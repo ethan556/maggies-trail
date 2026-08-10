@@ -1,0 +1,313 @@
+{
+  "id": "tno-02-03",
+  "slug": "which-digit-is-worth-more",
+  "title": "Which Digit Is Worth More?",
+  "courseId": "tens-and-ones",
+  "chapterId": "ch2-expanded-form",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "expanded-form",
+      "body": "A digit's value depends on its place. In 52, the 5 is worth 50 (5 tens) but the 2 is worth just 2 (2 ones). The same digit means more when it sits in the tens place."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build 52 and let the blocks show each digit's worth.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build 52 in standard form and compare the piles.",
+        "target": 52,
+        "requireStandard": true,
+        "maxTens": 9,
+        "maxOnes": 9,
+        "commonBuilds": [
+          {
+            "tens": 2,
+            "ones": 5,
+            "feedback": "That builds 25 — the digits swapped spots. In 52 the 5 counts RODS: 5 tens and 2 ones."
+          }
+        ],
+        "missFeedback": "The left digit counts rods (tens), the right counts cubes (ones): 5 rods, 2 cubes.",
+        "successFeedback": "5 rods against 2 cubes — the 5 carries 50 of the 52. Same digits, different spots, wildly different worth."
+      },
+      "predict": {
+        "prompt": "In 52, which digit is worth MORE?",
+        "options": [
+          {
+            "id": "five",
+            "label": "The 5"
+          },
+          {
+            "id": "two",
+            "label": "The 2"
+          },
+          {
+            "id": "equal",
+            "label": "They're worth the same"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "The 5 sits in the tens spot, so it's worth 50 — the 2 is worth just 2. You're about to see it as 5 whole rods towering over 2 little cubes: place, not the digit's size, decides worth."
+      },
+      "conceptTag": "tno-digit-value",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tno digit value.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tno digit value must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tno digit value."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "tens-and-ones:tno-digit-value",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another tens digit.",
+      "conceptTag": "tno-digit-value",
+      "explanationVariants": [
+        "The 7 in 74 sits in the tens place, so it's worth 70.",
+        "7 tens is 70."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 74, what is the value of the 7?",
+        "answer": 70,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the digit, but in the tens place it's worth 70."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the ones digit. The 7 is worth 70."
+          }
+        ],
+        "fallbackFeedback": "The 7 is in the tens place, so it's worth 70."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoDigitValueNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "In 33 both digits are 3, but they're worth different amounts: the left 3 is worth 30 and the right 3 is worth 3. The place, not the digit, decides the value.",
+      "figure": "tno-worth-more"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Same digit, different value.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 33, what is the value of the left 3?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "The left 3 sits in the tens place, so it's worth 30 (the right 3 is worth 3)."
+          },
+          {
+            "value": 6,
+            "feedback": "Don't add the two 3s. The left 3 alone is worth 30."
+          }
+        ],
+        "fallbackFeedback": "The left 3 is in the tens place, so it's worth 30."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "This is why 40 is bigger than 4: the 4 sits in the tens place in 40, worth 40, but stands alone as 4 ones in 4. Place is everything.",
+      "figure": "tno-place-matters"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A tens digit with zero ones.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 60, what is the value of the 6?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the digit, but in the tens place it's worth 60."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the ones digit. The 6 is worth 60."
+          }
+        ],
+        "fallbackFeedback": "The 6 is in the tens place, so it's worth 60."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Value of the 8.",
+      "conceptTag": "tno-digit-value",
+      "explanationVariants": [
+        "The 8 in 85 sits in the tens place, so it's worth 80.",
+        "8 tens is 80."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 85, what is the value of the 8?",
+        "answer": 80,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the digit, but in the tens place it's worth 80."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the ones digit. The 8 is worth 80."
+          }
+        ],
+        "fallbackFeedback": "The 8 is in the tens place, so it's worth 80."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoDigitValueNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A small tens digit.",
+      "conceptTag": "tno-digit-value",
+      "explanationVariants": [
+        "The 1 in 19 sits in the tens place, so it's worth 10.",
+        "1 ten is 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 19, what is the value of the 1?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the digit, but in the tens place it's worth 10."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the ones digit. The 1 is worth 10."
+          }
+        ],
+        "fallbackFeedback": "The 1 is in the tens place, so it's worth 10."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoDigitValueNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Biggest tens digit.",
+      "conceptTag": "tno-digit-value",
+      "explanationVariants": [
+        "The 9 in 90 sits in the tens place, so it's worth 90.",
+        "9 tens is 90."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 90, what is the value of the 9?",
+        "answer": 90,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the digit, but in the tens place it's worth 90."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the ones digit. The 9 is worth 90."
+          }
+        ],
+        "fallbackFeedback": "The 9 is in the tens place, so it's worth 90."
+      },
+      "hints": [
+        "Look at which place the 9 is in.",
+        "It's in the tens place, so count it as tens.",
+        "9 tens = 90."
+      ],
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoDigitValueNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A digit's place decides its value — tens are worth ten times the ones.",
+      "takeaways": [
+        "The same digit is worth more in the tens place.",
+        "In 33, the left 3 is 30 and the right 3 is 3.",
+        "Place value is why 40 is bigger than 4."
+      ],
+      "teaser": "next chapter: comparing two-digit numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tno-digit-value",
+      "concept": {
+        "id": "rem-tdv-c",
+        "kind": "concept",
+        "body": "A digit's value depends on its place. In 52, the 5 is in the tens place, worth 50, while the 2 is in the ones place, worth 2. Place decides value."
+      },
+      "check": {
+        "id": "rem-tdv-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tno-digit-value",
+        "explanationVariants": [
+          "The 5 in 52 is in the tens place, worth 50.",
+          "5 tens is 50."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In 52, what is the value of the 5?",
+          "answer": 50,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "In the tens place, the 5 is worth 50."
+            },
+            {
+              "value": 2,
+              "feedback": "2 is the ones digit; the 5 is worth 50."
+            }
+          ],
+          "fallbackFeedback": "The 5 is worth 50."
+        }
+      }
+    }
+  ]
+}

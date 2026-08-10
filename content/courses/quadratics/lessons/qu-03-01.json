@@ -1,0 +1,294 @@
+{
+  "id": "qu-03-01",
+  "slug": "solving-by-square-roots",
+  "title": "Solving by Square Roots",
+  "courseId": "quadratics",
+  "chapterId": "ch3-square-roots-and-the-formula",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-roots",
+      "body": "When a quadratic is just x² = k (with k > 0), take the square root of both sides: **x = ±√k**. That ± gives two solutions, one positive and one negative. To solve x² − 49 = 0, isolate x² = 49, then x = ±7."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Take the root.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 = 9. What is the larger solution?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "That's the smaller solution. The larger of ±3 is 3."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is x², not x. Take the square root: x = ±3."
+          }
+        ],
+        "fallbackFeedback": "x = ±√9 = ±3; the larger is 3."
+      },
+      "predict": {
+        "prompt": "Solving x² = 9 by square roots: √9 = 3, so the solutions are…",
+        "options": [
+          {
+            "id": "pm",
+            "label": "±3 — the equation keeps both"
+          },
+          {
+            "id": "pos",
+            "label": "Just 3 — that's what √ means"
+          },
+          {
+            "id": "root",
+            "label": "±√3"
+          }
+        ],
+        "outcomeId": "pm",
+        "reveal": "√9 is DEFINED as the positive root, 3 — but the equation x² = 9 asks for every number whose square is 9, and there are two. The ± is yours to add when you unsquare: the symbol and the equation answer different questions."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Isolate first.",
+      "conceptTag": "quad-square-root",
+      "explanationVariants": [
+        "x² − 49 = 0 gives x² = 49, so x = ±7; the larger is 7.",
+        "Isolate x² = 49, then x = ±7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 - 49 = 0. What is the larger solution?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "That's the smaller solution; the larger is 7."
+          },
+          {
+            "value": 49,
+            "feedback": "49 is x². Take the square root: x = ±7."
+          }
+        ],
+        "fallbackFeedback": "x² = 49, so x = ±7; the larger is 7."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-square-root__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Never drop the **negative** root: x² = 25 has solutions x = 5 **and** x = −5, because (−5)² = 25 as well. Forgetting the negative answer is the single most common square-root mistake.",
+      "figure": "qu-square-root-both"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the negative one.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 = 36. What is the smaller solution?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's the larger solution. The smaller is −6."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is x². The smaller solution is −√36 = −6."
+          }
+        ],
+        "fallbackFeedback": "x = ±6; the smaller is −6."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Square-root solving also works on a **shifted** square: (x − 3)² = 16 → x − 3 = ±4 → x = 3 + 4 = 7 or x = 3 − 4 = −1. Take the root of both sides, then undo the shift on each branch.",
+      "figure": "qu-shifted-square"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Undo the shift.",
+      "widget": {
+        "type": "quadraticExplore",
+        "form": "roots",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 0,
+        "rMin": -9,
+        "rMax": 9,
+        "aMin": -3,
+        "aMax": 3,
+        "aStart": 1,
+        "r1Start": 0,
+        "r2Start": 0,
+        "gridMax": 9,
+        "targetR1": 7,
+        "targetR2": -1,
+        "prompt": "(x − 3)² = 16 means x − 3 is 4 or −4. Drag the crossings to those two solutions.",
+        "successFeedback": "Roots 7 and −1 — 3 + 4 and 3 − 4. Taking a square root gives TWO answers because both +4 and −4 square to 16, and the graph shows both crossings at once.",
+        "shapeFeedback": "Leave a at 1.",
+        "vertexFeedback": "Not both yet. x − 3 = 4 gives one crossing; x − 3 = −4 gives the other."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Shifted the other way.",
+      "conceptTag": "quad-square-root",
+      "explanationVariants": [
+        "x + 2 = ±3, so x = 1 or x = −5; the smaller is −5.",
+        "Take the root: x + 2 = ±3, giving −5 and 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve (x + 2)^2 = 9. What is the smaller solution?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That's the larger solution (−2 + 3). The smaller is −2 − 3 = −5."
+          },
+          {
+            "value": -3,
+            "feedback": "−3 is −√9. Undo the shift: x = −2 − 3 = −5."
+          }
+        ],
+        "fallbackFeedback": "x + 2 = ±3, so x = −5 or 1; the smaller is −5."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-square-root__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Bigger numbers.",
+      "conceptTag": "quad-square-root",
+      "explanationVariants": [
+        "x² = 81 gives x = ±9; the larger is 9.",
+        "√81 = 9, so x = ±9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 = 81. What is the larger solution?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "That's the smaller solution; the larger is 9."
+          },
+          {
+            "value": 81,
+            "feedback": "81 is x². Take the square root: x = ±9."
+          }
+        ],
+        "fallbackFeedback": "x = ±9; the larger is 9."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-square-root__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Shift and sign together.",
+      "conceptTag": "quad-square-root",
+      "explanationVariants": [
+        "x − 1 = ±5, so x = 6 or x = −4; the smaller is −4.",
+        "Take the root: x − 1 = ±5, giving −4 and 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve (x - 1)^2 = 25. What is the smaller solution?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's the larger solution (1 + 5). The smaller is 1 − 5 = −4."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is √25. Undo the shift: x = 1 − 5 = −4."
+          }
+        ],
+        "fallbackFeedback": "x − 1 = ±5, so x = −4 or 6; the smaller is −4."
+      },
+      "hints": [
+        "Take the square root of both sides: x − 1 = ±5.",
+        "That gives x = 1 + 5 or x = 1 − 5.",
+        "The smaller is 1 − 5 = −4."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-square-root__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Isolate the square, take the root, and keep both signs.",
+      "takeaways": [
+        "x² = k gives x = ±√k — two solutions.",
+        "Never forget the negative root.",
+        "For (x − h)² = k, take the root then undo the shift."
+      ],
+      "teaser": "next: the quadratic formula, which solves any quadratic."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-square-root",
+      "concept": {
+        "id": "rem-qsr-c",
+        "kind": "concept",
+        "body": "Isolate x², then take the square root of both sides, keeping both signs: x² = 49 gives x = ±7. For a shifted square (x − 3)² = 16, x − 3 = ±4, so x = 7 or −1."
+      },
+      "check": {
+        "id": "rem-qsr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-square-root",
+        "explanationVariants": [
+          "x² = 49, so x = ±7; the larger is 7.",
+          "√49 = 7, so x = ±7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve x^2 - 49 = 0. What is the larger solution?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -7,
+              "feedback": "That's the smaller root; the larger is 7."
+            },
+            {
+              "value": 49,
+              "feedback": "49 is x²; take the square root to get ±7."
+            }
+          ],
+          "fallbackFeedback": "x² = 49, so x = ±7; larger is 7."
+        }
+      }
+    }
+  ]
+}

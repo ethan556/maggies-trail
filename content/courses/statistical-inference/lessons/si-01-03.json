@@ -1,0 +1,297 @@
+{
+  "id": "si-01-03",
+  "slug": "designing-an-experiment",
+  "title": "Designing an Experiment That Can Answer",
+  "courseId": "statistical-inference",
+  "chapterId": "ch1-how-the-data-was-made",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A usable experiment needs four parts:\n\n**Control** — a comparison arm, so you know what would have happened anyway.\n**Random assignment** — the coin decides the arm, not the person.\n**Blinding** — nobody who could tilt the result knows which arm they are in.\n**Replication** — enough subjects per arm that chance alone cannot fake the gap.\n\nDrop any one and the causal claim leaks.",
+      "figure": "si-random-assignment"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why a control arm?",
+      "conceptTag": "si-experiment-design",
+      "explanationVariants": [
+        "Most colds end in a week regardless. Without a control arm you cannot tell recovery from the treatment apart from recovery from time.",
+        "The control arm answers the question \"compared with what?\" — and without an answer to that, an improvement means nothing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "90% of people given a new cold remedy recover within a week. What is missing?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A control group — most colds resolve in a week anyway, so 90% may be no better than nothing.",
+            "correct": true,
+            "feedback": "Right. \"Compared with what?\" is the first question any causal claim must answer."
+          },
+          {
+            "id": "o2",
+            "label": "A larger sample, so the 90% is more precise.",
+            "correct": false,
+            "feedback": "Precision on a meaningless number is still meaningless. Without a comparison arm, 90% recovery has nothing to be better *than*."
+          },
+          {
+            "id": "o3",
+            "label": "A longer study, so the effect has time to appear.",
+            "correct": false,
+            "feedback": "Time would not help: whatever the recovery rate turns out to be, you still cannot say the remedy caused it without a comparison."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — 90% is clearly a strong result.",
+            "correct": false,
+            "feedback": "It looks strong until you learn that around 90% of untreated colds also resolve in a week. Then the remedy has done nothing at all."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-experiment-design__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two arms, built by coin.",
+      "widget": {
+        "type": "treeDiagram",
+        "prompt": "60 volunteers, split into 2 arms by coin flip, and each arm measured at 3 checkpoints. Set the branches.",
+        "stage1Label": "arms",
+        "stage2Label": "checkpoints",
+        "targetA": 2,
+        "targetB": 3,
+        "maxA": 6,
+        "maxB": 6,
+        "aStart": 1,
+        "bStart": 1,
+        "successFeedback": "6 endings: 2 arms × 3 checkpoints. The tree is symmetric because the coin, not the volunteer, chose the arm — that symmetry is what makes the comparison fair.",
+        "lowFeedback": "Fewer endings than the design has. Every arm is measured at every checkpoint.",
+        "highFeedback": "More endings than the design has. There are 2 arms and 3 checkpoints, nothing more."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Construct a complete multistage sample space and coordinate branches with counting and probability.",
+        "invariants": [
+          "each-path-is-one-outcome",
+          "branch-counts-multiply-across-stages"
+        ],
+        "misconceptions": [
+          "add-choices-along-a-path",
+          "omit-valid-outcomes"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-treeDiagram-new-context",
+        "delayed": false
+      },
+      "conceptTag": "si-experiment-design"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What is blinding for?",
+      "conceptTag": "si-experiment-design",
+      "explanationVariants": [
+        "If a patient knows they got the real drug, they may feel better because they expect to — the placebo effect. If the doctor knows, they may score the patient more generously.",
+        "Double-blinding hides the arm from both the subject and the assessor, so expectation cannot masquerade as effect."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In a double-blind trial, who is kept in the dark about which arm a patient is in?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Both the patient and the person assessing them.",
+            "correct": true,
+            "feedback": "Right — the patient's expectation and the assessor's expectation are two separate leaks, and each needs plugging."
+          },
+          {
+            "id": "o2",
+            "label": "Only the patient.",
+            "correct": false,
+            "feedback": "That is single-blind. It stops the placebo effect but leaves an assessor free to score the treated patients generously."
+          },
+          {
+            "id": "o3",
+            "label": "Only the statistician.",
+            "correct": false,
+            "feedback": "Blinding the analyst is good practice, but it does not stop the two leaks that happen during the trial itself: patient expectation and assessor judgement."
+          },
+          {
+            "id": "o4",
+            "label": "Nobody — the coin already handled everything.",
+            "correct": false,
+            "feedback": "The coin balances the arms at the start. It cannot stop people behaving differently once they know which arm they landed in."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-experiment-design__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Random assignment ≠ random sampling.** They are two different coins doing two different jobs.\n\nSample at random from a population → your finding **generalises** to that population.\nAssign at random within your subjects → your finding is **causal** for them.\n\nA drug trial on volunteers can prove cause without generalising. A random survey can generalise without proving cause.",
+      "figure": "si-study-types"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which coin was flipped?",
+      "conceptTag": "si-experiment-design",
+      "explanationVariants": [
+        "Volunteers were assigned at random to the two arms, so the causal claim holds for those volunteers. They were not randomly sampled from the country, so generalising the size of the effect to everyone is a separate, weaker step.",
+        "Random assignment inside the study buys cause; random sampling into the study buys generalisation. This trial did the first only."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "200 volunteers respond to an advert and are assigned by coin to drug or placebo. The drug arm improves. What may be claimed?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The drug caused improvement in these volunteers — but they are not a random sample, so extending the size of the effect to everyone is a further leap.",
+            "correct": true,
+            "feedback": "Right. The assignment coin was flipped; the sampling coin was not. Cause: yes. Generalisation: not automatically."
+          },
+          {
+            "id": "o2",
+            "label": "Nothing — the volunteers self-selected, so the study is worthless.",
+            "correct": false,
+            "feedback": "Self-selection into the study is a limit on generalising, not a break in the causal logic. Within these 200, the coin still balanced the arms."
+          },
+          {
+            "id": "o3",
+            "label": "The drug works for the whole population, since assignment was random.",
+            "correct": false,
+            "feedback": "The assignment coin buys cause, not reach. To speak about the whole population you would need to have sampled from it at random."
+          },
+          {
+            "id": "o4",
+            "label": "Only that the drug is associated with improvement.",
+            "correct": false,
+            "feedback": "That undersells it. Because the arms were built by coin, the improvement cannot be blamed on a lurking variable — this is stronger than association."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-experiment-design__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Fix the broken trial.",
+      "conceptTag": "si-experiment-design",
+      "hints": [
+        "Go through the four parts in order: control, random assignment, blinding, replication. Which one is actually absent?",
+        "There IS a comparison group, and there ARE enough subjects. Ask how each subject ended up in the group they are in.",
+        "The keen students chose the app. Whatever makes a student keen also raises test scores — that is a lurking variable, and only a coin removes it."
+      ],
+      "explanationVariants": [
+        "The flaw is the missing random assignment: students chose their own group, so the app arm is full of the keenest students. Fix it by assigning the app by coin.",
+        "A control group is present but useless, because it was not built the same way as the treatment group. The comparison is only fair when the coin does the sorting."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A school lets students opt into a study app; 300 opt in, 300 do not. The app group scores higher. Which of the four parts is missing?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Random assignment — the students sorted themselves, so the groups differ in motivation as well as in app use.",
+            "correct": true,
+            "feedback": "Right. There is a control group, but it was not built by coin, so the comparison is contaminated from the start."
+          },
+          {
+            "id": "o2",
+            "label": "Replication — 300 per group is too few.",
+            "correct": false,
+            "feedback": "300 per arm is ample. The problem is not the number of students; it is how they got into their arms."
+          },
+          {
+            "id": "o3",
+            "label": "A control group — there is nothing to compare against.",
+            "correct": false,
+            "feedback": "There is a comparison group: the 300 who did not opt in. The trouble is that it is not comparable, because it was self-selected."
+          },
+          {
+            "id": "o4",
+            "label": "Blinding — the students knew they were using an app.",
+            "correct": false,
+            "feedback": "Blinding is impossible here (you cannot hide an app from its user) and it is not the fatal flaw. Self-selection is."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-experiment-design__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Four parts, and each one plugs a specific leak.",
+      "takeaways": [
+        "Control answers \"compared with what?\"; random assignment removes lurking variables; blinding removes expectation; replication removes fluke.",
+        "Random assignment buys cause. Random sampling buys reach. They are different coins.",
+        "A comparison group that was not built by coin is not a control group — it is a second observational study."
+      ],
+      "teaser": "Next chapter: the sample is clean, the method is honest — and the answer still moves. Watch it move."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-experiment-design",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Run the checklist. Is there a comparison arm? Did a coin decide who went where? Is anyone who could tilt the result kept in the dark? Are there enough subjects that chance alone could not fake the gap? Each answer plugs one specific leak.",
+        "figure": "si-random-assignment"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which leak is open?",
+        "conceptTag": "si-experiment-design",
+        "explanationVariants": [
+          "Patients who knew they had the real pill may improve on expectation alone — that leak is closed by blinding.",
+          "The coin was flipped and there is a control arm, so what remains is the knowledge of which arm you are in."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A trial randomly assigns patients to a drug or to nothing at all, and everyone knows which they got. Which part is missing?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Blinding (and a placebo) — expectation alone can improve symptoms.",
+              "correct": true,
+              "feedback": "Right. Without a placebo and blinding, you cannot separate the drug from the belief in the drug."
+            },
+            {
+              "id": "o2",
+              "label": "Random assignment.",
+              "correct": false,
+              "feedback": "The patients WERE assigned at random here. The open leak is that they all know their arm."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

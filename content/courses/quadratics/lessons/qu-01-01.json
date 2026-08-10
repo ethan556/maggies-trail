@@ -1,0 +1,321 @@
+{
+  "id": "qu-01-01",
+  "slug": "the-parent-parabola-and-vertex-form",
+  "title": "The Parent Parabola & Vertex Form",
+  "courseId": "quadratics",
+  "chapterId": "ch1-graphing-parabolas",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-vertex",
+      "body": "The parent parabola y = x² is a U-shape. Its lowest point is the **vertex** at (0, 0), and the vertical line through it is the **axis of symmetry**. Vertex form y = (x − h)² + k slides that U so its vertex sits at **(h, k)**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Three dials, three jobs.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 2,
+        "targetK": -3,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 8,
+        "prompt": "Build y = (x − 2)² − 3.",
+        "successFeedback": "Vertex (2, −3), opening up. In vertex form a controls the shape, h slides it sideways, and k slides it up or down — and h moves it the OPPOSITE way to its sign, because (x − 2) is zero when x is 2.",
+        "shapeFeedback": "The width or the direction is wrong — that is the a dial.",
+        "vertexFeedback": "The shape is right but the vertex is in the wrong place. (x − 2)² − 3 has its vertex at (2, −3)."
+      },
+      "predict": {
+        "prompt": "You'll move h UP in y = a(x − h)² + k. Which way does the parabola slide?",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right"
+          },
+          {
+            "id": "left",
+            "label": "To the left"
+          },
+          {
+            "id": "upward",
+            "label": "Straight up"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "Raising h moves the vertex RIGHT even though h is subtracted — (x − h)² is smallest exactly when x = h, so the low point chases h. The minus sign is why so many people guess the wrong direction."
+      },
+      "conceptTag": "quad-vertex-form",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents quad vertex form.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for quad vertex form must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines quad vertex form."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "quadratics:quad-vertex-form",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the height.",
+      "conceptTag": "quad-vertex-form",
+      "explanationVariants": [
+        "In (x − 3)² + 2, the +2 is k, so the vertex y-coordinate is 2.",
+        "Vertex form ends in + k; here k = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = (x - 3)^2 + 2, what is the y-coordinate of the vertex?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "The k here is +2, so the vertex y is 2, not −2."
+          },
+          {
+            "value": 3,
+            "feedback": "That's the x-coordinate. The y-coordinate is the constant k = 2."
+          }
+        ],
+        "fallbackFeedback": "The + k term is +2, so the vertex y is 2."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-vertex-form__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The sign inside flips your intuition: **(x − h) shifts right by h**. So y = (x − 3)² has its vertex at x = 3, not −3. Likewise (x + 1)² means x − (−1), so its vertex is at x = −1. Set the inside to zero to find the vertex x.",
+      "figure": "qu-shift-right"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Watch the sign.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = (x + 1)^2 - 4, what is the x-coordinate of the vertex?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "(x + 1) is zero when x = −1, so the vertex x is −1."
+          },
+          {
+            "value": -4,
+            "feedback": "That's the y-coordinate (the −4). The x-coordinate is where x + 1 = 0, so x = −1."
+          }
+        ],
+        "fallbackFeedback": "x + 1 = 0 gives x = −1."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The **axis of symmetry** is the vertical line x = h through the vertex — the parabola is a mirror image across it. For y = (x − 3)² + 2, the axis is x = 3. It always matches the vertex's x-coordinate.",
+      "figure": "qu-axis-symmetry"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Name the axis.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = (x + 1)^2 - 4, what is the axis of symmetry (the value of x)?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The axis matches the vertex x: x + 1 = 0 gives x = −1."
+          },
+          {
+            "value": -4,
+            "feedback": "That's the vertex's y. The axis is the vertical line at the vertex's x, which is −1."
+          }
+        ],
+        "fallbackFeedback": "The axis is x = h = −1."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A stretched parabola.",
+      "conceptTag": "quad-vertex-form",
+      "explanationVariants": [
+        "The coefficient 2 changes the width, not the vertex: x − 5 = 0 gives vertex x = 5.",
+        "The a-value doesn't move the vertex; here the vertex x is 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2(x - 5)^2 + 1, what is the x-coordinate of the vertex?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "(x − 5) is zero at x = 5, so the vertex x is 5."
+          },
+          {
+            "value": 2,
+            "feedback": "The 2 is the stretch factor, not the vertex. The vertex x is 5."
+          }
+        ],
+        "fallbackFeedback": "x − 5 = 0 gives x = 5; the 2 only changes width."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-vertex-form__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which way does it open?",
+      "conceptTag": "quad-vertex-form",
+      "explanationVariants": [
+        "The leading coefficient is negative (−1), so the parabola opens downward.",
+        "A negative a flips the U upside down: it opens down."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Does y = -(x - 1)^2 + 3 open upward or downward?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Downward",
+            "correct": true,
+            "feedback": "Yes — the leading coefficient is −1, so the parabola opens downward."
+          },
+          {
+            "id": "b",
+            "label": "Upward",
+            "feedback": "The coefficient in front is negative (−1), which flips the U to open downward."
+          },
+          {
+            "id": "c",
+            "label": "Neither — it's a straight line",
+            "feedback": "The squared term makes it a parabola; the negative sign means it opens downward."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-vertex-form__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Vertex of a flipped, shifted parabola.",
+      "conceptTag": "quad-vertex-form",
+      "explanationVariants": [
+        "In −(x − 4)² − 6, the k is −6, so the vertex y-coordinate is −6.",
+        "The + k term is −6, giving vertex y = −6 (the negative sign in front doesn't change k)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = -(x - 4)^2 - 6, what is the y-coordinate of the vertex?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "The k is −6, so the vertex y is −6, not +6."
+          },
+          {
+            "value": 4,
+            "feedback": "That's the x-coordinate (from x − 4 = 0). The y-coordinate is k = −6."
+          }
+        ],
+        "fallbackFeedback": "The constant k is −6, so the vertex y is −6."
+      },
+      "hints": [
+        "Vertex form is a(x − h)² + k with vertex (h, k).",
+        "Here h = 4 and k = −6.",
+        "The y-coordinate is k = −6."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-vertex-form__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Vertex form hands you the vertex directly.",
+      "takeaways": [
+        "y = a(x − h)² + k has vertex (h, k) and axis x = h.",
+        "(x − h) shifts right by h — mind the sign flip.",
+        "A negative a opens the parabola downward."
+      ],
+      "teaser": "next: finding the vertex from standard form."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-vertex-form",
+      "concept": {
+        "id": "rem-qvf-c",
+        "kind": "concept",
+        "body": "Vertex form y = (x − h)² + k has vertex (h, k). The inside (x − h) is zero at x = h — that's the vertex x and the axis. The + k is the vertex y. For (x − 3)² + 2, the vertex is (3, 2)."
+      },
+      "check": {
+        "id": "rem-qvf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-vertex-form",
+        "explanationVariants": [
+          "x − 3 = 0 gives the vertex x = 3.",
+          "The vertex x is h = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For y = (x - 3)^2 + 2, what is the x-coordinate of the vertex?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -3,
+              "feedback": "Sign flip. Vertex form uses (x − h), so x − 3 = 0 puts the vertex at x = +3."
+            },
+            {
+              "value": 2,
+              "feedback": "That's the vertex y. The x-coordinate is 3."
+            }
+          ],
+          "fallbackFeedback": "x − 3 = 0, so x = 3."
+        }
+      }
+    }
+  ]
+}

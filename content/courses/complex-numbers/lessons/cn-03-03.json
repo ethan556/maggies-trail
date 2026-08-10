@@ -1,0 +1,321 @@
+{
+  "id": "cn-03-03",
+  "slug": "conjugates-and-division",
+  "title": "Conjugates & Division",
+  "courseId": "complex-numbers",
+  "chapterId": "ch3-complex-arithmetic",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **conjugate** of a + bi is a − bi — same real part, flipped imaginary sign. Multiply a number by its conjugate and the i vanishes: (a + bi)(a − bi) = **a² + b²**, always a real number. For 3 + 2i: (3 + 2i)(3 − 2i) = 9 + 4 = 13.",
+      "figure": "cn-conjugate"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A conjugate kills the imaginary part.",
+      "widget": {
+        "type": "argandExplore",
+        "mode": "multiply",
+        "mulRe": 2,
+        "mulIm": -3,
+        "targetRe": 13,
+        "targetIm": 0,
+        "reStart": 0,
+        "imStart": 0,
+        "gridMax": 5,
+        "prompt": "w = 2 − 3i. Find the z whose product z × w is real: land it on 13.",
+        "successFeedback": "z = 2 + 3i, the conjugate of w. Their product is 2² + 3² = 13 — a real number, every time, with the imaginary parts cancelling exactly. THAT is why dividing complex numbers multiplies top and bottom by the conjugate: it is the move that clears i out of the denominator.",
+        "realFeedback": "The product is not landing on 13. Try the mirror image of w across the real axis.",
+        "imagFeedback": "The real part is right, but there is still an imaginary part left. Only the exact conjugate cancels it completely."
+      },
+      "predict": {
+        "prompt": "w = 2 − 3i. Which z makes the product z × w purely REAL?",
+        "options": [
+          {
+            "id": "conj",
+            "label": "The conjugate: 2 + 3i"
+          },
+          {
+            "id": "opp",
+            "label": "The opposite: −2 + 3i"
+          },
+          {
+            "id": "axis",
+            "label": "Any z on the real axis"
+          }
+        ],
+        "outcomeId": "conj",
+        "reveal": "A number times its conjugate is |w|²: (2 + 3i)(2 − 3i) = 4 + 9 = 13 — the imaginary parts cancel in equal and opposite pairs. That cancellation is the entire engine of complex division."
+      },
+      "conceptTag": "cn-conjugate",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents conjugate.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for conjugate must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines conjugate."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-conjugate",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That real product is the key to **division**: to divide by a complex number, multiply top and bottom by the **bottom's conjugate**. Example: (3 + i)/(1 − i). Multiply by (1 + i)/(1 + i): bottom becomes 1 + 1 = 2, top becomes (3 + i)(1 + i) = 2 + 4i, so the answer is **1 + 2i**.",
+      "figure": "cn-division"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the conjugate.",
+      "conceptTag": "cn-conjugate",
+      "explanationVariants": [
+        "Keep the real part, flip only the imaginary sign: −2 + 7i ↦ −2 − 7i.",
+        "The conjugate of a + bi is a − bi — one sign changes, the b's sign."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the conjugate of −2 + 7i?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−2 − 7i",
+            "correct": true,
+            "feedback": "Right — only the imaginary sign flips."
+          },
+          {
+            "id": "o2",
+            "label": "2 − 7i",
+            "correct": false,
+            "feedback": "That flipped BOTH signs — the real part stays −2."
+          },
+          {
+            "id": "o3",
+            "label": "2 + 7i",
+            "correct": false,
+            "feedback": "That flipped the REAL sign — the conjugate flips only the imaginary one: −2 − 7i."
+          },
+          {
+            "id": "o4",
+            "label": "7 − 2i",
+            "correct": false,
+            "feedback": "That swapped the parts — conjugation keeps each part in place and flips b's sign."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-conjugate"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Prep the denominator.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "To divide by 1 − i, multiply by its conjugate 1 + i. What real number is (1 − i)(1 + i)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "1 − 1 subtracts — the conjugate product ADDS the squares: 1² + 1² = 2."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is only a² — add b² = 1 as well: 2."
+          }
+        ],
+        "fallbackFeedback": "a² + b² = 1 + 1 = 2 — a clean real denominator."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Finish the division.",
+      "conceptTag": "cn-conjugate",
+      "explanationVariants": [
+        "Top: (3 + i)(1 + i) = 3 + 3i + i + i² = 2 + 4i; bottom: 2. Result (2 + 4i)/2 = 1 + 2i.",
+        "After multiplying by (1 + i)/(1 + i), divide BOTH parts of 2 + 4i by 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify (3 + i)/(1 − i).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1 + 2i",
+            "correct": true,
+            "feedback": "Right — (2 + 4i) over the real denominator 2."
+          },
+          {
+            "id": "o2",
+            "label": "2 + 4i",
+            "correct": false,
+            "feedback": "That's the numerator before the final step — divide both parts by the denominator 2."
+          },
+          {
+            "id": "o3",
+            "label": "3 − i",
+            "correct": false,
+            "feedback": "You can't just cancel pieces across a complex fraction — multiply top AND bottom by the conjugate 1 + i."
+          },
+          {
+            "id": "o4",
+            "label": "1 − 2i",
+            "correct": false,
+            "feedback": "Sign slip in the numerator: (3 + i)(1 + i) has +4i, giving 1 + 2i."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-conjugate",
+        "form": "divideMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger conjugate product.",
+      "conceptTag": "cn-conjugate",
+      "explanationVariants": [
+        "(5 + 2i)(5 − 2i) = 5² + 2² = 29.",
+        "a² + b² with a = 5, b = 2: 25 + 4 = 29."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is (5 + 2i)(5 − 2i)?",
+        "answer": 29,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "25 − 4 subtracts — the pattern is a² PLUS b²: 25 + 4 = 29."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is only 5² — the imaginary coefficient adds its square: + 4 = 29."
+          }
+        ],
+        "fallbackFeedback": "25 + 4 = 29."
+      },
+      "variant": {
+        "gen": "cn-conjugate",
+        "form": "product"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Divide on your own.",
+      "conceptTag": "cn-conjugate",
+      "explanationVariants": [
+        "Multiply by (1 − i)/(1 − i): bottom 2, top (4 + 2i)(1 − i) = 4 − 4i + 2i + 2 = 6 − 2i; result 3 − i, real part 3.",
+        "(4 + 2i)/(1 + i) = (6 − 2i)/2 = 3 − i."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify (4 + 2i)/(1 + i). What is the REAL part of the result?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the numerator's real part BEFORE dividing by the denominator 2: 6/2 = 3."
+          },
+          {
+            "value": 4,
+            "feedback": "The 4 can't pass through untouched — multiply top and bottom by the conjugate 1 − i first, then divide by 2."
+          }
+        ],
+        "fallbackFeedback": "Top: (4 + 2i)(1 − i) = 6 − 2i; bottom: 2; result 3 − i."
+      },
+      "hints": [
+        "The bottom is 1 + i — multiply top and bottom by its conjugate, 1 − i.",
+        "Bottom: (1 + i)(1 − i) = 2. Top: (4 + 2i)(1 − i) = 6 − 2i.",
+        "Divide both parts by 2: 3 − i — the real part is 3."
+      ],
+      "variant": {
+        "gen": "cn-conjugate",
+        "form": "divideReal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Conjugates erase i: multiply by them to divide.",
+      "takeaways": [
+        "Conjugate of a + bi is a − bi — flip only the imaginary sign.",
+        "(a + bi)(a − bi) = a² + b², always real, never negative.",
+        "To divide: multiply top and bottom by the bottom's conjugate, then split the parts."
+      ],
+      "teaser": "Next chapter: quadratics whose roots are complex — the story A1 left unfinished."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-conjugate",
+      "concept": {
+        "id": "rem-cn0303-c",
+        "kind": "concept",
+        "body": "The conjugate flips ONLY the sign on the i-term: 4 + 3i becomes 4 − 3i."
+      },
+      "check": {
+        "id": "rem-cn0303-k",
+        "kind": "check",
+        "body": "Flip one sign.",
+        "conceptTag": "cn-conjugate",
+        "explanationVariants": [
+          "Keep the 4, flip the +3i to −3i.",
+          "a + bi ↦ a − bi with a = 4, b = 3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the conjugate of 4 + 3i?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "4 − 3i",
+              "correct": true,
+              "feedback": "Right — only the imaginary sign flips."
+            },
+            {
+              "id": "o2",
+              "label": "−4 + 3i",
+              "correct": false,
+              "feedback": "The REAL sign flipped — it should stay 4: the conjugate is 4 − 3i."
+            },
+            {
+              "id": "o3",
+              "label": "−4 − 3i",
+              "correct": false,
+              "feedback": "Both signs flipped — conjugation changes only the i-term's sign."
+            },
+            {
+              "id": "o4",
+              "label": "3 − 4i",
+              "correct": false,
+              "feedback": "The parts swapped places — each part stays put; only the i-sign flips."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

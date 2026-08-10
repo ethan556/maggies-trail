@@ -1,0 +1,408 @@
+{
+  "id": "sp-04-02",
+  "slug": "compound-events",
+  "title": "Compound Events",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch4-probability-models-and-compound-events",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "compound-event-tree",
+      "body": "The probability of a compound event is the fraction of the total sample space that satisfies BOTH conditions. Flipping heads AND rolling even: only 3 of the 2×6=12 outcomes match, so 3/12 = 1/4."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "The wheel is cut into equal parts, so each is equally likely. Shade the winning parts and the probability is simply the shaded share.",
+      "widget": {
+        "type": "spinnerSim",
+        "prompt": "Shade the wheel so the chance of winning is 3/8.",
+        "sectors": 8,
+        "targetFavourable": 3,
+        "favourableStart": 0,
+        "successFeedback": "3 of 8 equal parts — the winning share of the wheel IS the probability, 3/8.",
+        "lowFeedback": "Too little of the wheel is shaded for a 3/8 chance.",
+        "highFeedback": "Too much of the wheel is shaded — that's a bigger chance than 3/8."
+      },
+      "predict": {
+        "prompt": "You'll shade 3 of the 8 equal sectors. Is that chance more or less than a coin flip?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than 1/2"
+          },
+          {
+            "id": "less",
+            "label": "Less than 1/2"
+          },
+          {
+            "id": "half",
+            "label": "Exactly 1/2"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half of 8 sectors is 4, and 3 is less — so the chance 3/8 sits below 1/2. Benchmarking against a coin flip is the fastest sanity check a probability has."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Change favorable sectors and coordinate geometric fraction with theoretical and experimental probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-favorable-over-total"
+        ],
+        "misconceptions": [
+          "short-run-results-must-match-exactly",
+          "count-boundaries-not-sectors"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-spinnerSim-new-context",
+        "delayed": false
+      },
+      "conceptTag": "sp-compound-prob"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find a compound-event probability.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the probability of flipping heads and rolling an even number?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/4",
+            "correct": true,
+            "feedback": "Yes — P(heads)=1/2 and P(even)=1/2; multiply: 1/2 × 1/2 = 1/4."
+          },
+          {
+            "id": "b",
+            "label": "1/2",
+            "correct": false,
+            "feedback": "That's just ONE event's probability. Multiply BOTH: 1/2 × 1/2 = 1/4."
+          },
+          {
+            "id": "c",
+            "label": "1/12",
+            "feedback": "That undercounts the matches. Multiply the two probabilities directly: 1/2 × 1/2 = 1/4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another compound-event probability.",
+      "conceptTag": "sp-compound-prob",
+      "explanationVariants": [
+        "P(>4 on one die)=1/3; multiply for both dice: 1/3 × 1/3 = 1/9.",
+        "For independent events, multiply the individual probabilities."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "What is the probability of rolling a number greater than 4 on both dice?",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 9,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 3,
+            "feedback": "That's just ONE die's probability. Multiply BOTH: 1/3 × 1/3 = 1/9."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 3,
+            "feedback": "2/3 adds 1/3 + 1/3 — 'both' events MULTIPLY: 1/3 × 1/3 = 1/9."
+          }
+        ],
+        "fallbackFeedback": "Each die independently: P(>4) = 1/3, and 'both' multiplies the two.",
+        "successFeedback": "Yes — P(>4)=1/3 for one die; multiply for both: 1/3 × 1/3 = 1/9."
+      },
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "compound"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This multiplication rule works because the events are INDEPENDENT — one event's outcome doesn't affect the other's. A coin flip never influences a die roll.",
+      "figure": "compound-event-tree"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Verify by full enumeration.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That adds 2+6 instead of multiplying. Total outcomes = 2 × 6 = 12."
+          },
+          {
+            "value": 6,
+            "feedback": "That's just the die's outcomes. Multiply by the coin's 2 outcomes too: 2 × 6 = 12."
+          }
+        ],
+        "fallbackFeedback": "2 coin outcomes × 6 die outcomes = 12 total outcomes."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Of those 12 total outcomes, only 3 satisfy \"heads AND even\" (H2, H4, H6) — 3/12 simplifies to 1/4, matching the multiplication shortcut exactly.",
+      "figure": "sp-favorable-outcomes"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Another compound-event probability.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the probability of flipping heads and rolling an even number?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/4",
+            "correct": true,
+            "feedback": "Yes — 1/2 × 1/2 = 1/4, matching the 3 out of 12 total outcomes."
+          },
+          {
+            "id": "b",
+            "label": "3/6",
+            "feedback": "That simplifies to 1/2, which is only ONE event's probability. The compound probability is 1/4."
+          },
+          {
+            "id": "c",
+            "label": "1/12",
+            "feedback": "That's the probability of ONE specific outcome (like H2 alone), not all 3 matching ones. The answer is 1/4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another verification by counting.",
+      "conceptTag": "sp-sample-space-size",
+      "explanationVariants": [
+        "5×4=20.",
+        "Multiply the choices at each stage."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A store has 5 shirts and 4 pants. How many total outfits are possible?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That adds instead of multiplying. 5 × 4 = 20."
+          },
+          {
+            "value": 5,
+            "feedback": "Multiply by the 4 pants too: 5 × 4 = 20."
+          }
+        ],
+        "fallbackFeedback": "20."
+      },
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountOutfitsB"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another compound-event probability.",
+      "conceptTag": "sp-compound-prob",
+      "explanationVariants": [
+        "P(>4 on one die)=1/3; multiply for both: 1/9.",
+        "Multiply the individual probabilities for independent events."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "What is the probability of rolling a number greater than 4 on both dice?",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 9,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 6,
+            "feedback": "That's not the right product. 1/3 × 1/3 = 1/9, not 1/6."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 3,
+            "feedback": "2/3 adds 1/3 + 1/3 — 'both' events MULTIPLY: 1/3 × 1/3 = 1/9."
+          }
+        ],
+        "fallbackFeedback": "Each die independently: P(>4) = 1/3, and 'both' multiplies the two.",
+        "successFeedback": "Yes — 1/3 × 1/3 = 1/9."
+      },
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "compound"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier compound-event challenge.",
+      "conceptTag": "sp-compound-prob",
+      "explanationVariants": [
+        "P(heads)=1/2, P(even)=1/2; multiply: 1/4.",
+        "For independent events, multiply the individual probabilities."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "What is the probability of flipping heads and rolling an even number?",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 4,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 6,
+            "feedback": "That's not the individual events' probabilities multiplied. 1/2 × 1/2 = 1/4."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 3,
+            "feedback": "That's much too high for a compound event needing BOTH conditions. 1/2 × 1/2 = 1/4."
+          }
+        ],
+        "fallbackFeedback": "Multiply the two independent probabilities: 1/2 for heads, 1/2 for even.",
+        "successFeedback": "Yes — 1/2 × 1/2 = 1/4."
+      },
+      "hints": [
+        "P(heads) = 1/2.",
+        "P(rolling even) = 1/2.",
+        "Multiply the two: 1/2 × 1/2 = 1/4."
+      ],
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "compound"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "For independent events, multiply the individual probabilities to find the compound event's probability — this matches counting matches in the full sample space.",
+      "takeaways": [
+        "Compound event probability = product of the individual probabilities, for independent events.",
+        "This matches counting matches out of the total sample space.",
+        "Independent means one event's outcome doesn't affect the other's."
+      ],
+      "teaser": "next: probability models in real situations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-compound-prob",
+      "concept": {
+        "id": "rem-scpb-c",
+        "kind": "concept",
+        "body": "For independent events, multiply the individual probabilities. Flipping heads AND rolling even: P(heads)=1/2, P(even)=1/2, so 1/2×1/2=1/4."
+      },
+      "check": {
+        "id": "rem-scpb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-compound-prob",
+        "explanationVariants": [
+          "1/2 × 1/2 = 1/4.",
+          "Multiply the individual probabilities."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the probability of flipping heads and rolling an even number?",
+          "options": [
+            {
+              "id": "a",
+              "label": "1/4",
+              "correct": true,
+              "feedback": "Yes — 1/4."
+            },
+            {
+              "id": "b",
+              "label": "1/2",
+              "feedback": "That's just one event. Multiply both: 1/4."
+            },
+            {
+              "id": "c",
+              "label": "1/12",
+              "feedback": "Multiply the probabilities directly: 1/4."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-sample-space-size",
+      "concept": {
+        "id": "rem-scpb-ss-c",
+        "kind": "concept",
+        "body": "The counting principle: multiply the number of choices at each stage to find the total outcomes. 5 shirts and 4 pants: 5×4=20 outfits."
+      },
+      "check": {
+        "id": "rem-scpb-ss-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-sample-space-size",
+        "explanationVariants": [
+          "5×4=20.",
+          "Multiply the choices at each stage."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A store has 5 shirts and 4 pants. How many total outfits are possible?",
+          "answer": 20,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "That adds instead of multiplying. 5 × 4 = 20."
+            },
+            {
+              "value": 5,
+              "feedback": "Multiply by the 4 pants too: 5 × 4 = 20."
+            }
+          ],
+          "fallbackFeedback": "20."
+        }
+      }
+    }
+  ]
+}

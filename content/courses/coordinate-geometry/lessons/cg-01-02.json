@@ -1,0 +1,467 @@
+{
+ "id": "cg-01-02",
+ "slug": "plotting-points",
+ "title": "Plotting Points",
+ "courseId": "coordinate-geometry",
+ "chapterId": "ch1-coordinate-plane",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "To **plot** a point, walk its address: start at the origin, go **right** to its x-number, then **up** to its y-number, and mark the spot. Our practice grids label the gridlines 1 through 6 on each axis — the origin sits just below-left of the numbered corner. Plot (3, 2): column 3, then up to row 2.",
+   "figure": "cg-plot-walk"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Your first plot.",
+   "conceptTag": "coord-plot",
+   "widget": {
+    "type": "plotPoint",
+    "prompt": "Plot the point (3, 2): go right to 3, then up to 2, and mark it.",
+    "cols": 6,
+    "rows": 6,
+    "xLabels": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "yLabels": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "targets": [
+     {
+      "x": 3,
+      "y": 2
+     }
+    ],
+    "pointErrors": [
+     {
+      "x": 2,
+      "y": 3,
+      "feedback": "That's (2, 3) — the slots got swapped. Go right to 3 first, then up to 2."
+     }
+    ],
+    "missFeedback": "Walk the address: right to column 3, then up to row 2.",
+    "successFeedback": "Marked at (3, 2) — right 3, up 2. That's plotting."
+   },
+   "predict": {
+    "prompt": "In the point (3, 2), which number tells you how far to go RIGHT?",
+    "options": [
+     {
+      "id": "first",
+      "label": "The first number, 3"
+     },
+     {
+      "id": "second",
+      "label": "The second number, 2"
+     },
+     {
+      "id": "either",
+      "label": "Either one works"
+     }
+    ],
+    "outcomeId": "first",
+    "reveal": "Coordinates always speak in the same order: across first, then up. The 3 walks you right; the 2 lifts you."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": false,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Manipulate the model and track how it represents coord plot.",
+    "invariants": [
+     "The manipulated model and the mathematical relationship for coord plot must stay consistent."
+    ],
+    "misconceptions": [
+     "Changing a visible feature without preserving the relationship that defines coord plot."
+    ],
+    "representations": [
+     "diagram",
+     "symbolic"
+    ],
+    "translationFrom": "diagram",
+    "translationTo": "symbolic",
+    "fadeLevel": 0,
+    "transferFamily": "coordinate-geometry:coord-plot",
+    "delayed": true,
+    "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Again, farther out.",
+   "conceptTag": "coord-plot",
+   "explanationVariants": [
+    "(5, 4) means right to 5, then up to 4.",
+    "Column 5 first, then climb to row 4."
+   ],
+   "widget": {
+    "type": "plotPoint",
+    "prompt": "Plot the point (5, 4).",
+    "cols": 6,
+    "rows": 6,
+    "xLabels": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "yLabels": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "targets": [
+     {
+      "x": 5,
+      "y": 4
+     }
+    ],
+    "pointErrors": [
+     {
+      "x": 4,
+      "y": 5,
+      "feedback": "That's (4, 5) — swapped slots. The right-distance 5 comes first: right to 5, up to 4."
+     },
+     {
+      "x": 5,
+      "y": 1,
+      "feedback": "You went right to 5 but stopped low. Now climb: up to row 4."
+     }
+    ],
+    "missFeedback": "Right to 5, then up to 4.",
+    "successFeedback": "That's (5, 4) exactly."
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "plot"
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": false,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Manipulate the model and track how it represents coord plot.",
+    "invariants": [
+     "The manipulated model and the mathematical relationship for coord plot must stay consistent."
+    ],
+    "misconceptions": [
+     "Changing a visible feature without preserving the relationship that defines coord plot."
+    ],
+    "representations": [
+     "diagram",
+     "symbolic"
+    ],
+    "translationFrom": "diagram",
+    "translationTo": "symbolic",
+    "fadeLevel": 0,
+    "transferFamily": "coordinate-geometry:coord-plot",
+    "delayed": true,
+    "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Plotted points can **belong together**. Two points make the ends of a segment; three or four make the corners of a shape. And on a grid you can **measure along a gridline**: between (2, 2) and (6, 2) — same height — the distance is the difference of the x-numbers, 6 − 2 = 4 units. Count the **spaces** between them, not the dots.",
+   "figure": "cg-belong-together"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Plot both ends.",
+   "conceptTag": "coord-plot",
+   "explanationVariants": [
+    "(2, 2) and (6, 2) share the height 2 — two marks on the same row.",
+    "Both ends sit on row 2: one at column 2, one at column 6."
+   ],
+   "widget": {
+    "type": "plotPoint",
+    "prompt": "A segment runs from (2, 2) to (6, 2). Plot BOTH endpoints.",
+    "cols": 6,
+    "rows": 6,
+    "xLabels": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "yLabels": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "targets": [
+     {
+      "x": 2,
+      "y": 2
+     },
+     {
+      "x": 6,
+      "y": 2
+     }
+    ],
+    "pointErrors": [
+     {
+      "x": 2,
+      "y": 6,
+      "feedback": "That's (2, 6) — swapped slots on the second pair. Both endpoints have height 2."
+     },
+     {
+      "x": 6,
+      "y": 6,
+      "feedback": "That's (6, 6). The second endpoint is (6, 2) — right to 6, up only to 2."
+     }
+    ],
+    "missFeedback": "Both ends sit on row 2: columns 2 and 6.",
+    "successFeedback": "Both endpoints placed — a level segment on row 2.",
+    "connectTargets": true
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "segment"
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": false,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Manipulate the model and track how it represents coord plot.",
+    "invariants": [
+     "The manipulated model and the mathematical relationship for coord plot must stay consistent."
+    ],
+    "misconceptions": [
+     "Changing a visible feature without preserving the relationship that defines coord plot."
+    ],
+    "representations": [
+     "diagram",
+     "symbolic"
+    ],
+    "translationFrom": "diagram",
+    "translationTo": "symbolic",
+    "fadeLevel": 0,
+    "transferFamily": "coordinate-geometry:coord-plot",
+    "delayed": true,
+    "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Now measure that segment.",
+   "conceptTag": "coord-plot",
+   "widget": {
+    "type": "numeric",
+    "prompt": "How many units long is the segment from (2, 2) to (6, 2)?",
+    "answer": 4,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 counts the dots (2, 3, 4, 5, 6). Distance counts the spaces between them: 6 − 2 = 4."
+     },
+     {
+      "value": 8,
+      "feedback": "8 adds 2 + 6. Distance along a row is the difference: 6 − 2 = 4."
+     }
+    ],
+    "fallbackFeedback": "Same height, so subtract the x-numbers: 6 − 2 = 4 units."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A vertical measure.",
+   "conceptTag": "coord-plot",
+   "explanationVariants": [
+    "Same x, so subtract the heights: 6 − 1 = 5 units.",
+    "From height 1 to height 6 is 5 spaces of climb."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "How many units long is the segment from (4, 1) to (4, 6)?",
+    "task": "axisDistance",
+    "xLabel": "x",
+    "yLabel": "y",
+    "sets": [
+     {
+      "id": "story",
+      "label": "segment endpoints",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 4,
+        "y": 1
+       },
+       {
+        "id": "p2",
+        "label": "point 2",
+        "x": 4,
+        "y": 6
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "pathPointIds": [
+     "p1",
+     "p2"
+    ],
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 6,
+      "feedback": "6 counts the dots from 1 to 6. Count the spaces instead: 6 − 1 = 5."
+     },
+     {
+      "value": 10,
+      "feedback": "10 adds 4 + 6 — numbers from different axes. Same column, so subtract heights: 6 − 1 = 5."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "point:p1",
+     "point:p2",
+     "distance:changes",
+     "distance:total"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "Same x-number, so the length is 6 − 1 = 5 units.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Same x-number, so the length is 6 − 1 = 5 units."
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "cgAxisDistance"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Finish the rectangle.",
+   "conceptTag": "coord-plot",
+   "hints": [
+    "A rectangle's corners pair up: two x-numbers, two y-numbers.",
+    "The x-numbers in play are 1 and 6; the y-numbers are 1 and 4.",
+    "The missing combination is x = 1 with y = 4."
+   ],
+   "explanationVariants": [
+    "Corners use x ∈ {1, 6} and y ∈ {1, 4}; the missing pair is (1, 4).",
+    "Above (1, 1) and level with (6, 4) sits the fourth corner, (1, 4)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Three corners of a rectangle are (1, 1), (6, 1), and (6, 4). Where is the fourth corner?",
+    "options": [
+     {
+      "id": "a",
+      "label": "(1, 4)",
+      "correct": true,
+      "feedback": "Right — it sits directly above (1, 1) and level with (6, 4)."
+     },
+     {
+      "id": "b",
+      "label": "(4, 1)",
+      "feedback": "(4, 1) swaps the slots of the answer — that point sits on the bottom edge, not at a corner. The fourth corner is (1, 4)."
+     },
+     {
+      "id": "c",
+      "label": "(1, 6)",
+      "feedback": "(1, 6) borrows the 6 from the x-numbers. The rectangle's top edge is at height 4, so the corner is (1, 4)."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "cgRectangleCorner"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Walk it, mark it, measure it.",
+   "takeaways": [
+    "Plot (x, y) by walking right to x, then up to y.",
+    "Along a shared row or column, distance = the difference of the numbers that change.",
+    "Count spaces between points, never the dots themselves."
+   ],
+   "teaser": "next: points that mean something — town maps and savings graphs."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "coord-plot",
+   "concept": {
+    "id": "rem-cp-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Plotting is walking the address.** For (2, 3): start at the origin, step right until you reach 2 on the x-axis, then climb until you reach 3 on the y-axis. Mark where you stop. Right first, up second, every time."
+   },
+   "check": {
+    "id": "rem-cp-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "coord-plot",
+    "explanationVariants": [
+     "(2, 3): right to 2, up to 3.",
+     "Column 2, row 3 — right first, then up."
+    ],
+    "widget": {
+     "type": "plotPoint",
+     "prompt": "Plot the point (2, 3).",
+     "cols": 5,
+     "rows": 5,
+     "xLabels": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "yLabels": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "targets": [
+      {
+       "x": 2,
+       "y": 3
+      }
+     ],
+     "pointErrors": [
+      {
+       "x": 3,
+       "y": 2,
+       "feedback": "That's (3, 2) — swapped. The 2 is the right-distance: right to 2, then up to 3."
+      }
+     ],
+     "missFeedback": "Right to column 2, then up to row 3.",
+     "successFeedback": "That's (2, 3)."
+    }
+   }
+  }
+ ]
+}

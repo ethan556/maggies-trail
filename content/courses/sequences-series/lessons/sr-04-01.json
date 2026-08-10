@@ -1,0 +1,286 @@
+{
+  "id": "sr-04-01",
+  "slug": "why-adding-powers-needs-a-new-trick",
+  "title": "Why Adding Powers Needs a New Trick",
+  "courseId": "sequences-series",
+  "chapterId": "ch4-finite-geometric",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Try Gauss's fold on the geometric series 3 + 6 + 12 + 24. The outer pair gives 3 + 24 = 27… but the inner pair gives 6 + 12 = 18. **The pairs don't match** — multiplying spaces the terms unevenly, so the staircase won't fold flat. Geometric sums need a different trick entirely.",
+      "figure": "sr-gauss-fails"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the fold fail.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "In 3 + 6 + 12 + 24, the outer pair is 3 + 24 = 27. What does the inner pair 6 + 12 add to?",
+        "mode": "geometricTerm",
+        "task": "geometricPair",
+        "answerMode": "numeric",
+        "first": 3,
+        "targetD": 1,
+        "atPosition": 10,
+        "targetTerm": 18,
+        "targetRTenths": 5,
+        "targetSum": 18,
+        "rMax": 9,
+        "start": 1,
+        "ratio": 2,
+        "count": 4,
+        "pairIndices": [
+          1,
+          2
+        ],
+        "terms": [
+          3,
+          6,
+          12,
+          24
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 27,
+            "feedback": "Matching pairs is the ARITHMETIC pattern — here the gaps triple in size, so the inner pair lands on 18, not 27. That mismatch is exactly why the fold dies."
+          },
+          {
+            "value": 72,
+            "feedback": "72 is 6 × 12 — a product. Pairing ADDS the two terms: 6 + 12 = 18."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "fallbackFeedback": "6 + 12 = 18 ≠ 27 — unequal pairs, no fold.",
+        "explorationFeedback": "Open at least two exact sequence states before checking.",
+        "successFeedback": "6 + 12 = 18 ≠ 27 — unequal pairs, no fold.",
+        "lowFeedback": "6 + 12 = 18 ≠ 27 — unequal pairs, no fold.",
+        "highFeedback": "6 + 12 = 18 ≠ 27 — unequal pairs, no fold."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The trick that works: **multiply the whole sum by r, then subtract.** With S = 3 + 6 + 12 + 24 and r = 2, the copy 2S = 6 + 12 + 24 + 48 contains almost the same terms, shifted one slot. Subtracting cancels the entire shared middle — only the two edges survive: 2S − S = 48 − 3.",
+      "figure": "geometric-shift-subtract"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the moves.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the shift-and-subtract derivation in order.",
+        "items": [
+          {
+            "id": "m3",
+            "label": "Subtract: the shared 6, 12, 24 cancel, leaving 2S − S = 48 − 3"
+          },
+          {
+            "id": "m1",
+            "label": "Write S = 3 + 6 + 12 + 24"
+          },
+          {
+            "id": "m4",
+            "label": "Conclude S = 45"
+          },
+          {
+            "id": "m2",
+            "label": "Multiply everything by 2:  2S = 6 + 12 + 24 + 48"
+          }
+        ],
+        "correctOrder": [
+          "m1",
+          "m2",
+          "m3",
+          "m4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "m3",
+            "second": "m2",
+            "feedback": "There's nothing to subtract until the ×2 copy exists — build 2S first, THEN cancel against it."
+          },
+          {
+            "first": "m2",
+            "second": "m1",
+            "feedback": "The ×2 copy is a copy OF the sum — write S down before multiplying it."
+          }
+        ],
+        "missFeedback": "Follow the dependency: write the sum, make the shifted copy, cancel the overlap, read off S.",
+        "successFeedback": "Write → shift → subtract → solve: the move that tames every geometric sum."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read off the edges.",
+      "conceptTag": "sr-geo-derive",
+      "explanationVariants": [
+        "2S − S = S, and the right side is 48 − 3 = 45 — so S = 45.",
+        "Direct check: 3 + 6 + 12 + 24 = 45, matching the two surviving edges."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 2S − S = 48 − 3, what is S = 3 + 6 + 12 + 24?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 51,
+            "feedback": "51 is 48 + 3 — but the middles only cancel in a DIFFERENCE. The surviving edges subtract: 48 − 3 = 45."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the last term of the ORIGINAL row. The surviving high edge belongs to the shifted copy: 48. S = 48 − 3 = 45."
+          }
+        ],
+        "fallbackFeedback": "S = 48 − 3 = 45 — confirmed by adding directly."
+      },
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-geo-derive__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "With r = 3 the same move leaves a small twist. S = 2 + 6 + 18; the copy 3S = 6 + 18 + 54; subtracting gives 3S − S = **2S** = 54 − 2 = 52. When r isn't 2, the subtraction leaves (r − 1)S — one extra division finishes the job: S = 52 / 2 = 26.",
+      "figure": "sr-shift-subtract"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A tripling version.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the trick on S = 2 + 6 + 18. (3S − S = 54 − 2.)",
+        "answer": 26,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 52,
+            "feedback": "52 is 2S — the subtraction left TWO copies of S. Divide by r − 1 = 2: S = 26."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is 6 + 18 — the first term went missing. All three terms belong: 2 + 6 + 18 = 26."
+          }
+        ],
+        "fallbackFeedback": "2S = 52, so S = 26 — and 2 + 6 + 18 checks out."
+      }
+    },
+    {
+      "id": "i4",
+      "kind": "interactive",
+      "body": "Once more, solo.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the trick on S = 4 + 8 + 16. (2S − S = 32 − 4.)",
+        "answer": 28,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 32,
+            "feedback": "32 is the shifted copy's top edge alone — the original's bottom edge still subtracts: 32 − 4 = 28."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is 8 + 16 — the first term went missing. All three belong: 4 + 8 + 16 = 28."
+          }
+        ],
+        "fallbackFeedback": "32 − 4 = 28 — and adding directly confirms it."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Run it yourself.",
+      "conceptTag": "sr-geo-derive",
+      "explanationVariants": [
+        "5S − S = 4S = 625 − 1 = 624, so S = 156.",
+        "Direct check: 1 + 5 + 25 + 125 = 156."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Apply shift-and-subtract to S = 1 + 5 + 25 + 125.",
+        "answer": 156,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 624,
+            "feedback": "624 is 4S — the subtraction left FOUR copies (r − 1 = 4). One more division: 624 / 4 = 156."
+          },
+          {
+            "value": 155,
+            "feedback": "155 comes from 625 − 5 — subtracting the second term. The surviving LOW edge is the first term, 1: (625 − 1)/4 = 156."
+          }
+        ],
+        "fallbackFeedback": "4S = 625 − 1 = 624 ⇒ S = 156."
+      },
+      "hints": [
+        "Multiply the sum by r = 5 and line the copies up.",
+        "Everything shared cancels; the edges 5·125 = 625 and 1 survive: 4S = 624.",
+        "Divide by r − 1 = 4."
+      ],
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-geo-derive__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Shift, subtract, solve.",
+      "takeaways": [
+        "Gauss's fold dies on geometric sums — the pairs don't match.",
+        "Multiply by r and subtract: the whole middle cancels, only edges survive.",
+        "The subtraction leaves (r − 1)S — one division finishes."
+      ],
+      "teaser": "Next: bottling the trick into a formula you can fire in one line."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-geo-derive",
+      "concept": {
+        "id": "rem-sr0401-c",
+        "kind": "concept",
+        "body": "The trick in miniature: S = 1 + 2 + 4. The doubled copy is 2S = 2 + 4 + 8; subtracting cancels the shared 2 and 4, leaving S = 8 − 1 = 7. Every geometric sum yields to this same shift-and-cancel."
+      },
+      "check": {
+        "id": "rem-sr0401-k",
+        "kind": "check",
+        "body": "Cancel the middle.",
+        "conceptTag": "sr-geo-derive",
+        "explanationVariants": [
+          "2S − S = 8 − 1 = 7 — and 1 + 2 + 4 = 7 directly.",
+          "The shared 2 and 4 vanish in the subtraction; only the edges 8 and 1 remain."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Using 2S − S = 8 − 1, what is S = 1 + 2 + 4?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 is the shifted copy's top edge alone — the original's bottom edge still subtracts: 8 − 1 = 7."
+            },
+            {
+              "value": 6,
+              "feedback": "6 is 2 + 4, missing the first term. The full sum is 1 + 2 + 4 = 7."
+            }
+          ],
+          "fallbackFeedback": "8 − 1 = 7."
+        }
+      }
+    }
+  ]
+}

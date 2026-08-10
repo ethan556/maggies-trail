@@ -1,0 +1,477 @@
+{
+  "id": "mult-01-02",
+  "slug": "arrays-rows-and-columns",
+  "title": "Arrays: Rows and Columns",
+  "courseId": "multiplication-division",
+  "chapterId": "ch1-equal-groups",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An **array** lines up objects in neat rows — like eggs in a carton or chairs at a show. Every row holds the **same number**. That's our equal groups again, just standing in straight lines. Arrays turn multiplication into something you can see.",
+      "figure": "mult3-array"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Each new row brings the **same number** of cars.",
+      "conceptTag": "arrays",
+      "widget": {
+        "type": "slider",
+        "prompt": "A parking lot fills row by row. Each row fits 5 cars. Build rows until exactly 15 cars are parked.",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "start": 1,
+        "target": 3,
+        "visual": "groups",
+        "groupSize": 5,
+        "groupLayout": "row",
+        "itemEmoji": "🚗",
+        "unitLabel": "cars in all",
+        "lowFeedback": "Not enough parking yet — every new row adds 5 whole cars. Slide up.",
+        "highFeedback": "The lot is over 15! Each row you remove takes 5 cars with it. Slide down.",
+        "successFeedback": "3 rows of 5 cars parks exactly 15. Rows × cars-per-row!"
+      },
+      "predict": {
+        "prompt": "Each row fits 5 cars. Guess first: how many rows until exactly 15 cars are parked?",
+        "options": [
+          {
+            "id": "three",
+            "label": "3 rows"
+          },
+          {
+            "id": "five",
+            "label": "5 rows"
+          },
+          {
+            "id": "ten",
+            "label": "10 rows"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Three rows of 5 make 15 — and the finished lot IS a 3 × 5 array. Rows × row-size counts everything without counting by ones."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents arrays.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for arrays must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines arrays."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:arrays",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the array like a sentence: **rows first**, then how many in each row.",
+      "conceptTag": "arrays",
+      "explanationVariants": [
+        "4 × 3 builds 4 rows with 3 in every row. Count row by row: 3, 6, 9, 12.",
+        "Say it as '4 rows of 3.' The first number stacks the rows; the second fills each one. Four 3s: 3 + 3 + 3 + 3 = 12."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which array shows 4 × 3?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4 rows with 3 dots in each row",
+            "correct": true,
+            "feedback": "Yes — 4 rows of 3. Rows first, then how many in each."
+          },
+          {
+            "id": "b",
+            "label": "3 rows with 4 dots in each row",
+            "feedback": "That array also holds 12 dots, but it shows 3 × 4 — 3 rows of 4. For 4 × 3, stack 4 rows."
+          },
+          {
+            "id": "c",
+            "label": "4 rows with 4 dots in each row",
+            "feedback": "That's 4 rows of 4 — the array for 4 × 4 = 16. The second number, 3, tells how many go in each row."
+          },
+          {
+            "id": "d",
+            "label": "12 dots scattered all over",
+            "feedback": "Scattered dots still count to 12, but an array needs straight rows with the same number in each — that's what lets you multiply."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "array-model"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To read any array, ask two questions. **How many rows? How many in each row?** Then multiply: rows × in-each-row = total. 4 rows of 3 chairs is 4 × 3 = 12 chairs — no counting one by one.",
+      "figure": "mult3-array"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two questions, then multiply.",
+      "conceptTag": "arrays",
+      "explanationVariants": [
+        "5 rows, 4 stickers in each: 5 × 4 = 20. That's 4 + 4 + 4 + 4 + 4.",
+        "Count one row (4 stickers), then count by 4s once per row: 4, 8, 12, 16, 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sticker album page holds 5 rows of stickers with 4 stickers in each row. How many stickers fit on the page?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "stickers",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 comes from adding 5 + 4. But the page holds 5 whole rows of 4 — count 4 five times."
+          },
+          {
+            "value": 54,
+            "feedback": "54 puts the digits side by side. Instead, take the 4 in one row and count it once for every one of the 5 rows."
+          },
+          {
+            "value": 25,
+            "feedback": "25 would be 5 rows of 5 — but look again at one row: it holds 4 stickers, so count 5 fours."
+          }
+        ],
+        "fallbackFeedback": "Count one row first: 4 stickers. Then count it once per row: 4 + 4 + 4 + 4 + 4."
+      },
+      "variant": {
+        "gen": "array-model",
+        "form": "rowsTotal"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Rows run **side to side**. Find one whole row.",
+      "conceptTag": "arrays",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "These 12 chairs make 3 rows of 4. Tap every chair in the bottom row.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 3
+        },
+        "hotspots": [
+          {
+            "id": "r1c1",
+            "x": 20,
+            "y": 22,
+            "label": "Chair, top row, seat 1",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "That chair sits in the top row. Rows run side to side — the bottom row is the lowest line of chairs."
+          },
+          {
+            "id": "r1c2",
+            "x": 40,
+            "y": 22,
+            "label": "Chair, top row, seat 2",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "Top row again — slide your eyes down to the lowest line of chairs."
+          },
+          {
+            "id": "r1c3",
+            "x": 60,
+            "y": 22,
+            "label": "Chair, top row, seat 3",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "That one's up top. The bottom row sits below the other two."
+          },
+          {
+            "id": "r1c4",
+            "x": 80,
+            "y": 22,
+            "label": "Chair, top row, seat 4",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "Top row. Follow the chairs straight down to the lowest line."
+          },
+          {
+            "id": "r2c1",
+            "x": 20,
+            "y": 50,
+            "label": "Chair, middle row, seat 1",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "That's the middle row — one row still sits below it."
+          },
+          {
+            "id": "r2c2",
+            "x": 40,
+            "y": 50,
+            "label": "Chair, middle row, seat 2",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "Middle row. The bottom row is the very lowest line."
+          },
+          {
+            "id": "r2c3",
+            "x": 60,
+            "y": 50,
+            "label": "Chair, middle row, seat 3",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "Close — that chair is in the middle row, not the bottom one."
+          },
+          {
+            "id": "r2c4",
+            "x": 80,
+            "y": 50,
+            "label": "Chair, middle row, seat 4",
+            "icon": "🪑",
+            "count": 1,
+            "feedback": "Middle row again. Drop down one more line of chairs."
+          },
+          {
+            "id": "r3c1",
+            "x": 20,
+            "y": 78,
+            "label": "Chair, bottom row, seat 1",
+            "icon": "🪑",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c2",
+            "x": 40,
+            "y": 78,
+            "label": "Chair, bottom row, seat 2",
+            "icon": "🪑",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c3",
+            "x": 60,
+            "y": 78,
+            "label": "Chair, bottom row, seat 3",
+            "icon": "🪑",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c4",
+            "x": 80,
+            "y": 78,
+            "label": "Chair, bottom row, seat 4",
+            "icon": "🪑",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Rows run side to side. Find the lowest line of chairs and tap all 4 of them — only those.",
+        "successFeedback": "That whole line of 4 chairs is one row — and 3 rows like it make 3 × 4 chairs."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents arrays.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for arrays must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines arrays."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:arrays",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Arrays hide in everyday stories.",
+      "conceptTag": "arrays",
+      "explanationVariants": [
+        "The choir stands in 4 rows with 6 singers in each — 4 rows of 6, written 4 × 6.",
+        "Two questions: how many rows? 4. How many in each row? 6. Rows × in-each-row: 4 × 6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A choir stands in 4 rows with 6 singers in each row. Which finds the total number of singers?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4 + 6",
+            "feedback": "4 + 6 = 10 mixes the row count with the row size. There are 4 whole rows of 6 — four 6s, not a 4 plus a 6."
+          },
+          {
+            "id": "b",
+            "label": "4 × 6",
+            "correct": true,
+            "feedback": "4 rows of 6 singers — rows × in-each-row. That's 4 × 6 = 24."
+          },
+          {
+            "id": "c",
+            "label": "6 − 4",
+            "feedback": "Subtracting is for taking away, and no singers left the stage. The rows stack up, so the total grows."
+          },
+          {
+            "id": "d",
+            "label": "6 × 6",
+            "feedback": "6 × 6 would need 6 rows — but the choir stands in only 4. Count the rows first."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "array-model",
+        "form": "whichOperation"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller garden, before the big one.",
+      "conceptTag": "arrays",
+      "explanationVariants": [
+        "2 rows of 4 carrots is 2×4=8, then the rabbit eats 3: 8−3=5 left.",
+        "Multiply the array first (2×4=8) to get the total, then subtract what's eaten (8−3=5)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A garden has 2 rows of 4 carrots each. A rabbit eats 3 carrots. How many carrots are left?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is just the array multiplied (2×4) — the rabbit still ate 3, so subtract them: 8−3=5."
+          },
+          {
+            "value": 2,
+            "feedback": "2 comes from subtracting inside one row first (4−3=1, then ×2) — multiply the whole array first (2×4=8), THEN subtract what the rabbit ate: 8−3=5."
+          }
+        ],
+        "fallbackFeedback": "Multiply the rows and columns first (2×4=8), then subtract what was eaten (8−3=5)."
+      },
+      "variant": {
+        "gen": "array-model",
+        "form": "arrayMinus"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-step garden puzzle. One step at a time.",
+      "conceptTag": "arrays",
+      "hints": [
+        "Two things happen: carrots get planted in rows, then a rabbit eats some. First find how many were planted in all.",
+        "3 rows with 7 carrots in each row is 3 × 7 — or 7 + 7 + 7.",
+        "3 × 7 = 21 carrots planted. Now take away the 5 the rabbit ate."
+      ],
+      "explanationVariants": [
+        "Step 1: 3 rows × 7 carrots = 21 planted. Step 2: the rabbit eats 5, so 21 − 5 = 16 left.",
+        "Count by 7s for the rows: 7, 14, 21. Then the rabbit takes its share: 21 − 5 = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A garden has 3 rows of carrots with 7 carrots in each row. A rabbit sneaks in and eats 5 carrots. How many carrots are left?",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "carrots",
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 is every carrot planted — but the rabbit ate 5 of them. One more step!"
+          },
+          {
+            "value": 15,
+            "feedback": "15 comes from adding 3 + 7 + 5. The rows are groups of 7, so start with 3 × 7."
+          },
+          {
+            "value": 26,
+            "feedback": "26 adds the rabbit's 5 on top: 21 + 5. But eaten carrots leave the garden — subtract them."
+          }
+        ],
+        "fallbackFeedback": "Break it into two steps: find the planted total (3 rows of 7), then take away what the rabbit ate."
+      },
+      "variant": {
+        "gen": "array-model",
+        "form": "arrayMinus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Arrays are yours now!",
+      "takeaways": [
+        "An array lines up equal groups in straight rows.",
+        "Rows × in-each-row = the total.",
+        "Count the rows and just one row — then multiply."
+      ],
+      "teaser": "count by 2s, 5s, and 10s — skip counting is multiplication said out loud."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "arrays",
+      "concept": {
+        "id": "rem-ar-c",
+        "kind": "concept",
+        "body": "Quick rewind. An **array** lines things up in rows with the **same number in every row**. To read one, count the rows, then count how many sit in one row. Rows × in-each-row = total. So 2 rows of 3 is 2 × 3 = 6."
+      },
+      "check": {
+        "id": "rem-ar-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "arrays",
+        "explanationVariants": [
+          "2 rows with 5 eggs in each row is 2 × 5 = 10 eggs — count 5, then 5 more.",
+          "Two questions: rows? 2. Eggs in each row? 5. Multiply: 2 × 5."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "An egg carton has 2 rows with 5 eggs in each row. How do you find the total?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2 × 5 = 10",
+              "correct": true,
+              "feedback": "Rows × in-each-row: 2 × 5 = 10 eggs."
+            },
+            {
+              "id": "b",
+              "label": "2 + 5 = 7",
+              "feedback": "2 + 5 adds the row count to the row size. Instead, count the 5 eggs once for each of the 2 rows: 5 + 5."
+            },
+            {
+              "id": "c",
+              "label": "5 − 2 = 3",
+              "feedback": "Nothing was taken away — the rows stack together, so the total grows past 5."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

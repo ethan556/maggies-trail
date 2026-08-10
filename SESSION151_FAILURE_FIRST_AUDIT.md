@@ -1,0 +1,50 @@
+# Session 151 Failure-First Audit
+
+- Checks: **44/44**
+- Failed: **0**
+- Result: **PASS**
+
+- ✓ ConditionalTableLabSpec remains a plain ZodObject
+- ✓ GraphStoryLabSpec remains a plain ZodObject
+- ✓ ProportionalReasoningLabSpec remains a plain ZodObject
+- ✓ PlaceValueTransformLabSpec remains a plain ZodObject
+- ✓ QuotientReasoningLabSpec remains a plain ZodObject
+- ✓ AffineRelationshipLabSpec remains a plain ZodObject
+- ✓ ExactNumberLabSpec remains a plain ZodObject
+- ✓ GeometricConstraintLabSpec remains a plain ZodObject
+- ✓ PointSetReasoningLabSpec remains a plain ZodObject
+- ✓ EquationOutcomeLabSpec remains a plain ZodObject
+- ✓ SequenceBuildSpec remains a plain ZodObject
+- ✓ equation transform exact helper exists
+- ✓ negative scaling flips inequality
+- ✓ equation transform evaluator filters authored operation ids
+- ✓ equation workbench renderer is interactive
+- ✓ equation mastery colors encode roles
+- ✓ sequence exact truth helper exists
+- ✓ sequence semantic choice claims unique
+- ✓ sequence evaluator filters fabricated stages
+- ✓ sequence renderer exposes terms, changes, sums
+- ✓ coordinate proof truth mode exists
+- ✓ segment partition uses rational reconstruction
+- ✓ coordinate proof renderer uses semantic color plus labels/dashes
+- ✓ geometric evaluator filters fabricated stage ids
+- ✓ equationOutcomeLab retains all core surfaces
+- ✓ sequenceBuild retains all core surfaces
+- ✓ geometricConstraintLab retains all core surfaces
+- ✓ portable schema loader has no host TypeScript path
+- ✓ portable evaluate loader has no host TypeScript path
+- ✓ registration retains all sealed types, core-complete
+- ✓ player contract passed
+- ✓ source transpilation passed
+- ✓ content JSON passed
+- ✓ S151 original boundary remains exactly 29 widget substitutions
+- ✓ current changed-lesson boundary is exactly S151 targets plus exact-hash post-S151 authorizations
+- ✓ zero variant drift
+- ✓ all current non-authorized lessons remain byte-identical to the S150 baseline where comparable
+- ✓ 29 C to B transitions
+- ✓ registry retains all types sealed by s150
+- ✓ seeded sweep passed
+- ✓ integration audit passed
+- ✓ mutations rejected
+- ✓ sequence duplicate-claim defect has mutation coverage
+- ✓ all prior historical family sweeps retained

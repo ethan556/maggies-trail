@@ -1,0 +1,271 @@
+{
+  "id": "sp-02b-03",
+  "slug": "is-the-gap-big-enough",
+  "title": "Is the Gap Big Enough?",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch2b-measuring-the-difference",
+  "minutes": 11,
+  "standards": [
+    "7.SP.B.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "sp-same-gap-different-verdict",
+      "body": "Real comparisons arrive messy. The two groups rarely share a MAD, the numbers rarely divide evenly, and the answer often lands mid-scale. Three habits keep it honest: use a **typical** MAD when the two differ a little, **round the multiple** rather than report false precision, and say what it means **in the situation** — 2 MADs in reaction times and in bus fares is the same number about very different things."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "When the two wobbles disagree a little, take a typical value.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Group A's MAD is 4 and Group B's MAD is 6. What is a typical MAD to use as the ruler?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 adds the two MADs. A typical value is their average: (4 + 6) ÷ 2 = 5."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the difference between the MADs (6 − 4). You want a single ruler that represents both, which is their average: 5."
+          }
+        ],
+        "fallbackFeedback": "Average the two: (4 + 6) ÷ 2 = 5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Measure a real gap.",
+      "conceptTag": "sp-realworld-mad",
+      "explanationVariants": [
+        "Gap = 78 − 63 = 15, ruler 5, so 15 ÷ 5 = 3 MADs — comfortably past the 2-MAD mark.",
+        "Fifteen points of difference measured with a five-point wobble is three rulers: a difference worth reporting."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Morning class mean 63, afternoon class mean 78, typical MAD 5. How many MADs apart are the centres?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is the raw gap in points. Divide by the 5-point ruler to measure it: 15 ÷ 5 = 3."
+          },
+          {
+            "value": 141,
+            "feedback": "141 adds the means. Start from their difference, 15, then divide by the MAD: 3."
+          },
+          {
+            "value": 75,
+            "feedback": "75 multiplies the gap by the MAD (15 × 5). Measuring in MADs is division: 15 ÷ 5 = 3."
+          }
+        ],
+        "fallbackFeedback": "Gap = 78 − 63 = 15, and 15 ÷ 5 = 3 MADs."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Say it in the situation.",
+      "conceptTag": "sp-realworld-mad",
+      "explanationVariants": [
+        "Three MADs is past the 2-MAD mark, so the afternoon class really does score higher — but a sample cannot say WHY, so the claim stops at the difference.",
+        "The measurement supports 'the afternoon class scored higher', not any explanation for it. Time of day, who chose that class, and what else changed are all untested here."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The two classes come out 3 MADs apart, with the afternoon class higher. What can you fairly report?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The afternoon class scored clearly higher — the gap is well past sampling noise",
+            "correct": true,
+            "feedback": "Right — 3 MADs is a real separation, and the honest claim describes the difference without explaining it."
+          },
+          {
+            "id": "b",
+            "label": "Afternoon lessons cause higher scores",
+            "feedback": "The measurement shows a gap; it cannot show a cause. Different students chose each class, and any number of other things differ alongside the time of day."
+          },
+          {
+            "id": "c",
+            "label": "Every afternoon student scored above every morning student",
+            "feedback": "A 3-MAD gap separates the CENTRES, not every individual. Plenty of students on both sides will still overlap."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "sp-mad-ruler",
+      "body": "One more habit: check whether the difference **matters**, not only whether it is measurable. A delivery service whose vans arrive 3 MADs earlier than a rival's may be 3 MADs apart on a gap of two minutes. The multiple says the difference is real; only the situation says whether two minutes is worth paying for. Statistics settles 'is it there?' — people settle 'do we care?'"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Real, and small.",
+      "widget": {
+        "type": "distributionCompareLab",
+        "prompt": "Service X arrives at mean 12.0 min, Service Y at mean 13.2 min, typical MAD 0.4 min. How many MADs apart are the centres?",
+        "mode": "measure",
+        "meanA": 13.2,
+        "meanB": 12,
+        "variability": 0.4,
+        "answer": 3,
+        "tolerance": 0.01,
+        "measureChoices": [
+          {
+            "value": 1.2,
+            "label": "1.2",
+            "feedback": "1.2 minutes is the raw gap. Divide by the 0.4-minute ruler: 1.2 ÷ 0.4 = 3."
+          },
+          {
+            "value": 3,
+            "label": "3",
+            "feedback": "1.2 ÷ 0.4 = 3 MADs. A small gap in minutes is a large gap in rulers, because the wobble is smaller still."
+          },
+          {
+            "value": 0.48,
+            "label": "0.48",
+            "feedback": "0.48 multiplies the gap by the MAD (1.2 × 0.4). Measuring in MADs means dividing: 3."
+          },
+          {
+            "value": 0.8,
+            "label": "0.8",
+            "feedback": "0.8 subtracts (1.2 − 0.4). The MAD is the unit of measurement, so divide by it: 1.2 ÷ 0.4 = 3."
+          }
+        ],
+        "fallbackFeedback": "Gap = 13.2 − 12.0 = 1.2 min, and 1.2 ÷ 0.4 = 3 MADs.",
+        "successFeedback": "1.2 ÷ 0.4 = 3 MADs — barely a minute apart on the clock, but three rulers apart in the data.",
+        "groupALabel": "Service Y",
+        "groupBLabel": "Service X"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Real does not mean important.",
+      "conceptTag": "sp-realworld-mad",
+      "explanationVariants": [
+        "Three MADs makes the 1.2-minute difference genuine rather than noise, but 1.2 minutes is a small amount of time — whether that matters is a judgement about deliveries, not about statistics.",
+        "The multiple answers 'is the gap real?'; the size in minutes answers 'is the gap worth acting on?'. Here the answers can point in different directions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Services X and Y are 3 MADs apart, a difference of 1.2 minutes. What is the fair summary?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The difference is real but small — 1.2 minutes may not matter in practice",
+            "correct": true,
+            "feedback": "Exactly — the multiple establishes that the gap is not noise, and the raw size tells you whether anyone should care."
+          },
+          {
+            "id": "b",
+            "label": "The difference is not real, because 1.2 minutes is tiny",
+            "feedback": "It is real: measured against a wobble of only 0.4 minutes, a 1.2-minute gap is three rulers wide. Small and real are not opposites."
+          },
+          {
+            "id": "c",
+            "label": "Service X is 3 minutes faster than Service Y",
+            "feedback": "3 is the number of MADs, not minutes. The gap in minutes is 1.2; the 3 says how that compares with the noise."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Everything together, one report.",
+      "conceptTag": "sp-realworld-mad",
+      "explanationVariants": [
+        "Typical MAD = (7 + 9) ÷ 2 = 8. Gap = 96 − 88 = 8. So the centres are 8 ÷ 8 = 1 MAD apart — inside the uncertain zone, so the honest report is 'not convincing yet'.",
+        "The gap and the wobble are the same size here, which is the definition of a weak result: one typical wobble of separation cannot rule out sampling luck."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Brand A: mean life 88 hours, MAD 7. Brand B: mean life 96 hours, MAD 9. What should the report say?",
+        "options": [
+          {
+            "id": "a",
+            "label": "About 1 MAD apart — not convincing yet from these samples",
+            "correct": true,
+            "feedback": "Right — typical MAD 8, gap 8, so the multiple is 1. The brands may well differ, but this sample cannot show it."
+          },
+          {
+            "id": "b",
+            "label": "About 8 MADs apart — a very clear difference",
+            "feedback": "8 is the gap in HOURS, not the multiple. Divide it by the typical MAD of 8 to get 1."
+          },
+          {
+            "id": "c",
+            "label": "Exactly 0 MADs apart — the brands are identical",
+            "feedback": "The means genuinely differ by 8 hours, so the multiple is not 0. It is 1, which means the gap is the same size as the ordinary wobble."
+          }
+        ]
+      },
+      "hints": [
+        "The two MADs differ, so build one typical ruler from them first.",
+        "Typical MAD = (7 + 9) ÷ 2 = 8, and the gap is 96 − 88 = 8.",
+        "Divide the gap by the ruler, then compare the result with the 1-MAD and 2-MAD marks."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A number, then a sentence.",
+      "takeaways": [
+        "When two groups' MADs differ a little, average them into one ruler.",
+        "Report the multiple, then say what it means in the situation — and never claim a cause from a comparison.",
+        "A real difference can still be too small to matter; the multiple and the raw size answer different questions."
+      ],
+      "teaser": "next chapter: from comparing groups to predicting single outcomes — the language of probability."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-realworld-mad",
+      "concept": {
+        "id": "rem-spr-c",
+        "kind": "concept",
+        "body": "Quick rewind. With two different MADs, average them for a single ruler, then divide the gap by it. Means 50 and 62 with MADs 5 and 7: ruler 6, gap 12, multiple 12 ÷ 6 = 2."
+      },
+      "check": {
+        "id": "rem-spr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-realworld-mad",
+        "explanationVariants": [
+          "Typical MAD = (2 + 4) ÷ 2 = 3, gap = 41 − 32 = 9, so 9 ÷ 3 = 3 MADs.",
+          "Average the wobbles into a 3-unit ruler, then measure the 9-unit gap with it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Means 32 and 41, with MADs 2 and 4. How many MADs apart are the centres?",
+          "answer": 3,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is the raw gap. Divide it by the typical MAD of 3: the answer is 3."
+            },
+            {
+              "value": 4.5,
+              "feedback": "4.5 divides the gap by 2, the smaller MAD. Use a typical ruler from both: (2 + 4) ÷ 2 = 3, so 9 ÷ 3 = 3."
+            }
+          ],
+          "fallbackFeedback": "Typical MAD = 3 and the gap is 9, so 9 ÷ 3 = 3 MADs."
+        }
+      }
+    }
+  ]
+}

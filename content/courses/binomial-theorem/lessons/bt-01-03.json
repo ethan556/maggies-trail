@@ -1,0 +1,254 @@
+{
+  "id": "bt-01-03",
+  "slug": "why-combinations-appear",
+  "title": "Why Combinations Appear",
+  "courseId": "binomial-theorem",
+  "chapterId": "ch1-pascals-pattern",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Expanding (a + b)⁴ means multiplying four brackets, and from EACH bracket you take either an a or a b. Every term of the answer is one such choice sequence. So the coefficient of a²b² is simply the number of ways to choose which two of the four brackets contribute the b — a counting question, not an algebra one.",
+      "figure": "bt-choose-from-each-bracket"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the choice sequences directly.",
+      "widget": {
+        "type": "treeDiagram",
+        "prompt": "Each of 3 brackets offers 2 choices, a or b. Set the tree to 3 stages of 2 and read the total number of paths.",
+        "stage1Label": "Brackets",
+        "stage2Label": "Choices per bracket",
+        "targetA": 3,
+        "targetB": 2,
+        "maxA": 6,
+        "maxB": 6,
+        "aStart": 1,
+        "bStart": 1,
+        "successFeedback": "8 paths — and 2³ = 8 is exactly the sum of row 3 (1 + 3 + 3 + 1). Every path is one term before like terms are collected.",
+        "lowFeedback": "Not enough paths yet — raise the number of brackets or the choices per bracket.",
+        "highFeedback": "Too many paths — three brackets of two choices is what (a + b)³ offers."
+      },
+      "predict": {
+        "prompt": "In (a + b)⁴, the coefficient of a²b² counts what?",
+        "options": [
+          {
+            "id": "ways",
+            "label": "The ways to pick which 2 of the 4 brackets give the b"
+          },
+          {
+            "id": "product",
+            "label": "The product 2 × 2"
+          },
+          {
+            "id": "sum",
+            "label": "The sum 2 + 2"
+          }
+        ],
+        "outcomeId": "ways",
+        "reveal": "Each term is a choice sequence, so collecting like terms is counting sequences. Choosing 2 brackets out of 4 can be done C(4,2) = 6 ways, which is precisely row 4's middle entry. The combinations from probability were the coefficients all along."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "See the same counting at n = 2, as regions.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "requiredMoves": 3,
+        "startA": 0,
+        "startB": 0,
+        "prompt": "Build (x + 2)(x + 6) and read the middle coefficient — the two strips together.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 2,
+        "targetB": 6,
+        "asks": "middle",
+        "successFeedback": "x² + 8x + 12. There are exactly TWO strips because there are exactly C(2,1) = 2 ways to take the constant from one bracket and the x from the other — the region count IS the combination.",
+        "productMiddleFeedback": "The strips were multiplied: 2×6 = 12 is the corner. The two strips ADD, because they are two separate ways of choosing.",
+        "partialFeedback": "One partition has arrived and the other has not — this rectangle is 2 down and 6 across.",
+        "signFeedback": "Both partitions are added here, so both stay positive."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute the combination.",
+      "conceptTag": "bt-combinations-link",
+      "explanationVariants": [
+        "C(4,2) = 6, which is row 4's middle entry.",
+        "There are 6 ways to choose 2 brackets from 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many ways can you choose 2 of the 4 brackets to supply the b? (That is C(4,2).)",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 counts choosing ONE bracket, C(4,1). Two must be chosen here."
+          },
+          {
+            "value": 8,
+            "feedback": "8 double-counts by treating the two chosen brackets as ordered. Choosing brackets 1 and 3 is the same term as choosing 3 and 1."
+          }
+        ],
+        "fallbackFeedback": "C(4,2) = (4×3)/(2×1) = 6.",
+        "successFeedback": "6 — the same 6 that sits in the middle of row 4. The triangle was counting combinations the whole time."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That identification is the theorem's engine: the entry in row n, position k, IS C(n, k). Pascal's addition rule is the same statement in disguise — choosing k things from n either uses the last item or does not, which is exactly C(n−1, k−1) + C(n−1, k), the two entries above.",
+      "figure": "bt-entry-is-choose"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a row entry as a combination.",
+      "conceptTag": "bt-combinations-link",
+      "explanationVariants": [
+        "Row 5's third entry (position k = 2) is C(5,2) = 10.",
+        "Positions are counted from 0, so the third entry is k = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Row 5 of Pascal's triangle, position k = 2 (counting from 0). What is C(5,2)?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is C(5,1), position k = 1. Positions start at 0, so k = 2 is the THIRD entry."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is C(6,3), from row 6. Stay in row 5."
+          }
+        ],
+        "fallbackFeedback": "C(5,2) = (5×4)/(2×1) = 10.",
+        "successFeedback": "10 — row entry and combination are the same number, read two different ways."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Explain the symmetry.",
+      "conceptTag": "bt-combinations-link",
+      "explanationVariants": [
+        "Choosing which k brackets give b is the same as choosing which n−k give a, so C(n,k) = C(n,n−k).",
+        "Every choice of a set is simultaneously a choice of its complement."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why is Pascal's triangle symmetric?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Choosing k brackets to give b is the same as choosing the other n−k to give a",
+            "correct": true,
+            "feedback": "Exactly — C(n,k) = C(n,n−k), because a choice and its complement are one decision."
+          },
+          {
+            "id": "o2",
+            "label": "Because addition is commutative",
+            "correct": false,
+            "feedback": "Commutativity explains why a²b² and b²a² are the same term, not why the COUNTS mirror."
+          },
+          {
+            "id": "o3",
+            "label": "Because every row starts and ends with 1",
+            "correct": false,
+            "feedback": "That is a consequence of the symmetry, not its cause."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count paths a different way.",
+      "conceptTag": "bt-combinations-link",
+      "explanationVariants": [
+        "(a + b)⁴ offers 2⁴ = 16 choice sequences, and row 4 sums to 16.",
+        "Each of 4 brackets contributes 2 choices, giving 2⁴ = 16."
+      ],
+      "hints": [
+        "Each bracket independently offers two choices — how many brackets are there?",
+        "Multiply the choices: 2 for each of the 4 brackets.",
+        "2⁴, which should also equal the sum of row 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many choice sequences does expanding (a + b)⁴ produce, before like terms are collected?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 2³, three brackets' worth. There are four brackets here."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the number of TERMS after collecting. Before collecting, each bracket doubles the count."
+          }
+        ],
+        "fallbackFeedback": "Four brackets, two choices each: 2⁴ = 16 sequences.",
+        "successFeedback": "16 — and row 4 sums to 16 too, because collecting like terms only groups those sequences, never loses one."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Counting was the algebra.",
+      "takeaways": [
+        "Every term of (a + b)ⁿ is one choice of a-or-b from each bracket.",
+        "The coefficient of aⁿ⁻ᵏbᵏ is C(n,k) — the number of such choices.",
+        "Pascal's row n, position k, IS C(n,k), and its symmetry is the complement rule."
+      ],
+      "teaser": "Next: write that identification down as a single formula — the Binomial Theorem."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bt-combinations-link",
+      "concept": {
+        "id": "rem-bt-combinations-link-c",
+        "kind": "concept",
+        "body": "That identification is the theorem's engine: the entry in row n, position k, IS C(n, k). Pascal's addition rule is the same statement in disguise — choosing k things from n either uses the last item or does not, which is exactly C(n−1, k−1) + C(n−1, k), the two entries above."
+      },
+      "check": {
+        "id": "rem-bt-combinations-link-k",
+        "kind": "check",
+        "body": "Compute the combination.",
+        "conceptTag": "bt-combinations-link",
+        "explanationVariants": [
+          "C(4,2) = 6, which is row 4's middle entry.",
+          "There are 6 ways to choose 2 brackets from 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many ways can you choose 2 of the 4 brackets to supply the b? (That is C(4,2).)",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 counts choosing ONE bracket, C(4,1). Two must be chosen here."
+            },
+            {
+              "value": 8,
+              "feedback": "8 double-counts by treating the two chosen brackets as ordered. Choosing brackets 1 and 3 is the same term as choosing 3 and 1."
+            }
+          ],
+          "fallbackFeedback": "C(4,2) = (4×3)/(2×1) = 6.",
+          "successFeedback": "6 — the same 6 that sits in the middle of row 4. The triangle was counting combinations the whole time."
+        }
+      }
+    }
+  ]
+}

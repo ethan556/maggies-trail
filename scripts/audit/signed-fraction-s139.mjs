@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+const root=resolve(import.meta.dirname,"../..");
+const lessonPath="content/courses/rational-number-operations/lessons/rno-04-01.json";
+const lesson=JSON.parse(readFileSync(join(root,lessonPath),"utf8"));
+const state=JSON.parse(readFileSync(join(root,"PRODUCT_STATE.json"),"utf8"));
+const excellence=JSON.parse(readFileSync(join(root,"EXCELLENCE_BACKLOG_S126.json"),"utf8"));
+const sweep=JSON.parse(readFileSync(join(root,"SIGNED_FRACTION_VARIANT_SWEEP_S139.json"),"utf8"));
+const errors=[];
+const gcd=(a,b)=>{let x=Math.abs(a),y=Math.abs(b);while(y)[x,y]=[y,x%y];return x||1};
+const truth=w=>{const rawNum=w.operation==="multiply"?w.left.num*w.right.num:w.left.num*w.right.den;const rawDen=w.operation==="multiply"?w.left.den*w.right.den:w.left.den*w.right.num;const g=gcd(rawNum,rawDen);return{sign:w.left.sign*w.right.sign,num:rawNum/g,den:rawDen/g,rawNum,rawDen}};
+const equivalent=(c,t)=>c.sign===t.sign&&c.num*t.den===t.num*c.den;
+const correct=(c,t,w)=>equivalent(c,t)&&(w.form==="any"||(c.num===t.num&&c.den===t.den));
+const experiences=[...lesson.steps.filter(s=>s.widget?.type==="signedFractionLab"),...lesson.remedials.map(r=>r.check).filter(s=>s.widget?.type==="signedFractionLab")];
+if(experiences.length!==9)errors.push(`expected 9 signed-fraction experiences, found ${experiences.length}`);
+const rows=[];
+for(const step of experiences){const w=step.widget,t=truth(w);const right=w.choices.filter(c=>correct(c,t,w));if(right.length!==1)errors.push(`${step.id}: ${right.length} gradeable correct claims`);if(right[0]?.path!=="correct")errors.push(`${step.id}: gradeable answer is not path=correct`);if(new Set(w.choices.map(c=>c.id)).size!==w.choices.length)errors.push(`${step.id}: duplicate ids`);if(new Set(w.choices.map(c=>c.label)).size!==w.choices.length)errors.push(`${step.id}: duplicate labels`);for(const c of w.choices.filter(c=>c.path!=="correct"))if(correct(c,t,w))errors.push(`${step.id}/${c.id}: wrong path grades correct`);const sign=w.choices.find(c=>c.path==="wrongSign");if(!sign||sign.sign!==-t.sign||sign.num*t.den!==t.num*sign.den)errors.push(`${step.id}: wrongSign does not preserve magnitude and flip sign`);if(w.operation==="divide"){const kept=w.choices.find(c=>c.path==="keptDivisor");const n=w.left.num*w.right.num,d=w.left.den*w.right.den;if(!kept||kept.sign!==t.sign||kept.num*d!==n*kept.den)errors.push(`${step.id}: kept-divisor route missing or false`);}if(w.form==="lowestTerms"){const u=w.choices.find(c=>c.path==="unreduced");if(!u||!equivalent(u,t)||gcd(u.num,u.den)===1)errors.push(`${step.id}: lowest-terms route is not equivalent unreduced truth`);}rows.push({id:step.id,operation:w.operation,left:w.left,right:w.right,form:w.form,derived:{sign:t.sign,num:t.num,den:t.den},wrongPaths:w.choices.length-1});}
+const variants=lesson.steps.filter(s=>s.variant?.gen==="frac-sign-ops");
+if(variants.length!==4)errors.push(`expected 4 preserved variant declarations, found ${variants.length}`);
+const forms=variants.map(s=>s.variant.form??"default").sort();if(JSON.stringify(forms)!==JSON.stringify(["default","divDiff","divSame","mulDiff"].sort()))errors.push(`variant forms drifted: ${forms.join(",")}`);
+const source={schema:readFileSync(join(root,"src/lib/schema.ts"),"utf8"),eval:readFileSync(join(root,"src/lib/evaluate.ts"),"utf8"),pedagogy:readFileSync(join(root,"src/lib/pedagogy.ts"),"utf8"),renderer:readFileSync(join(root,"src/components/widgets.tsx"),"utf8"),narration:readFileSync(join(root,"src/lib/describeState.ts"),"utf8"),width:readFileSync(join(root,"src/components/stageWidth.ts"),"utf8"),samples:readFileSync(join(root,"src/components/widgetSamples.ts"),"utf8"),variants:readFileSync(join(root,"src/lib/variants.ts"),"utf8")};
+for(const [surface,text] of Object.entries(source)){const needle=surface==="width"?'signedFractionLab: "wide"':"signedFractionLab";if(!text.includes(needle))errors.push(`signedFractionLab missing ${surface}`)}
+if(!source.renderer.includes('control: "signed-fraction-claim"')||!source.renderer.includes('dir: signedFractionChoiceCorrect(spec, choice) ? "toward" : "away"'))errors.push("truthful process events are not wired");
+for(const marker of ["min-h-11","sfl-ghost","border-dashed","Division transform","Sign channel","Magnitude channel"])if(!source.renderer.includes(marker))errors.push(`renderer marker missing: ${marker}`);
+const caps=JSON.parse(readFileSync(join(root,"scripts/engine-capabilities.json"),"utf8")).types.signedFractionLab;if(!caps)errors.push("missing capability row");if(caps?.adapt!==3)errors.push("expected adapt=3 after explicit toward/away wiring");
+const start=source.variants.indexOf('tag: "frac-sign-ops"'),end=source.variants.indexOf('tag: "decimal-place-value"',start);if(start<0||end<0)errors.push("cannot isolate generator source");else{const hash=createHash("sha256").update(source.variants.slice(start,end)).digest("hex");if(hash!==sweep.sourceHash)errors.push("executed variant sweep does not match current generator source");}
+if(sweep.total!==4608||sweep.operations?.multiply!==2304||sweep.operations?.divide!==2304||sweep.signs?.positive!==2304||sweep.signs?.negative!==2304)errors.push(`variant sweep coverage drifted: ${JSON.stringify(sweep)}`);
+if((state.flagshipTiers?.B??0)<217||(state.flagshipTiers?.C??999)>280||(state.flagshipTiers?.D??999)>24)errors.push(`tier non-regression failed ${JSON.stringify(state.flagshipTiers)}`);
+if((state.manipulatives??0)<108)errors.push(`manipulative count regressed: ${state.manipulatives}`);
+if((excellence.summary?.liveK8Backlog??999)>48)errors.push(`live queue regressed: ${excellence.summary?.liveK8Backlog}`);
+if((excellence.records??[]).some(r=>r.lessonId==="rno-04-01"))errors.push("completed lesson remains in live queue");
+if(errors.length){console.error(`signed-fraction-s139 failed (${errors.length})`);for(const e of errors)console.error(`- ${e}`);process.exit(1)}
+const report={session:139,baselineSession:138,lessonId:lesson.id,sourcePath:lessonPath,registeredEngine:"signedFractionLab",experiences:rows,variantDeclarations:variants.map(s=>({stepId:s.id,...s.variant})),variantSweep:sweep,tierCounts:state.flagshipTiers,manipulatives:state.manipulatives,liveK8Backlog:excellence.summary.liveK8Backlog,lessonSha256:createHash("sha256").update(readFileSync(join(root,lessonPath))).digest("hex")};
+writeFileSync(join(root,"SIGNED_FRACTION_S139.json"),JSON.stringify(report,null,2)+"\n");
+const table=rows.map(r=>`| ${r.id} | ${r.operation} | ${r.left.sign<0?"−":""}${r.left.num}/${r.left.den} | ${r.right.sign<0?"−":""}${r.right.num}/${r.right.den} | ${r.derived.sign<0?"−":""}${r.derived.den===1?r.derived.num:`${r.derived.num}/${r.derived.den}`} | ${r.form} | ${r.wrongPaths} |`).join("\n");
+writeFileSync(join(root,"SIGNED_FRACTION_S139.md"),`# Session 139 — Signed-fraction causal laboratory\n\nA single proof-carrying surface keeps sign parity, multiplication or reciprocal division, fraction magnitude, and lowest-terms form visible together. Unsigned fraction bars were rejected because they erase the very sign and reciprocal claims being assessed.\n\n| experience | operation | left | right | derived result | form | wrong paths |\n|---|---|---:|---:|---:|---|---:|\n${table}\n\n- Exact-fit experiences: **${rows.length}/9**\n- Preserved seeded forms: **${variants.length}/4**\n- Executed generator sweep: **${sweep.total.toLocaleString("en-US")}/${sweep.total.toLocaleString("en-US")}**\n- Live reviewed K–8 queue: **${report.liveK8Backlog}**\n- Tier counts: **A ${report.tierCounts.A} · B ${report.tierCounts.B} · C ${report.tierCounts.C} · D ${report.tierCounts.D}**\n`,"utf8");
+console.log(`signed-fraction-s139: ${rows.length}/9 experiences; ${sweep.total} variants; queue ${report.liveK8Backlog}`);

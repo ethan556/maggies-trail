@@ -1,0 +1,334 @@
+{
+  "id": "fr-02-03",
+  "slug": "locating-a-b",
+  "title": "Locating a/b",
+  "courseId": "fractions",
+  "chapterId": "ch2-number-line",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To land **a/b**, take a jumps of size 1/b: 3/4 is three jumps of a four-cut trip. It's chapter 1's stacking, walked out loud — 1/4, 2/4, 3/4 — the top number is simply your **jump count**.",
+      "figure": "frac-numline-threefourths"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Walk to 3/4.",
+      "conceptTag": "nl-fraction",
+      "widget": {
+        "type": "slider",
+        "prompt": "The 0→1 trip has 4 equal jumps. Slide the marker to 3/4 — count your jumps as you go.",
+        "min": 0,
+        "max": 4,
+        "step": 1,
+        "start": 0,
+        "target": 3,
+        "visual": "numberline",
+        "unitLabel": "jumps from 0",
+        "lowFeedback": "Keep counting up — 1/4, 2/4… you're not at three jumps yet.",
+        "highFeedback": "That's the whole trip (4/4 = 1)! Step back one jump.",
+        "successFeedback": "Three jumps of the four: you're on 3/4, one jump shy of the finish."
+      },
+      "predict": {
+        "prompt": "You'll slide to 3/4. Is that before the halfway point, exactly halfway, or past halfway?",
+        "options": [
+          {
+            "id": "past",
+            "label": "Past halfway"
+          },
+          {
+            "id": "before",
+            "label": "Before halfway"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "past",
+        "reveal": "Halfway is 2/4 — two jumps. Three jumps carries you a whole jump beyond the middle of the trip."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents nl fraction.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for nl fraction must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines nl fraction."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions:nl-fraction",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Jumps to 5/6.",
+      "conceptTag": "nl-fraction",
+      "explanationVariants": [
+        "The top of 5/6 is the jump count: five jumps of the six-cut trip.",
+        "Count the landings: 1/6, 2/6, 3/6, 4/6, 5/6 — you said five names, you took five jumps."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On a 0→1 line with 6 equal jumps, how many jumps take you to 5/6?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "jumps",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 jumps finish the whole trip — that's 6/6 = 1. 5/6 stops one jump short."
+          },
+          {
+            "value": 1,
+            "feedback": "1 jump lands 1/6, the first mark. The TOP number counts the jumps, and it says five."
+          }
+        ],
+        "fallbackFeedback": "The top number of 5/6 is your jump count."
+      },
+      "variant": {
+        "gen": "nl-fraction"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Count up the line out loud: **1/4, 2/4, 3/4, 4/4** — and 4/4 lands exactly on 1, all the pieces walked. Every landing between 0 and 1 gets a fraction name, and the count-up IS the sequence of names.",
+      "figure": "frac-numline-threefourths"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The third jump.",
+      "conceptTag": "nl-fraction",
+      "explanationVariants": [
+        "Three jumps of a fourth each: you're standing on 3/4.",
+        "Say the landings as you go — 1/4, 2/4, 3/4 — the third name is where the third jump ends."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Counting by fourths from 0, where do you stand after your THIRD jump?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3/4",
+            "correct": true,
+            "feedback": "Third jump, third landing: 3/4 of the way along."
+          },
+          {
+            "id": "b",
+            "label": "1/3",
+            "feedback": "1/3 belongs to a THREE-cut trip. This trip is cut into fourths — three of them is 3/4."
+          },
+          {
+            "id": "c",
+            "label": "The number 3",
+            "feedback": "You're still inside the 0→1 trip — landings here are fractions. Three fourth-jumps reach 3/4, not 3."
+          },
+          {
+            "id": "d",
+            "label": "4/3",
+            "feedback": "4/3 flips the jobs — that would be four jumps of a THIRDS trip, past 1! Three fourth-jumps land at 3/4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "nl-fraction",
+        "form": "afterNthJump"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Line them up along the trail.",
+      "conceptTag": "nl-fraction",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Order these landings from CLOSEST to 0 up to closest to 1.",
+        "items": [
+          {
+            "id": "f45",
+            "label": "4/5"
+          },
+          {
+            "id": "f15",
+            "label": "1/5"
+          },
+          {
+            "id": "f55",
+            "label": "5/5"
+          },
+          {
+            "id": "f25",
+            "label": "2/5"
+          }
+        ],
+        "correctOrder": [
+          "f15",
+          "f25",
+          "f45",
+          "f55"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "f45",
+            "second": "f25",
+            "feedback": "4/5 is FOUR jumps out — 2/5 stops at two. Same jump size, so more jumps means farther along."
+          },
+          {
+            "first": "f55",
+            "second": "f45",
+            "feedback": "5/5 is the finish line itself (that's 1) — nothing on this list stands past it."
+          }
+        ],
+        "missFeedback": "All four use fifth-size jumps — so the jump COUNT (the top) decides the order.",
+        "successFeedback": "1/5, 2/5, 4/5, 5/5 — same jumps, rising counts, and 5/5 caps the trip at 1."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A curious landing.",
+      "conceptTag": "nl-fraction",
+      "explanationVariants": [
+        "Two of four jumps is half the trip — 2/4 lands on the very same spot as 1/2.",
+        "Half the jumps of the trip cover half its distance: 2/4 and 1/2 are two names for one point."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does 2/4 land?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Exactly halfway — the same spot as 1/2",
+            "correct": true,
+            "feedback": "Two of four jumps = half the trip. One spot, two names — hold that thought for the next chapter."
+          },
+          {
+            "id": "b",
+            "label": "A quarter of the way",
+            "feedback": "A quarter is ONE jump — 1/4. You took two, landing at the halfway point."
+          },
+          {
+            "id": "c",
+            "label": "At the number 2",
+            "feedback": "Two fourth-jumps stay well inside the 0→1 trip — they reach the middle, not the number 2."
+          },
+          {
+            "id": "d",
+            "label": "Almost at 1",
+            "feedback": "Almost-there is 3/4, three jumps out. Two of four is dead center."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "nl-fraction",
+        "form": "whereLands"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Kai and the water stops.",
+      "conceptTag": "nl-fraction",
+      "hints": [
+        "Stops stand at 1/6, 2/6, 3/6… — one per sixth walked.",
+        "Kai is standing exactly on his 5th stop.",
+        "One stop passed = one sixth walked."
+      ],
+      "explanationVariants": [
+        "Five stops means five sixth-jumps walked — Kai stands at 5/6 of the mile, so 5 sixths are behind him.",
+        "Match stops to landings: stop 1 is 1/6, stop 2 is 2/6… stop 5 is 5/6. The stop number IS the sixths walked."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 1-mile trail has a water stop at every SIXTH of a mile. Kai has reached 5 stops — the fifth is right under his boots. How many sixths of the mile has he walked?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "sixths",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 sixth is what's LEFT ahead of him. The question asks what's behind: five stops, five sixths walked."
+          },
+          {
+            "value": 6,
+            "feedback": "6 sixths is the whole mile — but Kai hasn't reached the end. His fifth stop marks 5/6."
+          }
+        ],
+        "fallbackFeedback": "Each stop marks one more sixth: the stop number equals the sixths walked."
+      },
+      "variant": {
+        "gen": "nl-fraction",
+        "form": "waterStops"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can land anywhere now.",
+      "takeaways": [
+        "a/b = a jumps of size 1/b — the top is your jump count.",
+        "Counting up the line says the names: 1/4, 2/4, 3/4, 4/4 = 1.",
+        "Same jump size? The jump count alone sets who's farther along."
+      ],
+      "teaser": "but what if you keep jumping past 1? The line doesn't stop — and neither do fractions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "nl-fraction",
+      "concept": {
+        "id": "rem-nf-c",
+        "kind": "concept",
+        "body": "Quick rewind. Walk it on your fingers: for 2/3, count **\"one third, two thirds\"** — and stop. The top number tells you when to stop counting; the landing under your last finger is the fraction."
+      },
+      "check": {
+        "id": "rem-nf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "nl-fraction",
+        "explanationVariants": [
+          "Two jumps of a three-cut trip land on 2/3.",
+          "Count: one third, two thirds — stop. That spot is 2/3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "On a 3-jump line from 0 to 1, where are you after 2 jumps?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2/3",
+              "correct": true,
+              "feedback": "Two of the three jumps — 2/3 of the way."
+            },
+            {
+              "id": "b",
+              "label": "3/2",
+              "feedback": "Flipped! 3/2 would be three jumps of a HALVES trip — past 1. Two jumps of thirds is 2/3."
+            },
+            {
+              "id": "c",
+              "label": "The number 2",
+              "feedback": "Two third-jumps stay inside the trip — you're at 2/3, not out at 2."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

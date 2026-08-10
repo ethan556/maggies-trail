@@ -1,0 +1,319 @@
+{
+  "id": "rno-03-02",
+  "slug": "dividing-integers",
+  "title": "Dividing Integers",
+  "courseId": "rational-number-operations",
+  "chapterId": "ch3-multiplying-and-dividing-integers",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "sign-rule-table",
+      "body": "Division follows the SAME sign rule as multiplication: same signs give a positive quotient, different signs give a negative quotient. -20 ÷ 4: different signs, so -5."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Divide different signs.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-20 ÷ 4 = ?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "Different signs give a NEGATIVE quotient: -20 ÷ 4 = -5."
+          },
+          {
+            "value": -16,
+            "feedback": "That subtracts instead of dividing. -20 ÷ 4 = -5."
+          }
+        ],
+        "fallbackFeedback": "Different signs: 20÷4=5, negative: -5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Divide two negatives.",
+      "conceptTag": "rno-divide-sign",
+      "explanationVariants": [
+        "Same signs (both negative) give a positive quotient: -18 ÷ -3 = 6.",
+        "Two negatives divide to a positive."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-18 ÷ -3 = ?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "Same signs give a POSITIVE quotient: -18 ÷ -3 = 6."
+          },
+          {
+            "value": -15,
+            "feedback": "That subtracts instead of dividing. -18 ÷ -3 = 6."
+          }
+        ],
+        "fallbackFeedback": "Same signs: 18÷3=6, positive: 6."
+      },
+      "variant": {
+        "gen": "g7-signed-multiply-divide",
+        "form": "divSame"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Division undoes multiplication — if -4 × 3 = -12, then -12 ÷ 3 = -4 and -12 ÷ -4 = 3. The sign rule stays consistent both ways.",
+      "figure": "rno-div-undoes"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Undo a multiplication.",
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "-12 ÷ 3 = ? Drag the marker to the quotient.",
+        "min": -15,
+        "max": 15,
+        "step": 1,
+        "tickStep": 5,
+        "target": -4,
+        "start": 0,
+        "commonPlacements": [
+          {
+            "value": 4,
+            "feedback": "Different signs give a NEGATIVE quotient: -12 ÷ 3 = -4."
+          },
+          {
+            "value": -9,
+            "feedback": "That subtracts instead of dividing. -12 ÷ 3 = -4."
+          }
+        ],
+        "successFeedback": "Different signs: 12÷3=4, negative: -4 — the missing factor sits left of zero.",
+        "lowFeedback": "That landing is further left than the quotient. 12 ÷ 3 = 4, so the answer is 4 units left of zero.",
+        "highFeedback": "That landing is right of the quotient. A negative divided by a positive lands on the negative side."
+      },
+      "predict": {
+        "prompt": "−12 ÷ 3 asks: 3 times WHAT gives −12. That missing factor's sign is…",
+        "options": [
+          {
+            "id": "neg",
+            "label": "Negative — a positive times it must land negative"
+          },
+          {
+            "id": "pos",
+            "label": "Positive — division washes signs out"
+          },
+          {
+            "id": "either",
+            "label": "Either sign works"
+          }
+        ],
+        "outcomeId": "neg",
+        "reveal": "3 × (+4) = +12, the wrong side of zero — only 3 × (−4) reaches −12. Division inherits multiplication's sign rule because it IS a multiplication question in reverse: different signs in, negative out."
+      },
+      "conceptTag": "rno-divide-sign",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents divide sign.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for divide sign must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines divide sign."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rational-number-operations:rno-divide-sign",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Two positives divide to a positive — the ordinary case, still following the same-sign rule.",
+      "figure": "sign-rule-table"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Two positives.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "42 ÷ 6 = ?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "Both positive, so the quotient is positive: 7."
+          },
+          {
+            "value": 36,
+            "feedback": "That subtracts instead of dividing. 42 ÷ 6 = 7."
+          }
+        ],
+        "fallbackFeedback": "Both positive: 42÷6=7."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Different signs again.",
+      "conceptTag": "rno-divide-sign",
+      "explanationVariants": [
+        "Different signs give a negative quotient: 45 ÷ -9 = -5.",
+        "Positive divided by negative is negative."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "45 ÷ -9 = ?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "Different signs give a NEGATIVE quotient: 45 ÷ -9 = -5."
+          },
+          {
+            "value": 36,
+            "feedback": "That subtracts instead of dividing. 45 ÷ -9 = -5."
+          }
+        ],
+        "fallbackFeedback": "Different signs: 45÷9=5, negative: -5."
+      },
+      "variant": {
+        "gen": "g7-signed-multiply-divide",
+        "form": "divDiff"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two negatives again.",
+      "conceptTag": "rno-divide-sign",
+      "explanationVariants": [
+        "Same signs give a positive quotient: -35 ÷ -5 = 7.",
+        "Two negatives divide to a positive."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-35 ÷ -5 = ?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "Same signs give a POSITIVE quotient: -35 ÷ -5 = 7."
+          },
+          {
+            "value": -30,
+            "feedback": "That subtracts instead of dividing. -35 ÷ -5 = 7."
+          }
+        ],
+        "fallbackFeedback": "Same signs: 35÷5=7, positive: 7."
+      },
+      "variant": {
+        "gen": "g7-signed-multiply-divide",
+        "form": "divSameLarge"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier division.",
+      "conceptTag": "rno-divide-sign",
+      "explanationVariants": [
+        "Different signs give a negative quotient: -64 ÷ 8 = -8.",
+        "Negative divided by positive is negative."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-64 ÷ 8 = ?",
+        "answer": -8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "Different signs give a NEGATIVE quotient: -64 ÷ 8 = -8."
+          },
+          {
+            "value": -56,
+            "feedback": "That subtracts instead of dividing. -64 ÷ 8 = -8."
+          }
+        ],
+        "fallbackFeedback": "Different signs: 64÷8=8, negative: -8."
+      },
+      "hints": [
+        "Divide the magnitudes first: 64÷8=8.",
+        "The signs are different (negative and positive).",
+        "Different signs give a negative result: -8."
+      ],
+      "variant": {
+        "gen": "g7-signed-multiply-divide",
+        "form": "divDiffLarge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Division follows the same sign rule as multiplication: same signs positive, different signs negative.",
+      "takeaways": [
+        "Same signs (both + or both −): quotient is positive.",
+        "Different signs: quotient is negative.",
+        "Division and multiplication use the identical sign rule."
+      ],
+      "teaser": "next: mixing multiplication and division in one problem."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rno-divide-sign",
+      "concept": {
+        "id": "rem-rds-c",
+        "kind": "concept",
+        "body": "Dividing integers follows the same sign rule as multiplying: same signs give a positive quotient, different signs give a negative quotient. -20 ÷ 4: different signs, so -5."
+      },
+      "check": {
+        "id": "rem-rds-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-divide-sign",
+        "explanationVariants": [
+          "Different signs: 20÷4=5, negative: -5.",
+          "Negative divided by positive is negative."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "-20 ÷ 4 = ?",
+          "answer": -5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "Different signs give a negative quotient: -5."
+            },
+            {
+              "value": -16,
+              "feedback": "Divide, don't subtract: -20÷4=-5."
+            }
+          ],
+          "fallbackFeedback": "-20 ÷ 4 = -5."
+        }
+      }
+    }
+  ]
+}

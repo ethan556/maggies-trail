@@ -1,0 +1,332 @@
+{
+  "id": "pv-03-03",
+  "slug": "subtracting-across-a-zero",
+  "title": "Subtracting Across a Zero",
+  "courseId": "place-value",
+  "chapterId": "ch3-add-subtract",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Try 52 − 27: the ones spot has 2 but must give 7 — it's short! The trading post runs **downhill**: break 1 ten into 10 ones. Now 52 is 4 tens and 12 ones (still 52). \"Borrowing\" is a misleading name — nothing gets paid back. It's a trade.",
+      "figure": "pv3-borrow-zero"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the down-trade rescue the ones.",
+      "conceptTag": "regroup-sub",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "See 52 − 27 trade its way through.",
+        "panels": [
+          {
+            "title": "The ones are short",
+            "body": "Ones first: 2 must give 7. Can't — the spot is 5 short. Subtraction stalls until the ones get reinforcements."
+          },
+          {
+            "title": "Trade down",
+            "body": "One of the 5 tens breaks into 10 ones. Now: 4 tens, 12 ones — count it: 40 + 12 = 52. Same number, new packaging."
+          },
+          {
+            "title": "Now subtract",
+            "body": "Ones: 12 − 7 = 5. Tens: 4 − 2 = 2. Answer: 25. The crossed-out 5-becomes-4 is the trade's paper trail."
+          }
+        ],
+        "continueFeedback": "Keep going — the rescue arrives in the next panel.",
+        "successFeedback": "Short spot → trade down → subtract. 52 − 27 = 25, and nothing was 'borrowed' — it was repackaged."
+      },
+      "predict": {
+        "prompt": "Trading a ten for ones in 52 — does that change the VALUE of 52?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — same total, new form"
+          },
+          {
+            "id": "shrink",
+            "label": "Yes — it shrinks by ten"
+          },
+          {
+            "id": "grow",
+            "label": "Yes — it grows"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "4 tens and 12 ones weigh exactly what 5 tens and 2 ones did — the trade rearranges, never adds or removes. That conservation is what makes borrowing legal."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What actually moved in that trade?",
+      "conceptTag": "regroup-sub",
+      "explanationVariants": [
+        "A whole TEN moved — and became ten ONES on arrival. 63 repackaged as 5 tens + 13 ones is still 50 + 13 = 63.",
+        "The crossed-out 6→5 and the new 13 are two halves of one trade: one ten left the tens, ten ones arrived in the ones."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In 63 − 38, the 6 becomes a 5 and the 3 becomes 13. What happened?",
+        "options": [
+          {
+            "id": "a",
+            "label": "One ten traded down into 10 ones — 63 repackaged as 5 tens, 13 ones",
+            "correct": true,
+            "feedback": "Check the value: 50 + 13 = 63. The trade changed the packaging, never the amount."
+          },
+          {
+            "id": "b",
+            "label": "A 1 was moved from the 6 over to the 3",
+            "feedback": "It LOOKS like a little 1 hopped over — but a whole TEN moved, and it became ten ones on landing. That's why 3 jumps all the way to 13, not 4."
+          },
+          {
+            "id": "c",
+            "label": "The 6 shrank because subtraction shrinks things",
+            "feedback": "The 6 shrank because it PAID for the trade — one of its tens broke into ones. Subtraction itself hasn't even started yet."
+          },
+          {
+            "id": "d",
+            "label": "It's a mistake — 63 became 53",
+            "feedback": "Count all of it: 5 tens (50) plus 13 ones = 63 exactly. The repackaged number is untouched."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "regroup-sub",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Now the boss level: **305 − 128**. The ones are short, but the tens spot is EMPTY — a zero can't lend anything. So chain the trade: break a hundred into 10 tens FIRST, then break one of those tens into ones. 305 becomes 2 hundreds, 9 tens, 15 ones — still 305.",
+      "figure": "pv3-borrow-zero"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The everyday trade, start to finish.",
+      "conceptTag": "regroup-sub",
+      "explanationVariants": [
+        "Trade: 4 tens, 12 ones. Then 12 − 7 = 5 and 4 − 2 = 2: answer 25.",
+        "Guard it: 52 − 27 ≈ 50 − 30 = 20, and 25 sits right beside the guard."
+      ],
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "52 − 27 = ? Tap each column to work it out; tap a top digit to break a ten when you need one.",
+        "op": "subtract",
+        "a": 52,
+        "b": 27,
+        "commonResults": [
+          {
+            "value": 35,
+            "feedback": "35 flipped the ones — it computed 7 − 2 because 2 − 7 'doesn't work.' The fix isn't flipping; it's trading a ten down so the ones CAN pay: 12 − 7."
+          }
+        ],
+        "fallbackFeedback": "Ones short → break a ten (4 tens, 12 ones) → subtract each spot.",
+        "successFeedback": "52 − 27 = 25: break a ten so the ones read 12 − 7, then 4 − 2 in the tens."
+      },
+      "variant": {
+        "gen": "regroup-sub",
+        "form": "columnBorrow"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents regroup sub.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for regroup sub must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines regroup sub."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:regroup-sub",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The chain trade, assembled in order.",
+      "conceptTag": "regroup-sub",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the steps of 305 − 128 in working order.",
+        "items": [
+          {
+            "id": "s3",
+            "label": "Break a ten: 2 hundreds, 9 tens, 15 ones"
+          },
+          {
+            "id": "s1",
+            "label": "Start: 305 = 3 hundreds, 0 tens, 5 ones"
+          },
+          {
+            "id": "s4",
+            "label": "Subtract each spot: answer 177"
+          },
+          {
+            "id": "s2",
+            "label": "Break a hundred: 2 hundreds, 10 tens, 5 ones"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3",
+          "s4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "s4",
+            "second": "s2",
+            "feedback": "Subtracting jumped ahead of the trades — but the ones are still short (5 can't give 8). Open the trading post first."
+          },
+          {
+            "first": "s3",
+            "second": "s2",
+            "feedback": "You can't break a ten yet — the tens spot is EMPTY (0). The hundred must break first to stock the tens."
+          }
+        ],
+        "missFeedback": "The zero forces a chain: hundred breaks into tens, THEN a ten breaks into ones, THEN subtract.",
+        "successFeedback": "305 → 2h 10t 5o → 2h 9t 15o → subtract: 15−8=7, 9−2=7, 2−1=1. Answer 177."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Boss level, solo run.",
+      "conceptTag": "regroup-sub",
+      "explanationVariants": [
+        "Chain: 2 hundreds, 9 tens, 15 ones. Then 15 − 8 = 7, 9 − 2 = 7, 2 − 1 = 1: answer 177.",
+        "Guard: 305 − 128 ≈ 300 − 100 = 200, and 177 lives near the guard."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "305 − 128 = ?",
+        "answer": 177,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 223,
+            "feedback": "223 flipped every short spot (8−5, 2−0, keeping 3−1) — the smaller-from-larger shortcut. Short spots trade down instead; they never flip."
+          },
+          {
+            "value": 187,
+            "feedback": "187 broke the hundred but forgot the second break — the tens must ALSO lend one to the ones, leaving 9 tens, not 10."
+          }
+        ],
+        "fallbackFeedback": "Two breaks (hundred → tens, then ten → ones), then subtract spot by spot."
+      },
+      "variant": {
+        "gen": "regroup-sub",
+        "form": "threeDigitSubtract"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Chairs out, chairs back.",
+      "conceptTag": "regroup-sub",
+      "hints": [
+        "400 − 156 crosses TWO zeros — chain the trades from the hundreds.",
+        "400 repackages as 3 hundreds, 9 tens, 10 ones; subtract to get 244.",
+        "Then 44 chairs come BACK — they rejoin the count."
+      ],
+      "explanationVariants": [
+        "Step 1: 400 − 156 = 244 (chain: 3h, 9t, 10o). Step 2: 244 + 44 = 288.",
+        "Guard step 1: 400 − 156 ≈ 400 − 200 = 200; 244 fits. Then the return adds 44: 288."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A school has 400 chairs. 156 are taken to the gym. Later, 44 are brought back. How many chairs does the school have outside the gym now?",
+        "answer": 288,
+        "tolerance": 0,
+        "unit": "chairs",
+        "commonErrors": [
+          {
+            "value": 244,
+            "feedback": "244 is after the gym takes its chairs — step one done! But 44 of them come BACK. Add the returns."
+          },
+          {
+            "value": 200,
+            "feedback": "200 SUBTRACTED the returning 44 — but returning chairs rejoin the pile. The second step adds."
+          },
+          {
+            "value": 356,
+            "feedback": "356 is 400 − 44 — the gym's 156 never left! Two moves happen in order: −156 first, then +44."
+          }
+        ],
+        "fallbackFeedback": "Two moves: the chain-trade subtraction 400 − 156, then add the 44 that return."
+      },
+      "variant": {
+        "gen": "regroup-sub",
+        "form": "chairsReturn"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "No zero can stall your subtraction now.",
+      "takeaways": [
+        "A short spot trades down: one ten becomes ten ones (value unchanged).",
+        "Across a zero, chain it: hundred → tens first, then ten → ones.",
+        "Never flip to smaller-from-larger — short spots trade, they don't surrender."
+      ],
+      "teaser": "one last habit locks it all in: guard every answer with an estimate."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "regroup-sub",
+      "concept": {
+        "id": "rem-rsu-c",
+        "kind": "concept",
+        "body": "Quick rewind. When a spot is short, **break a ten**: 31 − 15 → the ones (1) can't give 5, so 31 repackages as 2 tens, 11 ones. Now 11 − 5 = 6 and 2 − 1 = 1: answer 16. Short spot? Trade down. Never flip the digits."
+      },
+      "check": {
+        "id": "rem-rsu-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "regroup-sub",
+        "explanationVariants": [
+          "Trade: 3 tens, 12 ones. Then 12 − 8 = 4 and 3 − 1 = 2: answer 24.",
+          "Guard: 42 − 18 ≈ 40 − 20 = 20, and 24 sits nearby."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "42 − 18 = ?",
+          "options": [
+            {
+              "id": "a",
+              "label": "24",
+              "correct": true,
+              "feedback": "One trade (3 tens, 12 ones), then 12 − 8 = 4 and 3 − 1 = 2."
+            },
+            {
+              "id": "b",
+              "label": "36",
+              "feedback": "36 flipped the ones (8 − 2) instead of trading. The 2 is short — break a ten so it can pay: 12 − 8."
+            },
+            {
+              "id": "c",
+              "label": "34",
+              "feedback": "34 traded the ones correctly but forgot the tens paid for it — after the trade only 3 tens remain: 3 − 1 = 2."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

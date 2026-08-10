@@ -1,0 +1,242 @@
+{
+  "id": "iar-02-01",
+  "slug": "two-fences",
+  "title": "Two Fences",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch2-systems-of-inequalities",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A SYSTEM of inequalities demands both at once: y > x AND y < 4 keeps only points that pass both tests. Each inequality shades a half-plane; the system's solution is where the shadings overlap. Think of two fences — the region is the strip the fences trap between them.",
+      "figure": "iar-system-overlap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find a point trapped by both fences.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot a point with x = 1 satisfying BOTH y > x and y < 4.",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "targets": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 2,
+            "feedback": "On these axes that's (1, 1): y = x exactly — the strict > refuses the boundary."
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "feedback": "That's (1, 4): y < 4 refuses its own boundary too. The strip is OPEN at both fences."
+          },
+          {
+            "x": 2,
+            "y": 6,
+            "feedback": "y = 5 breaks the ceiling y < 4 — over the top fence."
+          }
+        ],
+        "missFeedback": "At x = 1 you need y strictly between 1 and 4: y = 2 or 3.",
+        "successFeedback": "Between the fences: above y = x, under y = 4. Both tests passed — that's what a system means."
+      },
+      "predict": {
+        "prompt": "How many of the checks must a point pass to be a solution of the system?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both — the region is the overlap"
+          },
+          {
+            "id": "either",
+            "label": "Either one — the region is the union"
+          },
+          {
+            "id": "depends",
+            "label": "Depends on the inequalities"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "AND means both: a point that clears y > x but breaks y < 4 is not half a solution — it is no solution. The system's region is the INTERSECTION of the two half-planes, always a subset of each."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Judge a candidate.",
+      "conceptTag": "iar-system-membership",
+      "explanationVariants": [
+        "(2, 3): 3 > 2 passes and 3 < 4 passes — both true, so it's a solution of the system.",
+        "The point clears the lower fence (y > x) and the ceiling (y < 4), so it lies in the overlap."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is (2, 3) a solution of the system y > x, y < 4?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — it passes both tests",
+            "correct": true,
+            "feedback": "3 > 2 ✓ and 3 < 4 ✓: membership in the overlap requires exactly this."
+          },
+          {
+            "id": "o2",
+            "label": "No — it fails y > x",
+            "correct": false,
+            "feedback": "Check: 3 > 2 is true. The point sits above the diagonal."
+          },
+          {
+            "id": "o3",
+            "label": "No — it fails y < 4",
+            "correct": false,
+            "feedback": "Check: 3 < 4 is true. The point stays under the ceiling."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One failed test disqualifies. (5, 2) satisfies y < 4 easily, but 2 > 5 is false — so it's out, no partial credit. When a point fails, it helps to name WHICH fence it hit: that's the difference between being below the strip and being above it.",
+      "figure": "iar-one-failure-disqualifies"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the broken fence.",
+      "conceptTag": "iar-system-membership",
+      "explanationVariants": [
+        "(1, 5): the ceiling y < 4 fails since 5 ≥ 4, while y > x holds (5 > 1).",
+        "5 > 1 passes the diagonal fence, but 5 < 4 is false — the point is over the top."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "(1, 5) is not in the region of y > x, y < 4. Which test does it fail?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y < 4 — it's above the ceiling",
+            "correct": true,
+            "feedback": "5 < 4 is false; the other test (5 > 1) actually passes."
+          },
+          {
+            "id": "o2",
+            "label": "y > x — it's under the diagonal",
+            "correct": false,
+            "feedback": "5 > 1 is true — that fence is cleared."
+          },
+          {
+            "id": "o3",
+            "label": "Both tests",
+            "correct": false,
+            "feedback": "Only the ceiling breaks; failing one is already enough to be out."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count the survivors.",
+      "conceptTag": "iar-system-membership",
+      "explanationVariants": [
+        "(1,2): 2>1 ✓, 2<4 ✓ in. (3,3): 3>3 ✗ out. (0,1): 1>0 ✓, 1<4 ✓ in — two solutions.",
+        "Two points pass both tests; (3, 3) dies on the strict boundary y > x."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Of the points (1, 2), (3, 3), (0, 1) — how many solve the system y > x, y < 4?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "(3, 3) fails: 3 > 3 is false — strict inequality rejects its own boundary."
+          },
+          {
+            "value": 1,
+            "feedback": "Recheck (0, 1): 1 > 0 and 1 < 4 both hold — it's in, alongside (1, 2)."
+          }
+        ],
+        "fallbackFeedback": "Test each point in BOTH inequalities: (1, 2) passes both, (0, 1) passes both, but (3, 3) fails y > x. Two points qualify."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "An impossible system.",
+      "conceptTag": "iar-system-membership",
+      "explanationVariants": [
+        "y > 3 and y < 1 demand a number above 3 AND below 1 at once — no y qualifies, so the region is empty.",
+        "The two half-planes don't overlap: one starts above 3, the other ends below 1, with a gap between."
+      ],
+      "hints": [
+        "Try any point: can its y satisfy both conditions?",
+        "y > 3 wants big y; y < 1 wants small y. Can one y be both?",
+        "A number above 3 is never below 1 — the overlap contains nothing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the solution region of the system y > 3, y < 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Empty — no point satisfies both",
+            "correct": true,
+            "feedback": "The half-planes are disjoint strips; their intersection holds no points at all."
+          },
+          {
+            "id": "o2",
+            "label": "The strip between y = 1 and y = 3",
+            "correct": false,
+            "feedback": "That strip satisfies y < 3 and y > 1 — the REVERSED system, not this one."
+          },
+          {
+            "id": "o3",
+            "label": "All points off both lines",
+            "correct": false,
+            "feedback": "Off-line isn't enough: each point still fails at least one of the two demands."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Systems are overlaps.",
+      "takeaways": [
+        "A system's region = the intersection of its half-planes.",
+        "One failed test disqualifies a point completely.",
+        "Overlaps can be strips, wedges — or empty."
+      ],
+      "teaser": "next: the corners where two boundaries cross, and why they matter most."
+    }
+  ]
+}

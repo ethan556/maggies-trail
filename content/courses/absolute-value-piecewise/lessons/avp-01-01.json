@@ -1,0 +1,254 @@
+{
+  "id": "avp-01-01",
+  "slug": "absolute-value-is-a-distance",
+  "title": "Absolute Value Is a Distance",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch1-the-v",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "|x| is almost always taught as “make it positive,” and that description survives exactly as long as the numbers stay simple. The honest definition is geometric: |x| is the DISTANCE from x to 0 on the number line. Distance has no direction, which is why it is never negative — not because a sign was deleted.",
+      "figure": "avp-distance-definition"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Place the marker and watch two different numbers describe it.",
+      "widget": {
+        "type": "numberLinePlace",
+        "step": 1,
+        "tickStep": 1,
+        "start": 0,
+        "commonPlacements": [
+          {
+            "value": 6,
+            "feedback": "That is −6's mirror image. Same distance from 0, opposite side — which is exactly the point: |6| and |−6| agree, 6 and −6 do not."
+          },
+          {
+            "value": -8,
+            "feedback": "Too far left. Count six units from 0, not eight."
+          }
+        ],
+        "prompt": "Place the marker at −6. Watch the position readout and the distance readout.",
+        "min": -8,
+        "max": 8,
+        "target": -6,
+        "showDistanceFromZero": true,
+        "successFeedback": "Position −6, distance 6. One marker, two honest numbers — and only the distance is |−6|.",
+        "lowFeedback": "Too far left — you have passed −6.",
+        "highFeedback": "Not far enough left — keep going toward −6."
+      },
+      "predict": {
+        "prompt": "The marker will sit at −6. What will the two readouts say?",
+        "options": [
+          {
+            "id": "both-neg",
+            "label": "Both −6 — position and distance agree"
+          },
+          {
+            "id": "split",
+            "label": "Position −6, distance 6"
+          },
+          {
+            "id": "both-pos",
+            "label": "Both 6 — absolute value rewrites the position"
+          }
+        ],
+        "outcomeId": "split",
+        "reveal": "Position and distance are different questions about the same marker. Where is it? −6. How far from 0? 6. Absolute value answers only the second, which is why it never rewrites where the number actually lives."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compare two distances.",
+      "conceptTag": "avp-abs-distance",
+      "explanationVariants": [
+        "|−6| = 6 and |4| = 4, and 6 > 4, so −6 sits farther from zero even though −6 is the smaller number.",
+        "Distance ignores side: six units left beats four units right."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which number is FARTHER from 0: −6 or 4?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−6, because |−6| = 6",
+            "correct": true,
+            "feedback": "Yes — six units out beats four, and the side it went does not enter the comparison."
+          },
+          {
+            "id": "o2",
+            "label": "4, because −6 is smaller than 4",
+            "correct": false,
+            "feedback": "That compares POSITION, not distance. −6 is indeed the smaller number, and still the farther one from zero."
+          },
+          {
+            "id": "o3",
+            "label": "They are equally far",
+            "correct": false,
+            "feedback": "Equal distance would need equal magnitudes: 6 ≠ 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So two numbers can share a distance while disagreeing about everything else. |−6| = |6| = 6, but −6 ≠ 6. Absolute value throws away the side and keeps the size; the number itself is unharmed by being measured.",
+      "figure": "avp-same-distance-different-side"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate directly.",
+      "conceptTag": "avp-abs-distance",
+      "explanationVariants": [
+        "|−9| asks how far −9 is from 0: nine units, so the value is 9.",
+        "Nine units left of zero is still nine units of distance — |−9| = 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is |−9|?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "That is the input, not its distance. −9 sits nine units from 0, so the distance is 9."
+          },
+          {
+            "value": 0,
+            "feedback": "Zero would mean −9 sits ON zero. It sits nine units to the left."
+          }
+        ],
+        "fallbackFeedback": "Count units from 0 to −9: nine of them. |−9| = 9.",
+        "successFeedback": "9 — the distance, positive because distances are."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more comparison, sign-mixed.",
+      "conceptTag": "avp-abs-distance",
+      "explanationVariants": [
+        "|−7| = 7 and |5| = 5, so −7 is farther out despite being the smaller number.",
+        "Strip the signs to compare distances: 7 against 5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which has the GREATER absolute value: −7 or 5?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−7",
+            "correct": true,
+            "feedback": "Right: 7 > 5. The negative sign changed the side, never the size."
+          },
+          {
+            "id": "o2",
+            "label": "5",
+            "correct": false,
+            "feedback": "5 is the larger NUMBER, but |−7| = 7 > 5 = |5|. Bigger value, smaller distance."
+          },
+          {
+            "id": "o3",
+            "label": "Neither — absolute values are always equal",
+            "correct": false,
+            "feedback": "Absolute values differ whenever magnitudes differ; 7 ≠ 5."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count the solutions.",
+      "conceptTag": "avp-abs-distance",
+      "explanationVariants": [
+        "Two points sit exactly five units from 0: 5 and −5.",
+        "Distance five, either direction — so exactly two integers qualify."
+      ],
+      "hints": [
+        "Draw the number line and mark every point exactly five units from 0.",
+        "Distance does not care about direction, so check the left side as well as the right.",
+        "5 is five units right of 0; −5 is five units left. Count them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many different values of x satisfy |x| = 5?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Only if distance had a direction. Five units LEFT of zero works just as well as five units right."
+          },
+          {
+            "value": 5,
+            "feedback": "That is the distance itself, not the number of solutions. Count the qualifying points: 5 and −5."
+          }
+        ],
+        "fallbackFeedback": "Exactly two points lie five units from 0 — one on each side: x = 5 and x = −5.",
+        "successFeedback": "Two — and that pair is the whole reason absolute-value equations behave the way the next chapter shows."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance, not sign-deletion.",
+      "takeaways": [
+        "|x| is the distance from x to 0, which is why it is never negative.",
+        "Absolute value discards the side and keeps the size: |−6| = |6| = 6, but −6 ≠ 6.",
+        "Equal distances usually come in pairs — one on each side of zero."
+      ],
+      "teaser": "Next: plot |x| at every input and watch the pair-of-distances idea draw a V."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-abs-distance",
+      "concept": {
+        "id": "rem-avp-abs-distance-c",
+        "kind": "concept",
+        "body": "So two numbers can share a distance while disagreeing about everything else. |−6| = |6| = 6, but −6 ≠ 6. Absolute value throws away the side and keeps the size; the number itself is unharmed by being measured."
+      },
+      "check": {
+        "id": "rem-avp-abs-distance-k",
+        "kind": "check",
+        "body": "Compare two distances.",
+        "conceptTag": "avp-abs-distance",
+        "explanationVariants": [
+          "|−6| = 6 and |4| = 4, and 6 > 4, so −6 sits farther from zero even though −6 is the smaller number.",
+          "Distance ignores side: six units left beats four units right."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which number is FARTHER from 0: −6 or 4?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "−6, because |−6| = 6",
+              "correct": true,
+              "feedback": "Yes — six units out beats four, and the side it went does not enter the comparison."
+            },
+            {
+              "id": "o2",
+              "label": "4, because −6 is smaller than 4",
+              "correct": false,
+              "feedback": "That compares POSITION, not distance. −6 is indeed the smaller number, and still the farther one from zero."
+            },
+            {
+              "id": "o3",
+              "label": "They are equally far",
+              "correct": false,
+              "feedback": "Equal distance would need equal magnitudes: 6 ≠ 4."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

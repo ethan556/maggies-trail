@@ -1,0 +1,335 @@
+{
+  "id": "as100-03-04",
+  "slug": "break-a-ten",
+  "title": "Break a Ten",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch3-sub-100",
+  "minutes": 8,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "unbundle-break",
+      "body": "62 − 37: only 2 ones, but 7 must leave. Break a rod: 5 tens 12 ones. Now 12−7 and 5−3: 25.",
+      "narration": "Sixty-two minus thirty-seven: only two ones, but seven must leave. Break a rod: five tens, twelve ones. Now twelve minus seven and five minus three: twenty-five."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build what's left after the break.",
+      "conceptTag": "unbundle-sub",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "62 − 37: break a rod (5 tens 12 ones), take 7 ones and 3 tens. Build what's left.",
+        "target": 25,
+        "requireStandard": true,
+        "commonBuilds": [
+          {
+            "tens": 3,
+            "ones": 5,
+            "feedback": "That builds 35 — the flip trap! 7−2 takes the SMALL from the BIG. Break a rod instead: 12−7=5 ones, 5−3=2 tens: 25."
+          },
+          {
+            "tens": 2,
+            "ones": 0,
+            "feedback": "That's just the tens (20). The ones stay too: 12−7=5, so 25."
+          }
+        ],
+        "missFeedback": "After the break: 12−7=5 ones, 5−3=2 tens. 25.",
+        "successFeedback": "2 tens and 5 ones — 62 − 37 = 25!"
+      },
+      "predict": {
+        "prompt": "You've broken a rod: 5 tens and 12 ones. Taking 7 ones away — will you need to break ANOTHER rod?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — 12 ones covers it"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — break one more"
+          },
+          {
+            "id": "cannot",
+            "label": "Can't tell yet"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "One break was enough: 12 ones is plenty to give up 7. You regroup only when the ones run short — never out of habit."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents unbundle sub.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for unbundle sub must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines unbundle sub."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:unbundle-sub",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish the break.",
+      "conceptTag": "unbundle-sub",
+      "explanationVariants": [
+        "62 − 37: break a rod → 5 tens 12 ones → ones 12−7=5, tens 5−3=2: 25.",
+        "62 is 50+12 after the break; take 37: 50−30=20 and 12−7=5, so 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "62 − 37 = ?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "That's the flip trap (7−2) — or a break that forgot to spend a rod. The broken rod leaves 5 tens: 12−7=5, 5−3=2 → 25."
+          },
+          {
+            "value": 29,
+            "feedback": "Ones: after the break, 12−7=5, not 9. 25."
+          }
+        ],
+        "fallbackFeedback": "Break: 5t 12o. Then 12−7=5 and 5−3=2: 25."
+      },
+      "hints": [
+        "2 ones can't lose 7 — break a rod.",
+        "Now 12 ones: 12−7=5.",
+        "Tens: 5−3=2. So 25."
+      ]
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two traps: flipping to 7−2, and breaking but keeping 6 tens. The broken rod is spent!",
+      "narration": "Two traps: flipping to seven minus two, and breaking but keeping six tens. The broken rod is spent!",
+      "figure": "as100-break-ten"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which take-aways need a break?",
+      "conceptTag": "unbundle-sub",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each subtraction to whether its ones need a break.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "74 − 28"
+          },
+          {
+            "id": "w2",
+            "label": "76 − 24"
+          },
+          {
+            "id": "w3",
+            "label": "53 − 19"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "break! 4 can't lose 8"
+          },
+          {
+            "id": "y2",
+            "label": "safe — 6 can lose 4"
+          },
+          {
+            "id": "y3",
+            "label": "break! 3 can't lose 9"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "76 − 24 has ones 6 − 4 — enough, so it's the safe one."
+          },
+          {
+            "left": "w1",
+            "right": "y3",
+            "feedback": "74 − 28 is 4 vs 8, not 3 vs 9. Both break, but match the right ones."
+          }
+        ],
+        "missFeedback": "Compare just the ones: 4 vs 8 (break), 6 vs 4 (safe), 3 vs 9 (break).",
+        "successFeedback": "You can spot a break before it happens!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Split the two traps.",
+      "conceptTag": "unbundle-sub",
+      "explanationVariants": [
+        "74 − 28: break → 6 tens 14 ones → 14−8=6, 6−2=4: 46.",
+        "74 is 60+14 after the break; 60−20=40 and 14−8=6: 46."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "74 − 28 = ?",
+        "answer": 46,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "The flip trap: 8−4 takes the small from the big. Break instead: 14−8=6, 6−2=4 → 46."
+          },
+          {
+            "value": 56,
+            "feedback": "You broke a rod but kept 7 tens! The broken rod is spent: 6−2=4 tens → 46."
+          }
+        ],
+        "fallbackFeedback": "Break: 6t 14o. Then 14−8=6 and 6−2=4: 46."
+      },
+      "hints": [
+        "4 can't lose 8 — break.",
+        "14−8=6 ones.",
+        "6−2=4 tens: 46."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why break?",
+      "conceptTag": "unbundle-sub",
+      "explanationVariants": [
+        "We break when the top ones are fewer than the ones leaving — 2 can't lose 7.",
+        "A break turns 1 rod into 10 ones so the take-away fits."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When do we break a ten?",
+        "options": [
+          {
+            "id": "a",
+            "label": "when the ones are too few to take from",
+            "correct": true,
+            "feedback": "Yes — 2 can't lose 7, so a rod becomes 10 ones first."
+          },
+          {
+            "id": "b",
+            "label": "every time we subtract",
+            "feedback": "86 − 52 needs no break (6 can lose 2). Only short ones force it."
+          },
+          {
+            "id": "c",
+            "label": "when the answer is big",
+            "feedback": "The answer's size doesn't matter — compare the ONES digits."
+          }
+        ]
+      },
+      "hints": [
+        "Look at the ones digits.",
+        "Can the top lose the bottom?",
+        "Too few → break."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "UnbundleSubMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full break, solo!",
+      "conceptTag": "unbundle-sub",
+      "explanationVariants": [
+        "83 − 45: break → 7 tens 13 ones → 13−5=8, 7−4=3: 38.",
+        "83 is 70+13 after the break; 70−40=30 and 13−5=8: 38."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "83 − 45 = ?",
+        "answer": 38,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "The flip trap: 5−3 takes the small from the big. Break instead: 13−5=8, 7−4=3 → 38."
+          },
+          {
+            "value": 48,
+            "feedback": "You broke a rod but kept 8 tens! The broken rod is spent: 7−4=3 tens → 38."
+          }
+        ],
+        "fallbackFeedback": "Break: 7t 13o. Then 13−5=8 and 7−4=3: 38."
+      },
+      "hints": [
+        "3 can't lose 5 — break.",
+        "13−5=8 ones.",
+        "7−4=3 tens: 38."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chapter done — you can break!",
+      "takeaways": [
+        "Short ones? Break a rod into 10 ones.",
+        "The broken rod is spent — one less ten.",
+        "Never flip to small-from-big."
+      ],
+      "teaser": "next chapter: two-step story problems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "unbundle-sub",
+      "concept": {
+        "id": "rem-ub-c",
+        "kind": "concept",
+        "body": "Slow it down. 32 − 15: 2 can't lose 5. Break: 2 tens 12 ones. 12−5=7, 2−1=1: 17.",
+        "narration": "Thirty-two minus fifteen: two can't lose five. Break: two tens, twelve ones. Twelve minus five is seven, two minus one is one: seventeen."
+      },
+      "check": {
+        "id": "rem-ub-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "unbundle-sub",
+        "explanationVariants": [
+          "32 − 15: break → 2t 12o → 12−5=7, 2−1=1: 17.",
+          "32 is 20+12 after the break; 20−10=10 and 12−5=7: 17."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "32 − 15 = ?",
+          "answer": 17,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 23,
+              "feedback": "The flip trap: 5−2 takes the small from the big. Break: 12−5=7, 2−1=1 → 17."
+            },
+            {
+              "value": 27,
+              "feedback": "You broke but kept 3 tens! The broken rod is spent: 2−1=1 ten → 17."
+            }
+          ],
+          "fallbackFeedback": "Break: 2t 12o. Then 12−5=7 and 2−1=1: 17."
+        }
+      }
+    }
+  ]
+}

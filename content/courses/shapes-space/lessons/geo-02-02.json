@@ -1,0 +1,364 @@
+{
+  "id": "geo-02-02",
+  "slug": "the-misfits",
+  "title": "The Misfits",
+  "courseId": "shapes-space",
+  "chapterId": "ch2-draw-sort",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The best way to know a shape's rules is to meet the shapes that ALMOST pass. A 'misfit' breaks exactly one rule — and that one break shows you which rule was doing the work. Non-examples teach the definition from the outside in.",
+      "figure": "geo3-misfit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why isn't it a triangle?",
+      "conceptTag": "non-examples",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Each shape is NOT a triangle. Match each misfit to the exact rule it breaks.",
+        "left": [
+          {
+            "id": "open",
+            "label": "Three lines with a gap (not joined)"
+          },
+          {
+            "id": "four",
+            "label": "A four-sided figure"
+          },
+          {
+            "id": "curved",
+            "label": "Two straight sides and one curved side"
+          }
+        ],
+        "right": [
+          {
+            "id": "rclosed",
+            "label": "Breaks 'must be closed'"
+          },
+          {
+            "id": "rstraight",
+            "label": "Breaks 'all sides straight'"
+          },
+          {
+            "id": "rthree",
+            "label": "Breaks 'exactly 3 sides'"
+          }
+        ],
+        "pairs": {
+          "open": "rclosed",
+          "four": "rthree",
+          "curved": "rstraight"
+        },
+        "pairErrors": [
+          {
+            "left": "open",
+            "right": "rthree",
+            "feedback": "The open figure still has three lines — it doesn't break the count. What it breaks is 'must be closed': there's a gap."
+          }
+        ],
+        "missFeedback": "For each misfit, ask which single rule fails: the count (3 sides), straightness, or closed.",
+        "successFeedback": "Gap → not closed; four sides → wrong count; a curve → not all straight. Each misfit fingers one rule."
+      },
+      "predict": {
+        "prompt": "A shape with three sides but one OPEN corner — is it a triangle?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a triangle must close"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — three sides is enough"
+          },
+          {
+            "id": "equal",
+            "label": "Only if the sides are equal"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Triangle membership takes the whole checklist: three sides, all straight, fully closed. One open corner fails it — near-misses teach the definition better than perfect examples do."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the broken rule.",
+      "conceptTag": "non-examples",
+      "explanationVariants": [
+        "A curved side breaks the 'all sides straight' rule — the count and closure are fine, but a triangle's sides must be straight.",
+        "Everything else checks out; the curve alone disqualifies it, pointing straight at the straightness rule."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A closed figure has three sides, but one side is curved like a bow. Which rule does it break?",
+        "options": [
+          {
+            "id": "a",
+            "label": "'All sides must be straight'",
+            "correct": true,
+            "feedback": "Three sides ✓, closed ✓ — only the curve fails. That's the straightness rule at work."
+          },
+          {
+            "id": "b",
+            "label": "'Must have exactly three sides'",
+            "feedback": "It DOES have three sides — the count is fine. The problem is the curved one, which breaks 'straight sides.'"
+          },
+          {
+            "id": "c",
+            "label": "'Must be closed'",
+            "feedback": "It's closed all the way around — no gap. The rule it breaks is straightness, because of the curved side."
+          },
+          {
+            "id": "d",
+            "label": "It breaks no rule — it's a triangle",
+            "feedback": "A curved side means it can't be a triangle. Triangles need three STRAIGHT sides — that's the broken rule."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "non-examples"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Misfits are sneaky because they look close. A four-sided figure with three lovely square corners feels rectangle-ish — until you check the fourth corner and find it tilted. **A rectangle needs ALL four corners square; break even one, and it drops out of the club.** One flaw is enough.",
+      "figure": "geo3-misfit"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The almost-rectangle.",
+      "conceptTag": "non-examples",
+      "explanationVariants": [
+        "A rectangle requires all four corners square; three-out-of-four fails the rule, so it's not a rectangle.",
+        "Close isn't enough — the one tilted corner breaks the 'four right angles' rule completely."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A four-sided shape has three square corners and one tilted corner. Is it a rectangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — a rectangle needs ALL four corners square",
+            "correct": true,
+            "feedback": "One tilted corner breaks the four-right-angles rule. Almost isn't in — the club checks every corner."
+          },
+          {
+            "id": "b",
+            "label": "Yes — three square corners is close enough",
+            "feedback": "The rule has no 'close enough.' All FOUR corners must be square; one tilted corner disqualifies it."
+          },
+          {
+            "id": "c",
+            "label": "Yes — any four-sided shape is a rectangle",
+            "feedback": "Four sides only makes a quadrilateral. A rectangle additionally needs four square corners — this shape is one short."
+          },
+          {
+            "id": "d",
+            "label": "Only if the tilted corner is small",
+            "feedback": "A corner is either square or it isn't — size of the tilt doesn't matter. One non-square corner breaks the rule."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "non-examples",
+        "form": "threeRightAngles"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Fit or misfit?",
+      "conceptTag": "non-examples",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Rule: 'a square' (4 straight sides, 4 right angles, all sides equal). Sort each figure.",
+        "buckets": [
+          {
+            "id": "fit",
+            "label": "A real square",
+            "icon": "✅"
+          },
+          {
+            "id": "miss",
+            "label": "Misfit (breaks a rule)",
+            "icon": "🚫"
+          }
+        ],
+        "items": [
+          {
+            "id": "f1",
+            "label": "4 equal straight sides, 4 square corners",
+            "bucketId": "fit",
+            "feedback": "Every rule met — a real square."
+          },
+          {
+            "id": "f2",
+            "label": "4 equal sides, corners tilted",
+            "bucketId": "miss",
+            "feedback": "Equal sides but no right angles — that's a rhombus, a square-misfit (breaks the right-angle rule)."
+          },
+          {
+            "id": "f3",
+            "label": "4 square corners, sides 5 and 2",
+            "bucketId": "miss",
+            "feedback": "Square corners but unequal sides — a rectangle, a square-misfit (breaks the equal-sides rule)."
+          },
+          {
+            "id": "f4",
+            "label": "4 equal sides but one side curved",
+            "bucketId": "miss",
+            "feedback": "A curved side breaks 'straight sides' — misfit."
+          }
+        ],
+        "missFeedback": "A real square must pass ALL three extra rules; breaking any one makes it a misfit.",
+        "successFeedback": "Only the all-rules figure is a true square; the rhombus, rectangle, and curved one each break exactly one rule."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What misfits teach.",
+      "conceptTag": "non-examples",
+      "explanationVariants": [
+        "A near-miss that breaks exactly one rule spotlights that rule — you learn what 'triangle' means by seeing what disqualifies a non-triangle.",
+        "Non-examples define the edges: the rule you didn't notice becomes obvious the moment a misfit breaks it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why are 'almost' shapes (misfits) useful for learning a definition?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Each one breaks a single rule, showing exactly what that rule requires",
+            "correct": true,
+            "feedback": "A misfit spotlights the one rule it fails — the definition's edges become visible."
+          },
+          {
+            "id": "b",
+            "label": "They prove the definition is wrong",
+            "feedback": "Misfits don't break the definition — they CONFIRM it by showing what falls outside. The rules hold."
+          },
+          {
+            "id": "c",
+            "label": "They're just tricky and teach nothing",
+            "feedback": "The near-misses are the most instructive cases — each pinpoints a rule you might otherwise overlook."
+          },
+          {
+            "id": "d",
+            "label": "They mean the shape has no rules",
+            "feedback": "The opposite — a misfit exists precisely because it violates a rule. That violation teaches the rule."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "non-examples",
+        "form": "misfitPurpose"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The detective's rejects.",
+      "conceptTag": "non-examples",
+      "hints": [
+        "Check the square's three rules one at a time: straight sides, right angles, equal sides.",
+        "This figure has four straight sides and four square corners — so which rule is left to test?",
+        "Its sides measure 7 and 4."
+      ],
+      "explanationVariants": [
+        "The figure passes 'straight sides' and 'four right angles,' so only 'all sides equal' is left — and with sides 7 and 4, it fails exactly that. It's a rectangle, rejected from the square club on the equal-sides rule.",
+        "Two rules pass, one fails: unequal sides (7 ≠ 4) breaks the equal-sides rule, making it a rectangle, not a square."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A detective rejects a figure from the SQUARE club. It has 4 straight sides and 4 square corners, but its sides are 7 and 4. Which rule got it rejected?",
+        "options": [
+          {
+            "id": "a",
+            "label": "'All sides equal' — its sides are 7 and 4",
+            "correct": true,
+            "feedback": "Straight ✓, right angles ✓, but 7 ≠ 4 breaks equal-sides. It's a rectangle, not a square."
+          },
+          {
+            "id": "b",
+            "label": "'Four right angles' — corners failed",
+            "feedback": "The corners ARE square (given). The rule it fails is equal-sides: 7 and 4 aren't equal."
+          },
+          {
+            "id": "c",
+            "label": "'Straight sides' — a side is curved",
+            "feedback": "All four sides are straight (given). The disqualifier is the unequal side lengths, 7 and 4."
+          },
+          {
+            "id": "d",
+            "label": "It shouldn't have been rejected — it's a square",
+            "feedback": "A square needs equal sides, and 7 ≠ 4. It's a rectangle — correctly rejected from the square club."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "non-examples",
+        "form": "unequalSideReject"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The edges of every definition.",
+      "takeaways": [
+        "A misfit breaks exactly one rule — and that break reveals the rule.",
+        "'Almost' never counts: one broken rule drops a shape from the club.",
+        "Non-examples define a shape as sharply as examples do."
+      ],
+      "teaser": "next chapter: splitting shapes into fair, equal parts — geometry shakes hands with fractions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "non-examples",
+      "concept": {
+        "id": "rem-ne-c",
+        "kind": "concept",
+        "body": "Quick rewind. A misfit is a shape that **fails the entry test on exactly one rule.** To find which rule, run down the checklist: right side-count? all straight? closed? all corners/sides as required? The first 'no' you hit is the broken rule."
+      },
+      "check": {
+        "id": "rem-ne-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "non-examples",
+        "explanationVariants": [
+          "Four sides breaks the triangle's 'exactly 3 sides' rule.",
+          "A triangle needs three sides; four breaks the count rule."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A closed figure with four straight sides is NOT a triangle. Which rule does it break?",
+          "options": [
+            {
+              "id": "a",
+              "label": "'Exactly 3 sides'",
+              "correct": true,
+              "feedback": "Four sides breaks the count — it's a quadrilateral, not a triangle."
+            },
+            {
+              "id": "b",
+              "label": "'Must be closed'",
+              "feedback": "It IS closed. The broken rule is the side count: a triangle needs exactly three."
+            },
+            {
+              "id": "c",
+              "label": "'Straight sides'",
+              "feedback": "All four sides are straight. What fails is the count — three sides required, not four."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

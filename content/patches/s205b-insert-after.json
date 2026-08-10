@@ -1,0 +1,59 @@
+{
+  "tag": "S205B",
+  "label": "insert-after pilot: Explain -> Reveal -> Manipulate -> Generalize on the steppedReveal wall (rev: graded act = locate the critical point; endpoint insight at success \u2014 the first draft's highFeedback was DEAD with targetX at the slider max, caught by the solvability gate)",
+  "conversions": [],
+  "insertions": [
+    {
+      "course": "curve-analysis",
+      "lesson": "ca-01-03",
+      "after": "i1",
+      "step": {
+        "id": "i1b",
+        "kind": "interactive",
+        "body": "The reveal's claim, live. Find the flat tangent yourself \u2014 then look at where the curve is actually tallest.",
+        "predict": {
+          "prompt": "This window shows f(x) = x\u00b3 on [\u22124, 4]. Somewhere the tangent goes flat. Will that flat point be the tallest point of the window?",
+          "options": [
+            {
+              "id": "flat-is-max",
+              "label": "Yes \u2014 flat tangent means maximum"
+            },
+            {
+              "id": "flat-not-max",
+              "label": "No \u2014 the flat point isn't the top here"
+            },
+            {
+              "id": "never-flat",
+              "label": "x\u00b3 never has a flat tangent"
+            }
+          ],
+          "outcomeId": "flat-not-max",
+          "reveal": "Drag and watch the f\u2032 pane: it touches zero at x = 0 while the curve climbs straight past \u2014 the tallest point is the right edge, where f\u2032 = 48."
+        },
+        "widget": {
+          "type": "derivativeTrace",
+          "prompt": "Drag the point until the tangent is FLAT \u2014 drive f\u2032 to zero \u2014 and watch what the curve does there.",
+          "fn": "cubic",
+          "mode": "point",
+          "targetX": 0,
+          "start": -2,
+          "successFeedback": "f\u2032 = 0 at x = 0 \u2014 and yet the curve climbs straight past it. Flat found you a candidate, not the champion: the tallest point on this window is the right edge, where f\u2032 = 48. That endpoint is exactly what the theorem makes you check.",
+          "lowFeedback": "Not flat yet \u2014 the f\u2032 pane is still above zero here, and the curve is still climbing. Keep moving right toward where f\u2032 dips to zero.",
+          "highFeedback": "You passed it \u2014 f\u2032 is positive again and climbing. Back up to where the lower pane touches zero."
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "in-01-03",
+      "title": "The Definite Integral (running backwards flips the sign)",
+      "why": "The authored steppedReveal teaches ORIENTATION: integrating from b to a makes every dx negative, so the sum flips sign. riemannSum is the only area engine, and it has no notion of traversal direction \u2014 its spec is a, b, tolerance, nStart, ruleStart (schema.ts:3153-3163) and its grader compares riemannEstimate(fn, a, b, n, rule) against exactArea(fn, a, b) (evaluate.ts:1488-1494), both of which presume a forward interval. An inserted lab could show area accumulating, but never the dx < 0 mechanism the reveal actually teaches \u2014 the models gate of the three-gate fit test fails."
+    },
+    {
+      "lesson": "ca-03-01",
+      "title": "Concavity (curve-analysis)",
+      "why": "The reveal's subject is f\u2033 and inflection. derivativeTrace draws exactly two panes, f and f\u2032 (widgets.tsx:4081-4086, traced via traceSlopeAt), with fn limited to square|cubic|abs (schema.ts:3136) and no second-derivative representation. A lab that cannot SHOW concavity changing cannot let the learner manipulate it \u2014 represents gate fails. Needs either an f\u2033 mode on derivativeTrace or a dedicated engine; recorded as an engine gap, not patched around."
+    }
+  ]
+}

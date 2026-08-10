@@ -1,0 +1,347 @@
+{
+ "id": "dd-01-03",
+ "slug": "from-question-to-data",
+ "title": "From Question to Data",
+ "courseId": "data-distributions",
+ "chapterId": "ch1-statistical-questions",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The full pipeline: **pose a statistical question → decide who to ask → collect one value per person → look for the pattern.** Every later tool in this course (plots, averages, spreads) works on data born this way. A weak question — or mixed-up collection — poisons everything downstream, so the pipeline's first step matters most.",
+   "figure": "dd-pipeline"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Design the sampling step of a statistical investigation and separate bias from variability.",
+   "conceptTag": "question-capstone",
+   "widget": {
+    "type": "samplingBiasLab",
+    "prompt": "You want to describe all students in the school. Build a representative sample and run it several times.",
+    "populationLabel": "all students",
+    "targetMethod": "stratified",
+    "targetSize": 100,
+    "sizeMin": 10,
+    "sizeMax": 200,
+    "sizeStep": 10,
+    "sizeStart": 20,
+    "requiredDraws": 5,
+    "successFeedback": "Stratifying across grade groups reduces selection bias; a larger sample reduces random variability.",
+    "methodFeedback": "Asking only the easiest students to reach can stay biased even with many responses.",
+    "sizeFeedback": "The selection is representative, but a larger sample will reduce random variability.",
+    "drawsFeedback": "Repeat the sample so you can see variability instead of trusting one result."
+   },
+   "predict": {
+    "prompt": "In a data investigation, what must exist BEFORE any data gets collected?",
+    "options": [
+     {
+      "id": "question",
+      "label": "The question"
+     },
+     {
+      "id": "graph",
+      "label": "The graph"
+     },
+     {
+      "id": "average",
+      "label": "The average"
+     }
+    ],
+    "outcomeId": "question",
+    "reveal": "Data is an answer — without a question first, there's nothing to collect and no way to know what counts. The question steers everything after it."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": true,
+    "kernel": "chance-sampling",
+    "actionGoal": "Build a representative design and distinguish bias from random variation.",
+    "invariants": [
+     "population-fixed",
+     "sampling-method-declared"
+    ],
+    "misconceptions": [
+     "large-sample-cures-bias",
+     "single-sample-proof"
+    ],
+    "representations": [
+     "diagram",
+     "table",
+     "graph",
+     "language"
+    ],
+    "fadeLevel": 1,
+    "transferFamily": "sampling-design",
+    "delayed": true,
+    "translationFrom": "diagram",
+    "translationTo": "graph",
+    "counterfactualPrompt": "Make the sample ten times larger without changing a biased method. Which problem remains?",
+    "explanation": {
+     "prompt": "Why can a very large convenience sample still be misleading?",
+     "options": [
+      {
+       "id": "bias",
+       "label": "It can repeatedly overrepresent the same easy-to-reach group.",
+       "correct": true,
+       "feedback": "Exactly — size cannot repair a biased selection process."
+      },
+      {
+       "id": "small",
+       "label": "Large samples are always accurate.",
+       "correct": false,
+       "feedback": "Large samples can be precisely wrong when selection is biased."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Diagnose the weak link.",
+   "conceptTag": "question-capstone",
+   "explanationVariants": [
+    "\"How tall is the flagpole?\" has one answer — the pipeline fails at step one because the question isn't statistical.",
+    "No variability is anticipated, so there's no distribution to collect or study."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student plans a survey around \"How tall is the school flagpole?\" Where does the pipeline break?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Step one — the question isn't statistical (one fixed answer)",
+      "correct": true,
+      "feedback": "Right — one flagpole, one height. There's no variability to study, so no survey can fix it."
+     },
+     {
+      "id": "b",
+      "label": "Step three — measuring flagpoles is too hard",
+      "feedback": "Difficulty isn't the issue; even measured perfectly, there's only ONE value. The question itself anticipates no variability."
+     },
+     {
+      "id": "c",
+      "label": "Nothing breaks — any question works",
+      "feedback": "A data pipeline needs anticipated variability from step one. A single fixed answer gives nothing to distribute or summarize."
+     }
+    ]
+   },
+   "hints": [
+    "Check the question against the ch1 test.",
+    "Does it anticipate varied answers?",
+    "One flagpole, one height — not statistical."
+   ],
+   "variant": {
+    "gen": "g6-data-literacy",
+    "form": "ddPipelineBreak"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A well-run pipeline still produces MESSY-looking data — that's normal and good. \"How many pets?\" giving 0,1,1,2,2,2,3,4 isn't a mistake; the spread IS the finding. Variability isn't noise to eliminate — it's the signal the statistical question set out to capture.",
+   "figure": "dd-pipeline"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Variety isn't error.",
+   "conceptTag": "question-capstone",
+   "explanationVariants": [
+    "Differing answers are exactly what a statistical question anticipates — the spread is the finding, not a flaw.",
+    "If every answer matched, the question would have been non-statistical to begin with."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A survey's answers are all different from each other. Did something go wrong?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — variability is exactly what the statistical question anticipated",
+      "correct": true,
+      "feedback": "Right — the differences are the phenomenon under study, not a collection error."
+     },
+     {
+      "id": "b",
+      "label": "Yes — good data should agree",
+      "feedback": "That's backwards for statistical questions: identical answers would mean no variability, i.e. nothing statistical to study."
+     },
+     {
+      "id": "c",
+      "label": "Yes — the survey should be rerun until answers match",
+      "feedback": "Rerunning to force agreement would erase the signal. The spread of answers IS the finding."
+     }
+    ]
+   },
+   "hints": [
+    "What did the statistical question anticipate?",
+    "Variability.",
+    "Different answers are the point."
+   ],
+   "variant": {
+    "gen": "g6-data-literacy",
+    "form": "ddVariabilityExpected"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Predict the data's size.",
+   "conceptTag": "question-capstone",
+   "widget": {
+    "type": "numeric",
+    "prompt": "You ask all 30 students in the gym \"how many jumping jacks can you do in a minute?\" — but 2 students decline to answer. How many values does your data set end up with?",
+    "answer": 28,
+    "tolerance": 0,
+    "unit": "values",
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30 counts everyone ASKED, but a value only exists when someone ANSWERS: 30 − 2 = 28."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is the number who declined. The data holds the answers you DID get: 30 − 2 = 28."
+     }
+    ],
+    "fallbackFeedback": "Values come from answers received: 30 − 2 = 28."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Choose the sharper question.",
+   "conceptTag": "question-capstone",
+   "explanationVariants": [
+    "\"Minutes spent reading last night\" fixes what's measured and who's asked; \"do students read a lot?\" is too vague to collect one clean value per person.",
+    "A collectible question specifies the measurement; a vague one can't produce comparable values."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which version is READY for data collection?",
+    "options": [
+     {
+      "id": "a",
+      "label": "How many minutes did each student in class read last night?",
+      "correct": true,
+      "feedback": "Right — one clear number per student, all measuring the same thing."
+     },
+     {
+      "id": "b",
+      "label": "Do students read a lot?",
+      "feedback": "\"A lot\" isn't measurable — each person would interpret it differently, so the values wouldn't be comparable."
+     },
+     {
+      "id": "c",
+      "label": "Is reading good?",
+      "feedback": "An opinion prompt with no measurement at all — nothing numeric to collect per person."
+     }
+    ]
+   },
+   "hints": [
+    "Which produces one comparable number per person?",
+    "Vague words like \"a lot\" can't be measured.",
+    "Minutes last night is concrete."
+   ],
+   "variant": {
+    "gen": "g6-data-literacy",
+    "form": "ddReadyQuestion"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Build the pipeline yourself.",
+   "conceptTag": "question-capstone",
+   "hints": [
+    "Statistical question about a group + concrete measurement.",
+    "One value per team member: 12 values.",
+    "Check each option against BOTH requirements."
+   ],
+   "explanationVariants": [
+    "\"How many goals has each of the 12 players scored this season?\" is statistical (varies by player), concrete (a count), and yields exactly 12 values.",
+    "The correct plan surveys the whole group with one measurable question."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "You want a 12-value data set about a 12-player team. Which plan delivers it?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Ask each player how many goals they scored this season",
+      "correct": true,
+      "feedback": "Right — statistical (goal counts vary), measurable (a count), and one value per player: 12 values."
+     },
+     {
+      "id": "b",
+      "label": "Ask the captain how many goals THE TEAM scored",
+      "feedback": "That's ONE value (the team total), not 12 — a single-answer question, not a survey of the group."
+     },
+     {
+      "id": "c",
+      "label": "Ask each player whether soccer is fun",
+      "feedback": "Yes/no opinions aren't the numeric measurement you planned, and \"fun\" isn't a concrete quantity. Ask a countable question per player."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g6-data-literacy",
+    "form": "ddSurveyPlan"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The pipeline, sound at every joint.",
+   "takeaways": [
+    "Question → who to ask → one value per answer → pattern.",
+    "Variability in the data is the finding, not an error.",
+    "A collectible question names a concrete measurement; values come only from answers received."
+   ],
+   "teaser": "next chapter: SEEING the data — dot plots and histograms."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "question-capstone",
+   "concept": {
+    "id": "rem-qc-c",
+    "kind": "concept",
+    "body": "Quick rewind. **The pipeline starts with a statistical question and ends with a pattern.** Ask a group a measurable question, record one value per answer, and the spread you see is the finding."
+   },
+   "check": {
+    "id": "rem-qc-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "question-capstone",
+    "explanationVariants": [
+     "The question comes first — everything downstream depends on it anticipating variability.",
+     "No statistical question, no meaningful data."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What is the FIRST step of the data pipeline?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Pose a statistical question",
+       "correct": true,
+       "feedback": "Right — the question defines what's measured and anticipates the variability everything else studies."
+      },
+      {
+       "id": "b",
+       "label": "Collect values",
+       "feedback": "Collection needs a question to collect answers TO. The question comes first."
+      },
+      {
+       "id": "c",
+       "label": "Look for a pattern",
+       "feedback": "The pattern is the LAST step — it needs collected values, which need a question first."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

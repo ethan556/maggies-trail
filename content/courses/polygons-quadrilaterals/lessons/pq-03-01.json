@@ -1,0 +1,375 @@
+{
+  "id": "pq-03-01",
+  "slug": "rectangles",
+  "title": "Rectangles",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch3-special-parallelograms",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-rectangle",
+      "concept": {
+        "id": "rem-pq-rectangle-c",
+        "kind": "concept",
+        "body": "A rectangle is a parallelogram with a right angle — supplementary consecutive angles then force all four corners to 90°. It keeps every parallelogram property (opposite sides congruent, diagonals bisect each other) and adds ONE new one: the diagonals are congruent. So the intersection point is equidistant from all four vertices."
+      },
+      "check": {
+        "id": "rem-pq-rectangle-k",
+        "kind": "check",
+        "body": "Inherited or new?",
+        "conceptTag": "pq-rectangle",
+        "explanationVariants": [
+          "Diagonals bisecting each other is the ch2 parallelogram property — inherited, not new. The rectangle's new fact is AC = BD.",
+          "Bisection: every parallelogram. Congruence of diagonals: rectangles."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Diagonals that bisect each other: parallelogram property or rectangle upgrade?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Parallelogram property — every parallelogram's diagonals bisect each other",
+              "correct": true,
+              "feedback": "Proved in ch2 for ALL parallelograms. The rectangle's addition is congruent diagonals."
+            },
+            {
+              "id": "o2",
+              "label": "Rectangle upgrade — only rectangles bisect",
+              "correct": false,
+              "feedback": "Bisection is universal among parallelograms (ch2's four-triangle ASA proof). Rectangles add CONGRUENT diagonals."
+            },
+            {
+              "id": "o3",
+              "label": "Square-only property",
+              "correct": false,
+              "feedback": "Squares inherit it too, but so does every leaning parallelogram — bisection is the family-wide rule."
+            },
+            {
+              "id": "o4",
+              "label": "True for every quadrilateral",
+              "correct": false,
+              "feedback": "A kite's diagonals, for one, don't bisect each other both ways. Bisection belongs to parallelograms."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **rectangle** is a parallelogram with one right angle — and that's all you must ASK for. Consecutive angles of a parallelogram are supplementary, so one 90° forces its neighbors to 90°, and theirs in turn: all four square up from a single corner. Cheap definition, rich consequences.",
+      "figure": "special-parallelogram-diagonals"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Drag the corner. The shape names itself.",
+      "widget": {
+        "type": "quadDrag",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            6,
+            4
+          ]
+        ],
+        "targetX": 0,
+        "targetY": 4,
+        "startX": 3,
+        "startY": 6,
+        "gridMax": 8,
+        "targetName": "a rectangle",
+        "prompt": "Three corners are pinned at (0,0), (6,0) and (6,4). Place the fourth so the shape is a rectangle.",
+        "successFeedback": "(0, 4). Sides 6, 4, 6, 4 — and the two diagonals come out EQUAL, which is exactly what separates a rectangle from an ordinary parallelogram. Drag the corner around and watch the name change underneath: the shape tells you what it is, and the hierarchy stops being a list to recite.",
+        "sideFeedback": "Your corner is not above A, so the side from C to it cannot match AB. Watch the four lengths in the readout: a rectangle's opposite sides must pair up, 6 with 6 and 4 with 4.",
+        "angleFeedback": "Your corner is in the right column now, so one pair of sides matches — but the height is wrong, so the last side does not match CB and the diagonals come out unequal. Read the name underneath: it is not the one you were asked for."
+      },
+      "predict": {
+        "prompt": "When the fourth vertex reaches the rectangle position, which extra property appears beyond opposite sides matching?",
+        "options": [
+          {
+            "id": "diag",
+            "label": "The diagonals are congruent"
+          },
+          {
+            "id": "allsides",
+            "label": "All four sides become equal"
+          },
+          {
+            "id": "oned",
+            "label": "Only one diagonal is bisected"
+          }
+        ],
+        "outcomeId": "diag",
+        "reveal": "A rectangle is a parallelogram with right angles; its diagonals are both bisected and congruent."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move one vertex and coordinate side lengths, diagonals, angles, and family classification.",
+        "invariants": [
+          "opposite-sides-equal",
+          "rectangle-diagonals-congruent"
+        ],
+        "misconceptions": [
+          "prototype-only",
+          "all-parallelograms-have-equal-diagonals"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "diagram",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "language",
+        "fadeLevel": 2,
+        "transferFamily": "quadrilateral-hierarchy",
+        "counterfactualPrompt": "Move the corner horizontally while preserving one pair of opposite sides. Which rectangle property fails first?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "What evidence distinguishes the rectangle from a generic parallelogram here?",
+          "options": [
+            {
+              "id": "diagonals",
+              "label": "Its diagonals are congruent in addition to bisecting each other.",
+              "correct": true,
+              "feedback": "That extra invariant is characteristic of rectangles."
+            },
+            {
+              "id": "tilt",
+              "label": "Its sides are drawn horizontally and vertically.",
+              "correct": false,
+              "feedback": "Orientation is irrelevant; a rotated rectangle is still a rectangle."
+            },
+            {
+              "id": "size",
+              "label": "Its longer side is exactly 6 units.",
+              "correct": false,
+              "feedback": "Specific dimensions do not define the family."
+            }
+          ]
+        }
+      },
+      "conceptTag": "pq-rectangle"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Rectangles add exactly one new tool to the parallelogram kit: **the diagonals are congruent.** (They still bisect each other — that's inherited.) Congruent + bisecting means all four half-diagonals are equal: the intersection point sits at the same distance from every corner.",
+      "figure": "pq-rect-diagonals"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Four equal halves.",
+      "conceptTag": "pq-rectangle",
+      "explanationVariants": [
+        "Congruent diagonals cut by mutual bisection: 2x + 1 = x + 9 gives x = 8, so each half is 17 and the full diagonal is 34.",
+        "Set the two half-diagonals equal (rectangle!), solve, then double: 17 × 2 = 34."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In rectangle ABCD the diagonals meet at O, with AO = 2x + 1 and BO = x + 9. Find the FULL diagonal AC.",
+        "answer": 34,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is x itself — the problem asks for the diagonal. AO = 2(8) + 1 = 17, and AC doubles it: 34."
+          },
+          {
+            "value": 17,
+            "feedback": "17 is the HALF-diagonal AO. Diagonals bisect each other, so AC = 2 × 17 = 34."
+          },
+          {
+            "value": 26,
+            "feedback": "26 = 17 + 9 mixes a half-diagonal with x + a stray 9 — recompute: BO = 8 + 9 = 17 too, and AC = 34."
+          }
+        ],
+        "fallbackFeedback": "2x + 1 = x + 9 → x = 8 → AO = 17 → AC = 34."
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-rectangle__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which claim needs the rectangle?",
+      "conceptTag": "pq-rectangle",
+      "explanationVariants": [
+        "Bisecting diagonals come free with EVERY parallelogram; congruent diagonals are the rectangle's upgrade.",
+        "AO = OC is old news (ch2); AC = BD is the new rectangle-only fact."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In rectangle ABCD with diagonals meeting at O, which statement is true because it's a RECTANGLE (not just a parallelogram)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "AC = BD",
+            "correct": true,
+            "feedback": "Congruent diagonals are the rectangle's signature — a generic parallelogram's diagonals differ in length."
+          },
+          {
+            "id": "o2",
+            "label": "AO = OC",
+            "correct": false,
+            "feedback": "That's mutual bisection — every parallelogram does it (ch2). The rectangle's new gift is AC = BD."
+          },
+          {
+            "id": "o3",
+            "label": "AB = DC",
+            "correct": false,
+            "feedback": "Opposite sides congruent is the ch2 parallelogram property — no right angle needed. The upgrade is AC = BD."
+          },
+          {
+            "id": "o4",
+            "label": "AB ∥ DC",
+            "correct": false,
+            "feedback": "Parallel opposite sides is the parallelogram DEFINITION itself. The rectangle adds congruent diagonals: AC = BD."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-rectangle__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The right angles also invite the Pythagorean theorem in: a rectangle's diagonal is the hypotenuse of a right triangle whose legs are the two side lengths. Width 9, length 12: diagonal = √(9² + 12²) = √225 = 15 — the 3-4-5 family scaled by 3, exactly as in the trig course.",
+      "figure": "pq-rect-pythagoras"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Diagonal by Pythagoras.",
+      "conceptTag": "pq-rectangle",
+      "explanationVariants": [
+        "diagonal = √(9² + 12²) = √(81 + 144) = √225 = 15.",
+        "The sides are the legs of a right triangle whose hypotenuse is the diagonal: 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle measures 9 by 12. How long is each diagonal?",
+        "answer": 15,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 = 9 + 12 adds side lengths — Pythagoras adds their SQUARES: √(81 + 144) = 15."
+          },
+          {
+            "value": 10.5,
+            "feedback": "10.5 = (9 + 12)/2 averages the sides — the diagonal is a hypotenuse, not a mean: 15."
+          },
+          {
+            "value": 7.94,
+            "feedback": "7.94 ≈ √(144 − 81) subtracts squares, which finds a missing LEG. Both sides are legs here: add → 15."
+          }
+        ],
+        "fallbackFeedback": "√(9² + 12²) = √225 = 15."
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-rectangle__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The equidistant center.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same 9-by-12 rectangle. How far is the diagonals' intersection point from each corner?",
+        "answer": 7.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is the FULL diagonal. The intersection bisects it, so each corner sits half that away: 7.5."
+          },
+          {
+            "value": 5.25,
+            "feedback": "5.25 = 10.5/2 halves the wrong number (the side average). Half the true diagonal: 15/2 = 7.5."
+          }
+        ],
+        "fallbackFeedback": "Half of the 15 diagonal: 7.5 — the same for all four corners, since the diagonals are congruent AND bisect each other."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "A door's honesty test.",
+      "conceptTag": "pq-rectangle",
+      "hints": [
+        "A carpenter checks a doorframe by measuring both diagonals — what property is being tested?",
+        "A parallelogram-shaped (leaning) frame still has bisecting diagonals — but NOT congruent ones.",
+        "Equal diagonals in a parallelogram frame certify right angles."
+      ],
+      "explanationVariants": [
+        "Equal diagonals are exclusive to rectangles among parallelograms — matching tape measures certify the frame is square-cornered.",
+        "A leaning frame's diagonals split into a long one and a short one; equality returns only at 90°."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A carpenter measures a doorframe's two diagonals and finds them equal (the frame's opposite sides are already equal). What's certified?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The frame is a true rectangle — right angles guaranteed",
+            "correct": true,
+            "feedback": "Equal opposite sides make it a parallelogram; equal diagonals upgrade a parallelogram to a rectangle. Doors that close properly depend on it."
+          },
+          {
+            "id": "o2",
+            "label": "Only that the frame is a parallelogram",
+            "correct": false,
+            "feedback": "Parallelogram-ness was already given by the equal opposite sides — the equal DIAGONALS add the rectangle upgrade."
+          },
+          {
+            "id": "o3",
+            "label": "The frame is a square",
+            "correct": false,
+            "feedback": "Squares also need all four SIDES equal — a doorframe is usually taller than wide. Equal diagonals certify rectangle, no more."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — all quadrilaterals have equal diagonals",
+            "correct": false,
+            "feedback": "Most don't: lean the frame and one diagonal stretches while the other shrinks. Equality is the rectangle's tell."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-rectangle__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One right angle, upgraded.",
+      "takeaways": [
+        "Rectangle = parallelogram + one right angle; supplements spread it to all four.",
+        "New property: congruent diagonals (bisection is inherited) — all four half-diagonals equal.",
+        "The diagonal is a hypotenuse: √(w² + ℓ²), Pythagoras style."
+      ],
+      "teaser": "Next: equal sides instead of equal angles — the rhombus and its perpendicular diagonals."
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "id": "dd-04-03",
+  "slug": "same-center-different-spread",
+  "title": "Same Center, Different Spread",
+  "courseId": "data-distributions",
+  "chapterId": "ch4-range-iqr",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "spread-compare",
+      "body": "Two classes record hours of weekly reading. **Class A:** 4, 5, 6, 8, 9, 10. **Class B:** 1, 2, 6, 8, 12, 13. Both sum to 42, so both means are 42 ÷ 6 = **7** — and both medians are (6 + 8) ÷ 2 = **7** too. Every center agrees the classes match. But look at the plots: A hugs its center; B scatters. Centers alone can hide the whole story."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Confirm the twin centers.",
+      "conceptTag": "spread-compare",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Class B's data is 1, 2, 6, 8, 12, 13. Verify its MEDIAN.",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "hours",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is only one of the two central values. Six values → average the middle pair: (6 + 8) ÷ 2 = 7."
+          },
+          {
+            "value": 42,
+            "feedback": "42 is the SUM of the data. The median is the middle of the sorted list: (6 + 8) ÷ 2 = 7."
+          }
+        ],
+        "fallbackFeedback": "Already sorted; even count; middle pair 6 and 8; median = (6 + 8) ÷ 2 = 7 — identical to Class A's."
+      },
+      "predict": {
+        "prompt": "This data set has SIX values. Will its median be one of the listed numbers, or sit between two of them?",
+        "options": [
+          {
+            "id": "between",
+            "label": "Between two of them"
+          },
+          {
+            "id": "listed",
+            "label": "Always one of the listed numbers"
+          },
+          {
+            "id": "range",
+            "label": "It's the biggest minus the smallest"
+          }
+        ],
+        "outcomeId": "between",
+        "reveal": "An even count has no single middle value — the median splits the difference between the two central numbers."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Let spread break the tie.",
+      "conceptTag": "spread-compare",
+      "explanationVariants": [
+        "Class B splits into halves 1, 2, 6 and 8, 12, 13, so Q1 = 2 and Q3 = 12: IQR = 12 − 2 = 10 — against Class A's IQR of just 4.",
+        "Each half's middle value is its quartile: 2 below, 12 above. The middle half of Class B is 10 wide, more than double Class A's."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Class A's IQR is 4. Compute Class B's IQR (data 1, 2, 6, 8, 12, 13 — halves of three).",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "hours",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is Class A's IQR — the point is that B differs! B's halves 1, 2, 6 and 8, 12, 13 give Q1 = 2 and Q3 = 12: IQR = 10."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds the quartiles (12 + 2). The IQR is their difference: 12 − 2 = 10."
+          }
+        ],
+        "fallbackFeedback": "Halves 1, 2, 6 and 8, 12, 13 → Q1 = 2, Q3 = 12 → IQR = 12 − 2 = 10."
+      },
+      "hints": [
+        "Split B's six values into two halves of three.",
+        "Q1 = 2 and Q3 = 12.",
+        "Subtract the fences."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCompareIqr"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Spread is what those numbers mean **in context**. Class A (IQR 4): most students read a similar amount — a 7-hour-ish plan suits nearly everyone. Class B (IQR 10): the 'typical 7 hours' describes almost nobody; some students read barely at all while others devour books. Same center, opposite classrooms. A center without a spread is **half a description**.",
+      "figure": "spread-compare"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Center or spread?",
+      "conceptTag": "spread-compare",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Drag each summary to the question it answers.",
+        "buckets": [
+          {
+            "id": "center",
+            "label": "CENTER — where's the middle?",
+            "icon": "🎯"
+          },
+          {
+            "id": "spread",
+            "label": "SPREAD — how far do values scatter?",
+            "icon": "↔️"
+          }
+        ],
+        "items": [
+          {
+            "id": "m1",
+            "label": "Mean",
+            "bucketId": "center",
+            "feedback": "The mean is a level-out value — it locates the data's balance point, a center."
+          },
+          {
+            "id": "m2",
+            "label": "Median",
+            "bucketId": "center",
+            "feedback": "The median is the middle of the sorted line-up — a center, not a stretch."
+          },
+          {
+            "id": "m3",
+            "label": "Range",
+            "bucketId": "spread",
+            "feedback": "Max − min measures how far the data STRETCHES — that's spread."
+          },
+          {
+            "id": "m4",
+            "label": "IQR",
+            "bucketId": "spread",
+            "feedback": "The width of the middle half is a scatter measure — spread, the outlier-resistant kind."
+          }
+        ],
+        "missFeedback": "Ask what the number tells you: a LOCATION on the number line (center) or a WIDTH along it (spread)?",
+        "successFeedback": "Two centers, two spreads — a full description borrows one of each."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read spread in context.",
+      "conceptTag": "spread-compare",
+      "explanationVariants": [
+        "Consistency is small spread. Class A's IQR of 4 means its middle half sits within a narrow 4-hour band — those students read similar amounts.",
+        "The tighter the middle half, the more alike the students: IQR 4 beats IQR 10 for consistency."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A librarian wants the class whose students read the MOST SIMILAR amounts. Class A: center 7, IQR 4. Class B: center 7, IQR 10. Which class — and on what evidence?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Class A — its smaller IQR means the middle half bunches tightly",
+            "correct": true,
+            "feedback": "Right — similarity is a SPREAD question, and A's middle half spans only 4 hours."
+          },
+          {
+            "id": "b",
+            "label": "They're identical — both centers are 7",
+            "feedback": "The centers match, but centers can't see scatter: B's students range from 1 to 13 hours. The IQRs (4 vs 10) break the tie."
+          },
+          {
+            "id": "c",
+            "label": "Class B — a bigger IQR means more data in the middle",
+            "feedback": "Both middle halves hold the same FRACTION of students; the IQR measures how WIDE that half is. Wider (10) means more scattered, not more central."
+          }
+        ]
+      },
+      "hints": [
+        "Is 'most similar' a center question or a spread question?",
+        "Similar values = small scatter.",
+        "Compare the IQRs: 4 vs 10."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddSimilarClass"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Match the numbers to the plots.",
+      "conceptTag": "spread-compare",
+      "explanationVariants": [
+        "Range checks: A stretches 4 to 10 (range 6); B stretches 1 to 13 (range 12) — the scattered plot owns the bigger stretch.",
+        "Every spread measure agrees here: B doubles A on range (12 vs 6) just as it did on IQR (10 vs 4)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One more spread measure: what is Class B's RANGE (data 1, 2, 6, 8, 12, 13)?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "hours",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is Class A's range (10 − 4). Class B stretches wider: 13 − 1 = 12."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds max and min (13 + 1). Range subtracts them: 13 − 1 = 12."
+          }
+        ],
+        "fallbackFeedback": "Max 13, min 1: range = 13 − 1 = 12 — double Class A's 6, matching the IQR story."
+      },
+      "hints": [
+        "Max minus min.",
+        "B runs from 1 up to 13.",
+        "13 − 1."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCompareRange"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Half a description, completed.",
+      "conceptTag": "spread-compare",
+      "explanationVariants": [
+        "Only (a) pairs a center (median 7) with a spread (IQR 10) — the two-part summary this chapter has been building toward.",
+        "'Center 7, spread 10' answers both questions: where the data sits AND how far it scatters."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which report FULLY describes Class B's reading hours with two numbers?",
+        "options": [
+          {
+            "id": "a",
+            "label": "\"Median 7 hours, IQR 10 hours\" — a center plus a spread",
+            "correct": true,
+            "feedback": "That's the complete pair — location and scatter together. Anyone reading it knows B is centered like A but far more varied."
+          },
+          {
+            "id": "b",
+            "label": "\"Mean 7 and median 7\" — two summaries must be enough",
+            "feedback": "That's two CENTERS — the same question answered twice. Class A posts identical numbers, so this report can't tell the classes apart. Pair a center with a spread."
+          },
+          {
+            "id": "c",
+            "label": "\"Range 12 and IQR 10\" — spread is the interesting part",
+            "feedback": "Two SPREADS with no location — how much scatter, but around what? Swap one for a center: median 7 plus IQR 10 tells the whole story."
+          }
+        ]
+      },
+      "hints": [
+        "A full description answers two different questions.",
+        "Where is the middle? How wide is the scatter?",
+        "One center + one spread."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddFullReport"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Center and spread — always both.",
+      "takeaways": [
+        "Data sets can share every center yet differ wildly: A and B both had mean AND median 7.",
+        "Spread broke the tie — IQR 4 vs 10, range 6 vs 12.",
+        "A full two-number description pairs one center with one spread."
+      ],
+      "teaser": "next: turning the five-number summary into a picture — the box plot — and then a second way to measure spread."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "spread-compare",
+      "concept": {
+        "id": "rem-sc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Centers locate, spreads scatter.** The sets 6, 7, 8 and 1, 7, 13 both have median 7 — but the first spans a range of 2 while the second spans 12. Spread is what tells them apart."
+      },
+      "check": {
+        "id": "rem-sc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "spread-compare",
+        "explanationVariants": [
+          "Range = 13 − 1 = 12; the other set's range is only 8 − 6 = 2.",
+          "Same middle, six times the stretch: 12 versus 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The sets 6, 7, 8 and 1, 7, 13 both have median 7. What is the RANGE of 1, 7, 13?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "2 is the range of the OTHER set (8 − 6). This one stretches 13 − 1 = 12."
+            },
+            {
+              "value": 7,
+              "feedback": "7 is the shared median — a center. The range is max − min: 13 − 1 = 12."
+            }
+          ],
+          "fallbackFeedback": "Max − min: 13 − 1 = 12."
+        }
+      }
+    }
+  ]
+}

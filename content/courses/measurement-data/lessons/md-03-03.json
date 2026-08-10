@@ -1,0 +1,328 @@
+{
+  "id": "md-03-03",
+  "slug": "asking-the-graph-questions",
+  "title": "Asking the Graph Questions",
+  "courseId": "measurement-data",
+  "chapterId": "ch3-picture-the-data",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A graph isn't just a picture — it answers questions. **'How many more?' subtracts** two bars. **'How many in all?' adds** them. **'Which is most?' finds the tallest.** The trick is matching the question word to the right move.",
+      "figure": "md3-bargraph"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match question to move.",
+      "conceptTag": "graph-questions",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each graph question to what you do.",
+        "left": [
+          {
+            "id": "q1",
+            "label": "\"How many MORE cats than dogs?\""
+          },
+          {
+            "id": "q2",
+            "label": "\"How many pets in ALL?\""
+          },
+          {
+            "id": "q3",
+            "label": "\"Which pet is the FEWEST?\""
+          }
+        ],
+        "right": [
+          {
+            "id": "add",
+            "label": "Add every bar"
+          },
+          {
+            "id": "shortest",
+            "label": "Find the shortest bar"
+          },
+          {
+            "id": "sub",
+            "label": "Subtract the two bars"
+          }
+        ],
+        "pairs": {
+          "q1": "sub",
+          "q2": "add",
+          "q3": "shortest"
+        },
+        "pairErrors": [
+          {
+            "left": "q1",
+            "right": "add",
+            "feedback": "'How many MORE' compares two bars — that's subtraction (the gap), not adding them together."
+          }
+        ],
+        "missFeedback": "More/fewer than → subtract; in all → add; most/fewest → find the tallest/shortest bar.",
+        "successFeedback": "More → subtract, in all → add, fewest → shortest bar. Question words point to the move."
+      },
+      "predict": {
+        "prompt": "'How many MORE does A have than B?' — do you read one bar, or compare two?",
+        "options": [
+          {
+            "id": "compare",
+            "label": "Compare two bars"
+          },
+          {
+            "id": "tall",
+            "label": "Read the taller bar"
+          },
+          {
+            "id": "add",
+            "label": "Add the two bars"
+          }
+        ],
+        "outcomeId": "compare",
+        "reveal": "'More than' is a gap question — it lives BETWEEN two bars, not inside either one. Subtracting their heights measures the gap."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "How many more?",
+      "conceptTag": "graph-questions",
+      "explanationVariants": [
+        "'How many more' is the GAP: dogs 8 minus fish 3 is 5.",
+        "Compare, don't combine — subtract the shorter bar from the taller: 8 − 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A bar graph shows: dogs 8, cats 6, fish 3, birds 5. How many MORE dogs than fish?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "more dogs",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 ADDED dogs and fish. 'How many more' measures the gap between them: 8 − 3."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the dog count alone — the question asks how far ABOVE the fish that is: subtract 3."
+          }
+        ],
+        "fallbackFeedback": "'More than' = subtract: 8 − 3."
+      },
+      "variant": {
+        "gen": "graph-read"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Watch a sneaky trap: the number of BARS and the HEIGHT of a bar answer different questions. Four bars might mean four days; each bar's height is that day's count. '4 bars' is not '4 books.' Always ask which one the question wants.",
+      "figure": "md3-bargraph"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Bars or heights?",
+      "conceptTag": "graph-questions",
+      "explanationVariants": [
+        "Add the HEIGHTS for the total books: 4 + 7 + 7 + 2 = 20. The four bars are just the four days.",
+        "Bars count days; heights count books — 'how many books' totals the heights."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A graph shows books read each day: Mon 4, Tue 7, Wed 7, Thu 2. How many books in ALL?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 counted the BARS (the days) — but the question wants BOOKS, which is the heights added: 4 + 7 + 7 + 2."
+          },
+          {
+            "value": 18,
+            "feedback": "18 dropped a bar — add all four heights: 4 + 7 + 7 + 2 = 20."
+          }
+        ],
+        "fallbackFeedback": "Add every bar's height: 4 + 7 + 7 + 2."
+      },
+      "variant": {
+        "gen": "graph-read",
+        "form": "totalAll"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "True or false about this graph?",
+      "conceptTag": "graph-questions",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Graph: apples 5, bananas 8, grapes 5, pears 2. Sort each statement.",
+        "buckets": [
+          {
+            "id": "true",
+            "label": "True",
+            "icon": "✅"
+          },
+          {
+            "id": "false",
+            "label": "False",
+            "icon": "❌"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Bananas are the most popular",
+            "bucketId": "true",
+            "feedback": "Bananas (8) top every other bar — the tallest, the most."
+          },
+          {
+            "id": "s2",
+            "label": "Apples and grapes tie",
+            "bucketId": "true",
+            "feedback": "Both bars reach 5 — a genuine tie."
+          },
+          {
+            "id": "s3",
+            "label": "Pears beat apples",
+            "bucketId": "false",
+            "feedback": "Pears (2) sit BELOW apples (5) — the shorter bar loses."
+          },
+          {
+            "id": "s4",
+            "label": "Four fruits means four votes",
+            "bucketId": "false",
+            "feedback": "Four BARS means four fruits; the votes are the heights added: 5 + 8 + 5 + 2 = 20."
+          }
+        ],
+        "missFeedback": "Check each claim against the bar heights — and watch the bars-vs-votes trap.",
+        "successFeedback": "Bananas lead, apples and grapes tie, pears trail apples, and 4 bars ≠ 4 votes — all settled by the heights."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two bars combined.",
+      "conceptTag": "graph-questions",
+      "explanationVariants": [
+        "'Together' adds the two heights: cats 6 + birds 5 = 11.",
+        "Combining bars means adding them — 6 and 5 make 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From dogs 8, cats 6, fish 3, birds 5 — how many cats and birds TOGETHER?",
+        "answer": 11,
+        "tolerance": 0,
+        "unit": "pets",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 subtracted (6 − 5) — but 'together' combines them. Add: 6 + 5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is just the cats. 'Together' means add the birds too: 6 + 5 = 11."
+          }
+        ],
+        "fallbackFeedback": "'Together' = add the two bars: 6 + 5."
+      },
+      "variant": {
+        "gen": "graph-read",
+        "form": "combineTwo"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The recess-vote showdown.",
+      "conceptTag": "graph-questions",
+      "hints": [
+        "Two moves: find each side's total first.",
+        "Soccer + tag = one team; swings + slide = the other.",
+        "Then take the difference between the two totals."
+      ],
+      "explanationVariants": [
+        "Active games: soccer 9 + tag 6 = 15. Playground: swings 4 + slide 5 = 9. The gap is 15 − 9 = 6 votes.",
+        "Total each group, then compare: 15 vs 9, a difference of 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Recess votes — soccer 9, tag 6, swings 4, slide 5. How many MORE votes did the games (soccer + tag) get than the playground (swings + slide)?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "votes",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 added ALL four bars — but the question compares two GROUPS. Total each group, then subtract."
+          },
+          {
+            "value": 3,
+            "feedback": "3 compared just soccer to slide (9 − 5)? Total each full group first: (9+6) − (4+5)."
+          }
+        ],
+        "fallbackFeedback": "Games total (9 + 6), playground total (4 + 5), then find the gap."
+      },
+      "variant": {
+        "gen": "graph-read",
+        "form": "groupCompare"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can interrogate any graph.",
+      "takeaways": [
+        "Match the question word: more → subtract, in all → add, most → tallest bar.",
+        "Bars count categories; heights count amounts — don't swap them.",
+        "Multi-step questions total each group first, then compare."
+      ],
+      "teaser": "last data lesson: line plots, where X's stack over a fraction number line."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "graph-questions",
+      "concept": {
+        "id": "rem-gq-c",
+        "kind": "concept",
+        "body": "Quick rewind. The question word is a **road sign**: 'MORE than' and 'fewer than' point to SUBTRACT (find the gap); 'in all' and 'together' point to ADD (combine). Read the sign before you drive."
+      },
+      "check": {
+        "id": "rem-gq-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "graph-questions",
+        "explanationVariants": [
+          "'How many more' points to subtract: 7 − 4 = 3.",
+          "The gap between the bars is 7 − 4 = 3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Red bar 7, blue bar 4. 'How many more red than blue?' You should…",
+          "options": [
+            {
+              "id": "a",
+              "label": "Subtract: 7 − 4 = 3",
+              "correct": true,
+              "feedback": "'More than' means the gap — subtract."
+            },
+            {
+              "id": "b",
+              "label": "Add: 7 + 4 = 11",
+              "feedback": "Adding combines them — but 'how many MORE' wants the gap: 7 − 4 = 3."
+            },
+            {
+              "id": "c",
+              "label": "Multiply: 7 × 4 = 28",
+              "feedback": "There's no multiplying in a comparison — 'more than' finds the gap by subtracting: 7 − 4 = 3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

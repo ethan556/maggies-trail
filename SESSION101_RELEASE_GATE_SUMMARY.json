@@ -1,0 +1,99 @@
+{
+ "session": 101,
+ "date": "2026-07-24",
+ "invariants": {
+  "content_frozen": {
+   "status": "PROVEN",
+   "detail": "1,213/1,213 content/courses files byte-identical to the Session-100 tar (sha256 tree-hash; 0 changed/added/removed)."
+  },
+  "framework": "Next.js 15.5.21 / React 19 (patch bump 15.5.20->15.5.21 via npm audit fix; major frozen)",
+  "gates_stricter_or_equal": "All test edits are corrections documented in-code (see REGRESSION_AUDIT_SESSION_101.md \u00a7sanctioned)."
+ },
+ "gates": {
+  "typecheck": {
+   "cmd": "npx tsc --noEmit",
+   "exit": 0
+  },
+  "unit_integration": {
+   "cmd": "npx vitest run",
+   "exit": 0,
+   "files": "111/111",
+   "tests": "8131/8131",
+   "note": "run twice green: pre- and post- LessonPlayer decomposition"
+  },
+  "content_schema": {
+   "cmd": "npm run validate:content",
+   "exit": 0,
+   "files": "1223/1223"
+  },
+  "pedagogy_lint": {
+   "cmd": "npm run lint:pedagogy",
+   "exit": 1,
+   "files": "1138/1139",
+   "blocking_finding": "dop-02-02/k3 predict on kind:'check' \u2014 frozen-content defect logged in VARIANT_LOG.md; rule not weakened, content not touched"
+  },
+  "widget_registration": {
+   "cmd": "node scripts/check-registration.mjs",
+   "exit": 0
+  },
+  "cml_strict": {
+   "cmd": "npm run cml:lint:strict",
+   "exit": 0,
+   "advisories": {
+    "prediction-not-causal": 218,
+    "flagship-response-heavy": 32,
+    "closure": "KNOWN_ISSUES.md \u00a7CML"
+   }
+  },
+  "native_integrity": {
+   "cmd": "npm run validate:native",
+   "exit": 1,
+   "only_flag": "node_modules/ present (gate audits a shipped archive; npm ci is mandated in a working checkout)",
+   "real_violations_removed": [
+    "scripts/measure/probe*.mts",
+    "bandcheck*.mts",
+    "samples14.mts",
+    "tsconfig.tsbuildinfo"
+   ]
+  },
+  "production_build": {
+   "cmd": "npm run build",
+   "exit": 0,
+   "compile_seconds": 95,
+   "first_load_js": {
+    "/learn/[lessonId]": "557 kB",
+    "shared": "102 kB",
+    "/": "502 kB"
+   }
+  },
+  "e2e": {
+   "cmd": "npx playwright test (prod server)",
+   "exit": 0,
+   "tests": "3/3",
+   "browser": "Chromium 149.0.7827.0 via @sparticuz/chromium (registry) \u2014 cdn.playwright.dev egress-blocked; env-gated PW_CHROMIUM_EXE override"
+  },
+  "dependency_audit": {
+   "cmd": "npm audit",
+   "exit": 1,
+   "high": 2,
+   "remediated": [
+    "brace-expansion"
+   ],
+   "remaining": [
+    "next (fix ships in 16.3; major frozen)",
+    "sharp (bundled by next)"
+   ]
+  }
+ },
+ "suite_delta": {
+  "phase0_start_failures": 295,
+  "final_failures": 0,
+  "prose_gate": "2954/2954 (71 defects fixed at source)",
+  "variant_gate": "3845/3845",
+  "resolver": "green incl. per-item freshness"
+ },
+ "environment_notes": [
+  "cdn.playwright.dev and deb.nodesource.com are outside the egress allowlist; documented workaround used for e2e.",
+  "Sessions 99-100 could not run dependency-backed gates (registry unreachable); this session is their first full execution \u2014 which is precisely what surfaced the dop-02-02/k3 content defect."
+ ]
+}

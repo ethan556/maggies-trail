@@ -1,0 +1,308 @@
+{
+ "id": "lg-04-03",
+ "slug": "solving-with-e-and-ln",
+ "title": "Solving with e and ln",
+ "courseId": "logarithms",
+ "chapterId": "ch4-the-natural-base-e",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Chapter 3's playbook, natural edition. Unknown in the **exponent**? Take ln of both sides: eˣ = 10 → x = **ln 10** (≈ 2.303). Unknown inside a **log**? Exponentiate: ln x = 2 → x = **e²** (≈ 7.389). Each tool summons its inverse.",
+   "figure": "lg-natural-exponent"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Pick the tool.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To solve eˣ = 42, the first move is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "take ln of both sides: x = ln 42",
+      "correct": true,
+      "feedback": "Right — ln collapses ln(eˣ) to x exactly."
+     },
+     {
+      "id": "o2",
+      "label": "take log base 10 of both sides",
+      "correct": false,
+      "feedback": "Legal but clumsy — you'd get x log e = log 42; the NATURAL log cancels e in one stroke."
+     },
+     {
+      "id": "o3",
+      "label": "divide both sides by e",
+      "correct": false,
+      "feedback": "The e is raised TO x, not multiplied by it — division can't reach an exponent."
+     },
+     {
+      "id": "o4",
+      "label": "square both sides",
+      "correct": false,
+      "feedback": "Squaring doubles the exponent (e^2x) — the inverse of e-to-the is ln."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "With structure around the power, **isolate first** — the standing rule. 5e^(2x) = 20: divide by 5 → e^(2x) = 4 → take ln → 2x = ln 4 → x = (ln 4)/2. And since ln 4 = 2 ln 2, that's exactly **ln 2 ≈ 0.693**. The properties keep simplifying after the solve.",
+   "figure": "lg-isolate-natural"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Full exponential solve.",
+   "conceptTag": "lg-e-solve",
+   "explanationVariants": [
+    "3eˣ = 15 → eˣ = 5 → x = ln 5 ≈ 1.609.",
+    "Divide by 3 first; ln finishes it."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 3eˣ = 15. Using ln 5 ≈ 1.609, give x to 3 decimal places.",
+    "answer": 1.609,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2.708,
+      "feedback": "Divide by 3 BEFORE taking ln: eˣ = 5, x = ln 5 ≈ 1.609 (2.708 ≈ ln 15)."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is eˣ — one more step: x = ln 5 ≈ 1.609."
+     }
+    ],
+    "fallbackFeedback": "eˣ = 5 → x = ln 5 ≈ 1.609."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-e-solve__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "A log equation.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve ln x = 3 exactly.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = e³",
+      "correct": true,
+      "feedback": "Right — exponentiate both sides: e^(ln x) = x on the left, e³ on the right."
+     },
+     {
+      "id": "o2",
+      "label": "x = 3e",
+      "correct": false,
+      "feedback": "The 3 is an EXPONENT on e, not a coefficient: x = e³ ≈ 20.1, not 3e ≈ 8.2."
+     },
+     {
+      "id": "o3",
+      "label": "x = ln 3",
+      "correct": false,
+      "feedback": "That solves eˣ = 3 — here the log is already applied, so we UNDO it: x = e³."
+     },
+     {
+      "id": "o4",
+      "label": "x = 3/e",
+      "correct": false,
+      "feedback": "Exponentiating isn't dividing — ln x = 3 means e to the 3rd: x = e³."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Isolate the log first.",
+   "conceptTag": "lg-e-solve",
+   "explanationVariants": [
+    "2 ln x = 8 → ln x = 4 → x = e⁴.",
+    "Divide by 2 before exponentiating."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve 2 ln x = 8 exactly.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = e⁴",
+      "correct": true,
+      "feedback": "Right — ln x = 4 first, then exponentiate."
+     },
+     {
+      "id": "o2",
+      "label": "x = e⁸",
+      "correct": false,
+      "feedback": "Divide by the coefficient 2 BEFORE exponentiating: ln x = 4, so e⁴."
+     },
+     {
+      "id": "o3",
+      "label": "x = e⁸/2",
+      "correct": false,
+      "feedback": "The ÷2 happens inside the exponent's derivation (8/2 = 4), not after: x = e⁴."
+     },
+     {
+      "id": "o4",
+      "label": "x = 4",
+      "correct": false,
+      "feedback": "4 is ln x — the unknown is x itself: e⁴ ≈ 54.6."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-e-solve__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The domain still polices.",
+   "conceptTag": "lg-e-solve",
+   "explanationVariants": [
+    "ln(x + 5) = 0 → x + 5 = e⁰ = 1 → x = −4; check the input: −4 + 5 = 1 > 0. ✓ Valid.",
+    "A negative SOLUTION is fine as long as the log's INPUT stays positive."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve ln(x + 5) = 0.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = −4 — and it's valid, since x + 5 = 1 > 0",
+      "correct": true,
+      "feedback": "Right — e⁰ = 1, and the log's input stays positive."
+     },
+     {
+      "id": "o2",
+      "label": "x = −4, but it's extraneous",
+      "correct": false,
+      "feedback": "Check the INPUT, not the solution's sign: −4 + 5 = 1 > 0 — perfectly legal."
+     },
+     {
+      "id": "o3",
+      "label": "x = −5",
+      "correct": false,
+      "feedback": "e⁰ = 1 (not 0): x + 5 = 1 → x = −4 (and −5 would make the input 0, which IS banned)."
+     },
+     {
+      "id": "o4",
+      "label": "no solution",
+      "correct": false,
+      "feedback": "ln(1) = 0 is exactly achievable: x = −4 works."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-e-solve__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The full pipeline.",
+   "conceptTag": "lg-e-solve",
+   "explanationVariants": [
+    "5e^(2x) = 20 → e^(2x) = 4 → 2x = ln 4 → x = (ln 4)/2 = ln 2 ≈ 0.693.",
+    "Isolate, ln, divide — then the power property collapses (ln 4)/2 to ln 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 5e^(2x) = 20. Using ln 2 ≈ 0.693, give x to 3 decimal places.",
+    "answer": 0.693,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1.386,
+      "feedback": "1.386 ≈ ln 4 = 2x — divide by the 2: x ≈ 0.693."
+     },
+     {
+      "value": 3,
+      "feedback": "That is ≈ ln 20 — the ln was taken WITHOUT isolating: divide by 5 first (e^(2x) = 4), then halve ln 4: x ≈ 0.693."
+     }
+    ],
+    "fallbackFeedback": "e^(2x) = 4 → 2x = ln 4 → x = ln 2 ≈ 0.693."
+   },
+   "hints": [
+    "Divide by 5: e^(2x) = 4.",
+    "Take ln: 2x = ln 4 ≈ 1.386.",
+    "Divide by 2: x ≈ 0.693 (= ln 2 exactly)."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-e-solve__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "ln for exponents, e for logs — after isolating.",
+   "takeaways": [
+    "eˣ = k solves as x = ln k; ln x = k solves as x = eᵏ.",
+    "Coefficients divide off before either inverse is applied.",
+    "Check log INPUTS for positivity — a negative x can still be valid."
+   ],
+   "teaser": "Final chapter: continuous growth, doubling times, and scales built from logs."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-e-solve",
+   "concept": {
+    "id": "rem-lg0403-c",
+    "kind": "concept",
+    "body": "The two inverse moves side by side: eˣ = 7 needs ln; ln x = 7 needs e-to-the. Solve the first."
+   },
+   "check": {
+    "id": "rem-lg0403-k",
+    "kind": "check",
+    "body": "Exact form.",
+    "conceptTag": "lg-e-solve",
+    "explanationVariants": [
+     "x = ln 7.",
+     "ln collapses ln(eˣ) to x."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Solve eˣ = 7 exactly.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x = ln 7",
+       "correct": true,
+       "feedback": "Right — take ln of both sides."
+      },
+      {
+       "id": "o2",
+       "label": "x = e⁷",
+       "correct": false,
+       "feedback": "e⁷ solves ln x = 7 — the mirror problem; here the unknown is the EXPONENT: ln 7."
+      },
+      {
+       "id": "o3",
+       "label": "x = 7/e",
+       "correct": false,
+       "feedback": "The e isn't a factor — it's the base under x; only ln can pull x down."
+      },
+      {
+       "id": "o4",
+       "label": "x = 7 − e",
+       "correct": false,
+       "feedback": "Exponentials don't subtract away — invert with the natural log: ln 7."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

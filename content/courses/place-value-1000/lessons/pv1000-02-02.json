@@ -1,0 +1,318 @@
+{
+  "id": "pv1000-02-02",
+  "slug": "skip-counting-by-fives",
+  "title": "Skip-Counting by Fives",
+  "courseId": "place-value-1000",
+  "chapterId": "ch2-counting-to-1000",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "skip-count-line",
+      "body": "Skip-counting by fives works the same way, just with smaller jumps: 610, 615, 620, 625 — each jump adds exactly 5."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop by fives and watch the ones digit.",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Skip-count by 5s: one hop past 620.",
+        "min": 600,
+        "max": 650,
+        "start": 610,
+        "hop": 5,
+        "hops": 3,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 613,
+            "feedback": "You counted by 1s. Each hop here is a FIVE: 610 → 615 → 620 → 625."
+          },
+          {
+            "value": 620,
+            "feedback": "That's the last number given — take one more hop of 5 to 625."
+          }
+        ],
+        "missFeedback": "Each hop adds five: 610 → 615 → 620 → 625.",
+        "successFeedback": "625! The ones digit walked its two-step — 0, 5, 0, 5 — right on schedule."
+      },
+      "predict": {
+        "prompt": "Counting by 5s from 610, the ones digit flips 0, 5, 0, 5… After the next hop past 620, it will read…",
+        "options": [
+          {
+            "id": "five",
+            "label": "5"
+          },
+          {
+            "id": "zero",
+            "label": "0"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "By-fives only ever visits ones digits 0 and 5 — from …0 one hop lands on …5. If a count by fives ever ends in 3, a hop went wrong somewhere."
+      },
+      "conceptTag": "pv1000-skip-fives",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents skip fives.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for skip fives must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines skip fives."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-skip-fives",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another fives sequence.",
+      "conceptTag": "pv1000-skip-fives",
+      "explanationVariants": [
+        "345+5=350.",
+        "Each jump adds 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 5s: 335, 340, 345, ___?",
+        "answer": 350,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 346,
+            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 345+5=350."
+          },
+          {
+            "value": 355,
+            "feedback": "That jumps by 10, not 5. Adding 5 to 345 gives 350."
+          }
+        ],
+        "fallbackFeedback": "345 + 5 = 350."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipFivesNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Skip-counting by fives always lands on a number ending in 0 or 5 — that's a quick way to check your work.",
+      "figure": "pv1000-fives-end"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Skip-count by fives across a rollover.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 5s: 190, 195, ___?",
+        "answer": 200,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1100,
+            "feedback": "The hundreds digit rolls over to the next hundred: 195+5=200, not 1100."
+          },
+          {
+            "value": 205,
+            "feedback": "That jumps by 10, not 5. Adding 5 to 195 gives 200."
+          }
+        ],
+        "fallbackFeedback": "195 + 5 = 200 (the tens and ones roll over, hundreds grows by 1)."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Whether you're counting by 5s, 10s, or 100s, the process is identical: add the same jump size every single time.",
+      "figure": "pv1000-same-process"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Skip-count by fives near the top.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 5s: 985, 990, 995, ___?",
+        "answer": 1000,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 996,
+            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 995+5=1000."
+          },
+          {
+            "value": 1005,
+            "feedback": "That jumps by 10, not 5. Adding 5 to 995 gives 1000."
+          }
+        ],
+        "fallbackFeedback": "995 + 5 = 1000."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another fives sequence.",
+      "conceptTag": "pv1000-skip-fives",
+      "explanationVariants": [
+        "720+5=725.",
+        "Each jump adds 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 5s: 710, 715, 720, ___?",
+        "answer": 725,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 721,
+            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 720+5=725."
+          },
+          {
+            "value": 730,
+            "feedback": "That jumps by 10, not 5. Adding 5 to 720 gives 725."
+          }
+        ],
+        "fallbackFeedback": "720 + 5 = 725."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipFivesNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A fives sequence with a rollover.",
+      "conceptTag": "pv1000-skip-fives",
+      "explanationVariants": [
+        "495+5=500.",
+        "The tens and ones roll over, hundreds grows by 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 5s: 485, 490, 495, ___?",
+        "answer": 500,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4100,
+            "feedback": "The hundreds digit rolls over to the next hundred: 495+5=500, not 4100."
+          },
+          {
+            "value": 505,
+            "feedback": "That jumps by 10, not 5. Adding 5 to 495 gives 500."
+          }
+        ],
+        "fallbackFeedback": "495 + 5 = 500."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipFivesNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier fives sequence.",
+      "conceptTag": "pv1000-skip-fives",
+      "explanationVariants": [
+        "845+5=850.",
+        "Each jump adds 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 5s: 835, 840, 845, ___?",
+        "answer": 850,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 846,
+            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 845+5=850."
+          },
+          {
+            "value": 855,
+            "feedback": "That jumps by 10, not 5. Adding 5 to 845 gives 850."
+          }
+        ],
+        "fallbackFeedback": "845 + 5 = 850."
+      },
+      "hints": [
+        "You're skip-counting by 5s: each jump adds 5.",
+        "845 + 5 = 850.",
+        "Check: 850 ends in 0, matching the fives pattern."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipFivesNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Skip-counting by fives always lands on a number ending in 0 or 5 — the same jump-by-5 process works anywhere in the range.",
+      "takeaways": [
+        "Skip-counting by 5s adds 5 each jump.",
+        "The result always ends in 0 or 5.",
+        "The process works the same near a rollover as anywhere else."
+      ],
+      "teaser": "next: counting forward by any skip amount, starting anywhere."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-skip-fives",
+      "concept": {
+        "id": "rem-psf-c",
+        "kind": "concept",
+        "body": "Skip-counting by fives adds 5 each jump, always landing on a number ending in 0 or 5. 620+5=625."
+      },
+      "check": {
+        "id": "rem-psf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-skip-fives",
+        "explanationVariants": [
+          "610+5=615, 615+5=620, 620+5=625.",
+          "Each jump adds 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Skip-count by 5s: 610, 615, 620, ___?",
+          "answer": 625,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 621,
+              "feedback": "You counted on by 1. Skip-counting by 5s goes from 620 straight to 625."
+            },
+            {
+              "value": 630,
+              "feedback": "You jumped by 10. Each skip adds only 5, so after 620 comes 625."
+            }
+          ],
+          "fallbackFeedback": "625."
+        }
+      }
+    }
+  ]
+}

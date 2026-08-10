@@ -1,0 +1,307 @@
+{
+  "id": "tno-01-03",
+  "slug": "reading-base-ten-blocks",
+  "title": "Reading Base-Ten Blocks",
+  "courseId": "tens-and-ones",
+  "chapterId": "ch1-bundles-of-ten",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "base-ten-blocks",
+      "body": "Base-ten blocks show a number: each rod is a ten and each cube is a one. So 3 rods and 5 cubes means 3 tens and 5 ones, which is 35. Count the rods, then the cubes."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the blocks, then read the number.",
+      "widget": {
+        "type": "baseTenCompose",
+        "target": 47,
+        "requireStandard": true,
+        "maxTens": 9,
+        "maxOnes": 20,
+        "prompt": "Build 47 with tens and ones.",
+        "successFeedback": "4 tens and 7 ones. The 4 is not four — it is four TENS, and the blocks show you why the digit's place changes what it is worth.",
+        "missFeedback": "Count your blocks: each ten-stick is worth 10 and each little cube is worth 1.",
+        "commonBuilds": []
+      },
+      "predict": {
+        "prompt": "47 is built from 4 rods and 7 cubes. Which pile has more PIECES — and which is worth more?",
+        "options": [
+          {
+            "id": "split",
+            "label": "The cubes are more pieces, but the rods are worth more"
+          },
+          {
+            "id": "cubes",
+            "label": "The cubes win both"
+          },
+          {
+            "id": "rods",
+            "label": "The rods win both"
+          }
+        ],
+        "outcomeId": "split",
+        "reveal": "7 cubes out-count 4 rods — but the rods carry 40 against the cubes' 7. Pieces and worth are different questions; the tray shows both at once."
+      },
+      "conceptTag": "tno-blocks",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tno blocks.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tno blocks must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tno blocks."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "tens-and-ones:tno-blocks",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Fewer rods.",
+      "conceptTag": "tno-blocks",
+      "explanationVariants": [
+        "2 rods and 7 cubes is 2 tens and 7 ones: 27.",
+        "Count the tens (2), then the ones (7): 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "2 rods and 7 cubes show what number?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "Don't add 2 and 7. The 2 rods are tens and 7 cubes are ones: 27."
+          },
+          {
+            "value": 72,
+            "feedback": "Rods are tens (left): 2 rods and 7 cubes show 27, not 72."
+          }
+        ],
+        "fallbackFeedback": "2 tens and 7 ones make 27."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoBlocksNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Count the tens first, then the ones. 5 rods and 0 cubes is 5 tens and 0 ones, which is 50 — no cubes means the ones digit is 0.",
+      "figure": "tno-rods-50"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "No cubes.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 rods and 0 cubes show what number?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 rods are 5 tens, which is 50 — not 5."
+          },
+          {
+            "value": 55,
+            "feedback": "There are 0 cubes, so the ones digit is 0: 50, not 55."
+          }
+        ],
+        "fallbackFeedback": "5 tens and 0 ones make 50."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Rods always come first because tens are worth more. 6 rods and 4 cubes is 6 tens and 4 ones, which is 64.",
+      "figure": "tno-rods-64"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Six rods.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "6 rods and 4 cubes show what number?",
+        "answer": 64,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Don't add 6 and 4. The 6 rods are tens and 4 cubes are ones: 64."
+          },
+          {
+            "value": 46,
+            "feedback": "Rods are tens (left): 6 rods and 4 cubes show 64, not 46."
+          }
+        ],
+        "fallbackFeedback": "6 tens and 4 ones make 64."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Four rods.",
+      "conceptTag": "tno-blocks",
+      "explanationVariants": [
+        "4 rods and 9 cubes is 4 tens and 9 ones: 49.",
+        "Count tens (4), then ones (9): 49."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "4 rods and 9 cubes show what number?",
+        "answer": 49,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "Don't add 4 and 9. The 4 rods are tens and 9 cubes are ones: 49."
+          },
+          {
+            "value": 94,
+            "feedback": "Rods are tens (left): 4 rods and 9 cubes show 49, not 94."
+          }
+        ],
+        "fallbackFeedback": "4 tens and 9 ones make 49."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoBlocksNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Seven rods.",
+      "conceptTag": "tno-blocks",
+      "explanationVariants": [
+        "7 rods and 2 cubes is 7 tens and 2 ones: 72.",
+        "Count tens (7), then ones (2): 72."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "7 rods and 2 cubes show what number?",
+        "answer": 72,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "Don't add 7 and 2. The 7 rods are tens and 2 cubes are ones: 72."
+          },
+          {
+            "value": 27,
+            "feedback": "Rods are tens (left): 7 rods and 2 cubes show 72, not 27."
+          }
+        ],
+        "fallbackFeedback": "7 tens and 2 ones make 72."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoBlocksNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full blocks.",
+      "conceptTag": "tno-blocks",
+      "explanationVariants": [
+        "9 rods and 9 cubes is 9 tens and 9 ones: 99.",
+        "Count tens (9), then ones (9): 99."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 rods and 9 cubes show what number?",
+        "answer": 99,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "Don't add 9 and 9. The 9 rods are tens and 9 cubes are ones: 99."
+          },
+          {
+            "value": 90,
+            "feedback": "There are 9 cubes, so the ones digit is 9: 99, not 90."
+          }
+        ],
+        "fallbackFeedback": "9 tens and 9 ones make 99."
+      },
+      "hints": [
+        "Each rod is a ten: 9 rods = 90.",
+        "Each cube is a one: 9 cubes = 9.",
+        "90 and 9 make 99."
+      ],
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoBlocksNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read rods as tens and cubes as ones, tens first.",
+      "takeaways": [
+        "Each rod is a ten; each cube is a one.",
+        "Count the rods, then the cubes.",
+        "No cubes means a 0 in the ones place."
+      ],
+      "teaser": "next chapter: breaking numbers into expanded form."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tno-blocks",
+      "concept": {
+        "id": "rem-tbl-c",
+        "kind": "concept",
+        "body": "Each rod is a ten and each cube is a one. Count the rods for tens, then the cubes for ones: 3 rods and 5 cubes show 35."
+      },
+      "check": {
+        "id": "rem-tbl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tno-blocks",
+        "explanationVariants": [
+          "3 rods and 5 cubes is 35.",
+          "3 tens and 5 ones make 35."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "3 rods and 5 cubes show what number?",
+          "answer": 35,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "Rods are tens: 3 tens and 5 ones make 35."
+            },
+            {
+              "value": 53,
+              "feedback": "Rods (tens) go on the left: 35."
+            }
+          ],
+          "fallbackFeedback": "3 tens and 5 ones make 35."
+        }
+      }
+    }
+  ]
+}

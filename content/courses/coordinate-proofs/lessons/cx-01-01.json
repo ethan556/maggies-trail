@@ -1,0 +1,337 @@
+{
+  "id": "cx-01-01",
+  "slug": "distance-formula",
+  "title": "The Distance Formula",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch1-distance-midpoint",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-distance",
+      "concept": {
+        "id": "rem-cx-distance-c",
+        "kind": "concept",
+        "body": "The distance between (x₁, y₁) and (x₂, y₂) is d = √((x₂ − x₁)² + (y₂ − y₁)²): the run and rise are the legs of a right triangle and the segment is its hypotenuse (Pythagoras, from Grade 8). Squaring erases sign, so the order of the points never matters."
+      },
+      "check": {
+        "id": "rem-cx-distance-k",
+        "kind": "check",
+        "body": "One triangle.",
+        "conceptTag": "cx-distance",
+        "explanationVariants": [
+          "Legs 3 and 4: d = √(9 + 16) = 5 — the 3-4-5 triple.",
+          "√25 = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Distance from (0, 0) to (3, 4) = ?",
+          "answer": 5,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 = 3 + 4 adds the legs — square, add, root: √25 = 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is d² — take the root: 5."
+            }
+          ],
+          "fallbackFeedback": "√(3² + 4²) = 5."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Coordinates turn geometry into arithmetic — starting with length. Between A(1, 2) and B(7, 10), draw the horizontal **run** Δx = 6 and vertical **rise** Δy = 8: they're the legs of a right triangle whose hypotenuse IS the segment AB. The Pythagorean theorem (your Grade 8 workhorse) prices it: d = √(6² + 8²) = 10.",
+      "figure": "distance-right-triangle"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Move the point and watch the two legs. The across-gap and the up-gap are the legs of a right triangle — the distance is its hypotenuse.",
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "Move the point to (6, 6) and read its distance from (2, 3).",
+        "anchor": [
+          2,
+          3
+        ],
+        "targetPoint": [
+          6,
+          6
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 2,
+        "startY": 3,
+        "successFeedback": "Across 4, up 3 — so the distance is √(4² + 3²) = √25 = 5. The formula is just Pythagoras.",
+        "wrongPointFeedback": "Not at (6, 6) yet. Watch the two legs: the across-gap and the up-gap are what get squared."
+      },
+      "predict": {
+        "prompt": "From (2, 3) to (6, 6): the run is 4 and the rise is 3. The straight-line distance is…",
+        "options": [
+          {
+            "id": "five",
+            "label": "5"
+          },
+          {
+            "id": "seven",
+            "label": "7 — the legs added"
+          },
+          {
+            "id": "four",
+            "label": "4 — the longer leg"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "The legs 4 and 3 frame a right triangle whose diagonal is √(16 + 9) = 5. Adding 4 + 3 = 7 measures the L-shaped walk along the streets, not the shortcut through the block."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move a coordinate point and connect horizontal and vertical displacement to geometric distance.",
+        "invariants": [
+          "distance-nonnegative",
+          "pythagorean-distance"
+        ],
+        "misconceptions": [
+          "coordinate-sum",
+          "axis-distance-confusion"
+        ],
+        "representations": [
+          "graph",
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "coordinate-proofs",
+        "delayed": false
+      },
+      "conceptTag": "cx-distance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read it off the figure.",
+      "conceptTag": "cx-distance",
+      "explanationVariants": [
+        "Legs 6 and 8, hypotenuse √(36 + 64) = √100 = 10.",
+        "The figure's own triangle: d = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute the distance from A(1, 2) to B(7, 10).",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 adds the legs — walking the two sides of the triangle, not the shortcut. Pythagoras: √(36 + 64) = 10."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is d² — the square root finishes the job: 10."
+          },
+          {
+            "value": 3.74,
+            "feedback": "3.74 ≈ √(6 + 8) square-rooted the SUM of legs — square each leg first: √(36 + 64) = 10."
+          }
+        ],
+        "fallbackFeedback": "d = √(6² + 8²) = 10."
+      },
+      "variant": {
+        "gen": "coord-distance"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "In general: **d = √((x₂ − x₁)² + (y₂ − y₁)²)**. The squares erase every sign worry — measuring from B to A negates both differences, but (−6)² = 6², so the distance comes out identical. Distance is unsigned, a pure length, exactly like the segment measures of your first geometry course.",
+      "figure": "cx-distance-formula"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Signs can't hurt you.",
+      "conceptTag": "cx-distance",
+      "explanationVariants": [
+        "Δx = 3 − (−3) = 6 and Δy = −4 − 4 = −8: d = √(36 + 64) = 10.",
+        "The squares eat the minus: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the distance between (−3, 4) and (3, −4).",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 would need identical points — the differences are 6 and −8, and their squares add to 100: d = 10."
+          },
+          {
+            "value": 2,
+            "feedback": "2 subtracts coordinates casually (like 3 − (−3) minus something) — run the formula: √(6² + (−8)²) = 10."
+          },
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 adds the leg sizes — square, add, root: 10."
+          }
+        ],
+        "fallbackFeedback": "√(6² + (−8)²) = √100 = 10."
+      },
+      "variant": {
+        "gen": "coord-distance"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The easy special case.",
+      "conceptTag": "cx-distance",
+      "explanationVariants": [
+        "Same x means a VERTICAL segment: distance = |7 − (−2)| = 9, no formula theatrics needed.",
+        "Δx = 0, so d = √(0 + 81) = 9 — just the y-gap."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Distance from (4, 7) to (4, −2) = ?",
+        "answer": 9,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 = 7 − 2 dropped the sign of −2 — the gap from −2 up to 7 is 9."
+          },
+          {
+            "value": 81,
+            "feedback": "81 is d² — root it (or just read the y-gap): 9."
+          },
+          {
+            "value": 11,
+            "feedback": "11 adds 4 + 7 mixing coordinates — same x means the distance is purely vertical: |7 − (−2)| = 9."
+          }
+        ],
+        "fallbackFeedback": "Same x: d = |7 − (−2)| = 9."
+      },
+      "variant": {
+        "gen": "coord-distance",
+        "form": "vertical"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order on trial.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Compute d(A, B) and d(B, A) with the distance formula. How do they compare?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Always equal — swapping the points negates both differences, and squaring erases the negation",
+            "correct": true,
+            "feedback": "(x₁ − x₂)² = (x₂ − x₁)² identically — distance is symmetric, as any honest length must be."
+          },
+          {
+            "id": "o2",
+            "label": "d(B, A) is the negative of d(A, B)",
+            "correct": false,
+            "feedback": "A square root's output is never negative — both orders give the same positive length."
+          },
+          {
+            "id": "o3",
+            "label": "Equal only if the points share an axis",
+            "correct": false,
+            "feedback": "The symmetry is unconditional — the squares kill the sign flip for EVERY pair of points."
+          },
+          {
+            "id": "o4",
+            "label": "They can differ by the run",
+            "correct": false,
+            "feedback": "The formula's squares make the order irrelevant — identical answers, always."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Between which pair?",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Which is farther from the origin: P(5, 5) or Q(1, 7)? Enter the LARGER distance (2 decimals).",
+        "answer": 7.07,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 50,
+            "feedback": "50 is the SQUARED distance (25 + 25, and 1 + 49 alike) — root it: both points sit √50 ≈ 7.07 from the origin, a tie."
+          },
+          {
+            "value": 10,
+            "feedback": "10 = 5 + 5 adds P's coordinates — distances square first: both points sit √50 ≈ 7.07 out."
+          }
+        ],
+        "fallbackFeedback": "Both are √50 ≈ 7.07 from the origin — a tie: different directions, same length."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Solve for the missing coordinate.",
+      "conceptTag": "cx-distance",
+      "hints": [
+        "Set up the formula with the unknown: √((k − 1)² + (8 − 2)²) = 10.",
+        "Square both sides: (k − 1)² + 36 = 100.",
+        "(k − 1)² = 64 — mind BOTH square roots, then take the larger k."
+      ],
+      "explanationVariants": [
+        "(k − 1)² = 64 gives k − 1 = ±8, so k = 9 or k = −7; the larger is 9.",
+        "k = 1 + 8 = 9 (the other solution, 1 − 8 = −7, sits on the far side)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Point (k, 8) is 10 units from (1, 2). Find the LARGER possible value of k.",
+        "answer": 9,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65 comes from (k−1)² = 100 − 36 = 64 read as k² — finish: k − 1 = ±8, larger k = 9."
+          },
+          {
+            "value": -7,
+            "feedback": "−7 is the SMALLER solution (k = 1 − 8) — the larger is 1 + 8 = 9."
+          },
+          {
+            "value": 11,
+            "feedback": "11 = 1 + 10 walks the full distance horizontally — but 6 of the 10 units are vertical: (k−1)² = 64, k = 9."
+          }
+        ],
+        "fallbackFeedback": "(k − 1)² + 36 = 100 ⇒ k = 1 ± 8 ⇒ larger k = 9."
+      },
+      "variant": {
+        "gen": "coord-distance",
+        "form": "solveK"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Length, computed.",
+      "takeaways": [
+        "d = √((Δx)² + (Δy)²) — Pythagoras on the run-rise triangle.",
+        "Squares erase signs: distance is symmetric and unsigned.",
+        "Shared axis ⇒ just the coordinate gap; unknowns ⇒ square both sides and mind the ±."
+      ],
+      "teaser": "Next: the point exactly halfway along — and why it's a pair of averages."
+    }
+  ]
+}

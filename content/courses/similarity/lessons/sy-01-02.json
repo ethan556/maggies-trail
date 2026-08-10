@@ -1,0 +1,305 @@
+{
+  "id": "sy-01-02",
+  "slug": "what-similarity-means",
+  "title": "What Similarity Means",
+  "courseId": "similarity",
+  "chapterId": "ch1-dilations-and-scale",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sy-similarity",
+      "concept": {
+        "id": "rem-sy-similarity-c",
+        "kind": "concept",
+        "body": "Similar figures: same shape, sides in a constant ratio k. Lengths (sides, perimeter) scale by k; AREA scales by k² (and volume, later, by k³). To go from an area ratio back to a side ratio, take the SQUARE ROOT. Congruence is the k = 1 case."
+      },
+      "check": {
+        "id": "rem-sy-similarity-k",
+        "kind": "check",
+        "body": "Area scales how?",
+        "conceptTag": "sy-similarity",
+        "explanationVariants": [
+          "Area scales by the square of the scale factor: k = 2 gives area ×4.",
+          "Lengths ×k, area ×k²."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Two similar figures have scale factor 2. By what factor does the AREA scale?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "2 is how LENGTHS scale. Area scales by k² = 2² = 4."
+            },
+            {
+              "value": 8,
+              "feedback": "8 = 2³ is the VOLUME factor. In 2D, area scales by k² = 4."
+            }
+          ],
+          "fallbackFeedback": "Area scales by k² = 2² = 4."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two figures are **similar** when one maps to the other by a **similarity transformation** — a rigid motion (which preserves size) followed by a dilation (which scales it). The result: **corresponding angles are equal** and **corresponding sides are proportional**. Similar means 'same shape, possibly different size.' The symbol is ~.",
+      "figure": "aa-similar"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Similar means what?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two triangles are similar (△ABC ~ △DEF). What must be true?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Corresponding angles are equal AND corresponding sides are proportional",
+            "correct": true,
+            "feedback": "Similarity means same shape: matching angles equal, matching sides in a constant ratio."
+          },
+          {
+            "id": "o2",
+            "label": "All corresponding sides are equal",
+            "correct": false,
+            "feedback": "Equal sides would make them CONGRUENT. Similar sides are PROPORTIONAL — in a constant ratio, not necessarily equal."
+          },
+          {
+            "id": "o3",
+            "label": "Only the angles are equal, sides can be anything",
+            "correct": false,
+            "feedback": "Angles must match AND sides must be PROPORTIONAL — the side ratios all share one value, not just 'anything.'"
+          },
+          {
+            "id": "o4",
+            "label": "The triangles are the same size",
+            "correct": false,
+            "feedback": "Similar triangles can differ in size — that's the point. Same SHAPE, sides in proportion."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Congruent vs similar.",
+      "conceptTag": "sy-similarity",
+      "explanationVariants": [
+        "Congruent = same shape AND size (scale factor 1). Similar = same shape, any size (any positive scale factor). Congruence is the special case k = 1.",
+        "All congruent figures are similar (k = 1), but similar figures are congruent only when the ratio is 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How are congruence and similarity related?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Congruence is similarity with scale factor 1 — same shape and same size",
+            "correct": true,
+            "feedback": "Congruent figures are similar with ratio 1; similar figures with any other ratio are the same shape but a different size."
+          },
+          {
+            "id": "o2",
+            "label": "They are completely unrelated ideas",
+            "correct": false,
+            "feedback": "They're closely related — congruence is the special case of similarity where the scale factor is exactly 1."
+          },
+          {
+            "id": "o3",
+            "label": "Similar figures are always congruent",
+            "correct": false,
+            "feedback": "Only when the scale factor is 1. A triangle and its enlargement are similar but NOT congruent."
+          },
+          {
+            "id": "o4",
+            "label": "Congruent figures are never similar",
+            "correct": false,
+            "feedback": "Congruent figures ARE similar — with scale factor 1. Congruence is a special case of similarity."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-similarity__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **ratio of similarity** (the scale factor k) links every pair of corresponding sides. If △ABC ~ △DEF with ratio 2, then DE = 2·AB, EF = 2·BC, and FD = 2·CA — all the SAME factor. Spotting that one ratio lets you find any missing side by multiplying or dividing.",
+      "figure": "aa-similar"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Use the ratio.",
+      "predict": {
+        "prompt": "AB = 6 corresponds to DE = 9. Going from the small triangle to the large one, what happens to every side?",
+        "options": [
+          {
+            "id": "ratio",
+            "label": "Each is multiplied by the same ratio, 9/6"
+          },
+          {
+            "id": "add",
+            "label": "Each grows by the same amount, 3"
+          },
+          {
+            "id": "vary",
+            "label": "Each changes by its own amount"
+          }
+        ],
+        "outcomeId": "ratio",
+        "reveal": "Similar figures scale by a RATIO, not by an amount added. 6 becomes 9 by multiplying by 1.5 — so every other side multiplies by 1.5 too. Adding 3 to each side would distort the shape."
+      },
+      "widget": {
+        "type": "ratioTable",
+        "prompt": "△ABC ~ △DEF. Fill in the row for BC = 8, keeping the same ratio the other rows show.",
+        "colA": "△ABC side",
+        "colB": "△DEF side",
+        "rows": [
+          [
+            6,
+            9
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "askA": 8,
+        "targetB": 12,
+        "bMax": 20,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "EF = 12. Read down the column: 6→9, 2→3, 8→12 — every pair multiplies by the same 1.5. That constant multiplier is what similarity IS. Adding 3 instead would have given 11, and the shape would no longer match.",
+        "lowFeedback": "Too short. Compare your row against 6→9 above it: the second number is one and a half times the first, so 8 has further to go.",
+        "highFeedback": "Too long — that stretches BC by more than the other rows are stretched. Every row here multiplies by the same 1.5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Order matters.",
+      "conceptTag": "sy-similarity",
+      "explanationVariants": [
+        "In △ABC ~ △DEF the letter order gives the correspondence: A↔D, B↔E, C↔F, so AB corresponds to DE.",
+        "Correspondence follows position in the similarity statement, just like congruence."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Given △ABC ~ △DEF, which side corresponds to BC?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "EF",
+            "correct": true,
+            "feedback": "B↔E and C↔F (positions 2 and 3), so BC corresponds to EF."
+          },
+          {
+            "id": "o2",
+            "label": "DE",
+            "correct": false,
+            "feedback": "DE is positions 1–2, corresponding to AB. BC is positions 2–3: EF."
+          },
+          {
+            "id": "o3",
+            "label": "DF",
+            "correct": false,
+            "feedback": "DF is positions 1–3, corresponding to AC. BC (positions 2–3) matches EF."
+          },
+          {
+            "id": "o4",
+            "label": "AB",
+            "correct": false,
+            "feedback": "AB is in the SAME triangle as BC — correspondence pairs across the two triangles: BC ↔ EF."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-similarity__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A powerful consequence: **perimeter scales by k, but area scales by k².** Double every side (k = 2) and the perimeter doubles, but the area quadruples. Triple the sides and area grows nine-fold. This 'squared' growth of area is one of the most useful — and most forgotten — facts about similar figures.",
+      "figure": "sy-perim-area-scale"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Area scaling.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar triangles have scale factor 3. The smaller has area 5. What is the area of the larger?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 = 5 × 3 scales by k, but AREA scales by k². Multiply by 3² = 9: 5 × 9 = 45."
+          },
+          {
+            "value": 8,
+            "feedback": "8 = 5 + 3 adds. Area scales by the SQUARE of the factor: 5 × 3² = 45."
+          }
+        ],
+        "fallbackFeedback": "Area scales by k²: 5 × 3² = 5 × 9 = 45."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Back out the ratio from area.",
+      "conceptTag": "sy-similarity",
+      "hints": [
+        "Areas scale by k², so the ratio of areas is k².",
+        "If the area ratio is 16, then k² = 16.",
+        "Take the square root: k = √16."
+      ],
+      "explanationVariants": [
+        "Since areas scale by k², the side ratio is the SQUARE ROOT of the area ratio: √16 = 4.",
+        "k² = 16 gives k = 4 — the sides are in ratio 4, even though the areas are in ratio 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar figures have areas in the ratio 16 : 1. What is the ratio of their corresponding SIDES?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is the AREA ratio. Sides scale by k, areas by k², so the side ratio is √16 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8 = 16 ÷ 2 halves it — but you need the SQUARE ROOT of the area ratio: √16 = 4."
+          }
+        ],
+        "fallbackFeedback": "Side ratio = √(area ratio) = √16 = 4."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-similarity__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same shape, scaled size.",
+      "takeaways": [
+        "Similar (~): corresponding angles equal, corresponding sides proportional.",
+        "Congruence is similarity with scale factor 1; the ratio links every side pair.",
+        "Perimeter scales by k, area by k² — the squared growth is easy to forget."
+      ],
+      "teaser": "Next: you don't need all six parts — just two angles prove triangles similar (AA)."
+    }
+  ]
+}

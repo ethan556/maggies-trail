@@ -1,0 +1,390 @@
+{
+  "id": "md-04-01",
+  "slug": "covering-with-squares",
+  "title": "Covering with Squares",
+  "courseId": "measurement-data",
+  "chapterId": "ch4-area",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**Area** is how much flat space a shape covers — and we measure it by counting **unit squares** that tile the shape with no gaps and no overlaps. Cover a rectangle in 1-cm squares, count them, and that count (in square cm) is its area.",
+      "figure": "md3-area-grid"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the covering.",
+      "conceptTag": "tiling",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "This rectangle is tiled in unit squares. Tap every square to count them — how many cover it?",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 3,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "s1",
+            "x": 17,
+            "y": 25,
+            "label": "square 1",
+            "icon": "▫",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "s2",
+            "x": 50,
+            "y": 25,
+            "label": "square 2",
+            "icon": "▫",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "s3",
+            "x": 83,
+            "y": 25,
+            "label": "square 3",
+            "icon": "▫",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "s4",
+            "x": 17,
+            "y": 75,
+            "label": "square 4",
+            "icon": "▫",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "s5",
+            "x": 50,
+            "y": 75,
+            "label": "square 5",
+            "icon": "▫",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "s6",
+            "x": 83,
+            "y": 75,
+            "label": "square 6",
+            "icon": "▫",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Tap each unit square once — the area is simply how many cover the shape.",
+        "successFeedback": "Six unit squares cover it, so the area is 6 square units. Area is a count of squares."
+      },
+      "predict": {
+        "prompt": "A rectangle tiled in unit squares. Will rows × columns give the count, or must you count squares one by one?",
+        "options": [
+          {
+            "id": "multiply",
+            "label": "Rows × columns gives it"
+          },
+          {
+            "id": "count",
+            "label": "Only counting one by one works"
+          },
+          {
+            "id": "add",
+            "label": "Rows + columns gives it"
+          }
+        ],
+        "outcomeId": "multiply",
+        "reveal": "The tiling is equal rows of equal squares — multiplying the rows by the columns counts every tile at once. Tap and check it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents tiling.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tiling must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tiling."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:tiling",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the unit.",
+      "conceptTag": "tiling",
+      "explanationVariants": [
+        "Area counts squares, so its unit is SQUARE centimeters — cm², not plain cm.",
+        "Plain cm measures a length; covering a flat space needs square units."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shape is covered by 12 one-centimeter squares. What is its area?",
+        "options": [
+          {
+            "id": "a",
+            "label": "12 square centimeters",
+            "correct": true,
+            "feedback": "Twelve unit squares cover it — area is that count, in square cm."
+          },
+          {
+            "id": "b",
+            "label": "12 centimeters",
+            "feedback": "Plain centimeters measure a LENGTH along a line. Covering a flat space is counted in SQUARE centimeters."
+          },
+          {
+            "id": "c",
+            "label": "12 squares long",
+            "feedback": "Area isn't a length — it's a covering. The unit is square centimeters (cm²)."
+          },
+          {
+            "id": "d",
+            "label": "24 square centimeters",
+            "feedback": "The count of covering squares IS the area — 12 squares means 12 cm², no doubling."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "tiling",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why SQUARES to measure with? Because they **tile perfectly** — full edge meets full edge, no gaps, no overlaps. Circles leave curved gaps; squares lock together like floor tiles. That gap-free locking is exactly why area is counted in *square* units.",
+      "figure": "md3-area-grid"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pick the tiler.",
+      "conceptTag": "tiling",
+      "explanationVariants": [
+        "Squares press edge-to-edge with no gaps — that's why floors and grids use them.",
+        "A gap-free cover needs straight matching edges; squares have them, circles don't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which shape can cover a floor with NO gaps and NO overlaps?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Squares",
+            "correct": true,
+            "feedback": "Full edges meet full edges — squares lock tight, which is why we tile and measure area with them."
+          },
+          {
+            "id": "b",
+            "label": "Circles",
+            "feedback": "Circles always leave little curved gaps between them — no flat edges to share. They can't tile a floor."
+          },
+          {
+            "id": "c",
+            "label": "Only very big shapes",
+            "feedback": "Size doesn't fix gaps — a shape's EDGES decide whether it locks together. Straight, equal edges tile."
+          },
+          {
+            "id": "d",
+            "label": "Nothing can cover a floor completely",
+            "feedback": "Plenty can — squares, rectangles, even triangles and hexagons. Bathroom floors prove it daily."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "tiling",
+        "form": "whichTiles"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which covers are gap-free?",
+      "conceptTag": "tiling",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each cover: does it measure area honestly (no gaps, no overlaps)?",
+        "buckets": [
+          {
+            "id": "ok",
+            "label": "Honest cover",
+            "icon": "✅"
+          },
+          {
+            "id": "bad",
+            "label": "Gaps or overlaps",
+            "icon": "🚫"
+          }
+        ],
+        "items": [
+          {
+            "id": "t1",
+            "label": "Unit squares edge-to-edge",
+            "bucketId": "ok",
+            "feedback": "Locked tight — a true area count."
+          },
+          {
+            "id": "t2",
+            "label": "Circles side by side",
+            "bucketId": "bad",
+            "feedback": "Curved gaps between them — the covered count would miss space."
+          },
+          {
+            "id": "t3",
+            "label": "Squares piled overlapping",
+            "bucketId": "bad",
+            "feedback": "Overlaps double-count space — the total comes out too big."
+          },
+          {
+            "id": "t4",
+            "label": "Equal squares in a neat grid",
+            "bucketId": "ok",
+            "feedback": "A perfect grid — the honest way to measure area."
+          }
+        ],
+        "missFeedback": "Honest area needs squares that fill the space exactly — no curved gaps, no piled overlaps.",
+        "successFeedback": "Edge-to-edge grids measure honestly; circle-gaps and overlaps distort the count."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count an L-ish cover.",
+      "conceptTag": "tiling",
+      "explanationVariants": [
+        "Count every unit square that covers the shape, wherever it sits: 4 + 3 = 7 squares.",
+        "Area is the total covering count — add the squares in both parts of the shape."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A shape is covered by unit squares: 4 squares in its top row and 3 in its bottom row. What is its area?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 multiplied 4 × 3 — but the rows aren't equal here (4 and 3). When rows differ, COUNT the squares: 4 + 3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 counted only the top row. Area covers the whole shape — add the bottom row's 3: total 7."
+          }
+        ],
+        "fallbackFeedback": "Count every covering square: top row plus bottom row."
+      },
+      "variant": {
+        "gen": "tiling",
+        "form": "unequalRows"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The patio tiles.",
+      "conceptTag": "tiling",
+      "hints": [
+        "Area = how many unit squares cover the patio.",
+        "Count them row by row: three full rows.",
+        "Each row holds the same number of tiles here."
+      ],
+      "explanationVariants": [
+        "Three rows of 5 tiles each cover the patio with no gaps: 5 + 5 + 5 = 15 square tiles of area.",
+        "Equal rows let you add (or multiply): three 5-tile rows make 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A patio is tiled with unit squares in 3 equal rows of 5 tiles each, no gaps. What is its area in square tiles?",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "square tiles",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 added a row-count to a row-length (3 + 5). Area COUNTS all the tiles: three rows of 5, which is 5 + 5 + 5."
+          },
+          {
+            "value": 16,
+            "feedback": "16 walked the edge (perimeter-style). Area fills the inside: 3 rows of 5 tiles = 15."
+          }
+        ],
+        "fallbackFeedback": "Three rows of 5 tiles — add them up: 5 + 5 + 5."
+      },
+      "variant": {
+        "gen": "tiling",
+        "form": "equalRows"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Area is a count of squares.",
+      "takeaways": [
+        "Area = unit squares that cover a shape, no gaps or overlaps.",
+        "Its unit is SQUARE units (cm²), not plain length units.",
+        "Squares are the measuring tool because they tile perfectly."
+      ],
+      "teaser": "next: when the rows are equal, counting becomes multiplying."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tiling",
+      "concept": {
+        "id": "rem-ti-c",
+        "kind": "concept",
+        "body": "Quick rewind. Area is like **counting floor tiles** — how many unit squares does it take to cover the shape with no gaps? That count, in square units, is the area. Cover it, count it, done."
+      },
+      "check": {
+        "id": "rem-ti-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tiling",
+        "explanationVariants": [
+          "Five covering squares means an area of 5 square units.",
+          "Area is the covering count: 5 squares → 5 square units."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A shape is covered by exactly 5 unit squares. Its area is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "5 square units",
+              "correct": true,
+              "feedback": "Five squares cover it — area 5."
+            },
+            {
+              "id": "b",
+              "label": "5 units long",
+              "feedback": "That's a length. Area is a covering, counted in SQUARE units: 5 square units."
+            },
+            {
+              "id": "c",
+              "label": "10 square units",
+              "feedback": "The covering count IS the area — 5 squares means 5 square units, no doubling."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+{
+ "id": "lg-03-03",
+ "slug": "solving-log-equations",
+ "title": "Solving Log Equations",
+ "courseId": "logarithms",
+ "chapterId": "ch3-change-of-base-and-exponential-equations",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "When the LOG holds the unknown, **convert to exponential form**: log₂(x − 3) = 4 means x − 3 = 2⁴ = 16, so x = **19**. Check in the original: log₂ 16 = 4. ✓ One conversion, then ordinary algebra — the definition from Chapter 1 doing equation work.",
+   "figure": "lg-convert-exponential"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Convert and solve.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve log₃(x + 2) = 3.",
+    "answer": 25,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "3³ = 27 (not 9): x + 2 = 27 → x = 25."
+     },
+     {
+      "value": 29,
+      "feedback": "x + 2 = 27 SUBTRACTS the 2: x = 25."
+     }
+    ],
+    "fallbackFeedback": "x + 2 = 27 → x = 25; check log₃ 27 = 3. ✓"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Logs on **both sides** with the same base? Equal logs mean equal insides: log₅(2x − 1) = log₅(x + 4) forces 2x − 1 = x + 4, so x = 5. But logs bring their **domain**: every inside must end up **positive**. Candidates that leave any inside ≤ 0 are extraneous — the radical-equations discipline, back again.",
+   "figure": "lg-both-sides"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Equal logs, equal insides.",
+   "conceptTag": "lg-log-solve",
+   "explanationVariants": [
+    "log₂(3x − 2) = log₂(x + 6): insides equate — 3x − 2 = x + 6 → x = 4; both insides are 10 > 0. ✓",
+    "Drop the matching logs, solve, then confirm positivity."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve log₂(3x − 2) = log₂(x + 6).",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "3x − 2 = x + 6 → 2x = 8 → x = 4 (2 halves the wrong side; check: insides both equal 10)."
+     },
+     {
+      "value": -4,
+      "feedback": "2x = 8 gives POSITIVE 4 — and −4 would make both insides negative anyway."
+     }
+    ],
+    "fallbackFeedback": "3x − 2 = x + 6 → x = 4; insides: 10 = 10 > 0. ✓"
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-log-solve__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The domain strikes.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solving log(x) + log(x − 3) = 1 gives candidates x = 5 and x = −2. The verdict?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "keep 5; reject −2 (it makes the insides negative)",
+      "correct": true,
+      "feedback": "Right — log(−2) doesn't exist; 5 gives log 5 + log 2 = log 10 = 1. ✓"
+     },
+     {
+      "id": "o2",
+      "label": "keep both",
+      "correct": false,
+      "feedback": "x = −2 puts −2 and −5 inside logs — no logarithm accepts a negative."
+     },
+     {
+      "id": "o3",
+      "label": "reject both",
+      "correct": false,
+      "feedback": "5 checks perfectly: 5 · 2 = 10 and log 10 = 1."
+     },
+     {
+      "id": "o4",
+      "label": "keep −2; reject 5",
+      "correct": false,
+      "feedback": "Backwards — the NEGATIVE-inside candidate is the phantom."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Condense first.",
+   "conceptTag": "lg-log-solve",
+   "explanationVariants": [
+    "log₂ x + log₂(x − 2) = 3 condenses to log₂(x(x − 2)) = 3 → x² − 2x = 8 → (x − 4)(x + 2) = 0 → x = 4 (−2 fails the domain).",
+    "Condense, convert, factor, filter."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve log₂ x + log₂(x − 2) = 3.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = 4",
+      "correct": true,
+      "feedback": "Right — x(x − 2) = 8 gives 4 or −2; only 4 keeps both insides positive."
+     },
+     {
+      "id": "o2",
+      "label": "x = 4 or x = −2",
+      "correct": false,
+      "feedback": "−2 would feed log₂(−2) — negative insides disqualify it."
+     },
+     {
+      "id": "o3",
+      "label": "x = 8",
+      "correct": false,
+      "feedback": "Condense FIRST: x(x − 2) = 2³ = 8, a quadratic — not x alone equal to 8."
+     },
+     {
+      "id": "o4",
+      "label": "x = 3",
+      "correct": false,
+      "feedback": "Check: 3 · 1 = 3 ≠ 8 — the product of insides must equal 2³."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-log-solve__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Where phantoms come from.",
+   "conceptTag": "lg-log-solve",
+   "explanationVariants": [
+    "The condensed equation log(x(x−3)) accepts inputs the ORIGINAL rejects — e.g. x = −2 makes the product positive (10) while each factor is negative.",
+    "Condensing can secretly widen the domain; the check narrows it back."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why can condensing log x + log(x − 3) into log(x(x − 3)) create extraneous candidates?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the product can be positive while each factor is negative",
+      "correct": true,
+      "feedback": "Right — at x = −2, x(x − 3) = 10 > 0, but log(−2) itself never existed."
+     },
+     {
+      "id": "o2",
+      "label": "condensing changes the equation's value",
+      "correct": false,
+      "feedback": "The property is an identity WHERE both sides exist — the issue is the condensed form existing more widely."
+     },
+     {
+      "id": "o3",
+      "label": "quadratics always have a fake root",
+      "correct": false,
+      "feedback": "Plenty of quadratics keep both roots — the filter is the DOMAIN, not the degree."
+     },
+     {
+      "id": "o4",
+      "label": "logs can't be added",
+      "correct": false,
+      "feedback": "They can (product property) — the subtlety is the domain silently widening."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-log-solve__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full solve with the filter.",
+   "conceptTag": "lg-log-solve",
+   "explanationVariants": [
+    "log₃(x + 6) + log₃ x = 3: x(x + 6) = 27 → x² + 6x − 27 = 0 → (x + 9)(x − 3) = 0 → x = 3 (x = −9 fails the domain).",
+    "Condense, convert to 3³, factor, keep the positive-inside survivor."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve log₃(x + 6) + log₃ x = 3 (give the valid solution).",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -9,
+      "feedback": "−9 solves the QUADRATIC but feeds log₃(−9) — extraneous by domain."
+     },
+     {
+      "value": 9,
+      "feedback": "x(x + 6) = 3³ = 27, and 3 · 9 = 27 works with x = 3 (9 misplaces the factor pair)."
+     }
+    ],
+    "fallbackFeedback": "x(x + 6) = 27 → (x + 9)(x − 3) = 0 → x = 3; check: log₃ 9 + log₃ 3 = 2 + 1 = 3. ✓"
+   },
+   "hints": [
+    "Condense: log₃(x(x + 6)) = 3.",
+    "Convert: x² + 6x = 27, then factor.",
+    "(x + 9)(x − 3) = 0 — only the positive-inside candidate survives."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-log-solve__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Convert single logs; equate matching insides; filter by positivity.",
+   "takeaways": [
+    "log_b(inside) = k ⟺ inside = b^k.",
+    "Condensing widens the domain — the final check narrows it back.",
+    "Every inside must be POSITIVE at any accepted solution."
+   ],
+   "teaser": "Final chapter: e, ln, and growth that compounds every instant."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-log-solve",
+   "concept": {
+    "id": "rem-lg0303-c",
+    "kind": "concept",
+    "body": "One conversion: log₂ x = 5 means x = 2⁵."
+   },
+   "check": {
+    "id": "rem-lg0303-k",
+    "kind": "check",
+    "body": "Evaluate.",
+    "conceptTag": "lg-log-solve",
+    "explanationVariants": [
+     "x = 32.",
+     "The definition converts the log into a power."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve log₂ x = 5.",
+     "answer": 32,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 10,
+       "feedback": "The 5 is an EXPONENT: 2⁵ = 32, not 2 · 5."
+      },
+      {
+       "value": 25,
+       "feedback": "The base is 2 (the subscript): 2⁵ = 32 — 25 would be 5², swapped."
+      }
+     ],
+     "fallbackFeedback": "x = 2⁵ = 32."
+    }
+   }
+  }
+ ]
+}

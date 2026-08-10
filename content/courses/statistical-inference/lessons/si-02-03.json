@@ -1,0 +1,435 @@
+{
+  "id": "si-02-03",
+  "slug": "how-much-wobble",
+  "title": "Putting a Number on the Wobble",
+  "courseId": "statistical-inference",
+  "chapterId": "ch2-sampling-variability",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The width of the pile has a formula. For a proportion, the **standard error** is\n\nSE = √( p(1−p) / n ).\n\nIt is the typical distance between a poll and the truth. And about 95% of the pile sits within **two** standard errors of the centre — the fact the rest of this course is built on.",
+      "figure": "si-sampling-dist-sizes"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute one.",
+      "conceptTag": "si-standard-error",
+      "explanationVariants": [
+        "SE = √(0.5 × 0.5 / 100) = √0.0025 = 0.05, which is 5 percentage points.",
+        "With p = 0.5 the numerator is 0.25, and 0.25/100 = 0.0025. Its square root is 0.05."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A poll of 100 people, with p = 0.5. Find the standard error, in **percentage points**.",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "p",
+            "label": "the proportion",
+            "value": 0.5
+          },
+          {
+            "id": "n",
+            "label": "the sample size",
+            "value": 100
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "lit",
+            "value": 1
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "lit",
+              "value": 100
+            },
+            "right": {
+              "op": "sqrt",
+              "arg": {
+                "op": "divide",
+                "left": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "const",
+                    "id": "p"
+                  },
+                  "right": {
+                    "op": "subtract",
+                    "left": {
+                      "op": "lit",
+                      "value": 1
+                    },
+                    "right": {
+                      "op": "const",
+                      "id": "p"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "const",
+                  "id": "n"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 3,
+        "answerMode": "numeric",
+        "tolerance": 0.05,
+        "numericErrors": [
+          {
+            "value": 0.05,
+            "feedback": "That is the SE as a decimal — correct arithmetic, wrong units. As a percentage of the population it is 5 points, not 0.05 points."
+          },
+          {
+            "value": 25,
+            "feedback": "That is 0.25 as a percentage: you stopped at p(1−p) and skipped both the division by n and the square root."
+          },
+          {
+            "value": 2.5,
+            "feedback": "That is half the SE — most likely a stray division. √(0.25/100) = 0.05 = 5 points."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "√(0.25/100) = 0.05 = 5 percentage points.",
+        "successFeedback": "√(0.25/100) = 0.05 = 5 percentage points."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-standard-error__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two standard errors, in both directions.",
+      "widget": {
+        "type": "samplingBiasLab",
+        "prompt": "Draw repeatedly from 4,000 voters at a sample size of 100 and watch where the estimates land. About how many fall inside two standard errors of the truth?",
+        "populationLabel": "4,000 voters",
+        "targetMethod": "random",
+        "targetSize": 100,
+        "sizeMin": 20,
+        "sizeMax": 200,
+        "sizeStep": 20,
+        "sizeStart": 20,
+        "requiredDraws": 8,
+        "successFeedback": "About 19 of every 20 draws land within 2 SE of the truth. That is the whole of '95% confident' — not a claim about this poll, but a count of how often the method lands close. SE = √(p(1−p)/n) is the formula for the width of the pile you just built.",
+        "methodFeedback": "The 95% figure assumes every member of the population could have been picked. A method that excludes some of them breaks the arithmetic before it starts.",
+        "sizeFeedback": "Any size gives a 95% band; the band is just wider when n is small. Bring it to 100 so the SE matches the worked example.",
+        "drawsFeedback": "Two draws cannot show a 95% pattern. Keep drawing — the shape only appears in the long run, which is the point."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The 2-SE band.",
+      "conceptTag": "si-standard-error",
+      "explanationVariants": [
+        "SE = √(0.6 × 0.4 / 600) = √0.0004 = 0.02, so 2 SE = 0.04 = 4 percentage points.",
+        "0.6 × 0.4 = 0.24, and 0.24/600 = 0.0004, whose square root is 0.02. Double it for the 95% band."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A poll of 600 people gives p̂ = 0.60. Find **2 × SE**, in percentage points.",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "p",
+            "label": "the proportion",
+            "value": 0.6
+          },
+          {
+            "id": "n",
+            "label": "the sample size",
+            "value": 600
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "lit",
+            "value": 2
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "lit",
+              "value": 100
+            },
+            "right": {
+              "op": "sqrt",
+              "arg": {
+                "op": "divide",
+                "left": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "const",
+                    "id": "p"
+                  },
+                  "right": {
+                    "op": "subtract",
+                    "left": {
+                      "op": "lit",
+                      "value": 1
+                    },
+                    "right": {
+                      "op": "const",
+                      "id": "p"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "const",
+                  "id": "n"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 3,
+        "answerMode": "numeric",
+        "tolerance": 0.05,
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "That is one SE (0.02 = 2 points). The 95% band is TWO standard errors wide on each side."
+          },
+          {
+            "value": 8,
+            "feedback": "That is 4 × SE. About 95% of polls fall within two SEs, not four."
+          },
+          {
+            "value": 24,
+            "feedback": "That is p(1−p) = 0.24 read as a percentage — the calculation stopped before dividing by n and taking the root."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "SE = √(0.24/600) = 0.02, so 2 SE = 0.04 = 4 percentage points.",
+        "successFeedback": "SE = √(0.24/600) = 0.02, so 2 SE = 0.04 = 4 percentage points."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-standard-error__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two practical facts fall out of the formula.\n\n**p(1−p) is largest at p = 0.5.** A 50/50 split is the hardest to pin down, so pollsters quote the worst case to be safe.\n\n**n is under the square root.** The wobble depends on the SIZE of the sample, not on the size of the population — polling 1,000 people works as well for a city as for a country.",
+      "figure": "si-accuracy-precision"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The surprising one.",
+      "conceptTag": "si-standard-error",
+      "explanationVariants": [
+        "The population size does not appear anywhere in SE = √(p(1−p)/n). Only n does.",
+        "A spoonful is enough to taste a pot or a vat, provided it is stirred. The sample size is what matters, not what fraction of the population it is."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A 1,000-person poll is run in a city of 100,000 and again in a country of 100 million. Which has the smaller wobble?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Neither — the wobble depends on n, not on the population size.",
+            "correct": true,
+            "feedback": "Right, and it surprises almost everyone. Only n appears in the formula. A well-stirred spoonful tastes the pot and the vat equally well."
+          },
+          {
+            "id": "o2",
+            "label": "The city poll, because 1,000 is a bigger share of 100,000.",
+            "correct": false,
+            "feedback": "Intuitive, and wrong. The share of the population you sampled does not enter the formula — √(p(1−p)/n) contains no N at all."
+          },
+          {
+            "id": "o3",
+            "label": "The country poll, because bigger populations average out.",
+            "correct": false,
+            "feedback": "Populations do not average anything out for you. The only averaging happens inside your sample, and both samples are 1,000."
+          },
+          {
+            "id": "o4",
+            "label": "The city poll, because there is less variety among people.",
+            "correct": false,
+            "feedback": "That is an assumption about the population, not something the design guarantees. And the formula does not contain population variety either — only p and n."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-standard-error__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Worst case, by design.",
+      "conceptTag": "si-standard-error",
+      "hints": [
+        "Pollsters do not know p in advance, so they plan for the value of p that makes p(1−p) largest.",
+        "Try p = 0.5, p = 0.3 and p = 0.1: p(1−p) gives 0.25, 0.21 and 0.09. The maximum is at 0.5.",
+        "So use p = 0.5 and n = 1000: SE = √(0.25/1000), then double it and convert to percentage points."
+      ],
+      "explanationVariants": [
+        "Worst case p = 0.5 gives SE = √(0.25/1000) ≈ 0.0158, so 2 SE ≈ 0.0316 ≈ 3.2 percentage points — the famous ±3 on a 1,000-person poll.",
+        "p(1−p) peaks at 0.25 when p = 0.5, so no true value could make this poll wobble more than about ±3.2 points."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A pollster surveys 1,000 people and quotes the WORST-CASE 2-SE margin. What is it, in percentage points (one decimal)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "p",
+            "label": "the proportion",
+            "value": 0.5
+          },
+          {
+            "id": "n",
+            "label": "the sample size",
+            "value": 1000
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "lit",
+            "value": 2
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "lit",
+              "value": 100
+            },
+            "right": {
+              "op": "sqrt",
+              "arg": {
+                "op": "divide",
+                "left": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "const",
+                    "id": "p"
+                  },
+                  "right": {
+                    "op": "subtract",
+                    "left": {
+                      "op": "lit",
+                      "value": 1
+                    },
+                    "right": {
+                      "op": "const",
+                      "id": "p"
+                    }
+                  }
+                },
+                "right": {
+                  "op": "const",
+                  "id": "n"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 3,
+        "answerMode": "numeric",
+        "tolerance": 0.1,
+        "numericErrors": [
+          {
+            "value": 1.6,
+            "feedback": "That is one SE (about 1.58 points). The quoted margin is two of them."
+          },
+          {
+            "value": 6.3,
+            "feedback": "That is 4 × SE. The convention is a 2-SE band, which covers about 95% of the pile."
+          },
+          {
+            "value": 0.03,
+            "feedback": "That is the margin as a decimal (0.0316). In percentage points it is 3.2."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Worst case p = 0.5: SE = √(0.25/1000) ≈ 0.0158, so 2 SE ≈ 3.2 percentage points.",
+        "successFeedback": "Worst case p = 0.5: SE = √(0.25/1000) ≈ 0.0158, so 2 SE ≈ 3.2 percentage points."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-standard-error__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The wobble has a formula.",
+      "takeaways": [
+        "SE = √(p(1−p)/n) is the typical distance from a poll to the truth; about 95% of polls land within 2 SE of it.",
+        "p(1−p) peaks at p = 0.5, so pollsters quote that worst case — which is where the familiar ±3 on a 1,000-person poll comes from.",
+        "The wobble depends on the sample size, never on the population size."
+      ],
+      "teaser": "Next chapter: turn that band around and point it at the truth."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-standard-error",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Work the formula in order. First p(1−p). Then divide by n. Then take the square root — that is one SE. Then double it for the 95% band. Skipping the square root is the most common slip, and it inflates the answer enormously.",
+        "figure": "si-sampling-dist-sizes"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "One step at a time.",
+        "conceptTag": "si-standard-error",
+        "explanationVariants": [
+          "0.5 × 0.5 = 0.25; 0.25/400 = 0.000625; √0.000625 = 0.025 = 2.5 percentage points.",
+          "SE = 0.025, so the poll typically lands within about 2.5 points of the truth — and within 5 points about 95% of the time."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "p = 0.5, n = 400. Find the standard error in percentage points.",
+          "answer": 2.5,
+          "tolerance": 0.05,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "That is 2 × SE, the 95% band. One standard error is half of it: 2.5 points."
+            },
+            {
+              "value": 25,
+              "feedback": "That is p(1−p) = 0.25 read as a percent — the division by n and the square root are both still to come."
+            }
+          ],
+          "fallbackFeedback": "√(0.25/400) = 0.025 = 2.5 percentage points."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "id": "fn-02-03",
+  "slug": "finding-terms-and-positions",
+  "title": "Finding Terms & Positions",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch2-arithmetic-sequences",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "arithmetic-steps",
+      "body": "From a sequence, find a_1 and d, then use a_n = a_1 + (n − 1)d. For 4, 7, 10, 13, … : a_1 = 4 and d = 3, so the 6th term is 4 + (6 − 1)·3 = 4 + 15 = 19."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Set the difference once and let position 6 read out.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "Dial the common difference so the 6th term of 4, 7, 10, 13, … lands on 19.",
+        "mode": "arithmetic",
+        "first": 4,
+        "targetD": 3,
+        "atPosition": 6,
+        "targetTerm": 19,
+        "successFeedback": "d = 3: five gaps from the first term — 4 + 5·3 = 19. Position in, term out.",
+        "lowFeedback": "Too small — the 6th term falls short of 19. Check one gap: 7 − 4.",
+        "highFeedback": "Too big — the 6th term overshoots 19. The gaps in 4, 7, 10, 13 are smaller."
+      },
+      "predict": {
+        "prompt": "To find the 6th term of 4, 7, 10, 13, … do you need to know the 5th first?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — the formula jumps straight there"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — sequences only move one step at a time"
+          },
+          {
+            "id": "big",
+            "label": "Only for big positions"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "a₆ = 4 + 5·3 = 19 in a single move — set d once and any position reads out directly. Step-by-step also works, but it doesn't scale to term 600; the formula does."
+      },
+      "conceptTag": "fn-arith-rule",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents arith rule.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for arith rule must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines arith rule."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-and-sequences:fn-arith-rule",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Seventh term of a new sequence.",
+      "conceptTag": "fn-arith-rule",
+      "explanationVariants": [
+        "a_1 = 2, d = 4, so a_7 = 2 + 6·4 = 26.",
+        "Six steps of 4 from 2: 2 + 24 = 26."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 2, 6, 10, 14, ..., what is the 7th term?",
+        "answer": 26,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "Take (7 − 1) = 6 steps, not 7: 2 + 6·4 = 26."
+          },
+          {
+            "value": 28,
+            "feedback": "a_1 = 2, d = 4, so a_7 = 2 + 24 = 26."
+          }
+        ],
+        "fallbackFeedback": "a_7 = 2 + 6·4 = 26."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-arith-rule__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You can also find **how far** a term is. In 5, 8, 11, … to reach 23: set 23 = 5 + (n − 1)·3, so 18 = (n − 1)·3, giving n − 1 = 6 and n = 7. The value 23 is the 7th term.",
+      "figure": "fn-how-far"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the position.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 5, 8, 11, ..., which term equals 23? (give n)",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "n − 1 = 18 ÷ 3 = 6, so n = 7 (add 1 back for the position)."
+          },
+          {
+            "value": 8,
+            "feedback": "18 ÷ 3 = 6 steps from the first term, so it's the 7th term."
+          }
+        ],
+        "fallbackFeedback": "23 = 5 + (n − 1)·3 → n = 7."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The same rule handles any term of any arithmetic sequence. Whether you want the 9th term or the position of a value, a_n = a_1 + (n − 1)d does the work — no listing required.",
+      "figure": "fn-any-term"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Ninth term.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 1, 4, 7, 10, ..., what is the 9th term?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 28,
+            "feedback": "Take (9 − 1) = 8 steps, not 9: 1 + 8·3 = 25."
+          },
+          {
+            "value": 27,
+            "feedback": "a_1 = 1, d = 3, so a_9 = 1 + 24 = 25."
+          }
+        ],
+        "fallbackFeedback": "a_9 = 1 + 8·3 = 25."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fifth term.",
+      "conceptTag": "fn-arith-rule",
+      "explanationVariants": [
+        "a_1 = 3, d = 6, so a_5 = 3 + 4·6 = 27.",
+        "Four steps of 6 from 3: 3 + 24 = 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 3, 9, 15, 21, ..., what is the 5th term?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 33,
+            "feedback": "Take (5 − 1) = 4 steps, not 5: 3 + 4·6 = 27."
+          },
+          {
+            "value": 30,
+            "feedback": "a_1 = 3, d = 6, so a_5 = 3 + 24 = 27."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 3 + 4·6 = 27."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-arith-rule__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another position.",
+      "conceptTag": "fn-arith-rule",
+      "explanationVariants": [
+        "34 = 4 + (n − 1)·6 → 30 = (n − 1)·6 → n − 1 = 5 → n = 6.",
+        "30 ÷ 6 = 5 steps from the first term, so it's the 6th term."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 4, 10, 16, ..., which term equals 34? (give n)",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "n − 1 = 30 ÷ 6 = 5, so n = 6 (add 1 back for the position)."
+          },
+          {
+            "value": 7,
+            "feedback": "30 ÷ 6 = 5 steps from the first term, so it's the 6th term."
+          }
+        ],
+        "fallbackFeedback": "34 = 4 + (n − 1)·6 → n = 6."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-arith-rule__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Tenth term.",
+      "conceptTag": "fn-arith-rule",
+      "explanationVariants": [
+        "a_1 = 6, d = 5, so a_10 = 6 + 9·5 = 51.",
+        "Nine steps of 5 from 6: 6 + 45 = 51."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 6, 11, 16, 21, ..., what is the 10th term?",
+        "answer": 51,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 56,
+            "feedback": "Take (10 − 1) = 9 steps, not 10: 6 + 9·5 = 51."
+          },
+          {
+            "value": 50,
+            "feedback": "a_1 = 6, d = 5, so a_10 = 6 + 45 = 51."
+          }
+        ],
+        "fallbackFeedback": "a_10 = 6 + 9·5 = 51."
+      },
+      "hints": [
+        "Read off a_1 = 6 and d = 5.",
+        "Take (10 − 1) = 9 steps: 9·5 = 45.",
+        "6 + 45 = 51."
+      ],
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-arith-rule__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read a_1 and d from the sequence, then the formula gives any term or position.",
+      "takeaways": [
+        "Find a_1 and d, then use a_n = a_1 + (n − 1)d.",
+        "For a position, solve value = a_1 + (n − 1)d for n.",
+        "One rule replaces listing every term."
+      ],
+      "teaser": "next chapter: geometric sequences that multiply by a constant ratio."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-arith-rule",
+      "concept": {
+        "id": "rem-far-c",
+        "kind": "concept",
+        "body": "Read a_1 and d from the sequence, then use a_n = a_1 + (n − 1)d. For 4, 7, 10, 13, … : a_1 = 4, d = 3, so the 6th term is 4 + 5·3 = 19."
+      },
+      "check": {
+        "id": "rem-far-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-arith-rule",
+        "explanationVariants": [
+          "a_6 = 4 + 5·3 = 19.",
+          "Five steps of 3 from 4: 19."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For the sequence 4, 7, 10, 13, ..., what is the 6th term?",
+          "answer": 19,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 22,
+              "feedback": "Use (6 − 1) = 5 steps: 4 + 15 = 19."
+            },
+            {
+              "value": 18,
+              "feedback": "That drops the starting 4. The 6th term adds d five times: 4 + 5(3) = 19."
+            }
+          ],
+          "fallbackFeedback": "a_6 = 4 + 15 = 19."
+        }
+      }
+    }
+  ]
+}

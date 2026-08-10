@@ -1,0 +1,321 @@
+{
+  "id": "si-03-02",
+  "slug": "what-95-percent-counts",
+  "title": "What \"95% Confident\" Actually Counts",
+  "courseId": "statistical-inference",
+  "chapterId": "ch3-margin-of-error",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here is the sentence almost everyone gets wrong:\n\n*\"There is a 95% chance the truth is inside this interval.\"*\n\nThe truth is a fixed number. It is either inside your interval or it is not — there is no chance about it. The 95% describes the **method**: run it many times and about 95% of the intervals it makes will capture the truth.",
+      "figure": "si-ci-meaning"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Each bar is one poll's interval. The dashed line is a truth you would never actually get to see.",
+      "widget": {
+        "type": "ciCapture",
+        "prompt": "Find the width at which about 19 bars in 20 reach across the truth. Draw at least 20 bars at that width.",
+        "populationP": 0.6,
+        "sampleSize": 80,
+        "levels": [
+          80,
+          95,
+          99
+        ],
+        "targetLevel": 95,
+        "requiredIntervals": 20,
+        "seed": 41,
+        "successFeedback": "About 19 in 20 bars caught the truth. Notice what varied and what did not: the bars jumped around, the truth never moved. The 95% is a property of the bar-making machine.",
+        "wrongLevelFeedback": "Count the misses at this width. The 80% setting misses about 1 time in 5 — far too often. The 99% setting almost never misses, but its bars are so wide they say very little.",
+        "moreIntervalsFeedback": "A handful of bars cannot show a hit rate. Add more — a 95% claim is a claim about the long run."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Generate repeated confidence intervals and coordinate method capture rate with confidence level and width.",
+        "invariants": [
+          "population-parameter-fixed",
+          "confidence-describes-long-run-method"
+        ],
+        "misconceptions": [
+          "parameter-random-after-interval-built",
+          "ninety-five-percent-of-samples-contain-truth"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-ciCapture-new-context",
+        "delayed": false
+      },
+      "conceptTag": "si-ci-meaning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Say what the 95% counts.",
+      "conceptTag": "si-ci-meaning",
+      "explanationVariants": [
+        "The parameter is fixed; the interval is random. So the probability statement belongs to the interval-making procedure, not to the parameter.",
+        "About 19 of every 20 intervals this method builds will contain the truth — which says nothing about whether the one on your screen is among them."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You compute one 95% confidence interval: 44% to 52%. What may you say?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The method that produced this interval captures the truth about 95% of the time.",
+            "correct": true,
+            "feedback": "Right. Confidence is a track record of the procedure, and you are borrowing it for this one run."
+          },
+          {
+            "id": "o2",
+            "label": "There is a 95% probability the true value lies between 44% and 52%.",
+            "correct": false,
+            "feedback": "The true value is a fixed number, not a random one. It is already in or already out — this interval either caught it or it did not."
+          },
+          {
+            "id": "o3",
+            "label": "95% of the population supports the proposal.",
+            "correct": false,
+            "feedback": "That confuses the confidence level with the estimate. The estimate here is around 48%; the 95% is about how reliable the method is."
+          },
+          {
+            "id": "o4",
+            "label": "95% of samples would give an estimate between 44% and 52%.",
+            "correct": false,
+            "feedback": "Close but different: the guarantee is about intervals CAPTURING the parameter, not about future estimates landing in this particular interval."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-ci-meaning__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Raising the confidence level widens the interval. There is no free lunch:\n\n**99%** — catches the truth almost always, but the band may be so wide it rules nothing out.\n**80%** — a tight, decisive-looking band that misses one time in five.\n\n95% is a convention, not a law of nature. It is a chosen trade between being right often and saying something useful.",
+      "figure": "si-ci-meaning"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Price the confidence.",
+      "conceptTag": "si-ci-meaning",
+      "explanationVariants": [
+        "Higher confidence needs a wider net, so the interval grows. Certainty and precision pull against each other.",
+        "You can always be 100% confident by saying \"between 0% and 100%\" — perfectly reliable, perfectly useless."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You switch a report from 95% confidence to 99% confidence, keeping the same sample. What happens to the interval?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It gets wider — more confidence costs precision.",
+            "correct": true,
+            "feedback": "Right. To miss less often you must cast a wider net, and a wider net excludes fewer possibilities."
+          },
+          {
+            "id": "o2",
+            "label": "It gets narrower, because you are more confident.",
+            "correct": false,
+            "feedback": "Confidence is not conviction. A higher hit rate requires a bigger target, so the interval must grow."
+          },
+          {
+            "id": "o3",
+            "label": "It stays the same; only the label changes.",
+            "correct": false,
+            "feedback": "The multiplier changes with the level (about 1.96 at 95%, about 2.58 at 99%), so the arithmetic really does widen the band."
+          },
+          {
+            "id": "o4",
+            "label": "It gets narrower because 99% is closer to certainty.",
+            "correct": false,
+            "feedback": "Closer to certainty means a wider band, not a tighter one. The only way to have both is a bigger sample."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-ci-meaning__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two levers, two effects.",
+      "conceptTag": "si-ci-meaning",
+      "explanationVariants": [
+        "A bigger sample narrows the interval at the same confidence. A higher confidence widens it at the same sample. They are separate dials.",
+        "The only way to be both more confident and more precise is to collect more data."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each change to what it does to the interval.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Quadruple the sample, keep 95%"
+          },
+          {
+            "id": "w2",
+            "label": "Keep the sample, go 95% → 99%"
+          },
+          {
+            "id": "w3",
+            "label": "Keep the sample, go 95% → 80%"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "half as wide, same hit rate"
+          },
+          {
+            "id": "y2",
+            "label": "wider, and it misses less often"
+          },
+          {
+            "id": "y3",
+            "label": "narrower, and it misses more often"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y3",
+            "feedback": "Going UP in confidence cannot make the interval narrower — a higher hit rate needs a wider net."
+          },
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "More data buys precision without giving up the hit rate. That is the only lever that improves both."
+          }
+        ],
+        "missFeedback": "Sample size changes the width for free. Confidence level trades width against hit rate.",
+        "successFeedback": "Only more data improves both. Everything else is a trade."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-ci-meaning__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the false sentence.",
+      "conceptTag": "si-ci-meaning",
+      "hints": [
+        "Check each sentence for a probability claim attached to the TRUTH rather than to the method.",
+        "The parameter is a fixed number. Any sentence that gives it a probability of being somewhere is suspect.",
+        "Two of the four sentences are fine, one is about the long-run behaviour of the procedure, and one puts the randomness in the wrong place."
+      ],
+      "explanationVariants": [
+        "\"There is a 95% chance the true value is in this interval\" gives a probability to a fixed constant. The randomness lives in the interval, not in the truth.",
+        "Rewrite it correctly: 95% of the intervals produced by this method contain the true value. This is one of them, or it is not."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A 95% interval comes out as 44%–52%. Which statement is WRONG?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"There is a 95% chance the true value lies between 44% and 52%.\"",
+            "correct": true,
+            "feedback": "Right — this is the wrong one. The true value is fixed; it does not have a 95% chance of being anywhere. The 95% belongs to the method."
+          },
+          {
+            "id": "o2",
+            "label": "\"If we repeated this poll many times, about 95% of the intervals would contain the true value.\"",
+            "correct": false,
+            "feedback": "That one is exactly right — it describes the long-run behaviour of the procedure, which is what the level means."
+          },
+          {
+            "id": "o3",
+            "label": "\"Values outside 44%–52% are less plausible given this sample.\"",
+            "correct": false,
+            "feedback": "That is a fair reading of the interval as a set of plausible values, and it makes no probability claim about the parameter."
+          },
+          {
+            "id": "o4",
+            "label": "\"This interval either contains the true value or it does not — we just don't know which.\"",
+            "correct": false,
+            "feedback": "That is precisely the honest position. It sounds unhelpful, but it is what a fixed parameter and a random interval imply."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-ci-meaning__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Confidence is a property of the method.",
+      "takeaways": [
+        "The parameter is fixed; the interval is random. So \"95%\" describes how often the METHOD captures the truth.",
+        "Any one interval either contains the truth or it does not — you are borrowing the method's track record.",
+        "Higher confidence means a wider interval. Only more data improves confidence and precision together."
+      ],
+      "teaser": "Next: two candidates, two bands, and the word \"lead\" doing more work than it can bear."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-ci-meaning",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Think of a machine that stamps out intervals. About 19 in 20 of its intervals contain the truth. You pull one out of the machine. You cannot say your interval has a 95% chance of being right — you can say the machine is right 95% of the time, and you trust the machine.",
+        "figure": "si-ci-meaning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Where does the 95% live?",
+        "conceptTag": "si-ci-meaning",
+        "explanationVariants": [
+          "It lives in the procedure — the long-run hit rate of intervals it builds.",
+          "It does not live in the parameter, which is a fixed number with no probability attached."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The \"95%\" in a 95% confidence interval is a statement about what?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The method — 95% of the intervals it builds capture the truth.",
+              "correct": true,
+              "feedback": "Right. You inherit the method's reliability; the individual interval has no probability of its own."
+            },
+            {
+              "id": "o2",
+              "label": "The true value — it has a 95% chance of being inside.",
+              "correct": false,
+              "feedback": "The true value is fixed. It is inside or it is not, and no probability attaches to a constant."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "id": "qu-04-03",
+  "slug": "putting-it-together",
+  "title": "Putting It Together",
+  "courseId": "quadratics",
+  "chapterId": "ch4-applications",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-vertex",
+      "body": "Real problems ask you to **model, solve by the best method, and interpret**. Ground or break-even → set the quadratic to 0 and solve. A greatest or least value → use the vertex. Just counting solutions → check the discriminant."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Optimize a profit.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Profit is P = -x^2 + 12x. At what production level x is profit greatest (the axis of symmetry)?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is b, not the peak. The greatest profit is at x = −b/(2a) = 6."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is where profit is zero at the start. The peak is at x = 6."
+          }
+        ],
+        "fallbackFeedback": "Axis x = −12/(2·−1) = 6."
+      },
+      "predict": {
+        "prompt": "P = −x² + 12x: profit is zero at x = 0 and x = 12. The PEAK sits…",
+        "options": [
+          {
+            "id": "mid",
+            "label": "Halfway between — at x = 6"
+          },
+          {
+            "id": "end",
+            "label": "At x = 12, the bigger zero"
+          },
+          {
+            "id": "cant",
+            "label": "Anywhere — parabolas vary"
+          }
+        ],
+        "outcomeId": "mid",
+        "reveal": "A parabola peaks midway between its zeros: (0 + 12)/2 = 6, where P = 36. The axis of symmetry is the AVERAGE of the roots — the peak found with no formula grinding at all."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The peak value.",
+      "conceptTag": "quad-apply-choose",
+      "explanationVariants": [
+        "At x = 6, P = −36 + 72 = 36.",
+        "Substitute the peak x = 6: P = −(6)² + 12(6) = 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For P = -x^2 + 12x, what is the maximum value of P (at the vertex)?",
+        "answer": 36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the production level, not the profit. Substitute it: P = 36."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is b, not the maximum. The peak profit is P = 36."
+          }
+        ],
+        "fallbackFeedback": "P(6) = −36 + 72 = 36."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-apply-choose__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked area: a rectangle x by (x + 4) with area 45 gives x² + 4x − 45 = 0 = (x + 9)(x − 5). The roots are −9 and 5; a length is positive, so x = 5. Length 9, and 5 × 9 = 45 checks out.",
+      "figure": "qu-area-equation"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Solve the area.",
+      "widget": {
+        "type": "quadraticExplore",
+        "form": "roots",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 0,
+        "rMin": -9,
+        "rMax": 9,
+        "aMin": -3,
+        "aMax": 3,
+        "aStart": 1,
+        "r1Start": 0,
+        "r2Start": 0,
+        "gridMax": 9,
+        "targetR1": 5,
+        "targetR2": -9,
+        "prompt": "The rectangle gives x² + 4x − 45 = 0. Drag the crossings until the expansion matches.",
+        "successFeedback": "Roots 5 and −9. The negative crossing is a genuine solution of the equation and a meaningless width — reading the context is part of solving, not an afterthought.",
+        "shapeFeedback": "Leave a at 1.",
+        "vertexFeedback": "Not yet — the crossings must multiply to −45 and add to −4."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "When a problem only asks **how many** solutions, the discriminant D = b² − 4ac answers instantly by its sign — two, one, or none — with no need to solve the whole thing.",
+      "figure": "qu-how-many-solutions"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Count without solving.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A design constraint gives x^2 - 4x + 4 = 0. How many real solutions does it have?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "D = 16 − 16 = 0, so there's exactly one (repeated) solution, not two."
+          },
+          {
+            "value": 0,
+            "feedback": "D = 0 gives one real solution; a negative D would give none."
+          }
+        ],
+        "fallbackFeedback": "D = 16 − 16 = 0 → one real solution."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Interpret a landing.",
+      "conceptTag": "quad-apply-choose",
+      "explanationVariants": [
+        "x² − 7x = 0 factors as x(x − 7) = 0, so it lands at the positive time x = 7.",
+        "The positive root is 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ball lands when x^2 - 7x = 0. At what positive time does it land?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "x = 0 is the launch. The landing is the positive root, x = 7."
+          },
+          {
+            "value": 3,
+            "feedback": "The landing is x = 7 (the nonzero root), not somewhere in the middle."
+          }
+        ],
+        "fallbackFeedback": "x(x − 7) = 0; it lands at x = 7."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-apply-choose__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more dimension.",
+      "conceptTag": "quad-apply-choose",
+      "explanationVariants": [
+        "x² + 6x − 16 = 0 factors as (x + 8)(x − 2) = 0, so the positive width is 2.",
+        "The valid root is 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle x by x+6 has area 16: x^2 + 6x - 16 = 0. What is the width x?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -8,
+            "feedback": "A width can't be negative; the valid root is x = 2."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is the area, not the width. Solving gives x = 2."
+          }
+        ],
+        "fallbackFeedback": "(x + 8)(x − 2) = 0; the positive width is 2."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-apply-choose__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Model and optimize.",
+      "conceptTag": "quad-apply-choose",
+      "explanationVariants": [
+        "Axis x = −10/(2·−1) = 5; h(5) = −25 + 50 = 25.",
+        "The peak is at x = 5, where h = −25 + 50 = 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A projectile follows h = -x^2 + 10x. What is the maximum height (the value at the vertex)?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the time of the peak, not the height. Substitute it: h = 25."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is b, not the maximum. The peak height is h(5) = 25."
+          }
+        ],
+        "fallbackFeedback": "Axis x = 5; h(5) = −25 + 50 = 25."
+      },
+      "hints": [
+        "Find the axis: x = −b/(2a) = −10/(2·−1) = 5.",
+        "Substitute x = 5 into h = −x² + 10x.",
+        "h = −25 + 50 = 25."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-apply-choose__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Model the situation, pick the method that fits, and read the answer in context.",
+      "takeaways": [
+        "Set = 0 and solve for times or dimensions; keep the valid root.",
+        "Use the vertex for a maximum or minimum value.",
+        "Use the discriminant when you only need the count."
+      ],
+      "teaser": "you've completed quadratics — parabolas, factoring, the formula, and applications."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-apply-choose",
+      "concept": {
+        "id": "rem-qac-c",
+        "kind": "concept",
+        "body": "Match the method to the question: ground or break-even → solve = 0; greatest/least value → vertex; how many → discriminant. For P = −x² + 12x, the peak is at x = −b/(2a) = 6, where P = 36."
+      },
+      "check": {
+        "id": "rem-qac-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-apply-choose",
+        "explanationVariants": [
+          "Axis x = −12/(2·−1) = 6.",
+          "The greatest profit is at x = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Profit is P = -x^2 + 12x. At what production level x is profit greatest (the axis of symmetry)?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "12 is b; the peak is at x = −b/(2a) = 6."
+            },
+            {
+              "value": 0,
+              "feedback": "0 is the start; the peak is at x = 6."
+            }
+          ],
+          "fallbackFeedback": "Axis x = −12/(2·−1) = 6."
+        }
+      }
+    }
+  ]
+}

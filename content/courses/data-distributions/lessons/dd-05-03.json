@@ -1,0 +1,317 @@
+{
+  "id": "dd-05-03",
+  "slug": "the-data-detective",
+  "title": "The Data Detective",
+  "courseId": "data-distributions",
+  "chapterId": "ch5-describing-distributions",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Course capstone: run the WHOLE pipeline on one fresh case. The question — *\"How many books do students in our class borrow per week?\"* — anticipates variability, so it's statistical. Ten students answer: 0, 1, 1, 2, 2, 2, 3, 3, 4, **12**. Your job, detective: plot it, name its shape, choose the honest summaries, and report in context. Every tool from chapters 1–4 shows up once.",
+      "figure": "distribution-story"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the investigation.",
+      "conceptTag": "data-capstone",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Arrange the full data-detective workflow, first step on top.",
+        "items": [
+          {
+            "id": "w4",
+            "label": "Choose summaries that fit the shape; report with context"
+          },
+          {
+            "id": "w2",
+            "label": "Collect one value per student"
+          },
+          {
+            "id": "w1",
+            "label": "Pose a statistical question (one that expects variety)"
+          },
+          {
+            "id": "w3",
+            "label": "Plot the data and read its shape"
+          }
+        ],
+        "correctOrder": [
+          "w1",
+          "w2",
+          "w3",
+          "w4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "w4",
+            "second": "w3",
+            "feedback": "Summaries are CHOSEN to fit the shape — you can't pick them before the plot reveals it."
+          },
+          {
+            "first": "w3",
+            "second": "w2",
+            "feedback": "There's nothing to plot until the data is collected — one value per student comes first."
+          }
+        ],
+        "missFeedback": "Question → data → picture → summary: each step feeds the next.",
+        "successFeedback": "That's the whole course in four moves — question, data, picture, summary."
+      },
+      "predict": {
+        "prompt": "In the full data-detective workflow, what belongs LAST — collecting the data or interpreting what it says?",
+        "options": [
+          {
+            "id": "interpret",
+            "label": "Interpreting what it says"
+          },
+          {
+            "id": "collect",
+            "label": "Collecting the data"
+          },
+          {
+            "id": "graph",
+            "label": "Drawing the graph"
+          }
+        ],
+        "outcomeId": "interpret",
+        "reveal": "Collection and graphing serve the finale: reading what the data actually answers. Interpretation is the payoff step, so it comes last."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the shape.",
+      "conceptTag": "data-capstone",
+      "explanationVariants": [
+        "Nine of the ten dots pile up at 0–4; then the values 5 through 11 are empty, and a lone dot sits at 12 — a low cluster, a wide gap, and an outlier.",
+        "Cluster (0–4), gap (5–11), outlier (12): the three shape words this plot demands."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Plot 0, 1, 1, 2, 2, 2, 3, 3, 4, 12 mentally. Which shape description fits?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Clustered at 0–4 with a gap, plus a high outlier at 12",
+            "correct": true,
+            "feedback": "Right — nine dots bunch low, the values 5–11 stand empty, and the 12 sits alone past the gap."
+          },
+          {
+            "id": "b",
+            "label": "Symmetric around a peak at 2",
+            "feedback": "The peak IS at 2 — but symmetry dies at the 12, which has no low-side mirror. The lone far value makes this clustered-with-outlier."
+          },
+          {
+            "id": "c",
+            "label": "Flat, since most values appear once or twice",
+            "feedback": "The stack at 2 towers (three dots) over ends holding one — and flat shapes have no gaps, while this one is empty from 5 to 11."
+          }
+        ]
+      },
+      "hints": [
+        "Where do the dots bunch?",
+        "What's between 4 and 12?",
+        "A lone value past a gap has a name."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCapShape"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Shape decides the summaries. The 12 is an outlier, so the honest pair is the resistant one: **median with IQR**. Sorted halves — 0, 1, 1, 2, 2 and 2, 3, 3, 4, 12 — give median (2 + 2) ÷ 2 = **2**, Q1 = **1**, Q3 = **3**. Meanwhile the mean is 30 ÷ 10 = **3**, dragged a full book above the median by one avid reader.",
+      "figure": "dd-summary-pairs"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Confirm the resistant pair.",
+      "conceptTag": "data-capstone",
+      "widget": {
+        "type": "numeric",
+        "prompt": "With Q1 = 1 and Q3 = 3, what is the IQR of the borrowing data?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 adds the quartiles (3 + 1). The IQR is the width between them: 3 − 1 = 2."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the RANGE (12 − 0) — and the outlier owns it. The resistant spread is Q3 − Q1 = 2."
+          }
+        ],
+        "fallbackFeedback": "IQR = Q3 − Q1 = 3 − 1 = 2 books — the calm middle half, untouched by the reader at 12."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Expose the dragged mean.",
+      "conceptTag": "data-capstone",
+      "explanationVariants": [
+        "The sum is 30 across 10 students: mean 3. But sort the data — 0 through 4, then 12 — and eight of the ten values sit BELOW that mean. The 12 dragged it above almost everyone.",
+        "Without the 12, the other nine values sum to 18 — mean 2. Add the one avid reader and the mean climbs to 3: a single value lifted the whole class average by a full book."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The borrowing data sums to 30 across 10 students. Compute the MEAN.",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the MEDIAN — the resistant center. The mean pools the sum: 30 ÷ 10 = 3, a full book higher, thanks to the 12."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is the pooled total. Share it across the 10 students: 30 ÷ 10 = 3."
+          }
+        ],
+        "fallbackFeedback": "Mean = sum ÷ count = 30 ÷ 10 = 3 books — notice it exceeds 8 of the 10 actual values."
+      },
+      "hints": [
+        "Sum ÷ count.",
+        "30 books across 10 students.",
+        "30 ÷ 10."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCapMean"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "File the final report.",
+      "conceptTag": "data-capstone",
+      "explanationVariants": [
+        "Only the full report survives the checklist: shape (clustered low, outlier at 12), center (median 2 — resistant), spread (IQR 2), all in books-per-week context.",
+        "The outlier disqualifies a mean-led report, and a bare number answers no statistical question — shape + median + IQR + context wins."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which report should the detective file for the borrowing data?",
+        "options": [
+          {
+            "id": "a",
+            "label": "\"Most students borrow 0–4 books (median 2, IQR 2); one outlier borrows 12\"",
+            "correct": true,
+            "feedback": "Shape, resistant center, resistant spread, context — and the outlier reported as real data rather than hidden. Case closed."
+          },
+          {
+            "id": "b",
+            "label": "\"The average is 3 books\" — short and sufficient",
+            "feedback": "That lone mean sits above 8 of the 10 students — the outlier dragged it, and no shape or spread backs it up. Report the median-IQR pair instead."
+          },
+          {
+            "id": "c",
+            "label": "\"Median 2, after deleting the 12 as an error\"",
+            "feedback": "The 12 is real data — an avid reader, not a typo. Outliers get REPORTED (and resisted via median/IQR), never silently erased."
+          }
+        ]
+      },
+      "hints": [
+        "Run the three-question checklist, plus context.",
+        "Does an outlier permit a mean-led report?",
+        "And is deleting real data ever the move?"
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCapReport"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One last computation, detective.",
+      "conceptTag": "data-capstone",
+      "explanationVariants": [
+        "Mean 3 minus median 2 = 1 book of drag — produced entirely by the single 12 among ten values.",
+        "The gap between the centers measures the outlier's pull: 3 − 2 = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The borrowing data has mean 3 and median 2. By how many books did the centers split apart?",
+        "answer": 1,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 adds the centers (3 + 2). Their GAP is the difference: 3 − 2 = 1 book."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the outlier minus the mean (12 − 3). The question compares the two centers to each other: 3 − 2 = 1."
+          }
+        ],
+        "fallbackFeedback": "Gap = mean − median = 3 − 2 = 1 book — the outlier's signature."
+      },
+      "hints": [
+        "Two centers, one subtraction.",
+        "Mean 3, median 2.",
+        "3 − 2."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCapGap"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The whole pipeline, yours now.",
+      "takeaways": [
+        "Question → data → picture → summary: the complete statistical workflow.",
+        "Shape chooses the summaries — outliers call for the median-IQR pair.",
+        "Report outliers as real data, in context units, never erased."
+      ],
+      "teaser": "that closes Data & Distributions — and with it, the whole Grade 6 trail. Onward to review, or a fresh challenge!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "data-capstone",
+      "concept": {
+        "id": "rem-dc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Shape chooses the summaries.** An outlier drags the mean and the range, but the median and IQR resist — so outlier data reports the median-IQR pair."
+      },
+      "check": {
+        "id": "rem-dc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "data-capstone",
+        "explanationVariants": [
+          "Outliers drag the mean; the median resists — so it's the honest center for data like 1, 2, 3, 50.",
+          "Resistant summaries (median, IQR) are the pair to report when a value sits far from the pack."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The data 1, 2, 3, 50 has an outlier. Which CENTER should the report lead with?",
+          "options": [
+            {
+              "id": "a",
+              "label": "The median, 2.5 — it resists the 50",
+              "correct": true,
+              "feedback": "Right — the sorted middle pair is 2 and 3, so the median 2.5 stays with the pack while the mean (14) chases the 50."
+            },
+            {
+              "id": "b",
+              "label": "The mean, 14 — it uses every value",
+              "feedback": "Using every value is exactly how the 50 drags it to 14 — higher than three of the four data points. Lead with the resistant median, 2.5."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

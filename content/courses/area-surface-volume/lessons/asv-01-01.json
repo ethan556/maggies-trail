@@ -1,0 +1,318 @@
+{
+  "id": "asv-01-01",
+  "slug": "the-triangles-half",
+  "title": "The Triangle's Half",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch1-area-triangles-quads",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "triangle-half-rectangle",
+      "body": "Any triangle sits inside a rectangle sharing its base and height — and it always covers exactly **half** that rectangle. So a triangle's area is **1/2 × base × height**: base 6, height 4 gives 1/2 × 6 × 4 = **12**. The rectangle would be 24; the triangle is exactly half of it."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Apply the formula.",
+      "conceptTag": "triangle-area",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has base 8 and height 5. What is its area?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is the full RECTANGLE's area (8 × 5), forgetting the triangle is only HALF of it: 1/2 × 8 × 5 = 20."
+          },
+          {
+            "value": 13,
+            "feedback": "13 adds 8 + 5. Triangle area multiplies: 1/2 × 8 × 5 = 20."
+          }
+        ],
+        "fallbackFeedback": "1/2 × 8 × 5 = 20 square units."
+      },
+      "predict": {
+        "prompt": "A triangle with base 8 and height 5 — will its area be more or less than the 8-by-5 rectangle drawn around it?",
+        "options": [
+          {
+            "id": "less",
+            "label": "Less — the triangle is part of it"
+          },
+          {
+            "id": "more",
+            "label": "More"
+          },
+          {
+            "id": "same",
+            "label": "Exactly the same"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "The triangle fills exactly half of its surrounding rectangle — that halving is where the ½ in the formula comes from."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Don't forget the half.",
+      "conceptTag": "triangle-area",
+      "explanationVariants": [
+        "1/2 × 10 × 3 = 15 — the enclosing rectangle would be 30, and the triangle is exactly half.",
+        "Multiply base and height, then take half: 30 ÷ 2 = 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has base 10 and height 3. What is its area?",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 is the RECTANGLE's area (10 × 3), missing the ÷2 that makes it a triangle: 1/2 × 10 × 3 = 15."
+          },
+          {
+            "value": 7,
+            "feedback": "7 doesn't match either the rectangle or its half cleanly — recompute: 1/2 × 10 × 3 = 15."
+          }
+        ],
+        "fallbackFeedback": "1/2 × 10 × 3 = 15 square units."
+      },
+      "variant": {
+        "gen": "triangle-area-calc"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Height** always means the PERPENDICULAR distance from the base to the opposite vertex — a straight up-and-down measurement, never a slanted side. A tall, tilted triangle can have a short height if its apex leans far to one side; height is about the drop, not the slant.",
+      "figure": "asv-height"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Height isn't a side.",
+      "conceptTag": "triangle-area",
+      "explanationVariants": [
+        "Height is the perpendicular (straight up-down) distance from base to apex — a slanted side is usually longer than this.",
+        "The area formula needs the PERPENDICULAR height, not any slanted edge length."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does \"height\" mean in the triangle area formula?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The perpendicular distance from the base to the opposite vertex",
+            "correct": true,
+            "feedback": "Right — height is measured straight up from the base, at a right angle to it."
+          },
+          {
+            "id": "b",
+            "label": "The length of the longest side",
+            "feedback": "The longest side (often a slanted edge) isn't the height. Height is the PERPENDICULAR drop from base to apex."
+          },
+          {
+            "id": "c",
+            "label": "The length of any side touching the base",
+            "feedback": "A side touching the base might be slanted, which is longer than the true perpendicular height."
+          }
+        ]
+      },
+      "hints": [
+        "Height is a straight up-down measurement.",
+        "It's perpendicular to the base.",
+        "Not a slanted side length."
+      ],
+      "variant": {"gen": "triangle-area-calc", "form": "heightMeaning"}
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match triangle to area.",
+      "conceptTag": "triangle-area",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each triangle's base/height to its area.",
+        "left": [
+          {
+            "id": "t1",
+            "label": "base 7, height 6"
+          },
+          {
+            "id": "t2",
+            "label": "base 12, height 4"
+          },
+          {
+            "id": "t3",
+            "label": "base 5, height 8"
+          },
+          {
+            "id": "t4",
+            "label": "base 6, height 6"
+          }
+        ],
+        "right": [
+          {
+            "id": "a21",
+            "label": "21"
+          },
+          {
+            "id": "a24",
+            "label": "24"
+          },
+          {
+            "id": "a20",
+            "label": "20"
+          },
+          {
+            "id": "a18",
+            "label": "18"
+          }
+        ],
+        "pairs": {
+          "t1": "a21",
+          "t2": "a24",
+          "t3": "a20",
+          "t4": "a18"
+        },
+        "pairErrors": [
+          {
+            "left": "t2",
+            "right": "a18",
+            "feedback": "18 belongs to base 6, height 6. For base 12, height 4: 1/2 × 12 × 4 = 24."
+          },
+          {
+            "left": "t4",
+            "right": "a24",
+            "feedback": "24 belongs to base 12, height 4. For base 6, height 6: 1/2 × 6 × 6 = 18."
+          }
+        ],
+        "missFeedback": "Compute 1/2 × base × height for each: 7×6/2=21, 12×4/2=24, 5×8/2=20, 6×6/2=18.",
+        "successFeedback": "All matched — half the base-times-height, every time."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find a missing height.",
+      "conceptTag": "triangle-area",
+      "explanationVariants": [
+        "Area 21 with base 7: 21 = 1/2 × 7 × h, so h = 42 ÷ 7 = 6.",
+        "Work backwards: double the area (42), divide by the base (7): 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has base 7 and area 21. What is its height?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "units",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 divides 21 by 7 without first UNDOING the 1/2. Double the area first (42), then divide by base: 42 ÷ 7 = 6."
+          },
+          {
+            "value": 147,
+            "feedback": "147 multiplies instead of solving backwards. Double the area (42), divide by the base (7): 6."
+          }
+        ],
+        "fallbackFeedback": "Double 21 to 42, then divide by 7: height = 6."
+      },
+      "variant": {
+        "gen": "triangle-area-calc",
+        "form": "heightFromArea"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tilted triangle.",
+      "conceptTag": "triangle-area",
+      "hints": [
+        "The slanted side (13) is NOT the height.",
+        "The height is the straight perpendicular drop, given separately as 8.",
+        "Use base 10, height 8 in the formula."
+      ],
+      "explanationVariants": [
+        "The 13 is a slanted side, a distractor; the true height is 8. Area = 1/2 × 10 × 8 = 40.",
+        "Ignore the slant length; use only the perpendicular height (8) with the base (10)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tilted triangle has base 10, a slanted side of length 13, and a perpendicular height of 8. What is its area?",
+        "answer": 40,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65 uses the SLANTED side (13) as if it were the height. The true height is the perpendicular drop, 8: 1/2 × 10 × 8 = 40."
+          },
+          {
+            "value": 130,
+            "feedback": "130 multiplies base × slant (10 × 13) without halving, and uses the wrong measurement. Use base × HEIGHT: 1/2 × 10 × 8 = 40."
+          }
+        ],
+        "fallbackFeedback": "1/2 × 10 × 8 = 40 — the slanted 13 was a distractor, not the height."
+      },
+      "variant": {
+        "gen": "triangle-area-calc",
+        "form": "slantDistractor"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Half the enclosing rectangle.",
+      "takeaways": [
+        "Triangle area = 1/2 × base × height — always half of the enclosing rectangle.",
+        "Height is the PERPENDICULAR distance from base to apex, never a slanted side.",
+        "Work backwards from area to find a missing base or height by undoing the ×1/2 first."
+      ],
+      "teaser": "next: parallelograms and trapezoids — shapes built from triangles."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "triangle-area",
+      "concept": {
+        "id": "rem-ta-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Half of base times height.** Base 4, height 5: 1/2 × 4 × 5 = 10. The enclosing rectangle would be 20; the triangle is exactly half of that."
+      },
+      "check": {
+        "id": "rem-ta-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "triangle-area",
+        "explanationVariants": [
+          "1/2 × 4 × 5 = 10.",
+          "The rectangle would be 20; the triangle is half: 10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A triangle has base 4 and height 5. What is its area?",
+          "answer": 10,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "20 is the RECTANGLE's area. The triangle is half: 1/2 × 4 × 5 = 10."
+            },
+            {
+              "value": 9,
+              "feedback": "9 adds 4 + 5. Triangle area multiplies then halves: 1/2 × 4 × 5 = 10."
+            }
+          ],
+          "fallbackFeedback": "1/2 × 4 × 5 = 10 square units."
+        }
+      }
+    }
+  ]
+}

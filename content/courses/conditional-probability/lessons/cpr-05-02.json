@@ -1,0 +1,332 @@
+{
+  "id": "cpr-05-02",
+  "slug": "combinations",
+  "title": "Combinations: When Order Doesn't Matter",
+  "courseId": "conditional-probability",
+  "chapterId": "ch5-counting",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A podium of gold-silver-bronze cares about order. A **team** does not: {A, B, C} is the same team however you list it.\n\nThose 60 ordered picks contain each team exactly 3! = 6 times — once per ordering. So divide:\n\n60 ÷ 6 = 10 teams.",
+      "figure": "cpr-combination-fold"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The six orderings of one team, collapsing into one.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Of the 6 orderings of {A, B, C}, shade the fraction that count as **different teams**.",
+        "rows": 1,
+        "cols": 6,
+        "targetNum": 1,
+        "targetDen": 6,
+        "start": 0,
+        "successFeedback": "1 of 6. Six orderings, one team — which is exactly why an ordered count must be divided by 3! to become a team count.",
+        "lowFeedback": "The six orderings still describe one real team, so shade one of the six.",
+        "highFeedback": "ABC and CBA are the same three people. Only one of the six orderings counts as a distinct team."
+      },
+      "predict": {
+        "prompt": "You'll shade 1/6 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 3/6 here — and 1 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-combination"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Divide out the orderings.",
+      "conceptTag": "cpr-combination",
+      "explanationVariants": [
+        "C(5,3) = 5P3 / 3! = 60/6 = 10 teams.",
+        "Each of the 10 teams shows up 6 times in the 60 ordered picks, once per arrangement of its three members."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 5 runners, how many different **teams of 3** (no order) can be chosen?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "That is 5P3, the ordered count — it treats ABC and CBA as different. Divide by 3! = 6 to collapse the orderings."
+          },
+          {
+            "value": 20,
+            "feedback": "That is 60 ÷ 3. You must divide by 3! = 6, not by 3 — there are six ways to order three people, not three."
+          },
+          {
+            "value": 15,
+            "feedback": "That is C(6,2). With 5 runners choosing 3, the count is 5!/(3!·2!) = 10."
+          }
+        ],
+        "fallbackFeedback": "60 ordered picks ÷ 3! = 10 teams."
+      },
+      "variant": {
+        "gen": "combination-count"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The formula records that division:\n\nC(n,k) = nPk / k! = n! / (k! (n−k)!).\n\nAsk one question before you compute: **would swapping two of my chosen items give a different outcome?** If yes, use a permutation. If no, use a combination.",
+      "figure": "cpr-combination-fold"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which tool for which job?",
+      "conceptTag": "cpr-combination",
+      "explanationVariants": [
+        "Medals, passwords and rankings distinguish order — permutations. Teams, committees and handshakes do not — combinations.",
+        "Swap two chosen items. If the outcome changed, order mattered."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Does swapping two of the chosen items change the outcome?",
+        "buckets": [
+          {
+            "id": "perm",
+            "label": "Order matters (permutation)",
+            "icon": "🏅"
+          },
+          {
+            "id": "comb",
+            "label": "Order doesn't (combination)",
+            "icon": "👥"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Gold, silver, bronze from 8 runners",
+            "bucketId": "perm",
+            "feedback": "Swapping gold and silver hands out different medals, so the outcome changed. Permutation."
+          },
+          {
+            "id": "s2",
+            "label": "A 3-person committee from 8 people",
+            "bucketId": "comb",
+            "feedback": "The same three people form the same committee however you list them. Combination."
+          },
+          {
+            "id": "s3",
+            "label": "A 4-digit PIN from digits 0–9",
+            "bucketId": "perm",
+            "feedback": "1234 and 4321 open different locks, so the order is part of the outcome."
+          },
+          {
+            "id": "s4",
+            "label": "Handshakes between 6 people",
+            "bucketId": "comb",
+            "feedback": "A shaking B is the same handshake as B shaking A, so each pair counts once: C(6,2) = 15."
+          }
+        ],
+        "missFeedback": "Swap two chosen items and ask whether anything actually changed.",
+        "successFeedback": "Medals and PINs care about order; committees and handshakes do not."
+      },
+      "variant": {
+        "gen": "combination-count",
+        "form": "orderBucket"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count the handshakes.",
+      "conceptTag": "cpr-combination",
+      "explanationVariants": [
+        "C(6,2) = (6 × 5)/2! = 30/2 = 15 handshakes.",
+        "Each of the 6 people shakes 5 hands, giving 30 — but each handshake was counted from both sides, so halve it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "6 people each shake hands once with every other person. How many handshakes?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That is 6 × 5 — every handshake counted twice, once from each person's point of view. Divide by 2."
+          },
+          {
+            "value": 36,
+            "feedback": "That is 6², which includes people shaking their own hand and counts every pair twice."
+          },
+          {
+            "value": 12,
+            "feedback": "That is 6 + 6 or 6 × 2. Each person shakes 5 hands, not 2, and the total must then be halved."
+          }
+        ],
+        "fallbackFeedback": "C(6,2) = 30/2 = 15."
+      },
+      "variant": {
+        "gen": "combination-count",
+        "form": "handshakes"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Bigger numbers, same rule.",
+      "conceptTag": "cpr-combination",
+      "explanationVariants": [
+        "C(10,3) = (10 × 9 × 8)/3! = 720/6 = 120.",
+        "720 ordered picks, each team counted 6 times, so 120 distinct teams."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 10 people, how many 3-person committees can be formed?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 720,
+            "feedback": "That is 10P3, the ordered count. Committees have no ranks, so divide by 3! = 6."
+          },
+          {
+            "value": 240,
+            "feedback": "That is 720 ÷ 3. Three chosen people can be ordered in 3! = 6 ways, so the divisor is 6."
+          },
+          {
+            "value": 30,
+            "feedback": "That is 10 × 3. Counting selections means filling slots and then removing the orderings: (10 × 9 × 8)/6."
+          }
+        ],
+        "fallbackFeedback": "(10 × 9 × 8)/3! = 120."
+      },
+      "variant": {
+        "gen": "combination-count"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two groups, one selection.",
+      "conceptTag": "cpr-combination",
+      "hints": [
+        "Split the job: choose the girls, then choose the boys, then combine.",
+        "Girls: C(4,2) = 6 ways. Boys: C(5,1) = 5 ways.",
+        "Each girl-pair can be teamed with any boy, so multiply the two counts."
+      ],
+      "explanationVariants": [
+        "C(4,2) × C(5,1) = 6 × 5 = 30 committees.",
+        "Pick the 2 girls in 6 ways; for each, any of the 5 boys completes the group — 30 in all."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A club has 4 girls and 5 boys. How many 3-person committees contain **exactly 2 girls**?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "That is 6 + 5. The two choices are made together, so their counts multiply: every girl-pair can pair with every boy."
+          },
+          {
+            "value": 84,
+            "feedback": "That is C(9,3) — every possible committee, with no restriction on how many girls it contains."
+          },
+          {
+            "value": 60,
+            "feedback": "That is 6 × 10 or a similar slip. There are C(5,1) = 5 ways to choose the single boy, not 10."
+          }
+        ],
+        "fallbackFeedback": "C(4,2) × C(5,1) = 6 × 5 = 30."
+      },
+      "variant": {
+        "gen": "combination-count",
+        "form": "exactlyTwo"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Order in, order out.",
+      "takeaways": [
+        "C(n,k) = nPk / k! — count the ordered picks, then divide out the orderings you do not want.",
+        "Swap two chosen items: if nothing changes, it is a combination.",
+        "Choices made in separate groups multiply: choose the girls, choose the boys, multiply."
+      ],
+      "teaser": "Next: use these counts as the numerator and denominator of a probability."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-combination",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Count as if order mattered, then repair. Any k chosen items can be arranged in k! ways, and those arrangements all describe the same group — so the ordered count is exactly k! times too big. Divide by k!.",
+        "figure": "cpr-combination-fold"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Repair the overcount.",
+        "conceptTag": "cpr-combination",
+        "explanationVariants": [
+          "4 × 3 = 12 ordered pairs, and each pair was counted twice (AB and BA), so 12/2! = 6 pairs.",
+          "C(4,2) = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "From 4 people, how many **pairs** can be chosen (order does not matter)?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "That is the ordered count 4 × 3. AB and BA are the same pair, so halve it."
+            },
+            {
+              "value": 8,
+              "feedback": "That is 4 × 2. Each of the 4 people can pair with 3 others, giving 12 ordered pairs, then halved to 6."
+            }
+          ],
+          "fallbackFeedback": "(4 × 3)/2! = 6."
+        }
+      }
+    }
+  ]
+}

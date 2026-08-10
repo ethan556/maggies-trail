@@ -1,0 +1,349 @@
+{
+  "id": "rf-05-01",
+  "slug": "clearing-the-lcd",
+  "title": "Solving by Clearing the LCD",
+  "courseId": "rational-functions",
+  "chapterId": "ch5-rational-equations-and-variation",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A rational **equation** clears its fractions in one move: **multiply every term by the LCD**. For 3/x + 1/2 = 2 (LCD 2x): 6 + x = 4x → x = **2**. Check: 3/2 + 1/2 = 2. ✓ One multiplication, then ordinary algebra.",
+      "figure": "rf-clear-fractions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Clear and solve.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 5/x = 10/(x + 6).",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Cross-multiply: 5(x + 6) = 10x → 5x + 30 = 10x → 30 = 5x → x = 6."
+          },
+          {
+            "value": -6,
+            "feedback": "x = −6 is EXCLUDED — it zeroes a denominator; the solution is +6 (and check: 5/6 = 10/12 ✓)."
+          }
+        ],
+        "fallbackFeedback": "5(x + 6) = 10x → x = 6; check 5/6 = 10/12. ✓"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The exclusions from Chapter 1 become **candidate filters**, exactly like extraneous solutions in radical equations. Multiplying by the LCD can mint candidates that zero a denominator — those are phantoms. **Solve, then check every candidate against the banned list.**",
+      "figure": "rf-candidate-filter"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A phantom appears.",
+      "conceptTag": "rf-equations",
+      "explanationVariants": [
+        "Clear by (x − 3): 1 + 2(x − 3) = x → 2x − 5 = x → x = 5. Check: 1/2 + 2 = 5/2. ✓",
+        "Clear by (x − 3), solve the linear result, and confirm 5 isn't banned."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 1/(x − 3) + 2 = x/(x − 3).",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 zeroes the denominators — it's the EXCLUDED value, never a solution; the honest candidate is 5."
+          },
+          {
+            "value": -5,
+            "feedback": "1 + 2(x − 3) = x gives 2x − 5 = x → x = +5 — track the sign when collecting."
+          }
+        ],
+        "fallbackFeedback": "1 + 2(x − 3) = x → x = 5; check: 1/2 + 2 = 5/2. ✓"
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-equations__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Judge a candidate.",
+      "predict": {
+        "prompt": "Clearing the LCD gave candidates x = 4 and x = 7, from an equation whose denominator was (x − 4). Before checking either — can BOTH be solutions?",
+        "options": [
+          {
+            "id": "one",
+            "label": "No — x = 4 was never allowed, because it zeroes the denominator"
+          },
+          {
+            "id": "both",
+            "label": "Yes — both came out of correct algebra, so both count"
+          },
+          {
+            "id": "neither",
+            "label": "No — multiplying by the LCD invalidates every candidate"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Only one. x = 4 was banned before the algebra started — it makes the original denominator zero, so it was never in the domain. Multiplying by the LCD quietly removed that restriction and minted a candidate the original equation cannot accept."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "The solving reduces to (x − 7)/(x − 4). Build its sign chart — then look at where each candidate sits.",
+        "roots": [
+          {
+            "x": 7,
+            "mult": 1
+          }
+        ],
+        "poles": [
+          {
+            "x": 4,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "There is the verdict, drawn rather than recalled: x = 7 sits ON the axis — the function is genuinely zero there, so it solves the equation. x = 4 is the dashed line, where the function does not exist at all. A solution has to be a point on the curve, and only one of the two candidates is.",
+        "crossFeedback": "Both cuts are odd, so the sign changes at each — at the zero (x = 7) because the curve passes through the axis, and at the pole (x = 4) because it swaps sides of the asymptote without ever touching it.",
+        "bounceFeedback": "A sign holding across a cut means an even multiplicity. Both (x − 7) and (x − 4) appear once here, so the sign changes at both."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Quadratic after clearing.",
+      "conceptTag": "rf-equations",
+      "explanationVariants": [
+        "x + 6/x = 5 (LCD x): x² + 6 = 5x → x² − 5x + 6 = 0 → (x − 2)(x − 3) = 0: x = 2 or 3, both legal (neither is 0).",
+        "Clearing can raise the degree — factor the quadratic, then filter."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve x + 6/x = 5.",
+        "tokens": [
+          {
+            "id": "a",
+            "label": "x = 2"
+          },
+          {
+            "id": "b",
+            "label": "x = 3"
+          },
+          {
+            "id": "c",
+            "label": "x = 5"
+          },
+          {
+            "id": "d",
+            "label": "x = −2"
+          },
+          {
+            "id": "e",
+            "label": "x = −3"
+          },
+          {
+            "id": "orr",
+            "label": "or"
+          }
+        ],
+        "correct": [
+          "a",
+          "orr",
+          "b"
+        ],
+        "acceptAlso": [
+          [
+            "b",
+            "orr",
+            "a"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "a"
+            ],
+            "feedback": "Check 3 too: 3 + 6/3 = 3 + 2 = 5 ✓ — both survive; only x = 0 was banned."
+          },
+          {
+            "sequence": [
+              "c"
+            ],
+            "feedback": "Don't drop the 6/x — clearing gives x² + 6 = 5x, a QUADRATIC with roots 2 and 3."
+          },
+          {
+            "sequence": [
+              "d",
+              "orr",
+              "e"
+            ],
+            "feedback": "x² − 5x + 6 needs factors summing to +5: (x − 2)(x − 3) — positive roots."
+          },
+          {
+            "sequence": [
+              "e",
+              "orr",
+              "d"
+            ],
+            "feedback": "x² − 5x + 6 needs factors summing to +5: (x − 2)(x − 3) — positive roots."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Multiply through by x: x² + 6 = 5x, so x² − 5x + 6 = (x − 2)(x − 3) = 0 — then check both against x ≠ 0.",
+        "successFeedback": "Right — x² − 5x + 6 = 0 factors as (x − 2)(x − 3); neither candidate zeroes the denominator."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-equations__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "No survivors.",
+      "conceptTag": "rf-equations",
+      "explanationVariants": [
+        "3/(x − 1) = (x + 2)/(x − 1) forces 3 = x + 2 → x = 1 — but 1 is BANNED: no solution.",
+        "When the only candidate is the excluded value, the solution set is empty."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve 3/(x − 1) = (x + 2)/(x − 1).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "no solution — the only candidate is excluded",
+            "correct": true,
+            "feedback": "Right — matching denominators force x = 1, which zeroes them: empty set."
+          },
+          {
+            "id": "o2",
+            "label": "x = 1",
+            "correct": false,
+            "feedback": "Substitute: 3/0 — undefined; the candidate dies at the door."
+          },
+          {
+            "id": "o3",
+            "label": "x = 5",
+            "correct": false,
+            "feedback": "Equal denominators equate the TOPS: 3 = x + 2 → x = 1 (then the ban strikes)."
+          },
+          {
+            "id": "o4",
+            "label": "x = −2",
+            "correct": false,
+            "feedback": "Equating the matching-denominator tops gives 3 = x + 2 → x = 1 (which is banned), never −2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-equations__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full solve with a filter.",
+      "conceptTag": "rf-equations",
+      "explanationVariants": [
+        "2/(x − 2) = x/(x − 2) − 1: clear by (x − 2): 2 = x − (x − 2) = 2 — TRUE for every legal x! Every x except 2 solves it.",
+        "The cleared equation is an identity; only the exclusion carves the solution set."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve 2/(x − 2) = x/(x − 2) − 1.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "every real x except 2",
+            "correct": true,
+            "feedback": "Right — clearing gives 2 = x − x + 2, always true; only the ban at 2 limits it."
+          },
+          {
+            "id": "o2",
+            "label": "x = 2 only",
+            "correct": false,
+            "feedback": "2 is the one value that CAN'T work — it zeroes the denominators."
+          },
+          {
+            "id": "o3",
+            "label": "no solution",
+            "correct": false,
+            "feedback": "Test x = 5: 2/3 vs 5/3 − 1 = 2/3 ✓ — the cleared equation holds everywhere legal."
+          },
+          {
+            "id": "o4",
+            "label": "x = 0 only",
+            "correct": false,
+            "feedback": "0 works (−1 = −1 ✓) — but so does every other x ≠ 2: the identity admits them all."
+          }
+        ]
+      },
+      "hints": [
+        "Multiply every term by (x − 2).",
+        "2 = x − (x − 2) — distribute the minus.",
+        "2 = 2: an identity — true for all x except the banned 2."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-equations__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Clear by the LCD, solve, then filter candidates against the banned list.",
+      "takeaways": [
+        "LCD-clearing can mint phantoms at denominator zeros — always check.",
+        "Clearing may raise the degree: expect quadratics.",
+        "Identities solve to 'everything except the exclusions'; contradictions to nothing."
+      ],
+      "teaser": "Next: proportions and the work-rate model — rational equations at work."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-equations",
+      "concept": {
+        "id": "rem-rf0501-c",
+        "kind": "concept",
+        "body": "The smallest case: 6/x = 3. Multiply both sides by x: 6 = 3x."
+      },
+      "check": {
+        "id": "rem-rf0501-k",
+        "kind": "check",
+        "body": "Finish it.",
+        "conceptTag": "rf-equations",
+        "explanationVariants": [
+          "x = 2; check 6/2 = 3. ✓",
+          "One clearing, one division."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve 6/x = 3.",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 18,
+              "feedback": "That multiplies 6 · 3 — instead divide: 6 = 3x → x = 2."
+            },
+            {
+              "value": 0.5,
+              "feedback": "6 = 3x solves to x = 2 — the x was UNDER the 6, so it ends up as 6/3."
+            }
+          ],
+          "fallbackFeedback": "6 = 3x → x = 2."
+        }
+      }
+    }
+  ]
+}

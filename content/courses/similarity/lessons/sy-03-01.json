@@ -1,0 +1,329 @@
+{
+  "id": "sy-03-01",
+  "slug": "the-side-splitter-theorem",
+  "title": "The Side-Splitter Theorem",
+  "courseId": "similarity",
+  "chapterId": "ch3-side-splitter",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "sy-side-splitter",
+      "concept": {
+        "id": "rem-sy-side-splitter-c",
+        "kind": "concept",
+        "body": "Side-Splitter: when a line is PARALLEL to one side of a triangle, it divides the other two sides proportionally. Two equivalent forms: piece-to-piece AD/DB = AE/EC, or piece-to-whole AD/AB = AE/AC. Keep BOTH ratios in the same style; don't mix piece-to-piece with piece-to-whole."
+      },
+      "check": {
+        "id": "rem-sy-side-splitter-k",
+        "kind": "check",
+        "body": "Matching the ratio.",
+        "conceptTag": "sy-side-splitter",
+        "explanationVariants": [
+          "AD/DB pairs with AE/EC — piece-to-piece on both sides.",
+          "Keep the same style: piece-to-piece with piece-to-piece."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "To match AD/DB in a side-splitter proportion, the other ratio should be…",
+          "options": [
+            {
+              "id": "o1",
+              "label": "AE/EC",
+              "correct": true,
+              "feedback": "Piece-to-piece pairs with piece-to-piece: AD/DB = AE/EC."
+            },
+            {
+              "id": "o2",
+              "label": "AE/AC",
+              "correct": false,
+              "feedback": "That's piece-to-WHOLE — mixing styles. Match AD/DB with AE/EC."
+            },
+            {
+              "id": "o3",
+              "label": "AC/EC",
+              "correct": false,
+              "feedback": "That flips and mixes. AD/DB pairs with AE/EC."
+            },
+            {
+              "id": "o4",
+              "label": "DB/AD",
+              "correct": false,
+              "feedback": "That just inverts the first ratio. Use AE/EC to match AD/DB."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Draw a line **parallel to one side** of a triangle, crossing the other two. The **Side-Splitter Theorem** says it cuts those two sides in the **same ratio**: AD/DB = AE/EC. It follows straight from AA similarity — the parallel line makes the small top triangle similar to the whole, so the pieces stay proportional.",
+      "figure": "side-splitter"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Split proportionally.",
+      "predict": {
+        "prompt": "A line parallel to the base cuts the other two sides. Slide it up and down: can the two ratios AD/DB and AE/EC ever come apart?",
+        "options": [
+          {
+            "id": "never",
+            "label": "Never — wherever the parallel cut sits, the two ratios stay equal"
+          },
+          {
+            "id": "sometimes",
+            "label": "Sometimes — they only match when the cut is at the midpoint"
+          },
+          {
+            "id": "shape",
+            "label": "It depends on the triangle — they match only in isosceles ones"
+          }
+        ],
+        "outcomeId": "never",
+        "reveal": "Never. Drag the cut anywhere along the sides and the two readouts move together, digit for digit — that is the side-splitter theorem, and the reason it can be used to solve for a missing length."
+      },
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "Slide the parallel cut until AD = 4 and DB = 6 — four tenths of the way down — then read what the other side is forced to do.",
+        "shape": [
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            11,
+            1
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 0.4,
+        "kMin": 0.1,
+        "kMax": 0.9,
+        "kStep": 0.1,
+        "kStart": 0.1,
+        "gridMin": 0,
+        "gridMax": 12,
+        "showRatios": [
+          "segments"
+        ],
+        "successFeedback": "Both readouts show 0.67. That is AD/DB = 4/6 — and it is equally AE/EC = 6/9, which is why EC must be 9. Slide the cut anywhere else and the two numbers change together and stay equal: the ratio is forced, never coincidental.",
+        "lowFeedback": "The cut is too high — AD/DB is still under 4/6. Keep sliding down, and watch the second ratio follow the first the whole way.",
+        "highFeedback": "Past it — AD/DB has gone above 4/6. Ease back up. Notice that overshooting moved BOTH ratios, never just one."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why the ratios match.",
+      "conceptTag": "sy-side-splitter",
+      "explanationVariants": [
+        "The parallel line creates equal corresponding angles, so the small triangle is similar to the whole (AA) — and similar triangles have proportional sides.",
+        "DE ∥ BC ⇒ △ADE ~ △ABC by AA, which forces the sides (and their pieces) into proportion."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does a line parallel to one side split the other two proportionally?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It creates a smaller similar triangle (AA), and similar triangles have proportional sides",
+            "correct": true,
+            "feedback": "The parallel line gives equal corresponding angles, so △ADE ~ △ABC — proportional sides split each side in the same ratio."
+          },
+          {
+            "id": "o2",
+            "label": "Because parallel lines are always equal in length",
+            "correct": false,
+            "feedback": "Parallel lines aren't equal in length — the proportionality comes from the SIMILAR triangles the parallel creates."
+          },
+          {
+            "id": "o3",
+            "label": "Because the triangle is isosceles",
+            "correct": false,
+            "feedback": "There is no isosceles assumption — the theorem holds for ANY triangle, via the similar triangles."
+          },
+          {
+            "id": "o4",
+            "label": "Because the line bisects both sides",
+            "correct": false,
+            "feedback": "It bisects only in the special midsegment case. In general it splits PROPORTIONALLY, not equally."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-side-splitter__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "There's a whole-side version too: **AD/AB = AE/AC**, comparing each top piece to the FULL side. Both forms come from the same similar triangles — use whichever matches the lengths you're given. Piece-to-piece (AD/DB) or piece-to-whole (AD/AB), just keep both ratios in the same style.",
+      "figure": "side-splitter"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Whole-side ratio.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using AD/AB = AE/AC: AD = 4, AB = 10, and AE = 6. Find AC.",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 = 6 + 6 guesses. Use 4/10 = 6/AC → AC = 6 × 10 ÷ 4 = 15."
+          },
+          {
+            "value": 2.4,
+            "feedback": "2.4 = 4 × 6 ÷ 10 inverts the ratio. AC = 6 × 10 ÷ 4 = 15."
+          }
+        ],
+        "fallbackFeedback": "4/10 = 6/AC → AC = 6 × 10 ÷ 4 = 15."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which ratio form?",
+      "conceptTag": "sy-side-splitter",
+      "explanationVariants": [
+        "Mixing forms is the trap: AD/DB (piece-to-piece) must pair with AE/EC, and AD/AB (piece-to-whole) with AE/AC. Keep both sides in the same style.",
+        "Match the ratio style on both sides — piece-to-piece with piece-to-piece, or whole with whole."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "If you write AD/DB on one side, what must you write on the other for the side-splitter proportion?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "AE/EC (piece-to-piece, matching the style)",
+            "correct": true,
+            "feedback": "Piece-to-piece pairs with piece-to-piece: AD/DB = AE/EC. Keep both ratios the same style."
+          },
+          {
+            "id": "o2",
+            "label": "AE/AC (piece-to-whole)",
+            "correct": false,
+            "feedback": "Mixing styles gives a wrong equation. AD/DB (piece-to-piece) must pair with AE/EC, not AE/AC."
+          },
+          {
+            "id": "o3",
+            "label": "AC/AE (whole-to-piece, flipped)",
+            "correct": false,
+            "feedback": "That both flips and mixes styles. To match AD/DB, use AE/EC."
+          },
+          {
+            "id": "o4",
+            "label": "DB/EC (both denominators)",
+            "correct": false,
+            "feedback": "That isn't a valid ratio pairing. AD/DB pairs with AE/EC."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-side-splitter__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The **midsegment** you met earlier is just the side-splitter's most famous special case: the parallel line hits the MIDPOINTS, so the ratio is 1 : 1 and each piece is half. Every midsegment is a side-splitter; not every side-splitter is a midsegment.",
+      "figure": "side-splitter"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Midsegment as special case.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The midsegment (joining two midpoints) splits the sides in what ratio?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1 : 1 — it hits the midpoints, so each piece is equal",
+            "correct": true,
+            "feedback": "Midpoints split each side into two equal pieces — the side-splitter ratio is 1 : 1."
+          },
+          {
+            "id": "o2",
+            "label": "2 : 1",
+            "correct": false,
+            "feedback": "2:1 is the centroid's median split, not the midsegment. Midpoints give 1 : 1."
+          },
+          {
+            "id": "o3",
+            "label": "1 : 2",
+            "correct": false,
+            "feedback": "A midpoint divides a side into two EQUAL halves, so 1 : 1 — not 1 : 2."
+          },
+          {
+            "id": "o4",
+            "label": "it depends on the triangle",
+            "correct": false,
+            "feedback": "It's always 1 : 1 for a midsegment, in every triangle — that's what 'midpoint' guarantees."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Solve for the segment.",
+      "conceptTag": "sy-side-splitter",
+      "hints": [
+        "Set up the side-splitter proportion with the algebraic pieces.",
+        "AD = x, DB = x + 2, AE = 6, EC = 9 — write x/(x+2) = 6/9.",
+        "Cross-multiply: 9x = 6(x + 2), then solve."
+      ],
+      "explanationVariants": [
+        "Side-splitter: x/(x+2) = 6/9 = 2/3. Cross-multiply: 3x = 2(x+2) → 3x = 2x + 4 → x = 4.",
+        "The proportion x/(x+2) = 2/3 gives 3x = 2x + 4, so x = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A parallel line splits the sides: AD = x, DB = x + 2, AE = 6, EC = 9. Solve for x.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 copies AE — but you must solve the proportion x/(x+2) = 6/9. That gives 3x = 2x + 4, so x = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "2 solves incorrectly. From x/(x+2) = 2/3: 3x = 2x + 4 → x = 4."
+          }
+        ],
+        "fallbackFeedback": "x/(x+2) = 2/3 → 3x = 2x + 4 → x = 4."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-side-splitter__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Parallel splits proportionally.",
+      "takeaways": [
+        "Side-Splitter: a line ∥ one side cuts the others in equal ratios (AD/DB = AE/EC).",
+        "It works because the parallel creates a similar triangle (AA).",
+        "Match ratio styles; the midsegment is the 1 : 1 special case."
+      ],
+      "teaser": "Next: run it backward — proportional splits prove a line is parallel."
+    }
+  ]
+}

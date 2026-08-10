@@ -1,0 +1,322 @@
+{
+  "id": "lf-04-02",
+  "slug": "line-through-two-points",
+  "title": "Line Through Two Points",
+  "courseId": "linear-functions",
+  "chapterId": "ch4-writing-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "coordinate-plane",
+      "body": "Two points also fix a line. Work in order: first the **slope**, m = (y₂ − y₁)/(x₂ − x₁). Then use **either point** to get b = y₁ − m·x₁. Then write **y = mx + b**, and confirm both points fit."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two points pin a line down completely.",
+      "widget": {
+        "type": "lineExplore",
+        "targetSlope": 2,
+        "targetIntercept": -1,
+        "slopeMin": -4,
+        "slopeMax": 4,
+        "interceptMin": -5,
+        "interceptMax": 5,
+        "slopeStart": 0,
+        "interceptStart": 0,
+        "gridMax": 6,
+        "prompt": "Build the line through (1, 1) and (3, 5).",
+        "successFeedback": "y = 2x − 1. From (1, 1) to (3, 5) the rise is 4 and the run is 2, so the slope is 2 — and only one intercept then drops the line onto both points. Two points, two unknowns, one line.",
+        "slopeFeedback": "The steepness is off: from (1, 1) to (3, 5) is 4 up for 2 across.",
+        "interceptFeedback": "The slope is right, but the line misses the points. Slide it until it passes through both."
+      },
+      "predict": {
+        "prompt": "Your line must pass through two given points. How many different lines can do that?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Exactly one"
+          },
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "many",
+            "label": "Infinitely many"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Two points pin a line completely: the slope is forced (rise over run between them), and once the slope is set, the intercept is forced too. That's why two points are always enough to write y = mx + b."
+      },
+      "conceptTag": "line-from-two-points",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents line from two points.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for line from two points must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines line from two points."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-functions:line-from-two-points",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now find b.",
+      "conceptTag": "line-from-two-points",
+      "explanationVariants": [
+        "Slope is (8 − 2)/(3 − 1) = 3. Using (1, 2): b = 2 − 3·1 = −1.",
+        "With m = 3 and point (1, 2): b = y₁ − m·x₁ = 2 − 3 = −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The line through (1, 2) and (3, 8) has slope 3. Find b.",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's y₁ of the first point. Finish: b = 2 − 3·1 = −1."
+          },
+          {
+            "value": 5,
+            "feedback": "It looks like you added: 2 + 3. Subtract: 2 − 3 = −1."
+          }
+        ],
+        "fallbackFeedback": "b = y₁ − m·x₁ = 2 − 3·1 = −1."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-two-points__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Full example with (1, 1) and (4, 10): slope = (10 − 1)/(4 − 1) = **9/3 = 3**; then b = 1 − 3·1 = **−2**; so **y = 3x − 2**. Check the other point: 3·4 − 2 = 10. Both fit — the line is right.",
+      "figure": "lf-two-point-slope"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the finished line.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which equation is the line through (-1, -1) and (2, 5)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = 2x + 1",
+            "correct": true,
+            "feedback": "Yes — slope = 6/3 = 2, b = −1 − 2·(−1) = 1, and both points fit."
+          },
+          {
+            "id": "b",
+            "label": "y = 2x − 1",
+            "feedback": "The slope 2 is right but b is off. Using (−1, −1): b = −1 − 2·(−1) = 1, so y = 2x + 1."
+          },
+          {
+            "id": "c",
+            "label": "y = 3x + 1",
+            "feedback": "The slope is (5 − (−1))/(2 − (−1)) = 6/3 = 2, not 3. So y = 2x + 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Slope with a bigger rise.",
+      "conceptTag": "line-from-two-points",
+      "explanationVariants": [
+        "m = (10 − 4)/(3 − 1) = 6/2 = 3.",
+        "Rise 6 over run 2 gives slope 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the slope of the line through (1, 4) and (3, 10).",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's the rise alone. Divide by the run (3 − 1 = 2): 6/2 = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "That's the run. Slope is rise over run: 6/2 = 3."
+          }
+        ],
+        "fallbackFeedback": "m = (10 − 4)/(3 − 1) = 6/2 = 3."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-two-points__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Watch for a **vertical line**: if the two points share the same x, the run is 0 and the slope is **undefined** — you can't divide by zero. The line is just **x = that value**, e.g. (3, 1) and (3, 6) give **x = 3**.",
+      "figure": "lf-vertical-two-point"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Name the vertical line.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the line through (3, 1) and (3, 6)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "x = 3",
+            "correct": true,
+            "feedback": "Yes — both points have x = 3, so the vertical line is x = 3 (slope undefined)."
+          },
+          {
+            "id": "b",
+            "label": "y = 3",
+            "feedback": "That's horizontal. Here x is constant, not y: the line is x = 3."
+          },
+          {
+            "id": "c",
+            "label": "x = 1",
+            "feedback": "1 is a y-value here. The shared x-coordinate is 3, so x = 3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find b for a full line.",
+      "conceptTag": "line-from-two-points",
+      "explanationVariants": [
+        "Slope = (7 − 1)/(5 − 2) = 2. Using (2, 1): b = 1 − 2·2 = −3.",
+        "m = 2 and point (2, 1) give b = 1 − 4 = −3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The line through (2, 1) and (5, 7) has slope 2. Find b.",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That's y₁ of the first point. Finish: b = 1 − 2·2 = −3."
+          },
+          {
+            "value": 5,
+            "feedback": "It looks like you added: 1 + 2·2 = 5. Subtract: 1 − 4 = −3."
+          }
+        ],
+        "fallbackFeedback": "b = y₁ − m·x₁ = 1 − 2·2 = −3."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-two-points__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Negatives in a point.",
+      "conceptTag": "line-from-two-points",
+      "explanationVariants": [
+        "Slope = (7 − 1)/(1 − (−2)) = 6/3 = 2. Using (−2, 1): b = 1 − 2·(−2) = 1 + 4 = 5.",
+        "m = 2 and point (−2, 1): b = 1 − 2·(−2) = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The line through (-2, 1) and (1, 7) has slope 2. Find b.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That's y₁. Finish: b = 1 − 2·(−2) = 5."
+          },
+          {
+            "value": -3,
+            "feedback": "That computed 1 + 2·(−2) = −3. The formula subtracts m·x₁: 1 − (−4) = 5."
+          }
+        ],
+        "fallbackFeedback": "b = y₁ − m·x₁ = 1 − 2·(−2) = 1 + 4 = 5."
+      },
+      "hints": [
+        "Slope is 2 (given); use b = y₁ − m·x₁ with either point.",
+        "With (−2, 1): b = 1 − 2·(−2), and subtracting −4 adds 4.",
+        "b = 1 + 4 = 5."
+      ],
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-two-points__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two points, one line — in order.",
+      "takeaways": [
+        "Slope first: m = (y₂ − y₁)/(x₂ − x₁).",
+        "Then b = y₁ − m·x₁ with either point; write y = mx + b.",
+        "Same x on both points → vertical line x = that value (slope undefined)."
+      ],
+      "teaser": "next: parallel and perpendicular lines."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "line-from-two-points",
+      "concept": {
+        "id": "rem-lf2p-c",
+        "kind": "concept",
+        "body": "Two points → slope first: m = (y₂ − y₁)/(x₂ − x₁). Then b = y₁ − m·x₁. For (1, 2) and (3, 8): m = 6/2 = 3, b = 2 − 3·1 = −1, so y = 3x − 1."
+      },
+      "check": {
+        "id": "rem-lf2p-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "line-from-two-points",
+        "explanationVariants": [
+          "m = (11 − 3)/(5 − 1) = 8/4 = 2.",
+          "Rise 8 over run 4 gives slope 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find the slope of the line through (1, 3) and (5, 11).",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "That's the rise alone. Divide by the run (5 − 1 = 4): 8/4 = 2."
+            },
+            {
+              "value": 4,
+              "feedback": "That's the run. Slope is rise over run: 8/4 = 2."
+            }
+          ],
+          "fallbackFeedback": "m = (11 − 3)/(5 − 1) = 8/4 = 2."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "id": "pv-02-04",
+  "slug": "estimating-in-stories",
+  "title": "Estimating in Stories",
+  "courseId": "place-value",
+  "chapterId": "ch2-rounding",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here's rounding's real job: **fast, good-enough answers**. When a story asks \"about how many,\" round the players to friendly numbers FIRST, then do one easy computation. The answer wears its \"about\" badge proudly — you met this move guarding word problems in the multiplication course.",
+      "figure": "pv3-round-hundred"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Feel the size before touching any exact digits.",
+      "conceptTag": "estimation",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "One stadium section holds 289 fans, another holds 512. Slide to estimate the total fans.",
+        "min": 50,
+        "max": 5000,
+        "start": 50,
+        "target": 800,
+        "acceptFactor": 2,
+        "unitLabel": "fans",
+        "ticks": [
+          50,
+          500,
+          5000
+        ],
+        "lowFeedback": "Too few — the second section ALONE holds about 500. Slide up.",
+        "highFeedback": "That's the whole stadium! Three hundred plus five hundred lands under a thousand — come back down.",
+        "successFeedback": "About 800 — think 300 + 500. The exact answer (801) was hiding one step away the whole time."
+      },
+      "predict": {
+        "prompt": "289 + 512, rounded to friendly hundreds, is about…",
+        "options": [
+          {
+            "id": "eight",
+            "label": "800 — round to 300 + 500"
+          },
+          {
+            "id": "seven",
+            "label": "700 — round both down"
+          },
+          {
+            "id": "eightthousand",
+            "label": "8,000"
+          }
+        ],
+        "outcomeId": "eight",
+        "reveal": "289 leans up to 300 and 512 leans down to 500: about 800. Rounding both DOWN to 200 + 500 ignores that 289 is a whisker from 300 — estimates round each number to its nearest friend."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents estimation.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for estimation must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines estimation."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:estimation",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Estimation is a tool — know when to reach for it.",
+      "conceptTag": "estimation",
+      "explanationVariants": [
+        "Round when 'about' answers the real question — enough money? enough chairs? — and exactness would just cost time.",
+        "Estimates trade a little precision for a lot of speed; that trade is only smart when precision isn't the point."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When is rounding-to-estimate the RIGHT move?",
+        "options": [
+          {
+            "id": "a",
+            "label": "When 'about' is good enough — like checking if you have enough money",
+            "correct": true,
+            "feedback": "Estimates shine when the question is really a yes/no or a rough size — speed matters, exactness doesn't."
+          },
+          {
+            "id": "b",
+            "label": "Always — exact answers are old-fashioned",
+            "feedback": "Try paying a bill with an estimate! When the question needs the true number, exact work is the only honest answer."
+          },
+          {
+            "id": "c",
+            "label": "Never — rounding is basically lying",
+            "feedback": "An estimate labeled 'about' tells the truth — it promises a size, not a digit-perfect count. Lying would be calling it exact."
+          },
+          {
+            "id": "d",
+            "label": "Only when the numbers end in 5",
+            "feedback": "Any number rounds — 287, 412, whatever the story brings. The 5s only matter for tie-breaking, not for whether to estimate."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "estimation",
+        "form": "whenEstimate"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Estimates also work as **guards** — the same trick from the word-problem workshop. For 512 − 289, think 500 − 300 = 200. Now any \"exact\" answer far from 200 is busted on sight: 723 fails instantly (it's bigger than what you started with!).",
+      "figure": "pv3-round-ten"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Build the guard for a subtraction.",
+      "conceptTag": "estimation",
+      "explanationVariants": [
+        "512 → 500 (tens digit 1) and 289 → 300 (tens digit 8); the friendly version is 500 − 300 = 200.",
+        "The exact answer, 223, sits comfortably near the 200 guard — that's the guard confirming it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate 512 − 289 by rounding each number to the nearest hundred first.",
+        "answer": 200,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 223,
+            "feedback": "223 is the EXACT difference — nice arithmetic, but the estimate wants the rounded players: 500 − 300."
+          },
+          {
+            "value": 300,
+            "feedback": "300 rounded 289 DOWN to 200 — but its tens digit is 8, well past the middle. 289 climbs to 300, making 500 − 300."
+          },
+          {
+            "value": 800,
+            "feedback": "800 ADDED the rounded numbers. The story subtracts — the estimate must run the same operation as the exact work."
+          }
+        ],
+        "fallbackFeedback": "Round both first (512 → ?, 289 → ?), then subtract the friendly versions."
+      },
+      "variant": {
+        "gen": "estimation",
+        "form": "estimateDiff"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The guard on duty: 313 + 296, estimate ≈ 600. Which offered answers survive it?",
+      "conceptTag": "estimation",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each offered answer: does it pass the ≈600 size check, or does the estimate bust it?",
+        "buckets": [
+          {
+            "id": "pass",
+            "label": "Passes the ≈600 check",
+            "icon": "🛂"
+          },
+          {
+            "id": "bust",
+            "label": "Busted by the estimate",
+            "icon": "🚨"
+          }
+        ],
+        "items": [
+          {
+            "id": "a609",
+            "label": "609",
+            "bucketId": "pass",
+            "feedback": "609 sits right beside 600 — the guard waves it through. (It's also the exact answer.)"
+          },
+          {
+            "id": "a509",
+            "label": "509",
+            "bucketId": "bust",
+            "feedback": "509 is a whole hundred below the guard's 600 — somewhere a hundred went missing. Busted."
+          },
+          {
+            "id": "a899",
+            "label": "899",
+            "bucketId": "bust",
+            "feedback": "899 overshoots the guard by almost 300 — no small slip makes that. Busted on sight."
+          },
+          {
+            "id": "a613",
+            "label": "613",
+            "bucketId": "pass",
+            "feedback": "613 passes the SIZE check even though it isn't the exact answer (609 is). Guards catch big blunders, not small slips — that's their honest limit."
+          }
+        ],
+        "missFeedback": "Compare each to 600: within a few dozen steps passes; a hundred or more off is busted.",
+        "successFeedback": "The guard cleared 609 and 613, busted 509 and 899 — estimates catch the big mistakes and admit they can't see the small ones."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The strongest estimate: round in the SAFE direction.",
+      "conceptTag": "estimation",
+      "explanationVariants": [
+        "Round her money DOWN (412 → 400) and the price UP (289 → 300): if the shrunken money still beats the inflated price, the real answer must too.",
+        "400 > 300 with the odds stacked AGAINST her — so the true 412 vs 289 is a certain yes, no exact subtraction needed."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Maya has $412; a bike costs $289. Using rounding, can she afford it — for CERTAIN?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — even her money rounded DOWN (400) beats the price rounded UP (300)",
+            "correct": true,
+            "feedback": "Safe-direction rounding: shrink what you have, inflate what it must beat. If it still wins, the real answer is guaranteed."
+          },
+          {
+            "id": "b",
+            "label": "No — 289 rounds to 300, and that's a lot",
+            "feedback": "Compare it to her side: even shortchanged to 400, Maya clears 300 with a hundred to spare."
+          },
+          {
+            "id": "c",
+            "label": "Can't be certain without exact subtraction",
+            "feedback": "Usually true — but rounding AGAINST yourself creates certainty: if the unfair version passes, the fair one must."
+          },
+          {
+            "id": "d",
+            "label": "Yes, because bikes are usually cheap",
+            "feedback": "Bike trivia isn't math! The certainty comes from the numbers: down-rounded 400 beats up-rounded 300."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "estimation",
+        "form": "affordCheck"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "One more round-and-add warm-up, ADDING this time, before the two shelf walls.",
+      "conceptTag": "estimation",
+      "explanationVariants": [
+        "340 rounds down to 300 (tens digit 4); 270 rounds up to 300 (tens digit 7). Add the rounded pair: 300 + 300 = 600.",
+        "Two separate rounds first — both land on 300 — then one easy addition: 600."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 340 to its nearest hundred, round 270 to its nearest hundred, then add the two rounded numbers. What do you get?",
+        "answer": 600,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 610,
+            "feedback": "610 is the EXACT sum — round each first: 340→300, 270→300, then add: 300+300=600."
+          },
+          {
+            "value": 700,
+            "feedback": "340's tens digit is 4, in the round-DOWN club — it stays at 300, not up to 400. 300+300=600."
+          },
+          {
+            "value": 500,
+            "feedback": "270's tens digit is 7, in the round-UP club — it climbs to 300, not down to 200. 300+300=600."
+          }
+        ],
+        "fallbackFeedback": "Round each number to its nearest hundred first (340→?, 270→?), then add the two rounded hundreds."
+      },
+      "variant": {
+        "gen": "estimation"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A library wall, estimated end to end.",
+      "conceptTag": "estimation",
+      "hints": [
+        "Round each shelf wall to its nearest hundred — tens digits decide.",
+        "385 → 400 (tens digit 8); 428 → 400 (tens digit 2).",
+        "Add the two friendly hundreds."
+      ],
+      "explanationVariants": [
+        "385 → 400 and 428 → 400: about 400 + 400 = 800 books (exact: 813, right nearby).",
+        "Both walls round to the same friendly 400 — one from below, one from above — and the estimate becomes a doubling."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A library has 385 books on one shelf wall and 428 on another. Round each to the nearest hundred, then add, to estimate the total.",
+        "answer": 800,
+        "tolerance": 0,
+        "unit": "books (about)",
+        "commonErrors": [
+          {
+            "value": 813,
+            "feedback": "813 is the EXACT total — the estimate wants the rounded walls: 400 + 400."
+          },
+          {
+            "value": 700,
+            "feedback": "700 rounded 385 DOWN to 300 — but its tens digit is 8. 385 climbs to 400."
+          },
+          {
+            "value": 900,
+            "feedback": "900 rounded 428 UP to 500 — but its tens digit is just 2. 428 stays down at 400."
+          }
+        ],
+        "fallbackFeedback": "Two rounds (385 → ?, 428 → ?), then one addition of hundreds."
+      },
+      "variant": {
+        "gen": "estimation",
+        "form": "estimateSum"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rounding earns its keep in the real world now.",
+      "takeaways": [
+        "For 'about' questions: round the players first, then compute once.",
+        "Estimates guard exact work — they catch big blunders and honestly miss small slips.",
+        "Safe-direction rounding (against yourself) can settle yes/no questions with certainty."
+      ],
+      "teaser": "next chapter: adding and subtracting to 1,000 — with friendly-number jumps that make it feel easy."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "estimation",
+      "concept": {
+        "id": "rem-es-c",
+        "kind": "concept",
+        "body": "Quick rewind. An \"about how many\" question invites the friendly version: **round each player, then do ONE easy step**. 198 + 304? Think 200 + 300 = 500. The exact answer lives close to the estimate — that's the whole point."
+      },
+      "check": {
+        "id": "rem-es-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "estimation",
+        "explanationVariants": [
+          "198 → 200 and 304 → 300; about 500.",
+          "Both numbers sit a step or two from friendly hundreds — the estimate almost computes itself."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "About how much is 198 + 304?",
+          "options": [
+            {
+              "id": "a",
+              "label": "About 500 — think 200 + 300",
+              "correct": true,
+              "feedback": "Friendly players, one easy add. (The exact 502 is two steps away.)"
+            },
+            {
+              "id": "b",
+              "label": "Exactly 502 — 'about' still demands exact work",
+              "feedback": "502 is right — but 'about' INVITES the friendly version. Estimation's job is speed: 200 + 300 in one glance."
+            },
+            {
+              "id": "c",
+              "label": "About 600",
+              "feedback": "600 rounds 304 up to 400 — but 304 sits just past 300. Both players round to the near hundreds: 200 and 300."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

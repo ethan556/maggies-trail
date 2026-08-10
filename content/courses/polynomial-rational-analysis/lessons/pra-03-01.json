@@ -1,0 +1,243 @@
+{
+  "id": "pra-03-01",
+  "slug": "when-slant-happens",
+  "title": "When the Asymptote Tilts",
+  "courseId": "polynomial-rational-analysis",
+  "chapterId": "ch3-slant-asymptotes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Horizontal asymptotes (recall): top degree **below** bottom → y = 0; degrees **equal** → y = ratio of leading coefficients. But when the top degree is **exactly one more** than the bottom, the far-out graph follows a tilted line instead — a **slant (oblique) asymptote**. Two or more degrees over: no line at all.",
+      "figure": "pra-ha-degree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Classify by degrees.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "continuous",
+        "a": 5,
+        "leftValue": 8,
+        "rightValue": 8,
+        "fAtA": 8,
+        "targetVerdict": "limit-exists",
+        "prompt": "f(x) = (x² + 3x + 5)/(x + 1) has no horizontal asymptote. Zoom out along the curve and watch it settle onto a straight line instead.",
+        "successFeedback": "It hugs a slanted line, not a level one. When the numerator's degree is exactly one more than the denominator's, the curve approaches a SLANT asymptote — division gives x + 2 plus a remainder that fades away.",
+        "moreZoomFeedback": "Keep going. The straight-line behaviour only emerges once the remainder becomes negligible.",
+        "wrongVerdictFeedback": "The curve approaches a definite line here.",
+        "requiredZoom": 2
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another classification.",
+      "conceptTag": "pra-slant-when",
+      "explanationVariants": [
+        "Degrees are 1 (top) and 2 (bottom): top smaller, so the graph flattens onto y = 0.",
+        "With the denominator growing faster, outputs shrink toward 0 — horizontal asymptote y = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "g(x) = (5x + 2)/(x² − 9). Its far-out behavior follows:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the horizontal asymptote y = 0",
+            "correct": true,
+            "feedback": "Right — top degree 1 < bottom degree 2: the denominator wins and outputs vanish."
+          },
+          {
+            "id": "o2",
+            "label": "the horizontal asymptote y = 5",
+            "feedback": "y = 5 would need degrees EQUAL (ratio 5/1). Here the bottom's x² dominates: y = 0."
+          },
+          {
+            "id": "o3",
+            "label": "a slant asymptote",
+            "feedback": "Slant needs the TOP one degree higher. Here it's one degree LOWER — the flat case, y = 0."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-slant-when__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why one-over means a line: dividing gives f(x) = (**line**) + remainder/(bottom). The leftover fraction has bottom-heavy degrees, so it **dies to 0** far out — leaving only the line. The slant asymptote IS the quotient of the division.",
+      "figure": "pra-line-plus"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Predict the quotient's shape.",
+      "conceptTag": "pra-slant-when",
+      "explanationVariants": [
+        "Degree 3 over degree 2 divides to a degree-1 quotient — a line, so a slant asymptote exists.",
+        "3 = 2 + 1: the one-over pattern again; the quotient ax + b is the slant line."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "h(x) = (x³ + 1)/(x² + 4). Does h have a slant asymptote?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — the division's quotient is a line (degree 3 − 2 = 1)",
+            "correct": true,
+            "feedback": "Right — one degree over always divides to a linear quotient plus a dying remainder."
+          },
+          {
+            "id": "o2",
+            "label": "No — cubics never have asymptotes",
+            "feedback": "The CUBIC alone doesn't, but this is a RATIO: degree 3 over degree 2 is the exact slant pattern."
+          },
+          {
+            "id": "o3",
+            "label": "No — it has the horizontal asymptote y = 1",
+            "feedback": "Equal degrees would give a ratio like y = 1; here 3 ≠ 2 — the graph follows a tilted line instead."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-slant-when__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "And two-or-more over?",
+      "conceptTag": "pra-slant-when",
+      "explanationVariants": [
+        "Degree 4 − 1 = 3: the quotient is a CUBIC, not a line — the far-out shape is a curve, so no straight asymptote of any kind.",
+        "Asymptote lines (flat or slant) need the quotient to be degree ≤ 1; a degree-3 quotient rules both out."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "k(x) = (x⁴ + 2)/(x − 1). What is true of its far-out behavior?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No horizontal or slant asymptote — the quotient is a cubic curve",
+            "correct": true,
+            "feedback": "Right — with the top 3 degrees over, the graph follows x³-like growth, not any line."
+          },
+          {
+            "id": "o2",
+            "label": "A slant asymptote",
+            "feedback": "Slant is EXACTLY one degree over. Here 4 − 1 = 3 — the graph bends away from every line."
+          },
+          {
+            "id": "o3",
+            "label": "Horizontal asymptote y = 1",
+            "feedback": "y = 1 needs equal degrees. Degree 4 over degree 1 grows without bound — no horizontal line contains it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-slant-when__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sort a mixed family.",
+      "conceptTag": "pra-slant-when",
+      "explanationVariants": [
+        "Only (x² − 1)/(x − 5) has top degree exactly one over: 2 = 1 + 1. The first has equal degrees (HA y = 3); the third is bottom-heavy (HA y = 0).",
+        "Check the degree gap: 0 → ratio HA; +1 → slant; −1 → y = 0. The middle function is the +1 case."
+      ],
+      "hints": [
+        "Compare top and bottom degrees for each option.",
+        "Equal degrees → horizontal ratio; one over → slant; under → y = 0.",
+        "(3x² + 1)/(x² + 2): gap 0. (x² − 1)/(x − 5): gap +1. (x + 7)/(x² + 1): gap −1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which function has a SLANT asymptote?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(x² − 1)/(x − 5)",
+            "correct": true,
+            "feedback": "Right — degree gap +1: dividing gives a linear quotient, the slant line."
+          },
+          {
+            "id": "o2",
+            "label": "(3x² + 1)/(x² + 2)",
+            "feedback": "Equal degrees → horizontal asymptote y = 3 (the leading ratio), not a slant."
+          },
+          {
+            "id": "o3",
+            "label": "(x + 7)/(x² + 1)",
+            "feedback": "Bottom-heavy (gap −1) → the flat asymptote y = 0."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-slant-when__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read the degree gap.",
+      "takeaways": [
+        "Gap −1 or less: y = 0. Gap 0: y = leading ratio. Gap +1: slant.",
+        "Gap +2 or more: no line-shaped asymptote at all.",
+        "The slant line is the division's quotient."
+      ],
+      "teaser": "Next: actually finding the slant line by dividing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pra-slant-when",
+      "concept": {
+        "id": "rem-pra0301-c",
+        "kind": "concept",
+        "body": "One question decides everything: (top degree) − (bottom degree). Negative → y = 0; zero → ratio; +1 → slant; ≥ +2 → no line."
+      },
+      "check": {
+        "id": "rem-pra0301-k",
+        "kind": "check",
+        "body": "One gap.",
+        "conceptTag": "pra-slant-when",
+        "explanationVariants": [
+          "Top degree 3, bottom degree 2: gap +1 — slant.",
+          "3 − 2 = 1: exactly the slant pattern."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "(x³ − x)/(x² + 1) has which asymptote type?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Slant (gap +1)",
+              "correct": true,
+              "feedback": "Right — degree 3 over degree 2 divides to a line plus a dying remainder."
+            },
+            {
+              "id": "o2",
+              "label": "Horizontal y = 1",
+              "feedback": "That needs gap 0 (equal degrees). Here the gap is +1: slant."
+            },
+            {
+              "id": "o3",
+              "label": "Horizontal y = 0",
+              "feedback": "y = 0 needs the top SMALLER. Here it's larger by one: slant."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

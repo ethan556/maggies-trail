@@ -1,0 +1,260 @@
+{
+  "id": "dr-02-01",
+  "slug": "the-power-rule",
+  "title": "The Power Rule",
+  "courseId": "derivative-rules",
+  "chapterId": "ch2-the-power-rule",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Take the limit by hand for x², x³, x⁴ and a pattern appears immediately:\n\nx² → 2x · x³ → 3x² · x⁴ → 4x³\n\n**The exponent drops in front, and the power falls by one:**\n\nd/dx[xⁿ] = n·xⁿ⁻¹.\n\nOne rule retires an infinite family of limits.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Check the rule against the tangent you can see.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "cubic",
+        "mode": "point",
+        "targetSlope": 0,
+        "targetX": 2,
+        "start": -2,
+        "prompt": "f(x) = x³, so the rule says f′(x) = 3x². Drag to x = 2, where the rule predicts a slope of 12.",
+        "successFeedback": "At x = 2 the tangent is steep and the readout says 12 — exactly 3(2)² . The rule is not a shortcut around the limit; it IS the limit, computed once for all powers so you never have to do it again.",
+        "lowFeedback": "Not there yet — keep sliding right toward x = 2.",
+        "highFeedback": "Past x = 2 — come back left."
+      },
+      "predict": {
+        "prompt": "You'll ride the tangent to x = 2. When you arrive, the tangent line will be tilting…",
+        "options": [
+          {
+            "id": "up",
+            "label": "Uphill (positive slope)"
+          },
+          {
+            "id": "down",
+            "label": "Downhill (negative slope)"
+          },
+          {
+            "id": "flat",
+            "label": "Perfectly flat (slope 0)"
+          }
+        ],
+        "outcomeId": "up",
+        "reveal": "At x = 2 the tangent's slope is 12 — uphill. The tangent's tilt at each point IS the derivative's value there."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move along a function and coordinate position, local slope, and derivative graph.",
+        "invariants": [
+          "derivative-records-local-slope",
+          "corners-break-differentiability"
+        ],
+        "misconceptions": [
+          "derivative-copies-function-height",
+          "slope-at-corner-is-zero"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-derivativeTrace",
+        "delayed": false
+      },
+      "conceptTag": "dr-power-rule"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply it.",
+      "conceptTag": "dr-power-rule",
+      "explanationVariants": [
+        "d/dx[x⁵] = 5x⁴, and at x = 2 that is 5(16) = 80.",
+        "Exponent in front, power down one: 5x⁴. Then substitute."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x⁵. Find f′(2).",
+        "answer": 80,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 32,
+            "feedback": "That is f(2) = 2⁵, the HEIGHT. The derivative is 5x⁴, which at 2 is 5(16) = 80."
+          },
+          {
+            "value": 16,
+            "feedback": "That is x⁴ without the 5 in front. The exponent must drop down as a coefficient: 5x⁴."
+          },
+          {
+            "value": 10,
+            "feedback": "That is 5 × 2 — the exponent times x, which would be the rule for x². Here the power falls to 4: 5x⁴ = 5(16)."
+          }
+        ],
+        "fallbackFeedback": "f′(x) = 5x⁴, so f′(2) = 5 × 16 = 80."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule does not care that n is a whole number.\n\n**√x = x^(1/2)** → (1/2)x^(−1/2) = 1/(2√x).\n**1/x² = x^(−2)** → −2x^(−3).\n\nRewrite as a power first, then apply the rule mechanically. Most 'hard' derivatives are just powers in disguise.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A fractional power.",
+      "conceptTag": "dr-power-rule",
+      "explanationVariants": [
+        "√x = x^(1/2), so the derivative is (1/2)x^(−1/2) = 1/(2√x). At x = 9 that is 1/(2·3) = 1/6.",
+        "The exponent 1/2 drops in front, and 1/2 − 1 = −1/2 sends the x downstairs under a root."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = √x. Find f′(9), as a decimal to three places.",
+        "answer": 0.167,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is f(9) = √9, the height. The SLOPE is 1/(2√9) = 1/6 ≈ 0.167 — the curve is nearly flat out there."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is the exponent 1/2 alone. It must still be multiplied by x^(−1/2) = 1/3."
+          },
+          {
+            "value": 6,
+            "feedback": "That is 2√9. The derivative has it in the DENOMINATOR: 1/(2√x)."
+          }
+        ],
+        "fallbackFeedback": "√x = x^(1/2) → (1/2)x^(−1/2) = 1/(2√x); at 9 that is 1/6 ≈ 0.167."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A negative power.",
+      "conceptTag": "dr-power-rule",
+      "explanationVariants": [
+        "1/x² = x^(−2), so the derivative is −2x^(−3) = −2/x³. At x = 2 that is −2/8 = −0.25.",
+        "The exponent −2 drops in front (bringing the minus with it) and the power falls to −3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 1/x². Find f′(2).",
+        "answer": -0.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.25,
+            "feedback": "The sign is wrong. The exponent −2 comes down IN FRONT, so the derivative is −2x^(−3): negative, because 1/x² is falling at x = 2."
+          },
+          {
+            "value": -0.5,
+            "feedback": "Check the new power: −2 − 1 = −3, so it is −2/x³ = −2/8 = −0.25, not −2/x²."
+          },
+          {
+            "value": -2,
+            "feedback": "That is the coefficient alone. It still multiplies x^(−3) = 1/8."
+          }
+        ],
+        "fallbackFeedback": "x^(−2) → −2x^(−3) = −2/8 = −0.25."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rewrite first, then differentiate.",
+      "conceptTag": "dr-power-rule",
+      "hints": [
+        "Do not reach for a quotient rule. Rewrite the expression as a single power of x.",
+        "x³/x = x², provided x ≠ 0.",
+        "Now differentiate x² and evaluate at 5."
+      ],
+      "explanationVariants": [
+        "x³/x simplifies to x², whose derivative is 2x. At x = 5 that is 10.",
+        "Simplifying first turned a quotient into a power. Most quotient-rule questions in this chapter are traps of exactly this kind."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³/x (for x ≠ 0). Find f′(5).",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 75,
+            "feedback": "That looks like 3x² at x = 5 — differentiating the numerator alone and ignoring the division. Simplify first: x³/x = x², so f′ = 2x = 10."
+          },
+          {
+            "value": 25,
+            "feedback": "That is f(5) = 25, the height. The slope of x² at 5 is 2(5) = 10."
+          },
+          {
+            "value": 3,
+            "feedback": "That is the exponent from x³. After simplifying, the function is x² and its derivative is 2x."
+          }
+        ],
+        "fallbackFeedback": "x³/x = x², so f′(x) = 2x and f′(5) = 10."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rule, all powers.",
+      "takeaways": [
+        "d/dx[xⁿ] = n·xⁿ⁻¹ — the exponent drops in front, the power falls by one.",
+        "It holds for negative and fractional exponents, so rewrite roots and reciprocals as powers first.",
+        "Simplify before you differentiate: many quotients are powers in disguise."
+      ],
+      "teaser": "Next: constants, sums, and why they cost nothing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-power-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two moves, always in this order. **Drop** the exponent to the front as a multiplier. **Subtract one** from the exponent. Nothing else changes — and if the expression is a root or a reciprocal, write it as a power BEFORE you start.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Drop, then subtract.",
+        "conceptTag": "dr-power-rule",
+        "explanationVariants": [
+          "x⁴ → 4x³, and at x = 2 that is 4 × 8 = 32.",
+          "The 4 comes down in front; the power becomes 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x⁴. Find f′(2).",
+          "answer": 32,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That is f(2) = 2⁴, the height, not the slope. f′ = 4x³ = 4 × 8 = 32."
+            },
+            {
+              "value": 8,
+              "feedback": "That is x³ without the coefficient. The exponent 4 must drop in front."
+            }
+          ],
+          "fallbackFeedback": "f′(x) = 4x³, so f′(2) = 32."
+        }
+      }
+    }
+  ]
+}

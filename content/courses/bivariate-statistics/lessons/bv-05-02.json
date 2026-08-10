@@ -1,0 +1,336 @@
+{
+  "id": "bv-05-02",
+  "slug": "reading-the-leftovers",
+  "title": "Reading the Leftovers",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch5-what-the-line-misses",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One residual judges one point. All the residuals together judge the MODEL. Plot each residual against x — flip the line down to a flat zero-axis — and look for a pattern. A good fit leaves patternless scatter; a pattern means the line missed something systematic.",
+      "figure": "bv-residual-plot-diagnoses"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Diagnose a suspicious set of leftovers.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A line was fit to data. Reading left to right, the residuals run: +3, +1, −1, −2, −1, +1, +3 — positive, dipping negative, positive again. Verdict?",
+        "options": [
+          {
+            "id": "curve",
+            "label": "The relationship curves — a line was the wrong tool",
+            "correct": true,
+            "feedback": "correct"
+          },
+          {
+            "id": "fine",
+            "label": "The fit is fine — some residuals are always nonzero",
+            "correct": false,
+            "feedback": "Nonzero is expected; ORGANIZED is the problem. Ends up, middle down is a U — a curve's signature."
+          },
+          {
+            "id": "outlier",
+            "label": "One outlier is dragging the line",
+            "correct": false,
+            "feedback": "An outlier makes ONE big residual. Here every residual follows the same sweep — that's structure, not one bad point."
+          }
+        ],
+        "successFeedback": "A U in the leftovers means the data bends: the line overshoots the middle and undershoots the ends. The residual plot is the model's X-ray."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Force the best straight line through curved data — then read its leftovers.",
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "The data is y = x² in disguise: (1,1), (2,4), (3,9), (4,16). Fit the best straight line you can.",
+        "points": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            16
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 5,
+        "yMin": 0,
+        "yMax": 17,
+        "mMin": 0,
+        "mMax": 7,
+        "mStep": 0.5,
+        "bMin": -7,
+        "bMax": 3,
+        "bStep": 0.5,
+        "mStart": 2,
+        "bStart": 0,
+        "tolerance": 0.5,
+        "successFeedback": "Best straight effort: ŷ = 5x − 5. Its leftovers read +1, −1, −1, +1 — ends above, middle below. No slope or shift removes that arc; the pattern is the data announcing it is not straight.",
+        "slopeFeedback": "Watch the ENDS against the middle: curved data will always leave the outer points on one side of a straight line and the inner points on the other.",
+        "offsetFeedback": "The tilt is close — now slide b until the misses straddle the line instead of piling on one side."
+      },
+      "predict": {
+        "prompt": "If the true relationship is curved and you force a straight line through it, the leftovers will…",
+        "options": [
+          {
+            "id": "pattern",
+            "label": "Form a pattern — misses organized by x"
+          },
+          {
+            "id": "random",
+            "label": "Still scatter randomly — errors are errors"
+          },
+          {
+            "id": "vanish",
+            "label": "Vanish — fitting makes them zero"
+          }
+        ],
+        "outcomeId": "pattern",
+        "reveal": "The line can't bend, so it must miss systematically: under at the ends, over in the middle (or vice versa). The residual plot turns that hidden bias into a visible U. Random scatter is what a CORRECT model leaves behind."
+      }
+    },
+    {
+      "id": "k0b",
+      "kind": "check",
+      "body": "Count the pattern you just built.",
+      "conceptTag": "bv-residual-pattern",
+      "explanationVariants": [
+        "The straight line overshoots curved data in the middle and undershoots at the ends, so exactly the two middle residuals are negative.",
+        "Compute all four against ŷ = 5x − 5: +1, −1, −1, +1. Two negatives — the middle pair, the curvature signature."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "With the best line ŷ = 5x − 5 in place, how many of the four residuals are NEGATIVE?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "A best fit does not erase misses — the middle points (2,4) and (3,9) sit BELOW this line: 4 < 5 and 9 < 10."
+          },
+          {
+            "value": 4,
+            "feedback": "The END points sit ABOVE the line: 1 > 0 and 16 > 15 — their residuals are positive. Only the middle pair goes negative."
+          }
+        ],
+        "fallbackFeedback": "Residuals under ŷ = 5x − 5: 1−0 = +1, 4−5 = −1, 9−10 = −1, 16−15 = +1. Two are negative.",
+        "successFeedback": "Two — the middle pair. Plus, minus, minus, plus: the arc a straight line cannot flatten."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The healthy picture.",
+      "conceptTag": "bv-residual-pattern",
+      "explanationVariants": [
+        "Patternless residuals — signs mixed, sizes similar across x — mean the line captured all the structure there was.",
+        "A good model's leftovers look like noise, because noise is all that's left."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which residual picture says 'the line fits well'?",
+        "options": [
+          {
+            "id": "noise",
+            "label": "Signs mixed, no trend, similar sizes everywhere",
+            "correct": true,
+            "feedback": "Structureless leftovers: the line took all the signal, leaving only noise."
+          },
+          {
+            "id": "u",
+            "label": "A clean U shape",
+            "correct": false,
+            "feedback": "A U means unmodeled curvature — the line failed."
+          },
+          {
+            "id": "grow",
+            "label": "Small on the left, huge on the right",
+            "correct": false,
+            "feedback": "Growing misses mean the relationship's spread changes with x — one line can't be equally trusted everywhere."
+          }
+        ],
+        "successFeedback": "Fit well ⇒ leftovers are boring. Interesting residuals are bad news for the model."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "All on one side.",
+      "conceptTag": "bv-residual-pattern",
+      "explanationVariants": [
+        "Residuals all positive means every observation beat the prediction — the line sits uniformly too low.",
+        "A line placed correctly must have leftovers on both sides; one-sided misses are a placement error, not noise."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Every residual comes out positive. The fitted line is…",
+        "options": [
+          {
+            "id": "low",
+            "label": "Too low — the whole cloud floats above it",
+            "correct": true,
+            "feedback": "Observed beats predicted everywhere: raise the line."
+          },
+          {
+            "id": "high",
+            "label": "Too high",
+            "correct": false,
+            "feedback": "All-positive means observed > predicted — the line is UNDER the data."
+          },
+          {
+            "id": "perfect",
+            "label": "Perfect — positivity is good",
+            "correct": false,
+            "feedback": "Good fits balance their misses; all-positive is systematic under-prediction."
+          }
+        ],
+        "successFeedback": "Residuals should straddle zero. One-sided leftovers mean the line needs to move, not that the world is generous."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three diagnoses so far: U = curvature, one-sided = misplaced line, growing spread = the relationship loosens with x. Different diseases, one instrument — and none of them are visible from the fitted line alone. The scatter plot can look fine while the residual plot screams.",
+      "figure": "bv-three-diagnoses"
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Numbers, not pictures.",
+      "conceptTag": "bv-residual-pattern",
+      "hints": [
+        "Compute each residual under ŷ = x + 1: data (1, 2), (2, 4), (3, 4), (4, 5).",
+        "Predictions: 2, 3, 4, 5. Residuals: 0, +1, 0, 0.",
+        "Three zeros and one +1 — is that a pattern organized by x, or one loose point?"
+      ],
+      "explanationVariants": [
+        "Residuals 0, +1, 0, 0: no sweep, no side, no growth — just one modest miss at x = 2. The line stands.",
+        "A pattern needs organization across x; a single nonzero residual among zeros is ordinary noise."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Data: (1,2), (2,4), (3,4), (4,5). Line: ŷ = x + 1. What do the residuals say?",
+        "options": [
+          {
+            "id": "fine",
+            "label": "0, +1, 0, 0 — no pattern; the line fits",
+            "correct": true,
+            "feedback": "Three exact hits, one small miss, no organization: healthy."
+          },
+          {
+            "id": "curve",
+            "label": "They form a U — curvature",
+            "correct": false,
+            "feedback": "U needs ends-up-middle-down (or the reverse). 0, +1, 0, 0 has no sweep."
+          },
+          {
+            "id": "low",
+            "label": "All positive — the line is too low",
+            "correct": false,
+            "feedback": "Three residuals are exactly zero; only one is positive. That's a point, not a placement."
+          }
+        ],
+        "successFeedback": "You just ran the diagnostic numerically. The instrument works without a single picture."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why bother, if the scatter looked fine?",
+      "conceptTag": "bv-residual-pattern",
+      "explanationVariants": [
+        "The fitted line visually dominates a scatter plot, hiding small systematic misses; zeroing it out makes the misses the whole picture.",
+        "Residual plots amplify what the eye discounts: structure a hundred times smaller than the trend still shows as a clear pattern."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why plot residuals instead of just eyeballing the line through the scatter?",
+        "options": [
+          {
+            "id": "amplify",
+            "label": "Removing the trend magnifies the misses the eye skips over",
+            "correct": true,
+            "feedback": "The steep line dwarfs 1-unit misses; against a flat zero line the same misses are unmissable."
+          },
+          {
+            "id": "pretty",
+            "label": "Residual plots are simpler to draw",
+            "correct": false,
+            "feedback": "Simplicity isn't the point — sensitivity is."
+          },
+          {
+            "id": "required",
+            "label": "Convention requires it",
+            "correct": false,
+            "feedback": "The convention exists because it catches what eyeballing misses."
+          }
+        ],
+        "successFeedback": "Flattening the trend is signal processing: subtract what you know to expose what you don't."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Leftovers, read together, audit the model.",
+      "takeaways": [
+        "A well-fit line leaves patternless residuals — boring leftovers are good news.",
+        "U-shape ⇒ curvature; one-sided ⇒ misplaced line; growing spread ⇒ trust varies with x.",
+        "The residual plot magnifies structure the raw scatter hides."
+      ],
+      "teaser": "Last step: use the leftovers as a steering wheel — adjust the line until they balance."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-residual-pattern",
+      "concept": {
+        "id": "rem-bv-residual-pattern-c",
+        "kind": "concept",
+        "body": "Three diagnoses so far: U = curvature, one-sided = misplaced line, growing spread = the relationship loosens with x. Different diseases, one instrument — and none of them are visible from the fitted line alone. The scatter plot can look fine while the residual plot screams."
+      },
+      "check": {
+        "id": "rem-bv-residual-pattern-k",
+        "kind": "check",
+        "body": "Count the pattern you just built.",
+        "conceptTag": "bv-residual-pattern",
+        "explanationVariants": [
+          "The straight line overshoots curved data in the middle and undershoots at the ends, so exactly the two middle residuals are negative.",
+          "Compute all four against ŷ = 5x − 5: +1, −1, −1, +1. Two negatives — the middle pair, the curvature signature."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "With the best line ŷ = 5x − 5 in place, how many of the four residuals are NEGATIVE?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "A best fit does not erase misses — the middle points (2,4) and (3,9) sit BELOW this line: 4 < 5 and 9 < 10."
+            },
+            {
+              "value": 4,
+              "feedback": "The END points sit ABOVE the line: 1 > 0 and 16 > 15 — their residuals are positive. Only the middle pair goes negative."
+            }
+          ],
+          "fallbackFeedback": "Residuals under ŷ = 5x − 5: 1−0 = +1, 4−5 = −1, 9−10 = −1, 16−15 = +1. Two are negative.",
+          "successFeedback": "Two — the middle pair. Plus, minus, minus, plus: the arc a straight line cannot flatten."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "id": "tg-05-03",
+  "slug": "solving-trig-equations",
+  "title": "Solving: One Answer from the Inverse, All Answers from the Circle",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch5-compositions-solving",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "sin x = 1/2 has infinitely many solutions, but **arcsin hands you exactly one**: x₁ = arcsin(1/2) = π/6. The rest come from the circle (recall reference angles): sine repeats its value at the **supplement π − x₁**, and everything recurs every 2π. On [0, 2π): x = π/6 and 5π/6.",
+      "figure": "tg-infinite-solutions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The partner solution.",
+      "predict": {
+        "prompt": "sin x = 1/2 on [0°, 360°). Arcsine hands you 30°. How many solutions are there in total?",
+        "options": [
+          {
+            "id": "two",
+            "label": "Two — 30° and its mirror partner across the vertical axis"
+          },
+          {
+            "id": "one",
+            "label": "One — the inverse's answer is the answer"
+          },
+          {
+            "id": "four",
+            "label": "Four — one per quadrant"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Two. Height 1/2 is a horizontal line through the circle, and it meets the circle at TWO points: 30° and its mirror 180° − 30° = 150°. The inverse only ever reports the branch's copy — you drag to the partner yourself."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "You start on arcsine's answer, 30°. Drag to the OTHER angle in [0°, 360°) with sine 1/2 — watch the sin readout: it must come back to 0.5.",
+        "targetAngle": 150,
+        "angleStart": 30,
+        "angleStep": 5,
+        "successFeedback": "150° = 180° − 30° — 5π/6, the supplement. Same height, opposite side of the vertical axis: every sine value under 1 is shared by a supplementary pair, so “solve” means arcsin's answer PLUS its mirror — then ±360°k for the ladder.",
+        "lowFeedback": "The sine dropped away from 1/2 — you're between the pair. Keep dragging: the readout returns to 0.5 exactly at the mirror angle.",
+        "highFeedback": "Past the partner — sine has moved off 1/2 again. Back up until the readout reads 0.500 on the far side of 90°."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Cosine's pairing rule.",
+      "conceptTag": "tg-solve-all",
+      "explanationVariants": [
+        "cos x = −1/2: arccos gives 2π/3; cosine's twin is the REFLECTION 2π − x₁ = 4π/3 (cosine is even — symmetric across the x-axis).",
+        "Cosine is negative in Quadrants II and III: 2π/3 and its mirror 4π/3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "cos x = −1/2 on [0, 2π): arccos gives 2π/3. The full solution set is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2π/3 and 4π/3",
+            "correct": true,
+            "feedback": "Right — cosine pairs each solution with 2π − x₁: the Q2/Q3 mirror pair."
+          },
+          {
+            "id": "o2",
+            "label": "2π/3 and 5π/3",
+            "feedback": "cos(5π/3) = +1/2, wrong sign. The −1/2 twin of 2π/3 is 2π − 2π/3 = 4π/3."
+          },
+          {
+            "id": "o3",
+            "label": "2π/3 only",
+            "feedback": "Quadrant III also has cosine −1/2: cos(4π/3) = −1/2. Two solutions per cycle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "solve-trig-all"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Tangent is easiest: period π means solutions come **one per branch** — x₁ = arctan(v), then x₁ + π, x₁ + 2π, … On [0, 2π), tan x = 1 gives π/4 and π/4 + π = 5π/4. The pairing rule depends on the FUNCTION: supplement for sine, reflection for cosine, +π for tangent.",
+      "figure": "tg-tangent-one-per"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Tangent's ladder.",
+      "conceptTag": "tg-solve-all",
+      "explanationVariants": [
+        "tan x = 1: arctan(1) = π/4, then add the period π: 5π/4. Two solutions in [0, 2π).",
+        "One per π-wide branch; 2π holds two branches."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does tan x = 1 have on [0, 2π)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Every π-branch contains exactly one solution, and [0, 2π) spans TWO branches: π/4 and 5π/4."
+          },
+          {
+            "value": 4,
+            "feedback": "Four would need period π/2. Tangent's period is π: two solutions here."
+          }
+        ],
+        "fallbackFeedback": "π/4 and 5π/4: two."
+      },
+      "variant": {
+        "gen": "solve-trig-all",
+        "form": "tanCount"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A negative sine.",
+      "conceptTag": "tg-solve-all",
+      "explanationVariants": [
+        "sin x = −1/2: reference angle π/6, sine negative in Q3 and Q4 → 7π/6 and 11π/6. (arcsin gives −π/6, which is 11π/6 after adding 2π.)",
+        "The two below-axis twins of π/6: π + π/6 and 2π − π/6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve sin x = −1/2 on [0, 2π):",
+        "options": [
+          {
+            "id": "o1",
+            "label": "7π/6 and 11π/6",
+            "correct": true,
+            "feedback": "Right — Quadrants III and IV: π + π/6 and 2π − π/6."
+          },
+          {
+            "id": "o2",
+            "label": "π/6 and 5π/6",
+            "feedback": "Those give sine +1/2. For NEGATIVE 1/2, drop below the axis: 7π/6 and 11π/6."
+          },
+          {
+            "id": "o3",
+            "label": "−π/6 only",
+            "feedback": "−π/6 is arcsin's raw answer but lies outside [0, 2π); wrapped and twinned it becomes 11π/6 — and 7π/6 joins it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "solve-trig-all",
+        "form": "sinPair"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "You already found this solution SET — now add the two values together.",
+      "conceptTag": "tg-solve-all",
+      "explanationVariants": [
+        "cos x = −1/2 on [0, 2π) has solutions 2π/3 and 4π/3. Their sum: 2π/3+4π/3=2π≈6.28.",
+        "The two solutions found earlier (2π/3 and 4π/3) add to exactly 2π, since they're symmetric about π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve cos x = −1/2 on [0, 2π). What is the SUM of the solutions, to hundredths?",
+        "answer": 6.28,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 2.09,
+            "feedback": "2.09 is only ONE solution (2π/3). The equation has TWO solutions on this interval — add both: 2π/3+4π/3=2π≈6.28."
+          },
+          {
+            "value": 4.19,
+            "feedback": "4.19 is only ONE solution (4π/3). Add BOTH solutions together: 2π/3+4π/3=2π≈6.28."
+          },
+          {
+            "value": 3.14,
+            "feedback": "3.14 is π, not the sum of these two solutions. 2π/3+4π/3=2π≈6.28, not π."
+          }
+        ],
+        "fallbackFeedback": "cos x=−1/2 solves to x=2π/3 and x=4π/3 on [0,2π). Add them: 2π/3+4π/3=2π≈6.28."
+      },
+      "variant": {
+        "gen": "solve-trig-all",
+        "form": "sumCos"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "An equation wearing a coat.",
+      "conceptTag": "tg-solve-all",
+      "explanationVariants": [
+        "2 sin x − 1 = 0 → sin x = 1/2 → x = π/6, 5π/6. Their sum: π/6 + 5π/6 = π ≈ 3.14.",
+        "Isolate first (recall two-step solving), then the standard sine pairing; the supplement pair always sums to π."
+      ],
+      "hints": [
+        "Isolate sin x first: add 1, divide by 2.",
+        "sin x = 1/2: both solutions on [0, 2π) from this lesson's opener.",
+        "π/6 + 5π/6 = 6π/6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 2 sin x − 1 = 0 on [0, 2π). What is the SUM of the solutions, to hundredths?",
+        "answer": 3.14,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1.05,
+            "feedback": "1.05 ≈ π/3 doubles just the first solution's neighborhood. The pair π/6 + 5π/6 sums to π ≈ 3.14."
+          },
+          {
+            "value": 0.52,
+            "feedback": "0.52 ≈ π/6 is only ONE solution. Add its supplement 5π/6: total π ≈ 3.14."
+          },
+          {
+            "value": 6.28,
+            "feedback": "6.28 ≈ 2π would be a cosine-style pair (x and 2π − x). Sine's supplement pair sums to π."
+          }
+        ],
+        "fallbackFeedback": "π/6 + 5π/6 = π ≈ 3.14."
+      },
+      "variant": {
+        "gen": "solve-trig-all",
+        "form": "sumSin"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One from the inverse, all from symmetry.",
+      "takeaways": [
+        "Inverse functions return ONE branch solution; the circle supplies its twins.",
+        "Pairings: sine → π − x₁; cosine → 2π − x₁; tangent → x₁ + kπ.",
+        "Isolate the trig function before inverting — coats off first."
+      ],
+      "teaser": "Course complete — next in the band: identities and equations at full strength."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-solve-all",
+      "concept": {
+        "id": "rem-tg0503-c",
+        "kind": "concept",
+        "body": "Solve recipe: isolate → invert for x₁ → add the function's twin (π − x₁ for sin, 2π − x₁ for cos, x₁ + π for tan) → shift by full periods to fill the interval."
+      },
+      "check": {
+        "id": "rem-tg0503-k",
+        "kind": "check",
+        "body": "One pairing.",
+        "conceptTag": "tg-solve-all",
+        "explanationVariants": [
+          "cos x = 1/2: arccos gives π/3; the twin is 2π − π/3 = 5π/3.",
+          "Cosine's reflection pair: x₁ and 2π − x₁."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "cos x = 1/2 on [0, 2π): the solutions are π/3 and:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "5π/3",
+              "correct": true,
+              "feedback": "Right — 2π − π/3 = 5π/3, the Quadrant IV mirror."
+            },
+            {
+              "id": "o2",
+              "label": "2π/3",
+              "feedback": "cos(2π/3) = −1/2, wrong sign. The +1/2 twin is 5π/3."
+            },
+            {
+              "id": "o3",
+              "label": "4π/3",
+              "feedback": "cos(4π/3) = −1/2. Reflect instead: 2π − π/3 = 5π/3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

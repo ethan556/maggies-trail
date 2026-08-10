@@ -1,0 +1,350 @@
+{
+  "id": "rt-01-02",
+  "slug": "converse-and-classifying",
+  "title": "The Converse & Classifying Triangles",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch1-pythagoras-special-rights",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "rt-classify",
+      "concept": {
+        "id": "rem-rt-classify-c",
+        "kind": "concept",
+        "body": "To classify a triangle by its sides, compare the LONGEST side's square c² with the sum of the other two squares a² + b². Equal → right. c² smaller → acute (the long side is too short to open a 90° angle). c² larger → obtuse."
+      },
+      "check": {
+        "id": "rem-rt-classify-k",
+        "kind": "check",
+        "body": "Which way does the comparison point?",
+        "conceptTag": "rt-classify",
+        "explanationVariants": [
+          "c² = 100 versus 36 + 49 = 85: c² is larger, so the biggest angle passes 90° — obtuse.",
+          "100 > 85 means the longest side stretches its opposite angle open: obtuse."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Sides 6, 7, 10: acute, right, or obtuse?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Obtuse — 100 > 36 + 49 = 85",
+              "correct": true,
+              "feedback": "The longest square beats the other two combined, so the opposite angle exceeds 90°."
+            },
+            {
+              "id": "o2",
+              "label": "Acute — 100 is a nice round number",
+              "correct": false,
+              "feedback": "Roundness is no test. 100 > 85 → obtuse."
+            },
+            {
+              "id": "o3",
+              "label": "Right — 6² + 8² = 10²",
+              "correct": false,
+              "feedback": "The middle side here is 7, not 8: 36 + 49 = 85 ≠ 100 → obtuse."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The theorem runs in reverse. **Converse:** if a triangle's sides satisfy a² + b² = c² (c the longest), the angle opposite c is exactly 90° — the triangle is right. No protractor needed: three side lengths alone certify a right angle. Builders' “3-4-5 rope trick” for square corners is this converse at work.",
+      "figure": "rt-converse"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The converse, run backwards from the sides.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "sss",
+        "a": 6,
+        "b": 8,
+        "target": 90,
+        "start": 5,
+        "prompt": "Two sides of 6 and 8. Set the third side so the angle between the first two is exactly 90°.",
+        "successFeedback": "A third side of 10: 6² + 8² = 100 = 10². The converse of Pythagoras is exactly this reading — if the three sides satisfy the equation, the angle MUST be right. Shorten the third side and the angle closes to acute; lengthen it and it opens to obtuse. The sides decide the angle.",
+        "lowFeedback": "The angle is still under 90° — the third side is too short, pulling the other two together.",
+        "highFeedback": "The angle has passed 90° — the third side is too long, forcing them apart."
+      },
+      "predict": {
+        "prompt": "Sides 6 and 8: which third side makes the angle between them exactly 90°?",
+        "options": [
+          {
+            "id": "ten",
+            "label": "10 — since 6² + 8² = 10²"
+          },
+          {
+            "id": "fourteen",
+            "label": "14 — the sides added"
+          },
+          {
+            "id": "seven",
+            "label": "7"
+          }
+        ],
+        "outcomeId": "ten",
+        "reveal": "The converse runs Pythagoras backwards: if the third side satisfies c² = 6² + 8² = 100, the angle MUST be right. Shorter than 10 squeezes it acute; longer pries it obtuse — the third side is an angle gauge."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Vary a triangle side or angle and connect the visible shape to the law of cosines.",
+        "invariants": [
+          "side-angle-dependence",
+          "triangle-determined-by-sas"
+        ],
+        "misconceptions": [
+          "pythagorean-only",
+          "angle-side-disconnect"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "right-triangles-trig",
+        "delayed": false
+      },
+      "conceptTag": "rt-converse"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Certify a corner.",
+      "conceptTag": "rt-converse",
+      "explanationVariants": [
+        "8² + 15² = 64 + 225 = 289 = 17² — the equation balances, so the triangle is right.",
+        "Compare the longest side's square (289) with the sum of the other two (64 + 225 = 289): equal → right."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Sides 8, 15, 17. Right triangle or not — and what's the test?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Right: 64 + 225 = 289 = 17²",
+            "correct": true,
+            "feedback": "Sum of the two smaller squares equals the largest square — converse says right angle opposite 17."
+          },
+          {
+            "id": "o2",
+            "label": "Not right: 8 + 15 = 23 ≠ 17",
+            "correct": false,
+            "feedback": "Adding sides tests nothing. Square first: 64 + 225 = 289 = 17² — it IS right."
+          },
+          {
+            "id": "o3",
+            "label": "Right: 17 − 15 = 2 and 8 ÷ 2 = 4",
+            "correct": false,
+            "feedback": "That arithmetic isn't the theorem. The genuine test: 64 + 225 = 289 = 17² — right, but for the Pythagorean reason."
+          },
+          {
+            "id": "o4",
+            "label": "Not right: 289 is odd... uneven squares can't balance",
+            "correct": false,
+            "feedback": "Parity is irrelevant — the squares balance exactly: 64 + 225 = 289 = 17², so it's right."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-converse__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When the equation does NOT balance, the imbalance tells you the triangle's type. Compare c² (longest side squared) against a² + b²: **c² = a² + b² → right. c² < a² + b² → acute** (the long side is too short to force 90°). **c² > a² + b² → obtuse** (the long side stretches the angle past 90°).",
+      "figure": "rt-imbalance"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Stretch or squeeze?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Sides 6, 7, 9. Compute 6² + 7² = 85 and 9² = 81. The triangle is…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Acute — c² = 81 is LESS than 85",
+            "correct": true,
+            "feedback": "The longest side's square falls short of the other two, so the biggest angle stays under 90°: acute."
+          },
+          {
+            "id": "o2",
+            "label": "Obtuse — 85 is bigger, and bigger means obtuse",
+            "correct": false,
+            "feedback": "Read the comparison from c²'s side: c² = 81 < 85 = a² + b² means the big angle is squeezed BELOW 90° — acute."
+          },
+          {
+            "id": "o3",
+            "label": "Right — 81 and 85 are close enough",
+            "correct": false,
+            "feedback": "Right requires exact equality. 81 ≠ 85, and 81 < 85 lands it on the acute side."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible — no triangle has these sides",
+            "correct": false,
+            "feedback": "6 + 7 = 13 > 9, so the triangle exists. And since 81 < 85, it's acute."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Classify by squares.",
+      "conceptTag": "rt-classify",
+      "explanationVariants": [
+        "4² + 7² = 65 while 9² = 81; since c² > a² + b², the angle opposite 9 exceeds 90°: obtuse.",
+        "The longest side's square (81) beats the other two combined (65) — the long side stretches the angle open: obtuse."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Classify the triangle with sides 4, 7, 9.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Obtuse — 81 > 16 + 49 = 65",
+            "correct": true,
+            "feedback": "c² exceeds a² + b², so the angle opposite the 9 opens past 90°."
+          },
+          {
+            "id": "o2",
+            "label": "Acute — all sides are under 10",
+            "correct": false,
+            "feedback": "Absolute size never decides type; the comparison does. 81 > 65 → obtuse."
+          },
+          {
+            "id": "o3",
+            "label": "Right — 4-7-9 is a Pythagorean triple",
+            "correct": false,
+            "feedback": "Check: 16 + 49 = 65 ≠ 81. Not a triple, and since 81 > 65, it's obtuse."
+          },
+          {
+            "id": "o4",
+            "label": "Equilateral — the sides are roughly equal",
+            "correct": false,
+            "feedback": "Equilateral needs sides exactly equal (4 ≠ 7 ≠ 9). The square test gives 81 > 65: obtuse."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-classify__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Whole-number side sets that balance exactly — like 3-4-5, 5-12-13, 8-15-17, 7-24-25 — are **Pythagorean triples**. Any multiple of a triple is a triple too: 3-4-5 scales to 6-8-10, 9-12-15, 30-40-50. Recognizing them turns square-root work into instant recall.",
+      "figure": "rt-triples"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Scale a triple.",
+      "conceptTag": "rt-triples",
+      "explanationVariants": [
+        "6-8-10 is 3-4-5 doubled, so the hypotenuse of legs 6, 8 is 10 — already verified earlier by direct computation.",
+        "Scaling 3-4-5 by 2 keeps the balance: 36 + 64 = 100 = 10²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Legs 30 and 40 — use a scaled triple to name the hypotenuse instantly.",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70 = 30 + 40 adds legs. This is 3-4-5 scaled by 10, so c = 50 (900 + 1600 = 2500)."
+          },
+          {
+            "value": 2500,
+            "feedback": "2500 is c². This is 3-4-5 × 10: c = 50."
+          },
+          {
+            "value": 35,
+            "feedback": "35 averages the legs. Recognize 3-4-5 × 10 → hypotenuse 50."
+          }
+        ],
+        "fallbackFeedback": "30-40-? is 3-4-5 scaled by 10: c = 50."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-triples__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Verdict on a big triple.",
+      "conceptTag": "rt-converse",
+      "hints": [
+        "Square the two smaller sides and add: 20² + 21².",
+        "400 + 441 = 841. Compare with 29².",
+        "29² = 841 — does it balance exactly?"
+      ],
+      "explanationVariants": [
+        "400 + 441 = 841 = 29² exactly, so by the converse the triangle is right.",
+        "The sum of the smaller squares equals the largest square (841 = 841): right triangle, and 20-21-29 is a genuine triple."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A triangle has sides 20, 21, 29. What's the verdict?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Right — 400 + 441 = 841 = 29²",
+            "correct": true,
+            "feedback": "Exact balance certifies the right angle: 20-21-29 is a Pythagorean triple."
+          },
+          {
+            "id": "o2",
+            "label": "Obtuse — 29 is much longer than 20 and 21",
+            "correct": false,
+            "feedback": "“Much longer” isn't the test. 400 + 441 = 841 = 29² exactly — right."
+          },
+          {
+            "id": "o3",
+            "label": "Acute — 841 < 400 + 441",
+            "correct": false,
+            "feedback": "Recompute: 400 + 441 = 841, which EQUALS 29² — equality means right, not acute."
+          },
+          {
+            "id": "o4",
+            "label": "Right — any odd-odd-odd side set is a triple",
+            "correct": false,
+            "feedback": "20 is even, and no such parity rule exists. The real certificate: 400 + 441 = 841 = 29²."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-converse__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The theorem in reverse.",
+      "takeaways": [
+        "Converse: a² + b² = c² certifies a right angle from side lengths alone.",
+        "c² < a² + b² → acute; c² > a² + b² → obtuse; equality → right.",
+        "Triples (3-4-5, 5-12-13, 8-15-17…) and their multiples are instant right triangles."
+      ],
+      "teaser": "Next: two special right triangles whose sides you can write down without computing."
+    }
+  ]
+}

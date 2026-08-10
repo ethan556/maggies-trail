@@ -1,0 +1,322 @@
+{
+  "id": "dd-01-02",
+  "slug": "data-as-answers",
+  "title": "Data as Answers",
+  "courseId": "data-distributions",
+  "chapterId": "ch1-statistical-questions",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Ask a statistical question and collect the answers — that collection is your **data set**. Ask 5 classmates \"how many pets do you have?\" and get 0, 1, 1, 2, 3: five **data values**, one per person. Each value answers the SAME question; together they show the variability the question anticipated.",
+      "figure": "dd-data-answers"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the data.",
+      "conceptTag": "data-collection",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The pet survey collected answers 0, 1, 1, 2, 3. How many data values is that?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "values",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 counts only the DISTINCT numbers (0,1,2,3). The two students who both said \"1\" are separate data values: 5 total."
+          },
+          {
+            "value": 7,
+            "feedback": "7 ADDS the answers (0+1+1+2+3). Counting data values counts the ANSWERS themselves: 5 students, 5 values."
+          }
+        ],
+        "fallbackFeedback": "Five students answered, so the data set has 5 values — repeats count separately."
+      },
+      "predict": {
+        "prompt": "One survey answer was '0 pets'. Does that zero count as a data value?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — an answer is a value"
+          },
+          {
+            "id": "no",
+            "label": "No — zero is nothing"
+          },
+          {
+            "id": "nonzero",
+            "label": "Only nonzero answers count"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Zero is a real answer to the question — dropping it would erase a person from the survey. Data counts responses, not just positive numbers."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Repeats are real data.",
+      "conceptTag": "data-collection",
+      "explanationVariants": [
+        "Two students both having 1 pet gives two separate data values — each student's answer counts.",
+        "Data values track PEOPLE's answers, not just which numbers appear."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two students both answered \"1 pet.\" In the data set, is that one value or two?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Two values — each student's answer counts separately",
+            "correct": true,
+            "feedback": "Right — a data value belongs to each response, so repeats are recorded as many times as they occur."
+          },
+          {
+            "id": "b",
+            "label": "One value — the number 1 only appears once in a list of possibilities",
+            "feedback": "That would lose information — HOW MANY students said each number is exactly what the data shows. Two students, two values."
+          },
+          {
+            "id": "c",
+            "label": "Zero values — repeats cancel",
+            "feedback": "Repeats never cancel; they pile up. Two students answering 1 gives the value 1 a count of two."
+          }
+        ]
+      },
+      "hints": [
+        "Whose answers are being recorded?",
+        "Each student contributes one value.",
+        "Two students = two values, even if equal."
+      ],
+      "variant": {
+        "gen": "g6-data-literacy",
+        "form": "ddDataRepeatedValues"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A data set answers exactly ONE statistical question, with one value per **unit of observation** — here, per student. Mixing questions (some students report pets, some report siblings) ruins the set. Before collecting, fix two things: WHAT you're asking, and WHO you're asking.",
+      "figure": "dd-data-answers"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One question per data set.",
+      "conceptTag": "data-collection",
+      "explanationVariants": [
+        "Mixing pets and siblings makes values incomparable — a data set must answer ONE question.",
+        "You can't see a pattern in answers to two different questions jumbled together."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A survey sheet accidentally mixes answers to \"how many pets?\" and \"how many siblings?\" into one list. Why is that a problem?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The values answer different questions, so no single pattern can be read from them",
+            "correct": true,
+            "feedback": "Right — a data set must collect answers to ONE question, or the variability means nothing."
+          },
+          {
+            "id": "b",
+            "label": "Pets and siblings can't be counted with the same numbers",
+            "feedback": "Both are counted with ordinary whole numbers — the numbers aren't the issue. The MEANINGS differ, which breaks the pattern."
+          },
+          {
+            "id": "c",
+            "label": "It's fine — numbers are numbers",
+            "feedback": "A 3 meaning \"3 pets\" and a 3 meaning \"3 siblings\" answer different questions. Jumbled, the data shows no interpretable pattern."
+          }
+        ]
+      },
+      "hints": [
+        "What should every value in a data set share?",
+        "The same question.",
+        "Mixed questions = meaningless pattern."
+      ],
+      "variant": {
+        "gen": "g6-data-literacy",
+        "form": "ddDataMixedQuestions"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match question to its data.",
+      "conceptTag": "data-collection",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each statistical question to the data set it would produce.",
+        "left": [
+          {
+            "id": "s1",
+            "label": "How many pets do 5 classmates have?"
+          },
+          {
+            "id": "s2",
+            "label": "How many minutes did 4 students read?"
+          },
+          {
+            "id": "s3",
+            "label": "What shoe sizes do 3 players wear?"
+          }
+        ],
+        "right": [
+          {
+            "id": "d1",
+            "label": "0, 1, 1, 2, 3"
+          },
+          {
+            "id": "d2",
+            "label": "10, 15, 20, 25"
+          },
+          {
+            "id": "d3",
+            "label": "6, 7.5, 9"
+          }
+        ],
+        "pairs": {
+          "s1": "d1",
+          "s2": "d2",
+          "s3": "d3"
+        },
+        "pairErrors": [
+          {
+            "left": "s1",
+            "right": "d2",
+            "feedback": "That set has 4 values, but 5 classmates were surveyed — the pet data must have 5 values: 0,1,1,2,3."
+          },
+          {
+            "left": "s3",
+            "right": "d1",
+            "feedback": "That set has 5 values for only 3 players, and shoe sizes like 7.5 fit the other set better: 6, 7.5, 9."
+          }
+        ],
+        "missFeedback": "Match the COUNT of values to the number of people surveyed — one value per person.",
+        "successFeedback": "Matched — each data set has exactly one value per person asked."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Values to people.",
+      "conceptTag": "data-collection",
+      "explanationVariants": [
+        "8 values means 8 units of observation — here, 8 students surveyed.",
+        "One value per person: count the values, count the people."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A reading survey produced the data 10, 10, 15, 15, 15, 20, 20, 25 (minutes). How many students were surveyed?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "students",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 counts only the DISTINCT times (10,15,20,25). Repeats are separate students: 8 values, 8 students."
+          },
+          {
+            "value": 130,
+            "feedback": "130 ADDS the minutes. The number of students equals the number of VALUES: 8."
+          }
+        ],
+        "fallbackFeedback": "8 values, one per student: 8 students."
+      },
+      "variant": {
+        "gen": "g6-data-literacy",
+        "form": "ddDataCountList"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Design the collection.",
+      "conceptTag": "data-collection",
+      "hints": [
+        "The question asks about THIS CLASS's homework minutes.",
+        "One value per student in the class.",
+        "24 students, each reporting one number."
+      ],
+      "explanationVariants": [
+        "The class has 24 students and each contributes one answer, so the data set will have exactly 24 values.",
+        "One value per unit of observation — 24 students, 24 values."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You'll survey your class of 24 students with: \"How many minutes did you spend on homework last night?\" How many data values will the finished set contain?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "values",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 would be a single person's answer. A statistical question surveys the GROUP: all 24 students, giving 24 values."
+          },
+          {
+            "value": 60,
+            "feedback": "60 guesses at minutes, but the question asks how many VALUES the set holds — one per student: 24."
+          }
+        ],
+        "fallbackFeedback": "One value per student: 24 values."
+      },
+      "variant": {
+        "gen": "g6-data-literacy",
+        "form": "ddDataClassSize"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Answers, collected.",
+      "takeaways": [
+        "A data set is the collection of answers to ONE statistical question.",
+        "One value per unit of observation — repeats count separately.",
+        "Fix WHAT you ask and WHO you ask before collecting."
+      ],
+      "teaser": "chapter finale: running the whole pipeline from question to data."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "data-collection",
+      "concept": {
+        "id": "rem-dc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **One value per person, repeats included.** Survey 6 students on siblings and get 0,1,1,2,2,3 — that's 6 data values (not 4), because the two 1s and two 2s belong to different students."
+      },
+      "check": {
+        "id": "rem-dc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "data-collection",
+        "explanationVariants": [
+          "6 students answered, so the set has 6 values.",
+          "Repeats belong to different people — count them all."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The sibling survey data is 0, 1, 1, 2, 2, 3. How many data values?",
+          "answer": 6,
+          "tolerance": 0,
+          "unit": "values",
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 counts distinct numbers only. Each student's answer is its own value: 6."
+            },
+            {
+              "value": 9,
+              "feedback": "9 ADDS the answers. Count the values themselves: 6."
+            }
+          ],
+          "fallbackFeedback": "Six answers were recorded: 6 values."
+        }
+      }
+    }
+  ]
+}

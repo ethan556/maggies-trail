@@ -1,0 +1,341 @@
+{
+  "id": "pv2-04-03",
+  "slug": "subtracting-across-zeros",
+  "title": "Subtracting Across Zeros",
+  "courseId": "place-value-million",
+  "chapterId": "ch4-add-subtract-big",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sometimes the place you'd normally break from is itself a **zero** — and zero has nothing to lend. When that happens, reach one place FURTHER left. If that's zero too, keep reaching until you find a digit that isn't zero, break IT, and every zero you passed through becomes a 9 along the way.",
+      "figure": "pv3-borrow-zero"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the chain reach past two zeros.",
+      "conceptTag": "subtract-across-zeros",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Walk through 40,052 − 18,675 one column at a time.",
+        "panels": [
+          {
+            "title": "Ones",
+            "body": "2 is smaller than 5. The tens digit (5) isn't zero, so break it directly: tens becomes 4, ones becomes 12. 12 − 5 = 7."
+          },
+          {
+            "title": "Tens — the zero problem",
+            "body": "Tens is now 4, smaller than 7. Look left: hundreds is 0 — nothing to lend. Look further: thousands is ALSO 0. Keep reaching: ten-thousands is 4 — not zero. Break IT."
+          },
+          {
+            "title": "The chain resolves",
+            "body": "Ten-thousands (4) breaks to 3. Every zero it passed through — thousands AND hundreds — becomes 9. Tens becomes 14. 14 − 7 = 7."
+          },
+          {
+            "title": "Finish the columns",
+            "body": "Hundreds is now 9: 9 − 6 = 3. Thousands is now 9: 9 − 8 = 1. Ten-thousands is now 3: 3 − 1 = 2. The answer is 21,377."
+          }
+        ],
+        "continueFeedback": "Keep tracing the chain past each zero.",
+        "successFeedback": "40,052 − 18,675 = 21,377 — the break reached past two zeros, turning both into 9s along the way."
+      },
+      "predict": {
+        "prompt": "Borrowing when the very next column holds a ZERO — does the borrow just stop there?",
+        "options": [
+          {
+            "id": "chain",
+            "label": "No — it chains left until a nonzero digit"
+          },
+          {
+            "id": "stop",
+            "label": "Yes — you can't borrow from 0"
+          },
+          {
+            "id": "right",
+            "label": "Borrow from the right instead"
+          }
+        ],
+        "outcomeId": "chain",
+        "reveal": "A zero has nothing to lend, so it borrows too — the request relays leftward until someone can pay, and the zeros become nines along the way."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One zero to reach past.",
+      "conceptTag": "subtract-across-zeros",
+      "explanationVariants": [
+        "5,003 has two zeros between the 5 and the 3. The break reaches all the way to the thousands digit (5→4), turning both zeros into 9s, giving 3,156.",
+        "The thousands digit lends 1, and both zeros it passes become 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 5,003 − 1,847?",
+        "answer": 3156,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4844,
+            "feedback": "4,844 subtracted the smaller digit from the larger in each column, ignoring which number is on top. Reaching the break past both zeros gives 3,156."
+          },
+          {
+            "value": 4156,
+            "feedback": "4,156 didn't break the thousands digit far enough — it needs to reach past BOTH zeros. Doing that gives 3,156."
+          }
+        ],
+        "fallbackFeedback": "Find the nearest nonzero digit to the left, break it, and turn every zero in between into a 9."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAcrossZerosNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The chain can reach as far left as it needs to. It doesn't matter if there's one zero in the way or several — the rule is identical: find the first nonzero digit, break it, and every zero between it and the column that needs help becomes a 9.",
+      "figure": "pv4-borrow-chain"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two separate borrow spots.",
+      "conceptTag": "subtract-across-zeros",
+      "explanationVariants": [
+        "500,203 has one small chain near the ones and another chain near the front — working through both carefully gives 412,747.",
+        "Each borrow episode is handled the same way, one at a time, right to left."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 500,203 − 87,456?",
+        "answer": 412747,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 587253,
+            "feedback": "587,253 subtracted the smaller digit from the larger in each column, ignoring which number is on top. Breaking correctly through both zero-chains gives 412,747."
+          },
+          {
+            "value": 413747,
+            "feedback": "413,747 is one break short in an early column. Re-checking each zero-chain carefully gives 412,747."
+          }
+        ],
+        "fallbackFeedback": "Work column by column from the ones; wherever a break is needed, reach past any zeros to the first nonzero digit."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAcrossZerosNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "How far does the chain reach?",
+      "conceptTag": "subtract-across-zeros",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each minuend to how many zeros its borrow chain must pass through (when borrowing into the rightmost digit).",
+        "left": [
+          {
+            "id": "n703",
+            "label": "703"
+          },
+          {
+            "id": "n5003",
+            "label": "5,003"
+          },
+          {
+            "id": "n40052",
+            "label": "40,052 (tens column borrow)"
+          }
+        ],
+        "right": [
+          {
+            "id": "z1",
+            "label": "1 zero"
+          },
+          {
+            "id": "z2",
+            "label": "2 zeros"
+          },
+          {
+            "id": "z0",
+            "label": "0 zeros (breaks directly)"
+          }
+        ],
+        "pairs": {
+          "n703": "z1",
+          "n5003": "z2",
+          "n40052": "z0"
+        },
+        "pairErrors": [
+          {
+            "left": "n40052",
+            "right": "z2",
+            "feedback": "For the tens column of 40,052, the hundreds digit is already 5 (nonzero) — no chain needed there; that 2-zero chain belongs to a different column's borrow."
+          }
+        ],
+        "missFeedback": "Count the zero digits between the place needing a break and the first nonzero digit to its left.",
+        "successFeedback": "703 has one zero (tens) to pass through; 5,003 has two (hundreds and tens); reaching hundreds from tens in 40,052 needs none — 5 is already there."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What happens to the zeros?",
+      "conceptTag": "subtract-across-zeros",
+      "explanationVariants": [
+        "Every zero digit the chain reaches through becomes a 9 — it received 10, then lent 1 onward, leaving 9.",
+        "The zeros aren't skipped; each one flips to 9 as the chain passes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When a borrow chain reaches past two zero digits to find a nonzero one, what happens to those two zeros?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Both become 9",
+            "correct": true,
+            "feedback": "Each zero receives 10 (becoming 10), then immediately lends 1 onward to the next column, leaving 9."
+          },
+          {
+            "id": "b",
+            "label": "They stay 0",
+            "feedback": "They can't stay 0 — each one both receives and lends a borrow, which lands them at 9, not 0."
+          },
+          {
+            "id": "c",
+            "label": "They become 10",
+            "feedback": "10 isn't a valid single digit. Each zero receives 10 then immediately lends 1 forward, settling at 9."
+          },
+          {
+            "id": "d",
+            "label": "Only the nearer one changes",
+            "feedback": "Every zero the chain passes through changes — each one becomes 9, not just the nearest."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAcrossZerosMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The four-zero chain.",
+      "conceptTag": "subtract-across-zeros",
+      "hints": [
+        "600,004 has FOUR zeros in a row between its first digit and its last.",
+        "The break has to reach all the way from the ones column to the hundred-thousands digit.",
+        "Every zero it passes — ten-thousands, thousands, hundreds, and tens — becomes a 9."
+      ],
+      "explanationVariants": [
+        "600,004's borrow chain reaches past four zeros to the hundred-thousands digit (6→5), turning all four into 9s. The result is 364,526.",
+        "Four zeros flip to 9 in one single chain, the longest reach in this course."
+      ],
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "What is 600,004 − 235,478? Tap each column to work it out; tap a top digit to break a ten when you need one.",
+        "op": "subtract",
+        "a": 600004,
+        "b": 235478,
+        "commonResults": [
+          {
+            "value": 435474,
+            "feedback": "435,474 subtracted the smaller digit from the larger in each column, ignoring which number is on top. Reaching the break past all four zeros gives 364,526."
+          },
+          {
+            "value": 365474,
+            "feedback": "365,474 didn't flip every zero in the chain to 9. All four zeros between the 6 and the 4 must change: 364,526."
+          }
+        ],
+        "fallbackFeedback": "Find the first nonzero digit to the left of the ones place, break it, and turn every zero it passes into a 9.",
+        "successFeedback": "600,004 − 235,478 = 364,526 — the borrow travels through every zero, turning each into a 9."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAcrossZerosColumn"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents subtract across zeros.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for subtract across zeros must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines subtract across zeros."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-million:subtract-across-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The chain, however long it needs to be.",
+      "takeaways": [
+        "If the digit you'd break is zero, reach one place further — and keep reaching until you find a nonzero digit.",
+        "Every zero the chain passes through becomes a 9, not a 0 and not a 10.",
+        "The chain can be as long as it needs to be — one zero, two zeros, or four."
+      ],
+      "teaser": "next chapter: comparing and ordering these big numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "subtract-across-zeros",
+      "concept": {
+        "id": "rem-sz-c",
+        "kind": "concept",
+        "body": "Quick rewind. **When the digit next door is zero, reach past it to the next nonzero digit — and that zero becomes a 9.** For 703 − 256: ones (3) needs a break, but tens is 0. Reach to hundreds (7→6); tens becomes 9. Ones becomes 13. 13−6=7, 9−5=4, 6−2=4. Result: 447."
+      },
+      "check": {
+        "id": "rem-sz-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "subtract-across-zeros",
+        "explanationVariants": [
+          "The break reaches past the zero tens digit to the hundreds (7→6); tens becomes 9. Result: 447.",
+          "One zero flips to 9 in this chain."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is 703 − 256?",
+          "options": [
+            {
+              "id": "a",
+              "label": "447",
+              "correct": true,
+              "feedback": "Reach past the zero tens digit to hundreds (7→6), tens becomes 9: 13−6=7, 9−5=4, 6−2=4."
+            },
+            {
+              "id": "b",
+              "label": "553",
+              "feedback": "553 subtracted the smaller digit from the larger in each column. Reaching the break past the zero gives 447."
+            },
+            {
+              "id": "c",
+              "label": "543",
+              "feedback": "543 didn't flip the zero tens digit to 9. Doing that correctly gives 447."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

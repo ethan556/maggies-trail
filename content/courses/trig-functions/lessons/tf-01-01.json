@@ -1,0 +1,281 @@
+{
+  "id": "tf-01-01",
+  "slug": "three-ratios-in-a-right-triangle",
+  "title": "Three Ratios in a Right Triangle",
+  "courseId": "trig-functions",
+  "chapterId": "ch1-right-triangle-trig",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Stand at an acute angle θ of a right triangle. The side across from you is the **opposite**; the side touching you (not the hypotenuse) is the **adjacent**; the longest side, across from the right angle, is the **hypotenuse**. Three ratios of these sides get names: **sin θ = opp/hyp, cos θ = adj/hyp, tan θ = opp/adj** — SOH-CAH-TOA.",
+      "figure": "sohcahtoa-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read a ratio.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "ratios",
+        "ratio": "opp/hyp",
+        "a": 6,
+        "b": 6,
+        "target": 37,
+        "start": 55,
+        "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "Drag the acute angle to 37° and read the opp/hyp card — then resize the whole triangle and watch whether that reading moves.",
+        "successFeedback": "opp/hyp ≈ 0.6 at 37°, and resizing changed nothing. That is the entire reason sine can be a function of the ANGLE alone: the 3-4-5 triangle and the 6-8-10 triangle are the same shape, so they hand back the same ratio.",
+        "lowFeedback": "The angle is under 37° — the opposite side is too short relative to the hypotenuse.",
+        "highFeedback": "The angle is over 37° — the opposite side is too long relative to the hypotenuse.",
+        "scaleFeedback": "Resize the triangle at least twice before checking. One reading at one size proves nothing about every similar triangle."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A bigger triangle.",
+      "conceptTag": "tf-ratios",
+      "explanationVariants": [
+        "θ sits opposite the 5, so the ADJACENT leg is 12 and cos θ = 12/13: n = 12.",
+        "CAH: cosine pairs the adjacent with the hypotenuse."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a 5-12-13 right triangle, θ is opposite the side of length 5. Then cos θ = n/13 — what is n?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the OPPOSITE side — that's sine's numerator. Cosine takes the adjacent: 12."
+          },
+          {
+            "value": 13,
+            "feedback": "13 is the hypotenuse — it's already on the BOTTOM of the ratio. The top is the adjacent leg, 12."
+          }
+        ],
+        "fallbackFeedback": "cos θ = adjacent/hypotenuse = 12/13."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-ratios__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Move to the OTHER acute angle and the legs swap jobs: what was opposite becomes adjacent and vice versa — the hypotenuse never moves. That swap is why **sin θ = cos(90° − θ)**: one angle's opposite is its complement's adjacent.",
+      "figure": "tf-other-acute"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Swap corners.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the 3-4-5 triangle, let φ be the OTHER acute angle (the one opposite the 4). What is sin φ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4/5",
+            "correct": true,
+            "feedback": "Right — from φ's corner the 4 is the opposite side, and the hypotenuse is still 5."
+          },
+          {
+            "id": "o2",
+            "label": "3/5",
+            "correct": false,
+            "feedback": "3/5 is sin θ — from φ's corner the 3 is now ADJACENT. The legs swap jobs when you switch corners."
+          },
+          {
+            "id": "o3",
+            "label": "5/4",
+            "correct": false,
+            "feedback": "The hypotenuse is the longest side, so it never sits on the bottom of sine — sin of any acute angle stays below 1."
+          },
+          {
+            "id": "o4",
+            "label": "3/4",
+            "correct": false,
+            "feedback": "3/4 pairs the two LEGS — that's a tangent, not a sine. Sine always uses the hypotenuse."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the sides.",
+      "conceptTag": "tf-ratios",
+      "explanationVariants": [
+        "Opposite = across from θ; adjacent = touching θ but not the hypotenuse; hypotenuse = across from the right angle, always the longest.",
+        "Two clues point at the hypotenuse: facing the right angle, and being longest."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each description by the side it names (relative to the marked angle θ).",
+        "buckets": [
+          {
+            "id": "opp",
+            "label": "opposite"
+          },
+          {
+            "id": "adj",
+            "label": "adjacent"
+          },
+          {
+            "id": "hyp",
+            "label": "hypotenuse"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "the side across from θ",
+            "bucketId": "opp",
+            "feedback": "Across from the angle IS the definition of opposite."
+          },
+          {
+            "id": "s2",
+            "label": "the side touching θ that isn't the hypotenuse",
+            "bucketId": "adj",
+            "feedback": "Touching the angle without being the hypotenuse — that's the adjacent leg."
+          },
+          {
+            "id": "s3",
+            "label": "the side across from the right angle",
+            "bucketId": "hyp",
+            "feedback": "The right angle is the biggest angle, and the side facing it is the hypotenuse."
+          },
+          {
+            "id": "s4",
+            "label": "the longest side",
+            "bucketId": "hyp",
+            "feedback": "The longest side always faces the largest angle — the 90° corner. Hypotenuse."
+          }
+        ],
+        "missFeedback": "Anchor everything to the marked angle: across, touching, or facing the right angle.",
+        "successFeedback": "Side names locked — every ratio in this course is built from these three."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-ratios__dragBucket"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Why do the ratios deserve names? **Scale the triangle and they don't change.** Double 3-4-5 into 6-8-10: the sides all doubled, but opp/adj is still 6/8 = 3/4. Similar triangles share every ratio — so sin, cos, and tan depend only on the ANGLE. Tan even has a physical reading: rise over run, the steepness.",
+      "figure": "tf-scale-invariant"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Scale it up.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the doubled triangle 6-8-10 (opposite 6, adjacent 8), what is tan θ as a decimal?",
+        "answer": 0.75,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1.5,
+            "feedback": "1.5 mixes triangles — 6 over the ORIGINAL's 4. Within 6-8-10, tan θ = 6/8 = 0.75, unchanged by the scaling."
+          },
+          {
+            "value": 0.6,
+            "feedback": "0.6 is 6/10 — sine. Tangent pairs opposite with ADJACENT: 6/8 = 0.75."
+          }
+        ],
+        "fallbackFeedback": "6/8 = 3/4 = 0.75 — scaling leaves every ratio alone."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the missing leg first.",
+      "conceptTag": "tf-ratios",
+      "explanationVariants": [
+        "Pythagorean recall: 17² − 8² = 289 − 64 = 225, so the leg is 15 — then tan θ = 8/15.",
+        "Legs come from SUBTRACTING squares under the root when the hypotenuse is known."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has hypotenuse 17 and one leg 8. Before any ratio, find the other leg.",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 19,
+            "feedback": "19 ≈ √(17² + 8²) — squares ADDED. The 17 is the hypotenuse, so the leg comes from subtracting: √(289 − 64) = 15."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is 17 − 8 — lengths subtracted directly. The theorem subtracts SQUARES: √(289 − 64) = 15."
+          }
+        ],
+        "fallbackFeedback": "√(17² − 8²) = √225 = 15 — and now tan θ = 8/15 for the angle opposite the 8."
+      },
+      "hints": [
+        "The 17 faces the right angle — it's the hypotenuse, so a² + b² = 17².",
+        "8² + b² = 289 — solve for b² first.",
+        "b = √225 — and once you have it, all three ratios of the triangle unlock."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-ratios__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three names, one triangle.",
+      "takeaways": [
+        "Opposite, adjacent, hypotenuse — all named relative to YOUR angle.",
+        "SOH-CAH-TOA: sin = opp/hyp, cos = adj/hyp, tan = opp/adj.",
+        "Similar triangles share ratios — sin, cos, tan depend only on the angle."
+      ],
+      "teaser": "Next: turning these ratios into a tool — solving for unknown sides."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-ratios",
+      "concept": {
+        "id": "rem-tf0101-c",
+        "kind": "concept",
+        "body": "One triangle, three reads. In the 3-4-5 triangle with θ opposite the 3: sine reads opp/hyp = 3/5, cosine reads adj/hyp = 4/5, tangent reads opp/adj = 3/4. Each name just picks a different PAIR of sides."
+      },
+      "check": {
+        "id": "rem-tf0101-k",
+        "kind": "check",
+        "body": "Read the cosine.",
+        "conceptTag": "tf-ratios",
+        "explanationVariants": [
+          "CAH: cos θ = adjacent/hypotenuse = 4/5 = 0.8.",
+          "The adjacent (4) touches θ; the hypotenuse (5) is the longest side."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the 3-4-5 triangle (opposite 3, adjacent 4), what is cos θ as a decimal?",
+          "answer": 0.8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.6,
+              "feedback": "0.6 is 3/5 — sine's pair. Cosine takes the ADJACENT over the hypotenuse: 4/5 = 0.8."
+            },
+            {
+              "value": 0.75,
+              "feedback": "0.75 is 3/4 — tangent's pair of legs. Cosine uses the hypotenuse on the bottom: 4/5 = 0.8."
+            }
+          ],
+          "fallbackFeedback": "cos θ = 4/5 = 0.8."
+        }
+      }
+    }
+  ]
+}

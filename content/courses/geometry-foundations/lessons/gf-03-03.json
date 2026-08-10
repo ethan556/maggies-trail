@@ -1,0 +1,324 @@
+{
+  "id": "gf-03-03",
+  "slug": "rotations-as-functions",
+  "title": "Rotations as Functions",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch3-transformation-functions",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-rotation-rule",
+      "concept": {
+        "id": "rem-gf-rotation-rule-c",
+        "kind": "concept",
+        "body": "The 180° rule is the anchor: a half turn pushes every point straight through the origin to the opposite side, so BOTH coordinates flip sign — (x, y) → (−x, −y). No swapping, just two sign flips."
+      },
+      "check": {
+        "id": "rem-gf-rotation-rule-k",
+        "kind": "check",
+        "body": "Half turn only.",
+        "conceptTag": "gf-rotation-rule",
+        "explanationVariants": [
+          "180°: both signs flip. (2, 7) → (−2, −7).",
+          "Straight through the origin: right 2 becomes left 2, up 7 becomes down 7."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Rotate (2, 7) by 180° about the origin. Where is the image?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(−2, −7)",
+              "correct": true,
+              "feedback": "Both signs flip and nothing swaps — the half-turn rule."
+            },
+            {
+              "id": "o2",
+              "label": "(−7, −2)",
+              "correct": false,
+              "feedback": "The coordinates traded places — that's quarter-turn behavior. 180° keeps the order and flips both signs."
+            },
+            {
+              "id": "o3",
+              "label": "(2, −7)",
+              "correct": false,
+              "feedback": "Only y flipped — that's the x-axis REFLECTION. The half turn flips x too: (−2, −7)."
+            },
+            {
+              "id": "o4",
+              "label": "(−2, 7)",
+              "correct": false,
+              "feedback": "Only x flipped — the y-axis reflection. A 180° rotation flips both coordinates."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Rotations about the origin get coordinate rules too. Counterclockwise: **90°: (x, y) → (−y, x)** · **180°: (x, y) → (−x, −y)** · **270°: (x, y) → (y, −x)**. The 180° rule is the easiest — both signs flip. The quarter turns swap the coordinates AND flip exactly one sign.",
+      "figure": "gf-rotations-origin"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The half turn.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the image of (3, 5) rotated 180° about the origin?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(−3, −5)",
+            "correct": true,
+            "feedback": "Half a turn sends every point straight through the origin to the far side: both signs flip."
+          },
+          {
+            "id": "o2",
+            "label": "(−5, −3)",
+            "correct": false,
+            "feedback": "The coordinates swapped as well — 180° never swaps. Only both SIGNS change: (−3, −5)."
+          },
+          {
+            "id": "o3",
+            "label": "(3, −5)",
+            "correct": false,
+            "feedback": "Flipping just the y is the x-axis REFLECTION. A half turn flips both coordinates' signs."
+          },
+          {
+            "id": "o4",
+            "label": "(−3, 5)",
+            "correct": false,
+            "feedback": "Flipping just the x is the y-axis reflection. Rotating 180° flips both: (−3, −5)."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "You'll rotate (3, 5) a half turn about the origin. How many coordinates change sign?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both — the point lands directly opposite"
+          },
+          {
+            "id": "yOnly",
+            "label": "Only y — like a flip over the x-axis"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — turning preserves coordinates"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "A 180° turn sends every point straight through the origin to the opposite side: (x, y) → (−x, −y), so (3, 5) lands on (−3, −5). Flipping only one sign is a REFLECTION's fingerprint, not a half turn's."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A quarter turn.",
+      "conceptTag": "gf-rotation-rule",
+      "explanationVariants": [
+        "90° CCW: (x, y) → (−y, x). So (4, 1) → (−1, 4), and the image's y-coordinate is 4.",
+        "The old x becomes the new y under a quarter turn counterclockwise: y′ = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Rotate (4, 1) by 90° counterclockwise about the origin. What is the image's y-coordinate?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the preimage's y riding along unchanged — but a quarter turn moves it into the x-slot. The NEW y is the old x: 4."
+          },
+          {
+            "value": -4,
+            "feedback": "−4 is the 270° (clockwise-quarter) result, (y, −x). Counterclockwise 90° puts +x into the y-slot: 4."
+          }
+        ],
+        "fallbackFeedback": "90° CCW rule (−y, x): new y = old x = 4."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-rotation-rule__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Direction convention: positive rotations run counterclockwise.** A 270° counterclockwise turn lands exactly where a 90° CLOCKWISE turn does — same ending, two descriptions. When a problem says only \"rotate 90°,\" read it as counterclockwise unless told otherwise.",
+      "figure": "gf-ccw-positive"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which turn was it?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A rotation about the origin sends (2, 6) to (6, −2). Which rotation is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "270° counterclockwise",
+            "correct": true,
+            "feedback": "The 270° rule (y, −x) gives (6, −2) exactly — equivalently, a 90° clockwise turn."
+          },
+          {
+            "id": "o2",
+            "label": "90° counterclockwise",
+            "correct": false,
+            "feedback": "90° CCW is (−y, x): it would send (2, 6) to (−6, 2) — the wrong quadrant entirely."
+          },
+          {
+            "id": "o3",
+            "label": "180°",
+            "correct": false,
+            "feedback": "180° only flips signs, never swaps: (2, 6) would land at (−2, −6), coordinates in their original order."
+          },
+          {
+            "id": "o4",
+            "label": "360°",
+            "correct": false,
+            "feedback": "A full turn brings every point home: (2, 6) would stay (2, 6), but this point moved."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Run the 270° rule.",
+      "conceptTag": "gf-rotation-rule",
+      "explanationVariants": [
+        "270° CCW: (x, y) → (y, −x). So (1, 7) → (7, −1), and the y-coordinate is −1.",
+        "Think 90° clockwise: the old x drops into the y-slot with a sign flip: −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Rotate (1, 7) by 270° counterclockwise about the origin. What is the image's y-coordinate?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the old x WITHOUT its sign flip. The 270° rule is (y, −x) — the x moves to the y-slot negated: −1."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the old y — under this turn it moves to the X-slot. The new y is −x = −1."
+          }
+        ],
+        "fallbackFeedback": "Rule (y, −x): new y = −1."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-rotation-rule__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Rotations **compose by adding angles**: a 90° turn followed by another 90° turn is one 180° turn. The rules confirm it — push a point through (−y, x) twice and both coordinates come out negated, exactly the 180° rule. Function composition, wearing degrees.",
+      "figure": "gf-rotations-add"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "One quarter first.",
+      "widget": {
+        "type": "rotationLab",
+        "mode": "coordinateRule",
+        "prompt": "Turn the point (5, 2) a quarter turn counterclockwise about the origin, and read its image straight off the grid.",
+        "point": [
+          5,
+          2
+        ],
+        "centre": [
+          0,
+          0
+        ],
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 90,
+        "gridMax": 8,
+        "commonTurns": [
+          {
+            "angle": 180,
+            "feedback": "A half turn sends (5, 2) to (−5, −2) — both signs flipped. That is the 180° rule, but the question asked for a quarter turn."
+          },
+          {
+            "angle": 270,
+            "feedback": "270° counterclockwise sends (5, 2) to (2, −5). Right idea, three quarters too far — a quarter turn is 90°."
+          }
+        ],
+        "successFeedback": "The image is (−2, 5), so the y-coordinate is 5. That IS the rule (x, y) → (−y, x), read off the grid rather than recalled: the old y (2) became the new x with a sign flip, and the old x (5) became the new y. Turn it again and you land on the 180° rule for free.",
+        "lowFeedback": "Not turned far enough — the quarter turn is 90° counterclockwise.",
+        "highFeedback": "Turned too far — ease back to the quarter turn at 90°."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Quarter + quarter.",
+      "conceptTag": "gf-rotation-rule",
+      "hints": [
+        "Apply 90° CCW once: (5, 2) → (−y, x) = ?",
+        "First turn gives (−2, 5). Now feed THAT through the same rule.",
+        "Or skip the middle step: 90 + 90 = 180, and the 180° rule flips both signs."
+      ],
+      "explanationVariants": [
+        "(5, 2) → (−2, 5) → (−5, −2). Same as one 180° turn: both signs flipped.",
+        "Angles add: two quarter turns are a half turn, so apply (−x, −y) directly to (5, 2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Apply a 90° counterclockwise rotation to (5, 2), then apply it AGAIN to the result. Where does the point end up?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(−5, −2)",
+            "correct": true,
+            "feedback": "Twice through (−y, x): (5, 2) → (−2, 5) → (−5, −2) — exactly the 180° rule, since 90 + 90 = 180."
+          },
+          {
+            "id": "o2",
+            "label": "(−2, 5)",
+            "correct": false,
+            "feedback": "(−2, 5) is the point after ONE quarter turn. The second application still has to run: (−2, 5) → (−5, −2)."
+          },
+          {
+            "id": "o3",
+            "label": "(5, 2)",
+            "correct": false,
+            "feedback": "Returning home takes a FULL turn (360°) — two quarters only make a half. (Two identical REFLECTIONS cancel; rotations keep adding.)"
+          },
+          {
+            "id": "o4",
+            "label": "(2, −5)",
+            "correct": false,
+            "feedback": "(2, −5) is the 270° result — a quarter turn the CLOCKWISE way. Two CCW quarters add to 180°: (−5, −2)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-rotation-rule__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Turns by the numbers.",
+      "takeaways": [
+        "CCW rules: 90° (−y, x) · 180° (−x, −y) · 270° (y, −x) — positive means counterclockwise.",
+        "270° CCW and 90° CW are the same turn in different words.",
+        "Rotations compose by ADDING angles: 90 then 90 is 180."
+      ],
+      "teaser": "Next chapter: chain different motions together — and meet figures that map onto THEMSELVES."
+    }
+  ]
+}

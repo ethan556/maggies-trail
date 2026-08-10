@@ -1,0 +1,313 @@
+{
+  "id": "ca-05-01",
+  "slug": "setting-up",
+  "title": "Setting Up an Optimisation",
+  "courseId": "curve-analysis",
+  "chapterId": "ch5-optimisation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Optimisation is not a calculus problem. It is a **translation** problem with a calculus step in the middle.\n\n1. Name what you are maximising. Write it as a formula.\n2. Use the constraint to eliminate variables until **one** is left.\n3. State the **domain** — the values that actually make physical sense.\n4. *Then* differentiate.\n\nMost marks are lost in steps 2 and 3, before any calculus happens.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Reduce to one variable.",
+      "conceptTag": "ca-optimisation-setup",
+      "explanationVariants": [
+        "The two numbers sum to 20, so if one is x the other is 20 − x. The product is P = x(20 − x) — one variable, and the constraint has been used up.",
+        "The constraint is not an extra condition to remember; it is the tool that removes a variable."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two numbers add to 20. You want the largest possible product. What should you maximise?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "P = x(20 − x), where x is one of the numbers.",
+            "correct": true,
+            "feedback": "Right — the constraint has been consumed to eliminate the second number. One variable, and now calculus can start."
+          },
+          {
+            "id": "o2",
+            "label": "P = xy",
+            "correct": false,
+            "feedback": "Two variables is one too many. Use x + y = 20 to write y = 20 − x, and the problem collapses to a single variable."
+          },
+          {
+            "id": "o3",
+            "label": "P = x + y = 20",
+            "correct": false,
+            "feedback": "That is the CONSTRAINT, not the quantity you want to maximise. It is fixed at 20 — there is nothing to optimise about it."
+          },
+          {
+            "id": "o4",
+            "label": "P = 20 − x",
+            "correct": false,
+            "feedback": "That is the second number, not the product. The product multiplies them."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "opt-setup"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The domain is not decoration.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why the physical domain decides the answer.",
+        "panels": [
+          {
+            "title": "The formula does not know",
+            "body": "For the open box, V = x(12 − 2x)². Substitute x = 100 and the algebra cheerfully returns a huge positive volume. But you cannot cut a 100-inch square out of a 12-inch sheet."
+          },
+          {
+            "title": "The domain says so",
+            "body": "The cut must be positive (x > 0) and must leave a base (12 − 2x > 0, so x < 6). The physical domain is 0 < x < 6, and everything outside it is fiction."
+          },
+          {
+            "title": "And it changes the answer",
+            "body": "Without the domain you might report a critical point that lies outside it — a perfect, meaningless answer. State the domain BEFORE differentiating, and the calculus can only ever hand you a legal candidate."
+          }
+        ],
+        "continueFeedback": "Keep going — the third panel is where the marks are lost.",
+        "successFeedback": "The formula will happily compute nonsense. The domain is what stops you reporting it."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "The reveal said the domain decides. Build V′'s sign chart yourself and watch the chart claim a third region the box cannot enter.",
+      "predict": {
+        "prompt": "V = x(12 − 2x)², so V′ = 12(x − 2)(x − 6). The chart will show V′ turning positive again past x = 6. Does the box start growing again there?",
+        "options": [
+          {
+            "id": "grows-again",
+            "label": "Yes — positive V′ means growing volume"
+          },
+          {
+            "id": "fiction",
+            "label": "No — past 6 the base is gone; that region is fiction"
+          },
+          {
+            "id": "chart-wrong",
+            "label": "No — the chart must be wrong about the sign"
+          }
+        ],
+        "outcomeId": "fiction",
+        "reveal": "The algebra is right AND the region is fiction — both at once. At x = 6 the base 12 − 2x is zero: no box exists there or beyond. The chart reports the formula faithfully; the DOMAIN 0 < x < 6 says which columns describe a real box. That is why you state it before differentiating."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Assign V′ its sign on each interval. Roots at x = 2 and x = 6, leading coefficient positive.",
+        "roots": [
+          {
+            "x": 2,
+            "mult": 1
+          },
+          {
+            "x": 6,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "+ − + : the volume rises to x = 2, falls after — so x = 2 is the maximum, V(2) = 2·8² = 128. And the final + column? The formula is happy there, but 12 − 2x < 0 means no base: the domain 0 < x < 6 has already thrown that region out. The chart shows exactly why the domain is part of the answer.",
+        "crossFeedback": "Check the signs by testing a point in each interval: V′(1) = 12(−1)(−5) > 0, V′(4) = 12(2)(−2) < 0, V′(7) = 12(5)(1) > 0. Both roots are single, so the sign flips at each crossing.",
+        "bounceFeedback": "Both roots here have multiplicity 1 — odd — so the sign CROSSES at each. A bounce (sign kept) only happens at an even-multiplicity root, and there are none in V′."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the domain.",
+      "conceptTag": "ca-optimisation-setup",
+      "explanationVariants": [
+        "The cut x must be positive, and the remaining base 12 − 2x must also be positive — so x < 6. The domain is 0 < x < 6.",
+        "At x = 6 the base has shrunk to nothing and the box has no volume at all. It is the degenerate end."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 12-inch square sheet, with squares of side x cut from the corners and the sides folded up. What is the largest x can be?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "The sheet is only 12 inches wide, and you cut x from BOTH sides — so the base is 12 − 2x, which must be positive: x < 6."
+          },
+          {
+            "value": 3,
+            "feedback": "Nothing forces x below 3. The base 12 − 2x is still positive at x = 5, though the box is getting very shallow."
+          },
+          {
+            "value": 0,
+            "feedback": "That is the lower limit, not the upper one."
+          }
+        ],
+        "fallbackFeedback": "The base is 12 − 2x, which must be positive: x < 6."
+      },
+      "variant": {
+        "gen": "opt-setup",
+        "form": "domainBound"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Once you have one variable and a domain, the rest is chapter 1:\n\nDifferentiate. Set to zero. Find the critical points **inside the domain**. Compare their values with the values at the ends.\n\nThat is the **closed-interval method**, and it is the whole of the calculus in an optimisation problem.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The order matters.",
+      "conceptTag": "ca-optimisation-setup",
+      "explanationVariants": [
+        "Differentiating a two-variable formula gets you nowhere: you must eliminate first. And a critical point outside the domain is not a candidate at all.",
+        "The calculus is easy. Getting the right thing to differentiate is the work."
+      ],
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put an optimisation problem in the right order.",
+        "items": [
+          {
+            "id": "c",
+            "label": "State the physical domain"
+          },
+          {
+            "id": "a",
+            "label": "Write a formula for the quantity to be optimised"
+          },
+          {
+            "id": "d",
+            "label": "Differentiate, and compare critical points with the endpoints"
+          },
+          {
+            "id": "b",
+            "label": "Use the constraint to reduce it to ONE variable"
+          }
+        ],
+        "correctOrder": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "d",
+            "second": "b",
+            "feedback": "You cannot differentiate a formula with two variables in it. Eliminate one first."
+          },
+          {
+            "first": "c",
+            "second": "a",
+            "feedback": "You cannot state the domain of a formula you have not written yet."
+          }
+        ],
+        "missFeedback": "Formula, then constraint, then domain, then calculus.",
+        "successFeedback": "Formula, constraint, domain, calculus. Three translation steps and one differentiation."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-optimisation-setup__dragOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Set it up and solve it.",
+      "conceptTag": "ca-optimisation-setup",
+      "hints": [
+        "P = x(20 − x) = 20x − x². The domain is 0 ≤ x ≤ 20.",
+        "P′ = 20 − 2x = 0 gives x = 10, the only critical point.",
+        "Compare: P(0) = 0, P(10) = 100, P(20) = 0."
+      ],
+      "explanationVariants": [
+        "P(10) = 10 × 10 = 100, which beats both endpoints (0 and 0). The maximum product is 100.",
+        "The two numbers are EQUAL at the optimum — which is not a coincidence, and it happens in a surprising number of these problems."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two numbers add to 20. What is their largest possible product?",
+        "answer": 100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That is the SUM, which is fixed and cannot be optimised. The product is x(20 − x), maximised at 100."
+          },
+          {
+            "value": 10,
+            "feedback": "That is the value of x at the optimum. Its PRODUCT with 20 − x = 10 is 100."
+          },
+          {
+            "value": 99,
+            "feedback": "That is 9 × 11 — close, but the true maximum is at 10 × 10 = 100. Equal numbers win."
+          }
+        ],
+        "fallbackFeedback": "P = x(20 − x) → P′ = 20 − 2x = 0 → x = 10, so P = 10 × 10 = 100."
+      },
+      "variant": {
+        "gen": "opt-setup",
+        "form": "maxProduct"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Translate first. Differentiate last.",
+      "takeaways": [
+        "Write the quantity, use the constraint to reach ONE variable, state the physical domain, then differentiate.",
+        "The formula will happily return nonsense outside the domain — the domain is what stops you reporting it.",
+        "Once you are down to one variable on a closed interval, it is the closed-interval method from chapter 1."
+      ],
+      "teaser": "Next: the classic box, and the sign chart that settles it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-optimisation-setup",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two variables cannot be differentiated. The constraint exists to KILL one of them — solve it for the variable you do not want, substitute, and only then reach for calculus.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Kill a variable.",
+        "conceptTag": "ca-optimisation-setup",
+        "explanationVariants": [
+          "x + y = 12 gives y = 12 − x, so the product is x(12 − x).",
+          "One substitution, one variable, and the problem is ready for calculus."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Two numbers add to 12. Write their product with ONE variable.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "P = x(12 − x)",
+              "correct": true,
+              "feedback": "Right — the constraint has been used to eliminate y."
+            },
+            {
+              "id": "o2",
+              "label": "P = xy",
+              "correct": false,
+              "feedback": "Still two variables. Use x + y = 12 to replace y with 12 − x."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,393 @@
+{
+  "id": "sr-05-01",
+  "slug": "when-adding-forever-settles-down",
+  "title": "When Adding Forever Settles Down",
+  "courseId": "sequences-series",
+  "chapterId": "ch5-infinite-geometric",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Fill a square in halves: first 1/2, then 1/4, then 1/8… forever. Each new piece fills exactly half of whatever gap remains — so the total climbs and climbs but **never passes 1**. Infinitely many additions, finite total. That's the strange, beautiful idea this chapter makes precise.",
+      "figure": "shrinking-halves"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch a forever-sum stop.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometric",
+        "first": 4,
+        "targetD": 1,
+        "atPosition": 6,
+        "targetTerm": 0,
+        "targetRTenths": 5,
+        "targetSum": 8,
+        "start": 9,
+        "prompt": "4 + 4r + 4r² + … Set the ratio so the forever-sum settles on exactly 8.",
+        "successFeedback": "r = 0.5, and the partial sums pile up against the ceiling at 8 without ever passing it. An infinite sum is not 'adding forever' — it is the height the partial sums close in on. Drag r toward 1 and watch the ceiling run away: that is divergence, and it is why |r| < 1 is not a technicality.",
+        "lowFeedback": "The ceiling is under 8 — the terms shrink too fast, so the pile stops short.",
+        "highFeedback": "The ceiling is over 8 — the terms shrink too slowly. As r approaches 1 the ceiling escapes altogether."
+      },
+      "predict": {
+        "prompt": "As the common ratio moves closer to 1 from below, what happens to the infinite geometric sum?",
+        "options": [
+          {
+            "id": "grows",
+            "label": "Its finite limit grows and eventually escapes as r approaches 1"
+          },
+          {
+            "id": "shrinks",
+            "label": "Its limit shrinks toward the first term"
+          },
+          {
+            "id": "fixed",
+            "label": "The limit stays fixed because the first term is fixed"
+          }
+        ],
+        "outcomeId": "grows",
+        "reveal": "The limit is a/(1 − r). As r approaches 1, the denominator approaches zero, so the ceiling rises without bound."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Vary the common ratio and coordinate term decay, partial sums, convergence, and the infinite-sum formula.",
+        "invariants": [
+          "constant-ratio-between-terms",
+          "partial-sums-accumulate-terms",
+          "convergence-requires-absolute-ratio-below-one"
+        ],
+        "misconceptions": [
+          "terms-and-partial-sums-are-same",
+          "every-infinite-series-has-finite-sum"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "geometric-series-convergence-and-sum",
+        "delayed": true,
+        "counterfactualPrompt": "Move r to 0.9, then 1.0, then −0.5. Compare the term pattern and partial-sum path. Which values converge, and how does oscillation change the approach?",
+        "explanation": {
+          "prompt": "Why does a geometric series converge only when |r| < 1?",
+          "options": [
+            {
+              "id": "shrink",
+              "label": "Only then do the term magnitudes shrink to zero fast enough for the partial sums to approach a finite ceiling.",
+              "correct": true,
+              "feedback": "Exactly — convergence is visible in the shrinking terms and stabilizing partial sums."
+            },
+            {
+              "id": "infinite",
+              "label": "Any infinite list converges because later terms become less important.",
+              "correct": false,
+              "feedback": "If |r| is at least 1, terms do not shrink to zero, so the partial sums cannot settle."
+            }
+          ]
+        }
+      },
+      "conceptTag": "sr-inf-converge"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Where is this heading?",
+      "conceptTag": "sr-inf-converge",
+      "explanationVariants": [
+        "Every partial sum equals 1 − 1/2ⁿ — always a hair below 1, climbing ever closer.",
+        "Each piece fills half the REMAINING gap, so the gap shrinks forever but never empties."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As more and more pieces are added, the running total…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "climbs toward 1 but never reaches or passes it",
+            "correct": true,
+            "feedback": "Exactly — the total is trapped: always rising, never arriving. We say it CONVERGES to 1."
+          },
+          {
+            "id": "o2",
+            "label": "eventually exceeds 1",
+            "correct": false,
+            "feedback": "Each new piece fills only HALF the remaining gap — the gap never empties, so 1 is never passed."
+          },
+          {
+            "id": "o3",
+            "label": "reaches exactly 1 after finitely many pieces",
+            "correct": false,
+            "feedback": "Every partial sum is 1 − 1/2ⁿ — always a hair short. Only the infinite limit IS 1."
+          },
+          {
+            "id": "o4",
+            "label": "grows without bound",
+            "correct": false,
+            "feedback": "The pieces shrink fast enough that the total stays trapped below 1 forever."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-inf-converge__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When does an infinite geometric series settle like this? Exactly when **|r| < 1** — the ratio must shrink each term toward zero. Then the partial sums converge to a finite value. If |r| ≥ 1, the terms never fade and the running total either explodes or bounces forever: it **diverges**.",
+      "figure": "sr-converges-when"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Settle or explode?",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each ratio by the fate of its infinite series.",
+        "buckets": [
+          {
+            "id": "conv",
+            "label": "converges (settles)"
+          },
+          {
+            "id": "div",
+            "label": "diverges"
+          }
+        ],
+        "items": [
+          {
+            "id": "r1",
+            "label": "r = 1/3",
+            "bucketId": "conv",
+            "feedback": "|1/3| < 1 — terms shrink toward 0 and the total settles."
+          },
+          {
+            "id": "r2",
+            "label": "r = 2",
+            "bucketId": "div",
+            "feedback": "Terms DOUBLE each step — the running total explodes past every bound."
+          },
+          {
+            "id": "r3",
+            "label": "r = −0.9",
+            "bucketId": "conv",
+            "feedback": "The sign makes it alternate, but the SIZE decides: |−0.9| < 1, so it settles."
+          },
+          {
+            "id": "r4",
+            "label": "r = 1",
+            "bucketId": "div",
+            "feedback": "r = 1 repeats the same term forever: a + a + a + ⋯ climbs without end."
+          },
+          {
+            "id": "r5",
+            "label": "r = −3/2",
+            "bucketId": "div",
+            "feedback": "|−3/2| > 1 — the swings GROW each step; the total never settles on anything."
+          }
+        ],
+        "missFeedback": "Judge by |r| alone: strictly less than 1 settles; 1 or more diverges.",
+        "successFeedback": "|r| < 1 is the whole story — the sign only decides whether the approach alternates."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the survivor.",
+      "conceptTag": "sr-inf-converge",
+      "explanationVariants": [
+        "Only 100 + 50 + 25 + ⋯ has |r| < 1 (each term is HALF the last) — the rest grow or repeat forever.",
+        "Check r term-over-term: 1/2 settles; 2, 1, and 3 do not."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which infinite series settles to a finite total?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "100 + 50 + 25 + 12.5 + ⋯",
+            "correct": true,
+            "feedback": "r = 1/2 — the terms halve toward 0 and the total converges (to 200, as you'll soon compute)."
+          },
+          {
+            "id": "o2",
+            "label": "1 + 2 + 4 + 8 + ⋯",
+            "correct": false,
+            "feedback": "r = 2 — each term doubles, so the running total grows past every bound."
+          },
+          {
+            "id": "o3",
+            "label": "5 + 5 + 5 + 5 + ⋯",
+            "correct": false,
+            "feedback": "r = 1 — the terms never shrink, and adding 5 forever climbs without end."
+          },
+          {
+            "id": "o4",
+            "label": "2 + 6 + 18 + 54 + ⋯",
+            "correct": false,
+            "feedback": "r = 3 — tripling terms explode even faster than doubling ones."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-inf-converge__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Why the strict rule? Shrinking terms alone don't guarantee a finite total — the famous sum 1 + 1/2 + 1/3 + 1/4 + ⋯ has fading terms yet grows forever. **Geometric** shrinking is special: each term is a fixed FRACTION of the last, so the leftovers vanish fast enough to trap the total.",
+      "figure": "sr-strict-rule"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Predict the ceiling.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The partial sums of 0.3 + 0.03 + 0.003 + ⋯ climb toward:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1/3",
+            "correct": true,
+            "feedback": "Right — the running totals are 0.3, 0.33, 0.333, … building the repeating decimal 0.333…, which IS 1/3."
+          },
+          {
+            "id": "o2",
+            "label": "0.4",
+            "correct": false,
+            "feedback": "The sums never even reach 0.34 — each new term is a tenth of the last, far too small to push that high."
+          },
+          {
+            "id": "o3",
+            "label": "3",
+            "correct": false,
+            "feedback": "That reads the first term as 3 — it's 0.3, and the whole pile stays below 0.34."
+          },
+          {
+            "id": "o4",
+            "label": "no ceiling — it grows forever",
+            "correct": false,
+            "feedback": "r = 1/10 shrinks the terms geometrically — the total is trapped. Growth without bound needs |r| ≥ 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Life at the edge.",
+      "conceptTag": "sr-inf-converge",
+      "explanationVariants": [
+        "Only |r| < 1 settles: |−0.99| = 0.99 < 1 qualifies — barely and slowly, but it converges.",
+        "1.01 and 1 fail the size test; −1 makes the partial sums flip between two values forever."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For which r does 6 + 6r + 6r² + 6r³ + ⋯ settle to a finite total?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "r = −0.99",
+            "correct": true,
+            "feedback": "|−0.99| < 1 — just barely. The approach is slow and swings sign, but it settles."
+          },
+          {
+            "id": "o2",
+            "label": "r = 1.01",
+            "correct": false,
+            "feedback": "|1.01| > 1 — the terms GROW a little each step, and any growth compounds without bound."
+          },
+          {
+            "id": "o3",
+            "label": "r = −1",
+            "correct": false,
+            "feedback": "The terms run 6, −6, 6, −6… so the partial sums flip 6, 0, 6, 0 forever — never settling on one value."
+          },
+          {
+            "id": "o4",
+            "label": "r = 1",
+            "correct": false,
+            "feedback": "6 + 6 + 6 + ⋯ climbs forever — the terms never shrink."
+          }
+        ]
+      },
+      "hints": [
+        "Apply the one test that matters: is |r| strictly less than 1?",
+        "1.01 and 1 fail immediately. Between −0.99 and −1, take absolute values.",
+        "|−0.99| = 0.99 < 1, but |−1| = 1 — the strict inequality decides."
+      ],
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-inf-converge__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Infinity, tamed.",
+      "takeaways": [
+        "An infinite geometric series converges exactly when |r| < 1.",
+        "Partial sums climb toward a ceiling they never cross.",
+        "The sign of r sets alternation; the SIZE of r decides the fate."
+      ],
+      "teaser": "Next: the one-line formula for what these forever-sums actually equal."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-inf-converge",
+      "concept": {
+        "id": "rem-sr0501-c",
+        "kind": "concept",
+        "body": "One series, one test. 40 + 20 + 10 + 5 + ⋯ has r = 1/2: every term is half the last, so the terms fade toward 0 and the running total gets trapped below a ceiling. |r| < 1 means SETTLES — that single check is the entire convergence story."
+      },
+      "check": {
+        "id": "rem-sr0501-k",
+        "kind": "check",
+        "body": "Run the test.",
+        "conceptTag": "sr-inf-converge",
+        "explanationVariants": [
+          "r = 20/40 = 1/2 and |1/2| < 1 — the series settles.",
+          "Halving terms fade toward 0; the pile can't grow past its ceiling."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Does 40 + 20 + 10 + 5 + ⋯ settle to a finite total?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Yes — r = 1/2, and |1/2| < 1",
+              "correct": true,
+              "feedback": "That's the whole test: shrinking ratio, trapped total."
+            },
+            {
+              "id": "o2",
+              "label": "No — adding forever always grows without bound",
+              "correct": false,
+              "feedback": "Each term is HALF the previous — the additions fade so fast the total stays below 80 forever."
+            },
+            {
+              "id": "o3",
+              "label": "Only if we stop adding at some point",
+              "correct": false,
+              "feedback": "Stopping gives a finite PARTIAL sum — but this infinite pile itself settles, because |r| < 1."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

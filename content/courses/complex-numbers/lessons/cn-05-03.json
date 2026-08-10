@@ -1,0 +1,327 @@
+{
+ "id": "cn-05-03",
+ "slug": "choosing-the-best-method",
+ "title": "Choosing the Best Method",
+ "courseId": "complex-numbers",
+ "chapterId": "ch5-roots-and-methods",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Four solving methods, one decision: bare x² = k or a ready-made square → **square roots**; friendly integer factors → **factoring**; even middle term, stubborn factors → **completing the square**; anything at all → the **formula**. The discriminant predicts the root type before you commit.",
+   "figure": "cn-four-methods"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match equation to method.",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Drag each equation to the method that solves it fastest.",
+    "buckets": [
+     {
+      "id": "sq",
+      "label": "square roots"
+     },
+     {
+      "id": "fac",
+      "label": "factoring"
+     },
+     {
+      "id": "cts",
+      "label": "completing the square"
+     },
+     {
+      "id": "form",
+      "label": "quadratic formula"
+     }
+    ],
+    "items": [
+     {
+      "id": "m1",
+      "label": "x² − 16 = 0",
+      "bucketId": "sq",
+      "feedback": "Isolate and root: x = ±4 — no other machinery needed."
+     },
+     {
+      "id": "m2",
+      "label": "x² + 5x + 6 = 0",
+      "bucketId": "fac",
+      "feedback": "2 and 3 multiply to 6 and add to 5: (x + 2)(x + 3) in one step."
+     },
+     {
+      "id": "m3",
+      "label": "x² + 6x − 1 = 0",
+      "bucketId": "cts",
+      "feedback": "b = 6 is even and −1 kills integer factoring — (x + 3)² = 10 is smooth."
+     },
+     {
+      "id": "m4",
+      "label": "3x² − 2x + 7 = 0",
+      "bucketId": "form",
+      "feedback": "a ≠ 1, nothing factors, odd middle — the formula grinds it out reliably."
+     }
+    ],
+    "missFeedback": "Match the equation's shape: bare square, friendly factors, even b, or none of the above.",
+    "successFeedback": "All four matched — the shape of the equation picks the tool."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Complex roots aren't tied to any one method — they appear whenever **D < 0**, whichever route you take. x² + 10x + 29: completing the square gives (x + 5)² = −4, so x = **−5 ± 2i** — the negative square announces the complex pair.",
+   "figure": "cn-roots-anywhere"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Read the parts.",
+   "conceptTag": "cn-method-choice",
+   "explanationVariants": [
+    "(x + 5)² = −4 gives x = −5 ± 2i; the root with positive imaginary part is −5 + 2i, imaginary part 2.",
+    "√(−4) = 2i sets the spread; the imaginary part is its coefficient, 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve x² + 10x + 29 = 0 (hint: complete the square). For the root with POSITIVE imaginary part, what is the imaginary part?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is the value of −k in (x + 5)² = −4 — take its square root: the spread is 2i, so the part is 2."
+     },
+     {
+      "value": -5,
+      "feedback": "−5 is the REAL part (the center) — the imaginary part is the 2 from ±2i."
+     }
+    ],
+    "fallbackFeedback": "(x + 5)² = −4 → x = −5 ± 2i; imaginary part 2."
+   },
+   "variant": {
+    "gen": "cn-solve-any"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Take the fast lane.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve x² − 2x − 15 = 0 by the quickest route.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = 5 or x = −3",
+      "correct": true,
+      "feedback": "Right — (x − 5)(x + 3): the numbers −5 and +3 multiply to −15 and add to −2. ✓"
+     },
+     {
+      "id": "o2",
+      "label": "x = −5 or x = 3",
+      "correct": false,
+      "feedback": "Signs flipped: the factors are (x − 5)(x + 3), so the roots are +5 and −3."
+     },
+     {
+      "id": "o3",
+      "label": "x = 1 ± 4i",
+      "correct": false,
+      "feedback": "D = 4 + 60 = 64 > 0 — the roots are REAL here (5 and −3)."
+     },
+     {
+      "id": "o4",
+      "label": "x = 5 or x = 3",
+      "correct": false,
+      "feedback": "The product of the roots must be c = −15, a NEGATIVE — one root of each sign: 5 and −3."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A ready-made square.",
+   "conceptTag": "cn-method-choice",
+   "explanationVariants": [
+    "x − 3 = ±7, so x = 10 or x = −4; the larger is 10.",
+    "The square is already isolated — root, then shift: 3 ± 7."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve (x − 3)² = 49. What is the LARGER solution?",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -4,
+      "feedback": "−4 is the smaller root (3 − 7) — the larger is 3 + 7 = 10."
+     },
+     {
+      "value": 52,
+      "feedback": "The 3 shifts AFTER rooting: x = 3 ± 7, never 49 + 3."
+     }
+    ],
+    "fallbackFeedback": "x = 3 ± 7 → 10 or −4."
+   },
+   "variant": {
+    "gen": "cn-solve-any",
+    "form": "shiftedSquare"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The safety net.",
+   "conceptTag": "cn-method-choice",
+   "explanationVariants": [
+    "The formula needs no special shape — it solves every quadratic, real or complex roots alike.",
+    "Factoring and square-rooting need cooperation from the equation; the formula never does."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which method is guaranteed to solve ANY quadratic equation?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the quadratic formula",
+      "correct": true,
+      "feedback": "Right — it handles every a, b, c, and every discriminant sign."
+     },
+     {
+      "id": "o2",
+      "label": "factoring",
+      "correct": false,
+      "feedback": "Factoring needs integer-friendly roots — x² + 6x − 1 defeats it, but not the formula."
+     },
+     {
+      "id": "o3",
+      "label": "square roots",
+      "correct": false,
+      "feedback": "That needs the square pre-packaged (no loose x term) — most quadratics aren't."
+     },
+     {
+      "id": "o4",
+      "label": "reading the graph",
+      "correct": false,
+      "feedback": "Graphs can't show complex roots at all — the parabola never touches the axis when D < 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-method-choice__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full capstone.",
+   "conceptTag": "cn-method-choice",
+   "explanationVariants": [
+    "Divide by 2: x² − 2x + 5 = 0; D = 4 − 20 = −16; x = (2 ± 4i)/2 = 1 ± 2i.",
+    "Any method lands the same place: the conjugate pair 1 ± 2i."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve 2x² − 4x + 10 = 0.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = 1 ± 2i",
+      "correct": true,
+      "feedback": "Right — divide by 2, then D = −16 gives (2 ± 4i)/2 = 1 ± 2i."
+     },
+     {
+      "id": "o2",
+      "label": "x = 2 ± 4i",
+      "correct": false,
+      "feedback": "Those are the formula's raw parts BEFORE dividing by 2a — halve both: 1 ± 2i."
+     },
+     {
+      "id": "o3",
+      "label": "x = −1 ± 2i",
+      "correct": false,
+      "feedback": "−b = +2 after dividing by 2 (or +4 before), so the real part is +1."
+     },
+     {
+      "id": "o4",
+      "label": "x = 1 ± 4i",
+      "correct": false,
+      "feedback": "The 4i still owes the ÷2: the spread is ±2i."
+     }
+    ]
+   },
+   "hints": [
+    "Divide everything by 2 first: x² − 2x + 5 = 0.",
+    "D = 4 − 20 = −16, so √D = 4i.",
+    "x = (2 ± 4i)/2 = 1 ± 2i."
+   ],
+   "variant": {
+    "gen": "cn-solve-any",
+    "form": "complexRoots"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Pick the method by the equation's shape — the answers don't care which you choose.",
+   "takeaways": [
+    "Bare square → roots; friendly factors → factor; even b → complete; always → formula.",
+    "D < 0 predicts a conjugate pair before any solving starts.",
+    "Dividing by a first often simplifies everything."
+   ],
+   "teaser": "That completes Algebra 2's complex-number toolkit — polynomials of every degree are next."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "cn-method-choice",
+   "concept": {
+    "id": "rem-cn0503-c",
+    "kind": "concept",
+    "body": "Shape picks the method. x² = 81 has no x term and no factoring puzzle — the square is already alone."
+   },
+   "check": {
+    "id": "rem-cn0503-k",
+    "kind": "check",
+    "body": "Pick the tool.",
+    "conceptTag": "cn-method-choice",
+    "explanationVariants": [
+     "Square roots: x = ±9, instantly.",
+     "With the square isolated, rooting both sides is one step."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What is the fastest method for x² = 81?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "square roots",
+       "correct": true,
+       "feedback": "Right — x = ±9 in one step."
+      },
+      {
+       "id": "o2",
+       "label": "the quadratic formula",
+       "correct": false,
+       "feedback": "It works, but it's the slow lane here — the square is already isolated: root it."
+      },
+      {
+       "id": "o3",
+       "label": "factoring",
+       "correct": false,
+       "feedback": "You could rewrite as a difference of squares, but rooting both sides is faster."
+      },
+      {
+       "id": "o4",
+       "label": "completing the square",
+       "correct": false,
+       "feedback": "The square is ALREADY complete — just take roots."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

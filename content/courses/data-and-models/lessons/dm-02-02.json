@@ -1,0 +1,333 @@
+{
+  "id": "dm-02-02",
+  "slug": "residuals-and-correlation",
+  "title": "How Good Is the Fit? Residuals and Correlation",
+  "courseId": "data-and-models",
+  "chapterId": "ch2-modeling-with-two-variables",
+  "minutes": 12,
+  "standards": [
+    "S-ID.B.6b",
+    "S-ID.C.8"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Once a line is fitted, every point has a **residual**: its actual value minus what the line predicted. A point above the line has a positive residual; a point below has a negative one. Small residuals, scattered on both sides, mean the line is doing its job.",
+      "figure": "dm-residual-gap-intro"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Refit the hours-vs-score line from before.",
+      "predict": {
+        "prompt": "The hours-studied scatter clusters tightly around its fitted line. Will the residuals mostly be small, or mostly be large?",
+        "options": [
+          {
+            "id": "small",
+            "label": "Small — the points hug the line closely"
+          },
+          {
+            "id": "large",
+            "label": "Large — a tight cluster still leaves big gaps"
+          }
+        ],
+        "outcomeId": "small",
+        "reveal": "Small. A tight cluster around the line means every point's actual value is close to what the line predicted — that closeness IS what a small residual is."
+      },
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit the line again: hours studied (x) versus test score (y).",
+        "points": [
+          [
+            1,
+            65
+          ],
+          [
+            2,
+            71
+          ],
+          [
+            3,
+            74
+          ],
+          [
+            4,
+            79
+          ],
+          [
+            5,
+            86
+          ],
+          [
+            6,
+            89
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 7,
+        "yMin": 55,
+        "yMax": 95,
+        "tolerance": 0.4,
+        "mMin": -2,
+        "mMax": 8,
+        "mStep": 0.5,
+        "mStart": 0,
+        "bMin": 40,
+        "bMax": 80,
+        "bStep": 2,
+        "bStart": 50,
+        "successFeedback": "y = 5x + 60 again. Now look at the gaps: none of the six points sit far from this line — the whole point of fitting well is keeping every one of those gaps small.",
+        "slopeFeedback": "The tilt is off for this trend.",
+        "offsetFeedback": "The tilt is right; slide the line toward the middle of the cloud."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute one point's residual directly.",
+      "conceptTag": "dm-residual-correlation",
+      "explanationVariants": [
+        "At x = 3, predicted is 5(3)+60 = 75; actual is 74; residual is 74 − 75 = −1.",
+        "Residual is always actual minus predicted, in that order."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At x = 3, the line predicts y = 5(3) + 60 = 75, but the actual score was 74. What is the residual?",
+        "answer": -1,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 has the right size but the wrong sign — actual (74) is BELOW predicted (75), so the residual is negative."
+          },
+          {
+            "value": 75,
+            "feedback": "75 is the predicted value itself, not the gap. Residual = actual − predicted = 74 − 75."
+          }
+        ],
+        "fallbackFeedback": "74 − 75 = −1."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read what a residual's size says.",
+      "conceptTag": "dm-residual-correlation",
+      "explanationVariants": [
+        "A residual near 0 means the line predicted that point almost exactly.",
+        "The residual's SIZE (distance from 0) is what measures the miss — sign just says which direction."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A residual of −1, compared to a residual of −15 on the same scale, tells you the line's prediction was:",
+        "options": [
+          {
+            "id": "a",
+            "label": "Much closer for the −1 point than the −15 point",
+            "correct": true,
+            "feedback": "Smaller size means a smaller miss. −1 is a near-exact prediction; −15 is a much bigger gap, even though both are negative."
+          },
+          {
+            "id": "b",
+            "label": "Equally close, since both are negative",
+            "correct": false,
+            "feedback": "Sign only says WHICH side of the line the point fell on. Size is what measures how far off the prediction was."
+          },
+          {
+            "id": "c",
+            "label": "Worse for the −1 point",
+            "correct": false,
+            "feedback": "Backwards — a residual's magnitude is the miss; 1 is a smaller miss than 15."
+          },
+          {
+            "id": "d",
+            "label": "Impossible to compare without more information",
+            "correct": false,
+            "feedback": "The two numbers alone are enough: compare their sizes directly."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Checking every residual by hand doesn't scale. The **correlation coefficient**, r, compresses that whole pattern into one number from −1 to 1: close to ±1 means the residuals are tiny and the points hug the line; close to 0 means the points are scattered with barely any linear trend at all. The sign matches the slope's direction; the SIZE says how strong the relationship is.",
+      "figure": "dm-correlation-scale"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A noisier dataset, same rough upward trend. Fit what you can.",
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit a line to this noisier upward trend.",
+        "points": [
+          [
+            1,
+            60
+          ],
+          [
+            2,
+            75
+          ],
+          [
+            3,
+            68
+          ],
+          [
+            4,
+            85
+          ],
+          [
+            5,
+            78
+          ],
+          [
+            6,
+            95
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 7,
+        "yMin": 50,
+        "yMax": 100,
+        "tolerance": 0.8,
+        "mMin": -2,
+        "mMax": 8,
+        "mStep": 0.5,
+        "mStart": 0,
+        "bMin": 40,
+        "bMax": 80,
+        "bStep": 2,
+        "bStart": 50,
+        "successFeedback": "A trend is there, but every point sits noticeably farther from the line than in the tidy dataset — bigger residuals throughout. That is exactly the picture of a WEAKER correlation, even with the same general direction.",
+        "slopeFeedback": "Keep adjusting — some tilt fits this noisier trend better than others, even if no tilt fits perfectly.",
+        "offsetFeedback": "Slide toward the middle of this messier cloud."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute r from the summary sums — the formula every calculator runs.",
+      "conceptTag": "dm-residual-correlation",
+      "explanationVariants": [
+        "r = [nΣxy − ΣxΣy] / √([nΣx² − (Σx)²][nΣy² − (Σy)²]) = [5(83) − 15(25)] / √([5(55) − 225][5(135) − 625]) = 40/50 = 0.8.",
+        "Build the numerator and the two denominator pieces separately, then divide."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 5 points: Σx=15, Σy=25, Σxy=83, Σx²=55, Σy²=135. Compute r using r = [nΣxy−ΣxΣy] / √([nΣx²−(Σx)²][nΣy²−(Σy)²]). (2 decimals)",
+        "answer": 0.8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1.6,
+            "feedback": "1.6 skips the square root in the denominator — divide by √(50×50), not by 50 alone before rooting."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is only the numerator. Finish by dividing by the square-rooted denominator: 40/50."
+          }
+        ],
+        "fallbackFeedback": "Numerator 5(83)−15(25)=40. Denominator √([5(55)−225][5(135)−625])=√(50×50)=50. r=40/50=0.8."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Strength is about size, not sign.",
+      "conceptTag": "dm-residual-correlation",
+      "explanationVariants": [
+        "|−0.95| = 0.95 > 0.8, so the negative correlation is actually the STRONGER relationship.",
+        "Compare magnitudes to judge strength; the sign only says which direction."
+      ],
+      "hints": [
+        "Strip both correlations down to their absolute values before comparing.",
+        "|0.8| = 0.8, and |−0.95| = 0.95.",
+        "0.95 is bigger than 0.8 — the negative one is stronger, just pointed the other way."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Dataset A has r = 0.8. Dataset B has r = −0.95. Which has the STRONGER linear relationship?",
+        "options": [
+          {
+            "id": "b",
+            "label": "Dataset B — 0.95 in magnitude beats 0.8",
+            "correct": true,
+            "feedback": "Strength is about |r|, the DISTANCE from 0 — 0.95 is farther from 0 than 0.8, so B's relationship is stronger, even though it runs in the opposite direction."
+          },
+          {
+            "id": "a",
+            "label": "Dataset A — positive is always stronger than negative",
+            "correct": false,
+            "feedback": "Sign says direction, not strength. Compare the sizes: 0.95 beats 0.8, regardless of sign."
+          },
+          {
+            "id": "c",
+            "label": "They are equally strong since both are 'high'",
+            "correct": false,
+            "feedback": "0.8 and 0.95 are not equal — 0.95 is closer to 1, meaning a tighter fit."
+          },
+          {
+            "id": "d",
+            "label": "Cannot compare a positive and a negative correlation",
+            "correct": false,
+            "feedback": "Comparing magnitudes works precisely because it strips the sign away first."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Grading a fit: one gap at a time, then all at once.",
+      "takeaways": [
+        "A residual is actual minus predicted for ONE point — positive above the line, negative below.",
+        "The correlation coefficient r, from −1 to 1, summarizes every residual's pattern into a single strength score.",
+        "Strength is |r|, the distance from 0 — sign only tells you the direction of the trend."
+      ],
+      "teaser": "next: what a model's slope and intercept mean depends on the story behind the numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dm-residual-correlation",
+      "concept": {
+        "id": "rem-drc-c",
+        "kind": "concept",
+        "body": "Rewind. Residual = actual − predicted. If a point's actual value is 50 and the line predicted 45, the residual is 50 − 45 = 5: positive, because the point sits ABOVE the line."
+      },
+      "check": {
+        "id": "rem-drc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "dm-residual-correlation",
+        "explanationVariants": [
+          "Actual 30 minus predicted 34 is −4.",
+          "Subtract predicted from actual, in that order, keeping the sign."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A point's actual value is 30; the line predicted 34. What is the residual?",
+          "answer": -4,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 has the right size but the wrong sign — actual is BELOW predicted here, so the residual is negative."
+            },
+            {
+              "value": 64,
+              "feedback": "64 adds them. Residual is actual MINUS predicted: 30 − 34."
+            }
+          ],
+          "fallbackFeedback": "30 − 34 = −4."
+        }
+      }
+    }
+  ]
+}

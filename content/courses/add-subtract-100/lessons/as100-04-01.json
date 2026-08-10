@@ -1,0 +1,347 @@
+{
+  "id": "as100-04-01",
+  "slug": "two-step-stories",
+  "title": "Two-Step Stories",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch4-two-step",
+  "minutes": 8,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "two-step-bar",
+      "body": "Some stories take **two steps**. 18 birds land, 24 more come, then 15 fly off: 18 + 24 − 15 = 27.",
+      "narration": "Some stories take two steps. Eighteen birds land, twenty-four more come, that's forty-two, then fifteen fly off. Do the steps in order: eighteen plus twenty-four minus fifteen equals twenty-seven."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the middle number.",
+      "conceptTag": "two-step",
+      "widget": {
+        "type": "numeric",
+        "prompt": "First step: 18 birds + 24 more. How many after the birds arrive?",
+        "answer": 42,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That subtracted. MORE birds come, so add: 18 + 24 = 42."
+          },
+          {
+            "value": 32,
+            "feedback": "Check the regroup: 8 + 4 = 12 ones, carry the ten. 18 + 24 = 42."
+          }
+        ],
+        "missFeedback": "18 + 24 = 42 — that's the middle total, before any leave.",
+        "successFeedback": "42 birds after they arrive — now the second step.",
+        "fallbackFeedback": "18 + 24 = 42."
+      },
+      "predict": {
+        "prompt": "A two-step story: birds arrive, then some fly off. Can you find the FINAL count without doing the first step first?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — step two needs step one's result"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — do either step first"
+          },
+          {
+            "id": "once",
+            "label": "Just add everything at once"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "The second step acts on what the first step LEAVES — its answer is the second step's starting number. Two-step stories chain, they don't shuffle."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Now finish what the first step started.",
+      "conceptTag": "two-step",
+      "widget": {
+        "type": "numeric",
+        "prompt": "You found 42 birds after the first two groups arrived (18 + 24). Now 15 fly off. How many are left?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 57,
+            "feedback": "57 adds the 15 instead of taking them away — the birds FLEW OFF, so subtract: 42 − 15 = 27."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is how many flew away, not how many are left — subtract that from the 42 you already found: 42 − 15 = 27."
+          }
+        ],
+        "fallbackFeedback": "You already have the middle number, 42. Subtract the 15 that flew off: 42 − 15 = 27."
+      },
+      "explanationVariants": [
+        "42 birds, minus the 15 that fly off: 42 − 15 = 27.",
+        "The first step gave you 42. The second step takes 15 away: 42 − 15 = 27."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish the story.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "18 + 24 = 42, then 42 − 15 = 27.",
+        "Add the arrivals, then take away the ones that leave: 27 birds remain."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "18 birds, then 24 more arrive, then 15 fly off. How many now?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "That's only step one — 15 still fly off: 42 − 15 = 27."
+          },
+          {
+            "value": 57,
+            "feedback": "That added all three (18 + 24 + 15). The 15 LEAVE, so subtract: 42 − 15 = 27."
+          }
+        ],
+        "fallbackFeedback": "18 + 24 = 42, then 42 − 15 = 27."
+      },
+      "hints": [
+        "Add first: 18 + 24 = 42.",
+        "Then 15 fly off.",
+        "42 − 15 = 27."
+      ],
+      "variant": {
+        "gen": "two-step-arith"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The order matters: do the **first thing that happens** first. A word like *then* or *after* points to step two.",
+      "narration": "The order matters: do the first thing that happens first. A word like then or after points to step two.",
+      "figure": "as100-two-step-order"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each story-step to its number sentence.",
+      "conceptTag": "two-step",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each step to what you compute.",
+        "left": [
+          {
+            "id": "s1",
+            "label": "35 marbles, win 20 more"
+          },
+          {
+            "id": "s2",
+            "label": "…then lose 12"
+          },
+          {
+            "id": "s3",
+            "label": "final count"
+          }
+        ],
+        "right": [
+          {
+            "id": "r55",
+            "label": "35 + 20 = 55"
+          },
+          {
+            "id": "r43",
+            "label": "55 − 12 = 43"
+          },
+          {
+            "id": "r43b",
+            "label": "43 marbles"
+          }
+        ],
+        "pairs": {
+          "s1": "r55",
+          "s2": "r43",
+          "s3": "r43b"
+        },
+        "pairErrors": [
+          {
+            "left": "s1",
+            "right": "r43",
+            "feedback": "Winning 20 is the FIRST step: 35 + 20 = 55. Losing 12 comes after."
+          },
+          {
+            "left": "s2",
+            "right": "r55",
+            "feedback": "Losing 12 is the SECOND step, done on 55: 55 − 12 = 43."
+          }
+        ],
+        "missFeedback": "Win first (add), then lose (subtract): 35 + 20 = 55, then 55 − 12 = 43.",
+        "successFeedback": "Both steps in order — 43 marbles!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Your turn, two steps.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "35 + 20 = 55, then 55 − 12 = 43.",
+        "Add the win, subtract the loss: 43 marbles."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "35 marbles, win 20, then lose 12. How many now?",
+        "answer": 43,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "That's only step one — 12 are still lost: 55 − 12 = 43."
+          },
+          {
+            "value": 67,
+            "feedback": "That added all three. The 12 are LOST, so subtract: 55 − 12 = 43."
+          }
+        ],
+        "fallbackFeedback": "35 + 20 = 55, then 55 − 12 = 43."
+      },
+      "hints": [
+        "Win first: 35 + 20 = 55.",
+        "Then lose 12.",
+        "55 − 12 = 43."
+      ],
+      "variant": {
+        "gen": "two-step-arith"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which step comes first?",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "The story says 46, THEN 17 more arrive, THEN 23 leave — so add before you subtract.",
+        "Follow the order events happen: arrivals (add) before departures (subtract)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "46 fish, 17 more added, then 23 scooped out. What do you do FIRST?",
+        "options": [
+          {
+            "id": "a",
+            "label": "add: 46 + 17 = 63",
+            "correct": true,
+            "feedback": "Yes — the 17 arrive first, so add: 63, then subtract 23."
+          },
+          {
+            "id": "b",
+            "label": "subtract: 46 − 23 = 23",
+            "feedback": "The scooping happens LAST. Add the 17 first: 46 + 17 = 63."
+          },
+          {
+            "id": "c",
+            "label": "add all: 46 + 17 + 23",
+            "feedback": "The 23 are scooped OUT — that's a subtraction. First add: 63, then 63 − 23 = 40."
+          }
+        ]
+      },
+      "hints": [
+        "What happens first in the story?",
+        "17 more are ADDED.",
+        "46 + 17 = 63."
+      ],
+      "variant": {
+        "gen": "two-step-order"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Whole story, solo!",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "46 + 17 = 63, then 63 − 23 = 40.",
+        "Add the arrivals, subtract the scooped: 40 fish."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "46 fish, 17 more added, then 23 scooped out. How many now?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 63,
+            "feedback": "That's only step one — 23 are scooped out: 63 − 23 = 40."
+          },
+          {
+            "value": 52,
+            "feedback": "That did 46 − 17 + 23. The 17 are ADDED, the 23 removed: 63 − 23 = 40."
+          }
+        ],
+        "fallbackFeedback": "46 + 17 = 63, then 63 − 23 = 40."
+      },
+      "hints": [
+        "Add first: 46 + 17 = 63.",
+        "Then 23 scooped out.",
+        "63 − 23 = 40."
+      ],
+      "variant": {
+        "gen": "two-step-arith"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You solve two-step stories!",
+      "takeaways": [
+        "Do the steps in the order they happen.",
+        "Arrivals add; departures subtract.",
+        "The middle number feeds the second step."
+      ],
+      "teaser": "next: stories where a ten must be traded mid-way."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "two-step",
+      "concept": {
+        "id": "rem-2s-c",
+        "kind": "concept",
+        "body": "Slow down. 10 apples, 5 more, then 3 eaten. Step 1: 10 + 5 = 15. Step 2: 15 − 3 = 12.",
+        "narration": "Slow it down. Ten apples, five more, then three eaten. Step one: ten plus five is fifteen. Step two: fifteen minus three is twelve. One step at a time."
+      },
+      "check": {
+        "id": "rem-2s-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "two-step",
+        "explanationVariants": [
+          "10 + 5 = 15, then 15 − 3 = 12.",
+          "Add the 5, take away the 3: 12 apples."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "10 apples, 5 more, then 3 eaten. How many now?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 15,
+              "feedback": "That's only step one — 3 are eaten: 15 − 3 = 12."
+            },
+            {
+              "value": 18,
+              "feedback": "That added all three. The 3 are eaten, so subtract: 15 − 3 = 12."
+            }
+          ],
+          "fallbackFeedback": "10 + 5 = 15, then 15 − 3 = 12."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,428 @@
+{
+  "id": "dgr1-03-01",
+  "slug": "how-many-in-all",
+  "title": "How Many in All?",
+  "courseId": "data-graphs-g1",
+  "chapterId": "ch3-what-the-data-says",
+  "minutes": 6,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "bar-compare",
+      "body": "A graph can answer “how many in all?” — add every category's count to collect the total.",
+      "narration": "A graph can answer “how many in all?” — add every category's count to collect the total."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build, then total.",
+      "conceptTag": "g1d-total",
+      "widget": {
+        "type": "barBuilder",
+        "prompt": "Build the graph: Vans 4, Bikes 6, Cars 3.",
+        "categories": [
+          "Vans",
+          "Bikes",
+          "Cars"
+        ],
+        "target": [
+          4,
+          6,
+          3
+        ],
+        "maxVal": 8,
+        "step": 1,
+        "histogram": false,
+        "display": "bar",
+        "icon": "●",
+        "successFeedback": "Four, six, and three — thirteen wheels' worth of data in all.",
+        "partialFeedback": "Compare each category against its count in the prompt — the bar's top must sit exactly on its number."
+      },
+      "predict": {
+        "prompt": "Vans 4, Bikes 6, Cars 3. Before adding — will the total be more or less than 10?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than 10"
+          },
+          {
+            "id": "less",
+            "label": "Less than 10"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly 10"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "4 + 6 already makes 10, and Cars adds 3 more: 13 in all. Estimating first catches missed categories."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g1d total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for g1d total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines g1d total."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "data-graphs-g1:g1d-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count them all.",
+      "conceptTag": "g1d-total",
+      "explanationVariants": [
+        "4 + 6 + 3 = 13 — every category counts.",
+        "Adding all three counts gives 13 in all."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Votes: Vans 4, Bikes 6, Cars 3. How many votes in all?",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That adds only the first two categories and leaves out Cars. \"In all\" means every category counts toward the total."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the biggest single category, not the total. Add all three counts together."
+          }
+        ],
+        "fallbackFeedback": "Add every category's count — the total collects all the votes, whichever category holds them."
+      },
+      "hints": [
+        "\"In all\" means every category.",
+        "Add the three counts.",
+        "4 + 6 + 3 = 13."
+      ],
+      "variant": {
+        "gen": "g1-data",
+        "form": "GdTotalNumeric"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g1d total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for g1d total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines g1d total."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "data-graphs-g1:g1d-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "bar-compare",
+      "body": "The total counts every vote once, whichever category holds it. Leaving a category out loses its votes.",
+      "narration": "The total counts every vote once, whichever category holds it. Leaving a category out loses its votes."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "One more graph to total.",
+      "conceptTag": "g1d-total",
+      "widget": {
+        "type": "barBuilder",
+        "prompt": "Build the graph: Milk 3, Juice 5, Water 6.",
+        "categories": [
+          "Milk",
+          "Juice",
+          "Water"
+        ],
+        "target": [
+          3,
+          5,
+          6
+        ],
+        "maxVal": 8,
+        "step": 1,
+        "histogram": false,
+        "display": "bar",
+        "icon": "●",
+        "successFeedback": "Three, five, six — fourteen drinks counted in all.",
+        "partialFeedback": "Compare each category against its count in the prompt — the bar's top must sit exactly on its number."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g1d total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for g1d total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines g1d total."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "data-graphs-g1:g1d-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count them all.",
+      "conceptTag": "g1d-total",
+      "explanationVariants": [
+        "7 + 2 + 4 = 13 — every category counts.",
+        "Adding all three counts gives 13 in all."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Votes: Ants 7, Bees 2, Moths 4. How many votes in all?",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That adds only the first two categories and leaves out Moths. \"In all\" means every category counts toward the total."
+          },
+          {
+            "value": 7,
+            "feedback": "That is the biggest single category, not the total. Add all three counts together."
+          }
+        ],
+        "fallbackFeedback": "Add every category's count — the total collects all the votes, whichever category holds them."
+      },
+      "hints": [
+        "\"In all\" means every category.",
+        "Add the three counts.",
+        "7 + 2 + 4 = 13."
+      ],
+      "variant": {
+        "gen": "g1-data",
+        "form": "GdTotalNumeric"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g1d total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for g1d total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines g1d total."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "data-graphs-g1:g1d-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count them all.",
+      "conceptTag": "g1d-total",
+      "explanationVariants": [
+        "3 + 5 + 6 = 14 — every category counts.",
+        "Adding all three counts gives 14 in all."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Votes: Milk 3, Juice 5, Water 6. How many votes in all?",
+        "answer": 14,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That adds only the first two categories and leaves out Water. \"In all\" means every category counts toward the total."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the biggest single category, not the total. Add all three counts together."
+          }
+        ],
+        "fallbackFeedback": "Add every category's count — the total collects all the votes, whichever category holds them."
+      },
+      "hints": [
+        "\"In all\" means every category.",
+        "Add the three counts.",
+        "3 + 5 + 6 = 14."
+      ],
+      "variant": {
+        "gen": "g1-data",
+        "form": "GdTotalNumeric"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g1d total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for g1d total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines g1d total."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "data-graphs-g1:g1d-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count them all.",
+      "conceptTag": "g1d-total",
+      "explanationVariants": [
+        "8 + 4 + 5 = 17 — every category counts.",
+        "Adding all three counts gives 17 in all."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Votes: Oak 8, Pine 4, Elm 5. How many votes in all?",
+        "answer": 17,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That adds only the first two categories and leaves out Elm. \"In all\" means every category counts toward the total."
+          },
+          {
+            "value": 8,
+            "feedback": "That is the biggest single category, not the total. Add all three counts together."
+          }
+        ],
+        "fallbackFeedback": "Add every category's count — the total collects all the votes, whichever category holds them."
+      },
+      "hints": [
+        "\"In all\" means every category.",
+        "Add the three counts.",
+        "8 + 4 + 5 = 17."
+      ],
+      "variant": {
+        "gen": "g1-data",
+        "form": "GdTotalNumeric"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g1d total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for g1d total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines g1d total."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "data-graphs-g1:g1d-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "“In all” adds every category.",
+        "Every vote counts exactly once.",
+        "Skipping a category loses votes."
+      ],
+      "teaser": "next: how far apart two categories are."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g1d-total",
+      "concept": {
+        "id": "rem-g1d-total-c",
+        "kind": "concept",
+        "body": "The total counts every vote once, whichever category holds it. Leaving a category out loses its votes.",
+        "narration": "The total counts every vote once, whichever category holds it. Leaving a category out loses its votes."
+      },
+      "check": {
+        "id": "rem-g1d-total-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g1d-total",
+        "explanationVariants": [
+          "4 + 6 + 3 = 13 — every category counts.",
+          "Adding all three counts gives 13 in all."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Votes: Vans 4, Bikes 6, Cars 3. How many votes in all?",
+          "answer": 13,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "That adds only the first two categories and leaves out Cars. \"In all\" means every category counts toward the total."
+            },
+            {
+              "value": 6,
+              "feedback": "That is the biggest single category, not the total. Add all three counts together."
+            }
+          ],
+          "fallbackFeedback": "Add every category's count — the total collects all the votes, whichever category holds them."
+        }
+      }
+    }
+  ]
+}

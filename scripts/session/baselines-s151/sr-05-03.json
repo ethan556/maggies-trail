@@ -1,0 +1,318 @@
+{
+ "id": "sr-05-03",
+ "slug": "forever-sums-in-the-wild",
+ "title": "Forever Sums in the Wild",
+ "courseId": "sequences-series",
+ "chapterId": "ch5-infinite-geometric",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A repeating decimal IS an infinite geometric series wearing a disguise. 0.777… = 0.7 + 0.07 + 0.007 + ⋯, with a₁ = 7/10 and r = 1/10. The formula converts it to an exact fraction: (7/10)/(9/10) = **7/9**. Every single-digit repeat lands over 9 this way.",
+   "figure": "sr-repeating-decimal"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Unmask a repeater.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "0.444… (the 4 repeating forever) equals which fraction?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "4/9",
+      "correct": true,
+      "feedback": "Right — (4/10)/(1 − 1/10) = (4/10)/(9/10) = 4/9. Check: 4 ÷ 9 = 0.444…"
+     },
+     {
+      "id": "o2",
+      "label": "2/5",
+      "correct": false,
+      "feedback": "2/5 is exactly 0.4 and then STOPS — the repeat keeps adding 0.04 + 0.004 + ⋯ beyond it."
+     },
+     {
+      "id": "o3",
+      "label": "4/10",
+      "correct": false,
+      "feedback": "4/10 is the first TERM of the series, the plain 0.4 — the infinite tail pushes the total up to 4/9."
+     },
+     {
+      "id": "o4",
+      "label": "4/11",
+      "correct": false,
+      "feedback": "4/11 = 0.363636…, a TWO-digit repeat — a different pattern entirely."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Over nine, always.",
+   "conceptTag": "sr-inf-apply",
+   "explanationVariants": [
+    "0.222… = (2/10)/(9/10) = 2/9 — the same machinery as 0.7̅ = 7/9.",
+    "a₁ = 2/10 and 1 − r = 9/10; the tens cancel, leaving the digit over 9."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "0.222… (repeating) equals 2/n. What is n?",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "Over 10 gives plain 0.2, which terminates — the repeat's infinite tail lifts it to 2/9."
+     },
+     {
+      "value": 5,
+      "feedback": "2/5 = 0.4 — twice too big. The series formula gives (2/10)/(9/10) = 2/9."
+     }
+    ],
+    "fallbackFeedback": "(2/10)/(9/10) = 2/9, so n = 9."
+   },
+   "variant": {
+    "gen": "geo-series",
+    "form": "repeatDecimal"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Now motion. A ball drops 10 m and each rebound rises to HALF the previous height, forever. The downward trips alone form 10 + 5 + 2.5 + ⋯ — an infinite geometric series with r = 1/2, totaling 10/(1/2) = 20 m of falling. Infinitely many bounces, twenty finite meters.",
+   "figure": "sr-bouncing-ball"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "All the falling.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For that ball (drop 10 m, each rebound half as high), what's the TOTAL downward distance, in meters?",
+    "answer": 20,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 m is only the FIRST drop — every rebound sets up another descent: 10 + 5 + 2.5 + ⋯ = 20."
+     },
+     {
+      "value": 30,
+      "feedback": "30 m counts the upward trips too — that's the full travel total, coming next. Downward alone: 20."
+     }
+    ],
+    "fallbackFeedback": "10/(1 − 1/2) = 20 m of falling."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The whole journey.",
+   "conceptTag": "sr-inf-apply",
+   "explanationVariants": [
+    "Up-trips are 5 + 2.5 + ⋯ = 10; total travel = 20 down + 10 up = 30 m. Equivalently 10 + 2(10).",
+    "Every height after the first is traveled twice — up and then down — but the opening 10 m drop happens once."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Same ball — now count the upward trips too. Total distance traveled, in meters?",
+    "answer": 30,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 m is the downward total only — each rebound also RISES before falling: add the up-trips (10 m more)."
+     },
+     {
+      "value": 40,
+      "feedback": "40 doubles everything — but the opening 10 m drop happens only ONCE. Only the rebound heights are traveled twice: 10 + 2(10) = 30."
+     }
+    ],
+    "fallbackFeedback": "10 + 2 · (5 + 2.5 + ⋯) = 10 + 20 = 30 m."
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-inf-apply__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "You now own three summing tools — the skill is picking the right one. **Equal gaps** → the arithmetic fold. **Equal ratios that stop** → the finite geometric formula. **Equal ratios running forever with |r| < 1** → a₁/(1 − r). Test the pattern, check the stopping, then fire.",
+   "figure": "sr-three-tools"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Choose your weapon.",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Match each total to the tool that clears it.",
+    "buckets": [
+     {
+      "id": "arith",
+      "label": "arithmetic fold"
+     },
+     {
+      "id": "fingeo",
+      "label": "finite geometric"
+     },
+     {
+      "id": "infgeo",
+      "label": "infinite geometric"
+     }
+    ],
+    "items": [
+     {
+      "id": "p1",
+      "label": "Rows of 20, 23, 26, … seats for 15 rows — total seats",
+      "bucketId": "arith",
+      "feedback": "Gaps of +3 are CONSTANT — arithmetic. Fold it: S = n(a₁ + aₙ)/2."
+     },
+     {
+      "id": "p2",
+      "label": "3 + 6 + 12 + ⋯ + 96 — total",
+      "bucketId": "fingeo",
+      "feedback": "Constant ratio 2, and it STOPS at 96 — the finite geometric formula's territory."
+     },
+     {
+      "id": "p3",
+      "label": "60 + 30 + 15 + ⋯ forever — total",
+      "bucketId": "infgeo",
+      "feedback": "Constant ratio 1/2 running forever with |r| < 1 — a₁/(1 − r) fires."
+     },
+     {
+      "id": "p4",
+      "label": "0.888… written as an exact fraction",
+      "bucketId": "infgeo",
+      "feedback": "A repeating decimal is an infinite geometric series in disguise: (8/10)/(9/10) = 8/9."
+     }
+    ],
+    "missFeedback": "Two questions sort everything: gaps or ratios? stopping or forever?",
+    "successFeedback": "Pattern first, stopping second, formula last — the complete series toolkit."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Apply the sum formula yourself — graded this time — before the swing.",
+   "conceptTag": "sr-inf-apply",
+   "explanationVariants": [
+    "Sum = a ÷ (1 − r) = 8 ÷ (1 − 0.5) = 8 ÷ 0.5 = 16.",
+    "Each bounce is half the last, forever — the formula for that endless total is a÷(1−r): 8÷0.5=16."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A different ball drops from 8 m and rebounds to half its previous height, forever. What is the TOTAL downward distance, in meters?",
+    "answer": 16,
+    "tolerance": 0.01,
+    "unit": "meters",
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 is just the FIRST drop. The bounces continue forever, each smaller — use the sum formula: 8÷(1−0.5)=16."
+     },
+     {
+      "value": 4,
+      "feedback": "4 MULTIPLIES 8×0.5 instead of using the infinite-sum formula. Sum = a÷(1−r) = 8÷0.5 = 16."
+     },
+     {
+      "value": 24,
+      "feedback": "24 adds an extra 8 (8+8+8) instead of dividing. Sum = a÷(1−r) = 8÷0.5 = 16."
+     }
+    ],
+    "fallbackFeedback": "Use the infinite-sum formula: total = first term ÷ (1 − ratio) = 8 ÷ (1 − 0.5) = 16."
+   },
+   "variant": {
+    "gen": "geo-series",
+    "form": "ballDown"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The fading swing.",
+   "conceptTag": "sr-inf-apply",
+   "explanationVariants": [
+    "r = 3/4, so S = 12/(1 − 3/4) = 12/(1/4) = 48 ft.",
+    "Dividing by a quarter multiplies by 4: the fade is slow, so the total is large."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A swing's first arc is 12 ft, and each arc is 3/4 the length of the one before, forever. Total distance across ALL arcs, in feet?",
+    "answer": 48,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 16,
+      "feedback": "16 is 12 ÷ (3/4) — divided by r itself. The formula divides by 1 − r = 1/4: 12/(1/4) = 48."
+     },
+     {
+      "value": 36,
+      "feedback": "36 leaves out the opening arc (48 − 12) — a₁ belongs in the total too. Every arc, first included: 48."
+     }
+    ],
+    "fallbackFeedback": "12/(1/4) = 48 ft."
+   },
+   "hints": [
+    "Read the ratio: each arc is 3/4 of the last — and 3/4 passes the |r| < 1 test.",
+    "S = a₁/(1 − r) with a₁ = 12 and 1 − r = 1/4.",
+    "Dividing by 1/4 multiplies by 4 — finish: 12 × 4."
+   ],
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-inf-apply__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The trail's end — for sums.",
+   "takeaways": [
+    "Repeating decimals are infinite geometric series: single repeats land over 9.",
+    "Motion totals (bounces, swings) are forever-sums — mind what's traveled once vs twice.",
+    "Pick the tool by pattern and stopping: fold, finite formula, or a₁/(1 − r)."
+   ],
+   "teaser": "That closes Sequences & Series. Next stop on the trail: triangles, circles, and the mathematics of motion — trigonometry."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "sr-inf-apply",
+   "concept": {
+    "id": "rem-sr0503-c",
+    "kind": "concept",
+    "body": "One more repeater, start to finish. 0.333… = 3/10 + 3/100 + ⋯, so a₁ = 3/10, r = 1/10, and S = (3/10)/(9/10) = 3/9 — which REDUCES to 1/3. The formula delivers the fraction; simplifying finishes the job."
+   },
+   "check": {
+    "id": "rem-sr0503-k",
+    "kind": "check",
+    "body": "Reduce to finish.",
+    "conceptTag": "sr-inf-apply",
+    "explanationVariants": [
+     "(3/10)/(9/10) = 3/9 = 1/3.",
+     "Check: 1 ÷ 3 = 0.333… — the repeat itself."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "0.333… (repeating) equals 1/n in lowest terms. What is n?",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 10,
+       "feedback": "Over 10 gives plain 0.3, terminating — the infinite tail lifts it to 3/9 = 1/3."
+      },
+      {
+       "value": 9,
+       "feedback": "3/9 is right but UNREDUCED — in lowest terms it's 1/3, so n = 3."
+      }
+     ],
+     "fallbackFeedback": "3/9 reduces to 1/3: n = 3."
+    }
+   }
+  }
+ ]
+}

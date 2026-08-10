@@ -1,0 +1,335 @@
+{
+  "id": "fr-02-04",
+  "slug": "fractions-past-one",
+  "title": "Fractions Past One",
+  "courseId": "fractions",
+  "chapterId": "ch2-number-line",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "What if the top beats the bottom? **Keep jumping.** 5/4 means five jumps of a fourth: four jumps land you on 1, and the fifth carries you past it. The number line doesn't stop at 1 — and neither do fractions.",
+      "figure": "frac-numline-pastone"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Jump past the whole.",
+      "conceptTag": "nl-beyond-one",
+      "widget": {
+        "type": "slider",
+        "prompt": "This line runs 0→2, cut into fourths — 8 jumps in all. Slide to 5/4.",
+        "min": 0,
+        "max": 8,
+        "step": 1,
+        "start": 0,
+        "target": 5,
+        "visual": "numberline",
+        "unitLabel": "fourth-jumps from 0",
+        "lowFeedback": "Not there yet — 5/4 needs five fourth-jumps, and the fourth one only reaches 1.",
+        "highFeedback": "Too far past — count back toward five jumps.",
+        "successFeedback": "Five fourth-jumps: one whole trip (4/4) plus one more jump. 5/4 lives between 1 and 2."
+      },
+      "predict": {
+        "prompt": "This line runs 0→2. When you slide to 5/4, will you be before 1, exactly on 1, or past 1?",
+        "options": [
+          {
+            "id": "past",
+            "label": "Past 1"
+          },
+          {
+            "id": "on",
+            "label": "Exactly on 1"
+          },
+          {
+            "id": "before",
+            "label": "Before 1"
+          }
+        ],
+        "outcomeId": "past",
+        "reveal": "Four fourth-jumps land exactly on 1 — the fifth jump steps beyond it. A fraction bigger than its bottom number lives past the whole."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents nl beyond one.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for nl beyond one must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines nl beyond one."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions:nl-beyond-one",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Place 7/4.",
+      "conceptTag": "nl-beyond-one",
+      "explanationVariants": [
+        "Four fourths reach 1 and eight reach 2 — seven jumps stop one short of 2, so 7/4 sits between 1 and 2.",
+        "Split it: 7/4 = 4/4 + 3/4 = one whole and three-quarters more."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does 7/4 live on the line?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Between 1 and 2",
+            "correct": true,
+            "feedback": "Past the first whole (4/4) but short of the second (8/4) — seven jumps land in between."
+          },
+          {
+            "id": "b",
+            "label": "Between 0 and 1",
+            "feedback": "The top (7) beats the bottom (4) — that means MORE than a whole trip. 7/4 has already crossed 1."
+          },
+          {
+            "id": "c",
+            "label": "Exactly on 2",
+            "feedback": "Exactly 2 would take eight fourth-jumps (8/4). Seven stops one jump shy."
+          },
+          {
+            "id": "d",
+            "label": "At the number 7",
+            "feedback": "The 7 counts JUMPS, not miles — seven quarter-jumps only carry you a bit past 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "nl-beyond-one"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Whole numbers wear fraction names on the line: **4/4 = 1, 8/4 = 2, 12/4 = 3**. Any n/n lands exactly on 1 — chapter 1's all-the-pieces, now a landing spot. A top bigger than the bottom just means more than one whole trip.",
+      "figure": "frac-numline-pastone"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Jumps to exactly 2.",
+      "conceptTag": "nl-beyond-one",
+      "explanationVariants": [
+        "Three third-jumps make each whole, so two wholes take 3 + 3 = 6 jumps: 6/3 = 2.",
+        "Count the whole-number landings: 3/3 is 1, 6/3 is 2 — every three jumps banks another whole."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Jumping in THIRDS from 0, how many jumps land you exactly on 2?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "jumps",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 jumps is 2/3 — still inside the first trip. Reaching the number 2 takes two FULL trips of three jumps each."
+          },
+          {
+            "value": 3,
+            "feedback": "3 jumps (3/3) lands exactly on 1 — the first whole. Keep going: three more reach 2."
+          }
+        ],
+        "fallbackFeedback": "Each whole costs 3 third-jumps — and 2 is two wholes out."
+      },
+      "variant": {
+        "gen": "nl-beyond-one",
+        "form": "jumpsToWhole"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort the landings around 1.",
+      "conceptTag": "nl-beyond-one",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Does each fraction land BEFORE 1, or ON-or-PAST 1?",
+        "buckets": [
+          {
+            "id": "before",
+            "label": "Before 1",
+            "icon": "🏠"
+          },
+          {
+            "id": "onpast",
+            "label": "On or past 1",
+            "icon": "🏁"
+          }
+        ],
+        "items": [
+          {
+            "id": "f34",
+            "label": "3/4",
+            "bucketId": "before",
+            "feedback": "Three of four jumps — one jump short of the finish."
+          },
+          {
+            "id": "f54",
+            "label": "5/4",
+            "bucketId": "onpast",
+            "feedback": "Top beats bottom: the fifth jump crossed the line at 1."
+          },
+          {
+            "id": "f66",
+            "label": "6/6",
+            "bucketId": "onpast",
+            "feedback": "Top EQUALS bottom — all six jumps taken, standing exactly ON 1."
+          },
+          {
+            "id": "f25",
+            "label": "2/5",
+            "bucketId": "before",
+            "feedback": "Two of five jumps — still in the first half of the trip."
+          }
+        ],
+        "missFeedback": "Compare top to bottom: smaller top lands before 1; equal lands on it; bigger sails past.",
+        "successFeedback": "Top vs bottom tells the tale: 3/4 and 2/5 stop short; 6/6 stands on 1; 5/4 is past it."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The n/n landing.",
+      "conceptTag": "nl-beyond-one",
+      "explanationVariants": [
+        "Nine jumps of a nine-cut trip is the complete trip — 9/9 stands exactly on 1.",
+        "Top equals bottom means every piece walked: the finish line itself."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does 9/9 land?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Exactly on 1",
+            "correct": true,
+            "feedback": "All nine jumps of the nine-jump trip — the whole, standing on the 1 mark."
+          },
+          {
+            "id": "b",
+            "label": "Just past 1",
+            "feedback": "Past 1 needs a top BIGGER than the bottom (like 10/9). Equal top and bottom is exactly the whole."
+          },
+          {
+            "id": "c",
+            "label": "Just before 1",
+            "feedback": "Before 1 would leave a jump untaken (like 8/9). Nine of nine takes them all — landing on 1 itself."
+          },
+          {
+            "id": "d",
+            "label": "At the number 9",
+            "feedback": "Nine NINTH-jumps only cover one whole trip — 9/9 = 1, not 9."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "nl-beyond-one",
+        "form": "whereWhole"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The frog's long journey.",
+      "conceptTag": "nl-beyond-one",
+      "hints": [
+        "How many third-jumps reach 1? And 2?",
+        "3 jumps land on 1; 6 jumps land on 2.",
+        "The frog took 7 — one jump more than a landing you know."
+      ],
+      "explanationVariants": [
+        "6 jumps land exactly on 2, so the 7th puts the frog just past it — 7/3 sits between 2 and 3, and the smaller neighbor is 2.",
+        "Bank the wholes: 7/3 = 6/3 + 1/3 = 2 and one more third-jump."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A frog jumps in THIRDS along the line, starting at 0. After 7 jumps it sits between two whole numbers. Enter the SMALLER of the two.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the neighbor on the FAR side — the frog would need 9 jumps (9/3) to reach it. It has only crossed 2."
+          },
+          {
+            "value": 7,
+            "feedback": "7 counts the JUMPS, not the frog's position. Seven third-jumps only carry it a bit past the number 2."
+          }
+        ],
+        "fallbackFeedback": "Find the whole-number landings first: 3 jumps = 1, 6 jumps = 2 — then place jump number 7."
+      },
+      "variant": {
+        "gen": "nl-beyond-one",
+        "form": "betweenWhich"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The line is endless — so are fractions.",
+      "takeaways": [
+        "Top bigger than bottom? Keep jumping past 1 — 5/4 is a whole plus a fourth.",
+        "n/n always lands exactly on 1; every b jumps banks another whole.",
+        "To place a big fraction, find the whole-number landings first, then count the extras."
+      ],
+      "teaser": "chapter 3: that strange moment when 2/4 landed on 1/2's spot — two names, one point."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "nl-beyond-one",
+      "concept": {
+        "id": "rem-nb-c",
+        "kind": "concept",
+        "body": "Quick rewind. Land on the whole numbers first: every b jumps is one whole — **b/b = 1, then 2b/b = 2**. Jumping in halves? 2 jumps = 1, 4 jumps = 2. Then count the leftover jumps past the last whole."
+      },
+      "check": {
+        "id": "rem-nb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "nl-beyond-one",
+        "explanationVariants": [
+          "Four half-jumps bank two wholes (4/2 = 2); the fifth adds one more half: 2 wholes and a half.",
+          "5/2 = 4/2 + 1/2 — two whole trips plus a single half-jump."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A frog jumps in HALVES. After 5 jumps, where is it?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2 wholes and one more half-jump",
+              "correct": true,
+              "feedback": "Four jumps bank 2 wholes; the fifth half-jump lands at 2½ — that's 5/2."
+            },
+            {
+              "id": "b",
+              "label": "At the number 5",
+              "feedback": "Five HALF-jumps cover half that distance — the frog sits at 2½, not 5."
+            },
+            {
+              "id": "c",
+              "label": "Before 1",
+              "feedback": "Just two half-jumps already reach 1 — five of them are well past it."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

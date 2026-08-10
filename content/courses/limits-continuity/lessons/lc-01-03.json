@@ -1,0 +1,281 @@
+{
+  "id": "lc-01-03",
+  "slug": "when-limits-fail",
+  "title": "When a Limit Fails to Exist",
+  "courseId": "limits-continuity",
+  "chapterId": "ch1-limits-graphically",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A limit **fails to exist** when the two sides disagree. If f approaches one value from the left and a DIFFERENT value from the right, there's no single number it heads toward — the limit does not exist (DNE). This is the story at a **jump**.",
+      "figure": "lc-jump-graph"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two branches, and a gap that will not close.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "jump",
+        "a": 2,
+        "leftValue": 1,
+        "rightValue": 3,
+        "fAtA": 3,
+        "targetVerdict": "no-limit",
+        "requiredZoom": 3,
+        "prompt": "Magnify around x = 2 as far as you like. Does a single number get approached from both sides?",
+        "successFeedback": "Zooming makes the gap look BIGGER, never smaller: from the left y → 1, from the right y → 3, at every magnification. Two different destinations means no limit — and no amount of looking closer will fix that.",
+        "moreZoomFeedback": "Keep magnifying. The point of the zoom is that a genuine limit survives it — and a jump does too, which is exactly what you are testing.",
+        "wrongVerdictFeedback": "Compare the two readouts. The left side is heading for 1 and the right side for 3. A limit has to be ONE number that both sides agree on."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 2. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          },
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          }
+        ],
+        "outcomeId": "differ",
+        "reveal": "The left side settles at 1 and the right at 3 — they never agree, no matter how far you zoom. Disagreeing sides is exactly what \"the limit does not exist\" means."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Zoom toward the target input and compare visible local behavior with the symbolic limit claim.",
+        "invariants": [
+          "local-behavior-survives-zoom",
+          "limit-depends-on-approach"
+        ],
+        "misconceptions": [
+          "graph-pixel-is-proof",
+          "function-value-equals-limit"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "limits-continuity-graphZoom",
+        "delayed": false
+      },
+      "conceptTag": "lc-dne"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two more ways limits fail: **unbounded** behavior (f shoots to +∞ or −∞ near a, as with 1/x² at 0) and wild **oscillation** that never settles. In each case there's no single finite value the function approaches, so the limit does not exist.",
+      "figure": "lc-unbounded-fail"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Blowing up.",
+      "conceptTag": "lc-dne",
+      "explanationVariants": [
+        "As x → 0, 1/x² grows without bound (100, 10000, …), so it approaches no finite value: the limit DNE (it diverges to +∞).",
+        "Unbounded growth means no finite limit exists."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = 1/x² as x → 0, the values grow 100, 10 000, 1 000 000, … So lim(x→0) f(x):",
+        "options": [
+          {
+            "id": "o1",
+            "label": "does not exist (grows without bound)",
+            "correct": true,
+            "feedback": "Right — the values diverge to +∞, so there's no finite limit."
+          },
+          {
+            "id": "o2",
+            "label": "is 0",
+            "feedback": "The values EXPLODE upward, not toward 0. The limit DNE."
+          },
+          {
+            "id": "o3",
+            "label": "is 1",
+            "feedback": "1/x² grows without bound near 0; it doesn't settle at 1. Limit DNE."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-dne__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A clean jump.",
+      "conceptTag": "lc-dne",
+      "explanationVariants": [
+        "A step function that is 1 for x < 0 and 2 for x ≥ 0 approaches 1 from the left and 2 from the right at 0 — the sides disagree, so the limit DNE.",
+        "Left → 1, right → 2: no single limit at the jump."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A step function equals 1 for x < 0 and 2 for x ≥ 0. What is lim(x→0) f(x)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "does not exist",
+            "correct": true,
+            "feedback": "Right — left approach 1 ≠ right approach 2, so the limit DNE."
+          },
+          {
+            "id": "o2",
+            "label": "1.5",
+            "feedback": "Limits aren't averaged. The disagreeing sides give DNE."
+          },
+          {
+            "id": "o3",
+            "label": "2",
+            "feedback": "The right side is 2 but the left is 1; since they differ, the limit DNE."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-dne__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When it DOES exist.",
+      "conceptTag": "lc-dne",
+      "explanationVariants": [
+        "If left and right BOTH approach 6, the limit exists and equals 6 — agreement is exactly the condition for existence.",
+        "Matching one-sided values (both 6) means the limit is 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Near x = 5, f approaches 6 from the left AND 6 from the right. What is lim(x→5) f(x)?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 = 6 + 6 adds. Matching sides give the shared value 6."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the x-value. Both sides approach 6, so the limit is 6."
+          }
+        ],
+        "fallbackFeedback": "Both sides agree on 6: the limit is 6."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-dne__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Diagnose the failure.",
+      "conceptTag": "lc-dne",
+      "explanationVariants": [
+        "A curve reaching −2 from the left and +2 from the right at x = 1 has disagreeing sides, so lim(x→1) DNE — a jump discontinuity.",
+        "Left −2 ≠ right +2: the limit does not exist."
+      ],
+      "hints": [
+        "Compare the two one-sided approaches.",
+        "−2 (left) versus +2 (right).",
+        "Do they agree?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "At x = 1, a graph jumps from y = −2 (left) to y = +2 (right). Then lim(x→1) f(x):",
+        "options": [
+          {
+            "id": "o1",
+            "label": "does not exist",
+            "correct": true,
+            "feedback": "Right — −2 ≠ +2, disagreeing sides, so the limit DNE."
+          },
+          {
+            "id": "o2",
+            "label": "is 0",
+            "feedback": "Limits aren't averaged to 0. Disagreeing sides mean DNE."
+          },
+          {
+            "id": "o3",
+            "label": "is 2",
+            "feedback": "Only the right side is 2; the left is −2. Since they differ, DNE."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-dne__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three ways to fail.",
+      "takeaways": [
+        "A limit exists only when left and right approaches AGREE.",
+        "Failures: a jump (sides disagree), unbounded blow-up, or endless oscillation.",
+        "Matching one-sided limits ⇒ the two-sided limit exists."
+      ],
+      "teaser": "Next chapter: evaluating limits cleanly with the limit laws."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lc-dne",
+      "concept": {
+        "id": "rem-lc0103-c",
+        "kind": "concept",
+        "body": "A limit exists only when the left and right approaches agree. It fails (DNE) at a jump (sides disagree), when f is unbounded, or when it oscillates without settling."
+      },
+      "check": {
+        "id": "rem-lc0103-k",
+        "kind": "check",
+        "body": "Exist or not.",
+        "conceptTag": "lc-dne",
+        "explanationVariants": [
+          "Left → 4, right → 7: they disagree, so the limit DNE.",
+          "4 ≠ 7 means no single limit."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Near x = 2, f → 4 from the left and 7 from the right. The limit:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "does not exist",
+              "correct": true,
+              "feedback": "Right — 4 ≠ 7, disagreeing sides, so DNE."
+            },
+            {
+              "id": "o2",
+              "label": "is 5.5",
+              "feedback": "Limits aren't averaged. Disagreeing sides mean DNE."
+            },
+            {
+              "id": "o3",
+              "label": "is 4",
+              "feedback": "Both sides must match. 4 ≠ 7, so the limit DNE."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

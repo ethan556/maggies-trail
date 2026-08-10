@@ -1,0 +1,398 @@
+{
+  "id": "fg-01-03",
+  "slug": "the-vertical-line-test",
+  "title": "The Vertical Line Test",
+  "courseId": "functions-g8",
+  "chapterId": "ch1-what-is-a-function",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "On a graph, the **vertical line test** checks the one-output rule visually: if any vertical line crosses the graph more than once, that single x-input has two y-outputs — so it's NOT a function. Cross at most once everywhere means it IS a function.",
+      "figure": "function-vs-not"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sweep a vertical scanner across a continuous relation and record intersection counts.",
+      "widget": {
+        "type": "verticalLineScanner",
+        "prompt": "Sweep the vertical line across the circle. Record the greatest number of intersections, then decide whether the relation is a function.",
+        "relation": "circle",
+        "targetVerdict": "not-function",
+        "xMin": -5,
+        "xMax": 5,
+        "scanStart": -5,
+        "scanStep": 0.5,
+        "requiredSweeps": 8,
+        "successFeedback": "Not a function: some vertical lines hit the circle twice, so one input has two outputs.",
+        "moreSweepFeedback": "Sweep farther. A verdict needs evidence from across the relation, not one convenient x-value.",
+        "verdictFeedback": "The one-output rule fails wherever the scanner records two intersections."
+      },
+      "predict": {
+        "prompt": "A vertical line marks ONE input. If it crosses a graph at two points, that input has how many outputs?",
+        "options": [
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "one",
+            "label": "Still one"
+          },
+          {
+            "id": "zero",
+            "label": "Zero"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Both crossings share that x but carry different y's — one input, two answers. The vertical line test just makes the contradiction visible."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Use a continuous scanner to connect intersection count with one-output-per-input.",
+        "invariants": [
+          "one-output-per-input"
+        ],
+        "misconceptions": [
+          "single-test-line",
+          "graph-as-picture"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "function-counterexamples",
+        "delayed": true,
+        "translationFrom": "graph",
+        "translationTo": "table",
+        "counterfactualPrompt": "Change the relation so every vertical line has at most one hit. What structural change was necessary?",
+        "explanation": {
+          "prompt": "What does the scanner count represent?",
+          "options": [
+            {
+              "id": "outputs",
+              "label": "How many outputs share the current input.",
+              "correct": true,
+              "feedback": "Exactly — a vertical line fixes one x-value."
+            },
+            {
+              "id": "inputs",
+              "label": "How many inputs share one output.",
+              "correct": false,
+              "feedback": "The scanner fixes x, so it counts outputs for one input."
+            }
+          ]
+        }
+      },
+      "conceptTag": "fg-vertical-line-test"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why does it work? A vertical line is all the points with the same x-value. If the graph meets that line twice, the single x has two y's — exactly the non-function pattern. A straight line (other than a vertical one) always passes the test.",
+      "figure": "function-vs-not"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A line's status.",
+      "conceptTag": "fg-vertical-line-test",
+      "explanationVariants": [
+        "A slanted straight line is met by any vertical line exactly once, so it passes and IS a function.",
+        "Every vertical line crosses a slanted line just once — one output per input."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Does a slanted straight line (like y = 2x) pass the vertical line test?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — every vertical line crosses it exactly once",
+            "correct": true,
+            "feedback": "Right — one crossing per vertical line means one output per input."
+          },
+          {
+            "id": "b",
+            "label": "No — lines can't be functions",
+            "correct": false,
+            "feedback": "Most lines ARE functions — a slanted line passes the vertical line test easily."
+          },
+          {
+            "id": "c",
+            "label": "Only if it goes through the origin",
+            "correct": false,
+            "feedback": "Passing through the origin isn't required — any slanted line passes the test."
+          },
+          {
+            "id": "d",
+            "label": "Only if the slope is positive",
+            "correct": false,
+            "feedback": "Slope direction doesn't matter — both uphill and downhill slanted lines pass."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-vertical-line",
+        "form": "fgVltLine"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The vertical line itself.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Does a VERTICAL line (like x = 3) pass the vertical line test?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — one x-value has infinitely many y-outputs",
+            "correct": true,
+            "feedback": "Right — a vertical line IS a vertical line, so it overlaps one and gives every y for that x — not a function."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it's a straight line",
+            "correct": false,
+            "feedback": "Being straight isn't enough — a vertical line has one x mapping to every y, so it fails."
+          },
+          {
+            "id": "c",
+            "label": "Yes — vertical lines are the simplest",
+            "correct": false,
+            "feedback": "Simple or not, a vertical line fails: its single x-value has infinitely many outputs."
+          },
+          {
+            "id": "d",
+            "label": "Only if it crosses the x-axis",
+            "correct": false,
+            "feedback": "Crossing the x-axis doesn't change it — a vertical line always fails the test."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A U-shaped curve.",
+      "conceptTag": "fg-vertical-line-test",
+      "explanationVariants": [
+        "A sideways U (opening right) is crossed twice by many vertical lines, so it FAILS — not a function.",
+        "Two crossings on one vertical line means one x maps to two y's."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A sideways U-shape (opening to the right) — does it pass the vertical line test?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — many vertical lines cross it twice",
+            "correct": true,
+            "feedback": "Right — a sideways U gives two y-outputs for many x-values, so it fails."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it's a smooth curve",
+            "correct": false,
+            "feedback": "Smoothness isn't the test — the sideways U is crossed twice by vertical lines, so it fails."
+          },
+          {
+            "id": "c",
+            "label": "Yes — U-shapes are always functions",
+            "correct": false,
+            "feedback": "An UPRIGHT U (like y=x²) passes, but a SIDEWAYS U fails — direction matters here."
+          },
+          {
+            "id": "d",
+            "label": "Only near the tip",
+            "correct": false,
+            "feedback": "Even away from the tip, vertical lines cross a sideways U twice — it fails overall."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-vertical-line",
+        "form": "fgVltSideways"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "An upright parabola.",
+      "conceptTag": "fg-vertical-line-test",
+      "explanationVariants": [
+        "An upright U (like y = x²) is crossed exactly once by every vertical line, so it PASSES and is a function.",
+        "Each x-value on an upright parabola has just one y, so it passes the test."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An upright U-shape (like y = x², opening upward) — does it pass the vertical line test?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — every vertical line crosses it exactly once",
+            "correct": true,
+            "feedback": "Right — each x gives exactly one y on an upright parabola."
+          },
+          {
+            "id": "b",
+            "label": "No — it curves too much",
+            "correct": false,
+            "feedback": "Curving is fine — what matters is that each vertical line crosses only once, which it does."
+          },
+          {
+            "id": "c",
+            "label": "No — U-shapes never pass",
+            "correct": false,
+            "feedback": "An upright U passes; only a SIDEWAYS U fails. Direction is the key difference."
+          },
+          {
+            "id": "d",
+            "label": "Only at the bottom point",
+            "correct": false,
+            "feedback": "It passes everywhere — every vertical line meets an upright parabola exactly once."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-vertical-line",
+        "form": "fgVltUpright"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sort graphs by the vertical line test.",
+      "conceptTag": "fg-vertical-line-test",
+      "explanationVariants": [
+        "Pass (functions): slanted line, upright U, horizontal line. Fail: vertical line, sideways U — each crossed more than once by some vertical line.",
+        "Imagine sweeping a vertical line across each graph: more than one crossing anywhere means it fails."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each graph: passes the vertical line test or fails?",
+        "buckets": [
+          {
+            "id": "pass",
+            "label": "Passes (function)"
+          },
+          {
+            "id": "fail",
+            "label": "Fails (not a function)"
+          }
+        ],
+        "items": [
+          {
+            "id": "g1",
+            "label": "a slanted straight line",
+            "bucketId": "pass",
+            "feedback": "Crossed once by every vertical line — passes."
+          },
+          {
+            "id": "g2",
+            "label": "a vertical line",
+            "bucketId": "fail",
+            "feedback": "One x-value, infinitely many y's — fails."
+          },
+          {
+            "id": "g3",
+            "label": "an upright U (y = x²)",
+            "bucketId": "pass",
+            "feedback": "Each x gives one y — passes."
+          },
+          {
+            "id": "g4",
+            "label": "a sideways U (opening right)",
+            "bucketId": "fail",
+            "feedback": "Many vertical lines cross it twice — fails."
+          },
+          {
+            "id": "g5",
+            "label": "a horizontal line",
+            "bucketId": "pass",
+            "feedback": "Each x gives exactly one y (always the same) — passes."
+          }
+        ],
+        "missFeedback": "Not quite — imagine a vertical line sweeping across each graph. Does it ever cross more than once?",
+        "successFeedback": "All sorted — passing means every vertical line crosses at most once."
+      },
+      "hints": [
+        "Picture sweeping a vertical line across each graph from left to right.",
+        "If the vertical line ever crosses the graph twice at once, that graph fails.",
+        "Pass: slanted line, upright U, horizontal line. Fail: vertical line, sideways U."
+      ],
+      "variant": {
+        "gen": "g8-fn-vertical-line",
+        "form": "fgVltSort"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The vertical line test turns the one-output rule into something you can see.",
+      "takeaways": [
+        "Cross more than once → two outputs for one input → NOT a function.",
+        "Cross at most once everywhere → IS a function.",
+        "Vertical lines and sideways U's fail; slanted lines and upright U's pass."
+      ],
+      "teaser": "Next chapter: rate of change — how fast a function's output climbs."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-vertical-line-test",
+      "concept": {
+        "id": "rem-fg0103-c",
+        "kind": "concept",
+        "body": "The vertical line test: if any vertical line crosses a graph more than once, that x-value has two outputs, so it's NOT a function. At most one crossing everywhere means it IS a function."
+      },
+      "check": {
+        "id": "rem-fg0103-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-vertical-line-test",
+        "explanationVariants": [
+          "A horizontal line is crossed exactly once by every vertical line, so it passes — a function.",
+          "Each x on a horizontal line has one y (always the same), so it passes the test."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Does a horizontal line pass the vertical line test?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Yes — every vertical line crosses it exactly once",
+              "correct": true,
+              "feedback": "Right — one y-output per x, so it's a function."
+            },
+            {
+              "id": "b",
+              "label": "No — it's flat",
+              "correct": false,
+              "feedback": "Flatness is fine — a horizontal line gives one output per input, so it passes."
+            },
+            {
+              "id": "c",
+              "label": "No — horizontal lines aren't functions",
+              "correct": false,
+              "feedback": "They ARE functions — each x maps to one (constant) y."
+            },
+            {
+              "id": "d",
+              "label": "Only if it's above the x-axis",
+              "correct": false,
+              "feedback": "Position doesn't matter — a horizontal line always passes."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

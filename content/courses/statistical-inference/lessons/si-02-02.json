@@ -1,0 +1,363 @@
+{
+  "id": "si-02-02",
+  "slug": "the-sampling-distribution",
+  "title": "The Sampling Distribution",
+  "courseId": "statistical-inference",
+  "chapterId": "ch2-sampling-variability",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Collect every answer your method could give, and you have the **sampling distribution** — the pile.\n\nIt has two features worth knowing:\n\n**Centre** — sits on the truth, if the method is unbiased.\n**Width** — shrinks as the sample grows. That is the only lever you control.",
+      "figure": "si-sampling-dist-sizes"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Same town, same truth of 60%. Change the size of the poll.",
+      "widget": {
+        "type": "sampleSim",
+        "prompt": "Find the sample size that pins the answer down: keep raising it until nearly every poll lands within a few points of the truth. Run at least 20 polls at that size.",
+        "populationP": 0.6,
+        "sizes": [
+          10,
+          40,
+          160
+        ],
+        "targetSize": 160,
+        "requiredDraws": 20,
+        "seed": 33,
+        "successFeedback": "At n = 160 nearly every poll lands within about 8 points of 60%. Compare that with n = 10, where they sprayed across 30 points. The centre never moved — only the width.",
+        "wrongSizeFeedback": "The pile is still wide at this size: honest polls are landing a long way from the truth. Go up a size and watch it tighten.",
+        "moreDrawsFeedback": "Run more polls at this size. You cannot judge the width of a pile from four dots."
+      },
+      "predict": {
+        "prompt": "When sample size increases but the population and random method stay fixed, what should happen to the sampling distribution?",
+        "options": [
+          {
+            "id": "narrow",
+            "label": "Its center stays near the truth while its spread narrows"
+          },
+          {
+            "id": "move",
+            "label": "Its center moves away from the truth"
+          },
+          {
+            "id": "wide",
+            "label": "Its spread becomes wider"
+          }
+        ],
+        "outcomeId": "narrow",
+        "reveal": "Larger random samples reduce sampling variability. They do not systematically move the center; they tighten the distribution around the population value."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Run repeated samples at several sizes and separate the stable center from the changing sampling variability.",
+        "invariants": [
+          "population-proportion-fixed",
+          "random-sampling-center-unbiased"
+        ],
+        "misconceptions": [
+          "large-sample-changes-population-truth",
+          "one-sample-shows-variability"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "sampling-distribution-width-across-statistics",
+        "delayed": true,
+        "counterfactualPrompt": "Keep n = 160 but switch to a systematically biased selection rule. Which property can the large sample tighten, and which error can it not repair?",
+        "explanation": {
+          "prompt": "Why does increasing sample size narrow the sampling distribution without moving its center?",
+          "options": [
+            {
+              "id": "averaging",
+              "label": "Random errors average out more strongly in larger samples, while the same unbiased process still targets the population value.",
+              "correct": true,
+              "feedback": "Exactly — size reduces variability; the sampling design determines bias."
+            },
+            {
+              "id": "truth",
+              "label": "A larger sample changes the true population proportion toward the sample result.",
+              "correct": false,
+              "feedback": "The population value is fixed; samples estimate it with different amounts of variability."
+            }
+          ]
+        }
+      },
+      "conceptTag": "si-sampling-dist"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What changed, and what did not?",
+      "conceptTag": "si-sampling-dist",
+      "explanationVariants": [
+        "The centre stayed on 60% at every sample size. Only the width changed — bigger samples make a tighter pile.",
+        "Sample size buys precision, never accuracy. The pile was already aimed at the truth."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Going from n = 10 to n = 160, what happened to the pile?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It stayed centred on 60% and got much narrower.",
+            "correct": true,
+            "feedback": "Right — and that is the whole payoff of a bigger sample. It does not aim better; it shakes less."
+          },
+          {
+            "id": "o2",
+            "label": "It moved closer to 60%.",
+            "correct": false,
+            "feedback": "It was already centred on 60% at n = 10 — the dots just sprayed further from it. The centre had nowhere to move to."
+          },
+          {
+            "id": "o3",
+            "label": "It got narrower and also more biased.",
+            "correct": false,
+            "feedback": "Nothing about the method changed, so no bias was introduced. Only the spread moved."
+          },
+          {
+            "id": "o4",
+            "label": "It got narrower, so individual polls are now guaranteed to be right.",
+            "correct": false,
+            "feedback": "Narrower means most polls land close, not that any of them is exact. Even at n = 160 you saw dots several points from 60%."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-sampling-dist__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The width does not fall in step with n. It falls with **√n**.\n\nQuadruple the sample and you halve the wobble. Go from 400 people to 1600 and the spread halves — from 1600 to 6400 it halves again.\n\nThat is why national polls stop at about a thousand people: the next halving costs four times as much.",
+      "figure": "si-sampling-dist-sizes"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Price the next halving.",
+      "conceptTag": "si-sampling-dist",
+      "explanationVariants": [
+        "Halving the wobble requires quadrupling n: 400 × 4 = 1600.",
+        "Wobble scales as 1/√n. To cut it by 2 you need √n to double, so n must go up fourfold."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A poll of 400 people has a wobble of about ±5 points. How many people are needed to cut the wobble to ±2.5 points?",
+        "answer": 1600,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 800,
+            "feedback": "That doubles the sample, which only cuts the wobble by a factor of √2 ≈ 1.41 — down to about ±3.5, not ±2.5."
+          },
+          {
+            "value": 200,
+            "feedback": "That halves the sample, which makes the wobble bigger (about ±7), not smaller."
+          },
+          {
+            "value": 100,
+            "feedback": "That would give a wobble around ±10 — four times worse, not half as good. Halving the wobble costs four times the sample."
+          }
+        ],
+        "fallbackFeedback": "Wobble ∝ 1/√n, so halving it needs 4× the people: 400 × 4 = 1600."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-sampling-dist__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Diminishing returns, felt.",
+      "conceptTag": "si-sampling-dist",
+      "explanationVariants": [
+        "Going 100 → 400 quadruples n and halves the wobble. Going 400 → 500 barely moves √n at all.",
+        "The gain from an extra person shrinks as the sample grows — the curve flattens."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which change buys more precision?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Going from 100 people to 400 people.",
+            "correct": true,
+            "feedback": "Right — that is a fourfold increase, which halves the wobble. It is the same 300 extra people that barely help later on."
+          },
+          {
+            "id": "o2",
+            "label": "Going from 400 people to 700 people.",
+            "correct": false,
+            "feedback": "That is the same 300 extra people, but √n only rises from 20 to about 26.5, so the wobble falls by a quarter rather than a half."
+          },
+          {
+            "id": "o3",
+            "label": "They buy the same, since both add 300 people.",
+            "correct": false,
+            "feedback": "Precision tracks √n, not n. The first 300 extra people quadruple the sample; the second 300 do not even double it."
+          },
+          {
+            "id": "o4",
+            "label": "Neither — sample size does not affect precision.",
+            "correct": false,
+            "feedback": "It is the only lever that does. You watched the pile tighten as n rose."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-sampling-dist__mcq"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "What a bigger sample cannot do.",
+      "conceptTag": "si-bias-vs-variability",
+      "explanationVariants": [
+        "Sample size shrinks the width of the pile. If the method is aimed at the wrong place, a narrower pile just concentrates the wrong answer.",
+        "Bias moves the centre; n moves the width. They are independent controls, and only one of them is on your dashboard."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A poll's sampling frame excludes renters. Will raising n from 500 to 5000 fix the estimate?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — a bigger sample narrows the pile, but the pile is centred in the wrong place.",
+            "correct": true,
+            "feedback": "Right. You end up more certain of a wrong number, which is worse than being honestly uncertain of it."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — with 5000 people the sample must become representative.",
+            "correct": false,
+            "feedback": "Renters are still excluded at 5000. Size cannot conjure people who were never eligible to be picked."
+          },
+          {
+            "id": "o3",
+            "label": "Yes — the margin of error will be tiny.",
+            "correct": false,
+            "feedback": "It will be, and it will be measuring the wrong thing: the wobble, not the lean."
+          },
+          {
+            "id": "o4",
+            "label": "Partly — bias falls as n rises, just slowly.",
+            "correct": false,
+            "feedback": "Bias does not fall with n at all. It is a property of the method, and 5000 draws from a broken frame are still 5000 draws from a broken frame."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-bias-vs-variability__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Design to a budget.",
+      "conceptTag": "si-sampling-dist",
+      "hints": [
+        "Start from the relationship: wobble is proportional to 1/√n. Write the current wobble and the target wobble.",
+        "Going from ±6 points to ±2 points is a threefold reduction in the wobble.",
+        "To cut the wobble by 3, √n must triple, so n must rise by 3² = 9."
+      ],
+      "explanationVariants": [
+        "The wobble must fall by a factor of 3, so n must rise by 3² = 9: 250 × 9 = 2250 people.",
+        "±6 → ±2 is a division by 3. Since wobble ∝ 1/√n, n scales with the square of the improvement factor."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 250-person poll has a wobble of about ±6 points. How many people are needed for a wobble of about ±2 points?",
+        "answer": 2250,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 750,
+            "feedback": "That triples n, which shrinks the wobble by √3 ≈ 1.73 — down to about ±3.5, not ±2. To divide the wobble by 3 you need 3² = 9 times the people."
+          },
+          {
+            "value": 1000,
+            "feedback": "That is 4× the sample, which halves the wobble to about ±3. Getting all the way to ±2 needs 9× the sample."
+          },
+          {
+            "value": 500,
+            "feedback": "Doubling the sample cuts the wobble only by √2, to about ±4.2."
+          }
+        ],
+        "fallbackFeedback": "Wobble ∝ 1/√n. To cut it by 3, multiply n by 3² = 9: 250 × 9 = 2250."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-sampling-dist__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The pile has a centre and a width.",
+      "takeaways": [
+        "The sampling distribution is the set of all answers your method could produce; one poll is a single dot from it.",
+        "An honest method centres the pile on the truth. Sample size controls only the width.",
+        "Width falls with √n: quadruple the sample to halve the wobble — which is why precision gets expensive fast."
+      ],
+      "teaser": "Next: put a number on the width, and you have the margin of error."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-sampling-dist",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Precision tracks the SQUARE ROOT of the sample size. So the useful question is never \"how many more people?\" but \"how many TIMES more people?\". Four times as many people halve the wobble; nine times as many divide it by three.",
+        "figure": "si-sampling-dist-sizes"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "How many times more?",
+        "conceptTag": "si-sampling-dist",
+        "explanationVariants": [
+          "Halving the wobble needs 4× the sample: 100 × 4 = 400.",
+          "√400 = 20 is double √100 = 10, and the wobble falls by that same factor of 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A poll of 100 has a wobble of ±10 points. How many people are needed for ±5 points?",
+          "answer": 400,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 200,
+              "feedback": "Doubling the sample cuts the wobble by √2 ≈ 1.41, giving about ±7 — not ±5."
+            },
+            {
+              "value": 50,
+              "feedback": "That halves the sample, which makes the wobble WIDER (about ±14)."
+            }
+          ],
+          "fallbackFeedback": "4 × 100 = 400: quadruple the sample to halve the wobble."
+        }
+      }
+    }
+  ]
+}

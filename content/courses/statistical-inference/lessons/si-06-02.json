@@ -1,0 +1,198 @@
+{
+  "id": "si-06-02",
+  "slug": "the-68-95-promise",
+  "title": "68, 95, 99.7",
+  "courseId": "statistical-inference",
+  "chapterId": "ch6-the-bell",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every normal curve keeps the same promise, whatever its center μ and width σ: about 68% of values land within one σ of μ, about 95% within two, about 99.7% within three. Scores on a test with μ = 100, σ = 10 will be our running example.",
+      "figure": "si-empirical-rule"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Estimate the one-σ share.",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "What percent of scores land between 90 and 110 — within one σ of the mean?",
+        "min": 1,
+        "max": 100,
+        "start": 50,
+        "target": 68,
+        "acceptFactor": 1.1,
+        "unitLabel": "%",
+        "ticks": [
+          10,
+          25,
+          50,
+          75,
+          90
+        ],
+        "lowFeedback": "More than that — one σ each side already captures the bell's thick middle.",
+        "highFeedback": "Less than that — plenty of the curve still lies beyond one σ.",
+        "successFeedback": "About 68% — just over two-thirds live within one σ. That number is worth memorizing; the bell repeats it everywhere."
+      },
+      "predict": {
+        "prompt": "Within ONE σ of the mean (90–110): more or less than half the scores?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half — the middle is where the bell is fat"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half — one σ is a narrow slice"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "The bell piles most of its area in the middle: one σ each side holds about 68% — over two-thirds. Half would be a flat distribution's answer; the bell is anything but flat."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What percent of scores land between 80 and 120 (within two σ)?",
+        "answer": 95,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 68,
+            "feedback": "68% is the ONE-σ share. Two σ each side captures more: 95%."
+          },
+          {
+            "value": 99.7,
+            "feedback": "99.7% is the three-σ share. Two σ gives 95%."
+          }
+        ],
+        "successFeedback": "95% within two σ — the interval behind every 'margin of error' you've met in this course.",
+        "fallbackFeedback": "Work from the memorized bell numbers: 68 within one σ, 95 within two, 99.7 within three — then halve for a single tail.",
+        "unit": ""
+      },
+      "body": "Widen to two σ.",
+      "conceptTag": "si-empirical-rule",
+      "explanationVariants": [
+        "Two σ each side of the mean captures 95% — the same 95% that margin-of-error intervals promise.",
+        "From 80 to 120 is μ ± 2σ; the empirical rule prices that band at 95% for every normal curve."
+      ]
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What percent of scores land ABOVE 120?",
+        "answer": 2.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5% is BOTH tails together. Above 120 is only the right tail: half of 5%."
+          },
+          {
+            "value": 95,
+            "feedback": "95% is INSIDE two σ. Above 120 is one tail of the remaining 5%."
+          }
+        ],
+        "successFeedback": "Outside two σ lives 5%, split evenly by symmetry: 2.5% in each tail.",
+        "fallbackFeedback": "Work from the memorized bell numbers: 68 within one σ, 95 within two, 99.7 within three — then halve for a single tail.",
+        "unit": ""
+      },
+      "body": "Now just one tail.",
+      "conceptTag": "si-empirical-rule",
+      "explanationVariants": [
+        "Outside two σ lies 5%, and symmetry splits it: 2.5% above 120, 2.5% below 80.",
+        "One tail is always half of what both tails hold — halving is the bell's free bonus rule."
+      ]
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice what just happened: symmetry let you split the leftover. Outside two σ is 5%; each tail takes exactly half. Every region under the bell is reachable from the three memorized numbers plus halving.",
+      "figure": "si-split-the-tails"
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What percent of scores land between 110 and 120?",
+        "answer": 13.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27% is BOTH bands (90→80 and 110→120... careful: the two flanks between one and two σ). One side takes half: 13.5%."
+          },
+          {
+            "value": 13,
+            "feedback": "Close — keep the half: (95 − 68)/2 = 13.5, not 13."
+          }
+        ],
+        "successFeedback": "From 68 to 95 the bell adds 27 points — split across two symmetric bands: 13.5% each side. You just did normal-curve arithmetic with no calculus in sight.",
+        "fallbackFeedback": "Work from the memorized bell numbers: 68 within one σ, 95 within two, 99.7 within three — then halve for a single tail.",
+        "unit": ""
+      },
+      "body": "A band between the fences.",
+      "conceptTag": "si-empirical-rule",
+      "explanationVariants": [
+        "Between one and two σ the bell adds 95 − 68 = 27 points, shared by two symmetric bands: 13.5% each.",
+        "Any band's share comes from subtracting the memorized levels and halving by symmetry."
+      ],
+      "hints": [
+        "The 110–120 band is the gap between the one-σ and two-σ fences on ONE side.",
+        "Within two σ is 95%; within one σ is 68%. The difference, 27%, is split across both flanks.",
+        "Half of 27: the right flank alone holds 13.5%."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The far country.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What percent of scores land beyond 130 or below 70 — outside three σ?",
+        "answer": 0.3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 99.7,
+            "feedback": "99.7% is INSIDE three σ. Outside is what's left: 0.3%."
+          },
+          {
+            "value": 3,
+            "feedback": "Careful with the decimal: 100 − 99.7 leaves 0.3%, not 3%."
+          }
+        ],
+        "fallbackFeedback": "Inside three σ holds 99.7% — outside is the leftover 0.3%.",
+        "successFeedback": "0.3% — three-σ events are once-in-333 rarities. That's why chapter 4 treats them as near-proof."
+      },
+      "conceptTag": "si-empirical-rule",
+      "explanationVariants": [
+        "99.7% within three σ leaves 0.3% outside — split across two tails, 0.15% each.",
+        "Three-σ events are the bell's outer country: rare enough that chapter 4 treats them as strong evidence."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "68 – 95 – 99.7, then halve tails by symmetry. With μ and σ you can price any region of a normal world. Next: a ruler that measures distance in σ's directly.",
+      "takeaways": [
+        "68 – 95 – 99.7: the shares within one, two, three σ of the mean, for every normal curve.",
+        "Symmetry halves anything: one tail is half of what both tails hold.",
+        "Any band's share comes from subtracting memorized levels — no new facts needed."
+      ],
+      "teaser": "Next: a ruler that measures every distance in σ's directly — the z-score."
+    }
+  ]
+}

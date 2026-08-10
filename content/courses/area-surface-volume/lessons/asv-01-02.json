@@ -1,0 +1,469 @@
+{
+  "id": "asv-01-02",
+  "slug": "parallelograms-and-trapezoids",
+  "title": "Parallelograms and Trapezoids",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch1-area-triangles-quads",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **parallelogram** slices a triangle off one side and reattaches it to the other, forming a rectangle of the SAME base and height — no halving needed. Area = **base × height**: base 6, height 4 gives 6 × 4 = **24**. Unlike a triangle, a parallelogram is already the full rectangle in disguise.",
+      "figure": "asv-parallelogram"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "No half here.",
+      "conceptTag": "quad-area",
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A parallelogram has base 9 and height 5. What is its area?",
+        "scene": "parallelogram-rearrange",
+        "pieces": [
+          {
+            "id": "p",
+            "label": "parallelogram",
+            "shape": "parallelogram",
+            "operation": "add",
+            "base": 9,
+            "height": 5
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "45 square units",
+            "value": 45,
+            "feedback": "9 × 5 = 45 — no halving for a parallelogram."
+          },
+          {
+            "id": "wrong-1",
+            "label": "22.5 square units",
+            "value": 22.5,
+            "feedback": "22.5 applies the TRIANGLE's ×1/2 — but a parallelogram is the full rectangle, no halving: 9 × 5 = 45."
+          },
+          {
+            "id": "wrong-2",
+            "label": "14 square units",
+            "value": 14,
+            "feedback": "14 adds 9 + 5. Parallelogram area multiplies: 9 × 5 = 45."
+          }
+        ],
+        "fallbackFeedback": "9 × 5 = 45 — no halving for a parallelogram.",
+        "successFeedback": "9 × 5 = 45 — no halving for a parallelogram."
+      },
+      "predict": {
+        "prompt": "A parallelogram with base 9 and height 5 — same base and height as a 9 × 5 rectangle. Its area will be…",
+        "options": [
+          {
+            "id": "same",
+            "label": "Exactly the rectangle's — the slant doesn't cost area"
+          },
+          {
+            "id": "less",
+            "label": "Less — slanting squeezes it thinner"
+          },
+          {
+            "id": "half",
+            "label": "Half — slanted shapes take the ½ like triangles"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "Slice the overhanging triangle off one end and slide it to the other: the parallelogram reassembles into the 9 × 5 rectangle exactly, so the area is the full 45. The ½ belongs to triangles alone — a parallelogram is two of them."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Confuse it with a triangle?",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "A parallelogram doesn't halve like a triangle — it's already rectangle-equivalent: 6 × 4 = 24.",
+        "Cutting and reattaching a triangle piece turns the parallelogram into a full rectangle of the same area."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A parallelogram has base 6 and height 4. Which is its area?",
+        "scene": "parallelogram-rearrange",
+        "pieces": [
+          {
+            "id": "p",
+            "label": "parallelogram",
+            "shape": "parallelogram",
+            "operation": "add",
+            "base": 6,
+            "height": 4
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "a",
+            "label": "24 — base times height, no halving",
+            "value": 24,
+            "feedback": "Right — a parallelogram equals a rectangle of the same base and height: 6 × 4 = 24."
+          },
+          {
+            "id": "b",
+            "label": "12 — half of base times height, like a triangle",
+            "value": 12,
+            "feedback": "That's the TRIANGLE rule. A parallelogram doesn't halve — it's already rectangle-shaped when rearranged: 24."
+          },
+          {
+            "id": "c",
+            "label": "10 — base plus height",
+            "value": 10,
+            "feedback": "Area multiplies, it doesn't add. Base × height = 6 × 4 = 24."
+          }
+        ],
+        "fallbackFeedback": "Right — a parallelogram equals a rectangle of the same base and height: 6 × 4 = 24.",
+        "successFeedback": "Right — a parallelogram equals a rectangle of the same base and height: 6 × 4 = 24."
+      },
+      "hints": [
+        "Does a parallelogram halve like a triangle?",
+        "No — it's rectangle-equivalent.",
+        "6 × 4 = 24."
+      ],
+      "variant": {
+        "gen": "composite-area-lab",
+        "form": "parallelogramMcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "trapezoid-decompose",
+      "body": "A **trapezoid** has two parallel bases of DIFFERENT lengths. Split it diagonally into two triangles — one using the long base (b1), one the short base (b2), both sharing the height. Adding those triangle areas gives the formula: **1/2 × (b1 + b2) × height**. Average the two bases, then apply the triangle rule."
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Average the bases.",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "1/2 × (8 + 4) × 3 = 1/2 × 12 × 3 = 18.",
+        "Add the bases (12), take half the height times that sum: 18."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A trapezoid has bases 8 and 4, and height 3. What is its area?",
+        "scene": "trapezoid-diagonal",
+        "pieces": [
+          {
+            "id": "long",
+            "label": "triangle on base 8",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 8,
+            "height": 3
+          },
+          {
+            "id": "short",
+            "label": "triangle on base 4",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 4,
+            "height": 3
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "18 square units",
+            "value": 18,
+            "feedback": "1/2 × (8 + 4) × 3 = 1/2 × 12 × 3 = 18."
+          },
+          {
+            "id": "wrong-1",
+            "label": "12 square units",
+            "value": 12,
+            "feedback": "12 uses only the LONG base (8) with the triangle rule (1/2 × 8 × 3), ignoring the short base entirely. Average both: 1/2 × (8+4) × 3 = 18."
+          },
+          {
+            "id": "wrong-2",
+            "label": "96 square units",
+            "value": 96,
+            "feedback": "96 multiplies all three numbers together (8×4×3) without the 1/2 or the averaging. The formula is 1/2 × (8+4) × 3 = 18."
+          }
+        ],
+        "fallbackFeedback": "1/2 × (8 + 4) × 3 = 1/2 × 12 × 3 = 18.",
+        "successFeedback": "1/2 × (8 + 4) × 3 = 1/2 × 12 × 3 = 18."
+      },
+      "variant": {
+        "gen": "composite-area-lab",
+        "form": "trapezoid"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Verify by decomposition.",
+      "conceptTag": "quad-area",
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A trapezoid has bases 10 and 6, height 4. Using the two-triangle decomposition: triangle 1 (base 10) has area 1/2×10×4=20. What is triangle 2's area (base 6)?",
+        "scene": "trapezoid-diagonal",
+        "pieces": [
+          {
+            "id": "long",
+            "label": "triangle 1 on base 10",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 10,
+            "height": 4
+          },
+          {
+            "id": "short",
+            "label": "triangle 2 on base 6",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 6,
+            "height": 4
+          }
+        ],
+        "target": {
+          "kind": "piece",
+          "pieceId": "short"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "12 square units",
+            "value": 12,
+            "feedback": "1/2 × 6 × 4 = 12."
+          },
+          {
+            "id": "wrong-1",
+            "label": "20 square units",
+            "value": 20,
+            "feedback": "20 repeats triangle 1's area. Triangle 2 uses the OTHER base (6): 1/2 × 6 × 4 = 12."
+          },
+          {
+            "id": "wrong-2",
+            "label": "24 square units",
+            "value": 24,
+            "feedback": "24 skips the ÷2. Triangle 2's area is 1/2 × 6 × 4 = 12."
+          }
+        ],
+        "fallbackFeedback": "1/2 × 6 × 4 = 12.",
+        "successFeedback": "1/2 × 6 × 4 = 12."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Add the two triangles.",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "20 + 12 = 32, matching the direct formula 1/2 × (10+6) × 4 = 32.",
+        "Both methods agree: decomposition and the formula give the same 32."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "Triangle 1 has area 20 and triangle 2 has area 12 (same trapezoid as before). What is the trapezoid's total area?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "t1",
+            "label": "triangle 1",
+            "shape": "given",
+            "operation": "add",
+            "area": 20
+          },
+          {
+            "id": "t2",
+            "label": "triangle 2",
+            "shape": "given",
+            "operation": "add",
+            "area": 12
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "32 square units",
+            "value": 32,
+            "feedback": "20 + 12 = 32, matching 1/2 × (10+6) × 4 = 32."
+          },
+          {
+            "id": "wrong-1",
+            "label": "8 square units",
+            "value": 8,
+            "feedback": "8 subtracts instead of adding the two triangle pieces. Together they make the whole trapezoid: 20 + 12 = 32."
+          },
+          {
+            "id": "wrong-2",
+            "label": "240 square units",
+            "value": 240,
+            "feedback": "240 multiplies the two areas. Combining two pieces of a shape means ADDING: 20 + 12 = 32."
+          }
+        ],
+        "fallbackFeedback": "20 + 12 = 32, matching 1/2 × (10+6) × 4 = 32.",
+        "successFeedback": "20 + 12 = 32, matching 1/2 × (10+6) × 4 = 32."
+      },
+      "variant": {
+        "gen": "composite-area-lab",
+        "form": "fromTriangles"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Pick the right shape rule.",
+      "conceptTag": "quad-area",
+      "hints": [
+        "A trapezoid has two DIFFERENT-length parallel bases.",
+        "Average them: (14+6)/2 = 10.",
+        "Multiply by the height: 10 × 5."
+      ],
+      "explanationVariants": [
+        "1/2 × (14+6) × 5 = 1/2 × 20 × 5 = 50.",
+        "Average the bases (10), multiply by height (5): 50."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A trapezoid has bases 14 and 6, and height 5. What is its area?",
+        "scene": "trapezoid-diagonal",
+        "pieces": [
+          {
+            "id": "long",
+            "label": "triangle on base 14",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 14,
+            "height": 5
+          },
+          {
+            "id": "short",
+            "label": "triangle on base 6",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 6,
+            "height": 5
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "50 square units",
+            "value": 50,
+            "feedback": "1/2 × (14 + 6) × 5 = 1/2 × 20 × 5 = 50."
+          },
+          {
+            "id": "wrong-1",
+            "label": "70 square units",
+            "value": 70,
+            "feedback": "70 uses only the long base (14) with a parallelogram-style rule (14 × 5), ignoring the short base. Average both bases first: 1/2 × (14+6) × 5 = 50."
+          },
+          {
+            "id": "wrong-2",
+            "label": "35 square units",
+            "value": 35,
+            "feedback": "35 uses only the long base with the TRIANGLE rule (1/2 × 14 × 5), missing the short base's contribution. Average both bases: 1/2 × 20 × 5 = 50."
+          }
+        ],
+        "fallbackFeedback": "1/2 × (14 + 6) × 5 = 1/2 × 20 × 5 = 50.",
+        "successFeedback": "1/2 × (14 + 6) × 5 = 1/2 × 20 × 5 = 50."
+      },
+      "variant": {
+        "gen": "composite-area-lab",
+        "form": "trapezoid"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three shapes, three rules built on triangles.",
+      "takeaways": [
+        "Parallelogram area = base × height — no halving, it's rectangle-equivalent.",
+        "Trapezoid area = 1/2 × (base1 + base2) × height — average the bases, then apply the triangle rule.",
+        "Every formula traces back to decomposing the shape into triangles or rectangles."
+      ],
+      "teaser": "next: choosing the right formula when shapes get mixed together."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-area",
+      "concept": {
+        "id": "rem-qa-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Parallelogram: base × height, no half. Trapezoid: average the two bases, then use the triangle rule.** For bases 6 and 2, height 4: 1/2 × (6+2) × 4 = 16."
+      },
+      "check": {
+        "id": "rem-qa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-area",
+        "explanationVariants": [
+          "1/2 × (6+2) × 4 = 1/2 × 8 × 4 = 16.",
+          "Average the bases (4), multiply by height... wait: sum first, then halve with height: 16."
+        ],
+        "widget": {
+          "type": "compositeAreaLab",
+          "prompt": "A trapezoid has bases 6 and 2, height 4. What is its area?",
+          "scene": "trapezoid-diagonal",
+          "pieces": [
+            {
+              "id": "long",
+              "label": "triangle on base 6",
+              "shape": "triangle",
+              "operation": "add",
+              "base": 6,
+              "height": 4
+            },
+            {
+              "id": "short",
+              "label": "triangle on base 2",
+              "shape": "triangle",
+              "operation": "add",
+              "base": 2,
+              "height": 4
+            }
+          ],
+          "target": {
+            "kind": "total"
+          },
+          "choices": [
+            {
+              "id": "correct",
+              "label": "16 square units",
+              "value": 16,
+              "feedback": "1/2 × (6+2) × 4 = 16."
+            },
+            {
+              "id": "wrong-1",
+              "label": "12 square units",
+              "value": 12,
+              "feedback": "12 uses only the long base (6) with the triangle rule, ignoring the 2. Average both: 1/2 × (6+2) × 4 = 16."
+            },
+            {
+              "id": "wrong-2",
+              "label": "32 square units",
+              "value": 32,
+              "feedback": "32 skips the 1/2 entirely ((6+2) × 4 = 32 without halving). The formula is 1/2 × (6+2) × 4 = 16."
+            }
+          ],
+          "fallbackFeedback": "1/2 × (6+2) × 4 = 16.",
+          "successFeedback": "1/2 × (6+2) × 4 = 16."
+        }
+      }
+    }
+  ]
+}

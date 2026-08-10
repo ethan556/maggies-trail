@@ -1,0 +1,320 @@
+{
+  "id": "dd-03-03",
+  "slug": "choosing-mean-vs-median",
+  "title": "Choosing Mean vs Median",
+  "courseId": "data-distributions",
+  "chapterId": "ch3-mean-median",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "mean-outlier-pull",
+      "body": "Five hikers carry 4, 5, 6, 7, and 8 pounds: mean 6 (sum 30 ÷ 5) and median 6 — the summaries agree. Now a sixth hiker hauls **30** pounds. The sum leaps to 60, so the mean jumps to 60 ÷ 6 = **10** — bigger than five of the six packs! The median barely moves: the middle pair is 6 and 7, so it becomes **6.5**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the mean get dragged.",
+      "conceptTag": "center-choice",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Packs weigh 4, 5, 6, 7, 8, and 30 pounds. Compute the MEAN. (The sum is 60.)",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "pounds",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 was the mean BEFORE the 30-pound pack joined. The new sum is 60 across 6 packs: 60 ÷ 6 = 10 — the outlier drags the mean up."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is 60 ÷ 5 — the count grew to SIX when the heavy pack joined. 60 ÷ 6 = 10."
+          }
+        ],
+        "fallbackFeedback": "Six packs now: 60 ÷ 6 = 10 pounds. One heavy pack lifted the mean above almost everyone."
+      },
+      "predict": {
+        "prompt": "Five packs weigh 4–8 pounds and one weighs 30. Will the MEAN land inside the 4–8 cluster, or above it?",
+        "options": [
+          {
+            "id": "above",
+            "label": "Above the cluster"
+          },
+          {
+            "id": "inside",
+            "label": "Inside the cluster"
+          },
+          {
+            "id": "below",
+            "label": "Below the cluster"
+          }
+        ],
+        "outcomeId": "above",
+        "reveal": "The 30 pulls the balance point up and out of the crowd — one extreme value drags the mean toward itself. That pull is exactly why the median sometimes tells it better."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the median.",
+      "conceptTag": "center-choice",
+      "explanationVariants": [
+        "Sorted: 4, 5, 6, 7, 8, 30. Six values → middle pair 6 and 7 → median (6 + 7) ÷ 2 = 6.5. The 30 is just 'one value above the middle' — its SIZE never enters the calculation.",
+        "The median counts positions, not pounds: swap the 30 for a 9 or a 900 and the middle pair stays 6 and 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same packs — 4, 5, 6, 7, 8, 30. What is the MEDIAN weight? (Decimals allowed.)",
+        "answer": 6.5,
+        "tolerance": 0,
+        "unit": "pounds",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the MEAN — the summary the outlier dragged. The median averages the middle pair of the sorted list: (6 + 7) ÷ 2 = 6.5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is only one of the two middle values. Six packs is an even count: median = (6 + 7) ÷ 2 = 6.5."
+          }
+        ],
+        "fallbackFeedback": "Sorted, the middle pair is 6 and 7; the median is (6 + 7) ÷ 2 = 6.5 pounds."
+      },
+      "hints": [
+        "Sort the six weights.",
+        "Even count — find the middle pair.",
+        "Average 6 and 7."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMedianOutlierData"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That's the whole choice. The mean uses every value's **size**, so one extreme value — an **outlier** — can drag it far from the pack (6 → 10). The median uses only **position**, so it's **resistant**: it moved just half a step (6 → 6.5). Data with outliers or a strong skew? Report the **median**. Balanced, outlier-free data? The **mean** works — and the two will nearly agree anyway.",
+      "figure": "mean-outlier-pull"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort the claims.",
+      "conceptTag": "center-choice",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Drag each statement to the summary it describes.",
+        "buckets": [
+          {
+            "id": "mean",
+            "label": "The MEAN",
+            "icon": "⚖️"
+          },
+          {
+            "id": "median",
+            "label": "The MEDIAN",
+            "icon": "📍"
+          }
+        ],
+        "items": [
+          {
+            "id": "t1",
+            "label": "Uses the size of every single value",
+            "bucketId": "mean",
+            "feedback": "Every value's size flows into the sum — that's the mean's defining trait, and exactly why outliers can drag it."
+          },
+          {
+            "id": "t2",
+            "label": "Gets dragged toward an outlier",
+            "bucketId": "mean",
+            "feedback": "Dragging happens through the SUM — the outlier's whole size gets added in. That's the mean's weakness, not the median's."
+          },
+          {
+            "id": "t3",
+            "label": "Only cares which value stands in the middle",
+            "bucketId": "median",
+            "feedback": "Position-not-size is the median's whole method — it's the middle of the sorted line-up."
+          },
+          {
+            "id": "t4",
+            "label": "Barely moves when one wild value joins",
+            "bucketId": "median",
+            "feedback": "Resistance comes from ignoring size: a new value shifts the middle by at most one position. That's the median."
+          }
+        ],
+        "missFeedback": "Ask of each claim: does it depend on values' SIZES (mean territory) or only their POSITIONS (median territory)?",
+        "successFeedback": "Sorted — mean feels every pound; median only counts heads."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pick the honest summary.",
+      "conceptTag": "center-choice",
+      "explanationVariants": [
+        "The mansion is an outlier, and it drags the mean above what nearly every family actually pays — the median, resistant to the one extreme, describes the typical home honestly.",
+        "When one value dwarfs the rest, position beats size: report the median."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A street has nine similar homes and one giant mansion. A report wants ONE number for the 'typical' home price. Which summary — and why?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Median — the mansion would drag the mean above almost every real home",
+            "correct": true,
+            "feedback": "Right — the median stays with the nine similar homes; the mean would chase the mansion."
+          },
+          {
+            "id": "b",
+            "label": "Mean — it's more accurate because it uses every price",
+            "feedback": "Using every price is exactly the vulnerability here: the mansion's full price inflates the sum, pushing the mean above what's typical. Choose the resistant median."
+          },
+          {
+            "id": "c",
+            "label": "Either — mean and median always come out close",
+            "feedback": "They agree on balanced data, but an outlier splits them apart — the pack data went mean 10 vs median 6.5. With a mansion in the mix, the choice matters."
+          }
+        ]
+      },
+      "hints": [
+        "Which summary chases extreme values?",
+        "The mansion inflates the sum, and the sum feeds the mean.",
+        "The resistant one is the median."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCenterTypical"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the gap between them.",
+      "conceptTag": "center-choice",
+      "explanationVariants": [
+        "A mean far ABOVE the median is the signature of a high outlier (or a long high tail) — the mean got dragged up while the median held its ground.",
+        "When the two centers split, the mean points toward the extreme values; here it points high."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A data set reports mean 42 and median 20. Without seeing the values, what's the most likely story?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Some very LARGE values are dragging the mean up past the middle",
+            "correct": true,
+            "feedback": "Exactly — a mean more than double the median almost always signals big values in a high tail pulling on the sum."
+          },
+          {
+            "id": "b",
+            "label": "Some very SMALL values are dragging the mean down",
+            "feedback": "Small extremes drag the mean BELOW the median — but this mean sits far above it, so the pull is coming from large values."
+          },
+          {
+            "id": "c",
+            "label": "Someone must have miscalculated — mean and median can't differ",
+            "feedback": "They differ whenever data is lopsided; the pack data legitimately gave mean 10 vs median 6.5. A big gap is information, not an error."
+          }
+        ]
+      },
+      "hints": [
+        "Which direction did the mean move relative to the median?",
+        "The mean chases extremes.",
+        "Mean above median → big values pulling up."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMeanMedianTail"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Quantify the drag.",
+      "conceptTag": "center-choice",
+      "explanationVariants": [
+        "Without the 30: mean 6. With it: mean 10. The single outlier moved the mean by 10 − 6 = 4 pounds — while the median moved only 0.5.",
+        "Compare the two means you've already computed: 10 versus 6. The gap, 4, is the outlier's drag."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The packs 4, 5, 6, 7, 8 have mean 6. Adding the 30-pound pack makes the mean 10. By how many pounds did the ONE outlier move the mean?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "pounds",
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "0.5 is how far the MEDIAN moved (6 → 6.5) — the resistant summary. The mean went from 6 to 10: a 4-pound drag."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the gap between the outlier (30) and the old mean (6) — not how far the mean itself moved. The mean went 6 → 10: a shift of 4."
+          }
+        ],
+        "fallbackFeedback": "The mean moved from 6 to 10; that's a shift of 10 − 6 = 4 pounds from a single value."
+      },
+      "hints": [
+        "You know both means already.",
+        "Before: 6. After: 10.",
+        "Subtract to measure the move."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddOutlierMeanShift"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two centers, one decision rule.",
+      "takeaways": [
+        "The mean feels every value's size; one outlier can drag it far from the pack.",
+        "The median only counts positions, so it resists outliers — 6 → 6.5 while the mean leapt 6 → 10.",
+        "Outliers or skew → report the median; balanced data → the mean serves well."
+      ],
+      "teaser": "next chapter: centers answer 'where's the middle?' — now we measure how far the data SPREADS."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "center-choice",
+      "concept": {
+        "id": "rem-cc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **The mean chases outliers; the median resists them.** Data 1, 2, 3 has mean 2 and median 2. Swap the 3 for a 30: the mean rockets to 11, but the sorted middle of 1, 2, 30 is still 2."
+      },
+      "check": {
+        "id": "rem-cc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "center-choice",
+        "explanationVariants": [
+          "Sorted, 1, 2, 30 still has 2 in the middle — the median ignores how big the 30 is.",
+          "The median counts positions: one value below 2, one above. Still 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The data 1, 2, 3 becomes 1, 2, 30. What is the NEW median?",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 11,
+              "feedback": "11 is the new MEAN (33 ÷ 3) — the summary the outlier dragged. The middle of the sorted list 1, 2, 30 is still 2."
+            },
+            {
+              "value": 30,
+              "feedback": "30 is the outlier itself, at the END of the sorted list. The middle value of 1, 2, 30 is 2."
+            }
+          ],
+          "fallbackFeedback": "Sort: 1, 2, 30. The middle value is 2 — the median didn't budge."
+        }
+      }
+    }
+  ]
+}

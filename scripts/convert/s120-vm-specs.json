@@ -1,0 +1,121 @@
+{
+  "note": "S120j — the vm- cluster. Four of nine convert against volumeBuilder, the only lab the course ships. All four use missing-dimension mode, so the target is reachable at exactly one lattice setting and the step cannot be passed without finding the authored answer. The five unit-conversion and line-plot lessons are declined; reasons in KNOWN_ISSUES.",
+  "conversions": [
+    {
+      "dir": "volume-measurement", "lesson": "vm-03-01", "step": "i2", "oldType": "numeric",
+      "capability": "volumeBuilder (volume-meaning)",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "One flat layer, 2 cubes deep and 1 cube tall. Slide the length out to 3 and watch the cube count as each new column lands.",
+        "targetVolume": 6,
+        "lMax": 6, "wMax": 6, "hMax": 6,
+        "lStart": 1, "wStart": 2, "hStart": 1,
+        "lockW": true, "lockH": true,
+        "commonBuilds": [
+          { "volume": 4, "feedback": "4 cubes is a layer only 2 across. Each column you add is worth 2 cubes, not 1, because the layer is 2 deep — count the columns, then count what each one brings." },
+          { "volume": 2, "feedback": "2 cubes is a single column. That is the depth, standing alone: one column of a layer that needs to run 3 across." }
+        ],
+        "successFeedback": "6 cubes. Three columns, each 2 deep — and that is why area is a multiplication rather than an addition. The 3 and the 2 are not two things to combine; the 2 is how much every one of the 3 is worth.",
+        "lowFeedback": "Fewer cubes than the layer needs. Keep extending the length — each step out adds another 2-deep column.",
+        "highFeedback": "Too many now. The layer is only meant to run 3 columns; pull the length back."
+      },
+      "predict": {
+        "prompt": "A flat layer of unit cubes is 3 across and 2 deep. How many cubes fill it?",
+        "options": [
+          { "id": "six", "label": "6" },
+          { "id": "five", "label": "5 — the 3 and the 2 together" },
+          { "id": "three", "label": "3" }
+        ],
+        "outcomeId": "six",
+        "reveal": "6. Each of the 3 columns holds 2 cubes, so the count multiplies. Adding gives 5, which counts along the two edges and misses every cube in the middle — the fastest way to see the difference is to watch a whole 2-cube column arrive each time the length grows by one."
+      }
+    },
+    {
+      "dir": "volume-measurement", "lesson": "vm-04-01", "step": "i2", "oldType": "numeric",
+      "capability": "volumeBuilder (volume-layers)",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "The base is fixed at 5 by 2 — ten cubes. Raise the height until the box is 3 layers tall, and watch what each new layer is worth.",
+        "targetVolume": 30,
+        "lMax": 6, "wMax": 6, "hMax": 6,
+        "lStart": 5, "wStart": 2, "hStart": 1,
+        "lockL": true, "lockW": true,
+        "commonBuilds": [
+          { "volume": 10, "feedback": "10 is the base layer on its own — one layer, not three. The base tells you what a layer is WORTH; the height tells you how many of them there are." },
+          { "volume": 20, "feedback": "20 is two layers. One more to go, and notice it will add another 10 rather than another 1 — a layer is not a unit." }
+        ],
+        "successFeedback": "30 cubes: three layers of ten. That is the whole of length × width × height — the base multiplication tells you a layer's worth, and the height counts the layers. Each step of the slider added 10, never 1.",
+        "lowFeedback": "Not enough layers yet. Each one you add brings another full base of 10 cubes.",
+        "highFeedback": "That is more than 3 layers. Bring the height back down — every extra layer is 10 cubes too many."
+      },
+      "predict": {
+        "prompt": "The base holds 10 cubes. Stacking it 3 layers tall gives a total of…",
+        "options": [
+          { "id": "thirty", "label": "30" },
+          { "id": "thirteen", "label": "13 — the base plus the 3 layers" },
+          { "id": "ten", "label": "10 — the base is the box" }
+        ],
+        "outcomeId": "thirty",
+        "reveal": "30 — three copies of the base. Adding the 3 to the 10 treats a LAYER as if it were a single cube, and the slider settles it: each step up adds ten cubes at once, not one."
+      }
+    },
+    {
+      "dir": "volume-measurement", "lesson": "vm-05-01", "step": "i1", "oldType": "numeric",
+      "capability": "volumeBuilder (additive-volume)",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "Box A is 4 long and 2 wide — that base is locked. Raise it to 3 tall and read the volume you will need for the sum that follows.",
+        "targetVolume": 24,
+        "lMax": 6, "wMax": 6, "hMax": 6,
+        "lStart": 4, "wStart": 2, "hStart": 1,
+        "lockL": true, "lockW": true,
+        "commonBuilds": [
+          { "volume": 8, "feedback": "8 is the base layer alone. The box is 3 tall, so there are two more layers of 8 still to stack." },
+          { "volume": 16, "feedback": "16 is two layers of the three. One more layer of 8 completes Box A." }
+        ],
+        "successFeedback": "24 cubic units. Worth holding on to: the next step joins this box to another one, and the reason the two volumes can simply be ADDED is that neither box has any cube the other one also contains.",
+        "lowFeedback": "Still short of Box A. Each layer you add is another 8 cubes.",
+        "highFeedback": "Past it — Box A is only 3 layers tall. Ease the height back down."
+      },
+      "predict": {
+        "prompt": "Box A measures 4 long, 2 wide and 3 tall. Its volume in cubic units is…",
+        "options": [
+          { "id": "nine", "label": "9 — the three edge lengths added" },
+          { "id": "twentyfour", "label": "24" },
+          { "id": "twelve", "label": "12" }
+        ],
+        "outcomeId": "twentyfour",
+        "reveal": "24. Adding the edges gives 9, but that is a total LENGTH, measured in units — it cannot be a count of cubes, which are measured in cubic units. Whenever the units of an answer do not match the units of the question, the operation is wrong."
+      }
+    },
+    {
+      "dir": "volume-measurement", "lesson": "vm-05-02", "step": "i1", "oldType": "numeric",
+      "capability": "volumeBuilder (decompose-solid)",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "The L's bottom slab is 2 wide and 2 tall, both locked. Slide the length out to 5 and watch what each unit of length is worth.",
+        "targetVolume": 20,
+        "lMax": 6, "wMax": 6, "hMax": 6,
+        "lStart": 1, "wStart": 2, "hStart": 2,
+        "lockW": true, "lockH": true,
+        "commonBuilds": [
+          { "volume": 4, "feedback": "4 cubes is one unit of length — a single 2-by-2 slice. The slab runs 5 of those." },
+          { "volume": 16, "feedback": "16 is four units of length. One more 2-by-2 slice completes the slab." }
+        ],
+        "successFeedback": "20 cubic units. Every unit of length brought a whole 2-by-2 cross-section of 4 cubes — which is why splitting an L-shaped solid works at all: each piece is a plain box, and no cube belongs to two pieces at once.",
+        "lowFeedback": "Shorter than the slab. Each step of length adds a full 2-by-2 slice — 4 cubes.",
+        "highFeedback": "Longer than the slab. Pull the length back toward 5."
+      },
+      "predict": {
+        "prompt": "The slab is 2 wide and 2 tall. Each extra unit of LENGTH will add…",
+        "options": [
+          { "id": "one", "label": "1 cube" },
+          { "id": "two", "label": "2 cubes" },
+          { "id": "four", "label": "4 cubes" }
+        ],
+        "outcomeId": "four",
+        "reveal": "4 — a whole 2-by-2 cross-section arrives with every unit of length. This is why an L-shaped solid can be split and its parts added: each part is a plain box built the same way, and no cube is ever counted by two of them."
+      }
+    }
+  ]
+}

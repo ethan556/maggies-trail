@@ -1,0 +1,497 @@
+{
+  "id": "tse-02-05",
+  "slug": "undo-in-the-right-order",
+  "title": "Undo in the Right Order",
+  "courseId": "two-step-equations",
+  "chapterId": "ch2-two-step-equations",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An equation like 5x + 3 = 28 is a machine: x goes in, the machine multiplies by 5, then adds 3, and 28 comes out. Solving it means UNDOING the machine. And undoing has a rule: the LAST thing the machine did is the FIRST thing you undo. The + 3 happened last, so it goes first — subtract 3, then divide by 5.",
+      "figure": "tse-undo-order-track"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the undo machine for 5x + 3 = 28.",
+      "predict": {
+        "prompt": "The machine multiplies by 5, then adds 3. Which undo machine finds x?",
+        "options": [
+          {
+            "id": "same",
+            "label": "Divide by 5, then subtract 3 — undo each step in order"
+          },
+          {
+            "id": "rev",
+            "label": "Subtract 3, then divide by 5 — undo the LAST step first"
+          },
+          {
+            "id": "copy",
+            "label": "Multiply by 5, then add 3 — run the same machine again"
+          }
+        ],
+        "outcomeId": "rev",
+        "reveal": "Undo the last step first. The + 3 was the machine's final move, so it must be the first thing removed: 28 − 3 = 25, then 25 ÷ 5 = 5. Dividing first splits the 3 too — that's how 28 ÷ 5 − 3 goes wrong."
+      },
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "The machine does: × 5, then + 3. Build the undo machine — last step first.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 5
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 3
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-sub3",
+            "op": "sub",
+            "n": 3
+          },
+          {
+            "id": "t-div5",
+            "op": "div",
+            "n": 5
+          },
+          {
+            "id": "t-add3",
+            "op": "add",
+            "n": 3
+          },
+          {
+            "id": "t-mul5",
+            "op": "mul",
+            "n": 5
+          }
+        ],
+        "answer": [
+          "t-sub3",
+          "t-div5"
+        ],
+        "sampleInput": 5,
+        "successFeedback": "That's the undo machine. Watch the check below: 5 goes in, the machine makes 28, and your track carries 28 straight back to 5.",
+        "forwardOrderFeedback": "Those are the right undo-steps, but in the machine's own order. Undoing runs BACKWARDS: the + 3 happened last, so subtracting 3 must come first — otherwise the divide splits the 3 as well.",
+        "unflippedFeedback": "The order is right, but a step was copied instead of undone. Each card must be the OPPOSITE of the step it cancels: + 3 is undone by − 3, × 5 by ÷ 5.",
+        "missFeedback": "Read the machine left to right, then build the track right to left, flipping each step: the + 3 becomes − 3 and goes first, the × 5 becomes ÷ 5 and goes second."
+      },
+      "conceptTag": "tse-solve-two-step",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "conceptTag": "tse-solve-two-step",
+      "body": "Now one with subtraction inside.",
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "6x − 5 = 25 is the machine × 6, then − 5. Build the undo machine.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 6
+          },
+          {
+            "id": "f2",
+            "op": "sub",
+            "n": 5
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-add5",
+            "op": "add",
+            "n": 5
+          },
+          {
+            "id": "t-div6",
+            "op": "div",
+            "n": 6
+          },
+          {
+            "id": "t-sub5",
+            "op": "sub",
+            "n": 5
+          },
+          {
+            "id": "t-mul6",
+            "op": "mul",
+            "n": 6
+          }
+        ],
+        "answer": [
+          "t-add5",
+          "t-div6"
+        ],
+        "sampleInput": 5,
+        "successFeedback": "Right — the − 5 happened last, so ADDING 5 comes first: 25 + 5 = 30, then 30 ÷ 6 = 5.",
+        "forwardOrderFeedback": "Right undo-steps, wrong direction. The machine ended with − 5, so the undo must START by adding 5 back. Dividing first leaves the missing 5 tangled inside the × 6.",
+        "unflippedFeedback": "Right order, but a step was copied instead of flipped. The − 5 is cancelled by + 5, and the × 6 by ÷ 6.",
+        "missFeedback": "Flip each step and reverse the order: − 5 becomes + 5 and goes first, × 6 becomes ÷ 6 and goes second."
+      },
+      "explanationVariants": [
+        "The machine did × 6 then − 5, so the undo runs + 5 then ÷ 6: 25 + 5 = 30, and 30 ÷ 6 = 5.",
+        "Reverse the order AND flip each step: the − 5 (last on) comes off first as + 5; the × 6 (first on) comes off last as ÷ 6."
+      ],
+      "variant": {
+        "gen": "inverse-pipeline"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Once the undo machine is built, solving is just feeding it the answer-side number. For 6x − 5 = 25: send 25 through the undo track — add 5 to get 30, divide by 6 to get x = 5. Every two-step equation you've solved was secretly this: build the undo, run the number through it.",
+      "figure": "tse-feed-undo-track"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build the undo for a machine that starts by adding.",
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "The machine does: + 7, then × 4. Build the undo machine.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "add",
+            "n": 7
+          },
+          {
+            "id": "f2",
+            "op": "mul",
+            "n": 4
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-div4",
+            "op": "div",
+            "n": 4
+          },
+          {
+            "id": "t-sub7",
+            "op": "sub",
+            "n": 7
+          },
+          {
+            "id": "t-mul4",
+            "op": "mul",
+            "n": 4
+          },
+          {
+            "id": "t-add7",
+            "op": "add",
+            "n": 7
+          }
+        ],
+        "answer": [
+          "t-div4",
+          "t-sub7"
+        ],
+        "sampleInput": 3,
+        "successFeedback": "Exactly. This machine ENDED with × 4, so the undo STARTS with ÷ 4 — the subtraction waits its turn.",
+        "forwardOrderFeedback": "Those undo-steps follow the machine's own order. This machine's last move was × 4, so ÷ 4 must come FIRST — subtracting 7 before dividing takes 7 from the wrong number.",
+        "unflippedFeedback": "The order is right, but a step was copied instead of undone. + 7 is cancelled by − 7, and × 4 by ÷ 4.",
+        "missFeedback": "This machine added first and multiplied last — so the undo divides first and subtracts last."
+      },
+      "conceptTag": "tse-solve-two-step",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "conceptTag": "tse-solve-two-step",
+      "body": "Same idea, new numbers.",
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "8x + 7 = 39 is the machine × 8, then + 7. Build the undo machine.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 8
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 7
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-sub7",
+            "op": "sub",
+            "n": 7
+          },
+          {
+            "id": "t-div8",
+            "op": "div",
+            "n": 8
+          },
+          {
+            "id": "t-add7",
+            "op": "add",
+            "n": 7
+          },
+          {
+            "id": "t-mul8",
+            "op": "mul",
+            "n": 8
+          }
+        ],
+        "answer": [
+          "t-sub7",
+          "t-div8"
+        ],
+        "sampleInput": 4,
+        "successFeedback": "That's it: 39 − 7 = 32, then 32 ÷ 8 = 4. Subtract first because the + 7 was the machine's last move.",
+        "forwardOrderFeedback": "Right undo-steps, but in the machine's own order. Divide 39 by 8 first and the 7 gets split too — subtract the 7 first, THEN divide.",
+        "unflippedFeedback": "Right order, but a step was copied instead of flipped: + 7 is undone by − 7, × 8 by ÷ 8.",
+        "missFeedback": "Reverse and flip: the + 7 becomes − 7 and goes first, the × 8 becomes ÷ 8 and goes second."
+      },
+      "explanationVariants": [
+        "The machine did × 8 then + 7, so the undo runs − 7 then ÷ 8: 39 − 7 = 32, and 32 ÷ 8 = 4.",
+        "The + 7 sits on the OUTSIDE of the 8x, so it must come off first — divide too early and the 7 gets split into eighths."
+      ],
+      "variant": {
+        "gen": "inverse-pipeline",
+        "form": "secondForm"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "conceptTag": "tse-solve-two-step",
+      "body": "Now run a number through an undo machine yourself — no tiles this time.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 5x + 10 = 45 by undoing: subtract 10, then divide by 5. What is x?",
+        "answer": 7,
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "That's 45 − 10 — the first undo-step, not the answer. One step remains: divide 35 by 5 to free x."
+          },
+          {
+            "value": -1,
+            "feedback": "That divides first: 45 ÷ 5 = 9, then 9 − 10 = −1. Dividing before subtracting shrinks the +10 too — undo the last step first: (45 − 10) ÷ 5 = 7."
+          }
+        ],
+        "successFeedback": "45 − 10 = 35, then 35 ÷ 5 = 7. The undo machine, run in your head.",
+        "fallbackFeedback": "Undo in reverse: subtract the 10 first (45 − 10 = 35), then divide by 5."
+      },
+      "explanationVariants": [
+        "Undo in reverse: 45 − 10 = 35 strips the + 10, then 35 ÷ 5 = 7 strips the × 5.",
+        "Check it forward: 5 × 7 = 35, plus 10 is 45. The undo order works because it peels the layers off in the order they were added — outermost first."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "conceptTag": "tse-solve-two-step",
+      "body": "A three-step machine. Same rule: last step first, flip every card.",
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "The machine does: × 3, then + 4, then ÷ 2. Build the undo machine.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 3
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 4
+          },
+          {
+            "id": "f3",
+            "op": "div",
+            "n": 2
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-mul2",
+            "op": "mul",
+            "n": 2
+          },
+          {
+            "id": "t-sub4",
+            "op": "sub",
+            "n": 4
+          },
+          {
+            "id": "t-div3",
+            "op": "div",
+            "n": 3
+          },
+          {
+            "id": "t-add4",
+            "op": "add",
+            "n": 4
+          },
+          {
+            "id": "t-mul3",
+            "op": "mul",
+            "n": 3
+          },
+          {
+            "id": "t-div2",
+            "op": "div",
+            "n": 2
+          }
+        ],
+        "answer": [
+          "t-mul2",
+          "t-sub4",
+          "t-div3"
+        ],
+        "sampleInput": 4,
+        "successFeedback": "Three steps, fully reversed: the ÷ 2 happened last so × 2 goes first, then − 4, then ÷ 3. The check below runs 4 all the way there and back.",
+        "forwardOrderFeedback": "All three undo-steps are right — but they follow the machine's own order. Undo runs backwards: the ÷ 2 was the machine's LAST move, so × 2 must be your FIRST.",
+        "unflippedFeedback": "The order is right, but at least one card was copied instead of flipped. Every card must cancel its partner: ÷ 2 is cancelled by × 2, + 4 by − 4, × 3 by ÷ 3.",
+        "missFeedback": "Work from the machine's right end to its left: ÷ 2 flips to × 2, + 4 flips to − 4, × 3 flips to ÷ 3."
+      },
+      "explanationVariants": [
+        "Reverse and flip all three layers: the ÷ 2 (last on) becomes × 2 and goes first, then − 4, then ÷ 3.",
+        "The last thing the machine did (÷ 2) is the first thing the undo repairs (× 2); the first thing it did (× 3) is the last thing the undo removes (÷ 3)."
+      ],
+      "hints": [
+        "Which step did the machine perform LAST? That's the only one the undo may touch first.",
+        "Write the machine's chain, reverse the list, then flip each entry: ÷ becomes ×, + becomes −.",
+        "The track reads: × 2, − 4, ÷ 3. Place them in exactly that order and run the sample value to confirm it returns."
+      ],
+      "variant": {
+        "gen": "inverse-pipeline",
+        "form": "three"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Solving an equation is building its undo machine.",
+      "takeaways": [
+        "Undo the LAST step first — reverse the whole order, then flip every operation.",
+        "Dividing before subtracting splits the added number too: (51 − 9) ÷ 7, never 51 ÷ 7 − 9."
+      ],
+      "teaser": "Next: machines with parentheses — where distributing first opens the way in."
+    }
+  ]
+}

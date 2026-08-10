@@ -1,0 +1,289 @@
+{
+  "id": "tg-02-03",
+  "slug": "reflections-and-equivalents",
+  "title": "Reflections & Equivalent Rules",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch2-cosine-equivalence",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A HALF-period slide flips a wave upside down: **sin(x + π) = −sin x** and **cos(x + π) = −cos x**. So reflection (the outside minus, recall) and a π-slide are the SAME motion for sinusoids — one graph can wear rules that look wildly different.",
+      "figure": "tg-half-period-flip"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "See the flip.",
+      "predict": {
+        "prompt": "Slide x forward by HALF a period — add π. What happens to the point's two coordinates, cos and sin?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both flip sign — the point jumps to the far side of the circle"
+          },
+          {
+            "id": "sine",
+            "label": "Only sine flips — cosine is even, it never changes"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — a slide moves the wave, not its values"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "Adding π sends the point to its antipode, straight through the center — so BOTH coordinates flip: sin(x + π) = −sin x and cos(x + π) = −cos x. (“Only sine flips” is a different identity: that one belongs to −x, not to x + π.)"
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "The tracked point sits at x + 180°. Pick the formula that computes it from cos x and sin x without ever letting go, then land x on 90° — where the flip becomes sin(3π/2).",
+        "targetAngle": 90,
+        "angleStart": 30,
+        "angleStep": 5,
+        "ghost": "sum",
+        "ghostAngle": 180,
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "(−cos x, −sin x) — flip BOTH coordinates"
+          },
+          {
+            "id": "linearity",
+            "label": "(cos x + cos 180°, sin x + sin 180°) — add the half-turn to each coordinate",
+            "feedback": "Watch the readout: this point slides to (cos x − 1, sin x) and leaves the circle — coordinates do not add under a rotation. The half-turn acts on the ANGLE, and through the angle it flips both coordinates at once."
+          }
+        ],
+        "successFeedback": "Glued at every x — the point at x + 180° is the antipode, so both coordinates flip together. At x = 90° that reads sin(3π/2) = −sin(π/2) = −1, the very number the next step asks you to write down. One wave, two names, half a period apart.",
+        "lowFeedback": "Formula's right — keep dragging to 90°, where the flip becomes the value the lesson opened with.",
+        "highFeedback": "Past 90° — ease back to the angle whose half-period partner is 3π/2."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Now write the flip down.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate sin(π/2 + π) = sin(3π/2). It should equal −sin(π/2). What is it?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "sin(3π/2) = −1 (unit circle bottom): the π-slide turned the peak value 1 into −1."
+          },
+          {
+            "value": 0,
+            "feedback": "3π/2 is the circle's BOTTOM, not a midline crossing: sin(3π/2) = −1."
+          }
+        ],
+        "fallbackFeedback": "sin(3π/2) = −1 = −sin(π/2): the half-period flip."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Match the reflected rule.",
+      "conceptTag": "tg-equiv-rules",
+      "explanationVariants": [
+        "−sin x equals sin(x + π): the outside minus IS a half-period slide.",
+        "Both rules start at the midline heading DOWN; test x = π/2: both give −1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which rule draws the SAME graph as y = −sin x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = sin(x + π)",
+            "correct": true,
+            "feedback": "Right — a π-slide flips sine: sin(x + π) = −sin x at every x."
+          },
+          {
+            "id": "o2",
+            "label": "y = sin(x + π/2)",
+            "feedback": "That's COSINE (quarter-period slide), which starts at a PEAK — but −sin starts at the midline going down."
+          },
+          {
+            "id": "o3",
+            "label": "y = sin(−x + π/2)",
+            "feedback": "sin(π/2 − x) = cos x — the peak-starter again. −sin x needs the half-period slide: sin(x + π)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-equiv-rules__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now with cosine.",
+      "conceptTag": "tg-equiv-rules",
+      "explanationVariants": [
+        "−cos x = cos(x − π) (or x + π — half a period either way): trough at 0 instead of a peak.",
+        "Test x = 0: cos(−π) = −1 = −cos 0 ✓."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "y = −cos x is the same graph as:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = cos(x − π)",
+            "correct": true,
+            "feedback": "Right — slide cosine half a period and its peak becomes a trough at 0: exactly −cos x."
+          },
+          {
+            "id": "o2",
+            "label": "y = cos(x − π/2)",
+            "feedback": "A QUARTER slide gives sin x (midline start), not the trough-start of −cos x."
+          },
+          {
+            "id": "o3",
+            "label": "y = cos(x) − π",
+            "feedback": "Subtracting π OUTSIDE drops the midline by π — a vertical move, no flip. The flip needs the inside π-slide."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-equiv-rules__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Equivalence is testable: two rules name the same wave iff they agree on the **landmarks** — same midline, amplitude, period, and same value-and-direction at one x. Checking a single well-chosen point (plus the dials) beats expanding identities.",
+      "figure": "tg-equivalence-test"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Audit a claimed equivalence.",
+      "conceptTag": "tg-equiv-rules",
+      "explanationVariants": [
+        "At x = 0: 2 sin(x + π/2) gives 2·1 = 2, but 2 cos(x + π) gives 2·(−1) = −2 — opposite postures, NOT the same wave.",
+        "2 sin(x + π/2) = 2 cos x (peak at 0); 2 cos(x + π) = −2 cos x (trough at 0): negatives of each other."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student claims 2 sin(x + π/2) and 2 cos(x + π) draw the same graph. Check x = 0:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They give 2 and −2 — different graphs (they're reflections)",
+            "correct": true,
+            "feedback": "Right — one is 2 cos x, the other −2 cos x: one test point exposes the flip."
+          },
+          {
+            "id": "o2",
+            "label": "Both give 2 — same graph",
+            "feedback": "cos(0 + π) = cos π = −1, so the second rule gives −2 at x = 0."
+          },
+          {
+            "id": "o3",
+            "label": "Both give 0 — same graph",
+            "feedback": "Neither is 0 at x = 0: sin(π/2) = 1 and cos(π) = −1, giving 2 and −2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-equiv-rules__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the third alias.",
+      "conceptTag": "tg-equiv-rules",
+      "explanationVariants": [
+        "cos(x − π/2) = sin x, and sin(x + 2π) = sin x (full period changes nothing). But sin(x − π) = −sin x — the flipped wave, the odd one out.",
+        "Test x = π/2: sin gives 1; cos(π/2 − π/2) = cos 0 = 1 ✓; sin(π/2 + 2π) = 1 ✓; sin(π/2 − π) = sin(−π/2) = −1 ✗."
+      ],
+      "hints": [
+        "Test each rule at one convenient x, like π/2, against sin(π/2) = 1.",
+        "Full-period slides (±2π) never change a wave.",
+        "sin(x − π) is a HALF-period slide — what does that do?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which rule is NOT equivalent to y = sin x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = sin(x − π)",
+            "correct": true,
+            "feedback": "Right — half-period slide = flip: sin(x − π) = −sin x. At π/2 it gives −1, not 1."
+          },
+          {
+            "id": "o2",
+            "label": "y = cos(x − π/2)",
+            "feedback": "That IS sine (the twin identity): at π/2 it gives cos 0 = 1 ✓."
+          },
+          {
+            "id": "o3",
+            "label": "y = sin(x + 2π)",
+            "feedback": "A full-period slide is invisible — identical wave: at π/2 it gives 1 ✓."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-equiv-rules__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Many rules, one wave.",
+      "takeaways": [
+        "π-slide = reflection: sin(x + π) = −sin x, cos(x ± π) = −cos x.",
+        "Full-period slides (±2π) change nothing.",
+        "Audit equivalences with the dials plus one test point."
+      ],
+      "teaser": "Next chapter: the wave that ISN'T a wave — tangent and its asymptote fence."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-equiv-rules",
+      "concept": {
+        "id": "rem-tg0203-c",
+        "kind": "concept",
+        "body": "To test whether two rules draw the same graph: compare midline, amplitude, period — then evaluate both at one x. Any disagreement ends it."
+      },
+      "check": {
+        "id": "rem-tg0203-k",
+        "kind": "check",
+        "body": "One-point audit.",
+        "conceptTag": "tg-equiv-rules",
+        "explanationVariants": [
+          "cos(0 + π) = −1: the rule cos(x + π) starts at a TROUGH, value −1.",
+          "cos π = −1 — the flipped start."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is cos(x + π) at x = 0?",
+          "answer": -1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "cos(0) = 1, but the argument is 0 + π: cos π = −1 — the upside-down start."
+            },
+            {
+              "value": 0,
+              "feedback": "π is the circle's LEFT point (−1, 0): cosine reads −1 there."
+            }
+          ],
+          "fallbackFeedback": "cos π = −1."
+        }
+      }
+    }
+  ]
+}

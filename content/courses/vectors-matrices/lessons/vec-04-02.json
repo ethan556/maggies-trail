@@ -1,0 +1,346 @@
+{
+  "id": "vec-04-02",
+  "slug": "determinant-and-inverse",
+  "title": "Determinant & Inverse",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch4-matrices",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **determinant** of [[a, b], [c, d]] is **ad − bc** — a single number measuring how the matrix scales area (recall the unit square). det[[1, 2], [3, 4]] = 1·4 − 2·3 = −2. Its sign tells orientation; its size tells the area factor; **zero means the matrix collapses the plane** (no inverse).",
+      "figure": "vec-determinant"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute a determinant.",
+      "widget": {
+        "type": "matrixTransform",
+        "prompt": "Build the map that sends î to (2, 1) and ĵ to (1, −1). Step the four entries and watch the determinant readout as the unit square changes.",
+        "ta": 2,
+        "tb": 1,
+        "tc": 1,
+        "td": -1,
+        "sa": 1,
+        "sb": 0,
+        "sc": 0,
+        "sd": 1,
+        "targetName": "a map that triples area and turns the square inside out",
+        "successFeedback": "det = (2)(−1) − (1)(1) = −3. Both halves of the number are on screen: the SIZE 3 is the area factor — the unit square's image covers three times the ground it started on — and the MINUS SIGN is orientation, the square flipped over as î and ĵ swapped sides. You started at the identity, det = 1: area unchanged, orientation kept.",
+        "swappedFeedback": "Those are the right four numbers in the wrong two places — you have entered î's image in the second column and ĵ's in the first. Columns are destinations: column 1 is where î lands, column 2 is where ĵ lands. Swapped, this map has det = +3 — same area factor, orientation kept rather than flipped.",
+        "signFeedback": "The diagonal is right but both off-diagonal signs are flipped. Watch the basis arrows: it is the off-diagonal entries that decide how far each unit vector leans into the OTHER axis, and reversing them leans it the opposite way.",
+        "fallbackFeedback": "Read the columns as destinations. Column 1 must read (2, 1) — where î lands — and column 2 must read (1, −1), where ĵ lands. The determinant readout updates as you step each entry."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Detect a singular matrix.",
+      "conceptTag": "vec-determinant",
+      "explanationVariants": [
+        "det[[1, 2], [2, 4]] = 1·4 − 2·2 = 0 — a zero determinant means the matrix is singular (no inverse).",
+        "The rows are proportional (⟨2,4⟩ = 2⟨1,2⟩), so the determinant vanishes."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is the determinant of [[1, 2], [2, 4]]?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "top-left",
+            "value": 1
+          },
+          {
+            "id": "b",
+            "label": "top-right",
+            "value": 2
+          },
+          {
+            "id": "c",
+            "label": "bottom-left",
+            "value": 2
+          },
+          {
+            "id": "d",
+            "label": "bottom-right",
+            "value": 4
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "a"
+            },
+            "right": {
+              "op": "const",
+              "id": "d"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "b"
+            },
+            "right": {
+              "op": "const",
+              "id": "c"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 1·4 + 2·2 adds. ad − bc = 4 − 4 = 0 — this matrix is singular."
+          },
+          {
+            "value": 4,
+            "feedback": "Subtract the cross-products: 1·4 − 2·2 = 0."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "1·4 − 2·2 = 0 — singular, no inverse.",
+        "successFeedback": "1·4 − 2·2 = 0 — singular, no inverse."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-determinant__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When det ≠ 0, the **inverse** exists:\n\n[[a, b], [c, d]]⁻¹ = (1/det)·[[d, −b], [−c, a]].\n\nSwap the diagonal, negate the off-diagonal, divide by the determinant. The inverse UNDOES the matrix: M⁻¹(M·v) = v.",
+      "figure": "vec-inverse"
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Build an inverse entry.",
+      "conceptTag": "vec-determinant",
+      "explanationVariants": [
+        "For [[2, 0], [0, 3]] (det 6), the inverse is (1/6)[[3, 0], [0, 2]] = [[1/2, 0], [0, 1/3]] — top-left 1/2.",
+        "Swap diagonal to [[3,0],[0,2]], divide by 6: top-left 3/6 = 1/2."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "The inverse of [[2, 0], [0, 3]] has what top-left entry? (As a decimal.)",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "d",
+            "label": "bottom-right",
+            "value": 3
+          },
+          {
+            "id": "det",
+            "label": "the determinant",
+            "value": 6
+          }
+        ],
+        "approxFormula": {
+          "op": "divide",
+          "left": {
+            "op": "const",
+            "id": "d"
+          },
+          "right": {
+            "op": "const",
+            "id": "det"
+          }
+        },
+        "approxRound": 3,
+        "answerMode": "numeric",
+        "tolerance": 0.005,
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the ORIGINAL top-left. The inverse uses d/det = 3/6 = 1/2 there."
+          },
+          {
+            "value": 0.33,
+            "feedback": "0.33 = 1/3 is the BOTTOM-right of the inverse (a/det = 2/6). Top-left is 3/6 = 0.5."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Inverse top-left = d/det = 3/6 = 1/2.",
+        "successFeedback": "Inverse top-left = d/det = 3/6 = 1/2."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-determinant__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "When there's no inverse.",
+      "conceptTag": "vec-determinant",
+      "explanationVariants": [
+        "det[[3, 6], [1, 2]] = 6 − 6 = 0, so the inverse does NOT exist — you can't divide by zero.",
+        "A zero determinant blocks the (1/det) step: no inverse."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Does [[3, 6], [1, 2]] have an inverse?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — its determinant is 0",
+            "correct": true,
+            "feedback": "Right — det = 6 − 6 = 0, and 1/det is undefined: no inverse."
+          },
+          {
+            "id": "o2",
+            "label": "Yes, with determinant 12",
+            "feedback": "det = 3·2 − 6·1 = 0, not 12. A zero determinant means NO inverse."
+          },
+          {
+            "id": "o3",
+            "label": "Yes, every matrix has one",
+            "feedback": "Singular matrices (det = 0) have no inverse. Here det = 0."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-determinant__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "An inverse entry, full matrix.",
+      "conceptTag": "vec-determinant",
+      "explanationVariants": [
+        "[[1, 2], [3, 4]] has det −2. Inverse = (1/−2)[[4, −2], [−3, 1]] = [[−2, 1], [1.5, −0.5]]; the top-left is 4/(−2) = −2.",
+        "Swap diagonal (4 to top-left), divide by −2: 4/−2 = −2."
+      ],
+      "hints": [
+        "det = 1·4 − 2·3 = −2.",
+        "Inverse top-left = d/det = 4/(−2).",
+        "= −2."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "The inverse of [[1, 2], [3, 4]] has what top-left entry?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "d",
+            "label": "bottom-right",
+            "value": 4
+          },
+          {
+            "id": "det",
+            "label": "the determinant",
+            "value": -2
+          }
+        ],
+        "approxFormula": {
+          "op": "divide",
+          "left": {
+            "op": "const",
+            "id": "d"
+          },
+          "right": {
+            "op": "const",
+            "id": "det"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "Sign matters: d/det = 4/(−2) = −2, negative."
+          },
+          {
+            "value": -0.5,
+            "feedback": "−0.5 is the BOTTOM-right (a/det = 1/−2). Top-left is 4/(−2) = −2."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Top-left = d/det = 4/(−2) = −2.",
+        "successFeedback": "Top-left = d/det = 4/(−2) = −2."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-determinant__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One number, big consequences.",
+      "takeaways": [
+        "Determinant = ad − bc; it scales area and flags invertibility.",
+        "det = 0 → singular, no inverse (the plane collapses).",
+        "Inverse = (1/det)[[d, −b], [−c, a]]."
+      ],
+      "teaser": "Next: using the inverse to solve a system of equations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-determinant",
+      "concept": {
+        "id": "rem-vec0402-c",
+        "kind": "concept",
+        "body": "Determinant of [[a,b],[c,d]] = ad − bc. If it's 0, the matrix is singular (no inverse). Otherwise inverse = (1/det)[[d,−b],[−c,a]]."
+      },
+      "check": {
+        "id": "rem-vec0402-k",
+        "kind": "check",
+        "body": "One determinant.",
+        "conceptTag": "vec-determinant",
+        "explanationVariants": [
+          "det[[1, 2], [3, 4]] = 1·4 − 2·3 = 4 − 6 = −2.",
+          "Cross-multiply and subtract: −2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute the determinant of [[1, 2], [3, 4]].",
+          "answer": -2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "10 = 4 + 6 adds. ad − bc = 4 − 6 = −2."
+            },
+            {
+              "value": 2,
+              "feedback": "Watch the sign: 4 − 6 = −2, not +2."
+            }
+          ],
+          "fallbackFeedback": "1·4 − 2·3 = −2."
+        }
+      }
+    }
+  ]
+}

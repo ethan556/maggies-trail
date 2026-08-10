@@ -1,0 +1,328 @@
+{
+  "id": "ft-01-01",
+  "slug": "meet-the-parent-functions",
+  "title": "Meet the Parent Functions",
+  "courseId": "function-transformations",
+  "chapterId": "ch1-families-domain-range",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every function family has a simplest member — its **parent function**. Algebra 2's five headliners: the line **y = x**, the parabola **y = x²**, the V of **y = |x|**, the half-curve **y = √x**, and the S-curve **y = x³**. Everything later is one of these shapes moved, flipped, or stretched.",
+      "figure": "parent-functions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each rule to the shape of its graph.",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each parent function to its graph's shape.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "y = x²"
+          },
+          {
+            "id": "l2",
+            "label": "y = |x|"
+          },
+          {
+            "id": "l3",
+            "label": "y = √x"
+          },
+          {
+            "id": "l4",
+            "label": "y = x³"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "U-shaped curve (parabola)"
+          },
+          {
+            "id": "r2",
+            "label": "V with a sharp corner"
+          },
+          {
+            "id": "r3",
+            "label": "half-curve starting at a point"
+          },
+          {
+            "id": "r4",
+            "label": "S-curve through the origin"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r2",
+          "l3": "r3",
+          "l4": "r4"
+        },
+        "pairErrors": [
+          {
+            "left": "l1",
+            "right": "r2",
+            "feedback": "x² is smoothly curved everywhere — the sharp corner belongs to |x|, whose two straight arms meet at a point."
+          },
+          {
+            "left": "l2",
+            "right": "r1",
+            "feedback": "|x| is built from two straight rays, so it has a corner at 0 — the smooth U is x²."
+          },
+          {
+            "left": "l4",
+            "right": "r3",
+            "feedback": "x³ takes every x, negative included — the half-curve that starts at a point is √x, which needs x ≥ 0."
+          }
+        ],
+        "missFeedback": "Think about corners vs. smooth curves, and which rule refuses negative inputs.",
+        "successFeedback": "All four matched — you can now spot each family on sight."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two look-alikes: **x²** and **|x|** both open upward and never dip below 0 — but |x| has a **sharp corner** and straight arms, while x² is **smoothly curved**. And **√x** is the only parent that refuses negative inputs, so its graph is just half a curve.",
+      "figure": "ft-parent-square-abs"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Spot the corner.",
+      "conceptTag": "ft-parents",
+      "explanationVariants": [
+        "Only y = |x| is built from two straight rays meeting at the origin — that meeting point is the sharp corner.",
+        "Absolute value switches rules at 0 (−x on the left, x on the right), and the switch shows up as a corner."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which parent function's graph has a sharp corner at the origin?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = |x|",
+            "correct": true,
+            "feedback": "Right — two straight rays meet at (0, 0), making a corner."
+          },
+          {
+            "id": "o2",
+            "label": "y = x²",
+            "correct": false,
+            "feedback": "The parabola is smoothly curved at its vertex — no corner. The corner belongs to |x|, whose straight arms meet at a point."
+          },
+          {
+            "id": "o3",
+            "label": "y = √x",
+            "correct": false,
+            "feedback": "√x starts at (0, 0) but curves smoothly away — it ends at a point rather than bending through one. The corner is |x|'s."
+          },
+          {
+            "id": "o4",
+            "label": "y = x³",
+            "correct": false,
+            "feedback": "The cubic flattens through the origin smoothly — an S-curve has no corner. |x| is the one with straight arms meeting sharply."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "parent-functions"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Evaluate a parent function.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "cubic",
+        "mode": "point",
+        "targetX": 2,
+        "start": 0,
+        "prompt": "Trace y = x³ to x = 2 and read the height.",
+        "successFeedback": "y = 8, since 2 × 2 × 2 = 8. A cube is three copies multiplied, not three copies added — the trace shows the curve climbing far faster than a straight line as x grows, which is the visual signature of that difference.",
+        "lowFeedback": "Still to the left of x = 2.",
+        "highFeedback": "Past x = 2 now."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which parent is picky about inputs?",
+      "conceptTag": "ft-parents",
+      "explanationVariants": [
+        "You can't take the square root of a negative (in the real numbers), so y = √x only accepts x ≥ 0.",
+        "√x asks 'what squared gives x?' — no real number squares to a negative, so negative x is refused."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which parent function is only defined for x ≥ 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = √x",
+            "correct": true,
+            "feedback": "Right — square roots of negatives aren't real, so √x accepts only x ≥ 0."
+          },
+          {
+            "id": "o2",
+            "label": "y = x²",
+            "correct": false,
+            "feedback": "You can square ANY number — (−3)² = 9 works fine. It's the square ROOT that refuses negatives."
+          },
+          {
+            "id": "o3",
+            "label": "y = x³",
+            "correct": false,
+            "feedback": "Cubing a negative is fine: (−2)³ = −8. Every real x works for the cubic."
+          },
+          {
+            "id": "o4",
+            "label": "y = |x|",
+            "correct": false,
+            "feedback": "Absolute value happily takes negatives — |−5| = 5. It's √x that refuses them."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "parent-functions"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate with a negative input.",
+      "conceptTag": "ft-parents",
+      "explanationVariants": [
+        "|−5| asks for the distance from −5 to 0, which is 5.",
+        "Absolute value strips the sign: |−5| = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the parent y = |x|, what is y when x = −5?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "Absolute value strips the sign — it measures distance from 0, and distance is never negative: |−5| = 5."
+          },
+          {
+            "value": 25,
+            "feedback": "That's (−5)² — squaring. Absolute value doesn't multiply; it just drops the sign: |−5| = 5."
+          }
+        ],
+        "fallbackFeedback": "|−5| is the distance from −5 to 0 on the number line: 5."
+      },
+      "variant": {
+        "gen": "parent-functions",
+        "form": "evalParent"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Identify a parent from its description.",
+      "conceptTag": "ft-parents",
+      "explanationVariants": [
+        "Falling on the left, rising on the right, smooth through the origin with no corner — that S shape is the cubic y = x³.",
+        "y = x keeps a constant slope (straight line); x² and |x| both open UP on both sides. Only x³ falls left and rises right through a smooth S."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A graph is S-shaped: it falls on the far left, rises on the far right, passes smoothly through the origin, and has no corner. Which parent is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = x³",
+            "correct": true,
+            "feedback": "Right — the cubic's ends go opposite directions, and it flattens smoothly through (0, 0)."
+          },
+          {
+            "id": "o2",
+            "label": "y = x",
+            "correct": false,
+            "feedback": "The line also falls left and rises right — but it's perfectly straight, not S-shaped with a flattening bend at the origin."
+          },
+          {
+            "id": "o3",
+            "label": "y = x²",
+            "correct": false,
+            "feedback": "The parabola rises on BOTH far ends — it never falls on the left the way this graph does."
+          },
+          {
+            "id": "o4",
+            "label": "y = |x|",
+            "correct": false,
+            "feedback": "The V rises on both sides and has a sharp corner — this graph is smooth and falls on the left."
+          }
+        ]
+      },
+      "hints": [
+        "Check the far ends first: this graph falls on the left and rises on the right.",
+        "x² and |x| rise on BOTH ends — rule them out. That leaves the line and the cubic.",
+        "A line is straight everywhere; an S shape that flattens through the origin is the cubic."
+      ],
+      "variant": {
+        "gen": "parent-functions"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Five parents, five shapes — the raw material for every transformation.",
+      "takeaways": [
+        "The parents: y = x, y = x², y = |x|, y = √x, y = x³.",
+        "|x| has a sharp corner; x² is the smooth look-alike; √x only takes x ≥ 0.",
+        "Every later function is a parent moved, flipped, or stretched."
+      ],
+      "teaser": "Next: which inputs a function actually accepts — the domain."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-parents",
+      "concept": {
+        "id": "rem-ft0101-c",
+        "kind": "concept",
+        "body": "Match shapes to rules: straight line = x, smooth U = x², sharp V = |x|, half-curve from a point = √x, S-curve = x³."
+      },
+      "check": {
+        "id": "rem-ft0101-k",
+        "kind": "check",
+        "body": "One more shape ID.",
+        "conceptTag": "ft-parents",
+        "explanationVariants": [
+          "The V with a sharp corner at the origin is y = |x| — two straight rays meeting at a point.",
+          "x² would be a smooth U; the CORNER gives away absolute value."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A graph is a V: two straight rays meeting in a sharp point at the origin. Which parent is it?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "y = |x|",
+              "correct": true,
+              "feedback": "Right — straight arms and a sharp corner are absolute value's signature."
+            },
+            {
+              "id": "o2",
+              "label": "y = x²",
+              "correct": false,
+              "feedback": "The parabola curves smoothly — no straight arms, no corner. The V is |x|."
+            },
+            {
+              "id": "o3",
+              "label": "y = √x",
+              "correct": false,
+              "feedback": "√x is only HALF a curve (x ≥ 0 side) — a full V on both sides is |x|."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

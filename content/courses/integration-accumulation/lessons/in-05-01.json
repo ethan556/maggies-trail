@@ -1,0 +1,251 @@
+{
+ "id": "in-05-01",
+ "slug": "undoing-the-chain-rule",
+ "title": "Undoing the Chain Rule",
+ "courseId": "integration-accumulation",
+ "chapterId": "ch5-u-substitution",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The chain rule left a fingerprint: **the derivative of the inside, multiplied on the outside.**\n\nSo when an integrand contains an inside function AND its derivative, you are looking at the output of a chain rule — and you can run it backwards.\n\nCall the inside **u**. Then du = u′ dx, and the whole integral collapses into ∫ (something in u) du.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Spot the fingerprint.",
+   "conceptTag": "in-usub",
+   "explanationVariants": [
+    "In ∫ 2x(x² + 1)³ dx, the inside is x² + 1 and its derivative is 2x — which is sitting right there as a factor. That is the fingerprint.",
+    "Without the 2x you could not substitute: the du would have nothing to come from."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In ∫ 2x(x² + 1)³ dx, what should u be?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "u = x² + 1 — the inside of the bracket, whose derivative 2x is right there as a factor.",
+      "correct": true,
+      "feedback": "Right. The 2x is not decoration; it is the du you need, and its presence is what makes the substitution legal."
+     },
+     {
+      "id": "o2",
+      "label": "u = 2x",
+      "correct": false,
+      "feedback": "2x is the DERIVATIVE of the inside, not the inside. Substituting it leaves the cubed bracket with nothing to become."
+     },
+     {
+      "id": "o3",
+      "label": "u = (x² + 1)³",
+      "correct": false,
+      "feedback": "Take the inside of the bracket, not the whole power. Then the cube stays behind as u³, which is exactly what you want to integrate."
+     },
+     {
+      "id": "o4",
+      "label": "u = x",
+      "correct": false,
+      "feedback": "That changes nothing — du = dx and you are back where you started. u must be the INSIDE function."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The chain rule, forwards, so you can see what you are undoing.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Where did 2x(x² + 1)³ come from?",
+    "panels": [
+     {
+      "title": "Differentiate the answer",
+      "body": "Take F(x) = (x² + 1)⁴/4 and differentiate it. The chain rule gives (4(x² + 1)³/4) · 2x = 2x(x² + 1)³ — precisely the integrand."
+     },
+     {
+      "title": "So the integrand is a fingerprint",
+      "body": "That stray 2x is the inner derivative the chain rule charged you. It is not part of the 'real' function at all — it is the receipt."
+     },
+     {
+      "title": "Substitution just reads the receipt",
+      "body": "Set u = x² + 1. Then du = 2x dx, and 2x(x² + 1)³ dx becomes u³ du, whose integral is u⁴/4 — that is, (x² + 1)⁴/4. You have run the chain rule backwards."
+     }
+    ],
+    "continueFeedback": "Keep going — the 2x is a receipt, not a factor.",
+    "successFeedback": "The inner derivative is the chain rule's receipt. Substitution reads it and undoes the transaction."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Do one.",
+   "conceptTag": "in-usub",
+   "explanationVariants": [
+    "u = x² + 1, du = 2x dx. The integral becomes ∫₁² u³ du = u⁴/4, so (16 − 1)/4 = 15/4 = 3.75.",
+    "Check by differentiating (x² + 1)⁴/4: the chain rule gives back 2x(x² + 1)³ ✓."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀¹ 2x(x² + 1)³ dx.",
+    "answer": 3.75,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "That is (x² + 1)⁴/4 at x = 1, which is 16/4 = 4 — you forgot to subtract the value at x = 0, which is 1/4."
+     },
+     {
+      "value": 16,
+      "feedback": "That is (x² + 1)⁴ at x = 1 without the division by 4."
+     },
+     {
+      "value": 7.5,
+      "feedback": "That looks like the answer doubled — a stray 2 has survived. The 2x was consumed by the du."
+     }
+    ],
+    "fallbackFeedback": "u = x² + 1 → ∫ u³ du = u⁴/4 → (16 − 1)/4 = 3.75."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "If the inner derivative is present but with the **wrong constant**, fix it with a constant — never with an x.\n\n∫ x(x² + 1)³ dx has an x where a 2x is wanted. Write du = 2x dx, so x dx = du/2, and the ½ comes out front.\n\nConstants may be moved across the integral sign. **Variables may not.** That single rule keeps substitution honest.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The missing constant.",
+   "conceptTag": "in-usub",
+   "explanationVariants": [
+    "u = x² + 1, du = 2x dx, so x dx = du/2. The integral becomes (1/2)∫₁² u³ du = (1/2)(u⁴/4) = (16 − 1)/8 = 15/8 = 1.875.",
+    "It is exactly half the previous answer, because there is exactly half as much x out front."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀¹ x(x² + 1)³ dx.",
+    "answer": 1.875,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 3.75,
+      "feedback": "That is the answer with 2x out front. Here there is only ONE x, so the whole thing is halved: 1.875."
+     },
+     {
+      "value": 0.9375,
+      "feedback": "That is a quarter of 3.75 — you may have halved twice. x dx = du/2, so one factor of ½ only."
+     },
+     {
+      "value": 4,
+      "feedback": "That forgot both the ½ and the lower limit. The answer is (1/2)(16 − 1)/4 = 15/8."
+     }
+    ],
+    "fallbackFeedback": "x dx = du/2 → (1/2)∫ u³ du = (16 − 1)/8 = 1.875."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A logarithm falls out.",
+   "conceptTag": "in-usub",
+   "hints": [
+    "The bottom is x² + 1 and the top is x — which is HALF its derivative. That is the fingerprint.",
+    "u = x² + 1, du = 2x dx, so x dx = du/2. The integral becomes (1/2)∫ du/u.",
+    "∫ du/u = ln|u|, so the answer is (1/2)[ln 2 − ln 1] = (1/2)ln 2."
+   ],
+   "explanationVariants": [
+    "u = x² + 1 turns it into (1/2)∫₁² du/u = (1/2)ln|u| = (1/2)(ln 2 − 0) ≈ 0.347.",
+    "The n = −1 case of the power rule shows up as soon as u appears in a denominator — which is why ln|x| had to be in the library."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀¹ x/(x² + 1) dx, as a decimal to three places.",
+    "answer": 0.347,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 0.693,
+      "feedback": "That is ln 2 — you forgot the ½ that came from x dx = du/2."
+     },
+     {
+      "value": 0.5,
+      "feedback": "That looks like the ½ on its own. It must multiply ln 2 ≈ 0.693, giving 0.347."
+     },
+     {
+      "value": 1,
+      "feedback": "That would be ∫₁^e du/u. Here u runs only from 1 to 2, and there is a ½ out front."
+     }
+    ],
+    "fallbackFeedback": "u = x² + 1 → (1/2)ln|u| from 1 to 2 = (1/2)ln 2 ≈ 0.347."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Read the receipt, undo the transaction.",
+   "takeaways": [
+    "If the integrand contains an inside function AND (a constant times) its derivative, substitute u = the inside.",
+    "du = u′ dx. A missing CONSTANT can be fixed out front; a missing VARIABLE cannot.",
+    "Always check by differentiating your answer — the chain rule should hand back the integrand."
+   ],
+   "teaser": "Next: what happens to the limits when you change variable."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "in-usub",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Look for an **inside function** and its **derivative**, sitting together. Name the inside u, write du = u′ dx, and swap everything over. If a piece of x is left over that is not a constant, the substitution was the wrong one.",
+    "figure": "dr-chain-gears"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Pick the inside.",
+    "conceptTag": "in-usub",
+    "explanationVariants": [
+     "In ∫ 3x²(x³ + 5)⁴ dx the inside is x³ + 5, whose derivative 3x² is right there.",
+     "The inside is what sits inside the bracket — never the bracket itself."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "For ∫ 3x²(x³ + 5)⁴ dx, what is u?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "u = x³ + 5",
+       "correct": true,
+       "feedback": "Right — and du = 3x² dx is sitting there waiting for you."
+      },
+      {
+       "id": "o2",
+       "label": "u = 3x²",
+       "correct": false,
+       "feedback": "That is the DERIVATIVE of the inside. Substituting it leaves the fourth power stranded."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

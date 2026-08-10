@@ -1,0 +1,382 @@
+{
+  "id": "as100-05-01",
+  "slug": "odd-and-even",
+  "title": "Odd & Even",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch5-odd-even",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "pair-up",
+      "body": "Line a number up in **pairs**. If none is left over, it's **even** (like 8). If one is left alone, it's **odd** (like 7).",
+      "narration": "Line a number up in pairs. If none is left over, it's even, like eight. If one is left alone, it's odd, like seven."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort these into odd and even.",
+      "conceptTag": "odd-even",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Pair each number up — is it odd or even?",
+        "left": [
+          {
+            "id": "n6",
+            "label": "6"
+          },
+          {
+            "id": "n9",
+            "label": "9"
+          },
+          {
+            "id": "n10",
+            "label": "10"
+          }
+        ],
+        "right": [
+          {
+            "id": "ev1",
+            "label": "even (6 = 3 pairs)"
+          },
+          {
+            "id": "od1",
+            "label": "odd (9 = 4 pairs + 1)"
+          },
+          {
+            "id": "ev2",
+            "label": "even (10 = 5 pairs)"
+          }
+        ],
+        "pairs": {
+          "n6": "ev1",
+          "n9": "od1",
+          "n10": "ev2"
+        },
+        "pairErrors": [
+          {
+            "left": "n9",
+            "right": "ev1",
+            "feedback": "9 makes 4 pairs with ONE left over — that leftover means odd."
+          },
+          {
+            "left": "n6",
+            "right": "od1",
+            "feedback": "6 makes 3 pairs with none left — that's even."
+          }
+        ],
+        "missFeedback": "Pair them: 6 and 10 leave none (even); 9 leaves one (odd).",
+        "successFeedback": "Paired and sorted — leftovers make odd!"
+      },
+      "variant": {
+        "gen": "match-parity"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Odd or even?",
+      "conceptTag": "odd-even",
+      "explanationVariants": [
+        "12 makes 6 pairs with none left over, so 12 is even.",
+        "12 splits into two equal groups of 6 — that's even."
+      ],
+      "widget": {
+        "type": "oddEvenPairs",
+        "prompt": "Is 12 odd or even?",
+        "n": 12,
+        "mode": "pair",
+        "answer": "even",
+        "oddFeedback": "12 pairs up completely (6 pairs, 0 left). No leftover means even.",
+        "successFeedback": "Yes — 12 makes 6 pairs with none left over."
+      },
+      "hints": [
+        "Pair 12 up.",
+        "6 pairs, none left.",
+        "Even."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "OddEvenOddEvenPairs"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents odd even.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for odd even must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines odd even."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:odd-even",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Shortcut: check the **last digit**. Ends in 0, 2, 4, 6, 8 → even. Ends in 1, 3, 5, 7, 9 → odd.",
+      "narration": "Shortcut: look at the last digit. Ends in zero, two, four, six, or eight means even. Ends in one, three, five, seven, or nine means odd. Works for any size number.",
+      "figure": "as100-odd-even"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Use the last-digit rule.",
+      "conceptTag": "odd-even",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Check the last digit of each big number.",
+        "left": [
+          {
+            "id": "b1",
+            "label": "34"
+          },
+          {
+            "id": "b2",
+            "label": "57"
+          },
+          {
+            "id": "b3",
+            "label": "80"
+          }
+        ],
+        "right": [
+          {
+            "id": "r-ev1",
+            "label": "even (ends in 4)"
+          },
+          {
+            "id": "r-od1",
+            "label": "odd (ends in 7)"
+          },
+          {
+            "id": "r-ev2",
+            "label": "even (ends in 0)"
+          }
+        ],
+        "pairs": {
+          "b1": "r-ev1",
+          "b2": "r-od1",
+          "b3": "r-ev2"
+        },
+        "pairErrors": [
+          {
+            "left": "b2",
+            "right": "r-ev1",
+            "feedback": "57 ends in 7, which is odd — the last digit decides."
+          },
+          {
+            "left": "b1",
+            "right": "r-od1",
+            "feedback": "34 ends in 4, which is even."
+          }
+        ],
+        "missFeedback": "Only the last digit matters: 4 even, 7 odd, 0 even.",
+        "successFeedback": "The last digit tells all — even for big numbers!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Big number, last digit.",
+      "conceptTag": "odd-even",
+      "explanationVariants": [
+        "57 ends in 7, and 7 is odd, so 57 is odd.",
+        "Ignore the 5 tens — the last digit 7 makes 57 odd."
+      ],
+      "widget": {
+        "type": "oddEvenPairs",
+        "prompt": "Is 57 odd or even?",
+        "n": 57,
+        "mode": "onesDigit",
+        "answer": "odd",
+        "evenFeedback": "57 ends in 7 — an odd digit — so 57 is odd, even though it starts with an odd-looking 5.",
+        "successFeedback": "Yes — it ends in 7, and 7 is odd."
+      },
+      "hints": [
+        "Look at the last digit.",
+        "7 is odd.",
+        "So 57 is odd."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "OddEvenOddEvenPairs"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents odd even.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for odd even must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines odd even."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:odd-even",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Don't be fooled.",
+      "conceptTag": "odd-even",
+      "explanationVariants": [
+        "30 ends in 0, which is even — the tens digit doesn't decide, the last digit does.",
+        "Even though 3 is odd, 30 ends in 0, so 30 is even."
+      ],
+      "widget": {
+        "type": "oddEvenPairs",
+        "prompt": "Is 30 odd or even?",
+        "n": 30,
+        "mode": "onesDigit",
+        "answer": "even",
+        "oddFeedback": "The 3 is odd, but the LAST digit is 0 — that's what counts. 30 is even.",
+        "successFeedback": "Yes — 30 ends in 0, and 0 makes it even."
+      },
+      "hints": [
+        "Which digit decides?",
+        "The last one: 0.",
+        "0 is even, so 30 is even."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "OddEvenOddEvenPairs"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents odd even.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for odd even must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines odd even."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:odd-even",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Pick the even one!",
+      "conceptTag": "odd-even",
+      "explanationVariants": [
+        "48 ends in 8 (even); 25, 63, and 71 all end in odd digits.",
+        "Scan the last digits: only 48 ends in an even digit."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which number is EVEN?",
+        "options": [
+          {
+            "id": "a",
+            "label": "48",
+            "correct": true,
+            "feedback": "Yes — 48 ends in 8, which is even."
+          },
+          {
+            "id": "b",
+            "label": "25",
+            "feedback": "25 ends in 5 — odd. Look for a last digit of 0, 2, 4, 6, or 8."
+          },
+          {
+            "id": "c",
+            "label": "71",
+            "feedback": "71 ends in 1 — odd. Only 48 ends in an even digit."
+          }
+        ]
+      },
+      "hints": [
+        "Check each last digit.",
+        "Even endings: 0 2 4 6 8.",
+        "48 ends in 8."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "OddEvenMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You know odd from even!",
+      "takeaways": [
+        "Even = pairs up with none left over.",
+        "Odd = one left over.",
+        "Shortcut: check the last digit."
+      ],
+      "teaser": "next: what happens when you ADD odds and evens."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "odd-even",
+      "concept": {
+        "id": "rem-oe-c",
+        "kind": "concept",
+        "body": "Slow down. 5 dots: pair them — 2 pairs and ONE left alone. A leftover means odd. So 5 is odd.",
+        "narration": "Slow down. Five dots: pair them — two pairs and one left alone. A leftover means odd. So five is odd."
+      },
+      "check": {
+        "id": "rem-oe-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "odd-even",
+        "explanationVariants": [
+          "5 makes 2 pairs with one left over, so 5 is odd.",
+          "The leftover dot makes 5 odd."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Is 5 odd or even?",
+          "options": [
+            {
+              "id": "a",
+              "label": "odd",
+              "correct": true,
+              "feedback": "Yes — 2 pairs and one left over means odd."
+            },
+            {
+              "id": "b",
+              "label": "even",
+              "feedback": "5 leaves one dot unpaired — a leftover means odd."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

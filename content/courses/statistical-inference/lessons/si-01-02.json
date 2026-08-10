@@ -1,0 +1,293 @@
+{
+  "id": "si-01-02",
+  "slug": "bias-versus-a-bigger-sample",
+  "title": "Bias, and Why a Bigger Sample Cannot Save You",
+  "courseId": "statistical-inference",
+  "chapterId": "ch1-how-the-data-was-made",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **biased** method misses the truth *systematically* — it leans the same way every time. Ask only people who answer the phone at noon, and you will keep landing in the same wrong place.\n\nCollecting more data does not fix a lean. It just plants your estimate more firmly in the wrong spot: a more precise wrong answer.",
+      "figure": "si-bias-not-fixed"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What does a bigger sample fix?",
+      "conceptTag": "si-bias-vs-variability",
+      "explanationVariants": [
+        "Sample size controls variability — how much your estimate bounces from sample to sample. Bias is where the whole pile sits, and no size moves it.",
+        "The 1936 Literary Digest poll asked 2.4 million people and still called the election wrong: its list of names skewed rich. Size is not a cure for a slanted list."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An online poll on a team's fan page finds 91% support the coach. The site collects 500,000 responses. What does the huge sample buy?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Almost nothing — the respondents are fans, so the estimate is precisely wrong.",
+            "correct": true,
+            "feedback": "Right. Size shrinks the wobble, not the lean. Half a million fans still tell you only about fans."
+          },
+          {
+            "id": "o2",
+            "label": "A very accurate estimate of public opinion, because the sample is enormous.",
+            "correct": false,
+            "feedback": "Accuracy needs the sample to *represent* the population. This one over-represents fans no matter how many of them answer."
+          },
+          {
+            "id": "o3",
+            "label": "A margin of error near zero, so the result is trustworthy.",
+            "correct": false,
+            "feedback": "The margin of error would indeed be tiny — and that is the trap. It measures random wobble only, and says nothing about who was left out."
+          },
+          {
+            "id": "o4",
+            "label": "A random sample, since anyone could click.",
+            "correct": false,
+            "feedback": "\"Anyone could\" is not random: the people who DO click are self-selected, and they care more than average. Randomness must be imposed, not left to volunteers."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-bias-vs-variability__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three ways a sample tilts:\n\n**Undercoverage** — some of the population can never be picked (landline-only lists).\n**Nonresponse** — the picked ones who refuse differ from those who answer.\n**Voluntary response** — the people who show up feel strongest.\n\nAll three change *who* is in the sample. None of them is a small-sample problem.",
+      "figure": "si-bias-not-fixed"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the mechanism.",
+      "conceptTag": "si-bias",
+      "explanationVariants": [
+        "Undercoverage leaves part of the population unreachable; nonresponse loses people who were reachable; voluntary response lets the keenest select themselves in.",
+        "Ask: were they never in the frame, did they refuse, or did they volunteer?"
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each flawed survey by how it goes wrong.",
+        "buckets": [
+          {
+            "id": "under",
+            "label": "Undercoverage",
+            "icon": "📵"
+          },
+          {
+            "id": "non",
+            "label": "Nonresponse",
+            "icon": "🚪"
+          },
+          {
+            "id": "vol",
+            "label": "Voluntary response",
+            "icon": "🙋"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Phone poll using a landline-only list",
+            "bucketId": "under",
+            "feedback": "Households without a landline can never be selected, so a slice of the population is outside the frame entirely."
+          },
+          {
+            "id": "s2",
+            "label": "Mailed survey; 8% mail it back",
+            "bucketId": "non",
+            "feedback": "Everyone was reachable, but the 92% who ignored it are likely different from the 8% who bothered."
+          },
+          {
+            "id": "s3",
+            "label": "\"Click here to tell us what you think!\"",
+            "bucketId": "vol",
+            "feedback": "The people with the strongest feelings select themselves in, which is why online polls skew to the angry and the delighted."
+          },
+          {
+            "id": "s4",
+            "label": "Street survey done only at 10am on a weekday",
+            "bucketId": "under",
+            "feedback": "People at work cannot be sampled at all at that hour, so a large group is outside the frame."
+          }
+        ],
+        "missFeedback": "Ask: could they be selected at all (coverage)? Were they selected and declined (nonresponse)? Or did they select themselves (voluntary)?",
+        "successFeedback": "Three different ways of ending up with the wrong people — and no sample size repairs any of them."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-bias__dragBucket"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Wording bias.",
+      "conceptTag": "si-bias",
+      "explanationVariants": [
+        "A question that supplies a reason (\"to protect children\") pushes agreement, so the estimate is biased upward whatever the sample size.",
+        "Neutral wording states the proposal and stops. Any added justification, emotive word, or one-sided framing tilts the answer."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which question wording is least likely to bias the result?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"Do you support the proposed 8pm curfew for under-16s?\"",
+            "correct": true,
+            "feedback": "Right — it states the proposal and stops, without supplying a reason to agree or disagree."
+          },
+          {
+            "id": "o2",
+            "label": "\"Do you support an 8pm curfew to protect children from harm?\"",
+            "correct": false,
+            "feedback": "It hands the respondent a reason to say yes. Attaching a justification to one side reliably inflates that side."
+          },
+          {
+            "id": "o3",
+            "label": "\"Do you oppose the government's heavy-handed new curfew?\"",
+            "correct": false,
+            "feedback": "\"Heavy-handed\" is loaded language, so the question argues before it asks."
+          },
+          {
+            "id": "o4",
+            "label": "\"Most experts back a curfew. Do you agree?\"",
+            "correct": false,
+            "feedback": "Citing authority inside the question pressures agreement — a form of leading the witness."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-bias__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two ways to be wrong, and only one of them is fixable by asking more people.",
+      "widget": {
+        "type": "samplingBiasLab",
+        "prompt": "Estimate support across 5,000 residents. Use a representative method, push the sample size up, and repeat — watch which of the two errors the size dial actually fixes.",
+        "populationLabel": "5,000 residents",
+        "targetMethod": "random",
+        "targetSize": 200,
+        "sizeMin": 20,
+        "sizeMax": 400,
+        "sizeStep": 20,
+        "sizeStart": 20,
+        "requiredDraws": 6,
+        "successFeedback": "Size shrinks the WOBBLE — the estimates cluster tighter every time you raise it. It never moves the LEAN, because a method that excludes part of the population excludes it just as thoroughly at 400 as at 20. Two different errors, and only one dial.",
+        "methodFeedback": "This method tilts systematically. Raising the size now makes a precise estimate of the wrong number — which is exactly how a 2.4-million-ballot poll called the 1936 election wrong.",
+        "sizeFeedback": "Right method, but too few people to see the wobble shrink. Raise it and watch the spread of repeated estimates close in.",
+        "drawsFeedback": "One sample cannot show variability. Repeat the draw and watch the estimates scatter."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Diagnose the poll.",
+      "conceptTag": "si-bias-vs-variability",
+      "hints": [
+        "Two things could be wrong: the estimate wobbles (random error), or the estimate leans (bias). Ask which one the facts point at.",
+        "The sample is huge, so the wobble is tiny — a large sample makes random error small.",
+        "But the people who returned the postcard chose to. That selection is a lean, and a lean does not shrink with n."
+      ],
+      "explanationVariants": [
+        "The 400,000 responses make the random error negligible, so the wobble is not the problem. The bias is: those who mailed a postcard back are not like those who did not.",
+        "The reported ±0.2% is honest arithmetic about sampling variability and completely silent about the nonresponse that actually broke the poll."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A magazine mails 10 million ballots, gets 400,000 back, and reports a candidate at 57% ± 0.2%. The candidate loses badly. What went wrong?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Nonresponse bias — the 4% who replied were not like the 96% who did not; the tiny ± measured only the wobble.",
+            "correct": true,
+            "feedback": "Right, and this is close to what happened in 1936. Precision is not accuracy, and the margin of error never sees the lean."
+          },
+          {
+            "id": "o2",
+            "label": "The sample was too small for a national estimate.",
+            "correct": false,
+            "feedback": "400,000 is enormous — the random error really is about ±0.2%. The estimate was precise; it was just aimed at the wrong crowd."
+          },
+          {
+            "id": "o3",
+            "label": "The margin of error was calculated incorrectly.",
+            "correct": false,
+            "feedback": "The arithmetic was likely right. It answers a question — how much does this estimate wobble? — that was not the one that mattered."
+          },
+          {
+            "id": "o4",
+            "label": "Bad luck: even a good method misses sometimes.",
+            "correct": false,
+            "feedback": "A miss of that size from a 400,000-person random sample is essentially impossible by chance. That rules luck out and points squarely at bias."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-bias-vs-variability__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Wobble shrinks. Lean does not.",
+      "takeaways": [
+        "Variability is random scatter around the truth; bias is a systematic miss. Sample size only touches the first.",
+        "Undercoverage, nonresponse, voluntary response and loaded wording all change WHO is in the sample.",
+        "A tiny margin of error on a biased poll is a precise wrong answer — the most dangerous kind."
+      ],
+      "teaser": "Next: watch a good estimate wobble, and measure exactly how much."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-bias-vs-variability",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Picture a dartboard. Random error scatters the darts around the bullseye. Bias moves the whole cluster off it. Throwing more darts tightens the cluster — it never re-aims it.",
+        "figure": "si-accuracy-precision"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which is which?",
+        "conceptTag": "si-bias-vs-variability",
+        "explanationVariants": [
+          "A tight cluster far from the bullseye is precise and biased — exactly what a huge, badly-drawn sample gives you.",
+          "Bias is about WHERE the cluster sits; variability is about HOW WIDE it is."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A method gives nearly the same answer every time, but that answer is 12 points from the truth. What is going on?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Low variability, high bias.",
+              "correct": true,
+              "feedback": "Right — a tight cluster in the wrong place. More data will tighten it further and move it not at all."
+            },
+            {
+              "id": "o2",
+              "label": "High variability, low bias.",
+              "correct": false,
+              "feedback": "High variability would mean the answers jump around a lot. These barely move — they are just consistently off-target."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,371 @@
+{
+ "id": "fg-01-02",
+ "slug": "functions-from-tables-and-pairs",
+ "title": "Functions from Tables and Pairs",
+ "courseId": "functions-g8",
+ "chapterId": "ch1-what-is-a-function",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A table or a list of (input, output) pairs is a function when no input appears twice with different outputs. Scan the input column: if every input value is paired with just one output, it's a function.",
+   "figure": "mapping-diagram"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Check a list of pairs.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Is this a function? (1, 5), (2, 7), (3, 9)",
+    "options": [
+     {
+      "id": "a",
+      "label": "Yes — each input appears once with one output",
+      "correct": true,
+      "feedback": "Right — inputs 1, 2, 3 each have exactly one output."
+     },
+     {
+      "id": "b",
+      "label": "No — the outputs are all different",
+      "correct": false,
+      "feedback": "Different outputs are expected and fine — what matters is each INPUT having one output, which holds here."
+     },
+     {
+      "id": "c",
+      "label": "No — the numbers increase",
+      "correct": false,
+      "feedback": "Increasing values don't affect whether it's a function — each input still maps to one output."
+     },
+     {
+      "id": "d",
+      "label": "Only if you add more pairs",
+      "correct": false,
+      "feedback": "It's already a function as written — every input has exactly one output."
+     }
+    ]
+   },
+   "predict": {
+    "prompt": "What would BREAK a function — one input reused with different outputs, or one output reused by different inputs?",
+    "options": [
+     {
+      "id": "input",
+      "label": "One input with different outputs"
+     },
+     {
+      "id": "output",
+      "label": "One output from different inputs"
+     },
+     {
+      "id": "either",
+      "label": "Either one breaks it"
+     }
+    ],
+    "outcomeId": "input",
+    "reveal": "A function promises each input exactly one answer — inputs may never contradict themselves. Outputs are free to repeat all they like."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The rule fails when the SAME input shows two different outputs. In (1, 2), (1, 5), the input 1 appears twice — once giving 2, once giving 5 — so it's not a function. Repeated inputs are the red flag to look for.",
+   "figure": "fg-not-function"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Spot the repeated input.",
+   "conceptTag": "fg-function-test",
+   "explanationVariants": [
+    "Input 4 appears twice — once with 1, once with 9 — so it's NOT a function.",
+    "The same input (4) giving two different outputs breaks the one-output rule."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Is this a function? (4, 1), (5, 3), (4, 9)",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — input 4 appears twice with different outputs",
+      "correct": true,
+      "feedback": "Right — 4 → 1 and 4 → 9 breaks the one-output rule."
+     },
+     {
+      "id": "b",
+      "label": "Yes — all the pairs are listed clearly",
+      "correct": false,
+      "feedback": "Being clearly listed doesn't make it a function — input 4 has TWO outputs (1 and 9), so it fails."
+     },
+     {
+      "id": "c",
+      "label": "Yes — the outputs are all different",
+      "correct": false,
+      "feedback": "Different outputs would be fine if inputs were unique, but input 4 repeats with different outputs — not a function."
+     },
+     {
+      "id": "d",
+      "label": "Only if 4 comes first",
+      "correct": false,
+      "feedback": "Order doesn't matter — input 4 appears twice with different outputs no matter the order."
+     }
+    ]
+   }
+  ,
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgFunctionRepeatedInput"
+      }},
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Repeated OUTPUT, unique inputs.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Is this a function? (1, 8), (2, 8), (3, 8)",
+    "options": [
+     {
+      "id": "a",
+      "label": "Yes — each input appears once (the repeated output is fine)",
+      "correct": true,
+      "feedback": "Right — inputs 1, 2, 3 are all unique; sharing output 8 doesn't break anything."
+     },
+     {
+      "id": "b",
+      "label": "No — the output 8 repeats",
+      "correct": false,
+      "feedback": "Repeated OUTPUTS are allowed — only repeated INPUTS with different outputs break the rule."
+     },
+     {
+      "id": "c",
+      "label": "No — every output should be different",
+      "correct": false,
+      "feedback": "Functions don't require unique outputs — many inputs can share one output."
+     },
+     {
+      "id": "d",
+      "label": "Only if the inputs also repeated",
+      "correct": false,
+      "feedback": "Repeated inputs would actually risk breaking it — unique inputs like these are exactly what a function needs."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A table this time.",
+   "conceptTag": "fg-function-test",
+   "explanationVariants": [
+    "Input 2 appears twice with different outputs (5 and 8), so the table is NOT a function.",
+    "The repeated input 2 giving two outputs breaks the one-output rule."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A table has inputs 1, 2, 3, 2 with outputs 4, 5, 6, 8. Is it a function?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — input 2 appears twice with outputs 5 and 8",
+      "correct": true,
+      "feedback": "Right — 2 → 5 and 2 → 8 breaks the one-output rule."
+     },
+     {
+      "id": "b",
+      "label": "Yes — there are four pairs",
+      "correct": false,
+      "feedback": "Count isn't the test — input 2 repeats with different outputs, so it fails."
+     },
+     {
+      "id": "c",
+      "label": "Yes — the outputs are all different",
+      "correct": false,
+      "feedback": "The outputs being different doesn't help — input 2 maps to two of them, breaking the rule."
+     },
+     {
+      "id": "d",
+      "label": "Only if you remove input 1",
+      "correct": false,
+      "feedback": "Removing input 1 wouldn't fix the input-2 repeat, which is the actual problem."
+     }
+    ]
+   }
+  ,
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgFunctionTableRepeated"
+      }},
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A clean function table.",
+   "conceptTag": "fg-function-test",
+   "explanationVariants": [
+    "Each input (2, 4, 6) appears exactly once, so it's a function even though every output is 1.",
+    "Unique inputs mean it's a function; the shared output 1 doesn't matter."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Is this a function? (2, 1), (4, 1), (6, 1)",
+    "options": [
+     {
+      "id": "a",
+      "label": "Yes — each input appears once",
+      "correct": true,
+      "feedback": "Right — inputs 2, 4, 6 are unique; the shared output 1 is allowed."
+     },
+     {
+      "id": "b",
+      "label": "No — the output is always 1",
+      "correct": false,
+      "feedback": "A constant output is fine — each input still maps to exactly one value (1)."
+     },
+     {
+      "id": "c",
+      "label": "No — a function needs different outputs",
+      "correct": false,
+      "feedback": "Functions don't require different outputs — one output per input is the only rule."
+     },
+     {
+      "id": "d",
+      "label": "Only if the output changed each time",
+      "correct": false,
+      "feedback": "The output staying at 1 is perfectly valid — it's still one output per input."
+     }
+    ]
+   }
+  ,
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgFunctionSharedOutput"
+      }},
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Sort tables into functions and non-functions.",
+   "conceptTag": "fg-function-test",
+   "explanationVariants": [
+    "Functions have every input appearing once; non-functions repeat an input with different outputs. Scan the input column of each.",
+    "The single test is whether any input value shows up twice with different outputs."
+   ],
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each set of pairs: function or not?",
+    "buckets": [
+     {
+      "id": "fn",
+      "label": "Function"
+     },
+     {
+      "id": "no",
+      "label": "Not a function"
+     }
+    ],
+    "items": [
+     {
+      "id": "t1",
+      "label": "(1,3), (2,3), (3,3)",
+      "bucketId": "fn",
+      "feedback": "Inputs 1, 2, 3 are all unique — a function (shared output is fine)."
+     },
+     {
+      "id": "t2",
+      "label": "(5,1), (5,2), (6,3)",
+      "bucketId": "no",
+      "feedback": "Input 5 appears twice with outputs 1 and 2 — not a function."
+     },
+     {
+      "id": "t3",
+      "label": "(0,0), (1,1), (2,4)",
+      "bucketId": "fn",
+      "feedback": "Inputs 0, 1, 2 are all unique — a function."
+     },
+     {
+      "id": "t4",
+      "label": "(7,8), (8,7), (7,9)",
+      "bucketId": "no",
+      "feedback": "Input 7 appears twice with outputs 8 and 9 — not a function."
+     },
+     {
+      "id": "t5",
+      "label": "(2,5), (4,5), (6,5)",
+      "bucketId": "fn",
+      "feedback": "Inputs 2, 4, 6 are all unique — a function (shared output 5 is fine)."
+     }
+    ],
+    "missFeedback": "Not quite — scan each input column for a value that repeats with different outputs.",
+    "successFeedback": "All sorted — a set is a function exactly when no input repeats with different outputs."
+   },
+   "hints": [
+    "For each set, look only at the INPUT (first) numbers — does any repeat?",
+    "If an input repeats, check whether its two outputs differ. Same output twice is still fine.",
+    "Functions: (1,3),(2,3),(3,3); (0,0),(1,1),(2,4); (2,5),(4,5),(6,5). Not functions: (5,1),(5,2),(6,3); (7,8),(8,7),(7,9)."
+   ]
+  ,
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgSortFunctionRules"
+      }},
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "A table or list of pairs is a function when no input repeats with different outputs.",
+   "takeaways": [
+    "Scan the INPUT column for repeats.",
+    "A repeated input with different outputs means it's NOT a function.",
+    "Repeated outputs across different inputs are always fine."
+   ],
+   "teaser": "Next: the vertical line test — spotting functions on a graph."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fg-function-test",
+   "concept": {
+    "id": "rem-fg0102-c",
+    "kind": "concept",
+    "body": "A list of pairs is a function when no input value repeats with two different outputs. Scan the input column: repeated inputs with different outputs break the rule; repeated outputs are fine."
+   },
+   "check": {
+    "id": "rem-fg0102-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "fg-function-test",
+    "explanationVariants": [
+     "Input 3 appears twice with outputs 1 and 2, so it's NOT a function.",
+     "The repeated input 3 with two outputs breaks the one-output rule."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Is this a function? (3, 1), (5, 4), (3, 2)",
+     "options": [
+      {
+       "id": "a",
+       "label": "No — input 3 appears twice with different outputs",
+       "correct": true,
+       "feedback": "Right — 3 → 1 and 3 → 2 breaks the rule."
+      },
+      {
+       "id": "b",
+       "label": "Yes — there are three pairs",
+       "correct": false,
+       "feedback": "Count isn't the test — input 3 repeats with different outputs."
+      },
+      {
+       "id": "c",
+       "label": "Yes — the outputs differ",
+       "correct": false,
+       "feedback": "Different outputs don't help when the same INPUT (3) maps to two of them."
+      },
+      {
+       "id": "d",
+       "label": "Only if 3 appeared once",
+       "correct": false,
+       "feedback": "Exactly — and since it appears twice with different outputs, it's not a function."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

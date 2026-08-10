@@ -1,0 +1,266 @@
+{
+ "id": "sg-04-03",
+ "slug": "surfaces-of-composites",
+ "title": "Surfaces of Composites",
+ "courseId": "solid-geometry",
+ "chapterId": "ch4-composite-solids",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sg-composite-surface",
+   "concept": {
+    "id": "rem-sg-composite-surface-c",
+    "kind": "concept",
+    "body": "Composite surface bills ONLY exposed faces. Prices: cylinder wall 2πrh (unrolled rectangle), sphere 4πr², hemisphere dome 2πr². At any glued seam the shared circle is interior — counted zero times — while hollows EXPOSE extra faces (a tube shows outer wall, inner wall, and two end rings). Cite the prism surface rules from Grade 6 for the flat-sided pieces."
+   },
+   "check": {
+    "id": "rem-sg-composite-surface-k",
+    "kind": "check",
+    "body": "One skin.",
+    "conceptTag": "sg-composite-surface",
+    "explanationVariants": [
+     "Wall 2π(2)(5) = 20π; dome 2π(4) = 8π; floor 4π. Seam: zero.",
+     "20 + 8 + 4 = 32."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A mini-silo: radius 2, wall height 5, hemispherical roof, circular floor. Surface coefficient (of π) = ?",
+     "answer": 32,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 36,
+       "feedback": "36 bills the seam circle (4) — interior faces are free: 32."
+      },
+      {
+       "value": 28,
+       "feedback": "28 forgets the floor — it stands on a 4π disk: 32."
+      }
+     ],
+     "fallbackFeedback": "20 + 8 + 4 = 32."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Surface needs two new prices and one discipline. Prices: a sphere's surface is **4πr²** (so a hemisphere's curved dome is 2πr²), and a cylinder's curved wall is its unrolled rectangle: **2πrh**. Discipline: at a seam, the shared circle is INTERIOR — count it zero times. Surface bills only what's exposed.",
+   "figure": "sg-surfaces"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Unroll the wall.",
+   "conceptTag": "sg-composite-surface",
+   "explanationVariants": [
+    "The wall unrolls into a rectangle: circumference by height.",
+    "2π(6)(10) = 120π."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The silo's cylindrical wall (radius 6, height 10) has lateral surface coefficient (of π) = ?",
+    "answer": 120,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 360,
+      "feedback": "360 is the VOLUME's coefficient — the wall is circumference × height: 2(6)(10) = 120."
+     },
+     {
+      "value": 60,
+      "feedback": "60 forgets the 2 — the unrolled width is the FULL circumference 2πr: 120."
+     },
+     {
+      "value": 72,
+      "feedback": "72 prices the dome (2r²) — the wall is 2rh = 120."
+     }
+    ],
+    "fallbackFeedback": "2πrh = 120π — the rectangle the wall becomes when unrolled."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-composite-surface__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The whole silo.",
+   "conceptTag": "sg-composite-surface",
+   "explanationVariants": [
+    "Exposed: wall 120π + dome 2π(36) = 72π + floor 36π. The JOINT circle: buried.",
+    "120 + 72 + 36 = 228."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Total exposed surface of the silo (radius 6, wall height 10, hemispherical roof, circular floor). Coefficient of π = ?",
+    "answer": 228,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 264,
+      "feedback": "264 bills the joint circle (36) — where dome meets wall is INTERIOR: 120 + 72 + 36 = 228."
+     },
+     {
+      "value": 300,
+      "feedback": "300 roofs with a full sphere (144) — the dome shows only 2πr² = 72: 228."
+     },
+     {
+      "value": 192,
+      "feedback": "192 forgets the floor — the silo stands on a 36π disk: 228."
+     }
+    ],
+    "fallbackFeedback": "120 + 72 + 36 = 228 — the seam circle appears in NO term."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-composite-surface__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Open tube, all faces.",
+   "conceptTag": "sg-composite-surface",
+   "explanationVariants": [
+    "Four exposed faces: outer wall 2π(5)(6), inner wall 2π(2)(6), and TWO end rings π(25 − 4) each.",
+    "60 + 24 + 21 + 21 = 126."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The tube (outer 5, inner 2, length 6), open at both ends. Total surface coefficient (of π) = ?",
+    "answer": 126,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 84,
+      "feedback": "84 counts only the two curved walls — the two end RINGS add 21 each: 126."
+     },
+     {
+      "value": 105,
+      "feedback": "105 counts one ring — both ends are exposed: 126."
+     },
+     {
+      "value": 134,
+      "feedback": "134 prices the end rings as full disks (25 each) — they're rings of 21: 126."
+     }
+    ],
+    "fallbackFeedback": "60 + 24 + 2(21) = 126 — (equal to its volume coefficient by pure coincidence of these numbers)."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-composite-surface__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Zero, once, or twice?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two solids are glued along a shared full circle. In the composite's surface total, that circle's area is counted:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Zero times — the seam is interior on both sides; only exposed surface bills",
+      "correct": true,
+      "feedback": "Each piece ALONE would count it once (silo cylinder's top, hemisphere's flat face) — gluing buries both copies."
+     },
+     {
+      "id": "o2",
+      "label": "Once — it belongs to one piece",
+      "correct": false,
+      "feedback": "It belonged to BOTH before gluing — and to neither after: interior, zero."
+     },
+     {
+      "id": "o3",
+      "label": "Twice — once per piece",
+      "correct": false,
+      "feedback": "That double-counts a face nobody can touch — zero."
+     },
+     {
+      "id": "o4",
+      "label": "Depends on which piece is larger",
+      "correct": false,
+      "feedback": "Size is irrelevant — sealed is sealed: zero."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Sphere's price.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A sphere of radius 4: surface coefficient (of π) = ?",
+    "answer": 64,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 16,
+      "feedback": "16 = 4² forgets the 4 — the sphere's surface is 4πr²: 64."
+     },
+     {
+      "value": 85.33,
+      "feedback": "85.33 ≈ (4/3)(64) is the VOLUME's coefficient — surface is 4r² = 64."
+     }
+    ],
+    "fallbackFeedback": "4(16) = 64 — four great circles' worth, the sphere's famous price."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The capsule's skin.",
+   "conceptTag": "sg-composite-surface",
+   "hints": [
+    "Exposed: the cylinder wall + two hemispherical domes = wall + one full sphere's surface.",
+    "Wall 2π(3)(8) = 48π; sphere surface 4π(9) = 36π.",
+    "The two seam circles: zero times each."
+   ],
+   "explanationVariants": [
+    "48 + 36 = 84 — and no flat faces anywhere: the capsule is all curve.",
+    "Wall 48 + caps 36 = 84."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The capsule (cylinder radius 3, height 8, hemispherical caps both ends). Total surface coefficient (of π) = ?",
+    "answer": 84,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 102,
+      "feedback": "102 adds the two seam circles (9 each) — seams are interior: 48 + 36 = 84."
+     },
+     {
+      "value": 66,
+      "feedback": "66 caps with one hemisphere (18) — both ends together show a full sphere's 36: 84."
+     },
+     {
+      "value": 120,
+      "feedback": "120 doubles the caps (72) — two DOMES of 2πr² = 18 each total 36: 84."
+     }
+    ],
+    "fallbackFeedback": "48 + 36 = 84 — two half-skins make one sphere's worth, over an unrolled wall."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-composite-surface__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Bill the exposed.",
+   "takeaways": [
+    "New prices: sphere 4πr² (dome 2πr²), cylinder wall 2πrh (an unrolled rectangle).",
+    "Seam circles count ZERO times — interior faces never bill.",
+    "Hollows expose extra faces: tubes bill outer + inner walls + end rings."
+   ],
+   "teaser": "Final chapter: what scaling does to length, surface, and volume — k, k², k³."
+  }
+ ]
+}

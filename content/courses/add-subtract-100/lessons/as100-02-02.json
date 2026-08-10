@@ -1,0 +1,349 @@
+{
+  "id": "as100-02-02",
+  "slug": "add-ones-two-digit",
+  "title": "Add Ones to a Two-Digit Number",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch2-add-100",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Ones join the ones. 34 + 5: the 5 joins the 4, making 39. The 3 tens don't change.",
+      "narration": "Ones join the ones. Thirty-four plus five: the five joins the four, making thirty-nine. The three tens don't change.",
+      "figure": "as100-add-ones-39"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop the ones on.",
+      "conceptTag": "add-ones",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "34 + 5: start at 34 and count on 5. Tap where you land.",
+        "min": 30,
+        "max": 42,
+        "start": 34,
+        "hop": 1,
+        "hops": 5,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 38,
+            "feedback": "That's 4 hops. One more: 35, 36, 37, 38, 39."
+          },
+          {
+            "value": 40,
+            "feedback": "That's 6 hops. Count just 5 to land on 39."
+          }
+        ],
+        "missFeedback": "Count on 5 from 34: 35, 36, 37, 38, 39.",
+        "successFeedback": "34 and 5 more is 39 — the tens never moved!"
+      },
+      "predict": {
+        "prompt": "Counting on 5 from 34 — does 34 itself count as a hop?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — the first hop lands on 35"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — say 34, 35, 36, 37, 38"
+          },
+          {
+            "id": "either",
+            "label": "Doesn't matter either way"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "34 is where you STAND, not a hop: 35, 36, 37, 38, 39. Counting the start is the classic off-by-one — watch each hop land one number further along."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents add ones.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add ones must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add ones."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:add-ones",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Ones to ones.",
+      "conceptTag": "add-ones",
+      "explanationVariants": [
+        "52 + 6: the 6 joins the 2 ones, making 8 ones: 58.",
+        "Only the ones change: 2 + 6 = 8, so 52 becomes 58."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "52 + 6 = ?",
+        "answer": 58,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 112,
+            "feedback": "That added 6 to the TENS (52 + 60). The 6 is ones: 52 + 6 = 58."
+          },
+          {
+            "value": 57,
+            "feedback": "One short: 2 + 6 = 8 ones, so 58."
+          }
+        ],
+        "fallbackFeedback": "2 ones + 6 ones = 8 ones: 58."
+      },
+      "hints": [
+        "The 6 joins the ones.",
+        "2 + 6 = 8 ones.",
+        "58."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddOnesNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Add ones to the ones digit — never to the tens digit. 71 + 8 changes only the 1.",
+      "narration": "Add ones to the ones digit — never to the tens digit. Seventy-one plus eight changes only the one.",
+      "figure": "as100-only-ones-79"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the ones-adds.",
+      "conceptTag": "add-ones",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each sum to its total.",
+        "left": [
+          {
+            "id": "m1",
+            "label": "71 + 8"
+          },
+          {
+            "id": "m2",
+            "label": "23 + 4"
+          },
+          {
+            "id": "m3",
+            "label": "45 + 3"
+          }
+        ],
+        "right": [
+          {
+            "id": "v79",
+            "label": "79"
+          },
+          {
+            "id": "v27",
+            "label": "27"
+          },
+          {
+            "id": "v48",
+            "label": "48"
+          }
+        ],
+        "pairs": {
+          "m1": "v79",
+          "m2": "v27",
+          "m3": "v48"
+        },
+        "pairErrors": [
+          {
+            "left": "m1",
+            "right": "v27",
+            "feedback": "71 + 8 keeps its 7 tens: 79. 27 belongs to 23 + 4."
+          },
+          {
+            "left": "m3",
+            "right": "v79",
+            "feedback": "45 + 3 keeps its 4 tens: 48. 79 belongs to 71 + 8."
+          }
+        ],
+        "missFeedback": "Add each pair's ones; the tens stay: 79, 27, 48.",
+        "successFeedback": "Ones joined ones every time!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Watch the places.",
+      "conceptTag": "add-ones",
+      "explanationVariants": [
+        "23 + 4: the 4 joins the 3 ones, making 27. The 2 tens hold still.",
+        "3 + 4 = 7 ones, so 23 becomes 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "23 + 4 = ?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 63,
+            "feedback": "That added 4 TENS (23 + 40). The 4 is ones: 27."
+          },
+          {
+            "value": 26,
+            "feedback": "One short: 3 + 4 = 7 ones, so 27."
+          }
+        ],
+        "fallbackFeedback": "3 ones + 4 ones = 7 ones: 27."
+      },
+      "hints": [
+        "The 4 joins the ones.",
+        "3 + 4 = 7.",
+        "27."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddOnesNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which is the ones-add?",
+      "conceptTag": "add-ones",
+      "explanationVariants": [
+        "In 62 + 7, the 7 joins the 2: 69. Adding it to the 6 would wrongly make 132 or 69→ mixing places.",
+        "Ones join ones: 62 + 7 = 69, with 6 tens untouched."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "62 + 7 = ?",
+        "options": [
+          {
+            "id": "a",
+            "label": "69",
+            "correct": true,
+            "feedback": "Yes — 2 + 7 = 9 ones, tens unchanged: 69."
+          },
+          {
+            "id": "b",
+            "label": "132",
+            "feedback": "That added 7 TENS (62 + 70). The 7 is ones: 69."
+          },
+          {
+            "id": "c",
+            "label": "68",
+            "feedback": "One short: 2 + 7 = 9, so it's 69."
+          }
+        ]
+      },
+      "hints": [
+        "The 7 is ones.",
+        "2 + 7 = 9.",
+        "69."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddOnesMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Prove the places!",
+      "conceptTag": "add-ones",
+      "explanationVariants": [
+        "71 + 8: the 8 joins the 1, making 9 ones: 79.",
+        "Only the ones move: 1 + 8 = 9, so 71 becomes 79."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "71 + 8 = ?",
+        "answer": 79,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 151,
+            "feedback": "That added 8 TENS (71 + 80). The 8 is ones: 79."
+          },
+          {
+            "value": 78,
+            "feedback": "One short: 1 + 8 = 9 ones, so 79."
+          }
+        ],
+        "fallbackFeedback": "1 one + 8 ones = 9 ones: 79."
+      },
+      "hints": [
+        "The 8 joins the ones.",
+        "1 + 8 = 9.",
+        "79."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddOnesNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Ones stay in their lane!",
+      "takeaways": [
+        "Ones add to the ones digit.",
+        "The tens digit doesn't move.",
+        "34 + 5 = 39, not 84."
+      ],
+      "teaser": "next: adding two two-digit numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "add-ones",
+      "concept": {
+        "id": "rem-ao-c",
+        "kind": "concept",
+        "body": "Slow it down. 42 + 3: the 3 joins the 2. 2 + 3 = 5 ones, so 45. The 4 tens wait.",
+        "narration": "Forty-two plus three: the three joins the two. Two plus three is five ones, so forty-five. The four tens wait."
+      },
+      "check": {
+        "id": "rem-ao-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "add-ones",
+        "explanationVariants": [
+          "42 + 3: 2 + 3 = 5 ones, so 45.",
+          "The 3 joins the ones: 45."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "42 + 3 = ?",
+          "answer": 45,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 72,
+              "feedback": "That added 3 TENS. The 3 is ones: 45."
+            },
+            {
+              "value": 44,
+              "feedback": "One short: 2 + 3 = 5 ones, so 45."
+            }
+          ],
+          "fallbackFeedback": "2 + 3 = 5 ones: 45."
+        }
+      }
+    }
+  ]
+}

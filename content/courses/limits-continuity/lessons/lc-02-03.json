@@ -1,0 +1,342 @@
+{
+ "id": "lc-02-03",
+ "slug": "rationalizing-limits",
+ "title": "Rationalizing to Resolve Limits",
+ "courseId": "limits-continuity",
+ "chapterId": "ch2-limit-laws",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "When a **square root** causes the 0/0, factoring won't help — but **multiplying by the conjugate** does. For (√(x + 4) − 2)/x, multiply top and bottom by (√(x + 4) + 2). The numerator becomes a difference of squares, (x + 4) − 4 = x, which cancels the x below.",
+   "figure": "lc-indeterminate"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The conjugate step.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To resolve (√(x + 4) − 2)/x, you multiply numerator and denominator by:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "√(x + 4) + 2 (the conjugate)",
+      "correct": true,
+      "feedback": "Right — the conjugate turns the top into a difference of squares."
+     },
+     {
+      "id": "o2",
+      "label": "√(x + 4) − 2 (the same expression)",
+      "feedback": "Squaring the same term doesn't rationalize. Use the CONJUGATE, with a + sign."
+     },
+     {
+      "id": "o3",
+      "label": "x",
+      "feedback": "Multiplying by x won't clear the root. Use the conjugate √(x + 4) + 2."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Finish the rationalization.",
+   "conceptTag": "lc-rationalize",
+   "explanationVariants": [
+    "After multiplying, the top is (x + 4) − 4 = x, cancelling the x below to leave 1/(√(x + 4) + 2); at x = 0 that's 1/(2 + 2) = 1/4.",
+    "The x cancels, then substitute: 1/(√4 + 2) = 1/4."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Find lim(x→0) (√(x + 4) − 2)/x. (After conjugate: 1/(√(x + 4) + 2).) Enter a decimal.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "c",
+      "label": "the radicand at x=0",
+      "value": 4
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "lit",
+      "value": 1
+     },
+     "right": {
+      "op": "add",
+      "left": {
+       "op": "sqrt",
+       "arg": {
+        "op": "const",
+        "id": "c"
+       }
+      },
+      "right": {
+       "op": "lit",
+       "value": 2
+      }
+     }
+    },
+    "approxRound": 2,
+    "answerMode": "numeric",
+    "tolerance": 0.005,
+    "numericErrors": [
+     {
+      "value": 0,
+      "feedback": "0/0 is indeterminate. After rationalizing, 1/(√4 + 2) = 1/4 = 0.25."
+     },
+     {
+      "value": 4,
+      "feedback": "4 = √(x+4)+2 is the DENOMINATOR. The limit is 1/4 = 0.25."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "1/(√4 + 2) = 1/4 = 0.25.",
+    "successFeedback": "1/(√4 + 2) = 1/4 = 0.25."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-rationalize__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The trick works because (√A − B)(√A + B) = A − B² erases the root. That difference-of-squares in the numerator cancels the troublesome factor in the denominator, converting an indeterminate 0/0 into something you can finally substitute into.",
+   "figure": "lc-conjugate-trick"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A different root.",
+   "conceptTag": "lc-rationalize",
+   "explanationVariants": [
+    "(√(x + 9) − 3)/x rationalizes to 1/(√(x + 9) + 3); at x = 0 that's 1/(3 + 3) = 1/6 ≈ 0.167.",
+    "Multiply by the conjugate, cancel x, substitute: 1/6."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Find lim(x→0) (√(x + 9) − 3)/x, to three decimals. (Conjugate gives 1/(√(x + 9) + 3).)",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "c",
+      "label": "the radicand at x=0",
+      "value": 9
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "lit",
+      "value": 1
+     },
+     "right": {
+      "op": "add",
+      "left": {
+       "op": "sqrt",
+       "arg": {
+        "op": "const",
+        "id": "c"
+       }
+      },
+      "right": {
+       "op": "lit",
+       "value": 3
+      }
+     }
+    },
+    "approxRound": 3,
+    "answerMode": "numeric",
+    "tolerance": 0.001,
+    "numericErrors": [
+     {
+      "value": 0,
+      "feedback": "Indeterminate 0/0. After rationalizing: 1/(√9 + 3) = 1/6 ≈ 0.167."
+     },
+     {
+      "value": 6,
+      "feedback": "6 = √9 + 3 is the denominator. The limit is 1/6 ≈ 0.167."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "1/(√9 + 3) = 1/6 ≈ 0.167.",
+    "successFeedback": "1/(√9 + 3) = 1/6 ≈ 0.167."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-rationalize__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Which tool?",
+   "conceptTag": "lc-rationalize",
+   "explanationVariants": [
+    "A square root in the 0/0 form calls for the conjugate; a pure polynomial ratio calls for factoring. Match the tool to the obstacle.",
+    "Roots → conjugate; polynomials → factor."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Substituting gives 0/0 in (√(x + 1) − 1)/x. The right technique is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "multiply by the conjugate",
+      "correct": true,
+      "feedback": "Right — a root in the numerator calls for the conjugate."
+     },
+     {
+      "id": "o2",
+      "label": "factor the numerator",
+      "feedback": "You can't factor a root away. Multiply by the conjugate √(x + 1) + 1."
+     },
+     {
+      "id": "o3",
+      "label": "the limit is simply 0",
+      "feedback": "0/0 is indeterminate; rationalize with the conjugate to find the real limit."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-rationalize__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full rationalization.",
+   "conceptTag": "lc-rationalize",
+   "explanationVariants": [
+    "(√(x + 1) − 1)/x → 1/(√(x + 1) + 1); at x = 0 that's 1/(1 + 1) = 1/2 = 0.5.",
+    "Conjugate, cancel x, substitute: 1/2."
+   ],
+   "hints": [
+    "Multiply by √(x + 1) + 1.",
+    "Top becomes (x + 1) − 1 = x; cancel the x.",
+    "Left with 1/(√(x + 1) + 1); put x = 0."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Find lim(x→0) (√(x + 1) − 1)/x. (Decimal.)",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "c",
+      "label": "the radicand at x=0",
+      "value": 1
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "lit",
+      "value": 1
+     },
+     "right": {
+      "op": "add",
+      "left": {
+       "op": "sqrt",
+       "arg": {
+        "op": "const",
+        "id": "c"
+       }
+      },
+      "right": {
+       "op": "lit",
+       "value": 1
+      }
+     }
+    },
+    "approxRound": 2,
+    "answerMode": "numeric",
+    "tolerance": 0.005,
+    "numericErrors": [
+     {
+      "value": 0,
+      "feedback": "Indeterminate. After the conjugate: 1/(√1 + 1) = 1/2 = 0.5."
+     },
+     {
+      "value": 2,
+      "feedback": "2 = √1 + 1 is the denominator. The limit is 1/2 = 0.5."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "1/(√1 + 1) = 1/2 = 0.5.",
+    "successFeedback": "1/(√1 + 1) = 1/2 = 0.5."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-rationalize__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Clear the root.",
+   "takeaways": [
+    "A root in a 0/0 form: multiply by the conjugate.",
+    "(√A − B)(√A + B) = A − B² erases the root and cancels the trouble factor.",
+    "Match the tool to the obstacle: factor for polynomials, conjugate for roots."
+   ],
+   "teaser": "Next chapter: one-sided limits and limits at infinity."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lc-rationalize",
+   "concept": {
+    "id": "rem-lc0203-c",
+    "kind": "concept",
+    "body": "For a 0/0 form with a square root, multiply top and bottom by the conjugate. The difference of squares clears the root and cancels the trouble factor, then substitute."
+   },
+   "check": {
+    "id": "rem-lc0203-k",
+    "kind": "check",
+    "body": "One rationalization.",
+    "conceptTag": "lc-rationalize",
+    "explanationVariants": [
+     "(√(x + 4) − 2)/x → 1/(√(x + 4) + 2) → 1/4 at x = 0.",
+     "Conjugate, cancel, substitute: 0.25."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Find lim(x→0) (√(x + 4) − 2)/x. (Decimal.)",
+     "answer": 0.25,
+     "tolerance": 0.005,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "Indeterminate; rationalize to 1/(√4 + 2) = 0.25."
+      },
+      {
+       "value": 4,
+       "feedback": "4 is the denominator √4 + 2. The limit is 1/4 = 0.25."
+      }
+     ],
+     "fallbackFeedback": "1/(√4 + 2) = 0.25."
+    }
+   }
+  }
+ ]
+}

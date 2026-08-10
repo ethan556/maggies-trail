@@ -1,0 +1,308 @@
+{
+  "id": "cx-05-01",
+  "slug": "circle-equation",
+  "title": "The Circle's Equation",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch5-circle-equation",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-circle-eq",
+      "concept": {
+        "id": "rem-cx-circle-eq-c",
+        "kind": "concept",
+        "body": "The circle centered at (h, k) with radius r collects the points at distance exactly r: (x − h)² + (y − k)² = r² (the distance formula, squared once). Reading: the equation SUBTRACTS the center, so (x + 4) means h = −4; the right side is r SQUARED, so 9 means r = 3. Membership: substitute and compare to r²."
+      },
+      "check": {
+        "id": "rem-cx-circle-eq-k",
+        "kind": "check",
+        "body": "One read.",
+        "conceptTag": "cx-circle-eq",
+        "explanationVariants": [
+          "(x − 2)² subtracts 2: h = 2. (y + 1)² = (y − (−1))²: k = −1. r = √16.",
+          "Center (2, −1), radius 4."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The circle (x − 2)² + (y + 1)² = 16 has:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Center (2, −1), radius 4",
+              "correct": true,
+              "feedback": "Subtracted values come out as-is (h = 2), added ones flip (k = −1), and √16 = 4."
+            },
+            {
+              "id": "o2",
+              "label": "Center (−2, 1), radius 4",
+              "correct": false,
+              "feedback": "Signs flip the other way: (x − 2) means h = +2, (y + 1) means k = −1."
+            },
+            {
+              "id": "o3",
+              "label": "Center (2, −1), radius 16",
+              "correct": false,
+              "feedback": "16 is r² — the radius is 4."
+            },
+            {
+              "id": "o4",
+              "label": "Center (2, 1), radius 8",
+              "correct": false,
+              "feedback": "(y + 1) flips to k = −1, and √16 = 4, not half of 16."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A circle is pure distance: every point (x, y) sitting exactly r from the center (h, k). Chapter 1's formula IS the equation — square both sides once and forever: **(x − h)² + (y − k)² = r²**. The figure's circle: center (3, 2), radius 5 — every point obeys (x − 3)² + (y − 2)² = 25.",
+      "figure": "circle-equation-distance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Membership check.",
+      "conceptTag": "cx-circle-eq",
+      "explanationVariants": [
+        "Substitute (6, 6): (6 − 3)² + (6 − 2)² = 9 + 16.",
+        "9 + 16 = 25 — the figure's own 3-4-5 triangle, closing the course's opening move."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Test (6, 6) against (x − 3)² + (y − 2)² = 25. The left side evaluates to ?",
+        "answer": 25,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the DISTANCE — the equation compares SQUARED distance to r² = 25, and (6,6) delivers exactly that."
+          },
+          {
+            "value": 7,
+            "feedback": "7 = 3 + 4 adds the legs unsquared — the equation squares them: 9 + 16 = 25."
+          },
+          {
+            "value": 49,
+            "feedback": "49 squares the leg-sum (3 + 4)² — squares add SEPARATELY: 9 + 16 = 25."
+          }
+        ],
+        "fallbackFeedback": "3² + 4² = 25 — on the circle: the run-rise-distance triangle from chapter 1, now as membership."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-eq__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read center and radius.",
+      "conceptTag": "cx-circle-eq",
+      "explanationVariants": [
+        "The template is (x − h)² + (y − k)² = r² — the equation SUBTRACTS the center's coordinates.",
+        "(x + 4) = (x − (−4)): h = −4, k = 5, r = √9 = 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The circle (x + 4)² + (y − 5)² = 9 has:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Center (−4, 5), radius 3",
+            "correct": true,
+            "feedback": "(x + 4) hides x − (−4) — the sign flips coming out — and r is √9, not 9."
+          },
+          {
+            "id": "o2",
+            "label": "Center (4, −5), radius 3",
+            "correct": false,
+            "feedback": "Both signs flipped the wrong way: the template SUBTRACTS the center, so +4 means h = −4 and −5 means k = +5."
+          },
+          {
+            "id": "o3",
+            "label": "Center (−4, 5), radius 9",
+            "correct": false,
+            "feedback": "The right side is r SQUARED — the radius is √9 = 3."
+          },
+          {
+            "id": "o4",
+            "label": "Center (4, 5), radius 81",
+            "correct": false,
+            "feedback": "h flips ((x + 4) ⇒ h = −4) and 9 is already r² — r = 3, never 81."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-eq__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Write one to order.",
+      "conceptTag": "cx-circle-eq",
+      "explanationVariants": [
+        "r² = distance² from (1, 2) to (7, 10) = 6² + 8².",
+        "36 + 64 = 100 — chapter 1's animated triangle, one last time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle is centered at (1, 2) and passes through (7, 10). In its equation (x − 1)² + (y − 2)² = r², the number r² = ?",
+        "answer": 100,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the RADIUS — the equation's right side holds r² = 100."
+          },
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 sums legs unsquared — r² = 36 + 64 = 100."
+          },
+          {
+            "value": 196,
+            "feedback": "196 = 14² squares the leg-sum — squares add separately: 100."
+          }
+        ],
+        "fallbackFeedback": "6² + 8² = 100 — the very triangle that opened the course."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-eq__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The tangent read.",
+      "predict": {
+        "prompt": "A circle centred at (3, 4) is tangent to the x-axis. Which point on the axis is the circle actually touching?",
+        "options": [
+          {
+            "id": "below",
+            "label": "(3, 0) — straight down from the centre"
+          },
+          {
+            "id": "origin",
+            "label": "(0, 0) — the origin"
+          },
+          {
+            "id": "either",
+            "label": "Any point on the axis within reach of the radius"
+          }
+        ],
+        "outcomeId": "below",
+        "reveal": "(3, 0). Tangency means the circle touches the line at exactly one point, and that point is where the PERPENDICULAR from the centre lands — straight down, since the x-axis is horizontal. Drag to it and read the radius off the distance."
+      },
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "The circle is tangent to the x-axis. Drag the point to where the circle actually touches the axis, and read its radius off the distance from the centre.",
+        "anchor": [
+          3,
+          4
+        ],
+        "targetPoint": [
+          3,
+          0
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 0,
+        "startY": 0,
+        "successFeedback": "Straight down 4, across 0 — distance √(0² + 4²) = 4. Tangency to an axis is a vertical reach: the radius is exactly the centre's distance to that axis, no more arithmetic needed.",
+        "wrongPointFeedback": "Not the point of tangency yet — that point sits directly below the centre, where the perpendicular from (3, 4) meets the x-axis."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Why squared?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The equation keeps r² (not r) on the right because:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Squaring both sides of distance = r removes the root once and for all — membership checks become pure arithmetic, no radicals",
+            "correct": true,
+            "feedback": "√((x−h)² + (y−k)²) = r squares into the clean form — every check is add-and-compare, as chapter 3's d² discipline promised."
+          },
+          {
+            "id": "o2",
+            "label": "Circles have squared shapes",
+            "correct": false,
+            "feedback": "The square comes from the ALGEBRA (distance formula's root), not the geometry — squaring clears it."
+          },
+          {
+            "id": "o3",
+            "label": "r² is always an integer",
+            "correct": false,
+            "feedback": "r² can be anything positive — the virtue is radical-free checking, not integrality."
+          },
+          {
+            "id": "o4",
+            "label": "It's a historical accident",
+            "correct": false,
+            "feedback": "It's deliberate: square once at the definition, and every membership test thereafter is arithmetic."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Diameter endpoints.",
+      "conceptTag": "cx-circle-eq",
+      "hints": [
+        "The center is the MIDPOINT of any diameter — chapter 1's formula.",
+        "Midpoint of (−1, 3) and (7, 9): average each coordinate.",
+        "r is half the diameter's length — or the distance from the center to either endpoint."
+      ],
+      "explanationVariants": [
+        "Center ((−1+7)/2, (3+9)/2) = (3, 6); r² = (7−3)² + (9−6)² = 16 + 9 = 25.",
+        "Center (3, 6), r² = 25: the equation is (x − 3)² + (y − 6)² = 25. Enter 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has diameter endpoints (−1, 3) and (7, 9). In its standard equation, the right-hand side r² = ?",
+        "answer": 25,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 is the DIAMETER squared (6² + 8² = 100, d = 10) — the radius halves it: r = 5, r² = 25."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is r itself — the equation stores r² = 25."
+          },
+          {
+            "value": 50,
+            "feedback": "50 halves d² — but r² = (d/2)² = d²/4 = 25."
+          }
+        ],
+        "fallbackFeedback": "d = √(64 + 36) = 10, r = 5, r² = 25 — midpoint (3,6) centers it."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-eq__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance, squared and settled.",
+      "takeaways": [
+        "(x − h)² + (y − k)² = r² — chapter 1's distance formula wearing an equals sign.",
+        "Read carefully: the equation SUBTRACTS the center (signs flip out) and stores r SQUARED.",
+        "Build from center + point (r² by distance) or a diameter (center by midpoint, r by half)."
+      ],
+      "teaser": "Next: the equation as a judge — on, inside, or outside."
+    }
+  ]
+}

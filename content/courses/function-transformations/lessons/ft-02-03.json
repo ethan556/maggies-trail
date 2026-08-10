@@ -1,0 +1,319 @@
+{
+  "id": "ft-02-03",
+  "slug": "combining-shifts",
+  "title": "Combining Shifts",
+  "courseId": "function-transformations",
+  "chapterId": "ch2-shifts",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Both moves at once: **y = (x − h)² + k** slides the parent **right h** and **up k**, parking the vertex at **(h, k)**. Read h from inside (flip the sign) and k from outside (keep the sign) — the whole graph's position in one glance.",
+      "figure": "transformation-shifts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two shifts at once.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": -1,
+        "targetK": -3,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 8,
+        "prompt": "Take y = x² and build y = (x + 1)² − 3: left 1, down 3.",
+        "successFeedback": "Vertex (−1, −3). The horizontal shift fights your intuition — (x + 1) moves the curve LEFT — while the vertical shift agrees with it. Inside the function, the sign is inverted; outside, it is not.",
+        "shapeFeedback": "The parent shape has a = 1. Leave the shape alone and move the vertex.",
+        "vertexFeedback": "The vertex is misplaced. Left 1 and down 3 lands on (−1, −3), so h = −1."
+      },
+      "predict": {
+        "prompt": "You'll move h DOWN in y = a(x − h)² + k. Which way does the parabola slide?",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right"
+          },
+          {
+            "id": "left",
+            "label": "To the left"
+          },
+          {
+            "id": "upward",
+            "label": "Straight up"
+          }
+        ],
+        "outcomeId": "left",
+        "reveal": "Raising h moves the vertex RIGHT even though h is subtracted — (x − h)² is smallest exactly when x = h, so the low point chases h. The minus sign is why so many people guess the wrong direction."
+      },
+      "conceptTag": "ft-combined-shift",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents combined shift.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for combined shift must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines combined shift."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-combined-shift",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two numbers never mix: **inside → x, outside → y**. For (x + 1)² − 3, the inside x + 1 puts the vertex at x = −1; the outside −3 puts it at y = −3. Vertex: (−1, −3).",
+      "figure": "ft-combine-shifts"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the y-coordinate.",
+      "conceptTag": "ft-combined-shift",
+      "explanationVariants": [
+        "The +7 outside lifts the vertex to y = 7.",
+        "Vertex of (x − h)² + k is (h, k): here k = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the y-coordinate of the vertex of y = (x − 2)² + 7?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "The outside keeps its sign: +7 means UP to y = 7."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the x-coordinate (from the inside) — the OUTSIDE +7 sets the height: y = 7."
+          }
+        ],
+        "fallbackFeedback": "The +7 outside sets the vertex height: y = 7."
+      },
+      "variant": {
+        "gen": "combined-shift"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Both coordinates at once.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the vertex of y = (x + 3)² − 5?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(−3, −5)",
+            "correct": true,
+            "feedback": "Right — inside x + 3 gives x = −3 (flip the sign), outside −5 gives y = −5 (keep it)."
+          },
+          {
+            "id": "o2",
+            "label": "(3, −5)",
+            "correct": false,
+            "feedback": "The inside flips: x + 3 = 0 at x = −3, not +3."
+          },
+          {
+            "id": "o3",
+            "label": "(−3, 5)",
+            "correct": false,
+            "feedback": "The outside keeps its sign — a −5 means DOWN to y = −5."
+          },
+          {
+            "id": "o4",
+            "label": "(3, 5)",
+            "correct": false,
+            "feedback": "Both slipped: flip the inside (x = −3) and keep the outside (y = −5)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The vertex height is the minimum.",
+      "conceptTag": "ft-combined-shift",
+      "explanationVariants": [
+        "The parabola opens up, so its vertex (1, 4) is the lowest point — minimum output 4.",
+        "The square (x − 1)² is at least 0, so y is at least 0 + 4 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the minimum output of y = (x − 1)² + 4?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the x-coordinate of the vertex — the MINIMUM OUTPUT is its height, y = 4."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the parent's floor — the +4 outside lifts the whole graph, floor included, to 4."
+          }
+        ],
+        "fallbackFeedback": "(x − 1)² bottoms out at 0, so the minimum of the whole rule is 0 + 4 = 4."
+      },
+      "variant": {
+        "gen": "combined-shift"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Shifts and the domain.",
+      "conceptTag": "ft-combined-shift",
+      "explanationVariants": [
+        "Only the inside touches the domain: x − 6 ≥ 0 gives x ≥ 6. The +2 outside just lifts outputs.",
+        "The curve starts where the inside is 0 (x = 6); the vertical shift can't change which x are allowed."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the smallest allowed x for y = √(x − 6) + 2?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The +2 is the VERTICAL shift — it moves outputs and can't restrict inputs. The domain comes from x − 6 ≥ 0: x ≥ 6."
+          },
+          {
+            "value": -6,
+            "feedback": "x − 6 ≥ 0 solves to x ≥ +6 — the 6 crosses over positive."
+          }
+        ],
+        "fallbackFeedback": "Inside ≥ 0: x − 6 ≥ 0 → x ≥ 6; the +2 outside doesn't affect the domain."
+      },
+      "variant": {
+        "gen": "combined-shift",
+        "form": "domainStart"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build the rule from the move.",
+      "conceptTag": "ft-combined-shift",
+      "explanationVariants": [
+        "Right 4 needs x − 4 inside the bars; down 3 needs −3 outside: y = |x − 4| − 3.",
+        "The corner must land at (4, −3): inside 0 at x = 4, outside −3 for the height."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which rule moves y = |x| RIGHT 4 and DOWN 3?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = |x − 4| − 3",
+            "correct": true,
+            "feedback": "Right — inside flips (right 4 → x − 4), outside keeps its sign (down 3 → −3)."
+          },
+          {
+            "id": "o2",
+            "label": "y = |x + 4| − 3",
+            "correct": false,
+            "feedback": "x + 4 inside moves the graph LEFT 4 — right needs the minus: |x − 4|."
+          },
+          {
+            "id": "o3",
+            "label": "y = |x − 4| + 3",
+            "correct": false,
+            "feedback": "The +3 outside moves the graph UP — down 3 needs a subtraction outside."
+          },
+          {
+            "id": "o4",
+            "label": "y = |x + 4| + 3",
+            "correct": false,
+            "feedback": "Both directions reversed: right 4 is x − 4 inside, and down 3 is −3 outside."
+          }
+        ]
+      },
+      "hints": [
+        "Handle the sideways move first: right 4 means the inside is 0 at x = 4.",
+        "So the inside must be x − 4 (flip the sign).",
+        "Down 3 keeps its sign outside: subtract 3 after the bars."
+      ],
+      "variant": {
+        "gen": "combined-shift",
+        "form": "whichRule"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Inside → x (flipped), outside → y (as-is): the vertex is (h, k).",
+      "takeaways": [
+        "y = (x − h)² + k has its vertex at (h, k).",
+        "The vertex height is the minimum for an upward-opening graph.",
+        "Vertical shifts never change the domain; the inside does."
+      ],
+      "teaser": "Next chapter: flips and stretches — the shape finally changes size."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-combined-shift",
+      "concept": {
+        "id": "rem-ft0203-c",
+        "kind": "concept",
+        "body": "In (x − h)² + k, the inside sets the vertex's x (flip the sign) and the outside sets its y (keep the sign): vertex (h, k)."
+      },
+      "check": {
+        "id": "rem-ft0203-k",
+        "kind": "check",
+        "body": "One more vertex read.",
+        "conceptTag": "ft-combined-shift",
+        "explanationVariants": [
+          "Inside x − 5 gives x = 5; outside +1 gives y = 1: vertex (5, 1).",
+          "The inside is 0 at x = 5, and the +1 lifts the vertex to height 1."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the vertex of y = (x − 5)² + 1?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(5, 1)",
+              "correct": true,
+              "feedback": "Right — flip the inside (x = 5), keep the outside (y = 1)."
+            },
+            {
+              "id": "o2",
+              "label": "(−5, 1)",
+              "correct": false,
+              "feedback": "The inside flips: x − 5 = 0 at x = +5."
+            },
+            {
+              "id": "o3",
+              "label": "(5, −1)",
+              "correct": false,
+              "feedback": "The outside keeps its sign: +1 means the vertex sits at y = +1."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

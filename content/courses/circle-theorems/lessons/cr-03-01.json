@@ -1,0 +1,301 @@
+{
+  "id": "cr-03-01",
+  "slug": "tangent-meets-radius",
+  "title": "Tangent Meets Radius",
+  "courseId": "circle-theorems",
+  "chapterId": "ch3-tangents",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-tangent-perp",
+      "concept": {
+        "id": "rem-cr-tangent-perp-c",
+        "kind": "concept",
+        "body": "A tangent line touches the circle at exactly one point, and the radius drawn to that point is PERPENDICULAR to the tangent (the touch point is the line's closest approach to the center). From an external point P: right angle at the tangency point T, hypotenuse OP, so the tangent segment is PT = √(OP² − r²)."
+      },
+      "check": {
+        "id": "rem-cr-tangent-perp-k",
+        "kind": "check",
+        "body": "One tangent length.",
+        "conceptTag": "cr-tangent-perp",
+        "explanationVariants": [
+          "PT = √(13² − 5²) = 12 — the 5-12-13 triple.",
+          "Hypotenuse 13 (center to P), leg 5 (radius): the other leg is 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "P is 13 from the center; radius = 5. Tangent segment from P = ?",
+          "answer": 12,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 18,
+              "feedback": "18 = 13 + 5 adds lengths — subtract SQUARES: √(169 − 25) = 12."
+            },
+            {
+              "value": 8,
+              "feedback": "8 = 13 − 5 subtracts lengths — the right triangle wants squares: 12."
+            }
+          ],
+          "fallbackFeedback": "√(169 − 25) = 12."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **tangent line** touches the circle at exactly ONE point — the point of tangency. (Different creature from the tangent RATIO in trigonometry; the shared name is historical.) The headline theorem: **a tangent is perpendicular to the radius at its point of tangency** — and conversely, a line perpendicular to a radius at its endpoint is tangent.",
+      "figure": "tangent-radius"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A tangent meets the radius square on.",
+      "predict": {
+        "prompt": "Where a tangent touches the circle, what angle does it make with the radius drawn to that point?",
+        "options": [
+          {
+            "id": "right",
+            "label": "Exactly 90° — always, wherever the point of contact is"
+          },
+          {
+            "id": "varies",
+            "label": "It varies with how far the outside point sits from the centre"
+          },
+          {
+            "id": "acute",
+            "label": "Slightly less than 90°, since the tangent only grazes the curve"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "Exactly 90°, always. That right angle is what makes the tangent length √(D² − r²) — the radius, the tangent and the line to the centre form a right triangle. Slide the outside point and watch the right angle refuse to move."
+      },
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "tangentLength",
+        "radius": 5,
+        "targetLength": 12,
+        "start": 6,
+        "prompt": "Radius 5. Slide the outside point until each tangent measures 12.",
+        "successFeedback": "The point sits 13 from the centre: 5-12-13 again. The tangent length is √(D² − r²) precisely BECAUSE the radius meets the tangent at a right angle — the radius, the tangent and the line to the centre form a right triangle, with the centre-line as the hypotenuse.",
+        "lowFeedback": "The tangents are shorter than 12 — the point is too close to the circle.",
+        "highFeedback": "The tangents are longer than 12 — pull the point back toward the circle."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate circle measurements while tangent, chord, radius, and power relationships update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "circle-measures-remain-linked"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "diagram-not-to-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-tangent-perp"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The instant right angle.",
+      "conceptTag": "cr-tangent-perp",
+      "explanationVariants": [
+        "Radius to tangency point meets the tangent at 90° — by the theorem, no computation needed.",
+        "Tangent ⊥ radius at the touch point: 90°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Line ℓ is tangent to a circle at T, and OT is the radius to T. The angle between ℓ and OT measures ?",
+        "answer": 90,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "45° halves the truth — the tangent-radius meeting is a full right angle: 90°."
+          },
+          {
+            "value": 180,
+            "feedback": "180° would make them the same line — the radius stands PERPENDICULAR to the tangent: 90°."
+          }
+        ],
+        "fallbackFeedback": "Tangent ⊥ radius: 90°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-perp__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That right angle recruits Pythagoras. From an external point P, the segment to the center (OP), the radius to the tangency point (r), and the **tangent segment** PT form a right triangle with the right angle AT T — so **PT = √(OP² − r²)**. The hypotenuse is OP, always.",
+      "figure": "cr-tangent-perp"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Tangent length.",
+      "conceptTag": "cr-tangent-perp",
+      "explanationVariants": [
+        "PT = √(17² − 8²) = √225 = 15 — the 8-15-17 triple.",
+        "Right angle at T makes OP the hypotenuse: √(289 − 64) = 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P sits 17 units from the center of a circle with radius 8. Find the length of the tangent segment from P.",
+        "answer": 15,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 = 17 + 8 adds lengths — Pythagoras works in squares: √(289 − 64) = 15."
+          },
+          {
+            "value": 18.79,
+            "feedback": "18.79 ≈ √(289 + 64) ADDS squares — but OP is the HYPOTENUSE (the right angle sits at T): subtract, 15."
+          },
+          {
+            "value": 9,
+            "feedback": "9 = 17 − 8 subtracts plain lengths — subtract the SQUARES, then root: 15."
+          }
+        ],
+        "fallbackFeedback": "PT = √(17² − 8²) = 15."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-perp__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where's the right angle?",
+      "conceptTag": "cr-tangent-perp",
+      "explanationVariants": [
+        "The theorem puts the 90° at the POINT OF TANGENCY — where radius meets tangent.",
+        "Right angle at T, so OP (center to external point) is the hypotenuse."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the right triangle formed by center O, external point P, and tangency point T, the right angle sits at:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "T — where the radius meets the tangent",
+            "correct": true,
+            "feedback": "That's the tangent-radius theorem itself. OP therefore serves as hypotenuse: PT = √(OP² − r²)."
+          },
+          {
+            "id": "o2",
+            "label": "O — at the center",
+            "correct": false,
+            "feedback": "The center's angle varies with P's position — the GUARANTEED 90° lives at the tangency point T."
+          },
+          {
+            "id": "o3",
+            "label": "P — at the external point",
+            "correct": false,
+            "feedback": "P's angle shrinks as P retreats — the fixed right angle is at T, where tangent meets radius."
+          },
+          {
+            "id": "o4",
+            "label": "Nowhere — the triangle is generally oblique",
+            "correct": false,
+            "feedback": "The tangent-radius theorem GUARANTEES a right angle at T — that's what unlocks Pythagoras."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-perp__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Backward to the radius.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "From a point 26 units from the center, the tangent segment measures 24. Find the circle's radius.",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 50,
+            "feedback": "50 = 26 + 24 adds — the radius is the remaining LEG: √(26² − 24²) = 10."
+          },
+          {
+            "value": 35.38,
+            "feedback": "35.38 ≈ √(676 + 576) adds squares — 26 is the hypotenuse, so subtract: √100 = 10."
+          }
+        ],
+        "fallbackFeedback": "r = √(26² − 24²) = 10 — the 10-24-26 triple from the Thales lesson, reused."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "How far is the horizon?",
+      "conceptTag": "cr-tangent-perp",
+      "hints": [
+        "Your line of sight to the horizon is TANGENT to the hill's circular cross-section.",
+        "Right triangle: hypotenuse = center-to-eye = r + h = 25 + 4; leg = r = 25.",
+        "Sight distance = √(29² − 25²)."
+      ],
+      "explanationVariants": [
+        "d = √(29² − 25²) = √(841 − 625) = √216 ≈ 14.7 — the tangent segment from eye to horizon point.",
+        "Eye sits 29 from the center; the tangent-length formula gives ≈ 14.7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A perfectly round hill has radius 25 m. Your eyes are 4 m above its surface (29 m from the center). How far is the horizon point along your tangent line of sight (1 decimal)?",
+        "answer": 14.7,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 m is your height above the surface — the tangent SIGHT distance is √(29² − 25²) ≈ 14.7 m."
+          },
+          {
+            "value": 38.3,
+            "feedback": "38.3 ≈ √(841 + 625) adds squares — the eye-to-center segment is the HYPOTENUSE: subtract, ≈ 14.7."
+          },
+          {
+            "value": 54,
+            "feedback": "54 = 29 + 25 adds lengths — the formula subtracts squares first: ≈ 14.7."
+          }
+        ],
+        "fallbackFeedback": "√(29² − 25²) = √216 ≈ 14.7 m."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-perp__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Touch once, at right angles.",
+      "takeaways": [
+        "Tangent line: exactly one shared point; perpendicular to the radius there (and conversely).",
+        "Tangent-length engine: PT = √(OP² − r²), right angle always at T.",
+        "Horizon sights and wheel contacts are tangent problems in costume."
+      ],
+      "teaser": "Next: TWO tangents from the same external point — and the perfect symmetry between them."
+    }
+  ]
+}

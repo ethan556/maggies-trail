@@ -1,0 +1,198 @@
+{
+  "id": "iar-02-02",
+  "slug": "corners-of-a-region",
+  "title": "Corners of a Region",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch2-systems-of-inequalities",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Where two boundary lines cross, the region gets a CORNER — a vertex. Corners are found by algebra, not squinting: the crossing of y = x and y = 4 is the point satisfying both equations at once. Corners matter because they're where regions are sharpest — and, soon, where best answers hide.",
+      "figure": "iar-corner-by-algebra"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Steer to the crossing of the two boundaries.",
+      "widget": {
+        "type": "systemsExplore",
+        "prompt": "Drag the point to where y = x meets y = 4 — the corner both boundary lines share.",
+        "m1": 1,
+        "b1": 0,
+        "m2": 0,
+        "b2": 4,
+        "xMin": 0,
+        "xMax": 6,
+        "yMin": 0,
+        "yMax": 6,
+        "xStart": 1,
+        "yStart": 2,
+        "successFeedback": "(4, 4): it obeys y = x and y = 4 simultaneously — the one point on both fences, the region's corner.",
+        "offLine1Feedback": "You've left the diagonal y = x — the corner must stay on it.",
+        "offLine2Feedback": "You've left the ceiling y = 4 — the corner sits at height 4 exactly."
+      },
+      "predict": {
+        "prompt": "Before dragging: the corner of y = x and y = 4 sits at…",
+        "options": [
+          {
+            "id": "ff",
+            "label": "(4, 4)"
+          },
+          {
+            "id": "fz",
+            "label": "(4, 0)"
+          },
+          {
+            "id": "zf",
+            "label": "(0, 4)"
+          }
+        ],
+        "outcomeId": "ff",
+        "reveal": "Height 4 is forced by the second line, and y = x then forces x = 4 too: the corner is (4, 4). Solving the two boundary EQUATIONS is how every corner of every region is found — no picture required."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Corners come from equations.",
+      "conceptTag": "iar-vertices",
+      "explanationVariants": [
+        "The vertex solves both boundary equations at once — it's the system y = x, y = 4 solved as equations.",
+        "Boundary crossings are found by setting the boundary equations equal, not by reading pixels."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How is a region's corner computed?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Solve the two boundary equations simultaneously",
+            "correct": true,
+            "feedback": "A corner lies on both boundaries, so it satisfies both equations — that's a system of equations."
+          },
+          {
+            "id": "o2",
+            "label": "Average the two y-intercepts",
+            "correct": false,
+            "feedback": "Intercepts describe where lines meet the AXIS, not each other."
+          },
+          {
+            "id": "o3",
+            "label": "Test points until one works",
+            "correct": false,
+            "feedback": "Point-testing finds sides; crossings need exact algebra."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Different pairs, same machine. x + y = 6 crossing y = 2: substitute the known y to get x + 2 = 6, so x = 4 — corner (4, 2). Every corner of every region falls to substitution or elimination, the tools you already own from systems of equations.",
+      "figure": "iar-same-corner-machine"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Run the machine.",
+      "conceptTag": "iar-vertices",
+      "explanationVariants": [
+        "Substitute y = 2 into x + y = 6: x = 4, so the crossing is (4, 2).",
+        "With y pinned at 2, the first equation forces x = 6 − 2 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Where do x + y = 6 and y = 2 cross? Enter the x-coordinate.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's x + y, not x. With y = 2 already spent, x = 6 − 2 = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "That's the y-coordinate. The x comes from 6 − 2."
+          },
+          {
+            "value": 8,
+            "feedback": "Added instead of substituting: x + 2 = 6 gives x = 4."
+          }
+        ],
+        "fallbackFeedback": "Substitute y = 2 into x + y = 6: x = 4. A crossing satisfies both equations at once."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A triangle's third corner.",
+      "conceptTag": "iar-vertices",
+      "explanationVariants": [
+        "y = x meets x + y = 6 where x + x = 6, so x = 3 and the corner is (3, 3).",
+        "Substituting y = x into x + y = 6 gives 2x = 6 — the crossing sits at (3, 3)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The region bounded by y = x, y = 0, and x + y = 6 has a top corner where y = x meets x + y = 6. Its x is…",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's the full sum. On y = x the equation reads x + x = 6, so x = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "2x = 6 gives x = 3, not 2 — check the division."
+          }
+        ],
+        "fallbackFeedback": "The top corner is where y = x meets x + y = 6: substituting gives 2x = 6, so x = 3 and y = 3."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "All three corners.",
+      "conceptTag": "iar-vertices",
+      "explanationVariants": [
+        "The pairs give (0, 0), (6, 0), (3, 3) — three boundary crossings, three vertices of the triangle.",
+        "y = x with y = 0 → origin; x + y = 6 with y = 0 → (6, 0); y = x with x + y = 6 → (3, 3)."
+      ],
+      "hints": [
+        "Each corner comes from one PAIR of the three boundaries.",
+        "Solve: y = x with y = 0; then x + y = 6 with y = 0; then y = x with x + y = 6.",
+        "The three crossings are (0, 0), (6, 0), and (3, 3) — how many is that?"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many corners does the region bounded by y = x, y = 0, and x + y = 6 have?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Three boundaries pair up three ways — and here all three crossings are genuine corners."
+          },
+          {
+            "value": 6,
+            "feedback": "Six would double-count: each PAIR of lines meets once, and there are 3 pairs."
+          }
+        ],
+        "fallbackFeedback": "Walk the boundary: (0, 0) where y = x meets y = 0; (6, 0) where y = 0 meets x + y = 6; (3, 3) where y = x meets x + y = 6. Three corners."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Corners are solved, not seen.",
+      "takeaways": [
+        "A vertex is the simultaneous solution of two boundary equations.",
+        "Substitution and elimination find every corner exactly.",
+        "n boundaries pair up into at most n·(n−1)/2 crossings."
+      ],
+      "teaser": "next: checking a point against three fences at once."
+    }
+  ]
+}

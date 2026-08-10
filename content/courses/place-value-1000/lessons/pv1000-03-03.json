@@ -1,0 +1,345 @@
+{
+ "id": "pv1000-03-03",
+ "slug": "ordering-3-digit-numbers",
+ "title": "Ordering 3-Digit Numbers",
+ "courseId": "place-value-1000",
+ "chapterId": "ch3-reading-writing-and-comparing",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "place-by-place-compare",
+   "body": "Ordering a list uses the same spot-by-spot comparison — just check each pair of numbers the same way, one comparison at a time."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Compare within a list.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Compare 340 and 304: <, =, or >?",
+    "options": [
+     {
+      "id": "a",
+      "label": ">",
+      "correct": true,
+      "feedback": "Yes — hundreds match (3=3), tens decide: 4 > 0, so 340 > 304."
+     },
+     {
+      "id": "b",
+      "label": "<",
+      "feedback": "Hundreds are tied. Check tens: 4 > 0, so 340 > 304, not <."
+     },
+     {
+      "id": "c",
+      "label": "=",
+      "feedback": "Hundreds match, but tens differ (4 vs 0) — not equal."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Read a number, then use it.",
+   "conceptTag": "pv1000-order-mixed",
+   "explanationVariants": [
+    "Two hundred sixteen is 216.",
+    "Hundreds word first, then the rest."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What number is \"two hundred sixteen\"?",
+    "answer": 216,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 26,
+      "feedback": "Don't drop the hundreds — two hundred is 200, plus sixteen is 216."
+     },
+     {
+      "value": 2016,
+      "feedback": "That's 4 digits. Two hundred sixteen is a 3-digit number: 216."
+     }
+    ],
+    "fallbackFeedback": "Two hundred sixteen = 216."
+   },
+   "variant": {
+    "gen": "g2-place-value-1000",
+    "form": "Pv1000OrderMixedNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "To order a whole list, compare pairs one at a time, sliding the smaller or bigger one into place until the whole list is sorted.",
+   "figure": "pv1000-order-list"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Order a whole set at once — same digits, different spots.",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Drag the four numbers into order, least to greatest. Every one uses only the digits 2, 6, and 7.",
+    "items": [
+     {
+      "id": "n627",
+      "label": "627"
+     },
+     {
+      "id": "n267",
+      "label": "267"
+     },
+     {
+      "id": "n672",
+      "label": "672"
+     },
+     {
+      "id": "n276",
+      "label": "276"
+     }
+    ],
+    "correctOrder": [
+     "n267",
+     "n276",
+     "n627",
+     "n672"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "n627",
+      "second": "n276",
+      "feedback": "627 has 6 hundreds; 276 has only 2. Hundreds are checked first, and 2 hundreds loses to 6 no matter how the other digits look."
+     },
+     {
+      "first": "n276",
+      "second": "n267",
+      "feedback": "Both start with 2 hundreds, so the TENS decide: 267 carries 6 tens, 276 carries 7 — so 267 comes first."
+     },
+     {
+      "first": "n672",
+      "second": "n627",
+      "feedback": "Both hold 6 hundreds — the tens break the tie: 2 tens (627) sits before 7 tens (672)."
+     }
+    ],
+    "missFeedback": "Sort by hundreds first (the 2-hundreds pair before the 6-hundreds pair), then let tens order each pair: 267, 276, 627, 672.",
+    "successFeedback": "267 < 276 < 627 < 672 — hundreds split the pairs, tens ordered within. Same digits, four different sizes."
+   },
+   "predict": {
+    "prompt": "All four numbers use only the digits 2, 6, and 7. What will decide their order?",
+    "options": [
+     {
+      "id": "hundreds",
+      "label": "The hundreds spot — the biggest spot speaks first"
+     },
+     {
+      "id": "digits",
+      "label": "The biggest digit anywhere in the number"
+     },
+     {
+      "id": "ones",
+      "label": "The ones spot — start where adding starts"
+     }
+    ],
+    "outcomeId": "hundreds",
+    "reveal": "Place beats digit size: 276 sits below 627 even though both use the very same digits, because 2 hundreds can't touch 6 hundreds. Only when hundreds tie do the tens get a vote — comparison scans left to right, the opposite end from addition."
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Write and compare go hand in hand — a story might give you a number in words, and you'll need to compare it against another number.",
+   "figure": "pv1000-write-compare"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Write a word-form number, mixed practice.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Write 730 in word form.",
+    "options": [
+     {
+      "id": "a",
+      "label": "seven hundred thirty",
+      "correct": true,
+      "feedback": "Yes — 7 hundreds, then thirty (0 ones, not spoken)."
+     },
+     {
+      "id": "b",
+      "label": "seven hundred three",
+      "feedback": "730 has 3 tens and 0 ones — that's \"thirty,\" not \"three.\""
+     },
+     {
+      "id": "c",
+      "label": "seventy-three",
+      "feedback": "Don't drop the hundreds: seven hundred thirty, not seventy-three."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A comparison with the ones spot deciding.",
+   "conceptTag": "pv1000-order-mixed",
+   "explanationVariants": [
+    "Hundreds and tens match; ones decide: 6 < 9, so 456 < 459.",
+    "The ones spot breaks the tie."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Compare 456 and 459: <, =, or >?",
+    "options": [
+     {
+      "id": "a",
+      "label": "<",
+      "correct": true,
+      "feedback": "Yes — hundreds (4=4) and tens (5=5) match, so ones decide: 6 < 9, meaning 456 < 459."
+     },
+     {
+      "id": "b",
+      "label": ">",
+      "feedback": "Hundreds and tens are tied. Check the ones: 6 < 9, so 456 < 459, not >."
+     },
+     {
+      "id": "c",
+      "label": "=",
+      "feedback": "Hundreds and tens match, but the ones differ (6 vs 9) — not equal."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g2-place-value-1000",
+    "form": "Pv1000OrderMixedMcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Another words-to-number conversion.",
+   "conceptTag": "pv1000-order-mixed",
+   "explanationVariants": [
+    "Eight hundred is 800.",
+    "Empty spots aren't spoken."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What number is \"eight hundred\"?",
+    "answer": 800,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "\"Eight hundred\" means 8 hundreds, 0 tens, 0 ones: 800, not just 8."
+     },
+     {
+      "value": 80,
+      "feedback": "80 would be \"eighty.\" \"Eight hundred\" is 800."
+     }
+    ],
+    "fallbackFeedback": "Eight hundred = 800."
+   },
+   "variant": {
+    "gen": "g2-place-value-1000",
+    "form": "Pv1000OrderMixedNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A full mixed challenge.",
+   "conceptTag": "pv1000-order-mixed",
+   "explanationVariants": [
+    "Hundreds match (7=7); tens decide: 9 > 2, so 792 > 725.",
+    "Check spot by spot until you find a difference."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Compare 792 and 725: <, =, or >?",
+    "options": [
+     {
+      "id": "a",
+      "label": ">",
+      "correct": true,
+      "feedback": "Yes — hundreds match (7=7), tens decide: 9 > 2, so 792 > 725."
+     },
+     {
+      "id": "b",
+      "label": "<",
+      "feedback": "Hundreds are tied. Check the tens digit: 9 > 2, so 792 > 725, not <."
+     },
+     {
+      "id": "c",
+      "label": "=",
+      "feedback": "Hundreds match, but the tens digits differ (9 vs 2) — not equal."
+     }
+    ]
+   },
+   "hints": [
+    "Compare the hundreds digit first: 7 = 7, tied.",
+    "Move to the tens digit: 9 vs 2.",
+    "9 > 2, so 792 > 725."
+   ],
+   "variant": {
+    "gen": "g2-place-value-1000",
+    "form": "Pv1000OrderMixedMcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Ordering a list just repeats spot-by-spot comparison for every pair — reading and writing numbers helps along the way.",
+   "takeaways": [
+    "Order a list by comparing pairs, spot by spot.",
+    "Word form and standard form both describe the same number.",
+    "The same left-to-right comparison strategy works for any pair."
+   ],
+   "teaser": "you've completed reading, writing, and comparing 3-digit numbers — more of this course is still ahead."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pv1000-order-mixed",
+   "concept": {
+    "id": "rem-pom-c",
+    "kind": "concept",
+    "body": "Ordering numbers uses the same spot-by-spot comparison as before: hundreds, then tens, then ones. Reading and writing word form helps interpret story problems along the way."
+   },
+   "check": {
+    "id": "rem-pom-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "pv1000-order-mixed",
+    "explanationVariants": [
+     "Hundreds and tens match; ones decide: 456 < 459.",
+     "The ones spot breaks the tie."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Compare 456 and 459: <, =, or >?",
+     "options": [
+      {
+       "id": "a",
+       "label": "<",
+       "correct": true,
+       "feedback": "Yes — 456 < 459."
+      },
+      {
+       "id": "b",
+       "label": ">",
+       "feedback": "6 < 9 in ones, so 456 < 459."
+      },
+      {
+       "id": "c",
+       "label": "=",
+       "feedback": "Ones differ (6 vs 9) — not equal."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

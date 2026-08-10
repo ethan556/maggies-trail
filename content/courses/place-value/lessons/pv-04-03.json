@@ -1,0 +1,375 @@
+{
+  "id": "pv-04-03",
+  "slug": "tens-in-stories",
+  "title": "Tens in Stories",
+  "courseId": "place-value",
+  "chapterId": "ch4-mult-tens",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The pattern earns its keep in the wild: rows of chairs, packs of stickers, cents in dimes. The workflow uses everything you own: **spot the tens unit → run the small fact → read in units → guard with an estimate**. This lesson is the whole course, one story at a time.",
+      "figure": "pv3-times-tens"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "First move: which way is the story pointing?",
+      "conceptTag": "tens-problems",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each story by the operation it needs.",
+        "buckets": [
+          {
+            "id": "mul",
+            "label": "4 × 20 (build the total)",
+            "icon": "🧱"
+          },
+          {
+            "id": "div",
+            "label": "80 ÷ 4 (split the total)",
+            "icon": "🔪"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "4 packs of 20 stickers — how many stickers?",
+            "bucketId": "mul",
+            "feedback": "The total is the mystery, built from 4 equal groups of 2 tens: 4 × 20 = 80."
+          },
+          {
+            "id": "s2",
+            "label": "80 stickers shared equally into 4 albums",
+            "bucketId": "div",
+            "feedback": "The total (80) is known and gets split — 80 ÷ 4 = 20 per album."
+          },
+          {
+            "id": "s3",
+            "label": "4 shelves with 20 books on each",
+            "bucketId": "mul",
+            "feedback": "Equal groups building an unknown total: 4 × 2 tens = 8 tens = 80 books."
+          },
+          {
+            "id": "s4",
+            "label": "80 chairs set out in 4 equal rows",
+            "bucketId": "div",
+            "feedback": "The 80 is given and gets split into rows: 80 ÷ 4 = 20 chairs per row."
+          }
+        ],
+        "missFeedback": "Find each story's total: unknown and being built → ×; known and being split → ÷. (The word-problem compass still works with tens.)",
+        "successFeedback": "Same numbers, opposite directions — the compass from the multiplication course points true with tens aboard."
+      },
+      "predict": {
+        "prompt": "'4 shelves with 20 books each — how many books in all?' Which operation builds the answer?",
+        "options": [
+          {
+            "id": "mul",
+            "label": "4 × 20 — combining equal groups"
+          },
+          {
+            "id": "div",
+            "label": "80 ÷ 4 — splitting a total"
+          },
+          {
+            "id": "sub",
+            "label": "20 − 4"
+          }
+        ],
+        "outcomeId": "mul",
+        "reveal": "Groups given, total wanted: multiply. Total given, shares wanted: divide. Sort stories by what's MISSING, not by their keywords — 'each' shows up in both kinds."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Dimes are tens wearing coats.",
+      "conceptTag": "tens-problems",
+      "explanationVariants": [
+        "Each dime is 1 ten of cents, so 7 dimes are 7 tens: 70 cents.",
+        "Run the workflow: unit is tens (of cents), fact is 7 × 1, read in tens: 70."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A dime is worth 10 cents. How many cents are 7 dimes worth?",
+        "answer": 70,
+        "tolerance": 0,
+        "unit": "cents",
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "17 adds 7 + 10. Each of the 7 coins is worth a whole ten — seven tens multiply up to 70."
+          },
+          {
+            "value": 710,
+            "feedback": "710 glues 7 and 10 side by side. The 7 counts tens: seven tens read as 70."
+          },
+          {
+            "value": 7,
+            "feedback": "7 counts the COINS. Their value is in tens of cents — read those 7 tens as 70."
+          }
+        ],
+        "fallbackFeedback": "7 coins × 1 ten each = 7 tens of cents."
+      },
+      "variant": {
+        "gen": "tens-problems",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two-step stories still follow the workshop rules: find the first pile, **say it out loud**, then let the second step act on the right pile. And the ch3 habit stands guard over the final answer — round, compute friendly, compare.",
+      "figure": "pv3-times-tens"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A one-step warmup at full size.",
+      "conceptTag": "tens-problems",
+      "explanationVariants": [
+        "6 rows of 3 tens: 6 × 3 = 18, read in tens: 180 chairs.",
+        "Guard: 6 × 30 is a bit under 6 × 40 = 240 and well over 6 × 20 = 120 — 180 sits comfortably between."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Chairs come in rows of 30. The hall needs 6 full rows. How many chairs is that?",
+        "answer": 180,
+        "tolerance": 0,
+        "unit": "chairs",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 is the tens count — eighteen TENS of chairs. The badge writes it as 180."
+          },
+          {
+            "value": 36,
+            "feedback": "36 adds 6 + 30. Six whole rows of 30 multiply: run 6 × 3 in tens."
+          },
+          {
+            "value": 1800,
+            "feedback": "1800 wears an extra badge — only one ten is in play (30's). Eighteen tens are 180."
+          }
+        ],
+        "fallbackFeedback": "6 × 3 tens = 18 tens. Read it back as a number."
+      },
+      "variant": {
+        "gen": "tens-problems",
+        "form": "chairRows"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Chain a whole plan — build, then change the pile.",
+      "conceptTag": "tens-problems",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "3 boxes hold 40 crayons each; then 20 crayons are given away. Build the whole plan as one expression.",
+        "tokens": [
+          {
+            "id": "t3",
+            "label": "3"
+          },
+          {
+            "id": "tx",
+            "label": "×"
+          },
+          {
+            "id": "t40",
+            "label": "40"
+          },
+          {
+            "id": "tm",
+            "label": "−"
+          },
+          {
+            "id": "t20",
+            "label": "20"
+          },
+          {
+            "id": "tp",
+            "label": "+"
+          }
+        ],
+        "correct": [
+          "t3",
+          "tx",
+          "t40",
+          "tm",
+          "t20"
+        ],
+        "acceptAlso": [
+          [
+            "t40",
+            "tx",
+            "t3",
+            "tm",
+            "t20"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t3",
+              "tx",
+              "t40",
+              "tp",
+              "t20"
+            ],
+            "feedback": "Given-away crayons LEAVE the pile — the chain's second link subtracts."
+          },
+          {
+            "sequence": [
+              "t3",
+              "tp",
+              "t40",
+              "tm",
+              "t20"
+            ],
+            "feedback": "3 + 40 joins the box count to one box's crayons. The boxes are equal groups — step one multiplies them."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Build the pile first (3 boxes × 40), then remove the 20 given away.",
+        "successFeedback": "3 × 40 − 20 = 120 − 20 = 100 crayons kept. Build, then change — the workshop chain with tens aboard."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One glance, tens-sized.",
+      "conceptTag": "tens-problems",
+      "explanationVariants": [
+        "6 × 20 is 12 tens = 120 — Jo's 80 is four-tickets money (4 × 20), not six.",
+        "Even 5 tickets cost 100; six must cost more. An 80 can't survive the size check."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Tickets cost $20 each. Jo says 6 tickets cost $80 total. What does one glance tell you?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Busted — six 20s make 12 tens, which is $120, not $80",
+            "correct": true,
+            "feedback": "The tens count does it in one glance: 6 × 2 tens = 12 tens = 120. Jo priced only four tickets."
+          },
+          {
+            "id": "b",
+            "label": "Fine — 80 is a reasonably big number",
+            "feedback": "Big compared to what? Five tickets alone cost $100 — six can't cost less. Size checks compare, never just admire."
+          },
+          {
+            "id": "c",
+            "label": "You can't tell without a calculator",
+            "feedback": "The small fact 6 × 2 (in tens) settles it in your head: 12 tens is 120, and 80 falls short."
+          },
+          {
+            "id": "d",
+            "label": "Busted — tickets never cost $20",
+            "feedback": "Ticket trivia isn't math. The bust comes from the numbers: 6 × 20 must reach 120."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "tens-problems",
+        "form": "badTicketClaim"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The course capstone: total, change, guard.",
+      "conceptTag": "tens-problems",
+      "hints": [
+        "Total first: 7 packs of 9 tens of pencils.",
+        "7 × 9 = 63, so 63 tens = 630 pencils.",
+        "The art room takes 130: subtract, and guard the answer (≈ 630 − 100)."
+      ],
+      "explanationVariants": [
+        "Total: 7 × 90 = 630. After the gift: 630 − 130 = 500. Guard: ≈ 600 − 100 = 500 — dead on.",
+        "Unit route: 63 tens minus 13 tens = 50 tens = 500 pencils remain."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A school buys 7 packs of 90 pencils, then gives 130 pencils to the art room. How many pencils does the school keep?",
+        "answer": 500,
+        "tolerance": 0,
+        "unit": "pencils",
+        "commonErrors": [
+          {
+            "value": 630,
+            "feedback": "630 is the full purchase — step one done! The art room's 130 leave the pile. Subtract them."
+          },
+          {
+            "value": 760,
+            "feedback": "760 ADDED the gift. Pencils that go to the art room leave the school's pile — the second step subtracts."
+          },
+          {
+            "value": 50,
+            "feedback": "50 is the answer in TENS (63 tens − 13 tens) — read the badge: fifty tens are 500 pencils."
+          }
+        ],
+        "fallbackFeedback": "Two steps: total the packs (7 × 9 tens), then subtract 130 — or work it all in tens: 63 − 13."
+      },
+      "variant": {
+        "gen": "tens-problems",
+        "form": "packsKeep"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "That's the whole course, working as one machine.",
+      "takeaways": [
+        "Spot the tens unit, run the small fact, read the badge.",
+        "Two-step stories: build the pile, say it out loud, then change it.",
+        "The guard checks every final answer — the habit that never retires."
+      ],
+      "teaser": "a brand-new course begins: Fractions from Scratch — what happens when we cut things into equal parts."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tens-problems",
+      "concept": {
+        "id": "rem-tp-c",
+        "kind": "concept",
+        "body": "Quick rewind. Translate the story into tens BEFORE computing: \"5 bags of 30\" becomes 5 × 3 tens. Run the small fact (15), read the badge (150). Story → tens → fact → badge, every time."
+      },
+      "check": {
+        "id": "rem-tp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tens-problems",
+        "explanationVariants": [
+          "2 rows of 5 tens: 2 × 5 = 10, read in tens: 100 chairs.",
+          "Ten tens trade up into exactly one hundred — the chapter-1 trade, closing the loop."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "2 rows of 50 chairs — how many chairs?",
+          "options": [
+            {
+              "id": "a",
+              "label": "100",
+              "correct": true,
+              "feedback": "2 × 5 tens = 10 tens = 100 — ten tens trade up into one hundred."
+            },
+            {
+              "id": "b",
+              "label": "10",
+              "feedback": "10 is the tens count. Ten TENS of chairs read as 100."
+            },
+            {
+              "id": "c",
+              "label": "52",
+              "feedback": "52 adds 2 + 50. Two whole rows of 50 multiply: 2 × 5 in tens."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "id": "fa-03-01",
+  "slug": "adding-like-fractions",
+  "title": "Adding Like Fractions",
+  "courseId": "fractions-add",
+  "chapterId": "ch3-add-subtract-like-denom",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When two fractions share a denominator, their pieces are already the **same size** — you're just counting how many you have in all. 2/7 (two sevenths) plus 3/7 (three sevenths) is 5 sevenths: **5/7.** Add the numerators; the denominator — the piece size — never changes.",
+      "figure": "fa-add-like"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Add the pieces, keep the cut.",
+      "widget": {
+        "type": "fractionBar",
+        "targetNum": 5,
+        "targetDen": 8,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 8,
+        "prompt": "2/8 + 3/8. Build the answer on the bar.",
+        "successFeedback": "5/8. The pieces are all the same size, so you just count them: 2 eighths plus 3 eighths is 5 eighths. The denominator names the piece — it is not something you add.",
+        "lowFeedback": "That is less than 5/8. Count the eighths: 2 + 3.",
+        "highFeedback": "That is more than 5/8. Adding the denominators too (5/16) is the classic slip — the bottom names the piece size, and that has not changed."
+      },
+      "predict": {
+        "prompt": "The bar starts at 1/8. Before you touch it: is 1/8 more or less of the bar than 5/8?",
+        "options": [
+          {
+            "id": "more",
+            "label": "1/8 is more"
+          },
+          {
+            "id": "less",
+            "label": "1/8 is less"
+          },
+          {
+            "id": "same",
+            "label": "They're the same amount"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "With the same whole, the bar settles it: 1/8 covers less than 5/8. Count of pieces and size of pieces work together — neither alone decides the amount."
+      },
+      "conceptTag": "add-like-denom",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents add like denom.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add like denom must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add like denom."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:add-like-denom",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the numerators.",
+      "conceptTag": "add-like-denom",
+      "explanationVariants": [
+        "2 + 5 = 7, and the denominator stays 11 — the sum is 7/11.",
+        "Only the numerators combine; the denominator is untouched."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "2/11 + 5/11 = 7/?. What is the denominator?",
+        "answer": 11,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "22 comes from adding the denominators too (11+11). The pieces don't change size when you combine them — the denominator stays 11."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the NUMERATOR of the sum, not the denominator. The denominator is what stayed fixed throughout: 11."
+          }
+        ],
+        "fallbackFeedback": "The denominator names the piece size, which never changes when adding like fractions."
+      },
+      "variant": {
+        "gen": "add-like-denom"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's why the denominator can't change: sevenths are sevenths. Combining 2 sevenths and 3 sevenths doesn't shrink the pieces into fourteenths — it just gives you more pieces of the SAME size. Adding the denominators (7+7=14) would mean the pieces got smaller, which never happened.",
+      "figure": "fa-add-like"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the mistake.",
+      "conceptTag": "add-like-denom",
+      "explanationVariants": [
+        "Sam added the denominators too (7+7=14), but the pieces stayed the same size. The correct sum is 5/7.",
+        "Combining sevenths never turns them into fourteenths."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Sam adds 2/7 + 3/7 and writes 5/14. What went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Sam added the denominators too — the pieces stayed the same size, so the answer is 5/7",
+            "correct": true,
+            "feedback": "The denominator names piece size, which never changes here. Only the numerators add: 5/7."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — 5/14 is correct",
+            "feedback": "The pieces never shrank into fourteenths. Adding same-size sevenths keeps the denominator at 7: 5/7."
+          },
+          {
+            "id": "c",
+            "label": "Sam should have multiplied the numerators",
+            "feedback": "Multiplying isn't the operation here — adding fractions with the same denominator just adds the numerators: 2+3=5, giving 5/7."
+          },
+          {
+            "id": "d",
+            "label": "The numerators should have been 2+7 and 3+7",
+            "feedback": "The numerators are 2 and 3 as given — only they combine (2+3=5). The denominator stays 7, unchanged."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "add-like-denom",
+        "form": "diagnoseError"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Correct sum, or the denominator trap?",
+      "conceptTag": "add-like-denom",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each answer: is it a CORRECT sum, or does it fall into the denominator trap?",
+        "buckets": [
+          {
+            "id": "correct",
+            "label": "Correct sum",
+            "icon": "✅"
+          },
+          {
+            "id": "trap",
+            "label": "Denominator trap",
+            "icon": "🚫"
+          }
+        ],
+        "items": [
+          {
+            "id": "a1",
+            "label": "3/10 + 4/10 = 7/10",
+            "bucketId": "correct",
+            "feedback": "Numerators added (3+4=7); denominator stayed 10."
+          },
+          {
+            "id": "a2",
+            "label": "3/10 + 4/10 = 7/20",
+            "bucketId": "trap",
+            "feedback": "The denominator was doubled (10+10=20) — but the piece size never changed. It should be 7/10."
+          },
+          {
+            "id": "a3",
+            "label": "5/12 + 2/12 = 7/12",
+            "bucketId": "correct",
+            "feedback": "Numerators added (5+2=7); denominator stayed 12."
+          },
+          {
+            "id": "a4",
+            "label": "5/12 + 2/12 = 7/24",
+            "bucketId": "trap",
+            "feedback": "The denominator was doubled (12+12=24) — but the pieces stayed twelfths. It should be 7/12."
+          }
+        ],
+        "missFeedback": "Check whether the denominator matches the ORIGINAL piece size, or whether it got added to itself.",
+        "successFeedback": "Every correct sum keeps the original denominator; every trap answer doubled it instead."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more sum.",
+      "conceptTag": "add-like-denom",
+      "explanationVariants": [
+        "6 + 5 = 11, and the denominator stays 13 — the sum is 11/13.",
+        "The numerators combine; the denominator holds steady at 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "6/13 + 5/13 = 11/?. What is the denominator?",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 26,
+            "feedback": "26 comes from adding the denominators too (13+13). The piece size never changes — the denominator stays 13."
+          },
+          {
+            "value": 11,
+            "feedback": "11 is the NUMERATOR of the sum, not the denominator. The denominator is what stayed fixed: 13."
+          }
+        ],
+        "fallbackFeedback": "The denominator stays exactly what it started as."
+      },
+      "variant": {
+        "gen": "add-like-denom"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The shared pizza.",
+      "conceptTag": "add-like-denom",
+      "hints": [
+        "Both amounts are already in ninths — same-size pieces.",
+        "Add just the numerators: 2 + 5.",
+        "The denominator stays 9."
+      ],
+      "explanationVariants": [
+        "2 + 5 = 7, and the denominator stays 9 — together they ate 7/9 of the pizza.",
+        "Combining ninths keeps the pieces as ninths: 7/9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Maya ate 2/9 of a pizza. Jake ate 5/9. Combined, they ate 7/?. What is the denominator?",
+        "answer": 9,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 comes from adding the denominators too (9+9). The pizza's pieces never changed size — the denominator stays 9."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the NUMERATOR of the combined amount, not the denominator. The denominator is what stayed fixed: 9."
+          }
+        ],
+        "fallbackFeedback": "Add just the numerators (2+5); the denominator stays 9."
+      },
+      "variant": {
+        "gen": "add-like-denom",
+        "form": "wordSum"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same-size pieces, just counted.",
+      "takeaways": [
+        "Adding like fractions adds only the numerators.",
+        "The denominator names the piece size, which never changes.",
+        "Adding the denominators too is the classic trap — the pieces don't shrink when you combine them."
+      ],
+      "teaser": "next: subtracting like fractions — the exact same idea, in reverse."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "add-like-denom",
+      "concept": {
+        "id": "rem-al-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Add only the numerators; the denominator stays put.** For 2/6 + 3/6: 2+3=5, and the denominator stays 6. The sum is 5/6 — not 5/12."
+      },
+      "check": {
+        "id": "rem-al-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "add-like-denom",
+        "explanationVariants": [
+          "2+3=5, and the denominator stays 6: 5/6.",
+          "Only the numerators combine."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is 2/6 + 3/6?",
+          "options": [
+            {
+              "id": "a",
+              "label": "5/6",
+              "correct": true,
+              "feedback": "2+3=5, denominator stays 6."
+            },
+            {
+              "id": "b",
+              "label": "5/12",
+              "feedback": "12 doubles the denominator — but the pieces stayed sixths. It's 5/6."
+            },
+            {
+              "id": "c",
+              "label": "5/3",
+              "feedback": "The denominator doesn't shrink either. It stays exactly 6: 5/6."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

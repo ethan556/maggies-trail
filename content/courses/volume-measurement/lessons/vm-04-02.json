@@ -1,0 +1,324 @@
+{
+  "id": "vm-04-02",
+  "slug": "volume-l-w-h",
+  "title": "V = l × w × h",
+  "courseId": "volume-measurement",
+  "chapterId": "ch4-volume-formula",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The layer method fits in one line. The base layer holds **length × width** cubes, and there are **height** layers. So the volume of a box is **V = l × w × h** — multiply the three edge lengths. A box 6 long, 3 wide, and 2 tall: V = 6 × 3 × 2 = 36 cubic units.",
+      "figure": "vm-formula-lwh"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Volume counts the unit cubes that fill a box. Set the three dimensions and watch the stack grow — length × width × height counts every cube without counting them one by one.",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "Build a box with a volume of 24 cubic units.",
+        "targetVolume": 24,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 1,
+        "hStart": 1,
+        "successFeedback": "24 cubes — length × width × height counts every cube in the box at once.",
+        "lowFeedback": "Fewer than 24 cubes so far. Stretch a dimension to add rows or layers.",
+        "highFeedback": "More than 24 cubes. Shrink a dimension to remove some."
+      },
+      "predict": {
+        "prompt": "If you double just ONE dimension of a box, what happens to how many cubes it holds?",
+        "options": [
+          {
+            "id": "double",
+            "label": "The count doubles"
+          },
+          {
+            "id": "same",
+            "label": "It stays the same"
+          },
+          {
+            "id": "quad",
+            "label": "It becomes four times as much"
+          }
+        ],
+        "outcomeId": "double",
+        "reveal": "Doubling one edge stacks a second copy of the whole box along that direction — every cube gets a twin, and the volume doubles exactly."
+      },
+      "conceptTag": "volume-lwh",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents volume lwh.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for volume lwh must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines volume lwh."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "volume-measurement:volume-lwh",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Use the formula once.",
+      "conceptTag": "volume-lwh",
+      "widget": {
+        "type": "numeric",
+        "prompt": "V = l × w × h. A box is 6 units long, 3 wide, and 2 tall. What is V, in cubic units?",
+        "answer": 36,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 adds 6 + 3 + 2. The formula multiplies: 6 × 3 × 2 = 36."
+          },
+          {
+            "value": 18,
+            "feedback": "18 stops at 6 × 3. Multiply by the height too: 18 × 2 = 36."
+          }
+        ],
+        "fallbackFeedback": "V = 6 × 3 × 2 = 18 × 2 = 36 cubic units."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Three bigger edges.",
+      "conceptTag": "volume-lwh",
+      "explanationVariants": [
+        "V = 5 × 4 × 3 = 20 × 3 = 60 cubic units.",
+        "The 5 × 4 base holds 20 cubes; three layers give 60."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box is 5 units long, 4 wide, and 3 tall. What is its volume in cubic units?",
+        "answer": 60,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 adds 5 + 4 + 3. Multiply all three edges: 5 × 4 × 3 = 60."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is only 5 × 4. Multiply by the height: 20 × 3 = 60."
+          }
+        ],
+        "fallbackFeedback": "5 × 4 × 3 = 60 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two useful facts. **Units:** if the edges are in centimeters, the volume is in **cm³** — a 4 cm × 2 cm × 3 cm box holds 24 cm³, the same as 24 one-centimeter cubes. **Order:** multiplying in any order gives the same result, so (4 × 2) × 3 and 4 × (2 × 3) both equal 24. Pick the easiest pairing.",
+      "figure": "vm-units-cubed"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Number and label together.",
+      "conceptTag": "volume-lwh",
+      "explanationVariants": [
+        "4 × 2 × 3 = 24 cm³.",
+        "Twenty-four centimeter-cubes fill it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A box measures 4 cm × 2 cm × 3 cm. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "24 cm³",
+            "correct": true,
+            "feedback": "Right — 4 × 2 × 3 = 24, in cubic centimeters."
+          },
+          {
+            "id": "b",
+            "label": "9 cm³",
+            "feedback": "9 adds 4 + 2 + 3. The formula multiplies: 4 × 2 × 3 = 24 cm³."
+          },
+          {
+            "id": "c",
+            "label": "24 cm",
+            "feedback": "cm measures length only. Volume fills space, so the unit is cubic: 24 cm³."
+          }
+        ]
+      },
+      "hints": [
+        "Multiply the three edges.",
+        "4 × 2 = 8, then × 3.",
+        "24, with a cubic label."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "dimensionsMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A long thin box.",
+      "conceptTag": "volume-lwh",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box is 7 units long, 2 wide, and 2 tall. What is its volume in cubic units?",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 adds 7 + 2 + 2. Multiply: 7 × 2 × 2 = 28."
+          },
+          {
+            "value": 14,
+            "feedback": "14 is 7 × 2 — two of the three edges. One more ×2: 28."
+          }
+        ],
+        "fallbackFeedback": "7 × 2 × 2 = 14 × 2 = 28 cubic units."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick your own pairing.",
+      "conceptTag": "volume-lwh",
+      "explanationVariants": [
+        "2 × 5 × 3 = 10 × 3 = 30 cubic units.",
+        "Pair 5 × 3 = 15 first if you like: 2 × 15 = 30 — same answer."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box is 2 units long, 5 wide, and 3 tall. What is its volume in cubic units?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 adds 2 + 5 + 3. Multiply the edges: 2 × 5 × 3 = 30."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is 5 × 3 — only two edges. Multiply by the length: 2 × 15 = 30."
+          }
+        ],
+        "fallbackFeedback": "2 × 5 × 3 = 30 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A real box, from words.",
+      "conceptTag": "volume-lwh",
+      "hints": [
+        "Write the three edges: 5, 5, and 4.",
+        "V = l × w × h = 5 × 5 × 4.",
+        "25 × 4 = 100."
+      ],
+      "explanationVariants": [
+        "V = 5 × 5 × 4 = 25 × 4 = 100 cubic units.",
+        "The 5 × 5 base holds 25 cubes; four layers give 100."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A toy chest is 5 units long, 5 units wide, and 4 units tall. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "100 cubic units",
+            "correct": true,
+            "feedback": "Right — 5 × 5 × 4 = 100 cubic units."
+          },
+          {
+            "id": "b",
+            "label": "25 cubic units",
+            "feedback": "25 is only 5 × 5. Multiply by the height: 25 × 4 = 100."
+          },
+          {
+            "id": "c",
+            "label": "14 cubic units",
+            "feedback": "14 adds 5 + 5 + 4. The formula multiplies: 5 × 5 × 4 = 100."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "dimensionsMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three edges, one product.",
+      "takeaways": [
+        "V = l × w × h: multiply a box's three edge lengths.",
+        "Centimeter edges give cm³; the volume counts unit cubes.",
+        "Multiply in any order — pick the easiest pairing."
+      ],
+      "teaser": "next: a shortcut inside the shortcut — V = B × h."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "volume-lwh",
+      "concept": {
+        "id": "rem-lw-c",
+        "kind": "concept",
+        "body": "Quick rewind. **V = l × w × h means multiply all three edges.** For a box 2 long, 2 wide, 2 tall: 2 × 2 = 4, then 4 × 2 = 8 cubic units. Never add the edges — multiply them, one at a time."
+      },
+      "check": {
+        "id": "rem-lw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "volume-lwh",
+        "explanationVariants": [
+          "2 × 2 × 2 = 8 cubic units.",
+          "A 4-cube layer, two high: 4 × 2 = 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A box is 2 units long, 2 wide, and 2 tall. What is its volume in cubic units?",
+          "answer": 8,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 adds 2 + 2 + 2. Multiply instead: 2 × 2 × 2 = 8."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is 2 × 2 — one layer. Multiply by the height: 4 × 2 = 8."
+            }
+          ],
+          "fallbackFeedback": "2 × 2 × 2 = 8 cubic units."
+        }
+      }
+    }
+  ]
+}

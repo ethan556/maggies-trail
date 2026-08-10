@@ -1,0 +1,359 @@
+{
+  "id": "cpr-02-03",
+  "slug": "or-and-neither-on-a-table",
+  "title": "Or, And, Neither — on a Table",
+  "courseId": "conditional-probability",
+  "chapterId": "ch2-addition-rule-and-tables",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "\"Bus **or** sport\" on a table means: shade the whole bus row, then shade the whole sport column. The cell where they cross gets shaded twice — once by the row, once by the column.\n\nThat is the addition rule in picture form. Add the row total and the column total, then take the crossing cell back once.",
+      "figure": "cpr-table-union"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The four inner cells of the student table.",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every cell that belongs to \"takes the bus **or** plays a sport\".",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 2,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "h1",
+            "x": 28,
+            "y": 32,
+            "label": "bus and sport: 40",
+            "icon": "40",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h2",
+            "x": 72,
+            "y": 32,
+            "label": "bus, no sport: 60",
+            "icon": "60",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h3",
+            "x": 28,
+            "y": 76,
+            "label": "walks and sport: 70",
+            "icon": "70",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h4",
+            "x": 72,
+            "y": 76,
+            "label": "walks, no sport: 30",
+            "icon": "30",
+            "count": 1,
+            "feedback": "These 30 walk and play no sport, so they satisfy neither event. They are the only cell outside the union."
+          }
+        ],
+        "missFeedback": "A cell belongs if it is in the bus ROW or in the sport COLUMN — one condition is enough.",
+        "successFeedback": "Three cells: 40 + 60 + 70 = 170 students. The fourth cell, 30, is the \"neither\" group."
+      },
+      "conceptTag": "cpr-table-union",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Manipulate the model and track how it represents table union.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for table union must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines table union."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "conditional-probability:cpr-table-union",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "On the table, \"takes the bus OR plays a sport\" means shading…",
+        "options": [
+          {
+            "id": "both",
+            "label": "The whole bus row and the whole sport column"
+          },
+          {
+            "id": "cross",
+            "label": "Only the cell where the row and the column cross"
+          },
+          {
+            "id": "except",
+            "label": "Everything except that crossing cell"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "The whole row and the whole column. The crossing cell is the students who do both — it belongs to \"or\" and gets shaded, but only once. Shading only the crossing is \"and\", which is a different and much smaller group of students."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now price the union.",
+      "conceptTag": "cpr-table-union",
+      "explanationVariants": [
+        "P(bus) + P(sport) − P(bus and sport) = 0.50 + 0.55 − 0.20 = 0.85.",
+        "Count the shaded cells directly: 40 + 60 + 70 = 170, and 170/200 = 0.85. The rule and the cells agree, as they must."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(takes the bus **or** plays a sport). Give a decimal.",
+        "answer": 0.85,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.05,
+            "feedback": "That is 0.50 + 0.55 with nothing subtracted — and a probability above 1 is the tell. The 40 in the crossing cell got counted twice."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is the joint cell, P(bus and sport). \"Or\" is the larger event: it also holds for the 60 bus riders with no sport and the 70 walkers who play."
+          },
+          {
+            "value": 0.55,
+            "feedback": "That is P(sport) alone. The 60 bus riders who play no sport still satisfy \"bus or sport\"."
+          }
+        ],
+        "fallbackFeedback": "0.50 + 0.55 − 0.20 = 0.85, which matches the 170 shaded students out of 200."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-table-union__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Say why the subtraction is there.",
+      "conceptTag": "cpr-table-union",
+      "explanationVariants": [
+        "The bus row already contains the 40 bus riders who play a sport, and the sport column contains them again. Adding row and column counts them twice, so remove one copy.",
+        "170 students are shaded, but 100 + 110 = 210. The 40-cell explains the whole 40-student gap."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do we subtract the 40 when we add the bus row (100) to the sport column (110)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Those 40 students sit in both the row and the column, so they are counted twice.",
+            "correct": true,
+            "feedback": "Exactly — 100 + 110 = 210, which overshoots the 170 shaded students by precisely those 40."
+          },
+          {
+            "id": "o2",
+            "label": "Because those 40 students belong to neither event.",
+            "feedback": "The 40 belong to BOTH events, which is why they are double-counted. The students who belong to neither are the 30 in the last cell."
+          },
+          {
+            "id": "o3",
+            "label": "To make the probability come out under 1.",
+            "feedback": "Staying under 1 is a symptom, not the reason. The subtraction exists because a double-counted student must be counted once."
+          },
+          {
+            "id": "o4",
+            "label": "Because the row and the column have different totals.",
+            "feedback": "Unequal totals are fine — the row and column here happen to be 100 and 110. The correction is about the shared cell, not the sizes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-table-union__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "\"**Neither**\" is the complement of \"or\". Every student is either inside the shaded union or outside it, so:\n\nP(neither) = 1 − P(A ∪ B).\n\nOn a table it is the one cell you never shaded. That gives you a free check: the union and the \"neither\" cell must add to the whole group.",
+      "figure": "cpr-complement-bar"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the unshaded cell.",
+      "conceptTag": "cpr-complement-table",
+      "explanationVariants": [
+        "1 − 0.85 = 0.15, and the unshaded cell holds 30 students: 30/200 = 0.15. Same answer, two routes.",
+        "Only the walkers with no sport miss both events. There are 30 of them, out of 200."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(neither takes the bus nor plays a sport). Give a decimal.",
+        "answer": 0.15,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.85,
+            "feedback": "That is the union itself — the students who DO satisfy at least one event. \"Neither\" is what is left over: 1 − 0.85."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(walks). Walking alone is not enough — the 70 walkers who play a sport still satisfy the \"sport\" half."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is P(no sport), the whole column. The 60 bus riders inside it are still in the union via the bus row."
+          }
+        ],
+        "fallbackFeedback": "The single unshaded cell holds 30 students: 30/200 = 0.15 = 1 − 0.85."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-complement-table__numeric"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "The complement as a shortcut.",
+      "conceptTag": "cpr-complement-table",
+      "explanationVariants": [
+        "\"At least one\" is the union, so its complement is \"neither\" — the single cell that satisfies no condition.",
+        "Any \"at least one\" question can be answered by finding the one way to fail and subtracting from 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student is picked at random. Which pair of events are complements?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"Bus or sport\" and \"walks and no sport\"",
+            "correct": true,
+            "feedback": "Right — they cover the table with no overlap, so their probabilities must sum to 1: 0.85 + 0.15."
+          },
+          {
+            "id": "o2",
+            "label": "\"Bus or sport\" and \"bus and sport\"",
+            "feedback": "These overlap heavily — the 40 in the crossing cell satisfy both descriptions. Complements can share no one."
+          },
+          {
+            "id": "o3",
+            "label": "\"Takes the bus\" and \"plays a sport\"",
+            "feedback": "A student can do both (40 do) and a student can do neither (30 do). Complements allow neither case."
+          },
+          {
+            "id": "o4",
+            "label": "\"Walks\" and \"plays no sport\"",
+            "feedback": "These two overlap in the 30 walkers with no sport, so they are not complements. Their probabilities sum to 0.95, not 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-complement-table__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "New table, same three moves.",
+      "conceptTag": "cpr-complement-table",
+      "hints": [
+        "First find how many phones have at least one of the two — that is the union.",
+        "Union = 90 + 60 − 40 = 110 phones have a case or a protector (or both).",
+        "\"Neither\" is everyone else: 150 − 110 = 40. Divide by 150 and round to three places."
+      ],
+      "explanationVariants": [
+        "Union = 90 + 60 − 40 = 110, so neither = 150 − 110 = 40, giving 40/150 ≈ 0.267.",
+        "Build the four cells: both 40, case-only 50, protector-only 20, and the rest neither: 150 − 40 − 50 − 20 = 40 → 0.267."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Of 150 phones, 90 have a case, 60 have a screen protector, and 40 have both. Find **P(neither)** as a decimal, rounded to three places.",
+        "answer": 0.267,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.733,
+            "feedback": "That is the union, 110/150 — the phones with at least one accessory. \"Neither\" is the leftover: 1 − 0.733."
+          },
+          {
+            "value": 0.533,
+            "feedback": "That is 80/150, which comes from subtracting the 40 overlap twice. It is added twice by 90 + 60, so it comes off exactly once."
+          },
+          {
+            "value": 0,
+            "feedback": "That comes from 90 + 60 = 150, as if every phone had exactly one accessory. But 40 phones have both, so those two counts overlap and the union is only 110."
+          }
+        ],
+        "fallbackFeedback": "90 + 60 − 40 = 110 phones have at least one, so 150 − 110 = 40 have neither: 40/150 ≈ 0.267."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-complement-table__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three moves, one table.",
+      "takeaways": [
+        "\"Or\" on a table = a row plus a column, minus the cell where they cross.",
+        "\"Neither\" is the complement of \"or\": P(neither) = 1 − P(A ∪ B) — the cell you never shaded.",
+        "The rule and the raw cell counts must agree; disagreement means the overlap was mishandled."
+      ],
+      "teaser": "Next chapter: someone tells you the student takes the bus. The denominator changes."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-table-union",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Row total + column total always overshoots, because the crossing cell lives in both. Subtract that cell once and you are left with exactly the shaded students. A quick sanity test: if your \"or\" probability exceeds 1, you forgot the subtraction.",
+        "figure": "cpr-table-union"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Spot the overshoot.",
+        "conceptTag": "cpr-table-union",
+        "explanationVariants": [
+          "100 + 110 = 210, but only 170 students are shaded. The gap is 40 — the crossing cell, counted twice.",
+          "210 − 170 = 40, which is exactly the bus-and-sport cell."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The bus row totals 100 and the sport column totals 110. By how many students does 100 + 110 overshoot the 170 who are in the union?",
+          "answer": 40,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 170,
+              "feedback": "That is the union itself. The overshoot is the difference: 210 − 170."
+            },
+            {
+              "value": 30,
+              "feedback": "That is the \"neither\" cell, which sits outside the union entirely. The overshoot comes from the cell inside BOTH events."
+            }
+          ],
+          "fallbackFeedback": "210 − 170 = 40, the crossing cell."
+        }
+      }
+    }
+  ]
+}

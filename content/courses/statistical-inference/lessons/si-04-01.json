@@ -1,0 +1,321 @@
+{
+  "id": "si-04-01",
+  "slug": "what-chance-alone-produces",
+  "title": "What Chance Alone Produces",
+  "courseId": "statistical-inference",
+  "chapterId": "ch4-is-the-difference-real",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two groups differ. Before you celebrate, ask the only question that matters:\n\n**Could chance alone have produced a gap this big?**\n\nTo answer it, you need to know what gaps chance *does* produce. So build them: shuffle the labels at random, keeping the same scores, and record the gap. Do it hundreds of times.",
+      "figure": "si-null-pile"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Ten students, five per method. The new method averaged 15; the old one averaged 11.",
+      "widget": {
+        "type": "shuffleTest",
+        "prompt": "Relabel the same ten scores at random, again and again, to see what gaps chance manufactures. Then judge the real gap of 4.",
+        "groupALabel": "new method",
+        "groupBLabel": "old method",
+        "groupA": [
+          12,
+          14,
+          15,
+          16,
+          18
+        ],
+        "groupB": [
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "requiredShuffles": 40,
+        "targetVerdict": "real",
+        "seed": 9,
+        "successFeedback": "Chance hardly ever manufactures a gap of 4 from these ten scores — in the exact count, only 6 of the 252 possible splits reach it, about 2%. A gap that chance almost never produces is evidence of something other than chance.",
+        "moreShufflesFeedback": "Build the pile first. You cannot call a gap unusual until you have seen what usual looks like — keep relabelling.",
+        "wrongVerdictFeedback": "Look again at where the observed line falls: it sits out in the tail, with almost no random relabellings reaching it. That is the signature of a gap chance cannot easily fake."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Shuffle labels under a null model and compare the observed statistic with the chance distribution.",
+        "invariants": [
+          "observations-fixed-under-relabeling",
+          "null-model-preserves-group-sizes"
+        ],
+        "misconceptions": [
+          "single-shuffle-proves-result",
+          "statistical-significance-means-practical-importance"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-shuffleTest-new-context",
+        "delayed": false
+      },
+      "conceptTag": "si-null-model"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What is the shuffle simulating?",
+      "conceptTag": "si-null-model",
+      "explanationVariants": [
+        "Shuffling the labels assumes the method made no difference — the same ten scores would have happened either way, and only the labels moved. That assumption is the null model.",
+        "The pile of shuffled gaps is a picture of 'what if there is no effect at all'. The real gap is then compared with it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When you shuffle the labels, what are you pretending is true?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "That the method made no difference — each student would have scored the same whichever group they landed in.",
+            "correct": true,
+            "feedback": "Right. That pretence is the null model, and the pile of shuffled gaps shows exactly what it can produce."
+          },
+          {
+            "id": "o2",
+            "label": "That the new method works.",
+            "correct": false,
+            "feedback": "The opposite. You assume it does NOT work, and then check whether the real data look like something that world could have produced."
+          },
+          {
+            "id": "o3",
+            "label": "That the scores are random numbers.",
+            "correct": false,
+            "feedback": "The scores are held fixed — that is the point. Only the labels move, so any gap you see comes purely from which scores happened to land together."
+          },
+          {
+            "id": "o4",
+            "label": "That the two groups are the same size.",
+            "correct": false,
+            "feedback": "They are, but that is a detail of the setup rather than the assumption being tested."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-null-model__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read the pile.",
+      "conceptTag": "si-null-model",
+      "explanationVariants": [
+        "The pile of chance gaps is centred on 0, because with no real effect the two groups should differ only by luck, in either direction.",
+        "A pile centred anywhere else would mean the shuffling itself was tilted — which it is not."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Your pile of shuffled gaps is centred on 0. Why?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "With the labels randomised, either group is equally likely to come out ahead, so gaps cancel around zero.",
+            "correct": true,
+            "feedback": "Right. The null world has no reason to favour either label, so its gaps scatter symmetrically around 0."
+          },
+          {
+            "id": "o2",
+            "label": "Because the two groups really are identical.",
+            "correct": false,
+            "feedback": "They are not — the real gap is 4. The pile is centred on 0 because it is built by pretending there is no effect, not because there is none."
+          },
+          {
+            "id": "o3",
+            "label": "Because averages are always 0.",
+            "correct": false,
+            "feedback": "The averages here are 15 and 11, nowhere near 0. It is the DIFFERENCE under random relabelling that centres on 0."
+          },
+          {
+            "id": "o4",
+            "label": "Because the scores are small numbers.",
+            "correct": false,
+            "feedback": "The size of the scores does not matter — shuffling their labels would centre the gap on 0 whatever the scale."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-null-model__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Now compare. The real gap was **4**. In the pile of chance gaps, almost nothing reaches out that far — in the exact count, 6 of the 252 possible splits, about **2%**.\n\nSo either something unusual happened by luck (about a 1-in-50 event), or the method really did something. That comparison is the whole logic of a significance test.",
+      "figure": "si-null-pile"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Put the logic in order.",
+      "conceptTag": "si-null-model",
+      "explanationVariants": [
+        "Assume no effect → build what that world produces → see how rare your result is in it → decide whether 'luck' is still believable.",
+        "The test never proves the effect. It shows that the no-effect world struggles to produce data like yours."
+      ],
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the four steps of a randomisation test in order.",
+        "items": [
+          {
+            "id": "d",
+            "label": "Ask: how often does chance reach the real gap?"
+          },
+          {
+            "id": "a",
+            "label": "Assume the treatment did nothing"
+          },
+          {
+            "id": "c",
+            "label": "Record the gap from each relabelling"
+          },
+          {
+            "id": "b",
+            "label": "Shuffle the labels, keeping the scores"
+          }
+        ],
+        "correctOrder": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "d",
+            "second": "a",
+            "feedback": "You cannot ask how rare the gap is until you have built the world it is supposed to be rare in. The assumption comes first."
+          },
+          {
+            "first": "c",
+            "second": "b",
+            "feedback": "There is nothing to record until you have shuffled. The shuffle produces the gap."
+          }
+        ],
+        "missFeedback": "Assume no effect, shuffle, record, then compare the real gap with the pile you built.",
+        "successFeedback": "Assume, shuffle, record, compare. The pile is not a decoration — it is the yardstick the real gap is measured against."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-null-model__dragOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "State the conclusion carefully.",
+      "conceptTag": "si-null-model",
+      "hints": [
+        "The test tells you how well the NO-EFFECT world explains your data. Ask what follows from 'it explains it badly'.",
+        "About 2% of random relabellings reach a gap of 4. So under 'no effect', data like yours turn up about 1 time in 50.",
+        "That makes 'pure luck' an uncomfortable explanation. It does not make it impossible, and it does not measure how big the effect is."
+      ],
+      "explanationVariants": [
+        "The honest conclusion: a gap this big is rare under the no-effect assumption (about 2%), so that assumption looks poor — the method probably did something.",
+        "Note what is NOT concluded: nothing is proved, and nothing has been said yet about whether a 4-point gain is worth having."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Only 2% of relabellings produce a gap of 4 or more. What may you conclude?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Data like ours would be rare if the method did nothing — so 'it did nothing' is a poor explanation.",
+            "correct": true,
+            "feedback": "Right, and that careful phrasing is the whole discipline. The test convicts the no-effect story; it does not certify the effect."
+          },
+          {
+            "id": "o2",
+            "label": "There is a 2% chance the method does nothing.",
+            "correct": false,
+            "feedback": "The 2% is the chance of seeing a gap this big IF the method does nothing — not the chance that the method does nothing. Those are different conditionals, and swapping them is the reversal error from the probability strand."
+          },
+          {
+            "id": "o3",
+            "label": "The method is proved to work.",
+            "correct": false,
+            "feedback": "A 1-in-50 event does happen about 1 time in 50. Rare is not impossible, and a single study proves nothing."
+          },
+          {
+            "id": "o4",
+            "label": "The method raises scores by exactly 4 points.",
+            "correct": false,
+            "feedback": "4 points is this sample's estimate of the gain, and it wobbles like any estimate. The test asked whether there is an effect, not how big it is."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-null-model__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Build the no-effect world, then check whether yours fits in it.",
+      "takeaways": [
+        "Shuffle the labels while keeping the scores: that simulates a world where the treatment did nothing.",
+        "The pile of shuffled gaps centres on 0 and shows exactly what chance can manufacture.",
+        "If the real gap sits far out in that pile's tail, 'chance alone' becomes a poor explanation — which is not the same as proof."
+      ],
+      "teaser": "Next: how far out is far enough, and where the famous 5% comes from."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-null-model",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "The scores never change. Only the labels move. If the treatment truly did nothing, then the labels are just stickers — and any gap you see is an accident of which scores happened to get which sticker. Shuffling shows you every accident that was available.",
+        "figure": "si-null-pile"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "What moves in a shuffle?",
+        "conceptTag": "si-null-model",
+        "explanationVariants": [
+          "The scores stay exactly as measured; only the group labels are reassigned at random.",
+          "That is why the pile shows what chance alone could do with THESE scores."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In a randomisation test, what gets shuffled?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The group labels — the scores stay put.",
+              "correct": true,
+              "feedback": "Right. Keeping the scores fixed is what makes the pile a fair picture of 'no effect'."
+            },
+            {
+              "id": "o2",
+              "label": "The scores — new random numbers each time.",
+              "correct": false,
+              "feedback": "Inventing new scores would test a different question. The whole point is to reuse the data you actually collected."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

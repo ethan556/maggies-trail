@@ -1,0 +1,313 @@
+{
+ "id": "mc-02-01",
+ "slug": "the-area-formula",
+ "title": "The Area Formula",
+ "courseId": "measure-convert",
+ "chapterId": "ch2-area-perimeter-formulas",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "You already know area from counting unit squares tiled inside a rectangle. That counting has a name: the **AREA FORMULA — length × width.** An 8-by-6 rectangle has 8×6=48 unit squares, no counting required.",
+   "figure": "mc-area-formula"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match rectangle to area.",
+   "conceptTag": "area-formula",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each rectangle's dimensions to its area.",
+    "left": [
+     {
+      "id": "e1",
+      "label": "8 × 6"
+     },
+     {
+      "id": "e2",
+      "label": "12 × 7"
+     },
+     {
+      "id": "e3",
+      "label": "15 × 9"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "48"
+     },
+     {
+      "id": "r2",
+      "label": "84"
+     },
+     {
+      "id": "r3",
+      "label": "135"
+     }
+    ],
+    "pairs": {
+     "e1": "r1",
+     "e2": "r2",
+     "e3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "e2",
+      "right": "r3",
+      "feedback": "135 belongs to 15×9. For 12×7: 12×7=84."
+     }
+    ],
+    "missFeedback": "Multiply length by width to find the area.",
+    "successFeedback": "8×6=48, 12×7=84, 15×9=135 — the formula replaces counting every square."
+   },
+   "predict": {
+    "prompt": "A 3-by-8 rectangle and an 8-by-3 rectangle — same area?",
+    "options": [
+     {
+      "id": "yes",
+      "label": "Yes — turning changes nothing"
+     },
+     {
+      "id": "no",
+      "label": "No — different shapes, different areas"
+     },
+     {
+      "id": "square",
+      "label": "Only if it's a square"
+     }
+    ],
+    "outcomeId": "yes",
+    "reveal": "Rotating a rectangle doesn't add or remove a single square — 3 × 8 and 8 × 3 count the same tiles. Multiplication doesn't care about the order."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Apply the formula.",
+   "conceptTag": "area-formula",
+   "explanationVariants": [
+    "Area = length × width = 9 × 5 = 45.",
+    "Multiplying the two sides gives the area directly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangle is 9 units long and 5 units wide. What is its area?",
+    "answer": 45,
+    "tolerance": 0,
+    "unit": "square units",
+    "commonErrors": [
+     {
+      "value": 14,
+      "feedback": "14 adds the sides instead of multiplying. Area uses length × width: 9×5=45."
+     },
+     {
+      "value": 28,
+      "feedback": "28 doubles the sum of the sides — that's closer to perimeter's idea. Area multiplies: 9×5=45."
+     }
+    ],
+    "fallbackFeedback": "Multiply the length by the width."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "For bigger rectangles, reuse the break-apart trick from Course 6: split one side into tens and ones, multiply each piece, then add. 23×14 splits into 23×10 + 23×4 = 230+92 = **322.**",
+   "figure": "mc-area-formula"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A bigger area.",
+   "conceptTag": "area-formula",
+   "explanationVariants": [
+    "34 splits into 30+4: 12×30+12×4=360+48=408.",
+    "Break-apart handles bigger rectangles the same way as smaller ones."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangle is 12 units by 34 units. Using break-apart (34=30+4), what is its area?",
+    "answer": 408,
+    "tolerance": 0,
+    "unit": "square units",
+    "commonErrors": [
+     {
+      "value": 360,
+      "feedback": "360 is only the 12×30 piece. Add the second piece, 12×4=48: 360+48=408."
+     },
+     {
+      "value": 46,
+      "feedback": "46 adds 12+34 instead of multiplying. Area breaks apart as 12×30+12×4=408."
+     }
+    ],
+    "fallbackFeedback": "Split 34 into 30+4, multiply each by 12, then add."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Small or big rectangle — same formula.",
+   "conceptTag": "area-formula",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each rectangle by its area range.",
+    "buckets": [
+     {
+      "id": "under100",
+      "label": "Under 100",
+      "icon": "🟦"
+     },
+     {
+      "id": "over100",
+      "label": "100 or more",
+      "icon": "🟩"
+     }
+    ],
+    "items": [
+     {
+      "id": "d1",
+      "label": "7 × 6",
+      "bucketId": "under100",
+      "feedback": "7×6=42 — under 100."
+     },
+     {
+      "id": "d2",
+      "label": "15 × 8",
+      "bucketId": "over100",
+      "feedback": "15×8=120 — 100 or more."
+     },
+     {
+      "id": "d3",
+      "label": "9 × 9",
+      "bucketId": "under100",
+      "feedback": "9×9=81 — under 100."
+     },
+     {
+      "id": "d4",
+      "label": "20 × 6",
+      "bucketId": "over100",
+      "feedback": "20×6=120 — 100 or more."
+     }
+    ],
+    "missFeedback": "Multiply each pair of dimensions, then compare to 100.",
+    "successFeedback": "7×6=42 and 9×9=81 stay under 100; 15×8=120 and 20×6=120 reach 100 or more."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One more area.",
+   "conceptTag": "area-formula",
+   "explanationVariants": [
+    "18×12 splits into 18×10+18×2=180+36=216.",
+    "Break-apart gives the same answer as direct multiplication."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangle is 18 units by 12 units. What is its area?",
+    "answer": 216,
+    "tolerance": 0,
+    "unit": "square units",
+    "commonErrors": [
+     {
+      "value": 180,
+      "feedback": "180 is only the 18×10 piece. Add the second piece, 18×2=36: 180+36=216."
+     },
+     {
+      "value": 30,
+      "feedback": "30 adds 18+12 instead of multiplying. Area is 18×12=216."
+     }
+    ],
+    "fallbackFeedback": "Split 12 into 10+2, multiply each by 18, then add."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The new carpet.",
+   "conceptTag": "area-formula",
+   "hints": [
+    "Area covers the whole surface — multiply the two dimensions.",
+    "18×12 splits into 18×10+18×2.",
+    "180+36 gives the total square units of carpet needed."
+   ],
+   "explanationVariants": [
+    "A room 18 by 12 needs 18×12=216 square units of carpet.",
+    "Break-apart: 18×10+18×2=180+36=216."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangular room is 18 feet by 12 feet. How many square feet of carpet are needed to cover the whole floor?",
+    "answer": 216,
+    "tolerance": 0,
+    "unit": "square feet",
+    "commonErrors": [
+     {
+      "value": 60,
+      "feedback": "60 adds and doubles the sides (2×(18+12)) — that finds the distance AROUND the room, not the surface. Covering the floor needs area: 18×12=216."
+     },
+     {
+      "value": 30,
+      "feedback": "30 just adds the two sides. Covering the whole floor needs area: 18×12=216."
+     }
+    ],
+    "fallbackFeedback": "Covering a floor needs area: multiply length by width."
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Counting squares, formalized.",
+   "takeaways": [
+    "Area = length × width — the formula replaces counting unit squares one by one.",
+    "For bigger rectangles, break apart one side into tens and ones, just like in Course 6.",
+    "Area answers 'how much surface,' like carpet or paint."
+   ],
+   "teaser": "next: the formula for the distance AROUND a rectangle."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "area-formula",
+   "concept": {
+    "id": "rem-af-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Area = length × width.** For a 4-by-3 rectangle: 4×3=12 square units — the same as counting 12 tiles, just faster."
+   },
+   "check": {
+    "id": "rem-af-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "area-formula",
+    "explanationVariants": [
+     "4×3=12 square units.",
+     "Multiplying the sides gives the area."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A rectangle is 4 units by 3 units. What is its area?",
+     "options": [
+      {
+       "id": "a",
+       "label": "12 square units",
+       "correct": true,
+       "feedback": "4×3=12."
+      },
+      {
+       "id": "b",
+       "label": "7 square units",
+       "feedback": "7 adds 4+3 instead of multiplying. Area is 4×3=12."
+      },
+      {
+       "id": "c",
+       "label": "14 square units",
+       "feedback": "14 doubles the sum of the sides. Area multiplies: 4×3=12."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,329 @@
+{
+  "id": "rt-01-01",
+  "slug": "the-pythagorean-theorem",
+  "title": "The Pythagorean Theorem",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch1-pythagoras-special-rights",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "rt-pythagorean",
+      "concept": {
+        "id": "rem-rt-pythagorean-c",
+        "kind": "concept",
+        "body": "The Pythagorean theorem relates the SQUARES of the sides of a right triangle: a² + b² = c², where c is the hypotenuse (the longest side, opposite the right angle). To find c, square both legs, add, and square-root the total."
+      },
+      "check": {
+        "id": "rem-rt-pythagorean-k",
+        "kind": "check",
+        "body": "The relationship.",
+        "conceptTag": "rt-pythagorean",
+        "explanationVariants": [
+          "Square the legs (9, 16), add (25), square-root: c = 5.",
+          "3² + 4² = 25 = 5² — leg-squares sum to the hypotenuse-square."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Legs 3 and 4: what is the hypotenuse?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 = 3 + 4 adds sides. Add SQUARES: 9 + 16 = 25 → c = 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is c² — square-root it: c = 5."
+            }
+          ],
+          "fallbackFeedback": "9 + 16 = 25, so c = √25 = 5."
+        }
+      }
+    },
+    {
+      "conceptTag": "rt-pythagorean-leg",
+      "concept": {
+        "id": "rem-rt-pythagorean-leg-c",
+        "kind": "concept",
+        "body": "When the hypotenuse is known and a LEG is missing, subtract: leg² = c² − (other leg)². The hypotenuse-square is the whole; each leg-square is a part. Adding when you should subtract gives an answer LONGER than the hypotenuse — impossible for a leg."
+      },
+      "check": {
+        "id": "rem-rt-pythagorean-leg-k",
+        "kind": "check",
+        "body": "Subtract for a leg.",
+        "conceptTag": "rt-pythagorean-leg",
+        "explanationVariants": [
+          "A leg must be shorter than the hypotenuse, so its square comes from subtracting: 100 − 64 = 36 → 6.",
+          "leg² = 10² − 8² = 36, so the leg is 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Hypotenuse 10, one leg 8. The other leg?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12.8,
+              "feedback": "√(100+64) ≈ 12.8 ADDED — but a leg can't beat the hypotenuse. Subtract: √36 = 6."
+            },
+            {
+              "value": 2,
+              "feedback": "2 = 10 − 8 subtracts sides. Subtract squares: 100 − 64 = 36 → 6."
+            }
+          ],
+          "fallbackFeedback": "leg = √(100 − 64) = √36 = 6."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In every right triangle, the two legs and the hypotenuse are locked together by one equation: **a² + b² = c²**. The squares built on the legs, combined, exactly fill the square on the hypotenuse. You proved WHY in Similarity (the altitude's three similar triangles); now we put it to work.",
+      "figure": "pythagorean-proof"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Check it on 3-4-5.",
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "Move the point so the legs are 3 across and 4 up, and read the straight-line distance back to the corner.",
+        "anchor": [
+          0,
+          0
+        ],
+        "targetPoint": [
+          4,
+          3
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 0,
+        "startY": 0,
+        "successFeedback": "Across 4, up 3, distance 5 — and 4² + 3² is 16 + 9 = 25 = 5². The distance formula you just used and the Pythagorean theorem are the same computation: the two legs squared, added, and rooted.",
+        "wrongPointFeedback": "Not at (4, 3) yet. Watch the two legs forming as you drag — those are exactly the two lengths the theorem squares."
+      },
+      "predict": {
+        "prompt": "Legs 3 and 4, hypotenuse 5. Will 3² + 4² land exactly on 5², or only close?",
+        "options": [
+          {
+            "id": "exact",
+            "label": "Exactly — the theorem is an identity"
+          },
+          {
+            "id": "close",
+            "label": "Close — it's a good approximation"
+          }
+        ],
+        "outcomeId": "exact",
+        "reveal": "9 + 16 = 25, on the nose. The theorem isn't a measurement or an estimate — the squares built on the two legs carry exactly as much area as the square on the hypotenuse, in every right triangle without exception."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find a hypotenuse.",
+      "conceptTag": "rt-pythagorean",
+      "explanationVariants": [
+        "Legs 6 and 8: c² = 36 + 64 = 100, so c = √100 = 10.",
+        "Square each leg (36, 64), add (100), square-root: c = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has legs 6 and 8. Find the hypotenuse.",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 adds the legs directly. Add their SQUARES: 36 + 64 = 100, then √100 = 10."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is c² — you stopped before the square root. c = √100 = 10."
+          },
+          {
+            "value": 48,
+            "feedback": "48 = 6 × 8 multiplies the legs. The theorem squares and adds: 36 + 64 = 100 → c = 10."
+          }
+        ],
+        "fallbackFeedback": "c² = 6² + 8² = 100, so c = 10."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Finding a **leg** flips the equation to subtraction: a² = c² − b². The hypotenuse-square is the TOTAL; a leg-square is what's left after removing the other leg-square. One habit prevents most errors: c is always the hypotenuse — the side across from the right angle, and always the longest.",
+      "figure": "rt-find-leg"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which side is c?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A right triangle has sides 9, 40, 41. Which number must play the role of c in a² + b² = c²?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "41 — the longest side is the hypotenuse",
+            "correct": true,
+            "feedback": "The hypotenuse sits opposite the right angle and is always the longest side: 41."
+          },
+          {
+            "id": "o2",
+            "label": "9 — c comes first alphabetically... err, smallest",
+            "correct": false,
+            "feedback": "Size decides, and c is the LARGEST: the hypotenuse 41, opposite the right angle."
+          },
+          {
+            "id": "o3",
+            "label": "40 — the middle value balances the equation",
+            "correct": false,
+            "feedback": "Check: 9² + 41² = 1762 ≠ 40² = 1600. Only c = 41 works: 81 + 1600 = 1681 = 41²."
+          },
+          {
+            "id": "o4",
+            "label": "Any of them — the equation is symmetric",
+            "correct": false,
+            "feedback": "a and b can swap, but c cannot: it's pinned to the hypotenuse, the longest side (41)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find a leg.",
+      "conceptTag": "rt-pythagorean-leg",
+      "explanationVariants": [
+        "b² = 13² − 5² = 169 − 25 = 144, so b = 12.",
+        "Subtract the known leg-square from the hypotenuse-square: 169 − 25 = 144 → b = √144 = 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The hypotenuse is 13 and one leg is 5. Find the other leg.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 194,
+            "feedback": "194 = 169 + 25 ADDS — but 13 is the hypotenuse, the total. Subtract: 169 − 25 = 144 → b = 12."
+          },
+          {
+            "value": 8,
+            "feedback": "8 = 13 − 5 subtracts the sides themselves. Subtract the SQUARES: 169 − 25 = 144, then √144 = 12."
+          },
+          {
+            "value": 144,
+            "feedback": "144 is b². Take the square root: b = 12."
+          }
+        ],
+        "fallbackFeedback": "b² = 169 − 25 = 144, so b = 12."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-pythagorean-leg__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Real problems hide right triangles in plain sight: a rectangle's diagonal, a ladder against a wall, the straight-line distance across a park. Spot the right angle, name the two perpendicular distances as legs, and the theorem hands you the third side.",
+      "figure": "rt-rectangle-diagonal"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A hidden right triangle.",
+      "conceptTag": "rt-pythagorean-apply",
+      "explanationVariants": [
+        "The ladder, wall, and ground form a right triangle: height² = 25² − 7² = 625 − 49 = 576 → 24.",
+        "The 25 ft ladder is the hypotenuse; the 7 ft base is a leg. √(625 − 49) = √576 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 25 ft ladder leans against a wall with its base 7 ft from the wall. How high up the wall does it reach (ft)?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25.96,
+            "feedback": "That treats the ladder as a LEG (√(625+49) ≈ 25.96). The ladder is the hypotenuse — subtract: √(625−49) = 24."
+          },
+          {
+            "value": 18,
+            "feedback": "18 = 25 − 7 subtracts lengths, not squares. Compute 625 − 49 = 576, then √576 = 24."
+          },
+          {
+            "value": 576,
+            "feedback": "576 is the height SQUARED. Finish with the square root: 24 ft."
+          }
+        ],
+        "fallbackFeedback": "The ladder (25) is the hypotenuse: height = √(625 − 49) = √576 = 24 ft."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-pythagorean-apply__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "A diagonal shortcut.",
+      "conceptTag": "rt-pythagorean-apply",
+      "hints": [
+        "The diagonal of a rectangle is the hypotenuse of a right triangle whose legs are the two sides.",
+        "Legs 9 and 12: d² = 9² + 12² = 81 + 144.",
+        "d² = 225 — take the square root."
+      ],
+      "explanationVariants": [
+        "The diagonal is the hypotenuse over legs 9 and 12: d = √(81 + 144) = √225 = 15 m.",
+        "d² = 9² + 12² = 225, so the walk across is 15 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangular field is 9 m by 12 m. How long is the diagonal path across it (m)?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 = 9 + 12 walks AROUND the corner (two sides), not across. The diagonal is √(81 + 144) = 15."
+          },
+          {
+            "value": 225,
+            "feedback": "225 is d². Square-root it: d = 15 m."
+          },
+          {
+            "value": 10.5,
+            "feedback": "10.5 averages the sides. Use the theorem: √(9² + 12²) = √225 = 15."
+          }
+        ],
+        "fallbackFeedback": "d = √(9² + 12²) = √225 = 15 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-pythagorean-apply__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One equation, three sides.",
+      "takeaways": [
+        "a² + b² = c² — and c is always the hypotenuse, the longest side.",
+        "Missing hypotenuse: add the leg-squares. Missing leg: subtract from the hypotenuse-square.",
+        "Rectangles' diagonals, ladders, and straight-line distances all hide right triangles."
+      ],
+      "teaser": "Next: run the theorem in reverse to TEST whether a triangle is right."
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "id": "avp-03-03",
+  "slug": "steps-brackets-and-real-rules",
+  "title": "Steps, Brackets & Real Rules",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch3-functions-in-pieces",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Some real rules are piecewise with many pieces, all of them flat. Postage charges by the ounce, parking by the hour, tax by the bracket. Between the jumps the price does not move at all; at each jump it leaps. Graphed, these rules look like a staircase.",
+      "figure": "avp-step-function"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Round the way the rule rounds.",
+      "widget": {
+        "type": "numberLinePlace",
+        "step": 1,
+        "tickStep": 1,
+        "start": 0,
+        "commonPlacements": [
+          {
+            "value": 2,
+            "feedback": "That rounds down, which no postal service does — those extra 0.3 oz have already started a third ounce, and a started ounce is a charged ounce."
+          },
+          {
+            "value": 4,
+            "feedback": "Too far: 2.3 has started the third ounce but not the fourth."
+          }
+        ],
+        "prompt": "Postage costs $1 for the first ounce and $1 for each additional STARTED ounce. A letter weighs 2.3 oz — place the weight it is CHARGED as.",
+        "min": 0,
+        "max": 6,
+        "target": 3,
+        "successFeedback": "3: a started ounce is a charged ounce, so 2.3 oz pays as 3 oz — $3. This rule always rounds UP.",
+        "lowFeedback": "Not far enough — the third ounce has already begun.",
+        "highFeedback": "Too far — only three ounces have been started."
+      },
+      "predict": {
+        "prompt": "A 2.3-ounce letter under that rule is charged for how many ounces?",
+        "options": [
+          {
+            "id": "two",
+            "label": "2 — round to the nearest"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          },
+          {
+            "id": "twoish",
+            "label": "2.3 — charged exactly"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Step functions round in whichever direction their rule states, and ‘each additional started ounce’ rounds up. This is why the graph is flat between whole ounces and jumps exactly at them — the price cannot notice 2.3 as different from 2.9."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Price it.",
+      "conceptTag": "avp-step-functions",
+      "explanationVariants": [
+        "2.3 oz is charged as 3 oz at $1 per ounce, so the cost is $3.",
+        "Round up to 3 started ounces, then multiply by the $1 rate."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What does that 2.3-ounce letter cost, in dollars?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2.3,
+            "feedback": "The rule charges by started OUNCES, not by exact weight — there is no such thing as a $2.30 stamp here."
+          },
+          {
+            "value": 2,
+            "feedback": "Rounding down; the third ounce has begun, and starting it is what triggers the charge."
+          }
+        ],
+        "fallbackFeedback": "Three started ounces at $1 each is $3.",
+        "successFeedback": "$3 — and a 2.9 oz letter costs exactly the same, which is what a flat step means."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Flat between jumps has a consequence worth naming: within one step the price carries no information about the exact input. Learning a letter cost $3 tells you the weight was more than 2 oz and at most 3 oz — a range, never a number. Steps trade precision for simplicity, on purpose.",
+      "figure": "avp-step-loses-detail"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same price, different weights.",
+      "conceptTag": "avp-step-functions",
+      "explanationVariants": [
+        "Anything above 2 oz and up to 3 oz costs $3, so 2.1 and 2.9 agree.",
+        "The step is flat across the whole interval, so the two weights cannot be told apart by price."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which pair of letters costs the SAME under that rule?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2.1 oz and 2.9 oz",
+            "correct": true,
+            "feedback": "Yes — both have started the third ounce and neither has started a fourth, so both pay $3."
+          },
+          {
+            "id": "o2",
+            "label": "2.9 oz and 3.1 oz",
+            "correct": false,
+            "feedback": "3.1 has started a FOURTH ounce, so it pays $4 while 2.9 pays $3."
+          },
+          {
+            "id": "o3",
+            "label": "1.9 oz and 2.1 oz",
+            "correct": false,
+            "feedback": "They straddle a jump: 1.9 pays $2 and 2.1 pays $3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Cross a jump.",
+      "conceptTag": "avp-step-functions",
+      "explanationVariants": [
+        "3.1 oz has started a fourth ounce, so it costs $4.",
+        "Round 3.1 up to 4 started ounces at $1 each."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What does a 3.1-ounce letter cost, in dollars?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3.1 has crossed the jump — that extra tenth started a fourth ounce."
+          },
+          {
+            "value": 3.1,
+            "feedback": "The rule charges whole started ounces, so the cost lands on a whole number of dollars."
+          }
+        ],
+        "fallbackFeedback": "3.1 oz means four started ounces, so $4.",
+        "successFeedback": "$4 — one tenth of an ounce more than 3.0, one whole dollar more to send."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the step backwards.",
+      "conceptTag": "avp-step-functions",
+      "explanationVariants": [
+        "$5 covers weights above 4 oz and up to 5 oz, whose largest value is 5.",
+        "The step's right endpoint is included, so the heaviest $5 letter weighs exactly 5 oz."
+      ],
+      "hints": [
+        "Ask which weights are charged $5 — the answer is a range, not a number.",
+        "Five started ounces means the weight is more than 4 oz and at most 5 oz.",
+        "The heaviest weight in that range is its right endpoint."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Under that rule, what is the HEAVIEST letter that still costs $5, in ounces?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 oz costs only $4 — four started ounces. The $5 range runs above 4 and up to 5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 oz would have started a sixth ounce and cost $6."
+          }
+        ],
+        "fallbackFeedback": "$5 buys five started ounces, so the range is 4 < w ≤ 5 and the heaviest is exactly 5 oz.",
+        "successFeedback": "5 oz — exactly on the step's edge, where the rule's ‘at most’ still includes it."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Staircases in the wild.",
+      "takeaways": [
+        "Step functions are piecewise rules whose branches are all flat.",
+        "Each branch rounds in the direction its rule states — started ounces round up.",
+        "Within a step the output carries no information about the exact input, only its range."
+      ],
+      "teaser": "Next up in Algebra: functions that stretch and shift as a family — the same moves you just made on the V."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-step-functions",
+      "concept": {
+        "id": "rem-avp-step-functions-c",
+        "kind": "concept",
+        "body": "Flat between jumps has a consequence worth naming: within one step the price carries no information about the exact input. Learning a letter cost $3 tells you the weight was more than 2 oz and at most 3 oz — a range, never a number. Steps trade precision for simplicity, on purpose."
+      },
+      "check": {
+        "id": "rem-avp-step-functions-k",
+        "kind": "check",
+        "body": "Price it.",
+        "conceptTag": "avp-step-functions",
+        "explanationVariants": [
+          "2.3 oz is charged as 3 oz at $1 per ounce, so the cost is $3.",
+          "Round up to 3 started ounces, then multiply by the $1 rate."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What does that 2.3-ounce letter cost, in dollars?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2.3,
+              "feedback": "The rule charges by started OUNCES, not by exact weight — there is no such thing as a $2.30 stamp here."
+            },
+            {
+              "value": 2,
+              "feedback": "Rounding down; the third ounce has begun, and starting it is what triggers the charge."
+            }
+          ],
+          "fallbackFeedback": "Three started ounces at $1 each is $3.",
+          "successFeedback": "$3 — and a 2.9 oz letter costs exactly the same, which is what a flat step means."
+        }
+      }
+    }
+  ]
+}

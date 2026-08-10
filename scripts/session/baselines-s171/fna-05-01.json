@@ -1,0 +1,240 @@
+{
+ "id": "fna-05-01",
+ "slug": "one-to-one-horizontal-line-test",
+ "title": "One-to-One & the Horizontal Line Test",
+ "courseId": "function-analysis",
+ "chapterId": "ch5-inverses-formalized",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A function can be **undone** only if no two inputs share an output — the function is **one-to-one**. Graph version: the **horizontal line test** — if some horizontal line crosses the graph twice, two inputs collide at one output, and no inverse function exists.",
+   "figure": "fna-hlt"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find a collision.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x². Give a POSITIVE input that shares its output with x = −3.",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is the shared OUTPUT. The colliding input is the positive x with x² = 9: x = 3."
+     },
+     {
+      "value": -3,
+      "feedback": "−3 is the input we started with — the question asks for the OTHER input landing on 9: x = 3."
+     }
+    ],
+    "fallbackFeedback": "(−3)² = 9 = 3², so x = 3 collides with x = −3."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Why the collision kills the inverse.",
+   "conceptTag": "fna-one-to-one",
+   "explanationVariants": [
+    "An inverse would have to send 9 back to its input — but 9 came from BOTH 3 and −3, and a function can't output two values for one input.",
+    "Undoing x² at 9 is ambiguous (3 or −3?), so no inverse FUNCTION exists on the full domain."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why does f(x) = x² (all real x) have no inverse function?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "An inverse would need to send 9 to both 3 and −3 — a function can't do that",
+      "correct": true,
+      "feedback": "Exactly — one-to-one failure at even one output makes the reverse assignment ambiguous."
+     },
+     {
+      "id": "o2",
+      "label": "Because x² has no square root",
+      "feedback": "√9 exists just fine — the problem is that TWO inputs (±3) produce 9, so the reverse direction is ambiguous."
+     },
+     {
+      "id": "o3",
+      "label": "Because parabolas aren't functions",
+      "feedback": "x² IS a function (it passes the VERTICAL line test). It fails the HORIZONTAL line test, which is what blocks the inverse."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-one-to-one__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Compare y = x³: every horizontal line crosses **once** — outputs are never shared, the cube is one-to-one, and an inverse exists (the cube root). Strictly increasing or strictly decreasing functions always pass the test.",
+   "figure": "fna-cubic-hlt"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Apply the test by eye.",
+   "conceptTag": "fna-one-to-one",
+   "explanationVariants": [
+    "x³ only ever climbs, so no horizontal line can catch it twice — one-to-one.",
+    "Two different inputs always cube to two different values; the graph passes every horizontal line once."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which function passes the horizontal line test on its full domain?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "f(x) = x³",
+      "correct": true,
+      "feedback": "Right — strictly increasing, so every output is hit exactly once and the cube root undoes it."
+     },
+     {
+      "id": "o2",
+      "label": "f(x) = x²",
+      "feedback": "The horizontal line y = 9 crosses at x = ±3 — two hits, test failed."
+     },
+     {
+      "id": "o3",
+      "label": "f(x) = |x|",
+      "feedback": "y = 4 crosses at x = ±4 — the V shape fails the test just like the parabola."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-one-to-one__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Numbers, not pictures.",
+   "conceptTag": "fna-one-to-one",
+   "explanationVariants": [
+    "|−4| = |4| = 4: two inputs, one output — not one-to-one.",
+    "The pair ±4 collides at 4, so |x| can't be undone on its full domain."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "h(x) = |x|. What OUTPUT value do the inputs 4 and −4 collide at?",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -4,
+      "feedback": "|−4| strips the sign: both inputs land at +4."
+     },
+     {
+      "value": 8,
+      "feedback": "They land at the SAME output, not the sum: |4| = |−4| = 4."
+     },
+     {
+      "value": 0,
+      "feedback": "Only x = 0 maps to 0. The inputs ±4 both map to 4."
+     }
+    ],
+    "fallbackFeedback": "|4| = 4 and |−4| = 4."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-one-to-one__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A table's verdict.",
+   "conceptTag": "fna-one-to-one",
+   "explanationVariants": [
+    "Outputs 5, 8, 5, 11: the output 5 appears for BOTH x = 1 and x = 3 — a collision, so no inverse on this table.",
+    "One-to-one requires all outputs distinct; the repeat at 5 fails it."
+   ],
+   "hints": [
+    "Scan the OUTPUT row for any repeated value.",
+    "x = 1 and x = 3 both matter here — compare their outputs.",
+    "f(1) = 5 and f(3) = 5: same output, different inputs. What does that mean for an inverse?"
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A table gives f(1)=5, f(2)=8, f(3)=5, f(4)=11. Does f have an inverse function?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No — the output 5 is shared by x = 1 and x = 3",
+      "correct": true,
+      "feedback": "Right — an inverse can't decide whether 5 should return to 1 or 3."
+     },
+     {
+      "id": "o2",
+      "label": "Yes — every input has exactly one output",
+      "feedback": "That makes f a FUNCTION, not one-to-one. For an inverse, every OUTPUT must also come from exactly one input, and 5 comes from two."
+     },
+     {
+      "id": "o3",
+      "label": "No — because 11 appears only once",
+      "feedback": "Appearing once is exactly what one-to-one wants. The failure is the REPEAT: 5 appears twice."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-one-to-one__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Undoing needs uniqueness.",
+   "takeaways": [
+    "One-to-one: no two inputs share an output.",
+    "Horizontal line test: any double-crossing line kills the inverse.",
+    "Strictly increasing or decreasing functions always pass."
+   ],
+   "teaser": "Next: rescuing x² — restricting the domain until an inverse exists."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fna-one-to-one",
+   "concept": {
+    "id": "rem-fna0501-c",
+    "kind": "concept",
+    "body": "To test one-to-one from values: look for any repeated OUTPUT. One repeat = not one-to-one = no inverse function."
+   },
+   "check": {
+    "id": "rem-fna0501-k",
+    "kind": "check",
+    "body": "Spot the repeat.",
+    "conceptTag": "fna-one-to-one",
+    "explanationVariants": [
+     "g(0) = 2 and g(4) = 2 share the output 2 — that's the collision.",
+     "The repeated output is 2, produced by both 0 and 4."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "g(0)=2, g(1)=7, g(4)=2, g(5)=9. Which OUTPUT value is repeated?",
+     "answer": 2,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "4 is an INPUT. Scan the outputs: 2, 7, 2, 9 — the 2 repeats."
+      },
+      {
+       "value": 7,
+       "feedback": "7 appears once (from x = 1). The output 2 appears twice, from x = 0 and x = 4."
+      }
+     ],
+     "fallbackFeedback": "Outputs are 2, 7, 2, 9 — the 2 is shared."
+    }
+   }
+  }
+ ]
+}

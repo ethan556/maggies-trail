@@ -1,0 +1,339 @@
+{
+  "id": "pv2-04-01",
+  "slug": "adding-with-regrouping",
+  "title": "Adding with Regrouping",
+  "courseId": "place-value-million",
+  "chapterId": "ch4-add-subtract-big",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You already know the trade: when a column sums to 10 or more, trade 10 of that place for 1 of the next place up, and carry that 1 into the next column as a **receipt**. The same trade works no matter how big the number gets — even when it cascades through several places in a row.",
+      "figure": "pv4-carry-chain"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the trade cascade.",
+      "conceptTag": "add-regroup-big",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Walk through 347,586 + 128,675 one column at a time.",
+        "panels": [
+          {
+            "title": "Ones",
+            "body": "6 + 5 = 11. That's too big for one column — trade 10 ones for 1 ten. Write 1, carry the 1."
+          },
+          {
+            "title": "Tens",
+            "body": "8 + 7 + the carried 1 = 16. Trade 10 tens for 1 hundred. Write 6, carry the 1."
+          },
+          {
+            "title": "Hundreds",
+            "body": "5 + 6 + the carried 1 = 12. Trade 10 hundreds for 1 thousand. Write 2, carry the 1."
+          },
+          {
+            "title": "Thousands",
+            "body": "7 + 8 + the carried 1 = 16. Trade 10 thousands for 1 ten-thousand. Write 6, carry the 1."
+          },
+          {
+            "title": "Ten-thousands and up",
+            "body": "4 + 2 + the carried 1 = 7 — no more trading needed. Hundred-thousands: 3 + 1 = 4. The final sum is 476,261."
+          }
+        ],
+        "continueFeedback": "Keep walking through each column, left to right.",
+        "successFeedback": "347,586 + 128,675 = 476,261 — four trades in a row, each one handled exactly the same way."
+      },
+      "predict": {
+        "prompt": "Column addition runs right to left. Why that direction?",
+        "options": [
+          {
+            "id": "carry",
+            "label": "Carries pass to the LEFT"
+          },
+          {
+            "id": "small",
+            "label": "Small columns deserve to go first"
+          },
+          {
+            "id": "trad",
+            "label": "Tradition only"
+          }
+        ],
+        "outcomeId": "carry",
+        "reveal": "An overflowing column hands its extra ten leftward — starting at the ones lets every carry arrive before its column is judged. The direction is logistics, not custom."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One trade.",
+      "conceptTag": "add-regroup-big",
+      "explanationVariants": [
+        "8 + 4 = 12 in the tens column trades 10 tens for 1 hundred: write 2, carry 1. The full sum is 37,928.",
+        "Only the tens column needs a trade here; every other column sums under 10."
+      ],
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "What is 24,681 + 13,247? Tap each column to work it out; tap a carry to include it.",
+        "op": "add",
+        "a": 24681,
+        "b": 13247,
+        "commonResults": [
+          {
+            "value": 37828,
+            "feedback": "37,828 added each column separately without carrying the extra ten from 8 + 4 = 12 into the hundreds column. Carrying that 1 gives 37,928."
+          }
+        ],
+        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
+        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAddColumn"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents add regroup big.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add regroup big must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add regroup big."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-million:add-regroup-big",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A carry can trigger ANOTHER carry — that's a cascade. Handle one column at a time, right to left, and just keep trading forward whenever a column's total (including anything carried in) reaches 10 or more. Nothing about the rule changes; it just repeats.",
+      "figure": "pv4-carry-chain"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A three-trade cascade.",
+      "conceptTag": "add-regroup-big",
+      "explanationVariants": [
+        "156,489 + 267,742 needs a trade in the ones, tens, hundreds, thousands, and ten-thousands columns — five trades in a row, landing on 424,231.",
+        "Each column's carry feeds the next, cascading all the way up to the hundred-thousands."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 156,489 + 267,742?",
+        "answer": 424231,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 313121,
+            "feedback": "313,121 added each column separately without ever carrying a trade forward. Carrying every trade through the cascade gives 424,231."
+          },
+          {
+            "value": 424321,
+            "feedback": "424,321 swaps two digits of the true answer. Working column by column with every carry gives 424,231."
+          }
+        ],
+        "fallbackFeedback": "Work column by column from the ones; carry every trade of 10 or more into the next column."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAddNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Trade, or no trade?",
+      "conceptTag": "add-regroup-big",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each column sum: does it need a trade (carry), or not?",
+        "buckets": [
+          {
+            "id": "trade",
+            "label": "Needs a trade",
+            "icon": "🔁"
+          },
+          {
+            "id": "notrade",
+            "label": "No trade needed",
+            "icon": "✅"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "7 + 8",
+            "bucketId": "trade",
+            "feedback": "7 + 8 = 15 — that's 10 or more, so trade 10 for 1 of the next place."
+          },
+          {
+            "id": "s2",
+            "label": "3 + 4",
+            "bucketId": "notrade",
+            "feedback": "3 + 4 = 7 — under 10, so nothing to trade."
+          },
+          {
+            "id": "s3",
+            "label": "9 + 9",
+            "bucketId": "trade",
+            "feedback": "9 + 9 = 18 — that's 10 or more, so trade."
+          },
+          {
+            "id": "s4",
+            "label": "2 + 5",
+            "bucketId": "notrade",
+            "feedback": "2 + 5 = 7 — under 10, so nothing to trade."
+          }
+        ],
+        "missFeedback": "A trade happens whenever a column's sum reaches 10 or more.",
+        "successFeedback": "7+8 and 9+9 both need a trade; 3+4 and 2+5 stay under 10 and need nothing extra."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where does the carry go?",
+      "conceptTag": "add-regroup-big",
+      "explanationVariants": [
+        "A carried 1 always joins the NEXT column to the left — the place value one rung higher.",
+        "The trade moves the receipt one place up, never sideways or back."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The ones column sums to 14. You write 4 and carry the 1. Which column does that carried 1 join?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The tens column",
+            "correct": true,
+            "feedback": "The trade moves the receipt one place up — from ones into tens."
+          },
+          {
+            "id": "b",
+            "label": "The ones column again",
+            "feedback": "The ones column is already finished — its answer (4) is written. The carry moves UP, into tens."
+          },
+          {
+            "id": "c",
+            "label": "The hundreds column",
+            "feedback": "That skips a place. The carry moves exactly one column over, into tens — not two."
+          },
+          {
+            "id": "d",
+            "label": "Nowhere — it's dropped",
+            "feedback": "Dropping the carry loses value from the sum. It must be added into the next column: tens."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAddMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The book sales.",
+      "conceptTag": "add-regroup-big",
+      "hints": [
+        "Add the ones, tens, and hundreds columns first — watch for trades.",
+        "Several columns in a row will need a trade.",
+        "Carry each trade forward before moving to the next column."
+      ],
+      "explanationVariants": [
+        "268,547 + 154,786 cascades through several trades, landing on 423,333.",
+        "Column by column, carrying every trade, gives 423,333."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A book sold 268,547 copies in its first year and 154,786 more in its second year. How many total copies were sold?",
+        "answer": 423333,
+        "tolerance": 0,
+        "unit": "copies",
+        "commonErrors": [
+          {
+            "value": 312223,
+            "feedback": "312,223 added each column separately without carrying any trades forward. Carrying every trade gives 423,333."
+          },
+          {
+            "value": 422333,
+            "feedback": "422,333 is one trade short in an early column. Re-checking each column's carry gives 423,333."
+          }
+        ],
+        "fallbackFeedback": "Add column by column from the ones, carrying every trade of 10 or more."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvAddNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Trades, chained together.",
+      "takeaways": [
+        "A column sum of 10 or more trades 10 of that place for 1 of the next place up.",
+        "A carry always joins the very next column to the left.",
+        "Carries can cascade — one trade can trigger another, and another."
+      ],
+      "teaser": "next: the same trade, run in reverse — subtracting with borrowing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "add-regroup-big",
+      "concept": {
+        "id": "rem-ar-c",
+        "kind": "concept",
+        "body": "Quick rewind. **A column summing to 10 or more trades 10 for 1 of the next place, carried forward.** For 3,758 + 1,494: ones 8+4=12, write 2 carry 1; tens 5+9+1=15, write 5 carry 1; hundreds 7+4+1=12, write 2 carry 1; thousands 3+1+1=5. Result: 5,252."
+      },
+      "check": {
+        "id": "rem-ar-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "add-regroup-big",
+        "explanationVariants": [
+          "6 + 7 = 13 in the ones column trades: write 3, carry 1 into tens.",
+          "The carried 1 makes the tens column 1 + 2 + 1 = 4."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is 26 + 17?",
+          "options": [
+            {
+              "id": "a",
+              "label": "43",
+              "correct": true,
+              "feedback": "6 + 7 = 13, write 3 carry 1; then 2 + 1 + 1 = 4: 43."
+            },
+            {
+              "id": "b",
+              "label": "33",
+              "feedback": "33 dropped the carry from the ones column. Carrying that 1 into tens gives 43."
+            },
+            {
+              "id": "c",
+              "label": "313",
+              "feedback": "313 wrote the two-digit column sum directly instead of trading. Carry the extra ten: 43."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+{
+  "id": "lf-04-01",
+  "slug": "line-from-point-and-slope",
+  "title": "Line from a Point and a Slope",
+  "courseId": "linear-functions",
+  "chapterId": "ch4-writing-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "slope-triangle",
+      "body": "Give me one point and a slope, and I can write the whole line. The slope you're handed is already **m**. The only missing piece is **b**, and you get it from **b = y₁ − m·x₁**. Then write **y = mx + b**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Let the point pin the intercept.",
+      "widget": {
+        "type": "lineExplore",
+        "prompt": "Slope is locked in spirit at 2 — set both dials so the line passes through (1, 5).",
+        "targetSlope": 2,
+        "targetIntercept": 3,
+        "slopeMin": -4,
+        "slopeMax": 4,
+        "interceptMin": -5,
+        "interceptMax": 5,
+        "slopeStart": 0,
+        "interceptStart": 0,
+        "gridMax": 6,
+        "successFeedback": "y = 2x + 3 — the only line with slope 2 through (1, 5). b = 5 − 2·1 = 3: the point pays for the intercept.",
+        "slopeFeedback": "Set the slope to 2 first — the problem hands it to you.",
+        "interceptFeedback": "Slope's right; now slide b until the line catches (1, 5). Check: 5 = 2·1 + b."
+      },
+      "predict": {
+        "prompt": "The line must pass through (1, 5) with slope 2. Is the intercept b forced, or yours to choose?",
+        "options": [
+          {
+            "id": "forced",
+            "label": "Forced — a slope plus one point pin the whole line"
+          },
+          {
+            "id": "free",
+            "label": "Free — any b still has slope 2"
+          },
+          {
+            "id": "five",
+            "label": "b = 5, the point's own y"
+          }
+        ],
+        "outcomeId": "forced",
+        "reveal": "With the slope locked at 2, sliding b sweeps the line up and down — and only b = 3 threads (1, 5): 5 = 2·1 + 3. One point plus a slope leaves nothing to choose. (b would equal 5 only if the point sat ON the y-axis.)"
+      },
+      "conceptTag": "line-from-point-slope",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents line from point slope.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for line from point slope must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines line from point slope."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-functions:line-from-point-slope",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the whole line.",
+      "conceptTag": "line-from-point-slope",
+      "explanationVariants": [
+        "Slope 2 and b = 3 give y = 2x + 3. Check: 2·1 + 3 = 5, matching (1, 5).",
+        "m stays 2, b = 5 − 2·1 = 3, so y = 2x + 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which equation is the line through (1, 5) with slope 2?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = 2x + 3",
+            "correct": true,
+            "feedback": "Yes — slope 2, b = 5 − 2 = 3, and 2·1 + 3 = 5 checks out."
+          },
+          {
+            "id": "b",
+            "label": "y = 2x + 5",
+            "feedback": "That used y₁ = 5 as b. But b = y₁ − m·x₁ = 5 − 2 = 3: y = 2x + 3."
+          },
+          {
+            "id": "c",
+            "label": "y = 2x − 3",
+            "feedback": "The sign is off. b = 5 − 2 = +3, so y = 2x + 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-point-slope__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "b can come out negative. For (2, 3) with slope 4: **b = 3 − 4·2 = −5**, so the line is **y = 4x − 5**. Check it — 4·2 − 5 = 3, which is the point's height. The point always lands back on the line.",
+      "figure": "lf-b-from-point"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try a negative slope.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line passes through (3, 4) with slope -1. What is b?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's y₁. Finish with b = y₁ − m·x₁ = 4 − (−1)·3 = 7."
+          },
+          {
+            "value": 1,
+            "feedback": "It looks like you added m·x₁: 4 + (−3) = 1. The formula subtracts: 4 − (−3) = 7."
+          }
+        ],
+        "fallbackFeedback": "b = y₁ − m·x₁ = 4 − (−1)·3 = 4 + 3 = 7."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A negative x this time.",
+      "conceptTag": "line-from-point-slope",
+      "explanationVariants": [
+        "b = y₁ − m·x₁ = 2 − 3·(−1) = 2 + 3 = 5.",
+        "Subtracting 3·(−1) means adding 3: b = 2 + 3 = 5."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A line passes through (-1, 2) with slope 3. What is b?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "y",
+            "label": "the point's y-coordinate",
+            "value": 2
+          },
+          {
+            "id": "m",
+            "label": "the slope",
+            "value": 3
+          },
+          {
+            "id": "x",
+            "label": "the point's x-coordinate",
+            "value": -1
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "const",
+            "id": "y"
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "m"
+            },
+            "right": {
+              "op": "const",
+              "id": "x"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "That's y₁. Keep going: b = 2 − 3·(−1) = 5."
+          },
+          {
+            "value": -1,
+            "feedback": "That computed 2 + 3·(−1) = −1. But the formula subtracts m·x₁: 2 − (−3) = 5."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "b = y₁ − m·x₁ = 2 − 3·(−1) = 5.",
+        "successFeedback": "b = y₁ − m·x₁ = 2 − 3·(−1) = 5."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-point-slope__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One special case: **slope 0** makes a **horizontal line**. Then b = y₁ − 0 = y₁, so the line is simply **y = y₁**. A line through (2, 5) with slope 0 is just **y = 5** — the same height everywhere.",
+      "figure": "lf-slope-zero-horiz"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Handle the flat line.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the line through (2, 5) with slope 0?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = 5",
+            "correct": true,
+            "feedback": "Yes — slope 0 means constant height, so y = 5 everywhere."
+          },
+          {
+            "id": "b",
+            "label": "x = 2",
+            "feedback": "That's a vertical line (undefined slope). Slope 0 is horizontal: y = 5."
+          },
+          {
+            "id": "c",
+            "label": "y = 2",
+            "feedback": "That used the x-coordinate. A horizontal line holds the height y₁ = 5: y = 5."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Put it all together.",
+      "conceptTag": "line-from-point-slope",
+      "explanationVariants": [
+        "b = 1 − (−2)·4 = 1 + 8 = 9, so y = −2x + 9. Check: −2·4 + 9 = 1.",
+        "Slope −2 stays; b = y₁ − m·x₁ = 1 + 8 = 9: y = −2x + 9."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which equation is the line through (4, 1) with slope -2?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = -2x + 9",
+            "correct": true,
+            "feedback": "Yes — b = 1 − (−2)·4 = 9, and −2·4 + 9 = 1 checks out."
+          },
+          {
+            "id": "b",
+            "label": "y = -2x + 1",
+            "feedback": "That used y₁ = 1 as b. But b = 1 − (−2)·4 = 9: y = −2x + 9."
+          },
+          {
+            "id": "c",
+            "label": "y = -2x − 9",
+            "feedback": "The sign is off. b = 1 + 8 = +9, so y = −2x + 9."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-point-slope__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two negatives to manage.",
+      "conceptTag": "line-from-point-slope",
+      "explanationVariants": [
+        "b = y₁ − m·x₁ = 3 − 4·(−2) = 3 + 8 = 11.",
+        "Subtracting 4·(−2) adds 8: b = 3 + 8 = 11, so y = 4x + 11."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A line passes through (-2, 3) with slope 4. What is b?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "y",
+            "label": "the point's y-coordinate",
+            "value": 3
+          },
+          {
+            "id": "m",
+            "label": "the slope",
+            "value": 4
+          },
+          {
+            "id": "x",
+            "label": "the point's x-coordinate",
+            "value": -2
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "const",
+            "id": "y"
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "m"
+            },
+            "right": {
+              "op": "const",
+              "id": "x"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 3,
+            "feedback": "That's y₁. Finish: b = 3 − 4·(−2) = 11."
+          },
+          {
+            "value": -5,
+            "feedback": "That computed 3 + 4·(−2) = −5. The formula subtracts m·x₁: 3 − (−8) = 11."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "b = y₁ − m·x₁ = 3 − 4·(−2) = 3 + 8 = 11.",
+        "successFeedback": "b = y₁ − m·x₁ = 3 − 4·(−2) = 3 + 8 = 11."
+      },
+      "hints": [
+        "Slope 4 stays; use b = y₁ − m·x₁.",
+        "b = 3 − 4·(−2), and subtracting −8 adds 8.",
+        "b = 3 + 8 = 11."
+      ],
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "line-from-point-slope__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A point plus a slope is enough to name the line.",
+      "takeaways": [
+        "Find b with b = y₁ − m·x₁, then write y = mx + b.",
+        "The given point always lands back on the finished line.",
+        "Slope 0 makes a horizontal line, y = y₁."
+      ],
+      "teaser": "next: build the line from two points instead of a slope."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "line-from-point-slope",
+      "concept": {
+        "id": "rem-lfps-c",
+        "kind": "concept",
+        "body": "With a point and a slope, find b = y₁ − m·x₁, then write y = mx + b. Through (2, 3) with slope 4: b = 3 − 4·2 = −5, so the line is y = 4x − 5."
+      },
+      "check": {
+        "id": "rem-lfps-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "line-from-point-slope",
+        "explanationVariants": [
+          "b = y₁ − m·x₁ = 4 − 3·1 = 1.",
+          "Slope 3 stays; b = 4 − 3 = 1, so y = 3x + 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A line passes through (1, 4) with slope 3. What is b?",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "That's y₁. Finish: b = 4 − 3·1 = 1."
+            },
+            {
+              "value": 7,
+              "feedback": "That added 4 + 3. Subtract: 4 − 3 = 1."
+            }
+          ],
+          "fallbackFeedback": "b = y₁ − m·x₁ = 4 − 3·1 = 1."
+        }
+      }
+    }
+  ]
+}

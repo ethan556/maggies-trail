@@ -1,0 +1,390 @@
+{
+ "id": "pf-03-01",
+ "slug": "polynomial-long-division",
+ "title": "Polynomial Long Division",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch3-polynomial-division",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Polynomial division works like numeric long division: **divide the leading terms, multiply back, subtract, repeat**. (x² + 5x + 6) ÷ (x + 2): x² ÷ x = x; x·(x + 2) = x² + 2x; subtract to leave 3x + 6; then 3x ÷ x = 3; 3(x + 2) = 3x + 6; subtract to leave 0. Quotient **x + 3**.",
+   "figure": "pf-long-division"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "First quotient term.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Dividing (x² + 7x + 12) by (x + 3), what is the FIRST term of the quotient?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x",
+      "correct": true,
+      "feedback": "Right — divide the leading terms: x² ÷ x = x."
+     },
+     {
+      "id": "o2",
+      "label": "x²",
+      "correct": false,
+      "feedback": "The quotient term is the RATIO of leading terms: x² ÷ x = x, one degree lower."
+     },
+     {
+      "id": "o3",
+      "label": "7x",
+      "correct": false,
+      "feedback": "Only the LEADING terms set each quotient term — x² ÷ x = x."
+     },
+     {
+      "id": "o4",
+      "label": "3",
+      "correct": false,
+      "feedback": "3 arrives on the SECOND pass — the first divide is x² ÷ x = x."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Every step trades the current leading term for something smaller, so the process must end. What's left when the degree drops below the divisor's is the **remainder** — and the bookkeeping identity always holds: f = divisor × quotient + remainder.",
+   "figure": "pf-trade-term"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Finish that division.",
+   "conceptTag": "pf-long-div",
+   "explanationVariants": [
+    "After x·(x + 3) is removed, 4x + 12 remains; 4x ÷ x = 4 and 4(x + 3) = 4x + 12 exactly: quotient x + 4, remainder 0.",
+    "Check by multiplying back: (x + 3)(x + 4) = x² + 7x + 12. ✓"
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What is (x² + 7x + 12) ÷ (x + 3)?",
+    "tokens": [
+     {
+      "id": "q4",
+      "label": "x + 4"
+     },
+     {
+      "id": "q7",
+      "label": "x + 7"
+     },
+     {
+      "id": "q3",
+      "label": "x + 3"
+     },
+     {
+      "id": "c",
+      "label": ","
+     },
+     {
+      "id": "r0",
+      "label": "remainder 0"
+     },
+     {
+      "id": "r12",
+      "label": "remainder 12"
+     },
+     {
+      "id": "r3",
+      "label": "remainder 3"
+     }
+    ],
+    "correct": [
+     "q4",
+     "c",
+     "r0"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "q4",
+       "c",
+       "r12"
+      ],
+      "feedback": "The last subtraction removes ALL of 4x + 12 — nothing remains: remainder 0."
+     },
+     {
+      "sequence": [
+       "q7",
+       "c",
+       "r12"
+      ],
+      "feedback": "The 7 must shed the 3x produced by x·(x + 3): the second term is 7 − 3 = 4."
+     },
+     {
+      "sequence": [
+       "q3",
+       "c",
+       "r3"
+      ],
+      "feedback": "Multiply back to test: (x + 3)(x + 3) = x² + 6x + 9 ≠ x² + 7x + 12 — the quotient is x + 4."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Multiply back to check: (x + 3) times the quotient plus the remainder must rebuild x² + 7x + 12.",
+    "successFeedback": "Right — and (x + 3)(x + 4) multiplies back to x² + 7x + 12."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-long-div__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "A nonzero remainder.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Divide (x² + 3x + 5) by (x + 1): the quotient is x + 2. What is the REMAINDER?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 is f's constant, but (x + 1)(x + 2) already supplies 2 of it: 5 − 2 = 3."
+     },
+     {
+      "value": 0,
+      "feedback": "This one doesn't divide exactly — (x + 1)(x + 2) = x² + 3x + 2, leaving 5 − 2 = 3 behind."
+     }
+    ],
+    "fallbackFeedback": "(x + 1)(x + 2) = x² + 3x + 2; the original has +5, so 3 is left over. (Check: f(−1) = 1 − 3 + 5 = 3.)"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Verify by multiplying back.",
+   "conceptTag": "pf-long-div",
+   "explanationVariants": [
+    "divisor × quotient + remainder must rebuild f — that's the universal check.",
+    "The identity f = d·q + r holds for every division, exact or not."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A division claims (x² + 3x + 5) = (x + 1)·q(x) + r. What is the fastest full check?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "expand (x + 1)·q(x), add r, compare to x² + 3x + 5",
+      "correct": true,
+      "feedback": "Right — multiply back and match every coefficient."
+     },
+     {
+      "id": "o2",
+      "label": "substitute x = 0 only",
+      "correct": false,
+      "feedback": "One input can match by luck — the multiply-back check compares EVERY coefficient."
+     },
+     {
+      "id": "o3",
+      "label": "check that q has a smaller leading coefficient",
+      "correct": false,
+      "feedback": "Leading coefficients say nothing alone — rebuild the whole product and compare."
+     },
+     {
+      "id": "o4",
+      "label": "no check is possible",
+      "correct": false,
+      "feedback": "Division is self-checking: d·q + r must reproduce f exactly."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-long-div__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Remainder meets an old friend.",
+   "conceptTag": "pf-long-div",
+   "explanationVariants": [
+    "The Remainder Theorem predicts r = f(−1) = 1 − 3 + 5 = 3 — matching the division.",
+    "For a linear divisor (x − c), one substitution confirms the remainder."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Use the Remainder Theorem to confirm: for f(x) = x² + 3x + 5 divided by (x + 1), the remainder is f(−1) = ?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "That adds the 3x term: f(−1) = 1 − 3 + 5 = 3 — the middle term goes NEGATIVE at x = −1."
+     },
+     {
+      "value": -3,
+      "feedback": "1 − 3 + 5 = +3 — the +5 outweighs the −3."
+     }
+    ],
+    "fallbackFeedback": "f(−1) = 1 − 3 + 5 = 3, exactly the division's leftover."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-long-div__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A full division.",
+   "conceptTag": "pf-long-div",
+   "explanationVariants": [
+    "x² ÷ x = x; x(x − 2) = x² − 2x; subtract: 6x − 7; 6x ÷ x = 6; 6(x − 2) = 6x − 12; subtract: 5. Quotient x + 6, remainder 5.",
+    "Check both ways: (x − 2)(x + 6) + 5 = x² + 4x − 12 + 5 = x² + 4x − 7 ✓, and f(2) = 4 + 8 − 7 = 5 ✓."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Divide (x² + 4x − 7) by (x − 2).",
+    "tokens": [
+     {
+      "id": "q6",
+      "label": "x + 6"
+     },
+     {
+      "id": "q4",
+      "label": "x + 4"
+     },
+     {
+      "id": "q2",
+      "label": "x + 2"
+     },
+     {
+      "id": "c",
+      "label": ","
+     },
+     {
+      "id": "r5",
+      "label": "remainder 5"
+     },
+     {
+      "id": "rm19",
+      "label": "remainder −19"
+     },
+     {
+      "id": "r1",
+      "label": "remainder 1"
+     },
+     {
+      "id": "rm3",
+      "label": "remainder −3"
+     }
+    ],
+    "correct": [
+     "q6",
+     "c",
+     "r5"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "q6",
+       "c",
+       "rm19"
+      ],
+      "feedback": "6(x − 2) = 6x − 12, and −7 − (−12) = +5 — the double negative flips it."
+     },
+     {
+      "sequence": [
+       "q4",
+       "c",
+       "r1"
+      ],
+      "feedback": "After removing x(x − 2) = x² − 2x, the x-column holds 4 − (−2) = 6, not 4."
+     },
+     {
+      "sequence": [
+       "q2",
+       "c",
+       "rm3"
+      ],
+      "feedback": "Multiply back: (x − 2)(x + 2) = x² − 4 — the x-term vanishes, so that quotient can't rebuild +4x."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Remove x(x − 2) first, then 6(x − 2) — the remainder is what the constant column leaves: 5.",
+    "successFeedback": "Right — and f(2) = 5 confirms the remainder instantly."
+   },
+   "hints": [
+    "Divide leading terms: x² ÷ x = x, then subtract x(x − 2).",
+    "The leftover is 6x − 7; divide again: 6x ÷ x = 6.",
+    "6(x − 2) = 6x − 12, and −7 − (−12) = 5 — the remainder."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-long-div__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Divide the leads, multiply back, subtract, repeat — then check with f = d·q + r.",
+   "takeaways": [
+    "Each pass kills the current leading term.",
+    "The remainder's degree is below the divisor's.",
+    "Multiply-back and the Remainder Theorem are two independent checks."
+   ],
+   "teaser": "Next: the same division in three quick rows — synthetic division."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-long-div",
+   "concept": {
+    "id": "rem-pf0301-c",
+    "kind": "concept",
+    "body": "One pass at a time. (x² + 5x + 4) ÷ (x + 1): first x² ÷ x = x, and x(x + 1) = x² + x. Subtracting leaves 4x + 4."
+   },
+   "check": {
+    "id": "rem-pf0301-k",
+    "kind": "check",
+    "body": "Take the second pass.",
+    "conceptTag": "pf-long-div",
+    "explanationVariants": [
+     "4x ÷ x = 4, and 4(x + 1) = 4x + 4 exactly: quotient x + 4, remainder 0.",
+     "Multiply back: (x + 1)(x + 4) = x² + 5x + 4. ✓"
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "After the first pass leaves 4x + 4, what is the final quotient of (x² + 5x + 4) ÷ (x + 1)?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x + 4",
+       "correct": true,
+       "feedback": "Right — the second pass divides 4x + 4 by (x + 1) exactly."
+      },
+      {
+       "id": "o2",
+       "label": "x + 5",
+       "correct": false,
+       "feedback": "The 5 already gave one x to the first pass — what remains is 4x + 4, so the second term is 4."
+      },
+      {
+       "id": "o3",
+       "label": "x + 1",
+       "correct": false,
+       "feedback": "Multiply back: (x + 1)(x + 1) = x² + 2x + 1 ≠ x² + 5x + 4."
+      },
+      {
+       "id": "o4",
+       "label": "4x + 4",
+       "correct": false,
+       "feedback": "That's the leftover BEFORE the second pass — dividing it by (x + 1) gives the quotient's +4."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,353 @@
+{
+  "id": "dop-02-02",
+  "slug": "the-standard-algorithm",
+  "title": "The Standard Algorithm",
+  "courseId": "decimal-operations",
+  "chapterId": "ch2-standard-multiplication",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The standard algorithm is partial products, written compactly. For 47 × 6: multiply the ones, 7 × 6 = 42 — write the 2, **carry** the 4. Then the tens: 4 × 6 = 24, plus the carried 4 = 28. The answer is 282. The carry is just the tens part of the first partial product, waiting its turn.",
+      "figure": "dop-standard-algo"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiply the ones, find the carry.",
+      "conceptTag": "standard-algorithm",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 28 × 3, start with the ones: 8 × 3 = 24. You write the 4 — what number do you carry?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the digit you WRITE (the ones of 24). The digit you carry is the tens of 24: 2."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the whole product 8 × 3. You write its ones (4) and carry its tens (2)."
+          }
+        ],
+        "fallbackFeedback": "8 × 3 = 24: write the 4, carry the tens digit — 2."
+      },
+      "hints": [
+        "8 × 3 = 24.",
+        "Write the ones digit (4).",
+        "Carry the tens digit: 2."
+      ],
+      "explanationVariants": [
+        "24 splits: write 4, carry 2.",
+        "The carry is the tens part of the ones-product."
+      ],
+      "predict": {
+        "prompt": "8 × 3 = 24 in the ones column. Where does the 2 of 24 go?",
+        "options": [
+          {
+            "id": "carry",
+            "label": "Carried to the tens — it IS 2 tens"
+          },
+          {
+            "id": "beside",
+            "label": "Written beside the 4 in the ones"
+          },
+          {
+            "id": "drop",
+            "label": "Dropped — only the ones digit survives"
+          }
+        ],
+        "outcomeId": "carry",
+        "reveal": "24 ones is 2 tens and 4 ones. The 4 stays home in the ones column; the 2 is two TENS, so it moves to the tens column as a carry. Writing '24' inside one column would scramble the place values the algorithm depends on."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish 28 × 3.",
+      "conceptTag": "standard-algorithm",
+      "variant": {
+        "gen": "partial-products",
+        "form": "carryContinue"
+      },
+      "explanationVariants": [
+        "Tens: 2 × 3 = 6, plus the carried 2 = 8; with the written 4, that's 84.",
+        "6 (tens product) + 2 (carry) = 8 tens, and the 4 ones → 84."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Continuing 28 × 3: you wrote 4 and carried 2. Now 2 × 3 = 6, plus the carried 2. What is the full product?",
+        "answer": 84,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "64 forgets to add the carried 2 (just 6 tens and 4). With the carry: 6 + 2 = 8 tens, so 84."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is only the ones step (8 × 3). The tens column still adds on: 2 × 3 = 6, plus the carried 2 = 8 tens — giving 84."
+          }
+        ],
+        "fallbackFeedback": "Tens: 2 × 3 = 6, plus carried 2 = 8; with the 4 ones, that's 84."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The carry matters most when the tens step would otherwise be wrong. For 35 × 4: ones give 5 × 4 = 20 — write 0, carry 2. Tens: 3 × 4 = 12, plus the carried 2 = 14. Answer 140. Forget the carry and you'd get 120 — off by exactly the carry's value.",
+      "figure": "dop-standard-algo"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Carry into the tens.",
+      "conceptTag": "standard-algorithm",
+      "variant": {
+        "gen": "partial-products",
+        "form": "carryScaffold"
+      },
+      "explanationVariants": [
+        "Ones: 3 × 5 = 15, write 5 carry 1. Tens: 6 × 5 = 30, plus 1 = 31 → 315.",
+        "15 gives write-5-carry-1; 30 + 1 = 31 tens, so 315."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the standard algorithm for 63 × 5. (ones: 3×5=15, write 5 carry 1; tens: 6×5=30, +1)",
+        "answer": 315,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 305,
+            "feedback": "305 forgets the carried 1 (30 tens, not 31). With the carry: 6×5=30, +1 = 31 → 315."
+          },
+          {
+            "value": 3015,
+            "feedback": "3015 writes 30 and 15 side by side. They overlap by place — the 1 from 15 carries into the 30: 315."
+          }
+        ],
+        "fallbackFeedback": "Ones 3×5=15 (write 5, carry 1); tens 6×5=30, +1 = 31 → 315."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "What is the carry doing?",
+      "conceptTag": "standard-algorithm",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the standard algorithm, why do you carry a digit from the ones step into the tens step?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The ones product spilled past 9 into the tens place",
+            "correct": true,
+            "feedback": "Exactly — when the ones product is 10 or more, its tens part belongs in the tens column, so it carries."
+          },
+          {
+            "id": "b",
+            "label": "To make the answer bigger",
+            "feedback": "It's not about making it bigger — the carry moves the tens part of the ones-product to where it belongs, the tens column."
+          },
+          {
+            "id": "c",
+            "label": "It's just a rule with no reason",
+            "feedback": "There's a real reason: a two-digit ones-product (like 24) has a tens part that must move to the tens column — that's the carry."
+          }
+        ]
+      },
+      "hints": [
+        "Think about 8 × 3 = 24.",
+        "24 has a tens part.",
+        "That tens part belongs in the tens column."
+      ],
+      "explanationVariants": [
+        "A ones-product of 10+ has a tens part that carries left.",
+        "The carry relocates the tens part of the ones-product to its correct column."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "interactive",
+      "body": "Spot the missing carry.",
+      "conceptTag": "standard-algorithm",
+      "variant": {
+        "gen": "partial-products",
+        "form": "carryColumn"
+      },
+      "explanationVariants": [
+        "Forgetting the carry on 35 × 4 gives 120 instead of 140 — short by the carry (2 tens = 20).",
+        "The correct 35 × 4 is 140; 120 is the forgot-the-carry result."
+      ],
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "A student computed 35 × 4 = 120 by forgetting to add the carry. What is the correct answer? Tap each column to work it out; tap a carry to include it.",
+        "op": "multiply",
+        "a": 35,
+        "b": 4,
+        "commonResults": [
+          {
+            "value": 120,
+            "feedback": "120 is the student's error — it drops the carried 2 tens. Adding it back: 3×4=12, +2 = 14 tens → 140."
+          }
+        ],
+        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
+        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+      },
+      "predict": {
+        "prompt": "When one column creates ten or more units, what must happen before the next column is finished?",
+        "options": [
+          {
+            "id": "exchange",
+            "label": "Exchange ten units for one in the next place"
+          },
+          {
+            "id": "ignore",
+            "label": "Ignore the extra ten"
+          },
+          {
+            "id": "repeat",
+            "label": "Repeat the same digit"
+          }
+        ],
+        "outcomeId": "exchange",
+        "reveal": "A carry is a place-value exchange: ten units in one place become one unit in the next place while the total value stays unchanged."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "quantity-composition",
+        "actionGoal": "Perform each carry as a place-value exchange and connect the action to the written algorithm.",
+        "predictionId": "g4-g5-decimal-regrouping-prediction",
+        "invariants": [
+          "quantity-preserved",
+          "place-value-preserved"
+        ],
+        "misconceptions": [
+          "forgotten-carry",
+          "digit-wise-operation"
+        ],
+        "representations": [
+          "concrete",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "table",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "decimal-operation-after-model-fades",
+        "delayed": true,
+        "counterfactualPrompt": "Deliberately omit one carry. Which column becomes inconsistent with the place-value exchange?",
+        "explanation": {
+          "prompt": "Why must a carry move into the next place?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Ten units in one place are exchanged for one unit in the next place.",
+              "correct": true,
+              "feedback": "Exactly. Regrouping preserves quantity through place-value equivalence."
+            },
+            {
+              "id": "surface",
+              "label": "A carry is an extra digit added by a rule with no value meaning.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Regrouping preserves quantity through place-value equivalence."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A bigger carry.",
+      "conceptTag": "standard-algorithm",
+      "variant": {
+        "gen": "partial-products",
+        "form": "carryBare"
+      },
+      "hints": [
+        "Ones first: 4 × 8 = 32 — write 2, carry 3.",
+        "Tens: 7 × 8 = 56, plus the carried 3.",
+        "56 + 3 = 59, with the written 2."
+      ],
+      "explanationVariants": [
+        "74 × 8: ones 4×8=32 (write 2, carry 3); tens 7×8=56, +3 = 59 → 592.",
+        "The carry is 3 here; 56 + 3 = 59 tens, so 592."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the standard algorithm for 74 × 8.",
+        "answer": 592,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 562,
+            "feedback": "562 forgets the carried 3 (56 tens, not 59). With the carry: 7×8=56, +3 = 59 → 592."
+          },
+          {
+            "value": 5612,
+            "feedback": "5612 writes 56 and 32 side by side. They overlap by place — the 3 from 32 carries into the 56: 592."
+          }
+        ],
+        "fallbackFeedback": "Ones 4×8=32 (write 2, carry 3); tens 7×8=56, +3 = 59 → 592."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Carry moves the spillover to its place.",
+      "takeaways": [
+        "The standard algorithm is partial products written compactly, ones first then tens.",
+        "When a step's product passes 9, write the ones digit and carry the tens digit.",
+        "Add the carry into the next column — forgetting it is the most common error."
+      ],
+      "teaser": "next: two-digit × two-digit, with four partial products."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "standard-algorithm",
+      "concept": {
+        "id": "rem-sa-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply the ones first; if that product is 10 or more, write its ones digit and carry its tens digit into the next step.** For 26 × 3: 6 × 3 = 18, write 8 carry 1; 2 × 3 = 6, plus 1 = 7 → 78."
+      },
+      "check": {
+        "id": "rem-sa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "standard-algorithm",
+        "explanationVariants": [
+          "Ones 6×3=18 (write 8, carry 1); tens 2×3=6, +1 = 7 → 78.",
+          "The carried 1 makes the tens 7, so 78."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Use the standard algorithm for 26 × 3.",
+          "answer": 78,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 68,
+              "feedback": "68 forgets the carried 1 (6 tens, not 7). With the carry: 2×3=6, +1 = 7 → 78."
+            },
+            {
+              "value": 618,
+              "feedback": "618 writes 6 and 18 side by side. The 1 from 18 carries into the 6: 78."
+            }
+          ],
+          "fallbackFeedback": "Ones 6×3=18 (write 8, carry 1); tens 2×3=6, +1 = 7 → 78."
+        }
+      }
+    }
+  ]
+}

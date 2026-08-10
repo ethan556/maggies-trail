@@ -1,0 +1,366 @@
+{
+ "id": "alg1-03-03",
+ "slug": "multi-step-literal-equations",
+ "title": "Multi-Step Literal Equations",
+ "courseId": "solving-equations",
+ "chapterId": "ch3-literal",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Temperature ties them together: **C = (F − 32)·5/9**. To solve for F, undo each layer in reverse: multiply by 9, divide by 5, then add 32. The result is **F = 9C/5 + 32** — the everyday conversion.",
+   "narration": "Temperature ties them together: C equals F minus thirty-two, times five over nine. To solve for F, undo each layer in reverse: multiply by nine, divide by five, then add thirty-two. The result is F equals nine C over five plus thirty-two — the everyday conversion.",
+   "figure": "alg1-temperature"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Order the reverse undo.",
+   "conceptTag": "multi-literal",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Solve C = (F − 32)·5/9 for F. Drag the undo steps into order.",
+    "items": [
+     {
+      "id": "t-add",
+      "label": "add 32 → F = 9C/5 + 32"
+     },
+     {
+      "id": "t-mul",
+      "label": "multiply both sides by 9 → 9C = (F − 32)·5"
+     },
+     {
+      "id": "t-div",
+      "label": "divide by 5 → 9C/5 = F − 32"
+     }
+    ],
+    "correctOrder": [
+     "t-mul",
+     "t-div",
+     "t-add"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "t-add",
+      "second": "t-mul",
+      "feedback": "The +32 is trapped inside (F − 32), which is still multiplied by 5/9 — you can't add 32 until that's cleared. Multiply by 9 and divide by 5 first."
+     }
+    ],
+    "missFeedback": "Peel the 5/9 off first (×9, ÷5), THEN undo the −32 by adding 32.",
+    "successFeedback": "×9, ÷5, +32 — F = 9C/5 + 32."
+   },
+   "predict": {
+    "prompt": "Undoing C = (F − 32)·5/9 to free F: which wrapper comes off FIRST?",
+    "options": [
+     {
+      "id": "mul",
+      "label": "The ×5/9 — it went on last"
+     },
+     {
+      "id": "sub",
+      "label": "The −32 — it's deepest inside"
+     },
+     {
+      "id": "any",
+      "label": "Order doesn't matter for equations"
+     }
+    ],
+    "outcomeId": "mul",
+    "reveal": "Unwrapping runs last-on, first-off: multiply both sides by 9/5 to peel the 5/9, THEN add 32 — F = 9C/5 + 32. Grabbing the −32 first would tear it out from under the multiplication it's wrapped in."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Convert with your formula.",
+   "conceptTag": "multi-literal",
+   "explanationVariants": [
+    "F = 9C/5 + 32. With C = 100: 9·100/5 + 32 = 180 + 32 = 212.",
+    "Water boils at 100°C — the formula gives 212°F, exactly right."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using F = 9C/5 + 32, find F when C = 100.",
+    "answer": 212,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 180,
+      "feedback": "That's 9C/5 — you forgot the + 32. Add it: 180 + 32 = 212."
+     },
+     {
+      "value": 132,
+      "feedback": "That added 32 to C first (100 + 32 = 132), skipping the 9/5 scaling. Scale FIRST: 9·100/5 = 180, then + 32 = 212."
+     }
+    ],
+    "fallbackFeedback": "F = 9·100/5 + 32 = 180 + 32 = 212."
+   },
+   "hints": [
+    "F = 9C/5 + 32.",
+    "9·100/5 = 180.",
+    "180 + 32 = 212."
+   ],
+   "variant": {
+    "gen": "a1-solving-equations",
+    "form": "multi-literal__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Assembling a solved formula, order matters: the whole **(y − b)** rides over m. Parentheses keep the subtraction together before the division.",
+   "narration": "Assembling a solved formula, order matters: the whole quantity y minus b rides over m. Parentheses keep the subtraction together before the division.",
+   "figure": "alg1-assemble-formula"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Build the solved formula from tokens.",
+   "conceptTag": "multi-literal",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Assemble the solution of y = mx + b for x.",
+    "tokens": [
+     {
+      "id": "tk-x",
+      "label": "x ="
+     },
+     {
+      "id": "tk-lp",
+      "label": "("
+     },
+     {
+      "id": "tk-y",
+      "label": "y"
+     },
+     {
+      "id": "tk-min",
+      "label": "−"
+     },
+     {
+      "id": "tk-b",
+      "label": "b"
+     },
+     {
+      "id": "tk-rp",
+      "label": ")"
+     },
+     {
+      "id": "tk-div",
+      "label": "/"
+     },
+     {
+      "id": "tk-m",
+      "label": "m"
+     }
+    ],
+    "correct": [
+     "tk-x",
+     "tk-lp",
+     "tk-y",
+     "tk-min",
+     "tk-b",
+     "tk-rp",
+     "tk-div",
+     "tk-m"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "tk-x",
+       "tk-y",
+       "tk-min",
+       "tk-b",
+       "tk-div",
+       "tk-m"
+      ],
+      "feedback": "Without parentheses, y − b/m divides only the b. Wrap (y − b) so the whole numerator divides by m."
+     },
+     {
+      "sequence": [
+       "tk-x",
+       "tk-lp",
+       "tk-y",
+       "tk-min",
+       "tk-b",
+       "tk-rp",
+       "tk-m"
+      ],
+      "feedback": "You're missing the division sign — (y − b) must be divided BY m, not multiplied."
+     }
+    ],
+    "missFeedback": "x = (y − b)/m — parentheses around y − b, then / m.",
+    "successFeedback": "x = (y − b)/m — numerator wrapped, divided by m!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which multi-step solve is right?",
+   "conceptTag": "multi-literal",
+   "explanationVariants": [
+    "2x + a = c solved for x: subtract a (2x = c − a), divide by 2 → x = (c − a)/2.",
+    "Undo the + a first, then the × 2 — keep (c − a) together over 2."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve 2x + a = c for x.",
+    "options": [
+     {
+      "id": "a",
+      "label": "x = (c − a)/2",
+      "correct": true,
+      "feedback": "Yes — subtract a, then divide the whole (c − a) by 2."
+     },
+     {
+      "id": "b",
+      "label": "x = c − a/2",
+      "feedback": "Only the a got divided. Subtract a first, then divide EVERYTHING by 2: (c − a)/2."
+     },
+     {
+      "id": "c",
+      "label": "x = (c − a)·2",
+      "feedback": "That multiplied by 2 — but 2 multiplies x, so you UNDO it by dividing: (c − a)/2."
+     }
+    ]
+   },
+   "hints": [
+    "Subtract a first.",
+    "2x = c − a.",
+    "Divide it all by 2."
+   ],
+   "variant": {
+    "gen": "a1-solving-equations",
+    "form": "multi-literal__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One more conversion.",
+   "conceptTag": "multi-literal",
+   "explanationVariants": [
+    "F = 9C/5 + 32. With C = 25: 9·25/5 + 32 = 45 + 32 = 77.",
+    "A warm 25°C converts to 45 + 32 = 77°F."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using F = 9C/5 + 32, find F when C = 25.",
+    "answer": 77,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 45,
+      "feedback": "That's 9C/5 — add the 32: 45 + 32 = 77."
+     },
+     {
+      "value": 57,
+      "feedback": "That added 32 to C first (25 + 32), skipping the scaling. Scale first: 9·25/5 = 45, then + 32 = 77."
+     }
+    ],
+    "fallbackFeedback": "F = 9·25/5 + 32 = 45 + 32 = 77."
+   },
+   "hints": [
+    "F = 9C/5 + 32.",
+    "9·25/5 = 45.",
+    "45 + 32 = 77."
+   ],
+   "variant": {
+    "gen": "a1-solving-equations",
+    "form": "multi-literal__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Rearrange AND evaluate!",
+   "conceptTag": "multi-literal",
+   "explanationVariants": [
+    "Solve C = (F − 32)·5/9 for F, giving F = 9C/5 + 32; at C = 20: 9·20/5 + 32 = 36 + 32 = 68.",
+    "20°C is a pleasant room — the formula gives 68°F."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "C = (F − 32)·5/9. Find F when C = 20.",
+    "answer": 68,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 36,
+      "feedback": "That's 9C/5 — the conversion adds 32: 36 + 32 = 68."
+     },
+     {
+      "value": 52,
+      "feedback": "That added 32 to C first (20 + 32), skipping the scaling. Scale first: 9·20/5 = 36, then + 32 = 68."
+     }
+    ],
+    "fallbackFeedback": "F = 9·20/5 + 32 = 36 + 32 = 68."
+   },
+   "hints": [
+    "First rearrange: F = 9C/5 + 32.",
+    "9·20/5 = 36.",
+    "36 + 32 = 68."
+   ],
+   "variant": {
+    "gen": "a1-solving-equations",
+    "form": "multi-literal__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Chapter done — formulas bend to your will!",
+   "takeaways": [
+    "Undo layers in reverse, clearing fractions early.",
+    "Keep numerators together with parentheses.",
+    "A rearranged formula evaluates like any other."
+   ],
+   "teaser": "next chapter: inequalities — and the one rule that flips."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "multi-literal",
+   "concept": {
+    "id": "rem-ml-c",
+    "kind": "concept",
+    "body": "Slow it down: 2x + 6 = c, solve for x. Subtract 6 (2x = c − 6), divide by 2: x = (c − 6)/2. Keep c − 6 together over the 2. Check with c = 10: x = 2, and 2·2 + 6 = 10. ✓",
+    "narration": "Slow it down: two x plus six equals c, solve for x. Subtract six, giving two x equals c minus six, divide by two: x equals c minus six over two. Check with c ten: x is two, and two times two plus six is ten."
+   },
+   "check": {
+    "id": "rem-ml-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "multi-literal",
+    "explanationVariants": [
+     "2x + 6 = c, solve for x: subtract 6, divide by 2 → x = (c − 6)/2.",
+     "Undo + 6, then ÷ 2, keeping (c − 6) together."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Solve 2x + 6 = c for x.",
+     "options": [
+      {
+       "id": "a",
+       "label": "x = (c − 6)/2",
+       "correct": true,
+       "feedback": "Yes — subtract 6, then divide the whole (c − 6) by 2."
+      },
+      {
+       "id": "b",
+       "label": "x = c − 6/2",
+       "feedback": "Only the 6 got divided. Subtract 6 first, then divide EVERYTHING by 2: (c − 6)/2."
+      },
+      {
+       "id": "c",
+       "label": "x = c/2 − 6",
+       "feedback": "That divided only c by 2. Subtract 6 first: x = (c − 6)/2."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

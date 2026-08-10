@@ -1,0 +1,250 @@
+{
+ "id": "pc-01-02",
+ "slug": "arc-length",
+ "title": "Arc Length: a Sum of Tiny Hypotenuses",
+ "courseId": "parametric-polar-calculus",
+ "chapterId": "ch1-parametric-calculus",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "How long is a curve? Cut it into tiny straight pieces and add them up — the oldest trick in the book, and it works here too.\n\nOne tiny piece moves dx across and dy up, so by **Pythagoras** its length is √(dx² + dy²). Factor out dt:\n\n**L = ∫ √((dx/dt)² + (dy/dt)²) dt**\n\nEvery arc length is a Riemann sum of tiny hypotenuses.",
+   "figure": "dr-tangent-line"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A straight line, to check the formula.",
+   "conceptTag": "pc-arc-length",
+   "explanationVariants": [
+    "dx/dt = 3 and dy/dt = 4, so the integrand is √(9 + 16) = 5, a constant. Over t from 0 to 1 that gives L = 5.",
+    "And the 3-4-5 triangle confirms it: the point travels from (0,0) to (3,4), a distance of 5. The formula reproduces the geometry."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "x = 3t, y = 4t, for t from 0 to 1. Find the arc length.",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "That is 3 + 4 — adding the legs rather than taking the hypotenuse. Pythagoras gives √(9 + 16) = 5."
+     },
+     {
+      "value": 25,
+      "feedback": "That is 3² + 4². The length is the SQUARE ROOT of that: 5."
+     },
+     {
+      "value": 1,
+      "feedback": "That is the range of t. The distance travelled is 5."
+     }
+    ],
+    "fallbackFeedback": "√(3² + 4²) = 5, and the point really does travel from (0,0) to (3,4)."
+   },
+   "variant": {
+    "gen": "g13-parametric-polar-calculus",
+    "form": "parametric-polar-calculus__pc-arc-length__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why it is Pythagoras all the way down.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Cut the curve into straight pieces.",
+    "panels": [
+     {
+      "title": "Straighten a tiny piece",
+      "body": "Zoom far enough into a differentiable curve and it becomes a straight line — that is the local straightness from C2. So a tiny piece of arc IS a tiny straight segment."
+     },
+     {
+      "title": "Measure it with Pythagoras",
+      "body": "That segment moves dx across and dy up, so its length is √(dx² + dy²). Nothing new is happening: it is the distance formula, applied to something very small."
+     },
+     {
+      "title": "Add them up",
+      "body": "Sum the pieces and let them shrink, and you have an integral. Arc length is the one place where 'the integral is a sum' is not a metaphor — you are literally adding up lengths."
+     }
+    ],
+    "continueFeedback": "Keep going — the first panel is why cutting the curve is legal at all.",
+    "successFeedback": "Local straightness makes each piece a hypotenuse. The integral just adds them up."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A quarter circle.",
+   "conceptTag": "pc-arc-length",
+   "explanationVariants": [
+    "x = cos t, y = sin t gives dx/dt = −sin t and dy/dt = cos t, so the integrand is √(sin² + cos²) = 1. Over t from 0 to π/2 the length is π/2 ≈ 1.571.",
+    "A quarter of the unit circle's circumference 2π is π/2 — the formula and the geometry agree exactly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "x = cos t, y = sin t, for t from 0 to π/2. Find the arc length, to three decimals.",
+    "answer": 1.571,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 6.283,
+      "feedback": "That is the WHOLE circumference, 2π. You travelled only a quarter of the way round."
+     },
+     {
+      "value": 1,
+      "feedback": "That is the integrand — which is 1 everywhere, because the point moves at unit speed. The LENGTH is that integrated over π/2."
+     },
+     {
+      "value": 0.785,
+      "feedback": "That is π/4. The sweep runs from 0 to π/2, so the length is π/2 ≈ 1.571."
+     }
+    ],
+    "fallbackFeedback": "The integrand is √(sin² + cos²) = 1, so L = π/2 ≈ 1.571 — a quarter of the circumference."
+   },
+   "variant": {
+    "gen": "g13-parametric-polar-calculus",
+    "form": "parametric-polar-calculus__pc-arc-length__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The speed is the integrand.\n\n√((dx/dt)² + (dy/dt)²) is exactly the **speed** of the point tracing the curve — the magnitude of its velocity vector.\n\nSo arc length is **∫ speed dt**, which is the total distance travelled. That is the same sentence as C5's ∫|v| dt, one dimension up.",
+   "figure": "dr-derivative-as-function"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Speed, and distance.",
+   "conceptTag": "pc-arc-length",
+   "explanationVariants": [
+    "The integrand IS the speed — the magnitude of the velocity vector ⟨dx/dt, dy/dt⟩. Integrating a speed gives a distance, which is exactly what arc length is.",
+    "It is the C5 idea (∫|v| dt is the total distance) in two dimensions, where |v| is now a Pythagorean magnitude."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What IS the quantity √((dx/dt)² + (dy/dt)²)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The SPEED of the point — the magnitude of its velocity vector.",
+      "correct": true,
+      "feedback": "Right, and so arc length is ∫ speed dt: the total distance travelled. It is C5's ∫|v| dt, one dimension up."
+     },
+     {
+      "id": "o2",
+      "label": "The slope of the curve.",
+      "correct": false,
+      "feedback": "The slope is the RATIO of the two rates. This is their Pythagorean combination, which is a magnitude, not a direction."
+     },
+     {
+      "id": "o3",
+      "label": "The acceleration.",
+      "correct": false,
+      "feedback": "Acceleration needs SECOND derivatives. These are first derivatives, so this is a velocity magnitude."
+     },
+     {
+      "id": "o4",
+      "label": "The area under the curve.",
+      "correct": false,
+      "feedback": "Every term inside that root is a LENGTH per unit time, so the whole expression is a speed. An area would need a length times a length, and there is none here."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-parametric-polar-calculus",
+    "form": "parametric-polar-calculus__pc-arc-length__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A speed you can read off.",
+   "conceptTag": "pc-arc-length",
+   "hints": [
+    "dx/dt = 6 and dy/dt = 8, both constant.",
+    "So the speed is √(36 + 64) = 10, constant for the whole journey.",
+    "Distance = speed × time, and t runs from 0 to 2."
+   ],
+   "explanationVariants": [
+    "The speed is a constant 10, and the journey lasts 2 units of t, so L = 20.",
+    "When the speed is constant the integral is just multiplication — and this is another 3-4-5 triangle, scaled by 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "x = 6t, y = 8t, for t from 0 to 2. Find the arc length.",
+    "answer": 20,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "That is the SPEED. It must be multiplied by the elapsed t, which runs from 0 to 2: L = 20."
+     },
+     {
+      "value": 28,
+      "feedback": "That is 6(2) + 8(2) — adding the legs rather than taking the hypotenuse. Use Pythagoras: √(12² + 16²) = 20."
+     },
+     {
+      "value": 14,
+      "feedback": "That is 6 + 8. The speed is √(36 + 64) = 10, and the journey lasts 2 units of t."
+     }
+    ],
+    "fallbackFeedback": "Speed √(36 + 64) = 10, for 2 units of t: L = 20."
+   },
+   "variant": {
+    "gen": "g13-parametric-polar-calculus",
+    "form": "parametric-polar-calculus__pc-arc-length__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Add up the hypotenuses.",
+   "takeaways": [
+    "L = ∫√((dx/dt)² + (dy/dt)²) dt — every tiny piece of arc is a hypotenuse, and the integral adds them up.",
+    "The integrand is the SPEED, so arc length is ∫ speed dt: the total distance travelled.",
+    "It is C5's ∫|v| dt in two dimensions, where the magnitude is now Pythagorean."
+   ],
+   "teaser": "Next: a polar region, whose slices are not rectangles at all."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pc-arc-length",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Each tiny piece of the curve is a right triangle: dx across, dy up, and the piece of arc as the hypotenuse. Its length is √(dx² + dy²). Add up the hypotenuses and you have the length of the curve.",
+    "figure": "dr-tangent-line"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "One hypotenuse.",
+    "conceptTag": "pc-arc-length",
+    "explanationVariants": [
+     "√(5² + 12²) = √169 = 13 — the 5-12-13 triangle.",
+     "Square, add, root."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A tiny piece of curve moves 5 across and 12 up. How long is it?",
+     "answer": 13,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 17,
+       "feedback": "That is 5 + 12 — adding the legs. The piece of arc is the HYPOTENUSE: √(25 + 144) = 13."
+      },
+      {
+       "value": 169,
+       "feedback": "That is 5² + 12². Take the square root: 13."
+      }
+     ],
+     "fallbackFeedback": "√(25 + 144) = 13."
+    }
+   }
+  }
+ ]
+}

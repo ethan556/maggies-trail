@@ -1,0 +1,334 @@
+{
+ "id": "cg-04-01",
+ "slug": "sorting-by-properties",
+ "title": "Sorting by Properties",
+ "courseId": "coordinate-geometry",
+ "chapterId": "ch4-classify-shapes",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Classification runs **both ways**. Given a list of properties, name the **most specific** shape they force — walk down the family tree as far as the clues push you, and no farther. Given a shape's name, you get back every property its whole ancestry promises. The clues decide; never assume a property you weren't given.",
+   "figure": "cg-most-specific"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Follow the clues down.",
+   "conceptTag": "classify-properties",
+   "widget": {
+    "type": "shapeFamilyBuilder",
+    "prompt": "Build the shape the clues describe: 4 sides, two pairs of parallel sides, 4 right angles — and its sides are NOT all equal. What family does it land in?",
+    "targetName": "rectangle",
+    "targetSides": 4,
+    "targetRightAngles": 4,
+    "targetEqualSides": 0,
+    "targetParallelPairs": 2,
+    "startSides": 3,
+    "successFeedback": "Rectangle. Every clue had to be satisfied at once — that is what “most specific name” means.",
+    "sidesFeedback": "Start with the side count: the clues say 4 sides, so this family sits among the quadrilaterals.",
+    "attributesFeedback": "Not there yet. With 4 sides and two pairs of parallel sides but no right angles you have a PARALLELOGRAM — more general than the clues allow. Add the four right angles. And if you make all four sides equal you have gone too far the other way, to a SQUARE, which the clue “not all equal” rules out."
+   },
+   "hints": [
+    "Which branch do right angles open?",
+    "Do the clues allow equal sides?",
+    "Down to rectangle, no further."
+   ],
+   "explanationVariants": [
+    "Right angles without equal sides lands on rectangle.",
+    "The clues force rectangle and forbid square."
+   ],
+   "predict": {
+    "prompt": "You are about to add “4 right angles” to a shape that already has 4 sides and two pairs of parallel sides. That will make the family name…",
+    "options": [
+     {
+      "id": "narrower",
+      "label": "more specific — fewer shapes qualify"
+     },
+     {
+      "id": "wider",
+      "label": "more general — more shapes qualify"
+     },
+     {
+      "id": "same",
+      "label": "unchanged — right angles don't affect the family"
+     }
+    ],
+    "outcomeId": "narrower",
+    "reveal": "Each attribute you require rules shapes OUT. A parallelogram becomes a rectangle exactly when the right angles are added — the family gets smaller as the description gets longer."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Don't add clues.",
+   "conceptTag": "classify-properties",
+   "explanationVariants": [
+    "Rhombus is the deepest guaranteed rung.",
+    "A tilted rhombus blocks the square answer."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "All you're told: a quadrilateral has all four sides equal. What is the most specific name the clues GUARANTEE?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Rhombus",
+      "correct": true,
+      "feedback": "Right — equal sides guarantee rhombus. Square would need right angles, which weren't given."
+     },
+     {
+      "id": "b",
+      "label": "Square",
+      "feedback": "That assumes right angles the clues never mentioned — a tilted rhombus fits every clue and isn't a square."
+     },
+     {
+      "id": "c",
+      "label": "Parallelogram",
+      "feedback": "True (four equal sides do make one), but the clues push further down: rhombus is more specific and still guaranteed."
+     }
+    ]
+   },
+   "hints": [
+    "Use only what's stated.",
+    "Were right angles mentioned?",
+    "Equal sides alone reach rhombus."
+   ],
+   "variant": {
+    "gen": "quadrilaterals",
+    "form": "cgGuaranteedRhombus"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The reverse direction: say a shape's **name** and you've promised its full inheritance. \"Square\" promises 4 sides, two parallel pairs, 4 right angles, 4 equal sides — the whole chain. And **cross-cutting rules** like \"has a right angle\" can gather shapes from totally different families: a square and a right triangle both pass.",
+   "figure": "cg-name-promises"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "What a name doesn't promise.",
+   "conceptTag": "classify-properties",
+   "explanationVariants": [
+    "Right angles aren't in the parallelogram package.",
+    "The name promises its ancestry, not its descendants' extras."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A shape is called a parallelogram — nothing more. Which property is NOT guaranteed?",
+    "options": [
+     {
+      "id": "a",
+      "label": "It has a right angle",
+      "correct": true,
+      "feedback": "Right — a tilted parallelogram has none. Right angles arrive only at the rectangle rung."
+     },
+     {
+      "id": "b",
+      "label": "It has two pairs of parallel sides",
+      "feedback": "That IS the parallelogram definition itself — guaranteed by the name."
+     },
+     {
+      "id": "c",
+      "label": "It has four sides",
+      "feedback": "Guaranteed — every parallelogram is a quadrilateral, inherited from the top of the tree."
+     }
+    ]
+   },
+   "hints": [
+    "Which properties are in the name's chain?",
+    "Where do right angles first appear?",
+    "One rung lower — rectangle."
+   ],
+   "variant": {
+    "gen": "quadrilaterals",
+    "form": "cgParallelogramNotGuaranteed"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "One rule, mixed families.",
+   "conceptTag": "classify-properties",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Rule: \"Has at least one right angle.\" Sort each shape — quadrilaterals and triangles both play.",
+    "buckets": [
+     {
+      "id": "yes",
+      "label": "Passes — has a right angle"
+     },
+     {
+      "id": "no",
+      "label": "Fails — none"
+     }
+    ],
+    "items": [
+     {
+      "id": "sq",
+      "label": "Square",
+      "bucketId": "yes",
+      "feedback": "A square's name promises 4 right angles — it passes with room to spare."
+     },
+     {
+      "id": "rt",
+      "label": "Right triangle (one 90° corner)",
+      "bucketId": "yes",
+      "feedback": "The 90° corner is exactly what the rule asks for — family doesn't matter, the property does."
+     },
+     {
+      "id": "rh",
+      "label": "Rhombus with tilted corners",
+      "bucketId": "no",
+      "feedback": "Equal sides are its specialty, but tilted corners mean zero right angles — the rule tests angles, not sides."
+     },
+     {
+      "id": "tz",
+      "label": "Trapezoid with tilted sides",
+      "bucketId": "no",
+      "feedback": "Its one parallel pair says nothing about angles — with tilted sides, it has no 90° corner to offer."
+     }
+    ],
+    "missFeedback": "Ask only the rule's question — is there a 90° corner anywhere? Ignore family, sides, and everything else.",
+    "successFeedback": "Sorted — one property rule gathered shapes across two different family trees."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One clue, one name.",
+   "conceptTag": "classify-properties",
+   "explanationVariants": [
+    "Exactly one pair = trapezoid.",
+    "The pair-count is the whole test."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A quadrilateral has EXACTLY one pair of parallel sides. What is it?",
+    "options": [
+     {
+      "id": "a",
+      "label": "A trapezoid",
+      "correct": true,
+      "feedback": "Right — exactly one parallel pair is our trapezoid definition, word for word."
+     },
+     {
+      "id": "b",
+      "label": "A parallelogram",
+      "feedback": "Parallelograms have TWO parallel pairs — one too many pairs are missing here. Exactly one pair is the trapezoid."
+     },
+     {
+      "id": "c",
+      "label": "A rhombus",
+      "feedback": "A rhombus inherits two parallel pairs from parallelograms. With exactly one pair, this is a trapezoid."
+     }
+    ]
+   },
+   "hints": [
+    "Count the parallel pairs in each definition.",
+    "Two pairs → parallelogram family.",
+    "Exactly one → trapezoid."
+   ],
+   "variant": {
+    "gen": "quadrilaterals",
+    "form": "trapezoidByParallel"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Use every clue.",
+   "conceptTag": "classify-properties",
+   "hints": [
+    "The right angles alone would say rectangle.",
+    "The equal sides alone would say rhombus.",
+    "Both together force one name."
+   ],
+   "explanationVariants": [
+    "Right angles + equal sides is the square's exact recipe — both branch attributes at once.",
+    "Rectangle and rhombus are each true but under-specific; the deepest forced rung is square."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A shape has 4 sides, two pairs of parallel sides, 4 right angles, and every side is 6 units. What is the MOST specific name?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Square",
+      "correct": true,
+      "feedback": "Right — right angles AND equal sides together force the bottom rung: square."
+     },
+     {
+      "id": "b",
+      "label": "Rectangle",
+      "feedback": "True but not most specific — the all-sides-6 clue adds the rhombus attribute, upgrading it to square."
+     },
+     {
+      "id": "c",
+      "label": "Rhombus",
+      "feedback": "True but not most specific — the 4 right angles add the rectangle attribute, upgrading it to square."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "sorting-rules",
+    "form": "bothRules"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Clues down, promises up.",
+   "takeaways": [
+    "Most specific name = as far down the tree as the clues force, never further.",
+    "A shape's name promises its whole ancestry of properties.",
+    "Cross-cutting property rules gather shapes across different families."
+   ],
+   "teaser": "final lesson: three verdicts — always, sometimes, never."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "classify-properties",
+   "concept": {
+    "id": "rem-cp2-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Match clues to rungs.** Two parallel pairs → parallelogram. Add 4 right angles → rectangle. Add all-equal sides instead → rhombus. Add both → square. Take the clues one at a time and stop when they run out."
+   },
+   "check": {
+    "id": "rem-cp2-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "classify-properties",
+    "explanationVariants": [
+     "Parallelogram + right angles, sides unequal: rectangle.",
+     "The angle clue moves it down exactly one rung."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A parallelogram has 4 right angles and sides that are NOT all equal. Most specific name?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Rectangle",
+       "correct": true,
+       "feedback": "Right — right angles without equal sides is exactly the rectangle rung."
+      },
+      {
+       "id": "b",
+       "label": "Square",
+       "feedback": "Square needs equal sides too, and the clue rules that out. It stops at rectangle."
+      },
+      {
+       "id": "c",
+       "label": "Rhombus",
+       "feedback": "Rhombus is the equal-SIDES rung, which this shape fails. Its right angles make it a rectangle."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

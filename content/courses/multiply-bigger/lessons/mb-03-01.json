@@ -1,0 +1,334 @@
+{
+  "id": "mb-03-01",
+  "slug": "tens-times",
+  "title": "Tens Times",
+  "courseId": "multiply-bigger",
+  "chapterId": "ch3-area-model",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Multiplying by a whole ten is a fact you already know, wearing a bigger coat. **3 × 40** is 3 × 4 *tens* — that's 12 tens, which is 120. Multiply the small facts (3 × 4 = 12), then the answer counts tens instead of ones. The ten's zero rides along as a unit badge.",
+      "figure": "pv3-times-tens"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Stack the tens.",
+      "conceptTag": "multiply-tens",
+      "widget": {
+        "type": "slider",
+        "prompt": "Each jump is 40. Slide to show 3 × 40 — three jumps of forty.",
+        "min": 0,
+        "max": 200,
+        "step": 40,
+        "start": 0,
+        "target": 120,
+        "visual": "numberline",
+        "unitLabel": "",
+        "lowFeedback": "Keep going — three whole jumps of 40. One jump is 40, two is 80…",
+        "highFeedback": "That's past three jumps. Three 40s land on 120.",
+        "successFeedback": "3 × 40 = 120 — three jumps of forty. It's just 3 × 4 = 12, counted as 12 tens."
+      },
+      "predict": {
+        "prompt": "Three jumps of 40 — before you slide: will you land past 100 or before 100?",
+        "options": [
+          {
+            "id": "past",
+            "label": "Past 100"
+          },
+          {
+            "id": "before",
+            "label": "Before 100"
+          },
+          {
+            "id": "on",
+            "label": "Exactly on 100"
+          }
+        ],
+        "outcomeId": "past",
+        "reveal": "Two jumps of 40 reach 80 and the third adds forty more — three 40s carry you past the hundred mark."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents multiply tens.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for multiply tens must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines multiply tens."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiply-bigger:multiply-tens",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Small fact, bigger coat.",
+      "conceptTag": "multiply-tens",
+      "explanationVariants": [
+        "6 × 30 is 6 × 3 tens = 18 tens = 180. Do the small fact, then count tens.",
+        "6 × 3 = 18, and these are tens, so the answer is 180."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 6 × 30?",
+        "answer": 180,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 is the small fact 6 × 3 — but these are 3 TENS, so the answer is 18 tens = 180. The ten's badge got dropped."
+          },
+          {
+            "value": 90,
+            "feedback": "90 is 6 × 15 or a slip — rebuild it: 6 × 3 = 18, and it's tens, so 180."
+          },
+          {
+            "value": 1800,
+            "feedback": "1800 added an extra zero. 6 × 3 = 18 tens is 180 — one zero for the one ten, not two."
+          }
+        ],
+        "fallbackFeedback": "Do 6 × 3, then count the result as tens."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbMultiplyTensNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's why the zero rides along: 40 is 4 × 10. So 3 × 40 = 3 × 4 × 10 = 12 × 10 = 120. Multiplying by 10 slides every digit up one place, and the ones slot opens up — that empty slot is written as 0. The zero isn't glue; it's the mark of the tens place.",
+      "figure": "pv3-times-tens"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Bigger tens.",
+      "conceptTag": "multiply-tens",
+      "explanationVariants": [
+        "5 × 70 is 5 × 7 tens = 35 tens = 350.",
+        "5 × 7 = 35, counted as tens, is 350."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 5 × 70?",
+        "answer": 350,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "35 is the small fact 5 × 7 — but 70 is 7 TENS, so it's 35 tens = 350. Add the ten's badge back."
+          },
+          {
+            "value": 3500,
+            "feedback": "3500 has one zero too many. 5 × 7 = 35 tens = 350 — a single zero for the tens place."
+          }
+        ],
+        "fallbackFeedback": "5 × 7, then count as tens: attach one zero."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbMultiplyTensNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each product.",
+      "conceptTag": "multiply-tens",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each tens-times problem to its answer.",
+        "left": [
+          {
+            "id": "e1",
+            "label": "8 × 20"
+          },
+          {
+            "id": "e2",
+            "label": "4 × 50"
+          },
+          {
+            "id": "e3",
+            "label": "7 × 60"
+          }
+        ],
+        "right": [
+          {
+            "id": "a200",
+            "label": "200"
+          },
+          {
+            "id": "a160",
+            "label": "160"
+          },
+          {
+            "id": "a420",
+            "label": "420"
+          }
+        ],
+        "pairs": {
+          "e1": "a160",
+          "e2": "a200",
+          "e3": "a420"
+        },
+        "pairErrors": [
+          {
+            "left": "e1",
+            "right": "a200",
+            "feedback": "8 × 2 = 16, so 8 × 20 = 160. 200 belongs to 4 × 50 (4 × 5 = 20 tens)."
+          }
+        ],
+        "missFeedback": "Each one is a small fact wearing a tens badge: multiply the non-zero digits, then attach one zero.",
+        "successFeedback": "16 tens = 160, 20 tens = 200, 42 tens = 420. Small fact first, tens badge second."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the dropped badge.",
+      "conceptTag": "multiply-tens",
+      "explanationVariants": [
+        "9 × 40 is 9 × 4 tens = 36 tens = 360; Sam wrote 36, the small fact, and forgot these are tens.",
+        "The 36 is 9 × 4 — correct as a fact, but 40 is four tens, so the product is 360."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For 9 × 40, Sam wrote 36. What went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "He found 9 × 4 but forgot the tens — it's 36 tens = 360",
+            "correct": true,
+            "feedback": "The small fact was right (9 × 4 = 36); 40 is four TENS, so the product is 360."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — 36 is correct",
+            "feedback": "36 is only 9 × 4. Since 40 is four tens, the real product is 36 tens = 360."
+          },
+          {
+            "id": "c",
+            "label": "He should have added 9 + 40",
+            "feedback": "Adding gives 49, but the problem multiplies. 9 × 4 = 36, then tens: 360."
+          },
+          {
+            "id": "d",
+            "label": "He needed two zeros — 3600",
+            "feedback": "Two zeros overcounts. 40 has a single ten's place, so one zero: 36 tens = 360."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbMultiplyTensMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The book-box order.",
+      "conceptTag": "multiply-tens",
+      "hints": [
+        "One crate holds 30 books; find the small fact first.",
+        "7 × 3 = 21, and 30 is three tens.",
+        "Attach the ten's badge to 21."
+      ],
+      "explanationVariants": [
+        "7 crates of 30 is 7 × 30 = 7 × 3 tens = 21 tens = 210 books.",
+        "7 × 3 = 21, counted as tens, is 210."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A library orders 7 crates of books. Each crate holds 30 books. How many books in all?",
+        "answer": 210,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 is 7 × 3 — the small fact. Each crate holds 3 TENS of books, so 21 tens = 210."
+          },
+          {
+            "value": 37,
+            "feedback": "37 added 7 + 30. Seven crates MULTIPLIES: 7 × 30 = 210."
+          }
+        ],
+        "fallbackFeedback": "7 × 3, then attach the ten's zero."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbMultiplyTensNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Tens times, unlocked.",
+      "takeaways": [
+        "n × (a ten) = the small fact (n × a) counted as tens.",
+        "Multiplying by 10 opens the ones slot — written as one 0.",
+        "The zero is the tens-place badge, not glue between digits."
+      ],
+      "teaser": "next: breaking a big number into tens and ones to multiply anything."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "multiply-tens",
+      "concept": {
+        "id": "rem-mt-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply the plain digits, then add the ten's zero.** For 4 × 20: think 4 × 2 = 8, and because 20 is two tens, the answer is 8 tens = 80. The zero shows the tens place — do the little fact first, then dress it in tens."
+      },
+      "check": {
+        "id": "rem-mt-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "multiply-tens",
+        "explanationVariants": [
+          "4 × 2 = 8, and 20 is two tens, so 4 × 20 = 80.",
+          "The small fact is 8; as tens it becomes 80."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is 4 × 20?",
+          "options": [
+            {
+              "id": "a",
+              "label": "80",
+              "correct": true,
+              "feedback": "4 × 2 = 8, counted as tens: 80."
+            },
+            {
+              "id": "b",
+              "label": "8",
+              "feedback": "8 is just 4 × 2. Since 20 is two tens, the answer is 8 tens = 80."
+            },
+            {
+              "id": "c",
+              "label": "24",
+              "feedback": "24 added 4 + 20. This problem multiplies: 4 × 2 = 8 tens = 80."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

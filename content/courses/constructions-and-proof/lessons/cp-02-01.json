@@ -1,0 +1,339 @@
+{
+  "id": "cp-02-01",
+  "slug": "perpendicular-at-a-point",
+  "title": "A Perpendicular at a Point",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch2-perpendiculars-parallels",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-perp-at-point",
+      "concept": {
+        "id": "rem-cp-perp-at-point-c",
+        "kind": "concept",
+        "body": "The whole construction rides on equidistance. Q is drawn by two arcs of the SAME radius from A and from B, so QA = QB. Any point equally far from A and B sits on the perpendicular bisector of AB — and since P is AB's midpoint, line PQ is that bisector, crossing at 90°."
+      },
+      "check": {
+        "id": "rem-cp-perp-at-point-k",
+        "kind": "check",
+        "body": "Equidistance does the work.",
+        "conceptTag": "cp-perp-at-point",
+        "explanationVariants": [
+          "Equal-radius arcs from A and B force QA = QB, placing Q on AB's perpendicular bisector.",
+          "The same compass opening from both endpoints is exactly what makes Q equidistant."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In the construction, why does point Q lie on the perpendicular bisector of AB?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Equal-radius arcs from A and B make QA = QB",
+              "correct": true,
+              "feedback": "Equidistance from the two endpoints is the defining property of the perpendicular bisector."
+            },
+            {
+              "id": "o2",
+              "label": "Q is the highest point of the arcs",
+              "correct": false,
+              "feedback": "\"Highest\" isn't a geometric property — Q's role comes from being EQUALLY far from A and B, whatever its height."
+            },
+            {
+              "id": "o3",
+              "label": "Q is twice as far from A as from B",
+              "correct": false,
+              "feedback": "The arcs use the SAME radius, so QA = QB — equal, not double. Equal distances put Q on the bisector."
+            },
+            {
+              "id": "o4",
+              "label": "A and B were placed by eye",
+              "correct": false,
+              "feedback": "A and B come from one compass swing about P, so PA = PB exactly — nothing is by eye."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The perpendicular-bisector trick has a cousin. To raise a **perpendicular at a point P that lies ON a line**, first make P the midpoint of a little segment, then bisect it. Two compass openings, and a clean 90° rises from P — no protractor, no guessing.",
+      "figure": "perp-at-point"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build it in stages.",
+      "predict": {
+        "prompt": "P sits ON the line. The construction first marks two points equidistant from P, then swings equal arcs from those. Why does that force a RIGHT angle at P?",
+        "options": [
+          {
+            "id": "isosceles",
+            "label": "The crossings are equidistant from both marks, so the line through them is the perpendicular bisector of the segment they span — and P is its midpoint"
+          },
+          {
+            "id": "eyeball",
+            "label": "It doesn't force it — you line it up by eye and check"
+          },
+          {
+            "id": "radius",
+            "label": "Any line drawn through two arc crossings is automatically perpendicular"
+          }
+        ],
+        "outcomeId": "isosceles",
+        "reveal": "The two marks are equal distances from P, so P is the MIDPOINT of the segment joining them. The crossings are equidistant from both marks, which is the definition of the perpendicular bisector of that segment — and a perpendicular bisector meets the segment square, at its midpoint, which is P."
+      },
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Construct the perpendicular to the line at point P (P is on the line). Reveal each stage.",
+        "panels": [
+          {
+            "title": "Mark equal distances",
+            "body": "Put the compass point on P. Swing one opening to cut the line on BOTH sides, marking A and B. Now PA = PB — P is the midpoint of AB.",
+            "figure": "perp-at-point"
+          },
+          {
+            "title": "Widen and arc from A",
+            "body": "Open WIDER than PA. With the point on A, swing an arc above the line.",
+            "figure": "perp-at-point"
+          },
+          {
+            "title": "Same-radius arc from B",
+            "body": "Keep that opening. Arc from B; it crosses the first arc at Q.",
+            "figure": "perp-at-point"
+          },
+          {
+            "title": "Draw PQ",
+            "body": "The straightedge line through P and Q is perpendicular to the original line at P.",
+            "figure": "perp-at-point"
+          }
+        ],
+        "continueFeedback": "Reveal each compass move in order.",
+        "successFeedback": "Line PQ meets the original line at P at a perfect right angle."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Raise it yourself.",
+      "conceptTag": "cp-perp-at-point",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "perpAtPoint",
+        "span": 8,
+        "target": 5,
+        "start": 2,
+        "prompt": "The two marks either side of P are 8 apart. Open the compass until the arcs from them cross — find the smallest whole radius that does it.",
+        "successFeedback": "Radius 5 — the first whole opening that clears half of 8. The two marks are equal distances from P, so P is the MIDPOINT between them; the crossings are equidistant from both marks, which is the perpendicular bisector of that segment. A perpendicular bisector meets the segment square, at its midpoint — and its midpoint is P.",
+        "lowFeedback": "The arcs from the two marks do not yet cross. Together they must span more than the 8 between them — the radius has to clear 4.",
+        "highFeedback": "They do cross, but you were asked for the SMALLEST whole radius that reaches. Ease back down until they are just about to come apart."
+      },
+      "predict": {
+        "prompt": "P sits ON the line, with two marks stepped off equally either side of it. Where must the crossings of two equal arcs from those marks lie?",
+        "options": [
+          {
+            "id": "above",
+            "label": "Directly above and below P — nowhere else is equidistant from both marks"
+          },
+          {
+            "id": "nearer",
+            "label": "Nearer whichever mark the compass was opened from first"
+          },
+          {
+            "id": "anywhere",
+            "label": "Anywhere the arcs happen to meet; the position is not fixed"
+          }
+        ],
+        "outcomeId": "above",
+        "reveal": "Directly above and below P. Equal arcs from two marks meet only on the perpendicular bisector of the segment joining them — and because the marks were stepped off equally from P, that bisector passes through P itself."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why is it a right angle?",
+      "conceptTag": "cp-perp-at-point",
+      "explanationVariants": [
+        "Q is equidistant from A and B (same-radius arcs), and so is P (it's the midpoint). Two points equidistant from A and B determine the perpendicular bisector of AB — which passes through P at 90°.",
+        "PQ is the perpendicular bisector of AB: every point on it is equally far from A and B, and it crosses AB squarely at the midpoint P."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What guarantees PQ ⊥ the line, without measuring?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Both P and Q are equidistant from A and B, so PQ is the perpendicular bisector of AB",
+            "correct": true,
+            "feedback": "Two points equally far from A and B pin down AB's perpendicular bisector — and it meets AB at 90° through the midpoint P."
+          },
+          {
+            "id": "o2",
+            "label": "Q was drawn directly above P by eye",
+            "correct": false,
+            "feedback": "Nothing was placed by eye — Q is fixed by two equal-radius arcs. Its being on the perpendicular follows from equidistance, not from looking straight."
+          },
+          {
+            "id": "o3",
+            "label": "The compass always makes right angles",
+            "correct": false,
+            "feedback": "A compass makes CIRCLES, not right angles. The 90° comes from the equidistance argument, not the tool itself."
+          },
+          {
+            "id": "o4",
+            "label": "Because PA = PB, angle APQ must be 90°",
+            "correct": false,
+            "feedback": "PA = PB only makes P the midpoint — it doesn't force the angle. The second pair of equal arcs (giving Q) is what squares the corner."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-at-point__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One perpendicular, two right angles. Because the original line is straight, the perpendicular splits the straight angle at P into two equal parts. Each must be **half of 180°** — so raising a perpendicular is really the same move as bisecting a straight angle.",
+      "figure": "cnp-perp-at-point"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Split the straight angle.",
+      "conceptTag": "cp-perp-at-point",
+      "explanationVariants": [
+        "The line is a straight angle, 180°, and the perpendicular bisects it: 180 ÷ 2 = 90° on each side.",
+        "Two equal angles that fill a straight line must each be 90°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The perpendicular at P splits the straight line into two equal angles. How many degrees is each?",
+        "answer": 90,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180° is the WHOLE straight angle. The perpendicular cuts it into two equal pieces: 180 ÷ 2 = 90°."
+          },
+          {
+            "value": 45,
+            "feedback": "45° would be a quarter of the straight angle — but a perpendicular makes HALVES: 180 ÷ 2 = 90°."
+          }
+        ],
+        "fallbackFeedback": "Half of the straight angle: 180 ÷ 2 = 90°."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-at-point__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which construction is this, really?",
+      "conceptTag": "cp-perp-at-point",
+      "explanationVariants": [
+        "Raising a perpendicular at P bisects the straight angle (180°) at P — same compass logic as bisecting any angle.",
+        "The line through P is a 180° angle; the perpendicular is its bisector, so this IS an angle-bisector construction in disguise."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Raising a perpendicular at a point on a line is secretly the same as…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "bisecting the straight angle at that point",
+            "correct": true,
+            "feedback": "The line is a 180° angle at P; the perpendicular splits it into two 90° halves — an angle bisection."
+          },
+          {
+            "id": "o2",
+            "label": "copying a segment",
+            "correct": false,
+            "feedback": "Copying a segment reproduces a LENGTH elsewhere — no angle is created. Here we're halving an angle, not moving a length."
+          },
+          {
+            "id": "o3",
+            "label": "constructing an equilateral triangle",
+            "correct": false,
+            "feedback": "That construction builds three 60° angles from equal radii. A perpendicular makes 90°, by halving a straight angle."
+          },
+          {
+            "id": "o4",
+            "label": "finding a midpoint only",
+            "correct": false,
+            "feedback": "The midpoint of AB is just step one. The right angle needs the second pair of arcs — the bisection of the straight angle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-at-point__mcq"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Two perpendiculars.",
+      "conceptTag": "cp-perp-at-point",
+      "hints": [
+        "What angle does each perpendicular make with the shared line?",
+        "Both make 90° with the same straight line — on the same side.",
+        "Two lines both perpendicular to a third: compare their directions."
+      ],
+      "explanationVariants": [
+        "Each perpendicular makes 90° with the shared line, so they make 0° with EACH OTHER — same direction. Two lines perpendicular to the same line are parallel.",
+        "In a plane, if line a ⊥ c and line b ⊥ c, then a ∥ b — both are tilted exactly 90° off c, hence identically tilted."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You raise a perpendicular to line ℓ at point P, and another perpendicular to ℓ at a different point R. How are the two perpendiculars related?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They are parallel to each other",
+            "correct": true,
+            "feedback": "Both stand at 90° to the same line ℓ, so they point the same way — in a plane, that makes them parallel."
+          },
+          {
+            "id": "o2",
+            "label": "They intersect at one point above ℓ",
+            "correct": false,
+            "feedback": "Two lines equally perpendicular to ℓ never tilt toward each other — no meeting point. They stay parallel."
+          },
+          {
+            "id": "o3",
+            "label": "They are perpendicular to each other",
+            "correct": false,
+            "feedback": "Each is perpendicular to ℓ, not to the other. Sharing a perpendicular direction makes them PARALLEL, not mutually perpendicular."
+          },
+          {
+            "id": "o4",
+            "label": "It depends on how far apart P and R are",
+            "correct": false,
+            "feedback": "Distance doesn't tilt them — both are locked at 90° to ℓ regardless of spacing, so they're always parallel."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-at-point__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Squaring a corner.",
+      "takeaways": [
+        "Perpendicular at P: mark equal PA = PB, then arc equal radii from A and B to get Q.",
+        "It works because P and Q are both equidistant from A and B — the perpendicular-bisector logic.",
+        "It's really bisecting the 180° straight angle: two 90° halves."
+      ],
+      "teaser": "Next: drop a perpendicular FROM a point that floats off the line — the shortest path down."
+    }
+  ]
+}

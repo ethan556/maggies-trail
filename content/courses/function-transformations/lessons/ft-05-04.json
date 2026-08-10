@@ -1,0 +1,517 @@
+{
+  "id": "ft-05-04",
+  "slug": "building-the-undo-machine",
+  "title": "Building the Undo Machine",
+  "courseId": "function-transformations",
+  "chapterId": "ch5-inverse-functions",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A function is a machine: f(x) = 3x + 4 takes x, multiplies by 3, then adds 4. Its inverse is the machine that undoes it — and undoing has a direction. Shoes went on last, so they come off first: f⁻¹ must reverse the steps in the OPPOSITE order, and flip each one as it goes.",
+      "figure": "ft-inverse-reversed-machine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build your first inverse from the parts in the tray.",
+      "predict": {
+        "prompt": "f multiplies by 3, then adds 4. Which machine undoes it?",
+        "options": [
+          {
+            "id": "same",
+            "label": "Divide by 3, then subtract 4 — undo each step in order"
+          },
+          {
+            "id": "rev",
+            "label": "Subtract 4, then divide by 3 — undo the LAST step first"
+          },
+          {
+            "id": "copy",
+            "label": "Multiply by 3, then add 4 — run the same machine again"
+          }
+        ],
+        "outcomeId": "rev",
+        "reveal": "Undo the last step first. The + 4 was the final thing f did, so it's the first thing f⁻¹ must remove: subtract 4, THEN divide by 3. Undoing in the original order leaves the 4 trapped inside the ×3."
+      },
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "f(x) = 3x + 4. Build f⁻¹ by placing undo-steps into the track — last step first.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 3
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 4
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-sub4",
+            "op": "sub",
+            "n": 4
+          },
+          {
+            "id": "t-div3",
+            "op": "div",
+            "n": 3
+          },
+          {
+            "id": "t-add4",
+            "op": "add",
+            "n": 4
+          },
+          {
+            "id": "t-mul3",
+            "op": "mul",
+            "n": 3
+          }
+        ],
+        "answer": [
+          "t-sub4",
+          "t-div3"
+        ],
+        "sampleInput": 5,
+        "successFeedback": "That's f⁻¹: subtract 4, then divide by 3 — so f⁻¹(x) = (x − 4)/3. Watch the sample value travel out and come straight back.",
+        "forwardOrderFeedback": "Those are the right two undo-steps, but in the order f applied them. An inverse runs the chain BACKWARDS: the + 4 happened last, so removing it must happen first.",
+        "unflippedFeedback": "Right order, but a step was copied instead of undone. Each card must be the OPPOSITE of the step it reverses: × 3 is undone by ÷ 3, + 4 by − 4.",
+        "missFeedback": "Read f left to right: ×3, then +4. Now build the track right to left, flipping each step as you go."
+      },
+      "conceptTag": "ft-inverse-undo",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse undo.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse undo must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse undo."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-undo",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A new machine to reverse.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "f adds 5 first and doubles last, so f⁻¹ halves first and subtracts 5 last: f⁻¹(x) = x/2 − 5.",
+        "Reverse the order AND flip each step: the ×2 (last on) comes off first as ÷2; the +5 (first on) comes off last as −5."
+      ],
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "f(x) = 2(x + 5) — add 5, then multiply by 2. Build f⁻¹.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "add",
+            "n": 5
+          },
+          {
+            "id": "f2",
+            "op": "mul",
+            "n": 2
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-div2",
+            "op": "div",
+            "n": 2
+          },
+          {
+            "id": "t-sub5",
+            "op": "sub",
+            "n": 5
+          },
+          {
+            "id": "t-mul2",
+            "op": "mul",
+            "n": 2
+          },
+          {
+            "id": "t-add5",
+            "op": "add",
+            "n": 5
+          }
+        ],
+        "answer": [
+          "t-div2",
+          "t-sub5"
+        ],
+        "sampleInput": 3,
+        "successFeedback": "f⁻¹(x) = x/2 − 5. The doubling was f's last act, so undoing it is f⁻¹'s first.",
+        "forwardOrderFeedback": "Right undo-steps, wrong direction — that track undoes the +5 before the ×2, but the ×2 is wrapped AROUND the +5. Unwrap from the outside in.",
+        "unflippedFeedback": "The order is right, but at least one card repeats f's step instead of reversing it. Flip it: × becomes ÷, + becomes −.",
+        "missFeedback": "f's chain is: +5, then ×2. Build the reverse, flipping each: ÷2 first, −5 second."
+      },
+      "variant": {
+        "gen": "inverse-pipeline"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse undo.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse undo must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse undo."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-undo",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This is why the textbook rule works. 'Swap x and y, then solve for y' is just this machine run in symbols: solving for y peels operations off from the outside in — the reversed, flipped chain you've been building by hand.",
+      "figure": "ft-swap-is-peeling"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Three steps now. The middle step is where forward-order mistakes hide.",
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "f(x) = (3x + 4)/2 — multiply by 3, add 4, divide by 2. Build f⁻¹.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 3
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 4
+          },
+          {
+            "id": "f3",
+            "op": "div",
+            "n": 2
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-mul2",
+            "op": "mul",
+            "n": 2
+          },
+          {
+            "id": "t-sub4",
+            "op": "sub",
+            "n": 4
+          },
+          {
+            "id": "t-div3",
+            "op": "div",
+            "n": 3
+          },
+          {
+            "id": "t-add4",
+            "op": "add",
+            "n": 4
+          },
+          {
+            "id": "t-mul3",
+            "op": "mul",
+            "n": 3
+          }
+        ],
+        "answer": [
+          "t-mul2",
+          "t-sub4",
+          "t-div3"
+        ],
+        "sampleInput": 4,
+        "successFeedback": "f⁻¹(x) = (2x − 4)/3. Three layers, unwrapped outside-in: the ÷2 came off first as ×2, and the ×3 — f's very first move — came off last.",
+        "forwardOrderFeedback": "Right three undo-steps, but running forwards. f wrapped x in three layers; the OUTERMOST layer (÷2) has to come off first, and the innermost (×3) last.",
+        "unflippedFeedback": "The direction is right — now flip every card. Any step copied straight from f puts the layer back ON instead of taking it off.",
+        "missFeedback": "List f's steps in order: ×3, +4, ÷2. Reverse the list and flip each entry: ×2, −4, ÷3."
+      },
+      "conceptTag": "ft-inverse-undo",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse undo.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse undo must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse undo."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-undo",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Reverse this one without the warm-up.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "f subtracts 5 then multiplies by 4, so f⁻¹ divides by 4 then adds 5: f⁻¹(x) = x/4 + 5.",
+        "Outside layer off first: the ×4 wraps everything, so ÷4 leads; the −5 was innermost, so +5 closes."
+      ],
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "f(x) = 4(x − 5) — subtract 5, then multiply by 4. Build f⁻¹.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "sub",
+            "n": 5
+          },
+          {
+            "id": "f2",
+            "op": "mul",
+            "n": 4
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-div4",
+            "op": "div",
+            "n": 4
+          },
+          {
+            "id": "t-add5",
+            "op": "add",
+            "n": 5
+          },
+          {
+            "id": "t-sub5",
+            "op": "sub",
+            "n": 5
+          },
+          {
+            "id": "t-mul4",
+            "op": "mul",
+            "n": 4
+          }
+        ],
+        "answer": [
+          "t-div4",
+          "t-add5"
+        ],
+        "sampleInput": 9,
+        "successFeedback": "f⁻¹(x) = x/4 + 5. Divide away the outer ×4 first, then restore the 5 that was taken.",
+        "forwardOrderFeedback": "Those cards undo f's steps in f's own order — the +5 can't come first while the ×4 is still wrapped around it. Peel the outside layer first.",
+        "unflippedFeedback": "Right order; now invert each card. A −5 in the track repeats f's subtraction — the undo is +5.",
+        "missFeedback": "f: −5, then ×4. Reverse and flip: ÷4 first, +5 second."
+      },
+      "variant": {
+        "gen": "inverse-pipeline"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse undo.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse undo must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse undo."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-undo",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "From machine to notation: use the inverse you'd build, but answer with a number.",
+      "conceptTag": "ft-inverse-rule",
+      "explanationVariants": [
+        "f⁻¹ undoes ×3-then-+4 as −4-then-÷3, so f⁻¹(19) = (19 − 4)/3 = 5.",
+        "Check it forwards: f(5) = 3·5 + 4 = 19, so f⁻¹ must send 19 back to 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 3x + 4. Find f⁻¹(19).",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 61,
+            "feedback": "That's f(19) = 3·19 + 4 — the machine run FORWARDS. f⁻¹(19) asks which input f sends to 19: undo it, (19 − 4)/3 = 5."
+          },
+          {
+            "value": 2.33,
+            "feedback": "That divided by 3 before subtracting 4 — undoing f's steps in f's own order. The + 4 was applied last, so it's removed first: (19 − 4)/3 = 5."
+          }
+        ],
+        "fallbackFeedback": "Undo last-step-first: subtract 4 (19 − 4 = 15), then divide by 3: f⁻¹(19) = 5."
+      },
+      "variant": {
+        "gen": "fn-inverse-rule",
+        "form": "undoPipeline"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Four layers deep. Every decoy in the tray is a real mistake waiting to be picked.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "f: ×2, +6, ÷4, −1. Reverse and flip every layer: +1, ×4, −6, ÷2 — so f⁻¹(x) = (4(x + 1) − 6)/2.",
+        "The last thing f did (−1) is the first thing f⁻¹ repairs (+1); the first thing f did (×2) is the last thing f⁻¹ removes (÷2)."
+      ],
+      "hints": [
+        "Which operation did f perform LAST? That's the only one f⁻¹ may touch first.",
+        "Write f's chain, reverse the list, then flip each entry: − becomes +, ÷ becomes ×.",
+        "The track reads: + 1, × 4, − 6, ÷ 2. Place them in exactly that order and run the sample value to confirm it returns."
+      ],
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "f(x) = (2x + 6)/4 − 1. Its chain: multiply by 2, add 6, divide by 4, subtract 1. Build f⁻¹.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 2
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 6
+          },
+          {
+            "id": "f3",
+            "op": "div",
+            "n": 4
+          },
+          {
+            "id": "f4",
+            "op": "sub",
+            "n": 1
+          }
+        ],
+        "tray": [
+          {
+            "id": "t-add1",
+            "op": "add",
+            "n": 1
+          },
+          {
+            "id": "t-mul4",
+            "op": "mul",
+            "n": 4
+          },
+          {
+            "id": "t-sub6",
+            "op": "sub",
+            "n": 6
+          },
+          {
+            "id": "t-div2",
+            "op": "div",
+            "n": 2
+          },
+          {
+            "id": "t-sub1",
+            "op": "sub",
+            "n": 1
+          },
+          {
+            "id": "t-mul2",
+            "op": "mul",
+            "n": 2
+          }
+        ],
+        "answer": [
+          "t-add1",
+          "t-mul4",
+          "t-sub6",
+          "t-div2"
+        ],
+        "sampleInput": 5,
+        "successFeedback": "All four layers, unwrapped in perfect reverse: +1, ×4, −6, ÷2. The sample value goes out through f and comes straight home through your track.",
+        "forwardOrderFeedback": "Every card is a genuine undo-step — but the track runs in f's direction. Four layers deep, the rule is unchanged: outermost layer off first.",
+        "unflippedFeedback": "The direction is right, but at least one layer is being re-applied instead of removed. Check each card against the step it faces: it must be the opposite.",
+        "missFeedback": "f's chain: ×2, +6, ÷4, −1. Reverse it and flip every step: +1, ×4, −6, ÷2."
+      },
+      "variant": {
+        "gen": "inverse-pipeline",
+        "form": "multistep"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse undo.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse undo must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse undo."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-undo",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "takeaways": [
+        "An inverse reverses the ORDER of the steps and flips each one — last on, first off, like shoes and socks.",
+        "The two classic mistakes are now visible moves: undoing in f's own order, and reversing without flipping. The sample value catches both — it only comes home when both are right."
+      ],
+      "teaser": "Next: which machines can be reversed at all — the horizontal line test, and what goes wrong when two inputs share an output.",
+      "body": "Reverse the order, flip each step — the whole of inverse-building in one motion."
+    }
+  ]
+}

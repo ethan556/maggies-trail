@@ -1,0 +1,355 @@
+{
+ "id": "rf-02-03",
+ "slug": "mixed-operations-and-restrictions",
+ "title": "Mixed Operations & Restriction Tracking",
+ "courseId": "rational-functions",
+ "chapterId": "ch2-multiplying-and-dividing",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Real problems chain operations. The bookkeeping rule: an input is banned if it breaks **any stage** — every original denominator, every divisor's numerator (it flips underneath), and nothing gets un-banned by cancellation. Collect exclusions as you go, not at the end.",
+   "figure": "rf-chains-bookkeeping"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Count the bans.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For (x/(x − 1)) ÷ ((x + 2)/(x − 3)), how many values of x are excluded in total?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "Three sources: the bottoms x − 1 and x − 3, PLUS the divisor's top x + 2 (it flips underneath) — 1, 3, and −2."
+     },
+     {
+      "value": 4,
+      "feedback": "Only three distinct culprits exist: 1, 3, and −2 — the numerator x is never a source of bans."
+     }
+    ],
+    "fallbackFeedback": "Banned: x = 1 (first bottom), x = 3 (divisor's bottom), x = −2 (divisor's top, flipped under)."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Chains simplify left to right (or all at once as one big fraction). (x²−1)/x · x/(x+1) ÷ (x−1)/2: flip the last, factor, and the big fraction ((x−1)(x+1) · x · 2) / (x · (x+1) · (x−1)) collapses to **2**. Constants can be the final answer — the exclusions are what remember the journey.",
+   "figure": "rf-chains-simplify"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Run the chain.",
+   "conceptTag": "rf-mixed",
+   "explanationVariants": [
+    "One big fraction after the flip: everything cancels except the 2.",
+    "(x−1)(x+1)·x·2 over x·(x+1)·(x−1) — three cancels, 2 remains."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Simplify: (x² − 1)/x · x/(x + 1) ÷ (x − 1)/2.",
+    "tokens": [
+     {
+      "id": "two",
+      "label": "2"
+     },
+     {
+      "id": "sq",
+      "label": "(x − 1)²"
+     },
+     {
+      "id": "prod",
+      "label": "2(x − 1)"
+     },
+     {
+      "id": "one",
+      "label": "1"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     }
+    ],
+    "correct": [
+     "two"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "sq",
+       "div",
+       "two"
+      ],
+      "feedback": "That multiplies WITHOUT flipping — ÷ (x − 1)/2 becomes · 2/(x − 1), and everything cancels to 2."
+     },
+     {
+      "sequence": [
+       "prod"
+      ],
+      "feedback": "The (x − 1)s appear top AND bottom after the flip — they cancel; only 2 survives."
+     },
+     {
+      "sequence": [
+       "one",
+       "div",
+       "two"
+      ],
+      "feedback": "The 2 lands on TOP (the flip inverts (x−1)/2 into 2/(x−1)): the answer is 2, not its reciprocal."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Flip only the divisor — · 2/(x − 1) — then every variable factor cancels, leaving 2.",
+    "successFeedback": "Right — after flipping the divisor, every variable factor cancels."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-mixed__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Verify at a legal point.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Check the chain at x = 2: (x² − 1)/x · x/(x + 1) ÷ (x − 1)/2 should equal the constant. Compute it.",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0.5,
+      "feedback": "Flip the LAST fraction: ÷ 1/2 becomes · 2 — the value is 3/2 · 2/3 · 2 = 2."
+     },
+     {
+      "value": 3,
+      "feedback": "(3/2)·(2/3) = 1, then ÷ (1/2) = · 2: the product is 2, not 3."
+     }
+    ],
+    "fallbackFeedback": "(3/2) · (2/3) · (2/1) = 2 ✓."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The banned list for that chain.",
+   "conceptTag": "rf-mixed",
+   "explanationVariants": [
+    "Bottoms: x and (x + 1) ban 0 and −1; the divisor (x − 1)/2 bans its zero 1. Three bans: 0, −1, 1.",
+    "The 2 under the divisor is constant — no ban from it; the divisor's TOP adds x = 1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For (x² − 1)/x · x/(x + 1) ÷ (x − 1)/2 = 2, which inputs are excluded?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = 0, −1, and 1",
+      "correct": true,
+      "feedback": "Right — two original bottoms plus the divisor's numerator zero."
+     },
+     {
+      "id": "o2",
+      "label": "x = 0 and −1 only",
+      "correct": false,
+      "feedback": "Dividing by (x − 1)/2 fails when that divisor is ZERO — at x = 1: add it to the list."
+     },
+     {
+      "id": "o3",
+      "label": "x = 1 only",
+      "correct": false,
+      "feedback": "The bottoms x and (x + 1) were already division-by-zero risks: 0 and −1 stay banned."
+     },
+     {
+      "id": "o4",
+      "label": "none — the answer 2 is a constant",
+      "correct": false,
+      "feedback": "The constant is what remains FOR LEGAL x — at 0, −1, or 1 the original chain is undefined."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-mixed__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Order matters for divisors only.",
+   "conceptTag": "rf-mixed",
+   "explanationVariants": [
+    "a · b ÷ c means (a · b) ÷ c — the flip applies to c alone, not to b.",
+    "Left-to-right: multiply first, then divide by the LAST fraction."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In a/b · c/d ÷ e/f, which single fraction gets flipped?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "e/f only",
+      "correct": true,
+      "feedback": "Right — it's the only divisor; everything before it multiplies normally."
+     },
+     {
+      "id": "o2",
+      "label": "c/d and e/f",
+      "correct": false,
+      "feedback": "c/d follows a MULTIPLICATION sign — only the fraction after ÷ inverts."
+     },
+     {
+      "id": "o3",
+      "label": "all of them",
+      "correct": false,
+      "feedback": "Flipping is division's move alone — one ÷, one flip."
+     },
+     {
+      "id": "o4",
+      "label": "e/f and then a/b",
+      "correct": false,
+      "feedback": "The first fraction is always KEPT — only the divisor e/f flips."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-mixed__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Capstone chain.",
+   "conceptTag": "rf-mixed",
+   "explanationVariants": [
+    "(x + 3)/(x − 2) ÷ (x² − 9)/(x − 2) = (x + 3)/(x − 2) · (x − 2)/((x − 3)(x + 3)) = 1/(x − 3).",
+    "Flip, factor the difference of squares, cancel (x + 3) and (x − 2)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Divide: (x + 3)/(x − 2) ÷ (x² − 9)/(x − 2).",
+    "tokens": [
+     {
+      "id": "one",
+      "label": "1"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "xm3",
+      "label": "(x − 3)"
+     },
+     {
+      "id": "xp3",
+      "label": "(x + 3)"
+     },
+     {
+      "id": "sqt",
+      "label": "(x + 3)²"
+     },
+     {
+      "id": "sqb",
+      "label": "(x − 2)²(x − 9)"
+     }
+    ],
+    "correct": [
+     "one",
+     "div",
+     "xm3"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "xm3"
+      ],
+      "feedback": "The surviving (x − 3) sits in the DENOMINATOR — the whole numerator cancelled to 1."
+     },
+     {
+      "sequence": [
+       "one",
+       "div",
+       "xp3"
+      ],
+      "feedback": "(x + 3) is the factor that CANCELS — the divisor's other factor (x − 3) is what survives below."
+     },
+     {
+      "sequence": [
+       "sqt",
+       "div",
+       "sqb"
+      ],
+      "feedback": "x² − 9 = (x − 3)(x + 3), and division FLIPS it — nothing squares."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Flip the divisor, factor x² − 9 = (x − 3)(x + 3), and cancel — 1 stays on top, (x − 3) below.",
+    "successFeedback": "Right — both (x − 2) and (x + 3) cancel after the flip; 1 remains on top."
+   },
+   "hints": [
+    "Flip: · (x − 2)/(x² − 9).",
+    "Factor: x² − 9 = (x − 3)(x + 3).",
+    "Cancel (x − 2) and (x + 3); a 1 is left on top."
+   ],
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-mixed__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One big fraction, one flip per ÷, and a running list of bans.",
+   "takeaways": [
+    "Exclusions come from every original bottom AND every divisor's top.",
+    "Cancellation never un-bans an input.",
+    "When everything cancels, the answer is a constant — on the legal domain."
+   ],
+   "teaser": "Next chapter: adding and subtracting — polynomial LCDs enter."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "rf-mixed",
+   "concept": {
+    "id": "rem-rf0203-c",
+    "kind": "concept",
+    "body": "Why the divisor's TOP matters: dividing by (x − 5)/2 at x = 5 is dividing by 0/2 = 0 — banned."
+   },
+   "check": {
+    "id": "rem-rf0203-k",
+    "kind": "check",
+    "body": "Name the new ban.",
+    "conceptTag": "rf-mixed",
+    "explanationVariants": [
+     "x = 5 — where the divisor itself is zero.",
+     "A zero divisor breaks division even though 5 zeroes a numerator."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Dividing anything by (x − 5)/2 newly excludes which value of x?",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "The 2 is a constant denominator — never zero; the divisor DIES where its top does: x = 5."
+      },
+      {
+       "value": -5,
+       "feedback": "Sign flip. x − 5 = 0 when x = +5, so 5 is the newly excluded value."
+      }
+     ],
+     "fallbackFeedback": "At x = 5 the divisor is 0 — division by zero."
+    }
+   }
+  }
+ ]
+}

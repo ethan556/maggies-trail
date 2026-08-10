@@ -1,0 +1,294 @@
+{
+  "id": "dr-01-01",
+  "slug": "from-one-slope-to-every-slope",
+  "title": "From One Slope to Every Slope",
+  "courseId": "derivative-rules",
+  "chapterId": "ch1-the-derivative-as-a-function",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In precalculus you squeezed the secant onto the tangent and got **one number**: the slope of f at one point.\n\nNow do it at every x at once. Each input has its own slope, and a rule that hands one output to each input is a **function**.\n\nThat function is the derivative, f′.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Drag x. The tangent turns above; f′ draws itself below.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "slope",
+        "targetSlope": 6,
+        "targetX": 0,
+        "start": -3,
+        "prompt": "f(x) = x². Drag x until the tangent has slope 6 — and watch what you are drawing underneath.",
+        "successFeedback": "x = 3, slope 6. Now look at the curve you traced below: it came out a straight line through the origin, f′(x) = 2x. You did not compute that — you DREW it, one tangent at a time. The derivative is a function, and that is the whole shift.",
+        "lowFeedback": "The tangent is shallower than 6 (or tipping downhill). Slide right: on x² the slope climbs steadily with x.",
+        "highFeedback": "The tangent is steeper than 6. Slide back left — the slope IS 2x, so it passes 6 exactly once."
+      },
+      "predict": {
+        "prompt": "On y = x², you need the tangent slope to read 6. Starting from x = -3, you'll find it…",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right of where you start"
+          },
+          {
+            "id": "left",
+            "label": "To the left of where you start"
+          },
+          {
+            "id": "both",
+            "label": "In two places — either direction works"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "On x² the slope at x is 2x — it climbs steadily left to right, so slope 6 lives at exactly one spot: x = 3. One slope, one place; that's what makes 2x a function of x."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move along a function and coordinate position, local slope, and derivative graph.",
+        "invariants": [
+          "derivative-records-local-slope",
+          "corners-break-differentiability"
+        ],
+        "misconceptions": [
+          "derivative-copies-function-height",
+          "slope-at-corner-is-zero"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-derivativeTrace",
+        "delayed": false
+      },
+      "conceptTag": "dr-derivative-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the derivative you drew.",
+      "conceptTag": "dr-derivative-function",
+      "explanationVariants": [
+        "The tangents you traced had slopes −4, 0 and 4 at x = −2, 0 and 2 — which is 2x every time. So f′(x) = 2x.",
+        "f′ is not a number attached to a point; it is a rule attached to the whole curve, and here that rule is 'double the input'."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You traced f′ for f(x) = x². What kind of object is f′?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A function — one slope for each input, here f′(x) = 2x.",
+            "correct": true,
+            "feedback": "Right. That is the promotion: from a slope AT a point to a slope FUNCTION over the whole domain."
+          },
+          {
+            "id": "o2",
+            "label": "A number — the slope of the curve.",
+            "correct": false,
+            "feedback": "A curve has no single slope; it has a different one at every point. That is precisely why the derivative must be a function."
+          },
+          {
+            "id": "o3",
+            "label": "The tangent line at a point.",
+            "correct": false,
+            "feedback": "The tangent is a LINE at one x. f′ is the rule that tells you the slope of that line for every x at once."
+          },
+          {
+            "id": "o4",
+            "label": "The limit of a single secant.",
+            "correct": false,
+            "feedback": "That is f′ at ONE point — the precalculus version. Doing it at every point is what turns it into a function."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-derivative-function__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use the definition once, by hand.",
+      "conceptTag": "dr-limit-definition",
+      "explanationVariants": [
+        "f(x+h) − f(x) = (x+h)² − x² = 2xh + h². Divide by h to get 2x + h, and let h → 0: f′(x) = 2x.",
+        "The h that survives division is exactly the h that dies in the limit — which is why the answer is clean."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x². Simplify [f(x+h) − f(x)]/h before taking the limit.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2x + h",
+            "correct": true,
+            "feedback": "Right — and now h → 0 kills the leftover h, leaving f′(x) = 2x. The division by h is legal precisely because h is not yet zero."
+          },
+          {
+            "id": "o2",
+            "label": "2x",
+            "correct": false,
+            "feedback": "That is the answer AFTER the limit. Before it, the h² term leaves a stray h behind: 2x + h."
+          },
+          {
+            "id": "o3",
+            "label": "2x + h²",
+            "correct": false,
+            "feedback": "The h² was divided by h, so it comes down to h, not h². Expand carefully: (2xh + h²)/h = 2x + h."
+          },
+          {
+            "id": "o4",
+            "label": "0/0",
+            "correct": false,
+            "feedback": "That is what you get if you substitute h = 0 too early — the same 0/0 trap you met in limits. The cancellation must happen first."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-limit-definition__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three notations, one object:\n\n**f′(x)** — Lagrange. Compact; good for stating rules.\n**dy/dx** — Leibniz. It *looks* like a fraction, and in the chain rule it behaves like one.\n**d/dx[ ]** — the operator. Read it as \"differentiate what follows\".\n\nThey are the same function wearing different clothes.",
+      "figure": "dr-tangent-line"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The tangent line falls out.",
+      "conceptTag": "dr-tangent-line",
+      "explanationVariants": [
+        "f′(3) = 6 and f(3) = 9, so the tangent is y − 9 = 6(x − 3), i.e. y = 6x − 9.",
+        "A line needs a point and a slope. The curve gives the point; the derivative gives the slope."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x², so f′(x) = 2x. Find the y-intercept of the tangent line at x = 3.",
+        "answer": -9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That is f(3), the y-value where the tangent touches the curve — not where it crosses the axis. Run the line back to x = 0: y = 9 + 6(0 − 3) = −9."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the slope f′(3), not the intercept. Use it in y − 9 = 6(x − 3) and set x = 0."
+          },
+          {
+            "value": 0,
+            "feedback": "The tangent at (3, 9) with slope 6 is nowhere near the origin. y = 6x − 9 crosses at −9."
+          }
+        ],
+        "fallbackFeedback": "y − 9 = 6(x − 3) → y = 6x − 9, so the intercept is −9."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-tangent-line__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a slope off a graph you cannot see.",
+      "conceptTag": "dr-derivative-function",
+      "hints": [
+        "You are told f′, the SLOPE function. Feed it the x you care about.",
+        "f′(x) = 2x means the slope at x = −4 is 2(−4).",
+        "A negative slope means the curve is falling there — and the size says how steeply."
+      ],
+      "explanationVariants": [
+        "f′(−4) = 2(−4) = −8. The curve is falling steeply at x = −4, even though f(−4) = 16 is positive and large.",
+        "Height and slope are independent facts. f can be high while f′ is negative — that is a curve on its way down from a great height."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x², find f′(−4).",
+        "answer": -8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That is f(−4), the HEIGHT of the curve. The derivative reports the SLOPE, which is 2(−4) = −8. A curve can be high and falling at the same time."
+          },
+          {
+            "value": 8,
+            "feedback": "The sign is wrong. f′(x) = 2x, and 2 × (−4) is −8: on the left arm of the parabola the curve is going DOWN."
+          },
+          {
+            "value": -4,
+            "feedback": "That is x itself. The rule doubles it: f′(−4) = 2(−4) = −8."
+          }
+        ],
+        "fallbackFeedback": "f′(x) = 2x, so f′(−4) = −8 — the curve is falling steeply there."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-derivative-function__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The promotion.",
+      "takeaways": [
+        "The derivative is a FUNCTION: one slope for every input, not one number for one point.",
+        "f′(x) = lim(h→0) [f(x+h) − f(x)]/h — and the cancellation must happen before h reaches 0.",
+        "f′ hands you the tangent line for free: the curve gives the point, the derivative gives the slope."
+      ],
+      "teaser": "Next: read f′ straight off the shape of f — and meet a flat tangent that is not a peak."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-derivative-function",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "f tells you **how high**. f′ tells you **how steep**. They are different questions about the same point, and their answers are unrelated: a curve can be high and falling, or low and climbing.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Height or steepness?",
+        "conceptTag": "dr-derivative-function",
+        "explanationVariants": [
+          "f(2) = 4 is the height. f′(2) = 2(2) = 4 is the slope. They happen to agree here, and that is a coincidence of x = 2.",
+          "Ask which question you are being asked: how high, or how steep?"
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x² and f′(x) = 2x. Find the SLOPE of the curve at x = 5.",
+          "answer": 10,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 25,
+              "feedback": "That is the height f(5). The slope is f′(5) = 2(5) = 10."
+            },
+            {
+              "value": 5,
+              "feedback": "That is x. Double it: f′(5) = 10."
+            }
+          ],
+          "fallbackFeedback": "f′(5) = 2(5) = 10."
+        }
+      }
+    }
+  ]
+}

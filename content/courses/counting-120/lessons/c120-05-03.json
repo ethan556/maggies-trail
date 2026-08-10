@@ -1,0 +1,337 @@
+{
+ "id": "c120-05-03",
+ "slug": "mixing-jumps",
+ "title": "Mixing Jumps",
+ "courseId": "counting-120",
+ "chapterId": "ch5-more-less",
+ "minutes": 8,
+ "readingProfile": "early",
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Now mix the jumps. From 34, ten more then one more: 34 → 44 → 45. Do each jump in order, watching tens and ones.",
+   "narration": "Now mix the jumps. From thirty-four, ten more then one more: thirty-four to forty-four to forty-five. Do each jump in order, watching tens and ones.",
+   "figure": "c120-mix-up"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Order the two jumps.",
+   "conceptTag": "mix-jumps",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "From 34: do ten more, then one more. Drag the steps in order.",
+    "items": [
+     {
+      "id": "j-one",
+      "label": "one more → 45"
+     },
+     {
+      "id": "j-ten",
+      "label": "ten more → 44"
+     },
+     {
+      "id": "j-start",
+      "label": "start at 34"
+     }
+    ],
+    "correctOrder": [
+     "j-start",
+     "j-ten",
+     "j-one"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "j-one",
+      "second": "j-ten",
+      "feedback": "Do ten more FIRST (34 → 44), then one more (44 → 45). Start at 34."
+     }
+    ],
+    "missFeedback": "Start at 34, ten more to 44, one more to 45.",
+    "successFeedback": "34, 44, 45 — both jumps in order!"
+   },
+   "predict": {
+    "prompt": "From 34: ten-more then one-more, versus one-more then ten-more. Same landing?",
+    "options": [
+     {
+      "id": "yes",
+      "label": "Yes — both paths reach the same number"
+     },
+     {
+      "id": "no",
+      "label": "No — order changes the landing"
+     },
+     {
+      "id": "some",
+      "label": "Only for small numbers"
+     }
+    ],
+    "outcomeId": "yes",
+    "reveal": "Both paths climb the same total — a ten and a one — so they meet at the same number. The order of the jumps is yours to choose."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Ten more, then one more.",
+   "conceptTag": "mix-jumps",
+   "explanationVariants": [
+    "34 + 10 = 44, then 44 + 1 = 45.",
+    "Add the ten first (44), then the one (45)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Start at 34. Ten more, then one more. Where do you land?",
+    "answer": 45,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 44,
+      "feedback": "That's only the ten jump. Add one more: 44 → 45."
+     },
+     {
+      "value": 35,
+      "feedback": "That did one more then... it's ten AND one: 34 → 44 → 45."
+     }
+    ],
+    "fallbackFeedback": "34 → 44 → 45."
+   },
+   "hints": [
+    "Ten more first: 34 → 44.",
+    "Then one more.",
+    "45."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "MixJumpsNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Jumps can go down too. From 58, ten less then one less: 58 → 48 → 47. Down for less, up for more.",
+   "narration": "Jumps can go down too. From fifty-eight, ten less then one less: fifty-eight to forty-eight to forty-seven. Down for less, up for more.",
+   "figure": "c120-mix-down"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each two-jump to its landing.",
+   "conceptTag": "mix-jumps",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each pair of jumps to where it lands.",
+    "left": [
+     {
+      "id": "p1",
+      "label": "from 45: ten more, one more"
+     },
+     {
+      "id": "p2",
+      "label": "from 45: ten less, one less"
+     },
+     {
+      "id": "p3",
+      "label": "from 45: ten more, one less"
+     }
+    ],
+    "right": [
+     {
+      "id": "l56",
+      "label": "56"
+     },
+     {
+      "id": "l34",
+      "label": "34"
+     },
+     {
+      "id": "l54",
+      "label": "54"
+     }
+    ],
+    "pairs": {
+     "p1": "l56",
+     "p2": "l34",
+     "p3": "l54"
+    },
+    "pairErrors": [
+     {
+      "left": "p1",
+      "right": "l54",
+      "feedback": "45 + 10 + 1 = 56. 54 is ten more then one LESS (45 → 55 → 54)."
+     },
+     {
+      "left": "p3",
+      "right": "l56",
+      "feedback": "45 + 10 − 1 = 54. 56 is ten more then one MORE."
+     }
+    ],
+    "missFeedback": "Do each jump: 56, 34, 54.",
+    "successFeedback": "Every mix landed right — 56, 34, 54!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Down two jumps.",
+   "conceptTag": "mix-jumps",
+   "explanationVariants": [
+    "58 − 10 = 48, then 48 − 1 = 47.",
+    "Ten less to 48, one less to 47."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Start at 58. Ten less, then one less. Where do you land?",
+    "answer": 47,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 48,
+      "feedback": "That's only the ten jump. One less more: 48 → 47."
+     },
+     {
+      "value": 57,
+      "feedback": "That did one less only. It's ten AND one less: 58 → 48 → 47."
+     }
+    ],
+    "fallbackFeedback": "58 → 48 → 47."
+   },
+   "hints": [
+    "Ten less first: 58 → 48.",
+    "Then one less.",
+    "47."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "MixJumpsNumeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Which digit does each change?",
+   "conceptTag": "mix-jumps",
+   "explanationVariants": [
+    "Ten more changes the tens digit; one more changes the ones digit. Each touches a different place.",
+    "The ten jump moves the tens; the one jump moves the ones."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A ten jump changes which digit?",
+    "options": [
+     {
+      "id": "a",
+      "label": "the tens digit",
+      "correct": true,
+      "feedback": "Yes — ten more/less moves the tens; the ones stay."
+     },
+     {
+      "id": "b",
+      "label": "the ones digit",
+      "feedback": "That's the ONE jump. A ten jump changes the tens digit."
+     },
+     {
+      "id": "c",
+      "label": "both digits",
+      "feedback": "A ten jump changes only the tens (unless it rolls a hundred). The ones stay."
+     }
+    ]
+   },
+   "hints": [
+    "Ten lives in the tens place.",
+    "Which digit does +10 move?",
+    "The tens."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "MixJumpsMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Mix up and down!",
+   "conceptTag": "mix-jumps",
+   "explanationVariants": [
+    "72 + 10 = 82, then 82 − 1 = 81.",
+    "Ten more to 82, one less to 81."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Start at 72. Ten more, then one less. Where do you land?",
+    "answer": 81,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 82,
+      "feedback": "That's only the ten jump. One less more: 82 → 81."
+     },
+     {
+      "value": 83,
+      "feedback": "That added one instead of subtracting. Ten more (82), then one LESS: 81."
+     }
+    ],
+    "fallbackFeedback": "72 → 82 → 81."
+   },
+   "hints": [
+    "Ten more first: 72 → 82.",
+    "Then one less.",
+    "81."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "MixJumpsNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Course complete — you jump like a pro!",
+   "takeaways": [
+    "Ten jumps move the tens; one jumps move the ones.",
+    "Do each jump in order.",
+    "Up for more, down for less."
+   ],
+   "teaser": "you've finished Count & Write to 120!"
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "mix-jumps",
+   "concept": {
+    "id": "rem-mj-c",
+    "kind": "concept",
+    "body": "Slow down. From 20: ten more is 30, then one more is 31. One jump at a time: 20 → 30 → 31.",
+    "narration": "Slow down. From twenty: ten more is thirty, then one more is thirty-one. One jump at a time: twenty to thirty to thirty-one."
+   },
+   "check": {
+    "id": "rem-mj-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "mix-jumps",
+    "explanationVariants": [
+     "20 + 10 = 30, then 30 + 1 = 31.",
+     "Ten more to 30, one more to 31."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Start at 20. Ten more, then one more. Where do you land?",
+     "answer": 31,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 30,
+       "feedback": "That's only the ten jump. One more: 30 → 31."
+      },
+      {
+       "value": 21,
+       "feedback": "That did one more only. It's ten AND one: 20 → 30 → 31."
+      }
+     ],
+     "fallbackFeedback": "20 → 30 → 31."
+    }
+   }
+  }
+ ]
+}

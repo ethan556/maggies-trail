@@ -1,0 +1,331 @@
+{
+ "id": "sr-02-03",
+ "slug": "writing-sums-in-sigma-form",
+ "title": "Writing Sums in Sigma Form",
+ "courseId": "sequences-series",
+ "chapterId": "ch2-sigma-notation",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Going the other way — sum → sigma — takes two finds: **the rule** (what is term k, in terms of k?) and **the bounds** (which counter values produce the first and last terms?). For 2 + 4 + 6 + ⋯ + 20: the terms are 2k, and 2k hits 20 at k = 10, so it's Σ from k = 1 to 10 of 2k.",
+   "figure": "sr-sum-to-sigma"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Pick the right sigma.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which sigma equals 2 + 4 + 6 + ⋯ + 20?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Σ from k = 1 to 10 of 2k",
+      "correct": true,
+      "feedback": "Right — 2k walks the evens, and it reaches 20 exactly when k = 10."
+     },
+     {
+      "id": "o2",
+      "label": "Σ from k = 1 to 20 of 2k",
+      "correct": false,
+      "feedback": "The top bound is the COUNTER's stop, not the last term — running k to 20 would sum evens all the way to 40."
+     },
+     {
+      "id": "o3",
+      "label": "Σ from k = 2 to 20 of k",
+      "correct": false,
+      "feedback": "That adds EVERY integer from 2 to 20, odd ones included. The evens need the doubling rule 2k."
+     },
+     {
+      "id": "o4",
+      "label": "Σ from k = 1 to 10 of (k + 1)",
+      "correct": false,
+      "feedback": "k + 1 walks 2, 3, 4, …, 11 — steps of one. The sum climbs by 2 per term, so the rule must double: 2k."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Squares in disguise.",
+   "conceptTag": "sr-sigma-write",
+   "explanationVariants": [
+    "The terms are 1², 2², …, 7² — rule k², counter 1 to 7.",
+    "49 = 7² is the last term, so the counter stops at 7, not 49."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which sigma equals 1 + 4 + 9 + 16 + 25 + 36 + 49?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Σ from k = 1 to 7 of k²",
+      "correct": true,
+      "feedback": "Right — seven squares, counter 1 through 7."
+     },
+     {
+      "id": "o2",
+      "label": "Σ from k = 1 to 49 of k²",
+      "correct": false,
+      "feedback": "49 is the last TERM, not the counter's stop — k² reaches 49 already at k = 7. Running to 49 would sum forty-nine squares."
+     },
+     {
+      "id": "o3",
+      "label": "Σ from k = 1 to 7 of 2k",
+      "correct": false,
+      "feedback": "2k walks 2, 4, 6, …, 14 — evens in steps of two. These terms jump 3, 5, 7, … apart: the squares k²."
+     },
+     {
+      "id": "o4",
+      "label": "Σ from k = 1 to 7 of k",
+      "correct": false,
+      "feedback": "That's 1 + 2 + ⋯ + 7 = 28 — the bare counter. Each term here is the counter SQUARED."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-sigma-write__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "For sums that climb by a constant step, the rule is **(step)·k + leftover**. 4 + 7 + 10 + 13 climbs by 3, so try 3k + c; pinning it with the first term (k = 1 must give 4) forces c = 1. Then **verify**: expand the first two terms and the last — 3k + 1 gives 4, 7, …, 13. ✓",
+   "figure": "sr-step-rule"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Build the rule.",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "The sum 4 + 7 + 10 + 13 climbs by 3. Build its term rule (term k = …).",
+    "tokens": [
+     {
+      "id": "t3",
+      "label": "3"
+     },
+     {
+      "id": "tdot",
+      "label": "·"
+     },
+     {
+      "id": "tk",
+      "label": "k"
+     },
+     {
+      "id": "tplus",
+      "label": "+"
+     },
+     {
+      "id": "t1",
+      "label": "1"
+     },
+     {
+      "id": "t4",
+      "label": "4"
+     }
+    ],
+    "correct": [
+     "t3",
+     "tdot",
+     "tk",
+     "tplus",
+     "t1"
+    ],
+    "acceptAlso": [
+     [
+      "t1",
+      "tplus",
+      "t3",
+      "tdot",
+      "tk"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "tk",
+       "tplus",
+       "t3"
+      ],
+      "feedback": "k + 3 walks 4, 5, 6, 7 — steps of ONE. The sum climbs by 3 per term, so the counter must be tripled first: 3k + 1."
+     },
+     {
+      "sequence": [
+       "t3",
+       "tdot",
+       "tk",
+       "tplus",
+       "t4"
+      ],
+      "feedback": "3k + 4 starts at 7 (k = 1 gives 7), one term too high — the +4 belongs to a k = 0 start. With k starting at 1, pin c using the FIRST term: 3·1 + c = 4, so c = 1."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The step 3 multiplies k; then pin the leftover with the first term: 3·1 + c = 4.",
+    "successFeedback": "3k + 1 — verified by the first term (4) and the last (13)."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find the stopping bound.",
+   "conceptTag": "sr-sigma-write",
+   "explanationVariants": [
+    "3k = 30 when k = 10 — the counter stops where the rule produces the last term.",
+    "The last TERM is 30; the last COUNTER value is 10."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The sum 3 + 6 + 9 + ⋯ + 30 is written Σ from k = 1 of 3k. What upper bound does it need?",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30 is the last TERM — the bound is the counter value that produces it: 3k = 30 gives k = 10."
+     },
+     {
+      "value": 9,
+      "feedback": "Stopping at k = 9 ends the sum at 27, one term short — the 30 itself needs k = 10."
+     }
+    ],
+    "fallbackFeedback": "Solve 3k = 30: the counter stops at k = 10."
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-sigma-write__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "One sum, **many correct sigmas** — shifting the counter shifts the rule. Σ from k = 1 to 4 of (3k + 1) and Σ from k = 0 to 3 of (3k + 4) both unroll to 4 + 7 + 10 + 13. Expanding proves it. The convention in this course: start counters at k = 1 unless a problem says otherwise.",
+   "figure": "sr-many-sigmas"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Spot the equivalent form.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which sigma ALSO equals 4 + 7 + 10 + 13?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Σ from k = 0 to 3 of (3k + 4)",
+      "correct": true,
+      "feedback": "Right — k = 0, 1, 2, 3 gives 4, 7, 10, 13. A shifted counter with a matching shifted rule."
+     },
+     {
+      "id": "o2",
+      "label": "Σ from k = 0 to 4 of (3k + 4)",
+      "correct": false,
+      "feedback": "Running the counter to 4 adds a fifth term, 16 — one term too many for this four-term sum."
+     },
+     {
+      "id": "o3",
+      "label": "Σ from k = 1 to 4 of (3k + 4)",
+      "correct": false,
+      "feedback": "Starting THIS rule at k = 1 gives 7, 10, 13, 16 — the whole sum slides up a term. The +4 version pairs with a k = 0 start."
+     },
+     {
+      "id": "o4",
+      "label": "Σ from k = 0 to 3 of (4k + 3)",
+      "correct": false,
+      "feedback": "4k + 3 walks 3, 7, 11, 15 — climbing by 4. This sum climbs by 3, so the counter's multiplier must be 3."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Pin the leftover.",
+   "conceptTag": "sr-sigma-write",
+   "explanationVariants": [
+    "At k = 1 the rule must give the first term: 4·1 + c = 6, so c = 2 — and 4·5 + 2 = 22 confirms the last term.",
+    "The 4k part supplies the climbing; c is whatever's left of the first term after 4·1."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The sum 6 + 10 + 14 + 18 + 22 is written Σ from k = 1 to 5 of (4k + c). What is c?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 is the first TERM — but the rule already supplies 4·1 of it. The leftover is 6 − 4 = 2."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is the STEP, and the 4k part already carries it. c is what remains of the first term: 6 − 4·1 = 2."
+     }
+    ],
+    "fallbackFeedback": "4·1 + c = 6 ⇒ c = 2. Check the end: 4·5 + 2 = 22. ✓"
+   },
+   "hints": [
+    "The 4k part handles the climbing — c only has to fix the starting height.",
+    "At k = 1 the rule must output the first term: 4·1 + c = 6.",
+    "c = 6 − 4 — then confirm with the last term, 4·5 + c = 22."
+   ],
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-sigma-write__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Two finds make a sigma.",
+   "takeaways": [
+    "Find the rule: (step)·k + leftover, pinned by the first term.",
+    "Find the bounds: the counter values producing the first and last terms.",
+    "Index shifts give many correct forms — expanding a few terms verifies any of them."
+   ],
+   "teaser": "Next: a 10-year-old's trick that adds 1 to 100 in seconds — the arithmetic series."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "sr-sigma-write",
+   "concept": {
+    "id": "rem-sr0203-c",
+    "kind": "concept",
+    "body": "Pin the rule with the first term. If a sum climbs by 3 and is written 3k + c with k starting at 1, then 3·1 + c must equal the first term — that single equation hands you c."
+   },
+   "check": {
+    "id": "rem-sr0203-k",
+    "kind": "check",
+    "body": "One equation, one unknown.",
+    "conceptTag": "sr-sigma-write",
+    "explanationVariants": [
+     "3·1 + c = 5 gives c = 2 — and 3·3 + 2 = 11 confirms the last term.",
+     "The 3k part supplies 3 of the first term's 5; c covers the remaining 2."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "The sum 5 + 8 + 11 is written Σ from k = 1 to 3 of (3k + c). What is c?",
+     "answer": 2,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 5,
+       "feedback": "5 is the first TERM — the rule already provides 3·1 of it, so c = 5 − 3 = 2."
+      },
+      {
+       "value": 3,
+       "feedback": "3 is the step, already living inside the 3k part. The leftover is 5 − 3 = 2."
+      }
+     ],
+     "fallbackFeedback": "3·1 + c = 5 ⇒ c = 2."
+    }
+   }
+  }
+ ]
+}

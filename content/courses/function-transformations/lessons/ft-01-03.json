@@ -1,0 +1,289 @@
+{
+  "id": "ft-01-03",
+  "slug": "range-the-possible-outputs",
+  "title": "Range: the Possible Outputs",
+  "courseId": "function-transformations",
+  "chapterId": "ch1-families-domain-range",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A function's **range** is every output it can produce. Squares are never negative, so **y = x²** has range **y ≥ 0** — and |x| and √x share it. The line and the cubic sweep through **every** real y. Range questions are usually about a function's floor (or ceiling).",
+      "figure": "parent-functions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read a parent's range.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the range of y = |x|?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y ≥ 0",
+            "correct": true,
+            "feedback": "Right — distance is never negative, and |0| = 0 puts 0 itself in the range."
+          },
+          {
+            "id": "o2",
+            "label": "all real numbers",
+            "correct": false,
+            "feedback": "Try to get y = −3: no input has |x| = −3 — absolute value can't output a negative."
+          },
+          {
+            "id": "o3",
+            "label": "y > 0",
+            "correct": false,
+            "feedback": "So close — but |0| = 0, so 0 IS an output. Use ≥, not >."
+          },
+          {
+            "id": "o4",
+            "label": "y ≤ 0",
+            "correct": false,
+            "feedback": "That's the flipped version −|x|. Plain |x| outputs 0 and up."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "y = |x|: can the machine ever output a negative number?",
+        "options": [
+          {
+            "id": "never",
+            "label": "Never — outputs are distances"
+          },
+          {
+            "id": "negIn",
+            "label": "Yes — feed it a negative x"
+          },
+          {
+            "id": "zero",
+            "label": "Only at x = 0"
+          }
+        ],
+        "outcomeId": "never",
+        "reveal": "|x| measures distance from 0, and distances are never negative — feeding in x = −5 outputs +5. Zero itself IS reachable (at x = 0), so the range is y ≥ 0: zero included, negatives impossible."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A vertical shift carries the range along. **y = x² + 4** takes the parent's minimum output 0 and lifts it to **0 + 4 = 4**, so the range is y ≥ 4. Find the parent's floor, then apply the shift.",
+      "figure": "ft-range-shift"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Shift the floor up.",
+      "conceptTag": "ft-range",
+      "explanationVariants": [
+        "x² bottoms out at 0; adding 6 lifts the floor to 6 — minimum output 6.",
+        "The smallest x² can be is 0 (at x = 0), so the smallest x² + 6 can be is 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the minimum output of y = x² + 6?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 is the PARENT's minimum — the +6 lifts every output, so the new floor is 0 + 6 = 6."
+          },
+          {
+            "value": -6,
+            "feedback": "The shift is UP by 6 (it's added to the output), so the floor rises to +6, not −6."
+          }
+        ],
+        "fallbackFeedback": "x²'s minimum is 0, so x² + 6's minimum is 0 + 6 = 6."
+      },
+      "variant": {
+        "gen": "range-floor"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Same idea, different parent.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 3,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 2,
+        "kStart": 0,
+        "gridMax": 8,
+        "prompt": "Build y = x² + 3 and read the smallest output the curve ever produces.",
+        "successFeedback": "Minimum 3 — the vertex. The range is everything from 3 upward, because a squared term is never negative and the +3 lifts the whole curve. Range is read off the vertex, not the equation.",
+        "shapeFeedback": "Leave a at 1 — this parent curve is not stretched.",
+        "vertexFeedback": "The vertex is not at (0, 3) yet."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A shift can drop the floor below zero.",
+      "conceptTag": "ft-range",
+      "explanationVariants": [
+        "√x's smallest output is 0 (at x = 0); subtracting 2 drops the floor to −2.",
+        "Every output of √x gets 2 taken away, so the minimum 0 becomes −2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the minimum output of y = √x − 2?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The shift is DOWN (minus 2), so the floor falls: 0 − 2 = −2."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the parent √x's floor — the −2 outside the root lowers every output by 2."
+          }
+        ],
+        "fallbackFeedback": "√x bottoms out at 0, so √x − 2 bottoms out at 0 − 2 = −2."
+      },
+      "variant": {
+        "gen": "range-floor"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which parent has no floor at all?",
+      "conceptTag": "ft-range",
+      "explanationVariants": [
+        "Cubes of negatives are negative — (−2)³ = −8 — and cubes grow without bound both ways, so x³'s range is all real numbers.",
+        "x³ falls forever on the left and rises forever on the right: every y gets hit exactly once."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the range of y = x³?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "all real numbers",
+            "correct": true,
+            "feedback": "Right — the cubic outputs every y: negatives from negative inputs, positives from positive ones."
+          },
+          {
+            "id": "o2",
+            "label": "y ≥ 0",
+            "correct": false,
+            "feedback": "That's x²'s range. Cubing keeps the sign: (−2)³ = −8, a negative output."
+          },
+          {
+            "id": "o3",
+            "label": "y ≤ 0",
+            "correct": false,
+            "feedback": "Positive inputs give positive cubes: 2³ = 8. The cubic covers BOTH signs — all reals."
+          },
+          {
+            "id": "o4",
+            "label": "y ≠ 0",
+            "correct": false,
+            "feedback": "0³ = 0, so 0 is an output too. Nothing is skipped — the range is all reals."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "range-floor",
+        "form": "allRealsRange"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A flip turns the floor into a ceiling.",
+      "conceptTag": "ft-range",
+      "explanationVariants": [
+        "−x² opens DOWNWARD, so its vertex is a maximum; the +9 lifts that peak to 0 + 9 = 9.",
+        "x² ≥ 0 always, so −x² ≤ 0 always — its biggest value is 0, and adding 9 makes the maximum 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the maximum output of y = −x² + 9?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "The 9 is ADDED, so the peak sits at +9. The minus sign is on the x² part, flipping the parabola — not on the 9."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is −x²'s own maximum — the +9 lifts that peak to 9."
+          }
+        ],
+        "fallbackFeedback": "−x² peaks at 0 (when x = 0); adding 9 raises the peak to 9."
+      },
+      "hints": [
+        "The minus sign flips x² upside down — now it has a MAXIMUM, not a minimum.",
+        "−x² by itself peaks at 0 (when x = 0).",
+        "Add the shift: the peak is 0 + 9 = 9."
+      ],
+      "variant": {
+        "gen": "range-floor",
+        "form": "negMax"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Range = possible outputs; track the floor (or ceiling) through the shift.",
+      "takeaways": [
+        "x², |x|, and √x all have range y ≥ 0; x and x³ hit every real y.",
+        "A vertical shift moves the range's floor by the same amount.",
+        "A flip (−x²) turns the floor into a ceiling."
+      ],
+      "teaser": "Next chapter: moving graphs on purpose — vertical and horizontal shifts."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-range",
+      "concept": {
+        "id": "rem-ft0103-c",
+        "kind": "concept",
+        "body": "Find the parent's minimum output (0 for x², |x|, √x), then apply the vertical shift to it."
+      },
+      "check": {
+        "id": "rem-ft0103-k",
+        "kind": "check",
+        "body": "One more floor.",
+        "conceptTag": "ft-range",
+        "explanationVariants": [
+          "x² bottoms out at 0; the +5 lifts the floor to 5.",
+          "Smallest possible x² is 0, so smallest possible x² + 5 is 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the minimum output of y = x² + 5?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "That's the parent's floor — the +5 raises it to 5."
+            },
+            {
+              "value": -5,
+              "feedback": "The 5 is added to outputs, lifting the floor UP to +5."
+            }
+          ],
+          "fallbackFeedback": "Minimum of x² is 0, so minimum of x² + 5 is 5."
+        }
+      }
+    }
+  ]
+}

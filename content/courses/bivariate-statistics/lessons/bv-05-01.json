@@ -1,0 +1,285 @@
+{
+  "id": "bv-05-01",
+  "slug": "the-leftover",
+  "title": "The Leftover: Observed − Predicted",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch5-what-the-line-misses",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Chapter 2 fit a line; chapter 3 used it to predict. But real points don't sit ON the line — each one misses by some amount. That miss has a name: the residual, observed minus predicted. It is the line's error, measured point by point.",
+      "figure": "bv-residual-gap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute one residual by hand.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The line is ŷ = 2x + 1. The data point is (3, 9). What is its residual, observed − predicted?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the PREDICTION. The residual is the gap: observed 9 minus predicted 7."
+          },
+          {
+            "value": -2,
+            "feedback": "Order matters: observed − predicted = 9 − 7 = +2. Above the line is positive."
+          }
+        ],
+        "fallbackFeedback": "First run the line at x = 3 (that's the prediction), then subtract it from the observed 9.",
+        "successFeedback": "Predicted: 2·3 + 1 = 7. Observed: 9. Residual: 9 − 7 = +2 — the point floats 2 above the line."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Place the point the residual describes.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Under ŷ = 2x + 1, the line predicts 5 at x = 2. Plot the OBSERVED point whose residual is +1.",
+        "cols": 6,
+        "rows": 8,
+        "targets": [
+          {
+            "x": 2,
+            "y": 6
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 5,
+            "feedback": "That is the PREDICTED point — it sits on the line, residual 0. Observed − predicted must come out +1."
+          },
+          {
+            "x": 2,
+            "y": 4,
+            "feedback": "One BELOW the line is residual −1. A positive leftover lives above the prediction."
+          }
+        ],
+        "missFeedback": "Residual = observed − predicted, so observed = 5 + 1 = 6: plot (2, 6).",
+        "successFeedback": "(2, 6): one above the line's 5 — a +1 leftover, which is all a residual is."
+      },
+      "predict": {
+        "prompt": "A data point sits ABOVE the fitted line. Its residual is…",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — the world beat the prediction"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — being off is a deficit"
+          },
+          {
+            "id": "zero",
+            "label": "Zero — the line already averaged it in"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "Residual = observed − predicted: above the line means the observed value is bigger, so the residual is positive. The sign encodes WHICH WAY the line was wrong — that direction is data, not noise."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now a point below.",
+      "conceptTag": "bv-residual",
+      "explanationVariants": [
+        "Predicted at x = 5: 2·5 + 1 = 11. Observed 9 falls short, so the residual is 9 − 11 = −2.",
+        "Negative residuals mark points below the line — the prediction overshot."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same line ŷ = 2x + 1. What is the residual of (5, 9)?",
+        "answer": -2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Keep the sign: observed 9 sits BELOW predicted 11, so −2."
+          },
+          {
+            "value": 11,
+            "feedback": "11 is the prediction. Subtract it from the observed: 9 − 11."
+          }
+        ],
+        "fallbackFeedback": "Prediction first (2·5 + 1), then observed − predicted.",
+        "successFeedback": "9 − 11 = −2: the line overpredicted by 2. Sign carries direction; size carries how badly."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The perfect case.",
+      "conceptTag": "bv-residual",
+      "explanationVariants": [
+        "A residual of 0 means observed = predicted: the point lies exactly on the line.",
+        "Zero residual is a perfect hit — rare with real data, routine with made-up data."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A point has residual 0. Where is it?",
+        "options": [
+          {
+            "id": "on",
+            "label": "Exactly on the line",
+            "correct": true,
+            "feedback": "Observed equals predicted — no miss at all."
+          },
+          {
+            "id": "origin",
+            "label": "At the origin",
+            "correct": false,
+            "feedback": "The origin is about x and y being zero, not the miss being zero."
+          },
+          {
+            "id": "mean",
+            "label": "At the average of the data",
+            "correct": false,
+            "feedback": "The mean point often has a SMALL residual, but zero means on-the-line, wherever that is."
+          }
+        ],
+        "successFeedback": "Residuals measure distance from the LINE, not from zero or from the center of the data."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Every data point gets a residual: positive above the line, negative below, zero on it. A fitted line doesn't erase the misses — it chooses where to put them. Reading those leftovers is how you audit the line.",
+      "figure": "bv-residual-sign"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Audit a whole set.",
+      "conceptTag": "bv-residual",
+      "explanationVariants": [
+        "(1,4): predicted 3, residual +1. (2,4): predicted 5, residual −1. (4,12): predicted 9, residual +3 — the largest miss.",
+        "The biggest |residual| flags the point the line explains worst — the first outlier suspect."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Under ŷ = 2x + 1, which point does the line miss WORST: (1,4), (2,4), or (4,12)?",
+        "options": [
+          {
+            "id": "big",
+            "label": "(4, 12) — residual +3",
+            "correct": true,
+            "feedback": "Predicted 9, observed 12: a 3-unit miss, triple the others."
+          },
+          {
+            "id": "first",
+            "label": "(1, 4) — residual +1",
+            "correct": false,
+            "feedback": "Predicted 3, observed 4 — only 1 off."
+          },
+          {
+            "id": "second",
+            "label": "(2, 4) — residual −1",
+            "correct": false,
+            "feedback": "Predicted 5, observed 4 — 1 below. Small miss."
+          }
+        ],
+        "successFeedback": "Comparing |residuals| ranks the line's failures — the biggest one is your outlier candidate."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two lines, one point.",
+      "conceptTag": "bv-residual",
+      "hints": [
+        "Compute the point's residual under EACH line separately.",
+        "Line A ŷ = x + 2 at x = 4 predicts 6; line B ŷ = 3x − 2 predicts 10. The observed is 8.",
+        "Misses: |8 − 6| = 2 and |8 − 10| = 2 — equal size, opposite signs."
+      ],
+      "explanationVariants": [
+        "The point (4, 8) misses line A by +2 and line B by −2 — the same distance from each, from opposite sides.",
+        "A single point can't crown a winner between two lines; whole residual SETS can. That's the next lesson."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Point (4, 8). Line A: ŷ = x + 2. Line B: ŷ = 3x − 2. Which line misses it by less?",
+        "options": [
+          {
+            "id": "tie",
+            "label": "Neither — both miss by exactly 2",
+            "correct": true,
+            "feedback": "A predicts 6 (residual +2); B predicts 10 (residual −2). Equal misses, opposite directions."
+          },
+          {
+            "id": "a",
+            "label": "Line A",
+            "correct": false,
+            "feedback": "A predicts 6: off by 2. But check B before deciding: it predicts 10 — also off by 2."
+          },
+          {
+            "id": "b",
+            "label": "Line B",
+            "correct": false,
+            "feedback": "B predicts 10: off by 2. A predicts 6 — the same 2 the other way."
+          }
+        ],
+        "successFeedback": "One point rarely settles a fit. Judging lines takes the whole leftover collection — next lesson's job."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The residual is the line's per-point error.",
+      "takeaways": [
+        "Residual = observed − predicted: positive above the line, negative below, zero on it.",
+        "The sign says which way the line erred; the size says how badly.",
+        "The largest |residual| flags the point the model explains worst."
+      ],
+      "teaser": "Next: stop reading leftovers one at a time — their PATTERN tells you whether a line was the right tool at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-residual",
+      "concept": {
+        "id": "rem-bv-residual-c",
+        "kind": "concept",
+        "body": "Every data point gets a residual: positive above the line, negative below, zero on it. A fitted line doesn't erase the misses — it chooses where to put them. Reading those leftovers is how you audit the line."
+      },
+      "check": {
+        "id": "rem-bv-residual-k",
+        "kind": "check",
+        "body": "Now a point below.",
+        "conceptTag": "bv-residual",
+        "explanationVariants": [
+          "Predicted at x = 5: 2·5 + 1 = 11. Observed 9 falls short, so the residual is 9 − 11 = −2.",
+          "Negative residuals mark points below the line — the prediction overshot."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Same line ŷ = 2x + 1. What is the residual of (5, 9)?",
+          "answer": -2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "Keep the sign: observed 9 sits BELOW predicted 11, so −2."
+            },
+            {
+              "value": 11,
+              "feedback": "11 is the prediction. Subtract it from the observed: 9 − 11."
+            }
+          ],
+          "fallbackFeedback": "Prediction first (2·5 + 1), then observed − predicted.",
+          "successFeedback": "9 − 11 = −2: the line overpredicted by 2. Sign carries direction; size carries how badly."
+        }
+      }
+    }
+  ]
+}

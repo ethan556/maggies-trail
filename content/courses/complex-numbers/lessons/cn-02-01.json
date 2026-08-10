@@ -1,0 +1,407 @@
+{
+  "id": "cn-02-01",
+  "slug": "meet-i",
+  "title": "Meet i",
+  "courseId": "complex-numbers",
+  "chapterId": "ch2-imaginary-unit",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "x² = −1 has no real solution — every real number squares to zero or more. Mathematicians' fix: invent a new number. Define **i** by **i² = −1**. With it, square roots of negatives make sense: √(−9) = √9 · √(−1) = **3i**.",
+      "figure": "cn-no-real"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "i is a quarter turn, not a mystery.",
+      "widget": {
+        "type": "argandExplore",
+        "mode": "multiply",
+        "mulRe": 0,
+        "mulIm": 1,
+        "targetRe": -2,
+        "targetIm": 0,
+        "reStart": 1,
+        "imStart": 0,
+        "gridMax": 5,
+        "prompt": "w = i. Find the z whose product z × i lands on −2.",
+        "successFeedback": "z = 2i. Multiplying by i turns the arrow a quarter turn anticlockwise — and 2i was already a quarter turn from 2, so the product has been turned a HALF turn onto the negative real axis. That is the only honest reason i² = −1: two quarter turns leave you facing backwards.",
+        "realFeedback": "The product lands in the wrong spot along the real axis. Multiplying by i rotates the arrow 90°, so it is a z ON the imaginary axis that lands on the real one.",
+        "imagFeedback": "The real part is right, but the product still has an imaginary part left over. The target is −2 exactly, sitting flat on the real axis."
+      },
+      "predict": {
+        "prompt": "Multiplying by i spins a number a quarter-turn counterclockwise. To LAND on −2 (pointing left), z must start out pointing…",
+        "options": [
+          {
+            "id": "up",
+            "label": "Straight up: z = 2i"
+          },
+          {
+            "id": "left",
+            "label": "Left already: z = −2"
+          },
+          {
+            "id": "right",
+            "label": "Right: z = 2"
+          }
+        ],
+        "outcomeId": "up",
+        "reveal": "A quarter-turn counterclockwise carries 'up' to 'left': z = 2i spins to 2i · i = 2i² = −2. Multiplying by i never stretches anything — it only turns."
+      },
+      "conceptTag": "cn-i-def",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents i def.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for i def must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines i def."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-i-def",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule in general: **√(−k) = i√k** for k > 0 — pull the −1 out as i, then root the rest. And equations follow: x² = −16 now HAS solutions, x = ±4i, because (4i)² = 16 · i² = −16 and (−4i)² does the same.",
+      "figure": "cn-sqrt-neg"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another negative root.",
+      "conceptTag": "cn-i-def",
+      "explanationVariants": [
+        "√(−49) = √49 · i = 7i.",
+        "Pull out the −1 as i: i√49 = 7i."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is √(−49)?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "7"
+          },
+          {
+            "id": "t1",
+            "label": "49"
+          },
+          {
+            "id": "t2",
+            "label": "i"
+          },
+          {
+            "id": "t3",
+            "label": "−"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t3",
+              "t0"
+            ],
+            "feedback": "(−7)² = +49, not −49 — no real number works; the answer needs i."
+          },
+          {
+            "sequence": [
+              "t1",
+              "t2"
+            ],
+            "feedback": "The root still applies to 49: √49 = 7, so 7i."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t0",
+              "t2"
+            ],
+            "feedback": "(−7i)² does equal −49 too, but the radical symbol names the PRINCIPAL root: 7i."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "√(−49) = √49 · √(−1) — the 7 comes out real, the i carries the negative.",
+        "successFeedback": "Right — 7 from the 49, i from the −1."
+      },
+      "variant": {
+        "gen": "cn-i-def"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Solve an impossible-looking equation.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What are the solutions of x² = −16?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = ±4i",
+            "correct": true,
+            "feedback": "Right — (±4i)² = 16i² = −16, so both work."
+          },
+          {
+            "id": "o2",
+            "label": "x = ±4",
+            "correct": false,
+            "feedback": "(±4)² = +16 — that solves x² = 16. The minus needs i: ±4i."
+          },
+          {
+            "id": "o3",
+            "label": "x = 4i only",
+            "correct": false,
+            "feedback": "(−4i)² = 16i² = −16 as well — squaring kills the sign, so BOTH ±4i solve it."
+          },
+          {
+            "id": "o4",
+            "label": "no solutions",
+            "correct": false,
+            "feedback": "That was true before i existed — there are no REAL solutions, but the complex pair ±4i solves it exactly."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The defining fact.",
+      "conceptTag": "cn-i-def",
+      "explanationVariants": [
+        "i is DEFINED by i² = −1 — everything else about complex numbers flows from that.",
+        "By definition, squaring i lands on −1."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is i²?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "−"
+          },
+          {
+            "id": "t1",
+            "label": "1"
+          },
+          {
+            "id": "t2",
+            "label": "i"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1"
+            ],
+            "feedback": "If i² were 1, i would just be ±1 and nothing new — the whole point is i² = −1."
+          },
+          {
+            "sequence": [
+              "t2"
+            ],
+            "feedback": "A number equal to its own square would satisfy x² = x, so x = 0 or 1 — i is neither."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t2"
+            ],
+            "feedback": "i² is real: the definition says it equals −1, not another imaginary number."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "i is DEFINED so that squaring it gives −1.",
+        "successFeedback": "Right — that's the definition of i."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Square a multiple of i.",
+      "conceptTag": "cn-i-def",
+      "explanationVariants": [
+        "(3i)² = 3² · i² = 9 · (−1) = −9.",
+        "Square the 3 and the i separately: 9 and −1, product −9."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is (3i)²?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "−"
+          },
+          {
+            "id": "t1",
+            "label": "9"
+          },
+          {
+            "id": "t2",
+            "label": "6"
+          },
+          {
+            "id": "t3",
+            "label": "i"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1"
+            ],
+            "feedback": "That drops i² = −1 — the imaginary unit flips the sign: −9."
+          },
+          {
+            "sequence": [
+              "t1",
+              "t3"
+            ],
+            "feedback": "Squaring removes the i entirely: i² = −1 is real, so (3i)² = −9 is real."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t2",
+              "t3"
+            ],
+            "feedback": "That's 3i doubled and negated — squaring means 3i × 3i = 9i² = −9."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Square both parts: 3² = 9 and i² = −1, so (3i)² = −9.",
+        "successFeedback": "Right — 9 from 3², times −1 from i²."
+      },
+      "variant": {
+        "gen": "cn-i-def",
+        "form": "coefSquared"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compute with the definition.",
+      "conceptTag": "cn-i-def",
+      "explanationVariants": [
+        "(5i)² = 25i² = −25, and −25 + 30 = 5.",
+        "Square first — the i² turns 25 negative — then add 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute (5i)² + 30.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "That treats (5i)² as +25 — but i² = −1 makes it −25, and −25 + 30 = 5."
+          },
+          {
+            "value": -55,
+            "feedback": "Two sign slips: (5i)² = −25, then ADD the 30: −25 + 30 = +5."
+          }
+        ],
+        "fallbackFeedback": "(5i)² = 25i² = −25; then −25 + 30 = 5."
+      },
+      "hints": [
+        "Square the 5 and the i separately.",
+        "(5i)² = 25 · i² = 25 · (−1) = −25.",
+        "Now add: −25 + 30 = 5."
+      ],
+      "variant": {
+        "gen": "cn-i-def",
+        "form": "computePlus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "i is the number whose square is −1 — it unlocks roots of negatives.",
+      "takeaways": [
+        "i² = −1 by definition.",
+        "√(−k) = i√k: pull the −1 out as i.",
+        "x² = −k has the two solutions ±i√k."
+      ],
+      "teaser": "Next: what happens when you keep multiplying by i — a four-step cycle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-i-def",
+      "concept": {
+        "id": "rem-cn0201-c",
+        "kind": "concept",
+        "body": "√(−k) splits into √k times i. For √(−36): √36 = 6, so the answer is 6i."
+      },
+      "check": {
+        "id": "rem-cn0201-k",
+        "kind": "check",
+        "body": "One more root.",
+        "conceptTag": "cn-i-def",
+        "explanationVariants": [
+          "√(−36) = √36 · i = 6i.",
+          "6 from the 36, i from the minus sign."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is √(−36)?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "6i",
+              "correct": true,
+              "feedback": "Right — 6 from √36, i from the −1."
+            },
+            {
+              "id": "o2",
+              "label": "−6",
+              "correct": false,
+              "feedback": "(−6)² = +36 — a real square can't be negative; the i is required."
+            },
+            {
+              "id": "o3",
+              "label": "36i",
+              "correct": false,
+              "feedback": "Still take the root of 36: it's 6i."
+            },
+            {
+              "id": "o4",
+              "label": "18i",
+              "correct": false,
+              "feedback": "18 is 36 ÷ 2 — the ROOT of 36 is 6, so 6i."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,407 @@
+{
+  "id": "gf-01-02",
+  "slug": "building-definitions",
+  "title": "Building Definitions",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch1-precise-definitions",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-notation",
+      "concept": {
+        "id": "rem-gf-notation-c",
+        "kind": "concept",
+        "body": "Angle-name decoder: three letters, and the MIDDLE one is the vertex — the corner where the two rays meet. ∠XYZ and ∠ZYX are the same angle (vertex Y); moving a different letter to the middle names a different angle entirely."
+      },
+      "check": {
+        "id": "rem-gf-notation-k",
+        "kind": "check",
+        "body": "Decode the middle letter.",
+        "conceptTag": "gf-notation",
+        "explanationVariants": [
+          "∠PQR has middle letter Q, so its vertex is Q.",
+          "Trace the path P → Q → R: the corner is turned at Q."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the vertex of ∠PQR?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "P",
+              "correct": false,
+              "feedback": "P is an outer letter — it marks a point on one ray, not the corner."
+            },
+            {
+              "id": "o2",
+              "label": "Q",
+              "correct": true,
+              "feedback": "Middle letter = vertex. The rays run from Q through P and through R."
+            },
+            {
+              "id": "o3",
+              "label": "R",
+              "correct": false,
+              "feedback": "R is the other outer letter — out on a ray, not at the meeting point."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now build. A **segment AB** is the part of line AB between A and B, endpoints included. A **ray AB** starts at A and runs forever through B — the ENDPOINT is written first. An **angle** is two rays sharing an endpoint (the **vertex**). A **circle** is the set of ALL points at one fixed distance (the radius) from one fixed point (the center).",
+      "figure": "defined-terms-anatomy"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each term to its precise definition.",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each term with its precise definition.",
+        "left": [
+          {
+            "id": "seg",
+            "label": "segment"
+          },
+          {
+            "id": "ray",
+            "label": "ray"
+          },
+          {
+            "id": "ang",
+            "label": "angle"
+          },
+          {
+            "id": "cir",
+            "label": "circle"
+          }
+        ],
+        "right": [
+          {
+            "id": "dseg",
+            "label": "part of a line between two endpoints"
+          },
+          {
+            "id": "dray",
+            "label": "part of a line with one endpoint, running forever one way"
+          },
+          {
+            "id": "dang",
+            "label": "two rays that share an endpoint"
+          },
+          {
+            "id": "dcir",
+            "label": "all points at a fixed distance from a fixed point"
+          }
+        ],
+        "pairs": {
+          "seg": "dseg",
+          "ray": "dray",
+          "ang": "dang",
+          "cir": "dcir"
+        },
+        "pairErrors": [
+          {
+            "left": "ray",
+            "right": "dseg",
+            "feedback": "A segment stops at BOTH ends. A ray has just one endpoint and never stops on the other side."
+          },
+          {
+            "left": "seg",
+            "right": "dray",
+            "feedback": "\"Forever one way\" is the ray's half-open signature — a segment is trapped between two endpoints."
+          },
+          {
+            "left": "cir",
+            "right": "dang",
+            "feedback": "Two rays make a corner, not a curve. The circle is a SET of points picked out by distance."
+          }
+        ],
+        "missFeedback": "Each definition names its building blocks: count the endpoints and directions to tell segment from ray.",
+        "successFeedback": "Four precise definitions, all built from point, line, and distance."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What a circle really is.",
+      "conceptTag": "gf-definitions",
+      "explanationVariants": [
+        "The circle is the set of ALL points at distance r from the center — the boundary curve only. The center itself is NOT on the circle (its distance is 0, not r).",
+        "Precise definitions classify every point in or out: distance exactly r → on the circle; anything else (including inside points) → not."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Using the precise definition, which points make up circle with center O and radius 5?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Every point at distance exactly 5 from O",
+            "correct": true,
+            "feedback": "The definition is a distance test: pass at exactly 5, you're on the circle; anything else, you're not."
+          },
+          {
+            "id": "o2",
+            "label": "Every point at distance 5 or less from O",
+            "correct": false,
+            "feedback": "Distance ≤ 5 describes the filled DISK. The circle is only the boundary — the points at exactly 5."
+          },
+          {
+            "id": "o3",
+            "label": "Every point inside the round shape, plus O",
+            "correct": false,
+            "feedback": "Interior points are closer than 5, so they fail the distance test — and O itself sits at distance 0."
+          },
+          {
+            "id": "o4",
+            "label": "The points where the circle crosses a line through O",
+            "correct": false,
+            "feedback": "That's just two points of it. The circle is ALL points at distance 5 — infinitely many, all the way around."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-definitions__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Angle naming: **the vertex letter goes in the middle**. The angle with vertex Y made by rays YX and YZ is ∠XYZ or ∠ZYX — never ∠YXZ. When only one angle sits at a vertex, the single letter ∠Y is enough; when several share the vertex, three letters keep them apart.",
+      "figure": "gf-angle-naming"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Tap the vertex.",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Here is ∠XYZ. Tap its vertex.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 300,
+          "h": 170
+        },
+        "hotspots": [
+          {
+            "id": "hX",
+            "x": 18,
+            "y": 30,
+            "label": "X",
+            "icon": "📍",
+            "count": 1,
+            "correct": false,
+            "feedback": "X is on one RAY of the angle. The vertex is where the two rays meet — read the middle letter of ∠XYZ."
+          },
+          {
+            "id": "hY",
+            "x": 50,
+            "y": 78,
+            "label": "Y",
+            "icon": "📍",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "hZ",
+            "x": 86,
+            "y": 34,
+            "label": "Z",
+            "icon": "📍",
+            "count": 1,
+            "correct": false,
+            "feedback": "Z is out on the other ray. The middle letter of the name — Y — marks the meeting point of the two rays."
+          }
+        ],
+        "missFeedback": "The middle letter of a three-letter angle name always marks the corner where the rays meet.",
+        "successFeedback": "Y — the middle letter is always the vertex."
+      },
+      "conceptTag": "gf-notation",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents gf notation.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for gf notation must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines gf notation."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-foundations:gf-notation",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name that vertex.",
+      "conceptTag": "gf-notation",
+      "explanationVariants": [
+        "The vertex is always the MIDDLE letter: in ∠STU the vertex is T.",
+        "Reading ∠STU as a path — from S, turn the corner at T, head to U — the turn happens at T, so T is the vertex."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which angle name has its vertex at T?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "∠STU",
+            "correct": true,
+            "feedback": "Middle letter T = vertex T. The rays run from T through S and through U."
+          },
+          {
+            "id": "o2",
+            "label": "∠TSU",
+            "correct": false,
+            "feedback": "Here the middle letter is S — this angle's vertex is S, with T just a point on one ray."
+          },
+          {
+            "id": "o3",
+            "label": "∠SUT",
+            "correct": false,
+            "feedback": "Middle letter U puts the vertex at U. T rides along a ray instead of sitting at the corner."
+          },
+          {
+            "id": "o4",
+            "label": "∠UST",
+            "correct": false,
+            "feedback": "The middle letter is S again — same vertex-S angle as ∠TSU, just read from the other side."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-notation__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Ray order is strict: **ray FG starts at F**; ray GF starts at G — different objects, opposite tails. But two ray names CAN mean the same ray: if A, B, C sit on a line in that order, ray AB and ray AC both start at A and run the same way — same endpoint, same direction, same ray.",
+      "figure": "gf-ray-order"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Same ray or not?",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Points A, B, C lie on a line in that order. Sort each ray by whether it is THE SAME as ray AB.",
+        "buckets": [
+          {
+            "id": "same",
+            "label": "same ray as ray AB"
+          },
+          {
+            "id": "diff",
+            "label": "different ray"
+          }
+        ],
+        "items": [
+          {
+            "id": "rAC",
+            "label": "ray AC",
+            "bucketId": "same",
+            "feedback": "Ray AC starts at A and runs through B on its way to C — same endpoint, same direction as ray AB."
+          },
+          {
+            "id": "rBA",
+            "label": "ray BA",
+            "bucketId": "diff",
+            "feedback": "Ray BA starts at B and runs BACKWARD through A — opposite direction, and a different endpoint too."
+          },
+          {
+            "id": "rBC",
+            "label": "ray BC",
+            "bucketId": "diff",
+            "feedback": "Ray BC points the same way but starts at B, so it's missing the piece from A to B. Same direction isn't enough — the endpoint must match."
+          },
+          {
+            "id": "rCA",
+            "label": "ray CA",
+            "bucketId": "diff",
+            "feedback": "Ray CA starts at C and runs toward A — the reverse direction entirely."
+          }
+        ],
+        "missFeedback": "Two ray names match only when BOTH the starting endpoint and the direction agree.",
+        "successFeedback": "Same endpoint + same direction = same ray. Ray AC is ray AB wearing a different name."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "One angle, many names.",
+      "conceptTag": "gf-notation",
+      "hints": [
+        "List what a valid name needs: which letter must sit in the middle?",
+        "The vertex is B, so the middle letter must be B — that eliminates some options instantly.",
+        "The outer letters must come from DIFFERENT rays, one from each side of the angle."
+      ],
+      "explanationVariants": [
+        "A valid name puts the vertex B in the middle and takes one point from EACH ray: ∠ABD works. ∠ABС-style names fail when both outer letters ride the same ray.",
+        "Test each name: middle letter = B? outer letters on different rays? ∠DBA passes both tests — it's ∠ABD read backward."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "∠ABD has vertex B; point C lies on ray BD beyond D. Which is a VALID alternate name for ∠ABD?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "∠ABC",
+            "correct": true,
+            "feedback": "C rides the same ray as D (ray BD extended through C is still ray BC = ray BD), so ∠ABC names the very same opening at vertex B."
+          },
+          {
+            "id": "o2",
+            "label": "∠BAD",
+            "correct": false,
+            "feedback": "The middle letter here is A — that names an angle with vertex A, a different corner altogether."
+          },
+          {
+            "id": "o3",
+            "label": "∠ADB",
+            "correct": false,
+            "feedback": "Middle letter D puts the vertex at D. Same three letters, wrong one in the middle."
+          },
+          {
+            "id": "o4",
+            "label": "∠DBC",
+            "correct": false,
+            "feedback": "D and C sit on the SAME ray from B, so these two \"sides\" collapse into one ray — no opening, no angle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-notation__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Built to be precise.",
+      "takeaways": [
+        "Segment = two endpoints; ray = one endpoint, one direction (endpoint written FIRST).",
+        "A circle is a distance test: all points at exactly r from the center.",
+        "Angle names put the vertex in the middle; outer letters come one from each ray."
+      ],
+      "teaser": "Next: the symbols — when to write ≅, when to write =, and what the little hats over AB mean."
+    }
+  ]
+}

@@ -1,0 +1,407 @@
+{
+  "id": "cp-01-01",
+  "slug": "compass-and-straightedge",
+  "title": "The Compass & Straightedge",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch1-toolkit-basics",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-tool-rules",
+      "concept": {
+        "id": "rem-cp-tool-rules-c",
+        "kind": "concept",
+        "body": "The compass does two jobs: draw circles, and CARRY a length. Once its legs span a distance, that distance travels with it until you change it. The straightedge does one job: draw a straight line through two points. Neither one measures a number."
+      },
+      "check": {
+        "id": "rem-cp-tool-rules-k",
+        "kind": "check",
+        "body": "Which tool carries a length?",
+        "conceptTag": "cp-tool-rules",
+        "explanationVariants": [
+          "The compass holds its opening, so it carries a length from place to place; the straightedge only draws lines.",
+          "Transferring a distance without a number is the compass's defining trick."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which tool can carry a length from one place to another?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "the compass",
+              "correct": true,
+              "feedback": "Its held opening IS the length — swing it anywhere to reuse it."
+            },
+            {
+              "id": "o2",
+              "label": "the straightedge",
+              "correct": false,
+              "feedback": "It has no marks and no memory of distance — it only draws lines through points."
+            },
+            {
+              "id": "o3",
+              "label": "neither — you must measure with a ruler",
+              "correct": false,
+              "feedback": "The compass carries lengths exactly, no ruler needed."
+            },
+            {
+              "id": "o4",
+              "label": "both equally",
+              "correct": false,
+              "feedback": "Only the compass holds a distance; the straightedge just draws the line."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two tools, strict rules. A **straightedge** draws a line through two points — but it has NO marks, so it never measures. A **compass** draws a circle (or arc) given a center and a radius, and it holds that radius as you swing. Constructions use only these two — no ruler numbers, no protractor. Every length comes from a compass setting.",
+      "figure": "construction-toolkit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Swing the compass and see what it guarantees.",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "perpBisector",
+        "span": 8,
+        "target": 5,
+        "start": 2,
+        "prompt": "A and B are 8 apart. Open the compass until the two arcs actually meet — find the smallest whole radius that does it.",
+        "successFeedback": "Radius 5 — the first whole opening that clears half of AB. Now widen it and watch: the crossings slide up and down, but the LINE through them never moves. It cannot. Both crossings are the same distance from A and from B by construction — that is what an equal-radius arc GUARANTEES — so they lie on the perpendicular bisector whatever radius you chose. The compass is not a drawing tool; it is a promise about distance.",
+        "lowFeedback": "The arcs cannot reach each other. Each reaches only its own radius from its own end, so together they must span more than the 8 between A and B — the radius has to clear 4.",
+        "highFeedback": "They do meet, but you were asked for the SMALLEST whole radius that reaches. Come back down until they are just about to come apart."
+      },
+      "predict": {
+        "prompt": "When equal-radius arcs from A and B intersect, what is guaranteed about each intersection?",
+        "options": [
+          {
+            "id": "equal",
+            "label": "It is equally distant from A and B"
+          },
+          {
+            "id": "midpoint",
+            "label": "It must be the midpoint of AB"
+          },
+          {
+            "id": "right",
+            "label": "It lies on a circle with diameter AB"
+          }
+        ],
+        "outcomeId": "equal",
+        "reveal": "Each intersection lies on both equal-radius circles, so its distances to A and B are exactly equal."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change the compass opening and observe which equal-distance and perpendicular-bisector guarantees remain fixed.",
+        "invariants": [
+          "equal-radius",
+          "perpendicular-bisector-locus"
+        ],
+        "misconceptions": [
+          "construction-by-appearance",
+          "measurement-is-proof"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "language",
+        "fadeLevel": 1,
+        "transferFamily": "compass-straightedge-proof",
+        "counterfactualPrompt": "Widen the compass after the arcs first intersect. Why do the crossings move but their connecting line stay fixed?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why does the line through the two arc intersections bisect AB perpendicularly?",
+          "options": [
+            {
+              "id": "locus",
+              "label": "Both intersections are equidistant from A and B, so both lie on the perpendicular-bisector locus.",
+              "correct": true,
+              "feedback": "Exactly—two points on that locus determine the same perpendicular bisector."
+            },
+            {
+              "id": "looks",
+              "label": "The arcs look balanced on the screen.",
+              "correct": false,
+              "feedback": "Visual balance is not the guarantee; equal radii are."
+            },
+            {
+              "id": "measure",
+              "label": "The straightedge measures half of AB.",
+              "correct": false,
+              "feedback": "A classical straightedge has no measurement marks."
+            }
+          ]
+        }
+      },
+      "conceptTag": "cp-tool-rules"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why no ruler?",
+      "conceptTag": "cp-tool-rules",
+      "explanationVariants": [
+        "A construction proves a figure is EXACTLY right using only the geometry of lines and equal radii — a ruler's approximate marks would replace proof with measurement.",
+        "The rules are a game with a purpose: what you can build with compass and straightedge, you can PROVE correct. Measuring only estimates."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do classical constructions forbid using the ruler's measurement marks?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "So the result is provably exact, not just measured close",
+            "correct": true,
+            "feedback": "Equal radii and straight lines give EXACT relationships you can prove — measurement only ever approximates."
+          },
+          {
+            "id": "o2",
+            "label": "Because rulers are less accurate than compasses",
+            "correct": false,
+            "feedback": "It's not about tool accuracy — even a perfect ruler is banned. The point is provable exactness from geometry alone."
+          },
+          {
+            "id": "o3",
+            "label": "Because ancient Greeks had no rulers",
+            "correct": false,
+            "feedback": "They had marked measuring tools; the restriction is a deliberate mathematical choice, not a shortage."
+          },
+          {
+            "id": "o4",
+            "label": "To make the constructions harder for practice",
+            "correct": false,
+            "feedback": "The restriction isn't busywork — it guarantees every constructed length rests on a proof, not a reading."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-tool-rules__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The compass's superpower is **holding a radius**. Set it to span two points, lift it, and every arc you swing keeps that exact length. This single ability — transfer a distance without reading a number — is what makes copying segments and building equal parts possible.",
+      "figure": "cnp-compass-radius"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Copy a segment.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Copy segment AB onto a ray starting at C. Reveal each step.",
+        "panels": [
+          {
+            "title": "Set the compass to AB",
+            "body": "Put the compass point on A and the pencil on B. Now the compass 'holds' the length AB — don't change it."
+          },
+          {
+            "title": "Swing an arc from C",
+            "body": "Move the point to C and swing an arc that crosses the ray. Same radius means the same length."
+          },
+          {
+            "title": "Mark the crossing D",
+            "body": "Where the arc meets the ray is D. CD = AB exactly — copied with no ruler."
+          }
+        ],
+        "continueFeedback": "Each reveal is one compass action.",
+        "successFeedback": "CD = AB — the compass carried the length across."
+      }
+    },
+    {
+      "id": "i2b",
+      "kind": "interactive",
+      "body": "A segment, then an angle.",
+      "conceptTag": "cp-tool-rules",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "copyAngle",
+        "span": 6,
+        "target": 4,
+        "start": 2,
+        "prompt": "The chord to carry across spans 6. Open the compass until it reaches — the smallest whole radius that does it.",
+        "successFeedback": "Radius 4 — the first whole opening that clears half of 6. The same two radii cut the same chord on both angles, and equal chords on equal circles subtend equal angles. The copy is exact, and no protractor was involved at any point.",
+        "lowFeedback": "The chord is not yet wide enough to carry across. The arc must span more than the 6 between the arms — the radius has to clear 3.",
+        "highFeedback": "The chord still transfers, but you were asked for the SMALLEST whole radius that reaches. Come back down."
+      },
+      "predict": {
+        "prompt": "A compass can copy a segment without a ruler. Can it copy an ANGLE without a protractor?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — an equal arc cuts an equal chord, and equal chords carry the angle"
+          },
+          {
+            "id": "no",
+            "label": "No — angles need a protractor; the compass only transfers lengths"
+          },
+          {
+            "id": "approx",
+            "label": "Only approximately — the copy is close but never exact"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Yes, and exactly. Swing the same radius on both angles and it cuts a chord on each; make those chords equal and the angles must be equal, because equal chords on equal circles subtend equal angles. The compass transfers a length, and the length does the angle's work."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What guarantees CD = AB?",
+      "conceptTag": "cp-copy-segment",
+      "explanationVariants": [
+        "The compass never changed its opening between A-to-B and C-to-D, so both distances equal the same radius: CD = AB.",
+        "CA = radius and CD = radius (same setting), and the whole copy rests on one unchanged compass span."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "After copying, why is CD exactly equal to AB?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Both equal the same unchanged compass radius",
+            "correct": true,
+            "feedback": "The opening from A-to-B is the very radius swung from C — one setting, so CD = AB exactly."
+          },
+          {
+            "id": "o2",
+            "label": "Because C was chosen halfway along AB",
+            "correct": false,
+            "feedback": "C sits on a totally separate ray — its position doesn't affect the copied length. The held radius does."
+          },
+          {
+            "id": "o3",
+            "label": "Because the ray from C is parallel to AB",
+            "correct": false,
+            "feedback": "Parallelism isn't required or used — the equality comes purely from the compass keeping its radius."
+          },
+          {
+            "id": "o4",
+            "label": "Because a straightedge measured both",
+            "correct": false,
+            "feedback": "The straightedge can't measure at all — it only drew the ray. The compass supplied the equal length."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-copy-segment__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Constructions are **recipes with guarantees**: follow the steps and the result is exact by the geometry of circles, not by careful drawing. A shaky hand makes a messy picture — but the LOGIC still proves the lengths and angles are exactly right.",
+      "figure": "cnp-recipe-guarantee"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Recipe or drawing?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Your compass slips and the drawing looks lopsided, but you followed every step correctly. Is the construction still valid?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — the LOGIC guarantees exactness even if the picture is messy",
+            "correct": true,
+            "feedback": "A construction's correctness lives in the equal radii and straight lines, not the neatness of the sketch."
+          },
+          {
+            "id": "o2",
+            "label": "No — a messy drawing means a wrong construction",
+            "correct": false,
+            "feedback": "Messiness is a drawing-quality issue. If the steps (equal radii, right connections) were followed, the relationships are still exactly right."
+          },
+          {
+            "id": "o3",
+            "label": "Only if you measure the result to check",
+            "correct": false,
+            "feedback": "Measuring isn't part of a construction — and isn't needed. Correct steps prove the result without any ruler check."
+          },
+          {
+            "id": "o4",
+            "label": "Yes, but only for perpendicular bisectors",
+            "correct": false,
+            "feedback": "It's true of every construction: the guarantee comes from the geometry of the steps, whatever the figure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Copy without a ruler.",
+      "conceptTag": "cp-copy-segment",
+      "hints": [
+        "You may only set the compass to distances already present.",
+        "AB is present; can you set the compass to AB and reuse it twice?",
+        "One AB span placed end-to-end from C gives AB; a second span continues to 2·AB."
+      ],
+      "explanationVariants": [
+        "Set the compass to AB, mark D at distance AB from C, then swing the SAME radius again from D to reach E: CE = AB + AB = 2·AB — no ruler, no number.",
+        "Two copies of the held radius, laid end to end along the ray, build twice AB exactly."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Using only a compass set to length AB (and a straightedge for the ray), how do you construct a segment of length 2·AB from point C?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Mark D at AB from C, then mark E at AB from D — CE = 2·AB",
+            "correct": true,
+            "feedback": "Two equal AB-spans end to end make exactly twice AB, all from one held radius."
+          },
+          {
+            "id": "o2",
+            "label": "Open the compass twice as wide as AB and swing once",
+            "correct": false,
+            "feedback": "You can't 'double' a compass opening exactly without a reference — but you CAN lay AB down twice."
+          },
+          {
+            "id": "o3",
+            "label": "Measure AB with the straightedge, then double the number",
+            "correct": false,
+            "feedback": "The straightedge has no marks — no number to read or double. Reuse the compass span instead."
+          },
+          {
+            "id": "o4",
+            "label": "Draw a circle of radius AB and its diameter is 2·AB",
+            "correct": false,
+            "feedback": "A diameter is 2·radius, true — but you'd still need to construct the diameter through the center along your ray, which is just laying AB down twice."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-copy-segment__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two tools, exact results.",
+      "takeaways": [
+        "Straightedge draws lines (no marks); compass draws arcs and HOLDS a radius.",
+        "Copying a segment works because the compass keeps one unchanged length.",
+        "Constructions are recipes whose results are provably exact, not merely measured."
+      ],
+      "teaser": "Next: swing two arcs from the endpoints and find the perpendicular bisector."
+    }
+  ]
+}

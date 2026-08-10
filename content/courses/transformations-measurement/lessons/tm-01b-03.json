@@ -1,0 +1,252 @@
+{
+  "id": "tm-01b-03",
+  "slug": "dilations-as-coordinate-rules",
+  "title": "Dilations as Coordinate Rules",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch1b-transformations-in-coordinates",
+  "minutes": 12,
+  "standards": [
+    "8.G.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Translations and reflections are rigid: they move a shape without resizing it. A **dilation** is the one that changes size.\n\nFrom the origin with scale factor k, the rule is (x, y) → (kx, ky). Every distance from the centre is multiplied by k, so the shape is preserved exactly while the size is not.",
+      "figure": "tm8-dilate-rule"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Scale the triangle from the origin.",
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "Dilate the triangle by a scale factor of 2 from the origin.",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 7,
+        "successFeedback": "k = 2 doubles every distance from the centre, so (1,1) → (2,2) and (3,1) → (6,2). The image is twice as large and exactly the same shape — the angles never moved.",
+        "lowFeedback": "The image is smaller than a doubling. A larger k pushes every point further from the centre.",
+        "highFeedback": "The image is larger than a doubling. A smaller k pulls every point back toward the centre."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply a scale factor.",
+      "conceptTag": "coordinate-rule-dilation",
+      "explanationVariants": [
+        "(x, y) → (3x, 3y) sends (2, 5) to (6, 15).",
+        "Multiply both coordinates by 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Under a dilation of factor 3 centred at the origin, (2, 5) lands at (6, b). What is b?",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 ADDS 3 to the y-coordinate. A dilation multiplies: 5 × 3 = 15."
+          },
+          {
+            "value": 5,
+            "feedback": "5 leaves y unchanged, but a dilation scales BOTH coordinates."
+          }
+        ],
+        "fallbackFeedback": "5 × 3 = 15."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A factor below 1.",
+      "conceptTag": "coordinate-rule-dilation",
+      "explanationVariants": [
+        "k = ½ halves every coordinate, so (8, 6) becomes (4, 3).",
+        "A scale factor between 0 and 1 shrinks the figure toward the centre."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A dilation of factor ½ centred at the origin maps (8, 6) to which point?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(4, 3)",
+            "correct": true,
+            "feedback": "Both coordinates are halved. A factor under 1 pulls every point toward the centre."
+          },
+          {
+            "id": "b",
+            "label": "(16, 12)",
+            "correct": false,
+            "feedback": "That doubles instead of halving. A factor of ½ makes the figure smaller."
+          },
+          {
+            "id": "c",
+            "label": "(7.5, 5.5)",
+            "correct": false,
+            "feedback": "That subtracts ½. Dilation multiplies each coordinate by the factor."
+          },
+          {
+            "id": "d",
+            "label": "(4, 6)",
+            "correct": false,
+            "feedback": "Both coordinates scale, not just the x."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A dilation is **not** rigid, and that is exactly its job: it produces a **similar** figure — same angles, all lengths multiplied by k.\n\nThat is the difference the whole chapter turns on. Translations, reflections and rotations give congruence; dilations give similarity. And an area does not scale by k, but by k² — doubling the lengths quadruples the space inside.",
+      "figure": "dilation-scale"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Shrink instead of grow.",
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "Dilate the triangle by a scale factor of 0.5 from the origin.",
+        "shape": [
+          [
+            2,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 0.5,
+        "kMin": 0.25,
+        "kMax": 3,
+        "kStep": 0.25,
+        "kStart": 1.5,
+        "gridMin": 0,
+        "gridMax": 7,
+        "successFeedback": "k = 0.5 halves every distance from the centre: (2,2) → (1,1) and (6,2) → (3,1). The triangle is smaller but its angles are untouched — similar, not congruent.",
+        "lowFeedback": "That is smaller than a halving — the image has shrunk too far toward the centre. Bring k back up to 0.5.",
+        "highFeedback": "The image is still larger than half size. A smaller k pulls the points further toward the centre."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which transformations preserve size?",
+      "conceptTag": "coordinate-rule-dilation",
+      "explanationVariants": [
+        "Translations, reflections and rotations are rigid; only the dilation changes lengths.",
+        "A dilation with k ≠ 1 produces a similar figure rather than a congruent one."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which transformation does NOT produce a congruent image?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A dilation with scale factor 3",
+            "correct": true,
+            "feedback": "Lengths are tripled, so the image is similar but not congruent — the only one here that resizes."
+          },
+          {
+            "id": "b",
+            "label": "A translation of (+4, −2)",
+            "correct": false,
+            "feedback": "A slide is rigid: every length and angle is preserved."
+          },
+          {
+            "id": "c",
+            "label": "A reflection across the x-axis",
+            "correct": false,
+            "feedback": "A flip is rigid; it reverses orientation but keeps all lengths."
+          },
+          {
+            "id": "d",
+            "label": "A rotation of 90° about the origin",
+            "correct": false,
+            "feedback": "A turn is rigid: sizes and angles are unchanged."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work backwards to the scale factor.",
+      "conceptTag": "coordinate-rule-dilation",
+      "explanationVariants": [
+        "(3, 4) landed at (12, 16), and 12 ÷ 3 = 4, so k = 4.",
+        "Divide an image coordinate by the matching original coordinate."
+      ],
+      "hints": [
+        "Compare one coordinate of the image with the same coordinate of the original.",
+        "The x went from 3 to 12. What was it multiplied by?",
+        "12 ÷ 3 = 4, and checking the other coordinate agrees: 16 ÷ 4 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A dilation centred at the origin maps (3, 4) to (12, 16). What is the scale factor?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the DIFFERENCE 12 − 3. A dilation multiplies, so divide instead: 12 ÷ 3 = 4."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the original x-coordinate. The factor is the image divided by the original: 12 ÷ 3."
+          }
+        ],
+        "fallbackFeedback": "12 ÷ 3 = 4, and 16 ÷ 4 = 4 agrees."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three rigid motions and one that resizes.",
+      "takeaways": [
+        "A dilation from the origin is (x, y) → (kx, ky) — every distance from the centre times k.",
+        "k > 1 enlarges, 0 < k < 1 shrinks, and the angles never change either way.",
+        "Rigid motions give congruent images; dilations give similar ones."
+      ],
+      "teaser": "Next chapter: congruence and similarity as sequences of these transformations."
+    }
+  ],
+  "remedials": []
+}

@@ -1,0 +1,260 @@
+{
+  "id": "tm-01b-01",
+  "slug": "translations-as-coordinate-rules",
+  "title": "Translations as Coordinate Rules",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch1b-transformations-in-coordinates",
+  "minutes": 11,
+  "standards": [
+    "8.G.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You have slid shapes around already. Now write down exactly what a slide **does to the numbers**.\n\nMove three right and two up and every point obeys the same instruction: (x, y) → (x + 3, y + 2). Not the vertices you happen to notice — every point, the same shift. That sentence is the whole transformation.",
+      "figure": "tm8-translate-rule"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Slide the triangle onto its target and watch the coordinates.",
+      "widget": {
+        "type": "transformExplore",
+        "prompt": "Slide the triangle onto its target: right 3 and up 2.",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            4
+          ]
+        ],
+        "target": [
+          [
+            4,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -6,
+        "dyMax": 6,
+        "allowReflect": false,
+        "successFeedback": "Every vertex moved by exactly (+3, +2) — and the shape did not change at all. That is why a translation is rigid: the same vector is added to every point, so no length or angle can move.",
+        "offsetFeedback": "Not there yet. Each vertex must move by the SAME amount — compare (1, 1) with (4, 3).",
+        "reflectFeedback": "A flip has crept in. This target is a pure slide, so the triangle keeps its orientation."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply a rule to one point.",
+      "conceptTag": "coordinate-rule-translation",
+      "explanationVariants": [
+        "(x, y) → (x − 4, y + 1) sends (6, 2) to (2, 3).",
+        "Subtract 4 from the x and add 1 to the y."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Under the rule (x, y) → (x − 4, y + 1), the point (6, 2) lands at (a, 3). What is a?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 adds 4 instead of subtracting it. The rule says x − 4, so 6 − 4 = 2."
+          },
+          {
+            "value": 6,
+            "feedback": "6 leaves x unchanged. The rule shifts it left by 4."
+          }
+        ],
+        "fallbackFeedback": "6 − 4 = 2."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read the rule off a movement.",
+      "conceptTag": "coordinate-rule-translation",
+      "explanationVariants": [
+        "From (2, 5) to (7, 1): x rose by 5 and y fell by 4, so the rule is (x, y) → (x + 5, y − 4).",
+        "Subtract the start from the end: 7 − 2 = 5 and 1 − 5 = −4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A translation sends (2, 5) to (7, 1). What is the rule?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(x, y) → (x + 5, y − 4)",
+            "correct": true,
+            "feedback": "x went up by 5 (2 → 7) and y went down by 4 (5 → 1)."
+          },
+          {
+            "id": "b",
+            "label": "(x, y) → (x + 5, y + 4)",
+            "correct": false,
+            "feedback": "The y-coordinate FELL from 5 to 1, so it is −4, not +4."
+          },
+          {
+            "id": "c",
+            "label": "(x, y) → (x − 5, y + 4)",
+            "correct": false,
+            "feedback": "Both signs are backwards. Subtract the start from the end: 7 − 2 = +5."
+          },
+          {
+            "id": "d",
+            "label": "(x, y) → (x + 7, y + 1)",
+            "correct": false,
+            "feedback": "That adds the destination rather than the change. The shift is end minus start."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Because a translation is just addition, two of them in a row simply add up.\n\nSlide (+2, −5) and then (−7, +1) and the net effect is (−5, −4) — one slide doing the work of two. No shape has changed at any stage, which is the deeper point: translations preserve every distance and every angle.",
+      "figure": "gf-translations-chain"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A slide with a negative component.",
+      "widget": {
+        "type": "transformExplore",
+        "prompt": "Slide the triangle onto its target: left 3 and down 3.",
+        "shape": [
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            4,
+            7
+          ]
+        ],
+        "target": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            1,
+            4
+          ]
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -6,
+        "dyMax": 6,
+        "allowReflect": false,
+        "successFeedback": "Every vertex moved by (−3, −3). Negative components are nothing special — the rule is still 'add the same vector to every point'.",
+        "offsetFeedback": "Not there yet. Compare (4, 5) with its target (1, 2): both coordinates must fall by 3.",
+        "reflectFeedback": "A flip has crept in. This is a pure slide, so turn the reflection back off."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compose two slides.",
+      "conceptTag": "coordinate-rule-translation",
+      "explanationVariants": [
+        "(+2, −5) then (−7, +1) gives 2 − 7 = −5 in x, so the combined rule shifts x by −5.",
+        "Add the two x-shifts: 2 + (−7) = −5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A shape is translated by (+2, −5), then by (−7, +1). In the single combined rule, by how much does x change?",
+        "answer": -5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 subtracts the shifts instead of adding them. Translations compose by ADDING: 2 + (−7) = −5."
+          },
+          {
+            "value": -14,
+            "feedback": "−14 multiplies the shifts. They add: 2 + (−7) = −5."
+          }
+        ],
+        "fallbackFeedback": "2 + (−7) = −5."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work backwards from the image.",
+      "conceptTag": "coordinate-rule-translation",
+      "explanationVariants": [
+        "If (x, y) → (x − 2, y + 6) landed a point at (3, 10), the original had x = 3 + 2 = 5 and y = 10 − 6 = 4.",
+        "Undo the rule: add back what was subtracted and subtract what was added."
+      ],
+      "hints": [
+        "You know where the point ended up and what the rule did to it.",
+        "The rule subtracted 2 from x, so to go backwards, add 2 to the image's x.",
+        "3 + 2 = 5 and 10 − 6 = 4, so the original point was (5, 4)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Under (x, y) → (x − 2, y + 6), a point lands at (3, 10). What was its original x-coordinate?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 applies the rule again instead of undoing it. Going backwards means ADDING the 2 back: 3 + 2 = 5."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the image's x-coordinate. The original was 2 larger, since the rule subtracted 2."
+          }
+        ],
+        "fallbackFeedback": "The rule subtracted 2, so the original x was 3 + 2 = 5."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A slide, written as arithmetic.",
+      "takeaways": [
+        "A translation is (x, y) → (x + a, y + b), applied to every point alike.",
+        "Read the rule off a movement by subtracting the start from the end.",
+        "Translations compose by adding their vectors, and never change lengths or angles."
+      ],
+      "teaser": "Next: the rule for a flip, and which coordinate changes sign."
+    }
+  ],
+  "remedials": []
+}

@@ -1,0 +1,254 @@
+{
+  "id": "dop-04-01",
+  "slug": "line-up-the-points",
+  "title": "Line Up the Points",
+  "courseId": "decimal-operations",
+  "chapterId": "ch4-decimal-add-subtract",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To add or subtract decimals, line up the **decimal points**, not the right ends. Points aligned means places aligned — tenths over tenths, hundredths over hundredths. Adding 3.5 + 1.75, the 5 tenths sits over the 7 tenths, and the point keeps every digit in its true place.",
+      "figure": "dop-line-up"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Which setup is right?",
+      "conceptTag": "align-points",
+      "widget": {
+        "type": "columnCalc",
+        "op": "add",
+        "a": 350,
+        "b": 175,
+        "decimals": 2,
+        "prompt": "Add 3.50 + 1.75. The columns are already lined up by place — work right to left and carry whenever a column passes 9.",
+        "commonResults": [
+          {
+            "value": 425,
+            "feedback": "4.25 has the hundredths right but the carry never left the tenths. 5 tenths + 7 tenths is 12 tenths, which is one WHOLE and 2 tenths — the whole belongs in the ones column."
+          }
+        ],
+        "fallbackFeedback": "Start at the hundredths, the rightmost column, and work left. Carry whenever a column total passes 9.",
+        "successFeedback": "5.25. Notice that 3.5 had to be read as 3.50 for the columns to line up — and that once they do, nothing about this is different from adding whole numbers. \"Line up the points\" is only ever \"line up the places\"."
+      },
+      "hints": [
+        "Think about which places must match.",
+        "Tenths belong over tenths.",
+        "Only aligning the points does that."
+      ],
+      "explanationVariants": [
+        "Aligning the points matches every place.",
+        "Points aligned = places aligned."
+      ],
+      "predict": {
+        "prompt": "To add 3.5 + 1.75 in columns, the 3.5 first has to be written as…",
+        "options": [
+          {
+            "id": "pad",
+            "label": "3.50"
+          },
+          {
+            "id": "as-is",
+            "label": "3.5, with the digits pushed to the right to fill the gap"
+          },
+          {
+            "id": "shift",
+            "label": "35.0"
+          }
+        ],
+        "outcomeId": "pad",
+        "reveal": "3.50 — because 3.5 has no hundredths, and a column with nothing in it is a column holding zero. Pushing the digits right instead would put the 5 under the 5 of 1.75, adding tenths to hundredths. The point is what marks the places; padding just says the empty ones out loud."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Once the points are aligned, **pad with trailing zeros** so both numbers have the same length. Write 3.5 as 3.50, then add straight down like whole numbers: 3.50 + 1.75. The zero holds the hundredths place so nothing drifts. Bring the point straight down into the answer.",
+      "figure": "dop-line-up"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Pad, then add.",
+      "conceptTag": "align-points",
+      "explanationVariants": [
+        "3.50 + 1.75: hundredths 0+5=5, tenths 5+7=12 (write 2 carry 1), ones 3+1+1=5 → 5.25.",
+        "Pad to 3.50, add straight down: 5.25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add 3.5 + 1.75 (pad 3.5 to 3.50 first). (enter as a decimal)",
+        "answer": 5.25,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4.25,
+            "feedback": "4.25 forgets the carry: 5 + 7 tenths = 12, so carry 1 to the ones — 3 + 1 + 1 = 5, giving 5.25."
+          },
+          {
+            "value": 5.2,
+            "feedback": "5.20 drops the hundredths 5 from 1.75. Pad 3.5 to 3.50: 0 + 5 = 5 hundredths, so 5.25."
+          }
+        ],
+        "fallbackFeedback": "3.50 + 1.75 = 5.25 (line up points, pad, add)."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another sum.",
+      "conceptTag": "align-points",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add 4.2 + 0.65 (pad 4.2 to 4.20). (enter as a decimal)",
+        "answer": 4.85,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4.25,
+            "feedback": "4.25 misses the tenths add: 2 + 6 = 8 tenths, so 4.85 — not 4.25."
+          },
+          {
+            "value": 5.85,
+            "feedback": "5.85 adds an extra whole. 4 + 0 = 4 ones, so 4.85."
+          }
+        ],
+        "fallbackFeedback": "4.20 + 0.65 = 4.85 (2+6 = 8 tenths, 0+5 = 5 hundredths)."
+      },
+      "hints": [
+        "Pad 4.2 to 4.20.",
+        "Tenths: 2 + 6 = 8. Hundredths: 0 + 5 = 5.",
+        "So 4.85."
+      ],
+      "explanationVariants": [
+        "4.20 + 0.65 = 4.85.",
+        "Padding keeps the hundredths lined up: 4.85."
+      ]
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtraction works the same way — align points, pad, then subtract straight down, borrowing when a top digit is too small. Pad 7.0 to 7.00 first.",
+      "conceptTag": "align-points",
+      "explanationVariants": [
+        "7.00 − 2.45: borrow across to get 4.55.",
+        "Padding 7.0 to 7.00 gives the hundredths a digit to borrow from: 4.55."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract 7.0 − 2.45 (pad 7.0 to 7.00). (enter as a decimal)",
+        "answer": 4.55,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4.6,
+            "feedback": "4.60 ignores the hundredths 5. Pad 7.0 to 7.00 and subtract all places: 7.00 − 2.45 = 4.55."
+          },
+          {
+            "value": 5.55,
+            "feedback": "5.55 skips a borrow in the ones. Borrowing correctly, 7.00 − 2.45 = 4.55."
+          }
+        ],
+        "fallbackFeedback": "7.00 − 2.45 = 4.55 (pad, then borrow across)."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "padSub"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Put it all together.",
+      "conceptTag": "align-points",
+      "hints": [
+        "Align the points and pad 6.4 to 6.40.",
+        "Hundredths: 0 + 5 = 5. Tenths: 4 + 8 = 12 (write 2, carry 1).",
+        "Ones: 6 + 2 + 1 = 9."
+      ],
+      "explanationVariants": [
+        "6.40 + 2.85: 0+5=5, 4+8=12 (carry 1), 6+2+1=9 → 9.25.",
+        "Padded and added straight down, 6.4 + 2.85 = 9.25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add 6.4 + 2.85. (enter as a decimal)",
+        "answer": 9.25,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8.25,
+            "feedback": "8.25 forgets the carry: 4 + 8 tenths = 12, so carry 1 to the ones — 6 + 2 + 1 = 9, giving 9.25."
+          },
+          {
+            "value": 9.24,
+            "feedback": "9.24 mis-adds the hundredths: 0 + 5 = 5, so 9.25."
+          }
+        ],
+        "fallbackFeedback": "6.40 + 2.85 = 9.25 (pad, align points, carry the tens)."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "bareAdd"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Points aligned, places aligned.",
+      "takeaways": [
+        "Line up the decimal points — never the right ends — so each place matches.",
+        "Pad with trailing zeros to equal length before adding or subtracting.",
+        "Bring the point straight down; carry and borrow just as with whole numbers."
+      ],
+      "teaser": "next: trickier padding and regrouping across the point."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "align-points",
+      "concept": {
+        "id": "rem-ap-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Line up the decimal points and pad with zeros.** For 2.5 + 1.25, write 2.5 as 2.50, then add straight down: 2.50 + 1.25 = 3.75. The point in the answer sits right below the points above."
+      },
+      "check": {
+        "id": "rem-ap-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "align-points",
+        "explanationVariants": [
+          "2.50 + 1.25 = 3.75 (pad, align, add).",
+          "Padding 2.5 to 2.50 lines up the hundredths: 3.75."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Add 2.5 + 1.25 (pad 2.5 to 2.50). (enter as a decimal)",
+          "answer": 3.75,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 3.3,
+              "feedback": "3.30 misaligns the places. Pad 2.5 to 2.50 and add: 2.50 + 1.25 = 3.75."
+            },
+            {
+              "value": 3.7,
+              "feedback": "3.70 drops the hundredths 5. With 0 + 5 = 5 hundredths, it's 3.75."
+            }
+          ],
+          "fallbackFeedback": "2.50 + 1.25 = 3.75."
+        }
+      }
+    }
+  ]
+}

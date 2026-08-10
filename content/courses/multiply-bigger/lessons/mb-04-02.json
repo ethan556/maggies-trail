@@ -1,0 +1,346 @@
+{
+ "id": "mb-04-02",
+ "slug": "big-division",
+ "title": "Big Division",
+ "courseId": "multiply-bigger",
+ "chapterId": "ch4-division-leftovers",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Dividing a bigger number reuses the SAME split you used for multiplying — just in reverse. For 84 ÷ 4: split 84 into 80 + 4 (a friendly tens piece and an ones piece), divide each: 80 ÷ 4 = 20, 4 ÷ 4 = 1. Add the two quotients: 20 + 1 = 21.",
+   "figure": "dop-long-division"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build the split.",
+   "conceptTag": "divide-big",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Break 84 ÷ 4 into two easier divisions. Build: 80 ÷ 4 + 4 ÷ 4.",
+    "tokens": [
+     {
+      "id": "t80",
+      "label": "80"
+     },
+     {
+      "id": "td1",
+      "label": "÷ 4"
+     },
+     {
+      "id": "tp",
+      "label": "+"
+     },
+     {
+      "id": "t4",
+      "label": "4"
+     },
+     {
+      "id": "td2",
+      "label": "÷ 4"
+     },
+     {
+      "id": "t84",
+      "label": "÷ 84"
+     }
+    ],
+    "correct": [
+     "t80",
+     "td1",
+     "tp",
+     "t4",
+     "td2"
+    ],
+    "acceptAlso": [
+     [
+      "t4",
+      "td2",
+      "tp",
+      "t80",
+      "td1"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t80",
+       "td1",
+       "tp",
+       "t4",
+       "t84"
+      ],
+      "feedback": "The second piece should divide the LEFTOVER 4 by 4, not by 84 — 84 was already split into 80 and 4."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Split 84 into 80 and 4, then divide each piece by 4 separately.",
+    "successFeedback": "80 ÷ 4 + 4 ÷ 4 = 20 + 1 = 21 — the same split trick, run backward."
+   },
+   "predict": {
+    "prompt": "Splitting 84 ÷ 4 into 80 ÷ 4 + 4 ÷ 4 — why split at 80?",
+    "options": [
+     {
+      "id": "friendly",
+      "label": "Because 80 ÷ 4 is instant — the split is chosen for friendliness"
+     },
+     {
+      "id": "only",
+      "label": "Because only 80 + 4 makes the math come out right"
+     },
+     {
+      "id": "tens",
+      "label": "Because 4 can only divide tens"
+     }
+    ],
+    "outcomeId": "friendly",
+    "reveal": "Any split of 84 obeys the distributive law — but 80 + 4 is the friendly one: 80 ÷ 4 = 20 and 4 ÷ 4 = 1 are both instant, so 84 ÷ 4 = 21. Break-apart division is the art of choosing pieces the divisor likes."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Add the two quotients.",
+   "conceptTag": "divide-big",
+   "explanationVariants": [
+    "90 ÷ 3 = 30 and 3 ÷ 3 = 1; together 30 + 1 = 31.",
+    "The two pieces are 30 and 1, and they sum to 31."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "90 ÷ 3 = 30 and 3 ÷ 3 = 1. What is 93 ÷ 3?",
+    "answer": 31,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30 is only the first piece (90 ÷ 3). The second piece (3 ÷ 3 = 1) still needs adding: 31."
+     },
+     {
+      "value": 1,
+      "feedback": "1 is only the second piece (3 ÷ 3). Add the big piece 90 ÷ 3 = 30 too: 31."
+     }
+    ],
+    "fallbackFeedback": "Add both pieces: 30 + 1."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbDivideBigNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Sometimes the leftover piece isn't perfectly divisible either — that's fine. For 87 ÷ 4: split into 80 + 7. **80 ÷ 4 = 20** exactly. **7 ÷ 4 = 1 remainder 3.** Add the whole quotients (20 + 1 = 21) and keep that last remainder: 87 ÷ 4 = 21 remainder 3.",
+   "figure": "dop-long-division"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find the remainder in a big division.",
+   "conceptTag": "divide-big",
+   "explanationVariants": [
+    "80 ÷ 4 = 20 exactly, and the leftover piece 7 ÷ 4 = 1 remainder 3 — so the whole remainder is 3.",
+    "Only the ones piece (7) carries a remainder here: 7 − 4 = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "87 ÷ 4: split into 80 + 7. 80 ÷ 4 = 20 exactly. What is the REMAINDER of 87 ÷ 4?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 is the quotient from the tens piece, not the remainder. The ones piece 7 ÷ 4 = 1 remainder 3 — that 3 is the answer."
+     },
+     {
+      "value": 1,
+      "feedback": "1 is the ones piece's quotient (how many extra whole groups of 4 fit in 7). The LEFTOVER after that is 3."
+     }
+    ],
+    "fallbackFeedback": "Divide the ones piece (7) by 4; whatever's left over is the remainder."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbDivideBigNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each big division.",
+   "conceptTag": "divide-big",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each division to its quotient (and remainder, if any).",
+    "left": [
+     {
+      "id": "e90",
+      "label": "90 ÷ 6"
+     },
+     {
+      "id": "e97",
+      "label": "97 ÷ 6"
+     },
+     {
+      "id": "e78",
+      "label": "78 ÷ 6"
+     }
+    ],
+    "right": [
+     {
+      "id": "r15",
+      "label": "15"
+     },
+     {
+      "id": "r16r1",
+      "label": "16 remainder 1"
+     },
+     {
+      "id": "r13",
+      "label": "13"
+     }
+    ],
+    "pairs": {
+     "e90": "r15",
+     "e97": "r16r1",
+     "e78": "r13"
+    },
+    "pairErrors": [
+     {
+      "left": "e97",
+      "right": "r13",
+      "feedback": "6 × 16 = 96, and 97 − 96 = 1 — that's '16 remainder 1', not 13 (which belongs to 78 ÷ 6)."
+     }
+    ],
+    "missFeedback": "Split each into a friendly tens piece plus the rest, divide, then add — watch for a leftover remainder.",
+    "successFeedback": "90÷6=15, 97÷6=16 r1, 78÷6=13 — three big divisions, same splitting trick each time."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "An even bigger split.",
+   "conceptTag": "divide-big",
+   "explanationVariants": [
+    "132 splits into 120 + 12; 120 ÷ 4 = 30 and 12 ÷ 4 = 3, so 132 ÷ 4 = 33.",
+    "The two pieces 30 and 3 add to 33."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Split 132 ÷ 4 into 120 ÷ 4 + 12 ÷ 4. What is 132 ÷ 4?",
+    "answer": 33,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30 is only 120 ÷ 4. Add the second piece 12 ÷ 4 = 3 too: 33."
+     },
+     {
+      "value": 3,
+      "feedback": "3 is only 12 ÷ 4. Add the bigger piece 120 ÷ 4 = 30 too: 33."
+     }
+    ],
+    "fallbackFeedback": "Add both pieces: 30 + 3."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbDivideBigNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The crayon boxes.",
+   "conceptTag": "divide-big",
+   "hints": [
+    "Split 168 into a friendly piece plus the rest: 160 + 8.",
+    "160 ÷ 4 = 40.",
+    "8 ÷ 4 = 2, then add the two pieces."
+   ],
+   "explanationVariants": [
+    "168 splits into 160 + 8; 160 ÷ 4 = 40 and 8 ÷ 4 = 2, so 168 ÷ 4 = 42 crayons per box.",
+    "The two pieces 40 and 2 add to 42."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "168 crayons are shared equally into 4 boxes. How many crayons go in each box?",
+    "answer": 42,
+    "tolerance": 0,
+    "unit": "crayons",
+    "commonErrors": [
+     {
+      "value": 40,
+      "feedback": "40 is only the 160 ÷ 4 piece. Add the second piece 8 ÷ 4 = 2 too: 42."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is the number of boxes, not a piece of the split. The pieces are 160 ÷ 4 = 40 and 8 ÷ 4 = 2, totaling 42."
+     }
+    ],
+    "fallbackFeedback": "Split 168 into 160 + 8, divide each by 4, then add."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbDivideBigNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Big numbers, split and conquered.",
+   "takeaways": [
+    "Split the dividend into a friendly piece plus the rest, then divide each.",
+    "Add the quotients; keep any remainder from the last piece.",
+    "The same splitting trick that multiplies now divides — just run in reverse."
+   ],
+   "teaser": "next: what a leftover actually MEANS depends on the story."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "divide-big",
+   "concept": {
+    "id": "rem-db-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Split the big number into a friendly piece plus the rest, divide each, then add.** For 64 ÷ 4: split into 40 + 24; 40 ÷ 4 = 10, 24 ÷ 4 = 6; total 10 + 6 = 16. Two easy divisions beat one hard one."
+   },
+   "check": {
+    "id": "rem-db-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "divide-big",
+    "explanationVariants": [
+     "40 ÷ 4 = 10 and 24 ÷ 4 = 6, so 64 ÷ 4 = 16.",
+     "The two pieces 10 and 6 add to 16."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "40 ÷ 4 = 10 and 24 ÷ 4 = 6. What is 64 ÷ 4?",
+     "options": [
+      {
+       "id": "a",
+       "label": "16",
+       "correct": true,
+       "feedback": "10 + 6 = 16 — both pieces added."
+      },
+      {
+       "id": "b",
+       "label": "10",
+       "feedback": "10 is only 40 ÷ 4. Add the second piece 24 ÷ 4 = 6: 16."
+      },
+      {
+       "id": "c",
+       "label": "6",
+       "feedback": "6 is only 24 ÷ 4. Add the first piece 40 ÷ 4 = 10: 16."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

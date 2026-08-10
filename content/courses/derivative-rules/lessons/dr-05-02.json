@@ -1,0 +1,283 @@
+{
+  "id": "dr-05-02",
+  "slug": "the-trig-derivatives",
+  "title": "The Trig Derivatives",
+  "courseId": "derivative-rules",
+  "chapterId": "ch5-the-function-library",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The sine wave's slope is the cosine wave. Not approximately — exactly.\n\n**(sin x)′ = cos x** · **(cos x)′ = −sin x**\n\nDifferentiate four times and you are back where you started. The derivatives go round in a circle, which is precisely what you would expect of a function born on one.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the slope off the wave.",
+      "conceptTag": "dr-trig-derivative",
+      "explanationVariants": [
+        "(sin x)′ = cos x, and cos 0 = 1. At the origin the sine wave is climbing at exactly 45°.",
+        "That slope of exactly 1 at the origin is why radians are the only sane unit for calculus — in degrees the answer would carry an ugly π/180."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = sin x. Find f′(0).",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is sin 0, the HEIGHT of the wave at the origin. Its SLOPE there is cos 0 = 1 — the wave is climbing steeply."
+          },
+          {
+            "value": -1,
+            "feedback": "That would be the slope where the wave is falling fastest, at x = π. At 0 it is rising: cos 0 = +1."
+          },
+          {
+            "value": 0.017,
+            "feedback": "That is the answer in DEGREES, and it is why calculus insists on radians: only in radians does (sin x)′ come out as a clean cos x."
+          }
+        ],
+        "fallbackFeedback": "(sin x)′ = cos x → f′(0) = cos 0 = 1."
+      },
+      "variant": {
+        "gen": "trig-deriv"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The wave and the circle, one more time.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 90°. Watch the HEIGHT (the sine) and think about how fast it is changing.",
+        "successFeedback": "At 90° the height is at its maximum of 1 — and precisely there, it has momentarily stopped changing: the sine wave is flat at its crest. And indeed cos 90° = 0. The derivative of the height is the horizontal coordinate, which is the cosine. The two functions were never separate.",
+        "lowFeedback": "Not far enough — the height is still climbing, so its derivative is still positive.",
+        "highFeedback": "Past 90°, and the height has started to fall — its derivative has gone negative."
+      },
+      "predict": {
+        "prompt": "You'll rotate from 0° to 90°. What does the point's HEIGHT do along the way?",
+        "options": [
+          {
+            "id": "climb",
+            "label": "Climbs the whole way"
+          },
+          {
+            "id": "updown",
+            "label": "Climbs, then falls back"
+          },
+          {
+            "id": "fall",
+            "label": "Falls the whole way"
+          }
+        ],
+        "outcomeId": "climb",
+        "reveal": "From 0° to 90° the height — the sine — only rises; the fall doesn't begin until past 90° (or past 270° coming out of the trough)."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move the angle and coordinate the circle point, triangle ratios, and trigonometric values.",
+        "invariants": [
+          "radius-remains-one",
+          "coordinates-are-cosine-and-sine"
+        ],
+        "misconceptions": [
+          "sine-is-horizontal",
+          "angle-size-is-arc-height"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-unitCircleExplore",
+        "delayed": false
+      },
+      "conceptTag": "dr-trig-derivative"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The minus sign on cosine.",
+      "conceptTag": "dr-trig-derivative",
+      "explanationVariants": [
+        "(cos x)′ = −sin x. At x = 0, sin 0 = 0, so the slope is 0 — the cosine wave is flat at its crest.",
+        "The minus sign is not decoration: just past 0 the cosine is falling, so its derivative must be negative there."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does (cos x)′ = −sin x carry a minus sign?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Just past x = 0 the cosine is falling, so its derivative must be negative — and sin x is positive there.",
+            "correct": true,
+            "feedback": "Right. The minus is forced by the geometry: cosine starts at its peak and goes DOWN, while sine is climbing."
+          },
+          {
+            "id": "o2",
+            "label": "Because cosine is negative.",
+            "correct": false,
+            "feedback": "cos x is positive for x near 0. The sign in the derivative is about the DIRECTION the curve is heading, not the sign of its height."
+          },
+          {
+            "id": "o3",
+            "label": "It is a convention.",
+            "correct": false,
+            "feedback": "It is forced. Drop the minus and the formula would claim the cosine is RISING just after its peak, which the graph plainly refutes."
+          },
+          {
+            "id": "o4",
+            "label": "Because sine and cosine are 90° apart.",
+            "correct": false,
+            "feedback": "They are — and that shift explains why the derivative is the OTHER function, but not why the sign flips. The flip comes from the direction of travel."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-trig-derivative__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rest of the library follows from the quotient and chain rules:\n\n**(tan x)′ = sec² x** — always positive, which is why the tangent graph only ever climbs.\n\nAnd with an inside: **(sin u)′ = cos u · u′**. The inner derivative is owed here exactly as everywhere else.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A trig chain.",
+      "conceptTag": "dr-trig-derivative",
+      "explanationVariants": [
+        "(sin 2x)′ = cos(2x)·2 = 2cos 2x. At x = 0 that is 2 × 1 = 2.",
+        "The wave is squashed to half its width, so it climbs twice as fast — and the derivative reports exactly that."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = sin 2x. Find f′(0).",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That is cos(2x) at x = 0 — the outside only. The chain rule owes you the inner derivative, 2."
+          },
+          {
+            "value": 0,
+            "feedback": "sin 2x is steeply RISING at the origin, not flat. Its derivative there is 2cos 0 = 2."
+          },
+          {
+            "value": 0.5,
+            "feedback": "You may have divided by the inner derivative rather than multiplying. The chain rule multiplies: cos(2x) × 2."
+          }
+        ],
+        "fallbackFeedback": "(sin 2x)′ = 2cos 2x → f′(0) = 2."
+      },
+      "variant": {
+        "gen": "trig-deriv",
+        "form": "chain"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Product meets trig.",
+      "conceptTag": "dr-trig-derivative",
+      "hints": [
+        "This is a PRODUCT: u = x, v = sin x. So the product rule comes first.",
+        "f′ = 1·sin x + x·cos x = sin x + x cos x.",
+        "At x = 0: sin 0 = 0 and cos 0 = 1, so the answer is 0 + 0 × 1."
+      ],
+      "explanationVariants": [
+        "f′ = sin x + x cos x. At x = 0 that is 0 + 0(1) = 0.",
+        "Both terms vanish at the origin — the first because sin 0 = 0, the second because of the factor x. The curve is momentarily flat there."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x·sin x. Find f′(0).",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That is cos 0 — but the x·cos x term carries a factor of x, which is 0 here. And sin 0 = 0 too, so the whole derivative vanishes."
+          },
+          {
+            "value": 2,
+            "feedback": "That would need both terms to contribute 1. In fact both contribute 0 at the origin."
+          },
+          {
+            "value": -1,
+            "feedback": "Check the product rule: 1·sin x + x·cos x. No minus sign appears anywhere."
+          }
+        ],
+        "fallbackFeedback": "f′ = sin x + x cos x → at 0: 0 + 0 = 0."
+      },
+      "variant": {
+        "gen": "trig-deriv",
+        "form": "product"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The derivatives go round in a circle.",
+      "takeaways": [
+        "(sin x)′ = cos x and (cos x)′ = −sin x. Four differentiations return you to the start.",
+        "The minus sign is forced: cosine starts at a peak and falls.",
+        "Radians are not a preference. In degrees, (sin x)′ picks up a factor of π/180 and every formula turns ugly."
+      ],
+      "teaser": "Last lesson: the derivative of an inverse, for free."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-trig-derivative",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Learn the pair, and the sign. **sin → cos** (no minus). **cos → −sin** (minus). Then differentiate four times and check that you return to where you began — if you do not, a sign has gone astray.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Sine, then cosine.",
+        "conceptTag": "dr-trig-derivative",
+        "explanationVariants": [
+          "(sin x)′ = cos x, and at x = π/3 (60°) that is cos 60° = 0.5.",
+          "No minus sign on this one — sine differentiates cleanly to cosine."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = sin x. Find f′(π/3), as a decimal.",
+          "answer": 0.5,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.866,
+              "feedback": "That is sin(π/3), the height. The slope is cos(π/3) = 0.5."
+            },
+            {
+              "value": -0.5,
+              "feedback": "There is no minus sign when differentiating SINE. The minus belongs to cosine."
+            }
+          ],
+          "fallbackFeedback": "(sin x)′ = cos x → cos(π/3) = 0.5."
+        }
+      }
+    }
+  ]
+}

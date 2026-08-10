@@ -1,0 +1,322 @@
+{
+  "id": "asv-04-03",
+  "slug": "surface-area-word-problems",
+  "title": "Surface Area Word Problems",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch4-surface-area-prisms",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Surface area answers real questions: **how much wrapping paper covers a gift, how much paint coats a room, how much cardboard makes a box.** The key reading skill: does the problem cover ALL faces (a wrapped gift) or only SOME (painting walls but not the floor)? Count exactly the faces the situation includes.",
+      "figure": "prism-net"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Surface area is the net, added up.",
+      "widget": {
+        "type": "netFold",
+        "targetSurfaceArea": 94,
+        "lMax": 8,
+        "wMax": 8,
+        "hMax": 8,
+        "lStart": 1,
+        "wStart": 1,
+        "hStart": 1,
+        "prompt": "A box measures 3 by 4 by 5. Build it and read its surface area.",
+        "successFeedback": "94 square units: 2(12) + 2(15) + 2(20). Surface area is not a formula to trust — it is six rectangles, in three matching pairs, and the net shows you all of them at once.",
+        "lowFeedback": "The net is smaller than 94 square units.",
+        "highFeedback": "The net is larger than 94 square units."
+      },
+      "predict": {
+        "prompt": "A 3 × 4 × 5 box: its LARGEST face is…",
+        "options": [
+          {
+            "id": "big",
+            "label": "4 × 5 = 20"
+          },
+          {
+            "id": "small",
+            "label": "3 × 4 = 12"
+          },
+          {
+            "id": "equal",
+            "label": "All six faces are equal"
+          }
+        ],
+        "outcomeId": "big",
+        "reveal": "The two biggest dimensions pair up: 4 × 5 = 20 beats the 15s and the 12s. Surface area = 2(12 + 15 + 20) = 94 — the net lays all three pairs flat where you can rank them by eye."
+      },
+      "conceptTag": "sa-word-problems",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents sa word problems.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sa word problems must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sa word problems."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "area-surface-volume:sa-word-problems",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Paint, but skip the floor.",
+      "conceptTag": "sa-word-problems",
+      "explanationVariants": [
+        "Walls: 2(10×3) + 2(8×3) = 60+48 = 108; ceiling 10×8 = 80; total 188 — the floor is excluded.",
+        "Count only the surfaces being painted: 4 walls + ceiling = 188."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A room is 10 long, 8 wide, 3 high. You paint the 4 walls AND the ceiling, but NOT the floor. How much area gets painted?",
+        "answer": 188,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 268,
+            "feedback": "268 paints the floor too (adds a second 80). The floor is EXCLUDED: 108 + 80 = 188."
+          },
+          {
+            "value": 108,
+            "feedback": "108 is the walls only, forgetting the ceiling. Add it: 108 + 80 = 188."
+          }
+        ],
+        "fallbackFeedback": "Walls 108 (60+48) + ceiling 80 = 188."
+      },
+      "variant": {
+        "gen": "box-surface-area",
+        "form": "roomPaint"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Volume and surface area answer DIFFERENT questions: volume is what fits **inside** (cubic units); surface area is what covers the **outside** (square units). \"How much water fills the tank\" is volume; \"how much paint coats the tank\" is surface area. The units are the tell: cubic for inside, square for outside.",
+      "figure": "asv-boxes-fit"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which measurement?",
+      "conceptTag": "sa-word-problems",
+      "explanationVariants": [
+        "Cardboard forms the box's OUTSIDE surface — that's surface area, in square units.",
+        "The box's walls are its faces; material to build faces = surface area."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "\"How much cardboard is needed to make a closed box?\" Which measurement answers this?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Surface area — cardboard forms the outside faces",
+            "correct": true,
+            "feedback": "Right — the cardboard IS the six faces, so you need their total area (square units)."
+          },
+          {
+            "id": "b",
+            "label": "Volume — it's about the box's size",
+            "feedback": "Volume measures what fits INSIDE (cubic units). Cardboard covers the OUTSIDE — that's surface area."
+          },
+          {
+            "id": "c",
+            "label": "Perimeter — the distance around",
+            "feedback": "Perimeter is a 1D length around a flat shape. Covering the box's faces needs their AREA."
+          }
+        ]
+      },
+      "hints": [
+        "What does the cardboard physically become?",
+        "The box's faces.",
+        "Total face area = surface area."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "whichMeasure"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort the questions.",
+      "conceptTag": "sa-word-problems",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each question by which measurement answers it.",
+        "buckets": [
+          {
+            "id": "sa",
+            "label": "Surface area"
+          },
+          {
+            "id": "vol",
+            "label": "Volume"
+          }
+        ],
+        "items": [
+          {
+            "id": "q1",
+            "label": "How much paint coats a water tank?",
+            "bucketId": "sa",
+            "feedback": "Paint covers the OUTSIDE faces — surface area."
+          },
+          {
+            "id": "q2",
+            "label": "How much water fills the tank?",
+            "bucketId": "vol",
+            "feedback": "Filling measures the INSIDE — volume."
+          },
+          {
+            "id": "q3",
+            "label": "How much fabric covers a tent?",
+            "bucketId": "sa",
+            "feedback": "Fabric forms the tent's faces — surface area."
+          },
+          {
+            "id": "q4",
+            "label": "How much air is inside the tent?",
+            "bucketId": "vol",
+            "feedback": "Air fills the interior space — volume."
+          }
+        ],
+        "missFeedback": "Covering/coating/wrapping the OUTSIDE = surface area; filling the INSIDE = volume.",
+        "successFeedback": "Sorted — outside coverage is surface area; inside capacity is volume."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A tent's fabric.",
+      "conceptTag": "sa-word-problems",
+      "explanationVariants": [
+        "The tent needs the 2 triangle ends (2 × 1/2 × 6 × 4 = 24) and the 2 slanted roof rectangles (2 × 5 × 8 = 80), but NOT the floor: 104.",
+        "Count only fabric faces: 2 triangles + 2 slants = 24 + 80 = 104."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tent is a triangular prism: triangle ends have base 6, height 4, slant sides 5 each; the tent is 8 long. Fabric covers the 2 ends and 2 slanted roof faces but NOT the ground. How much fabric?",
+        "answer": 104,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 152,
+            "feedback": "152 includes the ground face (6×8 = 48) — but the tent has no fabric floor: 24 + 80 = 104."
+          },
+          {
+            "value": 80,
+            "feedback": "80 is only the two slanted roof faces, missing the triangle ends: 80 + 24 = 104."
+          }
+        ],
+        "fallbackFeedback": "Ends 24 (2 × 12) + slants 80 (2 × 40) = 104 — no floor."
+      },
+      "variant": {
+        "gen": "prism-surface-area",
+        "form": "tentFabric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compare two boxes.",
+      "conceptTag": "sa-word-problems",
+      "hints": [
+        "Box A: 2(8×2 + 8×2 + 2×2) = 2(16+16+4).",
+        "Box B: 2(4×4 + 4×4 + 4×4) = 6×16.",
+        "Both boxes hold exactly 32 cubic units — same volume, but compute each surface area and subtract to compare the cardboard."
+      ],
+      "explanationVariants": [
+        "Box A (8×2×2): 2(16+16+4) = 72. Box B (4×4×2): 2(16+8+8) = 64. A needs 72−64 = 8 more.",
+        "The flatter, longer box exposes more surface for the same kind of contents — 8 extra square units of cardboard."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Box A is 8×2×2; Box B is 4×4×2 (both hold 32 cubic units). How much MORE cardboard does Box A need than Box B?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "72 is Box A's full surface area, not the DIFFERENCE. Box B needs 64, so A needs 72 − 64 = 8 more."
+          },
+          {
+            "value": 0,
+            "feedback": "Same volume doesn't mean same surface area! A: 2(16+16+4)=72; B: 2(16+8+8)=64. Difference: 8."
+          }
+        ],
+        "fallbackFeedback": "A: 72, B: 64; difference = 8. Same volume, different shapes, different surface."
+      },
+      "variant": {
+        "gen": "box-surface-area",
+        "form": "sameVolumeDifference"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read which faces the situation covers.",
+      "takeaways": [
+        "Wrapping/painting/covering questions are surface area; filling questions are volume.",
+        "Count exactly the faces the situation includes — rooms skip floors, tents skip the ground.",
+        "Equal volumes can have different surface areas; flatter shapes expose more."
+      ],
+      "teaser": "final chapter: volume itself — including boxes with fractional edges."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa-word-problems",
+      "concept": {
+        "id": "rem-swp-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Covering the outside = surface area; filling the inside = volume.** Wrapping a 3×2×1 gift: 2(6+3+2) = 22 square units of paper. The 6 cubic units of volume is a different question."
+      },
+      "check": {
+        "id": "rem-swp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sa-word-problems",
+        "explanationVariants": [
+          "2(3×2 + 3×1 + 2×1) = 2(6+3+2) = 22.",
+          "Wrapping covers all six faces: 22 square units."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How much paper wraps a 3×2×1 gift box completely?",
+          "answer": 22,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is the VOLUME (3×2×1). Wrapping covers the faces: 2(6+3+2) = 22."
+            },
+            {
+              "value": 11,
+              "feedback": "11 counts one face from each pair. Every face has a twin: 2 × 11 = 22."
+            }
+          ],
+          "fallbackFeedback": "2(6 + 3 + 2) = 22 square units."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "id": "cg-02-02",
+  "slug": "pairs-on-the-plane",
+  "title": "Pairs on the Plane",
+  "courseId": "coordinate-geometry",
+  "chapterId": "ch2-pattern-pairs",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every pair from two rules is an **ordered pair** — so it can be **plotted**. Rule A (*start at 1, add 1*) makes 1, 2, 3; rule B (*start at 2, add 2*) makes 2, 4, 6. The pairs are (1, 2), (2, 4), (3, 6): A gives the x, B gives the y. Plot them and watch what appears.",
+      "figure": "cg-each-plottable"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot the first pair.",
+      "conceptTag": "pattern-graph",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the pattern's first point, (1, 2).",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 1,
+            "feedback": "That's (2, 1) — the slots got swapped. A's number (1) is the x; B's number (2) is the y."
+          }
+        ],
+        "missFeedback": "A gives the x: right to 1. B gives the y: up to 2.",
+        "successFeedback": "First point placed at (1, 2)."
+      },
+      "predict": {
+        "prompt": "The pattern starts at (1, 2). Will that point sit closer to the LEFT edge or the BOTTOM edge of the grid?",
+        "options": [
+          {
+            "id": "left",
+            "label": "Closer to the left edge"
+          },
+          {
+            "id": "bottom",
+            "label": "Closer to the bottom edge"
+          },
+          {
+            "id": "same",
+            "label": "The same distance from both"
+          }
+        ],
+        "outcomeId": "left",
+        "reveal": "It stands just 1 step from the left but 2 steps up from the bottom — the smaller coordinate is the closer edge."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents pattern graph.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for pattern graph must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines pattern graph."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "coordinate-geometry:pattern-graph",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Plot the rest.",
+      "conceptTag": "pattern-graph",
+      "explanationVariants": [
+        "The remaining pairs are (2, 4) and (3, 6) — A's term is always the x, B's the y.",
+        "Step 2 gives (2, 4); step 3 gives (3, 6). Right to the A-number, up to the B-number."
+      ],
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the pattern's other two points: (2, 4) and (3, 6).",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 2,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 2,
+            "feedback": "That's (4, 2) — swapped slots. The pair is (2, 4): right to 2, up to 4."
+          },
+          {
+            "x": 6,
+            "y": 3,
+            "feedback": "That's (6, 3) — swapped slots. The pair is (3, 6): right to 3, up to 6."
+          }
+        ],
+        "missFeedback": "Right to the A-number, up to the B-number: (2, 4) and (3, 6).",
+        "successFeedback": "All three pattern points are on the plane — look at how they sit.",
+        "connectTargets": true
+      },
+      "variant": {
+        "gen": "proportional-plot"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents pattern graph.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for pattern graph must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines pattern graph."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "coordinate-geometry:pattern-graph",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The three points **line up straight**. Why: from each point to the next, you always move **right 1** (rule A adds 1) and **up 2** (rule B adds 2). The same move, repeated, can only walk a straight path. Steady rules draw straight lines — that's the two rules made visible.",
+      "figure": "cg-line-up"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Say why it's straight.",
+      "conceptTag": "pattern-graph",
+      "explanationVariants": [
+        "A constant right-1-up-2 step makes a line.",
+        "Steady adds mean a steady climb."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do the pattern's points line up in a straight line?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Each step moves right 1 and up 2 — the same move every time",
+            "correct": true,
+            "feedback": "Right — a repeated identical step can only trace a straight path."
+          },
+          {
+            "id": "b",
+            "label": "Because the numbers are small",
+            "feedback": "Size doesn't matter — (10, 20) and (50, 100) would land on the same line. It's the steady step that makes it straight."
+          },
+          {
+            "id": "c",
+            "label": "Because both rules start at the same number",
+            "feedback": "They don't — A starts at 1 and B at 2. Straightness comes from the adds being steady, not from the starts matching."
+          }
+        ]
+      },
+      "hints": [
+        "Compare one point to the next.",
+        "How far right? How far up? Every time?",
+        "Same move, straight path."
+      ],
+      "variant": {
+        "gen": "proportional-plot",
+        "form": "cgPairLineReason"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Extend the pattern.",
+      "conceptTag": "pattern-graph",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The rules keep going: A's next term is 4. What is the y-value of the pattern's 4th point?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 adds 1 to the last y — that's rule A's move. The y follows rule B, which adds 2: 6 + 2 = 8."
+          },
+          {
+            "value": 12,
+            "feedback": "12 doubles the last y (6 × 2). The doubling is between x and y, not step to step: y = 2 × 4 = 8."
+          }
+        ],
+        "fallbackFeedback": "y follows rule B: 6 + 2 = 8. (Check: it's still double the x, 2 × 4 = 8.)"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read past the plotted points.",
+      "conceptTag": "pattern-graph",
+      "explanationVariants": [
+        "Two more steps from (3, 6): up 2 each step lands y at 10 — or use y = 2 × 5 = 10.",
+        "The line's rule is y doubles x, so at x = 5, y = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Follow the same pattern out to x = 5. What is y there?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the last PLOTTED y (at x = 3). The pattern keeps climbing: two more up-2 steps reach 10."
+          },
+          {
+            "value": 8,
+            "feedback": "8 climbs only 1 per step from (3, 6). The y climbs 2 per step: 6 + 2 + 2 = 10."
+          }
+        ],
+        "fallbackFeedback": "From (3, 6), two steps of up-2 give y = 10; equivalently y = 2 × 5 = 10."
+      },
+      "variant": {
+        "gen": "proportional-plot",
+        "form": "cgPairValue"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "New rules, far target.",
+      "conceptTag": "pattern-graph",
+      "hints": [
+        "Write the first pairs: (1, 3), (2, 6), (3, 9), (4, 12).",
+        "Every y is triple its x.",
+        "At x = 6, y = 3 × 6."
+      ],
+      "explanationVariants": [
+        "y triples x in every pair, so at x = 6 the point is (6, 18).",
+        "From (4, 12), two more steps of up-3 land at (6, 18)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rule A: start at 1, add 1. Rule B: start at 3, add 3. The points are (1, 3), (2, 6), (3, 9), (4, 12)… Which point does the pattern pass through at x = 6?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(6, 18)",
+            "correct": true,
+            "feedback": "Right — y is always triple x: 3 × 6 = 18."
+          },
+          {
+            "id": "b",
+            "label": "(18, 6)",
+            "feedback": "That swaps the slots — x is the step number 6, and the tripled value 18 is the y: (6, 18)."
+          },
+          {
+            "id": "c",
+            "label": "(6, 15)",
+            "feedback": "15 climbs just one up-3 step from y = 12, but x = 6 is TWO steps past x = 4: 12 + 3 + 3 = 18."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "proportional-plot",
+        "form": "cgPairPointAtX"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rules draw lines.",
+      "takeaways": [
+        "Pairs from two rules plot as points: first rule gives x, second gives y.",
+        "Steady rules repeat one move, so the points line up straight.",
+        "Extend by stepping the rules — or jump with the pair relationship."
+      ],
+      "teaser": "next chapter: shapes get a family tree — what a square inherits from every rectangle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pattern-graph",
+      "concept": {
+        "id": "rem-pg-c",
+        "kind": "concept",
+        "body": "Quick rewind. **A pair plots as a point: first number right, second number up.** The pattern pair (2, 4) becomes the point 2 right and 4 up. Plot each pair the same way and the pattern appears on the plane."
+      },
+      "check": {
+        "id": "rem-pg-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pattern-graph",
+        "explanationVariants": [
+          "(2, 4): right to 2, up to 4.",
+          "First slot is the x, second is the y."
+        ],
+        "widget": {
+          "type": "plotPoint",
+          "prompt": "Plot the pattern pair (2, 4).",
+          "cols": 5,
+          "rows": 5,
+          "xLabels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "yLabels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "targets": [
+            {
+              "x": 2,
+              "y": 4
+            }
+          ],
+          "pointErrors": [
+            {
+              "x": 4,
+              "y": 2,
+              "feedback": "That's (4, 2) — swapped. The pair (2, 4) goes right to 2, then up to 4."
+            }
+          ],
+          "missFeedback": "Right to 2, then up to 4.",
+          "successFeedback": "That's (2, 4)."
+        }
+      }
+    }
+  ]
+}

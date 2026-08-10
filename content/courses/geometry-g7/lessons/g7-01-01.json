@@ -1,0 +1,296 @@
+{
+  "id": "g7-01-01",
+  "slug": "reading-a-scale",
+  "title": "Reading a Scale",
+  "courseId": "geometry-g7",
+  "chapterId": "ch1-scale-drawings",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **scale drawing** shows a real object shrunk (or enlarged) so it fits on paper. The **scale** says what each drawing unit stands for: a scale of **1 cm = 4 m** means every centimeter on paper is 4 real meters.",
+      "figure": "scale-drawing"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Ride both lines at once.",
+      "widget": {
+        "type": "doubleNumberLine",
+        "prompt": "Top line: real metres. Bottom line: drawing cm. Set the metres above the 3 cm tick.",
+        "topLabel": "real metres",
+        "bottomLabel": "drawing cm",
+        "topPerStep": 4,
+        "bottomPerStep": 1,
+        "steps": 5,
+        "askAtStep": 3,
+        "targetTop": 12,
+        "topMax": 20,
+        "topStep": 1,
+        "successFeedback": "3 cm ↔ 12 m: the lines stretch together at 4 m per cm. A scale IS a unit rate wearing map clothes.",
+        "lowFeedback": "Too few metres for 3 cm — each tick of the drawing is worth a full 4 m.",
+        "highFeedback": "Too many metres — count the ticks: 4, 8, 12."
+      },
+      "predict": {
+        "prompt": "Every drawing centimetre stands for 4 real metres. So 3 cm of drawing means…",
+        "options": [
+          {
+            "id": "twelve",
+            "label": "12 m — three fours"
+          },
+          {
+            "id": "seven",
+            "label": "7 m — that's 3 + 4"
+          },
+          {
+            "id": "three",
+            "label": "3 m — the number carries over"
+          }
+        ],
+        "outcomeId": "twelve",
+        "reveal": "Scale is a per-unit contract: each cm carries 4 m, so 3 cm carries 3 × 4 = 12 m. Adding 3 + 4 mixes the drawing's units with the world's — the two lines move in lockstep, never by addition."
+      },
+      "conceptTag": "g7-read-scale",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents read scale.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for read scale must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines read scale."
+        ],
+        "representations": [
+          "table",
+          "symbolic"
+        ],
+        "translationFrom": "table",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-g7:g7-read-scale",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Drawing-to-real is a **multiplication**: real length = drawing length × the scale amount. The scale works like a unit rate — meters per centimeter — exactly the rate thinking from proportional relationships.",
+      "figure": "g7-scale-rate"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another width.",
+      "conceptTag": "g7-read-scale",
+      "explanationVariants": [
+        "At 1 cm = 4 m, a 5 cm drawing length stands for 5 × 4 = 20 real meters.",
+        "Multiply drawing length by the scale: 5 × 4 = 20 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At the scale 1 cm = 4 m, a wall is 5 cm long in the drawing. How long is the real wall, in meters?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "Multiply, don't add: 5 × 4 = 20 m."
+          },
+          {
+            "value": 5,
+            "feedback": "That's the drawing length — multiply by 4 m per cm: 20 m."
+          }
+        ],
+        "fallbackFeedback": "5 cm × 4 m per cm = 20 m."
+      },
+      "variant": {
+        "gen": "g7-read-scale"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A different scale.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A map uses 1 cm = 5 m. A path is 3 cm long on the map. How long is the real path, in meters?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "Multiply, don't add: 3 × 5 = 15 m."
+          },
+          {
+            "value": 3,
+            "feedback": "That's the map length — each cm is 5 m: 3 × 5 = 15 m."
+          }
+        ],
+        "fallbackFeedback": "3 cm × 5 m per cm = 15 m."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What the scale means.",
+      "conceptTag": "g7-read-scale",
+      "explanationVariants": [
+        "1 cm = 2 m means every centimeter of drawing stands for 2 real meters.",
+        "The scale pairs one drawing unit with the real amount it represents."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A blueprint's scale is 1 cm = 2 m. What does this mean?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Each centimeter on the blueprint stands for 2 real meters",
+            "correct": true,
+            "feedback": "Right — the scale pairs one drawing centimeter with 2 real meters."
+          },
+          {
+            "id": "b",
+            "label": "The blueprint is 2 cm tall",
+            "correct": false,
+            "feedback": "The scale isn't a size of the drawing — it's what each drawing cm STANDS FOR: 2 m."
+          },
+          {
+            "id": "c",
+            "label": "The building is 2 m tall",
+            "correct": false,
+            "feedback": "The scale doesn't give the building's size directly — it converts each drawing cm into 2 m."
+          },
+          {
+            "id": "d",
+            "label": "Each meter equals 2 cm",
+            "correct": false,
+            "feedback": "It's the reverse: each CENTIMETER stands for 2 METERS."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-read-scale",
+        "form": "scaleMeaning"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A longer path.",
+      "conceptTag": "g7-read-scale",
+      "explanationVariants": [
+        "At 1 cm = 3 m, a 7 cm drawing length is 7 × 3 = 21 real meters.",
+        "Multiply: 7 × 3 = 21 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At the scale 1 cm = 3 m, a fence is 7 cm long in the drawing. How long is the real fence, in meters?",
+        "answer": 21,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Multiply, don't add: 7 × 3 = 21 m."
+          },
+          {
+            "value": 7,
+            "feedback": "That's the drawing length — each cm is 3 m: 7 × 3 = 21 m."
+          }
+        ],
+        "fallbackFeedback": "7 cm × 3 m per cm = 21 m."
+      },
+      "variant": {
+        "gen": "g7-read-scale",
+        "form": "scaleFence"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compare two rooms.",
+      "conceptTag": "g7-read-scale",
+      "explanationVariants": [
+        "Room A: 6 × 2 = 12 m. Room B: 4 × 2 = 8 m. A is 12 − 8 = 4 m longer.",
+        "Convert both (12 m and 8 m), then subtract: 4 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On a 1 cm = 2 m plan, Room A is 6 cm long and Room B is 4 cm long. How many real meters longer is Room A?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the drawing difference (6 − 4 cm) — convert to real meters: 12 − 8 = 4 m."
+          },
+          {
+            "value": 12,
+            "feedback": "That's Room A's full length — the question asks how much LONGER: 12 − 8 = 4 m."
+          }
+        ],
+        "fallbackFeedback": "Room A: 6 × 2 = 12 m; Room B: 4 × 2 = 8 m; difference 4 m."
+      },
+      "hints": [
+        "Convert each room to real meters first (multiply by 2).",
+        "Room A: 6 × 2 = 12 m. Room B: 4 × 2 = 8 m.",
+        "Subtract: 12 − 8 = 4 m."
+      ],
+      "variant": {
+        "gen": "g7-read-scale",
+        "form": "scaleCompare"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A scale pairs one drawing unit with a real amount; multiply drawing lengths by it.",
+      "takeaways": [
+        "A scale like 1 cm = 4 m converts drawing lengths to real lengths.",
+        "Real length = drawing length × scale amount.",
+        "The scale is a unit rate: meters per centimeter."
+      ],
+      "teaser": "Next: going the other way — from real lengths to the drawing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-read-scale",
+      "concept": {
+        "id": "rem-g70101-c",
+        "kind": "concept",
+        "body": "A scale like 1 cm = 4 m says what each drawing centimeter stands for. To get a real length, multiply the drawing length by the scale amount: 3 cm at 1 cm = 4 m is 3 × 4 = 12 m."
+      },
+      "check": {
+        "id": "rem-g70101-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-read-scale",
+        "explanationVariants": [
+          "At 1 cm = 4 m, a 2 cm length stands for 2 × 4 = 8 m.",
+          "Multiply: 2 × 4 = 8 m."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "At the scale 1 cm = 4 m, a drawing length of 2 cm stands for how many real meters?",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "Multiply, don't add: 2 × 4 = 8 m."
+            },
+            {
+              "value": 2,
+              "feedback": "That's the drawing length — each cm is 4 m: 2 × 4 = 8 m."
+            }
+          ],
+          "fallbackFeedback": "2 cm × 4 m per cm = 8 m."
+        }
+      }
+    }
+  ]
+}

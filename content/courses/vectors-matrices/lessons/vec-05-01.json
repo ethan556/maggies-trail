@@ -1,0 +1,299 @@
+{
+  "id": "vec-05-01",
+  "slug": "matrices-as-transformations",
+  "title": "Matrices as Transformations",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch5-transformations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A matrix is a **transformation of the plane**: feed it every point ⟨x, y⟩ and it maps them to new points ⟨x′, y′⟩ (recall the mapping notation from geometry). The matrix-vector product IS the rule (x, y) → (x′, y′). Scaling, reflecting, and rotating all become single matrices.",
+      "figure": "vec-transform"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Every matrix moves the whole plane at once. Build one and watch the unit square go along for the ride.",
+      "widget": {
+        "type": "matrixTransform",
+        "prompt": "Build the stretch: î should land at (2, 0) and ĵ should stay at (0, 1). Watch the det readout as you go.",
+        "ta": 2,
+        "tb": 0,
+        "tc": 0,
+        "td": 1,
+        "sa": 1,
+        "sb": 0,
+        "sc": 0,
+        "sd": 1,
+        "targetName": "a horizontal stretch by 2",
+        "successFeedback": "î ↦ (2, 0), ĵ ↦ (0, 1): the square becomes a 2×1 rectangle. det = 2·1 − 0·0 = 2 — twice the area, exactly the stretch you applied.",
+        "swappedFeedback": "You've stretched VERTICALLY — you put the 2 in ĵ's column. Columns are destinations: column 1 holds where î lands, and î is the one that should reach (2, 0).",
+        "signFeedback": "The off-diagonal signs don't belong here — a pure stretch keeps both basis vectors on their own axes, so b and c stay 0.",
+        "fallbackFeedback": "Move one basis vector at a time: î must reach (2, 0) — that's the first column — while ĵ stays put at (0, 1)."
+      },
+      "predict": {
+        "prompt": "You'll stretch the plane to twice as wide (x-parts double) while heights stay put. What happens to the unit square's area?",
+        "options": [
+          {
+            "id": "x2",
+            "label": "It doubles"
+          },
+          {
+            "id": "x4",
+            "label": "It quadruples"
+          },
+          {
+            "id": "same",
+            "label": "It stays the same"
+          }
+        ],
+        "outcomeId": "x2",
+        "reveal": "Only one direction stretched, so area scales by 2 — and that's exactly the determinant: 2·1 − 0·0 = 2. The determinant IS the area scale factor."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Change matrix entries and observe how columns move basis vectors and transform the plane.",
+        "invariants": [
+          "matrix-columns-are-basis-images",
+          "determinant-scales-oriented-area"
+        ],
+        "misconceptions": [
+          "rows-are-basis-images",
+          "determinant-is-only-arithmetic"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-matrixTransform",
+        "delayed": false
+      },
+      "conceptTag": "vec-transform"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Reflection over the x-axis.",
+      "conceptTag": "vec-transform",
+      "explanationVariants": [
+        "[[1, 0], [0, −1]] keeps x and flips y: ⟨2, 3⟩ → ⟨2, −3⟩ — reflection across the x-axis.",
+        "The −1 in the bottom-right negates the y-coordinate, mirroring over the x-axis."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Apply [[1, 0], [0, −1]] to ⟨2, 3⟩.",
+        "answer": [
+          2,
+          -3
+        ],
+        "delimiter": "angle",
+        "commonEntries": [
+          {
+            "values": [
+              -2,
+              3
+            ],
+            "feedback": "That flips X (reflection over the y-axis). This matrix flips Y: ⟨2, −3⟩."
+          },
+          {
+            "values": [
+              3,
+              2
+            ],
+            "feedback": "That swaps coordinates (reflection over y = x). This one gives ⟨2, −3⟩."
+          }
+        ],
+        "fallbackFeedback": "Apply row by row: x stays, y flips sign.",
+        "successFeedback": "Right — x stays, y flips sign: reflection over the x-axis."
+      },
+      "variant": {
+        "gen": "matrix-apply"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's the key to READING a transformation matrix: its **columns are the images of the basis vectors**. The first column is where ⟨1, 0⟩ lands; the second is where ⟨0, 1⟩ lands. Know where the two arrows go, and you know the whole matrix — every other point follows.",
+      "figure": "vec-read-transform"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Columns as basis images.",
+      "conceptTag": "vec-transform",
+      "explanationVariants": [
+        "For [[3, 1], [2, 4]], the first column ⟨3, 2⟩ is the image of ⟨1, 0⟩ — check: [[3,1],[2,4]]·⟨1,0⟩ = ⟨3, 2⟩.",
+        "⟨1, 0⟩ picks out the first column: ⟨3, 2⟩."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "For the matrix [[3, 1], [2, 4]], where does the basis vector ⟨1, 0⟩ land?",
+        "answer": [
+          3,
+          2
+        ],
+        "delimiter": "angle",
+        "commonEntries": [
+          {
+            "values": [
+              1,
+              4
+            ],
+            "feedback": "⟨1, 0⟩ selects the first COLUMN, ⟨3, 2⟩, not the diagonal."
+          },
+          {
+            "values": [
+              3,
+              1
+            ],
+            "feedback": "It's the first COLUMN ⟨3, 2⟩, not the first row. ⟨1,0⟩ → ⟨3, 2⟩."
+          }
+        ],
+        "fallbackFeedback": "The image of ⟨1, 0⟩ is the first COLUMN of the matrix.",
+        "successFeedback": "Right — ⟨1, 0⟩ maps to the first column, ⟨3, 2⟩."
+      },
+      "variant": {
+        "gen": "matrix-apply",
+        "form": "basisColumn"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Reflection over y = x.",
+      "conceptTag": "vec-transform",
+      "explanationVariants": [
+        "[[0, 1], [1, 0]] swaps coordinates: ⟨2, 3⟩ → ⟨3, 2⟩ — reflection over the line y = x.",
+        "The swap of the two basis vectors is exactly the y = x mirror."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Apply [[0, 1], [1, 0]] to ⟨2, 3⟩.",
+        "answer": [
+          3,
+          2
+        ],
+        "delimiter": "angle",
+        "commonEntries": [
+          {
+            "values": [
+              2,
+              3
+            ],
+            "feedback": "The off-diagonal 1's SWAP the coordinates: ⟨3, 2⟩, not unchanged."
+          },
+          {
+            "values": [
+              -2,
+              -3
+            ],
+            "feedback": "The off-diagonal 1's swap the coordinates rather than negating them, so ⟨2, 3⟩ becomes ⟨3, 2⟩ — a y=x reflection, not a sign change."
+          }
+        ],
+        "fallbackFeedback": "The off-diagonal 1's SWAP the two coordinates.",
+        "successFeedback": "Right — the coordinates swap: reflection over y = x."
+      },
+      "variant": {
+        "gen": "matrix-apply",
+        "form": "swap"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A non-uniform scaling.",
+      "conceptTag": "vec-transform",
+      "explanationVariants": [
+        "[[3, 0], [0, 1]] triples x, leaves y: ⟨2, 5⟩ → ⟨6, 5⟩; the x-component is 6.",
+        "Only the x is stretched (by 3): ⟨6, 5⟩."
+      ],
+      "hints": [
+        "Top row: 3·2 + 0·5.",
+        "Bottom row: 0·2 + 1·5.",
+        "New x = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Apply [[3, 0], [0, 1]] to ⟨2, 5⟩ and enter the x-component.",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The x is TRIPLED: 3·2 = 6."
+          },
+          {
+            "value": 15,
+            "feedback": "15 = 3·5 uses the wrong input. x′ = 3·2 = 6."
+          }
+        ],
+        "fallbackFeedback": "x′ = 3·2 + 0·5 = 6 (result ⟨6, 5⟩)."
+      },
+      "variant": {
+        "gen": "matrix-apply",
+        "form": "componentOnly"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Matrices move the plane.",
+      "takeaways": [
+        "A matrix maps (x, y) → (x′, y′) via the matrix-vector product.",
+        "Its columns are the images of ⟨1, 0⟩ and ⟨0, 1⟩.",
+        "Scalings and reflections are simple diagonal/swap matrices."
+      ],
+      "teaser": "Next: rotation matrices."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-transform",
+      "concept": {
+        "id": "rem-vec0501-c",
+        "kind": "concept",
+        "body": "A matrix transforms the plane: (x,y) → (x′,y′) by the matrix-vector product. Its columns are where ⟨1,0⟩ and ⟨0,1⟩ land."
+      },
+      "check": {
+        "id": "rem-vec0501-k",
+        "kind": "check",
+        "body": "One reflection.",
+        "conceptTag": "vec-transform",
+        "explanationVariants": [
+          "[[−1, 0], [0, 1]] flips x: ⟨4, 2⟩ → ⟨−4, 2⟩ (reflection over the y-axis).",
+          "The −1 top-left negates x: ⟨−4, 2⟩."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Apply [[−1, 0], [0, 1]] to ⟨4, 2⟩.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "⟨−4, 2⟩",
+              "correct": true,
+              "feedback": "Right — x flips, y stays: reflection over the y-axis."
+            },
+            {
+              "id": "o2",
+              "label": "⟨4, −2⟩",
+              "feedback": "This matrix flips X, not Y: ⟨−4, 2⟩."
+            },
+            {
+              "id": "o3",
+              "label": "⟨−4, −2⟩",
+              "feedback": "Only x is negated here: ⟨−4, 2⟩."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

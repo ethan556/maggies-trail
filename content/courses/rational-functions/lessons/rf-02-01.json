@@ -1,0 +1,438 @@
+{
+  "id": "rf-02-01",
+  "slug": "multiplying-rational-expressions",
+  "title": "Multiplying Rational Expressions",
+  "courseId": "rational-functions",
+  "chapterId": "ch2-multiplying-and-dividing",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Multiply like numeric fractions — tops together, bottoms together — but **factor first and cancel across**. (x + 2)/x · x/(x − 1): the x's cancel diagonally, leaving (x + 2)/(x − 1). Cancel before multiplying and nothing ever grows.",
+      "figure": "rf-multiply"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Cancel across.",
+      "predict": {
+        "prompt": "In (x + 5)/x · x/(x + 1), the x's cancel. Does the ban on x = 0 cancel with them?",
+        "options": [
+          {
+            "id": "gone",
+            "label": "Yes — once the factor is gone, so is its restriction"
+          },
+          {
+            "id": "stays",
+            "label": "The restriction survives — it was set by the ORIGINAL expression"
+          },
+          {
+            "id": "moves",
+            "label": "It moves to x = −1 and merges with that ban"
+          }
+        ],
+        "outcomeId": "stays",
+        "reveal": "Restrictions are set before any simplifying happens: the original expression divides by x, so x = 0 was never allowed. Cancelling rewrites the formula, not its history — the ban survives as a hole."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Chart the product (x + 5)/x · x/(x + 1) — reduced, (x + 5)/(x + 1). Mark each interval's sign; the cuts and the hole are the operation's full list of special x's.",
+        "roots": [
+          {
+            "x": -5,
+            "mult": 1
+          }
+        ],
+        "poles": [
+          {
+            "x": -1,
+            "mult": 1
+          }
+        ],
+        "holes": [
+          0
+        ],
+        "leadingPositive": true,
+        "successFeedback": "Positive, negative, positive — and three special x's on the line: a root at −5, a pole at −1 the curve never touches, and a hole at 0 where the cancelled x still bans the input. The hole changes no sign — the reduced value there would be 5 — but the point stays punched out, because the ORIGINAL product divided by x.",
+        "crossFeedback": "Both cuts here are single factors — x + 5 above the bar, x + 1 below — and a single factor flips the sign whether it lives in the numerator or the denominator. Each crossing changes exactly one factor's sign.",
+        "bounceFeedback": "A sign that holds through a cut would need an even power there. Every factor in this product appears once, so the sign genuinely flips at −5 and again at −1."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The full pipeline: **factor every level, cancel any top with any bottom, multiply what's left.** (x² − 4)/(x + 1) · (x + 1)/(x + 2) = ((x−2)(x+2)(x+1))/((x+1)(x+2)) = **x − 2**. Diagonal cancels are legal because multiplication is one big fraction.",
+      "figure": "rf-multiply-pipeline"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Full pipeline.",
+      "conceptTag": "rf-multiply",
+      "explanationVariants": [
+        "(x² − 9)/(x + 1) · (x + 1)/(x − 3): factor to (x−3)(x+3)(x+1) over (x+1)(x−3); cancel both pairs — x + 3 remains.",
+        "Two cancels: (x + 1) with (x + 1), (x − 3) with (x − 3)."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Multiply: (x² − 9)/(x + 1) · (x + 1)/(x − 3).",
+        "tokens": [
+          {
+            "id": "xp3",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "xm3",
+            "label": "(x − 3)"
+          },
+          {
+            "id": "xp1",
+            "label": "(x + 1)"
+          },
+          {
+            "id": "quad",
+            "label": "(x² − 9)"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          }
+        ],
+        "correct": [
+          "xp3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "xm3"
+            ],
+            "feedback": "(x − 3) is a factor that CANCELS — the survivor from x² − 9 is (x + 3)."
+          },
+          {
+            "sequence": [
+              "xp3",
+              "div",
+              "xp1"
+            ],
+            "feedback": "The (x + 1)s sit on opposite levels — they cancel too, leaving just x + 3."
+          },
+          {
+            "sequence": [
+              "quad",
+              "div",
+              "xm3"
+            ],
+            "feedback": "x² − 9 factors as (x − 3)(x + 3) — after both cancels only x + 3 stands."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Factor x² − 9 = (x − 3)(x + 3) first, then cancel across: (x + 1) with (x + 1), (x − 3) with (x − 3).",
+        "successFeedback": "Right — both (x + 1) and (x − 3) cancel completely."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-multiply__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Numeric spot check.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Verify with x = 4: compute (x² − 9)/(x + 1) · (x + 1)/(x − 3) directly (it should equal 4 + 3).",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "(16 − 9)/5 · 5/1 = 7/5 · 5 = 7 — track the whole product, not just one fraction."
+          },
+          {
+            "value": 35,
+            "feedback": "7/5 · 5/1 multiplies to 35/5 = 7 — divide by the bottom."
+          }
+        ],
+        "fallbackFeedback": "(7/5) · (5/1) = 7 — matching the simplified x + 3 at x = 4. ✓"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "With coefficients.",
+      "conceptTag": "rf-multiply",
+      "explanationVariants": [
+        "(2x/(x + 3)) · ((x + 3)/6) = 2x/6 = x/3.",
+        "The (x + 3)s cancel; then reduce 2/6."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Multiply: 2x/(x + 3) · (x + 3)/6.",
+        "tokens": [
+          {
+            "id": "x",
+            "label": "x"
+          },
+          {
+            "id": "twox",
+            "label": "2x"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          },
+          {
+            "id": "six",
+            "label": "6"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          },
+          {
+            "id": "top",
+            "label": "2x(x + 3)"
+          },
+          {
+            "id": "bot",
+            "label": "6(x + 3)"
+          }
+        ],
+        "correct": [
+          "x",
+          "div",
+          "three"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "twox",
+              "div",
+              "six"
+            ],
+            "feedback": "Finish the numeric reduction: 2/6 = 1/3, giving x/3."
+          },
+          {
+            "sequence": [
+              "x",
+              "div",
+              "six"
+            ],
+            "feedback": "The 2 on top survives into 2x/6 — which reduces to x/3, not x/6."
+          },
+          {
+            "sequence": [
+              "top",
+              "div",
+              "bot"
+            ],
+            "feedback": "That's the un-cancelled product — the (x + 3)s divide out: x/3."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Cancel the (x + 3) pair across the product, then reduce the numbers: 2x/6 = x/3.",
+        "successFeedback": "Right — cancel (x + 3), then reduce 2x/6."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-multiply__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Restrictions ride along.",
+      "conceptTag": "rf-multiply",
+      "explanationVariants": [
+        "Every denominator that EVER appeared bans its zeros: x + 3 (from the first bottom) bans −3, even though it cancelled.",
+        "The original product is undefined at −3 — simplification can't launder that."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In 2x/(x + 3) · (x + 3)/6 = x/3, which restriction must be carried?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x ≠ −3",
+            "correct": true,
+            "feedback": "Right — the original first factor divides by zero at −3; the answer inherits the ban."
+          },
+          {
+            "id": "o2",
+            "label": "x ≠ 3",
+            "correct": false,
+            "feedback": "+3 makes x + 3 equal 6, harmless — the zero of x + 3 is NEGATIVE 3."
+          },
+          {
+            "id": "o3",
+            "label": "x ≠ 0",
+            "correct": false,
+            "feedback": "0 zeroes a NUMERATOR (2x) — legal; the product is just 0 there."
+          },
+          {
+            "id": "o4",
+            "label": "none — x/3 is defined everywhere",
+            "correct": false,
+            "feedback": "x/3 alone is, but as a rewrite of the original it must exclude −3, where the original breaks."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-multiply__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Everything at once.",
+      "conceptTag": "rf-multiply",
+      "explanationVariants": [
+        "(x² − x − 6)/(x² − 1) · (x + 1)/(x − 3) = ((x−3)(x+2)(x+1)) / ((x−1)(x+1)(x−3)) = (x + 2)/(x − 1).",
+        "Factor all four levels; (x − 3) and (x + 1) both cancel."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Multiply: (x² − x − 6)/(x² − 1) · (x + 1)/(x − 3).",
+        "tokens": [
+          {
+            "id": "xp2",
+            "label": "(x + 2)"
+          },
+          {
+            "id": "xm2",
+            "label": "(x − 2)"
+          },
+          {
+            "id": "xm1",
+            "label": "(x − 1)"
+          },
+          {
+            "id": "xp1",
+            "label": "(x + 1)"
+          },
+          {
+            "id": "bigt",
+            "label": "(x + 2)(x + 1)"
+          },
+          {
+            "id": "bigb",
+            "label": "(x − 1)(x − 3)"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          }
+        ],
+        "correct": [
+          "xp2",
+          "div",
+          "xm1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "xp2",
+              "div",
+              "xp1"
+            ],
+            "feedback": "The (x + 1)s are the pair that CANCELS — the bottom's survivor is (x − 1)."
+          },
+          {
+            "sequence": [
+              "xm2",
+              "div",
+              "xm1"
+            ],
+            "feedback": "x² − x − 6 = (x − 3)(x + 2): the pair is −3 and +2, so the survivor is (x + 2)."
+          },
+          {
+            "sequence": [
+              "bigt",
+              "div",
+              "bigb"
+            ],
+            "feedback": "Two cancels remain in that form — (x + 1) and (x − 3) each appear top and bottom."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Factor x² − x − 6 = (x − 3)(x + 2) and x² − 1 = (x − 1)(x + 1), then cancel (x − 3) and (x + 1) across.",
+        "successFeedback": "Right — (x − 3) and (x + 1) cancel across."
+      },
+      "hints": [
+        "Factor: x² − x − 6 = (x − 3)(x + 2); x² − 1 = (x − 1)(x + 1).",
+        "Write the whole product as one big fraction.",
+        "Cancel (x − 3) and (x + 1): (x + 2)/(x − 1) remains."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-multiply__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Factor everything, cancel anywhere top-to-bottom, then multiply.",
+      "takeaways": [
+        "Diagonal cancels are legal — a product is one big fraction.",
+        "Cancel BEFORE multiplying to keep expressions small.",
+        "Every denominator that ever appeared contributes its exclusions."
+      ],
+      "teaser": "Next: division — one flip away from multiplication."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-multiply",
+      "concept": {
+        "id": "rem-rf0201-c",
+        "kind": "concept",
+        "body": "One diagonal cancel: (x/2) · (2/(x + 1)). The 2s sit top and bottom."
+      },
+      "check": {
+        "id": "rem-rf0201-k",
+        "kind": "check",
+        "body": "Cancel and multiply.",
+        "conceptTag": "rf-multiply",
+        "explanationVariants": [
+          "x/(x + 1).",
+          "2/2 = 1 disappears; tops and bottoms multiply."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Multiply: (x/2) · (2/(x + 1)).",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x/(x + 1)",
+              "correct": true,
+              "feedback": "Right — the 2s cancel diagonally."
+            },
+            {
+              "id": "o2",
+              "label": "2x/(x + 1)",
+              "correct": false,
+              "feedback": "The 2 on top cancels against the 2 below — no 2 survives."
+            },
+            {
+              "id": "o3",
+              "label": "x/(2x + 2)",
+              "correct": false,
+              "feedback": "Unfinished — the 2s divide out: x/(x + 1)."
+            },
+            {
+              "id": "o4",
+              "label": "(x + 2)/(x + 3)",
+              "correct": false,
+              "feedback": "Multiplication multiplies — nothing adds 2 to each level."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

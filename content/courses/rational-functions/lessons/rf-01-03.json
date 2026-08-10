@@ -1,0 +1,371 @@
+{
+  "id": "rf-01-03",
+  "slug": "opposite-factors",
+  "title": "Opposite Factors: the −1 Trick",
+  "courseId": "rational-functions",
+  "chapterId": "ch1-simplifying-rational-expressions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "(x − 3) and (3 − x) look like a match but aren't — they're **opposites**: 3 − x = −(x − 3). Check x = 5: the first gives 2, the second −2. So (3 − x)/(x − 3) doesn't cancel to 1 — it cancels to **−1**, at every legal x.",
+      "figure": "rf-opposites"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test the claim.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate (3 − x)/(x − 3) at x = 10.",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Compute: (3 − 10)/(10 − 3) = −7/7 = −1 — the opposite factors leave a minus."
+          },
+          {
+            "value": -7,
+            "feedback": "−7 is only the TOP — divide by the bottom 7: −1."
+          }
+        ],
+        "fallbackFeedback": "−7/7 = −1 — and the same happens at every x ≠ 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The mechanical move: rewrite one opposite as −1 times the other. (5 − x)/(x² − 25) = −(x − 5)/((x − 5)(x + 5)) = **−1/(x + 5)**. Factor, flip the backwards one with a −1, cancel as usual. The −1 rides out front.",
+      "figure": "rf-rewrite-opposite"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the trick.",
+      "conceptTag": "rf-opposite",
+      "explanationVariants": [
+        "(7 − x) = −(x − 7), so (7 − x)/(x − 7) = −1.",
+        "Opposite linear factors always cancel to −1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify (7 − x)/(x − 7).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−1",
+            "correct": true,
+            "feedback": "Right — the top is exactly −(x − 7)."
+          },
+          {
+            "id": "o2",
+            "label": "1",
+            "correct": false,
+            "feedback": "They're OPPOSITES, not equals — test x = 8: −1/1 = −1."
+          },
+          {
+            "id": "o3",
+            "label": "0",
+            "correct": false,
+            "feedback": "The top only hits 0 at x = 7... which is excluded; everywhere else the ratio is −1."
+          },
+          {
+            "id": "o4",
+            "label": "x − 7",
+            "correct": false,
+            "feedback": "The factors cancel entirely — what's left is the −1 from the flip."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-opposite__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Flip and cancel.",
+      "predict": {
+        "prompt": "(4 − x)/(x² − 16) cancels down to −1/(x + 4). What happened to x = 4, which used to break the original?",
+        "options": [
+          {
+            "id": "hole",
+            "label": "It is still excluded — the cancelling leaves a hole there"
+          },
+          {
+            "id": "fine",
+            "label": "It is fine now; the cancellation repaired it"
+          },
+          {
+            "id": "pole",
+            "label": "It became a vertical asymptote"
+          }
+        ],
+        "outcomeId": "hole",
+        "reveal": "Still excluded. Cancelling changes how the expression LOOKS, never which inputs it was allowed to take — the original was undefined at x = 4 and so is the simplified form, with a single point punched out. That puncture is a hole, not an asymptote: the curve carries on either side of it."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for (4 − x)/(x² − 16), which simplifies to −1/(x + 4). The dashed line is the asymptote; the hollow point is the hole.",
+        "roots": [],
+        "poles": [
+          {
+            "x": -4,
+            "mult": 1
+          }
+        ],
+        "holes": [
+          4
+        ],
+        "leadingPositive": false,
+        "successFeedback": "Positive left of −4, negative right of it — and nothing happens at the hole. That is the difference the lesson turns on: the pole at −4 is where the function runs away, the hole at 4 is where it simply skips a single point. Both are excluded values; only one changes the shape.",
+        "crossFeedback": "The pole at −4 has odd order, so the sign changes across it. Nothing changes at the hole — a puncture does not flip anything.",
+        "bounceFeedback": "A sign that holds across a cut belongs to an even multiplicity. Here (x + 4) appears once, so the sign really does change."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Not every reversal is an opposite.",
+      "conceptTag": "rf-opposite",
+      "explanationVariants": [
+        "(x + 2) and (2 + x) are IDENTICAL — addition commutes; they cancel to +1.",
+        "Only subtraction reversals flip sign; sums reorder freely."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify (2 + x)/(x + 2).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1",
+            "correct": true,
+            "feedback": "Right — addition commutes: 2 + x IS x + 2, a true cancel."
+          },
+          {
+            "id": "o2",
+            "label": "−1",
+            "correct": false,
+            "feedback": "The −1 trick is for SUBTRACTION reversals — (2 + x) and (x + 2) are the same expression."
+          },
+          {
+            "id": "o3",
+            "label": "0",
+            "correct": false,
+            "feedback": "Same top and bottom (for x ≠ −2) divide to 1, not 0."
+          },
+          {
+            "id": "o4",
+            "label": "x",
+            "correct": false,
+            "feedback": "Everything cancels — the ratio of identical expressions is 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-opposite__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where the −1 lands.",
+      "conceptTag": "rf-opposite",
+      "explanationVariants": [
+        "(9 − x²) = −(x² − 9) = −(x − 3)(x + 3): over (x − 3), the cancel leaves −(x + 3).",
+        "Flip the difference of squares whole, then cancel one factor."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Simplify (9 − x²)/(x − 3).",
+        "tokens": [
+          {
+            "id": "neg",
+            "label": "−"
+          },
+          {
+            "id": "xp3",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "xm3",
+            "label": "(x − 3)"
+          },
+          {
+            "id": "rev",
+            "label": "(3 − x)"
+          }
+        ],
+        "correct": [
+          "neg",
+          "xp3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "xp3"
+            ],
+            "feedback": "The flip's −1 survives: the answer is NEGATIVE (x + 3) — test x = 4: (9−16)/1 = −7 = −(7). ✓"
+          },
+          {
+            "sequence": [
+              "neg",
+              "xm3"
+            ],
+            "feedback": "(x − 3) is the factor that cancels — the survivor is (x + 3), carrying the minus."
+          },
+          {
+            "sequence": [
+              "rev"
+            ],
+            "feedback": "That's degree 1 with the wrong shape — the quotient is −(x + 3); check x = 4: −7 vs −1."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Factor 9 − x² as −(x − 3)(x + 3), cancel the (x − 3), and keep the −1 with the survivor.",
+        "successFeedback": "Right — 9 − x² = −(x − 3)(x + 3); cancelling (x − 3) leaves −(x + 3)."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-opposite__buildExpression"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Everything at once.",
+      "conceptTag": "rf-opposite",
+      "explanationVariants": [
+        "(6 − 2x)/(x² − 9) = −2(x − 3)/((x − 3)(x + 3)) = −2/(x + 3).",
+        "GCF 2 first, then the flip: 6 − 2x = 2(3 − x) = −2(x − 3)."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Simplify (6 − 2x)/(x² − 9).",
+        "tokens": [
+          {
+            "id": "n2",
+            "label": "−2"
+          },
+          {
+            "id": "p2",
+            "label": "2"
+          },
+          {
+            "id": "n3",
+            "label": "−3"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          },
+          {
+            "id": "xp3",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "xm3",
+            "label": "(x − 3)"
+          }
+        ],
+        "correct": [
+          "n2",
+          "div",
+          "xp3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "p2",
+              "div",
+              "xp3"
+            ],
+            "feedback": "The reversal (3 − x vs x − 3) still costs its −1 — the constant is NEGATIVE 2."
+          },
+          {
+            "sequence": [
+              "n2",
+              "div",
+              "xm3"
+            ],
+            "feedback": "The (x − 3) cancels away — the surviving denominator factor is (x + 3)."
+          },
+          {
+            "sequence": [
+              "n3",
+              "div",
+              "xp3"
+            ],
+            "feedback": "The GCF of 6 − 2x is 2, not 3: −2/(x + 3)."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Factor the top as −2(x − 3) and the bottom as (x − 3)(x + 3), then cancel the (x − 3)s.",
+        "successFeedback": "Right — 6 − 2x = −2(x − 3); the (x − 3)s cancel."
+      },
+      "hints": [
+        "Factor the top: 6 − 2x = 2(3 − x).",
+        "Flip: 2(3 − x) = −2(x − 3).",
+        "Cancel (x − 3) against the factored bottom (x − 3)(x + 3)."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-opposite__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Subtraction reversals are opposites — they cancel to −1, not 1.",
+      "takeaways": [
+        "b − a = −(a − b): rewrite, then cancel normally.",
+        "Addition reversals are identical — no sign cost.",
+        "One numeric test settles any sign doubt."
+      ],
+      "teaser": "Next chapter: multiplying and dividing rational expressions — cancel across everything."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-opposite",
+      "concept": {
+        "id": "rem-rf0103-c",
+        "kind": "concept",
+        "body": "Opposites at a single number: at x = 9, (x − 4) gives 5 and (4 − x) gives −5. Their ratio?"
+      },
+      "check": {
+        "id": "rem-rf0103-k",
+        "kind": "check",
+        "body": "Divide them.",
+        "conceptTag": "rf-opposite",
+        "explanationVariants": [
+          "(4 − x)/(x − 4) = −5/5 = −1.",
+          "Opposite values always divide to −1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "At x = 9, what is (4 − x)/(x − 4)?",
+          "answer": -1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "The values are −5 and 5 — OPPOSITE signs, so the ratio is −1."
+            },
+            {
+              "value": -5,
+              "feedback": "−5 is just the numerator — divide by 5: −1."
+            }
+          ],
+          "fallbackFeedback": "(4 − 9)/(9 − 4) = −5/5 = −1."
+        }
+      }
+    }
+  ]
+}

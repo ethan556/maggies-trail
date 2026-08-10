@@ -1,0 +1,219 @@
+{
+  "id": "co-04-03",
+  "slug": "hyperbolas-parabolas-from-general",
+  "title": "Hyperbolas & Parabolas from General Form",
+  "courseId": "conic-sections",
+  "chapterId": "ch4-general-form",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **hyperbola** in general form needs the same divide-to-1 finish, keeping the minus sign. From 9x² − 4y² − 36 = 0: move the constant (9x² − 4y² = 36), then divide by 36 to get x²/4 − y²/9 = 1 — a clean hyperbola with a = 2, b = 3.",
+      "figure": "co-hyperbola-divide"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Divide to standard form.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 2,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "a² = 4 asks: what number, squared, gives 4? Slide the base until base² reads 4.",
+        "successFeedback": "Base 2, so 2² = 4 confirms a = 2 — the same relationship as a² = 4, read forward instead of solved backward. Dividing 9x² − 4y² = 36 by 36 was the whole job; finding a is just this one square root.",
+        "lowFeedback": "base² is still under 4.",
+        "highFeedback": "base² has passed 4."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Hyperbola's b.",
+      "conceptTag": "co-general-hp",
+      "explanationVariants": [
+        "x²/4 − y²/9 = 1 has b² = 9 (under the minus term), so b = 3.",
+        "√9 = 3 sets the guiding box height."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/4 − y²/9 = 1, what is b?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is b². Take the root: b = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "2 = a (under the plus term). Here b = √9 = 3."
+          }
+        ],
+        "fallbackFeedback": "b = √9 = 3."
+      },
+      "variant": {
+        "gen": "hyperbola-cab"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **parabola** has only one squared variable, so there's nothing to divide — just isolate. From y² − 8x = 0: y² = 8x, matching y² = 4px with 4p = 8, so p = 2. Completing the square handles any shift, but the core move is isolating the lone square.",
+      "figure": "co-parabola-one-squared"
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Parabola focal length.",
+      "conceptTag": "co-general-hp",
+      "explanationVariants": [
+        "y² = 8x matches y² = 4px, so 4p = 8 and p = 2 — focus 2 units from the vertex.",
+        "Read 4p = 8, divide by 4: p = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y² = 8x (form y² = 4px), find p.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 4p, not p. Divide by 4: p = 2."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = 8/2 halves instead of quartering. From 4p = 8, p = 2."
+          }
+        ],
+        "fallbackFeedback": "4p = 8 → p = 2."
+      },
+      "variant": {
+        "gen": "conic-general"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Match the finish to the type.",
+      "conceptTag": "co-general-hp",
+      "explanationVariants": [
+        "Ellipses and hyperbolas end with dividing to make RHS = 1; parabolas (one square) just get isolated — no division needed.",
+        "The divide-to-1 step applies only when BOTH squares are present."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which conic does NOT require dividing to make the right side equal 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the parabola (only one squared term)",
+            "correct": true,
+            "feedback": "Right — with one square you just isolate it; there's no second term to normalize against."
+          },
+          {
+            "id": "o2",
+            "label": "the ellipse",
+            "feedback": "Ellipses DO divide to reach RHS = 1. The parabola is the exception."
+          },
+          {
+            "id": "o3",
+            "label": "the hyperbola",
+            "feedback": "Hyperbolas also divide to 1. The parabola, with one square, does not."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-general-hp__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full conversion.",
+      "conceptTag": "co-general-hp",
+      "explanationVariants": [
+        "16x² − 9y² − 144 = 0 → 16x² − 9y² = 144 → divide by 144: x²/9 − y²/16 = 1, so a = √9 = 3.",
+        "After dividing by 144, a² = 9 gives a = 3 (and b = 4)."
+      ],
+      "hints": [
+        "Move the constant: 16x² − 9y² = 144.",
+        "Divide every term by 144.",
+        "x²/9 − y²/16 = 1, so a = √9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 16x² − 9y² − 144 = 0 to standard form and find a.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is a² after dividing (144/16 = 9). Take the root: a = 3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = b (from 144/9 = 16). The a-value is √9 = 3."
+          }
+        ],
+        "fallbackFeedback": "x²/9 − y²/16 = 1 → a = 3."
+      },
+      "variant": {
+        "gen": "conic-general",
+        "form": "convertA"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every conic, tamed.",
+      "takeaways": [
+        "Hyperbola: move the constant, divide to RHS = 1, keep the minus.",
+        "Parabola: isolate the lone square (y² = 4px), no division.",
+        "Coefficient signs (Ch4 opener) predict the finish before you start."
+      ],
+      "teaser": "Final chapter: eccentricity unifying all the conics."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-general-hp",
+      "concept": {
+        "id": "rem-co0403-c",
+        "kind": "concept",
+        "body": "Hyperbola from general form: isolate, divide to RHS = 1 (keep the minus). Parabola: isolate the single square (y² = 4px), no division."
+      },
+      "check": {
+        "id": "rem-co0403-k",
+        "kind": "check",
+        "body": "One a.",
+        "conceptTag": "co-general-hp",
+        "explanationVariants": [
+          "From x²/25 − y²/4 = 1, a² = 25 so a = 5.",
+          "√25 = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For x²/25 − y²/4 = 1, find a.",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 25,
+              "feedback": "25 is a². Take the root: a = 5."
+            },
+            {
+              "value": 2,
+              "feedback": "You read the y-denominator. a comes from the x-term: a = √25 = 5, while 2 is b."
+            }
+          ],
+          "fallbackFeedback": "a = √25 = 5."
+        }
+      }
+    }
+  ]
+}

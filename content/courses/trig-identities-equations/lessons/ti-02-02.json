@@ -1,0 +1,261 @@
+{
+  "id": "ti-02-02",
+  "slug": "the-pythagorean-family",
+  "title": "The Pythagorean Family",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch2-identity-toolkit",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "From the one identity you know — **sin²θ + cos²θ = 1** (recall) — two more appear by division. Divide every term by **cos²θ**:\n\ntan²θ + 1 = **sec²θ**.\n\nDivide instead by **sin²θ**:\n\n1 + cot²θ = **csc²θ**.\n\nThree identities, one parent.",
+      "figure": "ti-derive-others"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Derive one value.",
+      "predict": {
+        "prompt": "The Pythagorean family all comes from one picture. If a formula in it carries a sign slip, what will the circle show?",
+        "options": [
+          {
+            "id": "mirror",
+            "label": "The computed point mirrors off the true one the moment θ moves"
+          },
+          {
+            "id": "nothing",
+            "label": "Nothing — signs wash out when you square"
+          },
+          {
+            "id": "shrink",
+            "label": "The point spirals inward"
+          }
+        ],
+        "outcomeId": "mirror",
+        "reveal": "It mirrors off — a wrong sign is a wrong reflection, visible instantly. tan²θ + 1 = sec²θ is safe under squaring, but the family's unsquared members are not: pick each formula and watch which survives the drag."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "One point is plotted directly at 90° − θ; the candidates compute it from θ. Pick the family member without the sign slip and land θ on 60°.",
+        "targetAngle": 60,
+        "angleStart": 15,
+        "angleStep": 5,
+        "ghost": "cofunction",
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "(sin θ, cos θ)"
+          },
+          {
+            "id": "signError",
+            "label": "(sin θ, −cos θ)",
+            "feedback": "The sign slip: squaring would hide it — (−cos θ)² = cos²θ — which is why tan² + 1 = sec² can't catch it but the CIRCLE can. Watch the point mirror across the x-axis and detach as soon as θ leaves 0°."
+          }
+        ],
+        "successFeedback": "Glued at every θ. With tan θ = 3/4 the squared identity gives sec²θ = 9/16 + 1 = 25/16 — the entry above — and the picture you just held is why that always works: the family is one right triangle on the circle, and right signs keep it one triangle.",
+        "lowFeedback": "The formula holds — finish the drag to 60° and read the coincidence there.",
+        "highFeedback": "Past 60° — ease back; the reading is at 60°."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Take the root.",
+      "conceptTag": "ti-pythagorean",
+      "explanationVariants": [
+        "sec θ = √(25/16) = 5/4 = 1.25 (positive for an acute θ).",
+        "√sec²θ = 5/4; the sign follows the quadrant, positive here."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Continuing (acute θ), what is sec θ? (As a decimal.)",
+        "answer": 1.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.5625,
+            "feedback": "1.5625 is sec²θ. Take the square root: √(25/16) = 5/4 = 1.25."
+          },
+          {
+            "value": 0.8,
+            "feedback": "0.8 = cos θ. sec is its reciprocal, 1.25 — which matches √(sec²θ)."
+          }
+        ],
+        "fallbackFeedback": "sec θ = √(25/16) = 1.25."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "These shine when **simplifying**: sec²θ − 1 collapses straight to **tan²θ**, and 1 − sin²θ becomes **cos²θ**. Spotting a Pythagorean pair inside a messy expression is the single most useful move in identity work.",
+      "figure": "ti-sec-squared"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Collapse a difference.",
+      "conceptTag": "ti-pythagorean",
+      "explanationVariants": [
+        "csc²θ − 1 = cot²θ, directly from 1 + cot²θ = csc²θ rearranged.",
+        "Move the 1: csc²θ − 1 is exactly cot²θ."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify csc²θ − 1.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "cot²θ",
+            "correct": true,
+            "feedback": "Right — rearrange 1 + cot²θ = csc²θ to get csc²θ − 1 = cot²θ."
+          },
+          {
+            "id": "o2",
+            "label": "tan²θ",
+            "feedback": "tan²θ = sec²θ − 1 (the cosine-divided version). The sine-divided one gives csc²θ − 1 = cot²θ."
+          },
+          {
+            "id": "o3",
+            "label": "1",
+            "feedback": "csc²θ − 1 isn't 1 unless csc²θ = 2. In general it's cot²θ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-pythagorean__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Simplify a product-sum.",
+      "conceptTag": "ti-pythagorean",
+      "explanationVariants": [
+        "sin²θ + sin²θ·cot²θ = sin²θ(1 + cot²θ) = sin²θ · csc²θ = sin²θ/sin²θ = 1.",
+        "Factor sin²θ, apply the identity, then sin²θ · csc²θ = 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify sin²θ + sin²θ·cot²θ.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1",
+            "correct": true,
+            "feedback": "Right — factor sin²θ(1 + cot²θ) = sin²θ·csc²θ = sin²θ/sin²θ = 1."
+          },
+          {
+            "id": "o2",
+            "label": "sin²θ",
+            "feedback": "Factoring gives sin²θ(1 + cot²θ), and 1 + cot²θ = csc²θ = 1/sin²θ — the sin²θ cancels to 1."
+          },
+          {
+            "id": "o3",
+            "label": "cot²θ",
+            "feedback": "Don't drop the first term: the FACTORED form sin²θ(1 + cot²θ) simplifies all the way to 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-pythagorean__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Prove a cleaner form.",
+      "conceptTag": "ti-pythagorean",
+      "explanationVariants": [
+        "(1 − cos²θ)·sec²θ = sin²θ·sec²θ = sin²θ/cos²θ = tan²θ. At θ = π/4, tan²θ = 1.",
+        "Recognize 1 − cos²θ = sin²θ first; the rest converts to tan²θ, which is 1 at π/4."
+      ],
+      "hints": [
+        "Replace 1 − cos²θ using the parent identity.",
+        "1 − cos²θ = sin²θ, so the expression is sin²θ · sec²θ = sin²θ/cos²θ.",
+        "That's tan²θ. Evaluate at π/4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify (1 − cos²θ)·sec²θ to a single function, then evaluate at θ = π/4.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "The simplified form is tan²θ; tan(π/4) = 1, so tan²(π/4) = 1, not 1/2."
+          },
+          {
+            "value": 2,
+            "feedback": "(1 − cos²θ)sec²θ = tan²θ, and tan²(π/4) = 1² = 1."
+          }
+        ],
+        "fallbackFeedback": "= sin²θ·sec²θ = tan²θ; at π/4 that's 1."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One parent, three tools.",
+      "takeaways": [
+        "Divide sin²+cos²=1 by cos²θ → tan²+1 = sec²; by sin²θ → 1+cot² = csc².",
+        "Rearranged: sec²−1 = tan², csc²−1 = cot², 1−sin² = cos².",
+        "Spotting a Pythagorean pair is the master simplification move."
+      ],
+      "teaser": "Next chapter: combining two DIFFERENT angles — the sum and difference formulas."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-pythagorean",
+      "concept": {
+        "id": "rem-ti0202-c",
+        "kind": "concept",
+        "body": "The family: sin²+cos²=1, tan²+1=sec², 1+cot²=csc². Rearrange any of them to collapse a '±1' expression into a single squared function."
+      },
+      "check": {
+        "id": "rem-ti0202-k",
+        "kind": "check",
+        "body": "One collapse.",
+        "conceptTag": "ti-pythagorean",
+        "explanationVariants": [
+          "1 − sin²θ = cos²θ, straight from the parent identity.",
+          "Move sin²θ across: what's left is cos²θ."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Simplify 1 − sin²θ.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "cos²θ",
+              "correct": true,
+              "feedback": "Right — the parent identity rearranged."
+            },
+            {
+              "id": "o2",
+              "label": "cos θ",
+              "feedback": "Mind the square: 1 − sin²θ = cos²θ, not cos θ."
+            },
+            {
+              "id": "o3",
+              "label": "tan²θ",
+              "feedback": "That comes from sec²θ − 1. Here 1 − sin²θ = cos²θ."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

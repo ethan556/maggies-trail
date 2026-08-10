@@ -1,0 +1,291 @@
+{
+  "id": "cx-01-02",
+  "slug": "midpoint-formula",
+  "title": "The Midpoint Formula",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch1-distance-midpoint",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-midpoint",
+      "concept": {
+        "id": "rem-cx-midpoint-c",
+        "kind": "concept",
+        "body": "The midpoint of the segment from (x₁, y₁) to (x₂, y₂) averages each coordinate separately: M = ((x₁ + x₂)/2, (y₁ + y₂)/2). Reverse it to find a missing endpoint: B = 2M − A (double the middle, subtract the known end). Similar triangles with ratio 1/2 guarantee the halves stay in sync."
+      },
+      "check": {
+        "id": "rem-cx-midpoint-k",
+        "kind": "check",
+        "body": "Two averages.",
+        "conceptTag": "cx-midpoint",
+        "explanationVariants": [
+          "x: (1 + 9)/2 = 5; y: (2 + 6)/2 = 4 — enter 5.",
+          "M = (5, 4)."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Midpoint of (1, 2) and (9, 6): enter the x-coordinate.",
+          "answer": 5,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 = 9 − 1 is the run — the midpoint averages: (1 + 9)/2 = 5."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is the Y-coordinate average — x gives (1 + 9)/2 = 5."
+            }
+          ],
+          "fallbackFeedback": "(1 + 9)/2 = 5."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Halfway along a segment is halfway along in x AND halfway along in y — so the midpoint is a pair of **averages**: **M = ((x₁ + x₂)/2, (y₁ + y₂)/2)**. From A(2, 3) to B(8, 7): M = (5, 5). Each coordinate splits its own gap evenly, independently of the other.",
+      "figure": "midpoint-average"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Average both lanes.",
+      "conceptTag": "cx-midpoint",
+      "explanationVariants": [
+        "x: (2 + 8)/2 = 5; y: (3 + 7)/2 = 5. M = (5, 5).",
+        "The figure's own averages: (5, 5) — enter the x-coordinate."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "M is the midpoint of A(2, 3) and B(8, 7). Enter M's x-coordinate.",
+        "answer": 5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 = 8 − 2 is the RUN — the midpoint AVERAGES the endpoints: (2 + 8)/2 = 5."
+          },
+          {
+            "value": 10,
+            "feedback": "10 = 2 + 8 adds without halving — divide by 2: 5."
+          },
+          {
+            "value": 3,
+            "feedback": "3 = 6/2 halves the run but forgets to start at A — the average (2 + 8)/2 = 5 does both at once."
+          }
+        ],
+        "fallbackFeedback": "(2 + 8)/2 = 5."
+      },
+      "variant": {
+        "gen": "coord-midpoint"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Negatives welcome.",
+      "conceptTag": "cx-midpoint",
+      "explanationVariants": [
+        "x: (−6 + 4)/2 = −1; y: (5 + (−3))/2 = 1. M = (−1, 1) — enter the y-coordinate: 1.",
+        "Averages handle signs automatically: y = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Midpoint of (−6, 5) and (4, −3): enter the y-coordinate.",
+        "answer": 1,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = (5 + 3)/2 dropped the minus on −3 — keep it: (5 − 3)/2 = 1."
+          },
+          {
+            "value": -1,
+            "feedback": "−1 is the X-coordinate ((−6 + 4)/2) — the y-average is (5 − 3)/2 = 1."
+          },
+          {
+            "value": 2,
+            "feedback": "2 = (5 − 3) skips the halving — the average is 1."
+          }
+        ],
+        "fallbackFeedback": "(5 + (−3))/2 = 1."
+      },
+      "variant": {
+        "gen": "coord-midpoint",
+        "form": "axisY"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Run the machine in reverse to find a missing **endpoint**: if M is the midpoint of A and B, then each M-coordinate is an average, so **B = (2Mₓ − Aₓ, 2Mᵧ − Aᵧ)** — double the middle, subtract the known end. Averages are easy to invert, and that inversion earns its keep in proofs.",
+      "figure": "cx-midpoint-reverse"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The missing endpoint.",
+      "conceptTag": "cx-midpoint",
+      "explanationVariants": [
+        "Bₓ = 2(5) − 2 = 8 and Bᵧ = 2(5) − 3 = 7: B = (8, 7) — enter Bₓ = 8.",
+        "Double the midpoint, subtract A: (8, 7)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "M(5, 5) is the midpoint of segment AB with A(2, 3). Enter B's x-coordinate.",
+        "answer": 8,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 3.5,
+            "feedback": "3.5 = (5 + 2)/2 averages M with A — that lands a QUARTER of the way. Invert instead: 2(5) − 2 = 8."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is B's Y-coordinate (2·5 − 3) — the x runs 2(5) − 2 = 8."
+          },
+          {
+            "value": 12,
+            "feedback": "12 = 2(5) + 2 adds A instead of subtracting — B = 2M − A: 8."
+          }
+        ],
+        "fallbackFeedback": "Bₓ = 2(5) − 2 = 8."
+      },
+      "variant": {
+        "gen": "coord-midpoint",
+        "form": "findEndpoint"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Midpoint meets distance.",
+      "predict": {
+        "prompt": "A(1, 2), B(7, 10) — distance 10 apart. Drag toward the midpoint: how far will it sit from A?",
+        "options": [
+          {
+            "id": "half",
+            "label": "5 — exactly half of AB"
+          },
+          {
+            "id": "avg",
+            "label": "Something else — averaging coordinates doesn't average the distance"
+          },
+          {
+            "id": "depends",
+            "label": "It depends on which coordinate moved more"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "5 — half of 10. Averaging both coordinates finds the point exactly halfway ALONG the segment, which is exactly half the distance from either end. Drag to it and read the live distance off the legs."
+      },
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "Drag the point to the midpoint of A(1, 2) and B(7, 10), and read its distance from A.",
+        "anchor": [
+          1,
+          2
+        ],
+        "targetPoint": [
+          4,
+          6
+        ],
+        "gridMin": 0,
+        "gridMax": 10,
+        "startX": 1,
+        "startY": 2,
+        "successFeedback": "Distance from A: 5 — exactly half of AB's 10. The point that averages both coordinates is the point exactly halfway along the segment, which is why the distance halves too.",
+        "wrongPointFeedback": "Not the midpoint yet — a point can be exactly halfway in x or in y without being halfway along the SEGMENT. Average both coordinates together: ((1+7)/2, (2+10)/2)."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Why averages?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does averaging the x-coordinates land halfway along the segment (not just halfway horizontally)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Similar right triangles: halving the run forces halving the rise and the hypotenuse too — the halves travel together",
+            "correct": true,
+            "feedback": "The half-run triangle from A is similar to the full run-rise triangle with ratio 1/2, so it halves EVERY dimension — rise and segment length included."
+          },
+          {
+            "id": "o2",
+            "label": "It's a lucky coincidence of the grid",
+            "correct": false,
+            "feedback": "It's the similar-triangles ratio at work — scaling the run by 1/2 scales the whole triangle by 1/2, grid or no grid."
+          },
+          {
+            "id": "o3",
+            "label": "Because x and y are always equal at midpoints",
+            "correct": false,
+            "feedback": "M = (5, 5) was a coincidence of that example — the real engine is the 1/2-ratio similar triangle."
+          },
+          {
+            "id": "o4",
+            "label": "It only works for horizontal segments",
+            "correct": false,
+            "feedback": "Tilted segments are exactly where the similar-triangle argument earns its pay — both legs halve in sync."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Diagonals in advance.",
+      "conceptTag": "cx-midpoint",
+      "hints": [
+        "A parallelogram's diagonals bisect each other (quadrilateral course) — so both diagonals share ONE midpoint.",
+        "Compute the midpoint of diagonal PR.",
+        "The midpoint of QS must be the same point: solve for S from Q and that midpoint."
+      ],
+      "explanationVariants": [
+        "Midpoint of PR = ((0 + 7)/2, (1 + 6)/2) = (3.5, 3.5). Then S = (2(3.5) − 5, 2(3.5) − 0) = (2, 7) — enter Sₓ = 2.",
+        "S = 2M − Q with M = (3.5, 3.5): S = (2, 7)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "PQRS is a parallelogram with P(0, 1), Q(5, 0), R(7, 6). Using the diagonal-bisection property, find vertex S. Enter S's x-coordinate.",
+        "answer": 2,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 3.5,
+            "feedback": "3.5 is the shared midpoint's x — S doubles it and subtracts Q: 2(3.5) − 5 = 2."
+          },
+          {
+            "value": 12,
+            "feedback": "12 = 5 + 7 adds Q and R coordinates — the route runs through the DIAGONAL midpoint: Sₓ = 7 − 5 + 0 = 2."
+          },
+          {
+            "value": -2,
+            "feedback": "−2 subtracts in the wrong order (5 − 7) — S = 2M − Q = 7 − 5 = 2."
+          }
+        ],
+        "fallbackFeedback": "M(PR) = (3.5, 3.5); S = 2M − Q = (2, 7). This is the coordinate-proof pattern arriving early."
+      },
+      "variant": {
+        "gen": "coord-midpoint",
+        "form": "parallelogramVertex"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Halfway is a pair of averages.",
+      "takeaways": [
+        "M = ((x₁ + x₂)/2, (y₁ + y₂)/2) — each coordinate splits its own gap.",
+        "Invert for endpoints: B = 2M − A.",
+        "The similar-triangle ratio 1/2 is why the halves synchronize — and diagonal-bisection puzzles already yield."
+      ],
+      "teaser": "Next: the formulas team up — classifying real triangles by measured sides."
+    }
+  ]
+}

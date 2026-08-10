@@ -1,0 +1,353 @@
+{
+  "id": "dd-02-03",
+  "slug": "the-shape-of-data",
+  "title": "The Shape of Data",
+  "courseId": "data-distributions",
+  "chapterId": "ch2-dot-plots-histograms",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Once data is plotted, describe its **shape** in plain words: where dots **cluster** (bunch up), where there are **gaps** (empty values), which values **peak** (tallest stack), and whether any point sits far from the rest (an **outlier**). The plot 1,2,2,3,3,3,4,4,5 peaks at 3 and falls away evenly on both sides — roughly **symmetric**.",
+      "figure": "dd-shape"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The shape is the story.",
+      "widget": {
+        "type": "dotPlot",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "target": [
+          1,
+          3,
+          5,
+          3,
+          1
+        ],
+        "maxPerValue": 6,
+        "prompt": "Build a dot plot of these test scores: one 1, three 2s, five 3s, three 4s, one 5.",
+        "successFeedback": "A symmetric mound: most values in the middle, tailing off evenly. Shape is the first thing to read from data — before any average, ask whether the pile is symmetric, skewed, or split in two.",
+        "partialFeedback": "Not the right pile yet. Count the dots at each value: 1, 3, 5, 3, 1."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Build and inspect a distribution while coordinating individual values, frequency, center, spread, and shape.",
+        "invariants": [
+          "data-values-determine-distribution",
+          "sample-size-is-frequency-total"
+        ],
+        "misconceptions": [
+          "axis-frequency-confusion",
+          "center-alone-describes-data"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-dotPlot-new-context",
+        "delayed": false
+      },
+      "conceptTag": "distribution-shape",
+      "predict": {
+        "prompt": "One 1, three 2s, five 3s, three 4s, one 5. Once these are plotted, the shape will be…",
+        "options": [
+          {
+            "id": "sym",
+            "label": "Symmetric, piled up in the middle"
+          },
+          {
+            "id": "low",
+            "label": "Clustered at the low end with a long tail"
+          },
+          {
+            "id": "flat",
+            "label": "Spread evenly across all five values"
+          }
+        ],
+        "outcomeId": "sym",
+        "reveal": "Symmetric — counts of 1, 3, 5, 3, 1, peaking at 3 and falling away evenly on both sides. Shape is the fastest thing a plot gives you: the balance point is visible here before a single mean is calculated."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Symmetric or not?",
+      "conceptTag": "distribution-shape",
+      "explanationVariants": [
+        "Around the peak at 3, the plot has 1+2 = 3 dots below and 2+1 = 3 dots above — balanced on both sides: symmetric.",
+        "A symmetric shape mirrors around its peak; this one does, dot for dot."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The plot of 1,2,2,3,3,3,4,4,5 peaks at 3, with 3 dots below the peak and 3 above. What's its shape?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Roughly symmetric — it mirrors around the peak",
+            "correct": true,
+            "feedback": "Right — equal weight on both sides of the peak is the mark of symmetry."
+          },
+          {
+            "id": "b",
+            "label": "Skewed — the values go up to 5",
+            "feedback": "Reaching 5 doesn't skew it — the LOW side reaches down to 1 equally far. Both sides mirror: symmetric."
+          },
+          {
+            "id": "c",
+            "label": "It has no shape",
+            "feedback": "Every plotted data set has a describable shape — this one balances around its peak: symmetric."
+          }
+        ]
+      },
+      "hints": [
+        "Compare the two sides of the peak.",
+        "3 dots below, 3 above.",
+        "Balanced = symmetric."
+      ],
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddShapeSymmetric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Not all data balances. The plot of 1,1,1,2,2,3,4,8 **clusters** at the low end (five dots at 1-2), then trails off — with a **gap** from 5 through 7 and a lone dot at 8 sitting far from the pack: an **outlier**. Naming cluster, gap, and outlier tells the data's story before any number is computed.",
+      "figure": "dd-shape"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the far point.",
+      "conceptTag": "distribution-shape",
+      "explanationVariants": [
+        "The value 8 sits beyond a three-value gap from the rest — a textbook outlier.",
+        "An outlier is separated from the pack; the gap from 5-7 isolates the 8."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the plot of 1,1,1,2,2,3,4,8 — what is the 8?",
+        "options": [
+          {
+            "id": "a",
+            "label": "An outlier — it sits far from the cluster, past a gap",
+            "correct": true,
+            "feedback": "Right — the empty stretch from 5 to 7 isolates the 8 from the low cluster."
+          },
+          {
+            "id": "b",
+            "label": "The peak — it's the biggest number",
+            "feedback": "The peak is the most COMMON value (1, with three dots), not the largest. The lone 8 is an outlier."
+          },
+          {
+            "id": "c",
+            "label": "An error that should be deleted",
+            "feedback": "Outliers are real data unless proven mistaken — maybe one student really does have 8 pets. Name it, don't erase it."
+          }
+        ]
+      },
+      "hints": [
+        "Where does the data bunch, and what sits apart?",
+        "The cluster is at 1-2; then a gap.",
+        "The isolated 8 is the outlier."
+      ],
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddShapeOutlier"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match plot to description.",
+      "conceptTag": "distribution-shape",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each plotted data set to the shape description that fits it.",
+        "left": [
+          {
+            "id": "p1",
+            "label": "1,2,2,3,3,3,4,4,5"
+          },
+          {
+            "id": "p2",
+            "label": "1,1,1,2,2,3,4,8"
+          },
+          {
+            "id": "p3",
+            "label": "2,2,5,5,5,8,8"
+          }
+        ],
+        "right": [
+          {
+            "id": "d1",
+            "label": "Symmetric around a single peak"
+          },
+          {
+            "id": "d2",
+            "label": "Clustered low with a gap and a high outlier"
+          },
+          {
+            "id": "d3",
+            "label": "Peak in the middle with matching small stacks at both ends"
+          }
+        ],
+        "pairs": {
+          "p1": "d1",
+          "p2": "d2",
+          "p3": "d3"
+        },
+        "pairErrors": [
+          {
+            "left": "p2",
+            "right": "d1",
+            "feedback": "That set piles up at 1-2 and trails to a lone 8 — clustered-with-outlier, not symmetric."
+          },
+          {
+            "left": "p1",
+            "right": "d2",
+            "feedback": "That set has no gap and no isolated point — it mirrors around its peak at 3."
+          }
+        ],
+        "missFeedback": "Sketch each mentally: where's the peak, is there a gap, does anything sit alone?",
+        "successFeedback": "Matched — peak position, gaps, and outliers pin down each shape."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Cluster, spotted.",
+      "conceptTag": "distribution-shape",
+      "explanationVariants": [
+        "Five of the eight dots sit at just 1 and 2 — that bunching is the cluster.",
+        "A cluster is where dots crowd together; here it's the low values."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 1,1,1,2,2,3,4,8 — how many data values sit in the low cluster at 1 and 2?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "values",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 counts the distinct VALUES (1 and 2), not the data points at them. Count all dots there: three 1s + two 2s = 5."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the whole data set. The cluster question asks only about the dots at 1 and 2: 5."
+          }
+        ],
+        "fallbackFeedback": "Three 1s and two 2s: 5 values in the cluster."
+      },
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddShapeClusterCount"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Tell the story.",
+      "conceptTag": "distribution-shape",
+      "hints": [
+        "Describe: peak? cluster? gap? outlier?",
+        "Most dots at 0-1; empty 3-5; one dot at 6.",
+        "Pick the description hitting all three features."
+      ],
+      "explanationVariants": [
+        "The data crowds at 0-1 (peak at 0), shows nothing from 3 through 5, and has a single distant 6 — cluster + gap + outlier.",
+        "All three named features appear: a low cluster, a gap, and one outlier."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Absences this month: 0,0,0,1,1,2,6. Which description tells the full story?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Clustered at 0-1 with a gap from 3-5 and an outlier at 6",
+            "correct": true,
+            "feedback": "Right — most students missed 0-1 days, and one student's 6 sits alone past a gap."
+          },
+          {
+            "id": "b",
+            "label": "Symmetric around 3",
+            "feedback": "Nothing sits AT 3 — and six of seven values crowd at 0-2 while one sits at 6. That's a cluster with an outlier, not symmetry."
+          },
+          {
+            "id": "c",
+            "label": "Evenly spread from 0 to 6",
+            "feedback": "The dots aren't even — they pile at 0-1, vanish from 3-5, and one appears at 6. Cluster, gap, outlier."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddShapeFullStory"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Shape is the first summary.",
+      "takeaways": [
+        "Describe plots with four words: peak (tallest), cluster (bunching), gap (empty), outlier (isolated).",
+        "Symmetric data mirrors around its peak; skewed data trails off to one side.",
+        "Outliers are real data — name them, don't erase them."
+      ],
+      "teaser": "next chapter: putting numbers on the center — mean and median."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "distribution-shape",
+      "concept": {
+        "id": "rem-ds-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Peak = most common, outlier = far from the pack.** In 2,2,2,3,9: the peak is at 2 (three dots), and the 9 sits alone past a gap — an outlier."
+      },
+      "check": {
+        "id": "rem-ds-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "distribution-shape",
+        "explanationVariants": [
+          "The value 2 has the tallest stack (three dots) — that's the peak.",
+          "Peak means most common, not largest."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the data 2, 2, 2, 3, 9 — at which value is the peak?",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is the LARGEST value (and an outlier) — the peak is the most COMMON: 2, with three dots."
+            },
+            {
+              "value": 3,
+              "feedback": "3 appears once. The tallest stack is at 2 (three times): the peak is 2."
+            }
+          ],
+          "fallbackFeedback": "2 appears three times — the tallest stack, so the peak."
+        }
+      }
+    }
+  ]
+}

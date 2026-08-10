@@ -1,0 +1,334 @@
+{
+  "id": "cpr-04-02",
+  "slug": "testing-independence",
+  "title": "The Product Test",
+  "courseId": "conditional-probability",
+  "chapterId": "ch4-independence",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Put P(A | B) = P(A) into the multiplication rule and the conditional disappears:\n\nP(A ∩ B) = P(A) × P(B)  — **only when A and B are independent.**\n\nThat gives a one-line test. Predict the cell from the two edge totals; then look at the cell. If the prediction is wrong, the events are dependent.",
+      "figure": "cpr-independence-test"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Run the test on a clean table.",
+      "conceptTag": "cpr-independence-test",
+      "explanationVariants": [
+        "P(coffee) = 120/200 = 0.6 and P(glasses) = 100/200 = 0.5, so the product predicts 0.30 → 60 people. The cell holds exactly 60.",
+        "Equivalently P(glasses | coffee) = 60/120 = 0.5 = P(glasses). Coffee tells you nothing about glasses."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "200 people: 120 drink coffee, 100 wear glasses, and 60 do both. The product predicts P(coffee) × P(glasses) × 200 people in that cell. How many does it predict?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "That is the coffee total alone. The prediction multiplies the two rates first: 0.6 × 0.5 = 0.30, then applies it to 200."
+          },
+          {
+            "value": 110,
+            "feedback": "That looks like 0.6 + 0.5 scaled — adding rates. The product test multiplies them."
+          },
+          {
+            "value": 100,
+            "feedback": "That is the glasses total. Multiply the two rates before scaling: 0.6 × 0.5 × 200."
+          }
+        ],
+        "fallbackFeedback": "0.6 × 0.5 = 0.30, and 0.30 × 200 = 60 — exactly the count in the cell, so the events are independent."
+      },
+      "variant": {
+        "gen": "independence-test"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The 200 people, one square each.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the coffee-and-glasses group predicted by independence: 60% of the width, 50% of the height.",
+        "rows": 10,
+        "cols": 20,
+        "targetNum": 3,
+        "targetDen": 10,
+        "start": 0,
+        "successFeedback": "60 of 200 squares = 0.30, the product 0.6 × 0.5. The actual cell holds 60 too, so the table is independent.",
+        "lowFeedback": "Smaller than 0.6 × 0.5. Take 60% of the group, then half of that.",
+        "highFeedback": "Larger than 0.30. Shading 0.6 alone would be the coffee drinkers, before the glasses rate is applied."
+      },
+      "predict": {
+        "prompt": "You'll shade 3/10 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 5/10 here — and 3 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-independence-test"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now run it where it fails.",
+      "conceptTag": "cpr-independence-test",
+      "explanationVariants": [
+        "0.50 × 0.55 × 200 = 55 students predicted, but the cell holds 40. The 15-student gap means travel and sport are dependent.",
+        "Bus riders play sports at 40/100 = 0.40, well under the school-wide 0.55, so the cell comes up short of the prediction."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The students: P(bus) = 0.50, P(sport) = 0.55, total 200. How many students does independence predict in the bus-and-sport cell?",
+        "answer": 55,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "That is the actual cell count. The *prediction* comes from the product: 0.50 × 0.55 × 200 = 55. The fact that they differ is the finding."
+          },
+          {
+            "value": 105,
+            "feedback": "That is 0.50 + 0.55 scaled to 200 — adding the rates. Independence multiplies them."
+          },
+          {
+            "value": 110,
+            "feedback": "That is the sport column total. The prediction must fold in P(bus) as well: 0.50 × 0.55 × 200."
+          }
+        ],
+        "fallbackFeedback": "0.50 × 0.55 = 0.275, and 0.275 × 200 = 55 predicted against 40 actual — dependent."
+      },
+      "variant": {
+        "gen": "independence-test",
+        "form": "predictVsActual"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The product test works in **both directions**:\n\n– Given a table, compare the actual cell with P(A) × P(B) × total.\n– Given that events *are* independent, use the product to **build** the missing cell.\n\nA gap in either direction — cell above or below the prediction — is dependence. Only an exact match means none.",
+      "figure": "cpr-independence-test"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Build a cell from independence.",
+      "conceptTag": "cpr-independence-test",
+      "explanationVariants": [
+        "If independent, P(A ∩ B) = 0.25 × 0.40 = 0.10, so the cell holds 0.10 × 400 = 40 people.",
+        "A quarter of the group is A; 40% of every subgroup is B when the events are independent; 40% of 100 A-people is 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "400 people. P(A) = 0.25, P(B) = 0.40, and A and B are **independent**. How many people are in the A-and-B cell?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "That is the A group as a whole (0.25 × 400). Only 40% of them are also B, which brings it down to 40."
+          },
+          {
+            "value": 160,
+            "feedback": "That is the B group as a whole (0.40 × 400). The A condition still has to be applied on top of it."
+          },
+          {
+            "value": 260,
+            "feedback": "That is 0.25 + 0.40 scaled to 400 — an addition, which would answer 'A or B' and even then would need the overlap removed."
+          }
+        ],
+        "fallbackFeedback": "0.25 × 0.40 × 400 = 40."
+      },
+      "variant": {
+        "gen": "independence-test",
+        "form": "plainProduct"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Which tables are independent?",
+      "conceptTag": "cpr-independence-test",
+      "explanationVariants": [
+        "Compute P(A) × P(B) × total and compare it with the given cell. Match → independent; gap → dependent.",
+        "Equivalently, compare the rate inside the row with the rate overall. Equal rates mean independence."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Each table has 100 people. Does the product test pass?",
+        "buckets": [
+          {
+            "id": "pass",
+            "label": "Independent",
+            "icon": "⚖️"
+          },
+          {
+            "id": "fail",
+            "label": "Dependent",
+            "icon": "🔗"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "P(A) = 0.5, P(B) = 0.4, cell = 20",
+            "bucketId": "pass",
+            "feedback": "0.5 × 0.4 × 100 = 20, exactly the cell. The product test passes."
+          },
+          {
+            "id": "s2",
+            "label": "P(A) = 0.5, P(B) = 0.4, cell = 30",
+            "bucketId": "fail",
+            "feedback": "The product predicts 20 but the cell holds 30 — a surplus of 10. A-people are B far more often than average, so the events are dependent."
+          },
+          {
+            "id": "s3",
+            "label": "P(A) = 0.2, P(B) = 0.5, cell = 10",
+            "bucketId": "pass",
+            "feedback": "0.2 × 0.5 × 100 = 10, matching the cell exactly."
+          },
+          {
+            "id": "s4",
+            "label": "P(A) = 0.6, P(B) = 0.5, cell = 15",
+            "bucketId": "fail",
+            "feedback": "The product predicts 30 but only 15 are there. A halves the chance of B, which is strong dependence."
+          }
+        ],
+        "missFeedback": "For each row, multiply the two rates and scale by 100, then compare with the cell that is given.",
+        "successFeedback": "Two exact matches, two gaps. The test does not care whether the gap is a surplus or a shortfall — either one is dependence."
+      },
+      "variant": {
+        "gen": "independence-test",
+        "form": "bucketTest"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One cell, hidden.",
+      "conceptTag": "cpr-independence-test",
+      "hints": [
+        "Independence lets you predict any inner cell from the two edge rates.",
+        "P(defective) = 0.05 and P(machine A) = 0.60, so P(A and defective) = 0.05 × 0.60 = 0.03.",
+        "Apply that to 2000 items."
+      ],
+      "explanationVariants": [
+        "0.60 × 0.05 × 2000 = 60 items. Independence means machine A's defect rate is the same 5% as everyone else's.",
+        "Machine A makes 1200 items, and 5% of them are defective: 0.05 × 1200 = 60."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A factory makes 2000 items. 60% come from machine A, and 5% of all items are defective. If the machine and the defect are **independent**, how many items are from machine A **and** defective?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "That is 5% of all 2000 items — every defective item, from either machine. Only 60% of them come from machine A."
+          },
+          {
+            "value": 1200,
+            "feedback": "That is machine A's whole output. Just 5% of it is defective."
+          },
+          {
+            "value": 30,
+            "feedback": "That is 5% of 600, as if machine A made 600 items. It makes 60% of 2000, which is 1200."
+          }
+        ],
+        "fallbackFeedback": "0.60 × 0.05 × 2000 = 60."
+      },
+      "variant": {
+        "gen": "independence-test",
+        "form": "factory"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiply the edges, then look at the cell.",
+      "takeaways": [
+        "Independence ⟺ P(A ∩ B) = P(A) × P(B). It is a test, not an assumption.",
+        "Any gap between the predicted and the actual cell — surplus or shortfall — means dependence.",
+        "Assume independence only when you have a reason; otherwise the product silently invents a number."
+      ],
+      "teaser": "Next: the pair of words people mix up more than any other in this subject."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-independence-test",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "The product test has two steps. **Predict:** multiply the two rates and scale by the total. **Compare:** look at what the cell actually holds. Equal means independent. Any difference at all means dependent.",
+        "figure": "cpr-independence-test"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Predict, then compare.",
+        "conceptTag": "cpr-independence-test",
+        "explanationVariants": [
+          "0.4 × 0.5 × 100 = 20 predicted, and the cell holds 20 — they agree, so the events are independent.",
+          "Same rate inside as outside: independence."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "100 people, P(A) = 0.4, P(B) = 0.5, and the A-and-B cell holds 20. Independent?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Independent — the product predicts 20 and the cell holds 20.",
+              "correct": true,
+              "feedback": "Right — prediction and reality agree exactly."
+            },
+            {
+              "id": "o2",
+              "label": "Dependent — 20 is smaller than both 40 and 50.",
+              "correct": false,
+              "feedback": "A joint cell is *always* smaller than each edge total. What matters is whether it matches the product, 0.4 × 0.5 × 100 = 20. It does."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+ "id": "fna-05-02",
+ "slug": "restricted-domains",
+ "title": "Restricting the Domain",
+ "courseId": "function-analysis",
+ "chapterId": "ch5-inverses-formalized",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A failed horizontal line test isn't fatal — we can **restrict the domain** to a piece where the function IS one-to-one. Keep only x ≥ 0 of y = x²: the right half climbs steadily, passes the test, and its inverse is exactly **√x**. This trade — smaller domain for invertibility — is how √x is defined.",
+   "figure": "fna-restrict-domain"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Use the restricted inverse.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x² restricted to x ≥ 0. What is f⁻¹(16)?",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -4,
+      "feedback": "(−4)² = 16 too, but −4 was thrown out by the restriction x ≥ 0 — the inverse returns the KEPT input, 4."
+     },
+     {
+      "value": 256,
+      "feedback": "256 = 16² applies f forward. The inverse UNDOES the square: √16 = 4."
+     }
+    ],
+    "fallbackFeedback": "On x ≥ 0, the only input squaring to 16 is 4."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Any one-to-one **piece** works. For f(x) = (x − 3)², the parabola's vertex sits at x = 3; restricting to **x ≥ 3** keeps the rising right branch. Its inverse solves y = (x − 3)² for x: x = **3 + √y**.",
+   "figure": "fna-one-to-one-piece"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Run the restricted inverse.",
+   "conceptTag": "fna-restricted",
+   "explanationVariants": [
+    "f⁻¹(y) = 3 + √y, so f⁻¹(1) = 3 + 1 = 4 — and indeed f(4) = (4 − 3)² = 1.",
+    "Undo in reverse order: un-square 1 to get 1, then un-subtract the 3: x = 4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = (x − 3)² restricted to x ≥ 3. What is f⁻¹(1)?",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 = 3 − √1 is the LEFT-branch answer, excluded by x ≥ 3. The kept branch gives 3 + √1 = 4."
+     },
+     {
+      "value": -2,
+      "feedback": "The inverse is 3 + √y = 3 + 1 = 4; check: (4 − 3)² = 1."
+     },
+     {
+      "value": 1,
+      "feedback": "1 is the OUTPUT being undone. f⁻¹ returns the input: 3 + √1 = 4."
+     }
+    ],
+    "fallbackFeedback": "3 + √1 = 4, and (4 − 3)² = 1 confirms it."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-restricted__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Choose a valid restriction.",
+   "conceptTag": "fna-restricted",
+   "explanationVariants": [
+    "x ≤ 3 keeps only the falling LEFT branch — strictly decreasing, so one-to-one and invertible.",
+    "Either single branch works; x ≤ 3 never revisits an output, unlike any interval straddling the vertex."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which restriction ALSO makes f(x) = (x − 3)² one-to-one?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x ≤ 3 (the left branch)",
+      "correct": true,
+      "feedback": "Right — the left branch is strictly decreasing, so it passes the horizontal line test on its own."
+     },
+     {
+      "id": "o2",
+      "label": "x ≥ 0",
+      "feedback": "x ≥ 0 still contains the vertex x = 3 AND points on both sides of it — e.g. f(2) = 1 = f(4). It straddles the turn."
+     },
+     {
+      "id": "o3",
+      "label": "−1 ≤ x ≤ 7",
+      "feedback": "That window is centered on the vertex: f(2) = 1 = f(4) both live inside it. Any interval crossing x = 3 keeps collisions."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-restricted__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Domain and range swap.",
+   "conceptTag": "fna-restricted",
+   "explanationVariants": [
+    "f on x ≥ 0 has range y ≥ 0; the inverse swaps them, so f⁻¹ = √x has domain x ≥ 0.",
+    "The inverse's DOMAIN is the original's RANGE: squares of x ≥ 0 fill exactly [0, ∞)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "f(x) = x² on x ≥ 0 has range y ≥ 0. What is the DOMAIN of f⁻¹(x) = √x?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x ≥ 0 — the inverse's domain is f's range",
+      "correct": true,
+      "feedback": "Exactly — inverses swap domain and range, and f's outputs filled [0, ∞)."
+     },
+     {
+      "id": "o2",
+      "label": "All real numbers",
+      "feedback": "√x can't accept negatives — and it shouldn't: f never OUTPUT a negative, so the inverse never needs to undo one."
+     },
+     {
+      "id": "o3",
+      "label": "x ≥ 3",
+      "feedback": "The 3 belongs to the (x − 3)² example. For plain x² on x ≥ 0, the range — hence the inverse's domain — is x ≥ 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-restricted__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Restrict, invert, evaluate.",
+   "conceptTag": "fna-restricted",
+   "explanationVariants": [
+    "Solve y = x² + 1 for x on x ≥ 0: x = √(y − 1). Then f⁻¹(10) = √9 = 3 — check: 3² + 1 = 10.",
+    "Undo in reverse: subtract the 1 (10 → 9), then un-square (9 → 3)."
+   ],
+   "hints": [
+    "Write y = x² + 1 and solve for x, keeping the x ≥ 0 branch.",
+    "Subtract 1 first, then take the square root: x = √(y − 1).",
+    "f⁻¹(10) = √(10 − 1)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x² + 1 restricted to x ≥ 0. What is f⁻¹(10)?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -3,
+      "feedback": "−3 squares to 9 too, but the restriction x ≥ 0 discarded it — the inverse returns 3."
+     },
+     {
+      "value": 101,
+      "feedback": "101 = 10² + 1 runs f FORWARD. The inverse goes backward: √(10 − 1) = 3."
+     },
+     {
+      "value": 9,
+      "feedback": "9 is the intermediate 10 − 1. One more undo: √9 = 3."
+     }
+    ],
+    "fallbackFeedback": "√(10 − 1) = 3; check 3² + 1 = 10."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-restricted__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Trade domain for undo-ability.",
+   "takeaways": [
+    "Restrict to a strictly rising or falling piece to gain an inverse.",
+    "Any interval straddling a turning point keeps collisions.",
+    "Inverses swap domain and range."
+   ],
+   "teaser": "Finale: PROVING two functions are inverses — the composition identity."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fna-restricted",
+   "concept": {
+    "id": "rem-fna0502-c",
+    "kind": "concept",
+    "body": "To invert a restricted function: solve y = f(x) for x, then pick the branch (± choice) matching the restriction."
+   },
+   "check": {
+    "id": "rem-fna0502-k",
+    "kind": "check",
+    "body": "Pick the kept branch.",
+    "conceptTag": "fna-restricted",
+    "explanationVariants": [
+     "√25 = 5 lies in x ≥ 0, the kept branch — f⁻¹(25) = 5.",
+     "Both ±5 square to 25; the restriction keeps only +5."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "f(x) = x² restricted to x ≥ 0. What is f⁻¹(25)?",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": -5,
+       "feedback": "−5 was excluded by x ≥ 0 — the restricted inverse returns +5."
+      },
+      {
+       "value": 625,
+       "feedback": "625 = 25² is forward. Backward: √25 = 5."
+      }
+     ],
+     "fallbackFeedback": "√25 = 5, the branch with x ≥ 0."
+    }
+   }
+  }
+ ]
+}

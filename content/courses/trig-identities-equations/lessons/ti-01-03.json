@@ -1,0 +1,293 @@
+{
+  "id": "ti-01-03",
+  "slug": "ladders-for-transformed-angles",
+  "title": "Ladders for Transformed Angles",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch1-general-solutions",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "For sin(2x) = 1/2, solve for the INSIDE first: 2x = π/6 + 2πk or 2x = 5π/6 + 2πk. Then divide EVERYTHING — including the 2πk — by 2:\n\nx = π/12 + **πk** or x = 5π/12 + **πk**.\n\nThe ladder step shrinks with the period: dividing by B compresses the spacing too.",
+      "figure": "ti-solve-inside"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Divide the whole ladder.",
+      "predict": {
+        "prompt": "Solutions of sin(2x) = … come from a 2x-ladder with 360° rungs. After dividing by 2, how far apart are the x-rungs?",
+        "options": [
+          {
+            "id": "d180",
+            "label": "180° — dividing the ladder divides the spacing"
+          },
+          {
+            "id": "d360",
+            "label": "Still 360° — the +2πk is untouchable"
+          },
+          {
+            "id": "d720",
+            "label": "720° — dividing spreads them out"
+          }
+        ],
+        "outcomeId": "d180",
+        "reveal": "180°: dividing EVERYTHING by 2 divides the rung spacing too — 2πk becomes πk. On the wave, that's just the period of sin 2x: drag one full cycle and see it close in half a turn."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = sin 2x through exactly ONE full cycle — that length is the spacing of the divided ladder's rungs.",
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "sin",
+        "angularScale": 2,
+        "targetFeature": {
+          "kind": "period",
+          "x": 180,
+          "tol": 5
+        },
+        "successFeedback": "One cycle in 180° — so x = π/12 + (π/1)·k... read carefully: the step is π, meaning n = 1 in the entry's π/n. Dividing 2x = π/6 + 2πk by 2 divided the whole ladder, rungs included — the wave's period is that division made visible.",
+        "lowFeedback": "The cycle hasn't closed — sin 2x moves twice as fast, but you still need the full pattern. Keep dragging.",
+        "highFeedback": "Past one cycle — the wave already repeated. Back up to where the pattern first restarts."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the consequences.",
+      "conceptTag": "ti-inside-ladder",
+      "explanationVariants": [
+        "Two families with step π each put 2 members per π-length: [0, 2π) holds 2 × 2 = 4 solutions (π/12, 5π/12, 13π/12, 17π/12).",
+        "Compressing by B = 2 doubles the solution count per window: sin x = 1/2 had 2, sin 2x = 1/2 has 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does sin(2x) = 1/2 have on [0, 2π)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the UNCOMPRESSED count. B = 2 squeezes two full waves into the window: 4 solutions."
+          },
+          {
+            "value": 8,
+            "feedback": "8 would need B = 4. With B = 2: 4."
+          }
+        ],
+        "fallbackFeedback": "π/12, 5π/12, 13π/12, 17π/12: four."
+      },
+      "variant": {
+        "gen": "trig-inside"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A shifted inside.",
+      "conceptTag": "ti-inside-ladder",
+      "explanationVariants": [
+        "cos(x − π/3) = 1: the inside must be a multiple of 2π (cos = 1 only at 0 + 2πk), so x = π/3 + 2πk.",
+        "Set u = x − π/3; cos u = 1 gives u = 2πk; undo the shift by adding π/3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve cos(x − π/3) = 1 in general:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = π/3 + 2πk",
+            "correct": true,
+            "feedback": "Right — the inside equals 2πk (cosine's peak positions), then the shift moves the ladder over by π/3."
+          },
+          {
+            "id": "o2",
+            "label": "x = 2πk",
+            "feedback": "That solves cos x = 1 for a PLAIN x. The inside is x − π/3: add the shift back."
+          },
+          {
+            "id": "o3",
+            "label": "x = π/3 + πk",
+            "feedback": "cos(π/3 + π − π/3) = cos π = −1 ✗ — cosine hits +1 only every FULL turn: step 2π."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "trig-inside",
+        "form": "generalCos"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The full recipe for A·trig(B(x − C)) = v: **(1)** isolate the trig; **(2)** write the inside's general ladder from the base twins; **(3)** solve the linear equation inside = ladder for x — dividing or shifting the ENTIRE expression, k-term included.",
+      "figure": "ti-full-recipe"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Recipe in one line.",
+      "conceptTag": "ti-inside-ladder",
+      "explanationVariants": [
+        "tan(3x) = 1: inside ladder 3x = π/4 + πk → x = π/12 + (π/3)k. The step is π/3.",
+        "Tangent's π step divides by B = 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The general solution of tan(3x) = 1 is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = π/12 + (π/3)k",
+            "correct": true,
+            "feedback": "Right — divide seed AND step by 3: rungs every π/3."
+          },
+          {
+            "id": "o2",
+            "label": "x = π/12 + πk",
+            "feedback": "The step must divide by 3 too: πk/3. Otherwise you skip two-thirds of the rungs."
+          },
+          {
+            "id": "o3",
+            "label": "x = π/4 + (π/3)k",
+            "feedback": "The SEED also divides: π/4 ÷ 3 = π/12."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "trig-inside",
+        "form": "generalTan"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "You already counted these four solutions — now add them together.",
+      "conceptTag": "ti-inside-ladder",
+      "explanationVariants": [
+        "sin(2x)=1/2 on [0,2π) gives x=π/12, 5π/12, 13π/12, 17π/12. Their sum: (1+5+13+17)π/12=36π/12=3π≈9.42.",
+        "Four solutions, evenly spaced from the inside-angle substitution, sum to exactly 3π≈9.42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve sin(2x) = 1/2 on [0, 2π) — you already found this has 4 solutions. What is their SUM, to hundredths?",
+        "answer": 9.42,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 6.28,
+            "feedback": "6.28 is 2π, the count-4-solutions interval width, not their sum. Add the four actual x-values: π/12+5π/12+13π/12+17π/12=3π≈9.42."
+          },
+          {
+            "value": 4.71,
+            "feedback": "4.71 sums only two of the four solutions. All FOUR solutions on [0,2π) must be added: 3π≈9.42."
+          },
+          {
+            "value": 3.14,
+            "feedback": "3.14 is only π — the sum of all four solutions is 3π≈9.42, three times that."
+          }
+        ],
+        "fallbackFeedback": "Solve for 2x first (u=π/6, 5π/6, and +2π for two more), then x=u/2 for all four, then add: 3π≈9.42."
+      },
+      "variant": {
+        "gen": "trig-inside",
+        "form": "sumSolutions"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full pipeline with an isolate step.",
+      "conceptTag": "ti-inside-ladder",
+      "explanationVariants": [
+        "2 cos(2x) = √2 → cos(2x) = √2/2 → 2x = π/4 + 2πk or 2x = 7π/4 + 2πk → x = π/8 + πk or 7π/8 + πk. On [0, π): π/8 and 7π/8 — sum π ≈ 3.14.",
+        "One member of each family fits below π; the pair sums to 8π/8 = π."
+      ],
+      "hints": [
+        "Isolate: cos(2x) = √2/2. Base twins for cosine at √2/2?",
+        "2x = π/4 + 2πk or 7π/4 + 2πk. Divide everything by 2.",
+        "x = π/8 + πk or 7π/8 + πk. Which members lie in [0, π)? Sum them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 2 cos(2x) = √2 on [0, π). What is the SUM of the solutions, to hundredths?",
+        "answer": 3.14,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 0.39,
+            "feedback": "0.39 ≈ π/8 is one solution alone. Its partner 7π/8 ≈ 2.75 also fits: sum π ≈ 3.14."
+          },
+          {
+            "value": 6.28,
+            "feedback": "2π counts the pre-division ladder. After dividing by 2 and restricting to [0, π): π/8 + 7π/8 = π."
+          },
+          {
+            "value": 1.57,
+            "feedback": "π/2 would be the sum if the twins were π/8 and 3π/8 — but cosine's second twin is 7π/8 here. Sum ≈ 3.14."
+          }
+        ],
+        "fallbackFeedback": "π/8 + 7π/8 = π ≈ 3.14."
+      },
+      "variant": {
+        "gen": "trig-inside",
+        "form": "sumSolutions"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The inside gets the ladder.",
+      "takeaways": [
+        "Write the ladder for the INSIDE, then solve linearly for x.",
+        "Divide or shift the k-term along with everything else.",
+        "B compresses both spacing and step: more solutions per window."
+      ],
+      "teaser": "Next chapter: the identity toolkit — six functions, one circle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-inside-ladder",
+      "concept": {
+        "id": "rem-ti0103-c",
+        "kind": "concept",
+        "body": "For trig(inside) = v: inside = general ladder; then solve for x, transforming seed AND step together."
+      },
+      "check": {
+        "id": "rem-ti0103-k",
+        "kind": "check",
+        "body": "One division.",
+        "conceptTag": "ti-inside-ladder",
+        "explanationVariants": [
+          "sin(4x) = 0: 4x = πk → x = (π/4)k — step π/4.",
+          "Sine's merged π ladder divides by 4."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The general solution of sin(4x) = 0 is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x = (π/4)k",
+              "correct": true,
+              "feedback": "Right — πk ÷ 4: rungs every quarter of π."
+            },
+            {
+              "id": "o2",
+              "label": "x = πk",
+              "feedback": "Divide the step too: sin(4·(π/4)) = sin π = 0 ✓ but πk skips those rungs."
+            },
+            {
+              "id": "o3",
+              "label": "x = 4πk",
+              "feedback": "Multiply vs divide: the inside 4x hits πk when x = πk/4, a DENSER ladder."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

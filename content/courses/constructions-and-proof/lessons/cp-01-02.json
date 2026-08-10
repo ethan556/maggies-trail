@@ -1,0 +1,304 @@
+{
+  "id": "cp-01-02",
+  "slug": "perpendicular-bisector",
+  "title": "Constructing a Perpendicular Bisector",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch1-toolkit-basics",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-perp-bisector",
+      "concept": {
+        "id": "rem-cp-perp-bisector-c",
+        "kind": "concept",
+        "body": "Recipe: (1) open the compass past half of AB, (2) arc from A above and below, (3) same radius, arc from B — they cross at X and Y, (4) draw line XY. It works because X and Y are each the same distance from A and from B, and equidistant points sit on the perpendicular bisector."
+      },
+      "check": {
+        "id": "rem-cp-perp-bisector-k",
+        "kind": "check",
+        "body": "The key equal distances.",
+        "conceptTag": "cp-perp-bisector",
+        "explanationVariants": [
+          "Because both arcs used the same radius, XA = XB — X is equidistant from the endpoints.",
+          "Equal compass radius from A and B is what forces XA = XB."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In the perpendicular-bisector construction, why is XA = XB?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Both were drawn with the same compass radius",
+              "correct": true,
+              "feedback": "One unchanged opening swung from A and from B makes both distances equal."
+            },
+            {
+              "id": "o2",
+              "label": "Because X is the midpoint of AB",
+              "correct": false,
+              "feedback": "X sits OFF the segment, above it — the midpoint is where the finished line crosses AB."
+            },
+            {
+              "id": "o3",
+              "label": "Because AB was measured first",
+              "correct": false,
+              "feedback": "Nothing is measured — the equality comes from the equal radius, not a ruler."
+            },
+            {
+              "id": "o4",
+              "label": "Because X is closer to A",
+              "correct": false,
+              "feedback": "X is the SAME distance from each — that equality is the whole point."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The workhorse construction. To bisect segment AB perpendicularly: open the compass **wider than half of AB**, swing an arc from A, swing the SAME radius from B, and connect the two crossing points. That line is the **perpendicular bisector** — it hits AB's midpoint at a right angle.",
+      "figure": "perp-bisector-stage3"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build it, arc by arc.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Construct the perpendicular bisector of AB. Reveal each stage.",
+        "panels": [
+          {
+            "title": "Arc from A",
+            "body": "Open past the midpoint. With the point on A, swing an arc reaching above and below AB."
+          },
+          {
+            "title": "Same-radius arc from B",
+            "body": "Without changing the opening, swing from B. The two arcs cross at two points, X and Y."
+          },
+          {
+            "title": "Draw line XY",
+            "body": "The straightedge line through X and Y is the perpendicular bisector — through the midpoint, at 90°."
+          }
+        ],
+        "continueFeedback": "Reveal each compass move in turn.",
+        "successFeedback": "Line XY bisects AB at a right angle."
+      },
+      "figure": "perp-bisector-stage1"
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Now swing the arcs yourself.",
+      "conceptTag": "cp-perp-bisector",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "perpBisector",
+        "span": 6,
+        "target": 4,
+        "start": 2,
+        "prompt": "A and B are 6 apart. Open the compass until the two arcs actually meet — find the smallest whole radius that does it.",
+        "successFeedback": "Radius 4 — the first whole opening that clears half of 6. Widen it and watch: the crossings slide, but the LINE through them refuses to move. Both crossings are equidistant from A and from B by construction, so they lie on the perpendicular bisector no matter which radius you chose.",
+        "lowFeedback": "The arcs cannot reach each other yet. Each reaches only its own radius from its own end, so together they must span more than the 6 between A and B — the radius has to clear 3.",
+        "highFeedback": "They do meet, but you were asked for the SMALLEST whole radius that reaches. Come back down until they are just about to come apart."
+      },
+      "predict": {
+        "prompt": "Both arcs will be drawn with the SAME compass opening — one from A, one from B. Whatever point they cross at must be…",
+        "options": [
+          {
+            "id": "equi",
+            "label": "The same distance from A and from B — that is what equal radii mean"
+          },
+          {
+            "id": "mid",
+            "label": "Exactly at the segment's midpoint"
+          },
+          {
+            "id": "closerA",
+            "label": "Closer to whichever end the compass touched first"
+          }
+        ],
+        "outcomeId": "equi",
+        "reveal": "An arc is every point at ONE distance from its center. Where two equal-radius arcs cross, that point is the same distance from A and from B at once — and every such point lies on the perpendicular bisector. The compass is not drawing a curve; it is making a promise about distance."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why WIDER than half?",
+      "conceptTag": "cp-perp-bisector",
+      "explanationVariants": [
+        "If the radius were less than half of AB, the two arcs couldn't reach each other — they'd never cross, so there'd be no X or Y to draw the line through.",
+        "The arcs meet only when each reaches past the midpoint. Radius ≤ half means they fall short and miss."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why must the compass be opened WIDER than half of AB?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Otherwise the two arcs are too short to cross",
+            "correct": true,
+            "feedback": "Below half, the arcs can't reach the middle to meet — no crossing points, no bisector line."
+          },
+          {
+            "id": "o2",
+            "label": "Otherwise the bisector wouldn't be perpendicular",
+            "correct": false,
+            "feedback": "Any equal-radius pair gives a PERPENDICULAR result — the width only controls whether the arcs meet at all."
+          },
+          {
+            "id": "o3",
+            "label": "So the midpoint lands exactly at the center",
+            "correct": false,
+            "feedback": "The midpoint is determined by AB, not the compass width — width just needs to be big enough for arcs to cross."
+          },
+          {
+            "id": "o4",
+            "label": "To make the two arcs different sizes",
+            "correct": false,
+            "feedback": "The arcs must be the SAME size (same radius). Width only needs to exceed half so they reach each other."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-bisector__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the midpoint that appears.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "On a number line, A sits at coordinate 70 and B at 210. The perpendicular bisector crosses AB at its midpoint. What coordinate is that?",
+        "answer": 140,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 280,
+            "feedback": "280 is 70 + 210 — coordinates summed. The midpoint is their AVERAGE: (70 + 210)/2 = 140."
+          },
+          {
+            "value": 70,
+            "feedback": "70 is endpoint A. The bisector meets AB halfway between the endpoints: 140."
+          }
+        ],
+        "fallbackFeedback": "Midpoint = average of endpoints: (70 + 210)/2 = 140."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Why it works** is the real lesson. Both X and Y were drawn at the same radius from A AND from B, so XA = XB and YA = YB. A point equidistant from A and B must lie on the perpendicular bisector — so the line through X and Y IS it.",
+      "figure": "perp-bisector-why"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The equidistance argument.",
+      "conceptTag": "cp-perp-bisector",
+      "explanationVariants": [
+        "X was swung at one radius from both A and B, so XA = XB — X is equidistant, hence on the perpendicular bisector. Same for Y.",
+        "Equal radii force XA = XB; the set of points equidistant from A and B is exactly the perpendicular bisector."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What property of X and Y proves line XY is the perpendicular bisector of AB?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Each of X and Y is equidistant from A and B",
+            "correct": true,
+            "feedback": "Same radius from A and from B gives XA = XB and YA = YB — and equidistant points lie on the perpendicular bisector."
+          },
+          {
+            "id": "o2",
+            "label": "X and Y are the midpoints of the two arcs",
+            "correct": false,
+            "feedback": "Arc midpoints aren't what's used — it's that X and Y sit at EQUAL distances from A and B."
+          },
+          {
+            "id": "o3",
+            "label": "X and Y are each twice as far from A as from B",
+            "correct": false,
+            "feedback": "The radii are EQUAL, not doubled — XA = XB exactly, which is what puts them on the bisector."
+          },
+          {
+            "id": "o4",
+            "label": "XY is parallel to AB",
+            "correct": false,
+            "feedback": "XY is PERPENDICULAR to AB, not parallel — it crosses AB at the midpoint at 90°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-bisector__mcq"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "One construction, two gifts.",
+      "conceptTag": "cp-perp-bisector",
+      "hints": [
+        "The construction produces a line with two features at once.",
+        "It passes through the midpoint AND meets AB at 90°.",
+        "So it can be used any time you need EITHER the midpoint OR a right angle on AB."
+      ],
+      "explanationVariants": [
+        "The perpendicular bisector both finds the midpoint of AB and erects a right angle to AB — so the same construction bisects a segment AND drops/raises a perpendicular.",
+        "Two jobs, one recipe: midpoint (bisector) and 90° (perpendicular). That's why it's the workhorse."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You need to construct the MIDPOINT of a segment — no perpendicular required. Which construction gives it to you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the perpendicular bisector — its crossing with the segment IS the midpoint",
+            "correct": true,
+            "feedback": "Even when you only want the midpoint, the perpendicular bisector delivers it where it meets the segment."
+          },
+          {
+            "id": "o2",
+            "label": "copying the segment onto a new ray",
+            "correct": false,
+            "feedback": "Copying reproduces the length elsewhere but never marks the middle of the original."
+          },
+          {
+            "id": "o3",
+            "label": "drawing a single arc from one endpoint",
+            "correct": false,
+            "feedback": "One arc gives points at a fixed distance from ONE endpoint — not the balanced middle. You need arcs from both."
+          },
+          {
+            "id": "o4",
+            "label": "connecting the endpoints with a straightedge",
+            "correct": false,
+            "feedback": "That just redraws the segment itself — it marks no interior point."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-bisector__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The perpendicular bisector.",
+      "takeaways": [
+        "Equal arcs from both endpoints cross at two points; their line is the perpendicular bisector.",
+        "Open wider than half so the arcs can meet.",
+        "It works because those crossing points are equidistant from A and B — and it gives midpoint AND right angle."
+      ],
+      "teaser": "Next: swing arcs INSIDE an angle to split it exactly in half."
+    }
+  ]
+}

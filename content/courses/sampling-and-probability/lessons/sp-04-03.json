@@ -1,0 +1,577 @@
+{
+  "id": "sp-04-03",
+  "slug": "probability-models-in-real-situations",
+  "title": "Probability Models in Real Situations",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch4-probability-models-and-compound-events",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "compound-event-tree",
+      "body": "Real situations often need both tools: count the full sample space with the counting principle, then find a compound event's probability by multiplying."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count outcomes for a real situation.",
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "A restaurant has 6 shirts and 5 pants for staff uniforms. How many total outfits are possible?",
+        "mode": "count",
+        "stages": [
+          {
+            "label": "Shirts",
+            "outcomes": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Pants",
+            "outcomes": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ],
+            "favourable": []
+          }
+        ],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "30",
+            "count": 30,
+            "feedback": "Yes — 6 × 5 = 30 outfits."
+          },
+          {
+            "id": "trap-1",
+            "label": "11",
+            "count": 11,
+            "feedback": "That adds 6+5 instead of multiplying. Total outfits = 6 × 5 = 30."
+          },
+          {
+            "id": "trap-2",
+            "label": "6",
+            "count": 6,
+            "feedback": "That's just the shirts. Multiply by the 5 pants too: 6 × 5 = 30."
+          }
+        ],
+        "fallbackFeedback": "6 shirts × 5 pants = 30 outfits.",
+        "successFeedback": "Yes — 6 × 5 = 30 outfits."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A compound-event probability in a game context.",
+      "conceptTag": "sp-realworld-prob",
+      "explanationVariants": [
+        "P(heads)=1/2, P(even)=1/2; multiply: 1/4.",
+        "For independent events, multiply the individual probabilities."
+      ],
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "What is the probability of flipping heads and rolling an even number?",
+        "mode": "probability",
+        "stages": [
+          {
+            "label": "Coin",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": [
+              0
+            ]
+          },
+          {
+            "label": "Die",
+            "outcomes": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "favourable": [
+              1,
+              3,
+              5
+            ]
+          }
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "1/4",
+            "num": 1,
+            "den": 4,
+            "feedback": "Yes — 1/2 × 1/2 = 1/4."
+          },
+          {
+            "id": "b",
+            "label": "1/2",
+            "num": 1,
+            "den": 2,
+            "feedback": "That's just one event. Multiply both: 1/4."
+          },
+          {
+            "id": "c",
+            "label": "1/12",
+            "num": 1,
+            "den": 12,
+            "feedback": "Multiply the probabilities directly: 1/4."
+          }
+        ],
+        "fallbackFeedback": "Yes — 1/2 × 1/2 = 1/4.",
+        "successFeedback": "Yes — 1/2 × 1/2 = 1/4."
+      },
+      "variant": {
+        "gen": "g7-sp-compound-model",
+        "form": "spCompoundBasic"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A game with repeated identical trials (like flipping a coin several times) still uses the counting principle — the same 2 choices, repeated.",
+      "figure": "compound-event-tree"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count outcomes for a game with repeated flips.",
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "Flipping a coin 4 times: how many total outcomes are there?",
+        "mode": "count",
+        "stages": [
+          {
+            "label": "Flip 1",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Flip 2",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Flip 3",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Flip 4",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": []
+          }
+        ],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "16",
+            "count": 16,
+            "feedback": "Yes — 2 × 2 × 2 × 2 = 16 ordered outcomes."
+          },
+          {
+            "id": "trap-1",
+            "label": "8",
+            "count": 8,
+            "feedback": "That adds 2+2+2+2 instead of multiplying. Total outcomes = 2×2×2×2 = 16."
+          },
+          {
+            "id": "trap-2",
+            "label": "4",
+            "count": 4,
+            "feedback": "That's just the number of flips. Multiply the 2 outcomes for each flip: 2×2×2×2=16."
+          }
+        ],
+        "fallbackFeedback": "2 × 2 × 2 × 2 = 16 total outcomes.",
+        "successFeedback": "Yes — 2 × 2 × 2 × 2 = 16 ordered outcomes."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Whatever the situation — outfits, games, dice — the same two tools apply: multiply choices for the sample space, multiply probabilities for a compound event.",
+      "figure": "compound-event-tree"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Another compound-event probability, dice game.",
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "What is the probability of rolling a number greater than 4 on both dice?",
+        "mode": "probability",
+        "stages": [
+          {
+            "label": "Die 1",
+            "outcomes": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "favourable": [
+              4,
+              5
+            ]
+          },
+          {
+            "label": "Die 2",
+            "outcomes": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "favourable": [
+              4,
+              5
+            ]
+          }
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "1/9",
+            "num": 1,
+            "den": 9,
+            "feedback": "Yes — 1/3 × 1/3 = 1/9."
+          },
+          {
+            "id": "b",
+            "label": "1/3",
+            "num": 1,
+            "den": 3,
+            "feedback": "That's just one die. Multiply both: 1/9."
+          },
+          {
+            "id": "c",
+            "label": "2/6",
+            "num": 2,
+            "den": 6,
+            "feedback": "That's the same as 1/3, still one die. Multiply for both dice: 1/9."
+          }
+        ],
+        "fallbackFeedback": "Yes — 1/3 × 1/3 = 1/9.",
+        "successFeedback": "Yes — 1/3 × 1/3 = 1/9."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count outcomes for another real combination.",
+      "conceptTag": "sp-realworld-prob",
+      "explanationVariants": [
+        "5×4=20.",
+        "Multiply the choices at each stage."
+      ],
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "A store has 5 shirts and 4 pants. How many total outfits are possible?",
+        "mode": "count",
+        "stages": [
+          {
+            "label": "Shirts",
+            "outcomes": [
+              "S1",
+              "S2",
+              "S3",
+              "S4",
+              "S5"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Pants",
+            "outcomes": [
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ],
+            "favourable": []
+          }
+        ],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "20",
+            "count": 20,
+            "feedback": "Yes — 5 × 4 = 20 outfits."
+          },
+          {
+            "id": "trap-1",
+            "label": "9",
+            "count": 9,
+            "feedback": "That adds instead of multiplying. 5 × 4 = 20."
+          },
+          {
+            "id": "trap-2",
+            "label": "5",
+            "count": 5,
+            "feedback": "Multiply by the 4 pants too: 5 × 4 = 20."
+          }
+        ],
+        "fallbackFeedback": "20.",
+        "successFeedback": "Yes — 5 × 4 = 20 outfits."
+      },
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountOutfitsReal"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count outcomes for a bigger game.",
+      "conceptTag": "sp-realworld-prob",
+      "explanationVariants": [
+        "2×6=12.",
+        "Multiply the choices at each stage."
+      ],
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
+        "mode": "count",
+        "stages": [
+          {
+            "label": "Coin",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Die",
+            "outcomes": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "favourable": []
+          }
+        ],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "12",
+            "count": 12,
+            "feedback": "Yes — 2 × 6 = 12 ordered outcomes."
+          },
+          {
+            "id": "trap-1",
+            "label": "8",
+            "count": 8,
+            "feedback": "Adding gives 2 + 6 = 8. But every coin side pairs with every die face, so multiply: 2 × 6 = 12."
+          },
+          {
+            "id": "trap-2",
+            "label": "6",
+            "count": 6,
+            "feedback": "Multiply by the coin's 2 too: 12."
+          }
+        ],
+        "fallbackFeedback": "12.",
+        "successFeedback": "Yes — 2 × 6 = 12 ordered outcomes."
+      },
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountCoinDieReal"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full mixed challenge, real-world framing.",
+      "conceptTag": "sp-realworld-prob",
+      "explanationVariants": [
+        "P(heads)=1/2, P(even)=1/2; multiply: 1/4.",
+        "For independent events, multiply the individual probabilities."
+      ],
+      "widget": {
+        "type": "compoundEventLab",
+        "prompt": "A carnival game asks players to flip a coin and roll a die, winning if they get heads and an even number. What is the probability of winning?",
+        "mode": "probability",
+        "stages": [
+          {
+            "label": "Coin",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": [
+              0
+            ]
+          },
+          {
+            "label": "Die",
+            "outcomes": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "favourable": [
+              1,
+              3,
+              5
+            ]
+          }
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "1/4",
+            "num": 1,
+            "den": 4,
+            "feedback": "Yes — P(heads)=1/2, P(even)=1/2; multiply: 1/2 × 1/2 = 1/4."
+          },
+          {
+            "id": "b",
+            "label": "1/2",
+            "num": 1,
+            "den": 2,
+            "feedback": "That's just one event. Multiply both probabilities: 1/4."
+          },
+          {
+            "id": "c",
+            "label": "1/12",
+            "num": 1,
+            "den": 12,
+            "feedback": "That's the chance of one specific outcome, not all the winning ones. Multiply the probabilities: 1/4."
+          }
+        ],
+        "fallbackFeedback": "Yes — P(heads)=1/2, P(even)=1/2; multiply: 1/2 × 1/2 = 1/4.",
+        "successFeedback": "Yes — P(heads)=1/2, P(even)=1/2; multiply: 1/2 × 1/2 = 1/4."
+      },
+      "hints": [
+        "This is a compound event: heads AND even.",
+        "P(heads) = 1/2, P(even) = 1/2.",
+        "Multiply: 1/2 × 1/2 = 1/4."
+      ],
+      "variant": {
+        "gen": "g7-sp-compound-model",
+        "form": "spCompoundGame"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Real probability problems combine both tools: count the sample space with the counting principle, then find a compound event's probability by multiplying.",
+      "takeaways": [
+        "Counting principle: multiply the choices at each stage for the total outcomes.",
+        "Compound events: multiply the individual probabilities, for independent events.",
+        "Both tools apply to any real situation, whatever the context."
+      ],
+      "teaser": "you've completed sampling & probability — estimating from samples, comparing populations, understanding probability, and combining events!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-realworld-prob",
+      "concept": {
+        "id": "rem-srp-c",
+        "kind": "concept",
+        "body": "Real probability problems combine the counting principle (multiply choices for the sample space) and the compound-event rule (multiply probabilities for independent events)."
+      },
+      "check": {
+        "id": "rem-srp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-realworld-prob",
+        "explanationVariants": [
+          "6×5=30.",
+          "Multiply the choices at each stage."
+        ],
+        "widget": {
+          "type": "compoundEventLab",
+          "prompt": "A restaurant has 6 shirts and 5 pants for staff uniforms. How many total outfits are possible?",
+          "mode": "count",
+          "stages": [
+            {
+              "label": "Shirts",
+              "outcomes": [
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5",
+                "S6"
+              ],
+              "favourable": []
+            },
+            {
+              "label": "Pants",
+              "outcomes": [
+                "P1",
+                "P2",
+                "P3",
+                "P4",
+                "P5"
+              ],
+              "favourable": []
+            }
+          ],
+          "choices": [
+            {
+              "id": "correct",
+              "label": "30",
+              "count": 30,
+              "feedback": "Yes — 6 × 5 = 30 outfits."
+            },
+            {
+              "id": "trap-1",
+              "label": "11",
+              "count": 11,
+              "feedback": "Adding gives 6 + 5 = 11. Every shirt pairs with every pair of pants, so multiply: 6 × 5 = 30."
+            },
+            {
+              "id": "trap-2",
+              "label": "6",
+              "count": 6,
+              "feedback": "Multiply by the 5 pants too: 30."
+            }
+          ],
+          "fallbackFeedback": "30.",
+          "successFeedback": "Yes — 6 × 5 = 30 outfits."
+        }
+      }
+    }
+  ]
+}

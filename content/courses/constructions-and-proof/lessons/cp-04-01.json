@@ -1,0 +1,317 @@
+{
+ "id": "cp-04-01",
+ "slug": "conjecture-vs-proof",
+ "title": "Conjecture vs Proof",
+ "courseId": "constructions-and-proof",
+ "chapterId": "ch4-intro-to-proof",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "cp-conjecture-proof",
+   "concept": {
+    "id": "rem-cp-conjecture-proof-c",
+    "kind": "concept",
+    "body": "The asymmetry to remember: to DISPROVE \"all X are Y,\" one counterexample is enough. To PROVE it, examples never suffice — you need a reason covering every case. Confirming examples build confidence; they can't finish the job."
+   },
+   "check": {
+    "id": "rem-cp-conjecture-proof-k",
+    "kind": "check",
+    "body": "Disprove a universal.",
+    "conceptTag": "cp-conjecture-proof",
+    "explanationVariants": [
+     "One counterexample suffices to disprove a claim about every case.",
+     "\"All X are Y\" collapses the moment a single X fails to be Y."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "How many counterexamples does it take to disprove the claim \"all swans are white\"?",
+     "answer": 1,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 1000,
+       "feedback": "1000 is far more than needed — a single non-white swan already breaks \"all.\""
+      },
+      {
+       "value": 0,
+       "feedback": "Zero found means the claim still stands. Disproving needs at least one exception: 1."
+      }
+     ],
+     "fallbackFeedback": "A single counterexample is enough."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "You've seen a pattern hold ten times — is it always true? A **conjecture** is a pattern you suspect; a **proof** is a chain of reasoning that makes it certain. The gap between them is the whole game: no matter how many examples agree, one counterexample can still sink a conjecture. Examples build belief; only proof gives knowledge.",
+   "figure": "cnp-conjecture"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Conjecture or proof?",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each statement: is it a CONJECTURE (pattern, not yet certain) or a PROOF (settled by reasoning)?",
+    "buckets": [
+     {
+      "id": "conj",
+      "label": "conjecture"
+     },
+     {
+      "id": "proof",
+      "label": "proof"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "\"I tried five triangles and the angles always summed to 180°\"",
+      "bucketId": "conj",
+      "feedback": "Five confirming cases is evidence for a conjecture — it hasn't ruled out the sixth. That takes a proof."
+     },
+     {
+      "id": "s2",
+      "label": "\"Since a straight angle is 180° and the three angles rearrange onto it, they must sum to 180°\"",
+      "bucketId": "proof",
+      "feedback": "A reason covering EVERY triangle at once — that's a proof, not a tally of examples."
+     },
+     {
+      "id": "s3",
+      "label": "\"Every prime I've checked so far is odd\"",
+      "bucketId": "conj",
+      "feedback": "A pattern from examples — and a shaky one: 2 is a prime that's even. Conjectures can be wrong."
+     },
+     {
+      "id": "s4",
+      "label": "\"n² is even whenever n is even, because n = 2k makes n² = 4k²\"",
+      "bucketId": "proof",
+      "feedback": "An argument from the definition, true for all even n — a proof."
+     }
+    ],
+    "missFeedback": "Counting examples makes a conjecture; giving a reason that covers all cases makes a proof.",
+    "successFeedback": "Examples suggest; reasoning proves."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "How many counterexamples?",
+   "conceptTag": "cp-conjecture-proof",
+   "explanationVariants": [
+    "A single counterexample disproves a universal conjecture — \"all X are Y\" fails the instant one X isn't Y.",
+    "One exception is fatal: it shows the claim isn't ALWAYS true, which is exactly what the conjecture asserted."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A conjecture claims something is true for EVERY case. What is the smallest number of counterexamples needed to disprove it?",
+    "answer": 1,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 100,
+      "feedback": "100 would certainly do it, but it's overkill — a single case where the claim fails already breaks \"every case.\""
+     },
+     {
+      "value": 0,
+      "feedback": "Zero counterexamples means none was found — that doesn't DISPROVE it. You need at least one exception: 1."
+     }
+    ],
+    "fallbackFeedback": "One counterexample breaks a universal claim."
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-conjecture-proof__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Flip it around: how many examples PROVE a universal conjecture? **None ever can.** A million confirming cases still leave the million-and-first unchecked. Proof escapes the trap by reasoning about ALL cases at once — usually from definitions and established facts, not from a pile of instances.",
+   "figure": "cnp-no-examples-prove"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Can examples prove it?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student checks a conjecture on 1,000 cases and every one works. What has been established?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Strong evidence for the conjecture, but not a proof",
+      "correct": true,
+      "feedback": "1,000 successes raise confidence, yet the 1,001st is still unchecked — universal truth needs reasoning, not tallying."
+     },
+     {
+      "id": "o2",
+      "label": "The conjecture is proven — 1,000 is plenty",
+      "correct": false,
+      "feedback": "A finite count never proves a claim about INFINITELY many cases — there's always a next case the examples didn't reach."
+     },
+     {
+      "id": "o3",
+      "label": "The conjecture is disproven",
+      "correct": false,
+      "feedback": "Every case WORKED, so nothing was disproven — but confirming cases don't prove it either. It stays a well-supported conjecture."
+     },
+     {
+      "id": "o4",
+      "label": "Nothing at all",
+      "correct": false,
+      "feedback": "1,000 confirmations is real evidence — it just falls short of PROOF. It makes the conjecture very plausible."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "This is why constructions needed proofs, not just careful drawings. A drawing is one more confirming example; a proof — equal radii, congruent triangles, done — settles every case. The rest of this chapter builds the machinery: how to write a proof that a skeptic can't wriggle out of.",
+   "figure": "cnp-need-proofs"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Why did constructions need proofs?",
+   "conceptTag": "cp-conjecture-proof",
+   "explanationVariants": [
+    "A drawing is a single confirming example, subject to the same limit — it can't guarantee the construction works in EVERY case. Proof can.",
+    "No drawing, however careful, escapes the examples-don't-prove-universals trap; a logical argument does."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why couldn't a carefully measured construction be accepted on the drawing alone?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A drawing is just one more example, and examples can't prove a universal claim",
+      "correct": true,
+      "feedback": "The construction claims to work ALWAYS — one accurate drawing is a single case, so a general proof is required."
+     },
+     {
+      "id": "o2",
+      "label": "Drawings are never accurate enough to be useful",
+      "correct": false,
+      "feedback": "Drawings ARE accurate enough to suggest and check — they simply can't PROVE universality, which is a different limitation."
+     },
+     {
+      "id": "o3",
+      "label": "Measuring tools are illegal in geometry",
+      "correct": false,
+      "feedback": "Nothing forbids measuring — it's just that a measurement confirms one case, and proof needs all cases."
+     },
+     {
+      "id": "o4",
+      "label": "Proofs are shorter than drawings",
+      "correct": false,
+      "feedback": "Length isn't the issue — certainty is. A proof covers every case; a drawing covers one."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-conjecture-proof__mcq"
+   }
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Evidence or proof?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "\"The angle bisector construction always works — I tested it on twenty different angles.\" This reasoning is…",
+    "options": [
+     {
+      "id": "o1",
+      "label": "evidence for the claim, but not a proof",
+      "correct": true,
+      "feedback": "Twenty successes support it, yet the twenty-first angle is still unchecked — universality needs a reason, not a tally."
+     },
+     {
+      "id": "o2",
+      "label": "a complete proof — twenty cases is thorough",
+      "correct": false,
+      "feedback": "A finite batch of test angles can't cover ALL angles — thoroughness in examples still isn't proof."
+     },
+     {
+      "id": "o3",
+      "label": "a disproof of the construction",
+      "correct": false,
+      "feedback": "Every test WORKED, so nothing was disproven — but confirming cases don't prove it either."
+     },
+     {
+      "id": "o4",
+      "label": "irrelevant to whether the construction works",
+      "correct": false,
+      "feedback": "Twenty confirmations are real evidence — they raise confidence, just short of proving universality."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Break the conjecture.",
+   "conceptTag": "cp-conjecture-proof",
+   "hints": [
+    "The conjecture: \"every angle has a larger supplement than complement.\" Test angle sizes.",
+    "Supplement = 180 − a; complement = 90 − a. When is the supplement NOT larger?",
+    "Both differ by exactly 90 for any valid angle — so the supplement is ALWAYS 90 more. Is the claim actually true, or is the trap elsewhere?"
+   ],
+   "explanationVariants": [
+    "For any angle a (0 < a < 90), supplement = 180 − a and complement = 90 − a, differing by exactly 90 — the supplement is always larger, so the claim is actually TRUE and has no counterexample. The right answer is that no counterexample exists.",
+    "180 − a is always 90 more than 90 − a, for every valid a — the conjecture holds universally, so you cannot break it with any example."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Conjecture: \"For any acute angle, the supplement is exactly 90° larger than the complement.\" Which is the correct verdict?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "It's true — for any angle a, (180 − a) − (90 − a) = 90, with no counterexample",
+      "correct": true,
+      "feedback": "The a's cancel: the difference is always 90, independent of the angle. No counterexample exists, and the algebra proves it."
+     },
+     {
+      "id": "o2",
+      "label": "False — a 45° angle is a counterexample",
+      "correct": false,
+      "feedback": "Check 45°: supplement 135, complement 45, difference 90 ✓. It confirms the claim, not breaks it."
+     },
+     {
+      "id": "o3",
+      "label": "False — a 30° angle is a counterexample",
+      "correct": false,
+      "feedback": "Check 30°: supplement 150, complement 60, difference 90 ✓. Another confirming case, not a counterexample."
+     },
+     {
+      "id": "o4",
+      "label": "It can't be decided without checking every angle",
+      "correct": false,
+      "feedback": "The algebra (180 − a) − (90 − a) = 90 covers EVERY angle at once — that's a proof, so no case-by-case check is needed."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-conjecture-proof__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Belief versus certainty.",
+   "takeaways": [
+    "Conjecture = a pattern you suspect; proof = reasoning that makes it certain.",
+    "One counterexample disproves a universal; no finite pile of examples proves one.",
+    "A proof reasons about all cases at once — which is why constructions need them."
+   ],
+   "teaser": "Next: the shape of a proof — statements on the left, reasons on the right."
+  }
+ ]
+}

@@ -1,0 +1,249 @@
+{
+  "id": "ti-02-01",
+  "slug": "quotient-and-reciprocal",
+  "title": "Six Functions from Two",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch2-identity-toolkit",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every trig function is built from sine and cosine. The **quotient** identity (recall the ratio observation): tan θ = sin θ / cos θ. The three **reciprocals** name the flips: **sec θ = 1/cos θ**, **csc θ = 1/sin θ**, **cot θ = 1/tan θ = cos θ/sin θ**. Learn the pairings, not six separate objects.",
+      "figure": "ti-six-functions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Flip a cosine.",
+      "predict": {
+        "prompt": "sec θ = 1/cos θ. What happens to sec as θ approaches 90°?",
+        "options": [
+          {
+            "id": "blow",
+            "label": "It blows up — dividing by a cosine that's heading to zero"
+          },
+          {
+            "id": "one",
+            "label": "It heads to 1 — reciprocals settle down"
+          },
+          {
+            "id": "zero",
+            "label": "It heads to 0, following cosine down"
+          }
+        ],
+        "outcomeId": "blow",
+        "reveal": "It blows up: sec inherits a wall exactly where cos crosses zero. Reciprocal functions add no new information — sec θ = 5/4 when cos θ = 4/5 — but they invert the geography: small cosines make huge secants. Land the trace on the crossing that makes the wall."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = cos x and land the tip exactly on its first zero — the crossing where sec θ = 1/cos θ has its wall.",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "cos",
+        "targetFeature": {
+          "kind": "zero",
+          "x": 90,
+          "tol": 5
+        },
+        "successFeedback": "Zero at 90° — and secant's wall stands exactly here. Everywhere else, sec is just cosine flipped over: cos θ = 4/5 gives sec θ = 5/4 = 1.25, the entry above. One readout, two names, and a wall wherever the denominator touches the axis.",
+        "lowFeedback": "cos is still positive here — not yet the crossing. Watch the readout fall toward 0 as you climb.",
+        "highFeedback": "cos has gone negative — you crossed it. Back up to the exact zero, where the reciprocal's wall lives."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which pairs with which?",
+      "conceptTag": "ti-reciprocals",
+      "explanationVariants": [
+        "cosecant is sine's reciprocal — the 'co' crossing is the classic trap: csc = 1/sin, sec = 1/cos.",
+        "Memory hook: SEcant pairs with the function WITHOUT a 'co' (cosine's reciprocal is secant, despite the mismatch)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the reciprocal of sin θ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "csc θ",
+            "correct": true,
+            "feedback": "Right — cosecant, despite the 'co', is 1/sin. The naming crosses over."
+          },
+          {
+            "id": "o2",
+            "label": "sec θ",
+            "feedback": "secant is 1/COS. The reciprocal of sine is cosecant: csc θ = 1/sin θ."
+          },
+          {
+            "id": "o3",
+            "label": "cot θ",
+            "feedback": "cotangent is 1/tan. Sine's reciprocal is cosecant."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-reciprocals__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Build cotangent two ways.",
+      "conceptTag": "ti-reciprocals",
+      "explanationVariants": [
+        "cot θ = cos θ/sin θ = (4/5)/(3/5) = 4/3 — and equally 1/tan θ = 1/(3/4) = 4/3.",
+        "Both routes agree: cotangent is cosine over sine, or tangent flipped."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "sin θ = 3/5 and cos θ = 4/5. What is cot θ? (As a decimal to hundredths.)",
+        "answer": 1.33,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.75,
+            "feedback": "0.75 = 3/4 = tan θ. Cotangent is its RECIPROCAL: 4/3 ≈ 1.33."
+          },
+          {
+            "value": 1.25,
+            "feedback": "1.25 = sec θ (1/cos). Cotangent is cos/sin = 4/3 ≈ 1.33."
+          }
+        ],
+        "fallbackFeedback": "cot θ = cos/sin = (4/5)/(3/5) = 4/3 ≈ 1.33."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-reciprocals__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "These identities also **simplify** expressions. sin θ · sec θ = sin θ · (1/cos θ) = sin θ/cos θ = **tan θ**. The trick is always the same: rewrite everything in sines and cosines, then cancel. Complicated-looking products collapse.",
+      "figure": "ti-simplify"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Simplify by converting.",
+      "conceptTag": "ti-reciprocals",
+      "explanationVariants": [
+        "cos θ · csc θ = cos θ · (1/sin θ) = cos θ/sin θ = cot θ.",
+        "Convert to sin/cos, and the quotient IS cotangent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify cos θ · csc θ.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "cot θ",
+            "correct": true,
+            "feedback": "Right — cos θ · (1/sin θ) = cos θ/sin θ = cot θ."
+          },
+          {
+            "id": "o2",
+            "label": "tan θ",
+            "feedback": "That would be sin/cos. Here it's cos/sin — the reciprocal, cot θ."
+          },
+          {
+            "id": "o3",
+            "label": "1",
+            "feedback": "cos θ · csc θ isn't cos · sec. csc = 1/sin, giving cos/sin = cot θ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-reciprocals__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Collapse a bigger expression.",
+      "conceptTag": "ti-reciprocals",
+      "explanationVariants": [
+        "tan θ · cot θ = tan θ · (1/tan θ) = 1 (any function times its reciprocal is 1), so the expression is 1 + cos θ; at θ = 0 that's 1 + 1 = 2.",
+        "In sines and cosines: (sin/cos)·(cos/sin) = 1, everything cancels — then add cos 0 = 1 to get 2."
+      ],
+      "hints": [
+        "tan θ · cot θ: what is any quantity times its own reciprocal?",
+        "That product is 1. So the expression is 1 + cos θ.",
+        "At θ = 0, cos θ = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify tan θ · cot θ + cos θ, then evaluate at θ = 0.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "tan θ · cot θ = 1, but don't forget + cos 0 = +1: total 2."
+          },
+          {
+            "value": 0,
+            "feedback": "tan·cot = 1 (not 0): a function times its reciprocal is 1. Plus cos 0 = 1 gives 2."
+          }
+        ],
+        "fallbackFeedback": "tan θ · cot θ = 1; 1 + cos 0 = 2."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-reciprocals__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two roots, six branches.",
+      "takeaways": [
+        "tan = sin/cos; sec = 1/cos, csc = 1/sin, cot = cos/sin.",
+        "The 'co' naming crosses: csc pairs with sin, sec with cos.",
+        "Simplify by rewriting everything in sine and cosine."
+      ],
+      "teaser": "Next: the Pythagorean identity, divided into a whole family."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-reciprocals",
+      "concept": {
+        "id": "rem-ti0201-c",
+        "kind": "concept",
+        "body": "Reciprocals: sec = 1/cos, csc = 1/sin, cot = 1/tan. To simplify, convert every function to sine and cosine, then cancel."
+      },
+      "check": {
+        "id": "rem-ti0201-k",
+        "kind": "check",
+        "body": "One reciprocal.",
+        "conceptTag": "ti-reciprocals",
+        "explanationVariants": [
+          "sin θ = 1/2 → csc θ = 1/(1/2) = 2.",
+          "Cosecant flips the fraction: 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "If sin θ = 1/2, what is csc θ?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.5,
+              "feedback": "0.5 is sin θ. Its reciprocal csc θ = 1/(1/2) = 2."
+            },
+            {
+              "value": 1.5,
+              "feedback": "csc is the RECIPROCAL, not 1 + sin: 1/(1/2) = 2."
+            }
+          ],
+          "fallbackFeedback": "csc θ = 1/sin θ = 2."
+        }
+      }
+    }
+  ]
+}

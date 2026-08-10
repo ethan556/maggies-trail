@@ -1,0 +1,433 @@
+{
+  "id": "sg-02-01",
+  "slug": "cavalieri-principle",
+  "title": "Cavalieri's Principle",
+  "courseId": "solid-geometry",
+  "chapterId": "ch2-cavalieri",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-cavalieri",
+      "concept": {
+        "id": "rem-sg-cavalieri-c",
+        "kind": "concept",
+        "body": "Cavalieri's principle: if two solids share the same height and their cross-sections have equal areas at EVERY level, the volumes are equal — shearing, leaning, or twisting a stack never changes what each level holds. Consequence: oblique prisms and cylinders use V = Bh with the VERTICAL height (never the slant edge)."
+      },
+      "check": {
+        "id": "rem-sg-cavalieri-k",
+        "kind": "check",
+        "body": "One lean.",
+        "conceptTag": "sg-cavalieri",
+        "explanationVariants": [
+          "Every level of the leaning prism holds the same base-area-10 slice.",
+          "V = 10 × 6 = 60."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A leaning prism: base area 10, vertical height 6. Volume = ?",
+          "answer": 60,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 adds — volume is base TIMES height: 60."
+            },
+            {
+              "value": 30,
+              "feedback": "30 halves — prisms take the full Bh: 60."
+            }
+          ],
+          "fallbackFeedback": "Bh = 60 — identical to its upright twin."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Push a stack of coins sideways: it leans, but nothing about any coin changed. **Cavalieri's principle** captures this: if two solids have the same height and their cross-sections at EVERY level have equal areas, their volumes are equal. Volume lives in the slices — how the slices are stacked (straight, sheared, curved) is irrelevant.",
+      "figure": "cavalieri-stacks"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The leaning stack.",
+      "conceptTag": "sg-cavalieri",
+      "explanationVariants": [
+        "Shearing rearranges the same coins — every level keeps its coin.",
+        "Identical volume: the slide moved material sideways, never created or destroyed it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Eight identical coins are stacked straight, then pushed into a lean. The leaning stack's volume, compared to the straight stack:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Exactly equal — every level still holds one full coin of the same area",
+            "correct": true,
+            "feedback": "The figure's shear is volume's alibi: same slices at every height, so Cavalieri certifies the same volume."
+          },
+          {
+            "id": "o2",
+            "label": "Slightly less — leaning compresses it",
+            "correct": false,
+            "feedback": "The coins never deform — each level keeps its full coin: equal volume."
+          },
+          {
+            "id": "o3",
+            "label": "Slightly more — it takes up more room",
+            "correct": false,
+            "feedback": "The lean spreads the FOOTPRINT, never the material — slices testify: equal."
+          },
+          {
+            "id": "o4",
+            "label": "It depends on the lean angle",
+            "correct": false,
+            "feedback": "Any shear, any angle: level-by-level the coins are unchanged — volume is angle-blind."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Oblique prism.",
+      "conceptTag": "sg-cavalieri",
+      "explanationVariants": [
+        "Cavalieri compares it to the right prism with the same base and the same VERTICAL height.",
+        "V = Bh = 24 × 7 = 168 — slant ignored."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "An oblique (leaning) prism has base area 24 and vertical height 7. Its volume = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "B",
+            "label": "the base area",
+            "value": 24
+          },
+          {
+            "id": "h",
+            "label": "the vertical height",
+            "value": 7
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "B"
+          },
+          "right": {
+            "op": "const",
+            "id": "h"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 31,
+            "feedback": "31 = 24 + 7 adds — volume multiplies base by height: 168."
+          },
+          {
+            "value": 84,
+            "feedback": "84 halves — no halving in prisms: Bh = 168 (Cavalieri matches it to the upright twin)."
+          },
+          {
+            "value": 192,
+            "feedback": "192 = 24 × 8 sneaks in the SLANT edge — Cavalieri uses the vertical height 7: 168."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Bh = 24 × 7 = 168 — same slices as the upright prism at every level.",
+        "successFeedback": "Bh = 24 × 7 = 168 — same slices as the upright prism at every level."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Oblique cylinder.",
+      "conceptTag": "sg-cavalieri",
+      "explanationVariants": [
+        "Same story, round base: every level is the same circle of radius 4.",
+        "V = π(16)(9) = 144π ≈ 452.39."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A leaning cylinder has base radius 4 and vertical height 9. Volume (2 decimals, π ≈ 3.14159) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "pi",
+            "label": "π ≈ 3.14159",
+            "value": 3.14159
+          },
+          {
+            "id": "r",
+            "label": "the base radius",
+            "value": 4
+          },
+          {
+            "id": "h",
+            "label": "the vertical height",
+            "value": 9
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "pi"
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "const",
+                "id": "r"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          }
+        },
+        "approxRound": 2,
+        "answerMode": "numeric",
+        "tolerance": 0.5,
+        "numericErrors": [
+          {
+            "value": 113.1,
+            "feedback": "113.1 ≈ 36π uses r = 2 or squares wrong — π(4²)(9) = 144π ≈ 452.39."
+          },
+          {
+            "value": 226.19,
+            "feedback": "226.19 ≈ 72π halves — cylinders take the full Bh: 144π ≈ 452.39."
+          },
+          {
+            "value": 515.22,
+            "feedback": "515.22 pads with extra for the lean — Cavalieri says the lean is free: 144π ≈ 452.39."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "π(16)(9) = 144π ≈ 452.39 — the upright twin's volume exactly.",
+        "successFeedback": "π(16)(9) = 144π ≈ 452.39 — the upright twin's volume exactly."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why 'every' matters.",
+      "predict": {
+        "prompt": "Two solids have equal heights, and their cross-sections match at the bottom and at the top. Must they have the same volume?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — they must match at EVERY height, not just two of them"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — matching ends is enough to pin the volume"
+          },
+          {
+            "id": "cant",
+            "label": "There is no way to tell without the formulas"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "No. Cavalieri's hypothesis is every height, and two agreements do not make a theorem — the solids are free to disagree everywhere in between. Sweep the plane through both and hunt for a height where the two readouts come apart."
+      },
+      "widget": {
+        "type": "solidSliceLab",
+        "prompt": "Two solids, same height. Sweep the section plane through BOTH and check the areas at matching heights — then stop at the middle.",
+        "solid": "cylinder",
+        "radius": 4,
+        "height": 8,
+        "baseArea": 50.2654824574,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.05,
+        "tolerance": 0.03,
+        "comparisonRequired": true,
+        "requiredMoves": 5,
+        "successFeedback": "Equal at every height you tested — THAT is the hypothesis Cavalieri actually needs. Matching at the two ends would have proved nothing; the theorem is about all the slices in between.",
+        "positionFeedback": "Keep sweeping, then finish at the middle height where both readouts can be compared side by side.",
+        "comparisonFeedback": "Bring in the second solid. Cavalieri is a comparison theorem — with one solid on screen there is nothing to compare, and 'every cross-section matches' has no second term.",
+        "invariantFeedback": "Two heights are not 'every height'. Test more before claiming the volumes must agree — that gap is exactly what this lesson is about."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Deck of cards.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A deck of cards is a 9-by-6.5 base stacked 4 high (volume 234). It's twisted into a spiral — every card rotated a little. The spiral's volume = ?",
+        "answer": 234,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 117,
+            "feedback": "117 halves — twisting rotates each card in place; every level keeps its full 58.5-area card: 234."
+          },
+          {
+            "value": 468,
+            "feedback": "468 doubles — rotation adds nothing: the same 234."
+          }
+        ],
+        "fallbackFeedback": "Rotation is a rigid motion of each slice — areas unchanged at every level: 234, by Cavalieri."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The slant edge.",
+      "conceptTag": "sg-cavalieri",
+      "hints": [
+        "Volume needs the VERTICAL height; the problem gives the slant.",
+        "The lean shifts the top face 5 sideways while rising vertically — slant, shift, and height make a right triangle.",
+        "13² − 5² = h²."
+      ],
+      "explanationVariants": [
+        "h = √(169 − 25) = 12 (a 5-12-13); V = π(2²)(12) = 48π ≈ 150.8.",
+        "Vertical height 12, so 48π."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A leaning cylinder of radius 2 has a slant edge of length 13, and its top face is shifted 5 units sideways from its base. Volume coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "r",
+            "label": "the radius",
+            "value": 2
+          },
+          {
+            "id": "l",
+            "label": "the slant edge",
+            "value": 13
+          },
+          {
+            "id": "d",
+            "label": "the sideways shift",
+            "value": 5
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "r"
+            },
+            "right": {
+              "op": "const",
+              "id": "r"
+            }
+          },
+          "right": {
+            "op": "sqrt",
+            "arg": {
+              "op": "subtract",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "l"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "l"
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "d"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "d"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 52,
+            "feedback": "52 = 4 × 13 multiplies by the SLANT — the vertical height is √(13² − 5²) = 12: 48π."
+          },
+          {
+            "value": 144,
+            "feedback": "144 forgets to square-then-multiply correctly — r² = 4 and h = 12: 48."
+          },
+          {
+            "value": 20,
+            "feedback": "20 = 4 × 5 uses the SHIFT as height — the shift is horizontal; h = 12: 48."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "h = √(169 − 25) = 12; V = π(4)(12) = 48π — Cavalieri charges only vertical height.",
+        "successFeedback": "h = √(169 − 25) = 12; V = π(4)(12) = 48π — Cavalieri charges only vertical height."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Slices carry the volume.",
+      "takeaways": [
+        "Cavalieri: same height + equal cross-sections at EVERY level ⇒ equal volumes.",
+        "Oblique prisms and cylinders cost the same as their upright twins — V = Bh with VERTICAL height.",
+        "Slant edges are decoys: extract h by Pythagoras before any volume recall."
+      ],
+      "teaser": "Next: the principle at work — comparing unlike solids slice by slice."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "tag": "S205J",
+  "label": "dr/dc steppedReveal cluster COMPLETED — all 9 lessons dispositioned. dr-04-03 converts via the new framing:'slope' mode on relatedRatesLab (the near-miss from S205I, refused then on dt notation alone; the engine now narrates the same circle in the lesson's own dy/dx language). dr-03-03, dc-03-02, dc-04-02 refuse on the cluster's established gates. Final tally: 2 converted (dc-02-01, dr-04-03), 7 refused with cites.",
+  "conversions": [],
+  "insertions": [
+    {
+      "course": "derivative-rules",
+      "lesson": "dr-04-03",
+      "after": "i1",
+      "step": {
+        "id": "i1b",
+        "kind": "interactive",
+        "body": "The reveal computed the slope at one point. Now hold the whole circle: slide the point and watch dy/dx come straight out of the relation — no y(x) formula ever written.",
+        "predict": {
+          "prompt": "A point slides to the RIGHT along the upper half of x² + y² = 25, so x grows and y shrinks. What happens to the slope dy/dx = −x/y?",
+          "options": [
+            { "id": "constant", "label": "Stays the same — it's one circle, one slope" },
+            { "id": "steeper", "label": "Gets steeper (more negative): x is growing AND y is shrinking" },
+            { "id": "shallower", "label": "Gets shallower — big circles are flat" }
+          ],
+          "outcomeId": "steeper",
+          "reveal": "Steeper, on both counts at once: the numerator x grows while the denominator y shrinks, so −x/y falls fast. That is why the answer to an implicit derivative KEEPS y in it — the slope genuinely depends on both coordinates, which is exactly what lets you skip solving for y as a function of x."
+        },
+        "widget": {
+          "type": "relatedRatesLab",
+          "prompt": "On the circle x² + y² = 25, slide the point to x = 3 and read the slope there.",
+          "framing": "slope",
+          "ladderLength": 5,
+          "horizontalRate": 1,
+          "targetX": 3,
+          "startX": 1,
+          "successFeedback": "At x = 3 the circle forces y = 4, and the relation 2x + 2y·(dy/dx) = 0 hands you dy/dx = −x/y = −3/4 — the reveal's exact number, read off the point's position. You never wrote y as a function of x; the relation itself did the differentiating.",
+          "explorationFeedback": "Watch the readout as you slide: dy/dx = −x/y changes at every position because it depends on BOTH coordinates. That dependence is the whole reason implicit differentiation leaves y in the answer.",
+          "positionFeedback": "Bring the point to x = 3 — the reveal's point (3, 4) — and check the slope readout against the −3/4 the algebra produced."
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "dr-03-03",
+      "title": "Choosing and Combining the Rules (derivative-rules)",
+      "why": "Represents gate — the cluster's established class. The reveal contrasts two ROUTES to the same derivative (product rule vs expand-first on x²(x+3), both landing on 3x² + 6x) and its moral is strategic choice: 'the rules are not always the fastest road.' No phenomenon engine can pose a route choice — derivativeRuleLab demonstrates one rule's mechanism, and demonstrating either route teaches the route, not the CHOOSING. Same shape as dr-03-02/dr-04-02: the engine shows an ingredient, the lesson asks about strategy over ingredients.",
+      "gate": "represents"
+    },
+    {
+      "lesson": "dc-03-02",
+      "title": "Differentials and Error (derivatives-in-context)",
+      "why": "Represents gate. The graded subject is error arithmetic: dV = 3s²·ds = 30 cm³ at s=10, ds=0.1; relative error dV/V = 3·(ds/s) — the power MULTIPLIES the relative error. The nearest proven engine, graphZoom, shows local linearity, which is the FOUNDATION of differentials but not this lesson's claim about error ratios; nothing on screen would show dV against V or the factor of 3. The ingredient/assembly split again. Engine gap: an error-propagation lab (a cube with a side slider showing ΔV vs dV and both relative errors live).",
+      "gate": "represents"
+    },
+    {
+      "lesson": "dc-04-02",
+      "title": "The Other Indeterminate Forms (derivatives-in-context)",
+      "why": "Models gate. The reveal's claim is the growth hierarchy ln x ≪ any power of x ≪ eˣ — a statement about races to infinity. No registered engine models comparative growth at large x: graphZoom is built for zooming IN (local linearity), and the course's other proven engines (derivativeTrace, relatedRatesLab, secantSlope) live on bounded stages. The hierarchy has nowhere to happen on screen. Engine gap: a growth-race engine (two functions, a shared log-scale ruler, a slider driving x outward).",
+      "gate": "models"
+    }
+  ]
+}

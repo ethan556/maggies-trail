@@ -1,0 +1,269 @@
+{
+ "id": "lg-02-01",
+ "slug": "the-product-property",
+ "title": "The Product Property",
+ "courseId": "logarithms",
+ "chapterId": "ch2-properties-of-logarithms",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Exponent rules become log rules — because logs ARE exponents. Multiplying powers ADDS exponents (2³ · 2⁴ = 2⁷), so logs of products split into sums: **log_b (MN) = log_b M + log_b N**. Check: log₂ (8 · 4) = log₂ 32 = 5, and log₂ 8 + log₂ 4 = 3 + 2 = 5. ✓",
+   "figure": "lg-rules-are-exponents"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Verify it yourself.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute log₃ 9 + log₃ 27, then confirm it equals log₃ (9 · 27) = log₃ 243. What is the value?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "log₃ 9 = 2 and log₃ 27 = 3 (not 3 and 3): 2 + 3 = 5."
+     },
+     {
+      "value": 243,
+      "feedback": "243 is the PRODUCT inside — the log of it is the exponent: 3⁵ = 243 → 5."
+     }
+    ],
+    "fallbackFeedback": "2 + 3 = 5, and 3⁵ = 243 confirms the property."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The property runs both directions. **Expand:** log₂ (8x) = log₂ 8 + log₂ x = 3 + log₂ x. **Condense:** log 5 + log 20 = log (5 · 20) = log 100 = 2. Condensing often turns ugly pieces into a clean whole — 5 and 20 alone have messy logs; their product doesn't.",
+   "figure": "lg-product"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Expand a product.",
+   "conceptTag": "lg-product",
+   "explanationVariants": [
+    "log₅ (25y) = log₅ 25 + log₅ y = 2 + log₅ y.",
+    "Split the product, then evaluate the numeric piece."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Expand log₅ (25y).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "2 + log₅ y",
+      "correct": true,
+      "feedback": "Right — the product splits into a sum, and log₅ 25 = 2."
+     },
+     {
+      "id": "o2",
+      "label": "25 log₅ y",
+      "correct": false,
+      "feedback": "Products INSIDE become sums OUTSIDE — the 25 exits as its own log, worth 2."
+     },
+     {
+      "id": "o3",
+      "label": "log₅ 25 · log₅ y",
+      "correct": false,
+      "feedback": "The logs ADD; they never multiply each other: 2 + log₅ y."
+     },
+     {
+      "id": "o4",
+      "label": "2 · log₅ y",
+      "correct": false,
+      "feedback": "The 2 (= log₅ 25) joins by ADDITION, not as a coefficient."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-product__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Condense a sum.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Condense and evaluate: log₂ 4 + log₂ 8 = log₂ (4 · 8) = ?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "The logs of 4 and 8 add as EXPONENTS (2 + 3 = 5) — 12 adds the numbers themselves."
+     },
+     {
+      "value": 32,
+      "feedback": "32 is the product inside the condensed log — its base-2 log is 5."
+     }
+    ],
+    "fallbackFeedback": "log₂ 32 = 5 (and 2 + 3 = 5 agrees)."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The property's fine print.",
+   "conceptTag": "lg-product",
+   "explanationVariants": [
+    "log(M + N) has NO splitting rule — the property is for PRODUCTS only. Witness: log₂(8 + 8) = 4, but log₂ 8 + log₂ 8 = 6.",
+    "Sums inside a log stay put."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which expression can the product property rewrite?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "log₂ (8x)",
+      "correct": true,
+      "feedback": "Right — a PRODUCT inside splits into a sum of logs."
+     },
+     {
+      "id": "o2",
+      "label": "log₂ (8 + x)",
+      "correct": false,
+      "feedback": "Sums inside have no rule — witness x = 8: log₂ 16 = 4, but 3 + 3 = 6."
+     },
+     {
+      "id": "o3",
+      "label": "(log₂ 8)(log₂ x)",
+      "correct": false,
+      "feedback": "That's a product OF logs — the property acts on a product INSIDE one log."
+     },
+     {
+      "id": "o4",
+      "label": "log₂ 8 − log₂ x",
+      "correct": false,
+      "feedback": "A DIFFERENCE of logs condenses by the quotient rule (next lesson), not the product rule."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-product__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Three factors.",
+   "conceptTag": "lg-product",
+   "explanationVariants": [
+    "log(2 · 5 · 100) = log 2 + log 5 + log 100 — and grouping 2 · 5 = 10 first: log 1000 = 3.",
+    "The property chains across any number of factors."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Evaluate log 2 + log 5 + log 100 (base 10).",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 107,
+      "feedback": "Condense FIRST: 2 · 5 · 100 = 1000, and log 1000 = 3 (107 adds the raw numbers)."
+     },
+     {
+      "value": 4,
+      "feedback": "2 · 5 · 100 = 1000 = 10³, not 10⁴: the answer is 3."
+     }
+    ],
+    "fallbackFeedback": "log(2 · 5 · 100) = log 1000 = 3."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-product__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Condense to solve.",
+   "conceptTag": "lg-product",
+   "explanationVariants": [
+    "log₂ x + log₂ 4 = 6 condenses to log₂ (4x) = 6, so 4x = 2⁶ = 64 → x = 16.",
+    "One condense, one conversion to exponential form, one division."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve: log₂ x + log₂ 4 = 6.",
+    "answer": 16,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 64,
+      "feedback": "64 is 4x (from 2⁶) — divide by 4: x = 16."
+     },
+     {
+      "value": 4,
+      "feedback": "Condense first: log₂(4x) = 6 → 4x = 64 → x = 16 (4 halves the exponent instead)."
+     }
+    ],
+    "fallbackFeedback": "log₂(4x) = 6 → 4x = 64 → x = 16; check log₂ 16 + log₂ 4 = 4 + 2 = 6. ✓"
+   },
+   "hints": [
+    "Condense the left side: log₂ (4x).",
+    "Convert: 4x = 2⁶ = 64.",
+    "x = 16."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-product__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Products inside become sums outside — in either direction.",
+   "takeaways": [
+    "log_b(MN) = log_b M + log_b N, straight from adding exponents.",
+    "No rule exists for log(M + N).",
+    "Condensing can turn messy pieces into a clean single log."
+   ],
+   "teaser": "Next: division's turn — the quotient property."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-product",
+   "concept": {
+    "id": "rem-lg0201-c",
+    "kind": "concept",
+    "body": "See it in pure exponents: 2² · 2³ = 2⁵. The logs of the three numbers are exactly 2, 3, and 5."
+   },
+   "check": {
+    "id": "rem-lg0201-k",
+    "kind": "check",
+    "body": "Read the sum.",
+    "conceptTag": "lg-product",
+    "explanationVariants": [
+     "log₂ 4 + log₂ 8 = 2 + 3 = 5 = log₂ 32.",
+     "Multiplying the numbers added their exponents."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "log₂ 4 + log₂ 8 = log₂ 32. Using exponents 2 and 3, what is log₂ 32?",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 6,
+       "feedback": "The exponents are 2 and 3 (4 = 2², 8 = 2³): they sum to 5."
+      },
+      {
+       "value": 32,
+       "feedback": "32 sits INSIDE the log — the log itself is the exponent 5."
+      }
+     ],
+     "fallbackFeedback": "2 + 3 = 5."
+    }
+   }
+  }
+ ]
+}

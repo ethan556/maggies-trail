@@ -1,0 +1,269 @@
+{
+  "id": "dd-04b-01",
+  "slug": "building-a-box-plot",
+  "title": "Building a Box Plot",
+  "courseId": "data-distributions",
+  "chapterId": "ch4b-box-plots-and-mad",
+  "minutes": 10,
+  "standards": [
+    "6.SP.B.4"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "dd-box-five-number",
+      "body": "You already find the median, Q1 and Q3. Add the smallest and largest values and you have the **five-number summary**: min, Q1, median, Q3, max. A **box plot** draws that summary. The **box** runs from Q1 to Q3 with a line at the median; the **whiskers** reach out to the min and the max. For 2, 5, 7, 8, 11, 13, 14, 16, 19, 20 the summary is min 2, Q1 7, median 12, Q3 16, max 20."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Drag each handle into place. The box holds the middle half; the whiskers reach the extremes.",
+      "widget": {
+        "type": "boxPlot",
+        "prompt": "Build the summary: min 2, Q1 6, median 10, Q3 15, max 20.",
+        "axisMin": 0,
+        "axisMax": 22,
+        "targetMin": 2,
+        "targetQ1": 6,
+        "targetMed": 10,
+        "targetQ3": 15,
+        "targetMax": 20,
+        "startMin": 0,
+        "startQ1": 4,
+        "startMed": 8,
+        "startQ3": 12,
+        "startMax": 16,
+        "successFeedback": "That's it — box from Q1 to Q3 cut at the median, whiskers out to the smallest and largest values.",
+        "orderFeedback": "Keep them in order: min ≤ Q1 ≤ median ≤ Q3 ≤ max. One handle has jumped its neighbour.",
+        "valueFeedback": "Ordered correctly, but not on the target values yet. Match each handle to its number."
+      },
+      "predict": {
+        "prompt": "Once it is built, which part of the picture will the WHISKERS cover?",
+        "options": [
+          {
+            "id": "outer",
+            "label": "The outer quarters — the lowest 25% and the highest 25%"
+          },
+          {
+            "id": "middle",
+            "label": "The middle half of the data"
+          },
+          {
+            "id": "all",
+            "label": "All of the data at once"
+          }
+        ],
+        "outcomeId": "outer",
+        "reveal": "The box already owns the middle half, so the two whiskers split what is left: the bottom quarter and the top quarter."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read a summary straight off the picture.",
+      "conceptTag": "box-plot",
+      "explanationVariants": [
+        "The left edge of the box is Q1. Here the box starts at 7, so Q1 = 7 — the whisker end at 2 is the minimum, not a quartile.",
+        "Walk in from the left: 2 is where the whisker starts (the min), and the box's first wall is Q1 at 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box plot has its whisker starting at 2, box edges at 7 and 16, median line at 12, and whisker ending at 20. What is Q1?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the MINIMUM — where the whisker begins. Q1 is the first wall of the box, at 7."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the MEDIAN, the line inside the box. Q1 is the box's left edge, at 7."
+          }
+        ],
+        "fallbackFeedback": "Q1 is the left edge of the box. The box runs 7 to 16, so Q1 = 7."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "How much data does the box hold?",
+      "conceptTag": "box-plot",
+      "explanationVariants": [
+        "Q1 cuts off the bottom quarter and Q3 cuts off the top quarter, so the box between them holds the two middle quarters — half the data.",
+        "The four sections of a box plot each hold a quarter. The box covers two of those four sections, which is 50%."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "About what share of the data sits inside the box, between Q1 and Q3?",
+        "options": [
+          {
+            "id": "a",
+            "label": "About half of it",
+            "correct": true,
+            "feedback": "Right — the box spans the two middle quarters, so about 50% of the values live inside it."
+          },
+          {
+            "id": "b",
+            "label": "About a quarter of it",
+            "feedback": "A quarter is what ONE section holds. The box covers two sections — from Q1 to the median, and from the median to Q3 — so about half."
+          },
+          {
+            "id": "c",
+            "label": "All of it",
+            "feedback": "All the data spans the whole picture, whiskers included. The box alone leaves out the bottom quarter and the top quarter."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "dd-box-quarters",
+      "body": "Every one of the four pieces — lower whisker, lower box, upper box, upper whisker — holds the **same quarter** of the data. So a **wide** piece does not mean more values; it means that quarter is **spread out**. A long whisker and a short whisker on the same plot hold equally many values, packed loosely on one side and tightly on the other."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The box's width has a name you already know.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the box plot with Q1 = 7 and Q3 = 16, how wide is the box? (That width is the IQR.)",
+        "answer": 9,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 23,
+            "feedback": "23 adds the quartiles (7 + 16). Width is a distance, so subtract: 16 − 7 = 9."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is the whole range, max − min (20 − 2). The box only spans Q1 to Q3: 16 − 7 = 9."
+          }
+        ],
+        "fallbackFeedback": "The box runs from Q1 = 7 to Q3 = 16, so its width is 16 − 7 = 9."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read what a long whisker is telling you.",
+      "conceptTag": "box-plot",
+      "explanationVariants": [
+        "Both whiskers carry a quarter of the data. A longer one means that quarter is stretched over more ground — more spread out, not more numerous.",
+        "Length measures distance, not headcount. The top quarter covering a longer stretch means those values are scattered further apart."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On one box plot the upper whisker is much longer than the lower whisker. What does that tell you?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The top quarter of the values is more spread out than the bottom quarter",
+            "correct": true,
+            "feedback": "Exactly — same number of values in each quarter, stretched across more ground at the top."
+          },
+          {
+            "id": "b",
+            "label": "There are more values in the top quarter than the bottom quarter",
+            "feedback": "Each of the four sections always holds the same quarter of the data. The whisker's length shows spread, never count."
+          },
+          {
+            "id": "c",
+            "label": "The median must be closer to Q3 than to Q1",
+            "feedback": "The whiskers sit OUTSIDE the box, so they say nothing about where the median falls inside it. They describe the outer quarters."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Raw data in, summary out.",
+      "conceptTag": "box-plot",
+      "explanationVariants": [
+        "Sorted: 4, 6, 9, 10, 12, 15, 18, 21. Eight values, so the median splits 4, 6, 9, 10 from 12, 15, 18, 21. Q1 is the lower half's median, (6 + 9) ÷ 2 = 7.5.",
+        "With an even count there is no single middle value in the lower half either, so average its central pair: 6 and 9 give Q1 = 7.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You are drawing a box plot for 10, 4, 15, 9, 21, 6, 12, 18. Where does the LEFT edge of the box go? (Sort first.)",
+        "answer": 7.5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the minimum — that is where the whisker starts. The box's left edge is Q1, the median of the lower half 4, 6, 9, 10, which is 7.5."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is one of the lower half's two middle values. With four values there, average the middle pair: (6 + 9) ÷ 2 = 7.5."
+          },
+          {
+            "value": 11,
+            "feedback": "11 is the median of the WHOLE set — that is the line inside the box, not its left edge. Q1 comes from the lower half only: 7.5."
+          }
+        ],
+        "fallbackFeedback": "Sorted: 4, 6, 9, 10, 12, 15, 18, 21. Lower half 4, 6, 9, 10 has middle pair 6 and 9, so Q1 = 7.5."
+      },
+      "hints": [
+        "The left edge of a box is always Q1.",
+        "Sort the eight values, split them into two halves of four, and work with the lower half only.",
+        "The lower half is 4, 6, 9, 10 — average its middle pair, 6 and 9."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Five numbers, one picture.",
+      "takeaways": [
+        "A box plot draws the five-number summary: min, Q1, median, Q3, max.",
+        "The box spans Q1 to Q3 — the middle half — and its width is the IQR.",
+        "All four sections hold a quarter of the data, so width shows spread, never how many."
+      ],
+      "teaser": "next: two box plots side by side, and what their shapes say about each other."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "box-plot",
+      "concept": {
+        "id": "rem-bp-c",
+        "kind": "concept",
+        "body": "Quick rewind. Left to right, a box plot reads: whisker start = **min**, box left edge = **Q1**, line in the box = **median**, box right edge = **Q3**, whisker end = **max**."
+      },
+      "check": {
+        "id": "rem-bp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "box-plot",
+        "explanationVariants": [
+          "The line drawn inside the box is always the median, so it is 14.",
+          "Box edges are the quartiles (11 and 19); the line between them is the median, 14."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A box plot has box edges at 11 and 19 with a line at 14 inside. What is the median?",
+          "answer": 14,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 11,
+              "feedback": "11 is the box's left edge, which is Q1. The median is the line drawn inside the box: 14."
+            },
+            {
+              "value": 19,
+              "feedback": "19 is the box's right edge, which is Q3. The median is the interior line: 14."
+            }
+          ],
+          "fallbackFeedback": "The line inside the box marks the median, so the median is 14."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+ "id": "vec-01-02",
+ "slug": "direction-angles",
+ "title": "Direction Angles & Building Components",
+ "courseId": "vectors-matrices",
+ "chapterId": "ch1-vectors-components",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A vector's **direction angle** θ is measured counterclockwise from the positive x-axis. Find it from the components: θ is the angle whose tangent is b/a — **with a quadrant check** (recall the arctan trap from polar). For ⟨1, √3⟩: |v| = 2 and tan θ = √3, so θ = 60° in Quadrant I.",
+   "figure": "vec-direction-angle"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "A first-quadrant angle.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "The vector ⟨1, √3⟩ has direction angle θ. What is θ in degrees?",
+    "answer": 60,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "tan θ = b/a = √3/1 = √3, which is 60°, not 30° (that's tan = 1/√3)."
+     },
+     {
+      "value": 45,
+      "feedback": "tan θ = √3 ≈ 1.73, not 1. The angle with tangent √3 is 60°."
+     }
+    ],
+    "fallbackFeedback": "tan θ = √3 → θ = 60° (Quadrant I)."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A second-quadrant direction.",
+   "conceptTag": "vec-direction",
+   "explanationVariants": [
+    "⟨−3, 4⟩ is in Quadrant II (left, up): reference angle ≈ 53.13°, so θ = 180° − 53.13° = 126.87°.",
+    "Negative x, positive y → Q2; the direction angle exceeds 90°."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The direction angle of v = ⟨−3, 4⟩ is closest to:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "126.87° (Quadrant II)",
+      "correct": true,
+      "feedback": "Right — left-and-up is Q2: 180° − 53.13° = 126.87°."
+     },
+     {
+      "id": "o2",
+      "label": "53.13°",
+      "feedback": "53.13° is Q1, for ⟨3, 4⟩. The negative x-component pushes this into Q2: 126.87°."
+     },
+     {
+      "id": "o3",
+      "label": "−53.13°",
+      "feedback": "That's Q4 (right-down). ⟨−3, 4⟩ points up-LEFT: 126.87°."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-direction__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Reverse the process to BUILD a vector from its size and angle — the polar→rectangular formulas (recall):\n\na = |v| cos θ,  b = |v| sin θ.\n\nA vector of magnitude 10 at 30° is ⟨10cos30°, 10sin30°⟩ = ⟨5√3, 5⟩ ≈ ⟨8.66, 5⟩.",
+   "figure": "vec-build-from-angle"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Build the y-component.",
+   "conceptTag": "vec-direction",
+   "explanationVariants": [
+    "b = |v| sin θ = 10 sin30° = 10·(1/2) = 5.",
+    "The vertical component is magnitude times sine: 5."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A vector has magnitude 10 and direction 30°. What is its y-component? (Exact.)",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "m",
+      "label": "the magnitude",
+      "value": 10
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "const",
+      "id": "m"
+     },
+     "right": {
+      "op": "sinDeg",
+      "degrees": 30
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 8.66,
+      "feedback": "8.66 = 10cos30° is the x-component. The y-component is 10sin30° = 5."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is the magnitude. The y-component is 10sin30° = 10·(1/2) = 5."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "b = 10 sin30° = 5.",
+    "successFeedback": "b = 10 sin30° = 5."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-direction__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Build the x-component.",
+   "conceptTag": "vec-direction",
+   "explanationVariants": [
+    "a = |v| cos θ = 8 cos45° = 8·(√2/2) = 4√2 ≈ 5.66.",
+    "The horizontal component is magnitude times cosine: 4√2."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A vector has magnitude 8 and direction 45°. What is its x-component, to two decimals?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "m",
+      "label": "the magnitude",
+      "value": 8
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "const",
+      "id": "m"
+     },
+     "right": {
+      "op": "cosDeg",
+      "degrees": 45
+     }
+    },
+    "approxRound": 2,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 4,
+      "feedback": "4 would be 8·(1/2). cos45° = √2/2 ≈ 0.707, so a = 8·0.707 ≈ 5.66."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is the magnitude. The x-component is 8cos45° = 4√2 ≈ 5.66."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "a = 8 cos45° = 4√2 ≈ 5.66.",
+    "successFeedback": "a = 8 cos45° = 4√2 ≈ 5.66."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-direction__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A third-quadrant angle.",
+   "conceptTag": "vec-direction",
+   "explanationVariants": [
+    "⟨−1, −1⟩ is in Quadrant III (both negative): reference angle 45°, so θ = 180° + 45° = 225°.",
+    "Down-and-left is Q3; add 180° to the 45° reference angle."
+   ],
+   "hints": [
+    "Both components negative → which quadrant?",
+    "Quadrant III. Reference angle: tan⁻¹(1/1) = 45°.",
+    "Q3 direction = 180° + 45°."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "The direction angle of v = ⟨−1, −1⟩, in [0°, 360°), is:",
+    "task": "vectorDirectionAngle",
+    "values": [],
+    "vdaX": -1,
+    "vdaY": -1,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 45,
+      "feedback": "45° is the reference angle only. In Q3 (both negative), θ = 180° + 45° = 225°."
+     },
+     {
+      "value": 135,
+      "feedback": "135° is Q2 (⟨−1, 1⟩). Both components here are negative → Q3: 225°."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "Q3: 180° + 45° = 225°.",
+    "successFeedback": "Q3: 180° + 45° = 225°."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-direction__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Angle out, components in.",
+   "takeaways": [
+    "Direction angle from components: tan θ = b/a with a quadrant check.",
+    "Components from size & angle: a = |v|cos θ, b = |v|sin θ.",
+    "The quadrant of ⟨a, b⟩ decides which angle the arctan really means."
+   ],
+   "teaser": "Next: vectors as displacements between points."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "vec-direction",
+   "concept": {
+    "id": "rem-vec0102-c",
+    "kind": "concept",
+    "body": "Direction angle: tan θ = b/a, then adjust for the quadrant of ⟨a, b⟩. Components from size & angle: a = |v|cosθ, b = |v|sinθ."
+   },
+   "check": {
+    "id": "rem-vec0102-k",
+    "kind": "check",
+    "body": "One component.",
+    "conceptTag": "vec-direction",
+    "explanationVariants": [
+     "b = |v|sinθ = 6 sin90° = 6·1 = 6.",
+     "At 90° the vector points straight up: all of its length is vertical."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A vector of magnitude 6 at direction 90° has what y-component?",
+     "answer": 6,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "0 is the x-component (6cos90°). At 90° the vector is vertical: y = 6sin90° = 6."
+      },
+      {
+       "value": 3,
+       "feedback": "sin90° = 1, so b = 6·1 = 6, not 3."
+      }
+     ],
+     "fallbackFeedback": "b = 6 sin90° = 6."
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,261 @@
+{
+  "id": "bt-02-03",
+  "slug": "binomials-meet-probability",
+  "title": "Binomials Meet Probability",
+  "courseId": "binomial-theorem",
+  "chapterId": "ch2-the-theorem-at-work",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Let p be the chance of a success and q = 1 − p the chance of a failure. Then (p + q)ⁿ expands into terms C(n,k)pᵏqⁿ⁻ᵏ, and each one is the probability of exactly k successes in n trials. Since p + q = 1, the whole expansion sums to 1ⁿ = 1 — the distribution accounts for every outcome.",
+      "figure": "bt-probability-expansion"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the outcome paths behind one probability.",
+      "widget": {
+        "type": "treeDiagram",
+        "prompt": "Four coin flips, two outcomes each. Set the tree to 4 stages of 2 and read the total number of outcome paths.",
+        "stage1Label": "Flips",
+        "stage2Label": "Outcomes per flip",
+        "targetA": 4,
+        "targetB": 2,
+        "maxA": 6,
+        "maxB": 6,
+        "aStart": 2,
+        "bStart": 1,
+        "successFeedback": "16 equally likely paths — 2⁴. Six of them show exactly two heads, which is C(4,2), so that probability is 6/16.",
+        "lowFeedback": "Not enough paths — add flips or outcomes.",
+        "highFeedback": "Too many paths — four flips of two outcomes is what this experiment offers."
+      },
+      "predict": {
+        "prompt": "Four fair coin flips. Is ‘exactly 2 heads’ more likely than ‘exactly 4 heads’?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — by a lot"
+          },
+          {
+            "id": "no",
+            "label": "No — all counts are equally likely"
+          },
+          {
+            "id": "same",
+            "label": "They are exactly equal"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Six of the sixteen paths give exactly two heads, but only one gives four. 6/16 against 1/16. Counts in the middle collect far more paths, which is Pascal's row 1 4 6 4 1 acting as a probability distribution."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the whole outcome space as a grid.",
+      "widget": {
+        "type": "areaModel",
+        "countGrid": true,
+        "commonCounts": [
+          {
+            "count": 8,
+            "feedback": "8 is 2³, the outcome count for THREE flips. A fourth flip doubles it."
+          },
+          {
+            "count": 4,
+            "feedback": "4 counts the flips' outcomes one flip at a time. Each flip doubles the whole space, giving 2⁴."
+          }
+        ],
+        "prompt": "The 16 outcomes of four flips are laid out as a 4 by 4 grid of squares. Count them.",
+        "targetArea": 16,
+        "wMax": 4,
+        "hMax": 4,
+        "wStart": 4,
+        "hStart": 4,
+        "successFeedback": "16 equally likely outcomes — 2⁴. The distribution 1, 4, 6, 4, 1 splits exactly these 16 squares among the five possible head-counts.",
+        "lowFeedback": "Keep counting — four rows of four squares.",
+        "highFeedback": "Too many — the grid holds four rows of four."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the favourable paths.",
+      "conceptTag": "bt-probability",
+      "explanationVariants": [
+        "Exactly two heads in four flips happens C(4,2) = 6 ways.",
+        "Choose which 2 of the 4 flips are heads."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In how many of the 16 outcomes of four coin flips do exactly 2 heads appear?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is half of 16, which would be right if every head-count were equally likely. They are not."
+          },
+          {
+            "value": 4,
+            "feedback": "4 counts the ways to get exactly ONE head, C(4,1)."
+          }
+        ],
+        "fallbackFeedback": "C(4,2) = 6 of the 16 outcomes have exactly two heads.",
+        "successFeedback": "6 — row 4's middle entry, now counting coin outcomes instead of algebra terms."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With a fair coin every path is equally likely, so the probability of exactly k heads is C(n,k)/2ⁿ. When p is not ½ the paths stop being equally likely and each carries weight pᵏqⁿ⁻ᵏ instead — but the COUNT of paths is still C(n,k), unchanged. The combination counts; the powers weigh.",
+      "figure": "bt-fair-coin-paths"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Turn the count into a probability.",
+      "conceptTag": "bt-probability",
+      "explanationVariants": [
+        "Only one outcome of sixteen gives four heads, so the probability is 1/16.",
+        "C(4,4) = 1 path out of 2⁴ = 16."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the probability of getting exactly 4 heads in four fair flips?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1/16",
+            "correct": true,
+            "feedback": "Right — C(4,4) = 1 path out of 16, the rarest column of the distribution."
+          },
+          {
+            "id": "o2",
+            "label": "1/4",
+            "correct": false,
+            "feedback": "That would be one flip's worth. Four heads in a row needs all four flips to cooperate."
+          },
+          {
+            "id": "o3",
+            "label": "6/16",
+            "correct": false,
+            "feedback": "6/16 is exactly TWO heads — the most likely count, not the extreme one."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why the total is 1.",
+      "conceptTag": "bt-probability",
+      "explanationVariants": [
+        "The counts 1, 4, 6, 4, 1 sum to 16, which is every outcome, so the probabilities sum to 1.",
+        "(p + q)ⁿ = 1ⁿ = 1 because p + q = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add the path counts for 0, 1, 2, 3 and 4 heads (1 + 4 + 6 + 4 + 1). What total do you get?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "Recount — both end 1s belong, for zero heads and for four."
+          },
+          {
+            "value": 10,
+            "feedback": "That drops the end terms. Every head-count from 0 to 4 is a genuine outcome."
+          }
+        ],
+        "fallbackFeedback": "1 + 4 + 6 + 4 + 1 = 16 = 2⁴, every outcome accounted for.",
+        "successFeedback": "16 — so the probabilities 1/16 + 4/16 + 6/16 + 4/16 + 1/16 total exactly 1, as a distribution must."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "An unfair coin.",
+      "conceptTag": "bt-probability",
+      "explanationVariants": [
+        "Exactly 2 heads in 3 trials with p = 1/2 has probability C(3,2)/8 = 3/8, so the numerator over 8 is 3.",
+        "C(3,2) = 3 paths out of 2³ = 8."
+      ],
+      "hints": [
+        "Count the paths with exactly two successes among three trials.",
+        "That count is C(3,2).",
+        "C(3,2) = 3, out of 2³ = 8 equally likely paths."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Three fair flips. Written as a fraction over 8, the probability of exactly 2 heads is ?/8. What is the numerator?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 counts only HHT-style thinking with a fixed position. Three different flips could be the tail."
+          },
+          {
+            "value": 6,
+            "feedback": "6 counts ORDERED arrangements of three items. Here the two heads are indistinguishable, so C(3,2) = 3."
+          }
+        ],
+        "fallbackFeedback": "C(3,2) = 3 paths out of 8, so the probability is 3/8.",
+        "successFeedback": "3 — row 3 reads 1, 3, 3, 1, and those four numbers over 8 are the whole distribution."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The expansion as a distribution.",
+      "takeaways": [
+        "(p + q)ⁿ expands to the binomial distribution: term k is the chance of exactly k successes.",
+        "C(n,k) counts the paths; pᵏqⁿ⁻ᵏ weighs each one.",
+        "Because p + q = 1, the terms sum to 1 and account for every outcome."
+      ],
+      "teaser": "Next in probability: attach a payoff to each outcome and ask what the long run is worth."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bt-probability",
+      "concept": {
+        "id": "rem-bt-probability-c",
+        "kind": "concept",
+        "body": "With a fair coin every path is equally likely, so the probability of exactly k heads is C(n,k)/2ⁿ. When p is not ½ the paths stop being equally likely and each carries weight pᵏqⁿ⁻ᵏ instead — but the COUNT of paths is still C(n,k), unchanged. The combination counts; the powers weigh."
+      },
+      "check": {
+        "id": "rem-bt-probability-k",
+        "kind": "check",
+        "body": "Count the favourable paths.",
+        "conceptTag": "bt-probability",
+        "explanationVariants": [
+          "Exactly two heads in four flips happens C(4,2) = 6 ways.",
+          "Choose which 2 of the 4 flips are heads."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In how many of the 16 outcomes of four coin flips do exactly 2 heads appear?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 is half of 16, which would be right if every head-count were equally likely. They are not."
+            },
+            {
+              "value": 4,
+              "feedback": "4 counts the ways to get exactly ONE head, C(4,1)."
+            }
+          ],
+          "fallbackFeedback": "C(4,2) = 6 of the 16 outcomes have exactly two heads.",
+          "successFeedback": "6 — row 4's middle entry, now counting coin outcomes instead of algebra terms."
+        }
+      }
+    }
+  ]
+}

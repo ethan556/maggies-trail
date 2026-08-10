@@ -1,0 +1,309 @@
+{
+  "id": "cn-01-03",
+  "slug": "vertex-form-by-completing",
+  "title": "Vertex Form by Completing the Square",
+  "courseId": "complex-numbers",
+  "chapterId": "ch1-completing-the-square",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You've read vertices FROM vertex form — now derive it. For y = x² − 6x + 5, add and subtract (6/2)² = 9 **on the same side**: y = (x² − 6x + 9) − 9 + 5 = **(x − 3)² − 4**. Add-and-subtract keeps y unchanged — there's no other side to balance on.",
+      "figure": "parabola-vertex"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Completing the square IS finding the vertex.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 3,
+        "targetK": -4,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 8,
+        "prompt": "x² − 6x + 5 completes to (x − 3)² − 4. Build it, and see what the completed form was hiding.",
+        "successFeedback": "Vertex (3, −4). Standard form buries the vertex; vertex form hands it to you. Completing the square is not an algebraic ritual — it is the change of address that makes the vertex readable.",
+        "shapeFeedback": "The shape is a = 1 here — only the vertex needs moving.",
+        "vertexFeedback": "(x − 3)² − 4 has its vertex at (3, −4): right 3, down 4."
+      },
+      "predict": {
+        "prompt": "You'll move h UP in y = a(x − h)² + k. Which way does the parabola slide?",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right"
+          },
+          {
+            "id": "left",
+            "label": "To the left"
+          },
+          {
+            "id": "upward",
+            "label": "Straight up"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "Raising h moves the vertex RIGHT even though h is subtracted — (x − h)² is smallest exactly when x = h, so the low point chases h. The minus sign is why so many people guess the wrong direction."
+      },
+      "conceptTag": "cn-cts-vertex",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents cts vertex.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for cts vertex must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines cts vertex."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-cts-vertex",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why it's legal: +9 − 9 = 0, so y never changed — it just regrouped. The payoff is instant: (x − 3)² − 4 hands you the vertex **(3, −4)** and the minimum value −4 with no formula at all.",
+      "figure": "cn-add-zero"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Convert another.",
+      "conceptTag": "cn-cts-vertex",
+      "explanationVariants": [
+        "(4/2)² = 4: y = (x² + 4x + 4) − 4 + 1 = (x + 2)² − 3.",
+        "Add-and-subtract 4: the constant becomes 1 − 4 = −3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the vertex form of y = x² + 4x + 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = (x + 2)² − 3",
+            "correct": true,
+            "feedback": "Right — add-and-subtract 4: constant 1 − 4 = −3."
+          },
+          {
+            "id": "o2",
+            "label": "y = (x + 2)² + 1",
+            "correct": false,
+            "feedback": "The +4 tucked into the square must be paid back — subtract 4 from the 1: constant −3."
+          },
+          {
+            "id": "o3",
+            "label": "y = (x + 2)² + 5",
+            "correct": false,
+            "feedback": "That's 1 + 4 — the compensation SUBTRACTS the added 4: 1 − 4 = −3."
+          },
+          {
+            "id": "o4",
+            "label": "y = (x − 2)² − 3",
+            "correct": false,
+            "feedback": "Half of +4 is +2, so the square is (x + 2)² — the inside sign matches b's sign."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-cts-vertex"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Bigger numbers.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = x² + 10x + 30 becomes (x + 5)² + k. What is k?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 is the original constant — pay back the 25 hidden in the square: 30 − 25 = 5."
+          },
+          {
+            "value": 55,
+            "feedback": "That's 30 + 25 — the compensation subtracts: 30 − 25 = 5."
+          }
+        ],
+        "fallbackFeedback": "(10/2)² = 25; k = 30 − 25 = 5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Straight to the vertex height.",
+      "conceptTag": "cn-cts-vertex",
+      "explanationVariants": [
+        "y = (x − 4)² − 13, so the vertex y-coordinate is −13.",
+        "(−8/2)² = 16; the constant becomes 3 − 16 = −13, which is the minimum value."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert y = x² − 8x + 3 to vertex form. What is the y-coordinate of the vertex?",
+        "answer": -13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the y-INTERCEPT (the value at x = 0) — the vertex height is 3 − 16 = −13."
+          },
+          {
+            "value": 19,
+            "feedback": "That's 3 + 16 — the 16 slipped into the square is paid back by SUBTRACTING: −13."
+          }
+        ],
+        "fallbackFeedback": "y = (x − 4)² − 13; vertex height −13. Check: at x = 4, 16 − 32 + 3 = −13. ✓"
+      },
+      "variant": {
+        "gen": "cn-cts-vertex",
+        "form": "yCoord"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the whole vertex.",
+      "conceptTag": "cn-cts-vertex",
+      "explanationVariants": [
+        "y = x² − 2x + 7 = (x − 1)² + 6, so the vertex is (1, 6).",
+        "Add-and-subtract 1: constant 7 − 1 = 6; the square puts x = 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "After completing the square on y = x² − 2x + 7, what is the vertex?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(1, 6)",
+            "correct": true,
+            "feedback": "Right — y = (x − 1)² + 6."
+          },
+          {
+            "id": "o2",
+            "label": "(−1, 6)",
+            "correct": false,
+            "feedback": "The square is (x − 1)², and (x − h)² puts the vertex at x = +1, not −1."
+          },
+          {
+            "id": "o3",
+            "label": "(1, 7)",
+            "correct": false,
+            "feedback": "7 hasn't paid back the +1 tucked into the square: 7 − 1 = 6."
+          },
+          {
+            "id": "o4",
+            "label": "(0, 7)",
+            "correct": false,
+            "feedback": "(0, 7) is the y-INTERCEPT — the vertex sits on the axis of symmetry at x = 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Minimum without a formula.",
+      "conceptTag": "cn-cts-vertex",
+      "explanationVariants": [
+        "y = (x + 6)² + 4, so the minimum value is 4 (reached at x = −6).",
+        "(12/2)² = 36; constant 40 − 36 = 4 — an upward parabola's vertex height IS its minimum."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the MINIMUM value of y = x² + 12x + 40?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is the y-intercept — pay back the 36 hidden in (x + 6)²: 40 − 36 = 4."
+          },
+          {
+            "value": 76,
+            "feedback": "That's 40 + 36 — the compensation subtracts: 40 − 36 = 4."
+          }
+        ],
+        "fallbackFeedback": "y = (x + 6)² + 4; the square is never negative, so the minimum is 4. Check x = −6: 36 − 72 + 40 = 4. ✓"
+      },
+      "hints": [
+        "Complete the square: half of 12 is 6, squared is 36.",
+        "y = (x + 6)² + (40 − 36).",
+        "The squared part bottoms out at 0, so the minimum is 40 − 36 = 4."
+      ],
+      "variant": {
+        "gen": "cn-cts-vertex",
+        "form": "minValue"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Add-and-subtract (b/2)² on one side to regroup y into vertex form.",
+      "takeaways": [
+        "On an expression (not an equation), compensate on the SAME side: +9 − 9.",
+        "Vertex form hands you the vertex and the max/min instantly.",
+        "The y-intercept (x = 0 value) is NOT the vertex height."
+      ],
+      "teaser": "Next chapter: the number that finally solves x² = −1."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-cts-vertex",
+      "concept": {
+        "id": "rem-cn0103-c",
+        "kind": "concept",
+        "body": "Small version: y = x² + 2x + 5. Add and subtract (2/2)² = 1: y = (x + 1)² + (5 − 1)."
+      },
+      "check": {
+        "id": "rem-cn0103-k",
+        "kind": "check",
+        "body": "Finish the regroup.",
+        "conceptTag": "cn-cts-vertex",
+        "explanationVariants": [
+          "k = 5 − 1 = 4.",
+          "The +1 inside the square is paid back by subtracting 1 from the 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "y = x² + 2x + 5 becomes (x + 1)² + k. What is k?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 still owes the +1 tucked into the square: 5 − 1 = 4."
+            },
+            {
+              "value": 6,
+              "feedback": "That's 5 + 1 — compensation subtracts: 5 − 1 = 4."
+            }
+          ],
+          "fallbackFeedback": "k = 5 − 1 = 4."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "note": "S120c — two conversions the playbook named in §3.3 and that were still outstanding, both pure authoring against engines already in the course. tc-02-01 is Tier D.",
+  "conversions": [
+    {
+      "dir": "triangle-congruence",
+      "lesson": "tc-02-01",
+      "step": "i3",
+      "oldType": "mcq",
+      "capability": "triangleConstraintLab (playbook §3.3 — HL rescues SSA)",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "The givens start as SSA, where 5 and 13 leave two different triangles. Switch the givens to HL and take the angle to 90° — then look for the second triangle again.",
+        "targetCriterion": "HL",
+        "startCriterion": "SSA",
+        "sideA": 5,
+        "sideB": 13,
+        "targetAngle": 90,
+        "angleStart": 35,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "successFeedback": "At 90° with the hypotenuse and a leg given, the second triangle is gone — there is nowhere else for the third vertex to land. That is the whole of HL: SSA normally leaves two candidates, and pinning the angle at a right angle destroys one of them. HL is not a new kind of magic, it is the one case where SSA stops being ambiguous.",
+        "criterionFeedback": "The givens are still on a different combination. HL is the claim under test — hypotenuse and one leg, with the right angle — so set the givens to HL before deciding.",
+        "angleFeedback": "The givens are right but the angle is not at 90° yet. Away from a right angle these parts are just SSA, and SSA is exactly the combination that leaves two triangles.",
+        "evidenceFeedback": "Try the second-triangle control at least once on each setting before checking. The claim is that the ambiguity is there under SSA and absent under HL, and seeing only one of those is not a test."
+      },
+      "predict": {
+        "prompt": "SSA leaves two possible triangles. Fixing the given angle at exactly 90° will…",
+        "options": [
+          { "id": "kills", "label": "Destroy one of them, leaving exactly one triangle" },
+          { "id": "both", "label": "Leave both — a right angle changes nothing" },
+          { "id": "none", "label": "Destroy both — no triangle can close" }
+        ],
+        "outcomeId": "kills",
+        "reveal": "One survives. The second SSA triangle exists because the given side can swing to two positions; at a right angle those two positions collapse onto each other. HL is SSA with the ambiguity removed by the right angle, which is why it works only for right triangles."
+      }
+    },
+    {
+      "dir": "triangle-congruence",
+      "lesson": "tc-05-01",
+      "step": "i2",
+      "oldType": "numeric",
+      "capability": "triangleSolve sss (playbook §3.3 — the inequality as a reachable limit)",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "sss",
+        "prompt": "Sides 5 and 8 are fixed. Drag the third side as far as it will go — note where it stops — then bring it to where the angle facing it reads exactly 60°.",
+        "a": 5,
+        "b": 8,
+        "target": 60,
+        "start": 2,
+        "successFeedback": "A third side of 7, with the angle opposite it at exactly 60°. The more important reading is where the dial ran out: it stops at 12, because at 13 the two short sides would lie flat along the third and enclose nothing. That is the upper bound — the third side must be LESS than 5 + 8, and the triangle stops existing rather than merely looking wrong.",
+        "lowFeedback": "The angle opposite the third side is still under 60°, which means the third side is too short. Lengthen it — and notice the two fixed sides opening apart as you do.",
+        "highFeedback": "The angle has gone past 60°, so the third side is too long. Shorten it. Keep pushing the other way and you will meet the dial's ceiling, which is the inequality itself."
+      },
+      "predict": {
+        "prompt": "Two sides measure 5 and 8. As you stretch the third side longer and longer, the triangle will…",
+        "options": [
+          { "id": "stops", "label": "Stop existing once the third side reaches 13" },
+          { "id": "flat", "label": "Keep existing, just getting flatter forever" },
+          { "id": "any", "label": "Exist for any third side at all" }
+        ],
+        "outcomeId": "stops",
+        "reveal": "It stops. At exactly 13 the sides 5 and 8 lie flat end to end along the third side, enclosing no area at all, and beyond that they cannot reach. The bound is not a rule bolted onto triangles — it is the point where two sides can no longer meet."
+      }
+    }
+  ]
+}

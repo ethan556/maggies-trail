@@ -1,0 +1,230 @@
+{
+  "id": "iar-01-02",
+  "slug": "testing-a-point",
+  "title": "Testing a Point",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch1-half-planes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An inequality like y > 2x − 1 doesn't pick a line — it picks a SIDE. Its solutions are every point whose coordinates make the statement true: a whole half-plane of them. To find which side, you don't need theory. Pick any point not on the boundary and ask it.",
+      "figure": "iar-half-plane-solutions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Interrogate the easiest witness on the plane.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the classic test point — the origin — and we'll ask it about y > 2x − 1.",
+        "cols": 5,
+        "rows": 5,
+        "targets": [
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "xLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 2,
+            "feedback": "That's (1, 1) on these axes — the origin is where both labels read 0, bottom-left."
+          }
+        ],
+        "missFeedback": "The origin sits where x = 0 and y = 0 — the bottom-left corner.",
+        "successFeedback": "(0, 0): the cheapest arithmetic on the plane. Substituting zeros kills every term with a variable."
+      },
+      "predict": {
+        "prompt": "When we substitute (0, 0) into y > 2x − 1, the statement becomes…",
+        "options": [
+          {
+            "id": "true",
+            "label": "0 > −1 — true"
+          },
+          {
+            "id": "false",
+            "label": "0 > −1 — false"
+          },
+          {
+            "id": "cant",
+            "label": "Can't tell without the graph"
+          }
+        ],
+        "outcomeId": "true",
+        "reveal": "0 > 2·0 − 1 is 0 > −1 — TRUE. So the origin is a solution, and the entire origin side of the line is the solution region. One point's testimony convicts a whole half-plane."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the verdict.",
+      "conceptTag": "iar-test-point",
+      "explanationVariants": [
+        "Substituting (0, 0) gives 0 > −1, which is true, so the origin's side is the solution side.",
+        "The origin satisfies the inequality, so shading goes on the origin's side of the boundary."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The test gave 0 > −1 (true). Which side of y = 2x − 1 gets shaded?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The side containing (0, 0)",
+            "correct": true,
+            "feedback": "A true verdict means the witness lives in the region — shade its side."
+          },
+          {
+            "id": "o2",
+            "label": "The opposite side",
+            "correct": false,
+            "feedback": "Opposite shading is for a FALSE verdict — the witness would live outside."
+          },
+          {
+            "id": "o3",
+            "label": "Both sides",
+            "correct": false,
+            "feedback": "An inequality with > picks exactly one half-plane, never both."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why one witness suffices: crossing the boundary flips the comparison, and NOT crossing it can't. All points on one side vote the same way. So a single test point speaks for its whole side — choose (0, 0) whenever the boundary misses it, because zeros make the arithmetic trivial.",
+      "figure": "iar-one-witness-suffices"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A different inequality, same method.",
+      "conceptTag": "iar-test-point",
+      "explanationVariants": [
+        "(0, 0) in y < x − 2 gives 0 < −2, false, so the solution side is the one AWAY from the origin.",
+        "The origin fails the inequality, so shading goes on the non-origin side."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Test (0, 0) in y < x − 2. What happens?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "0 < −2 is false — shade the side away from the origin",
+            "correct": true,
+            "feedback": "A failed witness means the region is the OTHER side."
+          },
+          {
+            "id": "o2",
+            "label": "0 < −2 is true — shade the origin's side",
+            "correct": false,
+            "feedback": "Check the arithmetic: is zero less than negative two? No."
+          },
+          {
+            "id": "o3",
+            "label": "The test breaks — pick another point",
+            "correct": false,
+            "feedback": "The test worked perfectly; it just answered 'not this side.'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute a boundary value to test against.",
+      "conceptTag": "iar-test-point",
+      "explanationVariants": [
+        "At (3, 4): 2·3 − 1 = 5 and 4 > 5 is false, so (3, 4) is not a solution of y > 2x − 1.",
+        "The right side evaluates to 5 at x = 3; the point's y = 4 doesn't exceed it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y > 2x − 1: what does the right side equal at x = 3?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's the point's y, not the expression's value: 2·3 − 1 = 5."
+          },
+          {
+            "value": 7,
+            "feedback": "Added 1 instead of subtracting: 2·3 − 1 = 6 − 1 = 5."
+          },
+          {
+            "value": 6,
+            "feedback": "That's 2·3 before the − 1. Finish: 6 − 1 = 5."
+          }
+        ],
+        "fallbackFeedback": "Evaluate the right side at x = 3: 2·3 − 1 = 5. That 5 is the boundary height the inequality compares y against."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "When the origin is disqualified.",
+      "conceptTag": "iar-test-point",
+      "explanationVariants": [
+        "(0, 0) lies ON y = 2x, so it can't testify; any off-line point like (1, 0) works: 0 > 2 is false, so shade the other side.",
+        "A witness on the boundary is useless — pick (1, 0), get 0 > 2 false, and shade the side not containing it."
+      ],
+      "hints": [
+        "Substitute (0, 0) into y = 2x — where does it land?",
+        "A point ON the boundary can't pick a side. Choose any point off the line, like (1, 0).",
+        "(1, 0) in y > 2x: is 0 > 2? Shade accordingly."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For y > 2x, why can't (0, 0) be the test point — and what do you do?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It's on the boundary (0 = 2·0); use another point like (1, 0)",
+            "correct": true,
+            "feedback": "On-boundary witnesses are neutral — off-line ones still convict a side."
+          },
+          {
+            "id": "o2",
+            "label": "Zeros make the arithmetic wrong",
+            "correct": false,
+            "feedback": "Zeros make arithmetic EASY — the problem is location, not computation."
+          },
+          {
+            "id": "o3",
+            "label": "You must graph instead",
+            "correct": false,
+            "feedback": "A sketch is optional — any off-boundary point testifies just as well, no picture required."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One point speaks for its whole side.",
+      "takeaways": [
+        "An inequality's solutions fill a half-plane.",
+        "Test one off-boundary point: true → shade its side; false → shade the other.",
+        "(0, 0) is the witness of choice — unless it's on the line."
+      ],
+      "teaser": "next: does the boundary itself count? Solid versus dashed."
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "id": "pf-03-03",
+  "slug": "division-meets-the-theorems",
+  "title": "Division Meets the Theorems",
+  "courseId": "polynomial-functions",
+  "chapterId": "ch3-polynomial-division",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now chain the tools into a **factoring machine**. To crack f(x) = x³ − 2x² − 5x + 6: (1) hunt a zero by substitution — f(1) = 1 − 2 − 5 + 6 = 0, so (x − 1) is a factor; (2) divide it out — the quotient is x² − x − 6; (3) factor the quadratic — (x − 3)(x + 2). Fully cracked.",
+      "figure": "pf-factoring-machine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Step 1: hunt.",
+      "predict": {
+        "prompt": "f(x) = x³ − 4x² + x + 6 factors as (x − 2)(x − 3)(x + 1). Before computing — what will f(2) be?",
+        "options": [
+          {
+            "id": "zero",
+            "label": "Exactly 0 — the factor (x − 2) becomes zero, and zero times anything is zero"
+          },
+          {
+            "id": "two",
+            "label": "2 — you substitute the 2 back in"
+          },
+          {
+            "id": "cant",
+            "label": "You cannot tell without multiplying it all out"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "Exactly 0. One factor of the product becomes (2 − 2) = 0, so the whole product collapses to zero no matter what the other factors are. That is the Factor Theorem read backwards — and dividing by (x − 2) would leave remainder 0 for the same reason."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for f(x) = x³ − 4x² + x + 6, then slide the probe onto x = 2 and read the value.",
+        "roots": [
+          {
+            "x": -1,
+            "mult": 1
+          },
+          {
+            "x": 2,
+            "mult": 1
+          },
+          {
+            "x": 3,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "probeX": true,
+        "successFeedback": "Slide the probe to 2 and the readout is exactly 0 — and the same at −1 and 3. Those are the three roots, and each one is where a factor of (x − 2)(x − 3)(x + 1) collapses. Dividing by (x − 2) leaves remainder 0 for the same reason: the remainder IS f(2).",
+        "crossFeedback": "All three roots are simple, so the curve crosses at each one and the sign changes every time. Slide the probe across a root and watch the readout pass through zero as the sign turns over.",
+        "bounceFeedback": "A sign that holds across a root means an even multiplicity — a bounce. Every factor here appears once, so all three are crossings."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Step 2 turns the zero into progress: dividing f by (x − 2) (synthetic box 2, row 1, −4, 1, 6) gives bottom row 1, −2, −3, | 0 — quotient **x² − 2x − 3**. Step 3 is Algebra 1: x² − 2x − 3 = (x − 3)(x + 1). So f = (x − 2)(x − 3)(x + 1).",
+      "figure": "pf-divide-zero"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the zeros.",
+      "conceptTag": "pf-div-theorems",
+      "explanationVariants": [
+        "f = (x − 2)(x − 3)(x + 1): zeros 2, 3, −1.",
+        "Each linear factor names one zero, sign flipped from inside."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "With f(x) = x³ − 4x² + x + 6 = (x − 2)(x − 3)(x + 1), what are ALL its zeros?",
+        "tokens": [
+          {
+            "id": "z2",
+            "label": "2"
+          },
+          {
+            "id": "z3",
+            "label": "3"
+          },
+          {
+            "id": "zm1",
+            "label": "−1"
+          },
+          {
+            "id": "zm2",
+            "label": "−2"
+          },
+          {
+            "id": "zm3",
+            "label": "−3"
+          },
+          {
+            "id": "z1",
+            "label": "1"
+          }
+        ],
+        "correct": [
+          "z2",
+          "z3",
+          "zm1"
+        ],
+        "acceptAlso": [
+          [
+            "z2",
+            "zm1",
+            "z3"
+          ],
+          [
+            "z3",
+            "z2",
+            "zm1"
+          ],
+          [
+            "z3",
+            "zm1",
+            "z2"
+          ],
+          [
+            "zm1",
+            "z2",
+            "z3"
+          ],
+          [
+            "zm1",
+            "z3",
+            "z2"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "zm2",
+              "zm3",
+              "z1"
+            ],
+            "feedback": "Flip each inside sign: (x − 2) dies at +2, (x − 3) at +3, (x + 1) at −1."
+          },
+          {
+            "sequence": [
+              "zm2",
+              "z1",
+              "zm3"
+            ],
+            "feedback": "Flip each inside sign: (x − 2) dies at +2, (x − 3) at +3, (x + 1) at −1."
+          },
+          {
+            "sequence": [
+              "zm3",
+              "zm2",
+              "z1"
+            ],
+            "feedback": "Flip each inside sign: (x − 2) dies at +2, (x − 3) at +3, (x + 1) at −1."
+          },
+          {
+            "sequence": [
+              "zm3",
+              "z1",
+              "zm2"
+            ],
+            "feedback": "Flip each inside sign: (x − 2) dies at +2, (x − 3) at +3, (x + 1) at −1."
+          },
+          {
+            "sequence": [
+              "z1",
+              "zm2",
+              "zm3"
+            ],
+            "feedback": "Flip each inside sign: (x − 2) dies at +2, (x − 3) at +3, (x + 1) at −1."
+          },
+          {
+            "sequence": [
+              "z1",
+              "zm3",
+              "zm2"
+            ],
+            "feedback": "Flip each inside sign: (x − 2) dies at +2, (x − 3) at +3, (x + 1) at −1."
+          },
+          {
+            "sequence": [
+              "z2",
+              "z3"
+            ],
+            "feedback": "The (x + 1) factor contributes a third zero, at −1."
+          },
+          {
+            "sequence": [
+              "z3",
+              "z2"
+            ],
+            "feedback": "The (x + 1) factor contributes a third zero, at −1."
+          },
+          {
+            "sequence": [
+              "z2",
+              "z3",
+              "z1"
+            ],
+            "feedback": "(x + 1) is zero at NEGATIVE one — the plus inside flips."
+          },
+          {
+            "sequence": [
+              "z2",
+              "z1",
+              "z3"
+            ],
+            "feedback": "(x + 1) is zero at NEGATIVE one — the plus inside flips."
+          },
+          {
+            "sequence": [
+              "z3",
+              "z2",
+              "z1"
+            ],
+            "feedback": "(x + 1) is zero at NEGATIVE one — the plus inside flips."
+          },
+          {
+            "sequence": [
+              "z3",
+              "z1",
+              "z2"
+            ],
+            "feedback": "(x + 1) is zero at NEGATIVE one — the plus inside flips."
+          },
+          {
+            "sequence": [
+              "z1",
+              "z2",
+              "z3"
+            ],
+            "feedback": "(x + 1) is zero at NEGATIVE one — the plus inside flips."
+          },
+          {
+            "sequence": [
+              "z1",
+              "z3",
+              "z2"
+            ],
+            "feedback": "(x + 1) is zero at NEGATIVE one — the plus inside flips."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "One zero per factor, sign flipped inside: 2, 3, and −1.",
+        "successFeedback": "Right — one per factor."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-div-theorems__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Your turn: divide out.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Divide x³ − 7x + 6 by (x − 1) synthetically (box 1, row 1, 0, −7, 6). The bottom row starts 1, 1, ... — what is its THIRD entry?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "1·1 + (−7) = −6 — the −7 keeps its sign in the add."
+          },
+          {
+            "value": -7,
+            "feedback": "The multiply joins in: (−7) + 1·1 = −6, not −7 alone."
+          }
+        ],
+        "fallbackFeedback": "Second entry 1 (from 0 + 1); third: 1·1 + (−7) = −6. Quotient so far: x² + x − 6."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Factor the quotient.",
+      "conceptTag": "pf-div-theorems",
+      "explanationVariants": [
+        "x² + x − 6 needs product −6, sum 1: the pair 3 and −2, so (x + 3)(x − 2).",
+        "f = (x − 1)(x + 3)(x − 2) — three factors, three zeros: 1, −3, 2."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "The quotient is x² + x − 6. What is the COMPLETE factorization of x³ − 7x + 6?",
+        "tokens": [
+          {
+            "id": "m1",
+            "label": "(x − 1)"
+          },
+          {
+            "id": "p3",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "m2",
+            "label": "(x − 2)"
+          },
+          {
+            "id": "m3",
+            "label": "(x − 3)"
+          },
+          {
+            "id": "p2",
+            "label": "(x + 2)"
+          },
+          {
+            "id": "p1",
+            "label": "(x + 1)"
+          },
+          {
+            "id": "quad",
+            "label": "(x² + x − 6)"
+          }
+        ],
+        "correct": [
+          "m1",
+          "p3",
+          "m2"
+        ],
+        "acceptAlso": [
+          [
+            "m1",
+            "m2",
+            "p3"
+          ],
+          [
+            "p3",
+            "m1",
+            "m2"
+          ],
+          [
+            "p3",
+            "m2",
+            "m1"
+          ],
+          [
+            "m2",
+            "m1",
+            "p3"
+          ],
+          [
+            "m2",
+            "p3",
+            "m1"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "m1",
+              "m3",
+              "p2"
+            ],
+            "feedback": "Those give x² − x − 6 (sum −1) — the quotient's middle term is +x, needing +3 and −2."
+          },
+          {
+            "sequence": [
+              "m1",
+              "p2",
+              "m3"
+            ],
+            "feedback": "Those give x² − x − 6 (sum −1) — the quotient's middle term is +x, needing +3 and −2."
+          },
+          {
+            "sequence": [
+              "m3",
+              "m1",
+              "p2"
+            ],
+            "feedback": "Those give x² − x − 6 (sum −1) — the quotient's middle term is +x, needing +3 and −2."
+          },
+          {
+            "sequence": [
+              "m3",
+              "p2",
+              "m1"
+            ],
+            "feedback": "Those give x² − x − 6 (sum −1) — the quotient's middle term is +x, needing +3 and −2."
+          },
+          {
+            "sequence": [
+              "p2",
+              "m1",
+              "m3"
+            ],
+            "feedback": "Those give x² − x − 6 (sum −1) — the quotient's middle term is +x, needing +3 and −2."
+          },
+          {
+            "sequence": [
+              "p2",
+              "m3",
+              "m1"
+            ],
+            "feedback": "Those give x² − x − 6 (sum −1) — the quotient's middle term is +x, needing +3 and −2."
+          },
+          {
+            "sequence": [
+              "m1",
+              "quad"
+            ],
+            "feedback": "Almost — but the quadratic still factors: (x + 3)(x − 2). 'Complete' means all the way."
+          },
+          {
+            "sequence": [
+              "quad",
+              "m1"
+            ],
+            "feedback": "Almost — but the quadratic still factors: (x + 3)(x − 2). 'Complete' means all the way."
+          },
+          {
+            "sequence": [
+              "p1",
+              "p3",
+              "m2"
+            ],
+            "feedback": "The first factor came from the zero at +1: (x − 1)."
+          },
+          {
+            "sequence": [
+              "p1",
+              "m2",
+              "p3"
+            ],
+            "feedback": "The first factor came from the zero at +1: (x − 1)."
+          },
+          {
+            "sequence": [
+              "p3",
+              "p1",
+              "m2"
+            ],
+            "feedback": "The first factor came from the zero at +1: (x − 1)."
+          },
+          {
+            "sequence": [
+              "p3",
+              "m2",
+              "p1"
+            ],
+            "feedback": "The first factor came from the zero at +1: (x − 1)."
+          },
+          {
+            "sequence": [
+              "m2",
+              "p1",
+              "p3"
+            ],
+            "feedback": "The first factor came from the zero at +1: (x − 1)."
+          },
+          {
+            "sequence": [
+              "m2",
+              "p3",
+              "p1"
+            ],
+            "feedback": "The first factor came from the zero at +1: (x − 1)."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Split the quadratic too: x² + x − 6 = (x + 3)(x − 2) — complete means every factor linear.",
+        "successFeedback": "Right — the quadratic splits as (x + 3)(x − 2)."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-div-theorems__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Zero remainder, guaranteed.",
+      "conceptTag": "pf-div-theorems",
+      "explanationVariants": [
+        "Dividing by (x − c) where f(c) = 0 must leave remainder 0 — that's the Remainder Theorem doing the audit.",
+        "Zero at c ⟺ exact division by (x − c)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You verified f(5) = 0 and then divide f by (x − 5). What remainder MUST appear?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "0",
+            "correct": true,
+            "feedback": "Right — remainder = f(5) = 0, always."
+          },
+          {
+            "id": "o2",
+            "label": "5",
+            "correct": false,
+            "feedback": "The remainder equals f(5), which you verified is 0 — the 5 is the root, not the leftover."
+          },
+          {
+            "id": "o3",
+            "label": "f(0)",
+            "correct": false,
+            "feedback": "f(0) is the y-intercept — the divisor (x − 5) makes the remainder f(5) = 0."
+          },
+          {
+            "id": "o4",
+            "label": "it depends on the quotient",
+            "correct": false,
+            "feedback": "The remainder is pinned before any division happens: f(5) = 0."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-div-theorems__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Crack one solo.",
+      "conceptTag": "pf-div-theorems",
+      "explanationVariants": [
+        "f(1) = 1 + 2 − 3 = 0, so divide by (x − 1): quotient x² + 3x + ... run it: row 1, 2, 0, −3 → 1, 3, 3, 0. Quotient x² + 3x + 3 — and ITS discriminant 9 − 12 < 0: no more real zeros. Only real zero: 1.",
+        "One real zero at 1; the leftover quadratic x² + 3x + 3 has D = −3, a complex pair."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ + 2x² − 3 has exactly ONE real zero. Test small integers to find it: what is it?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "f(−1) = −1 + 2 − 3 = −2 ≠ 0 — try the positive twin: f(1) = 1 + 2 − 3 = 0."
+          },
+          {
+            "value": 3,
+            "feedback": "f(3) = 27 + 18 − 3 = 42 ≠ 0 — the constant −3 suggests trying ±1 and ±3, and 1 works."
+          }
+        ],
+        "fallbackFeedback": "f(1) = 1 + 2 − 3 = 0. Dividing leaves x² + 3x + 3, whose D = 9 − 12 < 0 — no further real zeros."
+      },
+      "hints": [
+        "Try small integers: f(1), f(−1), f(3), f(−3).",
+        "f(1) = 1 + 2 − 3.",
+        "That's 0 — and the quotient x² + 3x + 3 has negative discriminant, so 1 is the only real zero."
+      ],
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-div-theorems__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Hunt a zero, divide it out, finish the quadratic — the cubic-cracking loop.",
+      "takeaways": [
+        "Substitution finds the first factor (Factor Theorem).",
+        "Synthetic division drops the degree by one.",
+        "The leftover quadratic may factor, need the formula — or go complex (D < 0)."
+      ],
+      "teaser": "Next chapter: factoring patterns that skip the hunt entirely — grouping, quadratic form, and cubes."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pf-div-theorems",
+      "concept": {
+        "id": "rem-pf0303-c",
+        "kind": "concept",
+        "body": "The machine in miniature: f(x) = x² − x − 2 has f(2) = 4 − 2 − 2 = 0, so (x − 2) is a factor and the other factor is found by dividing."
+      },
+      "check": {
+        "id": "rem-pf0303-k",
+        "kind": "check",
+        "body": "Name the partner.",
+        "conceptTag": "pf-div-theorems",
+        "explanationVariants": [
+          "x² − x − 2 = (x − 2)(x + 1).",
+          "Dividing by (x − 2) leaves x + 1 — check: (x − 2)(x + 1) = x² − x − 2. ✓"
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Given f(2) = 0 for f(x) = x² − x − 2, what is the complete factorization?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(x − 2)(x + 1)",
+              "correct": true,
+              "feedback": "Right — divide out (x − 2) to find the partner (x + 1)."
+            },
+            {
+              "id": "o2",
+              "label": "(x − 2)(x − 1)",
+              "correct": false,
+              "feedback": "Multiply back: (x − 2)(x − 1) = x² − 3x + 2 — the middle term is wrong; the partner is (x + 1)."
+            },
+            {
+              "id": "o3",
+              "label": "(x + 2)(x − 1)",
+              "correct": false,
+              "feedback": "The known zero is +2, so the factor is (x − 2), not (x + 2)."
+            },
+            {
+              "id": "o4",
+              "label": "(x − 2)(x + 2)",
+              "correct": false,
+              "feedback": "That's x² − 4, a difference of squares — this f has a −x middle term."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

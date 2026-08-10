@@ -1,0 +1,340 @@
+{
+  "id": "as-01-03",
+  "slug": "start-with-the-bigger-number",
+  "title": "Start with the Bigger Number",
+  "courseId": "add-subtract-20",
+  "chapterId": "ch1-counting-on",
+  "minutes": 6,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "3 + 8? Flip it! Start at the **bigger** number, 8. Count on 3: 9, 10, 11. Fewer hops!",
+      "narration": "Three plus eight? Flip it. Start at the bigger number, eight, and count on three: nine, ten, eleven. Fewer hops.",
+      "figure": "bigger-first"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Start big.",
+      "conceptTag": "bigger-first",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "For 3 + 8, start at the bigger number 8. Hop 3. Tap where you land.",
+        "min": 0,
+        "max": 12,
+        "start": 8,
+        "hop": 1,
+        "hops": 3,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 5,
+            "feedback": "You started at 3 and hopped — that's the slow way. Start at the bigger number, 8."
+          },
+          {
+            "value": 10,
+            "feedback": "That's only 2 hops. One more from 8: 9, 10, 11."
+          }
+        ],
+        "missFeedback": "Start at 8 and count on 3: 9, 10, 11.",
+        "successFeedback": "Start at 8, hop 3, land on 11 — 3 + 8 = 11!"
+      },
+      "predict": {
+        "prompt": "You'll add 3 + 8 by starting at the BIGGER number, 8, and hopping 3. Will you land on the same number as starting at 3 and hopping 8?",
+        "options": [
+          {
+            "id": "same",
+            "label": "Yes — the same landing"
+          },
+          {
+            "id": "different",
+            "label": "No — a different landing"
+          },
+          {
+            "id": "cannot",
+            "label": "It depends on the line"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "Either way you make the same total journey — 3 + 8 and 8 + 3 land on the very same number. Starting bigger just means fewer hops to count."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents bigger first.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for bigger first must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines bigger first."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-20:bigger-first",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Flip and count on.",
+      "conceptTag": "bigger-first",
+      "explanationVariants": [
+        "Start at the bigger number 9, hop 2: 10, 11. You land on 11.",
+        "2 + 9 is easier as 9 + 2 — two hops to 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "2 + 9 = ? (Start at 9, count on 2.)",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That's only 1 hop from 9. One more: 11."
+          },
+          {
+            "value": 12,
+            "feedback": "You counted 9 as a hop. Start AT 10: 10, 11."
+          }
+        ],
+        "fallbackFeedback": "Start at 9 and count on 2: 10, 11."
+      },
+      "hints": [
+        "Which number is bigger?",
+        "Start at 9.",
+        "Hop 2: 10, 11."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "BiggerFirstNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Same numbers, either order, **same answer**. 4 + 7 = 7 + 4. So start big and hop less.",
+      "narration": "Same numbers in either order give the same answer. Four plus seven equals seven plus four. So start big and hop less.",
+      "figure": "as-commutative"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add just one more.",
+      "conceptTag": "bigger-first",
+      "widget": {
+        "type": "tenFrame",
+        "prompt": "For 1 + 6, start at 6. Tap to add 1 more. How many?",
+        "target": 7,
+        "preFilled": 6,
+        "addColor": "tangerine",
+        "commonCounts": [
+          {
+            "count": 8,
+            "feedback": "That added 2. For 1 + 6 you add just 1 more: 7."
+          }
+        ],
+        "missFeedback": "Start at 6, add 1 dot: that's 7.",
+        "successFeedback": "6 and 1 more is 7 — much faster than starting at 1!"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents bigger first.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for bigger first must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines bigger first."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-20:bigger-first",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fewer hops which way?",
+      "conceptTag": "bigger-first",
+      "explanationVariants": [
+        "Starting at 7 needs only 4 hops; starting at 4 needs 7. Start at the bigger number for fewer hops.",
+        "4 + 7 and 7 + 4 both make 11, but 7 + 4 hops fewer times."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To add 4 + 7 with the FEWEST hops, where should you start?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Start at 7, hop 4",
+            "correct": true,
+            "feedback": "Yes — 7 is bigger, so only 4 hops. Fewer hops, fewer mistakes."
+          },
+          {
+            "id": "b",
+            "label": "Start at 4, hop 7",
+            "feedback": "Same answer (11), but 7 hops is a lot. Start at the BIGGER number, 7, and hop only 4."
+          },
+          {
+            "id": "c",
+            "label": "Start at 1, count everything",
+            "feedback": "That's the slowest way. You already know 7 — start there and count on 4."
+          }
+        ]
+      },
+      "hints": [
+        "Fewer hops comes from starting bigger.",
+        "Which is bigger, 4 or 7?",
+        "Start at 7."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "BiggerFirstMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Now the answer.",
+      "conceptTag": "bigger-first",
+      "explanationVariants": [
+        "Start at 7, hop 4: 8, 9, 10, 11. You land on 11.",
+        "7 + 4 is 11 — four hops from the bigger number."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "4 + 7 = ? (Start at 7, count on 4.)",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That's only 3 hops (8, 9, 10). One more: 11."
+          },
+          {
+            "value": 12,
+            "feedback": "You counted 7 as a hop. Start AT 8: 8, 9, 10, 11."
+          }
+        ],
+        "fallbackFeedback": "Start at 7 and count on 4: 8, 9, 10, 11."
+      },
+      "hints": [
+        "Start at the bigger number.",
+        "8, 9, 10, 11.",
+        "The fourth hop is your answer."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "BiggerFirstNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Big flip!",
+      "conceptTag": "bigger-first",
+      "explanationVariants": [
+        "5 + 9: start at the bigger number 9, hop 5: 10, 11, 12, 13, 14. Land on 14.",
+        "Flip 5 + 9 to 9 + 5 — five hops from 9 lands on 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 + 9 = ? (Start at the bigger number and count on.)",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "That's only 4 hops. One more from 9: 10, 11, 12, 13, 14."
+          },
+          {
+            "value": 15,
+            "feedback": "You counted 9 as a hop. Start AT 10: 10, 11, 12, 13, 14."
+          }
+        ],
+        "fallbackFeedback": "Start at 9 and count on 5: 10, 11, 12, 13, 14."
+      },
+      "hints": [
+        "Start at the bigger number, 9.",
+        "10, 11, 12, 13, 14.",
+        "The fifth hop is your answer."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "BiggerFirstNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Start big, hop less!",
+      "takeaways": [
+        "Either order gives the same sum: 3 + 8 = 8 + 3.",
+        "Start at the bigger number so you hop fewer times.",
+        "Fewer hops means fewer mistakes."
+      ],
+      "teaser": "next chapter: making ten to add even faster!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bigger-first",
+      "concept": {
+        "id": "rem-bf-c",
+        "kind": "concept",
+        "body": "Slow it down. For 2 + 6, the bigger number is 6. Start there and hop 2: 7, 8.",
+        "narration": "For two plus six, the bigger number is six. Start there and hop two: seven, eight."
+      },
+      "check": {
+        "id": "rem-bf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bigger-first",
+        "explanationVariants": [
+          "Start at the bigger number 6, hop 2: 7, 8. You land on 8.",
+          "2 + 6 is easier as 6 + 2 — two hops to 8."
+        ],
+        "widget": {
+          "type": "numberLineHop",
+          "prompt": "For 2 + 6, start at the bigger number 6. Hop 2. Tap where you land.",
+          "min": 0,
+          "max": 10,
+          "start": 6,
+          "hop": 1,
+          "hops": 2,
+          "direction": "forward",
+          "commonLandings": [
+            {
+              "value": 4,
+              "feedback": "You started at 2 — the slow way. Start at the bigger number, 6."
+            },
+            {
+              "value": 7,
+              "feedback": "That's only 1 hop. One more from 6: 7, 8."
+            }
+          ],
+          "missFeedback": "Start at 6 and count on 2: 7, 8.",
+          "successFeedback": "6 and 2 more is 8 — start big!"
+        }
+      }
+    }
+  ]
+}

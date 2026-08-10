@@ -1,0 +1,323 @@
+{
+  "id": "fg-02-03",
+  "slug": "initial-value-and-y-equals-mx-plus-b",
+  "title": "Initial Value and y = mx + b",
+  "courseId": "functions-g8",
+  "chapterId": "ch2-rate-of-change",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A linear function is written **y = mx + b**: m is the slope (rate of change) and b is the **initial value** — the output when x = 0, where the line starts. In y = 3x + 2, the slope is 3 and the initial value is 2.",
+      "figure": "line-intercepts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "m and b, one dial each.",
+      "widget": {
+        "type": "lineExplore",
+        "targetSlope": 3,
+        "targetIntercept": 2,
+        "slopeMin": -4,
+        "slopeMax": 4,
+        "interceptMin": -5,
+        "interceptMax": 5,
+        "slopeStart": 1,
+        "interceptStart": 0,
+        "gridMax": 6,
+        "prompt": "A tank starts with 2 litres and gains 3 litres a minute. Build its line.",
+        "successFeedback": "y = 3x + 2. The initial value is where the line meets the y-axis; the rate of change is how steeply it climbs. Two numbers, two dials, and they do independent jobs.",
+        "slopeFeedback": "The climb is wrong. Gaining 3 litres a minute means rising 3 for every 1 across.",
+        "interceptFeedback": "The climb is right but the start is wrong. At time 0 the tank already holds 2 litres."
+      },
+      "predict": {
+        "prompt": "The tank STARTS with 2 litres and gains 3 a minute. Which dial does the starting 2 control — slope or intercept?",
+        "options": [
+          {
+            "id": "intercept",
+            "label": "The intercept"
+          },
+          {
+            "id": "slope",
+            "label": "The slope"
+          },
+          {
+            "id": "both",
+            "label": "Both dials"
+          }
+        ],
+        "outcomeId": "intercept",
+        "reveal": "The starting amount is where the line meets the axis before any time passes — the intercept. The per-minute gain is the slope's job."
+      },
+      "conceptTag": "fg-initial-value",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents initial value.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for initial value must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines initial value."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-g8:fg-initial-value",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Find the initial value from a table by reading the output at x = 0 — or by working backward from the slope. If a line has slope 2 and passes through (3, 10), step back to x = 0: subtract the slope three times, 10 − 2·3 = 4, so the initial value is 4.",
+      "figure": "fg-initial-value"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read initial value from a table.",
+      "conceptTag": "fg-initial-value",
+      "explanationVariants": [
+        "The output at x = 0 is 7, so the initial value is 7.",
+        "The initial value is simply the y when x = 0: here, 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A table shows x: 0, 1, 2 with y: 7, 10, 13. What is the initial value?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the slope (y climbs 3 per step) — the initial value is the y at x=0, which is 7."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the output at x=1, not x=0 — the initial value is the y when x=0, which is 7."
+          }
+        ],
+        "fallbackFeedback": "The initial value is the output when x = 0, which the table shows as 7."
+      },
+      "variant": {
+        "gen": "g8-fn-initial-value",
+        "form": "fgInitialTable"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the slope from that same table.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the table x: 0, 1, 2 with y: 7, 10, 13, what is the slope?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the INITIAL VALUE (y at x=0), not the slope — the slope is how much y climbs per step: 3."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is an output value, not the slope — y climbs by 3 each step, so the slope is 3."
+          }
+        ],
+        "fallbackFeedback": "y climbs from 7 to 10 to 13 — a rise of 3 per step, so the slope is 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Work backward to the initial value.",
+      "conceptTag": "fg-initial-value",
+      "explanationVariants": [
+        "Slope 2 through (3,10): step back to x=0 by subtracting 2 three times: 10−6=4.",
+        "Initial value = 10 − 2·3 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line has slope 2 and passes through (3, 10). What is its initial value (y at x=0)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the output at x=3, not x=0 — step back: 10 − 2·3 = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "That's how much y changed over the 3 steps (2·3=6) — subtract it from 10 to reach the start: 10−6=4."
+          }
+        ],
+        "fallbackFeedback": "Step back from x=3 to x=0: subtract the slope 2 three times, 10 − 2·3 = 4."
+      },
+      "variant": {
+        "gen": "g8-fn-initial-value",
+        "form": "fgInitialPointSlope"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Assemble the equation.",
+      "conceptTag": "fg-initial-value",
+      "explanationVariants": [
+        "Slope 3 and initial value 2 give y = 3x + 2.",
+        "Put m=3 and b=2 into y = mx + b to get y = 3x + 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A linear function has slope 3 and initial value 2. What is its equation?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = 3x + 2",
+            "correct": true,
+            "feedback": "Right — m=3 is the slope, b=2 is the initial value."
+          },
+          {
+            "id": "b",
+            "label": "y = 2x + 3",
+            "correct": false,
+            "feedback": "That swaps the roles — the SLOPE (3) multiplies x, and the INITIAL VALUE (2) is added: y = 3x + 2."
+          },
+          {
+            "id": "c",
+            "label": "y = 3x − 2",
+            "correct": false,
+            "feedback": "The initial value is +2, not −2 — the equation is y = 3x + 2."
+          },
+          {
+            "id": "d",
+            "label": "y = 5x",
+            "correct": false,
+            "feedback": "That adds slope and initial value into one number — they stay separate: y = 3x + 2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-initial-value",
+        "form": "fgInitialEquation"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build the equation from two points.",
+      "conceptTag": "fg-initial-value",
+      "explanationVariants": [
+        "Through (0,1) and (2,7): slope = (7−1)/(2−0) = 3, initial value = 1 (the y at x=0), so y = 3x + 1.",
+        "One point is already at x=0, giving b=1 directly; slope from the two points is 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A line passes through (0, 1) and (2, 7). What is its equation?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = 3x + 1",
+            "correct": true,
+            "feedback": "Right — slope (7−1)/(2−0)=3, and the initial value is 1 (the y at x=0)."
+          },
+          {
+            "id": "b",
+            "label": "y = 3x + 7",
+            "correct": false,
+            "feedback": "The initial value is the y at x=0, which is 1, not 7 (7 is the y at x=2): y = 3x + 1."
+          },
+          {
+            "id": "c",
+            "label": "y = 6x + 1",
+            "correct": false,
+            "feedback": "The slope is (7−1)/(2−0)=6/2=3, not 6 — divide the rise by the run: y = 3x + 1."
+          },
+          {
+            "id": "d",
+            "label": "y = x + 3",
+            "correct": false,
+            "feedback": "That swaps slope and initial value — slope is 3, initial value is 1: y = 3x + 1."
+          }
+        ]
+      },
+      "hints": [
+        "One of the points is at x = 0 — that gives the initial value b directly.",
+        "The point (0,1) means b = 1. Now find the slope from the two points.",
+        "Slope = (7−1)/(2−0) = 6/2 = 3, so the equation is y = 3x + 1."
+      ],
+      "variant": {
+        "gen": "g8-fn-initial-value",
+        "form": "fgInitialEquationTwoPoints"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "y = mx + b packages a linear function: m is the slope, b is the starting output.",
+      "takeaways": [
+        "m is the slope (rate of change); b is the initial value (output at x=0).",
+        "Read b straight from a table's x=0 row, or work backward using the slope.",
+        "Slope and initial value together determine the whole line."
+      ],
+      "teaser": "Next chapter: comparing two functions given in different forms."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-initial-value",
+      "concept": {
+        "id": "rem-fg0203-c",
+        "kind": "concept",
+        "body": "In y = mx + b, m is the slope (rate of change) and b is the initial value — the output when x = 0. Read b from a table's x=0 row or work backward using the slope."
+      },
+      "check": {
+        "id": "rem-fg0203-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-initial-value",
+        "explanationVariants": [
+          "In y = 2x + 5, the initial value is b = 5 (the output at x=0).",
+          "b = 5 is the value where the line starts, at x = 0."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In y = 2x + 5, what is the initial value?",
+          "options": [
+            {
+              "id": "a",
+              "label": "5",
+              "correct": true,
+              "feedback": "Right — b = 5 is the output when x = 0."
+            },
+            {
+              "id": "b",
+              "label": "2",
+              "correct": false,
+              "feedback": "2 is the slope (m), not the initial value — b = 5 is the initial value."
+            },
+            {
+              "id": "c",
+              "label": "7",
+              "correct": false,
+              "feedback": "That adds m and b — the initial value is just b = 5."
+            },
+            {
+              "id": "d",
+              "label": "0",
+              "correct": false,
+              "feedback": "0 is the input at which we read the initial value; the value itself is 5."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

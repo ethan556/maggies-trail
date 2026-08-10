@@ -1,0 +1,433 @@
+{
+ "id": "sg-03-03",
+ "slug": "the-sphere-surrenders",
+ "title": "The Sphere Surrenders",
+ "courseId": "solid-geometry",
+ "chapterId": "ch3-volume-justifications",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sg-sphere-justified",
+   "concept": {
+    "id": "rem-sg-sphere-justified-c",
+    "kind": "concept",
+    "body": "The sphere's formula is proved by comparison: slice a hemisphere (radius r) and a same-size cylinder with a cone drilled out at any height h — disk area π(r² − h²) equals ring area πr² − πh². Cavalieri then gives hemisphere = cylinder − cone = πr³ − ⅓πr³ = ⅔πr³, and doubling yields V = (4/3)πr³."
+   },
+   "check": {
+    "id": "rem-sg-sphere-justified-k",
+    "kind": "check",
+    "body": "One slice.",
+    "conceptTag": "sg-sphere-justified",
+    "explanationVariants": [
+     "Disk: π(100 − 36); ring: 100π − 36π.",
+     "Both 64π."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "r = 10, h = 6. The hemisphere's disk and the drilled cylinder's ring both have area coefficient = ?",
+     "answer": 64,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 100,
+       "feedback": "100 is the full base — at h = 6 both shrink to 100 − 36 = 64."
+      },
+      {
+       "value": 36,
+       "feedback": "36 is the penalty h² — the surviving coefficient is 64."
+      }
+     ],
+     "fallbackFeedback": "100 − 36 = 64, on both sides — a 6-8-10 disk."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The masterpiece. Set a hemisphere (radius r) beside a cylinder of radius r and height r with a CONE drilled out (apex down, at the base's center). Slice both at height h: the hemisphere shows a disk of radius √(r² − h²) — area π(r² − h²); the drilled cylinder shows a RING: πr² − πh². Identical, at every height.",
+   "figure": "hemisphere-cavalieri"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Verify the slice identity.",
+   "conceptTag": "sg-sphere-justified",
+   "explanationVariants": [
+    "Hemisphere at h = 3 (r = 5): π(25 − 9). Ring at h = 3: 25π − 9π.",
+    "Both 16π — the figure's own numbers."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "r = 5, slicing height h = 3. The hemisphere's disk area AND the drilled cylinder's ring area both equal ? (coefficient of π)",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "r",
+      "label": "the sphere radius",
+      "value": 5
+     },
+     {
+      "id": "h",
+      "label": "the slicing height",
+      "value": 3
+     }
+    ],
+    "approxFormula": {
+     "op": "subtract",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "r"
+      },
+      "right": {
+       "op": "const",
+       "id": "r"
+      }
+     },
+     "right": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "h"
+      },
+      "right": {
+       "op": "const",
+       "id": "h"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 25,
+      "feedback": "25 is the full base disk — at height 3 both slices shrink to 25 − 9 = 16."
+     },
+     {
+      "value": 9,
+      "feedback": "9 is the drilled HOLE (or the h² penalty) — the surviving area is 25 − 9 = 16."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is the disk's RADIUS (√16) — the area coefficient is 16."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "π(25 − 9) = 16π = 25π − 9π — disk equals ring, and this holds at EVERY h.",
+    "successFeedback": "π(25 − 9) = 16π = 25π − 9π — disk equals ring, and this holds at EVERY h."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-sphere-justified__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Collect the volume.",
+   "conceptTag": "sg-sphere-justified",
+   "explanationVariants": [
+    "Cavalieri: hemisphere = cylinder − cone = πr²·r − ⅓πr²·r.",
+    "With r = 5: 125π − 125π/3 = 250π/3 ≈ 261.8. Enter the fraction's value."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "r = 5. Hemisphere volume = cylinder (125π) minus cone (125π/3). Coefficient of π (2 decimals) = ?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "cyl",
+      "label": "the cylinder coefficient",
+      "value": 125
+     }
+    ],
+    "approxFormula": {
+     "op": "subtract",
+     "left": {
+      "op": "const",
+      "id": "cyl"
+     },
+     "right": {
+      "op": "divide",
+      "left": {
+       "op": "const",
+       "id": "cyl"
+      },
+      "right": {
+       "op": "lit",
+       "value": 3
+      }
+     }
+    },
+    "approxRound": 2,
+    "answerMode": "numeric",
+    "tolerance": 0.05,
+    "numericErrors": [
+     {
+      "value": 125,
+      "feedback": "125 is the CYLINDER alone — subtract the cone's third: 125 − 41.67 = 83.33."
+     },
+     {
+      "value": 41.67,
+      "feedback": "41.67 is the CONE (125/3) — the hemisphere keeps the rest: 83.33."
+     },
+     {
+      "value": 166.67,
+      "feedback": "166.67 doubles into the full sphere — the HEMISPHERE is 250/3 ≈ 83.33."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "125 − 125/3 = 250/3 ≈ 83.33 — the hemisphere = ⅔ of its cylinder (last lesson's leftover, exactly).",
+    "successFeedback": "125 − 125/3 = 250/3 ≈ 83.33 — the hemisphere = ⅔ of its cylinder (last lesson's leftover, exactly)."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-sphere-justified__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The formula falls out.",
+   "conceptTag": "sg-sphere-justified",
+   "explanationVariants": [
+    "Hemisphere = ⅔πr³ in general; the sphere doubles it.",
+    "2 × ⅔ = 4/3: V = (4/3)πr³ — Grade 8's formula, finally justified. With r = 6: (4/3)(216)."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Double the hemisphere: the full sphere's V = (4/3)πr³. For r = 6, the coefficient of π = ?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "r",
+      "label": "the sphere radius",
+      "value": 6
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "divide",
+      "left": {
+       "op": "lit",
+       "value": 4
+      },
+      "right": {
+       "op": "lit",
+       "value": 3
+      }
+     },
+     "right": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "r"
+      },
+      "right": {
+       "op": "multiply",
+       "left": {
+        "op": "const",
+        "id": "r"
+       },
+       "right": {
+        "op": "const",
+        "id": "r"
+       }
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 216,
+      "feedback": "216 = 6³ misses the 4/3 — (4/3)(216) = 288."
+     },
+     {
+      "value": 144,
+      "feedback": "144 is the HEMISPHERE (⅔ × 216) — the sphere doubles: 288."
+     },
+     {
+      "value": 864,
+      "feedback": "864 = 4(216) misses the /3 — (4/3)(216) = 288."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "(4/3)(216) = 288 — the recall from Grade 8 is now a theorem: slice identity + Cavalieri + the ⅓ story.",
+    "successFeedback": "(4/3)(216) = 288 — the recall from Grade 8 is now a theorem: slice identity + Cavalieri + the ⅓ story."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-sphere-justified__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Name the ingredients.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "The sphere justification stands on exactly three earlier results. Which set?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The Pythagorean slice law (ch1), Cavalieri's principle (ch2), and the cone's ⅓ (last lesson)",
+      "correct": true,
+      "feedback": "r² − h² prices the disk, ⅓ prices the drilled cone, Cavalieri equates the stacks — the whole course conspired here."
+     },
+     {
+      "id": "o2",
+      "label": "Similarity, congruence, and the midpoint formula",
+      "correct": false,
+      "feedback": "Close cousins, but the load-bearers are the slice law, Cavalieri, and the ⅓."
+     },
+     {
+      "id": "o3",
+      "label": "Only Cavalieri — nothing else",
+      "correct": false,
+      "feedback": "Cavalieri equates, but the slice identity needs π(r² − h²) and the twin needs the cone's ⅓."
+     },
+     {
+      "id": "o4",
+      "label": "Calculus in disguise",
+      "correct": false,
+      "feedback": "The argument is fully pre-calculus: one slice identity, one principle, one tiling fact."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The ⅔ echo.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A hemisphere sits snugly inside its bounding cylinder (radius r, height r). The hemisphere fills what fraction of the cylinder? (decimal, 2 places)",
+    "answer": 0.67,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 0.5,
+      "feedback": "0.5 guesses half — the drilled-cone argument gives cylinder − ⅓cylinder = ⅔ ≈ 0.67."
+     },
+     {
+      "value": 0.33,
+      "feedback": "0.33 is the CONE's share — the hemisphere takes the complementary ⅔ ≈ 0.67."
+     }
+    ],
+    "fallbackFeedback": "⅔ ≈ 0.67 — Archimedes' favorite ratio, straight from the leftover."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Water transfer.",
+   "conceptTag": "sg-sphere-justified",
+   "hints": [
+    "The sphere's volume by the new theorem; the cylinder's by ch1's justified Bh.",
+    "Sphere r = 6: (4/3)(216)π = 288π. Cylinder r = 6: height must satisfy 36h = 288.",
+    "Solve 36h = 288."
+   ],
+   "explanationVariants": [
+    "h = 288/36 = 8 — melting the ball into its own-radius cylinder fills it to height 8 (= 4r/3, always).",
+    "36h = 288 ⇒ h = 8."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A solid sphere of radius 6 is melted and poured into an empty cylinder of radius 6. The water rises to height = ?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "V",
+      "label": "the sphere volume coefficient",
+      "value": 288
+     },
+     {
+      "id": "r",
+      "label": "the cylinder radius",
+      "value": 6
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "const",
+      "id": "V"
+     },
+     "right": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "r"
+      },
+      "right": {
+       "op": "const",
+       "id": "r"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 6,
+      "feedback": "6 assumes it fills to one radius — (4/3)(216) = 288 = 36h gives h = 8 (the general answer is 4r/3)."
+     },
+     {
+      "value": 12,
+      "feedback": "12 assumes the full diameter — the sphere holds only ⅔ of that cylinder: h = 8."
+     },
+     {
+      "value": 4.5,
+      "feedback": "4.5 inverts the fraction — 288/36 = 8."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "288π = 36πh ⇒ h = 8 — every sphere fills its own cylinder to exactly 4r/3.",
+    "successFeedback": "288π = 36πh ⇒ h = 8 — every sphere fills its own cylinder to exactly 4r/3."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-sphere-justified__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The masterpiece, assembled.",
+   "takeaways": [
+    "Slice identity: hemisphere disk π(r² − h²) = drilled-cylinder ring πr² − πh² at every height.",
+    "Cavalieri: hemisphere = cylinder − cone = ⅔πr³; doubling gives V = (4/3)πr³.",
+    "Every recall from Grade 8 is now a theorem — slice law + Cavalieri + the ⅓."
+   ],
+   "teaser": "Next chapter: the justified formulas go to work on composite solids."
+  }
+ ]
+}

@@ -1,0 +1,308 @@
+{
+  "id": "pq-04-02",
+  "slug": "the-midsegment",
+  "title": "The Trapezoid Midsegment",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch4-trapezoids-kites",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-midsegment",
+      "concept": {
+        "id": "rem-pq-midsegment-c",
+        "kind": "concept",
+        "body": "The trapezoid midsegment connects the midpoints of the two LEGS. Theorem: it is parallel to both bases and equals their average, m = (b₁ + b₂)/2. Going backward: a missing base is 2m minus the known base. It always lands strictly between the two base lengths — an answer outside that range signals an error."
+      },
+      "check": {
+        "id": "rem-pq-midsegment-k",
+        "kind": "check",
+        "body": "Forward once.",
+        "conceptTag": "pq-midsegment",
+        "explanationVariants": [
+          "(12 + 8)/2 = 10.",
+          "Sum 20, halved: 10 — between 8 and 12, as it must be."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Bases 12 and 8. Midsegment = ?",
+          "answer": 10,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "20 = 12 + 8 skips the halving — and lands outside the 8-to-12 range, impossible for a midsegment: 10."
+            },
+            {
+              "value": 2,
+              "feedback": "2 = (12 − 8)/2 is half the DIFFERENCE. Half the SUM: 10."
+            }
+          ],
+          "fallbackFeedback": "(12 + 8)/2 = 10."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Connect the midpoints of a trapezoid's two LEGS and you draw its **midsegment** — a segment with two theorems in one: it is **parallel to both bases**, and its length is their **average**: m = (b₁ + b₂)/2. Bases 10 and 6 give m = 8, floating exactly halfway.",
+      "figure": "trapezoid-midsegment"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Average the bases.",
+      "conceptTag": "pq-midsegment",
+      "explanationVariants": [
+        "m = (10 + 6)/2 = 8 — halfway between the base lengths, just as it sits halfway up.",
+        "Add the bases, halve: 16/2 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A trapezoid has bases 10 and 6. Its midsegment length = ?",
+        "answer": 8,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 = 10 + 6 adds but never halves — the midsegment AVERAGES: 8."
+          },
+          {
+            "value": 2,
+            "feedback": "2 = (10 − 6)/2 halves the DIFFERENCE — that's how far each end of the short base sits from the long base's ends, not the midsegment. (10 + 6)/2 = 8."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = 10 − 6 subtracts — the midsegment lives between the sizes, not at their gap: 8."
+          }
+        ],
+        "fallbackFeedback": "m = (10 + 6)/2 = 8."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "midsegment"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This is the triangle midsegment's sibling. In the congruence course, a triangle's midsegment measured HALF the base — average of that base and the “base” of length 0 at the apex. Widen the apex into a second base and the rule matures into the full average. One idea, two theorems.",
+      "figure": "pq-midsegment"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The degenerate check.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Shrink a trapezoid's top base toward length 0 (the shape becomes a triangle). What does m = (b₁ + b₂)/2 turn into?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "m = b₁/2 — exactly the triangle midsegment theorem",
+            "correct": true,
+            "feedback": "Setting b₂ = 0 gives (b₁ + 0)/2: the trapezoid rule CONTAINS the triangle rule as its limiting case."
+          },
+          {
+            "id": "o2",
+            "label": "m = b₁ — the midsegment matches the base",
+            "correct": false,
+            "feedback": "The average of b₁ and 0 is half of b₁, not all of it — the triangle midsegment is famously HALF the base."
+          },
+          {
+            "id": "o3",
+            "label": "m = 0 — the midsegment vanishes",
+            "correct": false,
+            "feedback": "Only the TOP base vanishes; the midpoints of the legs still exist, and their segment measures b₁/2."
+          },
+          {
+            "id": "o4",
+            "label": "The formula stops applying",
+            "correct": false,
+            "feedback": "It applies right through the limit — that continuity is the point: (b₁ + 0)/2 = b₁/2, the tc theorem."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Backward from the middle.",
+      "conceptTag": "pq-midsegment",
+      "explanationVariants": [
+        "m = (b₁ + b₂)/2 solved for the missing base: b₂ = 2m − b₁ = 18 − 4 = 14.",
+        "Double the midsegment, subtract the known base: 2(9) − 4 = 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A trapezoid's midsegment is 9 and one base is 4. Find the other base.",
+        "answer": 14,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 6.5,
+            "feedback": "6.5 = (9 + 4)/2 averages the midsegment WITH the base — the average runs between the two BASES. Reverse it: 2(9) − 4 = 14."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = 9 − 4 subtracts — but 9 is an average, so first double it: 18 − 4 = 14."
+          },
+          {
+            "value": 26,
+            "feedback": "26 = 2(9 + 4) doubles the wrong bundle — double only the midsegment: 18, then − 4 = 14."
+          }
+        ],
+        "fallbackFeedback": "b₂ = 2 × 9 − 4 = 14."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "otherBase"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The midsegment earns its keep in structures: a support beam halfway up two slanted posts, a road cut across a wedge-shaped lot. Whenever something spans the mid-level between two parallel edges, its length is the base average — no measuring at height required.",
+      "figure": "pq-midsegment-beam"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Halfway beam.",
+      "conceptTag": "pq-midsegment",
+      "explanationVariants": [
+        "The brace joins the legs' midpoints, so it's the midsegment: (22 + 14)/2 = 18 m.",
+        "Average the top and bottom edges: 36/2 = 18 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An A-frame wall has a 22 m bottom edge and a 14 m top edge (parallel). A brace connects the midpoints of the two slanted sides. Brace length?",
+        "answer": 18,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "36 = 22 + 14 is the two edges COMBINED — the brace averages them: 18."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = (22 − 14)/2 is each side's overhang, not the brace. (22 + 14)/2 = 18."
+          },
+          {
+            "value": 8,
+            "feedback": "8 = 22 − 14 measures the edges' difference — the midsegment sits at their average: 18."
+          }
+        ],
+        "fallbackFeedback": "(22 + 14)/2 = 18 m."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "midsegment"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Between, always.",
+      "widget": {
+        "type": "quadDrag",
+        "prompt": "The corner starts where the shape has no parallel pair at all, and the midsegment readout says so. Move it to (2, 4) to close the trapezoid — then watch where the readout settles between the two bases.",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            6,
+            4
+          ]
+        ],
+        "targetX": 2,
+        "targetY": 4,
+        "startX": 5,
+        "startY": 2,
+        "gridMax": 8,
+        "targetName": "a trapezoid",
+        "showMidsegment": true,
+        "successFeedback": "A trapezoid with bases 8 and 4, and the midsegment reads exactly 6 — the average, sitting strictly between them. It cannot leave that gap: an average of two numbers is always between them, so a midsegment shorter than both bases or longer than both is not a near miss, it is impossible.",
+        "sideFeedback": "The across value is still wrong, so the top side is not parallel to the bottom one — and with no parallel pair the readout has gone berry and has nothing to average. Slide the corner across until the two sides line up.",
+        "angleFeedback": "Across is right, so the top side is now parallel to the base — but the up value has it at the wrong height, which changes the legs rather than the bases. Take it to 4."
+      },
+      "predict": {
+        "prompt": "A trapezoid has bases 8 and 4. Its midsegment will measure…",
+        "options": [
+          {
+            "id": "between",
+            "label": "6 — between the two bases"
+          },
+          {
+            "id": "twelve",
+            "label": "12 — the two bases added"
+          },
+          {
+            "id": "four",
+            "label": "4 — the same as the shorter base"
+          }
+        ],
+        "outcomeId": "between",
+        "reveal": "6, the average. The midsegment is a compromise between the two bases, so it always lands strictly between them — never outside, and never equal to either unless the bases already match."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Two unknowns, one average.",
+      "conceptTag": "pq-midsegment",
+      "hints": [
+        "Write the theorem with the algebra in place: x + 5 = (b₁ + 11)/2 won't work — identify which piece is which first.",
+        "Midsegment 15, one base 11: the other base is 2(15) − 11.",
+        "Then check: is your base LONGER than the midsegment, as the second base must be here?"
+      ],
+      "explanationVariants": [
+        "b₂ = 2 × 15 − 11 = 19 — longer than the 15 midsegment, balancing the shorter 11 on the other side.",
+        "The average of 11 and 19 is 15 ✓."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A trapezoid's midsegment measures 15; one base measures 11. Find the other base.",
+        "answer": 19,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 = (15 + 11)/2 averages midsegment with base — the theorem averages the two BASES: 2(15) − 11 = 19."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = 15 − 11 subtracts without first doubling the average: 30 − 11 = 19."
+          },
+          {
+            "value": 26,
+            "feedback": "26 = 15 + 11 adds — solve the average equation instead: b₂ = 2m − b₁ = 19."
+          }
+        ],
+        "fallbackFeedback": "b₂ = 2(15) − 11 = 19 (check: (11 + 19)/2 = 15 ✓)."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "otherBase"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The average in the middle.",
+      "takeaways": [
+        "Midsegment: joins the legs' midpoints; parallel to both bases; m = (b₁ + b₂)/2.",
+        "Backward form: missing base = 2m − known base.",
+        "Shrink one base to 0 and the triangle midsegment theorem falls out — same idea, matured."
+      ],
+      "teaser": "Next: the kite — the non-parallelogram with the flashiest diagonals."
+    }
+  ]
+}

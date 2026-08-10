@@ -1,0 +1,313 @@
+{
+  "id": "cp-03-02",
+  "slug": "square-and-triangle",
+  "title": "The Square & the Triangle",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch3-inscribed-polygons",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-square-triangle",
+      "concept": {
+        "id": "rem-cp-square-triangle-c",
+        "kind": "concept",
+        "body": "Same recipe, different slice count: divide 360° by the number of vertices to get the central angle. Square → 360 ÷ 4 = 90°. Triangle → 360 ÷ 3 = 120°. Hexagon → 360 ÷ 6 = 60°. Equal slices force equal sides."
+      },
+      "check": {
+        "id": "rem-cp-square-triangle-k",
+        "kind": "check",
+        "body": "Slice the circle.",
+        "conceptTag": "cp-square-triangle",
+        "explanationVariants": [
+          "An inscribed square divides the circle into 4 equal central angles: 360 ÷ 4 = 90°.",
+          "Four equally spaced vertices means four 90° slices."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the central angle of an inscribed SQUARE, in degrees?",
+          "answer": 90,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 120,
+              "feedback": "120° is the TRIANGLE's central angle (3 vertices). A square has 4: 360 ÷ 4 = 90°."
+            },
+            {
+              "value": 60,
+              "feedback": "60° is the HEXAGON's (6 vertices). A square has 4: 360 ÷ 4 = 90°."
+            }
+          ],
+          "fallbackFeedback": "360 ÷ 4 = 90°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The square comes from **perpendicular diameters**. Draw a diameter, construct its perpendicular through the center (a diameter too), and the four points where these cross the circle are the square's vertices — four equal 90° slices of the circle.",
+      "figure": "equilateral-construction"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Cross the diameters.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Inscribe a square in a circle. Reveal each stage.",
+        "panels": [
+          {
+            "title": "Draw a diameter",
+            "body": "Draw any line through the center, meeting the circle at two opposite points.",
+            "figure": "equilateral-construction"
+          },
+          {
+            "title": "Perpendicular diameter",
+            "body": "Construct the perpendicular to that diameter through the center — it hits the circle at two more points.",
+            "figure": "equilateral-construction"
+          },
+          {
+            "title": "Four points",
+            "body": "The four crossing points are 90° apart around the circle.",
+            "figure": "equilateral-construction"
+          },
+          {
+            "title": "Connect them",
+            "body": "Join consecutive points: an inscribed square.",
+            "figure": "equilateral-construction"
+          }
+        ],
+        "continueFeedback": "Reveal each step of crossing the diameters.",
+        "successFeedback": "Four points 90° apart — an inscribed square."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Build the square's warrant yourself.",
+      "conceptTag": "cp-square-triangle",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "perpBisector",
+        "span": 4,
+        "target": 3,
+        "start": 1,
+        "prompt": "The diameter's ends are 4 apart. Find the smallest whole radius whose arcs cross — the line through the crossings carries the square's other two vertices.",
+        "successFeedback": "Radius 3 — just past half of 4. The line through the crossings is perpendicular to the diameter AND passes through its midpoint, the circle's center — so it is the second diameter, and its circle-crossings complete the square. Equal central angles of 90° each: that is where “regular” comes from.",
+        "lowFeedback": "The two arcs each reach only their own radius; together they must beat the 4 between the ends — the radius has to clear 2.",
+        "highFeedback": "They cross, but not at the SMALLEST whole radius that manages it. Ease back down."
+      },
+      "predict": {
+        "prompt": "AB is the circle's diameter. The construction bisects it with equal arcs. Where must the bisector's crossing points land?",
+        "options": [
+          {
+            "id": "circle",
+            "label": "On the circle — they become the square's other two vertices"
+          },
+          {
+            "id": "inside",
+            "label": "Strictly inside the circle, near the center"
+          },
+          {
+            "id": "anywhere",
+            "label": "Anywhere — it depends on the compass opening"
+          }
+        ],
+        "outcomeId": "circle",
+        "reveal": "The perpendicular bisector of a diameter passes through the center, so it is itself a diameter line — and a diameter meets the circle at two points. Those two points, with A and B, are four circle points a quarter-turn apart: the inscribed square. The compass opening only decides where the ARCS cross; the line they fix was never in doubt."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The square's central angle.",
+      "conceptTag": "cp-square-triangle",
+      "explanationVariants": [
+        "Four equally spaced vertices divide 360° into four parts: 360 ÷ 4 = 90°.",
+        "Perpendicular diameters cross at 90°, and those right angles ARE the central angles of the square."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An inscribed square's four vertices divide the circle equally. What is each central angle, in degrees?",
+        "answer": 90,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 360,
+            "feedback": "360° is the WHOLE turn. Split it among the four vertices: 360 ÷ 4 = 90°."
+          },
+          {
+            "value": 45,
+            "feedback": "45° would be 360 ÷ 8 — an octagon's spacing. A square has 4 vertices: 360 ÷ 4 = 90°."
+          }
+        ],
+        "fallbackFeedback": "360 ÷ 4 = 90° per vertex."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-square-triangle__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The equilateral triangle uses **three 120° arcs**. One way: inscribe a hexagon and keep every other vertex. Another: from any circle point, an arc of the circle's radius marks two neighbors 60° away — the three alternate marks span 120° each and form the triangle.",
+      "figure": "equilateral-construction"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The triangle's central angle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "An inscribed equilateral triangle's three vertices divide the circle equally. What is each central angle, in degrees?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60° is the HEXAGON's central angle. The triangle uses every OTHER hexagon vertex, doubling to 360 ÷ 3 = 120°."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the vertex count, not an angle. Each central slice is 360 ÷ 3 = 120°."
+          }
+        ],
+        "fallbackFeedback": "360 ÷ 3 = 120° per vertex."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count the radius-steps.",
+      "conceptTag": "cp-square-triangle",
+      "explanationVariants": [
+        "The radius steps 6 times around (the hexagon). The equilateral triangle keeps every OTHER step, so it uses 3 of those 6 marks.",
+        "Six equal 60° arcs, taken two at a time (120° each), give the triangle's 3 vertices."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using the radius-stepping method, the compass makes 6 equally spaced marks. How many of them are the vertices of the inscribed equilateral TRIANGLE?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 marks make the HEXAGON. The triangle keeps every OTHER one: 3 vertices."
+          },
+          {
+            "value": 4,
+            "feedback": "4 vertices make a square — and the square comes from perpendicular diameters, not the 6 radius-marks. The triangle uses 3 of the 6."
+          }
+        ],
+        "fallbackFeedback": "Every other of the 6 marks: 3 vertices."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-square-triangle__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "All three share one engine: **equal central angles make equal chords make a regular polygon**. Divide 360° into n equal slices and the n chords are forced equal, so the figure is regular. The compass just delivers the equal slices — 60° by radius-stepping, 90° by perpendicular diameters.",
+      "figure": "cnp-equal-central-chords"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Equal slices, equal sides.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do equal central angles guarantee a REGULAR polygon (all sides and angles equal)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Equal central angles cut equal-length chords, and equal chords make the polygon regular",
+            "correct": true,
+            "feedback": "In one circle, equal central angles subtend equal chords — so every side matches, which is what \"regular\" means."
+          },
+          {
+            "id": "o2",
+            "label": "Because the compass can only draw equal things",
+            "correct": false,
+            "feedback": "The compass draws whatever length it's set to — the regularity comes from equal ANGLES forcing equal chords, not the tool."
+          },
+          {
+            "id": "o3",
+            "label": "Any polygon inscribed in a circle is regular",
+            "correct": false,
+            "feedback": "A lopsided inscribed quadrilateral is not regular. Regularity needs the vertices EQUALLY spaced — equal central angles."
+          },
+          {
+            "id": "o4",
+            "label": "Equal angles make the polygon bigger",
+            "correct": false,
+            "feedback": "Size is set by the radius, not the angles. Equal angles make the polygon REGULAR, not larger."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Which construction, which tool-move?",
+      "conceptTag": "cp-square-triangle",
+      "hints": [
+        "Match each polygon to how its equal central angle is produced.",
+        "60° comes from radius-stepping; 90° comes from a perpendicular.",
+        "The square's 90° slices come from perpendicular DIAMETERS through the center."
+      ],
+      "explanationVariants": [
+        "The square's 90° central angles come from perpendicular diameters; the hexagon's 60° from radius-stepping; the triangle from taking every other hexagon mark.",
+        "Perpendicular diameters → 4 vertices at 90°. That's the square's signature move."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which inscribed polygon is built from two PERPENDICULAR diameters?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the square",
+            "correct": true,
+            "feedback": "Perpendicular diameters cross the circle at four points 90° apart — the square's vertices."
+          },
+          {
+            "id": "o2",
+            "label": "the hexagon",
+            "correct": false,
+            "feedback": "The hexagon comes from stepping the RADIUS around (60° arcs), not from perpendicular diameters."
+          },
+          {
+            "id": "o3",
+            "label": "the equilateral triangle",
+            "correct": false,
+            "feedback": "The triangle uses every other hexagon mark (120° arcs) — no perpendicular diameter is needed."
+          },
+          {
+            "id": "o4",
+            "label": "the regular pentagon",
+            "correct": false,
+            "feedback": "The pentagon needs 72° arcs, which neither radius-stepping nor perpendicular diameters produce directly."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-square-triangle__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three regulars, one idea.",
+      "takeaways": [
+        "Square: perpendicular diameters → 4 vertices at 90°.",
+        "Equilateral triangle: every other hexagon mark → 3 vertices at 120°.",
+        "Equal central angles force equal chords — that's what makes each polygon regular."
+      ],
+      "teaser": "Next: stop drawing and start PROVING — what turns a good-looking construction into a certainty?"
+    }
+  ]
+}

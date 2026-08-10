@@ -1,0 +1,407 @@
+{
+ "id": "lg-02-02",
+ "slug": "quotient-and-power-properties",
+ "title": "Quotient & Power Properties",
+ "courseId": "logarithms",
+ "chapterId": "ch2-properties-of-logarithms",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Two more exponent rules translate. Division subtracts exponents, so **log_b (M/N) = log_b M − log_b N**. And a power multiplies its exponent, so **log_b (Mᵖ) = p · log_b M** — the exponent inside marches out front. Check: log₂ (8²) = log₂ 64 = 6 = 2 · 3. ✓",
+   "figure": "lg-quotient"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Quotient in action.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Evaluate log₃ 81 − log₃ 3 as a single log: log₃ (81/3) = log₃ 27 = ?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "The subtraction DIVIDES the insides: 81/3 = 27, and log₃ 27 = 3 (4 is log₃ 81 alone)."
+     },
+     {
+      "value": 27,
+      "feedback": "27 is the quotient inside — its log (the exponent) is 3."
+     }
+    ],
+    "fallbackFeedback": "log₃ 27 = 3; check 4 − 1 = 3. ✓"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The power property is the workhorse of the whole subject: it drags an unknown **down from the exponent**. log₂ (x⁵) = 5 log₂ x — and later, taking log of both sides of 2^x = 10 will pull the x down where algebra can reach it. Special case: roots. log₉ (√9) = log₉ (9^(1/2)) = **1/2**.",
+   "figure": "lg-power"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Power out front.",
+   "conceptTag": "lg-power",
+   "explanationVariants": [
+    "log₂ (x⁷) = 7 log₂ x — the exponent becomes a coefficient.",
+    "Powers inside multiply the log outside."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Rewrite log₂ (x⁷).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "7"
+     },
+     {
+      "id": "t1",
+      "label": "log₂ x"
+     },
+     {
+      "id": "t2",
+      "label": "(log₂ x)⁷"
+     },
+     {
+      "id": "t3",
+      "label": "log₂ 7"
+     },
+     {
+      "id": "t4",
+      "label": "+"
+     },
+     {
+      "id": "t5",
+      "label": "log₁₄ x"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2"
+      ],
+      "feedback": "The exponent moves OUT as a multiplier — it doesn't raise the whole log to a power."
+     },
+     {
+      "sequence": [
+       "t3",
+       "t4",
+       "t1"
+      ],
+      "feedback": "x⁷ is a POWER, not the product 7 · x — the 7 exits as a coefficient."
+     },
+     {
+      "sequence": [
+       "t5"
+      ],
+      "feedback": "The base never changes — only a coefficient 7 appears: 7 log₂ x."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "The power property drops the exponent 7 to a COEFFICIENT in front: 7 log₂ x.",
+    "successFeedback": "Right — the power property moves the 7 out front."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-power__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Roots are powers.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Rewrite log₅ (√x) using the power property.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(1/2) log₅ x",
+      "correct": true,
+      "feedback": "Right — √x = x^(1/2), and the 1/2 marches out front."
+     },
+     {
+      "id": "o2",
+      "label": "log₅ x − log₅ 2",
+      "correct": false,
+      "feedback": "That's the QUOTIENT rule on x/2 — a square root is the POWER 1/2."
+     },
+     {
+      "id": "o3",
+      "label": "2 log₅ x",
+      "correct": false,
+      "feedback": "The root HALVES the exponent (1/2 out front); 2 would square it."
+     },
+     {
+      "id": "o4",
+      "label": "√(log₅ x)",
+      "correct": false,
+      "feedback": "The power exits as a coefficient — it never wraps the log itself."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Quotient, expanded.",
+   "conceptTag": "lg-power",
+   "explanationVariants": [
+    "log₃ (x/9) = log₃ x − log₃ 9 = log₃ x − 2.",
+    "Split the quotient; the numeric piece evaluates."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Expand log₃ (x/9).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "log₃ x"
+     },
+     {
+      "id": "t1",
+      "label": "−"
+     },
+     {
+      "id": "t2",
+      "label": "2"
+     },
+     {
+      "id": "t3",
+      "label": "+"
+     },
+     {
+      "id": "t4",
+      "label": "(log₃ x)/2"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t3",
+       "t2"
+      ],
+      "feedback": "DIVISION subtracts: the 9 underneath leaves with a MINUS sign."
+     },
+     {
+      "sequence": [
+       "t4"
+      ],
+      "feedback": "The bottom exits as a subtracted log (worth 2) — it never divides the log."
+     },
+     {
+      "sequence": [
+       "t2",
+       "t1",
+       "t0"
+      ],
+      "feedback": "Order matters: the NUMERATOR's log comes first — log₃ x − 2."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "The quotient splits with a MINUS, numerator first: log₃ x − log₃ 9, and log₃ 9 = 2.",
+    "successFeedback": "Right — the quotient splits, and log₃ 9 = 2."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-power__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Combined evaluation.",
+   "conceptTag": "lg-power",
+   "explanationVariants": [
+    "log₂ (4⁵) = 5 log₂ 4 = 5 · 2 = 10.",
+    "Power out, then evaluate the small log."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Evaluate log₂ (4⁵) without computing 4⁵.",
+    "task": "logarithmEvaluate",
+    "values": [],
+    "logBase": 2,
+    "logArgument": 1024,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 20,
+      "feedback": "log₂ 4 = 2 (not 4): the answer is 5 · 2 = 10."
+     },
+     {
+      "value": 7,
+      "feedback": "The power MULTIPLIES the log (5 · 2), it doesn't add to it (5 + 2)."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "5 · log₂ 4 = 5 · 2 = 10; indeed 4⁵ = 1024 = 2¹⁰. ✓",
+    "successFeedback": "5 · log₂ 4 = 5 · 2 = 10; indeed 4⁵ = 1024 = 2¹⁰. ✓"
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-power__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "All three at once.",
+   "conceptTag": "lg-power",
+   "explanationVariants": [
+    "log₂ (8x³/y) = log₂ 8 + log₂ x³ − log₂ y = 3 + 3 log₂ x − log₂ y.",
+    "Product splits to +, quotient to −, the power exits: three rules, one line."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Expand fully: log₂ (8x³/y).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "3"
+     },
+     {
+      "id": "t1",
+      "label": "+"
+     },
+     {
+      "id": "t2",
+      "label": "3 log₂ x"
+     },
+     {
+      "id": "t3",
+      "label": "−"
+     },
+     {
+      "id": "t4",
+      "label": "log₂ y"
+     },
+     {
+      "id": "t5",
+      "label": "log₂ x³ · log₂ y"
+     },
+     {
+      "id": "t6",
+      "label": "9 log₂ x"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t2",
+       "t1",
+       "t4"
+      ],
+      "feedback": "y sits UNDERNEATH — the quotient rule sends it out with a minus."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t5"
+      ],
+      "feedback": "Logs add and subtract when insides multiply and divide — they never multiply each other."
+     },
+     {
+      "sequence": [
+       "t6",
+       "t3",
+       "t4"
+      ],
+      "feedback": "log₂ 8 = 3 stands ALONE as an added constant — the x³'s coefficient 3 belongs only to log₂ x."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Product→add, power→coefficient, quotient→subtract: log₂8=3, then +3 log₂ x, then −log₂ y.",
+    "successFeedback": "Right — product, power, and quotient properties in sequence."
+   },
+   "hints": [
+    "Split the product: log₂ 8 + log₂ (x³) − log₂ y.",
+    "log₂ 8 = 3; the power property turns log₂(x³) into 3 log₂ x.",
+    "Assemble: 3 + 3 log₂ x − log₂ y."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-power__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Quotients subtract; powers march out front.",
+   "takeaways": [
+    "log_b(M/N) = log_b M − log_b N.",
+    "log_b(Mᵖ) = p log_b M — the equation-solving superpower.",
+    "Roots ride the same rule with fractional powers."
+   ],
+   "teaser": "Next: fluency drills — expanding and condensing multi-part expressions."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-power",
+   "concept": {
+    "id": "rem-lg0202-c",
+    "kind": "concept",
+    "body": "The power rule in pure numbers: log₂ (2³) asks '2 to what power gives 2³?' — the exponent is sitting right there."
+   },
+   "check": {
+    "id": "rem-lg0202-k",
+    "kind": "check",
+    "body": "Read it off.",
+    "conceptTag": "lg-power",
+    "explanationVariants": [
+     "log₂ (2³) = 3 — and 3 · log₂ 2 = 3 · 1 = 3 agrees.",
+     "The property just formalizes reading the exponent."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Evaluate log₂ (2³).",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 8,
+       "feedback": "2³ = 8 is the INSIDE — the log returns the exponent: 3."
+      },
+      {
+       "value": 6,
+       "feedback": "3 · log₂ 2 = 3 · 1 = 3 (log₂ 2 is 1, not 2)."
+      }
+     ],
+     "fallbackFeedback": "The exponent is 3."
+    }
+   }
+  }
+ ]
+}

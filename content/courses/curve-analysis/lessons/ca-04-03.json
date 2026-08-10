@@ -1,0 +1,351 @@
+{
+  "id": "ca-04-03",
+  "slug": "reading-f-from-f-prime",
+  "title": "Reading f From a Graph of f′",
+  "courseId": "curve-analysis",
+  "chapterId": "ch4-curve-sketching",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now the hardest reading of all: you are shown a graph, and told **it is f′, not f**.\n\nEvery instinct will read it as the function. Resist that.\n\nWhere the graph is **above** the axis, f is rising. Where it **crosses** the axis, f has an extremum. Where the graph is **rising**, f is concave up. The graph's HEIGHT is f's SLOPE.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Trace f′ and keep asking what f is doing.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "slope",
+        "targetSlope": -4,
+        "targetX": 0,
+        "start": 3,
+        "prompt": "f(x) = x², and f′ is drawn beneath. Drag to where f′ = −4 — and say what f itself is doing there.",
+        "successFeedback": "x = −2, where f′ = −4. The lower graph is BELOW the axis, so f is falling — steeply. And the lower graph is RISING (f′ climbs from −4 toward 0), so f is concave up. Two facts about f, read entirely off the graph of f′, without ever looking at f.",
+        "lowFeedback": "f′ is below −4 here — even steeper downhill. Slide right.",
+        "highFeedback": "f′ has climbed above −4. Slide back left."
+      },
+      "predict": {
+        "prompt": "At a point where the function is increasing more steeply, what should its derivative show?",
+        "options": [
+          {
+            "id": "higher",
+            "label": "A larger positive derivative value"
+          },
+          {
+            "id": "same",
+            "label": "The same value because height is unchanged"
+          },
+          {
+            "id": "negative",
+            "label": "A negative derivative"
+          }
+        ],
+        "outcomeId": "higher",
+        "reveal": "The derivative records local slope, so a steeper upward tangent appears as a larger positive derivative value."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Move along a function and coordinate position, local slope, and derivative graph.",
+        "invariants": [
+          "derivative-records-local-slope",
+          "corners-break-differentiability"
+        ],
+        "misconceptions": [
+          "derivative-copies-function-height",
+          "slope-at-corner-is-zero"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "curve-analysis-derivativeTrace",
+        "delayed": true,
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this derivativeTrace away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "What does the derivative graph record?",
+          "options": [
+            {
+              "id": "slope",
+              "label": "The original function's local slope at each input.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "height",
+              "label": "A copy of the original function's height.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "area",
+              "label": "The total area accumulated so far.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "ca-read-f-prime"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A zero of f′ is an extremum of f.",
+      "conceptTag": "ca-read-f-prime",
+      "explanationVariants": [
+        "Where the graph of f′ CROSSES the axis from positive to negative, f stops rising and starts falling: a maximum of f.",
+        "The crossing is what matters. A graph of f′ that merely touches the axis gives a saddle of f."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The graph of f′ crosses the axis from ABOVE to BELOW at x = 2. What is at x = 2 on the graph of f?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A local maximum of f.",
+            "correct": true,
+            "feedback": "Right — f was rising (f′ > 0), then falls (f′ < 0). It turned over at x = 2."
+          },
+          {
+            "id": "o2",
+            "label": "A zero of f.",
+            "correct": false,
+            "feedback": "That is what the graph would mean if it were f. But it is f′ — its zero is a FLAT SPOT of f, not a root."
+          },
+          {
+            "id": "o3",
+            "label": "An inflection point of f.",
+            "correct": false,
+            "feedback": "Inflections come from where f′ has an extremum (its own peak or valley), not where f′ crosses zero."
+          },
+          {
+            "id": "o4",
+            "label": "A local minimum of f.",
+            "correct": false,
+            "feedback": "That would need f′ to cross from BELOW to ABOVE. Here it goes the other way, so f climbs then falls."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-read-f-prime__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A peak of f′ is an inflection of f.",
+      "conceptTag": "ca-read-f-prime",
+      "explanationVariants": [
+        "Where f′ has a maximum, f″ = 0 and f″ changes sign — so f has an inflection. The steepest point of f is where f′ peaks.",
+        "A peak on the graph of f′ is the moment f is climbing as fast as it ever will."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The graph of f′ has a MAXIMUM at x = 1 (it peaks and comes back down, staying positive). What is at x = 1 on f?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "An inflection point — and the steepest climb of f.",
+            "correct": true,
+            "feedback": "Right. f′ peaking means f″ = 0 with a sign change: the bend flips, and f is climbing as fast as it ever does."
+          },
+          {
+            "id": "o2",
+            "label": "A maximum of f.",
+            "correct": false,
+            "feedback": "f′ is still POSITIVE at its own peak, so f is still climbing. A maximum of f needs f′ to reach ZERO."
+          },
+          {
+            "id": "o3",
+            "label": "A minimum of f.",
+            "correct": false,
+            "feedback": "f is rising throughout (f′ > 0). It cannot have a minimum in the middle of a climb."
+          },
+          {
+            "id": "o4",
+            "label": "A zero of f.",
+            "correct": false,
+            "feedback": "The graph shown is f′, and its shape says nothing about where f crosses the axis."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-read-f-prime__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A translation table, worth memorising:\n\n**f′ above the axis** → f rising.\n**f′ crosses zero** → f has an extremum.\n**f′ rising** → f concave up.\n**f′ has a peak or valley** → f has an inflection.\n\nEvery statement about the HEIGHT of f′ is a statement about the SLOPE of f, and every statement about the SLOPE of f′ is a statement about the BEND of f.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Translate three at once.",
+      "conceptTag": "ca-read-f-prime",
+      "explanationVariants": [
+        "Height of f′ = slope of f. Slope of f′ = bend of f. Zero of f′ = flat spot of f.",
+        "The whole skill is refusing to read the graph as f."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "You are looking at a graph of f′. Match each feature to what it says about f.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "f′ is above the axis"
+          },
+          {
+            "id": "w2",
+            "label": "f′ crosses the axis"
+          },
+          {
+            "id": "w3",
+            "label": "f′ is rising"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "f is rising"
+          },
+          {
+            "id": "y2",
+            "label": "f has an extremum"
+          },
+          {
+            "id": "y3",
+            "label": "f is concave up"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "f′ being POSITIVE means f is climbing. An extremum needs f′ to be ZERO, which happens at a crossing."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "f′ RISING is a statement about the bend of f (concave up), not about its direction. Direction comes from the SIGN of f′, not its slope."
+          }
+        ],
+        "missFeedback": "Height of f′ = slope of f. Slope of f′ = bend of f.",
+        "successFeedback": "Height gives direction; slope gives bend; a crossing gives an extremum. That table is the whole skill."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-read-f-prime__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count the extrema of f.",
+      "conceptTag": "ca-read-f-prime",
+      "hints": [
+        "You are told about the graph of f′. Extrema of f come from f′ CROSSING the axis, not merely touching it.",
+        "f′ touches zero at x = 1 without crossing, and crosses at x = 4.",
+        "Only a crossing turns the curve round."
+      ],
+      "explanationVariants": [
+        "f′ touches zero at x = 1 (no sign change: a saddle of f) and crosses at x = 4 (a genuine extremum). So f has exactly ONE extremum.",
+        "The touch-versus-cross distinction, one last time — it has decided the answer in every chapter of this course."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A graph of f′ touches the axis at x = 1 without crossing, and crosses it at x = 4. How many EXTREMA does f have?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "A touch is not a crossing. At x = 1 the derivative returns to the side it came from, so f does not turn — that is a saddle."
+          },
+          {
+            "value": 0,
+            "feedback": "There is one: at x = 4, f′ genuinely changes sign, so f turns round."
+          },
+          {
+            "value": 3,
+            "feedback": "Only two features are described, and only one of them is a sign change."
+          }
+        ],
+        "fallbackFeedback": "Only the crossing at x = 4 changes the sign of f′, so f has exactly one extremum."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-read-f-prime__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The height of f′ is the slope of f.",
+      "takeaways": [
+        "A graph of f′ is not a graph of f. Every instinct will read it wrongly, and every instinct must be resisted.",
+        "Above the axis → f rises. Crossing the axis → f has an extremum. Rising → f is concave up.",
+        "A touch without a crossing is a saddle — the same distinction that has decided every chapter of this course."
+      ],
+      "teaser": "Last chapter: use all of this to find the best possible answer to a real question."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-read-f-prime",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Say it before every question: **this graph is the SLOPE of f, not f.** So its height tells you how steeply f is going, and its sign tells you which way. Where it crosses zero, f stops and turns.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Height means slope.",
+        "conceptTag": "ca-read-f-prime",
+        "explanationVariants": [
+          "f′ = 3 means f is rising with slope 3. It says nothing about how high f is.",
+          "The graph of f′ carries no information at all about the VALUE of f."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "On the graph of f′, the height at x = 2 is 3. What does that tell you about f?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "f is rising at x = 2, with slope 3.",
+              "correct": true,
+              "feedback": "Right — the height of f′ IS the slope of f."
+            },
+            {
+              "id": "o2",
+              "label": "f(2) = 3",
+              "correct": false,
+              "feedback": "That would be true if the graph were f. It is f′, so 3 is the SLOPE of f at x = 2, not its value."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

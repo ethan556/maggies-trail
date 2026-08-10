@@ -1,0 +1,343 @@
+{
+  "id": "pv-01-04",
+  "slug": "ten-of-these-one-of-those",
+  "title": "Ten of These Is One of Those",
+  "courseId": "place-value",
+  "chapterId": "ch1-inside-a-number",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The spots run a **trading post** with one rule: 10 ones = 1 ten, and 10 tens = 1 hundred. Trades work both directions. This single rule secretly powers carrying, borrowing, and the ×10 shift you met in the fluency chapter — it's the engine under all of arithmetic.",
+      "figure": "pv3-trade"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Trade up: loose ones into tens.",
+      "conceptTag": "unit-trading",
+      "widget": {
+        "type": "slider",
+        "prompt": "60 loose beads get traded into bags of 10. Slide the number of bags until every bead is bagged.",
+        "min": 1,
+        "max": 9,
+        "step": 1,
+        "start": 1,
+        "target": 6,
+        "visual": "groups",
+        "groupSize": 10,
+        "itemEmoji": "⚪",
+        "unitLabel": "beads bagged",
+        "lowFeedback": "Loose beads remain — every bag swallows exactly 10 more. Add a bag.",
+        "highFeedback": "You're bagging more than 60 beads now — take one bag away; each holds 10.",
+        "successFeedback": "6 bags of 10 hold exactly 60 — sixty ones traded into 6 tens. Same beads, new packaging."
+      },
+      "predict": {
+        "prompt": "60 loose beads get bagged in tens. How does the number of bags relate to the digits of 60?",
+        "options": [
+          {
+            "id": "tens",
+            "label": "It's the 6 — the tens digit"
+          },
+          {
+            "id": "ones",
+            "label": "It's the 0 — the ones digit"
+          },
+          {
+            "id": "none",
+            "label": "The digits don't say"
+          }
+        ],
+        "outcomeId": "tens",
+        "reveal": "Bags of ten ARE the tens place — 60 holds six tens, so six bags swallow every bead. The tens digit counts the bags."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents unit trading.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for unit trading must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines unit trading."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:unit-trading",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The trading post's golden rule: value never changes.",
+      "conceptTag": "unit-trading",
+      "explanationVariants": [
+        "He hands IN 10 ones and receives 1 ten — the ten replaces them: 1 ten + 4 ones = 14, same as before.",
+        "Count the value both ways: before, 14 ones; after, 10 + 4. The packaging changed; the amount didn't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Kai has 14 loose ones. He trades 10 of them for 1 ten. What does he hold now?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1 ten and 4 ones — still worth 14",
+            "correct": true,
+            "feedback": "The 10 ones LEFT his hands when the ten arrived. New packaging, same value: 14."
+          },
+          {
+            "id": "b",
+            "label": "1 ten and 14 ones — worth 24 now",
+            "feedback": "That keeps the ten AND the traded ones — counting them twice! A trade hands the 10 ones over; only 4 stay loose."
+          },
+          {
+            "id": "c",
+            "label": "Just 4 ones — the trade shrank his money",
+            "feedback": "The 4 loose ones remain, but the 1 ten he received is worth the missing 10. Trades never shrink value."
+          },
+          {
+            "id": "d",
+            "label": "2 tens",
+            "feedback": "2 tens would be worth 20 — but Kai only brought 14 to the post. He can afford one ten, with 4 ones left loose."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "unit-trading",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Trades run **downhill too**: 1 hundred breaks into 10 tens, and 1 ten breaks into 10 ones. That's where \"borrowing\" in subtraction really comes from — you're not borrowing, you're trading a big unit down into small change.",
+      "figure": "pv3-trade-down"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Break big units into small change.",
+      "conceptTag": "unit-trading",
+      "explanationVariants": [
+        "Each hundred breaks into 10 tens, so 3 hundreds break into 3 × 10 = 30 tens.",
+        "Check the value: 30 tens = 300 — exactly what 3 hundreds were worth. The trade preserved it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "3 hundreds are traded down entirely into tens. How many tens?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "tens",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 forgot the trading rate — EACH hundred breaks into 10 tens, not 1. Three hundreds make three sets of 10 tens."
+          },
+          {
+            "value": 300,
+            "feedback": "300 traded all the way down to ONES. Stop one level up: in tens, 3 hundreds make 30."
+          },
+          {
+            "value": 13,
+            "feedback": "13 adds 3 + 10 — but trading multiplies: each of the 3 hundreds becomes 10 tens."
+          }
+        ],
+        "fallbackFeedback": "One hundred = 10 tens. Do that trade three times."
+      },
+      "variant": {
+        "gen": "unit-trading",
+        "form": "hundredsToTens"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Strange packagings, same numbers underneath.",
+      "conceptTag": "unit-trading",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each packaging to its value. Some packagings hide a trade inside!",
+        "left": [
+          {
+            "id": "l1",
+            "label": "1 ten and 16 ones"
+          },
+          {
+            "id": "l2",
+            "label": "3 tens and 2 ones"
+          },
+          {
+            "id": "l3",
+            "label": "1 hundred and 5 tens"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "26"
+          },
+          {
+            "id": "r2",
+            "label": "150"
+          },
+          {
+            "id": "r3",
+            "label": "32"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r3",
+          "l3": "r2"
+        },
+        "pairErrors": [
+          {
+            "left": "l1",
+            "right": "r3",
+            "feedback": "1 ten + 16 ones is 10 + 16 = 26, not 32 — the 16 ones hide an extra ten inside, but that only brings it to 2 tens 6 ones."
+          }
+        ],
+        "missFeedback": "Add each packaging's value: tens are worth 10 each, hundreds 100. Non-standard packs still total honestly.",
+        "successFeedback": "26, 32, 150 — packaging can look strange, but the value always adds up the same."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Overstuffed packaging — total it anyway.",
+      "conceptTag": "unit-trading",
+      "explanationVariants": [
+        "2 tens (20) plus 13 ones: 20 + 13 = 33. The 13 ones could trade into 1 ten 3 ones, making the tidy form 3 tens 3 ones.",
+        "Trade first if you like: 13 ones = 1 ten + 3 ones, so altogether 3 tens 3 ones = 33."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A jar holds 2 tens and 13 ones. What number is that?",
+        "answer": 33,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 213,
+            "feedback": "213 glued the packaging labels together. Add the VALUES instead: 2 tens are 20, plus the 13 ones."
+          },
+          {
+            "value": 23,
+            "feedback": "23 read the 13 ones as just 3 — but 13 ones hide a whole extra ten inside. Count all of them: 20 + 13."
+          },
+          {
+            "value": 15,
+            "feedback": "15 added the labels (2 + 13), ignoring what a ten is worth. Each ten counts as 10: 20 + 13."
+          }
+        ],
+        "fallbackFeedback": "Value it out: 2 tens = 20, then add all 13 ones."
+      },
+      "variant": {
+        "gen": "unit-trading",
+        "form": "tensAndOnes"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A bank teller's trade, step by step.",
+      "conceptTag": "unit-trading",
+      "hints": [
+        "First the trade: ONE hundred breaks down into how many tens?",
+        "The tens drawer now holds 10 tens (it started empty).",
+        "Then 2 tens are given away. How many stay in the drawer?"
+      ],
+      "explanationVariants": [
+        "Trade: 1 hundred → 10 tens in the drawer. Give away 2: 10 − 2 = 8 tens remain.",
+        "Only the traded hundred feeds the tens drawer; after the giveaway it keeps 8 tens (worth 80)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A bank drawer holds 4 hundreds, 0 tens, 0 ones. The teller trades ONE hundred down into tens, then gives away 2 tens. How many tens are in the drawer now?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "tens",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the drawer right after the trade — the giveaway hasn't happened yet. Hand over the 2 tens."
+          },
+          {
+            "value": 38,
+            "feedback": "38 counts the bank's WHOLE value in tens (380 = 38 tens). The question asks only what sits in the tens drawer: the traded 10, minus 2."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is what LEFT the drawer. The drawer received 10 tens from the trade and gave 2 away — count what stayed."
+          }
+        ],
+        "fallbackFeedback": "Two moves: one hundred becomes 10 tens; then 2 of those walk out the door."
+      },
+      "variant": {
+        "gen": "unit-trading",
+        "form": "tradeThenGive"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You run the trading post now.",
+      "takeaways": [
+        "10-for-1 trades go up (bundle) and down (break) between neighboring spots.",
+        "Trades change packaging, never value — count it both ways to prove it.",
+        "Carrying and borrowing are just these trades wearing school clothes."
+      ],
+      "teaser": "next chapter: every number has two neighbors — rounding finds the closer one."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "unit-trading",
+      "concept": {
+        "id": "rem-ut-c",
+        "kind": "concept",
+        "body": "Quick rewind. Think **bundles of sticks**: 10 loose sticks snap into 1 bundle; 10 bundles pack into 1 box. Loose = ones, bundles = tens, boxes = hundreds. Trading never adds or loses a single stick — it only regroups them."
+      },
+      "check": {
+        "id": "rem-ut-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "unit-trading",
+        "explanationVariants": [
+          "10 bundles of 10 sticks hold 100 sticks — exactly one box: a hundred.",
+          "Ten tens are worth 10 × 10 = 100, the next spot up."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "10 tens trade up into…",
+          "options": [
+            {
+              "id": "a",
+              "label": "1 hundred",
+              "correct": true,
+              "feedback": "Ten bundles of ten pack into one box: 10 tens = 1 hundred."
+            },
+            {
+              "id": "b",
+              "label": "1 ten",
+              "feedback": "One ten is what you started EACH bundle as. Ten of them together climb a whole spot: a hundred."
+            },
+            {
+              "id": "c",
+              "label": "100 hundreds",
+              "feedback": "That would be 10,000 sticks! Ten tens are worth 100 — exactly one hundred, not a hundred of them."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

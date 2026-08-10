@@ -1,0 +1,459 @@
+{
+  "id": "exp-04-02",
+  "slug": "comparing-growth",
+  "title": "Comparing Growth",
+  "courseId": "exponential-functions",
+  "chapterId": "ch4-graphs-and-comparisons",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-compare-curves",
+      "body": "To compare two exponential models, evaluate both at the same x. A **bigger base eventually wins**, even if it starts lower — exponential growth with a larger factor always overtakes in the long run."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Small change in base, large change in outcome.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 3,
+        "targetBase": 1.5,
+        "startBase": 3,
+        "showMirror": false,
+        "prompt": "Slide the base until b³ lands on the ring at 3.375 — a 50% growth rate compounded three times.",
+        "successFeedback": "1.5³ = 3.375. A 50% growth rate does not triple in three steps — it multiplies by 3.375, because each step grows what the previous step already grew.",
+        "lowFeedback": "b³ is under 3.375. A base of 1.5 means growing by 50% each step.",
+        "highFeedback": "b³ is over 3.375 — that is a faster growth rate than 50% per step."
+      },
+      "predict": {
+        "prompt": "Both bases are above 1. Moving the base from 3 to 1.5, the curve will…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Rise faster"
+          },
+          {
+            "id": "slower",
+            "label": "Rise more slowly"
+          },
+          {
+            "id": "shift",
+            "label": "Slide sideways without changing steepness"
+          }
+        ],
+        "outcomeId": "slower",
+        "reveal": "A bigger base multiplies by more at every step, so 3 outruns 1.5 — the base IS the growth factor per unit of x, not a sideways shift."
+      },
+      "conceptTag": "exp-compare",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines compare."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponential-functions:exp-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Evaluate the second.",
+      "conceptTag": "exp-compare",
+      "explanationVariants": [
+        "2² = 4, then 10 · 4 = 40.",
+        "g(2) = 10 · 2² = 10 · 4 = 40."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For g(x) = 10 * 2^x, what is g(2)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 10
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "a"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 20,
+            "feedback": "That's g(1) = 10 · 2. For g(2), use 2² = 4: 10 · 4 = 40."
+          },
+          {
+            "value": 80,
+            "feedback": "2² = 4, not 8: g(2) = 10 · 4 = 40."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "g(2) = 10 · 2² = 40.",
+        "successFeedback": "g(2) = 10 · 2² = 40."
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-compare__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "At x = 2, f = 2 · 9 = 18 and g = 10 · 4 = 40, so g is still ahead. But f multiplies by 3 each step while g multiplies by 2, so f closes the gap and eventually overtakes. The larger base wins.",
+      "figure": "exp-compare-18-40"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which grows faster?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = 2 * 3^x grows by ×3 each step; g(x) = 10 * 2^x grows by ×2. Which grows faster?",
+        "options": [
+          {
+            "id": "a",
+            "label": "f (base 3)",
+            "correct": true,
+            "feedback": "Yes — f multiplies by 3 each step, a larger factor, so it grows faster."
+          },
+          {
+            "id": "b",
+            "label": "g (base 2)",
+            "feedback": "g starts higher but multiplies by only 2. The larger base is f's 3."
+          },
+          {
+            "id": "c",
+            "label": "they grow at the same rate",
+            "feedback": "Different bases grow at different rates: 3 > 2, so f grows faster."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "“Grows faster” means a **bigger base** (a bigger per-step multiplier), not a bigger starting value. A model can start higher yet be overtaken by one with a larger base — starting ahead is not the same as growing faster.",
+      "figure": "exp-faster-base"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Go one step further.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2 * 3^x, what is f(3)?",
+        "answer": 54,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "That's f(2) = 2 · 9. For f(3), use 3³ = 27: 2 · 27 = 54."
+          },
+          {
+            "value": 6,
+            "feedback": "That's f(1). For f(3), use 3³ = 27: 2 · 27 = 54."
+          }
+        ],
+        "fallbackFeedback": "f(3) = 2 · 3³ = 2 · 27 = 54."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Faster grower.",
+      "conceptTag": "exp-compare",
+      "explanationVariants": [
+        "g has base 4, larger than f's base 2, so g grows faster.",
+        "The larger base (4) grows faster: that's g."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which grows faster: f(x) = 5 * 2^x or g(x) = 1 * 4^x?",
+        "options": [
+          {
+            "id": "a",
+            "label": "g (base 4)",
+            "correct": true,
+            "feedback": "Yes — base 4 > base 2, so g grows faster even though it starts lower."
+          },
+          {
+            "id": "b",
+            "label": "f (base 2)",
+            "feedback": "f starts higher (5 vs 1), but g's base 4 makes it grow faster."
+          },
+          {
+            "id": "c",
+            "label": "same rate",
+            "feedback": "Bases differ: 4 > 2, so g grows faster."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-compare__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate the fast one.",
+      "conceptTag": "exp-compare",
+      "explanationVariants": [
+        "4³ = 64, and 1 · 64 = 64.",
+        "g(3) = 1 · 4³ = 64."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For g(x) = 1 * 4^x, what is g(3)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 1
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 4
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "a"
+              },
+              "right": {
+                "op": "const",
+                "id": "b"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 12,
+            "feedback": "This isn't 4 · 3. 4³ = 64, so g(3) = 64."
+          },
+          {
+            "value": 16,
+            "feedback": "That's g(2) = 4². One more step: g(3) = 4³ = 64."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "g(3) = 4³ = 64.",
+        "successFeedback": "g(3) = 4³ = 64."
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-compare__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compare at x = 2.",
+      "conceptTag": "exp-compare",
+      "explanationVariants": [
+        "3² = 9, then 2 · 9 = 18.",
+        "g(2) = 2 · 3² = 2 · 9 = 18."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Two models: f(x) = 3 * 2^x and g(x) = 2 * 3^x. What is g(2)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 2
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "a"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is f(2) = 3 · 4. For g(2) = 2 · 3² = 18."
+          },
+          {
+            "value": 6,
+            "feedback": "That's g(1) = 2 · 3. For g(2), use 3² = 9: 2 · 9 = 18."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "g(2) = 2 · 3² = 18.",
+        "successFeedback": "g(2) = 2 · 3² = 18."
+      },
+      "hints": [
+        "Use g(x) = 2 · 3ˣ at x = 2.",
+        "3² = 9, then multiply by 2.",
+        "2 · 9 = 18."
+      ],
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-compare__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Evaluate at a shared x, and remember the larger base wins long-term.",
+      "takeaways": [
+        "Compare two models by evaluating both at the same x.",
+        "“Grows faster” = larger base, not larger start.",
+        "A larger base always overtakes eventually."
+      ],
+      "teaser": "next: exponential versus linear growth."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-compare",
+      "concept": {
+        "id": "rem-ecmp-c",
+        "kind": "concept",
+        "body": "Compare exponential models by evaluating at the same x; the one with the larger base grows faster and eventually overtakes. f(x) = 2·3ˣ (base 3) grows faster than g(x) = 10·2ˣ (base 2), even though g starts higher."
+      },
+      "check": {
+        "id": "rem-ecmp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-compare",
+        "explanationVariants": [
+          "Base 3 is larger than base 2, so f grows faster.",
+          "The larger base (3) grows faster: that's f."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which grows faster: f(x) = 2 * 3^x or g(x) = 10 * 2^x?",
+          "options": [
+            {
+              "id": "a",
+              "label": "f (base 3)",
+              "correct": true,
+              "feedback": "Yes — base 3 > base 2, so f grows faster despite starting lower."
+            },
+            {
+              "id": "b",
+              "label": "g (base 2)",
+              "feedback": "g starts higher but base 2 < 3, so f grows faster."
+            },
+            {
+              "id": "c",
+              "label": "same rate",
+              "feedback": "Bases differ: 3 > 2, so f grows faster."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

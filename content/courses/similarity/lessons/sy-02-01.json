@@ -1,0 +1,329 @@
+{
+ "id": "sy-02-01",
+ "slug": "sas-similarity",
+ "title": "The SAS Similarity Criterion",
+ "courseId": "similarity",
+ "chapterId": "ch2-similarity-criteria",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "sy-sas-similar",
+   "concept": {
+    "id": "rem-sy-sas-similar-c",
+    "kind": "concept",
+    "body": "SAS~ (SAS similarity) needs: two pairs of PROPORTIONAL sides (same ratio) AND the INCLUDED angle equal — the angle between those two sides. It's congruence's SAS with 'equal' relaxed to 'proportional.' Check both the ratio (equal for both side pairs) and the angle's position (included)."
+   },
+   "check": {
+    "id": "rem-sy-sas-similar-k",
+    "kind": "check",
+    "body": "SAS~ requirements.",
+    "conceptTag": "sy-sas-similar",
+    "explanationVariants": [
+     "SAS~ needs two proportional sides and the included angle equal.",
+     "Proportional sides plus the angle between them is SAS~."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "SAS~ similarity requires which of these?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "two proportional sides and the included angle equal",
+       "correct": true,
+       "feedback": "Proportional sides + included angle = SAS~."
+      },
+      {
+       "id": "o2",
+       "label": "two equal sides and the included angle",
+       "correct": false,
+       "feedback": "EQUAL sides give congruence's SAS. SAS~ uses PROPORTIONAL sides."
+      },
+      {
+       "id": "o3",
+       "label": "three proportional sides",
+       "correct": false,
+       "feedback": "That's SSS~. SAS~ uses two sides and the included angle."
+      },
+      {
+       "id": "o4",
+       "label": "two equal angles",
+       "correct": false,
+       "feedback": "That's AA. SAS~ needs proportional sides and the included angle."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "AA needs only angles, but sometimes you know sides. **SAS~** (SAS similarity): if two pairs of sides are **proportional** and the **included** angles are equal, the triangles are similar. It mirrors congruence's SAS, but 'equal sides' becomes 'proportional sides' — same shape, scaled by that common ratio.",
+   "figure": "sas-similar"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Check the ratio.",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "The small triangle has the two sides 4 and 6 meeting at a right angle. Drag k until the image is the triangle with 6 and 9 — and watch whether the angle between them ever moves.",
+    "shape": [
+     [
+      0,
+      0
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "center": [
+     0,
+     0
+    ],
+    "targetK": 1.5,
+    "kMin": 0.5,
+    "kMax": 3,
+    "kStep": 0.5,
+    "kStart": 0.5,
+    "gridMin": 0,
+    "gridMax": 10,
+    "showRatios": [
+     "length"
+    ],
+    "successFeedback": "k = 1.5: the 4 became 6 and the 6 became 9, both by the same factor, and the readout confirms every length went up by 1.5. The included angle never budged — a dilation cannot change an angle. Two sides in a common ratio plus that fixed angle between them is exactly what SAS~ asks for.",
+    "lowFeedback": "The image is still too small — 4 has not reached 6 yet. Keep opening k, and notice that both sides are growing together rather than one at a time.",
+    "highFeedback": "Past it: the image has overshot 6 and 9. Ease k back down. Whatever you do to k happens to both sides at once, which is why a single number can describe the whole pair."
+   },
+   "predict": {
+    "prompt": "Two triangles have sides 4 and 6, and 6 and 9, with equal included angles. Dilating the first onto the second will need…",
+    "options": [
+     {
+      "id": "one",
+      "label": "One scale factor that works for both sides"
+     },
+     {
+      "id": "two",
+      "label": "A different scale factor for each side"
+     },
+     {
+      "id": "none",
+      "label": "No single dilation — the angle would change too"
+     }
+    ],
+    "outcomeId": "one",
+    "reveal": "One factor, 1.5, and it moves both sides together — that is what makes the ratio 'common'. And the angle is untouched, because a dilation stretches distances and leaves directions alone."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Why 'included' matters again.",
+   "conceptTag": "sy-sas-similar",
+   "explanationVariants": [
+    "The angle must sit BETWEEN the two proportional sides — the included angle — just as in congruence's SAS. A non-included angle wouldn't lock the shape.",
+    "SAS~ needs the included angle; proportional sides plus the angle between them fix the triangle's shape."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For SAS~, where must the equal angle be?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "between the two proportional sides (included)",
+      "correct": true,
+      "feedback": "The included angle, flanked by the two proportional sides, locks the shape — exactly like congruence's SAS."
+     },
+     {
+      "id": "o2",
+      "label": "opposite the longer proportional side",
+      "correct": false,
+      "feedback": "An angle opposite a side is the ambiguous arrangement. SAS~ needs the angle BETWEEN the two sides."
+     },
+     {
+      "id": "o3",
+      "label": "anywhere, as long as the sides are proportional",
+      "correct": false,
+      "feedback": "Position matters: only the INCLUDED angle guarantees similarity. A stray angle wouldn't."
+     },
+     {
+      "id": "o4",
+      "label": "equal to 90°",
+      "correct": false,
+      "feedback": "The angle needn't be right — it just must be INCLUDED between the two proportional sides."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-sas-similar__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "SAS~ comes straight from dilation. Scale the smaller triangle by the common ratio: its two sides become equal to the larger triangle's, and the included angle is unchanged (dilations preserve angles). Now the two triangles match by SAS congruence — so the original pair was similar all along.",
+   "figure": "sas-similar"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Solve for a side.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two triangles are similar by SAS~. In the larger, a side is 12 opposite a side of 8 in the smaller. If another small side is 9, what is its large counterpart?",
+    "answer": 13.5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "13 = 9 + 4 adds the difference (12 − 8). The ratio is 12 ÷ 8 = 1.5, so 9 × 1.5 = 13.5."
+     },
+     {
+      "value": 6,
+      "feedback": "6 = 9 × 8 ÷ 12 uses the ratio upside down. The LARGER side is 9 × (12 ÷ 8) = 13.5."
+     }
+    ],
+    "fallbackFeedback": "Ratio 12 ÷ 8 = 1.5; 9 × 1.5 = 13.5."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Name the criterion.",
+   "conceptTag": "sy-sas-similar",
+   "explanationVariants": [
+    "Two proportional sides with the included angle equal is SAS~ (SAS similarity).",
+    "Proportional-side + included-angle is the SAS similarity pattern."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two triangles have two pairs of proportional sides and the angles BETWEEN those sides are equal. Which criterion applies?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "SAS~ (SAS similarity)",
+      "correct": true,
+      "feedback": "Two proportional sides with the included angle equal — SAS similarity."
+     },
+     {
+      "id": "o2",
+      "label": "SAS (congruence)",
+      "correct": false,
+      "feedback": "Congruent SAS needs EQUAL sides. Here the sides are PROPORTIONAL, giving SIMILARITY: SAS~."
+     },
+     {
+      "id": "o3",
+      "label": "AA",
+      "correct": false,
+      "feedback": "AA uses two ANGLES. Here you have two SIDES plus one angle — that's SAS~."
+     },
+     {
+      "id": "o4",
+      "label": "SSS~",
+      "correct": false,
+      "feedback": "SSS~ needs all THREE sides proportional. With two sides and the included angle, it's SAS~."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-sas-similar__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "SAS~ is the go-to when a shared angle sits between known sides — very common in **nested** and **overlapping** triangles. A small triangle inside a larger one, sharing the apex angle, with the sides around that angle in proportion, is similar by SAS~ (the shared angle is equal to itself).",
+   "figure": "sas-similar"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Nested triangles.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A small triangle sits inside a larger one, sharing vertex angle A. The sides from A are proportional (AD/AB = AE/AC). Why are the triangles similar?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "SAS~ — the shared angle A is the included angle between the proportional sides",
+      "correct": true,
+      "feedback": "∠A equals itself (shared), and it sits between the two proportional side pairs — SAS~ applies."
+     },
+     {
+      "id": "o2",
+      "label": "AA — two shared angles",
+      "correct": false,
+      "feedback": "Only ONE angle (∠A) is shared. With proportional SIDES around it, the criterion is SAS~, not AA."
+     },
+     {
+      "id": "o3",
+      "label": "SSS~ — three proportional sides",
+      "correct": false,
+      "feedback": "Only the two sides from A are known proportional; the third isn't given. The shared angle gives SAS~."
+     },
+     {
+      "id": "o4",
+      "label": "They are congruent",
+      "correct": false,
+      "feedback": "The triangles are different sizes (one nested in the other) — similar by SAS~, not congruent."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Proportional with a shared angle.",
+   "conceptTag": "sy-sas-similar",
+   "hints": [
+    "Set up the proportion of the two sides around the shared angle.",
+    "AD/AB = AE/AC. Substitute the known lengths and solve for the unknown.",
+    "With AD=4, AB=10, AE=6, find AC from 4/10 = 6/AC."
+   ],
+   "explanationVariants": [
+    "SAS~ requires AD/AB = AE/AC. So 4/10 = 6/AC gives AC = 6 × 10 ÷ 4 = 15.",
+    "Cross-multiply the proportion 4/10 = 6/AC: AC = 60 ÷ 4 = 15."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Triangles share angle A. AD = 4, AB = 10, and AE = 6. For the triangles to be similar by SAS~, what must AC equal?",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "12 = 6 + 10 − 4 mixes operations. Use the proportion 4/10 = 6/AC → AC = 6 × 10 ÷ 4 = 15."
+     },
+     {
+      "value": 2.4,
+      "feedback": "2.4 = 4 × 6 ÷ 10 solves the wrong ratio. Set AD/AB = AE/AC: 4/10 = 6/AC → AC = 15."
+     }
+    ],
+    "fallbackFeedback": "4/10 = 6/AC → AC = 6 × 10 ÷ 4 = 15."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-sas-similar__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Proportional sides, included angle.",
+   "takeaways": [
+    "SAS~: two proportional sides + the included angle equal ⇒ similar.",
+    "It follows from dilation: scale the small triangle and it matches by SAS congruence.",
+    "Ideal for nested/overlapping triangles that share the included angle."
+   ],
+   "teaser": "Next: when all three sides are proportional — the SSS~ criterion."
+  }
+ ]
+}

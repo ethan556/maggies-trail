@@ -1,0 +1,393 @@
+{
+  "id": "sp-01-02",
+  "slug": "how-sample-size-affects-confidence",
+  "title": "How Sample Size Affects Confidence",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch1-random-sampling-and-making-inferences",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "sample-to-population",
+      "body": "Different random samples of the same population usually give slightly different estimates — that's normal variation, not a mistake. Bigger samples tend to vary less from each other."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Vary selection method and sample size to see two different sources of error.",
+      "widget": {
+        "type": "samplingBiasLab",
+        "prompt": "Estimate neighborhood recycling. Choose a representative design, use at least 100 people, and repeat the sample.",
+        "populationLabel": "400 neighbors",
+        "targetMethod": "random",
+        "targetSize": 100,
+        "sizeMin": 20,
+        "sizeMax": 200,
+        "sizeStep": 20,
+        "sizeStart": 20,
+        "requiredDraws": 6,
+        "successFeedback": "Random selection addresses bias; the larger repeated samples reduce random variability.",
+        "methodFeedback": "A convenience sample can systematically overrepresent one part of the neighborhood.",
+        "sizeFeedback": "Random is fair, but this sample is still too small to control random variability well.",
+        "drawsFeedback": "Run more samples to see the spread of estimates before trusting the pattern."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Experiment with method and size as separate levers on sampling quality.",
+        "invariants": [
+          "population-fixed",
+          "random-selection"
+        ],
+        "misconceptions": [
+          "large-sample-cures-bias",
+          "sample-equals-population"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "sampling-design",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "graph",
+        "counterfactualPrompt": "Make the sample ten times larger without changing a biased method. Which problem remains?",
+        "explanation": {
+          "prompt": "Why can a very large convenience sample still be misleading?",
+          "options": [
+            {
+              "id": "bias",
+              "label": "It can repeatedly overrepresent the same easy-to-reach group.",
+              "correct": true,
+              "feedback": "Exactly — size cannot repair a biased selection process."
+            },
+            {
+              "id": "small",
+              "label": "Large samples are always accurate.",
+              "correct": false,
+              "feedback": "Large samples can be precisely wrong when selection is biased."
+            }
+          ]
+        }
+      },
+      "predict": {
+        "prompt": "Which change reduces selection bias?",
+        "options": [
+          {
+            "id": "method",
+            "label": "Use a representative selection method."
+          },
+          {
+            "id": "size",
+            "label": "Only make the sample larger."
+          },
+          {
+            "id": "repeat",
+            "label": "Repeat the same biased selection many times."
+          }
+        ],
+        "outcomeId": "method",
+        "reveal": "A larger sample reduces random variability, but only representative selection addresses systematic bias."
+      },
+      "conceptTag": "sp-sample-size"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Identify which sample would vary less.",
+      "conceptTag": "sp-sample-size",
+      "explanationVariants": [
+        "A bigger random sample tends to give more consistent, reliable estimates.",
+        "More data points smooth out random chance swings."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which random sample is likely to give a MORE RELIABLE estimate of a school's average test score?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A random sample of 200 students",
+            "correct": true,
+            "feedback": "Yes — a bigger random sample tends to vary less from the true population value."
+          },
+          {
+            "id": "b",
+            "label": "A random sample of 10 students",
+            "feedback": "A small sample can swing widely just by chance — less reliable than a bigger one."
+          },
+          {
+            "id": "c",
+            "label": "Both are equally reliable",
+            "feedback": "Sample size does matter — the bigger random sample tends to be more reliable."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-sample-reliability",
+        "form": "spReliabilitySchool"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Taking several different random samples and comparing their estimates shows you how much natural variation to expect.",
+      "figure": "sp-sample-size"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Compare estimates from repeated sampling.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Three random samples of 30 students each estimate a school's pizza-preference rate at 55%, 58%, and 52%. What does this spread suggest?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The true rate is likely near 55%, with some normal sample-to-sample variation",
+            "correct": true,
+            "feedback": "Yes — the estimates cluster closely, suggesting normal variation around a true value near 55%."
+          },
+          {
+            "id": "b",
+            "label": "The samples were all done wrong",
+            "feedback": "Small differences between random samples are expected, not a sign of error."
+          },
+          {
+            "id": "c",
+            "label": "The true rate could be anywhere from 0% to 100%",
+            "feedback": "The estimates cluster tightly together — that narrows things down a lot, not to \"anywhere.\""
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Scaling works the same no matter the sample size — the math doesn't change, only how confident you can be in the result.",
+      "figure": "sample-to-population"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Scale up a bigger sample.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 80 people, 20 have visited the new museum. If the city has 3200 people, estimate how many have visited.",
+        "answer": 800,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That's just the sample count. Scale it up: 20/80 of 3200 = 800."
+          },
+          {
+            "value": 3200,
+            "feedback": "That's everyone, not just museum visitors. Scale the ratio: 800."
+          }
+        ],
+        "fallbackFeedback": "20/80 = 1/4, and 1/4 of 3200 is 800."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another sample-size reliability question.",
+      "conceptTag": "sp-sample-size",
+      "explanationVariants": [
+        "A bigger random sample gives a more reliable, less variable estimate.",
+        "More data smooths out chance swings."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which random sample is likely to give a MORE RELIABLE estimate of a city's average commute time?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A random sample of 500 residents",
+            "correct": true,
+            "feedback": "Yes — a bigger random sample tends to vary less from the true value."
+          },
+          {
+            "id": "b",
+            "label": "A random sample of 15 residents",
+            "feedback": "A small sample can swing widely just by chance — less reliable."
+          },
+          {
+            "id": "c",
+            "label": "Both are equally reliable",
+            "feedback": "The bigger random sample tends to be more reliable."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-sample-reliability",
+        "form": "spReliabilityCommute"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another scaling estimate.",
+      "conceptTag": "sp-sample-estimate2",
+      "explanationVariants": [
+        "16/40 = 2/5, and 2/5 of 600 is 240.",
+        "Scale the sample's ratio up to the full population."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 40 workers, 16 bike to work. If the company has 600 workers, estimate how many bike to work.",
+        "answer": 240,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That's just the sample count. Scale it up: 16/40 of 600 = 240."
+          },
+          {
+            "value": 600,
+            "feedback": "That's everyone, not just bikers. Scale the ratio: 240."
+          }
+        ],
+        "fallbackFeedback": "16/40 of 600 is 240."
+      },
+      "variant": {
+        "gen": "g7-sp-sample-estimate",
+        "form": "spEstimateCompany"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier variation-interpretation question.",
+      "conceptTag": "sp-sample-size",
+      "explanationVariants": [
+        "Tight clustering across several samples suggests a reliable, consistent estimate near that value.",
+        "Small sample-to-sample differences are normal, not evidence of a problem."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Five random samples of 100 shoppers each estimate a store's discount-card usage rate at 41%, 39%, 42%, 40%, 41%. What's the best conclusion?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The true rate is likely close to 41%, with normal sample variation",
+            "correct": true,
+            "feedback": "Yes — five samples clustering tightly around 41% strongly suggests the true rate is near there."
+          },
+          {
+            "id": "b",
+            "label": "The sampling method must be flawed since the numbers aren't identical",
+            "feedback": "Small variation between random samples is expected and normal, not a flaw."
+          },
+          {
+            "id": "c",
+            "label": "You need at least 10 more samples before concluding anything",
+            "feedback": "Five closely-clustered samples already give a strong, useful estimate."
+          }
+        ]
+      },
+      "hints": [
+        "Look at how close together the five estimates are.",
+        "Tight clustering (39-42%) suggests low variation.",
+        "That points to a true rate near 41%, not a flawed method."
+      ],
+      "variant": {
+        "gen": "g7-sp-sample-reliability",
+        "form": "spReliabilityCluster"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Bigger random samples tend to give more reliable estimates, and repeated sampling reveals how much natural variation to expect.",
+      "takeaways": [
+        "Different random samples naturally give slightly different estimates.",
+        "Bigger samples tend to vary less and give more reliable estimates.",
+        "Tightly clustered estimates from several samples suggest a reliable true value."
+      ],
+      "teaser": "next chapter: comparing two different populations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-sample-size",
+      "concept": {
+        "id": "rem-sss-c",
+        "kind": "concept",
+        "body": "A bigger random sample tends to give a more reliable estimate — small samples can swing widely just by chance, while larger ones smooth out that variation."
+      },
+      "check": {
+        "id": "rem-sss-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-sample-size",
+        "explanationVariants": [
+          "A bigger sample gives a more reliable estimate.",
+          "More data smooths out chance swings."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which random sample is likely to give a MORE RELIABLE estimate of a school's average test score?",
+          "options": [
+            {
+              "id": "a",
+              "label": "A random sample of 200 students",
+              "correct": true,
+              "feedback": "Yes — bigger is more reliable."
+            },
+            {
+              "id": "b",
+              "label": "A random sample of 10 students",
+              "feedback": "Too small, less reliable."
+            },
+            {
+              "id": "c",
+              "label": "Both are equally reliable",
+              "feedback": "Sample size matters — bigger is more reliable."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-sample-estimate2",
+      "concept": {
+        "id": "rem-sse2-c",
+        "kind": "concept",
+        "body": "Scale a sample's ratio up to the whole population: (trait count ÷ sample size) × population size. 16 of 40 sampled (2/5) scales to 2/5 of 600 = 240."
+      },
+      "check": {
+        "id": "rem-sse2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-sample-estimate2",
+        "explanationVariants": [
+          "16/40 of 600 is 240.",
+          "Scale the sample's ratio up to the population."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In a sample of 40 workers, 16 bike to work. If the company has 600 workers, estimate how many bike to work.",
+          "answer": 240,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "Scale up the sample count: 240."
+            },
+            {
+              "value": 600,
+              "feedback": "That's everyone, not just bikers: 240."
+            }
+          ],
+          "fallbackFeedback": "240."
+        }
+      }
+    }
+  ]
+}

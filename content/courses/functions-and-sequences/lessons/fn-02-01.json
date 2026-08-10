@@ -1,0 +1,307 @@
+{
+  "id": "fn-02-01",
+  "slug": "common-difference",
+  "title": "Common Difference",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch2-arithmetic-sequences",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "arithmetic-steps",
+      "body": "An **arithmetic sequence** adds a constant, the **common difference d**, at each step. The sequence 3, 7, 11, 15 has d = 4. Subtract any term from the next one to find d: 7 − 3 = 4."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the difference, then let it run the machine.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "Dial the common difference so the 10th term of 3, 7, 11, 15, … lands on 39.",
+        "mode": "arithmetic",
+        "first": 3,
+        "targetD": 4,
+        "atPosition": 10,
+        "targetTerm": 39,
+        "successFeedback": "d = 4: ten terms, nine gaps — 3 + 9·4 = 39. One dial setting runs the whole sequence.",
+        "lowFeedback": "Too small — the 10th term lands short of 39. The gaps in 3, 7, 11, 15 are bigger than that.",
+        "highFeedback": "Too big — the 10th term overshoots 39. Check one gap: 7 − 3."
+      },
+      "predict": {
+        "prompt": "3, 7, 11, 15, … If the pattern holds, the gap between the 9th and 10th terms will be…",
+        "options": [
+          {
+            "id": "same",
+            "label": "4 — the same as every gap"
+          },
+          {
+            "id": "grow",
+            "label": "Bigger — the gaps grow down the line"
+          },
+          {
+            "id": "cant",
+            "label": "Can't tell without listing all nine"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "Arithmetic means ONE fixed gap forever — the 9th-to-10th step is the same 4 as the 1st-to-2nd. That constancy is what lets a formula jump straight to any term: 3 + 9·4 = 39."
+      },
+      "conceptTag": "fn-common-diff",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents common diff.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for common diff must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines common diff."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-and-sequences:fn-common-diff",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A decreasing sequence.",
+      "conceptTag": "fn-common-diff",
+      "explanationVariants": [
+        "7 − 10 = −3, so d = −3.",
+        "The terms go down by 3 each step, so d = −3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 10, 7, 4, 1, what is the common difference?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "The sequence decreases, so d is negative: 7 − 10 = −3."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the second term. The difference is 7 − 10 = −3."
+          }
+        ],
+        "fallbackFeedback": "7 − 10 = −3, so d = −3."
+      },
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "diffDown"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Extend a sequence by **adding d**. For 3, 7, 11, 15 with d = 4, the next term is 15 + 4 = 19. Keep adding the same step to go as far as you like.",
+      "figure": "fn-common-diff"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The next term.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 3, 7, 11, 15, what is the next term?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "The common difference is 4, not 5: 15 + 4 = 19."
+          },
+          {
+            "value": 18,
+            "feedback": "Add the full step of 4: 15 + 4 = 19."
+          }
+        ],
+        "fallbackFeedback": "15 + 4 = 19."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A negative or zero difference works the same way. In 20, 15, 10, 5 the difference is −5, so the next term is 5 + (−5) = 0. The sequence keeps stepping by the same amount, even through zero.",
+      "figure": "fn-negative-diff"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Step to zero.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 20, 15, 10, 5, what is the next term?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "Add d = −5 to the last term: 5 + (−5) = 0, not −5."
+          },
+          {
+            "value": 10,
+            "feedback": "The sequence is decreasing by 5: 5 − 5 = 0."
+          }
+        ],
+        "fallbackFeedback": "5 + (−5) = 0."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A bigger step.",
+      "conceptTag": "fn-common-diff",
+      "explanationVariants": [
+        "9 − 2 = 7, so d = 7.",
+        "The terms rise by 7 each step, so d = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 2, 9, 16, 23, what is the common difference?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the second term. The difference is 9 − 2 = 7."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the first term, not the step. Subtract: 9 − 2 = 7."
+          }
+        ],
+        "fallbackFeedback": "9 − 2 = 7, so d = 7."
+      },
+      "variant": {
+        "gen": "fn-arith-seq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Extend a rising sequence.",
+      "conceptTag": "fn-common-diff",
+      "explanationVariants": [
+        "d = 3, so the next term is 14 + 3 = 17.",
+        "Add the step 3: 14 + 3 = 17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 5, 8, 11, 14, what is the next term?",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "The common difference is 3, not 1: 14 + 3 = 17."
+          },
+          {
+            "value": 20,
+            "feedback": "Add one step of 3, not two: 14 + 3 = 17."
+          }
+        ],
+        "fallbackFeedback": "14 + 3 = 17."
+      },
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "nextUp"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A decreasing sequence's next term.",
+      "conceptTag": "fn-common-diff",
+      "explanationVariants": [
+        "d = 92 − 100 = −8, so the next term is 76 + (−8) = 68.",
+        "The terms drop by 8 each step: 76 − 8 = 68."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 100, 92, 84, 76, what is the next term?",
+        "answer": 68,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 84,
+            "feedback": "That's going the wrong way. The sequence decreases by 8: 76 − 8 = 68."
+          },
+          {
+            "value": 60,
+            "feedback": "The step is 8, not 16: subtract one step, 76 − 8 = 68."
+          }
+        ],
+        "fallbackFeedback": "d = −8, so 76 − 8 = 68."
+      },
+      "hints": [
+        "Find d: 92 − 100 = −8.",
+        "Add d to the last term: 76 + (−8).",
+        "76 − 8 = 68."
+      ],
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "nextDown"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Arithmetic sequences step by a constant common difference.",
+      "takeaways": [
+        "Find d by subtracting consecutive terms.",
+        "Extend by adding d to the last term.",
+        "d can be negative (decreasing) or zero."
+      ],
+      "teaser": "next: a formula for any term without listing them all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-common-diff",
+      "concept": {
+        "id": "rem-fcd-c",
+        "kind": "concept",
+        "body": "An arithmetic sequence adds a constant d each step. Find d by subtracting consecutive terms (7 − 3 = 4), and extend by adding d to the last term (15 + 4 = 19)."
+      },
+      "check": {
+        "id": "rem-fcd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-common-diff",
+        "explanationVariants": [
+          "7 − 3 = 4, so d = 4.",
+          "The step is 4 each time."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the sequence 3, 7, 11, 15, what is the common difference d?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is the first term; subtract: 7 − 3 = 4."
+            },
+            {
+              "value": 7,
+              "feedback": "7 is the second term; the difference is 4."
+            }
+          ],
+          "fallbackFeedback": "7 − 3 = 4."
+        }
+      }
+    }
+  ]
+}

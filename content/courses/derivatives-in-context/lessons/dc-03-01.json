@@ -1,0 +1,287 @@
+{
+  "id": "dc-03-01",
+  "slug": "the-tangent-as-approximation",
+  "title": "The Tangent as an Approximation",
+  "courseId": "derivatives-in-context",
+  "chapterId": "ch3-linearisation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Differentiable means **locally straight**. So near x = a, the curve is almost its own tangent line — and the tangent is something you can compute in your head.\n\n**L(x) = f(a) + f′(a)(x − a)**\n\nThat is the linearisation. It is not an approximation of convenience; it is what having a derivative MEANS, cashed in.",
+      "figure": "dr-tangent-line"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Build the linearisation.",
+      "conceptTag": "dc-linearisation",
+      "explanationVariants": [
+        "f(x) = √x has f(9) = 3 and f′(9) = 1/(2√9) = 1/6. So L(x) = 3 + (1/6)(x − 9).",
+        "Pick a base point where the function is EASY: 9 is a perfect square, and 9.1 is close to it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = √x. Find f′(9) as a decimal to three places.",
+        "answer": 0.167,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is f(9) = √9, the VALUE. Its slope there is 1/(2√9) = 1/6 ≈ 0.167."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is the exponent 1/2. It must still multiply x^(−1/2) = 1/3."
+          },
+          {
+            "value": 6,
+            "feedback": "That is 2√9. The derivative has it in the DENOMINATOR: 1/(2√x)."
+          }
+        ],
+        "fallbackFeedback": "f′(x) = 1/(2√x) → f′(9) = 1/6 ≈ 0.167."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Zoom in and the curve becomes its tangent.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "continuous",
+        "a": 3,
+        "leftValue": 5,
+        "rightValue": 5,
+        "fAtA": 5,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "Magnify a differentiable point. Watch the curve straighten — that straightness IS the linearisation.",
+        "successFeedback": "At high magnification the curve is indistinguishable from a straight line. That line is the tangent, and the linearisation is simply USING it instead of the curve. The approximation is good precisely because differentiability promised local straightness in the first place.",
+        "moreZoomFeedback": "Magnify further — the straightening is the point, and it only becomes obvious close in.",
+        "wrongVerdictFeedback": "Both sides settle on the same value, so the limit exists — and the curve is locally straight, which is exactly what makes the tangent a usable stand-in."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 3. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          },
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          }
+        ],
+        "outcomeId": "agree",
+        "reveal": "Both sides close in on 5. A limit only asks where the sides are HEADING, so it exists here."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Zoom toward the target input and compare visible local behavior with the symbolic limit claim.",
+        "invariants": [
+          "local-behavior-survives-zoom",
+          "limit-depends-on-approach"
+        ],
+        "misconceptions": [
+          "graph-pixel-is-proof",
+          "function-value-equals-limit"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivatives-in-context-graphZoom",
+        "delayed": false
+      },
+      "conceptTag": "dc-linearisation"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use it.",
+      "conceptTag": "dc-linearisation",
+      "explanationVariants": [
+        "L(9.1) = 3 + (1/6)(0.1) = 3 + 0.016667 = 3.016667. The true √9.1 is 3.0166206 — an error of about 0.00005.",
+        "You approximated a square root to four decimal places without a calculator, using only a division by 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate √9.1 using L(x) = 3 + (1/6)(x − 9). Give four decimals.",
+        "answer": 3.0167,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 3.1,
+            "feedback": "That adds the whole 0.1 to 3. The tangent's slope is 1/6, so the RISE is only 0.1/6 ≈ 0.0167."
+          },
+          {
+            "value": 3,
+            "feedback": "That is √9. The linearisation adds (1/6)(0.1) ≈ 0.0167 to it."
+          },
+          {
+            "value": 3.6,
+            "feedback": "Check: (1/6)(9.1 − 9) = (1/6)(0.1), not (1/6)(9.1)."
+          }
+        ],
+        "fallbackFeedback": "L(9.1) = 3 + (0.1)/6 ≈ 3.0167 — and the true value is 3.01662."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Which side is the tangent on?\n\n**f″ > 0 (concave up)** → the curve bends AWAY from the tangent, upward. The tangent lies below, so the estimate **under**-shoots.\n**f″ < 0 (concave down)** → the tangent lies above, so the estimate **over**-shoots.\n\nThe second derivative does not just describe the bend — it tells you the DIRECTION of your error, before you make it.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Predict the error's sign.",
+      "conceptTag": "dc-linearisation",
+      "explanationVariants": [
+        "√x has f″ < 0 (it bends downward), so the tangent lies ABOVE the curve and the estimate overshoots. Indeed 3.0167 > 3.01662.",
+        "You knew the answer was too big before you ever computed the true value."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "√x is concave down. Is the linear estimate of √9.1 too big or too small?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Too big — the tangent to a concave-down curve lies above it.",
+            "correct": true,
+            "feedback": "Right: 3.01667 versus a true 3.01662. You could predict the direction of the error without knowing the answer."
+          },
+          {
+            "id": "o2",
+            "label": "Too small.",
+            "correct": false,
+            "feedback": "That happens for a concave-UP curve, where the tangent sits underneath. √x bends the other way."
+          },
+          {
+            "id": "o3",
+            "label": "Exactly right.",
+            "correct": false,
+            "feedback": "A straight line cannot match a curve exactly, except at the point of tangency itself."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to tell without computing it.",
+            "correct": false,
+            "feedback": "The sign of f″ tells you, and it tells you in advance. That is what makes concavity useful rather than decorative."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A cube, approximated.",
+      "conceptTag": "dc-linearisation",
+      "hints": [
+        "Base at a = 2, where f(2) = 8 and f′(x) = 3x², so f′(2) = 12.",
+        "L(x) = 8 + 12(x − 2), so L(2.1) = 8 + 12(0.1).",
+        "And x³ is concave up at x = 2 — so predict the sign of your error before checking."
+      ],
+      "explanationVariants": [
+        "L(2.1) = 8 + 1.2 = 9.2, while the true 2.1³ = 9.261. The estimate is TOO SMALL, exactly as concave-up predicts.",
+        "The tangent lies below a concave-up curve, so a linear estimate always undershoots there."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate 2.1³ using the tangent at x = 2.",
+        "answer": 9.2,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 9.261,
+            "feedback": "That is the TRUE value. The linear estimate is L(2.1) = 8 + 12(0.1) = 9.2 — a little short, as concave-up guarantees."
+          },
+          {
+            "value": 8,
+            "feedback": "That is f(2). The tangent adds 12 × 0.1 = 1.2 to it."
+          },
+          {
+            "value": 20,
+            "feedback": "Check the increment: 12 × (2.1 − 2) = 12 × 0.1 = 1.2, not 12 × 2.1."
+          }
+        ],
+        "fallbackFeedback": "L(2.1) = 8 + 12(0.1) = 9.2, against a true 9.261 — an undershoot, as concave-up predicts."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Use the tangent instead of the curve.",
+      "takeaways": [
+        "L(x) = f(a) + f′(a)(x − a) — the tangent line, used as a stand-in for the curve near a.",
+        "It works because differentiable means locally straight. Zoom in and the curve BECOMES the line.",
+        "f″ tells you the direction of your error in advance: concave up undershoots, concave down overshoots."
+      ],
+      "teaser": "Next: the same idea, written as differentials — and used to estimate error."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dc-linearisation",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Start at a point you know exactly. Move along the TANGENT instead of the curve. The rise you get is f′(a) times how far you moved — and near a, that is almost the truth.",
+        "figure": "dr-tangent-line"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Move along the tangent.",
+        "conceptTag": "dc-linearisation",
+        "explanationVariants": [
+          "f(4) = 2 and f′(4) = 1/4, so L(4.2) = 2 + (1/4)(0.2) = 2.05.",
+          "The rise is slope × run: 0.25 × 0.2 = 0.05."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = √x, f(4) = 2 and f′(4) = 0.25. Estimate √4.2.",
+          "answer": 2.05,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 2.2,
+              "feedback": "That adds the whole 0.2. The rise is slope × run = 0.25 × 0.2 = 0.05."
+            },
+            {
+              "value": 2,
+              "feedback": "That is √4. The tangent adds 0.05 to it."
+            }
+          ],
+          "fallbackFeedback": "L(4.2) = 2 + 0.25(0.2) = 2.05."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "id": "de-01-02",
+  "slug": "equilibrium-solutions",
+  "title": "The Curve That Never Moves",
+  "courseId": "differential-equations",
+  "chapterId": "ch1-slope-fields",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Some fields have a line along which **every segment is flat**.\n\nStart there and the instruction says: *do not move.* So the solution is a horizontal line — forever. That is an **equilibrium solution**, and it is found by setting the whole right-hand side to zero:\n\n**dy/dx = 0 ⟹ solve f(x, y) = 0 for y.**\n\nIt is not a curve that happens to be flat. It is the one curve the instructions forbid from going anywhere.",
+      "figure": "de-slope-field-threads"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the line the field refuses to leave.",
+      "widget": {
+        "type": "slopeField",
+        "equation": "logistic",
+        "targetY0": 4,
+        "startY0": 1,
+        "prompt": "dy/dx = 1.8y(1 − y/4) — a population with a ceiling. Drag the starting value to the one place where the curve NEVER MOVES.",
+        "successFeedback": "y = 4, and every segment along that line is flat. Now drag AWAY from it: start below and the curve climbs to 4; start above and it FALLS to 4. Every solution runs to the same ceiling. That number has a name — the carrying capacity — and the field found it for you before any algebra was done.",
+        "lowFeedback": "Below the flat line. Your curve is climbing — the field is pushing it upward, toward something.",
+        "highFeedback": "Above the flat line. Your curve is falling — the field is pushing it back DOWN toward the same place."
+      },
+      "predict": {
+        "prompt": "If two solutions start at different initial values, what remains shared?",
+        "options": [
+          {
+            "id": "samecurve",
+            "label": "They must become the same curve"
+          },
+          {
+            "id": "local",
+            "label": "Each follows the same local slope rule at every point"
+          },
+          {
+            "id": "horizontal",
+            "label": "Both must stay horizontal"
+          }
+        ],
+        "outcomeId": "local",
+        "reveal": "Different initial conditions select different solution curves, but every curve must remain tangent to the same direction field."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Change an initial condition and trace a solution that remains tangent to the local direction field.",
+        "invariants": [
+          "field-slope-depends-on-position",
+          "solution-follows-local-slopes"
+        ],
+        "misconceptions": [
+          "all-solutions-share-one-curve",
+          "field-arrows-are-motion-vectors"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "differential-equations-slopeField",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this slopeField away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why can many solution curves belong to one differential equation?",
+          "options": [
+            {
+              "id": "initial",
+              "label": "The local slope rule is shared, but different initial conditions select different integral curves.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "random",
+              "label": "The arrows permit arbitrary paths.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "same",
+              "label": "All initial values eventually make the same graph.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "de-equilibrium"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the equilibria.",
+      "conceptTag": "de-equilibrium",
+      "explanationVariants": [
+        "Set 1.8y(1 − y/4) = 0. A product is zero when a factor is: y = 0, or 1 − y/4 = 0 giving y = 4. Two equilibria.",
+        "y = 0 is the empty population — nothing to grow. y = 4 is the ceiling."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dy/dt = 1.8y(1 − y/4). How many equilibrium solutions does it have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "A product is zero when EITHER factor is. y = 0 and y = 4 both make the right-hand side vanish."
+          },
+          {
+            "value": 0,
+            "feedback": "The right-hand side certainly can be zero: at y = 0 and at y = 4."
+          },
+          {
+            "value": 4,
+            "feedback": "That is the VALUE of one equilibrium, not the count. There are two: y = 0 and y = 4."
+          }
+        ],
+        "fallbackFeedback": "1.8y(1 − y/4) = 0 → y = 0 or y = 4: two equilibria."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-equilibrium__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Stable or unstable?",
+      "conceptTag": "de-equilibrium",
+      "explanationVariants": [
+        "Near y = 4, curves from below climb TOWARD it and curves from above fall toward it — so it attracts. It is STABLE. Near y = 0, any small positive population grows AWAY from zero, so y = 0 is unstable.",
+        "Stable equilibria attract nearby solutions; unstable ones repel them. The field shows which, without any algebra at all."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solutions near y = 4 move TOWARD it from both sides. Solutions near y = 0 move AWAY from it. What are these two equilibria?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = 4 is stable (it attracts); y = 0 is unstable (it repels).",
+            "correct": true,
+            "feedback": "Right. A population near extinction grows away from zero; a population near the ceiling settles onto it. The field says so without a formula being written."
+          },
+          {
+            "id": "o2",
+            "label": "Both are stable.",
+            "correct": false,
+            "feedback": "Anything starting just above y = 0 grows AWAY from it. An equilibrium that repels is unstable — a pencil balanced on its point."
+          },
+          {
+            "id": "o3",
+            "label": "Both are unstable.",
+            "correct": false,
+            "feedback": "y = 4 attracts from both sides — start above and you fall to it, start below and you climb to it. That is the definition of stable."
+          },
+          {
+            "id": "o4",
+            "label": "y = 0 is stable; y = 4 is unstable.",
+            "correct": false,
+            "feedback": "Backwards. Look at the field: the arrows near 0 point AWAY from it, and the arrows near 4 point TOWARD it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-equilibrium__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "And the field answers questions the formula would make you work for.\n\n**What happens in the long run?** Follow the segments. Every solution starting above zero ends up at the ceiling.\n\n**Where does it grow fastest?** Where the segments are steepest — for this logistic equation, at exactly HALF the ceiling, y = 2.\n\nAll of that, before a single line of algebra.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where growth is fastest.",
+      "conceptTag": "de-equilibrium",
+      "explanationVariants": [
+        "The growth rate 1.8y(1 − y/4) is a downward parabola in y, zero at 0 and 4, so it peaks at the midpoint: y = 2.",
+        "That is a genuinely useful fact about populations: they grow fastest not when they are largest, but at half their carrying capacity."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dP/dt = 1.8P(1 − P/4). At what population is the growth RATE greatest?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is the ceiling, where growth has stopped entirely — the rate there is ZERO. The fastest growth is at half of it."
+          },
+          {
+            "value": 0,
+            "feedback": "An empty population does not grow at all. The rate is zero there too."
+          },
+          {
+            "value": 1.8,
+            "feedback": "That is the rate constant k, not a population. The rate 1.8P(1 − P/4) is a downward parabola with roots 0 and 4, so it peaks at 2."
+          }
+        ],
+        "fallbackFeedback": "The rate is a downward parabola with roots at 0 and 4, so it peaks at the midpoint: P = 2 — half the carrying capacity."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-equilibrium__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the long run off the field.",
+      "conceptTag": "de-equilibrium",
+      "hints": [
+        "Do not solve anything. Ask only: what do the segments do near this starting value?",
+        "The population starts at 6, which is ABOVE the ceiling of 4.",
+        "Above the ceiling the field points downward, and it flattens as it approaches 4."
+      ],
+      "explanationVariants": [
+        "Starting at 6, the population FALLS and settles onto the carrying capacity of 4 — it never crosses it, because y = 4 is a solution and solutions cannot cross.",
+        "That last point is worth keeping: two solution curves can never cross, because a single starting point has only one instruction to follow."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A population obeying dP/dt = 1.8P(1 − P/4) starts at P = 6. What does it settle on in the long run?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "It does not stay put — 6 is above the ceiling, so the field points DOWNWARD there and the population falls."
+          },
+          {
+            "value": 0,
+            "feedback": "It does not crash to zero. The field pushes it down only as far as the equilibrium at 4, where every segment is flat."
+          },
+          {
+            "value": 2,
+            "feedback": "That is where growth is fastest, not where it ends up. The population settles at the ceiling, 4."
+          }
+        ],
+        "fallbackFeedback": "Above the ceiling the field points down, and the curve settles onto y = 4 — which it can never cross, because y = 4 is itself a solution."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-equilibrium__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The line the field refuses to leave.",
+      "takeaways": [
+        "An equilibrium is where the right-hand side is ZERO: dy/dx = 0 for every x, so the solution never moves.",
+        "Stable equilibria attract nearby curves; unstable ones repel them — and the field shows which, with no algebra at all.",
+        "Solutions can never cross, because a point has only one instruction. That is why nothing gets past the ceiling."
+      ],
+      "teaser": "Next chapter: when the equation CAN be solved, and how."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "de-equilibrium",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Set the whole right-hand side to zero and solve for y. Every y you find is a horizontal line the solution can never leave — because the instruction there says *do not move*.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Set it to zero.",
+        "conceptTag": "de-equilibrium",
+        "explanationVariants": [
+          "dy/dt = 3y is zero only when y = 0. One equilibrium.",
+          "Solve the right-hand side for zero."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "dy/dt = 3y. What is its only equilibrium value of y?",
+          "answer": 0,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "That is the rate constant. Set 3y = 0 to find the equilibrium: y = 0."
+            },
+            {
+              "value": 1,
+              "feedback": "Solve 3y = 0. The only solution is y = 0."
+            }
+          ],
+          "fallbackFeedback": "3y = 0 → y = 0."
+        }
+      }
+    }
+  ]
+}

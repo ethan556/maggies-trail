@@ -1,0 +1,60 @@
+{
+  "tag": "S205",
+  "label": "false-refusal re-check sweep — six candidates adjudicated individually against the three-gate fit test (models / reaches / represents)",
+  "conversions": [
+    {
+      "course": "vectors-matrices",
+      "lesson": "vec-04-02",
+      "step": "i1",
+      "widget": {
+        "type": "matrixTransform",
+        "prompt": "Build the map that sends î to (2, 1) and ĵ to (1, −1). Step the four entries and watch the determinant readout as the unit square changes.",
+        "ta": 2,
+        "tb": 1,
+        "tc": 1,
+        "td": -1,
+        "sa": 1,
+        "sb": 0,
+        "sc": 0,
+        "sd": 1,
+        "targetName": "a map that triples area and turns the square inside out",
+        "successFeedback": "det = (2)(−1) − (1)(1) = −3. Both halves of the number are on screen: the SIZE 3 is the area factor — the unit square's image covers three times the ground it started on — and the MINUS SIGN is orientation, the square flipped over as î and ĵ swapped sides. You started at the identity, det = 1: area unchanged, orientation kept.",
+        "swappedFeedback": "Those are the right four numbers in the wrong two places — you have entered î's image in the second column and ĵ's in the first. Columns are destinations: column 1 is where î lands, column 2 is where ĵ lands. Swapped, this map has det = +3 — same area factor, orientation kept rather than flipped.",
+        "signFeedback": "The diagonal is right but both off-diagonal signs are flipped. Watch the basis arrows: it is the off-diagonal entries that decide how far each unit vector leans into the OTHER axis, and reversing them leans it the opposite way.",
+        "fallbackFeedback": "Read the columns as destinations. Column 1 must read (2, 1) — where î lands — and column 2 must read (1, −1), where ĵ lands. The determinant readout updates as you step each entry."
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "tf-02-01",
+      "title": "The Radian",
+      "why": "circleMeasureExplore arcSector cannot REACH the states this lesson needs. The renderer's slider is min 15, max 345, step 15 (widgets.tsx:2728-2730), so a full turn (i1, answer 6.28 radians) and one radian (i2, 57.3°) are both off the lattice. The readout is degrees-only — 'angle v° · arc = … · sector area = …' — and never displays radian measure, which is the entire content of the chapter. The S204A/B recovery of the neighbouring tf-02-03 does not transfer: that lesson asks for an arc length at 90°, which is on the lattice and in the readout."
+    },
+    {
+      "lesson": "tf-02-02",
+      "title": "Degrees ↔ Radians, Fluently",
+      "why": "All three interactive steps are conversion arithmetic (matchPairs 30°/45°/90°/120° ↔ π/6, π/4, π/2, 2π/3; convert 5π/6 to degrees; one full turn plus a quarter in radians). circleMeasureExplore grades on landing a central angle and has no radian readout at all, so the degree↔radian correspondence the lesson teaches would never appear on screen. Landing 150° on the slider still requires knowing 5π/6 = 150° first — the recall is unchanged and merely re-housed."
+    },
+    {
+      "lesson": "rt-05-04",
+      "title": "Choosing the Tool & Trig Area",
+      "why": "triangleSolve cannot REPRESENT the authored numbers: sides a and b are capped at 12 (schema.ts:3036-3037) and i2 uses 13 and 19. Beyond the range, neither interactive step is a solve — both are dispatch MCQs about WHICH tool the givens name, and i1's givens (two angles and a non-included side) are AAS, outside the engine's sas/sss/ratios modes. The lesson's other half, trig area ½ab·sin C, is not a triangleSolve readout."
+    },
+    {
+      "lesson": "pq-02-02",
+      "title": "Opposite & Consecutive Angles",
+      "why": "coordinateProofLab drags a fourth vertex and offers slopes, midpoints and distances as evidence (requiredEvidence enum, schema.ts:3948) — there is no ANGLE readout anywhere in the engine. Every question in this lesson is a numeric angle measure (∠A = 65° ⇒ ∠C, ⇒ ∠B, (2x)° and (x+30)°, a 4:5 ratio). The engine models the shape's classification; the lesson is about its angles."
+    },
+    {
+      "lesson": "cp-05-01",
+      "title": "The Transversal Angle Family",
+      "why": "lineRelationLab draws exactly two lines and reports one intersection angle (widgets.tsx:13960-13982). It has no transversal and no eight-angle family, so corresponding / alternate-interior / co-interior — the naming that is this lesson's whole content — cannot be shown or graded. The S203Z use of this engine for cp-05-03 was correct because that lesson is about the parallel RELATION itself ('equal corresponding angles ⇒ parallel'), which is the engine's interaction."
+    },
+    {
+      "lesson": "vec-04-01",
+      "title": "Matrices & the Matrix-Vector Product",
+      "why": "matrixTransform's stated convention is that COLUMNS are where the basis vectors land (schema.ts:2737-2743). This lesson's frame is the opposite reading — c2 is 'each output component is a row of the matrix dotted with the vector' and the authored recap is 'Rows are recipes.' Converting the row/dot lesson to a column/basis-image lab would install an interaction that teaches a different (correct) idea than the one the frozen prose names. vec-04-02 is where this engine belongs, and that conversion is in this patch."
+    }
+  ]
+}

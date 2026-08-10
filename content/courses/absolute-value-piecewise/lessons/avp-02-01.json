@@ -1,0 +1,254 @@
+{
+  "id": "avp-02-01",
+  "slug": "two-numbers-share-a-distance",
+  "title": "Two Numbers Share a Distance",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch2-equations-with-abs",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "|x| = 5 asks which numbers sit five units from zero. Phrased that way the answer is obvious — there are two, one per side. Phrased as “remove the bars,” only one shows up. The distance reading is what keeps the second solution from disappearing.",
+      "figure": "avp-two-solutions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Place the solution most people miss.",
+      "widget": {
+        "type": "numberLinePlace",
+        "step": 1,
+        "tickStep": 1,
+        "start": 0,
+        "commonPlacements": [
+          {
+            "value": 5,
+            "feedback": "That is the solution everyone finds first. Its twin is the same distance out on the other side."
+          },
+          {
+            "value": -8,
+            "feedback": "Eight units out, not five. Read the distance panel as you slide."
+          }
+        ],
+        "prompt": "|x| = 5 has two solutions. Place the NEGATIVE one.",
+        "min": -8,
+        "max": 8,
+        "target": -5,
+        "showDistanceFromZero": true,
+        "successFeedback": "−5: position −5, distance 5. Both −5 and 5 answer |x| = 5, which is what “two numbers share a distance” means.",
+        "lowFeedback": "Too far left — the distance readout has passed 5.",
+        "highFeedback": "Not far enough left — keep sliding until the distance reads 5."
+      },
+      "predict": {
+        "prompt": "How many solutions does |x| = 5 have?",
+        "options": [
+          {
+            "id": "one",
+            "label": "One — x = 5"
+          },
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "none",
+            "label": "None — the bars make it unsolvable"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Every positive distance is achieved twice, once on each side of zero. The equation is really asking a geometry question, and geometry answers it with a pair."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Split into two cases.",
+      "conceptTag": "avp-abs-equations",
+      "explanationVariants": [
+        "|x| = 7 means the inside is 7 or −7, giving x = 7 and x = −7.",
+        "Two cases, because two numbers have distance 7 from zero."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solving |x| = 7 correctly means writing which pair of equations?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = 7 or x = −7",
+            "correct": true,
+            "feedback": "Yes — an absolute-value equation always splits into a positive and a negative case."
+          },
+          {
+            "id": "o2",
+            "label": "x = 7 only",
+            "correct": false,
+            "feedback": "That drops the left-hand solution. −7 is also seven units from zero."
+          },
+          {
+            "id": "o3",
+            "label": "x = 7 and x = 0",
+            "correct": false,
+            "feedback": "0 is zero units from zero, so |0| = 0 ≠ 7."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The method generalizes by treating whatever sits inside the bars as one object. |x − 1| = 4 says the QUANTITY x − 1 is four units from zero, so x − 1 = 4 or x − 1 = −4. Solve both, and you get both answers.",
+      "figure": "avp-quantity-as-object"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Solve a shifted equation.",
+      "conceptTag": "avp-abs-equations",
+      "explanationVariants": [
+        "x − 1 = −4 gives x = −3, the smaller of the two solutions.",
+        "The two cases give x = 5 and x = −3; the negative case is the one asked for."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "|x − 1| = 4. What is the SMALLER solution?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is the larger solution, from x − 1 = 4. The other case, x − 1 = −4, gives the smaller one."
+          },
+          {
+            "value": -5,
+            "feedback": "That treats the center as −1. The inside is x − 1, so the cases are x − 1 = ±4 and the negative case lands at −3."
+          }
+        ],
+        "fallbackFeedback": "x − 1 = −4 gives x = −3; check it: |−3 − 1| = |−4| = 4.",
+        "successFeedback": "−3 — and its partner is 5. Both sit four units from the center x = 1."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Verify a candidate.",
+      "conceptTag": "avp-abs-equations",
+      "explanationVariants": [
+        "|−2 − 1| = |−3| = 3, not 4, so −2 is not a solution.",
+        "Substituting is the check: the distance comes out 3, one short."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is x = −2 a solution of |x − 1| = 4?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — it gives 3, not 4",
+            "correct": true,
+            "feedback": "Correct: |−2 − 1| = 3. Close, but the equation demands exactly 4."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — it is negative, so it must be the second solution",
+            "correct": false,
+            "feedback": "Being negative does not make a number a solution; substitution decides. Here it gives 3."
+          },
+          {
+            "id": "o3",
+            "label": "Yes — |−2| = 2 and 2 + 1 = 3... close enough",
+            "correct": false,
+            "feedback": "The bars enclose the WHOLE expression x − 1, so subtract first, then measure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both at once.",
+      "conceptTag": "avp-abs-equations",
+      "explanationVariants": [
+        "The solutions are 5 and −3, and 5 + (−3) = 2.",
+        "Solutions sit symmetrically about the center x = 1, so their sum is twice the center: 2."
+      ],
+      "hints": [
+        "Solve both cases of |x − 1| = 4 before adding anything.",
+        "One case gives x − 1 = 4, the other x − 1 = −4.",
+        "The solutions are 5 and −3 — now add them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "|x − 1| = 4. What is the SUM of its two solutions?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That doubles the distance instead of adding the solutions. The solutions are 5 and −3."
+          },
+          {
+            "value": 0,
+            "feedback": "Solutions sum to zero only when the center is zero. Here they straddle x = 1, so they sum to 2."
+          }
+        ],
+        "fallbackFeedback": "The solutions are 5 and −3; their sum is 2 — exactly twice the center x = 1.",
+        "successFeedback": "2 — the pair always balances around the center, which is a fast way to check your work."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One equation, two cases.",
+      "takeaways": [
+        "|expression| = k splits into expression = k and expression = −k.",
+        "Treat everything inside the bars as a single quantity before splitting.",
+        "The two solutions sit symmetrically about the value that makes the inside zero."
+      ],
+      "teaser": "Next: when does that reliable pair become one solution — or none at all?"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-abs-equations",
+      "concept": {
+        "id": "rem-avp-abs-equations-c",
+        "kind": "concept",
+        "body": "The method generalizes by treating whatever sits inside the bars as one object. |x − 1| = 4 says the QUANTITY x − 1 is four units from zero, so x − 1 = 4 or x − 1 = −4. Solve both, and you get both answers."
+      },
+      "check": {
+        "id": "rem-avp-abs-equations-k",
+        "kind": "check",
+        "body": "Split into two cases.",
+        "conceptTag": "avp-abs-equations",
+        "explanationVariants": [
+          "|x| = 7 means the inside is 7 or −7, giving x = 7 and x = −7.",
+          "Two cases, because two numbers have distance 7 from zero."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Solving |x| = 7 correctly means writing which pair of equations?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x = 7 or x = −7",
+              "correct": true,
+              "feedback": "Yes — an absolute-value equation always splits into a positive and a negative case."
+            },
+            {
+              "id": "o2",
+              "label": "x = 7 only",
+              "correct": false,
+              "feedback": "That drops the left-hand solution. −7 is also seven units from zero."
+            },
+            {
+              "id": "o3",
+              "label": "x = 7 and x = 0",
+              "correct": false,
+              "feedback": "0 is zero units from zero, so |0| = 0 ≠ 7."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

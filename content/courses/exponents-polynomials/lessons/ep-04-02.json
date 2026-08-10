@@ -1,0 +1,427 @@
+{
+  "id": "ep-04-02",
+  "slug": "factoring-trinomials",
+  "title": "Factoring Trinomials",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch4-factoring",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "foil-box",
+      "body": "To factor x² + bx + c, find two numbers that **multiply to c** and **add to b**. They become the constants in (x + p)(x + q). This reverses FOIL: p + q is the middle term, and p·q is the last term."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the pair.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 2,
+        "targetB": 3,
+        "asks": "middle",
+        "startA": 0,
+        "startB": 0,
+        "requiredMoves": 3,
+        "prompt": "Build x² + 5x + 6 as a rectangle: drag the two partitions until the corner area reads 6, then read the middle coefficient.",
+        "successFeedback": "2 and 3: the corner is 2 × 3 = 6 and the two strips total 2x + 3x = 5x. That is why factoring hunts for numbers that MULTIPLY to the constant and ADD to the middle — the rectangle makes both conditions visible at once.",
+        "productMiddleFeedback": "The corner area is right but the strips do not total 5x, or the reverse. Both conditions must hold together.",
+        "partialFeedback": "Keep dragging — the rectangle is not yet x² + 5x + 6.",
+        "signFeedback": "Both partitions are positive here, since the constant and the middle term are both positive."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another pair.",
+      "conceptTag": "factor-trinomial",
+      "explanationVariants": [
+        "3·4 = 12 and 3 + 4 = 7, so the numbers are 3 and 4; the smaller is 3.",
+        "The pair multiplying to 12 and adding to 7 is 3 and 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "To factor (x^2 + 7x + 12), find two numbers that multiply to 12 and add to 7. What is the smaller number?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's the larger number. The pair is 3 and 4; the smaller is 3."
+          },
+          {
+            "value": 12,
+            "feedback": "That's the product. The numbers are 3 and 4."
+          }
+        ],
+        "fallbackFeedback": "3·4 = 12 and 3 + 4 = 7, so the smaller is 3."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-trinomial__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: x² + 5x + 6 needs product 6, sum 5 → **2 and 3**. So x² + 5x + 6 = (x + 2)(x + 3). Check by FOIL: middle 2x + 3x = 5x, last 2·3 = 6. It matches.",
+      "figure": "ep-factor-trinomial"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Choose the factors.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Factor (x^2 + 7x + 12).",
+        "options": [
+          {
+            "id": "a",
+            "label": "(x + 3)(x + 4)",
+            "correct": true,
+            "feedback": "Yes — 3·4 = 12 and 3 + 4 = 7."
+          },
+          {
+            "id": "b",
+            "label": "(x + 2)(x + 6)",
+            "feedback": "2·6 = 12 but 2 + 6 = 8, not 7. Use 3 and 4."
+          },
+          {
+            "id": "c",
+            "label": "(x + 5)(x + 2)",
+            "feedback": "5·2 = 10, not 12. The pair is 3 and 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "With a **negative constant**, the two numbers have opposite signs. For x² − x − 6: product −6, sum −1 → **−3 and +2**. So (x − 3)(x + 2). The larger-magnitude number carries the sign of b.",
+      "figure": "ep-neg-constant"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Opposite signs.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "To factor (x^2 - x - 6), find two numbers that multiply to -6 and add to -1. What is the larger number?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "That's the smaller (more negative) number. The larger is +2."
+          },
+          {
+            "value": -6,
+            "feedback": "That's the product. The numbers are −3 and 2."
+          }
+        ],
+        "fallbackFeedback": "−3·2 = −6 and −3 + 2 = −1, so the larger is 2."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Both negative.",
+      "conceptTag": "factor-trinomial",
+      "explanationVariants": [
+        "Product 6, sum −5 → −2 and −3, so (x − 2)(x − 3).",
+        "Two negatives multiply to +6 and add to −5: (x − 2)(x − 3)."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Factor (x^2 - 5x + 6).",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(x - 2)"
+          },
+          {
+            "id": "t1",
+            "label": "(x - 3)"
+          },
+          {
+            "id": "t2",
+            "label": "(x + 2)"
+          },
+          {
+            "id": "t3",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "t4",
+            "label": "(x - 1)"
+          },
+          {
+            "id": "t5",
+            "label": "(x - 6)"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [
+          [
+            "t1",
+            "t0"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "t3"
+            ],
+            "feedback": "That gives +5x in the middle. For −5x, use −2 and −3."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t2"
+            ],
+            "feedback": "That gives +5x in the middle. For −5x, use −2 and −3."
+          },
+          {
+            "sequence": [
+              "t4",
+              "t5"
+            ],
+            "feedback": "−1 + (−6) = −7, not −5. Use −2 and −3."
+          },
+          {
+            "sequence": [
+              "t5",
+              "t4"
+            ],
+            "feedback": "−1 + (−6) = −7, not −5. Use −2 and −3."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Find two numbers multiplying to +6 and adding to −5: both negative, −2 and −3.",
+        "successFeedback": "Yes — (−2)(−3) = 6 and −2 + (−3) = −5."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-trinomial__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Mixed signs.",
+      "conceptTag": "factor-trinomial",
+      "explanationVariants": [
+        "Product −6, sum −1 → −3 and +2, so (x − 3)(x + 2).",
+        "The pair is −3 and 2: (x − 3)(x + 2)."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Factor (x^2 - x - 6).",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(x - 3)"
+          },
+          {
+            "id": "t1",
+            "label": "(x + 2)"
+          },
+          {
+            "id": "t2",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "t3",
+            "label": "(x - 2)"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [
+          [
+            "t1",
+            "t0"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "t3"
+            ],
+            "feedback": "That gives +x in the middle. For −x, the −3 goes with x: (x − 3)(x + 2)."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t2"
+            ],
+            "feedback": "That gives +x in the middle. For −x, the −3 goes with x: (x − 3)(x + 2)."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t0"
+            ],
+            "feedback": "That multiplies to +6, not −6. Use −3 and +2."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t3"
+            ],
+            "feedback": "That multiplies to +6, not −6. Use −3 and +2."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Two numbers multiplying to −6 and adding to −1: −3 and +2.",
+        "successFeedback": "Yes — (−3)(2) = −6 and −3 + 2 = −1."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-trinomial__buildExpression"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Put it together.",
+      "conceptTag": "factor-trinomial",
+      "explanationVariants": [
+        "Product −8, sum 2 → 4 and −2, so (x + 4)(x − 2).",
+        "The pair multiplying to −8 and adding to 2 is 4 and −2: (x + 4)(x − 2)."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Factor (x^2 + 2x - 8).",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(x + 4)"
+          },
+          {
+            "id": "t1",
+            "label": "(x - 2)"
+          },
+          {
+            "id": "t2",
+            "label": "(x - 4)"
+          },
+          {
+            "id": "t3",
+            "label": "(x + 2)"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [
+          [
+            "t1",
+            "t0"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "t3"
+            ],
+            "feedback": "That gives −2x in the middle. For +2x, the +4 goes with x: (x + 4)(x − 2)."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t2"
+            ],
+            "feedback": "That gives −2x in the middle. For +2x, the +4 goes with x: (x + 4)(x − 2)."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t3"
+            ],
+            "feedback": "That multiplies to +8, not −8. Use 4 and −2."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t0"
+            ],
+            "feedback": "That multiplies to +8, not −8. Use 4 and −2."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Two numbers multiplying to −8 and adding to +2: +4 and −2.",
+        "successFeedback": "Yes — 4·(−2) = −8 and 4 + (−2) = 2."
+      },
+      "hints": [
+        "Find two numbers multiplying to −8 and adding to 2.",
+        "Opposite signs; the larger magnitude is positive: 4 and −2.",
+        "(x + 4)(x − 2)."
+      ],
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-trinomial__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Factor x² + bx + c by finding two numbers with product c and sum b.",
+      "takeaways": [
+        "The two numbers become the constants in (x + p)(x + q).",
+        "A negative constant means opposite signs.",
+        "Always check by FOIL-ing back."
+      ],
+      "teaser": "next: the difference-of-squares shortcut."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "factor-trinomial",
+      "concept": {
+        "id": "rem-ft-c",
+        "kind": "concept",
+        "body": "To factor x² + bx + c, find two numbers with product c and sum b. For x² + 5x + 6: 2 and 3 (2·3 = 6, 2 + 3 = 5), so (x + 2)(x + 3)."
+      },
+      "check": {
+        "id": "rem-ft-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "factor-trinomial",
+        "explanationVariants": [
+          "2·3 = 6 and 2 + 3 = 5; the larger is 3.",
+          "The pair is 2 and 3, so the larger number is 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "To factor (x^2 + 5x + 6), find two numbers that multiply to 6 and add to 5. What is the larger number?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's the product. The pair is 2 and 3."
+            },
+            {
+              "value": 5,
+              "feedback": "That's the sum. The larger number is 3."
+            }
+          ],
+          "fallbackFeedback": "The numbers are 2 and 3; the larger is 3."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "id": "les-01-01",
+  "slug": "keeping-the-balance",
+  "title": "Keeping the Balance",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch1-solving-linear-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An equation is a **balance**: the two sides are equal, and any move you make must be done to BOTH sides to keep them equal. To solve, undo the operations around x one at a time until x stands alone.",
+      "figure": "two-step-balance"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "An equation is a balance. Slide x until both pans hold the same amount — that value of x is the solution.",
+      "widget": {
+        "type": "balanceScale",
+        "prompt": "Slide x until the scale balances: 2x + 3 = 11.",
+        "a": 2,
+        "b": 3,
+        "c": 11,
+        "xMin": 0,
+        "xMax": 10,
+        "xStart": 0,
+        "successFeedback": "x = 4 balances it: 2(4) + 3 = 11. The two pans hold equal amounts — that's what solving means.",
+        "lowFeedback": "The left pan is too light and lifts. A bigger x adds weight to that side.",
+        "highFeedback": "The left pan is too heavy and sinks. A smaller x takes weight off that side."
+      },
+      "predict": {
+        "prompt": "The scale starts with x = 0. Right now the left pan (2x + 3) is…",
+        "options": [
+          {
+            "id": "light",
+            "label": "Lighter than the right pan"
+          },
+          {
+            "id": "heavy",
+            "label": "Heavier than the right pan"
+          },
+          {
+            "id": "level",
+            "label": "Already balanced"
+          }
+        ],
+        "outcomeId": "light",
+        "reveal": "At x = 0 the left pan weighs 3 against 11 on the right — 8 short. Every unit you add to x moves only that pan, which is why exactly one value levels the scale."
+      },
+      "conceptTag": "les-balance-both-sides",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents les balance both sides.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for les balance both sides must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines les balance both sides."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-equations-systems:les-balance-both-sides",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the solving steps.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Solve 4x + 8 = 28. Drag the steps into the right order.",
+        "items": [
+          {
+            "id": "s2",
+            "label": "Divide both sides by 4: x = 5"
+          },
+          {
+            "id": "s1",
+            "label": "Subtract 8 from both sides: 4x = 20"
+          },
+          {
+            "id": "s3",
+            "label": "Check: 4(5) + 8 = 28 ✓"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "s2",
+            "second": "s1",
+            "feedback": "Divide last — first peel off the +8 by subtracting, THEN divide by 4."
+          },
+          {
+            "first": "s3",
+            "second": "s1",
+            "feedback": "Check at the END — you can't verify x before you've solved for it."
+          }
+        ],
+        "missFeedback": "Undo the addition before the multiplication, then check — reverse order of operations.",
+        "successFeedback": "Right — subtract 8 first, then divide by 4 to get x = 5, then check."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Undo in REVERSE order: the last thing done to x is undone first. In 4x + 8, x was multiplied by 4, then 8 was added — so subtract 8 first, then divide by 4. Each undo peels one layer.",
+      "figure": "les-reverse-order"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve a two-step equation.",
+      "conceptTag": "les-balance-both-sides",
+      "explanationVariants": [
+        "Subtract 5: 3x = 15. Divide by 3: x = 5.",
+        "Undo the +5 first (subtract 5), then undo the ×3 (divide by 3): x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 3x + 5 = 20",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8.33,
+            "feedback": "That divided by 3 before subtracting 5 — undo the +5 first: 3x=15, then x=5."
+          },
+          {
+            "value": 15,
+            "feedback": "That's 3x, not x — after 3x=15, divide both sides by 3 to get x=5."
+          }
+        ],
+        "fallbackFeedback": "Subtract 5 from both sides: 3x = 15. Divide by 3: x = 5."
+      },
+      "variant": {
+        "gen": "eq-two-step",
+        "form": "default"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A subtraction version.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 2x − 6 = 12",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That subtracted 6 instead of adding it — undo −6 by ADDING 6: 2x=18, then x=9."
+          },
+          {
+            "value": 18,
+            "feedback": "That's 2x, not x — after 2x=18, divide both sides by 2 to get x=9."
+          }
+        ],
+        "fallbackFeedback": "Add 6 to both sides: 2x = 18. Divide by 2: x = 9."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Match equations to their solutions.",
+      "conceptTag": "les-balance-both-sides",
+      "explanationVariants": [
+        "Solve each: 2x+4=10 → x=3; 5x−5=20 → x=5; 3x+1=10 → x=3... check distinct: 2x+4=10 gives x=3, 5x−5=20 gives x=5, 4x+2=18 gives x=4.",
+        "Undo each equation step by step to find its x."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Solve each equation and match it to its x.",
+        "left": [
+          {
+            "id": "e1",
+            "label": "2x + 4 = 10"
+          },
+          {
+            "id": "e2",
+            "label": "5x − 5 = 20"
+          },
+          {
+            "id": "e3",
+            "label": "4x + 2 = 18"
+          }
+        ],
+        "right": [
+          {
+            "id": "x3",
+            "label": "x = 3"
+          },
+          {
+            "id": "x5",
+            "label": "x = 5"
+          },
+          {
+            "id": "x4",
+            "label": "x = 4"
+          }
+        ],
+        "pairs": {
+          "e1": "x3",
+          "e2": "x5",
+          "e3": "x4"
+        },
+        "pairErrors": [
+          {
+            "left": "e1",
+            "right": "x5",
+            "feedback": "2x+4=10 gives 2x=6, so x=3, not 5 — subtract 4 then divide by 2."
+          }
+        ],
+        "missFeedback": "Not quite — undo each equation: subtract the constant, then divide by the coefficient.",
+        "successFeedback": "Right — each equation peels down to its own x."
+      },
+      "variant": {
+        "gen": "match-solve"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A larger two-step.",
+      "conceptTag": "les-balance-both-sides",
+      "explanationVariants": [
+        "Subtract 3: 5x = 35. Divide by 5: x = 7.",
+        "Undo +3 first (subtract 3), then ÷5: x = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 5x + 3 = 38",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8.2,
+            "feedback": "That divided by 5 before subtracting 3 — undo the +3 first: 5x=35, then x=7."
+          },
+          {
+            "value": 35,
+            "feedback": "That's 5x, not x — after 5x=35, divide both sides by 5 to get x=7."
+          }
+        ],
+        "fallbackFeedback": "Subtract 3 from both sides: 5x = 35. Divide by 5: x = 7."
+      },
+      "variant": {
+        "gen": "eq-two-step",
+        "form": "secondForm"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve with the negative coefficient.",
+      "conceptTag": "les-balance-both-sides",
+      "explanationVariants": [
+        "Add 4: −2x = 10. Divide by −2: x = −5.",
+        "Undo the −4 (add 4), then divide by −2, remembering the sign: x = −5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: −2x − 4 = 6",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "Watch the sign — dividing 10 by −2 gives −5, not 5."
+          },
+          {
+            "value": -1,
+            "feedback": "That divided before undoing the −4 — add 4 first: −2x=10, then divide by −2: x=−5."
+          }
+        ],
+        "fallbackFeedback": "Add 4 to both sides: −2x = 10. Divide by −2: x = −5."
+      },
+      "hints": [
+        "First undo the −4 by adding 4 to both sides.",
+        "That gives −2x = 10. Now divide both sides by −2.",
+        "10 ÷ (−2) = −5, so x = −5 (watch the negative sign)."
+      ],
+      "variant": {
+        "gen": "eq-two-step",
+        "form": "negative"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Solve by undoing operations around x in reverse order, keeping both sides equal.",
+      "takeaways": [
+        "An equation is a balance — do the same to both sides.",
+        "Undo in reverse: subtract constants first, then divide by the coefficient.",
+        "Watch signs when dividing by a negative coefficient."
+      ],
+      "teaser": "Next: equations with the variable on both sides."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-balance-both-sides",
+      "concept": {
+        "id": "rem-les0101-c",
+        "kind": "concept",
+        "body": "An equation is a balance: do the same to both sides. Undo operations around x in reverse order — subtract the constant first, then divide by the coefficient."
+      },
+      "check": {
+        "id": "rem-les0101-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-balance-both-sides",
+        "explanationVariants": [
+          "Subtract 2: 4x = 12. Divide by 4: x = 3.",
+          "Undo +2 first (subtract 2), then ÷4: x = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve for x: 4x + 2 = 14",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "That divided by 4 before subtracting 2 — undo the +2 first: 4x=12, then x=3."
+            },
+            {
+              "value": 12,
+              "feedback": "That's 4x, not x — divide both sides by 4 to get x=3."
+            }
+          ],
+          "fallbackFeedback": "Subtract 2 from both sides: 4x = 12. Divide by 4: x = 3."
+        }
+      }
+    }
+  ]
+}

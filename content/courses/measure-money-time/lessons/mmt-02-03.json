@@ -1,0 +1,528 @@
+{
+  "id": "mmt-02-03",
+  "slug": "ordering-three-lengths",
+  "title": "Ordering Three Lengths",
+  "courseId": "measure-money-time",
+  "chapterId": "ch2-estimate-and-compare-lengths",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "ruler-measure",
+      "body": "With three measured objects, find the biggest number for longest and the smallest for shortest. Crayon 4 in, marker 9 in, ruler 6 in: the marker is longest, the crayon is shortest."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the longest.",
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The crayon is 4 inches, the marker is 9 inches, and the ruler is 6 inches. Tap the LONGEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "crayon",
+            "label": "crayon",
+            "length": 4,
+            "feedback": "The crayon is only 4 inches, the smallest here."
+          },
+          {
+            "id": "marker",
+            "label": "marker",
+            "length": 9
+          },
+          {
+            "id": "ruler",
+            "label": "ruler",
+            "length": 6,
+            "feedback": "The ruler is 6 inches — less than the marker's 9."
+          }
+        ],
+        "answerId": "marker",
+        "missFeedback": "Count the inch stripes and pick the biggest count.",
+        "successFeedback": "Yes — 9 inches is the biggest number, so the marker is longest."
+      },
+      "predict": {
+        "prompt": "If a measured object is shifted sideways without being stretched, what happens to its length?",
+        "options": [
+          {
+            "id": "same",
+            "label": "It stays the same"
+          },
+          {
+            "id": "longer",
+            "label": "It becomes longer"
+          },
+          {
+            "id": "shorter",
+            "label": "It becomes shorter"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "Position can change without changing length. Fair comparison depends on equal units and aligned starts, not where the drawing sits."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Compare lengths using equal units and a common starting point instead of visual impression.",
+        "predictionId": "g2-measure-unit-iteration-prediction",
+        "invariants": [
+          "measured-length-fixed",
+          "unit-size-consistent"
+        ],
+        "misconceptions": [
+          "misaligned-starts",
+          "visual-size-only"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "table",
+        "fadeLevel": 0,
+        "transferFamily": "new-objects-same-unit",
+        "delayed": true,
+        "counterfactualPrompt": "Imagine shifting one bar sideways without stretching it. Should its measured length change?",
+        "explanation": {
+          "prompt": "What makes the comparison fair?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "The same-size units and the measured counts determine length.",
+              "correct": true,
+              "feedback": "Exactly. Position can change while measured length stays fixed."
+            },
+            {
+              "id": "surface",
+              "label": "The object drawn farthest to the right must be longest.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Position can change while measured length stays fixed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "mmt-length-order"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the shortest.",
+      "conceptTag": "mmt-length-order",
+      "explanationVariants": [
+        "4 inches is the smallest number, so the crayon is shortest.",
+        "Comparing all three, 4 is the lowest."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The crayon is 4 inches, the marker is 9 inches, and the ruler is 6 inches. Tap the SHORTEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "crayon",
+            "label": "crayon",
+            "length": 4
+          },
+          {
+            "id": "marker",
+            "label": "marker",
+            "length": 9,
+            "feedback": "The marker is 9 inches, the biggest here, not the smallest."
+          },
+          {
+            "id": "ruler",
+            "label": "ruler",
+            "length": 6,
+            "feedback": "The ruler is 6 inches — more than the crayon's 4."
+          }
+        ],
+        "answerId": "crayon",
+        "missFeedback": "Count the inch stripes and pick the smallest count.",
+        "successFeedback": "Yes — 4 inches is the smallest number, so the crayon is shortest."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length order.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length order must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length order."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-length-order",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Compare all three numbers before deciding — no shortcuts, even when two are close together.",
+      "figure": "mmt-order-three"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Three more lengths.",
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The pen is 5 inches, the tape is 11 inches, and the key is 2 inches. Tap the LONGEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "pen",
+            "label": "pen",
+            "length": 5,
+            "feedback": "The pen is 5 inches — less than the tape's 11."
+          },
+          {
+            "id": "tape",
+            "label": "tape",
+            "length": 11
+          },
+          {
+            "id": "key",
+            "label": "key",
+            "length": 2,
+            "feedback": "The key is only 2 inches, the smallest here."
+          }
+        ],
+        "answerId": "tape",
+        "missFeedback": "Count the inch stripes and pick the biggest count.",
+        "successFeedback": "Yes — 11 inches is the biggest number, so the tape is longest."
+      },
+      "conceptTag": "mmt-length-order",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length order.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length order must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length order."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-length-order",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The middle-length object is neither the longest nor the shortest — knowing the two extremes still tells you a lot about the set.",
+      "figure": "mmt-middle-length"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Find the shortest, three more.",
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The pen is 5 inches, the tape is 11 inches, and the key is 2 inches. Tap the SHORTEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "pen",
+            "label": "pen",
+            "length": 5,
+            "feedback": "The pen is 5 inches — more than the key's 2."
+          },
+          {
+            "id": "tape",
+            "label": "tape",
+            "length": 11,
+            "feedback": "The tape is 11 inches, the biggest here, not the smallest."
+          },
+          {
+            "id": "key",
+            "label": "key",
+            "length": 2
+          }
+        ],
+        "answerId": "key",
+        "missFeedback": "Count the inch stripes and pick the smallest count.",
+        "successFeedback": "Yes — 2 inches is the smallest number, so the key is shortest."
+      },
+      "conceptTag": "mmt-length-order",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length order.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length order must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length order."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-length-order",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Longest of three.",
+      "conceptTag": "mmt-length-order",
+      "explanationVariants": [
+        "12 inches is the biggest number, so the box is longest.",
+        "Comparing all three, 12 is the highest."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The cup is 3 inches, the box is 12 inches, and the bag is 8 inches. Tap the LONGEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "cup",
+            "label": "cup",
+            "length": 3,
+            "feedback": "The cup is only 3 inches, the smallest here."
+          },
+          {
+            "id": "box",
+            "label": "box",
+            "length": 12
+          },
+          {
+            "id": "bag",
+            "label": "bag",
+            "length": 8,
+            "feedback": "The bag is 8 inches — less than the box's 12."
+          }
+        ],
+        "answerId": "box",
+        "missFeedback": "Count the inch stripes and pick the biggest count.",
+        "successFeedback": "Yes — 12 inches is the biggest number, so the box is longest."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length order.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length order must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length order."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-length-order",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Shortest of three.",
+      "conceptTag": "mmt-length-order",
+      "explanationVariants": [
+        "3 inches is the smallest number, so the cup is shortest.",
+        "Comparing all three, 3 is the lowest."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The cup is 3 inches, the box is 12 inches, and the bag is 8 inches. Tap the SHORTEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "cup",
+            "label": "cup",
+            "length": 3
+          },
+          {
+            "id": "box",
+            "label": "box",
+            "length": 12,
+            "feedback": "The box is 12 inches, the biggest here, not the smallest."
+          },
+          {
+            "id": "bag",
+            "label": "bag",
+            "length": 8,
+            "feedback": "The bag is 8 inches — more than the cup's 3."
+          }
+        ],
+        "answerId": "cup",
+        "missFeedback": "Count the inch stripes and pick the smallest count.",
+        "successFeedback": "Yes — 3 inches is the smallest number, so the cup is shortest."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length order.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length order must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length order."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-length-order",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tricky trio.",
+      "conceptTag": "mmt-length-order",
+      "explanationVariants": [
+        "13 inches is the biggest of the three, so the belt is longest, even with the string close at 12.",
+        "Comparing all three, 13 wins narrowly."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "The strap is 9 inches, the belt is 13 inches, and the string is 12 inches. Tap the LONGEST.",
+        "unitLabel": "inches",
+        "items": [
+          {
+            "id": "strap",
+            "label": "strap",
+            "length": 9,
+            "feedback": "The strap is only 9 inches, the smallest here."
+          },
+          {
+            "id": "belt",
+            "label": "belt",
+            "length": 13
+          },
+          {
+            "id": "string",
+            "label": "string",
+            "length": 12,
+            "feedback": "The string is 12 inches — close, but the belt's 13 is bigger."
+          }
+        ],
+        "answerId": "belt",
+        "missFeedback": "Count the inch stripes and pick the biggest count.",
+        "successFeedback": "Yes — 13 inches is the biggest number, so the belt is longest, even though the string (12) is close."
+      },
+      "hints": [
+        "Compare all three: 9, 13, and 12.",
+        "13 is the biggest of the three.",
+        "So the belt (13 inches) is longest."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length order.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length order must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length order."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-length-order",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "With three measured objects, the biggest number is longest and the smallest is shortest.",
+      "takeaways": [
+        "Compare every measurement before deciding.",
+        "The biggest number is the longest object.",
+        "The smallest number is the shortest object."
+      ],
+      "teaser": "you've built estimating and comparing skills with standard units — more of this course is still ahead."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mmt-length-order",
+      "concept": {
+        "id": "rem-mlo-c",
+        "kind": "concept",
+        "body": "With three measured objects, compare all the numbers: the biggest is longest, the smallest is shortest. Crayon 4 in, marker 9 in, ruler 6 in: marker is longest, crayon is shortest."
+      },
+      "check": {
+        "id": "rem-mlo-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mmt-length-order",
+        "explanationVariants": [
+          "9 is the biggest number, so the marker is longest.",
+          "Comparing 4, 9, and 6 — 9 wins."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is longest? The crayon is 4 inches, the marker is 9 inches, and the ruler is 6 inches.",
+          "options": [
+            {
+              "id": "a",
+              "label": "the marker",
+              "correct": true,
+              "feedback": "Yes — 9 is the biggest number."
+            },
+            {
+              "id": "b",
+              "label": "the ruler",
+              "feedback": "6 is less than the marker's 9."
+            },
+            {
+              "id": "c",
+              "label": "the crayon",
+              "feedback": "4 is the smallest number here."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

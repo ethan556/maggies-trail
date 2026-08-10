@@ -1,0 +1,304 @@
+{
+  "id": "rf-01-01",
+  "slug": "excluded-values",
+  "title": "Rational Expressions & Excluded Values",
+  "courseId": "rational-functions",
+  "chapterId": "ch1-simplifying-rational-expressions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **rational expression** is a fraction of polynomials, like (x + 2)/(x − 5). It behaves like any fraction with one iron rule: **the denominator can't be zero**. Here x = 5 would divide by zero, so 5 is an **excluded value** — the expression's domain is every real number except 5.",
+      "figure": "rf-rational-expression"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the forbidden input.",
+      "predict": {
+        "prompt": "At x = 4 the denominator of (x + 7)/(x − 4) is zero. Does the curve cross the axis there, or something else?",
+        "options": [
+          {
+            "id": "asymptote",
+            "label": "Neither — there is no point there at all; the curve runs off toward infinity"
+          },
+          {
+            "id": "cross",
+            "label": "It crosses, like any other sign change"
+          },
+          {
+            "id": "touch",
+            "label": "It touches zero and turns back"
+          }
+        ],
+        "outcomeId": "asymptote",
+        "reveal": "There is no point at x = 4 at all — the function is undefined, and the curve runs away from a vertical asymptote on both sides. The surprise is that the SIGN still changes across it, even though nothing ever crosses the axis."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for f(x) = (x + 7)/(x − 4). The dashed line at x = 4 is where the function is undefined.",
+        "roots": [
+          {
+            "x": -7,
+            "mult": 1
+          }
+        ],
+        "poles": [
+          {
+            "x": 4,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "Positive, negative, positive — and the change at x = 4 happened with no crossing, because there is no point there to cross. That is what \"excluded\" means: not a value the function handles badly, but one it does not have. The zero at −7 is the opposite — a point that IS on the curve, sitting exactly on the axis.",
+        "crossFeedback": "Both cuts are odd, so the sign changes at each. Check x = −7 (a zero the curve passes through) and x = 4 (a pole it never reaches) — the sign flips at both, for different reasons.",
+        "bounceFeedback": "A sign that stays the same across a cut belongs to an even multiplicity. Here the factor (x − 4) appears once, so the sign really does change across it."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Factored denominators hand you every excluded value at once: for x/((x − 2)(x + 3)), the denominator dies at x = 2 **and** x = −3 — two exclusions. A zero **numerator** is harmless: 0 divided by something is just 0. Only the bottom can break the expression.",
+      "figure": "rf-excluded-values"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two exclusions.",
+      "conceptTag": "rf-excluded",
+      "explanationVariants": [
+        "x² − 9 = (x − 3)(x + 3) is zero at ±3 — both are excluded.",
+        "Factor the denominator; each factor's zero is banned."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What are the excluded values of (x + 1)/(x² − 9)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = 3 and x = −3",
+            "correct": true,
+            "feedback": "Right — x² − 9 = (x − 3)(x + 3) vanishes at both."
+          },
+          {
+            "id": "o2",
+            "label": "x = 3 only",
+            "correct": false,
+            "feedback": "(−3)² − 9 = 0 too — the difference of squares has TWO zeros."
+          },
+          {
+            "id": "o3",
+            "label": "x = −1",
+            "correct": false,
+            "feedback": "−1 zeroes the TOP, which is fine — the expression just equals 0 there."
+          },
+          {
+            "id": "o4",
+            "label": "x = 9",
+            "correct": false,
+            "feedback": "9² − 9 = 72 ≠ 0 — solve x² = 9, giving x = ±3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-excluded__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Numerator zero vs denominator zero.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = (x − 6)/(x + 2), what happens AT x = 6?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f(6) = 0 — a perfectly legal output",
+            "correct": true,
+            "feedback": "Right — the top is 0, the bottom is 8: f(6) = 0/8 = 0."
+          },
+          {
+            "id": "o2",
+            "label": "x = 6 is excluded",
+            "correct": false,
+            "feedback": "Only DENOMINATOR zeros are excluded — the bottom at 6 is 8, safe."
+          },
+          {
+            "id": "o3",
+            "label": "f(6) is undefined",
+            "correct": false,
+            "feedback": "0/8 is defined (it's 0) — undefined needs a 0 underneath."
+          },
+          {
+            "id": "o4",
+            "label": "f(6) = 6",
+            "correct": false,
+            "feedback": "Substitute: (6 − 6)/(6 + 2) = 0/8 = 0."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Solve for the exclusions.",
+      "conceptTag": "rf-excluded",
+      "explanationVariants": [
+        "2x − 10 = 0 → x = 5.",
+        "One linear factor, one exclusion."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What value of x is excluded for (x² + 1)/(2x − 10)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Finish the solve: 2x = 10 → x = 5."
+          },
+          {
+            "value": -5,
+            "feedback": "2x − 10 = 0 gives x = +5 — moving the 10 flips its sign."
+          }
+        ],
+        "fallbackFeedback": "2x = 10 → x = 5."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-excluded__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A denominator that never dies.",
+      "conceptTag": "rf-excluded",
+      "explanationVariants": [
+        "x² + 4 ≥ 4 for every real x — it can't be zero, so nothing is excluded.",
+        "A square plus a positive number never reaches 0 (its zeros are complex: ±2i)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What are the excluded values of (x − 1)/(x² + 4)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "none — the denominator is never zero",
+            "correct": true,
+            "feedback": "Right — x² + 4 ≥ 4 always; its zeros ±2i are complex, not real inputs."
+          },
+          {
+            "id": "o2",
+            "label": "x = 2 and x = −2",
+            "correct": false,
+            "feedback": "(±2)² + 4 = 8, not 0 — that answer solves x² − 4 = 0, the wrong sign."
+          },
+          {
+            "id": "o3",
+            "label": "x = −4",
+            "correct": false,
+            "feedback": "(−4)² + 4 = 20 ≠ 0 — the constant adds, it isn't a root."
+          },
+          {
+            "id": "o4",
+            "label": "x = 1",
+            "correct": false,
+            "feedback": "1 zeroes the NUMERATOR — legal; the domain here is all real numbers."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-excluded__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full domain hunt.",
+      "conceptTag": "rf-excluded",
+      "explanationVariants": [
+        "x² − 5x = x(x − 5): zeros 0 and 5, both excluded — the SUM asked for is 0 + 5 = 5.",
+        "Factor out the GCF x first; two exclusions, adding to 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The expression (x + 3)/(x² − 5x) has two excluded values. What is their SUM?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "x² − 5x = x(x − 5) has zeros 0 and +5 — the sum is +5 (watch the factor's sign)."
+          },
+          {
+            "value": 8,
+            "feedback": "−3 isn't excluded (it zeroes the top) — the exclusions are 0 and 5, summing to 5."
+          }
+        ],
+        "fallbackFeedback": "x(x − 5) = 0 at x = 0 and x = 5; sum 5."
+      },
+      "hints": [
+        "Factor the denominator: x² − 5x = x(x − 5).",
+        "Each factor's zero is excluded: 0 and 5.",
+        "Add them: 0 + 5 = 5."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-excluded__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rational expressions ban exactly the denominator's zeros.",
+      "takeaways": [
+        "Excluded values come from the BOTTOM only; a zero top just outputs 0.",
+        "Factor the denominator to catch every exclusion.",
+        "Some denominators (like x² + 4) never vanish — nothing excluded."
+      ],
+      "teaser": "Next: simplifying by factoring — and why the exclusions refuse to disappear."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-excluded",
+      "concept": {
+        "id": "rem-rf0101-c",
+        "kind": "concept",
+        "body": "One question: what makes the BOTTOM zero? For 5/(x − 8), solve x − 8 = 0."
+      },
+      "check": {
+        "id": "rem-rf0101-k",
+        "kind": "check",
+        "body": "Solve it.",
+        "conceptTag": "rf-excluded",
+        "explanationVariants": [
+          "x = 8 is excluded.",
+          "Add 8 to both sides."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What value of x is excluded for 5/(x − 8)?",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -8,
+              "feedback": "x − 8 = 0 solves to +8 — the sign flips crossing the equals sign."
+            },
+            {
+              "value": 5,
+              "feedback": "The numerator 5 is fine — the ban comes from the denominator: x = 8."
+            }
+          ],
+          "fallbackFeedback": "x − 8 = 0 → x = 8."
+        }
+      }
+    }
+  ]
+}

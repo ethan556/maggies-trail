@@ -1,0 +1,263 @@
+{
+  "id": "fna-06-01",
+  "slug": "comparing-functions-across-representations",
+  "title": "Comparing Functions Across Representations",
+  "courseId": "function-analysis",
+  "chapterId": "ch6-comparing-representations",
+  "minutes": 11,
+  "standards": [
+    "F-IF.C.9"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A function can arrive as a graph, a table of input-output pairs, or an equation — three doors into the same room. Comparing two functions' properties (which grows faster, which has the bigger intercept) means finding that property in EACH representation, even though the representations look nothing alike.",
+      "figure": "fna-compare-representations"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Trace f(x) = x² to x = 2 and read its instantaneous rate there.",
+      "predict": {
+        "prompt": "f(x) = x² is graphed near x = 2. A second function g is given only as a table with a CONSTANT rate of 3 per step. Will f's instantaneous rate at x = 2 be bigger or smaller than g's constant rate of 3?",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger — f is accelerating by x = 2"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller — f started out slower"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "Bigger. f(x) = x² grows faster and faster as x increases; by x = 2 its instantaneous rate has already overtaken a steady rate of 3, even though f started out slower near x = 0."
+      },
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "slope",
+        "targetSlope": 4,
+        "targetX": 2,
+        "start": 0,
+        "prompt": "Trace f(x) = x² until the tangent's slope at x = 2 reads its true value.",
+        "successFeedback": "Slope 4 at x = 2, since f′(x) = 2x. That is bigger than a steady rate of 3 — f has already sped past it by this point, exactly as a curving-upward graph should.",
+        "lowFeedback": "The tangent is still shallower than the true slope at x = 2.",
+        "highFeedback": "The tangent has gone past the true slope at x = 2."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find g's rate from its table.",
+      "conceptTag": "fna-compare-reps",
+      "explanationVariants": [
+        "g's rate is constant: (13−10)/(2−1) = 3 between any two consecutive rows.",
+        "A table's rate of change is (change in y) ÷ (change in x) between two rows."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "g is given by the table (1,10), (2,13), (3,16). What is g's constant rate of change?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 is one of the table's y-values, not the rate. Divide a change in y by the matching change in x."
+          },
+          {
+            "value": 23,
+            "feedback": "23 adds two y-values. The rate is (13−10)/(2−1) = 3."
+          }
+        ],
+        "fallbackFeedback": "(13 − 10) ÷ (2 − 1) = 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name which representation makes THIS comparison easiest.",
+      "conceptTag": "fna-compare-reps",
+      "explanationVariants": [
+        "A table with equally-spaced x-values hands you the rate directly by subtraction — no tracing or graphing needed.",
+        "Different representations are easier for different questions; a table is fastest here precisely because the rate is constant."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For a function with a CONSTANT rate of change, which representation makes finding that rate fastest?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A table — subtract consecutive y-values directly",
+            "correct": true,
+            "feedback": "With equal x-steps, the rate is just one subtraction away in a table — no graph to read, no equation to differentiate."
+          },
+          {
+            "id": "b",
+            "label": "A graph — always the fastest for any rate question",
+            "correct": false,
+            "feedback": "A graph is often useful, but reading a precise rate off it takes more care than a clean subtraction in a table."
+          },
+          {
+            "id": "c",
+            "label": "None of the representations can show a rate of change",
+            "correct": false,
+            "feedback": "Every representation CAN show it — the table just makes THIS particular case fastest."
+          },
+          {
+            "id": "d",
+            "label": "Only an equation can reveal a rate of change",
+            "correct": false,
+            "feedback": "A table reveals a constant rate with a single subtraction — no equation required."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rate of change, an intercept, a maximum — these are facts ABOUT the function, not facts about whichever picture happens to be in front of you. The representation changes; the property doesn't. Comparing two functions is always comparing the SAME property, fished out of whatever representation each one is given in.",
+      "figure": "fna-properties-anywhere"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Trace f(x) = x² to x = 3 and read its value there.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "point",
+        "targetX": 3,
+        "start": 0,
+        "prompt": "Trace f(x) = x² to x = 3 and read the height.",
+        "successFeedback": "f(3) = 9. Compare that with g(3) = 3(3) − 1 = 8, computed straight from the equation — two different representations, one clean comparison, with f edging ahead.",
+        "lowFeedback": "Still short of x = 3.",
+        "highFeedback": "Past x = 3 now."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate g directly from its equation.",
+      "conceptTag": "fna-compare-reps",
+      "explanationVariants": [
+        "g(3) = 3(3) − 1 = 8.",
+        "Substitute x = 3 into the equation and simplify."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using g(x) = 3x − 1, what is g(3)?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 skips the −1. 3(3) = 9, then subtract 1: 8."
+          },
+          {
+            "value": 2,
+            "feedback": "2 computes 3 − 1 without the coefficient. Multiply first: 3(3) − 1 = 8."
+          }
+        ],
+        "fallbackFeedback": "3(3) − 1 = 8."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rank a property across three genuinely different representations.",
+      "conceptTag": "fna-compare-reps",
+      "explanationVariants": [
+        "The equation's y-intercept is read at x=0 directly; the table's is the y-value where x=0 appears as a row; the graph's is where the curve crosses the vertical axis — three different LOOKS, one comparable number each.",
+        "Find each function's y-intercept in its own representation, then just compare the three numbers."
+      ],
+      "hints": [
+        "For the equation, y-intercept is the value when x = 0.",
+        "For the table, look for the row where x = 0 (or extend the pattern back to it).",
+        "For the graph, it's where the curve crosses the vertical axis — read the height there."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Function P: y = 2x + 7 (equation). Function Q: table showing (0,3), (1,5), (2,7). Function R: a graph crossing the y-axis at 10. Which has the SMALLEST y-intercept?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Q — its intercept is 3",
+            "correct": true,
+            "feedback": "P's intercept is 7 (the equation's constant term). Q's is 3 (its x=0 row). R's is 10 (read off the graph). 3 is the smallest of the three."
+          },
+          {
+            "id": "b",
+            "label": "P — its intercept is 7",
+            "correct": false,
+            "feedback": "7 isn't the smallest — Q's intercept of 3 is lower."
+          },
+          {
+            "id": "c",
+            "label": "R — its intercept is 10",
+            "correct": false,
+            "feedback": "10 is the LARGEST of the three, not the smallest."
+          },
+          {
+            "id": "d",
+            "label": "They cannot be compared across different representations",
+            "correct": false,
+            "feedback": "That is exactly what this lesson is for — each representation still hands over the same property, ready to compare."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same property, three doors in.",
+      "takeaways": [
+        "A function's properties — rate of change, intercepts, values — exist independent of whether it's shown as a graph, table, or equation.",
+        "Each representation has its own fastest way to extract a given property: subtraction in a table, substitution in an equation, tracing on a graph.",
+        "Comparing two functions means finding the SAME property in each one's own representation, then comparing the numbers directly."
+      ],
+      "teaser": "next chapter: restricting a domain to build an inverse."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-compare-reps",
+      "concept": {
+        "id": "rem-fcr-c",
+        "kind": "concept",
+        "body": "Rewind. A table's rate of change between two rows is (change in y) divided by (change in x) — exactly the same idea as a graph's slope, just read from numbers instead of a picture."
+      },
+      "check": {
+        "id": "rem-fcr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fna-compare-reps",
+        "explanationVariants": [
+          "(20−12)/(2−0) = 4.",
+          "Subtract the y-values, subtract the matching x-values, then divide."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A table shows (0,12) and (2,20). What is the rate of change?",
+          "answer": 4,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 is the change in y alone (20−12), without dividing by the change in x (2)."
+            },
+            {
+              "value": 32,
+              "feedback": "32 adds the two y-values. Rate of change is (change in y) ÷ (change in x): (20−12)/(2−0) = 4."
+            }
+          ],
+          "fallbackFeedback": "(20 − 12) ÷ (2 − 0) = 4."
+        }
+      }
+    }
+  ]
+}

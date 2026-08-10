@@ -1,0 +1,212 @@
+{
+  "id": "pr-04b-03",
+  "slug": "percent-error",
+  "title": "Percent Error",
+  "courseId": "proportional-relationships",
+  "chapterId": "ch4b-interest-commission-and-error",
+  "minutes": 11,
+  "standards": [
+    "7.RP.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Guess 44 when the answer is 50 and you missed by 6. But *how badly* is 6?\n\n**Percent error** answers that: the size of the miss divided by the actual value, as a percent. Here 6 ÷ 50 = 0.12, so 12% error. The denominator is always the actual value — the truth you are being judged against.",
+      "figure": "pr7-percent-error"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "See the miss as a share of the truth.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 50,
+        "targetPercent": 12,
+        "percentStep": 2,
+        "startPercent": 0,
+        "unit": "units",
+        "prompt": "The actual value is 50 and the estimate missed it by 6. Shade the error as a percent of the actual value.",
+        "successFeedback": "12%. The gap of 6 is 12% of 50 — that is the whole calculation, and it is why percent error is just 'part out of whole' wearing different clothes.",
+        "lowFeedback": "That is under 12% of the actual value.",
+        "highFeedback": "That is over 12% of the actual value."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute one end to end.",
+      "conceptTag": "percent-error",
+      "explanationVariants": [
+        "The miss is |180 − 200| = 20, and 20 ÷ 200 = 0.10 = 10%.",
+        "Divide the gap by the ACTUAL value: 20 ÷ 200."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An estimate of 180 was made when the actual value was 200. What is the percent error?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "percent",
+        "commonErrors": [
+          {
+            "value": 11.1,
+            "feedback": "11.1 divides by the ESTIMATE (20 ÷ 180). Percent error always divides by the actual value: 20 ÷ 200 = 10%."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is the size of the miss, not its percent. Divide it by 200 first."
+          }
+        ],
+        "fallbackFeedback": "The gap is 20, and 20 ÷ 200 = 10%."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Over or under does not matter to the size.",
+      "conceptTag": "percent-error",
+      "explanationVariants": [
+        "Percent error uses the size of the gap, so overestimating by 5 gives the same error as underestimating by 5.",
+        "The absolute value is taken before dividing, so the sign disappears."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An estimate of 105 and an estimate of 95 are both compared to an actual value of 100. What are their percent errors?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Both 5%",
+            "correct": true,
+            "feedback": "Percent error uses the SIZE of the gap. Both missed by 5, so both are 5 ÷ 100 = 5%."
+          },
+          {
+            "id": "b",
+            "label": "5% and −5%",
+            "correct": false,
+            "feedback": "Percent error is never negative — the size of the gap is taken before dividing."
+          },
+          {
+            "id": "c",
+            "label": "5% and 5.3%",
+            "correct": false,
+            "feedback": "Both divide by the actual value of 100, not by the estimates, so both give exactly 5%."
+          },
+          {
+            "id": "d",
+            "label": "105% and 95%",
+            "correct": false,
+            "feedback": "Those are the estimates as percents of the actual. The ERROR is the gap: 5 out of 100."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Percent error exists because a raw miss means nothing on its own.\n\nMissing by 2 when the answer is 10 is a 20% error — serious. Missing by 2 when the answer is 1,000 is 0.2% — barely worth mentioning. Same gap, completely different verdicts, and only the percent tells them apart.",
+      "figure": "pr7-error-vs-size"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A small gap on a large quantity.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 400,
+        "targetPercent": 5,
+        "percentStep": 1,
+        "startPercent": 0,
+        "unit": "units",
+        "prompt": "An estimate missed an actual value of 400 by 20. Shade the error as a percent of the actual value.",
+        "successFeedback": "5%. Twenty sounds like a lot until you compare it to 400 — that is what percent error is for.",
+        "lowFeedback": "That is under 5% of the actual value.",
+        "highFeedback": "That is over 5% of the actual value."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Judge two estimates fairly.",
+      "conceptTag": "percent-error",
+      "explanationVariants": [
+        "The first is 3 ÷ 30 = 10%; the second is 10 ÷ 500 = 2%. The second is the better estimate despite the larger raw miss.",
+        "Compare percents, not gaps: 10% against 2%."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Estimate A misses 30 by 3. Estimate B misses 500 by 10. Which is the better estimate?",
+        "options": [
+          {
+            "id": "a",
+            "label": "B, because 2% error beats 10%",
+            "correct": true,
+            "feedback": "3 ÷ 30 = 10% and 10 ÷ 500 = 2%. B's raw miss is bigger but far smaller relative to what was measured."
+          },
+          {
+            "id": "b",
+            "label": "A, because 3 is a smaller miss than 10",
+            "correct": false,
+            "feedback": "Raw gaps cannot be compared across different quantities — that is exactly the problem percent error solves."
+          },
+          {
+            "id": "c",
+            "label": "They are equally good",
+            "correct": false,
+            "feedback": "10% and 2% are very different. Divide each gap by its own actual value."
+          },
+          {
+            "id": "d",
+            "label": "B, because 500 is larger than 30",
+            "correct": false,
+            "feedback": "The size of the quantity alone does not decide it. Compare the percent errors: 2% against 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work back from the percent to the estimate.",
+      "conceptTag": "percent-error",
+      "explanationVariants": [
+        "4% of 250 is 10, so an estimate that is too low reads 250 − 10 = 240.",
+        "Find the gap first: 0.04 × 250 = 10, then subtract because the estimate was under."
+      ],
+      "hints": [
+        "Turn the percent into an actual gap first.",
+        "4% of 250 is 0.04 × 250 = 10.",
+        "The estimate was too LOW, so subtract: 250 − 10 = 240."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A measurement has 4% error and is too low. The actual value is 250. What was the measurement?",
+        "answer": 240,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 260,
+            "feedback": "260 is too HIGH. The question says the measurement was under, so subtract the gap of 10."
+          },
+          {
+            "value": 246,
+            "feedback": "246 subtracts 4 rather than 4% of 250. The gap is 0.04 × 250 = 10."
+          }
+        ],
+        "fallbackFeedback": "The gap is 4% of 250 = 10, and the estimate was low: 250 − 10 = 240."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "How wrong, relative to what?",
+      "takeaways": [
+        "Percent error = size of the gap ÷ ACTUAL value, written as a percent.",
+        "It is never negative — over and under by the same amount give the same error.",
+        "It is what makes estimates of different sizes comparable at all."
+      ],
+      "teaser": "Next chapter: scale drawings, and what happens to area when lengths change."
+    }
+  ],
+  "remedials": []
+}

@@ -1,0 +1,306 @@
+{
+  "id": "bv-03-01",
+  "slug": "making-predictions",
+  "title": "Making Predictions",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch3-using-the-line",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A line of best fit does more than describe — it **predicts**. To predict y for a new x, plug that x into the equation **y = mx + b**. The line fills in a likely y-value for an x you didn't measure.",
+      "figure": "line-intercepts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Predict by reading the line, not the dots.",
+      "widget": {
+        "type": "scatterFit",
+        "points": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            10
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 5,
+        "yMin": 0,
+        "yMax": 12,
+        "mMin": -3,
+        "mMax": 3,
+        "mStep": 0.5,
+        "bMin": -5,
+        "bMax": 15,
+        "bStep": 1,
+        "mStart": 0,
+        "bStart": 0,
+        "tolerance": 0.5,
+        "prompt": "Fit a line to the data, then use it to predict.",
+        "successFeedback": "y = 2x + 2 runs through every point. A prediction at x = 4.5 reads 11 off the LINE — no data point sits there, and that is the point of fitting a line: it fills in between what you measured.",
+        "slopeFeedback": "The steepness is off — the points climb 2 for every 1 across.",
+        "offsetFeedback": "The steepness is right, but the line sits too high or low. At x = 0 the pattern heads for y = 2."
+      },
+      "predict": {
+        "prompt": "These points rise 2 for every 1 across. Will a line with slope 1 be too SHALLOW or too STEEP for them?",
+        "options": [
+          {
+            "id": "shallow",
+            "label": "Too shallow"
+          },
+          {
+            "id": "steep",
+            "label": "Too steep"
+          },
+          {
+            "id": "right",
+            "label": "Just right"
+          }
+        ],
+        "outcomeId": "shallow",
+        "reveal": "A slope-1 line climbs only half as fast as these points do — it falls behind them more with every step across."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move a fitted line and coordinate association, residual balance, prediction, and model limitations.",
+        "invariants": [
+          "residual-is-observed-minus-predicted",
+          "line-of-fit-balances-vertical-errors"
+        ],
+        "misconceptions": [
+          "correlation-implies-causation",
+          "line-must-pass-through-every-point"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-scatterFit-new-context",
+        "delayed": false
+      },
+      "conceptTag": "bv-predict"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The steps are always the same: multiply the slope by the new x, then add the intercept. For y = 3x + 1 at x = 4: 3 × 4 = 12, then 12 + 1 = 13. Order matters — multiply before you add.",
+      "figure": "bv-predict"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Predict with a steeper line.",
+      "conceptTag": "bv-predict",
+      "explanationVariants": [
+        "y = 3x + 1 at x = 4: 3 × 4 + 1 = 12 + 1 = 13.",
+        "Multiply 3 × 4 = 12, then add 1: 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line of best fit is y = 3x + 1. Predict y when x = 4.",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That's 3 × 5 or 4 × 4 — use 3 × 4 + 1 = 13."
+          },
+          {
+            "value": 12,
+            "feedback": "You stopped after multiplying — add the intercept: 12 + 1 = 13."
+          }
+        ],
+        "fallbackFeedback": "y = 3x + 1 at x = 4: 3 × 4 + 1 = 13."
+      },
+      "variant": {
+        "gen": "linear-predict"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Predict through the origin.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line of best fit is y = 5x (intercept 0). Predict y when x = 4.",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's 5 + 4 — the slope MULTIPLIES: 5 × 4 = 20."
+          },
+          {
+            "value": 25,
+            "feedback": "Use x = 4, not 5: 5 × 4 = 20."
+          }
+        ],
+        "fallbackFeedback": "y = 5x at x = 4: 5 × 4 = 20 (nothing to add, since the intercept is 0)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Predict with a negative slope.",
+      "conceptTag": "bv-predict",
+      "explanationVariants": [
+        "y = −2x + 20 at x = 4: −2 × 4 + 20 = −8 + 20 = 12.",
+        "Multiply −2 × 4 = −8, then add 20: 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line of best fit is y = −2x + 20. Predict y when x = 4.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 28,
+            "feedback": "The slope is negative: −2 × 4 = −8, then + 20 = 12, not 28."
+          },
+          {
+            "value": 18,
+            "feedback": "That's −2 + 20 — multiply first: −2 × 4 = −8, then + 20 = 12."
+          }
+        ],
+        "fallbackFeedback": "y = −2x + 20 at x = 4: −8 + 20 = 12."
+      },
+      "variant": {
+        "gen": "linear-predict",
+        "form": "negSlope"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Predict further out.",
+      "conceptTag": "bv-predict",
+      "explanationVariants": [
+        "y = 4x + 5 at x = 4: 4 × 4 + 5 = 16 + 5 = 21.",
+        "Multiply 4 × 4 = 16, then add 5: 21."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line of best fit is y = 4x + 5. Predict y when x = 4.",
+        "answer": 21,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "That's 5 × 4 + 5 or 4 × 5 + 5 — use 4 × 4 + 5 = 21."
+          },
+          {
+            "value": 16,
+            "feedback": "You stopped after multiplying — add the intercept: 16 + 5 = 21."
+          }
+        ],
+        "fallbackFeedback": "y = 4x + 5 at x = 4: 16 + 5 = 21."
+      },
+      "variant": {
+        "gen": "linear-predict"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A fractional slope.",
+      "conceptTag": "bv-predict",
+      "explanationVariants": [
+        "y = ½x + 2 at x = 4: ½ × 4 = 2, then + 2 = 4.",
+        "Half of 4 is 2, then add 2: 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line of best fit is y = ½x + 2. Predict y when x = 4.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's 2 × 4 — the slope is a HALF: ½ × 4 = 2, then + 2 = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "½ × 4 = 2, then + 2 = 4, not 6 (don't add 4 itself)."
+          }
+        ],
+        "fallbackFeedback": "y = ½x + 2 at x = 4: ½ × 4 = 2, then + 2 = 4."
+      },
+      "hints": [
+        "Plug x = 4 into y = ½x + 2.",
+        "Half of 4 is 2 — that's the ½x part.",
+        "Then add the intercept: 2 + 2 = 4."
+      ],
+      "variant": {
+        "gen": "linear-predict",
+        "form": "halfSlope"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Predict y for a new x by plugging it into y = mx + b: multiply, then add.",
+      "takeaways": [
+        "To predict, substitute the new x into y = mx + b.",
+        "Multiply the slope by x first, then add the intercept.",
+        "The line gives a likely y even for an x you never measured."
+      ],
+      "teaser": "Next: what the slope and intercept mean in the real situation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-predict",
+      "concept": {
+        "id": "rem-bv0301-c",
+        "kind": "concept",
+        "body": "To predict y for a new x, plug it into y = mx + b: multiply the slope by x first, then add the intercept."
+      },
+      "check": {
+        "id": "rem-bv0301-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-predict",
+        "explanationVariants": [
+          "y = 2x + 3 at x = 10: 2 × 10 + 3 = 23.",
+          "Multiply 2 × 10 = 20, then add 3: 23."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A line of best fit is y = 2x + 3. Predict y when x = 10.",
+          "answer": 23,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "You stopped after multiplying — add the intercept: 20 + 3 = 23."
+            },
+            {
+              "value": 5,
+              "feedback": "The slope MULTIPLIES: 2 × 10 = 20, then + 3 = 23."
+            }
+          ],
+          "fallbackFeedback": "y = 2x + 3 at x = 10: 20 + 3 = 23."
+        }
+      }
+    }
+  ]
+}

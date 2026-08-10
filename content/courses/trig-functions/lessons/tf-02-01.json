@@ -1,0 +1,253 @@
+{
+  "id": "tf-02-01",
+  "slug": "the-radian",
+  "title": "The Radian",
+  "courseId": "trig-functions",
+  "chapterId": "ch2-radians-arc-length",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Degrees are a human invention — 360 slices because ancient astronomers liked the number. The circle offers its own unit: bend one RADIUS along the rim, and the angle it spans is **one radian**. Since the full rim is 2π radii long, a full turn holds 2π ≈ 6.28 radians.",
+      "figure": "radian-wrap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the wrap.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many radians make one full circle? (Round to hundredths.)",
+        "answer": 6.28,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 360,
+            "feedback": "360 is the DEGREE count. In radians a full turn is the number of radius-lengths around the rim: 2π ≈ 6.28."
+          },
+          {
+            "value": 3.14,
+            "feedback": "π ≈ 3.14 is only HALF the turn — the rim of a full circle is 2πr, so 2π radians."
+          }
+        ],
+        "fallbackFeedback": "circumference = 2πr ⇒ 2π ≈ 6.28 radians."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A quarter of it.",
+      "conceptTag": "tf-radians",
+      "explanationVariants": [
+        "A quarter turn is a quarter of 2π: π/2 ≈ 1.57 radians.",
+        "Half of the half-turn π ≈ 3.14 gives 1.57."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many radians in a QUARTER turn (90°)? (Round to hundredths.)",
+        "answer": 1.57,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "90 is the degree measure — radians count radius-lengths of arc: π/2 ≈ 1.57."
+          },
+          {
+            "value": 3.14,
+            "feedback": "3.14 is π, the HALF turn (180°). A quarter turn is half of that: ≈ 1.57."
+          }
+        ],
+        "fallbackFeedback": "2π/4 = π/2 ≈ 1.57."
+      },
+      "variant": {
+        "gen": "radian-convert",
+        "form": "turnFraction"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why bother? Because radians are the circle's NATIVE unit: they're a pure ratio (arc length ÷ radius), no unit attached — and every clean circle formula, starting with arc length s = rθ next lesson, works **only** when θ is in radians. Degrees always need converting first.",
+      "figure": "tf-radian-native"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Why 57.3°?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "One radian is about 57.3°. What makes it exactly that size?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It's the angle whose arc equals one radius — and 360° ÷ 2π ≈ 57.3",
+            "correct": true,
+            "feedback": "Right — geometry forces it: the full 360° splits among the 2π radius-arcs that wrap the rim."
+          },
+          {
+            "id": "o2",
+            "label": "It's exactly 60°",
+            "correct": false,
+            "feedback": "Close but no — 2π ≈ 6.28 arcs fit around, not exactly 6, so each is slightly UNDER 60°."
+          },
+          {
+            "id": "o3",
+            "label": "57.3 is an arbitrary convention someone chose",
+            "correct": false,
+            "feedback": "Nothing arbitrary about it — once “arc = radius” defines the unit, 360/2π is forced by the circle itself."
+          },
+          {
+            "id": "o4",
+            "label": "It comes from splitting the circle into 100 parts",
+            "correct": false,
+            "feedback": "That's the gradian system (400 per turn). The radian comes from radius-lengths of arc, giving 2π per turn."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read an arc directly.",
+      "conceptTag": "tf-radians",
+      "explanationVariants": [
+        "Radians COUNT radius-lengths: an arc of 3 radii spans exactly 3 radians.",
+        "That's the whole beauty of the unit — no conversion, the arc count IS the angle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An arc along a circle's rim measures exactly 3 radius-lengths. What central angle does it span, in RADIANS?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 171.9,
+            "feedback": "171.9° is the DEGREE conversion — the question asks for radians, where the radius-count is the answer: 3."
+          },
+          {
+            "value": 9.42,
+            "feedback": "9.42 is 3π — a π multiplied in from habit. The radian count IS the radius count: 3."
+          }
+        ],
+        "fallbackFeedback": "3 radius-lengths of arc = 3 radians."
+      },
+      "variant": {
+        "gen": "radian-convert",
+        "form": "arcRadians"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Converting hinges on one anchor: **180° = π radians**. Degrees to radians: multiply by π/180. Radians to degrees: multiply by 180/π. Keep the anchor in view and the factor's direction is never in doubt — the 180 sits opposite the π.",
+      "figure": "tf-180-pi"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Convert down.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 60° to radians. (Round to hundredths.)",
+        "answer": 1.05,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.33,
+            "feedback": "0.33 is 60/180 — the π went missing. 60° = (60/180)π = π/3 ≈ 1.05."
+          },
+          {
+            "value": 1.57,
+            "feedback": "1.57 is π/2 — that's 90°'s value, one anchor-notch too high. 60° = π/3 ≈ 1.05."
+          }
+        ],
+        "fallbackFeedback": "60 · π/180 = π/3 ≈ 1.05."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Convert up.",
+      "conceptTag": "tf-radians",
+      "explanationVariants": [
+        "2 · 180/π ≈ 114.6° — two radians is about two 57.3° chunks.",
+        "Radians to degrees multiplies by 180/π, the anchor flipped."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 2 radians to degrees. (Round to tenths.)",
+        "answer": 114.6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.03,
+            "feedback": "0.03 is 2 · π/180 — the factor ran the WRONG direction. Radians to degrees uses 180/π: ≈ 114.6°."
+          },
+          {
+            "value": 90,
+            "feedback": "90° would make 2 radians a quarter turn — but one radian is already ≈ 57.3°, so two of them pass 114°."
+          }
+        ],
+        "fallbackFeedback": "2 · 180/π ≈ 114.6°."
+      },
+      "hints": [
+        "Each radian is about 57.3° — estimate first: two of them land near 115°.",
+        "The exact factor is 180/π (degrees on top, since degrees are wanted).",
+        "2 · 180/π = 360/π — round to tenths."
+      ],
+      "variant": {
+        "gen": "radian-convert",
+        "form": "radToDeg"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The circle's own unit.",
+      "takeaways": [
+        "One radian = the angle whose arc is one radius; 2π of them fill a turn.",
+        "Radians are a pure arc÷radius ratio — the unit circle formulas demand them.",
+        "Anchor 180° = π; the conversion factor points 180 at the unit you want."
+      ],
+      "teaser": "Next: fluency with the π-fraction angles you'll meet everywhere."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-radians",
+      "concept": {
+        "id": "rem-tf0201-c",
+        "kind": "concept",
+        "body": "One conversion, slowly. 90° is HALF of the anchor 180° = π, so 90° = π/2 ≈ 1.57 radians. Every conversion is just this: locate the angle as a fraction of 180, and attach that fraction to π."
+      },
+      "check": {
+        "id": "rem-tf0201-k",
+        "kind": "check",
+        "body": "Half the anchor.",
+        "conceptTag": "tf-radians",
+        "explanationVariants": [
+          "90° = π/2 ≈ 1.57 radians.",
+          "90 is half of 180, so the radian measure is half of π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Convert 90° to radians. (Round to hundredths.)",
+          "answer": 1.57,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 90,
+              "feedback": "90 is still in degrees — the conversion to radius-counting hasn't happened: π/2 ≈ 1.57."
+            },
+            {
+              "value": 3.14,
+              "feedback": "3.14 is the FULL anchor π = 180°. Ninety degrees is half of it: ≈ 1.57."
+            }
+          ],
+          "fallbackFeedback": "90 · π/180 = π/2 ≈ 1.57."
+        }
+      }
+    }
+  ]
+}

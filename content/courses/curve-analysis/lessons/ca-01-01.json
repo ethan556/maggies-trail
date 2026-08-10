@@ -1,0 +1,293 @@
+{
+  "id": "ca-01-01",
+  "slug": "finding-critical-points",
+  "title": "Finding the Suspects",
+  "courseId": "curve-analysis",
+  "chapterId": "ch1-critical-points",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In C1 you learned that **f′ = 0 is a suspect, not a conviction**. This course is where the suspects get tried.\n\nA **critical point** is any x where f′(x) = 0 **or f′ does not exist**. Those are the only places an interior extremum can hide — everywhere else the curve is visibly climbing or falling, and a climbing curve is not at a peak.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hunt the flat spot.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "slope",
+        "targetSlope": 0,
+        "targetX": 0,
+        "start": -3,
+        "prompt": "f(x) = x². Drag x to the one place where the tangent is flat — the only critical point this curve has.",
+        "successFeedback": "x = 0, where f′ = 0. And read the curve you drew underneath: f′ = 2x crosses zero there, going from negative to positive. The crossing is what makes it a genuine minimum — but that is the next lesson. For now: a flat tangent marks a place worth investigating.",
+        "lowFeedback": "The tangent is still tipping downhill (f′ < 0). Keep sliding right.",
+        "highFeedback": "The tangent is tipping uphill now (f′ > 0). You have gone past the flat spot."
+      },
+      "predict": {
+        "prompt": "On y = x², you need the tangent slope to read 0. Starting from x = -3, you'll find it…",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right of where you start"
+          },
+          {
+            "id": "left",
+            "label": "To the left of where you start"
+          },
+          {
+            "id": "both",
+            "label": "In two places — either direction works"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "On x² the slope at x is 2x — it climbs steadily left to right, so slope 0 lives at exactly one spot: x = 0. One slope, one place; that's what makes 2x a function of x."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move along a function and coordinate position, local slope, and derivative graph.",
+        "invariants": [
+          "derivative-records-local-slope",
+          "corners-break-differentiability"
+        ],
+        "misconceptions": [
+          "derivative-copies-function-height",
+          "slope-at-corner-is-zero"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-derivativeTrace",
+        "delayed": false
+      },
+      "conceptTag": "ca-critical-point"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find them algebraically.",
+      "conceptTag": "ca-critical-point",
+      "explanationVariants": [
+        "f′(x) = 3x² − 12 = 0 gives x² = 4, so x = ±2. Two critical points.",
+        "Setting the derivative to zero is how critical points are FOUND. Deciding what they ARE is a separate question."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 12x. How many critical points does it have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "3x² − 12 = 0 gives x² = 4, and a square equals 4 at TWO values: x = 2 and x = −2."
+          },
+          {
+            "value": 0,
+            "feedback": "The derivative does hit zero: 3x² = 12 at x = ±2."
+          },
+          {
+            "value": 3,
+            "feedback": "A quadratic derivative has at most two roots, and here it has exactly two."
+          }
+        ],
+        "fallbackFeedback": "f′ = 3x² − 12 = 0 → x = ±2: two critical points."
+      },
+      "variant": {
+        "gen": "critical-count"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The other kind.",
+      "conceptTag": "ca-critical-point",
+      "explanationVariants": [
+        "|x| has no derivative at 0 — the corner. That is still a critical point, and in fact it is a minimum, even though f′ never equals zero anywhere.",
+        "Defining critical points as 'f′ = 0' alone would miss every corner and cusp, and would miss the minimum of |x| entirely."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the definition include 'f′ does not exist' as well as 'f′ = 0'?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Because |x| has a minimum at its corner, where f′ does not exist at all.",
+            "correct": true,
+            "feedback": "Right — a definition that said only 'f′ = 0' would miss that minimum entirely. Extrema can hide at corners."
+          },
+          {
+            "id": "o2",
+            "label": "For completeness; it never actually happens.",
+            "correct": false,
+            "feedback": "It happens constantly — every corner, cusp and vertical tangent. And |x| puts a genuine minimum at one."
+          },
+          {
+            "id": "o3",
+            "label": "Because f′ = 0 is hard to solve.",
+            "correct": false,
+            "feedback": "Difficulty is not the reason. The reason is that some extrema sit at points where no tangent exists."
+          },
+          {
+            "id": "o4",
+            "label": "Because a vertical tangent is a maximum.",
+            "correct": false,
+            "feedback": "A vertical tangent might be a maximum, a minimum, or neither — which is exactly why it must be treated as a SUSPECT rather than ignored."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-critical-point__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the procedure has two halves, and the second is the hard one:\n\n**Find** the critical points: solve f′ = 0, and find where f′ is undefined.\n**Classify** them: peak, valley, or neither.\n\nFinding is algebra. Classifying is calculus — and it is where the rest of this chapter lives.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A critical point that is neither.",
+      "conceptTag": "ca-critical-point",
+      "explanationVariants": [
+        "f′(x) = 3x² is zero at x = 0, but it is positive on both sides — so f climbs into the point and climbs out. No extremum.",
+        "This is the x³ trap from C1, and it is the reason 'find' and 'classify' must be separate steps."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x³ has a critical point at x = 0. What is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Neither a peak nor a valley — f′ = 3x² is positive on BOTH sides, so f keeps climbing.",
+            "correct": true,
+            "feedback": "Right. Finding a critical point proves nothing on its own. This is the whole reason the classification step exists."
+          },
+          {
+            "id": "o2",
+            "label": "A minimum.",
+            "correct": false,
+            "feedback": "A minimum needs the curve to FALL into it and rise out. Here it rises in and rises out — it merely pauses."
+          },
+          {
+            "id": "o3",
+            "label": "A maximum.",
+            "correct": false,
+            "feedback": "The curve is higher just to the right of 0 than at 0, so it cannot be a maximum."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to tell.",
+            "correct": false,
+            "feedback": "You can tell, and easily: f′ = 3x² is positive either side, so f is climbing on both sides. That settles it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "critical-count",
+        "form": "oddPowerSaddle"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count carefully.",
+      "conceptTag": "ca-critical-point",
+      "hints": [
+        "Differentiate first, then factor. Do not expand needlessly.",
+        "f′(x) = 4x³ − 12x² = 4x²(x − 3).",
+        "That is zero when x² = 0 or x = 3. Count the DISTINCT solutions."
+      ],
+      "explanationVariants": [
+        "f′ = 4x²(x − 3) is zero at x = 0 and x = 3: two critical points. (The x = 0 root is doubled, which will matter enormously in the next lesson.)",
+        "A repeated root of f′ is a critical point where f′ touches zero without crossing — remember that phrase."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x⁴ − 4x³. How many DISTINCT critical points does it have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "The factor x² gives a repeated root at 0, but it is still only ONE point. Distinct solutions: x = 0 and x = 3."
+          },
+          {
+            "value": 1,
+            "feedback": "4x²(x − 3) = 0 has two distinct solutions: x = 0 and x = 3."
+          },
+          {
+            "value": 0,
+            "feedback": "The derivative certainly reaches zero — at x = 0 and x = 3."
+          }
+        ],
+        "fallbackFeedback": "f′ = 4x²(x − 3) = 0 → x = 0 (doubled) and x = 3: two distinct critical points."
+      },
+      "variant": {
+        "gen": "critical-count",
+        "form": "quartic"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Find, then classify.",
+      "takeaways": [
+        "A critical point is where f′ = 0 OR f′ does not exist. Both kinds can hide an extremum.",
+        "Finding them is algebra; classifying them is calculus, and they are separate steps.",
+        "x³ has a critical point that is neither a peak nor a valley. The suspect was innocent."
+      ],
+      "teaser": "Next: the trial. What f′ does on EITHER SIDE decides the verdict."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-critical-point",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Differentiate. Set it to zero. Solve. Then also ask: is there anywhere f′ fails to exist — a corner, a cusp, a vertical tangent? Every such x is a suspect, and no other x is.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Solve f′ = 0.",
+        "conceptTag": "ca-critical-point",
+        "explanationVariants": [
+          "f′ = 2x − 6 = 0 gives x = 3.",
+          "One linear derivative, one critical point."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x² − 6x + 1. Find its critical point.",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That is the coefficient. Set f′ = 2x − 6 to zero: x = 3."
+            },
+            {
+              "value": 1,
+              "feedback": "That is the constant term, which differentiates away entirely."
+            }
+          ],
+          "fallbackFeedback": "f′ = 2x − 6 = 0 → x = 3."
+        }
+      }
+    }
+  ]
+}

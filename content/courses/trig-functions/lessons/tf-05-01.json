@@ -1,0 +1,266 @@
+{
+  "id": "tf-05-01",
+  "slug": "the-ferris-wheel",
+  "title": "The Ferris Wheel",
+  "courseId": "trig-functions",
+  "chapterId": "ch5-modeling-identity",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Circular motion IS a wave — watch a rider's HEIGHT. A wheel of radius 20 ft with its axle 25 ft up, boarding at the bottom, gives **h(t) = 25 − 20 cos t**: axle height as the midline, radius as the amplitude, and −cos because the ride STARTS at its lowest point.",
+      "figure": "ferris-wheel-wave"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Boarding height.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "trace": "cos",
+        "targetAngle": 0,
+        "angleStart": 0,
+        "angleStep": 15,
+        "dials": [
+          {
+            "param": "amplitude",
+            "min": 5,
+            "max": 25,
+            "step": 5,
+            "start": 5,
+            "target": 20,
+            "feedback": "The wheel's radius is wrong. The amplitude is how far the rider swings above and below the centre."
+          },
+          {
+            "param": "midline",
+            "min": 5,
+            "max": 30,
+            "step": 5,
+            "start": 5,
+            "target": 25,
+            "feedback": "The wheel is at the wrong height. The midline is the centre of the wheel above the ground."
+          }
+        ],
+        "prompt": "Build the Ferris wheel h(t) = 25 − 20 cos t with the dials, then read the rider's lowest point.",
+        "successFeedback": "Minimum 5 feet — centre 25 minus radius 20. The cosine starts at its own maximum, so the minus sign puts the rider at the BOTTOM at t = 0, which is where a Ferris wheel loads.",
+        "lowFeedback": "The wheel is not yet 20 feet of swing about a 25-foot centre.",
+        "highFeedback": "The wheel has passed 20 feet of swing about a 25-foot centre."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Top of the ride.",
+      "conceptTag": "tf-model",
+      "explanationVariants": [
+        "max = midline + amplitude = 25 + 20 = 45 ft.",
+        "At the top, cos t = −1 and the −20 flips to +20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same wheel. What is the rider's MAXIMUM height, in feet?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the RADIUS — the amplitude of the swing, not a height. Top = 25 + 20 = 45."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is the axle — the center of the swing. The top sits one radius above: 45."
+          }
+        ],
+        "fallbackFeedback": "25 + 20 = 45 ft."
+      },
+      "variant": {
+        "gen": "trig-model"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Every part of the formula is a part of the wheel. **Midline = axle height** (the center of the motion). **Amplitude = radius** (how far the rider swings from it). And the entrance: boarding at the BOTTOM means starting at the minimum — exactly what −cos does (it opens at −1).",
+      "figure": "tf-midline-wheel"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Half a turn later.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h(t) = 25 − 20 cos t, find the height at t = π (half a rotation), in feet.",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 ft is t = 0, the boarding point — half a turn carries the rider all the way to the TOP: 25 − 20(−1) = 45."
+          },
+          {
+            "value": 25,
+            "feedback": "25 ft is the QUARTER-turn height (cos = 0, level with the axle). At half a turn cos π = −1: 45 ft."
+          }
+        ],
+        "fallbackFeedback": "25 − 20 cos π = 25 + 20 = 45."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why minus cosine?",
+      "conceptTag": "tf-model",
+      "explanationVariants": [
+        "−cos opens at its MINIMUM (−cos 0 = −1) — matching a rider who boards at the wheel's bottom.",
+        "Plain sine opens at the midline; plain cosine opens at the top. The entrance picks the function."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why model the ride with −20 cos t instead of +20 sin t?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The rider STARTS at the bottom — and −cos starts at its minimum",
+            "correct": true,
+            "feedback": "Right — the function's opening pose must match the physical starting position."
+          },
+          {
+            "id": "o2",
+            "label": "Sine is wrong because heights can't use sine",
+            "correct": false,
+            "feedback": "Sine works fine for waves — but +20 sin t would open at the MIDLINE (25 ft), and riders board at 5 ft."
+          },
+          {
+            "id": "o3",
+            "label": "The minus makes the heights negative",
+            "correct": false,
+            "feedback": "The heights stay between 5 and 45 — the minus only flips WHERE the wave starts, not its range."
+          },
+          {
+            "id": "o4",
+            "label": "Cosine always needs a minus sign",
+            "correct": false,
+            "feedback": "Only bottom-start motion does — a rider boarding at the TOP would take +cos."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-model__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Any oscillating data fits the same anatomy from last chapter: **midline = (max + min)/2, amplitude = (max − min)/2**. A tide running between 8 ft and 2 ft centers on 5 ft and swings 3 — the wheel's logic, without the wheel.",
+      "figure": "tf-oscillating-data"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Fit the tide.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tide oscillates between 8 ft (high) and 2 ft (low). What is the midline of its model, in feet?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the AMPLITUDE — the swing (8 − 2)/2. The midline averages: (8 + 2)/2 = 5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the full high-to-low span — the center is the average of the extremes: 5."
+          }
+        ],
+        "fallbackFeedback": "(8 + 2)/2 = 5 ft."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a strange wheel.",
+      "conceptTag": "tf-model",
+      "explanationVariants": [
+        "min = midline − amplitude = 30 − 26 = 4 ft — the boarding platform is the wave's LOWEST point.",
+        "In h = 30 − 26 cos t: axle 30, radius 26."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ride follows h(t) = 30 − 26 cos t. How high is the boarding platform, in feet?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 is the AXLE — the midline of the swing. Boarding happens a full radius below: 30 − 26 = 4."
+          },
+          {
+            "value": 56,
+            "feedback": "56 is the TOP (30 + 26) — riders board at the bottom of the wheel: 4 ft."
+          }
+        ],
+        "fallbackFeedback": "30 − 26 = 4 ft."
+      },
+      "hints": [
+        "Read the formula's anatomy: midline 30, amplitude 26.",
+        "−cos opens at the minimum — which is the boarding height.",
+        "min = 30 − 26."
+      ],
+      "variant": {
+        "gen": "trig-model",
+        "form": "platform"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The wheel in the wave.",
+      "takeaways": [
+        "h(t) = (axle) − (radius) cos t models a bottom-boarding wheel.",
+        "Midline = axle height, amplitude = radius — formula parts ARE wheel parts.",
+        "Any max/min data fits: average for the midline, half-span for the amplitude."
+      ],
+      "teaser": "Next: tides, temperatures, and setting the wave's SPEED from a real period."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-model",
+      "concept": {
+        "id": "rem-tf0501-c",
+        "kind": "concept",
+        "body": "A smaller wheel, same anatomy. Radius 10, axle 12 ft up: h(t) = 12 − 10 cos t. The lowest point is one radius below the axle — 12 − 10 = 2 ft. Midline from the axle, swing from the radius: the two reads solve every wheel."
+      },
+      "check": {
+        "id": "rem-tf0501-k",
+        "kind": "check",
+        "body": "One radius below.",
+        "conceptTag": "tf-model",
+        "explanationVariants": [
+          "min = 12 − 10 = 2 ft.",
+          "The rider's range is 2 to 22 — centered on the 12 ft axle."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A wheel of radius 10 ft has its axle 12 ft up. What is the rider's minimum height, in feet?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "12 is the axle — the CENTER of the swing. The bottom is a radius below it: 2 ft."
+            },
+            {
+              "value": 22,
+              "feedback": "22 is the TOP (12 + 10) — the minimum subtracts the radius: 2 ft."
+            }
+          ],
+          "fallbackFeedback": "12 − 10 = 2."
+        }
+      }
+    }
+  ]
+}

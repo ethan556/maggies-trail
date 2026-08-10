@@ -1,0 +1,283 @@
+{
+ "id": "dc-02-03",
+ "slug": "choosing-the-relation",
+ "title": "Choosing the Relation",
+ "courseId": "derivatives-in-context",
+ "chapterId": "ch2-related-rates",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The calculus in a related-rates problem is three lines. The **hard part is finding the equation**, and nobody hands it to you.\n\nAsk two questions:\n\n**Which quantities are changing?** (label them)\n**What ties them together?** (geometry, or a given formula)\n\nAnd resist the urge to substitute numbers into the picture — a labelled diagram of *variables* is what you want.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Pick the relation.",
+   "conceptTag": "dc-choosing-relation",
+   "explanationVariants": [
+    "A shadow problem is about SIMILAR TRIANGLES — the lamp, the person and their shadow form two nested right triangles with the same shape.",
+    "Pythagoras relates two legs of one right triangle. Similar triangles relate two different triangles, which is what a shadow gives you."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A person walks away from a lamppost; their shadow lengthens. Which relation should you use?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Similar triangles — the lamp/person/shadow makes two triangles of the same shape.",
+      "correct": true,
+      "feedback": "Right. The person's height over their shadow equals the lamp's height over the whole base — that proportion IS the relation."
+     },
+     {
+      "id": "o2",
+      "label": "Pythagoras",
+      "correct": false,
+      "feedback": "There is no hypotenuse in question here. The link between the distances is a PROPORTION, not a right-angle relation."
+     },
+     {
+      "id": "o3",
+      "label": "The area of a triangle",
+      "correct": false,
+      "feedback": "Nothing here has an area, and none is asked for. The quantities are LENGTHS, and they are tied together by similarity of the two triangles."
+     },
+     {
+      "id": "o4",
+      "label": "The volume of a cone",
+      "correct": false,
+      "feedback": "Nothing here is three-dimensional. That relation belongs to the filling-tank problems."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-choosing-relation__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which quantity is constant?",
+   "conceptTag": "dc-choosing-relation",
+   "explanationVariants": [
+    "The ladder's LENGTH never changes, so it is the constant. Both x and y vary, and both pay a d/dt.",
+    "Getting this wrong is fatal: differentiating a variable as if it were constant sends its rate to zero."
+   ],
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "For the sliding ladder, which quantities VARY with time?",
+    "buckets": [
+     {
+      "id": "var",
+      "label": "Varies with time",
+      "icon": "⏱️"
+     },
+     {
+      "id": "con",
+      "label": "Constant",
+      "icon": "🔒"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "x, the foot's distance from the wall",
+      "bucketId": "var",
+      "feedback": "It is being dragged outward at 2 ft/s — that IS its rate of change."
+     },
+     {
+      "id": "s2",
+      "label": "y, the height on the wall",
+      "bucketId": "var",
+      "feedback": "It falls as x grows. Finding its rate is the whole question."
+     },
+     {
+      "id": "s3",
+      "label": "The ladder's length, 10 ft",
+      "bucketId": "con",
+      "feedback": "A ladder does not stretch. That is why the right-hand side of the differentiated equation is 0."
+     },
+     {
+      "id": "s4",
+      "label": "The angle with the ground",
+      "bucketId": "var",
+      "feedback": "It certainly changes — the ladder flattens as it slides. It is simply not the variable this problem asks about."
+     }
+    ],
+    "missFeedback": "Ask of each quantity: is it different a second later? If yes, it varies and owes a d/dt.",
+    "successFeedback": "Only the ladder's length is fixed. Everything else owes a d/dt — and that is exactly why the equation differentiates to zero."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-choosing-relation__dragBucket"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "A relation you already own.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "The cone of water, and where its relation comes from.",
+    "panels": [
+     {
+      "title": "Two variables, one shape",
+      "body": "Water fills a cone. The volume depends on BOTH the radius of the surface and the depth: V = (1/3)πr²h. Two unknowns and one equation is not enough."
+     },
+     {
+      "title": "Similar triangles close the gap",
+      "body": "The cone's shape is fixed, so r and h are locked in proportion — say r = h/2. Substituting gives V in terms of h ALONE: V = (1/12)πh³."
+     },
+     {
+      "title": "Now differentiate",
+      "body": "dV/dt = (1/4)πh²·(dh/dt). One equation, one unknown rate. The similar triangles were not a trick — they were the step that made the problem solvable at all."
+     }
+    ],
+    "continueFeedback": "Keep going — the second panel is the move that unlocks it.",
+    "successFeedback": "Two variables is one too many. The geometry of the shape supplies the second equation that eliminates one."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Two rules that will save you every time:\n\n**Reduce to one variable BEFORE differentiating.** If your relation has two changing quantities and you only want one rate, use the geometry to eliminate the other first.\n\n**Never put numbers on the diagram.** Label lengths x and h, not 6 and 8. The numbers belong in the last line, and nowhere else.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Reduce first.",
+   "conceptTag": "dc-choosing-relation",
+   "explanationVariants": [
+    "With r = h/2, V = (1/3)π(h/2)²h = (1/3)π(h²/4)h = (1/12)πh³ — one variable, ready to differentiate.",
+    "Differentiating V = (1/3)πr²h directly would leave both dr/dt and dh/dt in the answer, and you would be stuck."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "V = (1/3)πr²h, and the cone's shape forces r = h/2. What should you differentiate?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "V = (1/12)πh³ — substitute r = h/2 FIRST, so only h remains.",
+      "correct": true,
+      "feedback": "Right. Differentiating the two-variable version leaves both dr/dt and dh/dt in your answer, and you cannot finish."
+     },
+     {
+      "id": "o2",
+      "label": "V = (1/3)πr²h, keeping both variables.",
+      "correct": false,
+      "feedback": "Then the product rule gives you an equation with TWO unknown rates. Eliminate r first, using the geometry."
+     },
+     {
+      "id": "o3",
+      "label": "r = h/2",
+      "correct": false,
+      "feedback": "That is the relation between the variables, not the quantity whose rate you want. Use it to SUBSTITUTE."
+     },
+     {
+      "id": "o4",
+      "label": "V = πr²h",
+      "correct": false,
+      "feedback": "That is the volume of a CYLINDER. A cone is one third of it — and the relation must be right before any calculus starts."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-choosing-relation__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Set one up from scratch.",
+   "conceptTag": "dc-choosing-relation",
+   "hints": [
+    "Two cars, one going north and one going east from the same point — the distance between them is the hypotenuse.",
+    "The relation is z² = x² + y², where x and y are the two distances from the junction.",
+    "At the instant asked: x = 30, y = 40, so z = 50. Then 2z(dz/dt) = 2x(dx/dt) + 2y(dy/dt)."
+   ],
+   "explanationVariants": [
+    "z = 50, and 50(dz/dt) = 30(30) + 40(40) = 900 + 1600 = 2500, so dz/dt = 50 mph.",
+    "The relation was Pythagoras again — and the whole problem was choosing it and refusing to substitute early."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two cars leave a junction, one north at 40 mph and one east at 30 mph. How fast is the distance between them growing when they are 30 and 40 miles out? (mph)",
+    "answer": 50,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 70,
+      "feedback": "That is 30 + 40 — but they are travelling at right angles, so the distance grows along the HYPOTENUSE, not the sum. Use z² = x² + y²."
+     },
+     {
+      "value": 10,
+      "feedback": "That is 40 − 30. The distance is the hypotenuse, and its rate is (30(30) + 40(40))/50 = 50."
+     },
+     {
+      "value": 35,
+      "feedback": "That is the average of the two speeds. The correct relation gives dz/dt = 2500/50 = 50 mph."
+     }
+    ],
+    "fallbackFeedback": "z = 50, and 50(dz/dt) = 30(30) + 40(40) = 2500 → dz/dt = 50 mph."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-choosing-relation__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Finding the equation IS the problem.",
+   "takeaways": [
+    "Ask what varies, and what ties them together. Geometry supplies the relation; calculus only differentiates it.",
+    "Reduce to one variable BEFORE differentiating, using the shape's fixed proportions.",
+    "Label the diagram with variables, never numbers. The numbers belong in the final line."
+   ],
+   "teaser": "Still to come in this course: linearisation, differentials, and L'Hôpital's rule."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "dc-choosing-relation",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Before any calculus: what is changing, and what equation ties those things together? Right triangle → Pythagoras. Nested triangles → similar triangles. A solid filling up → its volume formula. Find the equation first; differentiate second.",
+    "figure": "dr-chain-gears"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Which relation?",
+    "conceptTag": "dc-choosing-relation",
+    "explanationVariants": [
+     "Two sides of a right triangle with a fixed hypotenuse: that is Pythagoras.",
+     "The fixed hypotenuse is what makes the right-hand side a constant."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A ladder slides down a wall. Which relation ties its two ends together?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x² + y² = (ladder length)²",
+       "correct": true,
+       "feedback": "Right — Pythagoras, with a constant on the right because the ladder cannot stretch."
+      },
+      {
+       "id": "o2",
+       "label": "x + y = ladder length",
+       "correct": false,
+       "feedback": "The ladder is the HYPOTENUSE, not the sum of the legs. Try it with 6, 8 and 10: 6 + 8 is not 10."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

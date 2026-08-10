@@ -1,0 +1,379 @@
+{
+ "id": "ep-04-01",
+ "slug": "factoring-with-the-gcf",
+ "title": "Factoring with the GCF",
+ "courseId": "exponents-polynomials",
+ "chapterId": "ch4-factoring",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "distribute-area",
+   "body": "Factoring reverses distribution. The **greatest common factor (GCF)** is the largest monomial dividing every term: the GCD of the coefficients times the lowest power of x present. Pull it out front, and check by distributing back."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The number part.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the GCF coefficient of (6x^2 + 9x)?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "That's just the first coefficient. The GCF of 6 and 9 is 3."
+     },
+     {
+      "value": 9,
+      "feedback": "That's the second coefficient. The greatest common divisor of 6 and 9 is 3."
+     }
+    ],
+    "fallbackFeedback": "GCD(6, 9) = 3."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The variable part.",
+   "conceptTag": "factor-gcf",
+   "explanationVariants": [
+    "The lowest power of x is x^2, so the GCF's exponent is 2.",
+    "Take the smallest exponent present: x^2, so 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The GCF of (8x^3 + 12x^2) is 4x^?. What is the exponent?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "Take the lowest power, not the highest: x^2 divides both, so 2."
+     },
+     {
+      "value": 1,
+      "feedback": "Both terms have at least x^2, so the GCF is x^2, exponent 2."
+     }
+    ],
+    "fallbackFeedback": "The lowest power present is x^2, so the exponent is 2."
+   },
+   "variant": {
+    "gen": "a1-polynomials",
+    "form": "factor-gcf__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Worked: 6x² + 9x. GCD(6, 9) = 3 and the lowest power is x¹, so GCF = 3x. Divide each term: 6x²/3x = 2x, 9x/3x = 3. So 6x² + 9x = **3x(2x + 3)**. Distribute back to confirm.",
+   "figure": "ep-gcf"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Pull it out.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Factor (6x^2 + 9x).",
+    "options": [
+     {
+      "id": "a",
+      "label": "3x(2x + 3)",
+      "correct": true,
+      "feedback": "Yes — 3x·2x = 6x² and 3x·3 = 9x."
+     },
+     {
+      "id": "b",
+      "label": "3(2x^2 + 3x)",
+      "feedback": "The x is common too: the full GCF is 3x, giving 3x(2x + 3)."
+     },
+     {
+      "id": "c",
+      "label": "3x(2x + 9)",
+      "feedback": "9x ÷ 3x = 3, not 9: 3x(2x + 3)."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Take the **full** GCF, variable included. For 8x³ + 12x²: GCD(8, 12) = 4 and the lowest power is x², so GCF = 4x². Then 8x³ + 12x² = 4x²(2x + 3).",
+   "figure": "ep-full-gcf"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Another coefficient.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the GCF coefficient of (10x^2 - 15x)?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "That's just the first coefficient. GCD(10, 15) = 5."
+     },
+     {
+      "value": 15,
+      "feedback": "That's the second coefficient. The GCD of 10 and 15 is 5."
+     }
+    ],
+    "fallbackFeedback": "GCD(10, 15) = 5."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Factor the cubic.",
+   "conceptTag": "factor-gcf",
+   "explanationVariants": [
+    "GCF = 4x²; 8x³/4x² = 2x and 12x²/4x² = 3, so 4x²(2x + 3).",
+    "Pull out 4x²: 4x²(2x + 3)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Factor (8x^3 + 12x^2).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "4x^2"
+     },
+     {
+      "id": "t1",
+      "label": "4x"
+     },
+     {
+      "id": "t2",
+      "label": "2x^2"
+     },
+     {
+      "id": "t3",
+      "label": "(2x + 3)"
+     },
+     {
+      "id": "t4",
+      "label": "(2x^2 + 3x)"
+     },
+     {
+      "id": "t5",
+      "label": "(4x + 6)"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t3"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t1",
+       "t4"
+      ],
+      "feedback": "The lowest power is x², so pull out 4x²: 4x²(2x + 3)."
+     },
+     {
+      "sequence": [
+       "t2",
+       "t5"
+      ],
+      "feedback": "That leaves a common 2 inside. The full GCF is 4x²: 4x²(2x + 3)."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Pull the GREATEST common factor — 4x² — so nothing shared stays inside.",
+    "successFeedback": "Yes — 4x²·2x = 8x³ and 4x²·3 = 12x²."
+   },
+   "variant": {
+    "gen": "a1-polynomials",
+    "form": "factor-gcf__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Watch the sign.",
+   "conceptTag": "factor-gcf",
+   "explanationVariants": [
+    "GCF = 5x; 10x²/5x = 2x and −15x/5x = −3, so 5x(2x − 3).",
+    "Pull out 5x, keeping the minus: 5x(2x − 3)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Factor (10x^2 - 15x).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "5x"
+     },
+     {
+      "id": "t1",
+      "label": "5"
+     },
+     {
+      "id": "t2",
+      "label": "(2x - 3)"
+     },
+     {
+      "id": "t3",
+      "label": "(2x + 3)"
+     },
+     {
+      "id": "t4",
+      "label": "(2x^2 - 3x)"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t2"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t3"
+      ],
+      "feedback": "The second term is −15x, so the sign inside is minus: 5x(2x − 3)."
+     },
+     {
+      "sequence": [
+       "t1",
+       "t4"
+      ],
+      "feedback": "The x is common too: 5x(2x − 3)."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The GCF of 10x² and 15x is 5x — and the sign inside follows the original.",
+    "successFeedback": "Yes — 5x·2x = 10x² and 5x·(−3) = −15x."
+   },
+   "variant": {
+    "gen": "a1-polynomials",
+    "form": "factor-gcf__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Factor completely.",
+   "conceptTag": "factor-gcf",
+   "explanationVariants": [
+    "GCD(12, 18) = 6 and lowest power x², so GCF = 6x²; 6x²(2x − 3).",
+    "Pull out 6x²: 12x³/6x² = 2x and −18x²/6x² = −3, so 6x²(2x − 3)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Factor (12x^3 - 18x^2).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "6x^2"
+     },
+     {
+      "id": "t1",
+      "label": "6x"
+     },
+     {
+      "id": "t2",
+      "label": "(2x - 3)"
+     },
+     {
+      "id": "t3",
+      "label": "(2x^2 - 3x)"
+     },
+     {
+      "id": "t4",
+      "label": "(2x + 3)"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t2"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t1",
+       "t3"
+      ],
+      "feedback": "The lowest power is x², so pull out 6x²: 6x²(2x − 3)."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t4"
+      ],
+      "feedback": "The second term is −18x², so it's 6x²(2x − 3)."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "GCF 6x² leaves 2x − 3 inside — check the sign against the original.",
+    "successFeedback": "Yes — 6x²·2x = 12x³ and 6x²·(−3) = −18x²."
+   },
+   "hints": [
+    "Find GCD(12, 18) and the lowest power of x.",
+    "GCD is 6 and the lowest power is x², so GCF = 6x².",
+    "12x³/6x² = 2x, −18x²/6x² = −3: 6x²(2x − 3)."
+   ],
+   "variant": {
+    "gen": "a1-polynomials",
+    "form": "factor-gcf__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The GCF is the GCD of coefficients times the lowest power of the variable.",
+   "takeaways": [
+    "Pull out the largest monomial dividing every term.",
+    "Include the variable at its lowest power.",
+    "Distribute back to check, keeping every sign."
+   ],
+   "teaser": "next: factoring trinomials into two binomials."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "factor-gcf",
+   "concept": {
+    "id": "rem-fg-c",
+    "kind": "concept",
+    "body": "The GCF is GCD of coefficients times the lowest power of x. For 6x² + 9x: GCD(6,9)=3, lowest power x, so GCF = 3x, giving 3x(2x + 3)."
+   },
+   "check": {
+    "id": "rem-fg-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "factor-gcf",
+    "explanationVariants": [
+     "GCD(6, 9) = 3.",
+     "The greatest common divisor of 6 and 9 is 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "What is the GCF coefficient of (6x^2 + 9x)?",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 6,
+       "feedback": "That's the first coefficient. GCD(6, 9) = 3."
+      },
+      {
+       "value": 9,
+       "feedback": "That's the second coefficient. GCD(6, 9) = 3."
+      }
+     ],
+     "fallbackFeedback": "GCD(6, 9) = 3."
+    }
+   }
+  }
+ ]
+}

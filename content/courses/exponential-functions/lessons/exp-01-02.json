@@ -1,0 +1,439 @@
+{
+  "id": "exp-01-02",
+  "slug": "growth-vs-decay",
+  "title": "Growth vs Decay",
+  "courseId": "exponential-functions",
+  "chapterId": "ch1-growth-and-decay",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-decay",
+      "body": "The base **b** decides the shape. When **b > 1**, the function is exponential **growth** — the curve rises. When **0 < b < 1**, it is exponential **decay** — the curve falls toward zero. That base is called the growth (or decay) **factor**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A base below 1 turns growth into decay.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 0.5,
+        "startBase": 2,
+        "showMirror": false,
+        "prompt": "Slide the base until b² lands on the ring at 0.25. Watch the curve flip from rising to falling as you cross 1.",
+        "successFeedback": "Base 0.5: halving twice gives a quarter. Crossing b = 1 is what flips growth into decay — above 1 the curve rises, below 1 it falls, and at exactly 1 it is flat forever.",
+        "lowFeedback": "b² is under 0.25, so the base is smaller than 0.5. Nudge it up.",
+        "highFeedback": "b² is above 0.25 — the base is too big. Any base above 1 will grow instead of decay."
+      },
+      "predict": {
+        "prompt": "You'll slide the base b DOWN past 1. What happens to the curve as you cross?",
+        "options": [
+          {
+            "id": "flip",
+            "label": "It flips from rising to falling"
+          },
+          {
+            "id": "steeper",
+            "label": "It just rises more steeply"
+          },
+          {
+            "id": "nothing",
+            "label": "Nothing special at 1"
+          }
+        ],
+        "outcomeId": "flip",
+        "reveal": "A base above 1 multiplies numbers up; a base below 1 multiplies them down. b = 1 is the hinge — cross it and growth turns into decay, with a flat line exactly at the hinge."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Vary the exponential base and connect the growth-decay boundary across graph, table, rule, and language.",
+        "invariants": [
+          "constant-multiplicative-factor",
+          "base-one-is-growth-decay-boundary"
+        ],
+        "misconceptions": [
+          "additive-change",
+          "all-positive-bases-grow"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "exponential-growth-decay-classification",
+        "delayed": true,
+        "counterfactualPrompt": "Set the base exactly to 1, then just below and just above 1. What changes, and what multiplicative structure remains?",
+        "explanation": {
+          "prompt": "Why does crossing base 1 reverse the curve from growth to decay?",
+          "options": [
+            {
+              "id": "factor",
+              "label": "Each one-unit input step multiplies by the base, so factors above 1 enlarge and factors between 0 and 1 shrink.",
+              "correct": true,
+              "feedback": "Exactly — the constant factor controls the direction of change."
+            },
+            {
+              "id": "sign",
+              "label": "The exponent becomes negative whenever the base is below 1.",
+              "correct": false,
+              "feedback": "The exponent can stay positive; the multiplicative factor itself causes decay."
+            }
+          ]
+        }
+      },
+      "conceptTag": "exp-growth-decay"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The other direction.",
+      "conceptTag": "exp-growth-decay",
+      "explanationVariants": [
+        "The base 3 is greater than 1, so the values grow.",
+        "b = 3 > 1 means exponential growth."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is f(x) = 4 * 3^x growth or decay?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Growth",
+            "correct": true,
+            "feedback": "Yes — the base 3 is greater than 1, so the outputs grow each step."
+          },
+          {
+            "id": "b",
+            "label": "Decay",
+            "feedback": "Decay needs a base below 1. Here b = 3 > 1, so it grows."
+          },
+          {
+            "id": "c",
+            "label": "Neither",
+            "feedback": "b = 3 > 1 is exponential growth."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-growth-decay__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A decay function shrinks by a constant factor. For f(x) = 16 · (1/2)ˣ: 16, 8, 4, 2, 1 — halving each step. The base 1/2 is the decay factor; the outputs get smaller but always stay positive.",
+      "figure": "exp-decay-16"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Evaluate a decay.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 16 * (1/2)^x, what is f(3)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's f(1) = 16 · ½. Keep halving: 16 → 8 → 4 → 2, so f(3) = 2."
+          },
+          {
+            "value": 4,
+            "feedback": "That's f(2). One more halving gives f(3) = 2."
+          }
+        ],
+        "fallbackFeedback": "f(3) = 16 · (1/2)³ = 16/8 = 2."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Growth and decay are mirror behaviors: growth multiplies up by a base above 1, decay multiplies down by a base below 1. In both, the **same factor** applies at every step — that constant multiplier is the signature of exponential change.",
+      "figure": "exp-mirror"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A growth value.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2 * 5^x, what is f(2)?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "5² = 25, not 10: f(2) = 2 · 25 = 50."
+          },
+          {
+            "value": 10,
+            "feedback": "That's f(1) = 2 · 5. For f(2), use 5² = 25: 2 · 25 = 50."
+          }
+        ],
+        "fallbackFeedback": "f(2) = 2 · 5² = 2 · 25 = 50."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which base decays?",
+      "conceptTag": "exp-growth-decay",
+      "explanationVariants": [
+        "Only a base between 0 and 1 gives decay — here, 1/3.",
+        "b = 1/3 < 1 is the decay factor."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which base b gives exponential decay?",
+        "options": [
+          {
+            "id": "a",
+            "label": "b = 1/3",
+            "correct": true,
+            "feedback": "Yes — 1/3 is between 0 and 1, so the values shrink each step."
+          },
+          {
+            "id": "b",
+            "label": "b = 3",
+            "feedback": "3 is greater than 1, so that's growth, not decay."
+          },
+          {
+            "id": "c",
+            "label": "b = 2",
+            "feedback": "2 is greater than 1, so that's growth. Decay needs b < 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-growth-decay__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Decay with base 1/3.",
+      "conceptTag": "exp-growth-decay",
+      "explanationVariants": [
+        "(1/3)² = 1/9, then 81 · 1/9 = 9.",
+        "81 → 27 → 9, so f(2) = 9."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For f(x) = 81 * (1/3)^x, what is f(2)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount",
+            "value": 81
+          },
+          {
+            "id": "h",
+            "label": "the decay factor 1/3 (one factor per step)",
+            "value": 0.3333333333333333
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "a"
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "h"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 27,
+            "feedback": "That's f(1) = 81 · ⅓. One more step: f(2) = 9."
+          },
+          {
+            "value": 3,
+            "feedback": "That's f(3). f(2) = 81 · (1/9) = 9."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:h",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(2) = 81 · (1/3)² = 81/9 = 9.",
+        "successFeedback": "f(2) = 81 · (1/3)² = 81/9 = 9."
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-growth-decay__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Decay, four steps out.",
+      "conceptTag": "exp-growth-decay",
+      "explanationVariants": [
+        "(1/2)⁴ = 1/16, then 32 · 1/16 = 2.",
+        "32 → 16 → 8 → 4 → 2, so f(4) = 2."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For f(x) = 32 * (1/2)^x, what is f(4)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount",
+            "value": 32
+          },
+          {
+            "id": "h",
+            "label": "the decay factor 1/2 (one factor per step)",
+            "value": 0.5
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "a"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "h"
+                }
+              },
+              "right": {
+                "op": "const",
+                "id": "h"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "h"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 4,
+            "feedback": "That's f(3). One more halving gives f(4) = 2."
+          },
+          {
+            "value": 8,
+            "feedback": "That's f(2). Keep going: f(3) = 4, f(4) = 2."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:h",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(4) = 32 · (1/2)⁴ = 32/16 = 2.",
+        "successFeedback": "f(4) = 32 · (1/2)⁴ = 32/16 = 2."
+      },
+      "hints": [
+        "Halve repeatedly from 32.",
+        "32 → 16 → 8 → 4 → 2.",
+        "That's four halvings, so f(4) = 2."
+      ],
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-growth-decay__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The base tells you which way an exponential function moves.",
+      "takeaways": [
+        "b > 1 → growth (rising); 0 < b < 1 → decay (falling).",
+        "Decay shrinks by a constant factor but stays positive.",
+        "The base is the growth or decay factor."
+      ],
+      "teaser": "next: finding the constant ratio from a table."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-growth-decay",
+      "concept": {
+        "id": "rem-egd-c",
+        "kind": "concept",
+        "body": "If the base b > 1, the function grows; if 0 < b < 1, it decays. For f(x) = 16 · (1/2)ˣ (decay): 16, 8, 4, 2 — halving each step. f(3) = 2."
+      },
+      "check": {
+        "id": "rem-egd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-growth-decay",
+        "explanationVariants": [
+          "16 → 8 → 4 → 2, so f(3) = 2.",
+          "f(3) = 16 · (1/2)³ = 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = 16 * (1/2)^x, what is f(3)?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "That's f(1); keep halving to f(3) = 2."
+            },
+            {
+              "value": 4,
+              "feedback": "That's f(2); one more halving gives 2."
+            }
+          ],
+          "fallbackFeedback": "f(3) = 16/8 = 2."
+        }
+      }
+    }
+  ]
+}

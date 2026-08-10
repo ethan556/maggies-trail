@@ -1,0 +1,377 @@
+{
+  "id": "dd-04-02",
+  "slug": "quartiles-and-the-iqr",
+  "title": "Quartiles & the IQR",
+  "courseId": "data-distributions",
+  "chapterId": "ch4-range-iqr",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "quartile-fence",
+      "body": "The range trusts the wild endpoints. The **interquartile range (IQR)** measures the calm **middle half** instead. Sort the data and split it at the median into a lower and an upper half. **Q1** is the median of the lower half, **Q3** the median of the upper half, and **IQR = Q3 − Q1**. For 2, 4, 6, 8, 10, 12, 14, 16: halves split at the median 9, Q1 = 5, Q3 = 13, IQR = **8**."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "The five-number summary splits the data into four equal parts. Slide each handle to build the box: the box holds the middle half, from Q1 to Q3, split at the median.",
+      "widget": {
+        "type": "boxPlot",
+        "prompt": "Set the summary: min 3, Q1 7, median 10, Q3 14, max 18.",
+        "axisMin": 0,
+        "axisMax": 20,
+        "targetMin": 3,
+        "targetQ1": 7,
+        "targetMed": 10,
+        "targetQ3": 14,
+        "targetMax": 18,
+        "startMin": 0,
+        "startQ1": 5,
+        "startMed": 10,
+        "startQ3": 15,
+        "startMax": 20,
+        "successFeedback": "That's the summary — the box spans Q1 to Q3 (the middle half, the IQR), cut at the median, whiskers to the extremes.",
+        "orderFeedback": "Keep them ordered: min ≤ Q1 ≤ median ≤ Q3 ≤ max. One handle is out of sequence.",
+        "valueFeedback": "In order, but not the target yet. Match each handle to its value."
+      },
+      "predict": {
+        "prompt": "In the finished box plot, about what share of the data will sit INSIDE the box (from Q1 to Q3)?",
+        "options": [
+          {
+            "id": "half",
+            "label": "About half of it"
+          },
+          {
+            "id": "all",
+            "label": "All of it"
+          },
+          {
+            "id": "quarter",
+            "label": "About a quarter"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "The box spans the middle two quarters of the data — about half lives inside it, with a quarter out along each whisker."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Construct a five-number summary and coordinate ordered data with center and spread.",
+        "invariants": [
+          "quartiles-partition-ordered-data",
+          "box-spans-middle-half"
+        ],
+        "misconceptions": [
+          "box-height-is-frequency",
+          "range-equals-iqr"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-boxPlot-new-context",
+        "delayed": false
+      },
+      "conceptTag": "iqr"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Split, then find the fences.",
+      "conceptTag": "iqr",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 2, 4, 6, 8, 10, 12, 14, 16 the lower half is 2, 4, 6, 8. What is Q1, the MEDIAN of that lower half?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is one of the lower half's two central values — an even count means averaging the pair: (4 + 6) ÷ 2 = 5."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the lower half's MINIMUM, not its median. Four values → average the middle pair: (4 + 6) ÷ 2 = 5."
+          }
+        ],
+        "fallbackFeedback": "The lower half 2, 4, 6, 8 has middle pair 4 and 6, so Q1 = (4 + 6) ÷ 2 = 5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the whole IQR.",
+      "conceptTag": "iqr",
+      "explanationVariants": [
+        "Upper half 10, 12, 14, 16 has median Q3 = (12 + 14) ÷ 2 = 13. With Q1 = 5, the IQR is 13 − 5 = 8 — the width of the middle half.",
+        "Fences at 5 and 13 trap the central four values; the distance between the fences, 8, is the IQR."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same data — 2, 4, 6, 8, 10, 12, 14, 16 — with Q1 = 5 and Q3 = 13. What is the IQR?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 is Q3 PLUS Q1 (13 + 5). The IQR is the distance between the fences: 13 − 5 = 8."
+          },
+          {
+            "value": 14,
+            "feedback": "14 is the full RANGE (16 − 2) — endpoints included. The IQR drops the outer quarters: Q3 − Q1 = 13 − 5 = 8."
+          }
+        ],
+        "fallbackFeedback": "IQR = Q3 − Q1 = 13 − 5 = 8."
+      },
+      "hints": [
+        "The IQR is a difference of the two quartiles.",
+        "Q3 = 13, Q1 = 5.",
+        "Subtract: 13 − 5."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddIqrGiven"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One convention question: with an **odd** count, the median is a real data value — does it join a half? **No.** Our rule (the standard one): the median is **left out**, and the halves are everything below and above it. For 3, 5, 6, 8, 10, 12, 14, the median 8 steps aside; lower half 3, 5, 6 gives Q1 = 5, upper half 10, 12, 14 gives Q3 = 12, so IQR = **7**.",
+      "figure": "quartile-fence"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build the odd-count split.",
+      "conceptTag": "iqr",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "The data 3, 5, 6, 8, 10, 12, 14 has median 8. Drag each remaining value to its half.",
+        "buckets": [
+          {
+            "id": "lower",
+            "label": "Lower half",
+            "icon": "⬇️"
+          },
+          {
+            "id": "upper",
+            "label": "Upper half",
+            "icon": "⬆️"
+          }
+        ],
+        "items": [
+          {
+            "id": "v3",
+            "label": "3",
+            "bucketId": "lower",
+            "feedback": "3 sits below the median 8 — it belongs to the lower half."
+          },
+          {
+            "id": "v5",
+            "label": "5",
+            "bucketId": "lower",
+            "feedback": "5 is below the median 8, so it joins the lower half."
+          },
+          {
+            "id": "v6",
+            "label": "6",
+            "bucketId": "lower",
+            "feedback": "6 is still below the median 8 — lower half."
+          },
+          {
+            "id": "v10",
+            "label": "10",
+            "bucketId": "upper",
+            "feedback": "10 exceeds the median 8 — upper half."
+          },
+          {
+            "id": "v12",
+            "label": "12",
+            "bucketId": "upper",
+            "feedback": "12 is above the median 8, so it belongs upstairs."
+          },
+          {
+            "id": "v14",
+            "label": "14",
+            "bucketId": "upper",
+            "feedback": "14 is above the median 8 — upper half."
+          }
+        ],
+        "missFeedback": "Compare each value to the median, 8: smaller goes down, larger goes up — and the 8 itself joins neither half.",
+        "successFeedback": "Split — 3, 5, 6 below and 10, 12, 14 above, with the median 8 standing aside. Quartiles are the halves' medians: Q1 = 5, Q3 = 12."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Finish the odd case.",
+      "conceptTag": "iqr",
+      "explanationVariants": [
+        "Q1 is the median of 3, 5, 6 → 5. Q3 is the median of 10, 12, 14 → 12. IQR = 12 − 5 = 7.",
+        "Each half has three values, so each quartile is that half's middle value: 5 below, 12 above; the gap is 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 3, 5, 6, 8, 10, 12, 14 (median 8 excluded from the halves), what is the IQR?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 5.5,
+            "feedback": "5.5 comes from wrongly INCLUDING the median 8 in both halves (Q1 would be 5.5). Our convention sets the median aside: Q1 = 5, Q3 = 12, IQR = 7."
+          },
+          {
+            "value": 11,
+            "feedback": "11 is the full range (14 − 3). The IQR uses the quartile fences instead: 12 − 5 = 7."
+          }
+        ],
+        "fallbackFeedback": "Q1 = median of 3, 5, 6 = 5; Q3 = median of 10, 12, 14 = 12; IQR = 12 − 5 = 7."
+      },
+      "hints": [
+        "Each half has exactly three values.",
+        "Q1 = 5 and Q3 = 12.",
+        "IQR = Q3 − Q1."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddIqrOddSeven"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why bother with fences?",
+      "conceptTag": "iqr",
+      "explanationVariants": [
+        "The 100 becomes the new max, so the range explodes from 14 to 98 — but it lands outside the fences, so the IQR only creeps from 8 to 10: outlier-resistant.",
+        "Range reads the endpoints (which outliers own); the IQR reads the middle half, so the 100 barely nudges it (8 → 10) while the range leaps by 84."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A wild value of 100 joins the data 2, 4, 6, 8, 10, 12, 14, 16. Which spread measure changes the most?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The range — it leaps from 14 to 98, while the IQR barely moves",
+            "correct": true,
+            "feedback": "Right — the 100 rewrites the max (range 100 − 2 = 98, up 84) while the IQR creeps only from 8 to 10. The middle half stays calm."
+          },
+          {
+            "id": "b",
+            "label": "The IQR — quartiles chase extreme values",
+            "feedback": "Backwards — quartiles fence off the middle half precisely so extremes CAN'T reach them. It's the range, built from the endpoints, that the 100 rewrites."
+          },
+          {
+            "id": "c",
+            "label": "Neither — one value can't move a spread measure",
+            "feedback": "One value absolutely can: the 100 becomes the new maximum, and range = max − min jumps from 14 to 98. Only the IQR shrugs it off."
+          }
+        ]
+      },
+      "hints": [
+        "Where does the 100 land — inside or outside the middle half?",
+        "It becomes the new maximum.",
+        "Which measure is built from the max?"
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddIqrOutlierRobust"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A fresh set, start to finish.",
+      "conceptTag": "iqr",
+      "explanationVariants": [
+        "Sorted: 1, 3, 4, 5, 7, 9. Even count → halves 1, 3, 4 and 5, 7, 9. Q1 = 3, Q3 = 7, IQR = 7 − 3 = 4.",
+        "Six values split three-and-three; each quartile is its half's middle value: 3 and 7, a gap of 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the IQR of 5, 1, 9, 3, 7, 4. (Sort first!)",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the full range (9 − 1). The IQR wants the quartiles: sorted halves 1, 3, 4 and 5, 7, 9 give Q1 = 3, Q3 = 7, IQR = 4."
+          },
+          {
+            "value": 10,
+            "feedback": "10 adds the quartiles (3 + 7). The IQR is their DIFFERENCE: 7 − 3 = 4."
+          }
+        ],
+        "fallbackFeedback": "Sort: 1, 3, 4, 5, 7, 9. Halves of three: Q1 = 3, Q3 = 7. IQR = 7 − 3 = 4."
+      },
+      "hints": [
+        "Sort, split into halves, take each half's median.",
+        "Sorted: 1, 3, 4, 5, 7, 9 — halves of three values each.",
+        "Q1 = 3 and Q3 = 7; subtract."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddIqrUnsortedEven"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The width of the middle half.",
+      "takeaways": [
+        "Split sorted data at the median (set the median itself aside when the count is odd).",
+        "Q1 and Q3 are the halves' medians; IQR = Q3 − Q1.",
+        "Outliers own the endpoints but can't reach the fences — the IQR resists them, like the median does."
+      ],
+      "teaser": "next: two classes, identical centers — and the spread measures that expose how different they really are."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "iqr",
+      "concept": {
+        "id": "rem-iq-c",
+        "kind": "concept",
+        "body": "Quick rewind. **IQR = Q3 − Q1**, the width of the middle half. Sorted data 1, 2, 3, 4: halves 1, 2 and 3, 4; Q1 = 1.5, Q3 = 3.5; IQR = 3.5 − 1.5 = 2."
+      },
+      "check": {
+        "id": "rem-iq-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "iqr",
+        "explanationVariants": [
+          "Q3 − Q1 = 3.5 − 1.5 = 2.",
+          "The fences sit at 1.5 and 3.5; the middle half is 2 wide."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A data set has Q1 = 1.5 and Q3 = 3.5. What is its IQR?",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 adds the quartiles (3.5 + 1.5). The IQR subtracts them: 3.5 − 1.5 = 2."
+            },
+            {
+              "value": 3.5,
+              "feedback": "3.5 is Q3 alone. The IQR is the distance between the quartiles: 3.5 − 1.5 = 2."
+            }
+          ],
+          "fallbackFeedback": "IQR = Q3 − Q1 = 3.5 − 1.5 = 2."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "id": "esn-03-03",
+  "slug": "comparing-magnitudes",
+  "title": "Comparing Magnitudes",
+  "courseId": "exponents-scientific-notation",
+  "chapterId": "ch3-scientific-notation",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To compare numbers in scientific notation, compare the EXPONENTS first — a bigger exponent always means a bigger number, regardless of the coefficient. Only compare coefficients when the exponents match.",
+      "figure": "esn-compare-mag"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Scientific notation is a way to compare magnitudes.",
+      "widget": {
+        "type": "estimateSlider",
+        "min": 1000,
+        "max": 1000000000000,
+        "start": 1000000,
+        "target": 300000000,
+        "acceptFactor": 1.6,
+        "unitLabel": "metres per second",
+        "ticks": [
+          1000,
+          1000000,
+          1000000000,
+          1000000000000
+        ],
+        "prompt": "Light travels about 3 × 10⁸ m/s. Place it on the logarithmic scale.",
+        "successFeedback": "3 × 10⁸ — and notice the scale: each tick is a THOUSAND times the last. Scientific notation exists because these numbers cannot share a linear axis; the exponent is the only part big enough to compare.",
+        "lowFeedback": "Too slow by orders of magnitude. Light crosses the Atlantic in a hundredth of a second.",
+        "highFeedback": "Faster than light. The exponent has gone too high."
+      },
+      "predict": {
+        "prompt": "Light's speed in metres per second — is it closer to a MILLION or to a BILLION?",
+        "options": [
+          {
+            "id": "billion",
+            "label": "Closer to a billion"
+          },
+          {
+            "id": "million",
+            "label": "Closer to a million"
+          },
+          {
+            "id": "thousand",
+            "label": "Closer to a thousand"
+          }
+        ],
+        "outcomeId": "billion",
+        "reveal": "At about 3 × 10⁸, light sits under one power of ten below a billion but over two above a million — on a powers-of-ten line, that's the billion's neighborhood."
+      },
+      "conceptTag": "esn-sci-notation-compare",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents sci notation compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sci notation compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sci notation compare."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponents-scientific-notation:esn-sci-notation-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To find 'how many times as much' one number is compared to another, DIVIDE them — dividing in scientific notation subtracts exponents and divides coefficients, same as any division.",
+      "figure": "esn-compare-mag"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "How many times as much?",
+      "conceptTag": "esn-sci-notation-compare",
+      "explanationVariants": [
+        "(6×10⁸) ÷ (3×10⁵) = (6÷3) × 10^(8−5) = 2 × 10³ = 2,000 times as much.",
+        "Divide the coefficients (6÷3=2) and subtract the exponents (8−5=3): 2×10³."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A city has 6 × 10⁸ grains of sand and a jar has 3 × 10⁵ grains. How many times as much sand does the city have?",
+        "answer": 2000,
+        "tolerance": 1,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's just the coefficient division — you still need to account for the exponent difference: 2 × 10³ = 2,000."
+          },
+          {
+            "value": 200,
+            "feedback": "Check the exponent subtraction — 8−5=3, not 2, so it's 2×10³=2,000, not 2×10²=200."
+          }
+        ],
+        "fallbackFeedback": "(6×10⁸) ÷ (3×10⁵) = 2 × 10^3 = 2,000 times as much."
+      },
+      "variant": {
+        "gen": "g8-esn-compare",
+        "form": "esnCompareRatioLarge"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another 'how many times' comparison.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A whale weighs 4 × 10⁷ grams and a cat weighs 8 × 10⁴ grams. How many times as heavy is the whale?",
+        "answer": 500,
+        "tolerance": 1,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "That's just the coefficient division (4÷8=0.5) — you still need to multiply by the exponent difference, 10^(7−4)=10³, giving 0.5×10³=500."
+          },
+          {
+            "value": 0.0005,
+            "feedback": "That subtracts the exponents backward (4−7=−3 instead of 7−4=3) — the whale's exponent is bigger, so subtract the cat's from the whale's: 7−4=3, giving 500."
+          }
+        ],
+        "fallbackFeedback": "(4×10⁷) ÷ (8×10⁴) = 0.5 × 10³ = 500 times as heavy."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compare exponents to decide which is bigger.",
+      "conceptTag": "esn-sci-notation-compare",
+      "explanationVariants": [
+        "9 × 10⁴ has a smaller exponent than 2 × 10⁵, so 2 × 10⁵ is bigger, even though 9 > 2.",
+        "Always compare exponents FIRST — 10⁵ beats 10⁴ no matter the coefficient."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger: 9 × 10⁴ or 2 × 10⁵?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2 × 10⁵, because its exponent is bigger",
+            "correct": true,
+            "feedback": "Right — exponent 5 beats exponent 4, regardless of the coefficients."
+          },
+          {
+            "id": "b",
+            "label": "9 × 10⁴, because 9 is the bigger coefficient",
+            "correct": false,
+            "feedback": "Compare exponents FIRST — 10⁵ is bigger than 10⁴ no matter what the coefficients are."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "correct": false,
+            "feedback": "9×10⁴=90,000 and 2×10⁵=200,000 — not equal at all."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without converting to standard form",
+            "correct": false,
+            "feedback": "You CAN tell directly — just compare the exponents first."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-esn-compare",
+        "form": "esnCompareDifferent"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A closer comparison with matching exponents.",
+      "conceptTag": "esn-sci-notation-compare",
+      "explanationVariants": [
+        "When exponents match (both 10⁶), compare the coefficients: 7.5 > 3.1.",
+        "Same exponent means the coefficient decides — 7.5 is bigger than 3.1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger: 3.1 × 10⁶ or 7.5 × 10⁶?",
+        "options": [
+          {
+            "id": "a",
+            "label": "7.5 × 10⁶, since the exponents match, compare coefficients",
+            "correct": true,
+            "feedback": "Right — same exponent, so 7.5 > 3.1 decides it."
+          },
+          {
+            "id": "b",
+            "label": "3.1 × 10⁶, since it's listed first",
+            "correct": false,
+            "feedback": "Order in the question doesn't decide size — compare the coefficients: 7.5 > 3.1."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "correct": false,
+            "feedback": "3.1×10⁶ = 3,100,000 and 7.5×10⁶ = 7,500,000 — not equal."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell — need standard form first",
+            "correct": false,
+            "feedback": "You CAN tell directly — same exponent means just compare coefficients."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-esn-compare",
+        "form": "esnCompareSame"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier 'how many times as much'.",
+      "conceptTag": "esn-sci-notation-compare",
+      "explanationVariants": [
+        "(5×10⁶) ÷ (2×10⁶) = (5÷2) × 10^(6−6) = 2.5 × 10⁰ = 2.5 times as much.",
+        "Same exponent (6−6=0, and 10⁰=1), so it's purely the coefficient ratio: 5÷2=2.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One reservoir holds 5 × 10⁶ gallons and another holds 2 × 10⁶ gallons. How many times as much water is in the first?",
+        "answer": 2.5,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That rounds down — 5÷2 is exactly 2.5, not 2."
+          },
+          {
+            "value": 25,
+            "feedback": "Check the exponent subtraction — 6−6=0 and 10⁰=1, so this stays as 2.5, not 2.5×10."
+          }
+        ],
+        "fallbackFeedback": "(5×10⁶) ÷ (2×10⁶) = 2.5 × 10⁰ = 2.5 times as much."
+      },
+      "hints": [
+        "Divide the coefficients: 5 ÷ 2.",
+        "Subtract the exponents: 6 − 6 = 0, and 10⁰ = 1.",
+        "5 ÷ 2 = 2.5, and multiplying by 10⁰=1 changes nothing: 2.5 times as much."
+      ],
+      "variant": {
+        "gen": "g8-esn-compare",
+        "form": "esnCompareRatioClose"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Compare exponents first; divide to find 'how many times as much.'",
+      "takeaways": [
+        "A bigger exponent always means a bigger number, regardless of the coefficient.",
+        "Only compare coefficients when the exponents are equal.",
+        "Dividing two scientific-notation numbers answers 'how many times as much.'"
+      ],
+      "teaser": "Next chapter: actually computing — multiplying, dividing, adding, and subtracting in scientific notation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "esn-sci-notation-compare",
+      "concept": {
+        "id": "rem-esn0303-c",
+        "kind": "concept",
+        "body": "Compare scientific-notation numbers by their EXPONENTS first — a bigger exponent always means a bigger number. Only compare coefficients when exponents match. Dividing answers 'how many times as much.'"
+      },
+      "check": {
+        "id": "rem-esn0303-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "esn-sci-notation-compare",
+        "explanationVariants": [
+          "4 × 10³ has a smaller exponent than 2 × 10⁴, so 2 × 10⁴ is bigger, even though 4 > 2.",
+          "Always compare exponents FIRST — 10⁴ beats 10³ no matter the coefficient."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is bigger: 4 × 10³ or 2 × 10⁴?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2 × 10⁴, because its exponent is bigger",
+              "correct": true,
+              "feedback": "Right — exponent 4 beats exponent 3."
+            },
+            {
+              "id": "b",
+              "label": "4 × 10³, because 4 is the bigger coefficient",
+              "correct": false,
+              "feedback": "Compare exponents FIRST — 10⁴ beats 10³ regardless of coefficients."
+            },
+            {
+              "id": "c",
+              "label": "They're equal",
+              "correct": false,
+              "feedback": "4×10³=4,000 and 2×10⁴=20,000 — not equal."
+            },
+            {
+              "id": "d",
+              "label": "Can't tell without converting",
+              "correct": false,
+              "feedback": "You CAN tell directly by comparing exponents first."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

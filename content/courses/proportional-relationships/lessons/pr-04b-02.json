@@ -1,0 +1,200 @@
+{
+  "id": "pr-04b-02",
+  "slug": "commission-and-fees",
+  "title": "Commission and Fees",
+  "courseId": "proportional-relationships",
+  "chapterId": "ch4b-interest-commission-and-error",
+  "minutes": 11,
+  "standards": [
+    "7.RP.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **commission** is a percent of a sale, paid to the person who made it. Sell $2,000 of equipment on 6% commission and you earn 0.06 × 2000 = $120.\n\nThe skill is old — it is *percent of a quantity* — but the trap is new: the percent is always of the **sale**, not of your existing pay and not of what is left over.",
+      "figure": "pr7-commission-split"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Shade the seller's share.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 2000,
+        "targetPercent": 6,
+        "percentStep": 1,
+        "startPercent": 0,
+        "unit": "dollars",
+        "prompt": "A salesperson earns 6% commission on a $2,000 sale. Shade the commission.",
+        "successFeedback": "$120. Six percent of the SALE — the customer still paid $2,000, and $1,880 goes to the business.",
+        "lowFeedback": "That is under 6% of the sale.",
+        "highFeedback": "That is over 6% of the sale."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A straightforward one, then the twist.",
+      "conceptTag": "commission-fees",
+      "explanationVariants": [
+        "0.04 × 3500 = 140.",
+        "4% of $3,500 is $140 — divide by 100 and multiply by 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An agent earns 4% commission on a $3,500 sale. What is the commission?",
+        "answer": 140,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 3360,
+            "feedback": "3360 is what is LEFT after commission. The question asks for the commission itself: $140."
+          },
+          {
+            "value": 875,
+            "feedback": "875 divides by 4 instead of taking 4%. A percent means per hundred: 3500 ÷ 100 × 4 = 140."
+          }
+        ],
+        "fallbackFeedback": "4% of $3,500 is $140."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Base pay plus commission.",
+      "conceptTag": "commission-fees",
+      "explanationVariants": [
+        "Commission is 0.05 × 4000 = $200, so total pay is 300 + 200 = $500.",
+        "The percent applies only to the sales, then the flat base pay is added on."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A clerk earns $300 base pay plus 5% commission on $4,000 of sales. What is the total pay?",
+        "answer": 500,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 200,
+            "feedback": "200 is the commission alone. Base pay of $300 is added to it."
+          },
+          {
+            "value": 515,
+            "feedback": "515 takes 5% of the base pay as well. The commission is only on the SALES."
+          }
+        ],
+        "fallbackFeedback": "Commission is $200, plus $300 base pay, giving $500."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **fee** behaves differently from a commission, and the difference is proportionality.\n\nA 6% commission doubles when the sale doubles — it is proportional. A flat $5 fee does not: it is the same on a $20 sale and a $2,000 one. Mixing the two gives a relationship that is *not* proportional, which is exactly why the graph of pay-plus-fee misses the origin.",
+      "figure": "pr7-flat-fee"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A larger sale at a smaller rate.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 5000,
+        "targetPercent": 2,
+        "percentStep": 1,
+        "startPercent": 0,
+        "unit": "dollars",
+        "prompt": "A broker charges a 2% fee on a $5,000 transaction. Shade the fee.",
+        "successFeedback": "$100. Small rate, large sale — 2% of $5,000 still comes to a hundred dollars, which is why rates on big transactions matter so much.",
+        "lowFeedback": "That is under 2% of the transaction.",
+        "highFeedback": "That is over 2% of the transaction."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Tell the flat fee from the percent.",
+      "conceptTag": "commission-fees",
+      "explanationVariants": [
+        "A flat fee is the same whatever the size, so it does not double when the amount doubles.",
+        "Only the percentage-based charge scales with the sale."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A service charges a flat $5 fee plus 3% of the order. The order doubles from $100 to $200. What happens to the total charge?",
+        "options": [
+          {
+            "id": "a",
+            "label": "It rises from $8 to $11 — less than double",
+            "correct": true,
+            "feedback": "The 3% doubles ($3 → $6) but the flat $5 does not, so the total grows by less than a factor of two."
+          },
+          {
+            "id": "b",
+            "label": "It doubles from $8 to $16",
+            "correct": false,
+            "feedback": "That would need every part to double. The flat $5 stays $5 however large the order."
+          },
+          {
+            "id": "c",
+            "label": "It stays at $8",
+            "correct": false,
+            "feedback": "The percentage part grows with the order: 3% of $200 is $6, not $3."
+          },
+          {
+            "id": "d",
+            "label": "It rises from $8 to $13",
+            "correct": false,
+            "feedback": "Check the percent: 3% of $200 is $6, so the total is 5 + 6 = $11."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work backwards from the commission to the sale.",
+      "conceptTag": "commission-fees",
+      "explanationVariants": [
+        "If 8% of the sale is $240, the sale is 240 ÷ 0.08 = $3,000.",
+        "1% would be $30, so 100% — the whole sale — is $3,000."
+      ],
+      "hints": [
+        "You know the part and the percent; you need the whole.",
+        "If 8% is $240, then 1% is 240 ÷ 8 = $30.",
+        "The whole sale is 100%, so 100 × $30 = $3,000."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A salesperson earned $240 at an 8% commission rate. What was the sale amount?",
+        "answer": 3000,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 1920,
+            "feedback": "1920 takes 8% OF 240. Here 240 IS the 8%, so divide instead: 240 ÷ 0.08."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is 1% of the sale. The full sale is 100 of those: $3,000."
+          }
+        ],
+        "fallbackFeedback": "1% is 240 ÷ 8 = $30, so the whole sale is $3,000."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A percent of the sale, and a fee that does not care.",
+      "takeaways": [
+        "Commission is a percent of the SALE, not of pay or of what remains.",
+        "Base pay plus commission means the percent applies only to the sales part.",
+        "A flat fee is not proportional — it does not double when the amount does."
+      ],
+      "teaser": "Next: measuring how badly an estimate missed."
+    }
+  ],
+  "remedials": []
+}

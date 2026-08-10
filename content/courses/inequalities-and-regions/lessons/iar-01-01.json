@@ -1,0 +1,217 @@
+{
+  "id": "iar-01-01",
+  "slug": "a-line-splits-the-plane",
+  "title": "A Line Splits the Plane",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch1-half-planes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An equation like y = x + 1 draws a line — every point ON it makes the two sides equal. But the line does more: it cuts the whole plane into two halves. Every point not on the line lives on one side or the other, and which side it's on is a fact you can COMPUTE.",
+      "figure": "iar-line-cuts-plane"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find a point that sits exactly on the boundary.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the point on y = x + 1 where x = 3.",
+        "cols": 6,
+        "rows": 6,
+        "targets": [
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 3,
+            "y": 3,
+            "feedback": "That's y = x — you forgot the + 1. At x = 3 the line sits at 3 + 1 = 4."
+          },
+          {
+            "x": 4,
+            "y": 3,
+            "feedback": "Coordinates swapped: x = 3 goes across first, then y = 4 up."
+          }
+        ],
+        "missFeedback": "Feed x = 3 into y = x + 1: y = 4.",
+        "successFeedback": "(3, 4) makes both sides equal: 4 = 3 + 1. On the line means EQUAL."
+      },
+      "predict": {
+        "prompt": "Before plotting: (5, 2) — on the line y = x + 1, above it, or below it?",
+        "options": [
+          {
+            "id": "above",
+            "label": "Above the line"
+          },
+          {
+            "id": "below",
+            "label": "Below the line"
+          },
+          {
+            "id": "on",
+            "label": "Exactly on it"
+          }
+        ],
+        "outcomeId": "below",
+        "reveal": "At x = 5 the line stands at 5 + 1 = 6, and the point's y is only 2 — it sits 4 below the boundary. Every point answers this question through the same computation: compare its y to the line's y."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which side is (0, 3) on?",
+      "conceptTag": "iar-side-of-line",
+      "explanationVariants": [
+        "At x = 0 the line y = x + 1 sits at height 1; the point's y = 3 is higher, so (0, 3) is above.",
+        "Compare 3 with 0 + 1 = 1: the point's y beats the line's, putting it above."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The line is y = x + 1. Where is the point (0, 3)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Above the line",
+            "correct": true,
+            "feedback": "Yes: the line passes (0, 1), and 3 > 1 — the point floats above."
+          },
+          {
+            "id": "o2",
+            "label": "Below the line",
+            "correct": false,
+            "feedback": "Below would need y smaller than the line's 1 at x = 0 — but 3 > 1."
+          },
+          {
+            "id": "o3",
+            "label": "On the line",
+            "correct": false,
+            "feedback": "On the line requires y = x + 1 exactly: 3 ≠ 0 + 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the test is arithmetic, not eyesight: at the point's x, compute the line's y. If the point's y is bigger, it's above; smaller, below; equal, on. Three outcomes, one subtraction.",
+      "figure": "iar-arithmetic-test"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Run the test without a picture.",
+      "conceptTag": "iar-side-of-line",
+      "explanationVariants": [
+        "The line's height at x = 4 is 5; the point's y = 2 is smaller, so it lies below.",
+        "Compare y-values at the same x: 2 < 4 + 1, so (4, 2) sits under the boundary."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "No graph: is (4, 2) above, below, or on y = x + 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Below",
+            "correct": true,
+            "feedback": "2 < 4 + 1 = 5 — the point's y falls short of the line's."
+          },
+          {
+            "id": "o2",
+            "label": "Above",
+            "correct": false,
+            "feedback": "Above needs the point's y to EXCEED the line's 5 at x = 4; 2 doesn't."
+          },
+          {
+            "id": "o3",
+            "label": "On",
+            "correct": false,
+            "feedback": "On means 2 = 4 + 1 — false."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The boundary height itself.",
+      "conceptTag": "iar-side-of-line",
+      "explanationVariants": [
+        "Height of y = x + 1 at x = 7 is 7 + 1 = 8.",
+        "Substitute: the line passes (7, 8), so 8 is the boundary value there."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At x = 7, what y puts a point exactly ON y = x + 1?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That's the x fed back. The line adds 1: y = 7 + 1 = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "Subtracted instead of added — the rule is y = x + 1, so 7 + 1 = 8."
+          }
+        ],
+        "fallbackFeedback": "Feed x = 7 into the rule: y = x + 1 = 8. ON the line means the equation holds exactly — no more, no less."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A point with an unknown.",
+      "conceptTag": "iar-side-of-line",
+      "explanationVariants": [
+        "(a, a) has y = a while the line has y = a + 1 there; a < a + 1 always, so it's always below.",
+        "The line's height at x = a beats the point's y by exactly 1, for every a — below, always."
+      ],
+      "hints": [
+        "Compare the point's y with the line's y at the same x.",
+        "The line's height at x = a is a + 1. The point's is a.",
+        "a is always exactly 1 less than a + 1 — for every a."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For ANY number a, where is the point (a, a) relative to y = x + 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Always below",
+            "correct": true,
+            "feedback": "a < a + 1 no matter what a is — the diagonal y = x runs a constant 1 beneath y = x + 1."
+          },
+          {
+            "id": "o2",
+            "label": "Always above",
+            "correct": false,
+            "feedback": "Above needs a > a + 1, i.e. 0 > 1 — never true."
+          },
+          {
+            "id": "o3",
+            "label": "Depends on a",
+            "correct": false,
+            "feedback": "The gap (a + 1) − a = 1 doesn't involve a at all — it never changes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A line is also a fence.",
+      "takeaways": [
+        "Every line splits the plane into two half-planes.",
+        "Side test: compare the point's y with the line's y at that x.",
+        "Bigger = above, smaller = below, equal = on."
+      ],
+      "teaser": "next: inequalities pick one whole side — and a single test point finds which."
+    }
+  ]
+}

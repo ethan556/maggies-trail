@@ -1,0 +1,315 @@
+{
+  "id": "cx-03-03",
+  "slug": "proofs-for-every-figure",
+  "title": "Proofs for Every Figure",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch3-classification-proofs",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-general-proof",
+      "concept": {
+        "id": "rem-cx-general-proof-c",
+        "kind": "concept",
+        "body": "A coordinate proof with VARIABLES covers every figure of its kind at once. Strategy: place a vertex at the origin, run a side along an axis, and use symmetry (isosceles → (±a, 0), (0, b)) — rigid motions guarantee nothing is lost. Varignon's theorem: the four side midpoints of any quadrilateral form a parallelogram, because each midpoint segment is a midsegment parallel to a diagonal at half its length."
+      },
+      "check": {
+        "id": "rem-cx-general-proof-k",
+        "kind": "check",
+        "body": "One instance of the general fact.",
+        "conceptTag": "cx-general-proof",
+        "explanationVariants": [
+          "The midsegment copies the diagonal at half length: 12/2 = 6.",
+          "Half the diagonal: 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A quadrilateral's diagonal measures 12. The two midpoint-figure sides parallel to it each measure ?",
+          "answer": 6,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "12 is the diagonal itself — midsegments run at HALF: 6."
+            },
+            {
+              "value": 24,
+              "feedback": "24 doubles — the copy is half-scale: 6."
+            }
+          ],
+          "fallbackFeedback": "12 ÷ 2 = 6."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Numbers prove ONE figure; **variables prove them all**. Place a general rectangle at (0, 0), (a, 0), (a, b), (0, b) — chapter 1's “cheap placement” advice paying off — and both diagonals compute to √(a² + b²). No specific rectangle was harmed: the congruent-diagonals theorem is proved for every rectangle at once.",
+      "figure": "cx-variables-general"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The general diagonal.",
+      "conceptTag": "cx-general-proof",
+      "explanationVariants": [
+        "Diagonal 1: (0,0) to (a,b) — √(a² + b²). Diagonal 2: (a,0) to (0,b) — √((−a)² + b²), the same.",
+        "With a = 8, b = 6 both give √100 = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Rectangle (0,0), (8,0), (8,6), (0,6) — the general proof's a = 8, b = 6 instance. Both diagonals measure ?",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 = 8 + 6 walks the legs — the diagonal cuts across: √(64 + 36) = 10."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is the SQUARED diagonal — take the root: 10."
+          },
+          {
+            "value": 48,
+            "feedback": "48 = 8 × 6 is the AREA — the diagonal is √(8² + 6²) = 10."
+          }
+        ],
+        "fallbackFeedback": "√(8² + 6²) = 10, twice — as the variables promised for every a, b."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-general-proof__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Placement is strategy. Put a vertex at the origin; run a side along an axis; exploit symmetry (an isosceles triangle as (−a, 0), (a, 0), (0, b) makes the equal slants √(a² + b²) automatic). Good placement costs nothing — rigid motions from the transformations course guarantee the figure is the same — and buys zeros everywhere.",
+      "figure": "varignon-midpoints"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Varignon's surprise.",
+      "conceptTag": "cx-general-proof",
+      "explanationVariants": [
+        "Midpoints: (4,1), (9,5), (6,7), (1,3). Opposite slope pairs: (5−1)/(9−4) = 4/5 twice, and (7−5)/(6−9) = −2/3 twice.",
+        "Both midpoint-quad slope pairs match: parallelogram — from a fully IRREGULAR quadrilateral."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Quadrilateral (0,0), (8,2), (10,8), (2,6) — the figure's own. Join the four side midpoints in order. Compute the slope of the side joining midpoints (4, 1) and (9, 5).",
+        "answer": 0.8,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1.25,
+            "feedback": "1.25 = 5/4 inverts — rise over run is (5 − 1)/(9 − 4) = 4/5 = 0.8, and the OPPOSITE midpoint side matches it."
+          },
+          {
+            "value": -0.67,
+            "feedback": "−0.67 ≈ −2/3 belongs to the OTHER pair of midpoint sides — this one climbs at 4/5 = 0.8."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the rise alone — divide by the run 5: 0.8."
+          }
+        ],
+        "fallbackFeedback": "(5 − 1)/(9 − 4) = 4/5 — and its opposite partner (1,3)→(6,7) matches: Varignon's parallelogram."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-general-proof__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why it always works.",
+      "conceptTag": "cx-general-proof",
+      "explanationVariants": [
+        "Each midpoint side joins midpoints of two triangle sides — the midsegment: parallel to the third side (a DIAGONAL) at half its length.",
+        "Both members of a pair copy the SAME diagonal — so they're parallel to each other. Every quadrilateral, no exceptions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The figure shows each midpoint-parallelogram side parallel to a diagonal. Why does that prove Varignon for EVERY quadrilateral?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Each midpoint segment is a triangle midsegment over a diagonal — both segments of a pair copy the same diagonal, so they're parallel to each other",
+            "correct": true,
+            "feedback": "Split the quadrilateral along a diagonal: two triangles, two midsegments, one shared direction — the figure's color pairing IS the proof."
+          },
+          {
+            "id": "o2",
+            "label": "Because the example quadrilateral was special",
+            "correct": false,
+            "feedback": "The example was deliberately irregular — the midsegment argument uses no special property, so it covers all quadrilaterals."
+          },
+          {
+            "id": "o3",
+            "label": "Because midpoints always form squares",
+            "correct": false,
+            "feedback": "Squares only appear for special parents — the guaranteed outcome is a PARALLELOGRAM, via the shared-diagonal midsegments."
+          },
+          {
+            "id": "o4",
+            "label": "It only works for convex quadrilaterals",
+            "correct": false,
+            "feedback": "The midsegment argument never uses convexity — even crossed quadrilaterals obey it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-general-proof__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Placement audit.",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "answerMode": "choice",
+        "prompt": "To prove a theorem about a general ISOSCELES triangle by coordinates, the strongest placement is:",
+        "coordinateProof": {
+          "kind": "symmetricPlacement",
+          "points": [
+            {
+              "id": "A",
+              "label": "A",
+              "x": -3,
+              "y": 0
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "x": 3,
+              "y": 0
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "x": 0,
+              "y": 4
+            }
+          ]
+        },
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "o1",
+            "label": "(−a, 0), (a, 0), (0, b) — the axis of symmetry becomes the y-axis and the equal slants are automatic",
+            "claim": "placement:isosceles-symmetric",
+            "feedback": "Symmetric placement makes both slants √(a² + b²) by construction — the isosceles hypothesis is encoded, not assumed mid-proof."
+          },
+          {
+            "id": "o2",
+            "label": "(0, 0), (a, 0), (b, c) with all different letters",
+            "claim": "wrong:o2",
+            "feedback": "Legal but leaky — three free letters encode a GENERAL triangle, and the isosceles condition returns as an equation you must drag along. Symmetry is cheaper."
+          },
+          {
+            "id": "o3",
+            "label": "(1, 1), (5, 3), (3, 7) — nice concrete numbers",
+            "claim": "wrong:o3",
+            "feedback": "Concrete numbers prove ONE triangle — the general claim needs variables."
+          },
+          {
+            "id": "o4",
+            "label": "Placement doesn't matter at all",
+            "claim": "wrong:o4",
+            "feedback": "Correctness survives any placement, but EFFORT doesn't — rigid motions (tm) license the cheap seat, so take it."
+          }
+        ],
+        "numericErrors": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "successFeedback": "Symmetric placement makes both slants √(a² + b²) by construction — the isosceles hypothesis is encoded, not assumed mid-proof.",
+        "explorationFeedback": "Open at least two coordinate-proof states before checking.",
+        "fallbackFeedback": "Inspect the coordinate invariants, then choose the supported conclusion."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The midsegment's other half.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the Varignon figure the diagonal from (0,0) to (10,8) has length √164. Each midpoint side parallel to it has length √41. Compute √164 / √41.",
+        "answer": 2,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the RATIO OF SQUARES (164/41) — lengths take the root: 2. The midsegment is HALF the diagonal."
+          },
+          {
+            "value": 0.5,
+            "feedback": "0.5 inverts — the diagonal is the LONGER one: √164/√41 = 2."
+          }
+        ],
+        "fallbackFeedback": "√164/√41 = √4 = 2 — midsegments run at half the diagonal, the second half of Varignon."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "One proof, all rectangles' children.",
+      "conceptTag": "cx-general-proof",
+      "hints": [
+        "Varignon on a RECTANGLE: the parent's diagonals are congruent (proved in k1).",
+        "The midpoint parallelogram's sides are HALF the diagonals — all four sides equal half of √(a²+b²).",
+        "A parallelogram with four equal sides has a name from pq."
+      ],
+      "explanationVariants": [
+        "All four midpoint sides measure ½√(a² + b²) — equal — so the midpoint figure is a RHOMBUS, for every rectangle. (With a = 8, b = 6: four sides of 5.)",
+        "Congruent parent diagonals ⇒ equal midsegments ⇒ rhombus. Instance check: ½(10) = 5 four times."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Take the rectangle (0,0), (8,0), (8,6), (0,6) and join its side midpoints. Every side of the resulting figure measures ?",
+        "answer": 5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the parent DIAGONAL — each midpoint side is a midsegment at HALF that: 5 (four times: a rhombus)."
+          },
+          {
+            "value": 7,
+            "feedback": "7 = (8 + 6)/2 averages the rectangle's sides — the midsegments copy half the DIAGONAL √100: 5."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is the squared side — the length is 5, four times over: the midpoint rhombus."
+          }
+        ],
+        "fallbackFeedback": "Each side = ½√(8² + 6²) = 5 — four equal sides: the rectangle's midpoint figure is always a rhombus."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-general-proof__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Variables buy universality.",
+      "takeaways": [
+        "General placement (origin + axes + symmetry) turns one computation into a theorem for every figure.",
+        "Varignon: side midpoints of ANY quadrilateral form a parallelogram — midsegments copy the diagonals at half length.",
+        "Special parents pass traits down: congruent diagonals (rectangle) ⇒ midpoint rhombus."
+      ],
+      "teaser": "Next chapter: perimeter and area, measured straight off the plane."
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+  "id": "ft-01-02",
+  "slug": "domain-the-allowed-inputs",
+  "title": "Domain: the Allowed Inputs",
+  "courseId": "function-transformations",
+  "chapterId": "ch1-families-domain-range",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A function's **domain** is every input it accepts. The polynomial parents — x, x², x³ — accept **every real number**. Only two things break a function: a **square root of a negative**, and a **denominator hitting zero**. Domain-finding is hunting for those two dangers.",
+      "figure": "function-machine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find where a square root starts working.",
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for the RADICAND, x − 3. Where it is positive is where √(x − 3) is defined.",
+        "roots": [
+          {
+            "x": 3,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "Negative to the left of 3, positive to the right — and the smallest allowed x is 3 ITSELF, not the first value past it. At x = 3 the radicand is exactly 0, and √0 = 0 is perfectly defined, so the boundary belongs to the domain.",
+        "crossFeedback": "x − 3 is a single linear factor, so it changes sign once, at 3. One side must be negative and the other positive — and only the positive side can sit under a square root.",
+        "bounceFeedback": "A sign that holds across the root would mean an even multiplicity. Here (x − 3) appears once, so the radicand really does change sign at 3."
+      },
+      "predict": {
+        "prompt": "y = √(x − 3): which inputs must be banned?",
+        "options": [
+          {
+            "id": "neg",
+            "label": "Every x below 3 — the inside goes negative"
+          },
+          {
+            "id": "three",
+            "label": "x = 3 as well — √0 is undefined"
+          },
+          {
+            "id": "belowZero",
+            "label": "Only x below 0 — positives are always safe"
+          }
+        ],
+        "outcomeId": "neg",
+        "reveal": "The square root rejects only NEGATIVE insides. Below 3 the inside x − 3 dips negative and the rule fails; AT 3 the inside is 0 and √0 = 0 works fine. Positive x like 2 still breaks it — the boundary is 3, not 0. Domain: x ≥ 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The square-root recipe: set the **inside ≥ 0** and solve. For √(x + 5): x + 5 ≥ 0 gives x ≥ −5. For fractions, find the x that makes the **denominator zero** and throw it out — everything else is allowed.",
+      "figure": "ft-domain-sqrt"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another square-root domain.",
+      "conceptTag": "ft-domain",
+      "explanationVariants": [
+        "Set the inside ≥ 0: x − 7 ≥ 0, so x ≥ 7 — the smallest allowed x is 7.",
+        "√(x − 7) first works when the inside is exactly 0: x = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the smallest allowed x for y = √(x − 7)?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "x − 7 ≥ 0 solves to x ≥ 7 — moving the 7 across ADDS it, so the boundary is +7, not −7."
+          },
+          {
+            "value": 0,
+            "feedback": "x = 0 makes the inside −7, and √(−7) isn't real. Solve x − 7 ≥ 0: x ≥ 7."
+          }
+        ],
+        "fallbackFeedback": "Inside ≥ 0: x − 7 ≥ 0, so x ≥ 7."
+      },
+      "variant": {
+        "gen": "domain-restrict"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find a fraction's forbidden input.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Which x-value must be excluded from the domain of y = 1/(x − 4)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "The denominator x − 4 hits 0 when x = 4, not −4 — plug in: 4 − 4 = 0."
+          },
+          {
+            "value": 0,
+            "feedback": "x = 0 gives 1/(0 − 4) = −¼, which is fine. The danger is the DENOMINATOR reaching 0: x = 4."
+          }
+        ],
+        "fallbackFeedback": "Set the denominator to 0: x − 4 = 0 at x = 4 — that input is forbidden."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Exclude with a plus sign.",
+      "conceptTag": "ft-domain",
+      "explanationVariants": [
+        "x + 6 = 0 at x = −6 — that's the one forbidden input.",
+        "Plug in −6: the denominator becomes −6 + 6 = 0, so x = −6 must be excluded."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Which x-value must be excluded from the domain of y = 1/(x + 6)?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "Watch the sign: x + 6 = 0 solves to x = −6. At x = 6 the denominator is 12 — perfectly fine."
+          },
+          {
+            "value": 0,
+            "feedback": "x = 0 gives a denominator of 6, which is fine. The forbidden x makes x + 6 equal 0: x = −6."
+          }
+        ],
+        "fallbackFeedback": "Denominator zero: x + 6 = 0, so x = −6 is excluded."
+      },
+      "variant": {
+        "gen": "domain-restrict",
+        "form": "excludeZero"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A polynomial's domain.",
+      "conceptTag": "ft-domain",
+      "explanationVariants": [
+        "Squaring works on every real number — no root to go negative, no denominator to hit zero — so the domain is all reals.",
+        "Don't confuse inputs with outputs: x²'s OUTPUTS are ≥ 0 (that's range), but its INPUTS are unrestricted."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the domain of y = x²?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "all real numbers",
+            "correct": true,
+            "feedback": "Right — you can square anything; no root or denominator to worry about."
+          },
+          {
+            "id": "o2",
+            "label": "x ≥ 0",
+            "correct": false,
+            "feedback": "That's the RANGE (outputs never go below 0). The domain is about inputs — and every real x can be squared."
+          },
+          {
+            "id": "o3",
+            "label": "x ≠ 0",
+            "correct": false,
+            "feedback": "0² = 0 works fine — there's no denominator here to protect. Every real x is allowed."
+          },
+          {
+            "id": "o4",
+            "label": "x > 0",
+            "correct": false,
+            "feedback": "Negatives square happily: (−3)² = 9. No input is off-limits for a polynomial."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "domain-restrict",
+        "form": "allReals"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-step inside.",
+      "conceptTag": "ft-domain",
+      "explanationVariants": [
+        "Inside ≥ 0: 2x − 10 ≥ 0 → 2x ≥ 10 → x ≥ 5. The smallest allowed x is 5.",
+        "The inside 2x − 10 first reaches 0 at x = 5 (since 2·5 = 10)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the smallest allowed x for y = √(2x − 10)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "You solved 2x − 10 ≥ 0 halfway: after 2x ≥ 10, DIVIDE by 2 to get x ≥ 5."
+          },
+          {
+            "value": -5,
+            "feedback": "2x − 10 ≥ 0 gives 2x ≥ 10, so x ≥ +5 — the 10 stays positive when it crosses over."
+          }
+        ],
+        "fallbackFeedback": "2x − 10 ≥ 0 → 2x ≥ 10 → x ≥ 5."
+      },
+      "hints": [
+        "The inside of the root must be ≥ 0: start from 2x − 10 ≥ 0.",
+        "Add 10 to both sides: 2x ≥ 10.",
+        "Divide by 2: x ≥ 5 — so the smallest allowed x is 5."
+      ],
+      "variant": {
+        "gen": "domain-restrict",
+        "form": "rootScaled"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Domain = allowed inputs; hunt the two dangers.",
+      "takeaways": [
+        "Polynomials accept every real number.",
+        "Square root: set the inside ≥ 0 and solve.",
+        "Fraction: exclude any x that zeroes the denominator."
+      ],
+      "teaser": "Next: the outputs a function can actually produce — the range."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-domain",
+      "concept": {
+        "id": "rem-ft0102-c",
+        "kind": "concept",
+        "body": "For √(inside), set inside ≥ 0 and solve for x. For 1/(denominator), exclude the x making it 0."
+      },
+      "check": {
+        "id": "rem-ft0102-k",
+        "kind": "check",
+        "body": "One more domain boundary.",
+        "conceptTag": "ft-domain",
+        "explanationVariants": [
+          "Inside ≥ 0: x − 2 ≥ 0, so x ≥ 2 — the smallest allowed x is 2.",
+          "√(x − 2) first works when x − 2 = 0, i.e. at x = 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the smallest allowed x for y = √(x − 2)?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -2,
+              "feedback": "x − 2 ≥ 0 solves to x ≥ 2 — the 2 comes across as +2."
+            },
+            {
+              "value": 0,
+              "feedback": "At x = 0 the inside is −2 — not allowed. Solve x − 2 ≥ 0: x ≥ 2."
+            }
+          ],
+          "fallbackFeedback": "Inside ≥ 0: x − 2 ≥ 0 → x ≥ 2."
+        }
+      }
+    }
+  ]
+}

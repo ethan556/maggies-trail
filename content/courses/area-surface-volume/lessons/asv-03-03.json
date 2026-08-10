@@ -1,0 +1,627 @@
+{
+  "id": "asv-03-03",
+  "slug": "coordinate-plane-capstone",
+  "title": "Coordinate Plane Capstone",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch3-coordinate-polygons",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Everything from this chapter combines: read side lengths from coordinates, identify each shape, and — if the figure is composite — add or subtract pieces exactly as in Chapter 2. A rectangle (1,1)-(6,1)-(6,4)-(1,4) plus an attached triangle gives one combined coordinate-based composite area.",
+      "figure": "asv-coord-area"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The rectangle piece.",
+      "conceptTag": "coordinate-capstone",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateArea",
+        "coordinate": {
+          "pieces": [
+            {
+              "id": "rectangle",
+              "label": "rectangle",
+              "kind": "rectangle",
+              "x": 1,
+              "y": 1,
+              "width": 5,
+              "height": 3,
+              "operation": "add",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  1,
+                  4
+                ]
+              ]
+            }
+          ],
+          "target": "piece",
+          "targetPieceId": "rectangle"
+        },
+        "prompt": "A rectangle has corners (1,1), (6,1), (6,4), (1,4). What is its area?",
+        "answerUnit": "square units",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 adds width and height (5+3) instead of multiplying. Area = 5 × 3 = 15."
+          },
+          {
+            "value": 7.5,
+            "feedback": "7.5 halves the product like a triangle. Rectangles don't halve: 5 × 3 = 15."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "coordinate:rectangle:dimensions",
+          "coordinate:rectangle:area"
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "Width 6−1=5, height 4−1=3; area = 5 × 3 = 15.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Width 6−1=5, height 4−1=3; area = 5 × 3 = 15.",
+        "answerMode": "numeric"
+      },
+      "predict": {
+        "prompt": "Corners at (1,1), (6,1), (6,4), (1,4): the rectangle's area is…",
+        "options": [
+          {
+            "id": "fifteen",
+            "label": "15 — sides 5 and 3"
+          },
+          {
+            "id": "twentyfour",
+            "label": "24 — multiply the biggest coordinates"
+          },
+          {
+            "id": "twenty",
+            "label": "20"
+          }
+        ],
+        "outcomeId": "fifteen",
+        "reveal": "Sides come from DIFFERENCES: 6 − 1 = 5 and 4 − 1 = 3, so 15. Multiplying the raw corner numbers (6 × 4) measures a rectangle anchored at the origin — a different, bigger shape than the one drawn."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The attached triangle.",
+      "conceptTag": "coordinate-capstone",
+      "explanationVariants": [
+        "Legs 3 (9−6) and 3 (4−1); area = 1/2 × 3 × 3 = 4.5.",
+        "Read the legs from coordinates, then halve their product: 4.5."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateArea",
+        "coordinate": {
+          "pieces": [
+            {
+              "id": "triangle",
+              "label": "right triangle",
+              "kind": "rightTriangle",
+              "x": 6,
+              "y": 1,
+              "width": 3,
+              "height": 3,
+              "operation": "add",
+              "points": [
+                [
+                  6,
+                  1
+                ],
+                [
+                  9,
+                  1
+                ],
+                [
+                  6,
+                  4
+                ]
+              ]
+            }
+          ],
+          "target": "piece",
+          "targetPieceId": "triangle"
+        },
+        "prompt": "A right triangle attached to the rectangle has vertices (6,1), (9,1), (6,4). What is its area?",
+        "answerUnit": "square units",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the RECTANGLE's area with these same legs (3×3), forgetting the triangle halves it: 1/2 × 3 × 3 = 4.5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 adds the legs (3+3) instead of applying the area formula. Use 1/2 × 3 × 3 = 4.5."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "coordinate:triangle:dimensions",
+          "coordinate:triangle:area"
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "Legs 3 and 3; area = 1/2 × 3 × 3 = 4.5.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Legs 3 and 3; area = 1/2 × 3 × 3 = 4.5.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "triangle-area-calc",
+        "form": "coordinateRightTriangle"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Combine exactly as before: since the triangle is ATTACHED to the rectangle (not cut from it), **add** the two areas. 15 + 4.5 = **19.5** total. The coordinate reading and the combine-the-pieces skill from Chapter 2 work together on any figure, however it's described.",
+      "figure": "asv-coord-area"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Combine the two pieces.",
+      "conceptTag": "coordinate-capstone",
+      "explanationVariants": [
+        "15 + 4.5 = 19.5 — the triangle is attached, so its area adds to the rectangle's.",
+        "Both pieces computed from coordinates, then combined by addition."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateArea",
+        "coordinate": {
+          "pieces": [
+            {
+              "id": "rectangle",
+              "label": "rectangle",
+              "kind": "rectangle",
+              "x": 1,
+              "y": 1,
+              "width": 5,
+              "height": 3,
+              "operation": "add"
+            },
+            {
+              "id": "triangle",
+              "label": "attached triangle",
+              "kind": "rightTriangle",
+              "x": 6,
+              "y": 1,
+              "width": 3,
+              "height": 3,
+              "operation": "add"
+            }
+          ],
+          "target": "total"
+        },
+        "prompt": "The rectangle (area 15) and the attached triangle (area 4.5) together make one figure. What is the total area?",
+        "answerUnit": "square units",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 10.5,
+            "feedback": "10.5 subtracts the triangle instead of adding it. Since the triangle is ATTACHED, add: 15 + 4.5 = 19.5."
+          },
+          {
+            "value": 67.5,
+            "feedback": "67.5 multiplies the two areas together. Combine attached pieces by ADDING: 15 + 4.5 = 19.5."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "coordinate:rectangle:dimensions",
+          "coordinate:rectangle:area",
+          "coordinate:triangle:dimensions",
+          "coordinate:triangle:area",
+          "coordinate:combine"
+        ],
+        "requiredExplorations": 5,
+        "successFeedback": "15 + 4.5 = 19.5.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "15 + 4.5 = 19.5.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "area-compose",
+        "form": "attachedAreas"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A different composite, your turn.",
+      "conceptTag": "coordinate-capstone",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateArea",
+        "coordinate": {
+          "pieces": [
+            {
+              "id": "rectangle",
+              "label": "rectangle",
+              "kind": "rectangle",
+              "x": 2,
+              "y": 2,
+              "width": 7,
+              "height": 3,
+              "operation": "add",
+              "points": [
+                [
+                  2,
+                  2
+                ],
+                [
+                  9,
+                  2
+                ],
+                [
+                  9,
+                  5
+                ],
+                [
+                  2,
+                  5
+                ]
+              ]
+            },
+            {
+              "id": "notch",
+              "label": "triangular notch",
+              "kind": "rightTriangle",
+              "x": 2,
+              "y": 2,
+              "width": 3,
+              "height": 3,
+              "operation": "subtract"
+            }
+          ],
+          "target": "total"
+        },
+        "prompt": "A rectangle has corners (2,2), (9,2), (9,5), (2,5). A triangular notch (a right triangle with legs 3 and 3) is CUT from one corner. What is the remaining area?",
+        "answerUnit": "square units",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 25.5,
+            "feedback": "25.5 adds the notch instead of subtracting it. A cut-away notch REMOVES area: 21 − 4.5 = 16.5."
+          },
+          {
+            "value": 21,
+            "feedback": "21 is the full rectangle, forgetting the notch was cut away. Remove it: 21 − 4.5 = 16.5."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "coordinate:rectangle:dimensions",
+          "coordinate:rectangle:area",
+          "coordinate:notch:dimensions",
+          "coordinate:notch:area",
+          "coordinate:combine"
+        ],
+        "requiredExplorations": 5,
+        "successFeedback": "Rectangle 7×3=21, minus notch 1/2×3×3=4.5: 21 − 4.5 = 16.5.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Rectangle 7×3=21, minus notch 1/2×3×3=4.5: 21 − 4.5 = 16.5.",
+        "answerMode": "numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a missing vertex first.",
+      "conceptTag": "coordinate-capstone",
+      "explanationVariants": [
+        "The missing corner shares x=3 with (3,4) and y=8 with (7,8), giving (3,8); width 4, height 4, area 16.",
+        "Complete the rectangle, then compute width × height: 16."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateArea",
+        "coordinate": {
+          "pieces": [
+            {
+              "id": "rectangle",
+              "label": "rectangle",
+              "kind": "rectangle",
+              "x": 3,
+              "y": 4,
+              "width": 4,
+              "height": 4,
+              "operation": "add",
+              "points": [
+                [
+                  3,
+                  4
+                ],
+                [
+                  7,
+                  4
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  3,
+                  8
+                ]
+              ]
+            }
+          ],
+          "target": "piece",
+          "targetPieceId": "rectangle"
+        },
+        "prompt": "A rectangle has corners (3,4), (7,4), (7,8), and a missing 4th corner. What is its area?",
+        "answerUnit": "square units",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 adds width and height (4+4) instead of multiplying. Area = 4 × 4 = 16."
+          },
+          {
+            "value": 28,
+            "feedback": "28 uses the wrong pair of coordinates for width or height. Width 7−3=4, height 8−4=4: area = 16."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "coordinate:rectangle:dimensions",
+          "coordinate:rectangle:area"
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "Width 4, height 4; area = 16.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Width 4, height 4; area = 16.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "area-formula-pick",
+        "form": "coordinateRectangle"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full capstone: rectangle plus triangle plus a cut.",
+      "conceptTag": "coordinate-capstone",
+      "hints": [
+        "Rectangle (1,1)-(8,1)-(8,5)-(1,5): width 7, height 4, area 28.",
+        "Attached triangle (8,1)-(11,1)-(8,5): legs 3 and 4, area 6.",
+        "Cut notch (1,1)-(3,1)-(1,2): legs 2 and 1, area 1. Combine: 28+6−1."
+      ],
+      "explanationVariants": [
+        "Rectangle 28, plus attached triangle 6, minus cut notch 1: 28+6−1 = 33.",
+        "Compute each of the three pieces from their coordinates, then combine with the right signs: 33."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateArea",
+        "coordinate": {
+          "pieces": [
+            {
+              "id": "rectangle",
+              "label": "rectangle",
+              "kind": "rectangle",
+              "x": 1,
+              "y": 1,
+              "width": 7,
+              "height": 4,
+              "operation": "add",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  8,
+                  1
+                ],
+                [
+                  8,
+                  5
+                ],
+                [
+                  1,
+                  5
+                ]
+              ]
+            },
+            {
+              "id": "attached",
+              "label": "attached triangle",
+              "kind": "rightTriangle",
+              "x": 8,
+              "y": 1,
+              "width": 3,
+              "height": 4,
+              "operation": "add",
+              "points": [
+                [
+                  8,
+                  1
+                ],
+                [
+                  11,
+                  1
+                ],
+                [
+                  8,
+                  5
+                ]
+              ]
+            },
+            {
+              "id": "notch",
+              "label": "triangular notch",
+              "kind": "rightTriangle",
+              "x": 1,
+              "y": 1,
+              "width": 2,
+              "height": 1,
+              "operation": "subtract",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  3,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ]
+              ]
+            }
+          ],
+          "target": "total"
+        },
+        "prompt": "A figure combines: rectangle (1,1)-(8,1)-(8,5)-(1,5) [attached], triangle (8,1)-(11,1)-(8,5) [attached], and a triangular notch (1,1)-(3,1)-(1,2) [cut away]. What is the total area?",
+        "answerUnit": "square units",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 35,
+            "feedback": "35 adds the notch instead of subtracting it (28+6+1). The notch is CUT AWAY: 28+6−1 = 33."
+          },
+          {
+            "value": 34,
+            "feedback": "34 forgets to fully account for one piece. Rectangle 28, triangle 6, minus notch 1: 28+6−1 = 33."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "coordinate:rectangle:dimensions",
+          "coordinate:rectangle:area",
+          "coordinate:attached:dimensions",
+          "coordinate:attached:area",
+          "coordinate:notch:dimensions",
+          "coordinate:notch:area",
+          "coordinate:combine"
+        ],
+        "requiredExplorations": 7,
+        "successFeedback": "28 + 6 − 1 = 33 square units.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "28 + 6 − 1 = 33 square units.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "area-compose",
+        "form": "coordinateComposite"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Coordinates, shapes, and combining — all at once.",
+      "takeaways": [
+        "Read every side from coordinate differences before applying any area formula.",
+        "Identify each piece's shape (rectangle, triangle) to pick its formula correctly.",
+        "Combine composite pieces with the right sign — attached adds, cut-away subtracts."
+      ],
+      "teaser": "next chapter: stepping into 3D with surface area of prisms."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "coordinate-capstone",
+      "concept": {
+        "id": "rem-cc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Coordinates give sides; shape gives the formula; combine with the right sign.** Rectangle area 10 plus attached triangle area 3: 10 + 3 = 13. A cut-away piece would subtract instead."
+      },
+      "check": {
+        "id": "rem-cc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "coordinate-capstone",
+        "explanationVariants": [
+          "10 + 3 = 13 — the triangle is attached, so it adds.",
+          "Combine attached pieces by addition: 13."
+        ],
+        "widget": {
+          "type": "geometricConstraintLab",
+          "task": "coordinateArea",
+          "coordinate": {
+            "pieces": [
+              {
+                "id": "rectangle",
+                "label": "rectangle",
+                "kind": "rectangle",
+                "x": 0,
+                "y": 0,
+                "width": 5,
+                "height": 2,
+                "operation": "add"
+              },
+              {
+                "id": "triangle",
+                "label": "attached triangle",
+                "kind": "rightTriangle",
+                "x": 5,
+                "y": 0,
+                "width": 2,
+                "height": 3,
+                "operation": "add"
+              }
+            ],
+            "target": "total"
+          },
+          "prompt": "A rectangle (area 10) has an attached triangle (area 3). What is the total area?",
+          "answerUnit": "square units",
+          "tolerance": 0,
+          "choices": [],
+          "numericErrors": [
+            {
+              "value": 7,
+              "feedback": "7 subtracts the triangle instead of adding it. Since it's ATTACHED, add: 10 + 3 = 13."
+            },
+            {
+              "value": 30,
+              "feedback": "30 multiplies the two areas. Combine attached pieces by ADDING: 10 + 3 = 13."
+            }
+          ],
+          "authoredStages": [],
+          "requiredStageKeys": [
+            "coordinate:rectangle:dimensions",
+            "coordinate:rectangle:area",
+            "coordinate:triangle:dimensions",
+            "coordinate:triangle:area",
+            "coordinate:combine"
+          ],
+          "requiredExplorations": 5,
+          "successFeedback": "10 + 3 = 13.",
+          "explorationFeedback": "Inspect every required geometric constraint before checking.",
+          "fallbackFeedback": "10 + 3 = 13.",
+          "answerMode": "numeric"
+        }
+      }
+    }
+  ]
+}

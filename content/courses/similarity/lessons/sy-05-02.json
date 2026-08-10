@@ -1,0 +1,279 @@
+{
+  "id": "sy-05-02",
+  "slug": "scale-drawings-and-models",
+  "title": "Scale Drawings & Models",
+  "courseId": "similarity",
+  "chapterId": "ch5-applications",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sy-scale",
+      "concept": {
+        "id": "rem-sy-scale-c",
+        "kind": "concept",
+        "body": "Scale ratio compares drawing to reality (e.g. 1 : 50). Drawing → reality: MULTIPLY by the scale. Reality → drawing: DIVIDE by the scale. Crucial: the scale applies to LENGTHS. Area scales by the ratio SQUARED, and volume by the ratio CUBED — don't apply the plain scale to areas."
+      },
+      "check": {
+        "id": "rem-sy-scale-k",
+        "kind": "check",
+        "body": "Scale direction.",
+        "conceptTag": "sy-scale",
+        "explanationVariants": [
+          "Model to real multiplies by the scale: 8 × 50 = 400.",
+          "Enlarge to reality by multiplying by the scale factor."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "At scale 1 : 50, a 6-cm model part is how long in reality, in cm?",
+          "answer": 300,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 56,
+              "feedback": "56 = 6 + 50 adds. Multiply by the scale: 6 × 50 = 300 cm."
+            },
+            {
+              "value": 0.12,
+              "feedback": "0.12 = 6 ÷ 50 divides the wrong way. Model-to-real multiplies: 6 × 50 = 300."
+            }
+          ],
+          "fallbackFeedback": "6 × 50 = 300 cm."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **scale drawing** is a similar copy at a stated ratio — a map, a blueprint, a model car. The **scale** tells you the ratio between drawing and reality, like 1 cm : 50 cm or 1 in : 8 ft. Multiply a drawing length by the scale to get the real length; divide to go the other way.",
+      "figure": "indirect-measurement"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Model to real.",
+      "predict": {
+        "prompt": "A model is built at scale 1 : 50. Its 8 cm part stands for how much real length?",
+        "options": [
+          {
+            "id": "mult",
+            "label": "8 × 50 — every model centimetre stands for 50 real ones"
+          },
+          {
+            "id": "add",
+            "label": "8 + 50, adding the scale on"
+          },
+          {
+            "id": "div",
+            "label": "8 ÷ 50, since the model is smaller"
+          }
+        ],
+        "outcomeId": "mult",
+        "reveal": "A scale is a ratio, so it MULTIPLIES. Each centimetre of model stands for 50 real centimetres, and 8 of them stand for 8 × 50 = 400. Dividing would go the other way, from real to model."
+      },
+      "widget": {
+        "type": "ratioTable",
+        "prompt": "The scale is 1 : 50. Fill in the real length for an 8 cm model part, keeping the ratio the rows show.",
+        "colA": "model (cm)",
+        "colB": "real (cm)",
+        "rows": [
+          [
+            1,
+            50
+          ],
+          [
+            2,
+            100
+          ]
+        ],
+        "askA": 8,
+        "targetB": 400,
+        "bMax": 500,
+        "bStep": 10,
+        "bStart": 0,
+        "successFeedback": "400 cm. Down the column the ratio never moves: 1→50, 2→100, 8→400. A scale is a multiplier, not something added — which is why 8 + 50 = 58 is the wrong shape of answer entirely, not just the wrong number.",
+        "lowFeedback": "Too short. Each model centimetre stands for 50 real ones, so 8 of them reach much further — compare with the 2→100 row.",
+        "highFeedback": "Too long — that is more than the scale allows. Eight model centimetres stand for 8 × 50."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which direction?",
+      "conceptTag": "sy-scale",
+      "explanationVariants": [
+        "Model-to-real MULTIPLIES by the scale; real-to-model DIVIDES. The larger number is always reality.",
+        "To enlarge the model up to real size, multiply by the scale factor."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To convert a scale-model length to the real length at scale 1 : 50, you should…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "multiply the model length by 50",
+            "correct": true,
+            "feedback": "Reality is 50 times the model, so multiply the model length by 50."
+          },
+          {
+            "id": "o2",
+            "label": "divide the model length by 50",
+            "correct": false,
+            "feedback": "Dividing would SHRINK it further — but reality is LARGER. Multiply by 50."
+          },
+          {
+            "id": "o3",
+            "label": "add 50 to the model length",
+            "correct": false,
+            "feedback": "Scale is a RATIO, not an amount to add. Multiply by 50."
+          },
+          {
+            "id": "o4",
+            "label": "subtract 50 from the model length",
+            "correct": false,
+            "feedback": "Subtraction isn't how scale works. Reality = model × 50."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-scale__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Maps work the same way. A scale of **1 cm : 2 km** means each centimeter on the map is 2 km on the ground. Measure the map distance, multiply by the scale, and you have the real distance — the reason a ruler and a map can plan a road trip.",
+      "figure": "indirect-measurement"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Map distance.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A map has scale 1 cm : 2 km. Two towns are 7 cm apart on the map. How far apart are they in reality, in km?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 = 7 + 2 adds. Multiply by the scale: 7 × 2 = 14 km."
+          },
+          {
+            "value": 3.5,
+            "feedback": "3.5 = 7 ÷ 2 divides the wrong way. Map-to-real multiplies: 7 × 2 = 14 km."
+          }
+        ],
+        "fallbackFeedback": "7 × 2 = 14 km."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Real to drawing.",
+      "conceptTag": "sy-scale",
+      "explanationVariants": [
+        "Going from real length to drawing length DIVIDES by the scale: 400 cm at 1 : 50 is 400 ÷ 50 = 8 cm.",
+        "Reduce reality to the drawing by dividing by the scale factor."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At scale 1 : 50, a real object is 400 cm long. How long is it in the scale drawing, in cm?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20000,
+            "feedback": "20000 = 400 × 50 goes the wrong way (that enlarges). Real-to-drawing DIVIDES: 400 ÷ 50 = 8."
+          },
+          {
+            "value": 350,
+            "feedback": "350 = 400 − 50 subtracts. Divide by the scale: 400 ÷ 50 = 8 cm."
+          }
+        ],
+        "fallbackFeedback": "400 ÷ 50 = 8 cm."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-scale__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One subtlety trips people up: scale applies to **lengths**, but AREA scales by the square of the ratio. A 1 : 50 model has parts 1/50 the length — but its surface area is 1/50² = 1/2500 of the real thing. Length uses the scale; area uses the scale squared; volume, the cube.",
+      "figure": "indirect-measurement"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Area from scale.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar rectangular plots have sides in the ratio 1 : 4. The small plot has area 25 m². What is the large plot's area, in m²?",
+        "answer": 400,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 = 25 × 4 scales by the length ratio — but AREA scales by 4² = 16: 25 × 16 = 400."
+          },
+          {
+            "value": 29,
+            "feedback": "29 = 25 + 4 adds. Area scales by the square of the ratio: 25 × 4² = 400."
+          }
+        ],
+        "fallbackFeedback": "Area scales by 4²: 25 × 16 = 400 m²."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Blueprint to reality.",
+      "conceptTag": "sy-scale",
+      "hints": [
+        "The blueprint scale is 1 : 24. A wall is 15 in on the blueprint.",
+        "Real length = blueprint × 24.",
+        "15 × 24 = 360 inches."
+      ],
+      "explanationVariants": [
+        "At 1 : 24, the real wall is 15 × 24 = 360 inches (which is 30 feet).",
+        "Multiply blueprint by scale: 15 × 24 = 360 in."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A blueprint has scale 1 : 24. A wall measures 15 inches on the blueprint. How long is the real wall, in inches?",
+        "answer": 360,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 39,
+            "feedback": "39 = 15 + 24 adds. Multiply by the scale: 15 × 24 = 360 inches."
+          },
+          {
+            "value": 0.625,
+            "feedback": "0.625 = 15 ÷ 24 divides the wrong way. Blueprint-to-real multiplies: 15 × 24 = 360."
+          }
+        ],
+        "fallbackFeedback": "15 × 24 = 360 inches."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-scale__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Similarity you can hold.",
+      "takeaways": [
+        "Scale drawings are similar copies; multiply drawing × scale for reality, divide to reverse.",
+        "Maps, blueprints, and models all use a stated length ratio.",
+        "Length scales by the ratio, AREA by its square, volume by its cube."
+      ],
+      "teaser": "Next: bringing it together — area and perimeter ratios in applied problems."
+    }
+  ]
+}

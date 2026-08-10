@@ -1,0 +1,294 @@
+{
+  "id": "fna-02-02",
+  "slug": "extrema",
+  "title": "Peaks & Valleys: Extrema",
+  "courseId": "function-analysis",
+  "chapterId": "ch2-graph-behavior",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **local maximum** is a peak — higher than every nearby point. A **local minimum** is a valley. If a point is the highest the function EVER gets, it's the **absolute maximum**. Two numbers describe each one: **where** it happens (the x) and **what value** it reaches (the y).",
+      "figure": "fna-cubic-behavior"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "At the bottom of the valley the rate is zero.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "limit",
+        "a": 0,
+        "targetH": 0.1,
+        "startH": 1.5,
+        "prompt": "A sits at the very bottom of y = x². Squeeze the gap to 0.1 or less and watch what the slope does.",
+        "successFeedback": "The slope collapses toward 0. At a peak or a valley the instantaneous rate is exactly zero — the curve is momentarily flat, which is precisely how extrema are found. Note the secant is still not horizontal at any gap you can set: only the limit is.",
+        "lowFeedback": "At a gap of exactly 0 there is no second point and the quotient is 0/0. Come back a hair — the limit lives arbitrarily close to zero, never at it.",
+        "highFeedback": "The gap is still wide. Squeeze it to 0.1 or less to see where the rate is heading."
+      },
+      "predict": {
+        "prompt": "As h shrinks toward zero, what should the secant slope do?",
+        "options": [
+          {
+            "id": "diverge",
+            "label": "Grow without bound"
+          },
+          {
+            "id": "tangent",
+            "label": "Approach the tangent slope"
+          },
+          {
+            "id": "zero",
+            "label": "Approach zero for every function"
+          }
+        ],
+        "outcomeId": "tangent",
+        "reveal": "The secant uses two nearby points; as they merge, its average rate approaches the instantaneous tangent rate."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "function-analysis-secantSlope",
+        "delayed": true,
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this secantSlope away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why does the secant become a derivative model?",
+          "options": [
+            {
+              "id": "limit",
+              "label": "Its average rate is measured over h, and shrinking h produces the limiting instantaneous rate.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "height",
+              "label": "The graph's height automatically equals its slope.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "zero",
+              "label": "Setting h = 0 directly makes the quotient valid.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "fna-extrema"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Local doesn't mean absolute. The cubic's peak at (−1, 2) beats its neighbors, but the curve later climbs past every bound — so it has **no absolute maximum** at all. A downward parabola, by contrast, tops out at its vertex: one point that is both local **and** absolute.",
+      "figure": "fna-local-not-absolute"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The parabola's summit.",
+      "conceptTag": "fna-extrema",
+      "explanationVariants": [
+        "The vertex (2, 9) of y = −(x − 2)² + 9 is the absolute maximum value: 9.",
+        "−(x − 2)² is never positive, so y ≤ 9 everywhere, with equality exactly at x = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the absolute maximum VALUE of y = −(x − 2)² + 9?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is where the maximum occurs (the x of the vertex). The maximum VALUE is the height there: 9."
+          },
+          {
+            "value": -9,
+            "feedback": "The parabola opens DOWN from +9; the squared term subtracts, so the top is +9, not −9."
+          }
+        ],
+        "fallbackFeedback": "y = 9 − (x − 2)² ≤ 9, achieved at x = 2."
+      },
+      "variant": {
+        "gen": "extrema-value"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Sort local vs absolute.",
+      "conceptTag": "fna-extrema",
+      "explanationVariants": [
+        "The cubic rises without bound as x grows, so no output is ever the largest — the peak at (−1, 2) is only LOCAL.",
+        "f(3) = 18 already beats the peak's 2; larger inputs beat it further. Nothing tops the whole graph."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why is the peak of y = x³ − 3x at (−1, 2) a LOCAL but not an ABSOLUTE maximum?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The function later climbs above 2 and keeps going forever",
+            "correct": true,
+            "feedback": "Exactly — f(3) = 18 > 2, and outputs grow without bound, so 2 only beats its neighborhood."
+          },
+          {
+            "id": "o2",
+            "label": "Because the value 2 is too small to be absolute",
+            "feedback": "Size alone doesn't decide it — a tiny value can be absolute if nothing beats it. Here something DOES beat it: f(3) = 18."
+          },
+          {
+            "id": "o3",
+            "label": "Because a maximum must occur at x = 0",
+            "feedback": "Extrema can occur at any input. The issue is the curve's later climb past 2 — for example f(3) = 18."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "extrema-value",
+        "form": "localVsAbsolute"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A minimum with a corner.",
+      "conceptTag": "fna-extrema",
+      "explanationVariants": [
+        "y = |x − 3| + 1 bottoms out where |x − 3| = 0: at x = 3, value 1 — an absolute minimum.",
+        "Every output is 1-plus-something-nonnegative, so 1 is the floor, achieved at x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = |x − 3| + 1 has an absolute minimum. What is its VALUE?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the input where the minimum happens. The minimum VALUE is the height: |3 − 3| + 1 = 1."
+          },
+          {
+            "value": 0,
+            "feedback": "The absolute-value part can reach 0, but the +1 lifts the whole graph: the floor is 1."
+          }
+        ],
+        "fallbackFeedback": "Minimum value 1, at x = 3."
+      },
+      "variant": {
+        "gen": "extrema-value",
+        "form": "absMinValue"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both coordinates, one story.",
+      "conceptTag": "fna-extrema",
+      "explanationVariants": [
+        "The valley of x³ − 3x is at x = 1 with value f(1) = 1 − 3 = −2, so the local minimum point is (1, −2).",
+        "After falling across (−1, 1) the curve turns up at x = 1; its height there is −2."
+      ],
+      "hints": [
+        "The second turning point (falling → rising) is the local minimum.",
+        "Its x is 1. Evaluate f(1) = 1³ − 3·1 for the y.",
+        "f(1) = 1 − 3 = −2 — the point is (1, −2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which point is the local minimum of y = x³ − 3x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(1, −2)",
+            "correct": true,
+            "feedback": "Right — turn at x = 1, height f(1) = −2."
+          },
+          {
+            "id": "o2",
+            "label": "(−2, 1)",
+            "feedback": "Coordinates reversed: the turn is at INPUT x = 1 with OUTPUT −2, so the point is (1, −2)."
+          },
+          {
+            "id": "o3",
+            "label": "(1, 2)",
+            "feedback": "Sign slip in f(1) = 1 − 3 = −2, not +2. (+2 is the local MAX's height, over at x = −1.)"
+          }
+        ]
+      },
+      "variant": {
+        "gen": "extrema-value",
+        "form": "whichPoint"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Peaks and valleys, precisely.",
+      "takeaways": [
+        "Local extrema beat their neighbors; absolute extrema beat the whole graph.",
+        "Report both coordinates: where (x) and what value (y).",
+        "Unbounded growth means no absolute maximum exists."
+      ],
+      "teaser": "Next: putting it together — reading a whole graph's story in one pass."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-extrema",
+      "concept": {
+        "id": "rem-fna0202-c",
+        "kind": "concept",
+        "body": "At a peak or valley, the x says WHERE, the y says the VALUE. 'Maximum value' always asks for the y."
+      },
+      "check": {
+        "id": "rem-fna0202-k",
+        "kind": "check",
+        "body": "Where vs what.",
+        "conceptTag": "fna-extrema",
+        "explanationVariants": [
+          "The vertex of y = x² is (0, 0): the minimum VALUE is 0, occurring at x = 0.",
+          "x² is never negative and hits 0 at x = 0 — floor value 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the minimum VALUE of y = x² ?",
+          "answer": 0,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "y = x² can go lower than 1 — at x = 0 it reaches 0, its true floor."
+            },
+            {
+              "value": -1,
+              "feedback": "Squares are never negative: the smallest output is 0, at x = 0."
+            }
+          ],
+          "fallbackFeedback": "Minimum value 0, at the vertex (0, 0)."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,362 @@
+{
+  "id": "ft-05-03",
+  "slug": "graphs-and-verification",
+  "title": "Graphs & Verification",
+  "courseId": "function-transformations",
+  "chapterId": "ch5-inverse-functions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "On a graph, the pair swap becomes geometry: every point (a, b) on f becomes **(b, a)** on f⁻¹. Swapping coordinates reflects a point across the diagonal line **y = x** — so the whole graph of f⁻¹ is f's **mirror image across y = x**.",
+      "figure": "inverse-reflection"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reflect one point.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "The graph of f passes through (3, 5). Plot the point that must lie on f⁻¹.",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 3,
+            "y": 5,
+            "feedback": "That's the point on f itself — the inverse SWAPS the coordinates: plot (5, 3)."
+          }
+        ],
+        "missFeedback": "Swap the coordinates of (3, 5): the inverse contains (5, 3).",
+        "successFeedback": "Right — (3, 5) on f becomes (5, 3) on f⁻¹, its mirror image across y = x.",
+        "connectTargets": false
+      },
+      "predict": {
+        "prompt": "f passes through (3, 5). Then f⁻¹ must pass through…",
+        "options": [
+          {
+            "id": "swap",
+            "label": "(5, 3) — inputs and outputs trade places"
+          },
+          {
+            "id": "neg",
+            "label": "(−3, −5)"
+          },
+          {
+            "id": "same",
+            "label": "(3, 5) as well"
+          }
+        ],
+        "outcomeId": "swap",
+        "reveal": "The inverse answers the reverse question: f sends 3 to 5, so f⁻¹ sends 5 back to 3. Every point swaps its coordinates — which is why the two graphs are mirror images across y = x."
+      },
+      "conceptTag": "ft-inverse-graph",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse graph.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse graph must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse graph."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-graph",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To **verify** a claimed inverse, compose them: f(f⁻¹(x)) must return x for every input. For f(x) = 3x − 4 and f⁻¹(x) = (x + 4)/3: f(f⁻¹(x)) = 3 · (x + 4)/3 − 4 = x + 4 − 4 = **x**. ✓ Anything other than plain x means the pair isn't inverse.",
+      "figure": "ft-verify-inverse"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Swap the point.",
+      "conceptTag": "ft-inverse-graph",
+      "explanationVariants": [
+        "(2, 7) on f swaps to (7, 2) on f⁻¹ — inputs and outputs trade places.",
+        "Reflecting (2, 7) across y = x lands on (7, 2)."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "The graph of f contains (2, 7). Which point must the graph of f⁻¹ contain?",
+        "answer": [
+          7,
+          2
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              2,
+              7
+            ],
+            "feedback": "That's f's own point — the inverse SWAPS the coordinates to (7, 2)."
+          },
+          {
+            "values": [
+              -2,
+              -7
+            ],
+            "feedback": "Negating both coordinates reflects through the ORIGIN — the inverse reflects across y = x, swapping to (7, 2)."
+          },
+          {
+            "values": [
+              -7,
+              -2
+            ],
+            "feedback": "That's a reflection across y = −x. Inverses mirror across y = x: swap to (7, 2)."
+          }
+        ],
+        "fallbackFeedback": "The inverse SWAPS each coordinate pair: (a, b) → (b, a).",
+        "successFeedback": "Right — the inverse swaps each coordinate pair."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-graph__pointEntry"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Watch composition return x.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 3x − 4 and f⁻¹(x) = (x + 4)/3. Compute f(f⁻¹(8)).",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the inner value f⁻¹(8) = 12/3 — now apply f to finish: 3 × 4 − 4 = 8."
+          },
+          {
+            "value": 20,
+            "feedback": "That's f(8) = 3 × 8 − 4 — you applied f first. Composition runs f⁻¹ first: f(4) = 8."
+          }
+        ],
+        "fallbackFeedback": "f⁻¹(8) = 12/3 = 4, then f(4) = 12 − 4 = 8 — the composition hands back the original 8."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The mirror line.",
+      "conceptTag": "ft-inverse-graph",
+      "explanationVariants": [
+        "Swapping (a, b) to (b, a) is exactly reflection across the diagonal y = x.",
+        "Points ON y = x have equal coordinates, so the swap leaves them fixed — that line is the mirror."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A function's graph and its inverse's graph are mirror images across which line?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = x",
+            "correct": true,
+            "feedback": "Right — coordinate swapping is reflection across the diagonal y = x."
+          },
+          {
+            "id": "o2",
+            "label": "the x-axis",
+            "correct": false,
+            "feedback": "Reflecting across the x-axis sends (a, b) to (a, −b) — that negates the output, it doesn't swap the pair."
+          },
+          {
+            "id": "o3",
+            "label": "the y-axis",
+            "correct": false,
+            "feedback": "That sends (a, b) to (−a, b) — negating the input, not swapping input with output."
+          },
+          {
+            "id": "o4",
+            "label": "y = −x",
+            "correct": false,
+            "feedback": "That sends (a, b) to (−b, −a) — a swap AND two sign flips. The plain swap mirrors across y = x."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-graph__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When no inverse function exists.",
+      "conceptTag": "ft-inverse-graph",
+      "explanationVariants": [
+        "f(x) = x² sends both 2 and −2 to 4 — a horizontal line at y = 4 hits the parabola twice, so the undo of 4 is ambiguous.",
+        "A function has an inverse FUNCTION only if every horizontal line crosses its graph at most once; the parabola fails."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The horizontal line test says a function has an inverse function only if no horizontal line hits its graph twice. Which parent FAILS the test?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = x²",
+            "correct": true,
+            "feedback": "Right — y = 4 hits the parabola at both x = 2 and x = −2, so undoing 4 is ambiguous (fixable by restricting to x ≥ 0)."
+          },
+          {
+            "id": "o2",
+            "label": "y = x³",
+            "correct": false,
+            "feedback": "The cubic always rises — each height is reached exactly once, so it passes and has an inverse."
+          },
+          {
+            "id": "o3",
+            "label": "y = x + 2",
+            "correct": false,
+            "feedback": "A non-flat line meets each horizontal line exactly once — it passes."
+          },
+          {
+            "id": "o4",
+            "label": "y = √x",
+            "correct": false,
+            "feedback": "The half-curve climbs steadily from (0, 0) — each output occurs once, so it passes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-graph__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Where f meets its inverse.",
+      "conceptTag": "ft-inverse-graph",
+      "explanationVariants": [
+        "On y = x the coordinates are equal, so solve f(x) = x: 2x − 6 = x gives x = 6 — the shared point is (6, 6), and f⁻¹(6) = 6 too.",
+        "Subtract x from both sides of 2x − 6 = x: x − 6 = 0, so x = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 2x − 6. Its graph and its inverse's graph both cross the mirror line y = x at one shared point. At what x-value?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "x = 3 gives f(3) = 0 — that's the x-INTERCEPT. On y = x the output must EQUAL the input: solve 2x − 6 = x, so x = 6."
+          },
+          {
+            "value": -6,
+            "feedback": "Moving terms the wrong way: 2x − 6 = x gives 2x − x = 6, so x = +6, not −6."
+          }
+        ],
+        "fallbackFeedback": "Set f(x) = x: 2x − 6 = x → x = 6. Check: f(6) = 6. ✓"
+      },
+      "hints": [
+        "A point on the mirror line y = x has equal coordinates — so its output equals its input.",
+        "That means solve f(x) = x: set 2x − 6 = x.",
+        "Subtract x from both sides: x − 6 = 0, so x = 6."
+      ],
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-graph__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Inverses mirror across y = x; composition proves the pairing.",
+      "takeaways": [
+        "(a, b) on f becomes (b, a) on f⁻¹ — reflection across y = x.",
+        "Verify inverses by composing: f(f⁻¹(x)) must simplify to plain x.",
+        "Horizontal line test: two hits at one height means no inverse function without restricting the domain."
+      ],
+      "teaser": "Course complete! Next course: numbers beyond the real line — complex numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-inverse-graph",
+      "concept": {
+        "id": "rem-ft0503-c",
+        "kind": "concept",
+        "body": "The graph rule is the pair swap in disguise: a point (a, b) on f always appears as (b, a) on f⁻¹."
+      },
+      "check": {
+        "id": "rem-ft0503-k",
+        "kind": "check",
+        "body": "Swap one more point.",
+        "conceptTag": "ft-inverse-graph",
+        "explanationVariants": [
+          "Swap the coordinates: (1, 4) on f becomes (4, 1) on f⁻¹.",
+          "The input 1 and output 4 trade places on the inverse."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f contains the point (1, 4). Which point is on f⁻¹?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(4, 1)",
+              "correct": true,
+              "feedback": "Right — coordinates swap on the inverse."
+            },
+            {
+              "id": "o2",
+              "label": "(1, 4)",
+              "correct": false,
+              "feedback": "That's f's point — the inverse SWAPS it to (4, 1)."
+            },
+            {
+              "id": "o3",
+              "label": "(−1, −4)",
+              "correct": false,
+              "feedback": "Negating reflects through the origin; inverses swap coordinates instead: (4, 1)."
+            },
+            {
+              "id": "o4",
+              "label": "(4, 4)",
+              "correct": false,
+              "feedback": "Only the OUTPUT moved — the swap puts the old output first AND the old input second: (4, 1)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "id": "avp-01-03",
+  "slug": "shifting-and-flipping-the-v",
+  "title": "Shifting and Flipping the V",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch1-the-v",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "y = |x − 2| − 3 is still the same V, standing somewhere else. The −2 INSIDE the bars moves it horizontally; the −3 outside moves it vertically. The vertex is wherever the inside of the bars equals 0 — that is the one input the shift is built around.",
+      "figure": "avp-shifted-vertex"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Put the vertex where it actually stands.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the vertex of y = |x − 2| − 3.",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "yLabels": [
+          "-4",
+          "-3",
+          "-2",
+          "-1",
+          "0",
+          "1"
+        ],
+        "targets": [
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 2,
+            "feedback": "The inside says x − 2, and many readers move LEFT by 2. Solve x − 2 = 0 instead: the vertex sits at x = +2."
+          },
+          {
+            "x": 4,
+            "y": 5,
+            "feedback": "Right column, wrong floor — the −3 outside the bars drops the whole V three units below the axis."
+          }
+        ],
+        "missFeedback": "The vertex sits where x − 2 = 0, so x = 2; there the height is 0 − 3 = −3. Plot (2, −3).",
+        "successFeedback": "(2, −3): inside-the-bars moved it right, outside-the-bars moved it down. The V's shape never changed."
+      },
+      "predict": {
+        "prompt": "y = |x − 2| − 3. Which way does the −2 INSIDE the bars move the V?",
+        "options": [
+          {
+            "id": "left",
+            "label": "Left 2 — a minus means left"
+          },
+          {
+            "id": "right",
+            "label": "Right 2"
+          },
+          {
+            "id": "down",
+            "label": "Down 2 — it lowers the graph"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "The vertex tracks whatever makes the inside zero, and x − 2 = 0 at x = +2. Inside-the-bars shifts run opposite to the sign you read, which is exactly why this one catches so many people."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Locate another vertex.",
+      "conceptTag": "avp-v-transform",
+      "explanationVariants": [
+        "x + 4 = 0 at x = −4, and the +1 outside lifts the vertex to height 1, so the vertex is (−4, 1).",
+        "Plus-inside moves left; plus-outside moves up."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where is the vertex of y = |x + 4| + 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(−4, 1)",
+            "correct": true,
+            "feedback": "Yes — x + 4 = 0 at x = −4, and the outside +1 raises the floor to 1."
+          },
+          {
+            "id": "o2",
+            "label": "(4, 1)",
+            "correct": false,
+            "feedback": "Inside-the-bars shifts run opposite to their sign: x + 4 = 0 gives x = −4."
+          },
+          {
+            "id": "o3",
+            "label": "(−4, −1)",
+            "correct": false,
+            "feedback": "The outside +1 lifts the V; it does not lower it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A minus in FRONT flips instead of shifts. y = −|x| takes every height and negates it, turning the V upside down into a peak — the vertex becomes the highest point rather than the lowest. Inside the bars: horizontal. Outside: vertical. In front: reflection.",
+      "figure": "avp-flip-peak"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate a shifted V.",
+      "conceptTag": "avp-v-transform",
+      "explanationVariants": [
+        "At x = 5: |5 − 2| − 3 = 3 − 3 = 0.",
+        "Inside first: 5 − 2 = 3, its distance is 3, then subtract 3 to get 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = |x − 2| − 3, what is y when x = 5?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "The bars were dropped: |5 − 2| = 3, and then the outside −3 still has to be applied."
+          },
+          {
+            "value": -3,
+            "feedback": "That is the vertex height, which happens at x = 2, not x = 5."
+          }
+        ],
+        "fallbackFeedback": "Work inside out: 5 − 2 = 3, |3| = 3, 3 − 3 = 0.",
+        "successFeedback": "0 — the shifted V crosses the x-axis right there."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which way does it open?",
+      "conceptTag": "avp-v-transform",
+      "explanationVariants": [
+        "The minus in front negates every height, so the V opens downward into a peak.",
+        "−|x| turns the graph's floor into a ceiling."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How does y = −|x| + 2 open?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Downward — a peak at (0, 2)",
+            "correct": true,
+            "feedback": "Right: the front minus flips the V, so the vertex is now the maximum."
+          },
+          {
+            "id": "o2",
+            "label": "Upward — a valley at (0, 2)",
+            "correct": false,
+            "feedback": "That would be y = |x| + 2. The minus in front reverses every height."
+          },
+          {
+            "id": "o3",
+            "label": "Upward, with a vertex at (0, −2)",
+            "correct": false,
+            "feedback": "Two errors: the flip is ignored and the +2 is read as lowering the graph."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build the rule from the picture.",
+      "conceptTag": "avp-v-transform",
+      "explanationVariants": [
+        "A vertex at x = 6 needs the inside to vanish there: x − 6.",
+        "Set the inside equal to zero and solve for the shift that lands the vertex on 6."
+      ],
+      "hints": [
+        "The vertex happens where the expression inside the bars is 0.",
+        "You need |x − h| to vanish at x = 6, so ask what h does that.",
+        "x − h = 0 at x = h, so h must equal 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = |x − h| + 1 has its vertex at x = 6. What is h?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "The sign flip is being applied twice. The rule already reads x − h, so h = 6 puts the vertex at +6."
+          },
+          {
+            "value": 1,
+            "feedback": "That is the vertical shift, which sets the vertex's HEIGHT, not its x."
+          }
+        ],
+        "fallbackFeedback": "The vertex sits where x − h = 0, i.e. x = h. For that to be 6, h = 6.",
+        "successFeedback": "h = 6 — read the vertex straight off the rule, no table needed."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same V, new address.",
+      "takeaways": [
+        "The vertex sits where the expression inside the bars equals zero.",
+        "Inside the bars shifts horizontally and opposite to its sign; outside shifts vertically as written.",
+        "A minus in front flips the V into a peak."
+      ],
+      "teaser": "Next: stop reading the V and start solving it — |x| = 5 and the pair of answers it always hides."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-v-transform",
+      "concept": {
+        "id": "rem-avp-v-transform-c",
+        "kind": "concept",
+        "body": "A minus in FRONT flips instead of shifts. y = −|x| takes every height and negates it, turning the V upside down into a peak — the vertex becomes the highest point rather than the lowest. Inside the bars: horizontal. Outside: vertical. In front: reflection."
+      },
+      "check": {
+        "id": "rem-avp-v-transform-k",
+        "kind": "check",
+        "body": "Locate another vertex.",
+        "conceptTag": "avp-v-transform",
+        "explanationVariants": [
+          "x + 4 = 0 at x = −4, and the +1 outside lifts the vertex to height 1, so the vertex is (−4, 1).",
+          "Plus-inside moves left; plus-outside moves up."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Where is the vertex of y = |x + 4| + 1?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(−4, 1)",
+              "correct": true,
+              "feedback": "Yes — x + 4 = 0 at x = −4, and the outside +1 raises the floor to 1."
+            },
+            {
+              "id": "o2",
+              "label": "(4, 1)",
+              "correct": false,
+              "feedback": "Inside-the-bars shifts run opposite to their sign: x + 4 = 0 gives x = −4."
+            },
+            {
+              "id": "o3",
+              "label": "(−4, −1)",
+              "correct": false,
+              "feedback": "The outside +1 lifts the V; it does not lower it."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

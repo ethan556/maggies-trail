@@ -1,0 +1,266 @@
+{
+  "id": "lc-01-01",
+  "slug": "the-idea-of-a-limit",
+  "title": "The Idea of a Limit: Approaching a Value",
+  "courseId": "limits-continuity",
+  "chapterId": "ch1-limits-graphically",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **limit** asks a simple question: as x gets closer and closer to some value, what does f(x) head toward? We write lim(x→a) f(x) = L. The key idea is **approach** — we care where the function is GOING near a, not necessarily its value AT a.",
+      "figure": "lc-approach-table"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Approach x = 3 and watch the y-values close in.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "continuous",
+        "a": 3,
+        "leftValue": 5,
+        "rightValue": 5,
+        "fAtA": 5,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "Magnify the graph around x = 3. Decide whether the y-values settle on a single number as you close in from both sides.",
+        "successFeedback": "Both sides march to 5, and f(3) is 5 as well. This is the easy case — but notice the limit was decided by the APPROACH, and the value at the point merely agreed with it.",
+        "moreZoomFeedback": "Magnify further before deciding. A limit is a claim about arbitrarily small neighbourhoods, so one look from far out cannot settle it.",
+        "wrongVerdictFeedback": "Read the two numbers: from the left y → 5 and from the right y → 5, and they stay there at every magnification. That is a limit existing."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 3. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          },
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          }
+        ],
+        "outcomeId": "agree",
+        "reveal": "Both sides close in on 5. A limit only asks where the sides are HEADING, so it exists here."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Zoom toward the target input and compare visible local behavior with the symbolic limit claim.",
+        "invariants": [
+          "local-behavior-survives-zoom",
+          "limit-depends-on-approach"
+        ],
+        "misconceptions": [
+          "graph-pixel-is-proof",
+          "function-value-equals-limit"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "limits-continuity-graphZoom",
+        "delayed": false
+      },
+      "conceptTag": "lc-limit-idea"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Approach from both sides.",
+      "conceptTag": "lc-limit-idea",
+      "explanationVariants": [
+        "From the left f → 3.99… and from the right f → 4.01…; both sides squeeze toward 4, so the limit is 4.",
+        "When left and right approaches agree on 4, the limit equals 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Near x = 2, f(x) gives 3.99 (from the left) and 4.01 (from the right). What value is f approaching?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 3.99 + 4.01 adds. Both sides converge to the SAME value, 4."
+          },
+          {
+            "value": 0.02,
+            "feedback": "0.02 = 4.01 − 3.99 is the gap. Both sides approach 4."
+          }
+        ],
+        "fallbackFeedback": "Both sides close in on 4: the limit is 4."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-limit-idea__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Crucially, the limit can exist even where the function has a **hole**. For f(x) = (x² − 4)/(x − 2), plugging in x = 2 gives 0/0 — undefined. But everywhere else f(x) = x + 2, so as x → 2 the outputs approach 4. The limit is 4 even though f(2) doesn't exist.",
+      "figure": "lc-hole-graph"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A limit at a hole.",
+      "conceptTag": "lc-limit-idea",
+      "explanationVariants": [
+        "For x ≠ 2, (x² − 4)/(x − 2) = x + 2, which approaches 2 + 2 = 4 as x → 2 — the limit exists despite the hole.",
+        "Cancel to x + 2: the limit is 4, even though f(2) is undefined."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = (x² − 4)/(x − 2), find lim(x→2) f(x). (It equals x + 2 away from the hole.)",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0/0 is undefined, not the limit. Away from x = 2, f = x + 2 → 4."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the x-value. The function approaches x + 2 = 4."
+          }
+        ],
+        "fallbackFeedback": "f = x + 2 for x ≠ 2, so the limit is 4."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-limit-idea__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Value vs limit.",
+      "conceptTag": "lc-limit-idea",
+      "explanationVariants": [
+        "A limit describes the APPROACH, so a defined value at the point (even a wrong-looking one) doesn't change it: if f → 5 near a, the limit is 5 regardless of f(a).",
+        "The limit ignores the single point a; it only reads the neighborhood."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "If f(x) approaches 5 as x → 3, but f(3) = 1 (a lone point off the curve), then lim(x→3) f(x) is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5 (the approach wins)",
+            "correct": true,
+            "feedback": "Right — the limit reads the approach, not the isolated value f(3)."
+          },
+          {
+            "id": "o2",
+            "label": "1 (the actual value)",
+            "feedback": "The limit ignores the single point. The approach is 5, so the limit is 5."
+          },
+          {
+            "id": "o3",
+            "label": "undefined",
+            "feedback": "The approach is clear (5), so the limit exists and equals 5, regardless of f(3)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-limit-idea__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Another hole.",
+      "conceptTag": "lc-limit-idea",
+      "explanationVariants": [
+        "(x² − 9)/(x − 3) = x + 3 for x ≠ 3, which approaches 3 + 3 = 6 as x → 3.",
+        "Factor and cancel: the limit is 6."
+      ],
+      "hints": [
+        "Factor the numerator: x² − 9 = (x − 3)(x + 3).",
+        "Cancel (x − 3): leaves x + 3.",
+        "Evaluate x + 3 at x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find lim(x→3) (x² − 9)/(x − 3).",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0/0 at x = 3 is undefined, not the limit. Cancel to x + 3 → 6."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the x-value. The function approaches x + 3 = 6."
+          }
+        ],
+        "fallbackFeedback": "(x² − 9)/(x − 3) = x + 3 → 6."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-limit-idea__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Where it's going, not where it is.",
+      "takeaways": [
+        "A limit is the value f(x) approaches as x nears a.",
+        "Limits can exist at holes, where f itself is undefined.",
+        "The value f(a) doesn't decide the limit — the approach does."
+      ],
+      "teaser": "Next: reading limits from tables and graphs precisely."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lc-limit-idea",
+      "concept": {
+        "id": "rem-lc0101-c",
+        "kind": "concept",
+        "body": "A limit lim(x→a) f(x) = L is the value f(x) approaches as x nears a. It can exist even where f(a) is undefined (a hole); the approach, not the value at a, defines it."
+      },
+      "check": {
+        "id": "rem-lc0101-k",
+        "kind": "check",
+        "body": "One limit.",
+        "conceptTag": "lc-limit-idea",
+        "explanationVariants": [
+          "As x → 1, values 4.9, 4.99, 4.999 approach 5.",
+          "The outputs close in on 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "As x → 1, f(x) gives 4.9, 4.99, 4.999, … What is the limit?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4.999,
+              "feedback": "That's one step; the values approach 5."
+            },
+            {
+              "value": 1,
+              "feedback": "1 is the x-value. f(x) approaches 5."
+            }
+          ],
+          "fallbackFeedback": "The outputs approach 5."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,430 @@
+{
+  "id": "g4p-01-01",
+  "slug": "finding-all-factor-pairs",
+  "title": "Finding All Factor Pairs",
+  "courseId": "patterns-factors-g4",
+  "chapterId": "ch1-factors-and-multiples",
+  "minutes": 7,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "A factor pair is a rectangle a number can build: 24 makes 1×24, 2×12, 3×8 and 4×6, and each pair is two factors that multiply to 24.",
+      "narration": "A factor pair is a rectangle a number can build: 24 makes 1×24, 2×12, 3×8 and 4×6, and each pair is two factors that multiply to 24."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g4pf-factor-pairs",
+      "widget": {
+        "type": "areaModel",
+        "prompt": "Build a rectangle with area 24 whose sides are 4 and 6.",
+        "targetArea": 24,
+        "wMax": 6,
+        "hMax": 6,
+        "wStart": 1,
+        "hStart": 1,
+        "successFeedback": "24 — a 6 by 4 rectangle, one of the four factor pairs 24 allows.",
+        "lowFeedback": "Smaller than 24 — keep building until the rectangle reaches the full area.",
+        "highFeedback": "Larger than 24 — one side has grown past the pair asked for.",
+        "square": false,
+        "requireFactors": {
+          "w": 6,
+          "h": 4
+        },
+        "factorFeedback": "That area is right, but from a different pair — this one must measure 6 by 4."
+      },
+      "predict": {
+        "prompt": "Are 4 × 6 and 6 × 4 different factor pairs of 24?",
+        "options": [
+          {
+            "id": "same",
+            "label": "No — the same rectangle turned"
+          },
+          {
+            "id": "diff",
+            "label": "Yes — two pairs"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "Rotating a rectangle does not change which two numbers multiply to 24, so the pair is counted once."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf factor pairs.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf factor pairs can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-factor-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g4pf-factor-pairs",
+      "explanationVariants": [
+        "Sides multiply to the area.",
+        "Divide to find the partner."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle has one side 7 and an area of 56. What is the other side?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "That subtracted the known side. A rectangle's sides MULTIPLY to the area, so divide instead."
+          },
+          {
+            "value": 56,
+            "feedback": "56 is the whole area; the question asks for the side that pairs with 7."
+          }
+        ],
+        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
+        "successFeedback": "Correct — 8."
+      },
+      "hints": [
+        "Sides multiply to the area.",
+        "Test whole divisions.",
+        "Stop when pairs repeat."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf factor pairs.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf factor pairs can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-factor-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Search upward from 1 and stop when the pairs begin to repeat — 4×6 and 6×4 are the same rectangle turned on its side.",
+      "narration": "Search upward from 1 and stop when the pairs begin to repeat — 4×6 and 6×4 are the same rectangle turned on its side."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g4pf-factor-pairs",
+      "widget": {
+        "type": "areaModel",
+        "prompt": "Build a rectangle with area 24 whose sides are 4 and 6.",
+        "targetArea": 24,
+        "wMax": 6,
+        "hMax": 6,
+        "wStart": 1,
+        "hStart": 1,
+        "successFeedback": "24 — a 6 by 4 rectangle, one of the four factor pairs 24 allows.",
+        "lowFeedback": "Smaller than 24 — keep building until the rectangle reaches the full area.",
+        "highFeedback": "Larger than 24 — one side has grown past the pair asked for.",
+        "square": false,
+        "requireFactors": {
+          "w": 6,
+          "h": 4
+        },
+        "factorFeedback": "That area is right, but from a different pair — this one must measure 6 by 4."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf factor pairs.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf factor pairs can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-factor-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g4pf-factor-pairs",
+      "explanationVariants": [
+        "Search upward from 1.",
+        "Stop when pairs repeat."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How do you know you have found ALL the factor pairs of 24?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Test every number from 1 up until the pairs start repeating",
+            "correct": true,
+            "feedback": "Correct — once you pass the point where a pair flips (4 × 6 then 6 × 4), every pair has already appeared."
+          },
+          {
+            "id": "o1",
+            "label": "Stop once you find three pairs",
+            "correct": false,
+            "feedback": "The count of pairs is not fixed; 24 has four, and stopping early misses some."
+          },
+          {
+            "id": "o2",
+            "label": "Only even numbers can be factors of 24",
+            "correct": false,
+            "feedback": "1 and 3 are both odd factors of 24, so evenness is not the test."
+          },
+          {
+            "id": "o3",
+            "label": "Divide 24 by 2 repeatedly and list what you get",
+            "correct": false,
+            "feedback": "That finds 12, 6, 3 but misses 8 and 4 as partners — halving does not reach every factor."
+          }
+        ]
+      },
+      "hints": [
+        "Sides multiply to the area.",
+        "Test whole divisions.",
+        "Stop when pairs repeat."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf factor pairs.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf factor pairs can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-factor-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g4pf-factor-pairs",
+      "explanationVariants": [
+        "Each pair is a rectangle.",
+        "Whole sides only."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle has one side 5 and an area of 40. What is the other side?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "That subtracted the known side. A rectangle's sides MULTIPLY to the area, so divide instead."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is the whole area; the question asks for the side that pairs with 5."
+          }
+        ],
+        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
+        "successFeedback": "Correct — 8."
+      },
+      "hints": [
+        "Sides multiply to the area.",
+        "Test whole divisions.",
+        "Stop when pairs repeat."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf factor pairs.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf factor pairs can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-factor-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g4pf-factor-pairs",
+      "explanationVariants": [
+        "Bigger areas, same search.",
+        "Divide and check."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle has one side 6 and an area of 48. What is the other side?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "That subtracted the known side. A rectangle's sides MULTIPLY to the area, so divide instead."
+          },
+          {
+            "value": 48,
+            "feedback": "48 is the whole area; the question asks for the side that pairs with 6."
+          }
+        ],
+        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
+        "successFeedback": "Correct — 8."
+      },
+      "hints": [
+        "Sides multiply to the area.",
+        "Test whole divisions.",
+        "Stop when pairs repeat."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf factor pairs.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf factor pairs can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-factor-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "A factor pair builds a rectangle.",
+        "Search upward from 1.",
+        "Stop when the pairs repeat."
+      ],
+      "teaser": "next: testing a single candidate."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g4pf-factor-pairs",
+      "concept": {
+        "id": "rem-g4pf-factor-pairs-c",
+        "kind": "concept",
+        "body": "Search upward from 1 and stop when the pairs begin to repeat — 4×6 and 6×4 are the same rectangle turned on its side.",
+        "narration": "Search upward from 1 and stop when the pairs begin to repeat — 4×6 and 6×4 are the same rectangle turned on its side."
+      },
+      "check": {
+        "id": "rem-g4pf-factor-pairs-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g4pf-factor-pairs",
+        "explanationVariants": [
+          "Sides multiply to the area.",
+          "Divide to find the partner."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A rectangle has one side 7 and an area of 56. What is the other side?",
+          "answer": 8,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 49,
+              "feedback": "That subtracted the known side. A rectangle's sides MULTIPLY to the area, so divide instead."
+            },
+            {
+              "value": 56,
+              "feedback": "56 is the whole area; the question asks for the side that pairs with 7."
+            }
+          ],
+          "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
+          "successFeedback": "Correct — 8."
+        }
+      }
+    }
+  ]
+}

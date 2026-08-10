@@ -1,0 +1,654 @@
+{
+  "id": "g2a-03-01",
+  "slug": "writing-the-repeated-sum",
+  "title": "Writing the Repeated Sum",
+  "courseId": "arrays-even-odd-g2",
+  "chapterId": "ch3-arrays-and-their-sums",
+  "minutes": 6,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "The repeated sum is the array written as arithmetic: 3 rows of 4 becomes 4 + 4 + 4. The addend is the row size; the number of addends is the row count.",
+      "narration": "The repeated sum is the array written as arithmetic: 3 rows of 4 becomes 4 + 4 + 4. The addend is the row size; the number of addends is the row count."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g2a-repeated-sum",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "This array shows 4 + 4 + 4. Tap the row that is the LAST addend.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 3
+        },
+        "hotspots": [
+          {
+            "id": "r1c1",
+            "x": 13,
+            "y": 17,
+            "label": "row 1, column 1",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 1 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r1c2",
+            "x": 38,
+            "y": 17,
+            "label": "row 1, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 2 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r1c3",
+            "x": 63,
+            "y": 17,
+            "label": "row 1, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 3 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r1c4",
+            "x": 88,
+            "y": 17,
+            "label": "row 1, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 4 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c1",
+            "x": 13,
+            "y": 50,
+            "label": "row 2, column 1",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 1 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c2",
+            "x": 38,
+            "y": 50,
+            "label": "row 2, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 2 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c3",
+            "x": 63,
+            "y": 50,
+            "label": "row 2, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 3 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c4",
+            "x": 88,
+            "y": 50,
+            "label": "row 2, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 4 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r3c1",
+            "x": 13,
+            "y": 83,
+            "label": "row 3, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c2",
+            "x": 38,
+            "y": 83,
+            "label": "row 3, column 2",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c3",
+            "x": 63,
+            "y": 83,
+            "label": "row 3, column 3",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c4",
+            "x": 88,
+            "y": 83,
+            "label": "row 3, column 4",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Rows run across and columns run up and down — find the crossing the prompt names.",
+        "successFeedback": "Exactly right — that is the spot where the named row and column meet."
+      },
+      "predict": {
+        "prompt": "4 rows of 6: how many addends in the repeated sum?",
+        "options": [
+          {
+            "id": "four",
+            "label": "4 addends of 6"
+          },
+          {
+            "id": "six",
+            "label": "6 addends of 4"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "By rows, each of the 4 rows contributes one 6 — four sixes."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a repeated sum.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a repeated sum."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-repeated-sum",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g2a-repeated-sum",
+      "explanationVariants": [
+        "Addend = row size.",
+        "Count of addends = row count."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An array has 4 rows with 6 dots in each row. Which repeated sum counts it BY ROWS?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "6 + 6 + 6 + 6",
+            "correct": true,
+            "feedback": "Correct — one 6 for each of the 4 rows, added again and again."
+          },
+          {
+            "id": "o1",
+            "label": "4 + 4 + 4 + 4 + 4 + 4",
+            "correct": false,
+            "feedback": "That counts BY COLUMNS (6 columns of 4) — same total, different story than \"by rows\"."
+          },
+          {
+            "id": "o2",
+            "label": "4 + 6",
+            "correct": false,
+            "feedback": "Adding the row count to the row size mixes two different kinds of numbers."
+          },
+          {
+            "id": "o3",
+            "label": "7 + 7 + 7 + 7",
+            "correct": false,
+            "feedback": "Each row holds 6, not 7 — the repeated number must match the row size."
+          }
+        ]
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a repeated sum.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a repeated sum."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-repeated-sum",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Reading it back works too — see 5 + 5 + 5 and picture 3 rows of 5 before computing a thing.",
+      "narration": "Reading it back works too — see 5 + 5 + 5 and picture 3 rows of 5 before computing a thing."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g2a-repeated-sum",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "This array shows 4 + 4 + 4. Tap the row that is the LAST addend.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 3
+        },
+        "hotspots": [
+          {
+            "id": "r1c1",
+            "x": 13,
+            "y": 17,
+            "label": "row 1, column 1",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 1 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r1c2",
+            "x": 38,
+            "y": 17,
+            "label": "row 1, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 2 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r1c3",
+            "x": 63,
+            "y": 17,
+            "label": "row 1, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 3 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r1c4",
+            "x": 88,
+            "y": 17,
+            "label": "row 1, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 4 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c1",
+            "x": 13,
+            "y": 50,
+            "label": "row 2, column 1",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 1 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c2",
+            "x": 38,
+            "y": 50,
+            "label": "row 2, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 2 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c3",
+            "x": 63,
+            "y": 50,
+            "label": "row 2, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 3 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r2c4",
+            "x": 88,
+            "y": 50,
+            "label": "row 2, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 4 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+          },
+          {
+            "id": "r3c1",
+            "x": 13,
+            "y": 83,
+            "label": "row 3, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c2",
+            "x": 38,
+            "y": 83,
+            "label": "row 3, column 2",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c3",
+            "x": 63,
+            "y": 83,
+            "label": "row 3, column 3",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c4",
+            "x": 88,
+            "y": 83,
+            "label": "row 3, column 4",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Rows run across and columns run up and down — find the crossing the prompt names.",
+        "successFeedback": "Exactly right — that is the spot where the named row and column meet."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a repeated sum.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a repeated sum."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-repeated-sum",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g2a-repeated-sum",
+      "explanationVariants": [
+        "Compute the sum in stages.",
+        "The trail shows the rows."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two rows made 10. Add the third row: 10 + 5 = ?",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That added a fourth row — the array stops at three."
+          },
+          {
+            "value": 5,
+            "feedback": "That took a row away; the third row joins the total."
+          }
+        ],
+        "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
+        "successFeedback": "Correct — 15."
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a repeated sum.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a repeated sum."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-repeated-sum",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      },
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g2a-repeated-sum",
+      "explanationVariants": [
+        "By columns swaps the roles.",
+        "Same total either way."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An array has 3 rows with 6 dots in each row. Which repeated sum counts it BY ROWS?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "6 + 6 + 6",
+            "correct": true,
+            "feedback": "Correct — one 6 for each of the 3 rows, added again and again."
+          },
+          {
+            "id": "o1",
+            "label": "3 + 3 + 3 + 3 + 3 + 3",
+            "correct": false,
+            "feedback": "That counts BY COLUMNS (6 columns of 3) — same total, different story than \"by rows\"."
+          },
+          {
+            "id": "o2",
+            "label": "3 + 6",
+            "correct": false,
+            "feedback": "Adding the row count to the row size mixes two different kinds of numbers."
+          },
+          {
+            "id": "o3",
+            "label": "7 + 7 + 7",
+            "correct": false,
+            "feedback": "Each row holds 6, not 7 — the repeated number must match the row size."
+          }
+        ]
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a repeated sum.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a repeated sum."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-repeated-sum",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g2a-repeated-sum",
+      "explanationVariants": [
+        "Stories hide arrays too.",
+        "Write the sum, then stage it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Maggie plants 4 rows of 4 seedlings. The first 3 rows hold 12. So 12 + 4 = ?",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "The final row never got planted into the total — add its 4."
+          },
+          {
+            "value": 20,
+            "feedback": "That count does not match the array — recount one row at a time and add again."
+          }
+        ],
+        "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
+        "successFeedback": "Correct — 16."
+      },
+      "hints": [
+        "Find the rows and the row size.",
+        "Stage the sum row by row.",
+        "The last row finishes the total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a repeated sum.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a repeated sum."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-repeated-sum",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      },
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "Array to sum: addend is the row size.",
+        "One addend per row.",
+        "Reading back rebuilds the array."
+      ],
+      "teaser": "next: same total, different arrays."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g2a-repeated-sum",
+      "concept": {
+        "id": "rem-g2a-repeated-sum-c",
+        "kind": "concept",
+        "body": "Reading it back works too — see 5 + 5 + 5 and picture 3 rows of 5 before computing a thing.",
+        "narration": "Reading it back works too — see 5 + 5 + 5 and picture 3 rows of 5 before computing a thing."
+      },
+      "check": {
+        "id": "rem-g2a-repeated-sum-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g2a-repeated-sum",
+        "explanationVariants": [
+          "Addend = row size.",
+          "Count of addends = row count."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "An array has 4 rows with 6 dots in each row. Which repeated sum counts it BY ROWS?",
+          "options": [
+            {
+              "id": "o0",
+              "label": "6 + 6 + 6 + 6",
+              "correct": true,
+              "feedback": "Correct — one 6 for each of the 4 rows, added again and again."
+            },
+            {
+              "id": "o1",
+              "label": "4 + 4 + 4 + 4 + 4 + 4",
+              "correct": false,
+              "feedback": "That counts BY COLUMNS (6 columns of 4) — same total, different story than \"by rows\"."
+            },
+            {
+              "id": "o2",
+              "label": "4 + 6",
+              "correct": false,
+              "feedback": "Adding the row count to the row size mixes two different kinds of numbers."
+            },
+            {
+              "id": "o3",
+              "label": "7 + 7 + 7 + 7",
+              "correct": false,
+              "feedback": "Each row holds 6, not 7 — the repeated number must match the row size."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

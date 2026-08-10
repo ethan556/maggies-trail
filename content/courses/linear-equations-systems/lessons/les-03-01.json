@@ -1,0 +1,385 @@
+{
+  "id": "les-03-01",
+  "slug": "what-is-a-system",
+  "title": "What Is a System?",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch3-systems-and-solutions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **system** is two equations you solve at the same time. Its **solution** is the single point (x, y) that makes BOTH equations true at once — not just one of them. It's the point the two lines share.",
+      "figure": "les-system-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "What a system asks.",
+      "widget": {
+        "type": "systemsExplore",
+        "m1": 1,
+        "b1": 1,
+        "m2": -2,
+        "b2": 7,
+        "xMin": 0,
+        "xMax": 6,
+        "yMin": 0,
+        "yMax": 7,
+        "xStart": 0,
+        "yStart": 0,
+        "prompt": "Find the pair (x, y) that works for y = x + 1 AND y = −2x + 7.",
+        "successFeedback": "(2, 3). Each line is a whole set of pairs that work for its own equation; the system asks for the pair the two sets share — which is exactly where they cross.",
+        "offLine1Feedback": "That point does not satisfy y = x + 1.",
+        "offLine2Feedback": "That point satisfies the first equation but not y = −2x + 7."
+      },
+      "predict": {
+        "prompt": "Two lines with different slopes are on the grid. How many points can satisfy BOTH equations at once?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Exactly one"
+          },
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "many",
+            "label": "Every point on either line"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Lines with different slopes cross exactly once, so exactly one pair sits in both solution sets — the crossing point. Being on ONE line is not enough; the system demands both."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Locate the point satisfying both constraints and connect intersection to simultaneous substitution.",
+        "predictionId": "g8-systems-equivalent-views-prediction",
+        "invariants": [
+          "shared-solution",
+          "equivalent-system"
+        ],
+        "misconceptions": [
+          "one-equation-only",
+          "intersection-as-decoration"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 2,
+        "transferFamily": "noninteger-or-no-intersection-system",
+        "delayed": true,
+        "counterfactualPrompt": "Move to a point on only one line. Which equation is satisfied, and why is it not yet a system solution?",
+        "explanation": {
+          "prompt": "Why is the intersection the solution of the system?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Its coordinates make both equations true at the same time.",
+              "correct": true,
+              "feedback": "Exactly. A system solution must satisfy every constraint simultaneously."
+            },
+            {
+              "id": "surface",
+              "label": "It is the visually highest point on either line.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. A system solution must satisfy every constraint simultaneously."
+            }
+          ]
+        }
+      },
+      "conceptTag": "les-system-meaning"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To CHECK a proposed solution, substitute it into BOTH equations. The point counts only if it makes every equation true. A point on just one line is not a solution of the system.",
+      "figure": "les-system-def"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Verify a solution.",
+      "conceptTag": "les-system-meaning",
+      "explanationVariants": [
+        "For (1, 3) with y = 2x+1: 3 = 2(1)+1 = 3 ✓. With y = x+1: 3 = 1+1 = 2, false. So (1,3) is NOT a solution.",
+        "It fits the first equation but not the second, so it fails the system."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is (1, 3) a solution of the system y = 2x + 1 and y = x + 1?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — it fits the first equation but not the second",
+            "correct": true,
+            "feedback": "Right — 3 = 2(1)+1 ✓, but 3 ≠ 1+1, so it fails the second equation."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it works in both",
+            "correct": false,
+            "feedback": "Check the second: y = x+1 gives 1+1 = 2, not 3 — so (1,3) fails it."
+          },
+          {
+            "id": "c",
+            "label": "Yes — it's on the first line",
+            "correct": false,
+            "feedback": "Being on ONE line isn't enough — a solution must satisfy BOTH equations."
+          },
+          {
+            "id": "d",
+            "label": "No — it fits neither equation",
+            "correct": false,
+            "feedback": "It DOES fit the first (3 = 2(1)+1); it just fails the second, so it's still not a solution."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-system-meaning",
+        "form": "lesPointFailsSecond"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A point on only one line.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Point (4, 2) is on the line y = x − 2. Is it a solution of the system y = x − 2 and y = 2x − 5?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — it must also satisfy y = 2x − 5",
+            "correct": true,
+            "feedback": "Right — check the second: 2(4)−5 = 3, not 2, so (4,2) fails it."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it's on the first line",
+            "correct": false,
+            "feedback": "One line isn't enough — the second gives 2(4)−5 = 3 ≠ 2, so it's not a solution."
+          },
+          {
+            "id": "c",
+            "label": "Yes — both give 2",
+            "correct": false,
+            "feedback": "The second equation gives 2(4)−5 = 3, not 2 — so it fails there."
+          },
+          {
+            "id": "d",
+            "label": "There's not enough information",
+            "correct": false,
+            "feedback": "There's plenty — substitute into the second equation: 2(4)−5 = 3 ≠ 2, so no."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the point that solves the system.",
+      "conceptTag": "les-system-meaning",
+      "explanationVariants": [
+        "(3, 1) works: for y = −x+4, 1 = −3+4 ✓; for y = 2x−5, 1 = 2(3)−5 ✓.",
+        "Only (3,1) satisfies both equations at once."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which point solves the system y = −x + 4 and y = 2x − 5?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(3, 1)",
+            "correct": true,
+            "feedback": "Right — 1 = −3+4 ✓ and 1 = 2(3)−5 ✓, so both hold."
+          },
+          {
+            "id": "b",
+            "label": "(1, 3)",
+            "correct": false,
+            "feedback": "Check the first: 3 = −1+4 = 3 ✓, but the second: 2(1)−5 = −3 ≠ 3 — fails."
+          },
+          {
+            "id": "c",
+            "label": "(4, 0)",
+            "correct": false,
+            "feedback": "First: 0 = −4+4 ✓, but second: 2(4)−5 = 3 ≠ 0 — fails the second."
+          },
+          {
+            "id": "d",
+            "label": "(0, 4)",
+            "correct": false,
+            "feedback": "First: 4 = −0+4 ✓, but second: 2(0)−5 = −5 ≠ 4 — fails the second."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-system-meaning",
+        "form": "lesPointSolveA"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the intersection meaning.",
+      "conceptTag": "les-system-meaning",
+      "explanationVariants": [
+        "The solution of a system is where the two lines CROSS — the one point on both lines at once.",
+        "Graphically, the solution is the intersection point of the two lines."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On a graph, where is the solution of a system of two lines?",
+        "options": [
+          {
+            "id": "a",
+            "label": "At the point where the two lines cross",
+            "correct": true,
+            "feedback": "Right — the intersection is the single point on both lines."
+          },
+          {
+            "id": "b",
+            "label": "Wherever the first line is",
+            "correct": false,
+            "feedback": "The first line alone isn't the solution — only the point it SHARES with the second line."
+          },
+          {
+            "id": "c",
+            "label": "At the y-intercept of each line",
+            "correct": false,
+            "feedback": "The y-intercepts are just starting points, not necessarily where the lines meet."
+          },
+          {
+            "id": "d",
+            "label": "Anywhere the lines are parallel",
+            "correct": false,
+            "feedback": "Parallel lines never cross, so that's the NO-solution case — a solution is where they intersect."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-system-meaning",
+        "form": "lesIntersectionMeaning"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Verify a solution to a harder system.",
+      "conceptTag": "les-system-meaning",
+      "explanationVariants": [
+        "(3, 5) solves y = 3x−4 and y = x+2: 5 = 3(3)−4 = 5 ✓ and 5 = 3+2 = 5 ✓.",
+        "Both equations give 5 at x = 3, so (3,5) is the solution."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which point solves the system y = 3x − 4 and y = x + 2?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(3, 5)",
+            "correct": true,
+            "feedback": "Right — 5 = 3(3)−4 ✓ and 5 = 3+2 ✓, so both hold."
+          },
+          {
+            "id": "b",
+            "label": "(2, 4)",
+            "correct": false,
+            "feedback": "First: 3(2)−4 = 2 ≠ 4 — fails the first equation."
+          },
+          {
+            "id": "c",
+            "label": "(5, 3)",
+            "correct": false,
+            "feedback": "First: 3(5)−4 = 11 ≠ 3 — fails the first equation."
+          },
+          {
+            "id": "d",
+            "label": "(1, 3)",
+            "correct": false,
+            "feedback": "First: 3(1)−4 = −1 ≠ 3 — fails the first equation."
+          }
+        ]
+      },
+      "hints": [
+        "Substitute each point into BOTH equations and keep only the one that fits both.",
+        "For (3,5): first equation y = 3x−4 gives 3(3)−4 = 5 ✓. Now check the second.",
+        "Second equation y = x+2 gives 3+2 = 5 ✓ — both hold, so (3,5) is the solution."
+      ],
+      "variant": {
+        "gen": "g8-les-system-meaning",
+        "form": "lesPointSolveChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A system's solution is the single point that satisfies BOTH equations — where the lines cross.",
+      "takeaways": [
+        "A system is two equations solved together.",
+        "The solution must make BOTH equations true, not just one.",
+        "Graphically, it's the intersection point of the two lines."
+      ],
+      "teaser": "Next: finding that intersection by graphing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-system-meaning",
+      "concept": {
+        "id": "rem-les0301-c",
+        "kind": "concept",
+        "body": "A system is two equations solved together. Its solution is the single point (x,y) that makes BOTH equations true — the point where the two lines cross. Check by substituting into both."
+      },
+      "check": {
+        "id": "rem-les0301-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-system-meaning",
+        "explanationVariants": [
+          "(2, 3) solves y = x+1 and y = −x+5: 3 = 2+1 ✓ and 3 = −2+5 ✓.",
+          "Both equations hold at (2,3), so it's the solution."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which point solves the system y = x + 1 and y = −x + 5?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(2, 3)",
+              "correct": true,
+              "feedback": "Right — 3 = 2+1 ✓ and 3 = −2+5 ✓."
+            },
+            {
+              "id": "b",
+              "label": "(1, 2)",
+              "correct": false,
+              "feedback": "First holds (2 = 1+1), but second gives −1+5 = 4 ≠ 2 — fails."
+            },
+            {
+              "id": "c",
+              "label": "(0, 5)",
+              "correct": false,
+              "feedback": "Second holds (5 = −0+5), but first gives 0+1 = 1 ≠ 5 — fails."
+            },
+            {
+              "id": "d",
+              "label": "(3, 2)",
+              "correct": false,
+              "feedback": "First gives 3+1 = 4 ≠ 2 — fails the first equation."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

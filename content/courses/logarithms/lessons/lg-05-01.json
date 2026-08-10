@@ -1,0 +1,264 @@
+{
+  "id": "lg-05-01",
+  "slug": "continuous-growth-models",
+  "title": "Continuous Growth: A = Pe^(rt)",
+  "courseId": "logarithms",
+  "chapterId": "ch5-models-and-logarithmic-scales",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The all-purpose continuous model: **A = P·e^(rt)** — P the start, r the continuous rate (negative for decay), t the time. $500 at 6% for 10 years: A = 500·e^0.6 ≈ 500 · 1.822 = **$911**. Algebra 1's a·bˣ models, upgraded to compound every instant.",
+      "figure": "lg-continuous-model"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Evaluate forward.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 1,
+        "targetBase": 2.7,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "A = 200·e^(0.05·20) = 200·e¹. e is not a round number, so slide the base until b¹ lands near 2.7 — the finest step this dial reaches.",
+        "successFeedback": "This dial's best step is 2.7; e itself is 2.71828…, close enough that the two agree to two places. Using the lesson's own e ≈ 2.718, the growth factor is 200 × 2.718 ≈ 544 — the widget shows WHY the number lands near 2.7-and-a-bit, without pretending a dial in tenths can reach an irrational number exactly.",
+        "lowFeedback": "Still below e — the growth factor has not caught up to 2.7 yet.",
+        "highFeedback": "Past e now — the dial has gone beyond 2.7."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Read the anatomy: in A = 300·e^(0.08t), the start is **300** (t = 0 makes e⁰ = 1) and the continuous rate is **8%**. A negative rate flips it to decay: A = P·e^(−0.10t) shrinks continuously at 10%. Same skeleton either way — the exponent's sign tells the story.",
+      "figure": "lg-anatomy"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Anatomy check.",
+      "conceptTag": "lg-models",
+      "explanationVariants": [
+        "At t = 0: A = 450 · e⁰ = 450; the exponent's coefficient 0.03 is the rate: 3%.",
+        "Coefficient = start; exponent coefficient = continuous rate."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For A = 450·e^(0.03t), the starting amount and continuous rate are:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "450 and 3%",
+            "correct": true,
+            "feedback": "Right — e⁰ = 1 exposes the 450; 0.03 as a percent is 3%."
+          },
+          {
+            "id": "o2",
+            "label": "450 and 0.03%",
+            "correct": false,
+            "feedback": "The DECIMAL 0.03 converts to 3 percent — two decimal places over."
+          },
+          {
+            "id": "o3",
+            "label": "0.03 and 450%",
+            "correct": false,
+            "feedback": "The big number out front is the START; the small exponent coefficient is the rate."
+          },
+          {
+            "id": "o4",
+            "label": "453 and 3%",
+            "correct": false,
+            "feedback": "At t = 0 nothing has grown yet: A = 450 exactly, not 450 + 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-models__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Solve for time.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "When does $500 at 7% continuous growth reach $1000? Solve 2 = e^(0.07t) using ln 2 ≈ 0.693 (one decimal).",
+        "answer": 9.9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14.3,
+            "feedback": "t = (ln 2)/0.07 = 0.693/0.07 ≈ 9.9 — dividing by 0.0485 or similar misreads the rate."
+          },
+          {
+            "value": 0.14,
+            "feedback": "Divide ln 2 BY the rate: 0.693/0.07 ≈ 9.9 years (0.14 inverts the division)."
+          }
+        ],
+        "fallbackFeedback": "0.07t = ln 2 → t ≈ 9.9 years — the 'rule of 70': 70/7 ≈ 10."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Doubling time is rate-only.",
+      "conceptTag": "lg-models",
+      "explanationVariants": [
+        "P cancels in P·e^(rt) = 2P — the doubling time t = (ln 2)/r never sees the starting amount.",
+        "Big or small principal, same doubling clock."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How does the doubling time of A = P·e^(rt) depend on the starting amount P?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "it doesn't — P cancels, leaving t = (ln 2)/r",
+            "correct": true,
+            "feedback": "Right — $5 and $5 million double on the same schedule at equal rates."
+          },
+          {
+            "id": "o2",
+            "label": "bigger P doubles faster",
+            "correct": false,
+            "feedback": "Divide both sides of Pe^(rt) = 2P by P — it vanishes; only the rate r sets the clock."
+          },
+          {
+            "id": "o3",
+            "label": "bigger P doubles slower",
+            "correct": false,
+            "feedback": "The P cancels from the equation entirely — doubling time is (ln 2)/r, rate-only."
+          },
+          {
+            "id": "o4",
+            "label": "only P matters, not r",
+            "correct": false,
+            "feedback": "Exactly backwards: t = (ln 2)/r depends on r ALONE."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-models__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Continuous decay.",
+      "conceptTag": "lg-models",
+      "explanationVariants": [
+        "A = 600·e^(−0.25·2) = 600·e^(−0.5) ≈ 600 · 0.607 ≈ 364.",
+        "e^(−0.5) ≈ 0.607 — more than half survives (continuous 25% for 2 units isn't 50% gone)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sample decays continuously: A = 600·e^(−0.25·2). Using e^(−0.5) ≈ 0.607, what is A to the nearest whole?",
+        "answer": 364,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 300,
+            "feedback": "e^(−0.5) ≈ 0.607, not 0.5 — continuous decay leaves MORE than the naive half: ≈ 364."
+          },
+          {
+            "value": 236,
+            "feedback": "236 is what was LOST (600 − 364) — A asks what REMAINS: 600 · 0.607 ≈ 364."
+          }
+        ],
+        "fallbackFeedback": "600 · 0.607 ≈ 364."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-models__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Unknown rate.",
+      "conceptTag": "lg-models",
+      "explanationVariants": [
+        "450 = 300·e^(5r) → e^(5r) = 1.5 → 5r = ln 1.5 ≈ 0.405 → r ≈ 0.081 = 8.1%.",
+        "Isolate, ln, divide by the TIME to expose the rate."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "$300 grows continuously to $450 in 5 years: 450 = 300·e^(5r). Using ln 1.5 ≈ 0.405, find r as a percent (one decimal).",
+        "answer": 8.1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 40.5,
+            "feedback": "Divide ln 1.5 by the 5 YEARS: 0.405/5 = 0.081 → 8.1% (40.5 skips that division)."
+          },
+          {
+            "value": 10,
+            "feedback": "The naive (150/300)/5 = 10% ignores compounding — continuously, only ln 1.5/5 ≈ 8.1% is needed."
+          }
+        ],
+        "fallbackFeedback": "5r = 0.405 → r = 0.081 → 8.1%."
+      },
+      "hints": [
+        "Divide by 300: e^(5r) = 1.5.",
+        "ln both sides: 5r = ln 1.5 ≈ 0.405.",
+        "r = 0.081 → 8.1%."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-models__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A = Pe^(rt): e evaluates forward, ln solves backward.",
+      "takeaways": [
+        "Coefficient = start; exponent coefficient = continuous rate (sign = direction).",
+        "Doubling time (ln 2)/r ignores the principal entirely.",
+        "'How long?' and 'what rate?' are both one ln away."
+      ],
+      "teaser": "Next: half-life — decay's version of the doubling clock."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-models",
+      "concept": {
+        "id": "rem-lg0501-c",
+        "kind": "concept",
+        "body": "The model at t = 0: A = 900·e^(0.04·0), and e⁰ = 1."
+      },
+      "check": {
+        "id": "rem-lg0501-k",
+        "kind": "check",
+        "body": "Read the start.",
+        "conceptTag": "lg-models",
+        "explanationVariants": [
+          "A(0) = 900 · 1 = 900.",
+          "No time elapsed, no growth — the coefficient is the start."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For A = 900·e^(0.04t), what is A at t = 0?",
+          "answer": 900,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 936,
+              "feedback": "At t = 0 the exponent is 0 and e⁰ = 1 — no growth yet: exactly 900."
+            },
+            {
+              "value": 0,
+              "feedback": "The EXPONENT is 0; the amount is 900 · 1 = 900."
+            }
+          ],
+          "fallbackFeedback": "900 · e⁰ = 900."
+        }
+      }
+    }
+  ]
+}

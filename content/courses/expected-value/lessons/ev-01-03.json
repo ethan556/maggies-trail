@@ -1,0 +1,244 @@
+{
+  "id": "ev-01-03",
+  "slug": "the-long-run-average",
+  "title": "The Long-Run Average",
+  "courseId": "expected-value",
+  "chapterId": "ch1-random-variables",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Expected value is the long-run average: multiply each value by its probability and add. For a fair die that is (1 + 2 + 3 + 4 + 5 + 6)/6 = 3.5. No roll ever produces 3.5 — and that is not a flaw. Expectation describes where thousands of rolls settle, not what any single roll can do.",
+      "figure": "ev-long-run-average"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Measure a gap the standardized way.",
+      "widget": {
+        "type": "distributionCompareLab",
+        "mode": "measure",
+        "tolerance": 0,
+        "prompt": "Two games have mean payouts of 12 and 6, with a variability measure of 3. How many variability-units apart are the means?",
+        "meanA": 12,
+        "meanB": 6,
+        "variability": 3,
+        "answer": 2,
+        "measureChoices": [
+          {
+            "value": 6,
+            "feedback": "That is the raw gap, 12 − 6. Divide by the variability measure to standardize it: 6 ÷ 3 = 2."
+          },
+          {
+            "value": 2,
+            "feedback": "(12 − 6) ÷ 3 = 2 variability-units — the gap measured in the spread's own currency."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the variability measure itself, not the standardized gap."
+          }
+        ],
+        "fallbackFeedback": "(12 − 6) ÷ 3 = 2 variability-units.",
+        "successFeedback": "2 variability-units. Means are averages, and comparing them fairly means measuring the gap against how much the games wobble."
+      },
+      "predict": {
+        "prompt": "A fair die's expected value is 3.5. Can a single roll ever produce 3.5?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — it is the expected result"
+          },
+          {
+            "id": "no",
+            "label": "No — no face shows 3.5"
+          },
+          {
+            "id": "sometimes",
+            "label": "Only over many rolls"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Expected value is an average, and averages routinely land between the possible values — a family with 2.3 children is the same phenomenon. Insisting that expectation must be attainable is the single most common misreading of the word ‘expected’, which promises a long-run centre, not a forecast of the next roll."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute a simple expectation.",
+      "conceptTag": "ev-expected-value",
+      "explanationVariants": [
+        "Averaging the six faces gives 3.5.",
+        "(1+2+3+4+5+6)/6 = 21/6 = 3.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the expected value of one roll of a fair six-sided die?",
+        "answer": 3.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is a face, and a tempting one — but the average of the six faces is 21/6, which lands between 3 and 4."
+          },
+          {
+            "value": 21,
+            "feedback": "21 is the SUM of the faces. Divide by 6 to average them."
+          }
+        ],
+        "fallbackFeedback": "(1+2+3+4+5+6)/6 = 21/6 = 3.5.",
+        "successFeedback": "3.5 — a value no die can show, and exactly where thousands of rolls average out."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When the values are not equally likely, plain averaging is wrong — each value must be WEIGHTED by its probability. Expected value is a weighted average, and the weights are the distribution. A value with probability 0.9 pulls the answer toward itself far harder than one with probability 0.1.",
+      "figure": "ev-weighted-not-plain"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Weight the values.",
+      "conceptTag": "ev-expected-value",
+      "explanationVariants": [
+        "10(0.9) + 100(0.1) = 9 + 10 = 19.",
+        "The 10 carries nine times the weight, so the answer sits far below the midpoint."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "X is 10 with probability 0.9 and 100 with probability 0.1. What is its expected value?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "55 averages 10 and 100 as if they were equally likely. The 10 is nine times more probable, so it dominates."
+          },
+          {
+            "value": 110,
+            "feedback": "That adds the values without weighting. Multiply each by its probability first."
+          }
+        ],
+        "fallbackFeedback": "10(0.9) + 100(0.1) = 9 + 10 = 19.",
+        "successFeedback": "19 — much closer to 10 than to 100, because 10 carries nine tenths of the weight."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where does expectation sit?",
+      "conceptTag": "ev-expected-value",
+      "explanationVariants": [
+        "A weighted average always lies between the smallest and largest values, but need not equal any of them.",
+        "Expectation is a balance point, not a listed outcome."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Must an expected value be one of the variable's possible values?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — but it always lies between the smallest and largest",
+            "correct": true,
+            "feedback": "Exactly. It is a balance point, so it sits inside the range without having to be a listed value."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — otherwise it could not be expected",
+            "correct": false,
+            "feedback": "A die's 3.5 is a counterexample. ‘Expected’ names a long-run average, not an attainable result."
+          },
+          {
+            "id": "o3",
+            "label": "No — and it can fall outside the range entirely",
+            "correct": false,
+            "feedback": "A weighted average of numbers can never escape their range."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A three-value expectation.",
+      "conceptTag": "ev-expected-value",
+      "explanationVariants": [
+        "0(0.5) + 5(0.3) + 20(0.2) = 5.5.",
+        "0 + 1.5 + 4 = 5.5."
+      ],
+      "hints": [
+        "Multiply each value by its own probability before adding anything.",
+        "0(0.5) contributes nothing; then 5(0.3) and 20(0.2).",
+        "0 + 1.5 + 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A game pays 0 with probability 0.5, 5 with probability 0.3, and 20 with probability 0.2. What is the expected payout?",
+        "answer": 5.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "That adds the payouts without weighting them by how often they occur."
+          },
+          {
+            "value": 8.33,
+            "feedback": "That averages the three payouts equally. They are not equally likely — half the time the game pays nothing."
+          }
+        ],
+        "fallbackFeedback": "0(0.5) + 5(0.3) + 20(0.2) = 0 + 1.5 + 4 = 5.5.",
+        "successFeedback": "5.5 — a payout the game never actually makes, and precisely what it averages over the long run."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The balance point.",
+      "takeaways": [
+        "Expected value multiplies each value by its probability and adds: a weighted average.",
+        "It need not be a possible outcome — a fair die expects 3.5.",
+        "It always lies between the smallest and largest possible values."
+      ],
+      "teaser": "Next: attach real money to the outcomes and ask what a game is worth playing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ev-expected-value",
+      "concept": {
+        "id": "rem-ev-expected-value-c",
+        "kind": "concept",
+        "body": "When the values are not equally likely, plain averaging is wrong — each value must be WEIGHTED by its probability. Expected value is a weighted average, and the weights are the distribution. A value with probability 0.9 pulls the answer toward itself far harder than one with probability 0.1."
+      },
+      "check": {
+        "id": "rem-ev-expected-value-k",
+        "kind": "check",
+        "body": "Compute a simple expectation.",
+        "conceptTag": "ev-expected-value",
+        "explanationVariants": [
+          "Averaging the six faces gives 3.5.",
+          "(1+2+3+4+5+6)/6 = 21/6 = 3.5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the expected value of one roll of a fair six-sided die?",
+          "answer": 3.5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is a face, and a tempting one — but the average of the six faces is 21/6, which lands between 3 and 4."
+            },
+            {
+              "value": 21,
+              "feedback": "21 is the SUM of the faces. Divide by 6 to average them."
+            }
+          ],
+          "fallbackFeedback": "(1+2+3+4+5+6)/6 = 21/6 = 3.5.",
+          "successFeedback": "3.5 — a value no die can show, and exactly where thousands of rolls average out."
+        }
+      }
+    }
+  ]
+}

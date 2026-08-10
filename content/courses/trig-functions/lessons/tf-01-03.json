@@ -1,0 +1,252 @@
+{
+  "id": "tf-01-03",
+  "slug": "finding-the-angle",
+  "title": "Finding the Angle",
+  "courseId": "trig-functions",
+  "chapterId": "ch1-right-triangle-trig",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sides known, angle missing — run the ratio BACKWARD. If sin θ = 0.5, then θ = sin⁻¹(0.5) = 30°: the inverse function asks “which angle has this sine?” One notation warning: **sin⁻¹ is NOT 1/sin** — the −1 marks an inverse function, not a reciprocal.",
+      "figure": "tf-inverse-backward"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Undo a sine.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "ratios",
+        "ratio": "opp/hyp",
+        "a": 6,
+        "b": 6,
+        "target": 30,
+        "start": 60,
+        "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "sin θ = 0.5. Drag the angle until the opp/hyp card reads 0.5 — that is what an inverse sine does.",
+        "successFeedback": "θ = 30°. Finding an angle from a ratio is the same table read backwards, which is all sin⁻¹ means: not a new operation, but the question 'which angle gives this ratio?'.",
+        "lowFeedback": "opp/hyp is still below 0.5 — open the angle further.",
+        "highFeedback": "opp/hyp has gone past 0.5 — close the angle a little.",
+        "scaleFeedback": "Resize the triangle before checking; the angle that gives 0.5 must not depend on the triangle's size."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Grade the ramp.",
+      "conceptTag": "tf-inverse",
+      "explanationVariants": [
+        "Rise over run is tangent's pair: θ = tan⁻¹(3/4) = tan⁻¹(0.75) ≈ 36.9°.",
+        "The two LEGS are known — no hypotenuse needed, so tangent's inverse fires."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ramp rises 3 ft over a 4 ft run. What angle does it make with the ground, in degrees? (Round to tenths.)",
+        "answer": 36.9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 53.1,
+            "feedback": "53.1° is tan⁻¹(4/3) — the ratio flipped, giving the OTHER acute angle. Rise over run: tan⁻¹(0.75) ≈ 36.9°."
+          },
+          {
+            "value": 0.75,
+            "feedback": "0.75 is the ratio itself — the last step is missing. Feed it to the inverse: tan⁻¹(0.75) ≈ 36.9°."
+          }
+        ],
+        "fallbackFeedback": "θ = tan⁻¹(0.75) ≈ 36.9°."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-inverse__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Which inverse? Same matching game as before: identify WHICH two sides you hold, and take that ratio's inverse. Opposite-and-hypotenuse → sin⁻¹. Adjacent-and-hypotenuse → cos⁻¹. The two legs → tan⁻¹. The sides choose the function for you.",
+      "figure": "tf-which-inverse"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match, then invert.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "You know the opposite side (6) and the hypotenuse (12). The angle is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "sin⁻¹(6/12) = 30°",
+            "correct": true,
+            "feedback": "Right — opposite with hypotenuse is sine's pair, so its inverse recovers the angle."
+          },
+          {
+            "id": "o2",
+            "label": "cos⁻¹(6/12) = 60°",
+            "correct": false,
+            "feedback": "Cosine pairs the ADJACENT with the hypotenuse — but 6 is the opposite side. That computes a different angle."
+          },
+          {
+            "id": "o3",
+            "label": "tan⁻¹(6/12) ≈ 26.6°",
+            "correct": false,
+            "feedback": "Tangent needs the two LEGS — and 12 is the hypotenuse, not a leg. Sine's pair is what you actually hold."
+          },
+          {
+            "id": "o4",
+            "label": "sin(0.5)",
+            "correct": false,
+            "feedback": "That FEEDS 0.5 to sine instead of inverting — sine eats angles and outputs ratios. Recovering the angle needs sin⁻¹."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ladder angle.",
+      "conceptTag": "tf-inverse",
+      "explanationVariants": [
+        "The 13 ft ladder is the hypotenuse and the 12 ft height is opposite the ground angle: θ = sin⁻¹(12/13) ≈ 67.4°.",
+        "Steep is right — the ladder reaches nearly its full length up the wall."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 13 ft ladder reaches 12 ft up a wall. What angle does it make with the GROUND, in degrees? (Round to tenths.)",
+        "answer": 67.4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 22.6,
+            "feedback": "22.6° is cos⁻¹(12/13) — the angle at the TOP of the ladder, against the wall. The ground angle has the 12 ft height as its opposite: sin⁻¹(12/13) ≈ 67.4°."
+          },
+          {
+            "value": 0.92,
+            "feedback": "0.92 is the ratio 12/13 itself — the inverse hasn't run yet. sin⁻¹(12/13) ≈ 67.4°."
+          }
+        ],
+        "fallbackFeedback": "sin⁻¹(12/13) ≈ 67.4°."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-inverse__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Built-in check: a right triangle's two acute angles always total 90°. Find one with an inverse and the other is 90° minus it — 36.9° pairs with 53.1°. If your two inverses don't add to 90°, a ratio got flipped somewhere.",
+      "figure": "tf-acute-check"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "The complement.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "One acute angle of a right triangle is 36.9°. What is the other, in degrees?",
+        "answer": 53.1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 143.1,
+            "feedback": "143.1 is 180 − 36.9 — but the right angle already claims 90° of the triangle's 180°. The acute pair shares what's left: 90 − 36.9 = 53.1°."
+          },
+          {
+            "value": 36.9,
+            "feedback": "Equal acute angles only happen in the 45-45-90 triangle. Here the pair must total 90°: 90 − 36.9 = 53.1°."
+          }
+        ],
+        "fallbackFeedback": "90 − 36.9 = 53.1°."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Zipline pitch.",
+      "conceptTag": "tf-inverse",
+      "explanationVariants": [
+        "Drop and horizontal run are the two legs: θ = tan⁻¹(25/60) ≈ 22.6° below horizontal.",
+        "No hypotenuse is given — tangent's inverse is the only ratio whose two sides you hold."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A zipline drops 25 m over a 60 m horizontal run. What angle does it make below the horizontal, in degrees? (Round to tenths.)",
+        "answer": 22.6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 67.4,
+            "feedback": "67.4° is tan⁻¹(60/25) — the ratio flipped. The DROP is the opposite side of the pitch angle: tan⁻¹(25/60) ≈ 22.6°."
+          },
+          {
+            "value": 24.6,
+            "feedback": "24.6° is sin⁻¹(25/60) — but 60 m is the horizontal RUN, a leg, not the cable's slanted length. Two legs ⇒ tangent: ≈ 22.6°."
+          }
+        ],
+        "fallbackFeedback": "tan⁻¹(25/60) ≈ 22.6°."
+      },
+      "hints": [
+        "Which two sides do you hold — and is either one the hypotenuse?",
+        "Drop (opposite) and run (adjacent) are both legs: tangent's pair.",
+        "θ = tan⁻¹(25/60) — round to tenths."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-inverse__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Ratios in reverse.",
+      "takeaways": [
+        "Inverse trig recovers the angle from a ratio — and sin⁻¹ is an inverse, not a reciprocal.",
+        "Match the two KNOWN sides to their ratio, then invert that one.",
+        "The two acute inverses must total 90° — a free error check."
+      ],
+      "teaser": "Next: a new way to measure angles entirely — the radian — built from the circle itself."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-inverse",
+      "concept": {
+        "id": "rem-tf0103-c",
+        "kind": "concept",
+        "body": "The friendliest inverse: tan θ = 1 means the opposite and adjacent are EQUAL — rise matches run — and the only acute angle that balanced is 45°. So tan⁻¹(1) = 45°. Every inverse question reads the same way: which angle produces this ratio?"
+      },
+      "check": {
+        "id": "rem-tf0103-k",
+        "kind": "check",
+        "body": "Which angle balances?",
+        "conceptTag": "tf-inverse",
+        "explanationVariants": [
+          "tan⁻¹(1) = 45° — equal legs make the half-square triangle.",
+          "The inverse outputs an ANGLE, not another ratio."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "tan θ = 1. Find θ in degrees.",
+          "answer": 45,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is the ratio, not the angle — the inverse still has to run: tan⁻¹(1) = 45°."
+            },
+            {
+              "value": 90,
+              "feedback": "tan 90° is undefined (the adjacent side collapses to 0). Equal legs happen at 45°."
+            }
+          ],
+          "fallbackFeedback": "tan⁻¹(1) = 45°."
+        }
+      }
+    }
+  ]
+}

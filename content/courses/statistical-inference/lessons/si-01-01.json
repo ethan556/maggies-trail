@@ -1,0 +1,309 @@
+{
+  "id": "si-01-01",
+  "slug": "how-the-data-was-made",
+  "title": "How the Data Was Made",
+  "courseId": "statistical-inference",
+  "chapterId": "ch1-how-the-data-was-made",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Before you trust a number, ask how it was **made**. Three designs, three ceilings on what may be claimed:\n\n**Survey** — sample at random, describe a population.\n**Observational study** — watch, and report what goes together.\n**Experiment** — assign at random, and only then say *cause*.\n\nThe design sets the ceiling. No amount of data raises it.",
+      "figure": "si-study-types"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Match the design to what it licenses.",
+      "conceptTag": "si-study-type",
+      "explanationVariants": [
+        "Random sampling lets you generalise from the sample to the population. Random assignment lets you claim cause. They are different randomisations doing different jobs.",
+        "An observational study cannot rule out a lurking variable, so it may report association and nothing stronger."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each design to the strongest claim it can support.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Random sample survey"
+          },
+          {
+            "id": "w2",
+            "label": "Observational study"
+          },
+          {
+            "id": "w3",
+            "label": "Randomised experiment"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "\"About 62% of adults in this city agree.\""
+          },
+          {
+            "id": "y2",
+            "label": "\"Coffee drinkers tend to sleep less.\""
+          },
+          {
+            "id": "y3",
+            "label": "\"The drug lowered blood pressure.\""
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y3",
+            "feedback": "Watching cannot establish cause: the coffee drinkers may differ from everyone else in a dozen other ways. Only random assignment levels those differences."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "An experiment tests a cause; it usually runs on volunteers, who are not a random sample of the city, so generalising a percentage from it is a stretch."
+          }
+        ],
+        "missFeedback": "Ask what was randomised. Nothing → association only. The sample → a population estimate. The treatment → a causal claim.",
+        "successFeedback": "Sampling buys generalisation, assignment buys causation, and watching buys neither."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-study-type__matchPairs"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The volunteers are split by coin, not by choice.",
+      "widget": {
+        "type": "samplingBiasLab",
+        "prompt": "A trial of 300 patients. Choose the assignment method that removes the systematic differences between groups, use at least 120 patients, and repeat the draw several times.",
+        "populationLabel": "300 patients",
+        "targetMethod": "random",
+        "targetSize": 120,
+        "sizeMin": 20,
+        "sizeMax": 300,
+        "sizeStep": 20,
+        "sizeStart": 20,
+        "requiredDraws": 5,
+        "successFeedback": "Random assignment is what buys the causal claim. It does not make the groups identical — watch them wobble apart on each draw — but it makes their differences accidental rather than systematic, which is exactly what a lurking variable is not.",
+        "methodFeedback": "Letting patients choose, or assigning by who arrives first, lets something about the patient decide the group. That is the lurking variable arriving through the front door.",
+        "sizeFeedback": "Random, but small. With few patients the groups can still land far apart by luck alone; the design is sound and the evidence is thin.",
+        "drawsFeedback": "Draw several more times. The claim is about what random assignment does ON AVERAGE, which one draw cannot show."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the design.",
+      "conceptTag": "si-study-type",
+      "explanationVariants": [
+        "Nobody was assigned to run or not run — the researchers watched who already ran. That is observational, so the finding is association.",
+        "The runners chose to run. Whatever makes a person a runner may also protect their heart, and watching cannot separate the two."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Researchers follow 5,000 adults for 10 years and find that those who run have healthier hearts. What kind of study is this?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Observational — so it shows association, not cause.",
+            "correct": true,
+            "feedback": "Right. Nobody assigned the running, so runners may differ from non-runners in ways that also protect hearts."
+          },
+          {
+            "id": "o2",
+            "label": "An experiment, because the researchers collected data over 10 years.",
+            "correct": false,
+            "feedback": "Duration and effort do not make an experiment. The defining move is that the researcher *assigns* the treatment at random. Here, people assigned themselves."
+          },
+          {
+            "id": "o3",
+            "label": "An experiment, because the sample is large.",
+            "correct": false,
+            "feedback": "Size never converts an observational study into an experiment — it only makes the association estimate more precise. Precision about an association is still an association."
+          },
+          {
+            "id": "o4",
+            "label": "A sample survey, because they asked people about running.",
+            "correct": false,
+            "feedback": "A survey measures a population at one moment. Here an outcome (heart health) is tracked against a behaviour, which is an observational study."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-study-type__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When you only watch, a **lurking variable** can drive both columns of your table. Ice cream sales and drownings rise together; heat drives both.\n\nRandom assignment defeats this because the coin, not the person or the weather, decides who gets the treatment. Anything that could confound the comparison is dealt evenly into both arms.",
+      "figure": "si-confounding"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find the lurking variable.",
+      "conceptTag": "si-causation",
+      "explanationVariants": [
+        "Older students take harder classes AND have more homework. Age drives both, so the link between homework and grades is confounded.",
+        "A confounder must plausibly move BOTH variables. Anything that only moves one cannot manufacture a false link between them."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "A study finds towns with more firefighters have more fire damage. Which explanations could produce that link without firefighters causing damage?",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Could explain it",
+            "icon": "🔍"
+          },
+          {
+            "id": "no",
+            "label": "Cannot explain it",
+            "icon": "🚫"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Bigger towns have both more firefighters and more fires",
+            "bucketId": "yes",
+            "feedback": "Town size feeds both columns — the textbook lurking variable."
+          },
+          {
+            "id": "s2",
+            "label": "Big fires cause towns to hire more firefighters",
+            "bucketId": "yes",
+            "feedback": "Reverse causation: the arrow runs the other way. Association alone cannot tell you which end is the cause."
+          },
+          {
+            "id": "s3",
+            "label": "Firefighters accidentally start fires",
+            "bucketId": "no",
+            "feedback": "That would be the claim itself — firefighters causing the damage — rather than an alternative explanation of the link."
+          },
+          {
+            "id": "s4",
+            "label": "Fire damage is expensive to repair",
+            "bucketId": "no",
+            "feedback": "That is true but idle: it says nothing about why firefighter counts and damage move together."
+          }
+        ],
+        "missFeedback": "An alternative explanation must move BOTH variables, or reverse the arrow — otherwise it does not account for the link.",
+        "successFeedback": "Town size and reverse causation both explain the link with no causal arrow from firefighters to damage."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-causation__dragBucket"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Repair a claim.",
+      "conceptTag": "si-causation",
+      "hints": [
+        "Ask first: was the breakfast eaten because a researcher assigned it, or because the student chose it?",
+        "Students who eat breakfast may also sleep more, live in calmer homes, or be better organised — and all of those raise test scores by themselves.",
+        "The fix is not more students. It is a coin: assign breakfast at random and compare the arms."
+      ],
+      "explanationVariants": [
+        "The study is observational, so the honest claim is association: breakfast-eaters score higher. Turning it causal requires random assignment of breakfast.",
+        "The 20,000 students make the association precise, but precision about an association is not evidence of a cause. Only the design can promote the claim."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "\"In a survey of 20,000 students, breakfast-eaters scored 8 points higher. Schools should serve breakfast to raise scores.\" What is the flaw?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "An observational study cannot support a causal claim — breakfast-eaters may differ in other ways.",
+            "correct": true,
+            "feedback": "Right. To licence the recommendation you need random assignment, not a bigger survey."
+          },
+          {
+            "id": "o2",
+            "label": "The sample is too small to conclude anything.",
+            "correct": false,
+            "feedback": "20,000 is a large sample; the 8-point gap is likely real. The problem is not precision — it is that no design ruled out lurking variables."
+          },
+          {
+            "id": "o3",
+            "label": "An 8-point gap is too small to matter.",
+            "correct": false,
+            "feedback": "That is a question about effect size, and 8 points may well matter. The flaw here is the leap from association to cause."
+          },
+          {
+            "id": "o4",
+            "label": "Test scores are not a valid measure of learning.",
+            "correct": false,
+            "feedback": "That is a fair worry about the measurement, but it does not touch the specific logical break: watching who ate breakfast cannot show breakfast did the work."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-causation__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The design sets the ceiling.",
+      "takeaways": [
+        "Random sampling licenses generalising to a population; random assignment licenses claiming a cause.",
+        "Observational studies report association, however large they are.",
+        "Ask of any headline: what was randomised — nothing, the sample, or the treatment?"
+      ],
+      "teaser": "Next: the sample was random, and the number is still wrong. Meet bias."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-causation",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Before accepting \"A causes B\", try to invent a third thing that would move both. If you can, and nobody randomised A, the study cannot rule it out. Watching finds companions; only assigning finds causes.",
+        "figure": "si-confounding"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Was it assigned?",
+        "conceptTag": "si-causation",
+        "explanationVariants": [
+          "The researchers assigned the tutoring by coin flip, so lurking variables are balanced and a causal claim is licensed.",
+          "If the students had chosen tutoring themselves, the more motivated ones would have piled into it and confounded the comparison."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Students are assigned by coin flip to tutoring or no tutoring, and the tutored group scores higher. Can we say tutoring raised scores?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Yes — the coin balanced everything else.",
+              "correct": true,
+              "feedback": "Right. Random assignment leaves the treatment as the only systematic difference between the arms."
+            },
+            {
+              "id": "o2",
+              "label": "No — motivated students would still choose tutoring.",
+              "correct": false,
+              "feedback": "They did not choose it: the coin did. That is exactly what random assignment removes."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

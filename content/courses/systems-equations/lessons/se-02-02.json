@@ -1,0 +1,261 @@
+{
+  "id": "se-02-02",
+  "slug": "isolate-first-then-substitute",
+  "title": "Isolate First, Then Substitute",
+  "courseId": "systems-equations",
+  "chapterId": "ch2-substitution",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "coordinate-plane",
+      "body": "Often nothing is isolated yet. Then **solve one equation for a variable first** — pick one with a coefficient of 1 so you avoid fractions. From x + y = 7 you get **y = 7 − x**. Now substitute that into the other equation, exactly as before."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Isolate a variable.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve x + y = 7 for y.",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = 7 − x",
+            "correct": true,
+            "feedback": "Yes — subtract x from both sides: y = 7 − x."
+          },
+          {
+            "id": "b",
+            "label": "y = 7 + x",
+            "feedback": "Subtract x, don't add it: y = 7 − x."
+          },
+          {
+            "id": "c",
+            "label": "y = x − 7",
+            "feedback": "That solved for the wrong side. From x + y = 7, y = 7 − x."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Isolate, substitute, solve.",
+      "conceptTag": "isolate-then-substitute",
+      "explanationVariants": [
+        "From x + y = 8, y = 8 − x. Substitute into 3x − y = 4: 3x − (8 − x) = 4, so 4x − 8 = 4 and x = 3.",
+        "3x − (8 − x) = 4 gives 4x = 12, so x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system x + y = 8 and 3x − y = 4. What is x?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's y. Solve for x first: 3x − (8 − x) = 4 gives x = 3."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is a total, not x. After substituting, 4x = 12, so x = 3."
+          }
+        ],
+        "fallbackFeedback": "y = 8 − x, then 3x − (8 − x) = 4 → 4x = 12 → x = 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: **x + y = 8** and **3x − y = 4**. From the first, y = 8 − x. Substitute: 3x − (8 − x) = 4 → 4x − 8 = 4 → **x = 3**, then y = 8 − 3 = **5**. Solution **(3, 5)** — check both to be sure.",
+      "figure": "se-isolate-first"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Substitute carefully.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Using y = 8 − x, substitute into 3x − y = 4.",
+        "options": [
+          {
+            "id": "a",
+            "label": "3x − (8 − x) = 4",
+            "correct": true,
+            "feedback": "Yes — replace y with the whole expression, in parentheses, so the minus applies to all of it."
+          },
+          {
+            "id": "b",
+            "label": "3x − 8 − x = 4",
+            "feedback": "The minus applies to the whole (8 − x). Keep parentheses: 3x − (8 − x) = 4, which becomes 3x − 8 + x."
+          },
+          {
+            "id": "c",
+            "label": "3(8 − x) − y = 4",
+            "feedback": "Replace y, not x. Substitute y = 8 − x into the −y term: 3x − (8 − x) = 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Guard the **sign**. When you substitute into a **−y** term, wrap the expression in parentheses: −(8 − x) = −8 + x. Skip the parentheses and you'll flip the sign of the second piece — the most common substitution mistake.",
+      "figure": "se-guard-sign"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Solve for x.",
+      "widget": {
+        "type": "solveBalance",
+        "a": 3,
+        "b": 0,
+        "c": 9,
+        "relation": "eq",
+        "prompt": "For x − y = 1 and 2x + y = 8, adding the equations gives 3x = 9. Split into equal groups.",
+        "successFeedback": "x = 3, then y = 2. Adding the two equations made y disappear because its coefficients were opposites — the same balance move as always, applied to a whole equation rather than a number.",
+        "unbalancedFeedback": "The pans disagree.",
+        "notIsolatedFeedback": "x is not alone yet.",
+        "missFeedback": "Not the solution. 3x = 9 splits into 3 equal groups.",
+        "unexpandedFeedback": "Split the pan into equal groups."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Isolate x this time.",
+      "conceptTag": "isolate-then-substitute",
+      "explanationVariants": [
+        "From x − y = 2, x = 2 + y. Substitute into x + 2y = 8: (2 + y) + 2y = 8, so 3y = 6 and y = 2.",
+        "(2 + y) + 2y = 8 gives 2 + 3y = 8, so y = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system x + 2y = 8 and x − y = 2. What is y?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's x. Solve for y: (2 + y) + 2y = 8 gives y = 2."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is a total. After substituting, 3y = 6, so y = 2."
+          }
+        ],
+        "fallbackFeedback": "x = 2 + y, then (2 + y) + 2y = 8 → 3y = 6 → y = 2."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Watch the subtraction.",
+      "conceptTag": "isolate-then-substitute",
+      "explanationVariants": [
+        "From x + y = 9, y = 9 − x. Substitute into 2x − y = 6: 2x − (9 − x) = 6, so 3x − 9 = 6 and x = 5.",
+        "2x − (9 − x) = 6 gives 3x = 15, so x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system x + y = 9 and 2x − y = 6. What is x?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's y. Solve for x: 2x − (9 − x) = 6 gives x = 5."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is a total. After substituting, 3x = 15, so x = 5."
+          }
+        ],
+        "fallbackFeedback": "y = 9 − x, then 2x − (9 − x) = 6 → 3x = 15 → x = 5."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Isolate, then finish.",
+      "conceptTag": "isolate-then-substitute",
+      "explanationVariants": [
+        "From x − y = 2, x = 2 + y. Substitute into x + 2y = 11: (2 + y) + 2y = 11, so 3y = 9 and y = 3.",
+        "(2 + y) + 2y = 11 gives 2 + 3y = 11, so y = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system x − y = 2 and x + 2y = 11. What is y?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's x. Solve for y: (2 + y) + 2y = 11 gives y = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the first equation's total. After substituting, 3y = 9, so y = 3."
+          }
+        ],
+        "fallbackFeedback": "x = 2 + y, then (2 + y) + 2y = 11 → 3y = 9 → y = 3."
+      },
+      "hints": [
+        "The x has coefficient 1 in x − y = 2, so isolate it: x = 2 + y.",
+        "Substitute into x + 2y = 11: (2 + y) + 2y = 11.",
+        "3y = 9, so y = 3."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Isolate a coefficient-1 variable, then substitute as usual.",
+      "takeaways": [
+        "Solve one equation for a variable — prefer coefficient 1.",
+        "Substitute the whole expression, in parentheses, into the other equation.",
+        "Distribute the minus sign carefully into a −y term."
+      ],
+      "teaser": "next: put the full method to work on trickier systems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "isolate-then-substitute",
+      "concept": {
+        "id": "rem-is-c",
+        "kind": "concept",
+        "body": "Isolate a variable first, then substitute. From x + y = 8, y = 8 − x. Substitute into 3x − y = 4: 3x − (8 − x) = 4 → 4x − 8 = 4 → x = 3. Keep the parentheses so the minus hits both terms."
+      },
+      "check": {
+        "id": "rem-is-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "isolate-then-substitute",
+        "explanationVariants": [
+          "y = 8 − x, then 3x − (8 − x) = 4 gives x = 3.",
+          "3x − 8 + x = 4 → 4x = 12 → x = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve the system x + y = 8 and 3x − y = 4. What is x?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "That's y. Solve for x first: x = 3."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is a total. After substituting, 4x = 12, so x = 3."
+            }
+          ],
+          "fallbackFeedback": "y = 8 − x, then 3x − (8 − x) = 4 → x = 3."
+        }
+      }
+    }
+  ]
+}

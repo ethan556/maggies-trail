@@ -1,0 +1,445 @@
+{
+  "id": "pv-01-01",
+  "slug": "hundreds-tens-ones",
+  "title": "Hundreds, Tens, Ones",
+  "courseId": "place-value",
+  "chapterId": "ch1-inside-a-number",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A number is a **parking garage with three spots**: hundreds, tens, ones. In 347, the 3 parks in the hundreds spot, the 4 in tens, the 7 in ones. WHERE a digit parks decides its worth — the same 4 is worth 40 in the tens spot but only 4 in the ones spot.",
+      "figure": "pv3-place-chart"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "A flat is 100, a rod is 10, a unit is 1. Build the number with blocks and watch each digit's value add up.",
+      "widget": {
+        "type": "placeValue",
+        "prompt": "Build the number 156 with base-ten blocks.",
+        "target": 156,
+        "maxHundreds": 4,
+        "maxTens": 12,
+        "maxOnes": 15,
+        "hStart": 0,
+        "tStart": 0,
+        "oStart": 0,
+        "successFeedback": "156 — 1 hundred, 5 tens, and 6 ones. Each digit tells you how many of each block.",
+        "lowFeedback": "Your blocks add up to less than 156. Add more hundreds, tens, or ones.",
+        "highFeedback": "Your blocks add up to more than 156. Take some away."
+      },
+      "predict": {
+        "prompt": "156 needs 1 flat, 5 rods and 6 cubes. Which digit brings the FEWEST blocks but the MOST value?",
+        "options": [
+          {
+            "id": "one",
+            "label": "The 1"
+          },
+          {
+            "id": "six",
+            "label": "The 6"
+          },
+          {
+            "id": "five",
+            "label": "The 5"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "That single flat outweighs the 5 rods and 6 cubes combined: 100 against 56. Fewest pieces, biggest worth — the spot does the heavy lifting, not the digit."
+      },
+      "conceptTag": "place-value",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents place value.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for place value must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines place value."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:place-value",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Park the dots — one per digit-count in each spot.",
+      "conceptTag": "place-value",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Show 234 with dots: stack 2 dots in the Hundreds column, 3 in Tens, and 4 in Ones (build each stack from the bottom).",
+        "cols": 3,
+        "rows": 4,
+        "xLabels": [
+          "Hundreds",
+          "Tens",
+          "Ones"
+        ],
+        "yLabels": [
+          "1st",
+          "2nd",
+          "3rd",
+          "4th"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 1,
+            "y": 3,
+            "feedback": "A third hundreds dot would make 334 — the 2 in 234 parks exactly two dots in the hundreds spot."
+          },
+          {
+            "x": 1,
+            "y": 4,
+            "feedback": "Right column, but stacks grow from the bottom — put the hundreds dots in the lowest rows so the stack's height reads as the digit."
+          }
+        ],
+        "missFeedback": "Start every stack at the BOTTOM row and build up — the stack's height is the digit. 234 needs bottom-up stacks of 2, 3, and 4.",
+        "successFeedback": "2 hundreds + 3 tens + 4 ones = 200 + 30 + 4 = 234. Each column's dots are worth its spot."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents place value.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for place value must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines place value."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:place-value",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same digit, different spot, different worth.",
+      "conceptTag": "place-value",
+      "explanationVariants": [
+        "In 582 the 8 parks in the tens spot, so it stands for 8 tens: 80.",
+        "Break 582 into spots: 500 + 80 + 2 — the middle piece belongs to the 8."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the number 582, what is the 8 worth?",
+        "options": [
+          {
+            "id": "a",
+            "label": "80",
+            "correct": true,
+            "feedback": "The 8 sits in the tens spot — eight tens, worth 80."
+          },
+          {
+            "id": "b",
+            "label": "8",
+            "feedback": "8 would be its worth in the ONES spot — but here it parks one spot left, where every dot counts ten."
+          },
+          {
+            "id": "c",
+            "label": "800",
+            "feedback": "800 would need the 8 in the hundreds spot. That spot is taken by the 5 — the 8 is one spot right of it."
+          },
+          {
+            "id": "d",
+            "label": "582",
+            "feedback": "582 is the whole number. The question asks what the single digit 8 contributes: 8 tens."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "place-value",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Meet the **placeholder zero**. 507 has no tens at all — but the 0 must stay, holding the tens spot open so the 5 keeps parking in the hundreds. Erase it and you get 57: every digit slides into a cheaper spot and the number collapses.",
+      "figure": "pv3-placeholder-zero"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why the zero earns its place.",
+      "conceptTag": "place-value",
+      "explanationVariants": [
+        "The 0 keeps the tens spot occupied so the 5 stays in the hundreds — 500, not 50.",
+        "Without the 0, the digits slide right: 5 lands in tens and the number shrinks from 507 to 57."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why can't 507 be written as 57?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The 0 holds the tens spot open, so the 5 keeps meaning 500",
+            "correct": true,
+            "feedback": "Placeholder power: the zero contributes nothing itself, but it keeps every other digit in its rightful spot."
+          },
+          {
+            "id": "b",
+            "label": "You can — a zero does nothing, so it can be dropped",
+            "feedback": "Drop it and the 5 slides into the tens spot: 57. The zero adds nothing, but it HOLDS a spot — that's a real job."
+          },
+          {
+            "id": "c",
+            "label": "Because 5 + 0 + 7 = 12",
+            "feedback": "Adding the digits doesn't describe the number — spots do. The issue is where the 5 parks, not what the digits sum to."
+          },
+          {
+            "id": "d",
+            "label": "Because the zero belongs at the END of the number",
+            "feedback": "Zeros go wherever the empty spot is. 507's empty spot is the tens — in the middle. 570 would mean something else entirely."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "place-value",
+        "form": "zeroPlaceholder"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Track the digit 6 through different parking spots.",
+      "conceptTag": "place-value",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "In each number, find the 6 and sort by what it's WORTH.",
+        "buckets": [
+          {
+            "id": "w6",
+            "label": "Worth 6",
+            "icon": "🪙"
+          },
+          {
+            "id": "w60",
+            "label": "Worth 60",
+            "icon": "💵"
+          },
+          {
+            "id": "w600",
+            "label": "Worth 600",
+            "icon": "💰"
+          }
+        ],
+        "items": [
+          {
+            "id": "n361",
+            "label": "361",
+            "bucketId": "w60",
+            "feedback": "In 361 the 6 parks in the tens spot: 6 tens, worth 60."
+          },
+          {
+            "id": "n906",
+            "label": "906",
+            "bucketId": "w6",
+            "feedback": "In 906 the 6 sits in the ones spot — worth exactly 6. The zero holds the tens open."
+          },
+          {
+            "id": "n648",
+            "label": "648",
+            "bucketId": "w600",
+            "feedback": "In 648 the 6 leads from the hundreds spot: worth 600."
+          },
+          {
+            "id": "n762",
+            "label": "762",
+            "bucketId": "w60",
+            "feedback": "In 762 the 6 is in the tens spot again — worth 60, even though the number looks bigger than 361."
+          }
+        ],
+        "missFeedback": "Find which SPOT the 6 occupies in each number: ones → 6, tens → 60, hundreds → 600.",
+        "successFeedback": "Same digit, three different values — the spot does all the work."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Build a number from its spot-counts — mind the empty spot.",
+      "conceptTag": "place-value",
+      "explanationVariants": [
+        "4 hundreds, 0 tens, 9 ones: 400 + 0 + 9 = 409 — the zero keeps the 4 in the hundreds.",
+        "Write one digit per spot, left to right: 4, then 0 for the empty tens, then 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 4 hundreds, 0 tens, and 9 ones?",
+        "answer": 409,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "49 dropped the placeholder! Without a 0 in the tens spot, the 4 slid down to mean 40. Hold the spot open."
+          },
+          {
+            "value": 490,
+            "feedback": "490 parks the 9 in the tens spot — but the story says 0 tens and 9 ONES. The 9 belongs in the last spot."
+          },
+          {
+            "value": 4009,
+            "feedback": "4009 gives the zero its own extra spot. Three spot-counts make a three-digit number: one digit per spot."
+          }
+        ],
+        "fallbackFeedback": "One digit per spot, left to right: hundreds 4, tens 0, ones 9."
+      },
+      "variant": {
+        "gen": "place-value",
+        "form": "composeNumber"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Blocks in, blocks out — watch the spots.",
+      "conceptTag": "place-value",
+      "hints": [
+        "One hundreds block changes the hundreds digit only. Start there.",
+        "326 + 100 = 426.",
+        "Now remove one TENS block: that takes 10 away from 426."
+      ],
+      "explanationVariants": [
+        "Add a hundred: 326 → 426. Remove a ten: 426 → 416.",
+        "Only two digits move: hundreds 3→4, tens 2→1. The ones never change: 416."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Rio builds 326 with blocks. He adds one more hundreds block, then removes one tens block. What number does he have now?",
+        "answer": 416,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 336,
+            "feedback": "336 added a TENS block — but Rio added a hundreds block first. A hundreds block moves the leftmost digit."
+          },
+          {
+            "value": 425,
+            "feedback": "425 removed one ONE. Rio removed a tens block — worth 10, one step in the middle spot."
+          },
+          {
+            "value": 316,
+            "feedback": "316 removed the ten but never added the hundred. Two moves happened: +100 first, then −10."
+          }
+        ],
+        "fallbackFeedback": "Two moves, one spot each: +100 changes the hundreds digit, −10 changes the tens digit."
+      },
+      "variant": {
+        "gen": "place-value",
+        "form": "changeBlocks"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can see inside a number now.",
+      "takeaways": [
+        "The spot decides the worth: the same digit means 6, 60, or 600 by position.",
+        "Zero is a placeholder — it holds spots open so other digits keep their worth.",
+        "Adding or removing blocks moves exactly one spot's digit by one."
+      ],
+      "teaser": "explode any number into its worth-pieces — and snap it back together."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "place-value",
+      "concept": {
+        "id": "rem-pv-c",
+        "kind": "concept",
+        "body": "Quick rewind. Read spots **right to left**: ones, tens, hundreds — each spot worth ten times the one before. In 74: the 4 sits first (ones, worth 4), the 7 sits second (tens, worth 70). Say it as its pieces: seventy-four."
+      },
+      "check": {
+        "id": "rem-pv-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "place-value",
+        "explanationVariants": [
+          "The 7 parks in the tens spot of 74 — seven tens, worth 70.",
+          "74 in pieces is 70 + 4; the 7's piece is the 70."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In the number 74, what is the 7 worth?",
+          "options": [
+            {
+              "id": "a",
+              "label": "70",
+              "correct": true,
+              "feedback": "Tens spot: seven tens make 70."
+            },
+            {
+              "id": "b",
+              "label": "7",
+              "feedback": "7 would be the ones-spot worth — but the 4 holds the ones. The 7 parks one spot left, where each counts ten."
+            },
+            {
+              "id": "c",
+              "label": "700",
+              "feedback": "700 needs a hundreds spot, and 74 only has two spots. The 7 is in tens: 70."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "id": "ti-04-03",
+  "slug": "double-angle-in-action",
+  "title": "Double-Angle in Action",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch4-double-angle",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Double-angle identities SOLVE and PROVE. To prove sin 2θ/sin θ = 2 cos θ: expand the top — 2 sinθ cosθ/sinθ = 2 cos θ. The sin θ cancels. Whenever a '2θ' meets a 'θ', expand the double angle so everything speaks one angle.",
+      "figure": "ti-double-prove"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Prove by expanding.",
+      "predict": {
+        "prompt": "θ is acute (under 90°). Must cos 2θ be positive too?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — 2θ can cross into the second quadrant while θ is still acute"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — acute in, positive out"
+          },
+          {
+            "id": "zero",
+            "label": "cos 2θ is zero for all acute θ"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "No: at θ = 70°, the doubled point sits at 140° — second quadrant, cosine negative — while θ itself is comfortably acute. Watch the direct point cross the vertical axis at θ = 45°. Proofs that expand sin 2θ = 2 sin θ cos θ work in every quadrant precisely because the formula carries its own signs."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Pick the formula that stays glued to the 2θ point through the axis crossing, then land θ on 70° — where 2θ has entered the second quadrant.",
+        "targetAngle": 70,
+        "angleStart": 20,
+        "angleStep": 5,
+        "ghost": "double",
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "cos²θ − sin²θ (with 2 sin θ cos θ)"
+          },
+          {
+            "id": "signError",
+            "label": "sin²θ − cos²θ (with 2 sin θ cos θ)",
+            "feedback": "Mirrored: this candidate stays positive while the real cos 2θ goes negative past θ = 45° — the two points split across the vertical axis exactly when 2θ crosses it. The expansion 2 sin θ cos θ over sin θ collapses to 2 cos θ because the true faces never need a quadrant patch."
+          }
+        ],
+        "successFeedback": "Glued at 70°, with 2θ at 140° and cos 2θ negative — the formula rode through the crossing untouched. That is why “expand sin 2θ first” is the right opening for the proof: identities that hold everywhere can be cancelled anywhere.",
+        "lowFeedback": "Formula's right — continue to 70°, past the crossing at 45°.",
+        "highFeedback": "Past 70° — back up; the reading is just beyond the crossing."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Simplify a ratio.",
+      "conceptTag": "ti-double-action",
+      "explanationVariants": [
+        "sin 2θ/cos θ = 2 sinθ cosθ/cosθ = 2 sin θ.",
+        "Expand, cancel the cos θ: 2 sin θ."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify sin 2θ / cos θ.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2 sin θ",
+            "correct": true,
+            "feedback": "Right — 2 sinθ cosθ/cosθ = 2 sin θ."
+          },
+          {
+            "id": "o2",
+            "label": "2 cos θ",
+            "feedback": "The cos θ CANCELS, leaving the sin θ factor: 2 sin θ."
+          },
+          {
+            "id": "o3",
+            "label": "sin θ",
+            "feedback": "Don't drop the factor 2 from the double-angle expansion: 2 sin θ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "double-angle-solve"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "For EQUATIONS, expanding turns a mixed-angle equation into one solvable angle. sin 2x = sin x becomes 2 sinx cosx = sinx, then **2 sinx cosx − sinx = 0**, factor **sinx(2cosx − 1) = 0** — two simple equations (recall zero-product).",
+      "figure": "ti-expand-mixed"
+    },
+    {
+      "id": "k1c",
+      "kind": "check",
+      "body": "Set up the factor.",
+      "conceptTag": "ti-double-action",
+      "explanationVariants": [
+        "Move everything left and factor sin x: sinx(2cosx − 1) = 0 — never divide by sin x (it can be 0).",
+        "Factoring keeps all solutions; dividing by sin x would delete the sin x = 0 branch."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "sin 2x = sin x becomes 2 sinx cosx = sinx. The correct next step is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Subtract and factor: sinx(2cosx − 1) = 0",
+            "correct": true,
+            "feedback": "Right — factoring keeps BOTH branches (sinx = 0 and cosx = 1/2)."
+          },
+          {
+            "id": "o2",
+            "label": "Divide both sides by sin x to get 2 cos x = 1",
+            "feedback": "Dividing by sin x DELETES the solutions where sin x = 0 (like x = 0, π). Factor instead."
+          },
+          {
+            "id": "o3",
+            "label": "Take arcsin of both sides",
+            "feedback": "arcsin(sin 2x) ≠ 2x in general (recall the trap). Rearrange to a product = 0 and factor."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "double-angle-solve",
+        "form": "nextStep"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count the solutions.",
+      "conceptTag": "ti-double-action",
+      "explanationVariants": [
+        "sinx = 0 → x = 0, π; 2cosx − 1 = 0 → cosx = 1/2 → x = π/3, 5π/3. Four solutions on [0, 2π).",
+        "Two branches, two solutions each: 0, π, π/3, 5π/3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does sin 2x = sin x have on [0, 2π)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Only counting one branch. sinx = 0 gives 0 and π; cosx = 1/2 gives π/3 and 5π/3: four."
+          },
+          {
+            "value": 3,
+            "feedback": "Don't drop π: sinx = 0 has TWO solutions (0 and π) in [0, 2π), plus the two from cosx = 1/2."
+          }
+        ],
+        "fallbackFeedback": "0, π (from sinx = 0) and π/3, 5π/3 (from cosx = 1/2): four."
+      },
+      "variant": {
+        "gen": "double-angle-solve",
+        "form": "countSolutions"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "You already counted these four solutions — now add them together.",
+      "conceptTag": "ti-double-action",
+      "explanationVariants": [
+        "sin 2x = sin x factors to sin x(2 cos x − 1)=0, giving x=0, π/3, π, 5π/3. Sum: 0+π/3+π+5π/3=3π≈9.42.",
+        "Four solutions from two factors (sin x=0 or cos x=1/2) add to exactly 3π≈9.42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve sin 2x = sin x on [0, 2π) — you already found this has 4 solutions. What is their SUM, to hundredths?",
+        "answer": 9.42,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 6.28,
+            "feedback": "6.28 is 2π, the interval width — not the sum. Add the four actual solutions: 0+π/3+π+5π/3=3π≈9.42."
+          },
+          {
+            "value": 4.19,
+            "feedback": "4.19 sums only two of the four solutions (π/3+π). All FOUR must be added: 0+π/3+π+5π/3=3π≈9.42."
+          },
+          {
+            "value": 3.14,
+            "feedback": "3.14 is only π. The full sum of all four solutions is 3π≈9.42, three times that."
+          }
+        ],
+        "fallbackFeedback": "Factor to sin x(2 cos x − 1)=0: sin x=0 gives x=0,π; cos x=1/2 gives x=π/3,5π/3. Add all four: 3π≈9.42."
+      },
+      "variant": {
+        "gen": "double-angle-solve",
+        "form": "sumSolutions"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve and sum.",
+      "conceptTag": "ti-double-action",
+      "explanationVariants": [
+        "cos 2x = cos x → 2cos²x − 1 = cosx → 2cos²x − cosx − 1 = 0 → (2cosx + 1)(cosx − 1) = 0 → cosx = −1/2 (x = 2π/3, 4π/3) or cosx = 1 (x = 0). Sum = 0 + 2π/3 + 4π/3 = 2π ≈ 6.28.",
+        "Use the cosine-only face, factor the quadratic in cos x, collect all [0, 2π) roots and add."
+      ],
+      "hints": [
+        "Use cos 2x = 2cos²x − 1 to get a quadratic in cos x.",
+        "2cos²x − cosx − 1 = 0 factors as (2cosx + 1)(cosx − 1).",
+        "cosx = −1/2 → 2π/3, 4π/3; cosx = 1 → 0. Sum them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve cos 2x = cos x on [0, 2π). What is the SUM of the solutions, to hundredths?",
+        "answer": 6.28,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 4.19,
+            "feedback": "4.19 ≈ 2π/3 + 4π/3 forgets x = 0 (from cosx = 1). Including it: sum still 2π ≈ 6.28 (0 adds nothing) — recheck: 2π/3 + 4π/3 = 2π already. 6.28."
+          },
+          {
+            "value": 3.14,
+            "feedback": "Only part of the set. cosx = −1/2 gives 2π/3 and 4π/3 summing to 2π ≈ 6.28; x = 0 adds 0."
+          }
+        ],
+        "fallbackFeedback": "0 + 2π/3 + 4π/3 = 2π ≈ 6.28."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-double-action__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Expand to conquer.",
+      "takeaways": [
+        "Expand any 2θ so the whole expression shares one angle.",
+        "For equations: rearrange to a product = 0 and factor — never divide by a trig factor.",
+        "A quadratic in cos x or sin x is the usual payoff."
+      ],
+      "teaser": "Next chapter: the full toolkit turned loose on equations that need it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-double-action",
+      "concept": {
+        "id": "rem-ti0403-c",
+        "kind": "concept",
+        "body": "Expand double angles to unify the angle, then for equations move everything to one side and FACTOR (never divide by a trig factor that can be zero)."
+      },
+      "check": {
+        "id": "rem-ti0403-k",
+        "kind": "check",
+        "body": "One simplification.",
+        "conceptTag": "ti-double-action",
+        "explanationVariants": [
+          "cos 2θ/(cosθ − sinθ) = (cos²θ − sin²θ)/(cosθ − sinθ) = (cosθ − sinθ)(cosθ + sinθ)/(cosθ − sinθ) = cosθ + sinθ.",
+          "Factor the difference of squares on top, cancel."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Simplify cos 2θ / (cos θ − sin θ).",
+          "options": [
+            {
+              "id": "o1",
+              "label": "cos θ + sin θ",
+              "correct": true,
+              "feedback": "Right — cos²θ − sin²θ factors as (cosθ − sinθ)(cosθ + sinθ); cancel the first factor."
+            },
+            {
+              "id": "o2",
+              "label": "cos θ − sin θ",
+              "feedback": "That's the factor being CANCELLED. What remains is the OTHER factor: cos θ + sin θ."
+            },
+            {
+              "id": "o3",
+              "label": "cos 2θ",
+              "feedback": "Expand cos 2θ as a difference of squares and cancel: cos θ + sin θ."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

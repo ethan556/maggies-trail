@@ -1,0 +1,315 @@
+{
+ "id": "se-02-03",
+ "slug": "substitution-in-action",
+ "title": "Substitution in Action",
+ "courseId": "systems-equations",
+ "chapterId": "ch2-substitution",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "coordinate-plane",
+   "body": "Substitution solves **any** system, whether or not the graph is clear. The full method: isolate a variable if needed, substitute into the other equation, solve for one variable, back-substitute for the other, and check the point in both equations."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Solve for x.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system y = 2x − 3 and x + y = 9. What is x?",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "That's y. Solve for x first: x + (2x − 3) = 9 gives x = 4."
+     },
+     {
+      "value": 9,
+      "feedback": "9 is the total. After substituting, 3x − 3 = 9, so x = 4."
+     }
+    ],
+    "fallbackFeedback": "x + (2x − 3) = 9 → 3x − 3 = 9 → x = 4."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A different arrangement.",
+   "conceptTag": "substitution-solve",
+   "explanationVariants": [
+    "Substitute y = x − 2 into 2x + y = 7: 2x + (x − 2) = 7, so 3x = 9 and x = 3.",
+    "2x + (x − 2) = 7 gives 3x − 2 = 7, so x = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system 2x + y = 7 and y = x − 2. What is x?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "That's y (y = 3 − 2 = 1). Solve for x first: 3x = 9, so x = 3."
+     },
+     {
+      "value": 7,
+      "feedback": "7 is the total. After substituting, 3x = 9, so x = 3."
+     }
+    ],
+    "fallbackFeedback": "2x + (x − 2) = 7 → 3x = 9 → x = 3."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "substitution-solve__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Worked: **y = 2x − 3** and **x + y = 9**. Substitute: x + (2x − 3) = 9 → 3x − 3 = 9 → **x = 4**, then y = 2·4 − 3 = **5**. Check: 4 + 5 = 9 ✓ and 2·4 − 3 = 5 ✓. Solution **(4, 5)**.",
+   "figure": "se-sub-action"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Read off the full solution.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the solution of the system x + y = 10 and y = 3x + 2?",
+    "options": [
+     {
+      "id": "a",
+      "label": "(2, 8)",
+      "correct": true,
+      "feedback": "Yes — x + (3x + 2) = 10 gives x = 2, then y = 3·2 + 2 = 8."
+     },
+     {
+      "id": "b",
+      "label": "(8, 2)",
+      "feedback": "Coordinates are swapped. Solving gives x = 2 and y = 8: (2, 8)."
+     },
+     {
+      "id": "c",
+      "label": "(2, 6)",
+      "feedback": "Check y: with x = 2, y = 3·2 + 2 = 8, not 6. The solution is (2, 8)."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "The check into **both** equations isn't a formality. If the point fails one equation, a sign slipped during substitution — most often forgetting to distribute a minus into a substituted expression. Re-check that step first.",
+   "figure": "se-check-not-formality"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Match each system to its solution.",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Solve each system by substitution, then match its solution point.",
+    "left": [
+     {
+      "id": "l1",
+      "label": "y = x + 2 and x + y = 8"
+     },
+     {
+      "id": "l2",
+      "label": "y = 2x and x + y = 9"
+     },
+     {
+      "id": "l3",
+      "label": "y = x − 1 and 2x + y = 11"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "(3, 5)"
+     },
+     {
+      "id": "r2",
+      "label": "(3, 6)"
+     },
+     {
+      "id": "r3",
+      "label": "(4, 3)"
+     }
+    ],
+    "pairs": {
+     "l1": "r1",
+     "l2": "r2",
+     "l3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "l1",
+      "right": "r2",
+      "feedback": "x + (x + 2) = 8 gives x = 3 and y = 5, so (3, 5), not (3, 6)."
+     },
+     {
+      "left": "l3",
+      "right": "r1",
+      "feedback": "2x + (x − 1) = 11 gives x = 4 and y = 3, so (4, 3)."
+     }
+    ],
+    "missFeedback": "Substitute the y-expression into the other equation and solve: (3, 5), (3, 6), (4, 3).",
+    "successFeedback": "Three substitutions, three exact solutions — no graphing needed."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find y.",
+   "conceptTag": "substitution-solve",
+   "explanationVariants": [
+    "Substitute y = 2x into x + y = 6: x + 2x = 6, so x = 2 and y = 2·2 = 4.",
+    "3x = 6 gives x = 2, then y = 2·2 = 4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system x + y = 6 and y = 2x. What is y?",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That's x. Back-substitute: y = 2·2 = 4."
+     },
+     {
+      "value": 6,
+      "feedback": "6 is the total, not y. With x = 2, y = 2·2 = 4."
+     }
+    ],
+    "fallbackFeedback": "x + 2x = 6 → x = 2, then y = 2·2 = 4."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "substitution-solve__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Neither variable is isolated.",
+   "conceptTag": "substitution-solve",
+   "explanationVariants": [
+    "From 3x + y = 13, y = 13 − 3x. Substitute into x + 2y = 11: x + 2(13 − 3x) = 11, so −5x = −15, x = 3, y = 4.",
+    "x + 2(13 − 3x) = 11 gives x = 3 and y = 4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the solution of the system x + 2y = 11 and 3x + y = 13?",
+    "options": [
+     {
+      "id": "a",
+      "label": "(3, 4)",
+      "correct": true,
+      "feedback": "Yes — isolating y = 13 − 3x and substituting gives x = 3, then y = 4."
+     },
+     {
+      "id": "b",
+      "label": "(4, 3)",
+      "feedback": "Coordinates are swapped. Solving gives x = 3 and y = 4: (3, 4)."
+     },
+     {
+      "id": "c",
+      "label": "(3, 5)",
+      "feedback": "Check: x + 2y = 3 + 2·4 = 11 works, but 3 + 2·5 = 13 doesn't. The solution is (3, 4)."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "substitution-solve__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Solve completely.",
+   "conceptTag": "substitution-solve",
+   "explanationVariants": [
+    "Substitute y = x − 3 into x + 2y = 12: x + 2(x − 3) = 12, so 3x − 6 = 12, x = 6, y = 3.",
+    "x + 2(x − 3) = 12 gives 3x = 18, so x = 6."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system x + 2y = 12 and y = x − 3. What is x?",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "That's y (y = 6 − 3 = 3). Solve for x: 3x − 6 = 12, so x = 6."
+     },
+     {
+      "value": 12,
+      "feedback": "12 is the total. After substituting, 3x = 18, so x = 6."
+     }
+    ],
+    "fallbackFeedback": "x + 2(x − 3) = 12 → 3x − 6 = 12 → x = 6."
+   },
+   "hints": [
+    "Substitute y = x − 3 into x + 2y = 12.",
+    "x + 2(x − 3) = 12 → 3x − 6 = 12.",
+    "3x = 18, so x = 6."
+   ],
+   "variant": {
+    "gen": "a1-systems",
+    "form": "substitution-solve__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Substitution is a reliable, exact method for any system.",
+   "takeaways": [
+    "Isolate a variable, substitute, solve, back-substitute.",
+    "Distribute minus signs into substituted expressions.",
+    "Always confirm the solution in both equations."
+   ],
+   "teaser": "next chapter: elimination — adding equations to cancel a variable."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "substitution-solve",
+   "concept": {
+    "id": "rem-ss2-c",
+    "kind": "concept",
+    "body": "Substitute, solve, back-substitute, check. For y = 2x − 3 and x + y = 9: x + (2x − 3) = 9 → 3x − 3 = 9 → x = 4, then y = 5. Both equations hold at (4, 5)."
+   },
+   "check": {
+    "id": "rem-ss2-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "substitution-solve",
+    "explanationVariants": [
+     "x + (2x − 3) = 9 gives 3x = 12, so x = 4.",
+     "Substitute y = 2x − 3 into x + y = 9: x = 4."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve the system y = 2x − 3 and x + y = 9. What is x?",
+     "answer": 4,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 5,
+       "feedback": "That's y. Solve for x first: x = 4."
+      },
+      {
+       "value": 9,
+       "feedback": "9 is the total. After substituting, 3x − 3 = 9, so x = 4."
+      }
+     ],
+     "fallbackFeedback": "x + (2x − 3) = 9 → 3x = 12 → x = 4."
+    }
+   }
+  }
+ ]
+}

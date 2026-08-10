@@ -1,0 +1,402 @@
+{
+  "id": "re-03-02",
+  "slug": "domains-of-radical-functions",
+  "title": "Domains of Radical Functions",
+  "courseId": "radical-functions",
+  "chapterId": "ch3-radical-functions-graphs-and-domains",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "For any even root, the rule is one sentence: **the inside must be ≥ 0**. For f(x) = √(x − 3), solve x − 3 ≥ 0: domain **x ≥ 3**. The graph starts at (3, 0) and everything to the left is off-limits.",
+      "figure": "sqrt-domain-graph"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve for the domain.",
+      "predict": {
+        "prompt": "f(x) = √(x + 6). A square root refuses negative inputs. Which x survive that rule?",
+        "options": [
+          {
+            "id": "ge",
+            "label": "Those making x + 6 zero or positive — so from −6 rightwards"
+          },
+          {
+            "id": "pos",
+            "label": "Only x itself positive — from 0 rightwards"
+          },
+          {
+            "id": "all",
+            "label": "All of them; the root handles negatives fine"
+          }
+        ],
+        "outcomeId": "ge",
+        "reveal": "The rule applies to what is UNDER the root, not to x. x + 6 is zero or positive from −6 rightwards, so that is the domain — and −6 itself is in it, because √0 = 0 is perfectly defined."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for the RADICAND, x + 6. Where it is positive is where √(x + 6) is defined.",
+        "roots": [
+          {
+            "x": -6,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "Negative to the left of −6, positive to the right — and that positive region is the domain. The boundary belongs to it too: at x = −6 the radicand is exactly 0, and √0 = 0 is defined, which is why the answer is x ≥ −6 and not x > −6.",
+        "crossFeedback": "x + 6 is a single linear factor, so it changes sign once, at −6. One side must be negative and the other positive — and only the positive side can sit under a square root.",
+        "bounceFeedback": "A sign that holds across the root would mean an even multiplicity. Here (x + 6) appears once, so the radicand really does change sign at −6."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A coefficient just makes it a one-step inequality: for √(2x − 8), solve 2x − 8 ≥ 0 → x ≥ 4. But **cube roots take anything**: ∛(x − 5) happily accepts x = 0, since ∛(−5) is a real number. Odd roots: domain all reals.",
+      "figure": "re-inequality"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "With a coefficient.",
+      "conceptTag": "re-domains",
+      "explanationVariants": [
+        "3x + 12 ≥ 0 → 3x ≥ −12 → x ≥ −4.",
+        "One-step inequality: subtract 12, divide by 3."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is the domain of f(x) = √(3x + 12)?",
+        "tokens": [
+          {
+            "id": "x",
+            "label": "x"
+          },
+          {
+            "id": "ge",
+            "label": "≥"
+          },
+          {
+            "id": "le",
+            "label": "≤"
+          },
+          {
+            "id": "n4",
+            "label": "−4"
+          },
+          {
+            "id": "n12",
+            "label": "−12"
+          },
+          {
+            "id": "p4",
+            "label": "4"
+          }
+        ],
+        "correct": [
+          "x",
+          "ge",
+          "n4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "x",
+              "ge",
+              "n12"
+            ],
+            "feedback": "Finish the division: 3x ≥ −12 means x ≥ −4."
+          },
+          {
+            "sequence": [
+              "x",
+              "ge",
+              "p4"
+            ],
+            "feedback": "3x ≥ −12 divides to x ≥ NEGATIVE 4 — the sign survives the division by +3."
+          },
+          {
+            "sequence": [
+              "x",
+              "le",
+              "n4"
+            ],
+            "feedback": "Dividing by POSITIVE 3 keeps the ≥ direction: x ≥ −4."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Set the inside ≥ 0: 3x + 12 ≥ 0 gives 3x ≥ −12 — finish by dividing by 3.",
+        "successFeedback": "Right — 3x ≥ −12 gives x ≥ −4."
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-domains__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Odd root.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the domain of g(x) = ∛(x − 5)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "all real numbers",
+            "correct": true,
+            "feedback": "Right — cube roots accept negatives: ∛(−8) = −2 is perfectly real."
+          },
+          {
+            "id": "o2",
+            "label": "x ≥ 5",
+            "correct": false,
+            "feedback": "That's the EVEN-root rule — a cube root of a negative is fine: ∛(−8) = −2."
+          },
+          {
+            "id": "o3",
+            "label": "x ≥ 0",
+            "correct": false,
+            "feedback": "Neither the inside nor the input needs to be nonnegative for an ODD root."
+          },
+          {
+            "id": "o4",
+            "label": "x ≠ 5",
+            "correct": false,
+            "feedback": "x = 5 works fine: ∛0 = 0 — nothing excludes it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A decreasing inside.",
+      "conceptTag": "re-domains",
+      "explanationVariants": [
+        "10 − 2x ≥ 0 → 10 ≥ 2x → x ≤ 5 — dividing flips nothing here, but the variable ends on the small side.",
+        "The inside shrinks as x grows, so the domain points LEFT."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is the domain of f(x) = √(10 − 2x)?",
+        "tokens": [
+          {
+            "id": "x",
+            "label": "x"
+          },
+          {
+            "id": "le",
+            "label": "≤"
+          },
+          {
+            "id": "ge",
+            "label": "≥"
+          },
+          {
+            "id": "p5",
+            "label": "5"
+          },
+          {
+            "id": "n5",
+            "label": "−5"
+          }
+        ],
+        "correct": [
+          "x",
+          "le",
+          "p5"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "x",
+              "ge",
+              "p5"
+            ],
+            "feedback": "Test x = 6: inside is 10 − 12 = −2 < 0 — big x BREAKS this one; the domain is x ≤ 5."
+          },
+          {
+            "sequence": [
+              "x",
+              "le",
+              "n5"
+            ],
+            "feedback": "10 − 2x ≥ 0 gives 2x ≤ 10, so x ≤ +5."
+          },
+          {
+            "sequence": [
+              "x",
+              "ge",
+              "n5"
+            ],
+            "feedback": "Solve the inequality: 2x ≤ 10 → x ≤ 5 — and it points left, not right."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Solve 10 − 2x ≥ 0: move the 2x over to get 2x ≤ 10, then x ≤ 5.",
+        "successFeedback": "Right — 10 − 2x ≥ 0 solves to x ≤ 5; the graph runs leftward from (5, 0)."
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-domains__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a start point.",
+      "conceptTag": "re-domains",
+      "explanationVariants": [
+        "The graph of √(x − 3) begins where the inside hits 0: at (3, 0).",
+        "Start point = boundary of the domain, height 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does the graph of f(x) = √(x − 3) START?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(3, 0)",
+            "correct": true,
+            "feedback": "Right — the domain boundary x = 3 gives f(3) = √0 = 0."
+          },
+          {
+            "id": "o2",
+            "label": "(−3, 0)",
+            "correct": false,
+            "feedback": "x − 3 = 0 at x = +3 — inside-the-root shifts move OPPOSITE their sign."
+          },
+          {
+            "id": "o3",
+            "label": "(0, 3)",
+            "correct": false,
+            "feedback": "x = 0 isn't even in the domain (inside would be −3) — the start is (3, 0)."
+          },
+          {
+            "id": "o4",
+            "label": "(0, −3)",
+            "correct": false,
+            "feedback": "√ never outputs negatives, and x = 0 is excluded — the curve begins at (3, 0)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-domains__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Domain, fully solved.",
+      "conceptTag": "re-domains",
+      "explanationVariants": [
+        "5x − 20 ≥ 0 → 5x ≥ 20 → x ≥ 4; the boundary input is 4.",
+        "The smallest legal input makes the inside exactly zero."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "The domain of f(x) = √(5x − 20) is x ≥ a. What is a?",
+        "task": "radicalEquationSolve",
+        "values": [],
+        "radRootIndex": 2,
+        "radInsideCoef": 5,
+        "radInsideConst": -20,
+        "radRhs": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 20,
+            "feedback": "Finish dividing: 5x ≥ 20 gives x ≥ 4."
+          },
+          {
+            "value": -4,
+            "feedback": "5x ≥ 20 divides by POSITIVE 5: x ≥ +4 — no sign flip."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "5x − 20 ≥ 0 → x ≥ 4.",
+        "successFeedback": "5x − 20 ≥ 0 → x ≥ 4."
+      },
+      "hints": [
+        "Set the inside ≥ 0: 5x − 20 ≥ 0.",
+        "Add 20: 5x ≥ 20.",
+        "Divide by 5: x ≥ 4."
+      ],
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-domains__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Even roots: inside ≥ 0. Odd roots: anything goes.",
+      "takeaways": [
+        "Solve inside ≥ 0 as a one-step inequality for the domain.",
+        "The graph starts where the inside equals zero.",
+        "A negative x-coefficient points the domain leftward (x ≤ ...)."
+      ],
+      "teaser": "Next: your transformation toolkit from earlier this year, applied to √x."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "re-domains",
+      "concept": {
+        "id": "rem-re0302-c",
+        "kind": "concept",
+        "body": "One inequality: for √(x − 7), the inside x − 7 must be at least 0."
+      },
+      "check": {
+        "id": "rem-re0302-k",
+        "kind": "check",
+        "body": "Solve it.",
+        "conceptTag": "re-domains",
+        "explanationVariants": [
+          "x ≥ 7.",
+          "Add 7 to both sides of x − 7 ≥ 0."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the domain of f(x) = √(x − 7)?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x ≥ 7",
+              "correct": true,
+              "feedback": "Right — the graph starts at (7, 0)."
+            },
+            {
+              "id": "o2",
+              "label": "x ≥ −7",
+              "correct": false,
+              "feedback": "x − 7 ≥ 0 ADDS 7: x ≥ +7."
+            },
+            {
+              "id": "o3",
+              "label": "x ≤ 7",
+              "correct": false,
+              "feedback": "Big inputs are the safe ones here — x = 100 gives √93, fine; x = 0 gives √(−7), not real."
+            },
+            {
+              "id": "o4",
+              "label": "all real numbers",
+              "correct": false,
+              "feedback": "x = 0 would put −7 under the root — even roots refuse negatives."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "id": "cx-02-03",
+  "slug": "perpendicular-proved",
+  "title": "Perpendicular, Proved",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch2-partition-slope-criteria",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-perp-proof",
+      "concept": {
+        "id": "rem-cx-perp-proof-c",
+        "kind": "concept",
+        "body": "Perpendicular lines have slopes multiplying to −1 (negative reciprocals) — proved by rotating a slope triangle 90°: displacement (a, b) becomes (−b, a), and (b/a)(−a/b) = −1. One exception: vertical lines (undefined slope) are perpendicular to horizontal ones — test that pair separately."
+      },
+      "check": {
+        "id": "rem-cx-perp-proof-k",
+        "kind": "check",
+        "body": "Flip, negate.",
+        "conceptTag": "cx-perp-proof",
+        "explanationVariants": [
+          "Perpendicular to slope 4: −1/4 = −0.25.",
+          "(4)(−1/4) = −1 ✓."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A line has slope 4. Perpendicular slope (decimal) = ?",
+          "answer": -0.25,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 0.25,
+              "feedback": "0.25 flips without negating — the product must be −1: −0.25."
+            },
+            {
+              "value": -4,
+              "feedback": "−4 negates without flipping — (4)(−4) = −16: the perpendicular is −1/4 = −0.25."
+            }
+          ],
+          "fallbackFeedback": "−1/4 = −0.25."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The perpendicular rule — slopes multiply to −1 — falls to a **quarter-turn**. Rotate a slope triangle 90° about its corner (a rigid motion): the run (a, 0) turns into a rise, the rise (0, b) into a LEFTWARD run — displacement (a, b) becomes (−b, a). New slope: a/(−b). Old times new: (b/a)(−a/b) = **−1**, always.",
+      "figure": "perpendicular-rotation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Flip and negate.",
+      "conceptTag": "cx-perp-proof",
+      "explanationVariants": [
+        "Perpendicular slope = negative reciprocal of 2/3: −3/2 = −1.5.",
+        "(2/3)(−3/2) = −1 ✓."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line has slope 2/3. Enter the slope of a perpendicular line (as a decimal).",
+        "answer": -1.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0.67,
+            "feedback": "0.67 copies the slope — that's the PARALLEL rule. Perpendicular flips and negates: −3/2 = −1.5."
+          },
+          {
+            "value": 1.5,
+            "feedback": "1.5 flips without negating — the product must be −1: −1.5."
+          },
+          {
+            "value": -0.67,
+            "feedback": "−0.67 negates without flipping — (2/3)(−2/3) = −4/9 ≠ −1. The full move: −3/2 = −1.5."
+          }
+        ],
+        "fallbackFeedback": "−(3/2) = −1.5, since (2/3)(−3/2) = −1."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-perp-proof__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Detect the right angle.",
+      "conceptTag": "cx-perp-proof",
+      "explanationVariants": [
+        "Slope BA = 2/3 and slope BC = (6 − 3)/(2 − 4) = −3/2: product −1 — right angle at B. Enter −1.5.",
+        "BC's slope: 3/(−2) = −1.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A(1, 1), B(4, 3), C(2, 6). Compute slope BC (decimal) — then multiply by slope AB (2/3) in your head.",
+        "answer": -1.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1.5,
+            "feedback": "1.5 drops the sign — x DECREASES from B to C (4 → 2): 3/(−2) = −1.5, and the product with 2/3 is −1: right angle."
+          },
+          {
+            "value": -0.67,
+            "feedback": "−0.67 flips rise and run — (6−3)/(2−4) = −3/2 = −1.5."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the rise alone — the run is −2: slope −1.5."
+          }
+        ],
+        "fallbackFeedback": "Slope BC = −1.5; (2/3)(−1.5) = −1 ⇒ the angle at B is right — a protractor-free proof."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-perp-proof__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Care at the edges: the rule serves every pair EXCEPT when one line is vertical — vertical lines have no slope, yet they're perpendicular to every horizontal (slope 0) line. A complete perpendicularity test: slopes multiply to −1, OR one is vertical and the other horizontal. Coordinate proofs must remember the exception.",
+      "figure": "cx-vertical-edge"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The exceptional pair.",
+      "conceptTag": "cx-perp-proof",
+      "explanationVariants": [
+        "x = 3 is vertical (undefined slope); y = −2 is horizontal (slope 0). Product test fails to apply — yet they're perpendicular.",
+        "Vertical-horizontal: the one perpendicular pair the −1 rule can't see."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Lines x = 3 and y = −2: perpendicular?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — vertical meets horizontal at 90°, the case the product rule can't express",
+            "correct": true,
+            "feedback": "x = 3 has UNDEFINED slope, so no product exists — the complete test carries this pair as its explicit exception."
+          },
+          {
+            "id": "o2",
+            "label": "No — their slopes don't multiply to −1",
+            "correct": false,
+            "feedback": "The product is UNDEFINED, not ≠ −1 — and the lines visibly cross at a right angle at (3, −2)."
+          },
+          {
+            "id": "o3",
+            "label": "Only if they intersect at the origin",
+            "correct": false,
+            "feedback": "They cross at (3, −2), and perpendicularity doesn't care where — vertical ⊥ horizontal, always."
+          },
+          {
+            "id": "o4",
+            "label": "They're parallel",
+            "correct": false,
+            "feedback": "Parallel lines never meet — these cross at (3, −2), and at a right angle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-perp-proof__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why rotation?",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "answerMode": "choice",
+        "prompt": "The proof rotates the slope triangle 90°. What exactly does the rotation deliver?",
+        "coordinateProof": {
+          "kind": "vectorRotation",
+          "points": [
+            {
+              "id": "O",
+              "label": "O",
+              "x": 0,
+              "y": 0
+            },
+            {
+              "id": "V",
+              "label": "V",
+              "x": 2,
+              "y": 1
+            },
+            {
+              "id": "R",
+              "label": "R",
+              "x": -1,
+              "y": 2
+            }
+          ],
+          "vector": [
+            2,
+            1
+          ]
+        },
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "o1",
+            "label": "A line guaranteed perpendicular to the original, whose slope we can READ from the rotated displacement (−b, a)",
+            "claim": "rotation:perpendicular-readable",
+            "feedback": "The 90° rotation manufactures perpendicularity by definition; the coordinate rule (a, b) → (−b, a) then hands us the new slope to compare."
+          },
+          {
+            "id": "o2",
+            "label": "It proves the two triangles are congruent by SSS",
+            "claim": "wrong:o2",
+            "feedback": "They ARE congruent (rigid motion), but the payoff is the perpendicular DIRECTION plus its readable slope a/(−b)."
+          },
+          {
+            "id": "o3",
+            "label": "It shows all slopes equal −1",
+            "claim": "wrong:o3",
+            "feedback": "Slopes vary freely — it's the PRODUCT of the pair that locks at −1."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — rotations don't preserve lines",
+            "claim": "wrong:o4",
+            "feedback": "Rotations are rigid motions: lines to lines, lengths kept — exactly why the argument is airtight."
+          }
+        ],
+        "numericErrors": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "successFeedback": "The 90° rotation manufactures perpendicularity by definition; the coordinate rule (a, b) → (−b, a) then hands us the new slope to compare.",
+        "explorationFeedback": "Open at least two coordinate-proof states before checking.",
+        "fallbackFeedback": "Inspect the coordinate invariants, then choose the supported conclusion."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Altitude slope.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has base from (0, 0) to (8, 4). Compute the slope of the ALTITUDE dropped onto that base (decimal).",
+        "answer": -2,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "0.5 is the BASE's slope — the altitude runs perpendicular: −2."
+          },
+          {
+            "value": 2,
+            "feedback": "2 flips 1/2 but keeps the sign — negate too: (1/2)(−2) = −1 ✓."
+          }
+        ],
+        "fallbackFeedback": "Base slope 4/8 = 1/2; altitude slope = −2."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Perpendicular to the axis.",
+      "conceptTag": "cx-perp-proof",
+      "hints": [
+        "The perpendicular through B(6, 4) to a slope-2/3 line has slope −3/2.",
+        "Ride it to x = 0: Δx = −6.",
+        "y = 4 + (−3/2)(−6)."
+      ],
+      "explanationVariants": [
+        "Δy = (−3/2)(−6) = +9: y = 4 + 9 = 13.",
+        "Two negatives make the climb positive: 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line through B(6, 4) is PERPENDICULAR to a slope-2/3 line. Find its y-value at x = 0.",
+        "answer": 13,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 rides the PARALLEL slope 2/3: 4 + (2/3)(−6) = 0. Perpendicular takes −3/2: y = 13."
+          },
+          {
+            "value": -5,
+            "feedback": "−5 = 4 − 9 mishandles the double negative — (−3/2)(−6) = +9: y = 13."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the RISE alone — add the starting height: 4 + 9 = 13."
+          }
+        ],
+        "fallbackFeedback": "y = 4 + (−3/2)(0 − 6) = 13."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-perp-proof__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A quarter-turn settles it.",
+      "takeaways": [
+        "Rotating (a, b) to (−b, a) proves perpendicular slopes multiply to −1.",
+        "Complete test: product −1, OR vertical-meets-horizontal (the undefined exception).",
+        "Right angles, altitudes, and axis intercepts all fall to slope arithmetic — no protractor."
+      ],
+      "teaser": "Next chapter: the full toolkit — distance, midpoint, slope — turned on triangles and quadrilaterals for complete classification proofs."
+    }
+  ]
+}

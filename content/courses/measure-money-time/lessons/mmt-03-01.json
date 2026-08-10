@@ -1,0 +1,444 @@
+{
+  "id": "mmt-03-01",
+  "slug": "what-are-coins-worth",
+  "title": "What Are Coins Worth?",
+  "courseId": "measure-money-time",
+  "chapterId": "ch3-money-coins-and-dollars",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "coin-values",
+      "body": "Each coin has a value in **cents**: penny = 1¢, nickel = 5¢, dime = 10¢, quarter = 25¢. Bigger coins aren't always worth more — a dime is smaller than a nickel but worth twice as much!"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Name a coin's value.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which coin is worth 10 cents?",
+        "options": [
+          {
+            "id": "a",
+            "label": "dime",
+            "correct": true,
+            "feedback": "Yes — a dime is worth 10 cents."
+          },
+          {
+            "id": "b",
+            "label": "nickel",
+            "feedback": "A nickel is worth 5 cents, not 10. That's the dime."
+          },
+          {
+            "id": "c",
+            "label": "penny",
+            "feedback": "A penny is worth 1 cent, not 10. That's the dime."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another coin value.",
+      "conceptTag": "mmt-coin-name",
+      "explanationVariants": [
+        "A quarter is worth 25 cents.",
+        "The biggest common coin value here is the quarter, 25 cents."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which coin is worth 25 cents?",
+        "options": [
+          {
+            "id": "a",
+            "label": "quarter",
+            "correct": true,
+            "feedback": "Yes — a quarter is worth 25 cents."
+          },
+          {
+            "id": "b",
+            "label": "dime",
+            "feedback": "A dime is worth 10 cents, not 25. That's the quarter."
+          },
+          {
+            "id": "c",
+            "label": "nickel",
+            "feedback": "A nickel is worth 5 cents, not 25. That's the quarter."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtCoinNameMcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A single coin's value doesn't change with how many you have — one quarter is always 25 cents. Counting quarters means counting by 25s.",
+      "figure": "mmt-coin-value"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "How many cents in one quarter and one dime?",
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 1 quarter and 1 dime?",
+        "show": [
+          {
+            "cents": 25,
+            "label": "quarter",
+            "count": 1
+          },
+          {
+            "cents": 10,
+            "label": "dime",
+            "count": 1
+          }
+        ],
+        "answerCents": 35,
+        "commonEntries": [
+          {
+            "cents": 15,
+            "feedback": "That's 25 − 10. Add the coins instead: 25 + 10 = 35."
+          },
+          {
+            "cents": 26,
+            "feedback": "A quarter is 25 cents, not 26. 25 + 10 = 35."
+          }
+        ],
+        "fallbackFeedback": "25 + 10 = 35 cents.",
+        "successFeedback": "35¢ — every coin's value counted."
+      },
+      "conceptTag": "mmt-coin-name",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin name.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin name must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin name."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-name",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "One quarter and one dime together are worth…",
+        "options": [
+          {
+            "id": "thirtyfive",
+            "label": "35¢"
+          },
+          {
+            "id": "two",
+            "label": "2¢ — there are two coins"
+          },
+          {
+            "id": "fifteen",
+            "label": "15¢"
+          }
+        ],
+        "outcomeId": "thirtyfive",
+        "reveal": "35¢ — a quarter is 25¢ and a dime is 10¢. Counting the coins gives 2, but coins are not worth the same as each other, so how many you hold tells you nothing about how much you have. You have to add the values."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "To find a total, add up each coin's value. 2 dimes and 3 pennies is 10 + 10 + 1 + 1 + 1 = 23 cents.",
+      "figure": "mmt-coin-total"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Add several coins.",
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 2 dimes and 3 pennies?",
+        "show": [
+          {
+            "cents": 10,
+            "label": "dime",
+            "count": 2
+          },
+          {
+            "cents": 1,
+            "label": "penny",
+            "count": 3
+          }
+        ],
+        "answerCents": 23,
+        "commonEntries": [
+          {
+            "cents": 5,
+            "feedback": "That's just counting the coins (2 + 3), not their value. 10+10+1+1+1 = 23."
+          },
+          {
+            "cents": 30,
+            "feedback": "A dime is 10 cents, not counted as a whole ten pennies extra. 2 dimes + 3 pennies = 23."
+          }
+        ],
+        "fallbackFeedback": "2 dimes (20) + 3 pennies (3) = 23 cents.",
+        "successFeedback": "23¢ — every coin's value counted."
+      },
+      "conceptTag": "mmt-coin-name",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin name.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin name must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin name."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-name",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the smallest-value coin.",
+      "conceptTag": "mmt-coin-name",
+      "explanationVariants": [
+        "A penny is worth 1 cent.",
+        "The smallest coin value here is the penny, 1 cent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which coin is worth 1 cent?",
+        "options": [
+          {
+            "id": "a",
+            "label": "penny",
+            "correct": true,
+            "feedback": "Yes — a penny is worth 1 cent."
+          },
+          {
+            "id": "b",
+            "label": "nickel",
+            "feedback": "A nickel is worth 5 cents, not 1. That's the penny."
+          },
+          {
+            "id": "c",
+            "label": "dime",
+            "feedback": "A dime is worth 10 cents, not 1. That's the penny."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtCoinNameMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Add nickels and a quarter.",
+      "conceptTag": "mmt-coin-total",
+      "explanationVariants": [
+        "5 nickels is 25 cents.",
+        "Count by 5s five times: 5, 10, 15, 20, 25."
+      ],
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 5 nickels?",
+        "show": [
+          {
+            "cents": 5,
+            "label": "nickel",
+            "count": 5
+          }
+        ],
+        "answerCents": 25,
+        "commonEntries": [
+          {
+            "cents": 5,
+            "feedback": "That's just the count of coins, not their value. 5 nickels = 5 × 5 = 25 cents."
+          },
+          {
+            "cents": 10,
+            "feedback": "A nickel is 5 cents, not 2. 5 nickels = 25 cents."
+          }
+        ],
+        "fallbackFeedback": "5 nickels = 5 × 5 = 25 cents.",
+        "successFeedback": "25¢ — every coin's value counted."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Mixed coins.",
+      "conceptTag": "mmt-coin-total",
+      "explanationVariants": [
+        "2 quarters (50) + 1 nickel (5) + 4 pennies (4) = 59 cents.",
+        "Add each coin's value: 25+25+5+1+1+1+1 = 59."
+      ],
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 2 quarters, 1 nickel, and 4 pennies?",
+        "show": [
+          {
+            "cents": 25,
+            "label": "quarter",
+            "count": 2
+          },
+          {
+            "cents": 5,
+            "label": "nickel",
+            "count": 1
+          },
+          {
+            "cents": 1,
+            "label": "penny",
+            "count": 4
+          }
+        ],
+        "answerCents": 59,
+        "commonEntries": [
+          {
+            "cents": 7,
+            "feedback": "That's just counting the coins (2+1+4), not their value. 50+5+4 = 59."
+          },
+          {
+            "cents": 55,
+            "feedback": "Don't forget the pennies. 50 + 5 + 4 = 59, not 55."
+          }
+        ],
+        "fallbackFeedback": "50 + 5 + 4 = 59 cents.",
+        "successFeedback": "59¢ — every coin's value counted."
+      },
+      "hints": [
+        "2 quarters are 25 + 25 = 50 cents.",
+        "Add the nickel: 50 + 5 = 55.",
+        "Add the 4 pennies: 55 + 4 = 59."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Each coin has its own cent value — add them up to find a total.",
+      "takeaways": [
+        "Penny 1¢, nickel 5¢, dime 10¢, quarter 25¢.",
+        "Coin size doesn't tell you its value.",
+        "Add every coin's value to find the total."
+      ],
+      "teaser": "next: counting mixed groups of coins quickly."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mmt-coin-name",
+      "concept": {
+        "id": "rem-mcn-c",
+        "kind": "concept",
+        "body": "Each US coin has a fixed value: penny = 1¢, nickel = 5¢, dime = 10¢, quarter = 25¢. Memorize these four values — the coin's size doesn't tell you its worth."
+      },
+      "check": {
+        "id": "rem-mcn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mmt-coin-name",
+        "explanationVariants": [
+          "A dime is worth 10 cents.",
+          "Dime = 10¢."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which coin is worth 10 cents?",
+          "options": [
+            {
+              "id": "a",
+              "label": "dime",
+              "correct": true,
+              "feedback": "Yes — 10 cents."
+            },
+            {
+              "id": "b",
+              "label": "nickel",
+              "feedback": "Nickel is 5¢; dime is 10¢."
+            },
+            {
+              "id": "c",
+              "label": "penny",
+              "feedback": "Penny is 1¢; dime is 10¢."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

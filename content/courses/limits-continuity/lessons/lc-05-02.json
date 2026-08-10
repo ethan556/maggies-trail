@@ -1,0 +1,264 @@
+{
+  "id": "lc-05-02",
+  "slug": "derivative-as-a-limit",
+  "title": "The Derivative as a Limit",
+  "courseId": "limits-continuity",
+  "chapterId": "ch5-derivative",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Let the step h shrink to zero. The secant pivots into the **tangent line**, and the difference quotient's LIMIT is the **instantaneous rate of change** — the **derivative**:\n\nf′(a) = lim_{h→0} (f(a + h) − f(a)) / h.\n\nThis is the whole course's payoff: a single-point slope, defined by a limit.",
+      "figure": "lc-secant-tangent"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Shrink the interval to nothing — but not to zero.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "limit",
+        "a": 3,
+        "targetH": 0.1,
+        "startH": 1.5,
+        "prompt": "A sits at x = 3 on y = x². Squeeze the gap until the secant lies on the tangent. Then try dragging it to exactly 0.",
+        "successFeedback": "The slope readout is a whisker from 6, and the secant has all but merged with the tangent. At a gap of exactly 0 the quotient becomes 0/0 and dies — yet the tangent is still sitting right there. The derivative is the LIMIT of the slope as the gap vanishes, which is why it exists at a place the quotient itself does not.",
+        "lowFeedback": "At a gap of exactly 0 there is no second point: the quotient is 0/0. That is not a failure — it is why the derivative has to be defined as a limit. Come back a hair.",
+        "highFeedback": "The gap is still wide, so the line is cutting across the curve rather than grazing it. Squeeze it to 0.1 or less."
+      },
+      "predict": {
+        "prompt": "You'll squeeze the gap h toward 0, dragging B into A at x = 3. What does the secant's slope do?",
+        "options": [
+          {
+            "id": "settles",
+            "label": "Settles toward one number (6)"
+          },
+          {
+            "id": "blows",
+            "label": "Grows without bound"
+          },
+          {
+            "id": "bounces",
+            "label": "Keeps changing — no single value"
+          }
+        ],
+        "outcomeId": "settles",
+        "reveal": "The secant slopes home in on 6 — the tangent slope at x = 3. A derivative is not a new kind of slope; it is the number the secant slopes were already approaching."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "limits-continuity-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "lc-derivative"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Take the limit.",
+      "conceptTag": "lc-derivative",
+      "explanationVariants": [
+        "As h → 0, the difference quotient 2a + h → 2a. So for f(x) = x², the derivative is f′(a) = 2a.",
+        "Sending h to 0 drops the +h: f′(a) = 2a."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Taking h → 0 in the difference quotient 2a + h gives the derivative f′(a) =",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2a",
+            "correct": true,
+            "feedback": "Right — the +h vanishes as h → 0, leaving f′(a) = 2a."
+          },
+          {
+            "id": "o2",
+            "label": "2a + h",
+            "feedback": "The limit removes the h term: f′(a) = 2a."
+          },
+          {
+            "id": "o3",
+            "label": "a²",
+            "feedback": "a² is f(a) itself. The derivative (limit of the quotient) is 2a."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-derivative__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate a derivative.",
+      "conceptTag": "lc-derivative",
+      "explanationVariants": [
+        "With f′(a) = 2a, the derivative at a = 3 is f′(3) = 2·3 = 6 — the tangent slope there.",
+        "f′(3) = 2(3) = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x² (so f′(a) = 2a), find f′(3).",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 = f(3) = 3², the VALUE, not the slope. f′(3) = 2·3 = 6."
+          },
+          {
+            "value": 3,
+            "feedback": "f′(a) = 2a, so f′(3) = 2·3 = 6."
+          }
+        ],
+        "fallbackFeedback": "f′(3) = 2·3 = 6."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-derivative__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The derivative reads as an **instantaneous** rate: the exact speed at one instant, the tangent's steepness at one point. Average rate needed two points; the derivative needs a limit to capture just one. This limit — the same tool from all of Chapter 1 — is the gateway to calculus.",
+      "figure": "lc-derivative-instant"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Instantaneous vs average.",
+      "conceptTag": "lc-derivative",
+      "explanationVariants": [
+        "At x = 1, f′(1) = 2·1 = 2 — the instantaneous rate, generally different from any average over an interval.",
+        "f′(1) = 2 is the exact slope at the single point x = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x², find the instantaneous rate of change at x = 1, i.e. f′(1).",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "f′(a) = 2a, so f′(1) = 2·1 = 2 (not just a)."
+          },
+          {
+            "value": 4,
+            "feedback": "f′(1) = 2·1 = 2; 4 would be f′(2)."
+          }
+        ],
+        "fallbackFeedback": "f′(1) = 2·1 = 2."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-derivative__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A derivative at a new point.",
+      "conceptTag": "lc-derivative",
+      "explanationVariants": [
+        "Using f′(a) = 2a for f(x) = x², the tangent slope at x = 5 is f′(5) = 2·5 = 10.",
+        "f′(5) = 10 — the steepness of x² at x = 5."
+      ],
+      "hints": [
+        "Use the derivative rule f′(a) = 2a.",
+        "At a = 5.",
+        "2·5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x², find f′(5) (the tangent slope at x = 5).",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 = f(5) is the height, not the slope. f′(5) = 2·5 = 10."
+          },
+          {
+            "value": 5,
+            "feedback": "f′(a) = 2a, so f′(5) = 2·5 = 10."
+          }
+        ],
+        "fallbackFeedback": "f′(5) = 2·5 = 10."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-derivative__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One point, one slope.",
+      "takeaways": [
+        "Derivative f′(a) = lim_{h→0} (f(a + h) − f(a))/h (the difference quotient's limit).",
+        "The secant pivots into the tangent as h → 0.",
+        "For f(x) = x², f′(a) = 2a — an instantaneous rate at every point."
+      ],
+      "teaser": "Finale: limits everywhere — infinite sums and the road into calculus."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lc-derivative",
+      "concept": {
+        "id": "rem-lc0502-c",
+        "kind": "concept",
+        "body": "Derivative = instantaneous rate = lim_{h→0}(f(a+h)−f(a))/h, the tangent slope. For f(x)=x², f′(a)=2a."
+      },
+      "check": {
+        "id": "rem-lc0502-k",
+        "kind": "check",
+        "body": "One derivative.",
+        "conceptTag": "lc-derivative",
+        "explanationVariants": [
+          "f(x)=x², f′(a)=2a, so f′(4)=2·4=8.",
+          "Double the input: f′(4)=8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = x² (f′(a) = 2a), find f′(4).",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 = f(4), the value. The derivative f′(4) = 2·4 = 8."
+            },
+            {
+              "value": 4,
+              "feedback": "You reported a itself. The derivative doubles it: f′(4) = 2 × 4 = 8."
+            }
+          ],
+          "fallbackFeedback": "f′(4) = 2·4 = 8."
+        }
+      }
+    }
+  ]
+}

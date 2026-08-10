@@ -1,0 +1,324 @@
+{
+  "id": "dd-05-02",
+  "slug": "which-numbers-tell-it-best",
+  "title": "Which Numbers Tell It Best",
+  "courseId": "data-distributions",
+  "chapterId": "ch5-describing-distributions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Weekly allowances (dollars): 10, 12, 12, 14, 14, 16, 18, **64**. The 64 is a lone outlier past a huge gap. Mean: 160 ÷ 8 = **20** — larger than seven of the eight allowances! Median: (14 + 14) ÷ 2 = **14**, right among the pack. The shape you see decides the summary you trust: **outliers or skew → median (and IQR); symmetric → mean works fine**.",
+      "figure": "dd-summary-pairs"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "See how far the mean drifted.",
+      "conceptTag": "summary-choice",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Allowances 10, 12, 12, 14, 14, 16, 18, 64. The mean is 20. How many of the eight values sit BELOW the mean?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "values",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "Half-below is what a MEDIAN promises. The outlier dragged the mean to 20, so 10, 12, 12, 14, 14, 16, and 18 — seven values — all sit below it."
+          },
+          {
+            "value": 8,
+            "feedback": "Not quite all — the 64 sits above the mean of 20. The other seven values fall below it."
+          }
+        ],
+        "fallbackFeedback": "Only the 64 exceeds 20; the other seven allowances sit below the mean — a 'typical value' describing almost nobody."
+      },
+      "predict": {
+        "prompt": "The mean allowance is 20, but one value is 64. Can MOST of the values sit BELOW the mean?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — one big value lifts the mean"
+          },
+          {
+            "id": "no",
+            "label": "No — half must sit each side"
+          },
+          {
+            "id": "never",
+            "label": "No value can be below the mean"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "The mean balances totals, not headcounts — a single 64 hoists it above nearly everyone. Half-on-each-side is the MEDIAN's promise, not the mean's."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The resistant pair.",
+      "conceptTag": "summary-choice",
+      "explanationVariants": [
+        "Halves 10, 12, 12, 14 and 14, 16, 18, 64 give Q1 = 12 and Q3 = 17: IQR = 5. The 64 sits outside the fences, so the middle half stays honest.",
+        "Compare spreads: range 64 − 10 = 54 (outlier-owned) versus IQR 5 (outlier-proof)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same allowances. Q1 = 12 and Q3 = 17. What is the IQR?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "54 is the RANGE (64 − 10) — the outlier owns that number. The IQR uses the fences: 17 − 12 = 5."
+          },
+          {
+            "value": 29,
+            "feedback": "29 adds the quartiles (17 + 12). The IQR is their difference: 17 − 12 = 5."
+          }
+        ],
+        "fallbackFeedback": "IQR = Q3 − Q1 = 17 − 12 = 5 dollars — tiny next to the outlier-driven range of 54."
+      },
+      "hints": [
+        "Q3 minus Q1.",
+        "17 and 12.",
+        "Subtract: 17 − 12."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddChoiceIqr"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The summaries travel in **pairs**. The mean and range both feel every extreme — use them together on **symmetric, outlier-free** data, where they're honest and familiar. The median and IQR both read positions, not sizes — the **resistant pair** for **skewed or outlier-carrying** data. Mixing (say, median with range) half-fixes the problem: the range still hands the outlier the microphone.",
+      "figure": "dd-summary-pairs"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Assign the right crew.",
+      "conceptTag": "summary-choice",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Drag each data set to the summary pair that should report it.",
+        "buckets": [
+          {
+            "id": "meanrange",
+            "label": "Mean + range",
+            "icon": "⚖️"
+          },
+          {
+            "id": "mediqr",
+            "label": "Median + IQR",
+            "icon": "🛡️"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "Allowances with one $64 outlier",
+            "bucketId": "mediqr",
+            "feedback": "An outlier is exactly what the resistant pair is for — the mean (20) already sits above 7 of the 8 values."
+          },
+          {
+            "id": "d2",
+            "label": "Trip times: symmetric, no outliers",
+            "bucketId": "meanrange",
+            "feedback": "Symmetric and clean — the mean lands on the median anyway, so the familiar pair serves well."
+          },
+          {
+            "id": "d3",
+            "label": "House prices with one mansion",
+            "bucketId": "mediqr",
+            "feedback": "The mansion drags the mean and owns the range; report the median and the IQR instead."
+          },
+          {
+            "id": "d4",
+            "label": "Heights of 20 sixth-graders, evenly bunched",
+            "bucketId": "meanrange",
+            "feedback": "Evenly bunched with no extremes — nothing here to resist; mean + range describe it honestly."
+          }
+        ],
+        "missFeedback": "Scan the SHAPE first: any outlier or long tail → the resistant pair (median + IQR); balanced and clean → mean + range.",
+        "successFeedback": "Assigned — shape first, summaries second. That's the professional habit."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Defend the choice.",
+      "conceptTag": "summary-choice",
+      "explanationVariants": [
+        "'Typical' should describe the pack. The median 14 sits among the seven clustered allowances; the mean 20 describes nobody — it's beyond every value except the outlier itself.",
+        "Resistant beats dragged: with the 64 in play, only the median stays with the crowd."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For the allowances 10, 12, 12, 14, 14, 16, 18, 64 — which number honestly answers 'what's a TYPICAL allowance?'",
+        "options": [
+          {
+            "id": "a",
+            "label": "The median, 14 — it sits inside the actual cluster",
+            "correct": true,
+            "feedback": "Right — 14 lands among the pack the word 'typical' points at; the outlier can't move it."
+          },
+          {
+            "id": "b",
+            "label": "The mean, 20 — it accounts for every dollar",
+            "feedback": "Accounting for every dollar is precisely how the 64 dragged it to 20 — above seven of the eight kids. For 'typical', the resistant median (14) is the honest pick."
+          },
+          {
+            "id": "c",
+            "label": "The maximum, 64 — the most impressive value",
+            "feedback": "The 64 is the OUTLIER — the least typical value in the set. Typical means the middle of the pack: the median, 14."
+          }
+        ]
+      },
+      "hints": [
+        "Where does the actual cluster sit?",
+        "Which summary can the 64 not touch?",
+        "The median: 14."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddTypicalMedian"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Reverse-engineer the shape.",
+      "conceptTag": "summary-choice",
+      "explanationVariants": [
+        "Mean well ABOVE median is the fingerprint of a high tail or high outlier — big values feed the sum, dragging the mean up while the median holds position.",
+        "You've seen the pattern from both sides now: allowances (20 vs 14) and pack weights (10 vs 6.5) — both dragged from above."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A data set you HAVEN'T seen reports mean 20 and median 14. What does the gap suggest about its shape?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A high outlier or long high tail is pulling the mean up",
+            "correct": true,
+            "feedback": "That's the fingerprint — a mean sitting well above the median means large values are feeding the sum."
+          },
+          {
+            "id": "b",
+            "label": "A low outlier is pulling the mean down",
+            "feedback": "A low outlier would drag the mean BELOW the median. This mean sits above it — the pull comes from large values."
+          },
+          {
+            "id": "c",
+            "label": "The data must be perfectly symmetric",
+            "feedback": "Symmetric data puts mean and median together (the trip data had both at 15). A 6-point gap means the data leans — high side."
+          }
+        ]
+      },
+      "hints": [
+        "Which summary gets dragged, and which resists?",
+        "The mean sits above the median here.",
+        "What kind of values drag a mean UP?"
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddShapeFromCenters"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Quantify the honesty gap.",
+      "conceptTag": "summary-choice",
+      "explanationVariants": [
+        "Mean 20 minus median 14 leaves a gap of 6 dollars — the size of the outlier's distortion of 'typical.'",
+        "The two centers should roughly agree on clean data; here they split by 20 − 14 = 6, all of it the 64's doing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the allowances, the mean is 20 and the median is 14. How large is the gap between the two centers?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 34,
+            "feedback": "34 is mean + median (20 + 14). The gap is their difference: 20 − 14 = 6."
+          },
+          {
+            "value": 50,
+            "feedback": "50 is the outlier minus the median (64 − 14). The question compares the two CENTERS: 20 − 14 = 6."
+          }
+        ],
+        "fallbackFeedback": "Gap = mean − median = 20 − 14 = 6 dollars — the outlier's signature."
+      },
+      "hints": [
+        "Two centers, one subtraction.",
+        "20 and 14.",
+        "20 − 14."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddCenterGap"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Shape first, summaries second.",
+      "takeaways": [
+        "Outliers or skew → the resistant pair: median + IQR.",
+        "Symmetric, clean data → mean + range serve honestly (and mean ≈ median anyway).",
+        "A mean far from the median is itself evidence: something is dragging it."
+      ],
+      "teaser": "final lesson: run the ENTIRE pipeline — question to plot to summary — on one fresh data set."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "summary-choice",
+      "concept": {
+        "id": "rem-sy-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Outlier in the data → trust the median.** For 2, 3, 4, 91 the mean is 25 (dragged by the 91) but the median is 3.5, still with the pack."
+      },
+      "check": {
+        "id": "rem-sy-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "summary-choice",
+        "explanationVariants": [
+          "The 91 feeds the sum, so the mean (25) leaves the pack; the median (3.5) reads positions and stays.",
+          "Resistant summaries ignore sizes: the middle pair is 3 and 4 no matter how big the 91 grows."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Data: 2, 3, 4, 91. Mean = 25, median = 3.5. Which center better describes a TYPICAL value?",
+          "options": [
+            {
+              "id": "a",
+              "label": "The median, 3.5",
+              "correct": true,
+              "feedback": "Yes — 3.5 sits inside the 2-to-4 pack; the 91 can't move it."
+            },
+            {
+              "id": "b",
+              "label": "The mean, 25",
+              "feedback": "25 is bigger than three of the four values — the 91 dragged it out of the pack. The resistant median, 3.5, is the honest 'typical.'"
+            },
+            {
+              "id": "c",
+              "label": "They're equally good",
+              "feedback": "On clean data they'd agree, but here they split 25 vs 3.5 — the outlier broke the tie, and the median is the one still with the pack."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

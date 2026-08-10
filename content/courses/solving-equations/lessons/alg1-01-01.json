@@ -1,0 +1,393 @@
+{
+  "id": "alg1-01-01",
+  "slug": "two-step-equations",
+  "title": "Two-Step Equations",
+  "courseId": "solving-equations",
+  "chapterId": "ch1-multi-step",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "undo-machine",
+      "body": "An equation like **3x + 5 = 20** is a two-step machine: x was multiplied by 3, then 5 was added. To find x, run the machine in **reverse**, undoing the *last* step first: subtract 5 (leaving 15), then divide by 3. So x = 5.",
+      "narration": "An equation like three x plus five equals twenty is a two-step machine: x was multiplied by three, then five was added. To find x, run the machine in reverse, undoing the last step first: subtract five, leaving fifteen, then divide by three. So x equals five."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Balance it, do not 'do the same to both sides' on faith.",
+      "widget": {
+        "type": "balanceScale",
+        "a": 2,
+        "b": 3,
+        "c": 11,
+        "xMin": 0,
+        "xMax": 8,
+        "xStart": 0,
+        "prompt": "2x + 3 = 11. Slide x until the scale balances.",
+        "successFeedback": "x = 4: two boxes of 4 plus 3 weighs 11, matching the other pan. Solving is not a ritual — it is the search for the value that makes the two pans agree, and every legal step is one that keeps them level.",
+        "lowFeedback": "The left pan is lighter — x is too small.",
+        "highFeedback": "The left pan is heavier — x is too big."
+      },
+      "predict": {
+        "prompt": "The scale starts with x = 0. Right now the left pan (2x + 3) is…",
+        "options": [
+          {
+            "id": "light",
+            "label": "Lighter than the right pan"
+          },
+          {
+            "id": "heavy",
+            "label": "Heavier than the right pan"
+          },
+          {
+            "id": "level",
+            "label": "Already balanced"
+          }
+        ],
+        "outcomeId": "light",
+        "reveal": "At x = 0 the left pan weighs 3 against 11 on the right — 8 short. Every unit you add to x moves only that pan, which is why exactly one value levels the scale."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Find and justify the value that balances both sides while preserving equality under legal transformations.",
+        "invariants": [
+          "equality-preserved",
+          "solution-set-preserved"
+        ],
+        "misconceptions": [
+          "one-sided-operation",
+          "procedure-without-equivalence"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "multi-step-equations-and-literal-balances",
+        "delayed": true,
+        "counterfactualPrompt": "Add the same mass to both pans, then add it to only one pan. Which action preserves the solution and why?",
+        "explanation": {
+          "prompt": "Why must a legal equation step act equivalently on both sides?",
+          "options": [
+            {
+              "id": "equality",
+              "label": "Both sides name the same quantity, so matching transformations preserve the same solution set.",
+              "correct": true,
+              "feedback": "Exactly — solving is a chain of equivalence-preserving transformations."
+            },
+            {
+              "id": "rule",
+              "label": "Because algebra rules require identical-looking steps even when equality changes.",
+              "correct": false,
+              "feedback": "The reason is preservation of equality, not a visual ritual."
+            }
+          ]
+        }
+      },
+      "conceptTag": "two-step"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve it.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "4x + 8 = 28: subtract 8 to get 4x = 20, then divide by 4: x = 5.",
+        "Run the machine backward: 28 − 8 = 20, and 20 ÷ 4 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 4x + 8 = 28",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That ADDED 8 before dividing: (28+8)÷4. Undoing +8 means SUBTRACTING: (28−8)÷4 = 5."
+          },
+          {
+            "value": 20,
+            "feedback": "That's 4x, not x — the subtraction is done, but 4x = 20 still needs ÷4: x = 5."
+          }
+        ],
+        "fallbackFeedback": "Subtract 8: 4x = 20. Divide by 4: x = 5."
+      },
+      "hints": [
+        "Undo the +8 first.",
+        "4x = 20.",
+        "Divide by 4: x = 5."
+      ],
+      "variant": {
+        "gen": "two-step-solve"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Whatever you do, do it to **both sides** — that keeps the equation true. Each undo peels one layer off the x until it stands alone.",
+      "narration": "Whatever you do, do it to both sides — that keeps the equation true. Each undo peels one layer off the x until it stands alone.",
+      "figure": "alg1-both-sides"
+    },
+    {
+      "id": "c2b",
+      "kind": "interactive",
+      "body": "You just read the rule. Now make it a consequence: take tiles off ONE side and watch the beam call you out.",
+      "predict": {
+        "prompt": "The pans hold 3x + 5 on the left and 20 on the right. If you take the 5 unit tiles off the left and leave the right alone, what does the beam do?",
+        "options": [
+          {
+            "id": "stays-level",
+            "label": "Stays level — I removed what I meant to remove"
+          },
+          {
+            "id": "tips",
+            "label": "Tips — the sides no longer weigh the same"
+          },
+          {
+            "id": "solves",
+            "label": "It solves the equation for me"
+          }
+        ],
+        "outcomeId": "tips",
+        "reveal": "It tips, immediately. \"Do the same to both sides\" is not etiquette — the beam is weighing a real x, and a one-sided removal makes the two pans genuinely unequal. Take the 5 off BOTH sides and the beam stays level, which is the equation staying true."
+      },
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 3x + 5 = 20 on the beam: strip the pans down until a single x stands alone.",
+        "a": 3,
+        "b": 5,
+        "c": 20,
+        "successFeedback": "One x on the left, 5 on the right — x = 5. Every move you made was two-sided, so the beam never tipped and the equation never stopped being true. That is the whole two-step machine run backwards: undo the +5, then undo the ×3.",
+        "unbalancedFeedback": "The beam has tipped, so the two sides no longer weigh the same — one of your moves went to a single pan. Undo it and do that step to BOTH pans.",
+        "notIsolatedFeedback": "The beam is still level, so everything you did was fair — but x has not been left alone yet. Keep stripping matching amounts off both pans until one x stands by itself.",
+        "missFeedback": "Take tiles away from both pans until a single x is left on one side."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each equation to its solution.",
+      "conceptTag": "two-step",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Solve each two-step equation and match it to its x.",
+        "left": [
+          {
+            "id": "e1",
+            "label": "2x + 7 = 19"
+          },
+          {
+            "id": "e2",
+            "label": "5x + 3 = 38"
+          },
+          {
+            "id": "e3",
+            "label": "3x − 5 = 16"
+          }
+        ],
+        "right": [
+          {
+            "id": "x6",
+            "label": "x = 6"
+          },
+          {
+            "id": "x7a",
+            "label": "x = 7"
+          },
+          {
+            "id": "x7b",
+            "label": "x = 7 (again!)"
+          }
+        ],
+        "pairs": {
+          "e1": "x6",
+          "e2": "x7a",
+          "e3": "x7b"
+        },
+        "pairErrors": [
+          {
+            "left": "e1",
+            "right": "x7a",
+            "feedback": "2x + 7 = 19: subtract 7 → 2x = 12 → x = 6, not 7."
+          },
+          {
+            "left": "e3",
+            "right": "x6",
+            "feedback": "3x − 5 = 16: undoing −5 means ADDING 5 → 3x = 21 → x = 7."
+          }
+        ],
+        "missFeedback": "Undo the constant first (watch its sign!), then divide by the coefficient.",
+        "successFeedback": "Three machines reversed — and yes, two different equations can share a solution!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Mind the sign.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "3x − 5 = 16: the x-side LOST 5, so give it back — add 5 to both sides: 3x = 21, x = 7.",
+        "Undoing a −5 means +5: 16 + 5 = 21, then 21 ÷ 3 = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 3x − 5 = 16",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "That's 3x, not x — after adding 5 you still divide: 21 ÷ 3 = 7."
+          },
+          {
+            "value": 11,
+            "feedback": "16 − 5 = 11 subtracts AGAIN. The equation already subtracted; you must ADD 5 back: 3x = 21, x = 7."
+          }
+        ],
+        "fallbackFeedback": "Add 5: 3x = 21. Divide by 3: x = 7."
+      },
+      "hints": [
+        "The x-side lost 5 — give it back.",
+        "3x = 21.",
+        "x = 7."
+      ],
+      "variant": {
+        "gen": "two-step-solve",
+        "form": "minusForm"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why that order?",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "Solving reverses the build. The equation built x by ×3 then +6, so solving undoes +6 first, then ÷3 — like taking off shoes before socks.",
+        "Undo operations in reverse order: last on, first off."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To solve 3x + 6 = 21, which step comes FIRST?",
+        "options": [
+          {
+            "id": "a",
+            "label": "subtract 6 from both sides",
+            "correct": true,
+            "feedback": "Yes — the +6 was applied last, so it's undone first: 3x = 15, then x = 5."
+          },
+          {
+            "id": "b",
+            "label": "divide both sides by 3",
+            "feedback": "Dividing now splits the 6 too: x + 2 = 7. It works, but you're no longer doing ONE clean undo — subtract 6 first."
+          },
+          {
+            "id": "c",
+            "label": "subtract 3 from both sides",
+            "feedback": "The 3 multiplies x — it isn't added, so subtracting it doesn't undo anything. Subtract the 6, then divide by 3."
+          }
+        ]
+      },
+      "hints": [
+        "What happened to x LAST?",
+        "The +6 came last.",
+        "Undo it first: subtract 6."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "two-step__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full reverse, no map!",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "5x + 3 = 38: subtract 3 → 5x = 35 → divide by 5 → x = 7.",
+        "Backward through the machine: 38 − 3 = 35, and 35 ÷ 5 = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 5x + 3 = 38",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "That's 5x, not x — one more undo: 35 ÷ 5 = 7."
+          },
+          {
+            "value": 8,
+            "feedback": "Close — check the subtraction: 38 − 3 = 35, and 35 ÷ 5 = 7, not 8."
+          }
+        ],
+        "fallbackFeedback": "Subtract 3: 5x = 35. Divide by 5: x = 7."
+      },
+      "hints": [
+        "Undo +3 first.",
+        "5x = 35.",
+        "x = 7."
+      ],
+      "variant": {
+        "gen": "two-step-solve"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You reverse two-step machines!",
+      "takeaways": [
+        "Undo operations in reverse order: last on, first off.",
+        "Undoing +5 means −5; undoing −5 means +5.",
+        "Every move happens to both sides."
+      ],
+      "teaser": "next: x shows up on BOTH sides."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "two-step",
+      "concept": {
+        "id": "rem-ts-c",
+        "kind": "concept",
+        "body": "Slow it down with 2x + 4 = 10. The x was doubled, then 4 was added. Reverse it: take away the 4 first (2x = 6), then split in half (x = 3). Check: 2·3 + 4 = 10. ✓",
+        "narration": "Slow it down with two x plus four equals ten. The x was doubled, then four was added. Reverse it: take away the four first, giving two x equals six, then split in half: x equals three. Check: two times three plus four is ten."
+      },
+      "check": {
+        "id": "rem-ts-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "two-step",
+        "explanationVariants": [
+          "2x + 4 = 10: subtract 4 → 2x = 6 → x = 3.",
+          "Take the 4 off, then halve: 6 ÷ 2 = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve for x: 2x + 4 = 10",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's 2x, not x — halve it: x = 3."
+            },
+            {
+              "value": 7,
+              "feedback": "That added 4 instead: (10+4)÷2. Undo +4 by subtracting: 2x = 6, x = 3."
+            }
+          ],
+          "fallbackFeedback": "Subtract 4: 2x = 6. Divide by 2: x = 3."
+        }
+      }
+    }
+  ]
+}

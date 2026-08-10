@@ -1,0 +1,352 @@
+{
+ "id": "mb-05-02",
+ "slug": "multi-step-stories",
+ "title": "Multi-Step Stories",
+ "courseId": "multiply-bigger",
+ "chapterId": "ch5-patterns-multistep",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Some problems need more than one step. The trick: break the story into small pieces, solve them **in the order the story happens**, and feed each answer into the next step. Never try to do it all in your head at once — write down each small answer as you go.",
+   "figure": "mb-multistep"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Order the steps.",
+   "conceptTag": "multi-step",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "A gardener plants 5 rows of 12 tomato plants. A rabbit eats 7 of them. Then she plants 2 more rows of 9 plants. Put the steps in order to find how many plants she has now.",
+    "items": [
+     {
+      "id": "s3",
+      "label": "Add 18 — that's 2 × 9 — for the newly planted rows (71 plants)"
+     },
+     {
+      "id": "s1",
+      "label": "Multiply 5 × 12 for the initial total (60 plants)"
+     },
+     {
+      "id": "s2",
+      "label": "Subtract 7 for the plants the rabbit ate (53 plants)"
+     }
+    ],
+    "correctOrder": [
+     "s1",
+     "s2",
+     "s3"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "s3",
+      "second": "s2",
+      "feedback": "The rabbit ate plants BEFORE the new rows went in — subtract the eaten plants first, then add the new rows."
+     }
+    ],
+    "missFeedback": "Follow the story's own order: find the start, then apply each change as it happens.",
+    "successFeedback": "60, then 53 after the rabbit, then 71 after planting more — each step builds on the one before it."
+   },
+   "predict": {
+    "prompt": "'A rabbit eats 7' — does that happen to the number of ROWS, or to the running TOTAL?",
+    "options": [
+     {
+      "id": "total",
+      "label": "The running total"
+     },
+     {
+      "id": "rows",
+      "label": "The number of rows"
+     },
+     {
+      "id": "anywhere",
+      "label": "It can slot in anywhere"
+     }
+    ],
+    "outcomeId": "total",
+    "reveal": "The rabbit eats plants, not rows — its 7 comes off the total AFTER the planting is counted. Multi-step stories care deeply about what each step acts on."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Two steps, in order.",
+   "conceptTag": "multi-step",
+   "explanationVariants": [
+    "6 × 9 = 54 books total, then 54 − 14 = 40 books remain after the sale.",
+    "Find the total first, then subtract what was sold: 54 − 14 = 40."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A store has 6 shelves with 9 books each. It sells 14 books. How many books are left?",
+    "answer": 40,
+    "tolerance": 0,
+    "unit": "books",
+    "commonErrors": [
+     {
+      "value": 54,
+      "feedback": "54 is the total BEFORE any books sold (6 × 9). Subtract the 14 sold: 54 − 14 = 40."
+     },
+     {
+      "value": 68,
+      "feedback": "68 adds the 14 instead of subtracting. Selling books REMOVES them: 54 − 14 = 40."
+     }
+    ],
+    "fallbackFeedback": "Find the total first (6 × 9), then subtract the number sold."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbMultiStepNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A multi-step problem can hide a skill you already know — like a **times-as-many** comparison — as one of its steps. Find that hidden piece first (multiply to get the comparison's answer), then keep going with whatever the story does next.",
+   "figure": "mb-multistep"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A comparison, then a change.",
+   "conceptTag": "multi-step",
+   "explanationVariants": [
+    "Jake's pile is 4 times Mia's 6: 4 × 6 = 24. After giving away 9, he has 24 − 9 = 15 left.",
+    "Find Jake's total first (the comparison step), then subtract what he gave away."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Mia has 6 stickers. Jake has 4 TIMES as many as Mia. Jake gives away 9 stickers. How many does Jake have left?",
+    "answer": 15,
+    "tolerance": 0,
+    "unit": "stickers",
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "24 is Jake's pile BEFORE giving any away (4 × 6). Subtract the 9 he gave away: 24 − 9 = 15."
+     },
+     {
+      "value": 33,
+      "feedback": "33 adds 9 instead of subtracting. Giving stickers away REMOVES them: 24 − 9 = 15."
+     }
+    ],
+    "fallbackFeedback": "Find Jake's total first (4 × 6), then subtract the 9 he gave away."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbMultiStepNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each story to its chain.",
+   "conceptTag": "multi-step",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each story to the expression that solves it.",
+    "left": [
+     {
+      "id": "pa",
+      "label": "Sam has 4 times as many cards as his sister's 7, then buys 5 more"
+     },
+     {
+      "id": "pb",
+      "label": "A farmer has 9 rows of 6 corn stalks, then 8 stalks are damaged"
+     },
+     {
+      "id": "pc",
+      "label": "96 crayons split into 4 boxes, then each box split among 3 kids"
+     }
+    ],
+    "right": [
+     {
+      "id": "ra",
+      "label": "4 × 7 + 5 = 33"
+     },
+     {
+      "id": "rb",
+      "label": "9 × 6 − 8 = 46"
+     },
+     {
+      "id": "rc",
+      "label": "96 ÷ 4 ÷ 3 = 8"
+     }
+    ],
+    "pairs": {
+     "pa": "ra",
+     "pb": "rb",
+     "pc": "rc"
+    },
+    "pairErrors": [
+     {
+      "left": "pb",
+      "right": "ra",
+      "feedback": "4 × 7 + 5 belongs to Sam's card story. The farmer's rows multiply, then the damaged stalks SUBTRACT: 9 × 6 − 8 = 46."
+     }
+    ],
+    "missFeedback": "Match each story's actions (multiply, add, subtract, divide) to the matching expression.",
+    "successFeedback": "Multiply-then-add, multiply-then-subtract, divide-then-divide — three different chains, each solved one step at a time."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Area model, then a change.",
+   "conceptTag": "multi-step",
+   "explanationVariants": [
+    "6 × 23 splits into 6×20 + 6×3 = 120 + 18 = 138 plants, then 138 − 45 = 93 remain after the harvest.",
+    "Find the total with the break-apart method first, then subtract what was removed."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A garden has 6 rows of 23 plants each (use the break-apart method: 6×20 + 6×3). After harvest, 45 plants are removed. How many plants remain?",
+    "answer": 93,
+    "tolerance": 0,
+    "unit": "plants",
+    "commonErrors": [
+     {
+      "value": 138,
+      "feedback": "138 is the total BEFORE the harvest (6 × 23). Subtract the 45 removed: 138 − 45 = 93."
+     },
+     {
+      "value": 183,
+      "feedback": "183 adds 45 instead of subtracting. Removing plants means SUBTRACT: 138 − 45 = 93."
+     }
+    ],
+    "fallbackFeedback": "Find the total first (6 × 23 = 138), then subtract the 45 removed."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbMultiStepNumeric"
+   }
+  },
+  {
+   "id": "k4",
+   "kind": "check",
+   "body": "Two totals, combined, then split — the exact shape of the challenge, with smaller numbers.",
+   "conceptTag": "multi-step",
+   "explanationVariants": [
+    "Team X: 2×6=12. Team Y: 3×5=15. Combined: 12+15=27. Shared among 5: 27÷5=5 remainder 2 — 5 WHOLE apiece.",
+    "Two separate multiplications (12 and 15) get added to 27, then divided into 5 equal shares: 5 each, with 2 left over."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Team X packs 2 boxes of 6 apples. Team Y packs 3 boxes of 5 apples. All the apples are combined and shared equally among 5 families (apples can't be split, so some may be left over). How many WHOLE apples does each family get?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "27÷5 doesn't come out even — it's 5 remainder 2. Only 5 WHOLE apples go to each family; the extra 2 can't be split."
+     },
+     {
+      "value": 27,
+      "feedback": "27 is the COMBINED total (12+15) before sharing — the question asks for each family's share: 27÷5=5 (with 2 left over)."
+     },
+     {
+      "value": 3,
+      "feedback": "3 only uses Team Y's boxes (3×5=15÷5). Both teams' apples get combined FIRST: 12+15=27, then shared: 27÷5=5."
+     }
+    ],
+    "fallbackFeedback": "Multiply each team's total (2×6 and 3×5), add them together, then divide by 5 families — keep only the whole number."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbMultiStepNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The pencil delivery.",
+   "conceptTag": "multi-step",
+   "hints": [
+    "Find Class A's pencils first: 3 times Class B's 9.",
+    "Find Class C's pencils: 8 rows of 7.",
+    "Add Class A and Class C together, then divide by 4 teachers — pencils can't be split, so some may be left over."
+   ],
+   "explanationVariants": [
+    "Class A = 3×9 = 27. Class C = 8×7 = 56. Combined = 27+56 = 83. Sharing among 4 teachers: 83÷4 = 20 remainder 3 — each teacher gets 20 whole pencils, with 3 left over.",
+    "27 + 56 = 83 pencils total; 4 × 20 = 80 fits evenly, leaving 3 over, so each teacher gets 20."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Class A gets 3 TIMES as many pencils as Class B's 9. Class C gets a box arranged in 8 rows of 7 pencils each. The pencils from Class A and Class C are combined and shared equally among 4 teachers (pencils can't be split, so some may be left over). How many WHOLE pencils does each teacher get?",
+    "answer": 20,
+    "tolerance": 0,
+    "unit": "pencils each",
+    "commonErrors": [
+     {
+      "value": 83,
+      "feedback": "83 is the COMBINED total before sharing (27 + 56). Divide that by the 4 teachers: 83 ÷ 4 = 20 remainder 3, so 20 whole pencils each."
+     },
+     {
+      "value": 21,
+      "feedback": "21 rounds up — but pencils can't be split, so the leftover 3 stays undistributed. Each teacher gets the whole number that fits evenly: 20."
+     }
+    ],
+    "fallbackFeedback": "Add Class A (3 × 9) and Class C (8 × 7), then divide the total by 4."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbMultiStepNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Every skill, chained together.",
+   "takeaways": [
+    "Break a multi-step problem into small pieces, solved in the story's own order.",
+    "Earlier skills — comparisons, area-model multiplication, remainders — often hide inside one bigger problem.",
+    "When items can't be split, keep only the whole quotient and set the remainder aside."
+   ],
+   "teaser": "That's every skill Multiply Bigger set out to teach — next stop, Grade 4's number system: Place Value to a Million."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "multi-step",
+   "concept": {
+    "id": "rem-ms-c",
+    "kind": "concept",
+    "body": "Quick rewind. Solve a multi-step problem **one small piece at a time**, feeding each answer into the next. For 'find 3 × 4, then add 5': first 3 × 4 = 12, then 12 + 5 = 17. Write down each small answer instead of trying to combine both operations at once."
+   },
+   "check": {
+    "id": "rem-ms-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "multi-step",
+    "explanationVariants": [
+     "2 × 5 = 10 first, then 10 + 6 = 16.",
+     "Find the first piece, then add the second: 16."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "First find 2 × 5, then add 6. What's the final answer?",
+     "options": [
+      {
+       "id": "a",
+       "label": "16",
+       "correct": true,
+       "feedback": "2 × 5 = 10, then 10 + 6 = 16."
+      },
+      {
+       "id": "b",
+       "label": "10",
+       "feedback": "10 is only the first step (2 × 5). Add 6 next: 16."
+      },
+      {
+       "id": "c",
+       "label": "13",
+       "feedback": "13 adds 6 to 7, not to the first step's answer. First find 2 × 5 = 10, then add 6: 16."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

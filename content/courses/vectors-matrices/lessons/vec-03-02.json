@@ -1,0 +1,262 @@
+{
+  "id": "vec-03-02",
+  "slug": "angle-between-vectors",
+  "title": "The Angle Between Two Vectors",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch3-dot-product",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The dot product also encodes the exact **angle** between vectors:\n\ncos θ = (u · v) / (|u| |v|).\n\nDivide the dot product by the product of magnitudes to get the cosine, then take arccos (recall). This one formula turns component arithmetic into geometry.",
+      "figure": "vec-dot-angle-formula"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Zero dot product means a right angle. Watch it happen.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "dot",
+        "ux": 3,
+        "uy": 4,
+        "targetDot": 0,
+        "vxStart": 3,
+        "vyStart": 0,
+        "gridMax": 6,
+        "prompt": "u = (3, 4). Steer v until the dot product reads 0, then look at the angle.",
+        "successFeedback": "The angle snaps to 90°. That is what the dot product is FOR: one number that hits zero exactly when the arrows are perpendicular. And notice several v work — (4, −3), (−4, 3), (8, −6) — because perpendicular is a whole line of directions, not one arrow.",
+        "lowFeedback": "The dot product is negative, so the arrows lean AWAY from each other — the angle is past 90°. Swing v back toward u.",
+        "highFeedback": "The dot product is positive, so the arrows still lean the same way — the angle is under 90°. Swing v further from u."
+      },
+      "predict": {
+        "prompt": "Look at the two arrows before you move anything. The dot product u · v of the STARTING pair is…",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — they lean the same way"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — they lean apart"
+          },
+          {
+            "id": "zero",
+            "label": "Zero — they're perpendicular"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "u · v = 3·3 + 4·0 = 9. One number tells the geometry: positive means the angle is under 90°, zero means exactly 90°, negative means past it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "vec-angle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A 45° angle.",
+      "conceptTag": "vec-angle",
+      "explanationVariants": [
+        "u · v = ⟨1,0⟩·⟨1,1⟩ = 1; |u| = 1, |v| = √2; cos θ = 1/√2 = √2/2 → θ = 45°.",
+        "The cosine √2/2 is the signature of 45°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For u = ⟨1, 0⟩, v = ⟨1, 1⟩, the angle θ between them is:",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "cos θ = 1/(1·√2) = √2/2 ≈ 0.707, not 0. That's 45°, not 90°."
+          },
+          {
+            "value": 30,
+            "feedback": "cos 30° = √3/2 ≈ 0.87. Here cos θ = √2/2 ≈ 0.71 → 45°."
+          }
+        ],
+        "fallbackFeedback": "cos θ = 1/√2 = √2/2 → θ = 45°."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-angle__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When cos θ = 1 the vectors are **parallel** (same direction, 0°); when cos θ = −1 they're **antiparallel** (opposite, 180°). Parallel vectors are scalar multiples of each other, so their dot product equals the full product of magnitudes — no 'wasted' perpendicular part.",
+      "figure": "vec-parallel-cos"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Recognize parallel vectors.",
+      "conceptTag": "vec-angle",
+      "explanationVariants": [
+        "⟨2, 2⟩ and ⟨3, 3⟩: u · v = 12, |u| = 2√2, |v| = 3√2, cos θ = 12/12 = 1 → θ = 0° (parallel).",
+        "Both point along the line y = x, so the angle between them is 0°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The angle between ⟨2, 2⟩ and ⟨3, 3⟩ is:",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "Both lie along y = x — same direction. cos θ = 12/(2√2·3√2) = 1 → 0°."
+          },
+          {
+            "value": 90,
+            "feedback": "These are PARALLEL (one is a scalar multiple of the other): angle 0°, not 90°."
+          }
+        ],
+        "fallbackFeedback": "cos θ = 12/12 = 1 → θ = 0°."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-angle__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A 60° angle.",
+      "conceptTag": "vec-angle",
+      "explanationVariants": [
+        "u · v = ⟨1,√3⟩·⟨1,0⟩ = 1; |u| = 2, |v| = 1; cos θ = 1/2 → θ = 60°.",
+        "The vector ⟨1, √3⟩ points at 60° from the x-axis, so the angle to ⟨1,0⟩ is 60° — the cos θ = 1/2 signature."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The angle between ⟨1, √3⟩ and ⟨1, 0⟩ is:",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "cos θ = 1/(2·1) = 1/2, which is 60°, not 30° (cos 30° = √3/2)."
+          },
+          {
+            "value": 45,
+            "feedback": "cos θ = 1/2 → 60°. cos 45° = √2/2 ≈ 0.71, a different value."
+          }
+        ],
+        "fallbackFeedback": "cos θ = 1/2 → θ = 60°."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-angle__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A non-special angle.",
+      "conceptTag": "vec-angle",
+      "explanationVariants": [
+        "u · v = ⟨3,4⟩·⟨5,0⟩ = 15; |u| = 5, |v| = 5; cos θ = 15/25 = 0.6 → θ = arccos(0.6) ≈ 53.13°.",
+        "The 3-4-5 vector meets the x-axis at its own direction angle, 53.13°."
+      ],
+      "hints": [
+        "Dot product: 3·5 + 4·0 = 15.",
+        "|⟨3,4⟩| = 5, |⟨5,0⟩| = 5, so cos θ = 15/25.",
+        "θ = arccos(0.6)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the angle between ⟨3, 4⟩ and ⟨5, 0⟩, in degrees to two decimals.",
+        "answer": 53.13,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 36.87,
+            "feedback": "36.87° = arccos(0.8). Here cos θ = 15/25 = 0.6 → arccos(0.6) ≈ 53.13°."
+          },
+          {
+            "value": 0.6,
+            "feedback": "0.6 is the COSINE, not the angle. arccos(0.6) ≈ 53.13°."
+          }
+        ],
+        "fallbackFeedback": "cos θ = 15/25 = 0.6 → θ ≈ 53.13°."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-angle__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cosine from components.",
+      "takeaways": [
+        "cos θ = (u · v)/(|u| |v|); then θ = arccos of that.",
+        "cos θ = 1 → parallel (0°); cos θ = −1 → antiparallel (180°); 0 → perpendicular.",
+        "Special cosines (√2/2, 1/2, √3/2) flag 45°, 60°, 30°."
+      ],
+      "teaser": "Final dot-product lesson: work done by a force."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-angle",
+      "concept": {
+        "id": "rem-vec0302-c",
+        "kind": "concept",
+        "body": "Angle between vectors: cos θ = (u·v)/(|u||v|), then θ = arccos. cos = 1 parallel, 0 perpendicular, −1 antiparallel."
+      },
+      "check": {
+        "id": "rem-vec0302-k",
+        "kind": "check",
+        "body": "One angle.",
+        "conceptTag": "vec-angle",
+        "explanationVariants": [
+          "⟨1,0⟩·⟨0,1⟩ = 0 → cos θ = 0 → θ = 90°.",
+          "Perpendicular unit axes: 90°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The angle between ⟨1, 0⟩ and ⟨0, 1⟩ is (degrees):",
+          "answer": 90,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "Their dot product is 0, so cos θ = 0 → θ = 90°, not 0°."
+            },
+            {
+              "value": 45,
+              "feedback": "cos θ = 0 (not √2/2) → 90°."
+            }
+          ],
+          "fallbackFeedback": "cos θ = 0 → 90°."
+        }
+      }
+    }
+  ]
+}

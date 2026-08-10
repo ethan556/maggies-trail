@@ -1,0 +1,370 @@
+{
+  "id": "se-01-03",
+  "slug": "one-none-or-infinitely-many",
+  "title": "One, None, or Infinitely Many",
+  "courseId": "systems-equations",
+  "chapterId": "ch1-graphing",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "coordinate-plane",
+      "body": "You can tell how many solutions a system has **before** solving, by comparing the lines. **Different slopes** → they cross once → **one solution**. **Same slope, different intercept** → parallel → **no solution**. **Same slope and intercept** → the same line → **infinitely many**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Different slopes cross once. Predict, then make them equal and watch.",
+      "predict": {
+        "prompt": "You are about to make the two rates equal. The single crossing will…",
+        "options": [
+          {
+            "id": "gone",
+            "label": "Be gone — no crossing at all"
+          },
+          {
+            "id": "moves",
+            "label": "Move somewhere else on the grid"
+          },
+          {
+            "id": "offscreen",
+            "label": "Slide off the edge, still out there somewhere"
+          }
+        ],
+        "outcomeId": "gone",
+        "reveal": "Gone. Equal rates means the lines never close on each other, so they hold a constant gap and never meet — not further along, and not off the edge of the grid either. Only if their starting values match as well do the two become one line."
+      },
+      "widget": {
+        "type": "systemsExplore",
+        "prompt": "Drag the point to where y = x + 1 and y = −x + 5 cross. Then grab a line itself and tilt it until the two rates match — watch what happens to the crossing, and bring it back before you check. The steppers below set exact values.",
+        "m1": 1,
+        "b1": 1,
+        "m2": -1,
+        "b2": 5,
+        "xMin": 0,
+        "xMax": 6,
+        "yMin": 0,
+        "yMax": 8,
+        "xStart": 0,
+        "yStart": 0,
+        "editLine1": {
+          "slopeMin": -3,
+          "slopeMax": 3,
+          "slopeStep": 1,
+          "interceptMin": 0,
+          "interceptMax": 6,
+          "interceptStep": 1,
+          "outOfRange": "clamp",
+          "offLattice": "snap"
+        },
+        "editLine2": {
+          "slopeMin": -3,
+          "slopeMax": 3,
+          "slopeStep": 1,
+          "interceptMin": 0,
+          "interceptMax": 6,
+          "interceptStep": 1,
+          "outOfRange": "clamp",
+          "offLattice": "snap"
+        },
+        "successFeedback": "(2, 3) — and it checks in both: 2 + 1 = 3 and −2 + 5 = 3. Now make the two rates equal and watch this crossing leave.",
+        "offLine1Feedback": "Your point is not on line 1. A solution has to sit on both lines at once.",
+        "offLine2Feedback": "On line 1, but not on line 2. The solution is the single point the two lines share.",
+        "degenerateSystemFeedback": "Equal rates, so there is no single crossing to mark. Two cases live here, and both are worth seeing. If the starting values differ, the lines are parallel: they hold that same gap forever, so they never meet further out either — there is nowhere off the screen for them to cross. If the starting values match, the two equations describe one line, and every point on it satisfies both — infinitely many solutions, not none. Change either rate to bring a single crossing back."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same slope, different intercept.",
+      "conceptTag": "classify-systems",
+      "explanationVariants": [
+        "Both have slope 2 but intercepts 1 and −3 — parallel lines that never meet, so no solution.",
+        "Equal slopes, different y-intercepts means parallel: no crossing, no solution."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does the system y = 2x + 1 and y = 2x − 3 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No solution",
+            "correct": true,
+            "feedback": "Yes — same slope 2, different intercepts: parallel lines that never meet."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "feedback": "One solution needs different slopes. These share slope 2, so they're parallel: no solution."
+          },
+          {
+            "id": "c",
+            "label": "Infinitely many",
+            "feedback": "That needs identical lines. Same slope but different intercepts means parallel: no solution."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-systems",
+        "form": "classify-systems__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Parallel** is the no-solution case. Equal slopes tilt the lines the same way; different y-intercepts start them at different heights. They march alongside each other forever and never cross — so there's no point that satisfies both.",
+      "figure": "se-parallel"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The very same line.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does the system y = 4x + 2 and y = 4x + 2 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Infinitely many",
+            "correct": true,
+            "feedback": "Yes — the two equations are identical, so every point on the line satisfies both."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "feedback": "They're the same line, so they overlap everywhere — infinitely many solutions, not one."
+          },
+          {
+            "id": "c",
+            "label": "No solution",
+            "feedback": "Same slope AND same intercept means one line, not parallel. Every point works: infinitely many."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "When both equations describe the **same line**, every point on it satisfies both — **infinitely many** solutions. Watch for equations that look different but are the same line in disguise; comparing slope and intercept settles it.",
+      "figure": "se-same-line"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Match each system to its solution count.",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Compare slopes and intercepts, then match each system.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "y = x + 1, y = −x + 3"
+          },
+          {
+            "id": "l2",
+            "label": "y = 3x + 2, y = 3x − 4"
+          },
+          {
+            "id": "l3",
+            "label": "y = −2x + 5, y = −2x + 5"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "Exactly one solution"
+          },
+          {
+            "id": "r2",
+            "label": "No solution"
+          },
+          {
+            "id": "r3",
+            "label": "Infinitely many"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r2",
+          "l3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r3",
+            "feedback": "Same slope 3 but different intercepts — parallel lines, so no solution, not infinitely many."
+          },
+          {
+            "left": "l3",
+            "right": "r2",
+            "feedback": "These are the identical line, so every point works: infinitely many, not none."
+          }
+        ],
+        "missFeedback": "Different slopes → one; same slope, different intercept → none; same line → infinitely many.",
+        "successFeedback": "You read all three off the slopes and intercepts — no solving needed."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Identical equations.",
+      "conceptTag": "classify-systems",
+      "explanationVariants": [
+        "Both are y = −x + 4 — the same line — so every point satisfies both: infinitely many.",
+        "Same slope and same intercept means one line, hence infinitely many solutions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does the system y = −x + 4 and y = −x + 4 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Infinitely many",
+            "correct": true,
+            "feedback": "Yes — identical equations, one line, so every point on it solves the system."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "feedback": "The lines coincide, so they share every point, not just one: infinitely many."
+          },
+          {
+            "id": "c",
+            "label": "No solution",
+            "feedback": "They're the same line, not parallel. Every point works: infinitely many."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-systems",
+        "form": "classify-systems__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Same slope again.",
+      "conceptTag": "classify-systems",
+      "explanationVariants": [
+        "Both have slope 1 but intercepts 4 and −4 — parallel, so no solution.",
+        "Equal slopes, different intercepts: parallel lines, no crossing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does the system y = x + 4 and y = x − 4 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No solution",
+            "correct": true,
+            "feedback": "Yes — slope 1 for both, but intercepts 4 and −4 differ: parallel, no solution."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "feedback": "Equal slopes can't cross once. Different intercepts make them parallel: no solution."
+          },
+          {
+            "id": "c",
+            "label": "Infinitely many",
+            "feedback": "That needs identical intercepts too. Here 4 ≠ −4, so parallel: no solution."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-systems",
+        "form": "classify-systems__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Fractional slopes count too.",
+      "conceptTag": "classify-systems",
+      "explanationVariants": [
+        "Both have slope 1/2 but intercepts 3 and −1 — parallel, so no solution.",
+        "Equal slopes (1/2 = 1/2), different intercepts: parallel lines, no solution."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does the system y = (1/2)x + 3 and y = (1/2)x − 1 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No solution",
+            "correct": true,
+            "feedback": "Yes — both slopes are 1/2, but intercepts 3 and −1 differ: parallel, no solution."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "feedback": "Compare the slopes: both 1/2, so they're parallel, not crossing. No solution."
+          },
+          {
+            "id": "c",
+            "label": "Infinitely many",
+            "feedback": "Same slope but different intercepts (3 vs −1) means parallel, not the same line: no solution."
+          }
+        ]
+      },
+      "hints": [
+        "Compare the slopes first: both are 1/2.",
+        "Equal slopes mean parallel or identical — check the intercepts.",
+        "Intercepts 3 and −1 differ, so parallel: no solution."
+      ],
+      "variant": {
+        "gen": "a1-systems",
+        "form": "classify-systems__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Slopes and intercepts reveal the solution count at a glance.",
+      "takeaways": [
+        "Different slopes → exactly one solution.",
+        "Same slope, different intercept → no solution (parallel).",
+        "Same slope and intercept → infinitely many (same line)."
+      ],
+      "teaser": "next chapter: solving systems by substitution."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "classify-systems",
+      "concept": {
+        "id": "rem-cs-c",
+        "kind": "concept",
+        "body": "Compare the two lines. Different slopes cross once → one solution. Same slope but different intercepts are parallel → no solution. Same slope and same intercept are one line → infinitely many."
+      },
+      "check": {
+        "id": "rem-cs-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "classify-systems",
+        "explanationVariants": [
+          "Slopes 2 and 5 differ, so the lines cross once: exactly one solution.",
+          "Different slopes always give a single crossing point."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "How many solutions does the system y = 2x + 1 and y = 5x − 2 have?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Exactly one",
+              "correct": true,
+              "feedback": "Yes — slopes 2 and 5 differ, so they cross exactly once."
+            },
+            {
+              "id": "b",
+              "label": "No solution",
+              "feedback": "That's the parallel case, which needs equal slopes. Here 2 ≠ 5, so they cross once — one solution."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

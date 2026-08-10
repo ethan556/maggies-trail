@@ -1,0 +1,324 @@
+{
+  "id": "dc-01-02",
+  "slug": "speeding-up-or-slowing-down",
+  "title": "Speeding Up or Slowing Down",
+  "courseId": "derivatives-in-context",
+  "chapterId": "ch1-motion",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here is the rule that settles it, and it is not the one people guess:\n\n**Speeding up ⟺ v and a have the SAME sign.**\n**Slowing down ⟺ they have OPPOSITE signs.**\n\nA car reversing (v < 0) with a < 0 is speeding up — going backward, faster and faster. The sign of a alone tells you nothing about speed.",
+      "figure": "dc-speeding-up-signs"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same sign or opposite?",
+      "conceptTag": "dc-speed",
+      "explanationVariants": [
+        "v < 0 and a < 0 have the same sign, so the particle is speeding up — moving backward, and increasingly fast.",
+        "Speed is |v|. When a pushes in the same direction v already points, |v| grows."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "v = −5 and a = −2. Is the particle speeding up or slowing down?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Speeding up — both are negative, so the acceleration pushes it further in the direction it is already going.",
+            "correct": true,
+            "feedback": "Right. Its speed |v| = 5 is growing, even though its velocity is becoming MORE negative. Speed and velocity are different quantities."
+          },
+          {
+            "id": "o2",
+            "label": "Slowing down, because the acceleration is negative.",
+            "correct": false,
+            "feedback": "That is the classic error. Negative acceleration slows a FORWARD-moving object; it speeds up a backward-moving one."
+          },
+          {
+            "id": "o3",
+            "label": "Slowing down, because the velocity is negative.",
+            "correct": false,
+            "feedback": "The sign of v alone says nothing about speeding up. It is the COMPARISON of the two signs that decides."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to say.",
+            "correct": false,
+            "feedback": "The rule settles it: same signs means speeding up. Here both are negative."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-speed__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The sign chart of velocity.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 1,
+            "mult": 1
+          },
+          {
+            "x": 3,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "v(t) = 3(t − 1)(t − 3). Set the signs of the VELOCITY on each interval.",
+        "successFeedback": "+ − +. The particle moves forward until t = 1, reverses until t = 3, then goes forward again. Two sign changes, two genuine turning points. Now hold this chart next to the acceleration a = 6t − 12, which is negative before t = 2 and positive after — and the four combinations tell you exactly when it is speeding up.",
+        "crossFeedback": "Both roots of v are single, so the sign flips at each. Two flips, three intervals.",
+        "bounceFeedback": "Neither root is repeated — the velocity crosses zero at both 1 and 3."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivatives-in-context-signChart",
+        "delayed": false
+      },
+      "conceptTag": "dc-speed",
+      "predict": {
+        "prompt": "v(t) = 3(t − 1)(t − 3) is negative between t = 1 and t = 3. During that stretch the object is…",
+        "options": [
+          {
+            "id": "back",
+            "label": "Moving backwards — which does not yet say anything about its speed"
+          },
+          {
+            "id": "slow",
+            "label": "Slowing down"
+          },
+          {
+            "id": "stop",
+            "label": "Stopped"
+          }
+        ],
+        "outcomeId": "back",
+        "reveal": "Moving backwards, and that is a direction, not a verdict. Speeding up means v and a share a sign — so something travelling backwards and accelerating backwards is getting FASTER while its velocity is negative and still falling. Negative velocity and decreasing speed are different claims, and the sign chart keeps them apart."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Combine the two charts.",
+      "conceptTag": "dc-speed",
+      "explanationVariants": [
+        "On (1, 2): v < 0 and a = 6t − 12 < 0. Same sign — so the particle is SPEEDING UP while moving backward.",
+        "It reversed at t = 1 and is now picking up speed in the negative direction. It will not start slowing until a turns positive at t = 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "v = 3(t − 1)(t − 3) and a = 6t − 12. What is happening on the interval (1, 2)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Moving backward and SPEEDING UP — v < 0 and a < 0, the same sign.",
+            "correct": true,
+            "feedback": "Right. It reversed at t = 1 and is now gathering speed backward. It will not begin to slow until a turns positive at t = 2."
+          },
+          {
+            "id": "o2",
+            "label": "Moving backward and slowing down.",
+            "correct": false,
+            "feedback": "That would need OPPOSITE signs. On (1, 2) both v and a are negative, so the speed is growing."
+          },
+          {
+            "id": "o3",
+            "label": "Moving forward and speeding up.",
+            "correct": false,
+            "feedback": "v = 3(t − 1)(t − 3) is NEGATIVE between 1 and 3 — the particle is going backward there."
+          },
+          {
+            "id": "o4",
+            "label": "At rest.",
+            "correct": false,
+            "feedback": "It is at rest only AT t = 1 and t = 3, not on the interval between them."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-speed__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Speed is |v| — it has no direction and cannot be negative. Velocity has both.\n\nSo **speed increases exactly when v and a agree in sign**, and the sign of a on its own is never the answer. The word 'deceleration' is a trap for the same reason: it means a < 0, which slows a forward-mover and speeds up a reverser.",
+      "figure": "dc-speeding-up-signs"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sort the four cases.",
+      "conceptTag": "dc-speed",
+      "explanationVariants": [
+        "Same signs (both + or both −) means speeding up. Opposite signs means slowing down. Four cases, two verdicts.",
+        "The rule never mentions the sign of a in isolation, and that is deliberate."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "In which cases is the particle SPEEDING UP?",
+        "buckets": [
+          {
+            "id": "up",
+            "label": "Speeding up",
+            "icon": "⏩"
+          },
+          {
+            "id": "down",
+            "label": "Slowing down",
+            "icon": "🐢"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "v = 4, a = 3",
+            "bucketId": "up",
+            "feedback": "Both positive: the push is in the direction of travel, so the speed grows."
+          },
+          {
+            "id": "s2",
+            "label": "v = 4, a = −3",
+            "bucketId": "down",
+            "feedback": "Opposite signs: moving forward, being pushed backward. Braking."
+          },
+          {
+            "id": "s3",
+            "label": "v = −4, a = −3",
+            "bucketId": "up",
+            "feedback": "Both negative: reversing, and being pushed further backward. The SPEED |v| is growing."
+          },
+          {
+            "id": "s4",
+            "label": "v = −4, a = 3",
+            "bucketId": "down",
+            "feedback": "Opposite signs: reversing while being pushed forward. Slowing down (and about to turn round)."
+          }
+        ],
+        "missFeedback": "Compare the two SIGNS. Same means speeding up; opposite means slowing down.",
+        "successFeedback": "Same sign, speeding up. Opposite sign, slowing down. The sign of a alone never decides."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-speed__dragBucket"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the interval.",
+      "conceptTag": "dc-speed",
+      "hints": [
+        "Build both sign charts on [0, 4]. v = 3(t − 1)(t − 3) is + on (0,1), − on (1,3), + on (3,4).",
+        "a = 6t − 12 is − on (0,2) and + on (2,4).",
+        "Speeding up needs the signs to AGREE. Check each of the four sub-intervals: (0,1), (1,2), (2,3), (3,4)."
+      ],
+      "explanationVariants": [
+        "Signs agree on (1, 2) — both negative — and on (3, 4) — both positive. That is TWO intervals of speeding up.",
+        "On (0, 1) v is + and a is −, and on (2, 3) v is − and a is +: both are slowing-down stretches."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "v = 3(t − 1)(t − 3), a = 6t − 12, on [0, 4]. On how many intervals is the particle SPEEDING UP?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Check all four sub-intervals. The signs AGREE on (1, 2) — both negative — and again on (3, 4) — both positive."
+          },
+          {
+            "value": 3,
+            "feedback": "On (0, 1) the signs are + and −, and on (2, 3) they are − and +. Both of those are slowing down."
+          },
+          {
+            "value": 4,
+            "feedback": "Two of the four intervals have opposite signs, and those are the slowing-down ones."
+          }
+        ],
+        "fallbackFeedback": "Signs agree on (1, 2) [both −] and (3, 4) [both +]: two intervals of speeding up."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-speed__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Compare the signs. Never read a alone.",
+      "takeaways": [
+        "Speeding up ⟺ v and a have the SAME sign. Slowing down ⟺ opposite signs.",
+        "A reversing car with negative acceleration is speeding up — backward, and faster.",
+        "Speed is |v|, and 'deceleration' is a trap: it means a < 0, which is not the same as slowing down."
+      ],
+      "teaser": "Next: how far it travelled, versus where it ended up."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dc-speed",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Write down the two signs and compare them. **Same** → the push is in the direction of travel → speeding up. **Different** → the push opposes the travel → slowing down. The sign of the acceleration on its own tells you nothing.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Compare them.",
+        "conceptTag": "dc-speed",
+        "explanationVariants": [
+          "v = 3 and a = −1 have opposite signs, so the particle is slowing down.",
+          "Moving forward, pushed backward: braking."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "v = 3 and a = −1. Speeding up or slowing down?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Slowing down",
+              "correct": true,
+              "feedback": "Right — opposite signs, so the push opposes the motion."
+            },
+            {
+              "id": "o2",
+              "label": "Speeding up",
+              "correct": false,
+              "feedback": "That needs the SAME sign. Here the particle moves forward while being pushed backward."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

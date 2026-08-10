@@ -1,0 +1,313 @@
+{
+  "id": "tm-05-03",
+  "slug": "volume-of-a-sphere",
+  "title": "Volume of a Sphere",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch5-volume-round-solids",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **sphere** is a perfect ball. Its volume uses the radius cubed: **V = 4⁄3 πr³**. Cube the radius first (r × r × r), multiply by 4, then divide by 3 — leaving the answer as a number times π.",
+      "figure": "round-solids"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute a sphere volume.",
+      "predict": {
+        "prompt": "A sphere of radius 3 — will its volume be more or less than the 36π cylinder from earlier (radius 3, height 4)?",
+        "options": [
+          {
+            "id": "equal",
+            "label": "Exactly the same, 36π"
+          },
+          {
+            "id": "less",
+            "label": "Less — a ball is smaller than a can"
+          },
+          {
+            "id": "more",
+            "label": "More"
+          }
+        ],
+        "outcomeId": "equal",
+        "reveal": "They match exactly. 4πr³/3 at r = 3 is 36π, and so is πr²h at r = 3, h = 4. Two very different shapes can hold precisely the same amount — volume is not decided by how a solid looks."
+      },
+      "widget": {
+        "type": "volumeBuilder",
+        "solid": "sphere",
+        "targetVolume": 36,
+        "rMax": 6,
+        "rStart": 1,
+        "hMax": 6,
+        "hStart": 1,
+        "prompt": "A sphere has only one measurement. Set the radius until the volume reads 36π.",
+        "successFeedback": "36π at radius 3 — the same volume as the cylinder of radius 3 and height 4 from the earlier lesson. A sphere needs no height because its radius already fixes it in every direction, which is why r appears three times rather than twice.",
+        "lowFeedback": "Still under 36π — grow the radius. It counts three times over here, so small moves go a long way.",
+        "highFeedback": "Over 36π — ease the radius back."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The order that avoids mistakes: cube the radius, multiply by 4, then divide by 3. For r = 6: r³ = 216, times 4 = 864, divided by 3 = 288, so V = 288π. Cubing (not squaring) is the key difference from cylinders and cones.",
+      "figure": "tm-sphere-volume"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A bigger sphere.",
+      "conceptTag": "tm-sphere-volume",
+      "explanationVariants": [
+        "r³ = 6³ = 216; 4 × 216 = 864; 864 ÷ 3 = 288, so V = 288π.",
+        "Cube (216), times 4 (864), divide by 3: 288π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sphere has radius 6. What is its volume as a number times π?",
+        "answer": 288,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 216,
+            "feedback": "That's just r³ — apply 4⁄3: 4 × 216 ÷ 3 = 288."
+          },
+          {
+            "value": 72,
+            "feedback": "That squared instead of cubed — use 6³ = 216, then 4⁄3 × 216 = 288."
+          }
+        ],
+        "fallbackFeedback": "V = 4⁄3 πr³ = 4⁄3 × 216 π = 288π, so the number is 288."
+      },
+      "variant": {
+        "gen": "g8-tm-sphere-volume",
+        "form": "tmSphereCoeff"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Cube versus square.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What makes the sphere formula different from the cylinder and cone formulas?",
+        "options": [
+          {
+            "id": "a",
+            "label": "It uses the radius CUBED (r³), not squared",
+            "correct": true,
+            "feedback": "Right — a sphere uses r³, while cylinders and cones use r²."
+          },
+          {
+            "id": "b",
+            "label": "It doesn't use π",
+            "correct": false,
+            "feedback": "The sphere formula DOES use π — the difference is r³ instead of r²."
+          },
+          {
+            "id": "c",
+            "label": "It has no fraction",
+            "correct": false,
+            "feedback": "It has the fraction 4⁄3 — the real difference is cubing the radius."
+          },
+          {
+            "id": "d",
+            "label": "It uses the diameter",
+            "correct": false,
+            "feedback": "It uses the radius (cubed), like the others — just r³ instead of r²."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A small sphere.",
+      "conceptTag": "tm-sphere-volume",
+      "explanationVariants": [
+        "r³ = 3³... wait, r = 3 gives 27; for r = 3: V computed earlier is 36π. For radius 1: 4⁄3 × 1 = 4⁄3, so V = 4⁄3 π.",
+        "Cube 1 (=1), times 4⁄3: 4⁄3 π."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A sphere has radius 1. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4⁄3 π",
+            "correct": true,
+            "feedback": "Right — r³ = 1, so V = 4⁄3 × 1 × π = 4⁄3 π."
+          },
+          {
+            "id": "b",
+            "label": "4 π",
+            "correct": false,
+            "feedback": "You must divide by 3: 4 × 1 ÷ 3 = 4⁄3, so 4⁄3 π."
+          },
+          {
+            "id": "c",
+            "label": "π",
+            "correct": false,
+            "feedback": "The formula is 4⁄3 πr³ with r³ = 1: 4⁄3 π, not just π."
+          },
+          {
+            "id": "d",
+            "label": "3 π",
+            "correct": false,
+            "feedback": "Cube r (1), times 4⁄3: 4⁄3 π, not 3π."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-sphere-volume",
+        "form": "tmSphereUnit"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Round a sphere volume.",
+      "conceptTag": "tm-sphere-volume",
+      "explanationVariants": [
+        "36π ≈ 36 × 3.14 = 113.04, rounding to 113.",
+        "Multiply the coefficient by 3.14: 36 × 3.14 ≈ 113."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sphere's volume is 36π. Using π ≈ 3.14, what is it rounded to the nearest whole number?",
+        "answer": 113,
+        "tolerance": 1,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "That's the coefficient of π — multiply by 3.14: 36 × 3.14 ≈ 113."
+          },
+          {
+            "value": 108,
+            "feedback": "Use π ≈ 3.14, not 3: 36 × 3.14 ≈ 113."
+          }
+        ],
+        "fallbackFeedback": "36π ≈ 36 × 3.14 = 113.04, which rounds to 113."
+      },
+      "variant": {
+        "gen": "g8-tm-sphere-volume",
+        "form": "tmSphereApprox"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Match each solid to its volume formula.",
+      "conceptTag": "tm-sphere-volume",
+      "explanationVariants": [
+        "Cylinder = πr²h; cone = ⅓πr²h; sphere = 4⁄3πr³. Only the sphere cubes the radius.",
+        "Cylinder and cone use r²h; the sphere uses r³."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each round solid to its volume formula.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "cylinder"
+          },
+          {
+            "id": "l2",
+            "label": "cone"
+          },
+          {
+            "id": "l3",
+            "label": "sphere"
+          }
+        ],
+        "right": [
+          {
+            "id": "f1",
+            "label": "πr²h"
+          },
+          {
+            "id": "f2",
+            "label": "⅓πr²h"
+          },
+          {
+            "id": "f3",
+            "label": "4⁄3πr³"
+          }
+        ],
+        "pairs": {
+          "l1": "f1",
+          "l2": "f2",
+          "l3": "f3"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "f1",
+            "feedback": "The cone is ONE-THIRD of the cylinder: ⅓πr²h, not the full πr²h."
+          }
+        ],
+        "missFeedback": "Not quite — the cylinder is πr²h, the cone is a third of that, and the sphere uses r³.",
+        "successFeedback": "All matched — only the sphere cubes the radius; the cone is a third of the cylinder."
+      },
+      "hints": [
+        "The cylinder is the base area times height: πr²h.",
+        "The cone is one-third of the cylinder: ⅓πr²h.",
+        "The sphere is the odd one out, using r cubed: 4⁄3πr³."
+      ],
+      "variant": {
+        "gen": "g8-tm-sphere-volume",
+        "form": "tmSphereFormulaMatch"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A sphere's volume cubes the radius: V = 4⁄3 πr³. That closes Grade 8 geometry.",
+      "takeaways": [
+        "V = 4⁄3 πr³ — cube the radius, times 4, divided by 3.",
+        "Spheres cube the radius; cylinders and cones square it.",
+        "Leave answers as a number times π, or round with π ≈ 3.14."
+      ],
+      "teaser": "That completes Transformations & Measurement — the last of Grade 8 geometry."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-sphere-volume",
+      "concept": {
+        "id": "rem-tm0503-c",
+        "kind": "concept",
+        "body": "A sphere's volume is V = 4⁄3 πr³: cube the radius, multiply by 4, divide by 3. Unlike cylinders and cones, a sphere CUBES the radius."
+      },
+      "check": {
+        "id": "rem-tm0503-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-sphere-volume",
+        "explanationVariants": [
+          "r³ = 3³ = 27; 4 × 27 ÷ 3 = 36, so V = 36π.",
+          "Cube 3 (27), times 4⁄3: 36π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A sphere has radius 3. What is its volume as a number times π?",
+          "answer": 36,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 27,
+              "feedback": "That's just r³ — apply 4⁄3: 4 × 27 ÷ 3 = 36."
+            },
+            {
+              "value": 9,
+              "feedback": "That squared instead of cubed — 3³ = 27, then 4⁄3 × 27 = 36."
+            }
+          ],
+          "fallbackFeedback": "V = 4⁄3 πr³ = 4⁄3 × 27 π = 36π, so the number is 36."
+        }
+      }
+    }
+  ]
+}

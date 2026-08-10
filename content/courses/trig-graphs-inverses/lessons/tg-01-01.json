@@ -1,0 +1,255 @@
+{
+  "id": "tg-01-01",
+  "slug": "phase-shift",
+  "title": "Phase Shift: Sliding the Wave",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch1-full-sinusoid",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You already move waves UP (midline) and STRETCH them (amplitude, period). The last motion is SIDEWAYS: y = sin(x − C) slides the whole wave **C to the right** — the **phase shift**. Inside the parentheses, minus means right (the same inside-flip as every function shift).",
+      "figure": "tg-phase-shift"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Track the peak.",
+      "predict": {
+        "prompt": "y = sin(x − 90°) is sin x with its start delayed. Where is its FIRST peak?",
+        "options": [
+          {
+            "id": "p90",
+            "label": "Still at 90° — shifting doesn't move the peak"
+          },
+          {
+            "id": "p180",
+            "label": "At 180° — everything slides right by the shift"
+          },
+          {
+            "id": "p0",
+            "label": "At 0° — the wave starts at its top now"
+          }
+        ],
+        "outcomeId": "p180",
+        "reveal": "180°. The circle's pointer starts 90° behind, so every feature of the wave — peak included — arrives 90° late. Drag θ and watch the trace: the peak lands where the pointer finally reaches the top."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "The circle starts 90° behind (phase −90°) and traces y = sin(x − 90°) as you drag. Land the trace on the wave's first peak.",
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "sin",
+        "phaseDeg": -90,
+        "targetFeature": {
+          "kind": "peak",
+          "x": 180,
+          "tol": 5
+        },
+        "successFeedback": "Peak at 180° — which is π in the prose above, the answer n = 1. The peak moved because the circle STARTED elsewhere: the wave slides exactly as far as the start was delayed.",
+        "lowFeedback": "Not there yet — 90° is where PLAIN sin x peaks, but this pointer started 90° behind and hasn't reached the top. Keep dragging and watch the point climb.",
+        "highFeedback": "Past the peak — the trace is already on its way down. Back up until the tip sits on the crest, where the pointer is at the very top of the circle."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which way did it go?",
+      "conceptTag": "tg-phase",
+      "explanationVariants": [
+        "y = sin(x + π/3) has C = −π/3: the wave slides LEFT by π/3 — plus inside means left.",
+        "The wave hits sin's zero start where x + π/3 = 0, i.e. x = −π/3: shifted left."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The graph of y = sin(x + π/3) is the sine wave shifted:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "left by π/3",
+            "correct": true,
+            "feedback": "Right — inside PLUS is a LEFT slide, the mirror of every inside shift you've seen."
+          },
+          {
+            "id": "o2",
+            "label": "right by π/3",
+            "feedback": "Right needs a MINUS inside: sin(x − π/3). Plus inside pre-loads the input, pulling the wave left."
+          },
+          {
+            "id": "o3",
+            "label": "up by π/3",
+            "feedback": "Vertical moves live OUTSIDE the function (… + π/3 at the end). Inside changes are horizontal."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-phase__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With a period change, read the shift ONLY after factoring: y = sin(2x − π/3) = sin(2(x − **π/6**)) — the shift is π/6, not π/3. The B multiplies the whole inside, so the raw constant overstates the slide by a factor of B.",
+      "figure": "tg-factor-shift"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Factor first.",
+      "conceptTag": "tg-phase",
+      "explanationVariants": [
+        "4x − π = 4(x − π/4): the phase shift is π/4 right.",
+        "Divide the constant by B: π ÷ 4 = π/4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the phase shift of y = sin(4x − π)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π/4 right",
+            "correct": true,
+            "feedback": "Right — factoring gives sin(4(x − π/4)): the slide is the constant DIVIDED by B."
+          },
+          {
+            "id": "o2",
+            "label": "π right",
+            "feedback": "π is the unfactored constant. B = 4 compresses it: the true shift is π/4."
+          },
+          {
+            "id": "o3",
+            "label": "π/4 left",
+            "feedback": "The factored form has a MINUS: 4(x − π/4) — minus inside slides right."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-phase__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Verify with a point.",
+      "conceptTag": "tg-phase",
+      "explanationVariants": [
+        "At x = 5π/12: 2x − π/3 = 5π/6 − 2π/6 = π/2, and sin(π/2) = 1 — a peak, confirming the shifted wave crests π/6 late (at π/4 + π/6 = 5π/12).",
+        "The peak solves 2x − π/3 = π/2: x = (π/2 + π/3)/2 = 5π/12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 2 sin(2x − π/3). What is y at x = 5π/12?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The AMPLITUDE is 2: at a peak the value is the full 2, since sin hits exactly 1."
+          },
+          {
+            "value": 0,
+            "feedback": "x = 5π/12 makes the inside π/2 — a PEAK, not a zero: y = 2·1 = 2."
+          }
+        ],
+        "fallbackFeedback": "Inside = 2(5π/12) − π/3 = π/2; y = 2 sin(π/2) = 2."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-phase__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "All the pieces of the inside.",
+      "conceptTag": "tg-phase",
+      "explanationVariants": [
+        "Factor: 3x + π/2 = 3(x + π/6): shift π/6 LEFT. n = 6.",
+        "Constant over B: (π/2)/3 = π/6, and the + sign means left."
+      ],
+      "hints": [
+        "Factor B = 3 out of the inside.",
+        "3x + π/2 = 3(x + π/6).",
+        "Plus inside means left; the size is π/6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = sin(3x + π/2) is shifted LEFT by π/n. What is n?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "π/2 is the raw constant. Factor out B = 3: the true shift is (π/2)/3 = π/6, so n = 6."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is B, the period-changer. The shift divides the constant by it: π/6 → n = 6."
+          }
+        ],
+        "fallbackFeedback": "3(x + π/6): left by π/6, n = 6."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-phase__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Sideways, at last.",
+      "takeaways": [
+        "sin(x − C): slide right C; plus inside slides left.",
+        "With a B, factor first — shift = constant ÷ B.",
+        "Verify any shift by tracking one landmark point."
+      ],
+      "teaser": "Next: stacking all four motions into one wave."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-phase",
+      "concept": {
+        "id": "rem-tg0101-c",
+        "kind": "concept",
+        "body": "Phase shift = the C in sin(B(x − C)). Get there by factoring B out of the inside; minus → right, plus → left."
+      },
+      "check": {
+        "id": "rem-tg0101-k",
+        "kind": "check",
+        "body": "One factor-first read.",
+        "conceptTag": "tg-phase",
+        "explanationVariants": [
+          "2x − π = 2(x − π/2): shift π/2 right.",
+          "Constant π over B = 2: π/2, minus sign → right."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The phase shift of y = sin(2x − π) is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "π/2 right",
+              "correct": true,
+              "feedback": "Right — sin(2(x − π/2))."
+            },
+            {
+              "id": "o2",
+              "label": "π right",
+              "feedback": "Factor the 2 first: the shift is π/2, half the raw constant."
+            },
+            {
+              "id": "o3",
+              "label": "π/2 left",
+              "feedback": "The factored inside is (x − π/2): minus slides right."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "id": "tse-03-03",
+  "slug": "mixed-parenthesized-equations",
+  "title": "Mixed Parenthesized Equations",
+  "courseId": "two-step-equations",
+  "chapterId": "ch3-equations-with-parentheses",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "two-step-balance",
+      "body": "You now handle any parenthesized equation: distribute using the sign rule, then solve the two-step equation that results — whatever the multiplier's sign."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A positive-multiplier equation.",
+      "predict": {
+        "prompt": "3(x + 4) = 24. Before opening anything — how many unit tiles will the left pan hold once the brackets are off?",
+        "options": [
+          {
+            "id": "twelve",
+            "label": "12 — three copies of 4"
+          },
+          {
+            "id": "four",
+            "label": "4 — the 4 inside the brackets"
+          },
+          {
+            "id": "seven",
+            "label": "7 — 3 plus 4"
+          }
+        ],
+        "outcomeId": "twelve",
+        "reveal": "Twelve. Three groups, each carrying a 4, is three 4s. The count is settled before you press anything — opening the brackets only shows you tiles that were already on the pan."
+      },
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 3(x + 4) = 24. Open the groups, then clear and split until one x-tile stands alone.",
+        "a": 3,
+        "b": 12,
+        "c": 24,
+        "groups": {
+          "count": 3,
+          "x": 1,
+          "unit": 4
+        },
+        "successFeedback": "x = 4. Three groups opened to 3x + 12 = 24, twelve units came off both pans (3x = 12), then both sides split into 3.",
+        "unbalancedFeedback": "The beam tipped — tiles left one pan without leaving the other. Undo back to level and remove in pairs.",
+        "notIsolatedFeedback": "Level the whole way, so every move was fair. x is not alone yet — finish clearing the units from both pans, then split.",
+        "missFeedback": "The x-tiles stay — they are what the question wants. Clear units from both sides, then split both sides into 3 groups.",
+        "unexpandedFeedback": "The brackets are still closed. The pan is balanced, but a sealed group moves as one piece — open the groups before clearing tiles.",
+        "partialDistributeFeedback": "The beam tipped the instant the brackets opened. The ×3 went to the x and left the 4 behind, so eight units vanished from a pan that was balanced a moment ago."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A negative-multiplier equation.",
+      "conceptTag": "tse-parens-mixed",
+      "explanationVariants": [
+        "Distribute: -4x-8=-24. Add 8: -4x=-16. Divide by -4: x=4.",
+        "Distribute with the sign rule, then solve."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: -4(x + 2) = -24",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "Dividing -16 by -4 gives a POSITIVE result (same signs): 4, not -4."
+          },
+          {
+            "value": -16,
+            "feedback": "That's only the first step (-4x=-16). Finish by dividing both sides by -4: x=4."
+          }
+        ],
+        "fallbackFeedback": "Distribute: -4x-8=-24. Add 8: -4x=-16. Divide by -4: x=4."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The very first move is always the same: identify the multiplier outside the parentheses, and distribute it across every term inside.",
+      "figure": "les-distribute"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Subtraction inside the parentheses.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 5(x - 2) = 15",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's dividing 15 by 5 without distributing first. Distribute: 5x-10=15, then solve: x=5."
+          },
+          {
+            "value": 1,
+            "feedback": "Check your signs: 5x-10=15 means 5x=25, so x=5, not 1."
+          }
+        ],
+        "fallbackFeedback": "Distribute: 5x-10=15. Add 10: 5x=25. Divide by 5: x=5."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Practice catching your own errors: if your final answer doesn't satisfy the ORIGINAL equation when substituted back, retrace your distribution step.",
+      "figure": "two-step-balance"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A negative multiplier, subtraction inside.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: -6(x - 1) = 12",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Check the final division: 6 ÷ -6 = -1, not 1. Distribute: -6x+6=12, so -6x=6, x=-1."
+          },
+          {
+            "value": 3,
+            "feedback": "That's only distributing (-6x+6=12), forgetting to isolate x fully: -6x=6, so x=-1."
+          }
+        ],
+        "fallbackFeedback": "Distribute: -6x+6=12. Subtract 6: -6x=6. Divide by -6: x=-1."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another positive-multiplier equation.",
+      "conceptTag": "tse-parens-mixed",
+      "explanationVariants": [
+        "Distribute: 2x+10=20. Subtract 10: 2x=10. Divide by 2: x=5.",
+        "Distribute first, then solve."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 2(x + 5) = 20",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That's dividing 20 by 2 without distributing first. Distribute: 2x+10=20, then solve: x=5."
+          },
+          {
+            "value": 15,
+            "feedback": "That's only distributing (2x+10=20), forgetting to subtract 10: 2x=10, so x=5."
+          }
+        ],
+        "fallbackFeedback": "Distribute: 2x+10=20. Subtract 10: 2x=10. Divide by 2: x=5."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another negative-multiplier equation.",
+      "conceptTag": "tse-parens-mixed",
+      "explanationVariants": [
+        "Distribute: -3x+9=-3. Subtract 9: -3x=-12. Divide by -3: x=4.",
+        "Distribute with the sign rule, then solve."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: -3(x - 3) = -3",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "Dividing -12 by -3 gives a POSITIVE result (same signs): 4, not -4."
+          },
+          {
+            "value": -12,
+            "feedback": "That's only the first step (-3x=-12). Finish by dividing both sides by -3: x=4."
+          }
+        ],
+        "fallbackFeedback": "Distribute: -3x+9=-3. Subtract 9: -3x=-12. Divide by -3: x=4."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full mixed challenge.",
+      "conceptTag": "tse-parens-mixed",
+      "explanationVariants": [
+        "Distribute: -9x-18=-9. Add 18: -9x=9. Divide by -9: x=-1.",
+        "Distribute with the sign rule, then solve."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: -9(x + 2) = -9",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Dividing 9 by -9 gives a NEGATIVE result (different signs): -1, not 1."
+          },
+          {
+            "value": 9,
+            "feedback": "That's only the first step (-9x=9). Finish by dividing both sides by -9: x=-1."
+          }
+        ],
+        "fallbackFeedback": "Distribute: -9x-18=-9. Add 18: -9x=9. Divide by -9: x=-1."
+      },
+      "hints": [
+        "Distribute -9 across (x+2): -9x-18=-9.",
+        "Add 18 to both sides: -9x=9.",
+        "Divide both sides by -9 (different signs, negative): x=-1."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every parenthesized equation follows the same two moves: distribute using the sign rule, then solve the two-step equation.",
+      "takeaways": [
+        "Distribute first, regardless of the multiplier's sign.",
+        "The resulting equation solves exactly like the last chapter's two-step equations.",
+        "Verify by substituting the solution into the ORIGINAL, un-distributed equation."
+      ],
+      "teaser": "next chapter: solving two-step inequalities."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tse-parens-mixed",
+      "concept": {
+        "id": "rem-tpm-c",
+        "kind": "concept",
+        "body": "Any parenthesized equation solves the same way: distribute using the sign rule, then use the two-step method. -4(x+2)=-24: distribute to -4x-8=-24, then solve: x=4."
+      },
+      "check": {
+        "id": "rem-tpm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tse-parens-mixed",
+        "explanationVariants": [
+          "Distribute: -4x-8=-24. Solve: x=4.",
+          "Distribute with the sign rule, then solve."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve: -4(x + 2) = -24",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -4,
+              "feedback": "Same signs give positive: 4."
+            },
+            {
+              "value": -16,
+              "feedback": "You stopped at −4x = −16. Divide by −4 to finish: x = 4."
+            }
+          ],
+          "fallbackFeedback": "x=4."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+ "id": "in-01-03",
+ "slug": "the-definite-integral",
+ "title": "The Definite Integral",
+ "courseId": "integration-accumulation",
+ "chapterId": "ch1-area-under-a-curve",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "∫ₐᵇ f(x) dx is not a formula. It is the **number the trap closes on** — the limit of the Riemann sums.\n\nThree properties fall straight out of the rectangles:\n\n∫ₐᵃ f = 0 (no width, no area).\n∫ₐᵇ f = −∫ᵦᵃ f (running backwards flips the sign of every dx).\n∫ₐᶜ f + ∫꜀ᵇ f = ∫ₐᵇ f (the strips just join up).",
+   "figure": "in-riemann-trap"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Split the interval.",
+   "conceptTag": "in-definite-integral",
+   "explanationVariants": [
+    "The strips from 1 to 3 and the strips from 3 to 5 together are exactly the strips from 1 to 5. So 4 + 6 = 10.",
+    "Nothing subtle is happening: you are cutting a pile of rectangles into two piles."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₁³ f = 4 and ∫₃⁵ f = 6. Find ∫₁⁵ f.",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That is 6 − 4 — a subtraction, but the two pieces JOIN. Adjacent intervals add: 4 + 6 = 10."
+     },
+     {
+      "value": 24,
+      "feedback": "That is 4 × 6. Areas of adjacent regions add; they do not multiply."
+     },
+     {
+      "value": 5,
+      "feedback": "That is the upper limit. The integral is the total area, 4 + 6 = 10."
+     }
+    ],
+    "fallbackFeedback": "Adjacent strips join: 4 + 6 = 10."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-definite-integral__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why running backwards flips the sign.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "The one property that looks strange.",
+    "panels": [
+     {
+      "title": "dx carries a direction",
+      "body": "Every strip has width dx = (b − a)/n. Sweep from a to b and dx is positive. Sweep from b to a and the SAME formula makes dx negative."
+     },
+     {
+      "title": "So the sum flips",
+      "body": "Every term in the Riemann sum is a height times dx. Flip the sign of dx in every term and you flip the sign of the total. That is all the property says."
+     },
+     {
+      "title": "And it is useful",
+      "body": "It lets you write ∫ₐᵇ + ∫ᵦᶜ = ∫ₐᶜ even when b sits OUTSIDE the interval — the bookkeeping simply works, because the negative width undoes the double-counting."
+     }
+    ],
+    "continueFeedback": "Keep going — the sign is not a convention, it is a consequence.",
+    "successFeedback": "dx is a signed width. Reverse the sweep and every strip's width goes negative, so the whole sum does."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Reverse the limits.",
+   "conceptTag": "in-definite-integral",
+   "explanationVariants": [
+    "∫₅¹ f = −∫₁⁵ f = −10. Running the sweep backwards makes every dx negative.",
+    "The magnitude of the area is unchanged — only the sign of the bookkeeping."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₁⁵ f = 10. Find ∫₅¹ f.",
+    "answer": -10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "The sign must flip. Sweeping from 5 down to 1 makes every dx negative, and so makes the whole sum negative."
+     },
+     {
+      "value": 0,
+      "feedback": "The area has not vanished — it has changed sign. ∫₅¹ f = −10."
+     },
+     {
+      "value": -5,
+      "feedback": "The magnitude is unchanged at 10; only the sign flips."
+     }
+    ],
+    "fallbackFeedback": "Reversing the limits negates the integral: −10."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-definite-integral__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "And the integral is **signed**. Where f dips below the axis, the heights are negative — so those strips contribute negative area.\n\n∫ₐᵇ f is not 'the area'. It is the area above the axis **minus** the area below it. If you want the geometric area, you must integrate |f|.",
+   "figure": "dr-derivative-as-function"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Signed versus geometric.",
+   "conceptTag": "in-signed-area",
+   "explanationVariants": [
+    "A region of 5 above the axis and 3 below gives a signed integral of 5 − 3 = 2, while the geometric area is 5 + 3 = 8.",
+    "The integral is doing accounting, not geometry — and that is exactly what makes it useful for net change."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "f is above the axis with area 5, then below it with area 3. What is ∫ f, and what is the total geometric area?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "∫ f = 2; the geometric area is 8.",
+      "correct": true,
+      "feedback": "Right. The integral SUBTRACTS what lies below the axis. If you want plain area, integrate |f|."
+     },
+     {
+      "id": "o2",
+      "label": "Both are 8.",
+      "correct": false,
+      "feedback": "The integral counts the region below the axis as negative — that is not a flaw, it is what lets an integral measure NET change."
+     },
+     {
+      "id": "o3",
+      "label": "Both are 2.",
+      "correct": false,
+      "feedback": "The geometric area does not care about signs: 5 + 3 = 8 square units of ink."
+     },
+     {
+      "id": "o4",
+      "label": "∫ f = 8; the geometric area is 2.",
+      "correct": false,
+      "feedback": "Backwards. The signed integral is the smaller one here, because the negative region cancels part of the positive."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-signed-area__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Combine the properties.",
+   "conceptTag": "in-definite-integral",
+   "hints": [
+    "You want ∫₄¹ f, which runs BACKWARDS. Start by finding ∫₁⁴ f.",
+    "∫₁⁴ = ∫₁³ + ∫₃⁴ = 4 + (−2) = 2. The −2 means f dips below the axis on [3, 4].",
+    "Now reverse: ∫₄¹ f = −∫₁⁴ f."
+   ],
+   "explanationVariants": [
+    "∫₁⁴ f = 4 + (−2) = 2, so ∫₄¹ f = −2.",
+    "Two properties in one question: adjacent intervals add, and reversing the limits flips the sign."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₁³ f = 4 and ∫₃⁴ f = −2. Find ∫₄¹ f.",
+    "answer": -2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That is ∫₁⁴ f. The question runs from 4 DOWN to 1, so the sign flips: −2."
+     },
+     {
+      "value": 6,
+      "feedback": "That is 4 − (−2). The pieces ADD as they stand: 4 + (−2) = 2, and then the reversal negates it."
+     },
+     {
+      "value": -6,
+      "feedback": "Check the addition: 4 + (−2) = 2, not 6. Then reverse the limits to get −2."
+     }
+    ],
+    "fallbackFeedback": "∫₁⁴ = 4 + (−2) = 2, so ∫₄¹ = −2."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-definite-integral__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The number the trap closes on.",
+   "takeaways": [
+    "∫ₐᵇ f dx is DEFINED as the limit of Riemann sums — not as a formula.",
+    "Adjacent intervals add; reversing the limits flips the sign (because dx is a signed width).",
+    "The integral is SIGNED: area below the axis counts as negative. For geometric area, integrate |f|."
+   ],
+   "teaser": "Next chapter: stop asking for one fixed area, and start asking for the area SO FAR."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "in-definite-integral",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Three facts, and all three come straight from the rectangles. Zero width gives zero area. Sweeping backwards makes every width negative. And two adjacent piles of strips are one bigger pile.",
+    "figure": "dr-power-rule-pattern"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Adjacent pieces add.",
+    "conceptTag": "in-definite-integral",
+    "explanationVariants": [
+     "∫₀² + ∫₂⁵ = ∫₀⁵, so 3 + 7 = 10.",
+     "The strips simply join up."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "∫₀² f = 3 and ∫₂⁵ f = 7. Find ∫₀⁵ f.",
+     "answer": 10,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "That is 7 − 3. Adjacent intervals ADD: the two piles of strips form one pile."
+      },
+      {
+       "value": 21,
+       "feedback": "That is 3 × 7. Areas add; they do not multiply."
+      }
+     ],
+     "fallbackFeedback": "3 + 7 = 10."
+    }
+   }
+  }
+ ]
+}

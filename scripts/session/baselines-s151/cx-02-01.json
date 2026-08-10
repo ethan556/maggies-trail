@@ -1,0 +1,268 @@
+{
+ "id": "cx-02-01",
+ "slug": "partitioning-segments",
+ "title": "Partitioning a Segment",
+ "courseId": "coordinate-proofs",
+ "chapterId": "ch2-partition-slope-criteria",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cx-partition",
+   "concept": {
+    "id": "rem-cx-partition-c",
+    "kind": "concept",
+    "body": "To divide the segment from A to B in the ratio m : n (measured from A), walk the fraction k = m/(m + n) of the displacement: P = A + k(B − A), coordinate by coordinate. Similar triangles make the coordinate fraction equal the length fraction. Swapping which endpoint leads mirrors the point."
+   },
+   "check": {
+    "id": "rem-cx-partition-k",
+    "kind": "check",
+    "body": "One walk.",
+    "conceptTag": "cx-partition",
+    "explanationVariants": [
+     "The ratio 1 : 4 gives k = 1/(1 + 4) = 1/5: x = 0 + (1/5)(10) = 2.",
+     "One fifth of the run: x = 2."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "P divides the segment from (0, 0) to (10, 5) in the ratio 1 : 4. Enter P's x-coordinate.",
+     "answer": 2,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 5,
+       "feedback": "5 is the midpoint's x — 1:4 walks only k = 1/5: x = 2."
+      },
+      {
+       "value": 8,
+       "feedback": "8 rides k = 4/5, the swapped ratio — from the origin, 1:4 stops at x = 2."
+      }
+     ],
+     "fallbackFeedback": "x = (1/5)(10) = 2."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The midpoint splits a segment 1 : 1 — but any ratio is buyable. To divide AB in the ratio **m : n from A**, walk the fraction k = m/(m + n) of the way: **P = A + k(B − A)**, applied to each coordinate. For 2 : 1, k = 2/3: two parts down, one to go.",
+   "figure": "partition-ratio"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Two thirds of the way.",
+   "conceptTag": "cx-partition",
+   "explanationVariants": [
+    "k = 2/(2+1) = 2/3. Pₓ = 1 + (2/3)(7 − 1) = 5; Pᵧ = 1 + (2/3)(9) = 7. Enter 5.",
+    "The figure's own point: P(5, 7)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "P divides the segment from A(1, 1) to B(7, 10) in the ratio 2 : 1. Enter P's x-coordinate.",
+    "answer": 5,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is the MIDPOINT's x ((1+7)/2) — the 1:1 split. A 2:1 split walks k = 2/3 of the run: 1 + 4 = 5."
+     },
+     {
+      "value": 3,
+      "feedback": "3 walks only k = 1/3 — the SWAPPED ratio 1:2. From A, 2:1 means two parts first: k = 2/3, x = 5."
+     },
+     {
+      "value": 7,
+      "feedback": "7 is B's own x — the full walk. Stop at two thirds: 1 + (2/3)(6) = 5."
+     }
+    ],
+    "fallbackFeedback": "Pₓ = 1 + (2/3)(6) = 5."
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-partition__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Why does the coordinate walk match the geometric ratio? **Similar triangles** again: the run-rise triangle from A to P is a k-scaled copy of the full A-to-B triangle, so AP is k of AB along the segment itself — the same 1/2-argument that justified the midpoint, generalized to any k. Direction matters: the ratio counts **from the first-named point**.",
+   "figure": "cx-similar-walk"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A quarter of the way.",
+   "conceptTag": "cx-partition",
+   "explanationVariants": [
+    "k = 1/(1+3) = 1/4. P = (2 + (1/4)(8), 0 + (1/4)(8)) = (4, 2). Enter 4.",
+    "One part of four: (4, 2)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "P divides the segment from A(2, 0) to B(10, 8) in the ratio 1 : 3. Enter P's x-coordinate.",
+    "answer": 4,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 is the midpoint's x — 1:3 is an UNEVEN split: k = 1/4, so x = 2 + 2 = 4."
+     },
+     {
+      "value": 8,
+      "feedback": "8 walks k = 3/4 — the swapped ratio 3:1. From A, 1:3 puts the SHORT piece first: x = 4."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is B — the walk stops at a quarter: 2 + (1/4)(8) = 4."
+     }
+    ],
+    "fallbackFeedback": "Pₓ = 2 + (1/4)(10 − 2) = 4."
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-partition__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Direction discipline.",
+   "conceptTag": "cx-partition",
+   "explanationVariants": [
+    "From B, the 1:3 walk uses k = 1/4 of the REVERSED displacement: 10 + (1/4)(2 − 10) = 8.",
+    "Same segment, opposite start: (8, 6)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Same segment, but now P divides it 1 : 3 measured FROM B. Where does P land?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(8, 6) — a quarter of the way from B toward A",
+      "correct": true,
+      "feedback": "The ratio reads from its first-named endpoint: 10 + (1/4)(−8) = 8 and 8 + (1/4)(−8) = 6. Direction is half the definition."
+     },
+     {
+      "id": "o2",
+      "label": "(4, 2), the same point as before",
+      "correct": false,
+      "feedback": "Swapping the start moves the point — 1:3 from B mirrors 3:1 from A, landing at (8, 6)."
+     },
+     {
+      "id": "o3",
+      "label": "(6, 4), the midpoint",
+      "correct": false,
+      "feedback": "Only 1:1 lands at the midpoint — this uneven split sits a quarter from B: (8, 6)."
+     },
+     {
+      "id": "o4",
+      "label": "The ratio can't be measured from B",
+      "correct": false,
+      "feedback": "Any endpoint can lead — the formula just uses that endpoint as A: P = B + (1/4)(A − B) = (8, 6)."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-partition__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Recover the ratio.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "P(3, 4) sits on the segment from A(1, 1) to B(7, 10). P divides AB in the ratio m : n from A with m + n smallest. Enter m.",
+    "answer": 1,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 would put P two parts along (at (5, 7)) — here the walk is (3−1)/(7−1) = 1/3, so the ratio is 1 : 2, m = 1."
+     },
+     {
+      "value": 3,
+      "feedback": "3 counts the total parts — the ratio 1 : 2 has m = 1 (one part taken, two remaining)."
+     }
+    ],
+    "fallbackFeedback": "k = 2/6 = 1/3 ⇒ ratio 1 : 2 from A ⇒ m = 1. (The y-lane agrees: 3/9 = 1/3 ✓.)"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Checkpoint on the trail.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A trail runs straight from the lodge (0, 2) to the summit (12, 10). A water station sits 3 : 1 of the way up (from the lodge). Enter the station's x-coordinate.",
+    "answer": 9,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 walks k = 1/4 — the swapped ratio. Three parts of four from the lodge: (3/4)(12) = 9."
+     },
+     {
+      "value": 6,
+      "feedback": "6 is halfway — 3:1 rides three quarters: x = 9."
+     }
+    ],
+    "fallbackFeedback": "k = 3/4: x = 0 + (3/4)(12) = 9 (and y = 2 + 6 = 8)."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Split into three.",
+   "conceptTag": "cx-partition",
+   "hints": [
+    "Trisection points divide AB in ratios 1:2 and 2:1 from A.",
+    "Compute both with k = 1/3 and k = 2/3 on the displacement (9, −6).",
+    "The question wants the point NEARER B — which k is that?"
+   ],
+   "explanationVariants": [
+    "Nearer B means the LONGER walk: k = 2/3. P = (−1 + 6, 5 − 4) = (5, 1). Enter 5.",
+    "k = 2/3 on (9, −6) from (−1, 5): (5, 1)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Segment from A(−1, 5) to B(8, −1) is trisected. Enter the x-coordinate of the trisection point NEARER TO B.",
+    "answer": 5,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 is the k = 1/3 point (nearer A) — nearer B rides k = 2/3: −1 + 6 = 5."
+     },
+     {
+      "value": 3.5,
+      "feedback": "3.5 is the MIDPOINT's x — trisection points sit at thirds, and the B-side one is at x = 5."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is B itself — the trisection point stops a third short: x = 5."
+     }
+    ],
+    "fallbackFeedback": "k = 2/3: x = −1 + (2/3)(9) = 5."
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-partition__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Any ratio, priced.",
+   "takeaways": [
+    "P = A + k(B − A) with k = m/(m + n) — the m : n point measured FROM A.",
+    "Similar triangles guarantee the coordinate walk matches the segment ratio.",
+    "Direction is part of the ratio; midpoints are the k = 1/2 special case."
+   ],
+   "teaser": "Next: the slope rules you've trusted since Algebra 1 — finally proved."
+  }
+ ]
+}

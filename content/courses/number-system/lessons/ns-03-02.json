@@ -1,0 +1,278 @@
+{
+  "id": "ns-03-02",
+  "slug": "least-common-multiple",
+  "title": "Least Common Multiple",
+  "courseId": "number-system",
+  "chapterId": "ch3-factors-multiples",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **multiple** is what you get by counting UP in steps of a number. Multiples of 4: 4, 8, 12, 16… Multiples of 6: 6, 12, 18… The first number that appears on BOTH lists is the **least common multiple**: LCM(4, 6) = **12**. Factors divide in; multiples count out — opposite directions.",
+      "figure": "ns-lcm"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the first shared multiple.",
+      "conceptTag": "lcm",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Hop by 3 from 0. Stop at the first place a 5-hopper would also land.",
+        "min": 0,
+        "max": 20,
+        "start": 0,
+        "hop": 3,
+        "hops": 5,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 8,
+            "feedback": "8 is 3 + 5. Adding the two numbers is a different question from asking where their hops agree — the hoppers never both stop at 8."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is a landing for the 3-hopper, but the 5-hopper skips it: 5 goes 5, 10, 15. A shared landing has to appear on BOTH lists."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is a landing for the 5-hopper, but the 3-hopper skips it: 3 goes 3, 6, 9, 12, 15. A shared landing has to appear on BOTH lists."
+          }
+        ],
+        "missFeedback": "Not a shared landing yet. Keep hopping by 3 and check each stop against the 5-hopper's stops: 5, 10, 15.",
+        "successFeedback": "15 — the first place both hoppers stop. That is what \"least common multiple\" means: not the smallest multiple of either, but the earliest landing they share. 30 and 45 are shared too; 15 is simply the first."
+      },
+      "predict": {
+        "prompt": "Multiples of 3 and multiples of 5: the first number on BOTH lists is…",
+        "options": [
+          {
+            "id": "fifteen",
+            "label": "15"
+          },
+          {
+            "id": "thirty",
+            "label": "30"
+          },
+          {
+            "id": "eight",
+            "label": "8"
+          }
+        ],
+        "outcomeId": "fifteen",
+        "reveal": "Both lists pass through 15 first — 30 is also shared, just not LEAST. And 3 + 5 = 8 sits on neither list: common multiples come from the lists themselves, not from adding the two numbers."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Not always the product.",
+      "conceptTag": "lcm",
+      "explanationVariants": [
+        "Multiples of 6: 6, 12, 18, 24; of 8: 8, 16, 24. First shared is 24.",
+        "6 × 8 = 48, but 24 is smaller and still divisible by both — so LCM is 24, not 48."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the LCM of 6 and 8.",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "48 multiplies 6 × 8, which always gives A common multiple — but not always the LEAST. 24 is also divisible by both and is smaller, so LCM = 24."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the greatest common FACTOR of 6 and 8, not a multiple. The least common MULTIPLE — first shared when counting up — is 24."
+          }
+        ],
+        "fallbackFeedback": "6 → 6,12,18,24; 8 → 8,16,24. First shared: 24."
+      },
+      "variant": {
+        "gen": "lcm-pair"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two shortcuts. If the numbers are **relatively prime** (GCF 1), the LCM IS their product: LCM(3, 4) = 12. If one number **divides the other**, the LCM is the bigger number: LCM(5, 10) = 10, since 10 is already a multiple of 5. Otherwise, list until you hit the first match.",
+      "figure": "ns-lcm"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One divides the other.",
+      "conceptTag": "lcm",
+      "explanationVariants": [
+        "10 is already a multiple of 5, so it's the first shared one: LCM(5, 10) = 10.",
+        "When one number divides the other, the LCM is just the larger number."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the LCM of 5 and 10.",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 50,
+            "feedback": "50 multiplies 5 × 10, but that's not the LEAST. Since 5 divides 10, 10 is already a multiple of both — LCM = 10."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is a multiple of 5 but NOT of 10 (10 isn't a multiple of... wait, 5 doesn't reach 10's list). The first shared multiple is 10 itself."
+          }
+        ],
+        "fallbackFeedback": "10 is a multiple of both 5 and 10, so LCM = 10."
+      },
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "divides"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The classic gears problem.",
+      "conceptTag": "lcm",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two blinking lights: one every 4 seconds, one every 6 seconds. They just blinked together. After how many seconds do they NEXT blink together?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "seconds",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 adds 4 + 6. They blink together on a shared MULTIPLE of both intervals — the first is LCM(4, 6) = 12."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is a shared multiple (they DO blink together then), but not the FIRST one. 12 comes sooner and works: 12 is divisible by both 4 and 6."
+          }
+        ],
+        "fallbackFeedback": "They align on the least common multiple of 4 and 6: 12 seconds."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "LCM for a common denominator.",
+      "conceptTag": "lcm",
+      "explanationVariants": [
+        "The least common denominator of 4 and 10 is LCM(4, 10) = 20.",
+        "Multiples of 4: …16, 20; of 10: 10, 20. First shared: 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "To add 1/4 + 3/10, what is the least common denominator (the LCM of 4 and 10)?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 multiplies 4 × 10 — a common denominator, but not the LEAST. 20 is divisible by both 4 and 10 and is smaller."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds 4 + 10. The least common denominator is the least common MULTIPLE: LCM(4, 10) = 20."
+          }
+        ],
+        "fallbackFeedback": "4 → …,16,20; 10 → 10,20. Least common multiple: 20."
+      },
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "lcd"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Tell the two apart.",
+      "conceptTag": "lcm",
+      "hints": [
+        "\"Groups of equal size from both piles\" is a GCF idea; \"when do cycles line up\" is an LCM idea.",
+        "Buses leaving on repeating schedules line up on a MULTIPLE.",
+        "First shared multiple of 8 and 12."
+      ],
+      "explanationVariants": [
+        "Buses on 8- and 12-minute cycles next depart together at LCM(8, 12) = 24 minutes.",
+        "Multiples of 8: 8,16,24; of 12: 12,24. First shared: 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One bus leaves every 8 minutes, another every 12 minutes. They just left together. In how many minutes do they NEXT leave together?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the GCF of 8 and 12 — the wrong tool. \"When do cycles align\" is an LCM question: LCM(8, 12) = 24."
+          },
+          {
+            "value": 96,
+            "feedback": "96 multiplies 8 × 12, a shared multiple but not the least. 24 is divisible by both and comes first."
+          }
+        ],
+        "fallbackFeedback": "Cycles align on the LCM of 8 and 12: 24 minutes."
+      },
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "buses"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The first shared count-up.",
+      "takeaways": [
+        "A multiple counts UP in steps; the LCM is the first multiple two numbers share.",
+        "Relatively prime → LCM is the product; one divides the other → LCM is the bigger number.",
+        "GCF (biggest shared divisor) and LCM (smallest shared multiple) point in opposite directions."
+      ],
+      "teaser": "last in the chapter: pulling a GCF out of a sum."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lcm",
+      "concept": {
+        "id": "rem-lcm-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Count up both, stop at the first match.** Multiples of 2: 2, 4, 6, 8… Multiples of 3: 3, 6, 9… The first number on both lists is 6, so LCM(2, 3) = 6."
+      },
+      "check": {
+        "id": "rem-lcm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "lcm",
+        "explanationVariants": [
+          "Multiples of 2: 2,4,6; of 3: 3,6. First shared: 6.",
+          "6 is the smallest number both 2 and 3 divide into."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find the LCM of 2 and 3.",
+          "answer": 6,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is the GCF, not the multiple. The least common MULTIPLE — first shared counting up — is 6."
+            },
+            {
+              "value": 5,
+              "feedback": "5 adds 2 + 3. A multiple isn't a sum; the first number both divide into is 6."
+            }
+          ],
+          "fallbackFeedback": "First shared multiple of 2 and 3 is 6."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+{
+  "id": "sg-02-02",
+  "slug": "cavalieri-at-work",
+  "title": "Cavalieri at Work",
+  "courseId": "solid-geometry",
+  "chapterId": "ch2-cavalieri",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-cavalieri-apply",
+      "concept": {
+        "id": "rem-sg-cavalieri-apply-c",
+        "kind": "concept",
+        "body": "Cavalieri as a comparison engine: align two solids of the same height; if every level's cross-section areas are EQUAL the volumes are equal, and if one solid's sections are always k times the other's, its volume is k times as large. This prices oblique cones (⅓πr²h with vertical height) and curvy solids with known constant sections."
+      },
+      "check": {
+        "id": "rem-sg-cavalieri-apply-k",
+        "kind": "check",
+        "body": "One ratio.",
+        "conceptTag": "sg-cavalieri-apply",
+        "explanationVariants": [
+          "Every section is 3 times as large, same height.",
+          "Volume 3 × 20 = 60."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solid B's every cross-section is triple solid A's (same heights). A's volume is 20. B's = ?",
+          "answer": 60,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "20 copies A — triple slices at every level: 60."
+            },
+            {
+              "value": 23,
+              "feedback": "23 adds — the ratio MULTIPLIES: 60."
+            }
+          ],
+          "fallbackFeedback": "3 × 20 = 60."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Cavalieri also compares UNLIKE solids. Chapter 1 found the circle-in-square section ratio: π/4 at every height. Promote it: if one solid's sections are always k times another's (same height), its volume is k times as large — the equal-slices principle, run through a constant multiplier.",
+      "figure": "sg-cavalieri-compare"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The π/4 payoff.",
+      "conceptTag": "sg-cavalieri-apply",
+      "explanationVariants": [
+        "The prism: 6 × 6 × 10 = 360. The inscribed cylinder's sections are π/4 of the squares at every level.",
+        "V = (π/4)(360) = 90π ≈ 282.74 — or directly π(3²)(10)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square prism (side 6, height 10) circumscribes a cylinder (radius 3, height 10). The cylinder's volume (2 decimals) = ?",
+        "answer": 282.74,
+        "tolerance": 0.5,
+        "commonErrors": [
+          {
+            "value": 360,
+            "feedback": "360 is the PRISM — the cylinder claims the π/4 share of every slice: 90π ≈ 282.74."
+          },
+          {
+            "value": 94.25,
+            "feedback": "94.25 ≈ 30π forgets to square r — π(9)(10) = 90π ≈ 282.74."
+          },
+          {
+            "value": 565.49,
+            "feedback": "565.49 ≈ 180π doubles — (π/4)(360) = 90π ≈ 282.74."
+          }
+        ],
+        "fallbackFeedback": "Section ratio π/4 at every height ⇒ volume ratio π/4: (π/4)(360) = 90π ≈ 282.74."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri-apply__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Oblique cone.",
+      "conceptTag": "sg-cavalieri-apply",
+      "explanationVariants": [
+        "A leaning cone's sections match its upright twin's at every level — similarity shrinks both alike.",
+        "V = ⅓π(36)(10) = 120π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A leaning (oblique) cone: base radius 6, vertical height 10. Volume coefficient (of π) = ?",
+        "answer": 120,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 360,
+            "feedback": "360 skips the ⅓ — cones (upright or leaning) claim a third: 120."
+          },
+          {
+            "value": 60,
+            "feedback": "60 = ⅓(6)(10)·3 mangles the square — ⅓(36)(10) = 120."
+          },
+          {
+            "value": 200,
+            "feedback": "200 uses r = √60-ish — ⅓(6²)(10) = 120, lean or no lean."
+          }
+        ],
+        "fallbackFeedback": "⅓π(36)(10) = 120π — Cavalieri extends the ⅓ to oblique cones for free."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri-apply__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The comparison move generalizes beautifully: any solid squeezed slice-for-slice between two others inherits their verdicts, and any solid whose sections COPY a known solid's (however the stacking bends) copies its volume. Next chapter this becomes an engine: the sphere's volume will fall out of a cylinder-minus-cone comparison, slice by slice.",
+      "figure": "sg-squeezed"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Set up the comparison.",
+      "conceptTag": "sg-cavalieri-apply",
+      "explanationVariants": [
+        "To use Cavalieri you need same heights and a slice-area relationship at every level.",
+        "Matching the pair level-for-level is the whole method."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To prove two solids have equal volume via Cavalieri, you must establish:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Same height, and equal cross-section areas at every single level",
+            "correct": true,
+            "feedback": "Both clauses carry weight — the height aligns the slicing, and 'every level' seals it."
+          },
+          {
+            "id": "o2",
+            "label": "Equal surface areas",
+            "correct": false,
+            "feedback": "Surface area is a different (and shear-fragile) quantity — Cavalieri trades only in slice areas."
+          },
+          {
+            "id": "o3",
+            "label": "Equal bases and equal tops",
+            "correct": false,
+            "feedback": "Ends matching says nothing about the middle — EVERY level must match."
+          },
+          {
+            "id": "o4",
+            "label": "That both are solids of revolution",
+            "correct": false,
+            "feedback": "The principle is shape-agnostic — prisms, deformed stacks, anything sliceable qualifies."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri-apply__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Half the slices.",
+      "predict": {
+        "prompt": "Every cross-section of solid B has exactly half the area of A's at the same height. What is B's volume?",
+        "options": [
+          {
+            "id": "half",
+            "label": "Half of A's — the ratio carries straight through"
+          },
+          {
+            "id": "quarter",
+            "label": "A quarter — areas scale as the square"
+          },
+          {
+            "id": "unknown",
+            "label": "Not determined without the shapes"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "Half. Volume is the accumulation of slices, so a constant ratio between the slices passes straight to the total — no squaring, because nothing is being scaled in two directions here. Sweep and watch the ratio hold at every height."
+      },
+      "widget": {
+        "type": "solidSliceLab",
+        "prompt": "Sweep the plane and check the two area readouts at several matching heights. Does their RATIO ever change?",
+        "solid": "prism",
+        "radius": 4,
+        "height": 8,
+        "baseArea": 32,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.05,
+        "tolerance": 0.03,
+        "comparisonRequired": true,
+        "requiredMoves": 5,
+        "successFeedback": "The ratio held at every height you tested — so it holds for the accumulated total too. A constant slice ratio is a volume ratio; that is Cavalieri used as a scale, not just as an equality.",
+        "positionFeedback": "Keep sweeping, then settle at the middle height to finish the reading.",
+        "comparisonFeedback": "Add the second solid — a ratio needs two readouts, and there is only one on screen.",
+        "invariantFeedback": "Test more heights first. 'Every cross-section' is a claim about all of them, and it is the constancy you are checking."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The bent prism.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A rectangular prism is 'bent' into a gentle S-curve — every cross-section perpendicular to the original height stays the same rectangle, at the same levels. Its volume:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Unchanged — Cavalieri doesn't care HOW the slices are stacked, only what they are at each level",
+            "correct": true,
+            "feedback": "Straight, sheared, or S-curved: the stacking path is free. (Real bending often distorts sections — the stated hypothesis is what licenses the verdict.)"
+          },
+          {
+            "id": "o2",
+            "label": "Less — curves compress",
+            "correct": false,
+            "feedback": "If sections truly stay congruent at each level (as stated), the volume is level-by-level identical."
+          },
+          {
+            "id": "o3",
+            "label": "More — the S is longer",
+            "correct": false,
+            "feedback": "Arc-length grows, but volume reads the slices — unchanged."
+          },
+          {
+            "id": "o4",
+            "label": "Cavalieri can't apply to curved stacks",
+            "correct": false,
+            "feedback": "The principle is exactly about ignoring the stacking — slices rule."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The vase and the cylinder.",
+      "conceptTag": "sg-cavalieri-apply",
+      "hints": [
+        "Check Cavalieri's hypothesis: the vase's stated section areas vs the cylinder's, level by level.",
+        "The cylinder's sections are constantly π(5²) = 25π.",
+        "The vase: 25π at every level too (its BOUNDARY curves, but the given areas hold) — conclude, then compute πr²h."
+      ],
+      "explanationVariants": [
+        "Both solids present 25π at every one of the 12 levels of height: equal volumes. V = π(25)(12) = 300π.",
+        "Equal slices, height 12: the vase costs the cylinder's 300π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A curvy vase of height 12 has horizontal cross-section area 25π at EVERY height — the same as a radius-5 cylinder of height 12. The vase's volume coefficient (of π) = ?",
+        "answer": 300,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 = ⅓(25)(12) applies a cone's third — constant sections mean cylinder pricing: 25 × 12 = 300."
+          },
+          {
+            "value": 60,
+            "feedback": "60 = 5 × 12 forgets the square — the section is already 25π: coefficient 25 × 12 = 300."
+          },
+          {
+            "value": 500,
+            "feedback": "500 = 25 × 20 misreads the height — h = 12: 300."
+          }
+        ],
+        "fallbackFeedback": "Constant 25π sections over height 12: V = 300π — curvature of the WALL never entered the bill."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cavalieri-apply__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Compare slice by slice.",
+      "takeaways": [
+        "Constant section ratio k at every level ⇒ volume ratio k (the π/4 cylinder-in-prism).",
+        "Oblique cones inherit the ⅓ for free; curvy solids with known sections price like their straight twins.",
+        "The method: align heights, relate sections at every level, conclude."
+      ],
+      "teaser": "Next: what Cavalieri does NOT promise — surface area and the converse."
+    }
+  ]
+}

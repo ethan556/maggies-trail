@@ -1,0 +1,353 @@
+{
+  "id": "asv-01-03",
+  "slug": "choosing-the-right-formula",
+  "title": "Choosing the Right Formula",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch1-area-triangles-quads",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Same base, same height, three different answers — the SHAPE decides the rule. Base 9, height 4: a **triangle** gives 1/2 × 9 × 4 = 18; a **parallelogram** gives 9 × 4 = 36 (exactly double the triangle); a **trapezoid** needs a second base too. Identify the shape FIRST, then pick its formula.",
+      "figure": "asv-formula-compare"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Same numbers, triangle version.",
+      "conceptTag": "area-formula-choice",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A TRIANGLE has base 9 and height 4. What is its area?",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "36 is the PARALLELOGRAM's area with these same numbers. A triangle halves it: 1/2 × 9 × 4 = 18."
+          },
+          {
+            "value": 13,
+            "feedback": "13 adds 9 + 4. Triangle area multiplies then halves: 1/2 × 9 × 4 = 18."
+          }
+        ],
+        "fallbackFeedback": "1/2 × 9 × 4 = 18."
+      },
+      "predict": {
+        "prompt": "For a TRIANGLE, what does base × height alone give you?",
+        "options": [
+          {
+            "id": "double",
+            "label": "Twice the triangle's area"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly the triangle's area"
+          },
+          {
+            "id": "half",
+            "label": "Half the triangle's area"
+          }
+        ],
+        "outcomeId": "double",
+        "reveal": "Base × height measures the full rectangle around the triangle — the triangle claims only half of it, so the formula halves the product."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same numbers, parallelogram version.",
+      "conceptTag": "area-formula-choice",
+      "explanationVariants": [
+        "A parallelogram with the same base and height gives EXACTLY double the triangle's area: 9 × 4 = 36.",
+        "No halving for a parallelogram — it's the full rectangle-equivalent."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A PARALLELOGRAM has base 9 and height 4 (same numbers as before). What is its area?",
+        "answer": 36,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 is the TRIANGLE's area with these numbers. A parallelogram doesn't halve: 9 × 4 = 36."
+          },
+          {
+            "value": 13,
+            "feedback": "13 adds instead of multiplying. Parallelogram area: 9 × 4 = 36."
+          }
+        ],
+        "fallbackFeedback": "9 × 4 = 36 — double the triangle's area with the same base and height."
+      },
+      "variant": {
+        "gen": "area-formula-pick"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A trapezoid needs one more piece of information than the others: a SECOND base. Given base 9, second base 5, height 4: 1/2 × (9 + 5) × 4 = **28** — between the triangle's 18 and the parallelogram's 36, which makes sense since a trapezoid is a blend of the two.",
+      "figure": "asv-formula-compare"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same numbers, trapezoid version.",
+      "conceptTag": "area-formula-choice",
+      "explanationVariants": [
+        "1/2 × (9+5) × 4 = 1/2 × 14 × 4 = 28 — between the triangle (18) and parallelogram (36).",
+        "Averaging the bases before applying the triangle rule gives 28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A TRAPEZOID has bases 9 and 5, and height 4. What is its area?",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 is the TRIANGLE's area using only base 9, ignoring the second base entirely. Average both bases: 1/2 × (9+5) × 4 = 28."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is the PARALLELOGRAM's area (9 × 4), also ignoring the second base. Average both: 1/2 × (9+5) × 4 = 28."
+          }
+        ],
+        "fallbackFeedback": "1/2 × (9 + 5) × 4 = 1/2 × 14 × 4 = 28."
+      },
+      "variant": {
+        "gen": "area-formula-pick",
+        "form": "trapezoid"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Identify the shape, then compute.",
+      "conceptTag": "area-formula-choice",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each shape+measurements to its area.",
+        "left": [
+          {
+            "id": "s1",
+            "label": "Triangle: base 11, height 6"
+          },
+          {
+            "id": "s2",
+            "label": "Parallelogram: base 7, height 9"
+          },
+          {
+            "id": "s3",
+            "label": "Trapezoid: bases 16 & 10, height 6"
+          },
+          {
+            "id": "s4",
+            "label": "Triangle: base 8, height 5"
+          }
+        ],
+        "right": [
+          {
+            "id": "v33",
+            "label": "33"
+          },
+          {
+            "id": "v63",
+            "label": "63"
+          },
+          {
+            "id": "v78",
+            "label": "78"
+          },
+          {
+            "id": "v20",
+            "label": "20"
+          }
+        ],
+        "pairs": {
+          "s1": "v33",
+          "s2": "v63",
+          "s3": "v78",
+          "s4": "v20"
+        },
+        "pairErrors": [
+          {
+            "left": "s2",
+            "right": "v78",
+            "feedback": "78 belongs to the trapezoid. The parallelogram (base 7, height 9) is 7 × 9 = 63."
+          },
+          {
+            "left": "s3",
+            "right": "v63",
+            "feedback": "63 belongs to the parallelogram. The trapezoid (bases 16, 10, height 6) is 1/2 × (16+10) × 6 = 78."
+          }
+        ],
+        "missFeedback": "Identify the shape first: triangle halves, parallelogram doesn't, trapezoid averages two bases then halves.",
+        "successFeedback": "All matched — the shape name tells you exactly which rule to apply."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The trapezoid sits in between.",
+      "conceptTag": "area-formula-choice",
+      "explanationVariants": [
+        "A trapezoid's area sits between a triangle's (using only the short base) and a parallelogram's (using only the long base) — it's a genuine blend of both.",
+        "Averaging two different bases naturally lands the trapezoid's area between the two extremes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For fixed height and two DIFFERENT base lengths, why does the trapezoid formula average the bases instead of using just one?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Because the trapezoid blends properties of both bases — its area falls between what either base alone would give",
+            "correct": true,
+            "feedback": "Right — averaging the bases captures that blend exactly, landing the trapezoid's area between the triangle-with-short-base and parallelogram-with-long-base extremes."
+          },
+          {
+            "id": "b",
+            "label": "Because using only one base is always close enough",
+            "feedback": "It's not close enough — using only one base ignores the other side's contribution entirely, giving a wrong answer."
+          },
+          {
+            "id": "c",
+            "label": "Averaging is just a simplification with no geometric meaning",
+            "feedback": "It has real geometric meaning — decomposing into two triangles (one per base) and adding their areas IS the averaging formula."
+          }
+        ]
+      },
+      "hints": [
+        "A trapezoid decomposes into two triangles.",
+        "One triangle per base.",
+        "Adding both areas is the same as averaging the bases."
+      ],
+      "variant": {"gen": "area-formula-pick", "form": "trapezoidAverage"}
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller rectangle-minus-triangle, before the 8-by-5 stand.",
+      "conceptTag": "area-formula-choice",
+      "explanationVariants": [
+        "The full rectangle is 6×4=24. The cut-off triangle is ½×4×2=4. What remains: 24−4=20.",
+        "Compute the whole shape's area (24), compute the removed piece's area (4), then subtract the piece from the whole: 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 6-by-4 rectangle has a triangular corner cut off (that triangle has base 4 and height 2). What is the area of the remaining shape?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the area of the WHOLE rectangle, before the corner was cut. Subtract the triangle's area: 24−4=20."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is only the triangle that was REMOVED, not what's left. The remaining shape is the rectangle minus that triangle: 24−4=20."
+          },
+          {
+            "value": 28,
+            "feedback": "28 ADDS the triangle instead of removing it. The corner was CUT OFF, so it's subtracted: 24−4=20."
+          }
+        ],
+        "fallbackFeedback": "Find the rectangle's full area (6×4), find the triangle's area (½×4×2), then subtract the triangle from the rectangle."
+      },
+      "variant": {
+        "gen": "area-formula-pick",
+        "form": "cornerCut"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A composite shape, cut from a rectangle.",
+      "conceptTag": "area-formula-choice",
+      "hints": [
+        "Start with the full rectangle: 8 × 5 = 40.",
+        "Then subtract the triangular corner cut off: 1/2 × 8 × 3.",
+        "40 minus that triangle's area."
+      ],
+      "explanationVariants": [
+        "Rectangle 8×5 = 40; the triangular cut (base 8, height 3) removes 1/2×8×3 = 12; remaining shape: 40 − 12 = 28.",
+        "Full rectangle minus the removed triangle gives the composite shape's area: 28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An 8-by-5 rectangle has a triangular corner cut off (that triangle has base 8 and height 3). What is the area of the remaining shape?",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is just the CUT-OFF triangle's area, not what remains. Subtract it from the full rectangle: 40 − 12 = 28."
+          },
+          {
+            "value": 52,
+            "feedback": "52 ADDS the triangle instead of removing it. Cutting a piece away means subtracting: 40 − 12 = 28."
+          }
+        ],
+        "fallbackFeedback": "Rectangle 40 minus the cut triangle 12: 40 − 12 = 28."
+      },
+      "variant": {
+        "gen": "area-formula-pick",
+        "form": "cornerCut"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The shape names the rule.",
+      "takeaways": [
+        "Same base and height give different areas for a triangle, parallelogram, and trapezoid — always identify the shape first.",
+        "A trapezoid's area sits between a triangle's and a parallelogram's, since it blends both bases.",
+        "Composite shapes often combine addition and subtraction of simpler shape areas."
+      ],
+      "teaser": "next chapter: irregular composite figures made of several shapes at once."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "area-formula-choice",
+      "concept": {
+        "id": "rem-afc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Name the shape before computing.** Triangle: 1/2 × base × height. Parallelogram: base × height (no half). Trapezoid: 1/2 × (base1 + base2) × height. The same numbers give three different answers depending on which shape they describe."
+      },
+      "check": {
+        "id": "rem-afc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "area-formula-choice",
+        "explanationVariants": [
+          "A triangle with base 10, height 6: 1/2 × 10 × 6 = 30.",
+          "Halve the base-times-height product for a triangle."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A TRIANGLE has base 10 and height 6. What is its area?",
+          "answer": 30,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 60,
+              "feedback": "60 is the PARALLELOGRAM's area with these numbers. A triangle halves it: 1/2 × 10 × 6 = 30."
+            },
+            {
+              "value": 16,
+              "feedback": "16 adds 10 + 6. Triangle area multiplies then halves: 1/2 × 10 × 6 = 30."
+            }
+          ],
+          "fallbackFeedback": "1/2 × 10 × 6 = 30."
+        }
+      }
+    }
+  ]
+}

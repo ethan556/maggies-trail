@@ -1,0 +1,258 @@
+{
+  "id": "g7-01-03",
+  "slug": "how-area-scales",
+  "title": "How Area Scales",
+  "courseId": "geometry-g7",
+  "chapterId": "ch1-scale-drawings",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Lengths scale by the scale factor — but **area scales by its square**. At 1 cm = 4 m, each 1 cm² of drawing stands for 4 × 4 = **16 m²** of real area, because both the width AND the height stretch by 4.",
+      "figure": "scale-drawing"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Scale an area.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "At 1 cm = 4 m, a drawing square is 1 cm by 1 cm. How many square meters is the real square?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That scales only ONE side — both sides stretch by 4: 4 × 4 = 16 m²."
+          },
+          {
+            "value": 8,
+            "feedback": "Don't double — SQUARE the scale: 4 × 4 = 16 m²."
+          }
+        ],
+        "fallbackFeedback": "The real square is 4 m by 4 m: 4 × 4 = 16 m²."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The safest method for a scaled rectangle: convert each **side** to real units first, then multiply. A 2 cm × 3 cm drawing at 1 cm = 4 m becomes 8 m × 12 m, so the real area is 96 m².",
+      "figure": "g7-scale-area"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Sides first, then area.",
+      "conceptTag": "g7-scaled-area",
+      "explanationVariants": [
+        "Convert sides: 2 × 4 = 8 m and 3 × 4 = 12 m. Area = 8 × 12 = 96 m².",
+        "Real sides 8 m and 12 m give area 96 m²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 2 cm × 3 cm drawing uses the scale 1 cm = 4 m. What is the real area, in square meters?",
+        "answer": 96,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "That multiplied the drawing area (6 cm²) by 4 — area scales by 4² = 16: 6 × 16 = 96 m²."
+          },
+          {
+            "value": 6,
+            "feedback": "That's the DRAWING area in cm² — convert sides first: 8 m × 12 m = 96 m²."
+          }
+        ],
+        "fallbackFeedback": "Real sides: 8 m and 12 m. Area = 8 × 12 = 96 m²."
+      },
+      "variant": {
+        "gen": "g7-scaled-area"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Why squared?",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why does area scale by the SQUARE of the scale factor?",
+        "panels": [
+          {
+            "title": "Width stretches",
+            "body": "Going from drawing to real, the width multiplies by the scale factor (say 4)."
+          },
+          {
+            "title": "Height stretches too",
+            "body": "The height ALSO multiplies by 4 — both directions grow."
+          },
+          {
+            "title": "Area gets both",
+            "body": "Area = width × height, so it picks up the factor twice: 4 × 4 = 16 times bigger."
+          }
+        ],
+        "continueFeedback": "Reveal the next step.",
+        "successFeedback": "Exactly — area stretches in two directions at once, so the factor is squared."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A different scale.",
+      "conceptTag": "g7-scaled-area",
+      "explanationVariants": [
+        "At 1 cm = 3 m, each cm² stands for 3 × 3 = 9 m².",
+        "Square the scale: 3² = 9 m² per cm²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At the scale 1 cm = 3 m, how many square meters does each 1 cm² of drawing stand for?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That scales one side only — area squares the factor: 3 × 3 = 9 m²."
+          },
+          {
+            "value": 6,
+            "feedback": "Don't double — SQUARE it: 3 × 3 = 9 m²."
+          }
+        ],
+        "fallbackFeedback": "Each cm² stands for 3 m × 3 m = 9 m²."
+      },
+      "variant": {
+        "gen": "g7-scaled-area",
+        "form": "unitAreaScale"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the error.",
+      "conceptTag": "g7-scaled-area",
+      "explanationVariants": [
+        "Multiplying a drawing area by the scale factor once scales only one direction — it must be squared.",
+        "Area needs the factor twice (both directions), so times-4 alone is wrong."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student converts a 5 cm² drawing area at 1 cm = 4 m by computing 5 × 4 = 20 m². What went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Area scales by 4² = 16, so it should be 5 × 16 = 80 m²",
+            "correct": true,
+            "feedback": "Right — both directions stretch by 4, so area multiplies by 16."
+          },
+          {
+            "id": "b",
+            "label": "They should have divided by 4",
+            "correct": false,
+            "feedback": "Direction is right (drawing → real grows) — the issue is area needs 4², not 4: 80 m²."
+          },
+          {
+            "id": "c",
+            "label": "Anything times 5 is wrong",
+            "correct": false,
+            "feedback": "Using the 5 cm² is fine — the scale factor just needs to be SQUARED: 5 × 16 = 80 m²."
+          },
+          {
+            "id": "d",
+            "label": "The answer is correct",
+            "correct": false,
+            "feedback": "It scaled only one direction — area picks up the factor twice: 5 × 16 = 80 m²."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-scaled-area",
+        "form": "areaError"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full floor plan.",
+      "conceptTag": "g7-scaled-area",
+      "explanationVariants": [
+        "Real sides: 3 × 2 = 6 m and 5 × 2 = 10 m. Area = 6 × 10 = 60 m².",
+        "Convert sides (6 m, 10 m), then multiply: 60 m²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A room is 3 cm × 5 cm on a plan with scale 1 cm = 2 m. What is the real floor area, in square meters?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That multiplied the drawing area (15 cm²) by 2 — area scales by 2² = 4: 15 × 4 = 60 m²."
+          },
+          {
+            "value": 15,
+            "feedback": "That's the DRAWING area — convert sides first: 6 m × 10 m = 60 m²."
+          }
+        ],
+        "fallbackFeedback": "Real sides: 6 m and 10 m. Area = 60 m²."
+      },
+      "hints": [
+        "Convert each side to real meters first (multiply by 2).",
+        "Real sides: 3 × 2 = 6 m and 5 × 2 = 10 m.",
+        "Area = 6 × 10 = 60 m²."
+      ],
+      "variant": {
+        "gen": "g7-scaled-area",
+        "form": "roomScaledArea"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Lengths scale by the factor; areas scale by its square. Convert sides first.",
+      "takeaways": [
+        "Area picks up the scale factor twice: k becomes k².",
+        "Safest route: convert each side to real units, then multiply.",
+        "At 1 cm = 4 m, each cm² stands for 16 m²."
+      ],
+      "teaser": "Next chapter: circles — the measure the volume formulas were built on."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-scaled-area",
+      "concept": {
+        "id": "rem-g70103-c",
+        "kind": "concept",
+        "body": "Area scales by the SQUARE of the scale factor, because both directions stretch. Safest method: convert each side to real units first, then multiply. At 1 cm = 4 m, each cm² stands for 16 m²."
+      },
+      "check": {
+        "id": "rem-g70103-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-scaled-area",
+        "explanationVariants": [
+          "At 1 cm = 5 m, each cm² stands for 5 × 5 = 25 m².",
+          "Square the scale: 5² = 25 m² per cm²."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "At the scale 1 cm = 5 m, how many square meters does each 1 cm² of drawing stand for?",
+          "answer": 25,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "That scales one side only — area squares the factor: 5 × 5 = 25 m²."
+            },
+            {
+              "value": 10,
+              "feedback": "Don't double — SQUARE it: 5 × 5 = 25 m²."
+            }
+          ],
+          "fallbackFeedback": "Each cm² stands for 5 m × 5 m = 25 m²."
+        }
+      }
+    }
+  ]
+}

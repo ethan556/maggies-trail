@@ -1,0 +1,349 @@
+{
+  "id": "c120-05-01",
+  "slug": "one-more-one-less",
+  "title": "One More, One Less",
+  "courseId": "counting-120",
+  "chapterId": "ch5-more-less",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "number-track",
+      "body": "One more means the next number; one less means the number before. After 45 comes 46; before 45 is 44.",
+      "narration": "One more means the next number; one less means the number before. After forty-five comes forty-six; before forty-five is forty-four."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Step one more.",
+      "conceptTag": "one-more-less",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Start at 45 and hop one more. Tap where you land.",
+        "min": 40,
+        "max": 52,
+        "start": 45,
+        "hop": 1,
+        "hops": 1,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 44,
+            "feedback": "That went one LESS. One more is the next number: 46."
+          },
+          {
+            "value": 55,
+            "feedback": "That added a ten. One more is just the next number: 46."
+          }
+        ],
+        "missFeedback": "One more than 45 is 46.",
+        "successFeedback": "46 — one more than 45!"
+      },
+      "predict": {
+        "prompt": "45 and one more — which digit will change?",
+        "options": [
+          {
+            "id": "ones",
+            "label": "The ones digit"
+          },
+          {
+            "id": "tens",
+            "label": "The tens digit"
+          },
+          {
+            "id": "both",
+            "label": "Both digits"
+          }
+        ],
+        "outcomeId": "ones",
+        "reveal": "One more is a single step: the ones digit ticks up to 6 and the tens digit doesn't move at all."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents one more less.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for one more less must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines one more less."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "counting-120:one-more-less",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One less.",
+      "conceptTag": "one-more-less",
+      "explanationVariants": [
+        "One less than 60 is 59 — the number just before it.",
+        "Count back one from 60 to reach 59."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is one less than 60?",
+        "answer": 59,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 61,
+            "feedback": "That's one MORE. One less means count back: 60 → 59."
+          },
+          {
+            "value": 50,
+            "feedback": "That went ten less. One less is just the number before: 59."
+          }
+        ],
+        "fallbackFeedback": "One less than 60 is 59."
+      },
+      "hints": [
+        "Count back one.",
+        "The number just before 60.",
+        "59."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "OneMoreLessNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes one more rolls a ten. One more than 39 is 40; one less than 40 is 39. The ones roll over.",
+      "narration": "Sometimes one more rolls a ten. One more than thirty-nine is forty; one less than forty is thirty-nine. The ones roll over.",
+      "figure": "c120-one-more-roll"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each to one more.",
+      "conceptTag": "one-more-less",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each number to ONE MORE than it.",
+        "left": [
+          {
+            "id": "n29",
+            "label": "one more than 29"
+          },
+          {
+            "id": "n50",
+            "label": "one more than 50"
+          },
+          {
+            "id": "n99",
+            "label": "one more than 99"
+          }
+        ],
+        "right": [
+          {
+            "id": "r30",
+            "label": "30"
+          },
+          {
+            "id": "r51",
+            "label": "51"
+          },
+          {
+            "id": "r100",
+            "label": "100"
+          }
+        ],
+        "pairs": {
+          "n29": "r30",
+          "n50": "r51",
+          "n99": "r100"
+        },
+        "pairErrors": [
+          {
+            "left": "n29",
+            "right": "r51",
+            "feedback": "One more than 29 rolls to 30. 51 is one more than 50."
+          },
+          {
+            "left": "n99",
+            "right": "r30",
+            "feedback": "One more than 99 rolls all the way to 100."
+          }
+        ],
+        "missFeedback": "One more is the next number: 30, 51, 100.",
+        "successFeedback": "Even the rollovers — 30, 51, 100!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Roll a ten.",
+      "conceptTag": "one-more-less",
+      "explanationVariants": [
+        "One more than 39 is 40 — the ones roll from 9 to 0 and a ten appears.",
+        "39, then one more: the 9 rolls to 0 and the tens tick up to 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is one more than 39?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 310,
+            "feedback": "That wrote 3 and 10 side by side. When 9 rolls over, it becomes 40."
+          },
+          {
+            "value": 49,
+            "feedback": "That added a ten. One more than 39 is 40."
+          }
+        ],
+        "fallbackFeedback": "One more than 39 is 40 — the ten rolls."
+      },
+      "hints": [
+        "The ones are at 9.",
+        "9 rolls to 0, a ten appears.",
+        "40."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "OneMoreLessNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "More or less?",
+      "conceptTag": "one-more-less",
+      "explanationVariants": [
+        "One less than 70 is 69 — count back one across the ten.",
+        "70 back one: the ten breaks and you land on 69."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is one LESS than 70?",
+        "options": [
+          {
+            "id": "a",
+            "label": "69",
+            "correct": true,
+            "feedback": "Yes — count back one from 70 to 69."
+          },
+          {
+            "id": "b",
+            "label": "71",
+            "feedback": "71 is one MORE. One less means count back: 69."
+          },
+          {
+            "id": "c",
+            "label": "60",
+            "feedback": "That's ten less. One less is just the number before 70: 69."
+          }
+        ]
+      },
+      "hints": [
+        "Count back just one.",
+        "The number before 70.",
+        "69."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "OneMoreLessMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One less across a hundred!",
+      "conceptTag": "one-more-less",
+      "explanationVariants": [
+        "One less than 100 is 99 — count back one, breaking the hundred.",
+        "100 back one lands on 99."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is one less than 100?",
+        "answer": 99,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 101,
+            "feedback": "That's one MORE. One less than 100 counts back to 99."
+          },
+          {
+            "value": 90,
+            "feedback": "That went ten less. One less than 100 is 99."
+          }
+        ],
+        "fallbackFeedback": "One less than 100 is 99."
+      },
+      "hints": [
+        "Count back just one.",
+        "The number before 100.",
+        "99."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "OneMoreLessNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One more, one less — mastered!",
+      "takeaways": [
+        "One more = the next number.",
+        "One less = the number before.",
+        "Sometimes a ten rolls over."
+      ],
+      "teaser": "next: ten more and ten less."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "one-more-less",
+      "concept": {
+        "id": "rem-om-c",
+        "kind": "concept",
+        "body": "Slow down. One more than 12 is 13 — the next number. One less than 12 is 11 — the one before.",
+        "narration": "Slow down. One more than twelve is thirteen — the next number. One less than twelve is eleven — the one before."
+      },
+      "check": {
+        "id": "rem-om-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "one-more-less",
+        "explanationVariants": [
+          "One more than 12 is 13 — the next number.",
+          "Count up one from 12 to 13."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is one more than 12?",
+          "answer": 13,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 11,
+              "feedback": "That's one LESS. One more is the next number: 13."
+            },
+            {
+              "value": 22,
+              "feedback": "That added a ten. One more than 12 is 13."
+            }
+          ],
+          "fallbackFeedback": "One more than 12 is 13."
+        }
+      }
+    }
+  ]
+}

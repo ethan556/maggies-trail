@@ -1,0 +1,302 @@
+{
+  "id": "dop-01-03",
+  "slug": "writing-and-reading-expressions",
+  "title": "Writing & Reading Expressions",
+  "courseId": "decimal-operations",
+  "chapterId": "ch1-order-of-operations",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Words become expressions. \"Add 4 and 5, then double it\" means do the adding first, so it needs grouping: **(4 + 5) × 2**. The phrase \"then double\" acts on the whole sum, and the parentheses capture that. Reading carefully tells you where the grouping goes.",
+      "figure": "dop-word-expr"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Translate and evaluate.",
+      "conceptTag": "expression-forms",
+      "widget": {
+        "type": "numeric",
+        "prompt": "\"Add 4 and 5, then double it.\" Written as (4 + 5) × 2, what does it equal?",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 doubles only the 5 (4 + 5×2). \"Then double it\" doubles the whole sum: (4 + 5) × 2 = 9 × 2 = 18."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is just 4 + 5 — the \"double it\" step still happens: 9 × 2 = 18."
+          }
+        ],
+        "fallbackFeedback": "Add first: 4 + 5 = 9, then double: 9 × 2 = 18."
+      },
+      "hints": [
+        "\"Then double it\" acts on the whole sum.",
+        "4 + 5 = 9.",
+        "9 × 2 = 18."
+      ],
+      "explanationVariants": [
+        "(4 + 5) × 2 = 9 × 2 = 18.",
+        "The parentheses capture the sum before doubling."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Word order sets the grouping.",
+      "conceptTag": "expression-forms",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "wordSubtractMultiply"
+      },
+      "explanationVariants": [
+        "\"Subtract 3 from 10\" is 10 − 3 = 7, then × 2 = 14.",
+        "The subtraction is grouped first: (10 − 3) × 2 = 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "\"Subtract 3 from 10, then multiply by 2\" is (10 − 3) × 2. What does it equal?",
+        "answer": 14,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 multiplies before subtracting (10 − 3×2). The words group the subtraction first: (10 − 3) × 2 = 14."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is just 10 − 3 — the \"× 2\" step still happens: 7 × 2 = 14."
+          }
+        ],
+        "fallbackFeedback": "Subtract first: 10 − 3 = 7, then × 2 = 14."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Word order matters. \"Double 4, then add 5\" doubles just the 4: 4 × 2 + 5 = 13 — no parentheses. But \"add 4 and 5, then double\" groups the sum: (4 + 5) × 2 = 18. Same numbers, different grouping, because the words describe different steps.",
+      "figure": "dop-word-expr"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "No parentheses needed.",
+      "conceptTag": "expression-forms",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "doubleAddEval"
+      },
+      "explanationVariants": [
+        "\"Double 4\" is 4 × 2 = 8, then add 5 = 13 — the doubling acts only on the 4.",
+        "Here the 5 is added after, so no grouping: 4×2 + 5 = 13."
+      ],
+      "widget": {
+        "type": "evalOrder",
+        "prompt": "\"Double 4, then add 5\" is 4 × 2 + 5. What does it equal? Tap an operator to work it out.",
+        "tokens": [
+          "4",
+          "×",
+          "2",
+          "+",
+          "5"
+        ],
+        "target": 13,
+        "commonResults": [
+          {
+            "value": 28,
+            "feedback": "28 adds before doubling — that is 4 × (2 + 5). Only the 4 is doubled: 4 × 2 = 8, then 8 + 5 = 13."
+          }
+        ],
+        "fallbackFeedback": "Double the 4 first: 4 × 2 = 8, then add 5 = 13.",
+        "successFeedback": "Double the 4 first: 4 × 2 = 8, then add 5 = 13."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents expression forms.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for expression forms must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines expression forms."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:expression-forms",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the structure.",
+      "conceptTag": "expression-forms",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Without computing it, what does 3 × (12 + 7) represent?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Three times the sum of 12 and 7",
+            "correct": true,
+            "feedback": "The parentheses make (12 + 7) one quantity, and the 3 × means three times that whole sum."
+          },
+          {
+            "id": "b",
+            "label": "Three times 12, plus 7",
+            "feedback": "That would be 3 × 12 + 7, with no parentheses. Here the parentheses group 12 + 7, so it's three times the whole sum."
+          },
+          {
+            "id": "c",
+            "label": "12 plus 7, three times in a row added",
+            "feedback": "The 3 × multiplies the sum, which is the same as adding it three times — but stated as 'three times the sum of 12 and 7.'"
+          }
+        ]
+      },
+      "hints": [
+        "The parentheses bundle 12 + 7 into one quantity.",
+        "The 3 × acts on that whole bundle.",
+        "So: three times the sum."
+      ],
+      "explanationVariants": [
+        "3 × (12 + 7) is three times the quantity (12 + 7).",
+        "You can read the structure without computing 12 + 7 = 19."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick the matching words.",
+      "conceptTag": "expression-forms",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "groupPhraseMcq"
+      },
+      "explanationVariants": [
+        "(8 + 2) × 5 groups the sum, so it's five times the sum of 8 and 2.",
+        "The parentheses bundle 8 + 2; the × 5 makes it five times that."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which words match (8 + 2) × 5?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Five times the sum of 8 and 2",
+            "correct": true,
+            "feedback": "The parentheses group 8 + 2, and × 5 makes it five times that sum."
+          },
+          {
+            "id": "b",
+            "label": "Eight, plus 2 times 5",
+            "feedback": "That's 8 + 2×5, no parentheses. Here the grouping makes it five times the whole sum (8 + 2)."
+          },
+          {
+            "id": "c",
+            "label": "Eight times 5, plus 2",
+            "feedback": "That's 8×5 + 2. The parentheses group 8 + 2 first, so it's five times that sum."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "From words to the right expression.",
+      "conceptTag": "expression-forms",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "wordSubtractMultiply"
+      },
+      "hints": [
+        "\"Subtract 2 from 9\" is 9 − 2, and it must happen first.",
+        "That calls for parentheses: (9 − 2).",
+        "Then multiply by 4."
+      ],
+      "explanationVariants": [
+        "\"Subtract 2 from 9, then multiply by 4\" groups the subtraction: (9 − 2) × 4 = 7 × 4 = 28.",
+        "The subtraction is first, so (9 − 2) × 4 = 28 — not 9 − 2×4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "\"Subtract 2 from 9, then multiply by 4.\" Write it as (9 − 2) × 4 and evaluate.",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 multiplies before subtracting (9 − 2×4). The words group the subtraction first: (9 − 2) × 4 = 28."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is just 9 − 2 — the \"× 4\" step still happens: 7 × 4 = 28."
+          }
+        ],
+        "fallbackFeedback": "Subtract first: 9 − 2 = 7, then × 4 = 28."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Words, symbols, and structure line up.",
+      "takeaways": [
+        "Translate words to expressions by finding which step happens first — that step gets the parentheses.",
+        "Word order changes the grouping: 'double 4, then add 5' ≠ 'add 4 and 5, then double.'",
+        "You can read an expression's structure ('three times the sum') without computing it."
+      ],
+      "teaser": "that completes Order of Operations — next chapter: the standard multiplication algorithm."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "expression-forms",
+      "concept": {
+        "id": "rem-ef-c",
+        "kind": "concept",
+        "body": "Quick rewind. **The step that happens first gets the parentheses.** \"Add 1 and 2, then multiply by 6\" does the adding first, so it's (1 + 2) × 6. The words tell you what to bundle together."
+      },
+      "check": {
+        "id": "rem-ef-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "expression-forms",
+        "explanationVariants": [
+          "Add first: 1 + 2 = 3, then × 6 = 18.",
+          "(1 + 2) × 6 = 3 × 6 = 18."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "\"Add 1 and 2, then multiply by 6\" is (1 + 2) × 6. What does it equal?",
+          "answer": 18,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 13,
+              "feedback": "13 multiplies before adding (1 + 2×6). The words add first: (1 + 2) × 6 = 18."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is just 1 + 2 — the \"× 6\" step still happens: 3 × 6 = 18."
+            }
+          ],
+          "fallbackFeedback": "Add first: 1 + 2 = 3, then × 6 = 18."
+        }
+      }
+    }
+  ]
+}

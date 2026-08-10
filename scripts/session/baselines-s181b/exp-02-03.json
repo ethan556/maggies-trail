@@ -1,0 +1,291 @@
+{
+ "id": "exp-02-03",
+ "slug": "percent-growth-and-decay",
+ "title": "Percent Growth & Decay",
+ "courseId": "exponential-functions",
+ "chapterId": "ch2-modeling",
+ "minutes": 12,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "exp-curve-growth",
+   "body": "A percent change becomes a base. Growing by 50% each step multiplies by 1 + 1/2 = **3/2**. Losing 50% multiplies by 1 − 1/2 = **1/2**. Growing by 100% doubles (×2). Turn the rate into a factor, then evaluate as usual."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Growth factor from a percent.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A quantity grows 50% each year. What is its growth factor (base b)?",
+    "options": [
+     {
+      "id": "a",
+      "label": "3/2",
+      "correct": true,
+      "feedback": "Yes — growth adds the rate to 1: 1 + 1/2 = 3/2."
+     },
+     {
+      "id": "b",
+      "label": "1/2",
+      "feedback": "1/2 would be the amount of increase, but the factor is 1 + 1/2 = 3/2."
+     },
+     {
+      "id": "c",
+      "label": "50",
+      "feedback": "The percent becomes a fraction of 1: the factor is 1 + 0.5 = 3/2."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Decay factor from a percent.",
+   "conceptTag": "exp-percent",
+   "explanationVariants": [
+    "Decay subtracts the rate from 1: 1 − 1/4 = 3/4.",
+    "Losing 25% keeps 75%, so the factor is 3/4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A quantity loses 25% each step. What is its decay factor?",
+    "options": [
+     {
+      "id": "a",
+      "label": "3/4",
+      "correct": true,
+      "feedback": "Yes — losing 25% keeps 75%, so the factor is 1 − 1/4 = 3/4."
+     },
+     {
+      "id": "b",
+      "label": "1/4",
+      "feedback": "1/4 is the amount lost; the factor is what remains, 1 − 1/4 = 3/4."
+     },
+     {
+      "id": "c",
+      "label": "25",
+      "feedback": "The factor is 1 minus the rate as a fraction: 1 − 0.25 = 3/4."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-percent__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Once the base is set, evaluate as usual. Growing 50% from 16 gives M(x) = 16 · (3/2)ˣ → 16, 24, 36, … For M(2): 16 · (3/2)² = 16 · 9/4 = 36.",
+   "figure": "exp-grow-50"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Evaluate the growth.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A population grows 50% per step: M(x) = 16 * (3/2)^x. What is M(2)?",
+    "answer": 36,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "That's M(1) = 16 · 3/2. Apply the factor twice for M(2): 16 · 9/4 = 36."
+     },
+     {
+      "value": 48,
+      "feedback": "The factor is 3/2, not 3: M(2) = 16 · (3/2)² = 36, not 16 · 3."
+     }
+    ],
+    "fallbackFeedback": "M(2) = 16 · (3/2)² = 16 · 9/4 = 36."
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "For decay, subtract the percent. Losing 50% from 80 gives D(x) = 80 · (1/2)ˣ → 80, 40, 20, … Whether you **add** or **subtract** the rate is the only difference between a growth and a decay percent.",
+   "figure": "exp-decay-50"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Evaluate the decay.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A balance loses 50% each period: D(x) = 80 * (1/2)^x. What is D(3)?",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "That's D(2). One more halving gives D(3) = 10."
+     },
+     {
+      "value": 40,
+      "feedback": "That's D(1). Keep halving: D(2) = 20, D(3) = 10."
+     }
+    ],
+    "fallbackFeedback": "D(3) = 80 · (1/2)³ = 80/8 = 10."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Doubling is +100%.",
+   "conceptTag": "exp-percent",
+   "explanationVariants": [
+    "100% growth means ×2: G(3) = 25 · 2³ = 25 · 8 = 200.",
+    "Doubling three times: 25 → 50 → 100 → 200."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Growing 100% each step (doubling): G(x) = 25 * 2^x. What is G(3)?",
+    "answer": 200,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 100,
+      "feedback": "That's G(2). One more doubling gives G(3) = 200."
+     },
+     {
+      "value": 50,
+      "feedback": "That's G(1). Keep doubling: G(2) = 100, G(3) = 200."
+     }
+    ],
+    "fallbackFeedback": "G(3) = 25 · 2³ = 200."
+   },
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-percent__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Factor for +100%.",
+   "conceptTag": "exp-percent",
+   "explanationVariants": [
+    "100% growth adds a whole copy: 1 + 1 = 2.",
+    "Growing by 100% means the factor is 2 (doubling)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A quantity grows 100% each step. What is its growth factor?",
+    "options": [
+     {
+      "id": "a",
+      "label": "2",
+      "correct": true,
+      "feedback": "Yes — 100% is a whole extra copy: 1 + 1 = 2, so it doubles."
+     },
+     {
+      "id": "b",
+      "label": "1",
+      "feedback": "A factor of 1 means no change. Growing 100% gives 1 + 1 = 2."
+     },
+     {
+      "id": "c",
+      "label": "100",
+      "feedback": "The factor is 1 + the rate as a fraction: 1 + 1 = 2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-percent__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Percent growth, three steps.",
+   "conceptTag": "exp-percent",
+   "explanationVariants": [
+    "(3/2)³ = 27/8, then 8 · 27/8 = 27.",
+    "C(3) = 8 · (3/2)³ = 8 · 27/8 = 27."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A colony grows 50% each hour: C(x) = 8 * (3/2)^x. What is C(3)?",
+    "answer": 27,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 18,
+      "feedback": "That's C(2) = 8 · 9/4. One more step: C(3) = 27."
+     },
+     {
+      "value": 12,
+      "feedback": "That's C(1) = 8 · 3/2. Apply the factor three times for C(3) = 27."
+     }
+    ],
+    "fallbackFeedback": "C(3) = 8 · (3/2)³ = 8 · 27/8 = 27."
+   },
+   "hints": [
+    "The factor for +50% is 3/2; cube it: (3/2)³ = 27/8.",
+    "Multiply by the start: 8 · 27/8.",
+    "The 8's cancel, giving 27."
+   ],
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-percent__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Percents turn into factors: add for growth, subtract for decay.",
+   "takeaways": [
+    "Growth factor = 1 + rate; decay factor = 1 − rate.",
+    "+100% means ×2; −50% means ×1/2.",
+    "Once you have the base, evaluate a · bˣ as usual."
+   ],
+   "teaser": "you've modeled exponential growth and decay from tables, stories, and percents."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "exp-percent",
+   "concept": {
+    "id": "rem-epct-c",
+    "kind": "concept",
+    "body": "Turn a percent into a factor: growth is 1 + rate, decay is 1 − rate. Growing 50% → 3/2; losing 50% → 1/2; growing 100% → 2. Then evaluate a · bˣ normally."
+   },
+   "check": {
+    "id": "rem-epct-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "exp-percent",
+    "explanationVariants": [
+     "Growth adds the rate to 1: 1 + 1/2 = 3/2.",
+     "The +50% factor is 3/2."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A quantity grows 50% each step. What is its growth factor?",
+     "options": [
+      {
+       "id": "a",
+       "label": "3/2",
+       "correct": true,
+       "feedback": "Yes — 1 + 1/2 = 3/2."
+      },
+      {
+       "id": "b",
+       "label": "1/2",
+       "feedback": "That's the increase; the factor is 1 + 1/2 = 3/2."
+      },
+      {
+       "id": "c",
+       "label": "2",
+       "feedback": "2 would be +100%. For +50%, the factor is 3/2."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

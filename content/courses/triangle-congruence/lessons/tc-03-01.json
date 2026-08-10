@@ -1,0 +1,299 @@
+{
+  "id": "tc-03-01",
+  "slug": "isosceles-base-angles",
+  "title": "The Isosceles Base Angles Theorem",
+  "courseId": "triangle-congruence",
+  "chapterId": "ch3-isosceles-and-midsegment",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "tc-isosceles",
+      "concept": {
+        "id": "rem-tc-isosceles-c",
+        "kind": "concept",
+        "body": "Isosceles angle arithmetic: apex + 2(base angle) = 180. Given the apex, each base angle = (180 − apex)/2. Given a base angle, apex = 180 − 2(base angle). The two BASE angles are the equal pair; the apex sits between the legs and can differ."
+      },
+      "check": {
+        "id": "rem-tc-isosceles-k",
+        "kind": "check",
+        "body": "Base angle from apex.",
+        "conceptTag": "tc-isosceles",
+        "explanationVariants": [
+          "Each base angle = (180 − apex)/2 = (180 − 80)/2 = 50°.",
+          "Subtract the apex, halve the rest: (180 − 80)/2 = 50°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An isosceles triangle has an apex angle of 80°. What is each base angle, in degrees?",
+          "answer": 50,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 100,
+              "feedback": "100 = 180 − 80 is the two base angles COMBINED. Each is half: 100 ÷ 2 = 50°."
+            },
+            {
+              "value": 80,
+              "feedback": "80° is the apex. Base angles are (180 − 80)/2 = 50° each."
+            }
+          ],
+          "fallbackFeedback": "(180 − 80)/2 = 50°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An **isosceles** triangle has two equal sides — the **legs** — and the angles opposite them, the **base angles**, turn out equal too. This is the Base Angles Theorem: equal legs force equal base angles. It's not obvious from looking; it earns its certainty from a congruence proof.",
+      "figure": "isosceles-base-angles"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the base angle.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "The legs are locked equal at 7. Drag the apex angle toward 40° and watch the two base angles — can you make them disagree?",
+        "targetCriterion": "SAS",
+        "startCriterion": "SAS",
+        "sideA": 7,
+        "sideB": 7,
+        "targetAngle": 40,
+        "angleStart": 90,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "constraint": "isoscelesLegs",
+        "constraintFeedback": "You released the lock — the legs are no longer equal, so the base angles are reading a DIFFERENT triangle than the one the theorem is about. Lock them again.",
+        "successFeedback": "70° each — (180 − 40) ÷ 2. However you dragged the apex, the two base-angle readouts never came apart: equal legs force equal base angles, at every apex angle, not just this one.",
+        "criterionFeedback": "The apex angle is what moves here — the criterion itself is not in question.",
+        "angleFeedback": "Bring the apex to 40° and read the base angles there.",
+        "evidenceFeedback": "Try the apex at a few different angles first — one drag is not evidence that the base angles always match."
+      },
+      "predict": {
+        "prompt": "The apex is 40°. Each base angle will come out…",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger than 40° — they split the lion's share"
+          },
+          {
+            "id": "equal",
+            "label": "Exactly 40° — all three match"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller than 40° — the apex dominates"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "The apex takes only 40 of the triangle's 180 degrees, leaving 140 for the two base angles to split equally — 70 each, well above the apex. Equal legs force equal base angles, but nothing forces them to match the apex."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "How the proof works.",
+      "conceptTag": "tc-isosceles",
+      "explanationVariants": [
+        "Draw the bisector of the apex angle. It splits the triangle into two triangles sharing that bisector, with equal legs and equal half-angles — congruent by SAS. CPCTC then makes the base angles equal.",
+        "The apex-angle bisector creates two SAS-congruent triangles (equal legs, equal half-angles, shared bisector); their base angles correspond, so they're equal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What construction proves the base angles equal?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Bisect the apex angle, creating two triangles congruent by SAS",
+            "correct": true,
+            "feedback": "The bisector gives equal half-angles, the legs are equal, and the bisector is shared — SAS congruence, then CPCTC equates the base angles."
+          },
+          {
+            "id": "o2",
+            "label": "Measure both base angles with a protractor",
+            "correct": false,
+            "feedback": "Measuring checks one triangle, not all — the theorem needs a proof. The apex bisector gives SAS congruence."
+          },
+          {
+            "id": "o3",
+            "label": "Draw a circle through all three vertices",
+            "correct": false,
+            "feedback": "A circumscribed circle doesn't directly equate the base angles. The apex-angle bisector and SAS do."
+          },
+          {
+            "id": "o4",
+            "label": "Assume the base angles are equal",
+            "correct": false,
+            "feedback": "Assuming the conclusion is circular. The bisector-plus-SAS argument derives it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-isosceles__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The bisector does triple duty. In an isosceles triangle, the segment from the apex is at once the **angle bisector**, the **perpendicular bisector of the base**, the **median**, and the **altitude** — all the same line. That coincidence is special to isosceles (and equilateral) triangles.",
+      "figure": "isosceles-base-angles"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "One line, many roles.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In an isosceles triangle, the segment from the apex to the base midpoint is NOT which of these?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a side of the triangle",
+            "correct": true,
+            "feedback": "It's an interior segment — the altitude/median/bisector — not one of the triangle's three sides."
+          },
+          {
+            "id": "o2",
+            "label": "the altitude to the base",
+            "correct": false,
+            "feedback": "It IS the altitude — it meets the base at a right angle. So this can't be the 'not' answer."
+          },
+          {
+            "id": "o3",
+            "label": "the median to the base",
+            "correct": false,
+            "feedback": "It IS the median — it hits the base's midpoint. So this isn't the exception."
+          },
+          {
+            "id": "o4",
+            "label": "the apex angle bisector",
+            "correct": false,
+            "feedback": "It IS the angle bisector — it splits the apex angle in half. Not the exception."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apex from base angles.",
+      "conceptTag": "tc-isosceles",
+      "explanationVariants": [
+        "Two base angles of 65° use 130°, leaving 180 − 130 = 50° for the apex.",
+        "Apex = 180 − 2(65) = 180 − 130 = 50°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An isosceles triangle has base angles of 65° each. What is its apex angle, in degrees?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65° is a BASE angle. The apex is what's left after both base angles: 180 − 65 − 65 = 50°."
+          },
+          {
+            "value": 115,
+            "feedback": "115 = 180 − 65 subtracts only ONE base angle. Subtract both: 180 − 130 = 50°."
+          }
+        ],
+        "fallbackFeedback": "180 − 2(65) = 50°."
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-isosceles__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Equal legs guarantee equal base angles — a one-way street for now. The reverse question (do equal base angles guarantee equal legs?) is the CONVERSE, and it deserves its own proof. That's the next lesson. For now: whenever you see two equal sides, you may immediately mark the base angles equal.",
+      "figure": "tc-base-angles"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Legs give angles.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "You're told a triangle has two equal sides. What may you immediately conclude?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The angles opposite those sides are equal",
+            "correct": true,
+            "feedback": "Equal sides (legs) ⇒ equal opposite (base) angles, by the Base Angles Theorem."
+          },
+          {
+            "id": "o2",
+            "label": "All three angles are equal",
+            "correct": false,
+            "feedback": "Only the two BASE angles are forced equal — the apex can differ. All-equal happens only for equilateral."
+          },
+          {
+            "id": "o3",
+            "label": "The triangle is right-angled",
+            "correct": false,
+            "feedback": "Isosceles triangles needn't be right — the theorem is only about the two base angles being equal."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing without more information",
+            "correct": false,
+            "feedback": "Equal sides are enough: the Base Angles Theorem immediately gives equal base angles."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Isosceles with algebra.",
+      "conceptTag": "tc-isosceles",
+      "hints": [
+        "The two base angles are equal — set their expressions equal or use the angle sum.",
+        "Apex is 50°, so the two base angles share 180 − 50 = 130°.",
+        "Each base angle is 130 ÷ 2 = 65°."
+      ],
+      "explanationVariants": [
+        "The apex is 50°, so the base angles share 180 − 50 = 130°, and being equal, each is 65°.",
+        "Base angle = (180 − 50) ÷ 2 = 65°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An isosceles triangle has an apex angle of 50°. One base angle is labeled (5x)°. Find x.",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65 is the base ANGLE in degrees, not x. Since 5x = 65, divide: x = 13."
+          },
+          {
+            "value": 10,
+            "feedback": "10 would make 5x = 50, the APEX angle — but 5x is a BASE angle = 65, so x = 13."
+          }
+        ],
+        "fallbackFeedback": "Base angle = (180 − 50)/2 = 65°; 5x = 65 → x = 13."
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-isosceles__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Equal legs, equal angles.",
+      "takeaways": [
+        "Base Angles Theorem: equal legs ⇒ equal base angles (opposite those legs).",
+        "Proof: bisect the apex angle → two SAS-congruent triangles → CPCTC.",
+        "The apex segment is bisector, median, altitude, and perpendicular bisector all at once."
+      ],
+      "teaser": "Next: run the theorem backward — equal base angles prove the triangle isosceles."
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "id": "vec-01-01",
+  "slug": "vectors-and-components",
+  "title": "Vectors: Size and Direction Together",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch1-vectors-components",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **vector** carries two facts at once: a **magnitude** (how much) and a **direction** (which way). In components, v = ⟨a, b⟩ means 'go a right and b up.' Unlike a plain number — a scalar — a vector points somewhere. Velocity, force, and displacement are all vectors.",
+      "figure": "vec-components"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "An arrow has a size and a direction — and components carry both.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "add",
+        "ux": 0,
+        "uy": 0,
+        "targetX": 3,
+        "targetY": 4,
+        "vxStart": 1,
+        "vyStart": 0,
+        "gridMax": 6,
+        "prompt": "u is the zero vector, so u + v is just v. Land the sum on (3, 4) and read the length.",
+        "successFeedback": "v = (3, 4), and its length is √(3² + 4²) = 5. The two components are not the vector — they are a recipe for reaching it: 3 across, then 4 up. Length and direction are what the arrow actually IS.",
+        "lowFeedback": "The horizontal part is wrong — the sum must land 3 to the right.",
+        "highFeedback": "The horizontal part is right but the height is wrong — the sum must land 4 up."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "vec-components",
+      "predict": {
+        "prompt": "The vector ⟨3, 4⟩ has components 3 and 4. Its LENGTH will be…",
+        "options": [
+          {
+            "id": "seven",
+            "label": "7 — the two components added"
+          },
+          {
+            "id": "five",
+            "label": "5"
+          },
+          {
+            "id": "half",
+            "label": "3.5 — the average of the two"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "5, by Pythagoras. The components are the two legs of a right triangle, not pieces to be totalled. Adding them measures a journey along the grid lines; the vector's length is the straight line cutting across."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Magnitude ignores sign.",
+      "conceptTag": "vec-components",
+      "explanationVariants": [
+        "|⟨−3, 4⟩| = √((−3)² + 4²) = √(9 + 16) = 5 — squaring erases the negative, so it matches ⟨3, 4⟩.",
+        "The length is the same 5; only the DIRECTION differs (this one points up-left)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the magnitude of v = ⟨−3, 4⟩?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 = −3 + 4 adds signed components. Magnitude squares first: √(9 + 16) = 5."
+          },
+          {
+            "value": -5,
+            "feedback": "A magnitude is a LENGTH, never negative: √((−3)² + 4²) = 5."
+          }
+        ],
+        "fallbackFeedback": "√((−3)² + 4²) = √25 = 5."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-components__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Magnitude is pure Pythagoras: |⟨a, b⟩| = √(a² + b²). The components are the legs of a right triangle; the vector is the hypotenuse. That's why ⟨3, 4⟩, ⟨5, 12⟩, and ⟨6, 8⟩ have the clean lengths 5, 13, and 10 — they're the Pythagorean triples.",
+      "figure": "vec-magnitude"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Recognize a triple.",
+      "conceptTag": "vec-components",
+      "explanationVariants": [
+        "|⟨6, 8⟩| = √(36 + 64) = √100 = 10 — a scaled 3-4-5.",
+        "Double the 3-4-5 triangle: legs 6 and 8, hypotenuse 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the magnitude of v = ⟨6, 8⟩?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 adds. |v| = √(36 + 64) = √100 = 10."
+          },
+          {
+            "value": 48,
+            "feedback": "48 = 6·8 multiplies. Use √(36 + 64) = 10."
+          }
+        ],
+        "fallbackFeedback": "√(6² + 8²) = √100 = 10."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-components__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Scalar vs vector.",
+      "conceptTag": "vec-components",
+      "explanationVariants": [
+        "Speed is a scalar (just a number); velocity is a vector (speed AND heading). The extra fact is direction.",
+        "A vector adds direction to a magnitude — that's the whole distinction."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which quantity is a VECTOR, not a scalar?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Velocity (50 km/h north)",
+            "correct": true,
+            "feedback": "Right — it has a magnitude AND a direction, the defining vector traits."
+          },
+          {
+            "id": "o2",
+            "label": "Temperature (20°C)",
+            "feedback": "Temperature is a plain number — a scalar. Velocity, with its direction, is the vector."
+          },
+          {
+            "id": "o3",
+            "label": "Mass (5 kg)",
+            "feedback": "Mass is a scalar. The vector here is velocity, which carries a direction."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-components__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A larger triangle.",
+      "conceptTag": "vec-components",
+      "explanationVariants": [
+        "|⟨5, 12⟩| = √(25 + 144) = √169 = 13 — the 5-12-13 right triangle.",
+        "Recognize the Pythagorean triple: the magnitude is 13."
+      ],
+      "hints": [
+        "Magnitude = √(a² + b²).",
+        "5² + 12² = 25 + 144 = 169.",
+        "√169 = ?"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the magnitude of v = ⟨5, 12⟩?",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "17 = 5 + 12 adds. |v| = √(25 + 144) = √169 = 13."
+          },
+          {
+            "value": 169,
+            "feedback": "169 = 5² + 12² skips the root: √169 = 13."
+          }
+        ],
+        "fallbackFeedback": "√(5² + 12²) = √169 = 13."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-components__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two facts, one arrow.",
+      "takeaways": [
+        "A vector ⟨a, b⟩ bundles magnitude and direction.",
+        "Magnitude = √(a² + b²), always ≥ 0 — the sign lives in the direction.",
+        "Vectors model directed quantities: velocity, force, displacement."
+      ],
+      "teaser": "Next: the direction angle, and building components from size and angle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-components",
+      "concept": {
+        "id": "rem-vec0101-c",
+        "kind": "concept",
+        "body": "Vector ⟨a, b⟩: magnitude √(a²+b²), a length that is never negative. The components are the legs of a right triangle whose hypotenuse is the vector."
+      },
+      "check": {
+        "id": "rem-vec0101-k",
+        "kind": "check",
+        "body": "One magnitude.",
+        "conceptTag": "vec-components",
+        "explanationVariants": [
+          "|⟨0, −5⟩| = √(0 + 25) = 5 — a purely vertical vector of length 5.",
+          "Only the y-component contributes: √25 = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the magnitude of v = ⟨0, −5⟩?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -5,
+              "feedback": "Magnitude is never negative: √(0 + 25) = 5."
+            },
+            {
+              "value": 0,
+              "feedback": "The y-component is −5, so |v| = √(0 + 25) = 5, not 0."
+            }
+          ],
+          "fallbackFeedback": "√(0² + (−5)²) = 5."
+        }
+      }
+    }
+  ]
+}

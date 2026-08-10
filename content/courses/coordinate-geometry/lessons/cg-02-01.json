@@ -1,0 +1,294 @@
+{
+ "id": "cg-02-01",
+ "slug": "two-patterns-at-once",
+ "title": "Two Patterns at Once",
+ "courseId": "coordinate-geometry",
+ "chapterId": "ch2-pattern-pairs",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **rule** makes a pattern. Rule A says *start at 0, add 2*: it makes 0, 2, 4, 6, 8. Rule B says *start at 0, add 4*: it makes 0, 4, 8, 12, 16. Run both rules **side by side**, one step at a time, and each step gives you one number from each pattern.",
+   "figure": "cg-rule-a"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Run rule A.",
+   "conceptTag": "two-rules",
+   "widget": {
+    "type": "numberLineHop",
+    "prompt": "Rule A: start at 0, add 2. Take the hops the rule describes — where does the next one land?",
+    "min": 0,
+    "max": 20,
+    "start": 0,
+    "hop": 2,
+    "hops": 4,
+    "direction": "forward",
+    "commonLandings": [
+     {
+      "value": 6,
+      "feedback": "6 is where the pattern already stopped — 0, 2, 4, 6 is three hops. The question asks for the hop AFTER that one."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is one hop too far: that would be a fifth hop past the end of the shown pattern. 0, 2, 4, 6 uses three hops, so the next landing is the fourth."
+     }
+    ],
+    "missFeedback": "Each hop is the rule's “add 2” made visible. Start at 0 and take four of them.",
+    "successFeedback": "8. Every hop is the same size, which is what “add 2 each time” means — the rule is the hop."
+   },
+   "predict": {
+    "prompt": "Rule A adds 2 each time and rule B adds 4. Both start at 0. After the same number of steps, rule B's number will be…",
+    "options": [
+     {
+      "id": "double",
+      "label": "exactly double rule A's"
+     },
+     {
+      "id": "plus2",
+      "label": "2 more than rule A's"
+     },
+     {
+      "id": "depends",
+      "label": "it depends how many steps you take"
+     }
+    ],
+    "outcomeId": "double",
+    "reveal": "Every one of B's hops is twice the size of A's, so after the same number of hops B has covered twice the distance — at every single step, not just at the end."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Now run rule B.",
+   "conceptTag": "two-rules",
+   "explanationVariants": [
+    "Rule B adds 4 each step: 12 + 4 = 16.",
+    "B's pattern climbs by fours: 0, 4, 8, 12, 16."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Rule B: start at 0, add 4. The pattern so far is 0, 4, 8, 12. What number comes next?",
+    "answer": 16,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 14,
+      "feedback": "14 adds 2 — that's rule A's move. Rule B adds 4: 12 + 4 = 16."
+     },
+     {
+      "value": 12,
+      "feedback": "12 repeats the last term. Add 4 for the next step: 12 + 4 = 16."
+     }
+    ],
+    "fallbackFeedback": "Rule B adds 4 every step: 12 + 4 = 16."
+   },
+   "variant": {
+    "gen": "proportional-plot",
+    "form": "cgPairNext"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Now **pair the terms that happen at the same step**: (0, 0), (2, 4), (4, 8), (6, 12), (8, 16). A-term first, B-term second. Look across each pair — the B-number is always **double** the A-number. Two separate rules, one hidden relationship.",
+   "figure": "cg-pair-terms"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Name the relationship.",
+   "conceptTag": "two-rules",
+   "explanationVariants": [
+    "Every B-number is 2× its A-number.",
+    "Doubling holds in all three pairs; adding 2 fails after the first."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The pairs are (2, 4), (4, 8), (6, 12). What is true of EVERY pair?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The second number is double the first",
+      "correct": true,
+      "feedback": "Right — 2×2 = 4, 2×4 = 8, 2×6 = 12. It holds every time."
+     },
+     {
+      "id": "b",
+      "label": "The second number is 2 more than the first",
+      "feedback": "That works for (2, 4) only — in (4, 8) the second is 4 more, and in (6, 12) it's 6 more. The gap grows; doubling is what holds every time."
+     },
+     {
+      "id": "c",
+      "label": "The two numbers are equal",
+      "feedback": "In (2, 4), 2 and 4 already differ. What holds is that the second is always twice the first."
+     }
+    ]
+   },
+   "hints": [
+    "Test each claim on all three pairs.",
+    "Check (4, 8): is 8 two more, or two times?",
+    "Twice, every time."
+   ],
+   "variant": {
+    "gen": "proportional-plot",
+    "form": "cgPairRelation"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Pair the right terms.",
+   "conceptTag": "two-rules",
+   "widget": {
+    "type": "ratioTable",
+    "prompt": "A's rule and B's rule run side by side. Fill in the B-number that pairs with A's 6.",
+    "colA": "Rule A",
+    "colB": "Rule B",
+    "rows": [
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      8
+     ]
+    ],
+    "askA": 6,
+    "targetB": 12,
+    "bMax": 20,
+    "bStep": 2,
+    "bStart": 0,
+    "successFeedback": "12. Pairing the terms that happen at the same step turns two separate rules into one relationship: B is always double A.",
+    "lowFeedback": "Too low. Look down the table: 2 pairs with 4 and 4 pairs with 8 — each B is double its A, so 6 pairs with more than 8.",
+    "highFeedback": "Too high. The pattern is doubling, not tripling: 2→4 and 4→8, so 6 pairs with 12, not further along B's list."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Use the shortcut.",
+   "conceptTag": "two-rules",
+   "explanationVariants": [
+    "B stays at double A, so when A is 10, B is 2 × 10 = 20.",
+    "No need to list more terms — the relationship jumps you straight to 20."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The rules keep running. When rule A's pattern reaches 10, what will rule B's pattern be?",
+    "answer": 20,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "12 adds 2 to A's 10 — that mixes the rules together. B is always DOUBLE A: 2 × 10 = 20."
+     },
+     {
+      "value": 14,
+      "feedback": "14 is 10 + 4, one B-step past A's number. Use the pair relationship instead: B = 2 × A = 20."
+     }
+    ],
+    "fallbackFeedback": "The relationship says B = 2 × A, so B = 2 × 10 = 20."
+   },
+   "variant": {
+    "gen": "proportional-plot",
+    "form": "cgPairValue"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Fresh rules, same game.",
+   "conceptTag": "two-rules",
+   "hints": [
+    "Write a few pairs: (0, 0), (3, 6), (6, 12), (9, 18).",
+    "Test each claim against ALL the pairs.",
+    "6 = 2×3, 12 = 2×6, 18 = 2×9."
+   ],
+   "explanationVariants": [
+    "Every D-term doubles its C-term: 6 = 2×3, 12 = 2×6, 18 = 2×9.",
+    "D adds 6 while C adds 3 — twice the speed keeps D at twice C."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Rule C: start at 0, add 3 (0, 3, 6, 9). Rule D: start at 0, add 6 (0, 6, 12, 18). What is true of every corresponding pair?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Each D-term is double its C-term",
+      "correct": true,
+      "feedback": "Right — it holds in every pair: 6 = 2×3, 12 = 2×6, 18 = 2×9."
+     },
+     {
+      "id": "b",
+      "label": "Each D-term is 3 more than its C-term",
+      "feedback": "That fits (3, 6) only — in (6, 12) the gap is 6, and in (9, 18) it's 9. Doubling is what never fails."
+     },
+     {
+      "id": "c",
+      "label": "Each D-term is 6 more than its C-term",
+      "feedback": "That fits (6, 12) only — check (3, 6): the gap there is 3. The rule that holds everywhere is D = 2 × C."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "proportional-plot",
+    "form": "cgPairRelation"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Two rules, one relationship.",
+   "takeaways": [
+    "Run two rules step by step and pair the terms from the same step.",
+    "Compare across each pair — a relationship appears (here: doubling).",
+    "The relationship is a shortcut: jump to any pair without listing terms."
+   ],
+   "teaser": "next: those pairs become points on the plane — and they line up."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "two-rules",
+   "concept": {
+    "id": "rem-tr-c",
+    "kind": "concept",
+    "body": "Quick rewind. **A rule tells you the start and the step.** *Start at 0, add 5* makes 0, 5, 10, 15 — each term is the last one plus 5. To continue any pattern, take the last term and apply the rule's add once."
+   },
+   "check": {
+    "id": "rem-tr-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "two-rules",
+    "explanationVariants": [
+     "Add 5 once more: 10 + 5 = 15.",
+     "The pattern climbs by fives: 0, 5, 10, 15."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Rule: start at 0, add 5. The pattern so far is 0, 5, 10. What comes next?",
+     "answer": 15,
+     "tolerance": 0,
+     "unit": "",
+     "commonErrors": [
+      {
+       "value": 20,
+       "feedback": "20 jumps two steps (10 + 5 + 5). One step at a time: 10 + 5 = 15."
+      },
+      {
+       "value": 10,
+       "feedback": "10 repeats the last term. Apply the rule once more: 10 + 5 = 15."
+      }
+     ],
+     "fallbackFeedback": "One more step of add-5: 10 + 5 = 15."
+    }
+   }
+  }
+ ]
+}

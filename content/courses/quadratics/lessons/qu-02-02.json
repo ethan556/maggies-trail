@@ -1,0 +1,309 @@
+{
+  "id": "qu-02-02",
+  "slug": "factoring-to-solve",
+  "title": "Factoring to Solve",
+  "courseId": "quadratics",
+  "chapterId": "ch2-solving-by-factoring",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-roots",
+      "body": "To solve x² + bx + c = 0, **factor first**: find two numbers that multiply to c and add to b. Write them as (x + p)(x + q), then use the zero-product property to read off the roots."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Factor it.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the correct factorization of x^2 + 5x + 6?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(x + 2)(x + 3)",
+            "correct": true,
+            "feedback": "Yes — 2 · 3 = 6 and 2 + 3 = 5."
+          },
+          {
+            "id": "b",
+            "label": "(x + 1)(x + 6)",
+            "feedback": "1 · 6 = 6 but 1 + 6 = 7, not 5. You need 2 and 3."
+          },
+          {
+            "id": "c",
+            "label": "(x + 2)(x + 4)",
+            "feedback": "2 · 4 = 8, not 6. The pair that works is 2 and 3."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "To factor x² + 5x + 6 you'll hunt for two numbers. They must…",
+        "options": [
+          {
+            "id": "prodSum",
+            "label": "Multiply to 6 AND add to 5"
+          },
+          {
+            "id": "swap",
+            "label": "Multiply to 5 AND add to 6"
+          },
+          {
+            "id": "both6",
+            "label": "Both equal 6"
+          }
+        ],
+        "outcomeId": "prodSum",
+        "reveal": "Expanding (x + p)(x + q) gives x² + (p + q)x + pq: the middle coefficient is the SUM and the constant is the PRODUCT. Swap those roles and you chase 1 and 5 — numbers that fit nothing here. The pair is 2 and 3."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve it.",
+      "conceptTag": "quad-factor-solve",
+      "explanationVariants": [
+        "(x + 2)(x + 3) = 0 gives x = −2 or x = −3; the larger is −2.",
+        "The roots are −2 and −3, and the larger is −2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 + 5x + 6 = 0. What is the larger solution?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "That's the smaller root. The larger of −2 and −3 is −2."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the constant, not a root. The solutions are −2 and −3."
+          }
+        ],
+        "fallbackFeedback": "Roots −2 and −3; the larger is −2."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-factor-solve__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: x² − 7x + 12. Two numbers that multiply to 12 and add to −7 are **−3 and −4**. So (x − 3)(x − 4) = 0, giving x = 3 or x = 4. The signs of the numbers become the roots directly.",
+      "figure": "qu-factor-search"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Factor with negatives.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the correct factorization of x^2 - 7x + 12?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(x - 3)(x - 4)",
+            "correct": true,
+            "feedback": "Yes — (−3)(−4) = 12 and −3 + (−4) = −7."
+          },
+          {
+            "id": "b",
+            "label": "(x + 3)(x + 4)",
+            "feedback": "3 + 4 = 7, but you need −7. Both numbers are negative: (x − 3)(x − 4)."
+          },
+          {
+            "id": "c",
+            "label": "(x - 2)(x - 6)",
+            "feedback": "−2 + (−6) = −8, not −7. The pair is −3 and −4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The signs guide the search. Positive c with negative b → **both numbers negative**. A **negative c** → one positive and one negative, and the larger-magnitude number carries the sign of b.",
+      "figure": "qu-sign-guide"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Solve the worked one.",
+      "widget": {
+        "type": "quadraticExplore",
+        "form": "roots",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 0,
+        "rMin": -9,
+        "rMax": 9,
+        "aMin": -3,
+        "aMax": 3,
+        "aStart": 1,
+        "r1Start": 0,
+        "r2Start": 0,
+        "gridMax": 9,
+        "targetR1": 4,
+        "targetR2": 3,
+        "prompt": "Drag the crossings until the expansion reads x² − 7x + 12. The larger crossing is the answer.",
+        "successFeedback": "Roots 3 and 4 — and the expansion confirms it: −7 is −(3 + 4) and 12 is 3 × 4. Factoring is the search for two numbers that add to the middle coefficient and multiply to the last.",
+        "shapeFeedback": "Leave a at 1 — this quadratic has no stretch.",
+        "vertexFeedback": "Not there yet. Watch the expansion: the middle coefficient is minus the SUM of the crossings, and the constant is their PRODUCT."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Negative constant.",
+      "conceptTag": "quad-factor-solve",
+      "explanationVariants": [
+        "Numbers multiplying to −6 and adding to +1 are +3 and −2: (x + 3)(x − 2).",
+        "3 · (−2) = −6 and 3 + (−2) = 1, so (x + 3)(x − 2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the correct factorization of x^2 + x - 6?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(x + 3)(x - 2)",
+            "correct": true,
+            "feedback": "Yes — 3 · (−2) = −6 and 3 + (−2) = 1."
+          },
+          {
+            "id": "b",
+            "label": "(x - 3)(x + 2)",
+            "feedback": "−3 + 2 = −1, but b is +1. The bigger number is positive: (x + 3)(x − 2)."
+          },
+          {
+            "id": "c",
+            "label": "(x + 1)(x - 6)",
+            "feedback": "1 · (−6) = −6 but 1 + (−6) = −5, not +1. Use 3 and −2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-factor-solve__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Its smaller root.",
+      "conceptTag": "quad-factor-solve",
+      "explanationVariants": [
+        "(x + 3)(x − 2) = 0 gives −3 and 2; the smaller is −3.",
+        "The roots are −3 and 2, so the smaller is −3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 + x - 6 = 0. What is the smaller solution?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the larger root. The smaller of −3 and 2 is −3."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the constant, not a root. The solutions are −3 and 2."
+          }
+        ],
+        "fallbackFeedback": "Roots −3 and 2; the smaller is −3."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-factor-solve__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Factor and solve on your own.",
+      "conceptTag": "quad-factor-solve",
+      "explanationVariants": [
+        "Numbers multiplying to −12 and adding to −1 are −4 and +3: (x − 4)(x + 3), roots 4 and −3; larger is 4.",
+        "(x − 4)(x + 3) = 0 gives 4 and −3, so the larger is 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 - x - 12 = 0. What is the larger solution?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "That's the smaller root. The larger of 4 and −3 is 4."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the constant, not a root. The solutions are 4 and −3."
+          }
+        ],
+        "fallbackFeedback": "Factors (x − 4)(x + 3); larger root is 4."
+      },
+      "hints": [
+        "Find two numbers that multiply to −12 and add to −1.",
+        "They are −4 and +3, so (x − 4)(x + 3) = 0.",
+        "Roots 4 and −3; the larger is 4."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-factor-solve__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Factor to two numbers (product c, sum b), then apply zero-product.",
+      "takeaways": [
+        "Find two numbers with product c and sum b.",
+        "Positive c, negative b → both negative; negative c → mixed signs.",
+        "Set each factor to zero to get the roots."
+      ],
+      "teaser": "next: special products, roots, and the graph."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-factor-solve",
+      "concept": {
+        "id": "rem-qfs-c",
+        "kind": "concept",
+        "body": "Factor x² + bx + c by finding two numbers with product c and sum b. For x² + 5x + 6: 2 and 3 work, so (x + 2)(x + 3) = 0, giving x = −2 or x = −3."
+      },
+      "check": {
+        "id": "rem-qfs-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-factor-solve",
+        "explanationVariants": [
+          "Roots −2 and −3; the larger is −2.",
+          "(x + 2)(x + 3) = 0 gives the larger root −2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve x^2 + 5x + 6 = 0. What is the larger solution?",
+          "answer": -2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -3,
+              "feedback": "That's the smaller root; the larger is −2."
+            },
+            {
+              "value": 6,
+              "feedback": "6 is the constant, not a root."
+            }
+          ],
+          "fallbackFeedback": "Roots −2 and −3; larger is −2."
+        }
+      }
+    }
+  ]
+}

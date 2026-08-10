@@ -1,0 +1,416 @@
+{
+  "id": "pv-02-02",
+  "slug": "the-closer-hundred",
+  "title": "The Closer Hundred",
+  "courseId": "place-value",
+  "chapterId": "ch2-rounding",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Same game, bigger streets. Every number lives between two **hundred-neighbors**: 368 lives between 300 and 400. It's 68 steps past 300 but only 32 steps short of 400 — so 368 rounds to 400. On hundred-streets, it's the **tens digit** that runs the shortcut.",
+      "figure": "pv3-round-hundred"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Every number knows its own street.",
+      "conceptTag": "round-100",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each number to the two hundred-neighbors it lives between.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "368"
+          },
+          {
+            "id": "l2",
+            "label": "214"
+          },
+          {
+            "id": "l3",
+            "label": "850"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "300 and 400"
+          },
+          {
+            "id": "r2",
+            "label": "800 and 900"
+          },
+          {
+            "id": "r3",
+            "label": "200 and 300"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r3",
+          "l3": "r2"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r1",
+            "feedback": "214 hasn't reached 300 yet — its street runs from 200 to 300. The hundreds digit (2) names the street's low end."
+          }
+        ],
+        "missFeedback": "The hundreds digit names the lower neighbor; the next hundred up is the other one.",
+        "successFeedback": "Every number found its street — the hundreds digit told you the low end each time."
+      },
+      "predict": {
+        "prompt": "Rounding 349 to the nearest HUNDRED — which digit decides whether you round up or down?",
+        "options": [
+          {
+            "id": "tens",
+            "label": "The tens digit"
+          },
+          {
+            "id": "ones",
+            "label": "The ones digit"
+          },
+          {
+            "id": "hundreds",
+            "label": "The hundreds digit"
+          }
+        ],
+        "outcomeId": "tens",
+        "reveal": "The digit one place BELOW the target place is the referee — the 4 in 349 sits under five, so the hundred rounds down. The ones digit never gets a vote."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which digit gets the vote on hundred-streets?",
+      "conceptTag": "round-100",
+      "explanationVariants": [
+        "The tens digit measures the walk in tens: 368's 6 tens put it past the halfway line, so 400 is closer.",
+        "The ones digit is too small to steer a hundred-sized decision; the hundreds digit only names the street. The tens digit decides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rounding 368 to the nearest hundred — which digit decides the answer?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The tens digit (6) — it says 400 is the closer neighbor",
+            "correct": true,
+            "feedback": "One spot below the target place always holds the vote: 6 tens is past halfway, so up to 400."
+          },
+          {
+            "id": "b",
+            "label": "The ones digit (8)",
+            "feedback": "The 8 votes when rounding to TENS. For hundreds, the decision lives one spot up — with the tens digit."
+          },
+          {
+            "id": "c",
+            "label": "The hundreds digit (3)",
+            "feedback": "The 3 only names the street (300 to 400). It can't say which end is closer — the tens digit measures that."
+          },
+          {
+            "id": "d",
+            "label": "No digit — you must subtract both ways",
+            "feedback": "Subtracting works (68 vs 32) but the tens digit already encodes it: 5 or more tens means past halfway."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "round-hundred"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The classic trap: round 349 to the nearest hundred. The 49 FEELS big — but the tens digit is 4, so 349 rounds **down** to 300. Check the walk: 49 steps back to 300, 51 forward to 400. The ones digit can never overrule the tens digit's vote.",
+      "figure": "pv3-round-hundred"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Don't let the 49 shout you down.",
+      "conceptTag": "round-100",
+      "explanationVariants": [
+        "Tens digit 4 → round down: 349 → 300. The walk agrees: 49 back beats 51 forward.",
+        "349 sits just below the street's halfway mark (350), so the low neighbor is closer."
+      ],
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "Round 349 to the nearest hundred.",
+        "min": 300,
+        "max": 400,
+        "step": 1,
+        "tickStep": 10,
+        "target": 300,
+        "start": 349,
+        "commonPlacements": [
+          {
+            "value": 350,
+            "feedback": "350 is the nearest TEN — right game, wrong street. Hundred-neighbors end in two zeros."
+          },
+          {
+            "value": 400,
+            "feedback": "400 is the farther neighbor: 349 is 49 from 300 but 51 from 400. The tens digit 4 votes down — the big-looking 9 can't overrule it."
+          },
+          {
+            "value": 340,
+            "feedback": "340 rounded DOWN to a ten. To the nearest hundred, the choices are only 300 or 400."
+          }
+        ],
+        "successFeedback": "Neighbors: 300 and 400. The tens digit (4) is below 5 — the low neighbor wins.",
+        "lowFeedback": "Neighbors: 300 and 400. The tens digit (4) is below 5 — the low neighbor wins.",
+        "highFeedback": "Neighbors: 300 and 400. The tens digit (4) is below 5 — the low neighbor wins."
+      },
+      "variant": {
+        "gen": "round-hundred",
+        "form": "placeOnLine"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round 100.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round 100 must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round 100."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:round-100",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The 600-to-700 street sorts its residents.",
+      "conceptTag": "round-100",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Round each number to its nearest hundred.",
+        "buckets": [
+          {
+            "id": "b600",
+            "label": "Rounds to 600",
+            "icon": "⬅️"
+          },
+          {
+            "id": "b700",
+            "label": "Rounds to 700",
+            "icon": "➡️"
+          }
+        ],
+        "items": [
+          {
+            "id": "n649",
+            "label": "649",
+            "bucketId": "b600",
+            "feedback": "Tens digit 4 → down. 649 sits 49 short of the halfway line; 600 is the closer end."
+          },
+          {
+            "id": "n651",
+            "label": "651",
+            "bucketId": "b700",
+            "feedback": "Tens digit 5 and past the middle — 651 is just 49 from 700 but 51 from 600."
+          },
+          {
+            "id": "n608",
+            "label": "608",
+            "bucketId": "b600",
+            "feedback": "608 barely left 600 — 8 little steps. The tens digit 0 makes it the easiest call on the street."
+          },
+          {
+            "id": "n691",
+            "label": "691",
+            "bucketId": "b700",
+            "feedback": "691 is 9 steps from 700 — nearly home. Tens digit 9 votes up, loudly."
+          }
+        ],
+        "missFeedback": "Check each tens digit: 0–4 walks to 600; 6–9 (and past-the-middle 5s) walks to 700.",
+        "successFeedback": "649 and 608 down; 651 and 691 up. The tens digit called every one."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Run the rounding backwards.",
+      "conceptTag": "round-100",
+      "explanationVariants": [
+        "451's tens digit is 5 and it's past 450 — it walks up to 500. The others have different closest hundreds.",
+        "Test each: 449 → 400 (tens 4), 451 → 500, 551 → 600, 399 → 400. Only one lands on 500."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these numbers rounds to 500 (nearest hundred)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "451",
+            "correct": true,
+            "feedback": "451 sits past the halfway mark of its street: 49 steps from 500, 51 from 400. Up it goes."
+          },
+          {
+            "id": "b",
+            "label": "449",
+            "feedback": "449 is on the 400-to-500 street but BELOW the middle — tens digit 4 walks it down to 400."
+          },
+          {
+            "id": "c",
+            "label": "551",
+            "feedback": "551 lives on the NEXT street (500 to 600), past its middle — it rounds up to 600, skipping 500 entirely."
+          },
+          {
+            "id": "d",
+            "label": "399",
+            "feedback": "399 is just 1 step from 400 — that's its closest hundred. 500 is more than a whole street away."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "round-hundred",
+        "form": "whichRounds"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "One more round-and-add warm-up before the ticket counts.",
+      "conceptTag": "round-100",
+      "explanationVariants": [
+        "130 rounds down to 100 (tens digit 3); 260 rounds up to 300 (tens digit 6). Add the rounded pair: 100 + 300 = 400.",
+        "Two separate rounds first — 130→100 and 260→300 — then one easy addition of hundreds: 400."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 130 to its nearest hundred, round 260 to its nearest hundred, then add the two rounded numbers. What do you get?",
+        "answer": 400,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 390,
+            "feedback": "390 is the EXACT sum — round each number first: 130→100, 260→300, then add: 100+300=400."
+          },
+          {
+            "value": 500,
+            "feedback": "130's tens digit is 3 — in the round-DOWN club (0–4) — so it stays at 100, not up to 200. 100+300=400."
+          },
+          {
+            "value": 300,
+            "feedback": "260's tens digit is 6 — in the round-UP club (5–9) — so it climbs to 300, not down to 200. 100+300=400."
+          }
+        ],
+        "fallbackFeedback": "Round each number to its nearest hundred first (130→?, 260→?), then add the two rounded hundreds."
+      },
+      "variant": {
+        "gen": "round-hundred",
+        "form": "roundThenAdd"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A weekend of tickets, rounded and totaled.",
+      "conceptTag": "round-100",
+      "hints": [
+        "Round each day separately — tens digits decide.",
+        "287 → 300 (tens digit 8); 412 → 400 (tens digit 1).",
+        "Add the two rounded hundreds."
+      ],
+      "explanationVariants": [
+        "287 → 300 and 412 → 400; the estimate is 300 + 400 = 700 (the exact sum, 699, sits one step away).",
+        "Round the players first, then one friendly addition: 3 hundreds + 4 hundreds."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A school fair sells 287 tickets on Saturday and 412 on Sunday. Round each to the nearest hundred, then add the rounded numbers. What estimate do you get?",
+        "answer": 700,
+        "tolerance": 0,
+        "unit": "tickets (about)",
+        "commonErrors": [
+          {
+            "value": 699,
+            "feedback": "699 is the EXACT total — and look how close the estimate lands to it! But this question asks for the rounded version: 300 + 400."
+          },
+          {
+            "value": 600,
+            "feedback": "600 rounded 287 DOWN to 200 — but its tens digit is 8, well past the middle. 287 climbs to 300."
+          },
+          {
+            "value": 800,
+            "feedback": "800 rounded 412 UP to 500 — but its tens digit is just 1. 412 barely left 400 and stays there."
+          }
+        ],
+        "fallbackFeedback": "Two rounds (tens digits 8 and 1), then add 300 + 400."
+      },
+      "variant": {
+        "gen": "round-hundred",
+        "form": "roundThenAdd"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Hundred-streets hold no surprises now.",
+      "takeaways": [
+        "Every number lives between two hundred-neighbors; the hundreds digit names the street.",
+        "The tens digit decides which end is closer — the ones digit never overrules it.",
+        "Rounding both players first makes big additions one-glance easy."
+      ],
+      "teaser": "but what about a number standing EXACTLY in the middle? Ties need a rule."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "round-100",
+      "concept": {
+        "id": "rem-r100-c",
+        "kind": "concept",
+        "body": "Quick rewind. For hundreds: **name the street, then check the tens digit**. 723's street runs 700 to 800 (the 7 says so). Its tens digit is 2 — in the 0–4 club — so 723 walks down to 700. Street first, tens digit second."
+      },
+      "check": {
+        "id": "rem-r100-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "round-100",
+        "explanationVariants": [
+          "280's street is 200-to-300; tens digit 8 is past the middle, so up to 300.",
+          "280 sits just 20 steps from 300 but 80 from 200 — the short walk goes up."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Round 280 to the nearest hundred.",
+          "options": [
+            {
+              "id": "a",
+              "label": "300",
+              "correct": true,
+              "feedback": "Tens digit 8 votes up: 280 is only 20 steps from 300."
+            },
+            {
+              "id": "b",
+              "label": "200",
+              "feedback": "200 is 80 steps back — the long walk. The tens digit 8 points firmly up the street."
+            },
+            {
+              "id": "c",
+              "label": "290",
+              "feedback": "290 is the nearest TEN. Hundred-neighbors end in two zeros: the choice here is 200 or 300."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

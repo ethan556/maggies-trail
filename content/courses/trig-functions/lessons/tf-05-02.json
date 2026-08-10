@@ -1,0 +1,254 @@
+{
+  "id": "tf-05-02",
+  "slug": "fitting-waves-to-the-world",
+  "title": "Fitting Waves to the World",
+  "courseId": "trig-functions",
+  "chapterId": "ch5-modeling-identity",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Temperatures, tides, daylight hours — anything that cycles fits y = a sin(bt) + d (or its −cos twin). The data hands you two of the dials immediately: a day running from 10° up to 30° has **amplitude (30 − 10)/2 = 10** and **midline (30 + 10)/2 = 20**.",
+      "figure": "tf-real-cycles"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The swing of a day.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "trace": "sin",
+        "targetAngle": 0,
+        "angleStart": 0,
+        "angleStep": 15,
+        "dials": [
+          {
+            "param": "amplitude",
+            "min": 1,
+            "max": 15,
+            "step": 1,
+            "start": 1,
+            "target": 10,
+            "feedback": "The swing is wrong. Amplitude is half the distance between the high and the low."
+          },
+          {
+            "param": "midline",
+            "min": 10,
+            "max": 30,
+            "step": 5,
+            "start": 10,
+            "target": 20,
+            "feedback": "The centre is wrong. The midline is the average of the high and the low."
+          }
+        ],
+        "prompt": "Daily temperature runs between 30° and 10°. Build the model with the dials.",
+        "successFeedback": "Amplitude 10, midline 20: half the 20-degree spread, centred on their average. Every wave-fitting problem starts with these two — (high − low)/2 and (high + low)/2 — before any period work begins.",
+        "lowFeedback": "The wave does not yet run between 10 and 30.",
+        "highFeedback": "The wave now swings past the 10-to-30 range."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The center of a day.",
+      "conceptTag": "tf-model",
+      "explanationVariants": [
+        "midline = (30 + 10)/2 = 20° — the temperature the day oscillates around.",
+        "Check: 20 ± 10 rebuilds the 30° high and 10° low. ✓"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same data (high 30°, low 10°). What is the midline?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the amplitude — the swing. The midline AVERAGES the extremes: (30 + 10)/2 = 20."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is the sum before halving — the average needs the divide: 20."
+          }
+        ],
+        "fallbackFeedback": "(30 + 10)/2 = 20."
+      },
+      "variant": {
+        "gen": "trig-model",
+        "form": "midline"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The third dial comes from the real-world REPEAT time: **b = 2π/period**, exactly as in the graphs chapter — except now the period arrives in hours or seconds. A tide repeating every 12 hours takes b = 2π/12 = π/6 ≈ 0.52.",
+      "figure": "tf-b-repeat"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Tide speed.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tide repeats every 12 hours. What is b in its model y = a sin(bt) + d? (Round to hundredths.)",
+        "answer": 0.52,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the PERIOD itself — b is the speed derived from it: 2π/12 ≈ 0.52."
+          },
+          {
+            "value": 75.4,
+            "feedback": "75.4 is 12 × 2π — multiplied. The period DIVIDES: 2π/12 ≈ 0.52."
+          }
+        ],
+        "fallbackFeedback": "b = 2π/12 = π/6 ≈ 0.52."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Wheel speed.",
+      "conceptTag": "tf-model",
+      "explanationVariants": [
+        "b = 2π/40 ≈ 0.16 — one full 2π cycle spread over 40 seconds.",
+        "Check: b × period = 0.157 × 40 ≈ 2π. ✓"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ferris wheel completes one rotation every 40 seconds. What is b in h(t) = 25 − 20 cos(bt)? (Round to hundredths.)",
+        "answer": 0.16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is the rotation TIME — the period. b converts it to speed: 2π/40 ≈ 0.16."
+          },
+          {
+            "value": 251.33,
+            "feedback": "251.33 is 40 × 2π — the factor ran the wrong way. Divide: 2π/40 ≈ 0.16."
+          }
+        ],
+        "fallbackFeedback": "2π/40 ≈ 0.16."
+      },
+      "variant": {
+        "gen": "trig-model",
+        "form": "speedB"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Assembled, the model PREDICTS: plug in a time, get a value. h(t) = 3 sin(πt/6) + 5 models the tide — at t = 3 hours the inside is π/2, sine hits its peak 1, and the tide reads 3 · 1 + 5 = 8 ft: high tide, right on schedule.",
+      "figure": "tf-model-predicts"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Predict the tide.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h(t) = 3 sin(πt/6) + 5, find the tide height at t = 3 hours, in feet.",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 drops the sine term — but at t = 3 the inside is π/2, where sine peaks at 1: h = 3 + 5 = 8."
+          },
+          {
+            "value": 6.5,
+            "feedback": "6.5 uses sin(π/6) = 0.5 — the inside is π·3/6 = π/2, not π/6: h = 8."
+          }
+        ],
+        "fallbackFeedback": "3 sin(π/2) + 5 = 8 ft."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The rider's schedule.",
+      "conceptTag": "tf-model",
+      "explanationVariants": [
+        "Inside: π·20/20 = π; cos π = −1, so h = 25 + 20 = 45 ft — the top, half the 40 s rotation in.",
+        "b = π/20 makes the period 2π/(π/20) = 40 s — t = 20 is the half-turn."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h(t) = 25 − 20 cos(πt/20), find the rider's height at t = 20 seconds, in feet.",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 ft treats cos as +1 — that's t = 0 (or t = 40, a full lap). At t = 20 the inside is π: the TOP, 45 ft."
+          },
+          {
+            "value": 25,
+            "feedback": "25 ft treats cos π as 0 — that's the quarter-turn value. cos π = −1, so h = 45."
+          }
+        ],
+        "fallbackFeedback": "25 − 20 cos π = 45 ft."
+      },
+      "hints": [
+        "Evaluate the inside first: π · 20/20.",
+        "cos π = −1 — the deepest flip.",
+        "25 − 20(−1) — subtracting a negative climbs."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-model__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Waves with schedules.",
+      "takeaways": [
+        "Data gives a and d: half-span and average of the extremes.",
+        "Real repeat time gives b = 2π/period — hours and seconds welcome.",
+        "The finished model predicts: evaluate the inside first, then swing and shift."
+      ],
+      "teaser": "One tool remains — the identity hiding inside the unit circle since Chapter 3."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-model",
+      "concept": {
+        "id": "rem-tf0502-c",
+        "kind": "concept",
+        "body": "Two reads, one dataset. A pond's depth cycles between 9 ft and 1 ft. Amplitude = (9 − 1)/2 = 4 — half the span, the swing. (The midline would be the average, 5.) Difference for the swing, sum for the center — keep the two reads straight."
+      },
+      "check": {
+        "id": "rem-tf0502-k",
+        "kind": "check",
+        "body": "Half the span.",
+        "conceptTag": "tf-model",
+        "explanationVariants": [
+          "amplitude = (9 − 1)/2 = 4.",
+          "Midline check: 5 ± 4 rebuilds 9 and 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Depth cycles between 9 ft and 1 ft. What is the amplitude?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 is the MIDLINE — the average (9 + 1)/2. The amplitude halves the difference: 4."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is the full span 9 − 1 — the amplitude is half of it: 4."
+            }
+          ],
+          "fallbackFeedback": "(9 − 1)/2 = 4."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "id": "sr-04-02",
+  "slug": "the-geometric-sum-formula",
+  "title": "The Geometric Sum Formula",
+  "courseId": "sequences-series",
+  "chapterId": "ch4-finite-geometric",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Run shift-and-subtract on a general series and the trick becomes a formula: **Sₙ = a₁(1 − rⁿ)/(1 − r)**, valid whenever r ≠ 1. The n in rⁿ is the **number of terms** — the count, not the last exponent. For 3 + 6 + 12 + 24: S = 3(1 − 2⁴)/(1 − 2) = 3(−15)/(−1) = 45. Same 45 as the trick, now in one line.",
+      "figure": "sr-general-shift"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Fire the formula.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "a₁ = 2, r = 3, n = 5. Find S₅.",
+        "mode": "geometricTerm",
+        "task": "geometricSum",
+        "answerMode": "numeric",
+        "first": 2,
+        "targetD": 1,
+        "atPosition": 10,
+        "targetTerm": 242,
+        "targetRTenths": 5,
+        "targetSum": 242,
+        "rMax": 9,
+        "start": 1,
+        "ratio": 3,
+        "count": 5,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 162,
+            "feedback": "162 is only the last term (2·3⁴). The sum gathers all five: 2(1 − 3⁵)/(1 − 3) = 242."
+          },
+          {
+            "value": 121,
+            "feedback": "121 is (3⁵ − 1)/2 with a₁ = 2 dropped — the front factor scales the whole thing: 2 · 121 = 242."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "fallbackFeedback": "2(1 − 243)/(1 − 3) = 484/2 = 242.",
+        "explorationFeedback": "Open at least two exact sequence states before checking.",
+        "successFeedback": "2(1 − 243)/(1 − 3) = 484/2 = 242.",
+        "lowFeedback": "2(1 − 243)/(1 − 3) = 484/2 = 242.",
+        "highFeedback": "2(1 − 243)/(1 − 3) = 484/2 = 242."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Six doublings' worth.",
+      "conceptTag": "sr-geo-sum",
+      "explanationVariants": [
+        "S = 5(1 − 2⁶)/(1 − 2) = 5 · 63 = 315.",
+        "Direct check: 5 + 10 + 20 + 40 + 80 + 160 = 315."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "a₁ = 5, r = 2, n = 6. Find S₆.",
+        "answer": 315,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 160,
+            "feedback": "160 is only the sixth term (5·2⁵). The sum wants all six: 5 · (2⁶ − 1) = 315."
+          },
+          {
+            "value": 635,
+            "feedback": "635 is 5(2⁷ − 1) — the exponent ran one too far. n counts TERMS, and six terms means 2⁶."
+          }
+        ],
+        "fallbackFeedback": "5(2⁶ − 1) = 5 · 63 = 315."
+      },
+      "variant": {
+        "gen": "geo-series"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Keep the two exponents straight. The **last term** is a₁·rⁿ⁻¹ — the first term took zero factors. The **sum formula** uses rⁿ — the full term count. For 1 + 4 + 16 + 64 (four terms): the last term is 4³ = 64, but the formula's power is 4⁴ = 256. Mixing them up is THE geometric-sum slip.",
+      "figure": "sr-exponents"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which power?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For the four-term sum 1 + 4 + 16 + 64, the formula's rⁿ is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4⁴ = 256",
+            "correct": true,
+            "feedback": "Right — the sum formula's exponent is the term COUNT, four."
+          },
+          {
+            "id": "o2",
+            "label": "4³ = 64",
+            "correct": false,
+            "feedback": "4³ is the LAST TERM's power — the nth-term formula's exponent. The sum formula runs one higher: rⁿ = 4⁴."
+          },
+          {
+            "id": "o3",
+            "label": "4⁵ = 1024",
+            "correct": false,
+            "feedback": "Five would claim a fifth term — only four exist. The count n = 4 sets the power: 4⁴."
+          },
+          {
+            "id": "o4",
+            "label": "4 · 4 = 16",
+            "correct": false,
+            "feedback": "r·n multiplies where the formula RAISES — the ratio stacks as a power, rⁿ = 4⁴ = 256."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now evaluate it.",
+      "conceptTag": "sr-geo-sum",
+      "explanationVariants": [
+        "S = (1 − 4⁴)/(1 − 4) = (−255)/(−3) = 85.",
+        "Direct check: 1 + 4 + 16 + 64 = 85."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 1 + 4 + 16 + 64 with the formula.",
+        "answer": 85,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 84,
+            "feedback": "84 is 4 + 16 + 64 — the first term went missing. The 1 = 4⁰ is a full member: 84 + 1 = 85."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is just the last term. The formula gathers all four: (4⁴ − 1)/3 = 85."
+          }
+        ],
+        "fallbackFeedback": "(256 − 1)/3 = 85."
+      },
+      "variant": {
+        "gen": "geo-series",
+        "form": "powers"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The formula doesn't care whether r grows or shrinks. For 16 + 8 + 4 + 2 (a₁ = 16, r = 1/2, n = 4): S = 16(1 − (1/2)⁴)/(1 − 1/2) = 16 · (15/16)/(1/2) = 30. Shrinking ratios will matter enormously in the next chapter — the formula already handles them.",
+      "figure": "sr-shrinking"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A shrinking series.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find 16 + 8 + 4 + 2 with the formula (a₁ = 16, r = 1/2, n = 4).",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 31,
+            "feedback": "31 sneaks in a fifth term (+1) — n = 4 stops the series at 2. Four terms: 30."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is only the last term. The sum gathers all four: 16 + 8 + 4 + 2 = 30."
+          }
+        ],
+        "fallbackFeedback": "16 · (15/16) · 2 = 30."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The doubling allowance.",
+      "conceptTag": "sr-geo-sum",
+      "explanationVariants": [
+        "S = 1·(2⁷ − 1)/(2 − 1) = 127.",
+        "Direct check: 1 + 2 + 4 + 8 + 16 + 32 + 64 = 127."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You get $1 on day 1, and each day the amount doubles. How much IN TOTAL over 7 days?",
+        "answer": 127,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "$64 is day 7's payment alone — “in total” sums all seven days: 2⁷ − 1 = 127."
+          },
+          {
+            "value": 128,
+            "feedback": "128 is 2⁷ itself — but the total of doublings from 1 always lands ONE short of the next power: 2⁷ − 1 = 127."
+          }
+        ],
+        "fallbackFeedback": "1 + 2 + ⋯ + 64 = 2⁷ − 1 = 127."
+      },
+      "hints": [
+        "Extract the pieces: a₁ = 1, r = 2, n = 7 days.",
+        "S = a₁(rⁿ − 1)/(r − 1) — with r = 2 that's simply 2⁷ − 1.",
+        "2⁷ = 128 — one less."
+      ],
+      "variant": {
+        "gen": "geo-series",
+        "form": "doubling"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One line, any geometric sum.",
+      "takeaways": [
+        "Sₙ = a₁(1 − rⁿ)/(1 − r), for r ≠ 1.",
+        "rⁿ uses the term COUNT; the last term uses rⁿ⁻¹ — keep them straight.",
+        "Growing or shrinking r — the formula handles both."
+      ],
+      "teaser": "Next: geometric series loose in the world — colonies, chains, and payments."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-geo-sum",
+      "concept": {
+        "id": "rem-sr0402-c",
+        "kind": "concept",
+        "body": "The cleanest case: doublings from 1. 1 + 2 + 4 + 8 = 2⁴ − 1 = 15 — the sum of n doublings always lands one short of the next power of 2. The formula says the same: (2⁴ − 1)/(2 − 1)."
+      },
+      "check": {
+        "id": "rem-sr0402-k",
+        "kind": "check",
+        "body": "One short of a power.",
+        "conceptTag": "sr-geo-sum",
+        "explanationVariants": [
+          "1 + 2 + 4 + 8 = 15 = 2⁴ − 1.",
+          "Four terms, so the formula's power is 2⁴ = 16; the sum is one less."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find 1 + 2 + 4 + 8.",
+          "answer": 15,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 is 2⁴ itself — the sum lands one SHORT of the next power: 15."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is just the last term. All four join: 1 + 2 + 4 + 8 = 15."
+            }
+          ],
+          "fallbackFeedback": "2⁴ − 1 = 15."
+        }
+      }
+    }
+  ]
+}

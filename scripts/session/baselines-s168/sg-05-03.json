@@ -1,0 +1,275 @@
+{
+ "id": "sg-05-03",
+ "slug": "modeling-with-solids",
+ "title": "Modeling with Solids",
+ "courseId": "solid-geometry",
+ "chapterId": "ch5-scale-modeling",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sg-modeling",
+   "concept": {
+    "id": "rem-sg-modeling-c",
+    "kind": "concept",
+    "body": "Modeling with solids: bill every quantity by its law — paint, sheet metal, wrapping, and heat loss scale with SURFACE (k²); capacity, fill material, and weight scale with VOLUME (k³). Their ratio falls as 1/k, so larger designs use less material per unit of capacity. Design problems run the justified formulas backwards (capacity → radius via roots)."
+   },
+   "check": {
+    "id": "rem-sg-modeling-k",
+    "kind": "check",
+    "body": "One bill.",
+    "conceptTag": "sg-modeling",
+    "explanationVariants": [
+     "Paint is surface: 200 × 3.",
+     "$600."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A tank has surface 200 units². Paint costs $3 per unit². Total = ?",
+     "answer": 600,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 203,
+       "feedback": "203 adds — cost multiplies: 600."
+      },
+      {
+       "value": 66.67,
+       "feedback": "66.67 divides — 200 × 3 = 600."
+      }
+     ],
+     "fallbackFeedback": "200 × 3 = 600."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Modeling assigns each COST to its law: paint, sheet metal, and cooling bill by SURFACE (k²); capacity, concrete, and weight bill by VOLUME (k³). The tension between the two — volume outrunning surface as things grow — is the deepest design fact in this course.",
+   "figure": "sg-modeling"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Paint the silo.",
+   "conceptTag": "sg-modeling",
+   "explanationVariants": [
+    "Chapter 4 priced the silo's skin: 228π ≈ 716.3.",
+    "716.3 × $2 ≈ $1433."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Painting the chapter-4 silo (exposed surface 228π ≈ 716.3 units²) at $2 per unit² costs about ? (nearest dollar)",
+    "answer": 1433,
+    "tolerance": 2,
+    "commonErrors": [
+     {
+      "value": 456,
+      "feedback": "456 charges $2 on the COEFFICIENT 228 — the surface is 228π ≈ 716.3: ≈ $1433."
+     },
+     {
+      "value": 2866,
+      "feedback": "2866 doubles — 716.3 × 2 ≈ 1433."
+     },
+     {
+      "value": 1008,
+      "feedback": "1008 prices the VOLUME's 504 — paint bills surface: ≈ $1433."
+     }
+    ],
+    "fallbackFeedback": "228π × 2 ≈ $1433 — paint reads the k² ledger."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-modeling__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The economy of scale.",
+   "conceptTag": "sg-modeling",
+   "explanationVariants": [
+    "Double the tank: capacity ×8 (k³), steel ×4 (k²).",
+    "Steel per unit capacity: 4/8 = 1/2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A spherical tank is doubled in radius. Steel (surface) per unit of capacity (volume) becomes what fraction of before? (decimal)",
+    "answer": 0.5,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 inverts — surface ×4 over capacity ×8 is 4/8 = 0.5: HALF the steel per liter."
+     },
+     {
+      "value": 0.25,
+      "feedback": "0.25 is the pure 1/k² of surface alone — per CAPACITY it's k²/k³ = 1/k = 0.5."
+     },
+     {
+      "value": 1,
+      "feedback": "1 would mean no economy — surface lags volume: 0.5."
+     }
+    ],
+    "fallbackFeedback": "k²/k³ = 1/k = 1/2 — big tanks are materially cheaper per liter: the k³ economy."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-modeling__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Nature runs the same books.",
+   "conceptTag": "sg-modeling",
+   "explanationVariants": [
+    "Heat is MADE in the body's volume and SHED through its skin.",
+    "Surface-to-volume falls as 1/k: big bodies hold heat, small ones bleed it."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A mouse must eat constantly while an elephant doesn't. The k-law explanation:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Heat generates with volume (k³) but escapes through surface (k²) — small bodies have huge surface per volume and lose heat fast",
+      "correct": true,
+      "feedback": "Surface-to-volume ∝ 1/k: shrink k and the ratio explodes — the mouse is all skin, thermodynamically."
+     },
+     {
+      "id": "o2",
+      "label": "Elephants have better food",
+      "correct": false,
+      "feedback": "The driver is geometric: the 1/k surface-to-volume law, not the menu."
+     },
+     {
+      "id": "o3",
+      "label": "Mice have higher density",
+      "correct": false,
+      "feedback": "Densities are comparable — the asymmetry is surface (k²) versus volume (k³)."
+     },
+     {
+      "id": "o4",
+      "label": "It's unrelated to geometry",
+      "correct": false,
+      "feedback": "It's the k-laws in fur: heat made ∝ k³, shed ∝ k²."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-modeling__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Choose the law.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Sort correctly: which pair bills by SURFACE (k²)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Wrapping paper and heat loss",
+      "correct": true,
+      "feedback": "Both live on the boundary — k². Concrete fill and shipping weight live inside — k³."
+     },
+     {
+      "id": "o2",
+      "label": "Concrete fill and wrapping paper",
+      "correct": false,
+      "feedback": "Concrete FILLS (k³); paper wraps (k²) — a mixed pair."
+     },
+     {
+      "id": "o3",
+      "label": "Shipping weight and capacity",
+      "correct": false,
+      "feedback": "Both are k³ volume quantities — the surface pair is paper + heat loss."
+     },
+     {
+      "id": "o4",
+      "label": "Heat loss and shipping weight",
+      "correct": false,
+      "feedback": "Heat loss is boundary (k²); weight is bulk (k³)."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The concrete bill.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Chapter 4's concrete pipe used 450π ≈ 1413.7 units³ of concrete. At $0.10 per unit³, the material cost ≈ ? (nearest dollar)",
+    "answer": 141,
+    "tolerance": 1,
+    "commonErrors": [
+     {
+      "value": 45,
+      "feedback": "45 prices the coefficient 450 — the volume is 450π ≈ 1413.7: ≈ $141."
+     },
+     {
+      "value": 1414,
+      "feedback": "1414 charges $1 per unit — at $0.10: ≈ $141."
+     }
+    ],
+    "fallbackFeedback": "1413.7 × 0.10 ≈ $141 — concrete reads the k³ ledger."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The design brief.",
+   "conceptTag": "sg-modeling",
+   "hints": [
+    "Capacity fixes the volume; the QUESTION is the radius — run the sphere formula backwards.",
+    "(4/3)πr³ = 288π ⇒ r³ = 216.",
+    "∛216."
+   ],
+   "explanationVariants": [
+    "r³ = 288 × 3/4 = 216 ⇒ r = 6 — chapter 3's melt challenge, run in reverse.",
+    "r = ∛216 = 6."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A client needs a spherical tank holding exactly 288π units³. The radius to build = ?",
+    "answer": 6,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 216,
+      "feedback": "216 is r³ — cube-root it: 6."
+     },
+     {
+      "value": 8,
+      "feedback": "8 solves 36h = 288 for a CYLINDER'S height (chapter 3's melt) — the sphere solves (4/3)r³ = 288: r = 6."
+     },
+     {
+      "value": 9.6,
+      "feedback": "9.6 = 288/30 divides wrong — r³ = (3/4)(288) = 216, r = 6."
+     }
+    ],
+    "fallbackFeedback": "(4/3)r³ = 288 ⇒ r³ = 216 ⇒ r = 6 — design is the formulas inverted."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-modeling__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Assign each cost its law.",
+   "takeaways": [
+    "Surface costs (paint, metal, heat): k². Volume costs (capacity, fill, weight): k³.",
+    "Surface-to-volume falls as 1/k — big tanks are cheap per liter, small animals eat constantly.",
+    "Design inverts the formulas: capacity ⇒ r by roots."
+   ],
+   "teaser": "Course complete — solids sliced, justified, compounded, scaled, and put to work."
+  }
+ ]
+}

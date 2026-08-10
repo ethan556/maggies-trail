@@ -1,0 +1,234 @@
+{
+  "id": "bt-01-01",
+  "slug": "powers-of-a-sum",
+  "title": "Powers of a Sum",
+  "courseId": "binomial-theorem",
+  "chapterId": "ch1-pascals-pattern",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "(a + b)² is not a² + b². Squaring a sum means multiplying the whole sum by itself, and the cross terms that appear are the entire content of this course. Drawn as a rectangle, (a + b)² is one a-square, one b-square, and TWO identical strips — and the strips are what the wrong version throws away.",
+      "figure": "bt-cross-terms"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Lay the square out as area and read its middle.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "requiredMoves": 3,
+        "startA": 1,
+        "startB": 0,
+        "prompt": "Build (x + 3)(x + 3) as a rectangle: drag both partitions to 3, then read the middle coefficient.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 3,
+        "targetB": 3,
+        "asks": "middle",
+        "successFeedback": "x² + 6x + 9. The 6x is TWO strips of 3x, one along each side — which is exactly the term a² + b² forgets. The coefficients read 1, 2, 1 against the blocks.",
+        "productMiddleFeedback": "The strips were multiplied instead of counted. Two strips of 3x add to 6x; 3×3 = 9 is the CORNER, a different region entirely.",
+        "partialFeedback": "One partition has arrived and the other has not — a square needs both sides equal to 3.",
+        "signFeedback": "Right sizes, wrong direction: a negative partition draws area taken away, but (x + 3) adds its 3."
+      },
+      "predict": {
+        "prompt": "Is (a + b)² equal to a² + b²?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — the square distributes over the sum"
+          },
+          {
+            "id": "no",
+            "label": "No — something extra appears"
+          },
+          {
+            "id": "sometimes",
+            "label": "Only when a and b are both positive"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Two cross terms appear: (a + b)² = a² + 2ab + b². On the rectangle they are the two strips between the corner squares, and they have real area — so dropping them is not a simplification, it is a different number. Test it with a = b = 1: 4, not 2."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the middle coefficient.",
+      "conceptTag": "bt-powers-of-sum",
+      "explanationVariants": [
+        "(x + 3)² = x² + 6x + 9, so the middle coefficient is 6.",
+        "Two strips of 3x each give 6x."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the expansion of (x + 3)², what is the coefficient of x?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the CONSTANT — the corner square, 3×3. The middle term comes from the two strips."
+          },
+          {
+            "value": 3,
+            "feedback": "That counts one strip. There are two, one along each side."
+          }
+        ],
+        "fallbackFeedback": "Two strips of 3x give 6x, so the coefficient is 6.",
+        "successFeedback": "6 — and its coefficient pattern 1, 6, 9 comes from 1, 2, 1 acting on powers of 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Push the exponent up and the pattern keeps going. (a + b)³ has four terms, not two; (a + b)⁴ has five. In general (a + b)ⁿ expands into n + 1 terms, whose a-powers count down from n while the b-powers count up — and whose coefficients are what the rest of this chapter is about.",
+      "figure": "bt-term-count-grows"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count the terms.",
+      "conceptTag": "bt-powers-of-sum",
+      "explanationVariants": [
+        "(a + b)⁵ has 5 + 1 = 6 terms, from a⁵ down to b⁵.",
+        "The exponent on a runs 5, 4, 3, 2, 1, 0 — six values."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many terms does the expansion of (a + b)⁵ have?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "The count is n + 1, not n — both a⁵ and b⁵ are terms, and so are the four between them."
+          },
+          {
+            "value": 2,
+            "feedback": "Two terms would be a⁵ + b⁵, the same error this lesson opened by refuting."
+          }
+        ],
+        "fallbackFeedback": "The powers of a run 5 down to 0, which is six terms.",
+        "successFeedback": "6 — one term for each way of splitting the exponent 5 between a and b."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Test the false identity.",
+      "conceptTag": "bt-powers-of-sum",
+      "explanationVariants": [
+        "At a = b = 1, (a + b)² = 4 while a² + b² = 2 — the identity fails.",
+        "One counterexample is enough to kill a claimed identity."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Put a = 1 and b = 1. What do (a + b)² and a² + b² come to?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4 and 2 — they disagree",
+            "correct": true,
+            "feedback": "Exactly. A single counterexample settles it, and the gap of 2 is the 2ab that was dropped."
+          },
+          {
+            "id": "o2",
+            "label": "2 and 2 — they agree",
+            "correct": false,
+            "feedback": "(1 + 1)² = 2² = 4, not 2. Add first, then square."
+          },
+          {
+            "id": "o3",
+            "label": "4 and 4 — they agree",
+            "correct": false,
+            "feedback": "1² + 1² = 2. The two expressions genuinely differ."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One step further up.",
+      "conceptTag": "bt-powers-of-sum",
+      "explanationVariants": [
+        "(a + b)³ has 4 terms and its middle coefficients are 3 and 3.",
+        "The a-exponent runs 3, 2, 1, 0 — four terms."
+      ],
+      "hints": [
+        "Write (a + b)³ as (a + b)(a + b)² and expand what you already know.",
+        "(a + b)² = a² + 2ab + b²; multiply that by (a + b).",
+        "The result is a³ + 3a²b + 3ab² + b³ — now read the a²b coefficient."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In (a + b)³ = a³ + ?a²b + 3ab² + b³, what is the missing coefficient?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the coefficient of a³, the end term. The inner terms carry more weight because more products land on them."
+          },
+          {
+            "value": 2,
+            "feedback": "2 belongs to the SQUARE, (a + b)². Cubing raises the inner coefficients to 3."
+          }
+        ],
+        "fallbackFeedback": "(a + b)³ = a³ + 3a²b + 3ab² + b³, so the coefficient is 3.",
+        "successFeedback": "3 — and the full row reads 1, 3, 3, 1. That row is about to get a name."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cross terms are the content.",
+      "takeaways": [
+        "(a + b)ⁿ is not aⁿ + bⁿ — cross terms appear and they are not optional.",
+        "(a + b)ⁿ expands into n + 1 terms, with a's power falling as b's rises.",
+        "For n = 2 the coefficients are 1, 2, 1; for n = 3 they are 1, 3, 3, 1."
+      ],
+      "teaser": "Next: those coefficient rows, stacked into the triangle that generates them all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bt-powers-of-sum",
+      "concept": {
+        "id": "rem-bt-powers-of-sum-c",
+        "kind": "concept",
+        "body": "Push the exponent up and the pattern keeps going. (a + b)³ has four terms, not two; (a + b)⁴ has five. In general (a + b)ⁿ expands into n + 1 terms, whose a-powers count down from n while the b-powers count up — and whose coefficients are what the rest of this chapter is about."
+      },
+      "check": {
+        "id": "rem-bt-powers-of-sum-k",
+        "kind": "check",
+        "body": "Read the middle coefficient.",
+        "conceptTag": "bt-powers-of-sum",
+        "explanationVariants": [
+          "(x + 3)² = x² + 6x + 9, so the middle coefficient is 6.",
+          "Two strips of 3x each give 6x."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the expansion of (x + 3)², what is the coefficient of x?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is the CONSTANT — the corner square, 3×3. The middle term comes from the two strips."
+            },
+            {
+              "value": 3,
+              "feedback": "That counts one strip. There are two, one along each side."
+            }
+          ],
+          "fallbackFeedback": "Two strips of 3x give 6x, so the coefficient is 6.",
+          "successFeedback": "6 — and its coefficient pattern 1, 6, 9 comes from 1, 2, 1 acting on powers of 3."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "id": "cx-04-03",
+  "slug": "shoelace-formula",
+  "title": "The Shoelace Formula",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch4-perimeter-area",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-shoelace",
+      "concept": {
+        "id": "rem-cx-shoelace-c",
+        "kind": "concept",
+        "body": "Shoelace formula: list the vertices IN BOUNDARY ORDER (either direction), form xᵢyᵢ₊₁ − xᵢ₊₁yᵢ for each consecutive pair (wrapping the last vertex to the first), sum, halve, absolute value. Reversing direction only flips the sign; scrambling the order traces a crossed path and prices the wrong figure."
+      },
+      "check": {
+        "id": "rem-cx-shoelace-k",
+        "kind": "check",
+        "body": "One lace.",
+        "conceptTag": "cx-shoelace",
+        "explanationVariants": [
+          "Terms: (0·0 − 6·0) = 0; (6·4 − 0·0) = 24; (0·0 − 0·4) = 0. Sum 24.",
+          "½(24) = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Shoelace the triangle (0, 0), (6, 0), (0, 4). Area = ?",
+          "answer": 12,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 24,
+              "feedback": "24 is the raw sum — halve: 12."
+            },
+            {
+              "value": 48,
+              "feedback": "48 doubles — ½(24) = 12, matching ½ × base × height."
+            }
+          ],
+          "fallbackFeedback": "½|24| = 12."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The box method industrialized: the **shoelace formula**. List the vertices counterclockwise, cross-multiply each pair like lacing a shoe — x₁y₂ − x₂y₁ for every edge, wrapping around — sum, halve, take absolute value. Area = ½|Σ(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ)|. One sweep, any polygon.",
+      "figure": "cx-shoelace"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Lace the triangle.",
+      "conceptTag": "cx-shoelace",
+      "explanationVariants": [
+        "Pairs: (1·3 − 5·1) = −2; (5·7 − 3·3) = 26; (3·1 − 1·7) = −4. Sum 20; halve: 10.",
+        "½|−2 + 26 − 4| = 10 — the box method's answer, one line."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Shoelace on (1, 1), (5, 3), (3, 7): the three cross-terms are −2, 26, and −4. Area = ?",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the raw sum — the shoelace HALVES it: 10."
+          },
+          {
+            "value": 5,
+            "feedback": "5 halves twice — once is the recipe: ½(20) = 10."
+          },
+          {
+            "value": 32,
+            "feedback": "32 adds absolute values term by term (2 + 26 + 4) — signs cancel INSIDE first, then |·|: ½|20| = 10."
+          }
+        ],
+        "fallbackFeedback": "½|−2 + 26 − 4| = 10."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-shoelace__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The 44, one line.",
+      "conceptTag": "cx-shoelace",
+      "explanationVariants": [
+        "Terms: (0·2 − 8·0) = 0; (8·8 − 10·2) = 44; (10·6 − 2·8) = 44; (2·0 − 0·6) = 0.",
+        "½|0 + 44 + 44 + 0| = 44 — matching the box method's 80 − 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Shoelace on (0, 0), (8, 2), (10, 8), (2, 6). Area = ?",
+        "answer": 44,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 88,
+            "feedback": "88 is the un-halved sum — ½(88) = 44, exactly the box method's answer."
+          },
+          {
+            "value": 22,
+            "feedback": "22 halves TWICE — or laces only half the terms. The full sweep gives 88, halved once: 44."
+          },
+          {
+            "value": 80,
+            "feedback": "80 is the bounding BOX from last lesson — the shoelace prices the figure directly: 44."
+          }
+        ],
+        "fallbackFeedback": "½(0 + 44 + 44 + 0) = 44."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-shoelace__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why it works: each cross-term ½(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ) is the SIGNED area of the triangle from the origin to that edge — positive when the edge runs counterclockwise around the origin, negative clockwise. Summing sweeps the whole boundary: outside cancels, inside survives. It's the box method's subtraction, automated by signs.",
+      "figure": "cx-signed-area"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Order matters (a little).",
+      "conceptTag": "cx-shoelace",
+      "explanationVariants": [
+        "Clockwise order flips every sign, negating the sum — but |·| erases the flip.",
+        "Same magnitude, opposite sign: the absolute value makes both orders give +44."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Run the shoelace on the SAME quadrilateral but list the vertices clockwise. The result:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The raw sum flips sign (−88), and the absolute value restores the same area, 44",
+            "correct": true,
+            "feedback": "Orientation flips every cross-term — which is why the recipe ends with |·|. Skipping vertices or scrambling order, though, breaks it entirely."
+          },
+          {
+            "id": "o2",
+            "label": "The area doubles",
+            "correct": false,
+            "feedback": "Direction never scales the sweep — it only flips the SIGN, which |·| absorbs: still 44."
+          },
+          {
+            "id": "o3",
+            "label": "The formula fails completely",
+            "correct": false,
+            "feedback": "Reversal is the benign change (sign flip). The fatal one is a SCRAMBLED order that makes edges cross: still 44 here."
+          },
+          {
+            "id": "o4",
+            "label": "You get the perimeter instead",
+            "correct": false,
+            "feedback": "The shoelace never measures boundary length — reversed order gives −88, halved and absolute: 44."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-shoelace__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Varignon's bonus.",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "answerMode": "numeric",
+        "prompt": "Shoelace the midpoint parallelogram (4, 1), (9, 5), (6, 7), (1, 3) of that same quadrilateral. Area = ?",
+        "coordinateProof": {
+          "kind": "shoelaceArea",
+          "points": [
+            {
+              "id": "A",
+              "label": "A",
+              "x": 4,
+              "y": 1
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "x": 9,
+              "y": 5
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "x": 6,
+              "y": 7
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "x": 1,
+              "y": 3
+            }
+          ]
+        },
+        "answerUnit": "",
+        "tolerance": 0.01,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 44,
+            "feedback": "44 is the PARENT's area — the midpoint parallelogram claims exactly HALF: 22."
+          },
+          {
+            "value": 11,
+            "feedback": "11 quarters the parent — Varignon's figure takes half, not a quarter: 22."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "successFeedback": "½|11 + 33 + 11 − 11| = 22 — half the parent's 44. Varignon's parallelogram ALWAYS captures half the area.",
+        "explorationFeedback": "Open at least two coordinate-proof states before checking.",
+        "fallbackFeedback": "½|11 + 33 + 11 − 11| = 22 — half the parent's 44. Varignon's parallelogram ALWAYS captures half the area."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot the fatal error.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student shoelaces (0,0), (10,8), (8,2), (2,6) — the same four points, scrambled — and gets a different area. What happened?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Scrambled order traces a self-CROSSING path — the shoelace prices the path you list, not the shape you meant",
+            "correct": true,
+            "feedback": "Vertices must run around the boundary (either direction). The scrambled list draws a bowtie, and the signed sweep dutifully prices the bowtie."
+          },
+          {
+            "id": "o2",
+            "label": "The formula only works for triangles",
+            "correct": false,
+            "feedback": "Any simple polygon laces fine — the failure is the CROSSING path from scrambled order."
+          },
+          {
+            "id": "o3",
+            "label": "They forgot the absolute value",
+            "correct": false,
+            "feedback": "|·| fixes sign, not geometry — a crossed path prices differently at every step, not just in sign."
+          },
+          {
+            "id": "o4",
+            "label": "Coordinates with zeros break the method",
+            "correct": false,
+            "feedback": "Zeros are harmless (they just zero some terms) — the order is the crime."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The surveyor's pentagon.",
+      "conceptTag": "cx-shoelace",
+      "hints": [
+        "Lace all five in order, wrapping the last back to the first.",
+        "Terms with a zero coordinate often vanish — compute only what survives.",
+        "½|sum| at the end."
+      ],
+      "explanationVariants": [
+        "Terms: (0·0 − 9·0) = 0; (9·5 − 9·0) = 45; (9·8 − 5·5) = 47; (5·8 − 0·8) = 40; (0·0 − 0·8) = 0. Sum 132; area 66.",
+        "½(45 + 47 + 40) = 66 square meters."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The fence-bid pentagon (0,0), (9,0), (9,5), (5,8), (0,8). Shoelace its area.",
+        "answer": 66,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 132,
+            "feedback": "132 is the raw lace-sum — halve it: 66."
+          },
+          {
+            "value": 72,
+            "feedback": "72 = 9 × 8 boxes the pentagon — the shoelace prices the actual figure: 66 (the box overcounts a 6-area corner)."
+          },
+          {
+            "value": 33,
+            "feedback": "33 halves twice — the recipe halves once: ½(132) = 66."
+          }
+        ],
+        "fallbackFeedback": "½|45 + 47 + 40| = 66 — and the box audit agrees: 72 − 6 = 66."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-shoelace__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One sweep, any polygon.",
+      "takeaways": [
+        "Shoelace: ½|Σ(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ)|, vertices in boundary order, wrap at the end.",
+        "Signed origin-triangles explain it; reversal flips sign (harmless), scrambling crosses the path (fatal).",
+        "Varignon bonus: the midpoint parallelogram holds exactly HALF its parent's area."
+      ],
+      "teaser": "Final chapter: the circle joins the plane — (x − h)² + (y − k)² = r²."
+    }
+  ]
+}

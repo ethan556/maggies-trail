@@ -1,0 +1,396 @@
+{
+  "id": "dpv-03-01",
+  "slug": "lining-up-the-places",
+  "title": "Lining Up the Places",
+  "courseId": "decimals-place-value",
+  "chapterId": "ch3-comparing-decimals",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To compare two decimals, line up their points and check place by place, **left to right**. The first place where the digits differ decides it — a bigger digit there wins, no matter what follows. Start at tenths, the biggest place after the point.",
+      "figure": "dpv-line-up-compare"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compare at the tenths.",
+      "conceptTag": "compare-align-places",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "compare",
+        "answerMode": "choice",
+        "prompt": "Which is greater: 0.6 or 0.4?",
+        "values": [
+          0.6,
+          0.4
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "0.6",
+            "feedback": "The tenths digits are 6 and 4; 6 is bigger, so 0.6 wins.",
+            "claim": "relation:gt"
+          },
+          {
+            "id": "b",
+            "label": "0.4",
+            "feedback": "Compare the tenths first: 4 vs 6. Since 4 is smaller, 0.4 is the lesser one — 0.6 is greater.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "Their tenths digits differ (6 vs 4), so they can't be equal. 0.6 is greater.",
+            "claim": "misconception:c"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 1,
+        "successFeedback": "The tenths digits are 6 and 4; 6 is bigger, so 0.6 wins.",
+        "explorationFeedback": "Inspect at least 1 base-ten stage before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0
+      },
+      "hints": [
+        "Look at the tenths place first.",
+        "6 versus 4.",
+        "The bigger tenths digit wins."
+      ],
+      "explanationVariants": [
+        "Tenths decide it: 6 > 4, so 0.6 is greater.",
+        "The first place already differs, and 6 beats 4."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "When tenths tie.",
+      "conceptTag": "compare-align-places",
+      "explanationVariants": [
+        "Tenths tie at 3, so move to hundredths: 5 vs 8 — 0.38 is greater.",
+        "Equal tenths pushes the decision to the next place, hundredths."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "compare",
+        "answerMode": "choice",
+        "prompt": "Which is greater: 0.35 or 0.38?",
+        "values": [
+          0.35,
+          0.38
+        ],
+        "choices": [
+          {
+            "id": "lt",
+            "label": "0.35 < 0.38",
+            "feedback": "Tenths tie (both 3), so hundredths decide: 8 > 5, making 0.38 greater.",
+            "claim": "relation:lt"
+          },
+          {
+            "id": "eq",
+            "label": "0.35 = 0.38",
+            "feedback": "The hundredths differ (5 vs 8), so they aren't equal. 0.38 is greater.",
+            "claim": "misconception:eq"
+          },
+          {
+            "id": "gt",
+            "label": "0.35 > 0.38",
+            "feedback": "The tenths tie at 3, so check hundredths: 5 vs 8. Since 5 is smaller, 0.35 is the lesser — 0.38 wins.",
+            "claim": "misconception:gt"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 2,
+        "successFeedback": "Tenths tie (both 3), so hundredths decide: 8 > 5, making 0.38 greater.",
+        "explorationFeedback": "Inspect at least 2 base-ten stages before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0
+      },
+      "variant": {
+        "gen": "place-compare",
+        "form": "decimalTie"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's the trap: more digits does **not** mean bigger. Compare 0.7 and 0.68 at the first place — tenths: 7 versus 6. 7 wins immediately, so **0.7 is greater than 0.68**, even though 0.68 has more digits. The first differing place is all that matters.",
+      "figure": "dpv-line-up-compare"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fewer digits, still bigger.",
+      "conceptTag": "compare-align-places",
+      "explanationVariants": [
+        "Tenths decide: 7 > 6, so 0.7 beats 0.68 despite having fewer digits.",
+        "The extra digit in 0.68 never matters — the tenths already settled it."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "compare",
+        "answerMode": "choice",
+        "prompt": "Which is greater: 0.7 or 0.68?",
+        "values": [
+          0.7,
+          0.68
+        ],
+        "choices": [
+          {
+            "id": "lt",
+            "label": "0.7 < 0.68",
+            "feedback": "Length is the trap here. Compare tenths: 7 vs 6 — 0.7 already wins before the 8 matters.",
+            "claim": "misconception:lt"
+          },
+          {
+            "id": "eq",
+            "label": "0.7 = 0.68",
+            "feedback": "The tenths already differ (7 vs 6), so they can't be equal — 0.7 is greater.",
+            "claim": "misconception:eq"
+          },
+          {
+            "id": "gt",
+            "label": "0.7 > 0.68",
+            "feedback": "Tenths first: 7 vs 6. 7 wins, so 0.7 is greater — the extra digit in 0.68 doesn't help.",
+            "claim": "relation:gt"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 1,
+        "successFeedback": "Tenths first: 7 vs 6. 7 wins, so 0.7 is greater — the extra digit in 0.68 doesn't help.",
+        "explorationFeedback": "Inspect at least 1 base-ten stage before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0
+      },
+      "variant": {
+        "gen": "place-compare",
+        "form": "decimalMixed"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Tenths tie again.",
+      "conceptTag": "compare-align-places",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "compare",
+        "answerMode": "choice",
+        "prompt": "Which is greater: 0.52 or 0.5?",
+        "values": [
+          0.52,
+          0.5
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "0.52",
+            "feedback": "Tenths tie at 5. In hundredths, 0.52 has a 2 and 0.5 has nothing (a 0), so 0.52 is greater.",
+            "claim": "relation:gt"
+          },
+          {
+            "id": "b",
+            "label": "0.5",
+            "feedback": "Tenths tie at 5, so check hundredths: 0.52 has 2 there, 0.5 has 0. 0.52 is greater.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "0.52 carries an extra 2 in hundredths that 0.5 lacks, so they differ. 0.52 is greater.",
+            "claim": "misconception:c"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 2,
+        "successFeedback": "Tenths tie at 5. In hundredths, 0.52 has a 2 and 0.5 has nothing (a 0), so 0.52 is greater.",
+        "explorationFeedback": "Inspect at least 2 base-ten stages before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0
+      },
+      "hints": [
+        "Tenths tie at 5.",
+        "Think of 0.5 as 0.50 to compare hundredths.",
+        "2 beats 0 in hundredths."
+      ],
+      "explanationVariants": [
+        "Tenths tie, then hundredths: 2 > 0, so 0.52 wins.",
+        "Reading 0.5 as 0.50 shows the hundredths gap."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "First difference decides.",
+      "conceptTag": "compare-align-places",
+      "explanationVariants": [
+        "0.6 vs 0.4 differs right at tenths — 6 > 4.",
+        "The very first place already separates them: 0.6 is greater."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "decidingPlace",
+        "answerMode": "choice",
+        "prompt": "In comparing 0.61 and 0.48, which place decides the winner?",
+        "values": [
+          0.61,
+          0.48
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "The tenths place (6 vs 4)",
+            "feedback": "6 and 4 differ right at the tenths, so that decides it — 0.61 is greater, and the hundredths never matter.",
+            "claim": "place:-1"
+          },
+          {
+            "id": "b",
+            "label": "The hundredths place (1 vs 8)",
+            "feedback": "You only reach hundredths if tenths tie. Here tenths already differ (6 vs 4), so tenths decide.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "Neither — count the digits",
+            "feedback": "Digit count doesn't decide comparisons. The first differing place — tenths, 6 vs 4 — does.",
+            "claim": "misconception:c"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 1,
+        "successFeedback": "6 and 4 differ right at the tenths, so that decides it — 0.61 is greater, and the hundredths never matter.",
+        "explorationFeedback": "Inspect at least 1 base-ten stage before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0
+      },
+      "variant": {
+        "gen": "place-compare",
+        "form": "decidingPlace"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The close one.",
+      "conceptTag": "compare-align-places",
+      "hints": [
+        "Pad the shorter one: think of 0.41 as 0.410.",
+        "Tenths tie at 4; compare hundredths.",
+        "0.409 has 0 in hundredths, 0.410 has 1 — so 0.41 is bigger."
+      ],
+      "explanationVariants": [
+        "Tenths tie at 4. In hundredths, 0.409 has 0 and 0.41 (=0.410) has 1, so 0.41 is greater.",
+        "Reading 0.41 as 0.410, the hundredths 1 > 0 settles it: 0.41 is greater."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "compare",
+        "answerMode": "choice",
+        "prompt": "Which is greater: 0.409 or 0.41?",
+        "values": [
+          0.409,
+          0.41
+        ],
+        "choices": [
+          {
+            "id": "lt",
+            "label": "0.409 < 0.41",
+            "feedback": "Read 0.41 as 0.410. Tenths tie at 4; hundredths give 1 vs 0, so 0.41 is greater.",
+            "claim": "relation:lt"
+          },
+          {
+            "id": "eq",
+            "label": "0.409 = 0.41",
+            "feedback": "Pad 0.41 to 0.410: tenths tie at 4, but the hundredths differ (1 vs 0) — not equal.",
+            "claim": "misconception:eq"
+          },
+          {
+            "id": "gt",
+            "label": "0.409 > 0.41",
+            "feedback": "The length is the trap. Pad to 0.409 vs 0.410: tenths tie, then hundredths 0 vs 1 — 0.41 wins.",
+            "claim": "misconception:gt"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 2,
+        "successFeedback": "Read 0.41 as 0.410. Tenths tie at 4; hundredths give 1 vs 0, so 0.41 is greater.",
+        "explorationFeedback": "Inspect at least 2 base-ten stages before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0
+      },
+      "variant": {
+        "gen": "place-compare",
+        "form": "decimalClose"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Left to right, first difference wins.",
+      "takeaways": [
+        "Line up the decimal points and compare place by place, starting at tenths.",
+        "The first place where digits differ decides — later places don't matter.",
+        "More digits does not mean bigger: 0.7 is greater than 0.68."
+      ],
+      "teaser": "next: why 0.5, 0.50, and 0.500 are all the same — the trailing-zero trap."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "compare-align-places",
+      "concept": {
+        "id": "rem-cap-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Compare decimals place by place from the left; the first differing place decides.** For 0.8 vs 0.3, the tenths (8 vs 3) differ right away, so 0.8 is greater. Always start at the biggest place — tenths."
+      },
+      "check": {
+        "id": "rem-cap-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "compare-align-places",
+        "explanationVariants": [
+          "Tenths decide: 8 > 3, so 0.8 is greater.",
+          "The first place already differs — 0.8 wins."
+        ],
+        "widget": {
+          "type": "placeValueTransformLab",
+          "task": "compare",
+          "answerMode": "choice",
+          "prompt": "Which is greater: 0.8 or 0.3?",
+          "values": [
+            0.8,
+            0.3
+          ],
+          "choices": [
+            {
+              "id": "a",
+              "label": "0.8",
+              "feedback": "Tenths: 8 > 3, so 0.8 is greater.",
+              "claim": "relation:gt"
+            },
+            {
+              "id": "b",
+              "label": "0.3",
+              "feedback": "Compare the tenths: 3 vs 8. Since 3 is smaller, 0.8 is greater.",
+              "claim": "misconception:b"
+            },
+            {
+              "id": "c",
+              "label": "Equal",
+              "feedback": "The tenths differ (8 vs 3), so they aren't equal. 0.8 is greater.",
+              "claim": "misconception:c"
+            }
+          ],
+          "numericErrors": [],
+          "requiredExplorations": 1,
+          "successFeedback": "Tenths: 8 > 3, so 0.8 is greater.",
+          "explorationFeedback": "Inspect at least 1 base-ten stage before checking.",
+          "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+          "tolerance": 0
+        }
+      }
+    }
+  ]
+}

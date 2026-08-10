@@ -1,0 +1,477 @@
+{
+  "id": "smg1-03-01",
+  "slug": "which-is-longer",
+  "title": "Which Is Longer?",
+  "courseId": "shapes-measure-g1",
+  "chapterId": "ch3-length-order-and-compare",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "length-compare",
+      "body": "You can measure length by counting how many small objects fit end to end — like paperclips. A pencil that's 5 paperclips long is longer than an eraser that's 3 paperclips long. More units means longer."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Measure a pencil by iterating paperclip-sized units.",
+      "widget": {
+        "type": "unitRuler",
+        "prompt": "Measure the pencil. Align zero, use one-paperclip units, and cover it with five units exactly.",
+        "objectStart": 1,
+        "objectEnd": 6,
+        "allowedUnitSizes": [
+          1,
+          2
+        ],
+        "targetUnitSize": 1,
+        "startUnitSize": 2,
+        "requiredPlacements": 5,
+        "successFeedback": "Five equal paperclip units cover the pencil exactly, so its length is 5 paperclips.",
+        "alignFeedback": "Start the first unit at the pencil’s starting end.",
+        "gapOverlapFeedback": "Every paperclip unit must touch the next without gaps or overlaps.",
+        "unitFeedback": "Use one-paperclip units so the count is in paperclips."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Iterate a nonstandard unit and connect coverage count to length.",
+        "invariants": [
+          "equal-unit-size",
+          "gap-free-iteration"
+        ],
+        "misconceptions": [
+          "bigger-unit-more-length",
+          "gaps-overlaps"
+        ],
+        "representations": [
+          "concrete",
+          "number-line",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "unit-iteration",
+        "delayed": true,
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the unit size while measuring the same object. What changes, and what physical quantity stays fixed?",
+        "explanation": {
+          "prompt": "Why is the final ruler label not always the object’s length?",
+          "options": [
+            {
+              "id": "difference",
+              "label": "Length is the distance between start and end, not the end label alone.",
+              "correct": true,
+              "feedback": "Exactly — subtract the start or iterate units across the interval."
+            },
+            {
+              "id": "label",
+              "label": "The end label always equals the length.",
+              "correct": false,
+              "feedback": "That works only when the object starts at zero."
+            }
+          ]
+        }
+      },
+      "predict": {
+        "prompt": "What must be true when units measure length?",
+        "options": [
+          {
+            "id": "touch",
+            "label": "Equal units touch end to end from the object’s start."
+          },
+          {
+            "id": "gaps",
+            "label": "Small gaps are harmless."
+          },
+          {
+            "id": "label",
+            "label": "The ending ruler label is always the length."
+          }
+        ],
+        "outcomeId": "touch",
+        "reveal": "Measurement iterates equal units from the correct starting point with no gaps or overlaps."
+      },
+      "conceptTag": "smg1-length-compare"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another comparison.",
+      "conceptTag": "smg1-length-compare",
+      "explanationVariants": [
+        "7 cubes is more than 4 cubes, so the marker is longer.",
+        "Compare the counts: 7 beats 4."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A marker is 7 cubes long. A crayon is 4 cubes long. Tap the longer one.",
+        "items": [
+          {
+            "id": "marker",
+            "label": "marker",
+            "length": 7
+          },
+          {
+            "id": "crayon",
+            "label": "crayon",
+            "length": 4,
+            "feedback": "The crayon is only 4 cubes long. The marker, at 7, is longer."
+          }
+        ],
+        "answerId": "marker",
+        "missFeedback": "Count the stripes: 7 beats 4 — the marker is longer.",
+        "successFeedback": "Yes — 7 cubes is more than 4, so the marker is longer.",
+        "unitLabel": "cubes"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length compare."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-measure-g1:smg1-length-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same idea tells you which is shorter — just look for the smaller count. Fewer units means shorter, the same way more units means longer.",
+      "figure": "smg1-fewer-shorter"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the shorter one.",
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A book is 8 blocks long. A phone is 3 blocks long. Tap the SHORTER one.",
+        "items": [
+          {
+            "id": "book",
+            "label": "book",
+            "length": 8,
+            "feedback": "The book is 8 blocks long — more than the phone's 3. The phone is shorter."
+          },
+          {
+            "id": "phone",
+            "label": "phone",
+            "length": 3
+          }
+        ],
+        "answerId": "phone",
+        "missFeedback": "Fewer stripes means shorter — the phone, at 3, is shorter.",
+        "successFeedback": "Yes — 3 blocks is fewer than 8, so the phone is shorter.",
+        "unitLabel": "blocks"
+      },
+      "conceptTag": "smg1-length-compare",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length compare."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-measure-g1:smg1-length-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Always compare with the same unit. If a pencil is measured in paperclips and an eraser is measured in cubes, you can't compare their counts directly — the units have to match.",
+      "figure": "smg1-same-unit"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Compare with cubes.",
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A spoon is 6 cubes long. A fork is 9 cubes long. Tap the longer one.",
+        "items": [
+          {
+            "id": "spoon",
+            "label": "spoon",
+            "length": 6,
+            "feedback": "The spoon is only 6 cubes long. The fork, at 9, is longer."
+          },
+          {
+            "id": "fork",
+            "label": "fork",
+            "length": 9
+          }
+        ],
+        "answerId": "fork",
+        "missFeedback": "Count the stripes: 9 beats 6 — the fork is longer.",
+        "successFeedback": "Yes — 9 cubes is more than 6, so the fork is longer.",
+        "unitLabel": "cubes"
+      },
+      "conceptTag": "smg1-length-compare",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length compare."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-measure-g1:smg1-length-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Shorter one.",
+      "conceptTag": "smg1-length-compare",
+      "explanationVariants": [
+        "2 paperclips is fewer than 6, so the key is shorter.",
+        "Compare the counts: 2 is less than 6."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A key is 2 paperclips long. A ruler is 6 paperclips long. Tap the SHORTER one.",
+        "items": [
+          {
+            "id": "key",
+            "label": "key",
+            "length": 2
+          },
+          {
+            "id": "ruler",
+            "label": "ruler",
+            "length": 6,
+            "feedback": "The ruler is 6 paperclips long — more than the key's 2. The key is shorter."
+          }
+        ],
+        "answerId": "key",
+        "missFeedback": "Fewer stripes means shorter — the key, at 2, is shorter.",
+        "successFeedback": "Yes — 2 paperclips is fewer than 6, so the key is shorter.",
+        "unitLabel": "paperclips"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length compare."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-measure-g1:smg1-length-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Longer one.",
+      "conceptTag": "smg1-length-compare",
+      "explanationVariants": [
+        "10 cubes is more than 4, so the shoe is longer.",
+        "Compare the counts: 10 beats 4."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A shoe is 10 cubes long. A sock is 4 cubes long. Tap the longer one.",
+        "items": [
+          {
+            "id": "shoe",
+            "label": "shoe",
+            "length": 10
+          },
+          {
+            "id": "sock",
+            "label": "sock",
+            "length": 4,
+            "feedback": "The sock is only 4 cubes long. The shoe, at 10, is longer."
+          }
+        ],
+        "answerId": "shoe",
+        "missFeedback": "Count the stripes: 10 beats 4 — the shoe is longer.",
+        "successFeedback": "Yes — 10 cubes is more than 4, so the shoe is longer.",
+        "unitLabel": "cubes"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length compare."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-measure-g1:smg1-length-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Close counts.",
+      "conceptTag": "smg1-length-compare",
+      "explanationVariants": [
+        "9 blocks is more than 8, so the wallet is longer, even though the counts are close.",
+        "Even a difference of 1 block still decides it: 9 beats 8."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A wallet is 9 blocks long. A card is 8 blocks long. Tap the longer one — count carefully, it is close!",
+        "items": [
+          {
+            "id": "wallet",
+            "label": "wallet",
+            "length": 9
+          },
+          {
+            "id": "card",
+            "label": "card",
+            "length": 8,
+            "feedback": "The card is 8 blocks long — 1 less than the wallet's 9. The wallet is longer."
+          }
+        ],
+        "answerId": "wallet",
+        "missFeedback": "They differ by just one stripe — count again: 9 beats 8.",
+        "successFeedback": "Yes — 9 blocks is more than 8, so the wallet is longer, even though it is close.",
+        "unitLabel": "blocks"
+      },
+      "hints": [
+        "Compare the two block-counts: 9 and 8.",
+        "9 is more than 8.",
+        "So the wallet (9 blocks) is longer."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents length compare.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for length compare must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines length compare."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-measure-g1:smg1-length-compare",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Measuring with the same unit lets you compare lengths by comparing counts.",
+      "takeaways": [
+        "More units of length means longer.",
+        "Fewer units means shorter.",
+        "Only compare counts measured in the same unit."
+      ],
+      "teaser": "next: finding exactly how much longer one thing is."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "smg1-length-compare",
+      "concept": {
+        "id": "rem-slc-c",
+        "kind": "concept",
+        "body": "When two objects are measured in the same unit (like paperclips), the one with the bigger count is longer. A pencil at 5 paperclips is longer than an eraser at 3."
+      },
+      "check": {
+        "id": "rem-slc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "smg1-length-compare",
+        "explanationVariants": [
+          "5 is more than 3, so the pencil is longer.",
+          "Compare the counts: 5 beats 3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A pencil is 5 paperclips long. An eraser is 3 paperclips long. Which is longer, the pencil or the eraser?",
+          "options": [
+            {
+              "id": "a",
+              "label": "the pencil",
+              "correct": true,
+              "feedback": "Yes — 5 is more than 3."
+            },
+            {
+              "id": "b",
+              "label": "the eraser",
+              "feedback": "3 is fewer than 5; the pencil is longer."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

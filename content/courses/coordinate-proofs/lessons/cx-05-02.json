@@ -1,0 +1,304 @@
+{
+  "id": "cx-05-02",
+  "slug": "on-inside-outside",
+  "title": "On, Inside, Outside",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch5-circle-equation",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-circle-position",
+      "concept": {
+        "id": "rem-cx-circle-position-c",
+        "kind": "concept",
+        "body": "To place a point relative to a circle, substitute it into (x − h)² + (y − k)² and compare with r²: equal means on the circle, less means inside, greater means outside. Squared distances order the same way as distances, so no square roots are ever needed — evaluate and compare."
+      },
+      "check": {
+        "id": "rem-cx-circle-position-k",
+        "kind": "check",
+        "body": "One verdict.",
+        "conceptTag": "cx-circle-position",
+        "explanationVariants": [
+          "(4, 1): (4 − 1)² + (1 − 1)² = 9, against r² = 16.",
+          "9 < 16: inside."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Circle (x − 1)² + (y − 1)² = 16. The point (4, 1) is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Inside — it evaluates to 9 < 16",
+              "correct": true,
+              "feedback": "Three units out against a radius of four: 9 < 16, inside."
+            },
+            {
+              "id": "o2",
+              "label": "On the circle",
+              "correct": false,
+              "feedback": "On needs exactly 16 — the point gives 9: inside."
+            },
+            {
+              "id": "o3",
+              "label": "Outside",
+              "correct": false,
+              "feedback": "9 falls short of 16 — inside."
+            },
+            {
+              "id": "o4",
+              "label": "On the center",
+              "correct": false,
+              "feedback": "The center is (1, 1) — this point sits 3 away: inside the radius-4 circle."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The equation is a JUDGE. Substitute any point into (x − h)² + (y − k)² and compare the result to r²: **equal ⇒ on the circle; less ⇒ inside; greater ⇒ outside.** It's chapter 3's d² discipline again — squared distances compare perfectly well without ever taking a root.",
+      "figure": "cx-circle-judge"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Three verdicts.",
+      "conceptTag": "cx-circle-position",
+      "explanationVariants": [
+        "(7, 2): (7−3)² + (2−2)² = 16.",
+        "16 < 25: inside."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Against the figure's circle (x − 3)² + (y − 2)² = 25, the point (7, 2) is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Inside — (7−3)² + (2−2)² = 16 < 25",
+            "correct": true,
+            "feedback": "Four units from the center against a radius of five — the squared comparison (16 < 25) says it without a single root."
+          },
+          {
+            "id": "o2",
+            "label": "On the circle",
+            "correct": false,
+            "feedback": "On would need exactly 25 — the point delivers 16: inside."
+          },
+          {
+            "id": "o3",
+            "label": "Outside",
+            "correct": false,
+            "feedback": "Outside needs MORE than 25 — 16 falls short: inside."
+          },
+          {
+            "id": "o4",
+            "label": "Undecidable without the distance formula's root",
+            "correct": false,
+            "feedback": "Roots never needed: d² vs r² settles it. 16 < 25 ⇒ inside."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-position__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The boundary case.",
+      "conceptTag": "cx-circle-position",
+      "explanationVariants": [
+        "(−2, 3): (−2 − 3)² + (3 − 2)² = 25 + 1.",
+        "26 > 25 — barely, but outside is outside."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same circle. Evaluate (x − 3)² + (y − 2)² at the point (−2, 3).",
+        "answer": 26,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 would put it ON the circle — careful with the first square: (−2 − 3)² = (−5)² = 25, plus 1 = 26. Just outside."
+          },
+          {
+            "value": 24,
+            "feedback": "24 subtracts the 1 — both squares ADD: 25 + 1 = 26."
+          },
+          {
+            "value": 2,
+            "feedback": "2 = (−2 + 3)² + (3 − 2)² flips the subtraction — the template subtracts h: (−2 − 3)² = 25, total 26."
+          }
+        ],
+        "fallbackFeedback": "(−5)² + 1² = 26 > 25 — outside by a whisker."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-position__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Radius hunt.",
+      "conceptTag": "cx-circle-position",
+      "explanationVariants": [
+        "For (5, 8) to sit ON the circle centered (2, 4): r² = (5−2)² + (8−4)².",
+        "9 + 16 = 25, so r = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle centered at (2, 4) must pass through (5, 8). Its radius r = ?",
+        "answer": 5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is r² — the radius takes the root: 5."
+          },
+          {
+            "value": 7,
+            "feedback": "7 = 3 + 4 adds legs unsquared — r = √(9 + 16) = 5."
+          },
+          {
+            "value": 3.5,
+            "feedback": "3.5 averages the legs — the distance is √(3² + 4²) = 5."
+          }
+        ],
+        "fallbackFeedback": "r = √(9 + 16) = 5."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-position__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A safety radius.",
+      "predict": {
+        "prompt": "A cell tower at the origin covers a disk of radius 20. A house sits at (12, 16) — exactly a scaled 3–4–5 triangle away. Inside, outside, or exactly on the edge?",
+        "options": [
+          {
+            "id": "edge",
+            "label": "Exactly on the edge — no margin either way"
+          },
+          {
+            "id": "inside",
+            "label": "Comfortably inside"
+          },
+          {
+            "id": "outside",
+            "label": "Just outside"
+          }
+        ],
+        "outcomeId": "edge",
+        "reveal": "Exactly on the edge. 12² + 16² = 400 = 20², so the distance from the tower to the house equals the radius exactly — zero margin. Drag to the house and watch the readout land precisely on 20."
+      },
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "Drag the point to the house at (12, 16) and read its distance from the tower at the origin — then compare that to the coverage radius of 20.",
+        "anchor": [
+          0,
+          0
+        ],
+        "targetPoint": [
+          12,
+          16
+        ],
+        "gridMin": 0,
+        "gridMax": 16,
+        "startX": 4,
+        "startY": 4,
+        "successFeedback": "√(12² + 16²) = √400 = 20 — exactly the coverage radius. 144 + 256 lands precisely on 400: the house sits on the boundary, covered with zero margin.",
+        "wrongPointFeedback": "Not the house yet. Keep dragging toward (12, 16) and watch the distance readout climb toward the radius, 20."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Inside margin.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Circle x² + y² = 169. The point (5, 12) evaluates to 25 + 144 = 169 (on the circle). The point (5, 11) evaluates to ?",
+        "answer": 146,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 169,
+            "feedback": "169 belongs to (5, 12) — dropping y to 11 gives 25 + 121 = 146: inside."
+          },
+          {
+            "value": 147,
+            "feedback": "147 miscounts 11² — 121 + 25 = 146."
+          }
+        ],
+        "fallbackFeedback": "25 + 121 = 146 < 169 — one step down moves the point inside."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The delivery zone.",
+      "conceptTag": "cx-circle-position",
+      "hints": [
+        "The zone is (x − 4)² + (y − 3)² ≤ r², and it must JUST include (10, 11).",
+        "'Just include' pins (10, 11) exactly on the boundary.",
+        "Then test (0, 0) against that r²."
+      ],
+      "explanationVariants": [
+        "r² = (10−4)² + (11−3)² = 36 + 64 = 100. Origin check: (0−4)² + (0−3)² = 25 ≤ 100 — covered, with 16 + 9 = 25 giving distance 5 against radius 10.",
+        "r² = 100; the origin evaluates to 25: inside."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A delivery zone centered at (4, 3) is drawn just large enough to include the house at (10, 11). Is the warehouse at (0, 0) inside the zone?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — the zone's r² = 100, and the origin evaluates to only 25: deep inside",
+            "correct": true,
+            "feedback": "Boundary through (10,11) fixes r² = 36 + 64 = 100; the origin's 16 + 9 = 25 sits well under it — distance 5 against radius 10."
+          },
+          {
+            "id": "o2",
+            "label": "No — the origin is always outside a shifted circle",
+            "correct": false,
+            "feedback": "Shifted centers exclude nothing automatically — the test is arithmetic: 25 ≤ 100, inside."
+          },
+          {
+            "id": "o3",
+            "label": "Exactly on the boundary",
+            "correct": false,
+            "feedback": "The boundary sits at 100 — the origin's 25 is far under: inside."
+          },
+          {
+            "id": "o4",
+            "label": "Yes, but only because 4 + 3 < 10 + 11",
+            "correct": false,
+            "feedback": "Coordinate sums prove nothing — the squared-distance comparison (25 vs 100) is the argument."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-circle-position__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The equation as judge.",
+      "takeaways": [
+        "Substitute, then compare to r²: equal = on, less = inside, greater = outside.",
+        "No roots — squared distances rank exactly like distances (chapter 3's discipline).",
+        "Design radii by pinning a boundary point: r² = that point's evaluation."
+      ],
+      "teaser": "Finale: circles in disguise — completing the square unmasks them."
+    }
+  ]
+}

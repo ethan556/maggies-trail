@@ -1,0 +1,369 @@
+{
+  "id": "sp-04-01",
+  "slug": "counting-all-the-outcomes",
+  "title": "Counting All the Outcomes",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch4-probability-models-and-compound-events",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "compound-event-tree",
+      "body": "A compound event combines two or more chance events. Flipping a coin AND rolling a die: 2 coin outcomes × 6 die outcomes = 12 total outcomes."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Each branch splits again. Add branches and count the endings — that's why outcomes multiply instead of adding.",
+      "widget": {
+        "type": "treeDiagram",
+        "prompt": "3 shirts and 4 hats. Set the branches to show every outfit.",
+        "stage1Label": "shirts",
+        "stage2Label": "hats",
+        "targetA": 3,
+        "targetB": 4,
+        "maxA": 6,
+        "maxB": 6,
+        "aStart": 1,
+        "bStart": 1,
+        "successFeedback": "12 endings — every shirt fans into all 4 hats, so the counts multiply: 3 × 4 = 12.",
+        "lowFeedback": "Fewer endings than there are outfits. Add branches so each shirt reaches every hat.",
+        "highFeedback": "More endings than the problem describes — that's too many branches."
+      },
+      "predict": {
+        "prompt": "3 shirts and 4 hats — how many different outfits?",
+        "options": [
+          {
+            "id": "mult",
+            "label": "12 — each shirt pairs with all 4 hats"
+          },
+          {
+            "id": "add",
+            "label": "7 — add them up"
+          },
+          {
+            "id": "four",
+            "label": "4 — one per hat"
+          }
+        ],
+        "outcomeId": "mult",
+        "reveal": "Each of the 3 shirts fans out into 4 hat-branches: 3 × 4 = 12 leaves on the tree. Adding 3 + 4 = 7 counts the CLOTHES in the closet, not the ways to combine them."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Construct a complete multistage sample space and coordinate branches with counting and probability.",
+        "invariants": [
+          "each-path-is-one-outcome",
+          "branch-counts-multiply-across-stages"
+        ],
+        "misconceptions": [
+          "add-choices-along-a-path",
+          "omit-valid-outcomes"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-treeDiagram-new-context",
+        "delayed": false
+      },
+      "conceptTag": "sp-sample-space-size"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the total outcomes.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That adds 2+6 instead of multiplying. Total outcomes = 2 × 6 = 12."
+          },
+          {
+            "value": 6,
+            "feedback": "That's just the die's outcomes. Multiply by the coin's 2 outcomes too: 2 × 6 = 12."
+          }
+        ],
+        "fallbackFeedback": "2 coin outcomes × 6 die outcomes = 12 total outcomes."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count outcomes from a different combination.",
+      "conceptTag": "sp-sample-space-size",
+      "explanationVariants": [
+        "4 shirts × 3 pants = 12 outfits.",
+        "Multiply the number of choices at each stage."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A store has 4 shirts and 3 pants. How many total outfits are possible?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That adds 4+3 instead of multiplying. Total outfits = 4 × 3 = 12."
+          },
+          {
+            "value": 4,
+            "feedback": "That's just the shirts. Multiply by the 3 pants too: 4 × 3 = 12."
+          }
+        ],
+        "fallbackFeedback": "4 shirts × 3 pants = 12 outfits."
+      },
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountOutfitsA"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This is the counting principle: multiply the number of choices at each stage to find the total, without listing every single outcome by hand.",
+      "figure": "sp-counting-principle"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count outcomes from repeated flips.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Flipping a coin 3 times: how many total outcomes are there?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That adds 2+2+2 instead of multiplying. Total outcomes = 2 × 2 × 2 = 8."
+          },
+          {
+            "value": 3,
+            "feedback": "That's just the number of flips. Multiply the 2 outcomes for each flip: 2×2×2=8."
+          }
+        ],
+        "fallbackFeedback": "2 × 2 × 2 = 8 total outcomes."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "You can double-check by listing every outcome — HHH, HHT, HTH, HTT, THH, THT, TTH, TTT — that's 8, matching the multiplication.",
+      "figure": "compound-event-tree"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Count outcomes from a bigger combination.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A store has 5 shirts and 4 pants. How many total outfits are possible?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That adds 5+4 instead of multiplying. Total outfits = 5 × 4 = 20."
+          },
+          {
+            "value": 5,
+            "feedback": "That's just the shirts. Multiply by the 4 pants too: 5 × 4 = 20."
+          }
+        ],
+        "fallbackFeedback": "5 shirts × 4 pants = 20 outfits."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count outcomes, coin and die again.",
+      "conceptTag": "sp-sample-space-size",
+      "explanationVariants": [
+        "2 × 6 = 12.",
+        "Multiply the choices at each stage."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That adds instead of multiplying. 2 × 6 = 12."
+          },
+          {
+            "value": 6,
+            "feedback": "Multiply by the coin's 2 outcomes too: 2 × 6 = 12."
+          }
+        ],
+        "fallbackFeedback": "12."
+      },
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountCoinDieA"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count outcomes from four flips.",
+      "conceptTag": "sp-counting-principle",
+      "explanationVariants": [
+        "2×2×2×2=16.",
+        "Multiply the 2 outcomes for each flip."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Flipping a coin 4 times: how many total outcomes are there?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That adds 2+2+2+2 instead of multiplying. Total outcomes = 2×2×2×2 = 16."
+          },
+          {
+            "value": 4,
+            "feedback": "That's just the number of flips. Multiply the 2 outcomes for each flip: 2×2×2×2=16."
+          }
+        ],
+        "fallbackFeedback": "2 × 2 × 2 × 2 = 16 total outcomes."
+      },
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountFlips"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier outfit-counting challenge.",
+      "conceptTag": "sp-counting-principle",
+      "explanationVariants": [
+        "6 shirts × 5 pants = 30.",
+        "Multiply the number of choices at each stage."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A store has 6 shirts and 5 pants. How many total outfits are possible?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "That adds 6+5 instead of multiplying. Total outfits = 6 × 5 = 30."
+          },
+          {
+            "value": 6,
+            "feedback": "That's just the shirts. Multiply by the 5 pants too: 6 × 5 = 30."
+          }
+        ],
+        "fallbackFeedback": "6 shirts × 5 pants = 30 outfits."
+      },
+      "hints": [
+        "You're combining 6 shirt choices with 5 pants choices.",
+        "Multiply: 6 × 5.",
+        "6 × 5 = 30 total outfits."
+      ],
+      "variant": {
+        "gen": "g7-sp-counting-principle",
+        "form": "spCountOutfitsChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The counting principle multiplies the number of choices at each stage to find the total outcomes, without listing them all by hand.",
+      "takeaways": [
+        "Multiply the choices at each stage: 2 outcomes × 6 outcomes = 12.",
+        "This works for any number of stages, not just two.",
+        "You can double-check a small case by listing every outcome."
+      ],
+      "teaser": "next: finding the probability of a compound event."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-sample-space-size",
+      "concept": {
+        "id": "rem-ssss-c",
+        "kind": "concept",
+        "body": "The counting principle: multiply the number of choices at each stage to find the total outcomes. Coin (2) and die (6): 2×6=12."
+      },
+      "check": {
+        "id": "rem-ssss-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-sample-space-size",
+        "explanationVariants": [
+          "2 × 6 = 12.",
+          "Multiply the choices at each stage."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "Adding gives 2 + 6 = 8. Each coin side pairs with every die face, so multiply: 2 × 6 = 12."
+            },
+            {
+              "value": 6,
+              "feedback": "Multiply by the coin's 2 too: 12."
+            }
+          ],
+          "fallbackFeedback": "12."
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-counting-principle",
+      "concept": {
+        "id": "rem-scp-c",
+        "kind": "concept",
+        "body": "For 3+ stages, multiply all the choices together: 3 coin flips = 2×2×2=8. A store with 6 shirts and 5 pants = 6×5=30 outfits."
+      },
+      "check": {
+        "id": "rem-scp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-counting-principle",
+        "explanationVariants": [
+          "2×2×2=8.",
+          "Multiply the 2 outcomes for each flip."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Flipping a coin 3 times: how many total outcomes are there?",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "Adding the flips gives 6. Each flip doubles the outcomes, so multiply: 2 × 2 × 2 = 8."
+            },
+            {
+              "value": 3,
+              "feedback": "Multiply the 2 outcomes for each flip: 8."
+            }
+          ],
+          "fallbackFeedback": "8."
+        }
+      }
+    }
+  ]
+}

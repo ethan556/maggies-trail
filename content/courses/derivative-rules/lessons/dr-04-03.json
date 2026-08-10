@@ -1,0 +1,285 @@
+{
+  "id": "dr-04-03",
+  "slug": "implicit-differentiation",
+  "title": "Implicit Differentiation in Practice",
+  "courseId": "derivative-rules",
+  "chapterId": "ch4-the-chain-rule",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An implicit derivative usually comes out in terms of **both x and y** — and that is not a failure. It is the honest answer.\n\nOn a circle, dy/dx = −x/y. The slope depends on WHERE you are on the curve, and a circle has two points above most x-values with opposite slopes. Only a formula mentioning y can tell them apart.",
+      "figure": "dr-implicit-circle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why y has to be in the answer.",
+      "conceptTag": "dr-implicit-practice",
+      "explanationVariants": [
+        "Above x = 3 the circle has two points, (3, 4) and (3, −4), and their tangents have opposite slopes: −3/4 and +3/4. A formula in x alone could never give both.",
+        "dy/dx = −x/y feeds on the y-coordinate precisely so it can tell the top of the circle from the bottom."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On x² + y² = 25, why does dy/dx = −x/y depend on y as well as x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Because the curve has two points above most x-values, with opposite slopes — and only y can distinguish them.",
+            "correct": true,
+            "feedback": "Right. At (3, 4) the slope is −3/4 and at (3, −4) it is +3/4. A formula in x alone would have to choose one and be wrong about the other."
+          },
+          {
+            "id": "o2",
+            "label": "Because we made a mistake and failed to eliminate y.",
+            "correct": false,
+            "feedback": "Nothing went wrong. The dependence on y is information, not residue — it is what lets one formula serve the whole curve."
+          },
+          {
+            "id": "o3",
+            "label": "Because the circle is not a function.",
+            "correct": false,
+            "feedback": "True, and that is WHY implicit differentiation exists — but the question is what the y in the answer is doing, and it is telling the two branches apart."
+          },
+          {
+            "id": "o4",
+            "label": "It does not really — you can always substitute y = √(25 − x²).",
+            "correct": false,
+            "feedback": "You can, on the top half. Then you need a second formula for the bottom half. The implicit answer covers both at once."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-implicit-practice__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The tangent to a curve that is not a function.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Build the tangent line to a circle at (3, 4).",
+        "panels": [
+          {
+            "title": "Differentiate the equation",
+            "body": "x² + y² = 25 gives 2x + 2y·(dy/dx) = 0. Every y costs a dy/dx — that is the chain rule doing its job."
+          },
+          {
+            "title": "Solve for the slope",
+            "body": "dy/dx = −x/y. At the point (3, 4) that is −3/4. Notice we never had to write y as a function of x, and we could not have done so for the whole circle anyway."
+          },
+          {
+            "title": "Then it is just a line",
+            "body": "A point and a slope: y − 4 = −(3/4)(x − 3). The calculus ended at the slope; the rest is the geometry you already had."
+          }
+        ],
+        "continueFeedback": "Keep going — the calculus stops sooner than you expect.",
+        "successFeedback": "Differentiate, solve for dy/dx, substitute the point. Then it is a line through a point with a slope, and you have known how to do that for years."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "The reveal computed the slope at one point. Now hold the whole circle: slide the point and watch dy/dx come straight out of the relation — no y(x) formula ever written.",
+      "predict": {
+        "prompt": "A point slides to the RIGHT along the upper half of x² + y² = 25, so x grows and y shrinks. What happens to the slope dy/dx = −x/y?",
+        "options": [
+          {
+            "id": "constant",
+            "label": "Stays the same — it's one circle, one slope"
+          },
+          {
+            "id": "steeper",
+            "label": "Gets steeper (more negative): x is growing AND y is shrinking"
+          },
+          {
+            "id": "shallower",
+            "label": "Gets shallower — big circles are flat"
+          }
+        ],
+        "outcomeId": "steeper",
+        "reveal": "Steeper, on both counts at once: the numerator x grows while the denominator y shrinks, so −x/y falls fast. That is why the answer to an implicit derivative KEEPS y in it — the slope genuinely depends on both coordinates, which is exactly what lets you skip solving for y as a function of x."
+      },
+      "widget": {
+        "type": "relatedRatesLab",
+        "prompt": "On the circle x² + y² = 25, slide the point to x = 3 and read the slope there.",
+        "framing": "slope",
+        "ladderLength": 5,
+        "horizontalRate": 1,
+        "targetX": 3,
+        "startX": 1,
+        "successFeedback": "At x = 3 the circle forces y = 4, and the relation 2x + 2y·(dy/dx) = 0 hands you dy/dx = −x/y = −3/4 — the reveal's exact number, read off the point's position. You never wrote y as a function of x; the relation itself did the differentiating.",
+        "explorationFeedback": "Watch the readout as you slide: dy/dx = −x/y changes at every position because it depends on BOTH coordinates. That dependence is the whole reason implicit differentiation leaves y in the answer.",
+        "positionFeedback": "Bring the point to x = 3 — the reveal's point (3, 4) — and check the slope readout against the −3/4 the algebra produced."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Finish the tangent line.",
+      "conceptTag": "dr-implicit-practice",
+      "explanationVariants": [
+        "The tangent at (3, 4) is y − 4 = −(3/4)(x − 3). At x = 0 that gives y = 4 + 9/4 = 6.25.",
+        "The slope came from calculus; the intercept is ordinary line-work."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The tangent to x² + y² = 25 at (3, 4) has slope −3/4. Find its y-intercept, as a decimal.",
+        "answer": 6.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is the y-coordinate of the POINT, not where the tangent crosses the axis. Run the line back: y = 4 + (−3/4)(0 − 3) = 4 + 2.25."
+          },
+          {
+            "value": 5,
+            "feedback": "That is the circle's radius. The intercept comes from the line: 4 + 9/4 = 6.25."
+          },
+          {
+            "value": 1.75,
+            "feedback": "Sign slip: (−3/4)(0 − 3) = +9/4, so it ADDS to 4, giving 6.25."
+          }
+        ],
+        "fallbackFeedback": "y = 4 + (−3/4)(0 − 3) = 4 + 2.25 = 6.25."
+      },
+      "variant": {
+        "gen": "implicit-diff"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When a **product** of x and y appears, the product rule and the chain rule arrive together.\n\nFor xy: differentiate as a product — one term for each factor taking its turn — and the y-term picks up its dy/dx.\n\nd/dx[xy] = 1·y + x·(dy/dx).",
+      "figure": "dr-product-rule-box"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A product of the two variables.",
+      "conceptTag": "dr-implicit-practice",
+      "explanationVariants": [
+        "xy = 12 → y + x·y′ = 0 → y′ = −y/x. At (3, 4) that is −4/3 ≈ −1.333.",
+        "The hyperbola is falling steeply there, which is exactly what a negative slope of size 4/3 says."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "xy = 12. Find dy/dx at the point (3, 4), as a decimal to three places.",
+        "answer": -1.333,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.333,
+            "feedback": "The sign is wrong. y + x·y′ = 0 gives y′ = −y/x, and on this branch the hyperbola is FALLING."
+          },
+          {
+            "value": -0.75,
+            "feedback": "That is −x/y = −3/4 — the two variables have been swapped. Here y′ = −y/x = −4/3."
+          },
+          {
+            "value": -12,
+            "feedback": "That is the constant on the right-hand side, whose derivative is 0. Differentiate the product properly: y + x·y′."
+          }
+        ],
+        "fallbackFeedback": "y + x·y′ = 0 → y′ = −y/x = −4/3 ≈ −1.333."
+      },
+      "variant": {
+        "gen": "implicit-diff",
+        "form": "hyperbola"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Every rule at once.",
+      "conceptTag": "dr-implicit-practice",
+      "hints": [
+        "Differentiate every term with respect to x. The xy term needs the PRODUCT rule; the y² term needs the CHAIN rule.",
+        "You get 2x + (y + x·y′) + 2y·y′ = 0. Now collect the y′ terms on one side.",
+        "y′(x + 2y) = −(2x + y). Substitute (1, 2) and divide."
+      ],
+      "explanationVariants": [
+        "2x + y + x·y′ + 2y·y′ = 0 → y′(x + 2y) = −(2x + y). At (1, 2): y′(1 + 4) = −(2 + 2), so y′ = −4/5 = −0.8.",
+        "First check the point is on the curve: 1 + 2 + 4 = 7 ✓. Then collect and divide — implicit differentiation is always 'differentiate, collect, divide'."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x² + xy + y² = 7. Find dy/dx at (1, 2), as a decimal.",
+        "answer": -0.8,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "The sign is wrong: y′(x + 2y) = −(2x + y), and the minus applies to the whole numerator."
+          },
+          {
+            "value": -1.25,
+            "feedback": "That is the reciprocal, −5/4. The numerator is −(2x + y) = −4 and the denominator is (x + 2y) = 5."
+          },
+          {
+            "value": -0.5,
+            "feedback": "Check the xy term: it needs the PRODUCT rule, giving y + x·y′ — two pieces, not one."
+          }
+        ],
+        "fallbackFeedback": "2x + y + x·y′ + 2y·y′ = 0 → y′ = −(2x + y)/(x + 2y) = −4/5 = −0.8."
+      },
+      "variant": {
+        "gen": "implicit-diff",
+        "form": "quadForm"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Differentiate, collect, divide.",
+      "takeaways": [
+        "An implicit derivative in terms of BOTH x and y is the honest answer — it is what lets one formula serve a curve with two branches.",
+        "A product of x and y needs the product rule AND the chain rule together: d/dx[xy] = y + x·y′.",
+        "The recipe never changes: differentiate every term, collect the y′ terms, divide."
+      ],
+      "teaser": "Next chapter: the derivatives of the whole function library — starting with the curve that is its own derivative."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-implicit-practice",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Three steps, always the same. **Differentiate** every term with respect to x, charging a y′ each time a y is differentiated. **Collect** every y′ term on one side. **Divide.** The algebra is ordinary; only the y′ bookkeeping is new.",
+        "figure": "dr-implicit-circle"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Collect and divide.",
+        "conceptTag": "dr-implicit-practice",
+        "explanationVariants": [
+          "2x + 2y·y′ = 0 → y′ = −x/y. At (3, 4) that is −0.75.",
+          "Differentiate, collect the y′, divide. Nothing else happens."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "x² + y² = 25. Find dy/dx at (3, 4), as a decimal.",
+          "answer": -0.75,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.75,
+              "feedback": "The sign is wrong: 2x + 2y·y′ = 0 forces y′ = −x/y, and the circle is falling at that point."
+            },
+            {
+              "value": -1.333,
+              "feedback": "That is −y/x. On a circle the derivative is −x/y = −3/4."
+            }
+          ],
+          "fallbackFeedback": "y′ = −x/y = −3/4 = −0.75."
+        }
+      }
+    }
+  ]
+}

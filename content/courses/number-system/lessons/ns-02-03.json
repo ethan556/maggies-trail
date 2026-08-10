@@ -1,0 +1,277 @@
+{
+  "id": "ns-02-03",
+  "slug": "multiplying-and-dividing-decimals",
+  "title": "Multiplying and Dividing Decimals",
+  "courseId": "number-system",
+  "chapterId": "ch2-fluent-operations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Multiplying decimals: ignore the points, multiply the whole numbers, then **count total decimal places** and place the point. 2.5 × 1.4: 25 × 14 = 350; both factors together have 2 decimal places, so the answer gets 2: **3.50**, which is 3.5.",
+      "figure": "dop-count-places"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the places.",
+      "conceptTag": "decimal-mult-div",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To multiply 2.5 × 1.4, you compute 25 × 14 = 350. How many decimal places does the final answer need?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2 — one place from each factor",
+            "correct": true,
+            "feedback": "Right — 2.5 has 1 decimal place, 1.4 has 1, so the product needs 1 + 1 = 2: 3.50."
+          },
+          {
+            "id": "b",
+            "label": "1 — matching the bigger factor",
+            "feedback": "Decimal places ADD from both factors, they don't just copy one. 1 (from 2.5) + 1 (from 1.4) = 2 places."
+          },
+          {
+            "id": "c",
+            "label": "0 — since 350 is already a whole number",
+            "feedback": "350 is the digit product BEFORE placing the decimal. Both factors' places (1 + 1 = 2) must be restored: 3.50."
+          }
+        ]
+      },
+      "hints": [
+        "Count decimal places in EACH factor.",
+        "2.5 has 1, 1.4 has 1.",
+        "Total: 1 + 1 = 2 places."
+      ],
+      "explanationVariants": [
+        "1 place + 1 place = 2 places total.",
+        "Decimal places from both factors add together."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Place the point.",
+      "conceptTag": "decimal-mult-div",
+      "explanationVariants": [
+        "25 × 14 = 350, and 2 total decimal places gives 3.50.",
+        "Count places from both factors, then count that many digits from the right."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 2.5 × 1.4.",
+        "answer": 3.5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "35 forgets to place the decimal point at all. Count 2 total decimal places (1 + 1) from the right: 3.50."
+          },
+          {
+            "value": 0.35,
+            "feedback": "That places the point one digit too far. 2.5 has 1 place, 1.4 has 1 place — 2 total, giving 3.50, not 0.35."
+          }
+        ],
+        "fallbackFeedback": "25 × 14 = 350; 2 total decimal places gives 3.50."
+      },
+      "variant": {
+        "gen": "decimal-compute"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Dividing decimals: make the **divisor a whole number** first, by shifting both decimal points the same number of places. 12.6 ÷ 0.3: shift both one place right — 126 ÷ 3 = **42**. Shifting both points equally doesn't change the answer, because it's the same as multiplying both numbers by 10.",
+      "figure": "decimal-shift"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Shift and divide.",
+      "conceptTag": "decimal-mult-div",
+      "explanationVariants": [
+        "Shift both points one place: 96 ÷ 12 = 8.",
+        "9.6 ÷ 1.2 becomes 96 ÷ 12 once both points move one place right."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 9.6 ÷ 1.2.",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "0.8 divides only 9.6 ÷ 12, forgetting to shift the DIVISOR's point too. Shift both: 96 ÷ 12 = 8."
+          },
+          {
+            "value": 80,
+            "feedback": "80 shifts one point but not correctly balanced. Shift both points the same one place: 96 ÷ 12 = 8."
+          }
+        ],
+        "fallbackFeedback": "Shift both points one place: 96 ÷ 12 = 8."
+      },
+      "variant": {
+        "gen": "decimal-compute",
+        "form": "divCompute"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another multiply.",
+      "conceptTag": "decimal-mult-div",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "The whole square is 1, cut into 100 small squares. Shade a block 6 tenths wide and 7 tenths tall, then count what you covered.",
+        "rows": 10,
+        "cols": 10,
+        "targetNum": 42,
+        "targetDen": 100,
+        "start": 0,
+        "successFeedback": "42 small squares — 42 hundredths, or 0.42. Each small square is a tenth OF a tenth, which is a hundredth, and that is the whole reason the answer needs two decimal places: one from each factor. Counting places is not a rule to memorise; it is what the grid was always going to do.",
+        "lowFeedback": "Not enough shaded yet. The block is 6 columns across and 7 rows down — if you are near 13, you have added the tenths instead of covering the rectangle they make.",
+        "highFeedback": "Too much shaded. Keep the block to 6 columns across and 7 rows down; anything wider or taller is a different product."
+      },
+      "predict": {
+        "prompt": "For 0.6 × 0.7 you'll compute 6 × 7 = 42. The final answer will be…",
+        "options": [
+          {
+            "id": "two",
+            "label": "0.42 — one decimal place from each factor"
+          },
+          {
+            "id": "one",
+            "label": "4.2 — one place total is enough"
+          },
+          {
+            "id": "whole",
+            "label": "42 — the zeros drop away"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Each factor carries one decimal place, and places ADD in multiplication: 42 needs two, giving 0.42. Notice it's smaller than either factor — six-tenths OF seven-tenths is a piece of a piece."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another divide.",
+      "conceptTag": "decimal-mult-div",
+      "explanationVariants": [
+        "Shift both points one place: 48 ÷ 4 = 12.",
+        "4.8 ÷ 0.4 becomes 48 ÷ 4 once the divisor is a whole number."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 4.8 ÷ 0.4.",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1.2,
+            "feedback": "1.2 divides 4.8 ÷ 4, forgetting to shift the divisor's point too. Shift both: 48 ÷ 4 = 12."
+          },
+          {
+            "value": 120,
+            "feedback": "120 shifts one point but places it incorrectly after. Shift both points one place: 48 ÷ 4 = 12."
+          }
+        ],
+        "fallbackFeedback": "Shift both points one place: 48 ÷ 4 = 12."
+      },
+      "variant": {
+        "gen": "decimal-compute",
+        "form": "divCompute"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Multiply, then divide, with the same numbers.",
+      "conceptTag": "decimal-mult-div",
+      "hints": [
+        "First: 7.2 × 0.5.",
+        "72 × 5 = 360; place 2 decimal places.",
+        "Then use that product for the division."
+      ],
+      "explanationVariants": [
+        "7.2 × 0.5 = 3.60 = 3.6, then 15.6 ÷ 2.6 = 156 ÷ 26 = 6 (a separate, unrelated division sharing the chapter's technique).",
+        "Both operations use the same core skill: track decimal places (multiply) or shift them equally (divide)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 15.6 ÷ 2.6.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.6,
+            "feedback": "0.6 divides 15.6 by 26, forgetting to shift the divisor's point too. Shift both one place: 156 ÷ 26 = 6."
+          },
+          {
+            "value": 60,
+            "feedback": "60 shifts a point but overshoots. Shift both points the same one place: 156 ÷ 26 = 6."
+          }
+        ],
+        "fallbackFeedback": "Shift both points one place: 156 ÷ 26 = 6."
+      },
+      "variant": {
+        "gen": "decimal-compute",
+        "form": "divCompute"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Count places; shift equally.",
+      "takeaways": [
+        "Multiplying: count TOTAL decimal places across both factors, then place the point.",
+        "Dividing: shift both decimal points the same amount until the divisor is a whole number.",
+        "Shifting both points equally never changes the division's answer."
+      ],
+      "teaser": "next chapter: factors, multiples, and the distributive property."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decimal-mult-div",
+      "concept": {
+        "id": "rem-dmd-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply: count total places. Divide: shift both points equally.** 1.5 × 0.2: 15 × 2 = 30, with 2 total places gives 0.30. For division, shift both numbers' points the same amount until the divisor is whole."
+      },
+      "check": {
+        "id": "rem-dmd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decimal-mult-div",
+        "explanationVariants": [
+          "15 × 2 = 30; 2 total decimal places gives 0.30.",
+          "1.5 has 1 place, 0.2 has 1 place — 2 total."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute 1.5 × 0.2.",
+          "answer": 0.3,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 skips placing the decimal. With 2 total decimal places, 30 becomes 0.30."
+            },
+            {
+              "value": 0.03,
+              "feedback": "That places the point one digit too far. 1 place + 1 place = 2 total: 0.30, not 0.03."
+            }
+          ],
+          "fallbackFeedback": "15 × 2 = 30; 2 total decimal places gives 0.30."
+        }
+      }
+    }
+  ]
+}

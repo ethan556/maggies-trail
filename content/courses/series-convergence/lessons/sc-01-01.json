@@ -1,0 +1,297 @@
+{
+  "id": "sc-01-01",
+  "slug": "beyond-geometric",
+  "title": "Beyond Geometric",
+  "courseId": "series-convergence",
+  "chapterId": "ch1-convergence-beyond-geometric",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In `sequences-series` you watched partial sums pile up against a **ceiling** at a/(1 − r), and stop. That was convergence, made visible — and it was the only test you had.\n\nBut it works for **one family only**. A geometric series has a fixed ratio. Most series do not.\n\nSo the question becomes general: **how would you know whether a pile of partial sums has a ceiling at all?**",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The ceiling you already know.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometric",
+        "first": 4,
+        "targetD": 1,
+        "atPosition": 6,
+        "targetTerm": 0,
+        "targetRTenths": 5,
+        "targetSum": 8,
+        "start": 9,
+        "prompt": "4 + 4r + 4r² + … Set the ratio so the forever-sum settles on exactly 8 — the ceiling you met in Algebra 2.",
+        "successFeedback": "r = 0.5, ceiling 8. Now hold on to the PICTURE and let go of the formula: what actually made the sum settle was that the TERMS shrank fast enough. Every test in this chapter is a different way of asking that one question — and the geometric case is just the one where the answer was easy.",
+        "lowFeedback": "The ceiling is under 8 — the terms shrink too fast, so the pile stops short.",
+        "highFeedback": "The ceiling is over 8 — the terms shrink too slowly. As r approaches 1 the ceiling escapes altogether."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Build successive terms and connect recursive pattern, explicit rule, and long-run behavior.",
+        "invariants": [
+          "term-rule-generates-each-index",
+          "partial-pattern-needs-general-rule"
+        ],
+        "misconceptions": [
+          "next-term-is-enough-proof",
+          "index-and-value-are-interchangeable"
+        ],
+        "representations": [
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "series-convergence-sequenceBuild",
+        "delayed": false
+      },
+      "conceptTag": "sc-nth-term"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The first thing to check, always.",
+      "conceptTag": "sc-nth-term",
+      "explanationVariants": [
+        "If the terms do NOT go to zero, the sum cannot settle — you keep adding lumps of a fixed size forever. That is the nth-term test, and it is the cheapest one there is.",
+        "It is a one-way test: terms going to zero does NOT guarantee convergence. It only rules out the hopeless cases."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The terms of a series do not approach 0. What can you conclude?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It diverges — you are adding lumps of a fixed size forever, so the pile can never settle.",
+            "correct": true,
+            "feedback": "Right, and it is the cheapest check in the subject. Always run it first."
+          },
+          {
+            "id": "o2",
+            "label": "It converges.",
+            "correct": false,
+            "feedback": "The opposite. If the terms never fade, the partial sums keep taking finite jumps forever and no ceiling can hold them."
+          },
+          {
+            "id": "o3",
+            "label": "Nothing can be said.",
+            "correct": false,
+            "feedback": "Something very definite can: divergence. It is the CONVERSE that says nothing — terms going to zero does not guarantee convergence."
+          },
+          {
+            "id": "o4",
+            "label": "It converges only if the terms are positive.",
+            "correct": false,
+            "feedback": "Sign is irrelevant here. Terms that do not fade to zero kill any series, positive or not."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-nth-term__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The trap in the other direction.",
+      "conceptTag": "sc-nth-term",
+      "explanationVariants": [
+        "The harmonic series 1 + 1/2 + 1/3 + … has terms going to zero and still DIVERGES — the pile grows without bound, just very slowly.",
+        "So the nth-term test can only ever prove divergence. It can never prove convergence, and treating it as if it could is the classic error."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The terms of 1 + 1/2 + 1/3 + 1/4 + … go to zero. Does the series converge?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — the harmonic series diverges, even though its terms fade to nothing.",
+            "correct": true,
+            "feedback": "Right, and it is the single most important counterexample in the subject: fading terms are NECESSARY for convergence but nowhere near sufficient."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — the terms go to zero, so the sum must settle.",
+            "correct": false,
+            "feedback": "That is the trap. The harmonic series grows without bound; it just takes its time. Its terms fade too slowly to be summable."
+          },
+          {
+            "id": "o3",
+            "label": "Yes, because it is like a geometric series with r < 1.",
+            "correct": false,
+            "feedback": "It is not geometric at all — the RATIO between consecutive terms is not constant. That is exactly why the old test cannot decide it."
+          },
+          {
+            "id": "o4",
+            "label": "Only if you add the terms in the right order.",
+            "correct": false,
+            "feedback": "For a series of positive terms the order makes no difference at all. This one diverges however you arrange it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-nth-term__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So every test asks ONE question — *do the terms fade fast enough?* — in a different way:\n\n**nth-term** — do they fade at all?\n**comparison** — at least as fast as something you know?\n**ratio** — does each term shrink by a factor that settles below 1?\n**alternating** — do they fade AND flip sign?\n\nEach is a different way of getting a ceiling over the pile.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The ratio test IS the geometric idea.",
+      "conceptTag": "sc-ratio-test",
+      "explanationVariants": [
+        "The ratio test asks what |aₙ₊₁/aₙ| settles down to. If that limit is under 1, the tail behaves like a geometric series with that ratio — and geometric series with r < 1 converge.",
+        "It is the old test, freed from the requirement that the ratio be the SAME every time. It only has to settle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the ratio test work?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "If |aₙ₊₁/aₙ| settles below 1, the tail eventually behaves like a geometric series with that ratio — and those converge.",
+            "correct": true,
+            "feedback": "Right. It is the geometric test with the requirement loosened: the ratio no longer has to be CONSTANT, only to settle."
+          },
+          {
+            "id": "o2",
+            "label": "Because every series is secretly geometric.",
+            "correct": false,
+            "feedback": "Very few are. The point is that the TAIL behaves geometrically once the ratio has settled, which is enough to build a ceiling over the pile."
+          },
+          {
+            "id": "o3",
+            "label": "Because the terms go to zero.",
+            "correct": false,
+            "feedback": "The harmonic series has terms going to zero and diverges. The ratio test asks something stronger: how FAST they shrink."
+          },
+          {
+            "id": "o4",
+            "label": "It does not — it only works for positive terms.",
+            "correct": false,
+            "feedback": "It uses ABSOLUTE values precisely so that signs cannot interfere. It works for any series."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-ratio-test__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Which test, and what does it say?",
+      "conceptTag": "sc-nth-term",
+      "hints": [
+        "Look at the terms of Σ n/(n + 1): 1/2, 2/3, 3/4, 4/5, …",
+        "What are they heading toward? Not zero — they climb toward 1.",
+        "So the cheapest test settles it immediately."
+      ],
+      "explanationVariants": [
+        "The terms n/(n + 1) tend to 1, not 0. So by the nth-term test the series DIVERGES — you are adding roughly 1 forever.",
+        "Never reach for a clever test before running the cheap one. Half of these questions die at the first line."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Does Σ n/(n + 1) converge?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — the terms tend to 1, not 0, so by the nth-term test it diverges.",
+            "correct": true,
+            "feedback": "Right, and it took one line. Always run the cheap test first."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — the terms are all less than 1.",
+            "correct": false,
+            "feedback": "Being less than 1 is not enough; they must FADE TO ZERO. These climb toward 1, so you are adding roughly 1 forever."
+          },
+          {
+            "id": "o3",
+            "label": "Yes, by the ratio test.",
+            "correct": false,
+            "feedback": "The ratio here settles at exactly 1, which is the inconclusive case — and in any case the nth-term test has already killed it."
+          },
+          {
+            "id": "o4",
+            "label": "It depends on where you start summing.",
+            "correct": false,
+            "feedback": "Convergence is a question about the TAIL, and no starting point can rescue terms that do not fade."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-nth-term__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every test asks one question.",
+      "takeaways": [
+        "The geometric ceiling was one test for one family. Every other test is a different way of getting a ceiling over the pile.",
+        "nth-term test: if the terms do not fade to zero, it diverges. It can NEVER prove convergence.",
+        "The harmonic series is the standing counterexample: terms fade to zero, and it diverges anyway."
+      ],
+      "teaser": "Next: use a series to BUILD a function — and watch the polynomial hug the curve."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sc-nth-term",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Before any clever test, ask the cheap question: **do the terms go to zero?** If they do not, the series diverges and you are finished. If they do, you have learned nothing yet — and now the real work starts.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Run the cheap test.",
+        "conceptTag": "sc-nth-term",
+        "explanationVariants": [
+          "The terms of Σ (2n)/(n + 5) head toward 2, not 0, so the series diverges.",
+          "Adding roughly 2 forever cannot settle."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The terms of a series tend to 2. Does it converge?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "No — it diverges.",
+              "correct": true,
+              "feedback": "Right: you are adding roughly 2 forever, and no ceiling can hold that."
+            },
+            {
+              "id": "o2",
+              "label": "Yes, if 2 is small enough.",
+              "correct": false,
+              "feedback": "Size is irrelevant. Any nonzero limit means the pile keeps taking finite jumps forever."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

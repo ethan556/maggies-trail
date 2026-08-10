@@ -1,0 +1,330 @@
+{
+  "id": "fn-01-01",
+  "slug": "function-notation",
+  "title": "Function Notation",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch1-function-basics",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "function-machine",
+      "body": "A function is a machine: you feed in an input x and it returns an output f(x). The rule f(x) = 2x + 3 means \"double the input, then add 3.\" So f(4) = 2·4 + 3 = 11."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "f(x) is a machine with a name.",
+      "widget": {
+        "type": "functionMachine",
+        "a": 3,
+        "b": 2,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 17,
+        "prompt": "f(x) = 3x + 2. Feed the machine until it outputs 17 — that input is the answer to f(?) = 17.",
+        "successFeedback": "f(5) = 17. Function notation is just a label for the machine: f(5) does not mean f times 5, it means 'what this machine does to 5'.",
+        "lowFeedback": "The output is below 17 — feed it a larger input.",
+        "highFeedback": "The output is above 17 — feed it a smaller input."
+      },
+      "predict": {
+        "prompt": "Function notation ahead: f(5) means…",
+        "options": [
+          {
+            "id": "feed",
+            "label": "Feed 5 into the machine f"
+          },
+          {
+            "id": "times",
+            "label": "f times 5"
+          },
+          {
+            "id": "fifth",
+            "label": "The 5th value of a list"
+          }
+        ],
+        "outcomeId": "feed",
+        "reveal": "f(5) is not multiplication — the parentheses are the machine's mouth: run f on the input 5. For f(x) = 3x + 2 that's 3·5 + 2 = 17, which is exactly the output you're about to chase."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Vary the input and coordinate the machine, output, table, graph point, and symbolic rule.",
+        "invariants": [
+          "one-output-per-input",
+          "rule-consistent"
+        ],
+        "misconceptions": [
+          "function-notation-as-multiplication",
+          "input-output-reversal"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "function-notation-across-representations",
+        "delayed": true,
+        "counterfactualPrompt": "Increase the input by 1. Predict the exact output change and where the new ordered pair will appear.",
+        "explanation": {
+          "prompt": "What does f(5) mean in this machine?",
+          "options": [
+            {
+              "id": "input",
+              "label": "Apply the rule named f to the input 5 and read the resulting output.",
+              "correct": true,
+              "feedback": "Yes — the notation names a rule and the value placed into it."
+            },
+            {
+              "id": "multiply",
+              "label": "Multiply an unknown number f by 5.",
+              "correct": false,
+              "feedback": "Parentheses here indicate function input, not multiplication."
+            }
+          ]
+        }
+      },
+      "conceptTag": "fn-notation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A different rule.",
+      "conceptTag": "fn-notation",
+      "explanationVariants": [
+        "f(5) = 3·5 − 1 = 15 − 1 = 14.",
+        "Multiply by 3, then subtract 1: 15 − 1 = 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 3x - 1, what is f(5)?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "Don't forget the − 1: 3·5 − 1 = 14."
+          },
+          {
+            "value": 12,
+            "feedback": "Multiply 3·5 = 15 first, then subtract 1: 14."
+          }
+        ],
+        "fallbackFeedback": "f(5) = 3·5 − 1 = 14."
+      },
+      "variant": {
+        "gen": "fn-evaluate"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The letter is just a name — g(x), h(t) all work the same way. Substitute the number everywhere the variable appears. For g(x) = x² + 1, g(3) = 3² + 1 = 9 + 1 = 10.",
+      "figure": "fn-notation"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A squaring rule.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For g(x) = x^2 + 1, what is g(3)?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's just 3². Add the 1: 9 + 1 = 10."
+          },
+          {
+            "value": 16,
+            "feedback": "Square only x, then add 1: 3² + 1 = 10, not (3 + 1)² = 16."
+          }
+        ],
+        "fallbackFeedback": "g(3) = 3² + 1 = 9 + 1 = 10."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "You can evaluate at any input, including 0. Since anything times 0 is 0, f(0) often reveals the starting value. For f(x) = 2x + 3, f(0) = 2·0 + 3 = 3.",
+      "figure": "fn-eval-zero"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Input zero.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2x + 3, what is f(0)?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "2·0 = 0, but you still add 3: f(0) = 3."
+          },
+          {
+            "value": 5,
+            "feedback": "2·0 = 0, not 2. So f(0) = 0 + 3 = 3."
+          }
+        ],
+        "fallbackFeedback": "f(0) = 2·0 + 3 = 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another linear rule.",
+      "conceptTag": "fn-notation",
+      "explanationVariants": [
+        "h(3) = 4·3 − 2 = 12 − 2 = 10.",
+        "Multiply by 4, then subtract 2: 12 − 2 = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h(x) = 4x - 2, what is h(3)?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "Don't forget the − 2: 4·3 − 2 = 10."
+          },
+          {
+            "value": 8,
+            "feedback": "4·3 = 12, then subtract 2: 10 (not 4·2)."
+          }
+        ],
+        "fallbackFeedback": "h(3) = 4·3 − 2 = 10."
+      },
+      "variant": {
+        "gen": "fn-evaluate"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Squaring, then subtracting.",
+      "conceptTag": "fn-notation",
+      "explanationVariants": [
+        "g(5) = 5² − 4 = 25 − 4 = 21.",
+        "Square 5, then subtract 4: 25 − 4 = 21."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For g(x) = x^2 - 4, what is g(5)?",
+        "answer": 21,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "That's just 5². Subtract the 4: 25 − 4 = 21."
+          },
+          {
+            "value": 9,
+            "feedback": "Square first, then subtract: 5² − 4 = 21, not (5 − 4)² or 5² − 4²."
+          }
+        ],
+        "fallbackFeedback": "g(5) = 5² − 4 = 21."
+      },
+      "variant": {
+        "gen": "fn-evaluate",
+        "form": "squareMinus"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Coefficient and square together.",
+      "conceptTag": "fn-notation",
+      "explanationVariants": [
+        "f(3) = 2·3² + 1 = 2·9 + 1 = 19.",
+        "Square first (3² = 9), then multiply by 2 and add 1: 18 + 1 = 19."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2x^2 + 1, what is f(3)?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 37,
+            "feedback": "Square only x, not 2x: 2·(3²) + 1 = 19, not (2·3)² + 1 = 37."
+          },
+          {
+            "value": 20,
+            "feedback": "The 2 multiplies just 3², not the whole (3² + 1): 2·9 + 1 = 19."
+          }
+        ],
+        "fallbackFeedback": "f(3) = 2·3² + 1 = 2·9 + 1 = 19."
+      },
+      "hints": [
+        "Square the input first: 3² = 9.",
+        "Then multiply by 2: 2·9 = 18.",
+        "Add 1: 18 + 1 = 19."
+      ],
+      "variant": {
+        "gen": "fn-evaluate",
+        "form": "quadPlus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "f(x) is a rule; substitute the input and follow order of operations.",
+      "takeaways": [
+        "f(4) means substitute 4 for x in the rule.",
+        "Follow order of operations — powers and × before + and −.",
+        "The letter (f, g, h) is just a name."
+      ],
+      "teaser": "next: domain, range, and what makes a relation a function."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-notation",
+      "concept": {
+        "id": "rem-fnn-c",
+        "kind": "concept",
+        "body": "f(x) is a rule; substitute the input for x. For f(x) = 2x + 3: f(4) = 2·4 + 3 = 11. Multiply and take powers before adding, per order of operations."
+      },
+      "check": {
+        "id": "rem-fnn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-notation",
+        "explanationVariants": [
+          "f(4) = 2·4 + 3 = 11.",
+          "Double 4 to get 8, then add 3: 11."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = 2x + 3, what is f(4)?",
+          "answer": 11,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 14,
+              "feedback": "Multiply before adding: 2·4 + 3 = 11."
+            },
+            {
+              "value": 24,
+              "feedback": "Only 2 multiplies x: 8 + 3 = 11."
+            }
+          ],
+          "fallbackFeedback": "f(4) = 8 + 3 = 11."
+        }
+      }
+    }
+  ]
+}

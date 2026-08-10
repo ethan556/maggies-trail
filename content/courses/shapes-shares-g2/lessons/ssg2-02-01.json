@@ -1,0 +1,328 @@
+{
+  "id": "ssg2-02-01",
+  "slug": "counting-a-grid-of-squares",
+  "title": "Counting a Grid of Squares",
+  "courseId": "shapes-shares-g2",
+  "chapterId": "ch2-partition-rectangles-into-squares",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "partition-grid",
+      "body": "A rectangle can be split into a grid of same-size squares — rows going across, columns going up and down. Count every square in the grid to find the total."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A grid of squares is rows times columns.",
+      "widget": {
+        "type": "areaModel",
+        "targetArea": 12,
+        "wMax": 8,
+        "hMax": 8,
+        "wStart": 1,
+        "hStart": 1,
+        "prompt": "Build a rectangle made of exactly 12 squares, with 3 in each row.",
+        "successFeedback": "3 across and 4 down: 12 squares. You can count them one at a time, or you can count one row and then count the rows — and the second way is what multiplication IS.",
+        "lowFeedback": "Fewer than 12 squares.",
+        "highFeedback": "More than 12 squares."
+      },
+      "predict": {
+        "prompt": "12 squares with 3 in each row — how many rows will the rectangle need?",
+        "options": [
+          {
+            "id": "four",
+            "label": "4 rows"
+          },
+          {
+            "id": "three",
+            "label": "3 rows"
+          },
+          {
+            "id": "nine",
+            "label": "9 rows"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Dealing 12 squares into rows of 3 fills exactly four rows — equal grouping is division wearing a shape."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Compose the rectangle from equal squares and coordinate rows, columns, and total squares.",
+        "predictionId": "g2-shape-composition-prediction",
+        "invariants": [
+          "target-boundary",
+          "equal-unit-squares",
+          "area-product"
+        ],
+        "misconceptions": [
+          "add-rows-columns",
+          "unequal-units"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rotated-grid-same-area",
+        "delayed": true,
+        "counterfactualPrompt": "Rotate the rectangle. Which measurements trade places, and which quantity remains unchanged?",
+        "explanation": {
+          "prompt": "Why do rows times columns count every square exactly once?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Each row has the same number of squares, and every row is included.",
+              "correct": true,
+              "feedback": "Exactly. The grid is equal groups, so multiplication counts the full area."
+            },
+            {
+              "id": "surface",
+              "label": "Rows and columns should be added because they are two numbers.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. The grid is equal groups, so multiplication counts the full area."
+            }
+          ]
+        }
+      },
+      "conceptTag": "ssg2-grid-count"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another grid.",
+      "conceptTag": "ssg2-grid-count",
+      "explanationVariants": [
+        "2 rows of 5 squares each is 10 squares in all.",
+        "Count every square in the grid: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is partitioned into 2 rows and 5 columns of unit squares. How many unit squares in all?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That's 2 + 5. Count every square in the grid: 10."
+          },
+          {
+            "value": 5,
+            "feedback": "That's just one row. Count both rows: 10 in all."
+          }
+        ],
+        "fallbackFeedback": "2 rows of 5 squares each makes 10 squares in all."
+      },
+      "variant": {
+        "gen": "grid-count"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A bigger grid always has more squares — more rows, more columns, or both means more squares to count.",
+      "figure": "ssg2-bigger-grid"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A square grid.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is partitioned into 4 rows and 4 columns of unit squares. How many unit squares in all?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's 4 + 4. Count every square in the grid: 16."
+          },
+          {
+            "value": 4,
+            "feedback": "That's just one row. Count all 4 rows: 16 in all."
+          }
+        ],
+        "fallbackFeedback": "4 rows of 4 squares each makes 16 squares in all."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A single row or single column grid is the simplest case — just count straight across or straight down.",
+      "figure": "ssg2-single-row"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A single row.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is partitioned into 1 rows and 6 columns of unit squares. How many unit squares in all?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That's 1 + 6. Count every square in the single row: 6."
+          },
+          {
+            "value": 1,
+            "feedback": "That's just the row count, not the squares. There are 6 squares in the one row."
+          }
+        ],
+        "fallbackFeedback": "1 row of 6 squares is 6 squares in all."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A wider grid.",
+      "conceptTag": "ssg2-grid-count",
+      "explanationVariants": [
+        "3 rows of 5 squares each is 15 squares in all.",
+        "Count every square in the grid: 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is partitioned into 3 rows and 5 columns of unit squares. How many unit squares in all?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's 3 + 5. Count every square in the grid: 15."
+          },
+          {
+            "value": 5,
+            "feedback": "That's just one row. Count all 3 rows: 15 in all."
+          }
+        ],
+        "fallbackFeedback": "3 rows of 5 squares each makes 15 squares in all."
+      },
+      "variant": {
+        "gen": "grid-count"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A taller grid.",
+      "conceptTag": "ssg2-grid-count",
+      "explanationVariants": [
+        "5 rows of 2 squares each is 10 squares in all.",
+        "Count every square in the grid: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is partitioned into 5 rows and 2 columns of unit squares. How many unit squares in all?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That's 5 + 2. Count every square in the grid: 10."
+          },
+          {
+            "value": 2,
+            "feedback": "That's just one row. Count all 5 rows: 10 in all."
+          }
+        ],
+        "fallbackFeedback": "5 rows of 2 squares each makes 10 squares in all."
+      },
+      "variant": {
+        "gen": "grid-count"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A bigger grid.",
+      "conceptTag": "ssg2-grid-count",
+      "explanationVariants": [
+        "6 rows of 4 squares each is 24 squares in all.",
+        "Count every square in the grid: 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is partitioned into 6 rows and 4 columns of unit squares. How many unit squares in all?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That's 6 + 4. Count every square in the grid: 24."
+          },
+          {
+            "value": 6,
+            "feedback": "That's just one column. Count all the squares in every row and column: 24 in all."
+          }
+        ],
+        "fallbackFeedback": "6 rows of 4 squares each makes 24 squares in all."
+      },
+      "hints": [
+        "There are 6 rows.",
+        "Each row has 4 squares.",
+        "Count all the squares in all 6 rows: 24."
+      ],
+      "variant": {
+        "gen": "grid-count",
+        "form": "colTrap"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Count every square in a partitioned grid to find the total.",
+      "takeaways": [
+        "A grid has rows going across and columns going up and down.",
+        "Count every unit square, not just the row and column counts.",
+        "More rows or columns always means more squares."
+      ],
+      "teaser": "next: counting bigger and trickier grids."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ssg2-grid-count",
+      "concept": {
+        "id": "rem-sgc-c",
+        "kind": "concept",
+        "body": "To find the total squares in a partitioned rectangle, count every unit square in the grid — not just the number of rows or columns alone. 3 rows of 4 squares each makes 12 squares."
+      },
+      "check": {
+        "id": "rem-sgc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "ssg2-grid-count",
+        "explanationVariants": [
+          "3 rows of 4 squares each is 12 in all.",
+          "Count every square in the grid: 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A rectangle is partitioned into 3 rows and 4 columns of unit squares. How many unit squares in all?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "That's 3+4; count every square: 12."
+            },
+            {
+              "value": 3,
+              "feedback": "That's just the row count; count all squares: 12."
+            }
+          ],
+          "fallbackFeedback": "12 unit squares in all."
+        }
+      }
+    }
+  ]
+}

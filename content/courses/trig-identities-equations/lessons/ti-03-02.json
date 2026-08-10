@@ -1,0 +1,261 @@
+{
+  "id": "ti-03-02",
+  "slug": "tangent-and-cofunctions",
+  "title": "Tangent Sums & Cofunctions",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch3-sum-difference",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Tangent has its own formula, all tangents:\n\ntan(A ± B) = (tan A ± tan B) / (1 ∓ tan A tan B).\n\nThe denominator's sign is OPPOSITE the numerator's. For tan 75° = tan(45° + 30°): (1 + 1/√3)/(1 − 1·1/√3), which simplifies to **2 + √3 ≈ 3.732**.",
+      "figure": "ti-tangent-sum-formula"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the denominator sign.",
+      "predict": {
+        "prompt": "Cofunction claims survive any θ — even past 90°, where the “co” angle goes negative?",
+        "options": [
+          {
+            "id": "hold",
+            "label": "They hold everywhere — the swap needs no quadrant escort"
+          },
+          {
+            "id": "acute",
+            "label": "Only while both angles stay acute"
+          },
+          {
+            "id": "flip",
+            "label": "Past 90° a sign flips in"
+          }
+        ],
+        "outcomeId": "hold",
+        "reveal": "Everywhere. Drag θ through 90° and beyond: the swapped-coordinate point never leaves the direct one, negative co-angle and all. The quadrant-blind version — tacking on a sign — detaches immediately. Identities don't check quadrants; wrong formulas do."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Direct point at 90° − θ. Pick the cofunction formula that stays glued even when θ passes 90°, then land on 115° — past the crossing.",
+        "targetAngle": 115,
+        "angleStart": 45,
+        "angleStep": 5,
+        "ghost": "cofunction",
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "(sin θ, cos θ)"
+          },
+          {
+            "id": "signError",
+            "label": "(sin θ, −cos θ) — “adjust for the quadrant”",
+            "feedback": "The adjustment IS the error: past 90°, cos θ is already negative, and negating it again mirrors the point away. The plain swap carries its own signs — watch it hold while this one detaches at the crossing."
+          }
+        ],
+        "successFeedback": "Still glued at 115° — the swap survived the crossing because cos θ turned negative on its own, exactly as the co-angle 90° − 115° = −25° demands. Tangent's sum rule inherits this same discipline in its denominator: signs ride inside the functions, never alongside them.",
+        "lowFeedback": "Formula's right — keep dragging through 90° to 115° and watch the crossing change nothing.",
+        "highFeedback": "Past 115° — back up; the point of interest is just past the crossing."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute tan 75°.",
+      "conceptTag": "ti-tan-cofunction",
+      "explanationVariants": [
+        "(1 + 1/√3)/(1 − 1/√3); rationalizing gives 2 + √3 ≈ 3.732.",
+        "tan 75° is steep — near the 90° wall — so a large value ≈ 3.73 is expected."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate tan 75° to three decimals.",
+        "answer": 3.732,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.577,
+            "feedback": "1.577 forgets to divide by the (small) denominator 1 − 1/√3 ≈ 0.42. The full value is 2 + √3 ≈ 3.732."
+          },
+          {
+            "value": 0.268,
+            "feedback": "0.268 ≈ tan 15° — you may have inverted. tan 75° = 2 + √3 ≈ 3.732."
+          }
+        ],
+        "fallbackFeedback": "(1 + 1/√3)/(1 − 1/√3) = 2 + √3 ≈ 3.732."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-cofunction__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Cofunctions**: sin and cos are the SAME wave a quarter-turn apart (recall cos x = sin(x + π/2)), which means **sin(90° − θ) = cos θ** and cos(90° − θ) = sin θ. 'Co' literally means *complementary*: each function of an angle equals its cofunction of the complement.",
+      "figure": "ti-cofunctions"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use the cofunction rule.",
+      "conceptTag": "ti-tan-cofunction",
+      "explanationVariants": [
+        "cos 34° = sin(90° − 34°) = sin 56°.",
+        "The complement of 34° is 56°; cosine of an angle is sine of its complement."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "cos 34° equals sin of which angle?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "56°",
+            "correct": true,
+            "feedback": "Right — 90° − 34° = 56°, and cos θ = sin(90° − θ)."
+          },
+          {
+            "id": "o2",
+            "label": "34°",
+            "feedback": "sin 34° ≠ cos 34° (unless θ = 45°). The cofunction uses the COMPLEMENT: 56°."
+          },
+          {
+            "id": "o3",
+            "label": "124°",
+            "feedback": "That's the supplement, not the complement. Cofunctions use 90° − θ = 56°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-cofunction__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Derive a cofunction.",
+      "conceptTag": "ti-tan-cofunction",
+      "explanationVariants": [
+        "sin(90° − θ) = sin90°cosθ − cos90°sinθ = 1·cosθ − 0·sinθ = cos θ — the sum formula PROVES the cofunction identity.",
+        "With sin90° = 1 and cos90° = 0, the difference formula collapses to cos θ."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Expanding sin(90° − θ) with the difference formula gives:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "cos θ (since sin90° = 1, cos90° = 0)",
+            "correct": true,
+            "feedback": "Right — the formula collapses: 1·cosθ − 0·sinθ = cos θ, proving the cofunction identity."
+          },
+          {
+            "id": "o2",
+            "label": "sin θ",
+            "feedback": "Check the constants: sin90° = 1 multiplies cos θ, and cos90° = 0 kills the sin θ term. Result: cos θ."
+          },
+          {
+            "id": "o3",
+            "label": "1 − sin θ",
+            "feedback": "The formula is a difference of PRODUCTS, not of terms: 1·cosθ − 0·sinθ = cos θ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-cofunction__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Combine both tools.",
+      "conceptTag": "ti-tan-cofunction",
+      "explanationVariants": [
+        "tan 15° = tan(45° − 30°) = (1 − 1/√3)/(1 + 1/√3) = 2 − √3 ≈ 0.268.",
+        "The difference flips both signs: numerator minus, denominator plus. 2 − √3 ≈ 0.27."
+      ],
+      "hints": [
+        "Split: 15° = 45° − 30°.",
+        "Difference → numerator (tan45 − tan30), denominator (1 + tan45·tan30).",
+        "(1 − 1/√3)/(1 + 1/√3) rationalizes to 2 − √3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate tan 15° to three decimals.",
+        "answer": 0.268,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 3.732,
+            "feedback": "3.732 = tan 75° — the reciprocal-ish partner. tan 15° = 2 − √3 ≈ 0.268."
+          },
+          {
+            "value": 0.577,
+            "feedback": "0.577 = tan 30° = 1/√3. tan 15° is smaller: 2 − √3 ≈ 0.268."
+          }
+        ],
+        "fallbackFeedback": "(1 − 1/√3)/(1 + 1/√3) = 2 − √3 ≈ 0.268."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-cofunction__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Tangents and complements.",
+      "takeaways": [
+        "tan(A ± B) = (tanA ± tanB)/(1 ∓ tanA tanB) — denominator sign opposite.",
+        "Cofunction: sin(90° − θ) = cos θ, cos(90° − θ) = sin θ.",
+        "The sum formulas PROVE the cofunction identities."
+      ],
+      "teaser": "Next chapter: doubling an angle — one input, squared consequences."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-tan-cofunction",
+      "concept": {
+        "id": "rem-ti0302-c",
+        "kind": "concept",
+        "body": "tan(A±B): numerator tanA±tanB, denominator 1∓tanA tanB (opposite sign). Cofunction: any function of θ equals its co-partner of (90°−θ)."
+      },
+      "check": {
+        "id": "rem-ti0302-k",
+        "kind": "check",
+        "body": "One cofunction.",
+        "conceptTag": "ti-tan-cofunction",
+        "explanationVariants": [
+          "sin 20° = cos(90° − 20°) = cos 70°.",
+          "The complement of 20° is 70°."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "sin 20° equals cos of which angle?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "70°",
+              "correct": true,
+              "feedback": "Right — 90° − 20° = 70°."
+            },
+            {
+              "id": "o2",
+              "label": "20°",
+              "feedback": "Cofunctions use the COMPLEMENT: 90° − 20° = 70°."
+            },
+            {
+              "id": "o3",
+              "label": "160°",
+              "feedback": "That's the supplement. Use 90° − 20° = 70°."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

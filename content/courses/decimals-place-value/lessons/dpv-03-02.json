@@ -1,0 +1,290 @@
+{
+ "id": "dpv-03-02",
+ "slug": "the-trailing-zero-trap",
+ "title": "The Trailing-Zero Trap",
+ "courseId": "decimals-place-value",
+ "chapterId": "ch3-comparing-decimals",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Zeros added to the **right end** of a decimal change nothing: 0.5, 0.50, and 0.500 are the same value. Each extra zero just says \"and no more of the next smaller piece.\" Half a whole is half whether you write one place or three.",
+   "figure": "dpv-trailing-zero"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Same or different?",
+   "conceptTag": "trailing-zeros",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which statement about 0.5 and 0.50 is true?",
+    "options": [
+     {
+      "id": "a",
+      "label": "They are equal",
+      "correct": true,
+      "feedback": "The trailing zero adds no value: 0.5 and 0.50 are the same amount."
+     },
+     {
+      "id": "b",
+      "label": "0.50 is bigger — it has more digits",
+      "feedback": "Extra trailing zeros don't add size. 0.50 is just 0.5 with an empty hundredths place: equal."
+     },
+     {
+      "id": "c",
+      "label": "0.5 is bigger — it's simpler",
+      "feedback": "Fewer digits doesn't mean bigger either. The trailing zero changes nothing: they're equal."
+     }
+    ]
+   },
+   "hints": [
+    "Read 0.50 as 'five tenths and zero hundredths.'",
+    "The extra place is empty.",
+    "Empty doesn't add value."
+   ],
+   "explanationVariants": [
+    "0.50 is 0.5 plus an empty hundredths place — equal.",
+    "Trailing zeros never change a decimal's value."
+   ],
+   "predict": {
+    "prompt": "0.5 and 0.05 — the same value?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — that zero moved the 5 to a smaller place"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — zeros never matter"
+     },
+     {
+      "id": "cannot",
+      "label": "Can't tell without money"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "A zero BETWEEN the point and the digit shoves the 5 into the hundredths — ten times smaller. Where a zero sits decides whether it matters at all."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Pad to compare.",
+   "conceptTag": "trailing-zeros",
+   "explanationVariants": [
+    "Writing 0.4 as 0.40 lets you line it up with 0.40 exactly — still equal.",
+    "Padding with trailing zeros makes lengths match without changing value."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "0.4, 0.40, and 0.400 — how do they compare?",
+    "options": [
+     {
+      "id": "a",
+      "label": "All three are equal",
+      "correct": true,
+      "feedback": "Only trailing zeros differ, so all three are the same value."
+     },
+     {
+      "id": "b",
+      "label": "0.400 is the biggest",
+      "feedback": "The trailing zeros in 0.400 add nothing. All three equal 0.4."
+     },
+     {
+      "id": "c",
+      "label": "0.4 is the biggest",
+      "feedback": "Length, long or short, doesn't change value here. All three are equal."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "decimal-representation",
+    "form": "trailingEquivalent"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Padding is a **tool**: give two decimals the same number of places, then compare like whole numbers. To check 0.5 against 0.45, pad to 0.50 — now compare 50 and 45. So **0.5 is greater than 0.45**, even though 0.45 has more digits.",
+   "figure": "dpv-trailing-zero"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The length trap, again.",
+   "conceptTag": "trailing-zeros",
+   "explanationVariants": [
+    "Pad 0.5 to 0.50, then compare 50 vs 45 — 0.5 wins.",
+    "Same length reveals it: 0.50 > 0.45."
+   ],
+   "widget": {
+    "type": "placeValueTransformLab",
+    "task": "compare",
+    "answerMode": "choice",
+    "prompt": "Which is greater: 0.5 or 0.45?",
+    "values": [
+     0.5,
+     0.45
+    ],
+    "choices": [
+     {
+      "id": "lt",
+      "label": "0.5 < 0.45",
+      "feedback": "The extra digit is the trap. Pad 0.5 to 0.50: 50 beats 45, so 0.5 is greater.",
+      "claim": "misconception:lt"
+     },
+     {
+      "id": "eq",
+      "label": "0.5 = 0.45",
+      "feedback": "Pad 0.5 to 0.50 and compare: 50 vs 45 — the hundredths differ, so they aren't equal.",
+      "claim": "misconception:eq"
+     },
+     {
+      "id": "gt",
+      "label": "0.5 > 0.45",
+      "feedback": "Pad to 0.50 and compare 50 vs 45 — 0.5 is greater, despite fewer digits.",
+      "claim": "relation:gt"
+     }
+    ],
+    "numericErrors": [],
+    "requiredExplorations": 1,
+    "successFeedback": "Pad to 0.50 and compare 50 vs 45 — 0.5 is greater, despite fewer digits.",
+    "explorationFeedback": "Inspect at least 1 base-ten stage before checking.",
+    "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+    "tolerance": 0
+   },
+   "variant": {
+    "gen": "place-compare",
+    "form": "decimalMixed"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One caution before you go: this freedom is only for zeros on the **right end**. A zero right after the point fills the tenths place and shrinks everything. Test it —",
+   "conceptTag": "trailing-zeros",
+   "explanationVariants": [
+    "0.05 puts a 0 in tenths, pushing the 5 down to hundredths — ten times smaller than 0.5.",
+    "A zero after the point shifts value; a zero on the right end does not."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Are 0.5 and 0.05 equal?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — 0.05 is ten times smaller",
+      "correct": true,
+      "feedback": "The 0 in 0.05 fills the tenths place, pushing the 5 to hundredths — ten times smaller than 0.5."
+     },
+     {
+      "id": "b",
+      "label": "Yes — the zero doesn't matter",
+      "feedback": "This zero is after the point, not on the right end. It fills tenths and shrinks the value: 0.05 is ten times smaller."
+     },
+     {
+      "id": "c",
+      "label": "Yes — both have a 5",
+      "feedback": "Same digit, different place. In 0.05 the 5 is in hundredths, so 0.05 is ten times smaller than 0.5."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "decimal-representation",
+    "form": "leadingZeroCompare"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Spot the matches.",
+   "conceptTag": "trailing-zeros",
+   "hints": [
+    "Trailing zeros (right end) keep the value; a zero right after the point changes it.",
+    "0.60 and 0.600 are 0.6 with empty places — equal.",
+    "0.06 puts the 6 in hundredths — not equal to 0.6."
+   ],
+   "explanationVariants": [
+    "0.60 and 0.600 equal 0.6 (trailing zeros); 0.06 does not (the 6 drops to hundredths).",
+    "Two of the three match 0.6 — only 0.06 differs, because its zero is after the point."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Of these three — 0.60, 0.06, 0.600 — how many equal 0.6?",
+    "answer": 2,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "0.06 is the odd one out — its zero is after the point, dropping the 6 to hundredths. Only 0.60 and 0.600 equal 0.6: that's 2."
+     },
+     {
+      "value": 1,
+      "feedback": "Both 0.60 and 0.600 equal 0.6 (trailing zeros are free). That's 2, not 1 — 0.06 is the only mismatch."
+     }
+    ],
+    "fallbackFeedback": "Trailing zeros keep the value (0.60, 0.600); a zero after the point (0.06) changes it."
+   },
+   "variant": {
+    "gen": "decimal-representation",
+    "form": "trailingMatchCount"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Right-end zeros are free; position isn't.",
+   "takeaways": [
+    "Trailing zeros on the right end don't change value: 0.5 = 0.50 = 0.500.",
+    "Pad decimals to equal length, then compare like whole numbers.",
+    "A zero right after the point is different — it shrinks the value (0.5 ≠ 0.05)."
+   ],
+   "teaser": "next: putting a whole set of decimals in order."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "trailing-zeros",
+   "concept": {
+    "id": "rem-tz-c",
+    "kind": "concept",
+    "body": "Quick rewind. **A zero added to the right end of a decimal doesn't change its value.** 0.3 = 0.30 = 0.300, because each extra zero just marks an empty smaller place. It's a handy way to make two decimals the same length before comparing."
+   },
+   "check": {
+    "id": "rem-tz-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "trailing-zeros",
+    "explanationVariants": [
+     "0.30 is 0.3 with an empty hundredths place — equal.",
+     "The trailing zero adds nothing: 0.3 = 0.30."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Is 0.3 equal to 0.30?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Yes — they're equal",
+       "correct": true,
+       "feedback": "The trailing zero adds no value: 0.3 = 0.30."
+      },
+      {
+       "id": "b",
+       "label": "No — 0.30 is bigger",
+       "feedback": "The extra zero is on the right end, so it adds nothing. They're equal."
+      },
+      {
+       "id": "c",
+       "label": "No — 0.3 is bigger",
+       "feedback": "Trailing zeros don't change value in either direction. 0.3 = 0.30."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,304 @@
+{
+  "id": "qu-03-02",
+  "slug": "the-quadratic-formula",
+  "title": "The Quadratic Formula",
+  "courseId": "quadratics",
+  "chapterId": "ch3-square-roots-and-the-formula",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-roots",
+      "body": "When factoring is hard, the **quadratic formula** solves any ax² + bx + c = 0: x = (−b ± √(b² − 4ac)) / (2a). Identify a, b, and c, substitute, and simplify. The ± gives the two roots."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Use the formula.",
+      "widget": {
+        "type": "quadraticExplore",
+        "form": "roots",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 0,
+        "rMin": -9,
+        "rMax": 9,
+        "aMin": -3,
+        "aMax": 3,
+        "aStart": 1,
+        "r1Start": 0,
+        "r2Start": 0,
+        "gridMax": 9,
+        "targetR1": 3,
+        "targetR2": 2,
+        "prompt": "Drag the crossings until the expansion reads x² − 5x + 6. The larger one is the answer.",
+        "successFeedback": "Roots 2 and 3. The quadratic formula would grind out the same two numbers — it is a general recipe for the crossings you just found by eye.",
+        "shapeFeedback": "Leave a at 1.",
+        "vertexFeedback": "Not yet — the crossings must add to 5 and multiply to 6."
+      },
+      "predict": {
+        "prompt": "The formula's ± produces two candidates. With a positive a, the LARGER solution comes from…",
+        "options": [
+          {
+            "id": "plus",
+            "label": "The + branch"
+          },
+          {
+            "id": "minus",
+            "label": "The − branch"
+          },
+          {
+            "id": "tie",
+            "label": "They tie"
+          }
+        ],
+        "outcomeId": "plus",
+        "reveal": "Adding the root pushes x up: (5 + 1)/2 = 3 beats (5 − 1)/2 = 2. The ± isn't decoration — it's both solutions living in one line, and the discriminant under the root decides how far apart they sit."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Your turn.",
+      "conceptTag": "quad-formula",
+      "explanationVariants": [
+        "b² − 4ac = 4 + 32 = 36, √36 = 6, so x = (−2 ± 6)/2 = 2 or −4; the larger is 2.",
+        "With √36 = 6, x = (−2 ± 6)/2 gives 2 and −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 + 2x - 8 = 0 with the formula. What is the larger solution?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "That's the smaller solution; the larger is 2."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is c, not a root. The roots are 2 and −4."
+          }
+        ],
+        "fallbackFeedback": "x = (−2 ± 6)/2 = 2 or −4; the larger is 2."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-formula__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: x² − 2x − 3 = 0, so a = 1, b = −2, c = −3. The part under the root is b² − 4ac = 4 − 4(1)(−3) = 4 + 12 = 16, and √16 = 4. Then x = (2 ± 4)/2 → x = 3 or x = −1.",
+      "figure": "qu-formula-worked"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the smaller root.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 - 2x - 3 = 0 with the formula. What is the smaller solution?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's the larger solution; the smaller is −1."
+          },
+          {
+            "value": -3,
+            "feedback": "−3 is c, not a root. The roots are 3 and −1."
+          }
+        ],
+        "fallbackFeedback": "x = (2 ± 4)/2 = 3 or −1; the smaller is −1."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The formula handles **non-integer** roots too. For 2x² − 7x + 3 = 0: b² − 4ac = 49 − 24 = 25, √25 = 5, so x = (7 ± 5)/(2·2) = 12/4 or 2/4 → x = 3 or **x = 1/2**. A fraction is a perfectly valid root.",
+      "figure": "qu-non-integer"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Find the fractional root.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "One solution of 2x^2 - 7x + 3 = 0 is x = 3. What is the other?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/2",
+            "correct": true,
+            "feedback": "Yes — x = (7 − 5)/4 = 2/4 = 1/2."
+          },
+          {
+            "id": "b",
+            "label": "-1/2",
+            "feedback": "The numerator is 7 − 5 = +2, so x = 2/4 = +1/2."
+          },
+          {
+            "id": "c",
+            "label": "2",
+            "feedback": "You divide by 2a = 4, not 2: x = 2/4 = 1/2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two negative roots.",
+      "conceptTag": "quad-formula",
+      "explanationVariants": [
+        "b² − 4ac = 25 − 16 = 9, √9 = 3, so x = (−5 ± 3)/2 = −1 or −4; the smaller is −4.",
+        "With √9 = 3, x = (−5 ± 3)/2 gives −1 and −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 + 5x + 4 = 0 with the formula. What is the smaller solution?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "That's the larger solution; the smaller is −4."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is c, not a root. The roots are −1 and −4."
+          }
+        ],
+        "fallbackFeedback": "x = (−5 ± 3)/2 = −1 or −4; the smaller is −4."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-formula__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Both fractional roots.",
+      "conceptTag": "quad-formula",
+      "explanationVariants": [
+        "√25 = 5, and x = (7 ± 5)/4 gives 3 and 1/2.",
+        "The two roots are 12/4 = 3 and 2/4 = 1/2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What are the two solutions of 2x^2 - 7x + 3 = 0?",
+        "options": [
+          {
+            "id": "a",
+            "label": "x = 3 and x = 1/2",
+            "correct": true,
+            "feedback": "Yes — (7 ± 5)/4 gives 3 and 1/2."
+          },
+          {
+            "id": "b",
+            "label": "x = 3 and x = 2",
+            "feedback": "Divide by 2a = 4: the second root is 2/4 = 1/2, not 2."
+          },
+          {
+            "id": "c",
+            "label": "x = -3 and x = -1/2",
+            "feedback": "The numerator uses −b = +7, so both roots are positive: 3 and 1/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-formula__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve a tougher one.",
+      "conceptTag": "quad-formula",
+      "explanationVariants": [
+        "b² − 4ac = 9 + 40 = 49, √49 = 7, so x = (3 ± 7)/2 = 5 or −2; the larger is 5.",
+        "With √49 = 7, x = (3 ± 7)/2 gives 5 and −2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 - 3x - 10 = 0 with the formula. What is the larger solution?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "That's the smaller solution; the larger is 5."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is c, not a root. The roots are 5 and −2."
+          }
+        ],
+        "fallbackFeedback": "x = (3 ± 7)/2 = 5 or −2; the larger is 5."
+      },
+      "hints": [
+        "a = 1, b = −3, c = −10; compute b² − 4ac = 9 + 40 = 49.",
+        "√49 = 7, so x = (3 ± 7)/2.",
+        "That gives 5 and −2; the larger is 5."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-formula__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The quadratic formula solves every quadratic — integer or fractional roots alike.",
+      "takeaways": [
+        "x = (−b ± √(b² − 4ac)) / (2a).",
+        "Compute b² − 4ac first, then apply ±.",
+        "Divide the whole numerator by 2a; fractional roots are fine."
+      ],
+      "teaser": "next: what b² − 4ac alone tells you."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-formula",
+      "concept": {
+        "id": "rem-qf-c",
+        "kind": "concept",
+        "body": "The quadratic formula is x = (−b ± √(b² − 4ac))/(2a). For x² + 2x − 8 = 0: b² − 4ac = 4 + 32 = 36, √36 = 6, so x = (−2 ± 6)/2 = 2 or −4."
+      },
+      "check": {
+        "id": "rem-qf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-formula",
+        "explanationVariants": [
+          "x = (−2 ± 6)/2 = 2 or −4; the larger is 2.",
+          "With √36 = 6, the larger root is 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve x^2 + 2x - 8 = 0 with the formula. What is the larger solution?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -4,
+              "feedback": "That's the smaller root; the larger is 2."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is the constant c, not a solution. The formula gives roots 2 and −4, so the larger is 2."
+            }
+          ],
+          "fallbackFeedback": "x = (−2 ± 6)/2 = 2 or −4; larger is 2."
+        }
+      }
+    }
+  ]
+}

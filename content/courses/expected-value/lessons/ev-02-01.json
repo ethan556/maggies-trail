@@ -1,0 +1,228 @@
+{
+  "id": "ev-02-01",
+  "slug": "computing-payoffs",
+  "title": "Computing Payoffs",
+  "courseId": "expected-value",
+  "chapterId": "ch2-deciding-with-expectation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Money makes expectation concrete, and it introduces one detail that changes everything: the cost to play is a NEGATIVE payoff. A game that pays $10 on a win but costs $3 to enter nets $7 on a win and −$3 on a loss. Netting the cost before averaging is where most payoff errors happen.",
+      "figure": "ev-cost-is-negative"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Set the winning share of the wheel.",
+      "widget": {
+        "type": "spinnerSim",
+        "favourableStart": 0,
+        "prompt": "A carnival wheel has 6 equal sectors. Shade it so the chance of winning is 2/6.",
+        "sectors": 6,
+        "targetFavourable": 2,
+        "successFeedback": "2 of 6 shaded — a 1/3 chance of winning, and a 2/3 chance of losing whatever the entry cost was.",
+        "lowFeedback": "Too little shaded for a 2-in-6 chance.",
+        "highFeedback": "Too much shaded — only two sectors win."
+      },
+      "predict": {
+        "prompt": "A game costs $3 and pays $10 on a win. What does a WIN net you?",
+        "options": [
+          {
+            "id": "10",
+            "label": "$10"
+          },
+          {
+            "id": "7",
+            "label": "$7"
+          },
+          {
+            "id": "13",
+            "label": "$13"
+          }
+        ],
+        "outcomeId": "7",
+        "reveal": "The $3 is spent whether you win or lose, so a win nets $10 − $3 = $7 and a loss nets −$3. Forgetting to subtract the entry cost is what makes losing games look profitable, because it prices the prize while ignoring what the prize cost to chase."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Net a losing outcome.",
+      "conceptTag": "ev-payoffs",
+      "explanationVariants": [
+        "A loss returns nothing, so the net is just the −$3 paid to play.",
+        "Losing costs the entry fee and gains nothing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "That same game: what does a LOSS net you, in dollars?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 would mean nothing changed hands, but the $3 entry was already paid."
+          },
+          {
+            "value": 3,
+            "feedback": "The sign matters: $3 left your pocket, so the net is −$3."
+          }
+        ],
+        "fallbackFeedback": "You paid $3 and received nothing, so the net is −$3.",
+        "successFeedback": "−$3 — and expectation needs both nets, the +$7 and the −$3, weighted by how often each happens."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With both nets in hand the expectation is routine: multiply each net by its probability and add. The result is what one play is worth on average — positive means the game favours you, negative means it favours the house, and zero means neither.",
+      "figure": "ev-net-expectation"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute the expected net.",
+      "conceptTag": "ev-payoffs",
+      "explanationVariants": [
+        "7(1/3) + (−3)(2/3) = 7/3 − 2 = 0.3333…, which rounds to about 0.33.",
+        "The win is worth 2.33 on average and the loss costs 2, leaving about +0.33."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Win $7 net with probability 1/3, lose $3 with probability 2/3. What is the expected net, to two decimal places?",
+        "answer": 0.33,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That averages 7 and −3 as if equally likely, and drops the 2-to-1 weighting against you."
+          },
+          {
+            "value": 2.33,
+            "feedback": "That is the win's contribution, 7(1/3), alone. The loss still has to be subtracted."
+          }
+        ],
+        "fallbackFeedback": "7(1/3) + (−3)(2/3) = 2.333… − 2 = 0.333…, about 0.33.",
+        "successFeedback": "About +$0.33 — a slim edge to the player, which is a rare thing at a carnival."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which sign favours whom?",
+      "conceptTag": "ev-payoffs",
+      "explanationVariants": [
+        "A negative expected net means the player loses money on average over many plays.",
+        "Expectation's sign is the verdict; its size is the rate."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A game has an expected net of −$0.50 per play. What does that mean?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Over many plays you lose about 50 cents each time",
+            "correct": true,
+            "feedback": "Yes — and it says nothing about any single play, which may well win."
+          },
+          {
+            "id": "o2",
+            "label": "You lose exactly 50 cents every play",
+            "correct": false,
+            "feedback": "That treats an average as if it were an outcome. Every individual play is a win or a loss; −$0.50 is where those results settle over many plays, and it is a net no single play produces."
+          },
+          {
+            "id": "o3",
+            "label": "You will lose your next play",
+            "correct": false,
+            "feedback": "Expectation forecasts the long run, never the next play."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Price a lottery ticket.",
+      "conceptTag": "ev-payoffs",
+      "explanationVariants": [
+        "500(0.001) + 0(0.999) = 0.5, so the ticket is worth $0.50 before its price.",
+        "A one-in-a-thousand shot at $500 averages 50 cents."
+      ],
+      "hints": [
+        "Compute the expected PRIZE first, ignoring the ticket price for a moment.",
+        "The prize is $500 with probability 0.001, and $0 otherwise.",
+        "500 × 0.001."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ticket wins $500 with probability 0.001 and nothing otherwise. What is the expected prize, in dollars?",
+        "answer": 0.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 500,
+            "feedback": "That is the prize if you win. Expectation weights it by the one-in-a-thousand chance of winning."
+          },
+          {
+            "value": 0,
+            "feedback": "The expected prize is small but not zero — 500 × 0.001 = 0.50."
+          }
+        ],
+        "fallbackFeedback": "500 × 0.001 = $0.50.",
+        "successFeedback": "$0.50 — so a $1 ticket loses 50 cents per play on average, which is exactly the argument lesson 6 examines."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Net first, then average.",
+      "takeaways": [
+        "The cost to play is a negative payoff and must be netted into every outcome.",
+        "Expected net multiplies each net payoff by its probability and adds.",
+        "The sign says who the game favours; the size says by how much per play."
+      ],
+      "teaser": "Next: the word ‘fair’ — and why it does not mean winning half the time."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ev-payoffs",
+      "concept": {
+        "id": "rem-ev-payoffs-c",
+        "kind": "concept",
+        "body": "With both nets in hand the expectation is routine: multiply each net by its probability and add. The result is what one play is worth on average — positive means the game favours you, negative means it favours the house, and zero means neither."
+      },
+      "check": {
+        "id": "rem-ev-payoffs-k",
+        "kind": "check",
+        "body": "Net a losing outcome.",
+        "conceptTag": "ev-payoffs",
+        "explanationVariants": [
+          "A loss returns nothing, so the net is just the −$3 paid to play.",
+          "Losing costs the entry fee and gains nothing."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "That same game: what does a LOSS net you, in dollars?",
+          "answer": -3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "0 would mean nothing changed hands, but the $3 entry was already paid."
+            },
+            {
+              "value": 3,
+              "feedback": "The sign matters: $3 left your pocket, so the net is −$3."
+            }
+          ],
+          "fallbackFeedback": "You paid $3 and received nothing, so the net is −$3.",
+          "successFeedback": "−$3 — and expectation needs both nets, the +$7 and the −$3, weighted by how often each happens."
+        }
+      }
+    }
+  ]
+}

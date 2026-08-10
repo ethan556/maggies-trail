@@ -1,0 +1,315 @@
+{
+  "id": "les-03-02",
+  "slug": "solving-by-graphing",
+  "title": "Solving by Graphing",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch3-systems-and-solutions",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To solve a system BY GRAPHING: draw each line (start at its y-intercept, then step by its slope), and read off where they CROSS. That crossing point is the solution — the (x, y) that works in both.",
+      "figure": "line-intercepts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot the crossing point.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "y = 2x and y = x + 3 cross at one point. Plot where they cross.",
+        "cols": 8,
+        "rows": 8,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "targets": [
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 6,
+            "y": 3,
+            "feedback": "That's (6, 3) — coordinates swapped. The lines cross at x=3, y=6: plot (3, 6)."
+          },
+          {
+            "x": 2,
+            "y": 4,
+            "feedback": "(2, 4) is on y = 2x but not on y = x+3 (2+3=5, not 4) — find where BOTH hold: (3, 6)."
+          }
+        ],
+        "missFeedback": "Set the lines equal: 2x = x + 3 gives x = 3, then y = 2(3) = 6. Plot (3, 6).",
+        "successFeedback": "Right — (3, 6) is on both lines: 2·3 = 6 and 3 + 3 = 6.",
+        "connectTargets": false
+      },
+      "predict": {
+        "prompt": "y = 2x and y = x + 3 cross at one point. At that crossing, do the two rules give the SAME y-value or different ones?",
+        "options": [
+          {
+            "id": "same",
+            "label": "The same y — that's what crossing means"
+          },
+          {
+            "id": "different",
+            "label": "Different y's"
+          },
+          {
+            "id": "zero",
+            "label": "Both give y = 0"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "The intersection is the one input where both rules agree — same x, same y, both equations satisfied at once. That's what solving the system finds."
+      },
+      "conceptTag": "les-system-graphing",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents les system graphing.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for les system graphing must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines les system graphing."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-equations-systems:les-system-graphing",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You can also find the crossing without a perfect graph: set the two expressions for y EQUAL. For y = 2x and y = x + 3, solve 2x = x + 3 → x = 3, then y = 2(3) = 6. The crossing is (3, 6).",
+      "figure": "les-graph-solution"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the x-coordinate of the crossing.",
+      "conceptTag": "les-system-graphing",
+      "explanationVariants": [
+        "Set 2x − 1 = x + 1: subtract x to get x − 1 = 1, so x = 2.",
+        "Equate the two y-expressions and solve: x = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Where do y = 2x − 1 and y = x + 1 cross? Give the x-coordinate.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Check the setup — 2x−1 = x+1 gives x−1 = 1 after subtracting x, so x = 2, not 1."
+          },
+          {
+            "value": 3,
+            "feedback": "That's the y-coordinate — the x-coordinate where they cross is 2."
+          }
+        ],
+        "fallbackFeedback": "Set 2x − 1 = x + 1: subtract x to get x − 1 = 1, so x = 2."
+      },
+      "variant": {
+        "gen": "g8-les-system-graphing",
+        "form": "lesGraphXBasic"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Now the y-coordinate.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2x − 1 and y = x + 1 (which cross at x = 2), what is the y-coordinate?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the x-coordinate — plug x = 2 into either equation: y = 2(2)−1 = 3."
+          },
+          {
+            "value": 5,
+            "feedback": "Check — y = 2(2)−1 = 3, or y = 2+1 = 3, not 5."
+          }
+        ],
+        "fallbackFeedback": "Plug x = 2 into either equation: y = 2(2) − 1 = 3 (or y = 2 + 1 = 3)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A crossing with a negative slope.",
+      "conceptTag": "les-system-graphing",
+      "explanationVariants": [
+        "Set −x + 4 = 2x − 5: add x and 5 to get 9 = 3x, so x = 3.",
+        "Equate and solve: −x+4 = 2x−5 gives x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Where do y = −x + 4 and y = 2x − 5 cross? Give the x-coordinate.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Check — −x+4 = 2x−5 gives 9 = 3x, so x = 3, not 1."
+          },
+          {
+            "value": 9,
+            "feedback": "That's 3x, not x — after 9 = 3x, divide by 3 to get x = 3."
+          }
+        ],
+        "fallbackFeedback": "Set −x + 4 = 2x − 5: add x and 5 to both sides to get 9 = 3x, so x = 3."
+      },
+      "variant": {
+        "gen": "g8-les-system-graphing",
+        "form": "lesGraphXSigned"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The matching y-coordinate.",
+      "conceptTag": "les-system-graphing",
+      "explanationVariants": [
+        "At x = 3: y = −3 + 4 = 1 (or 2(3) − 5 = 1). The crossing is (3, 1).",
+        "Plug x = 3 into either equation to get y = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = −x + 4 and y = 2x − 5 (crossing at x = 3), what is the y-coordinate?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's the x-coordinate — plug x = 3 in: y = −3+4 = 1."
+          },
+          {
+            "value": 7,
+            "feedback": "Check — y = −3+4 = 1, or 2(3)−5 = 1, not 7."
+          }
+        ],
+        "fallbackFeedback": "Plug x = 3 into either equation: y = −3 + 4 = 1 (or 2(3) − 5 = 1)."
+      },
+      "variant": {
+        "gen": "g8-les-system-graphing",
+        "form": "lesGraphYGiven"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find both coordinates of the crossing.",
+      "conceptTag": "les-system-graphing",
+      "explanationVariants": [
+        "Set 3x − 4 = x + 2: subtract x and add 4 to get 2x = 6, x = 3; then y = 3+2 = 5. Crossing (3, 5).",
+        "Equate, solve for x = 3, then y = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 3x − 4 and y = x + 2 cross at a point. What is the y-coordinate of the crossing?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's the x-coordinate — plug x = 3 in: y = 3+2 = 5."
+          },
+          {
+            "value": 7,
+            "feedback": "Check — after x = 3, y = 3+2 = 5, or 3(3)−4 = 5, not 7."
+          }
+        ],
+        "fallbackFeedback": "Set 3x − 4 = x + 2: 2x = 6, so x = 3; then y = 3 + 2 = 5."
+      },
+      "hints": [
+        "Set the two y-expressions equal: 3x − 4 = x + 2.",
+        "Subtract x and add 4: 2x = 6, so x = 3.",
+        "Plug x = 3 into y = x + 2: y = 5, so the crossing is (3, 5)."
+      ],
+      "variant": {
+        "gen": "g8-les-system-graphing",
+        "form": "lesGraphYChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Solve a system by graphing — or by setting the two y-expressions equal and solving.",
+      "takeaways": [
+        "The crossing point of the two lines is the solution.",
+        "Set the expressions equal to find x, then plug in for y.",
+        "Always check the point in BOTH equations."
+      ],
+      "teaser": "Next: systems with no crossing, or infinitely many."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-system-graphing",
+      "concept": {
+        "id": "rem-les0302-c",
+        "kind": "concept",
+        "body": "Solve a system by graphing — the crossing point is the solution. Or set the two y-expressions equal, solve for x, then plug in for y. Check in both equations."
+      },
+      "check": {
+        "id": "rem-les0302-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-system-graphing",
+        "explanationVariants": [
+          "Set 2x = x + 3: subtract x to get x = 3.",
+          "Equate the y-expressions: 2x = x+3 gives x = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Where do y = 2x and y = x + 3 cross? Give the x-coordinate.",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's the y-coordinate — the x-coordinate is 3."
+            },
+            {
+              "value": 1,
+              "feedback": "Check — 2x = x+3 gives x = 3 after subtracting x, not 1."
+            }
+          ],
+          "fallbackFeedback": "Set 2x = x + 3: subtract x to get x = 3."
+        }
+      }
+    }
+  ]
+}

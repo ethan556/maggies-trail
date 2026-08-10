@@ -1,0 +1,349 @@
+{
+  "id": "as100-02-01",
+  "slug": "adding-tens",
+  "title": "Adding Tens",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch2-add-100",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "tens-plus-tens",
+      "body": "Adding tens is like adding ones. 3 tens + 4 tens = 7 tens, so 30 + 40 = 70.",
+      "narration": "Adding tens is like adding ones. Three tens plus four tens is seven tens, so thirty plus forty equals seventy."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop by tens.",
+      "conceptTag": "add-tens",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "30 + 40: start at 30 and make 4 hops of 10. Tap where you land.",
+        "min": 0,
+        "max": 100,
+        "start": 30,
+        "hop": 10,
+        "hops": 4,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 60,
+            "feedback": "That's 3 hops of ten. One more: 40, 50, 60, 70."
+          },
+          {
+            "value": 34,
+            "feedback": "That hopped by ONES. Each hop is a whole ten: land on 70."
+          }
+        ],
+        "missFeedback": "Four hops of ten from 30: 40, 50, 60, 70.",
+        "successFeedback": "30 and 4 tens more is 70!"
+      },
+      "predict": {
+        "prompt": "You'll take 4 equal hops of 10, right from 30. How far from 30 will you end up in total?",
+        "options": [
+          {
+            "id": "total",
+            "label": "40 away"
+          },
+          {
+            "id": "add",
+            "label": "14 away"
+          },
+          {
+            "id": "off",
+            "label": "30 away"
+          }
+        ],
+        "outcomeId": "total",
+        "reveal": "4 equal hops of 10 cover 10 × 4 = 40 — repeated equal jumps ARE multiplication. Adding 10 + 4 = 14 mixes up the jump size with the number of jumps."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents add tens.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add tens must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add tens."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:add-tens",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the tens.",
+      "conceptTag": "add-tens",
+      "explanationVariants": [
+        "2 tens + 5 tens = 7 tens: 20 + 50 = 70.",
+        "Think 2 + 5 = 7, then make them tens: 70."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "20 + 50 = ?",
+        "answer": 70,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the number of TENS. Seven tens is 70."
+          },
+          {
+            "value": 25,
+            "feedback": "That squeezed the digits together. Add the tens: 2 + 5 = 7 tens = 70."
+          }
+        ],
+        "fallbackFeedback": "2 tens + 5 tens = 7 tens = 70."
+      },
+      "hints": [
+        "Count the tens.",
+        "2 + 5 = 7 tens.",
+        "70."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddTensNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The ones digit stays 0 when you add whole tens — only the tens digit changes.",
+      "narration": "The ones digit stays zero when you add whole tens — only the tens digit changes.",
+      "figure": "as100-add-tens-zero"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the tens sums.",
+      "conceptTag": "add-tens",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each tens-sum to its total.",
+        "left": [
+          {
+            "id": "p1",
+            "label": "60 + 30"
+          },
+          {
+            "id": "p2",
+            "label": "40 + 40"
+          },
+          {
+            "id": "p3",
+            "label": "20 + 30"
+          }
+        ],
+        "right": [
+          {
+            "id": "q90",
+            "label": "90"
+          },
+          {
+            "id": "q80",
+            "label": "80"
+          },
+          {
+            "id": "q50",
+            "label": "50"
+          }
+        ],
+        "pairs": {
+          "p1": "q90",
+          "p2": "q80",
+          "p3": "q50"
+        },
+        "pairErrors": [
+          {
+            "left": "p2",
+            "right": "q90",
+            "feedback": "40 + 40 is the double: 8 tens = 80. 90 is 6 + 3 tens."
+          },
+          {
+            "left": "p3",
+            "right": "q80",
+            "feedback": "20 + 30 is 5 tens = 50. 80 is 4 + 4 tens."
+          }
+        ],
+        "missFeedback": "Add the tens digits, keep the 0: 6+3→90, 4+4→80, 2+3→50.",
+        "successFeedback": "All the tens added — just like small facts, ten times bigger!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A doubles echo.",
+      "conceptTag": "add-tens",
+      "explanationVariants": [
+        "4 tens + 4 tens is the double: 8 tens = 80.",
+        "40 + 40 echoes 4 + 4 = 8, so it's 80."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "40 + 40 = ?",
+        "answer": 80,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the number of tens. Eight tens is 80."
+          },
+          {
+            "value": 44,
+            "feedback": "That squeezed the digits together. Double the tens: 80."
+          }
+        ],
+        "fallbackFeedback": "Double 4 tens is 8 tens = 80."
+      },
+      "hints": [
+        "It's a double, in tens.",
+        "4 + 4 = 8 tens.",
+        "80."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddTensNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which is right?",
+      "conceptTag": "add-tens",
+      "explanationVariants": [
+        "60 + 30 adds 6 tens and 3 tens: 9 tens = 90.",
+        "Think 6 + 3 = 9, then tens: 90."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "60 + 30 = ?",
+        "options": [
+          {
+            "id": "a",
+            "label": "90",
+            "correct": true,
+            "feedback": "Yes — 6 tens + 3 tens = 9 tens = 90."
+          },
+          {
+            "id": "b",
+            "label": "9",
+            "feedback": "9 counts the tens. Nine TENS is 90."
+          },
+          {
+            "id": "c",
+            "label": "63",
+            "feedback": "That squeezed 6 and 3 together. Add the tens: 90."
+          }
+        ]
+      },
+      "hints": [
+        "Count tens like ones.",
+        "6 + 3 = 9 tens.",
+        "90."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddTensMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Right to 100!",
+      "conceptTag": "add-tens",
+      "explanationVariants": [
+        "6 tens + 4 tens = 10 tens, and ten tens make 100.",
+        "60 + 40 fills the whole hundred: 100."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "60 + 40 = ?",
+        "answer": 100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the number of tens. Ten tens make 100."
+          },
+          {
+            "value": 64,
+            "feedback": "That squeezed the digits. 6 tens + 4 tens = 10 tens = 100."
+          }
+        ],
+        "fallbackFeedback": "6 + 4 = 10 tens = 100."
+      },
+      "hints": [
+        "6 + 4 tens.",
+        "That's 10 tens.",
+        "Ten tens are 100."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "AddTensNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Tens add like ones!",
+      "takeaways": [
+        "3 tens + 4 tens = 7 tens.",
+        "The ones digit stays 0.",
+        "Ten tens make 100."
+      ],
+      "teaser": "next: adding ones onto a two-digit number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "add-tens",
+      "concept": {
+        "id": "rem-at-c",
+        "kind": "concept",
+        "body": "Slow it down. 10 + 20: that's 1 ten and 2 tens — 3 tens. So 10 + 20 = 30.",
+        "narration": "Ten plus twenty: that's one ten and two tens — three tens. So ten plus twenty equals thirty."
+      },
+      "check": {
+        "id": "rem-at-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "add-tens",
+        "explanationVariants": [
+          "1 ten + 2 tens = 3 tens = 30.",
+          "Think 1 + 2 = 3, then tens: 30."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "10 + 20 = ?",
+          "answer": 30,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 counts the tens. Three tens is 30."
+            },
+            {
+              "value": 12,
+              "feedback": "That squeezed 1 and 2 together. 1 ten + 2 tens = 30."
+            }
+          ],
+          "fallbackFeedback": "1 + 2 = 3 tens = 30."
+        }
+      }
+    }
+  ]
+}

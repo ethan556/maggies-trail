@@ -1,0 +1,274 @@
+{
+ "id": "in-05-03",
+ "slug": "choosing-u",
+ "title": "Choosing u",
+ "courseId": "integration-accumulation",
+ "chapterId": "ch5-u-substitution",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Nothing labels the inside for you. Two questions decide it:\n\n**What is inside something?** (a bracket, a root, an exponent, a denominator)\n**Is its derivative also present, up to a constant?**\n\nIf both answers are yes, that thing is u. If the second answer is no, substitution will not save you — and in this course, that means the integral is out of reach.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Choose u.",
+   "conceptTag": "in-choosing-u",
+   "explanationVariants": [
+    "The inside is x³ + 1, whose derivative 3x² is present (up to the constant 3 — and the x² out front is a third of it).",
+    "Ask what is inside the bracket, then check that its derivative is available."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For ∫ x²(x³ + 1)⁵ dx, what is u?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "u = x³ + 1 — and du = 3x² dx, so x² dx = du/3.",
+      "correct": true,
+      "feedback": "Right. The x² is a third of the du, and a constant like that is always fixable out front."
+     },
+     {
+      "id": "o2",
+      "label": "u = x²",
+      "correct": false,
+      "feedback": "x² is not INSIDE anything. It is the leftover factor — the receipt — and it is what becomes the du."
+     },
+     {
+      "id": "o3",
+      "label": "u = x³",
+      "correct": false,
+      "feedback": "Very close, and it would even work here (du = 3x² dx again). But taking the whole inside, x³ + 1, keeps the bracket clean as u⁵."
+     },
+     {
+      "id": "o4",
+      "label": "There is no valid u.",
+      "correct": false,
+      "feedback": "There is: the inside is x³ + 1 and its derivative 3x² is sitting right there, up to a constant."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-choosing-u__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Finish it.",
+   "conceptTag": "in-choosing-u",
+   "explanationVariants": [
+    "u = x³ + 1, x² dx = du/3, limits u: 1 → 2. So (1/3)∫₁² u⁵ du = (1/3)(u⁶/6) = (64 − 1)/18 = 63/18 = 3.5.",
+    "Check by differentiating (x³ + 1)⁶/18: the chain rule gives 6(x³+1)⁵·3x²/18 = x²(x³+1)⁵ ✓."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀¹ x²(x³ + 1)⁵ dx.",
+    "answer": 3.5,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 10.5,
+      "feedback": "The 1/3 from x² dx = du/3 has gone missing: 63/6 = 10.5 is three times too big."
+     },
+     {
+      "value": 3.556,
+      "feedback": "That is 64/18 — you forgot to subtract the lower limit, u = 1, whose sixth power is 1."
+     },
+     {
+      "value": 1.167,
+      "feedback": "That looks like (64 − 1)/54 — one division too many. It is (1/3)(u⁶/6) = u⁶/18."
+     }
+    ],
+    "fallbackFeedback": "u = x³ + 1, limits 1 → 2: (1/3)(u⁶/6) = (64 − 1)/18 = 3.5."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-choosing-u__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "When substitution fails.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Why ∫ (x² + 1)³ dx has no substitution.",
+    "panels": [
+     {
+      "title": "The inside is there",
+      "body": "u = x² + 1 looks tempting. It is genuinely the inside of the bracket."
+     },
+     {
+      "title": "But the du is not",
+      "body": "du = 2x dx, and there is NO x out front to supply it. You cannot manufacture one — dividing by 2x would move a VARIABLE across the integral sign, which is illegal."
+     },
+     {
+      "title": "So expand instead",
+      "body": "(x² + 1)³ = x⁶ + 3x⁴ + 3x² + 1, and now the power rule handles it term by term. Substitution is a tool, not an obligation — and knowing when it does NOT apply is half of using it well."
+     }
+    ],
+    "continueFeedback": "Keep going — the second panel is the whole test.",
+    "successFeedback": "No inner derivative, no substitution. Constants may cross the integral sign; variables may not."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "And that is integration, in this course.\n\nYou can **define** an integral (the trap, squeezed shut), **interpret** it (a rate integrated gives a total), **compute** it (an antiderivative, evaluated twice), and **transform** it (substitution, the chain rule reversed).\n\nWhat remains is not new machinery but new uses: areas between curves, volumes, average values. Those are the next course.",
+   "figure": "dr-inverse-reciprocal"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Sort them.",
+   "conceptTag": "in-choosing-u",
+   "explanationVariants": [
+    "Substitution works exactly when the inner derivative is present up to a CONSTANT factor. A stray x that is not part of the du is fatal.",
+    "The test is mechanical: write down du and ask whether the integrand supplies it."
+   ],
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "For which of these does u-substitution work?",
+    "buckets": [
+     {
+      "id": "yes",
+      "label": "Substitution works",
+      "icon": "✅"
+     },
+     {
+      "id": "no",
+      "label": "It does not",
+      "icon": "🚫"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "∫ 2x·cos(x²) dx",
+      "bucketId": "yes",
+      "feedback": "u = x², du = 2x dx — sitting right there. The integral becomes ∫cos u du = sin(x²) + C."
+     },
+     {
+      "id": "s2",
+      "label": "∫ cos(x²) dx",
+      "bucketId": "no",
+      "feedback": "u = x² needs du = 2x dx, and there is no x. You cannot conjure one, and in fact this integral has no elementary antiderivative at all."
+     },
+     {
+      "id": "s3",
+      "label": "∫ x·e^(x²) dx",
+      "bucketId": "yes",
+      "feedback": "u = x², du = 2x dx, and x dx = du/2. A constant is always fixable."
+     },
+     {
+      "id": "s4",
+      "label": "∫ (x + 1)⁵ dx",
+      "bucketId": "yes",
+      "feedback": "u = x + 1, du = dx. The simplest substitution there is — and it works because the inner derivative is 1."
+     }
+    ],
+    "missFeedback": "Write down du and ask: does the integrand supply it, up to a constant?",
+    "successFeedback": "Constants can be fixed; a missing VARIABLE cannot. That single test settles every case."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-choosing-u__dragBucket"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The last one.",
+   "conceptTag": "in-choosing-u",
+   "hints": [
+    "What is inside something? The exponent, x². And is its derivative there? There is an x out front — half of 2x.",
+    "u = x², du = 2x dx, so x dx = du/2. The limits become u: 0 → 1.",
+    "(1/2)∫₀¹ e^u du = (1/2)(e − 1)."
+   ],
+   "explanationVariants": [
+    "u = x² gives (1/2)∫₀¹ e^u du = (1/2)(e¹ − e⁰) = (e − 1)/2 ≈ 0.859.",
+    "Check by differentiating e^(x²)/2: the chain rule gives e^(x²)·2x/2 = x·e^(x²) ✓."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀¹ x·e^(x²) dx, as a decimal to three places. (e ≈ 2.71828)",
+    "answer": 0.859,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 1.718,
+      "feedback": "That is e − 1 without the ½ from x dx = du/2."
+     },
+     {
+      "value": 1.359,
+      "feedback": "That is e/2. You must subtract e⁰ = 1 as well: (e − 1)/2 = 0.859."
+     },
+     {
+      "value": 0.5,
+      "feedback": "That is the ½ alone. It multiplies (e − 1) ≈ 1.718, giving 0.859."
+     }
+    ],
+    "fallbackFeedback": "u = x² → (1/2)(e − 1) ≈ 0.859."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-choosing-u__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Two questions, and you are done.",
+   "takeaways": [
+    "What is inside something? Is its derivative present, up to a constant? If both, that is your u.",
+    "Constants may be moved across the integral sign. Variables may not — which is why a missing x is fatal.",
+    "Substitution is a tool, not an obligation: knowing when it fails (∫cos(x²) dx) is half of using it well."
+   ],
+   "teaser": "That is integration. Next course: what to DO with it — areas between curves, volumes, and average value."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "in-choosing-u",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Write down the candidate u, then immediately write du. Now look at the integrand: **does it contain that du, up to a constant?** If yes, substitute. If a bare x is left over, stop — that substitution is the wrong one.",
+    "figure": "dr-chain-gears"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Is the du there?",
+    "conceptTag": "in-choosing-u",
+    "explanationVariants": [
+     "u = x² needs du = 2x dx. In ∫ x·sin(x²) dx there IS an x, so x dx = du/2 and it works.",
+     "In ∫ sin(x²) dx there is no x at all, and the substitution dies."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Which one can be done by substitution?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "∫ x·sin(x²) dx",
+       "correct": true,
+       "feedback": "Right — the x supplies the du, up to a factor of ½."
+      },
+      {
+       "id": "o2",
+       "label": "∫ sin(x²) dx",
+       "correct": false,
+       "feedback": "There is no x to become the du, and you cannot manufacture one. This integral has no elementary antiderivative at all."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,477 @@
+{
+  "id": "pra-04-01",
+  "slug": "the-sign-chart",
+  "title": "The Sign Chart",
+  "courseId": "polynomial-rational-analysis",
+  "chapterId": "ch4-polynomial-inequalities",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Where is (x + 1)(x − 2) **positive**? A polynomial can only switch sign by **passing through zero**, so its zeros chop the number line into intervals of constant sign. The **sign chart** records one test per interval — the whole inequality reads straight off it.",
+      "figure": "pra-signchart-intro"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The sign chart IS the inequality.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 2
+          },
+          {
+            "x": 4,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "p(x) = x²(x − 4). Set the sign on each interval, then read off where p(x) > 0.",
+        "successFeedback": "− − +. The double root at 0 does NOT flip the sign, so p stays negative on both sides of it and only turns positive past 4. Solving p(x) > 0 is nothing but reading the plus signs off this chart: x > 4.",
+        "crossFeedback": "The single root at 4 is a crossing — the sign has to flip there.",
+        "bounceFeedback": "You flipped across x = 0, but that root is double: the curve grazes zero and returns to the side it came from. It stays negative either side."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "polynomial-rational-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "pra-signchart",
+      "predict": {
+        "prompt": "p(x) = x²(x − 4) is zero at x = 0 and at x = 4. The SIGN of p actually changes at…",
+        "options": [
+          {
+            "id": "four",
+            "label": "x = 4 only"
+          },
+          {
+            "id": "both",
+            "label": "Both zeros"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — a zero is where the sign is undecided"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Only at x = 4. The x² factor is a double root: the curve touches the axis at 0 and turns back, so the sign that arrives is the sign that leaves. Odd multiplicity crosses, even multiplicity bounces — which is why counting the zeros is not the same as counting the places the chart is cut."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the solution off the chart.",
+      "conceptTag": "pra-signchart",
+      "explanationVariants": [
+        "Signs are +, −, + across the cuts −1 and 2, so f > 0 exactly on the OUTER intervals: x < −1 or x > 2.",
+        "Test points: f(−2) = 4 > 0, f(0) = −2 < 0, f(3) = 4 > 0 — keep the + intervals."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Where is (x + 1)(x − 2) > 0?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "<"
+          },
+          {
+            "id": "t2",
+            "label": "−1"
+          },
+          {
+            "id": "t3",
+            "label": "or"
+          },
+          {
+            "id": "t4",
+            "label": ">"
+          },
+          {
+            "id": "t5",
+            "label": "2"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t0",
+          "t4",
+          "t5"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "t1",
+              "t0",
+              "t1",
+              "t5"
+            ],
+            "feedback": "That's the NEGATIVE interval (test f(0) = −2). The positive regions are outside the zeros."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t4",
+              "t5"
+            ],
+            "feedback": "Don't forget the far left: f(−2) = (−1)(−4) = 4 > 0 — two negatives multiply to a positive."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Chart the signs across the zeros −1 and 2, then harvest the + intervals; strict > leaves the zeros out.",
+        "successFeedback": "Right — both outer intervals test positive; the strict > excludes the zeros themselves."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-signchart__buildExpression"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Strict vs inclusive matters only at the **boundary points**: for f > 0 the zeros are excluded (f is 0 there, not positive); for f ≥ 0 they join the solution. The intervals themselves never change — only their endpoints.",
+      "figure": "pra-boundary-strict"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Flip to ≤.",
+      "conceptTag": "pra-signchart",
+      "explanationVariants": [
+        "f ≤ 0 keeps the negative interval AND its endpoints where f = 0: −1 ≤ x ≤ 2.",
+        "Same chart, different harvest: the − interval, closed at both zeros because equality is allowed."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Where is (x + 1)(x − 2) ≤ 0?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "−1"
+          },
+          {
+            "id": "t1",
+            "label": "≤"
+          },
+          {
+            "id": "t2",
+            "label": "x"
+          },
+          {
+            "id": "t3",
+            "label": "2"
+          },
+          {
+            "id": "t4",
+            "label": "<"
+          },
+          {
+            "id": "t5",
+            "label": "or"
+          },
+          {
+            "id": "t6",
+            "label": "≥"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t1",
+          "t3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t4",
+              "t2",
+              "t4",
+              "t3"
+            ],
+            "feedback": "With ≤ (not <), the zeros satisfy f = 0 ≤ 0 — include them: −1 ≤ x ≤ 2."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t1",
+              "t0",
+              "t5",
+              "t2",
+              "t6",
+              "t3"
+            ],
+            "feedback": "Those intervals test POSITIVE (e.g. f(3) = 4). For ≤ 0, keep the middle: −1 ≤ x ≤ 2."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "The middle interval is negative, and ≤ closes both zero endpoints.",
+        "successFeedback": "Right — the middle interval is negative, and ≤ pulls in both zeros."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-signchart__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A chart with three cuts.",
+      "conceptTag": "pra-signchart",
+      "explanationVariants": [
+        "Zeros of x(x − 2)(x + 2) are −2, 0, 2; signs run −, +, −, + left to right, so f < 0 on x < −2 and on 0 < x < 2.",
+        "Test f(−3) = −15, f(−1) = 3, f(1) = −3, f(3) = 15: keep the two − intervals."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Where is x³ − 4x < 0? (Factor: x(x − 2)(x + 2).)",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "<"
+          },
+          {
+            "id": "t2",
+            "label": "−2"
+          },
+          {
+            "id": "t3",
+            "label": "or"
+          },
+          {
+            "id": "t4",
+            "label": "0"
+          },
+          {
+            "id": "t5",
+            "label": "2"
+          },
+          {
+            "id": "t6",
+            "label": ">"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t4",
+          "t1",
+          "t0",
+          "t1",
+          "t5"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "t1",
+              "t0",
+              "t1",
+              "t4",
+              "t3",
+              "t0",
+              "t6",
+              "t5"
+            ],
+            "feedback": "Those are the POSITIVE intervals (f(−1) = 3, f(3) = 15). The < 0 harvest is the other pair."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t2"
+            ],
+            "feedback": "There's a second negative stretch: f(1) = 1 − 4 = −3 < 0 — the interval 0 < x < 2 also counts."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Three zeros give a −, +, −, + chart — harvest the two negative stretches.",
+        "successFeedback": "Right — the −, +, −, + pattern puts negatives on the far left and between 0 and 2."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-signchart__buildExpression"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Choose your own test points.",
+      "conceptTag": "pra-signchart",
+      "explanationVariants": [
+        "Zeros 1 and 4; f(0) = (−1)(−4) = 4 > 0, f(2) = (1)(−2) = −2 < 0, f(5) = 4 > 0. For f ≥ 0: x ≤ 1 or x ≥ 4.",
+        "Signs +, −, +: keep the outer intervals, closed at the zeros since equality is allowed."
+      ],
+      "hints": [
+        "Find the zeros of (x − 1)(x − 4) first.",
+        "Test one point per interval: try x = 0, x = 2, x = 5.",
+        "Signs run +, −, +. Which intervals satisfy ≥ 0, and are the endpoints in or out?"
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Where is (x − 1)(x − 4) ≥ 0?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "≤"
+          },
+          {
+            "id": "t2",
+            "label": "1"
+          },
+          {
+            "id": "t3",
+            "label": "or"
+          },
+          {
+            "id": "t4",
+            "label": "≥"
+          },
+          {
+            "id": "t5",
+            "label": "4"
+          },
+          {
+            "id": "t6",
+            "label": "<"
+          },
+          {
+            "id": "t7",
+            "label": ">"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t0",
+          "t4",
+          "t5"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "t1",
+              "t0",
+              "t1",
+              "t5"
+            ],
+            "feedback": "The middle tests negative: f(2) = (1)(−2) = −2. Keep the outsides."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t6",
+              "t2",
+              "t3",
+              "t0",
+              "t7",
+              "t5"
+            ],
+            "feedback": "So close — but ≥ includes the zeros: at x = 1 and x = 4, f = 0 ≥ 0 holds."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Outer intervals are positive, and ≥ pulls both zeros in.",
+        "successFeedback": "Right — outer positives, endpoints included by the ≥."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-signchart__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chop, test, harvest.",
+      "takeaways": [
+        "Zeros cut the line; sign is constant on each piece.",
+        "One test point per interval decides its sign.",
+        "Strict excludes the zeros; inclusive keeps them."
+      ],
+      "teaser": "Next: a shortcut — multiplicity tells you the signs with almost no testing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pra-signchart",
+      "concept": {
+        "id": "rem-pra0401-c",
+        "kind": "concept",
+        "body": "Three moves: (1) zeros → cut points; (2) one test point per interval; (3) harvest the intervals matching the inequality, minding endpoints."
+      },
+      "check": {
+        "id": "rem-pra0401-k",
+        "kind": "check",
+        "body": "One test point.",
+        "conceptTag": "pra-signchart",
+        "explanationVariants": [
+          "f(0) = (0 + 3)(0 − 1) = −3: negative between the zeros.",
+          "A positive times a negative: (3)(−1) = −3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = (x + 3)(x − 1). What is the test value f(0)?",
+          "answer": -3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "(0 + 3)(0 − 1) = (3)(−1) — the second factor is negative at 0, so the product is −3."
+            },
+            {
+              "value": -2,
+              "feedback": "Multiply the factors' values, don't add: 3 × (−1) = −3."
+            }
+          ],
+          "fallbackFeedback": "f(0) = 3 · (−1) = −3."
+        }
+      }
+    }
+  ]
+}

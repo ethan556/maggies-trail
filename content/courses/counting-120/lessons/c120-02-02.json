@@ -1,0 +1,352 @@
+{
+ "id": "c120-02-02",
+ "slug": "find-a-number",
+ "title": "Find a Number",
+ "courseId": "counting-120",
+ "chapterId": "ch2-120-chart",
+ "minutes": 7,
+ "readingProfile": "early",
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "chart-120",
+   "body": "Find a number by its row and spot. 47 is in the row of forties, 7 spots across.",
+   "narration": "Find a number by its row and spot. Forty-seven is in the row of forties, seven spots across."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match each number to its row.",
+   "conceptTag": "chart-find",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Which row of ten is each number in?",
+    "left": [
+     {
+      "id": "n47",
+      "label": "47"
+     },
+     {
+      "id": "n23",
+      "label": "23"
+     },
+     {
+      "id": "n68",
+      "label": "68"
+     }
+    ],
+    "right": [
+     {
+      "id": "r40",
+      "label": "the forties (41–50)"
+     },
+     {
+      "id": "r20",
+      "label": "the twenties (21–30)"
+     },
+     {
+      "id": "r60",
+      "label": "the sixties (61–70)"
+     }
+    ],
+    "pairs": {
+     "n47": "r40",
+     "n23": "r20",
+     "n68": "r60"
+    },
+    "pairErrors": [
+     {
+      "left": "n47",
+      "right": "r60",
+      "feedback": "47's tens digit is 4 — it's in the forties (41–50), not the sixties."
+     },
+     {
+      "left": "n23",
+      "right": "r40",
+      "feedback": "23's tens digit is 2 — it's in the twenties (21–30), not the forties."
+     }
+    ],
+    "missFeedback": "The tens digit tells the row: 47 → forties, 23 → twenties, 68 → sixties.",
+    "successFeedback": "The tens digit names the row — nicely found!"
+   },
+   "predict": {
+    "prompt": "Which digit tells you a number's ROW on the chart — the tens digit or the ones digit?",
+    "options": [
+     {
+      "id": "tens",
+      "label": "The tens digit"
+     },
+     {
+      "id": "ones",
+      "label": "The ones digit"
+     },
+     {
+      "id": "both",
+      "label": "You need both equally"
+     }
+    ],
+    "outcomeId": "tens",
+    "reveal": "Rows ARE tens — the tens digit names the row, and the ones digit just finds the seat inside it."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Fill the gap in a row.",
+   "conceptTag": "chart-find",
+   "explanationVariants": [
+    "Across a row, 41, 42, 43, then 44, then 45 — the missing number is 44.",
+    "Between 43 and 45 sits 44."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Fill the missing number in this row: 41, 42, 43, __, 45",
+    "answer": 44,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 40,
+      "feedback": "40 comes before 41, not inside this row. The gap after 43 is 44."
+     },
+     {
+      "value": 46,
+      "feedback": "46 comes after 45. The gap between 43 and 45 is 44."
+     }
+    ],
+    "fallbackFeedback": "41, 42, 43, 44, 45 — the missing number is 44."
+   },
+   "hints": [
+    "What comes right after 43?",
+    "Count across the row.",
+    "44."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartFindNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The spot across is the ones digit. 47 sits under 7. 52 sits under 2.",
+   "narration": "The spot across is the ones digit. Forty-seven sits under seven. Fifty-two sits under two.",
+   "figure": "c120-ones-column"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Order this row.",
+   "conceptTag": "chart-find",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Drag these into the order they appear across the row.",
+    "items": [
+     {
+      "id": "n47b",
+      "label": "47"
+     },
+     {
+      "id": "n44b",
+      "label": "44"
+     },
+     {
+      "id": "n46b",
+      "label": "46"
+     },
+     {
+      "id": "n43b",
+      "label": "43"
+     },
+     {
+      "id": "n45b",
+      "label": "45"
+     }
+    ],
+    "correctOrder": [
+     "n43b",
+     "n44b",
+     "n45b",
+     "n46b",
+     "n47b"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "n47b",
+      "second": "n43b",
+      "feedback": "47 is the biggest — it goes last across the row. Start with 43."
+     },
+     {
+      "first": "n45b",
+      "second": "n44b",
+      "feedback": "44 comes before 45 across the row: 43, 44, 45, 46, 47."
+     }
+    ],
+    "missFeedback": "Across a row, numbers rise by one: 43, 44, 45, 46, 47.",
+    "successFeedback": "43, 44, 45, 46, 47 — right across the row!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Next across the row.",
+   "conceptTag": "chart-find",
+   "explanationVariants": [
+    "Across a row you count up one: right after 47 comes 48.",
+    "47's neighbor to the right is 48."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What number comes right after 47 in its row?",
+    "answer": 48,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 46,
+      "feedback": "46 is just BEFORE 47. Right after 47 is 48."
+     },
+     {
+      "value": 57,
+      "feedback": "57 is straight DOWN a row (ten more). Right ACROSS from 47 is 48."
+     }
+    ],
+    "fallbackFeedback": "After 47 across the row comes 48."
+   },
+   "hints": [
+    "Move one spot right.",
+    "47… then?",
+    "48."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartFindNumeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Name the row.",
+   "conceptTag": "chart-find",
+   "explanationVariants": [
+    "68 has a 6 in the tens place, so it's in the row 61–70 — the sixties.",
+    "The tens digit of 68 is 6, placing it in 61–70."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which row is 68 in?",
+    "options": [
+     {
+      "id": "a",
+      "label": "the sixties (61–70)",
+      "correct": true,
+      "feedback": "Yes — the tens digit 6 puts 68 in the row 61–70."
+     },
+     {
+      "id": "b",
+      "label": "the seventies (71–80)",
+      "feedback": "68 is less than 70. Its tens digit is 6, so it's in 61–70."
+     },
+     {
+      "id": "c",
+      "label": "the eighties (81–90)",
+      "feedback": "68 is nowhere near 80. The tens digit 6 means 61–70."
+     }
+    ]
+   },
+   "hints": [
+    "Look at the tens digit of 68.",
+    "It's 6.",
+    "So the row is 61–70."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartFindMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Fill the tricky gap.",
+   "conceptTag": "chart-find",
+   "explanationVariants": [
+    "Across the row 76, 77, then 78, then 79, 80 — the missing number is 78.",
+    "Between 77 and 79 sits 78."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Fill the missing number: 76, 77, __, 79, 80",
+    "answer": 78,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 77,
+      "feedback": "77 is already shown. The gap after it is 78."
+     },
+     {
+      "value": 88,
+      "feedback": "88 is a whole row down. Across from 77 comes 78."
+     }
+    ],
+    "fallbackFeedback": "76, 77, 78, 79, 80 — the missing number is 78."
+   },
+   "hints": [
+    "What comes right after 77?",
+    "Count across.",
+    "78."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartFindNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "You can find any number!",
+   "takeaways": [
+    "The tens digit names the row.",
+    "The ones digit is the spot across.",
+    "Across a row counts up by one."
+   ],
+   "teaser": "next: the chart's ten-more, ten-less pattern."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "chart-find",
+   "concept": {
+    "id": "rem-find-c",
+    "kind": "concept",
+    "body": "Slow it down. The tens digit picks the row. 53 has a 5, so it's in the fifties: 51–60.",
+    "narration": "The tens digit picks the row. Fifty-three has a five, so it's in the fifties: fifty-one to sixty."
+   },
+   "check": {
+    "id": "rem-find-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "chart-find",
+    "explanationVariants": [
+     "53's tens digit is 5, so it's in the row 51–60.",
+     "The 5 in 53 means the fifties row."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Which row is 53 in?",
+     "options": [
+      {
+       "id": "a",
+       "label": "the fifties (51–60)",
+       "correct": true,
+       "feedback": "Yes — the tens digit 5 puts 53 in 51–60."
+      },
+      {
+       "id": "b",
+       "label": "the thirties (31–40)",
+       "feedback": "The 3 in 53 is the ones digit. The tens digit 5 means the fifties."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

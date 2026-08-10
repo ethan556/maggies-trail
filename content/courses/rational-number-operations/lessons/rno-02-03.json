@@ -1,0 +1,303 @@
+{
+  "id": "rno-02-03",
+  "slug": "adding-and-subtracting-together",
+  "title": "Adding and Subtracting Together",
+  "courseId": "rational-number-operations",
+  "chapterId": "ch2-subtracting-integers",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "integer-jump",
+      "body": "You now have every tool for signed addition and subtraction. Any subtraction rewrites as addition, then the same-sign/different-sign rules take over from there."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "An addition problem.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-7 + (-4) = ?",
+        "answer": -11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "Both negative, so the sum stays negative: -11."
+          },
+          {
+            "value": -3,
+            "feedback": "Same sign means add: 7+4=11, so -11."
+          }
+        ],
+        "fallbackFeedback": "-7 + (-4) = -11."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A subtraction problem.",
+      "conceptTag": "rno-mixed-ops",
+      "explanationVariants": [
+        "8 − (−5) = 8 + 5 = 13.",
+        "The opposite of −5 is +5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 - (-5) = ?",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "Subtracting a negative flips to adding: 8 + 5 = 13."
+          },
+          {
+            "value": -13,
+            "feedback": "8 + 5 = 13, not negative."
+          }
+        ],
+        "fallbackFeedback": "8 - (-5) = 13."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The very first step is always the same: identify whether you're adding or subtracting, and if subtracting, rewrite it as adding the opposite before doing anything else.",
+      "figure": "rno-add-opposite"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Different-sign addition.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-13 + 8 = ?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "Different signs means SUBTRACT the magnitudes: 13−8=5, not add."
+          },
+          {
+            "value": 5,
+            "feedback": "-13 has the bigger magnitude, so the answer stays negative: -5."
+          }
+        ],
+        "fallbackFeedback": "13−8=5, and -13 has the bigger magnitude: -5."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "With practice, rewriting a subtraction becomes automatic — you'll start seeing a − (−b) and immediately think a + b.",
+      "figure": "rno-add-opposite"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A subtraction of two negatives.",
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "-6 - (-10) = ? Drag the marker to the answer.",
+        "min": -20,
+        "max": 20,
+        "step": 1,
+        "tickStep": 5,
+        "target": 4,
+        "start": -6,
+        "commonPlacements": [
+          {
+            "value": -16,
+            "feedback": "Subtracting a NEGATIVE flips to adding a positive: -6 − (−10) = -6 + 10 = 4."
+          },
+          {
+            "value": -4,
+            "feedback": "The opposite of −10 is +10, and -6 + 10 = 4, not negative."
+          }
+        ],
+        "successFeedback": "-6 − (−10) = -6 + 10 = 4 — subtracting a negative walked you RIGHT, across zero.",
+        "lowFeedback": "That landing sits left of the answer. Subtracting −10 moves you right from −6, not further left.",
+        "highFeedback": "That landing sits right of the answer. From −6, a move of 10 to the right stops at 4."
+      },
+      "predict": {
+        "prompt": "−6 − (−10): before computing, which side of zero does the answer land on?",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — removing a bigger debt lifts you past zero"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — it starts negative and stays there"
+          },
+          {
+            "id": "zero",
+            "label": "Exactly zero — the negatives cancel"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "Subtracting −10 adds 10: from −6, ten steps right crosses zero with room to spare, landing at +4. 'Subtraction makes smaller' fails the moment the number being taken away is negative."
+      },
+      "conceptTag": "rno-mixed-ops",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mixed ops.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mixed ops must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mixed ops."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rational-number-operations:rno-mixed-ops",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Mixed addition again.",
+      "conceptTag": "rno-mixed-ops",
+      "explanationVariants": [
+        "Both positive: 12+9=21.",
+        "Same sign means add."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "12 + 9 = ?",
+        "answer": 21,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -21,
+            "feedback": "Both positive, so the sum is positive: 21."
+          },
+          {
+            "value": 3,
+            "feedback": "Same sign means add: 12+9=21, not subtract."
+          }
+        ],
+        "fallbackFeedback": "12+9=21."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Mixed subtraction again.",
+      "conceptTag": "rno-mixed-ops",
+      "explanationVariants": [
+        "5 − 18 = 5 + (−18) = -13.",
+        "The opposite of 18 is −18."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 - 18 = ?",
+        "answer": -13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 23,
+            "feedback": "That adds instead of subtracting. 5 − 18 = 5 + (−18) = -13."
+          },
+          {
+            "value": 13,
+            "feedback": "18 has the bigger magnitude and is now negative, so the answer is -13, not 13."
+          }
+        ],
+        "fallbackFeedback": "5 − 18 = 5 + (−18) = -13."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full mixed challenge.",
+      "conceptTag": "rno-mixed-ops",
+      "explanationVariants": [
+        "-11 − (−30) = -11 + 30 = 19.",
+        "The opposite of −30 is +30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-11 - (-30) = ?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -41,
+            "feedback": "Subtracting a NEGATIVE flips to adding a positive: -11 − (−30) = -11 + 30 = 19."
+          },
+          {
+            "value": -19,
+            "feedback": "The opposite of −30 is +30, and -11 + 30 = 19, not negative."
+          }
+        ],
+        "fallbackFeedback": "-11 − (−30) = -11 + 30 = 19."
+      },
+      "hints": [
+        "Rewrite as adding the opposite: -11 + 30.",
+        "The signs are now different: subtract magnitudes 30−11=19.",
+        "30 has the bigger magnitude and is positive, so the answer is 19."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Identify the operation, rewrite subtraction as addition, then apply the same-sign/different-sign rules.",
+      "takeaways": [
+        "Any subtraction can be rewritten as adding the opposite.",
+        "After rewriting, the addition rules from Chapter 1 handle everything.",
+        "Practice makes the rewrite automatic."
+      ],
+      "teaser": "you've completed adding and subtracting signed integers — more of this course is still ahead."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rno-mixed-ops",
+      "concept": {
+        "id": "rem-rmo-c",
+        "kind": "concept",
+        "body": "First identify addition or subtraction. Rewrite any subtraction as adding the opposite, then use the same-sign/different-sign addition rules."
+      },
+      "check": {
+        "id": "rem-rmo-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-mixed-ops",
+        "explanationVariants": [
+          "8 − (−5) = 8 + 5 = 13.",
+          "The opposite of −5 is +5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "8 - (-5) = ?",
+          "answer": 13,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "Subtracting a negative flips to adding: 13."
+            },
+            {
+              "value": -13,
+              "feedback": "Subtracting a negative adds. 8 − (−5) becomes 8 + 5 = 13, a positive."
+            }
+          ],
+          "fallbackFeedback": "8 - (-5) = 13."
+        }
+      }
+    }
+  ]
+}

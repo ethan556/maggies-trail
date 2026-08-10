@@ -1,0 +1,303 @@
+{
+  "id": "alg1-03-01",
+  "slug": "solving-for-a-variable",
+  "title": "Solving for a Variable",
+  "courseId": "solving-equations",
+  "chapterId": "ch3-literal",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "formula-rearrange",
+      "body": "A **literal equation** has more than one letter, like the perimeter **P = 2L + 2W**. To solve for W, use the exact same moves as with numbers: subtract 2L (P − 2L = 2W), then divide by 2. So W = (P − 2L) / 2 — the letters just stay letters.",
+      "narration": "A literal equation has more than one letter, like the perimeter P equals two L plus two W. To solve for W, use the exact same moves as with numbers: subtract two L, then divide by two. So W equals P minus two L over two — the letters just stay letters."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the rearrangement.",
+      "conceptTag": "literal-eq",
+      "widget": {
+        "type": "solveBalance",
+        "a": 2,
+        "b": 2,
+        "c": 12,
+        "relation": "eq",
+        "prompt": "P = 2L + 2W with P = 12 and L = 1 becomes 2W + 2 = 12. Clear the units, then split into equal groups.",
+        "successFeedback": "W = 5. Rearranging a formula is the same moves as solving a number equation — clear what is added, then undo the multiplication — which is why 'solve for W' needs no new rules, only the ones already in hand.",
+        "unbalancedFeedback": "The pans disagree. Whatever you remove from one side must come off the other.",
+        "notIsolatedFeedback": "W is not alone yet — there are still units on its pan.",
+        "missFeedback": "Not the solution. Clear the 2 units first, then split what remains into 2 equal groups.",
+        "unexpandedFeedback": "Deal with the added units before splitting into groups."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use your rearranged formula.",
+      "conceptTag": "literal-eq",
+      "explanationVariants": [
+        "W = (P − 2L)/2. With P = 20 and L = 6: (20 − 12)/2 = 8/2 = 4.",
+        "The fence is 20 around, two 6-long sides use 12, leaving 8 for the two W-sides: each is 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle has P = 20 and L = 6. Find W.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is P − 2L (the two W-sides together). One more step — divide by 2: W = 4."
+          },
+          {
+            "value": 14,
+            "feedback": "That subtracted only ONE L: 20 − 6. Two sides are length L, so subtract 2L = 12: (20−12)/2 = 4."
+          }
+        ],
+        "fallbackFeedback": "W = (20 − 2·6)/2 = 8/2 = 4."
+      },
+      "hints": [
+        "W = (P − 2L)/2.",
+        "P − 2L = 20 − 12 = 8.",
+        "Divide by 2: W = 4."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-eq__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The goal is the same as always: get your chosen letter **alone**. Whatever surrounds it — added terms, multipliers — gets undone in reverse, onto both sides.",
+      "narration": "The goal is the same as always: get your chosen letter alone. Whatever surrounds it — added terms, multipliers — gets undone in reverse, onto both sides.",
+      "figure": "alg1-isolate"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each formula to its solved form.",
+      "conceptTag": "literal-eq",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each formula to the correct rearrangement.",
+        "left": [
+          {
+            "id": "m1",
+            "label": "d = rt, solve for t"
+          },
+          {
+            "id": "m2",
+            "label": "A = LW, solve for L"
+          },
+          {
+            "id": "m3",
+            "label": "F = ma, solve for a"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "t = d/r"
+          },
+          {
+            "id": "r2",
+            "label": "L = A/W"
+          },
+          {
+            "id": "r3",
+            "label": "a = F/m"
+          }
+        ],
+        "pairs": {
+          "m1": "r1",
+          "m2": "r2",
+          "m3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "m1",
+            "right": "r2",
+            "feedback": "d = rt: to free t, divide by r → t = d/r. (L = A/W solves A = LW.)"
+          },
+          {
+            "left": "m3",
+            "right": "r1",
+            "feedback": "F = ma: to free a, divide by m → a = F/m. (t = d/r solves d = rt.)"
+          }
+        ],
+        "missFeedback": "When two letters are multiplied, divide by the one you DON'T want.",
+        "successFeedback": "Three formulas rearranged — divide away the unwanted factor!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Free the variable.",
+      "conceptTag": "literal-eq",
+      "explanationVariants": [
+        "d = rt: t is multiplied by r, so divide both sides by r → t = d/r.",
+        "To undo 'times r,' divide by r: t = d/r."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "d = rt. Solve for t.",
+        "options": [
+          {
+            "id": "a",
+            "label": "t = d/r",
+            "correct": true,
+            "feedback": "Yes — divide both sides by r to free t."
+          },
+          {
+            "id": "b",
+            "label": "t = d − r",
+            "feedback": "r MULTIPLIES t, it isn't added — undo it by dividing, not subtracting: t = d/r."
+          },
+          {
+            "id": "c",
+            "label": "t = dr",
+            "feedback": "That multiplies again. To undo 'times r,' divide: t = d/r."
+          }
+        ]
+      },
+      "hints": [
+        "r multiplies t.",
+        "Undo × by ÷.",
+        "t = d/r."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-eq__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Numbers agree with letters.",
+      "conceptTag": "literal-eq",
+      "explanationVariants": [
+        "t = d/r. With d = 120 and r = 40: 120/40 = 3.",
+        "Going 120 miles at 40 mph takes 120 ÷ 40 = 3 hours."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using t = d/r, find t when d = 120 and r = 40.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "That subtracted: 120 − 40. The formula divides: 120 ÷ 40 = 3."
+          },
+          {
+            "value": 4800,
+            "feedback": "That multiplied: 120 × 40. t = d/r divides: 3."
+          }
+        ],
+        "fallbackFeedback": "t = 120/40 = 3."
+      },
+      "hints": [
+        "t = d/r.",
+        "120 ÷ 40.",
+        "t = 3."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-eq__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rearrange, then plug in!",
+      "conceptTag": "literal-eq",
+      "explanationVariants": [
+        "A = LW solved for L is L = A/W. With A = 48 and W = 6: 48/6 = 8.",
+        "Area ÷ width = length: 48 ÷ 6 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A = LW. Find L when A = 48 and W = 6.",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "That subtracted: 48 − 6. Area = L × W, so L = A/W = 48/6 = 8."
+          },
+          {
+            "value": 288,
+            "feedback": "That multiplied: 48 × 6. To free L from L × W, DIVIDE: 48/6 = 8."
+          }
+        ],
+        "fallbackFeedback": "L = A/W = 48/6 = 8."
+      },
+      "hints": [
+        "L = A/W.",
+        "48 ÷ 6.",
+        "L = 8."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-eq__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You solve for any letter!",
+      "takeaways": [
+        "Literal equations use the same moves as numeric ones.",
+        "Isolate your chosen letter; undo the rest in reverse.",
+        "Multiplied factor? Divide it away."
+      ],
+      "teaser": "next: rearranging formulas with fractions and several steps."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "literal-eq",
+      "concept": {
+        "id": "rem-le-c",
+        "kind": "concept",
+        "body": "Slow it down with y = x + b, solve for x. Only b sits with x, added on. Subtract b from both sides: x = y − b. That's it — one undo. Check with y=10, b=4: x = 6, and 6 + 4 = 10. ✓",
+        "narration": "Slow it down with y equals x plus b, solve for x. Only b sits with x, added on. Subtract b from both sides: x equals y minus b. Check with y ten, b four: x is six, and six plus four is ten."
+      },
+      "check": {
+        "id": "rem-le-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "literal-eq",
+        "explanationVariants": [
+          "y = x + b, solve for x: subtract b → x = y − b.",
+          "Undo the '+ b' by subtracting b: x = y − b."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "y = x + b. Solve for x.",
+          "options": [
+            {
+              "id": "a",
+              "label": "x = y − b",
+              "correct": true,
+              "feedback": "Yes — subtract b from both sides to free x."
+            },
+            {
+              "id": "b",
+              "label": "x = y + b",
+              "feedback": "That adds b again. To undo '+ b,' SUBTRACT b: x = y − b."
+            },
+            {
+              "id": "c",
+              "label": "x = yb",
+              "feedback": "b is added to x, not multiplied — subtract it: x = y − b."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

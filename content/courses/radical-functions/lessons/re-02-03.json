@@ -1,0 +1,431 @@
+{
+ "id": "re-02-03",
+ "slug": "conjugates-and-binomial-denominators",
+ "title": "Conjugates & Binomial Denominators",
+ "courseId": "radical-functions",
+ "chapterId": "ch2-rationalizing-and-radical-arithmetic",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The **conjugate** of a + √b is a − √b — flip the radical's sign. Their product needs no FOIL survivors: (3 + √2)(3 − √2) = 9 − 2 = **7**. The middle terms cancel and both leftovers are rational: (a + √b)(a − √b) = a² − b. Sound familiar? Complex conjugates play the same trick.",
+   "figure": "re-conjugate"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Compute a conjugate product.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is (5 + √3)(5 − √3)?",
+    "answer": 22,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 28,
+      "feedback": "The pattern is a² MINUS b: 25 − 3 = 22, not 25 + 3."
+     },
+     {
+      "value": 2,
+      "feedback": "a² = 25 (not just 5): 25 − 3 = 22."
+     }
+    ],
+    "fallbackFeedback": "25 − 3 = 22 — no radical survives."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "That's exactly the tool for a **binomial denominator**: for 4/(3 + √2), multiply by the conjugate over itself. Bottom: (3 + √2)(3 − √2) = 7. Top: 4(3 − √2) = 12 − 4√2. Result: **(12 − 4√2)/7** — radical evicted.",
+   "figure": "re-conjugate-denom"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Rationalize a binomial denominator.",
+   "conceptTag": "re-conjugates",
+   "explanationVariants": [
+    "Multiply by (1 − √2)/(1 − √2): bottom 1 − 2 = −1, top 3(1 − √2) — total −3(1 − √2) = 3√2 − 3.",
+    "The conjugate clears the bottom to 1 − 2 = −1; dividing by −1 flips both signs."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Rationalize 3/(1 + √2).",
+    "tokens": [
+     {
+      "id": "a",
+      "label": "3√2"
+     },
+     {
+      "id": "minus",
+      "label": "−"
+     },
+     {
+      "id": "t3",
+      "label": "3"
+     },
+     {
+      "id": "conj",
+      "label": "3(1 + √2)"
+     },
+     {
+      "id": "s2",
+      "label": "√2"
+     },
+     {
+      "id": "one",
+      "label": "1"
+     }
+    ],
+    "correct": [
+     "a",
+     "minus",
+     "t3"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t3",
+       "minus",
+       "a"
+      ],
+      "feedback": "The denominator is 1 − 2 = −1 — dividing by it flips both signs: 3√2 − 3."
+     },
+     {
+      "sequence": [
+       "conj"
+      ],
+      "feedback": "Multiply by the CONJUGATE (1 − √2) — repeating (1 + √2) squares the radical mess instead of clearing it."
+     },
+     {
+      "sequence": [
+       "s2",
+       "minus",
+       "one"
+      ],
+      "feedback": "The 3 on top multiplies through: 3(√2 − 1) = 3√2 − 3."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Multiply by the conjugate (1 − √2): the bottom becomes 1 − 2 = −1, which flips both signs on top.",
+    "successFeedback": "Right — 3(1 − √2)/(1 − 2) = (3 − 3√2)/(−1) = 3√2 − 3."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-conjugates__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Just the denominator.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Rationalizing 6/(4 − √5) uses the conjugate (4 + √5). What does the DENOMINATOR become?",
+    "answer": 11,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 21,
+      "feedback": "a² − b = 16 − 5 = 11 — the b is 5 (the radicand), already 'squared'."
+     },
+     {
+      "value": 9,
+      "feedback": "16 − 5 = 11, not 16 − 7 — b is the radicand 5."
+     }
+    ],
+    "fallbackFeedback": "(4 − √5)(4 + √5) = 16 − 5 = 11."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Pick the right multiplier.",
+   "conceptTag": "re-conjugates",
+   "explanationVariants": [
+    "The conjugate of 2 − √7 flips ONLY the radical sign: 2 + √7.",
+    "a − √b pairs with a + √b."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "To rationalize 1/(2 − √7), multiply top and bottom by:",
+    "tokens": [
+     {
+      "id": "t2",
+      "label": "2"
+     },
+     {
+      "id": "plus",
+      "label": "+"
+     },
+     {
+      "id": "minus",
+      "label": "−"
+     },
+     {
+      "id": "s7",
+      "label": "√7"
+     },
+     {
+      "id": "n2",
+      "label": "−2"
+     }
+    ],
+    "correct": [
+     "t2",
+     "plus",
+     "s7"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "minus",
+       "s7"
+      ],
+      "feedback": "Repeating the same binomial gives (2 − √7)² — the radical survives in the middle term."
+     },
+     {
+      "sequence": [
+       "s7"
+      ],
+      "feedback": "√7 alone clears MONOMIAL denominators — a binomial needs its conjugate."
+     },
+     {
+      "sequence": [
+       "n2",
+       "plus",
+       "s7"
+      ],
+      "feedback": "That's the negative of the original — the conjugate flips only the RADICAL's sign: 2 + √7."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The conjugate keeps the 2 and flips only the radical's sign.",
+    "successFeedback": "Right — the conjugate; the bottom becomes 4 − 7 = −3."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-conjugates__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Conjugates with two radicals.",
+   "conceptTag": "re-conjugates",
+   "explanationVariants": [
+    "(√5 + √3)(√5 − √3) = 5 − 3 = 2.",
+    "The pattern reads a² − b² with a = √5, b = √3: 5 − 3."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "What is (√5 + √3)(√5 − √3)?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "√5 squared",
+      "value": 5
+     },
+     {
+      "id": "b",
+      "label": "√3 squared",
+      "value": 3
+     }
+    ],
+    "approxFormula": {
+     "op": "subtract",
+     "left": {
+      "op": "const",
+      "id": "a"
+     },
+     "right": {
+      "op": "const",
+      "id": "b"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 8,
+      "feedback": "The conjugate pattern SUBTRACTS: 5 − 3 = 2, not 5 + 3."
+     },
+     {
+      "value": 15,
+      "feedback": "That multiplies the radicands (√15 territory) — conjugates give a² − b² = 5 − 3 = 2."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "5 − 3 = 2.",
+    "successFeedback": "5 − 3 = 2."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-conjugates__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full rationalization.",
+   "conceptTag": "re-conjugates",
+   "explanationVariants": [
+    "2/(√5 − √3) · (√5 + √3)/(√5 + √3) = 2(√5 + √3)/2 = √5 + √3.",
+    "The denominator lands on exactly 2, cancelling the numerator's 2."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Rationalize 2/(√5 − √3).",
+    "tokens": [
+     {
+      "id": "s5",
+      "label": "√5"
+     },
+     {
+      "id": "s3",
+      "label": "√3"
+     },
+     {
+      "id": "plus",
+      "label": "+"
+     },
+     {
+      "id": "minus",
+      "label": "−"
+     },
+     {
+      "id": "t2",
+      "label": "2"
+     },
+     {
+      "id": "big",
+      "label": "(√5 + √3)"
+     },
+     {
+      "id": "slash",
+      "label": "/"
+     },
+     {
+      "id": "t8",
+      "label": "8"
+     }
+    ],
+    "correct": [
+     "s5",
+     "plus",
+     "s3"
+    ],
+    "acceptAlso": [
+     [
+      "s3",
+      "plus",
+      "s5"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "big"
+      ],
+      "feedback": "The new denominator 5 − 3 = 2 cancels the numerator's 2 — nothing doubles."
+     },
+     {
+      "sequence": [
+       "big",
+       "t2"
+      ],
+      "feedback": "The new denominator 5 − 3 = 2 cancels the numerator's 2 — nothing doubles."
+     },
+     {
+      "sequence": [
+       "s5",
+       "minus",
+       "s3"
+      ],
+      "feedback": "Multiply by the CONJUGATE (√5 + √3) — and it's the conjugate that survives on top."
+     },
+     {
+      "sequence": [
+       "big",
+       "slash",
+       "t8"
+      ],
+      "feedback": "The denominator is 5 − 3 = 2, not (√5 − √3)² = 8 − 2√15."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Multiply by the conjugate √5 + √3 — the bottom becomes 5 − 3 = 2, which cancels the top's 2.",
+    "successFeedback": "Right — the bottom becomes 5 − 3 = 2, which cancels the top's 2."
+   },
+   "hints": [
+    "The conjugate of √5 − √3 is √5 + √3.",
+    "New denominator: 5 − 3 = 2.",
+    "2(√5 + √3)/2 — cancel the 2s."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-conjugates__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Conjugates annihilate radicals: (a + √b)(a − √b) = a² − b.",
+   "takeaways": [
+    "Flip only the radical's sign to form the conjugate.",
+    "Binomial denominators rationalize by conjugate; monomial ones by the bare root.",
+    "Watch for a negative denominator flipping signs at the end."
+   ],
+   "teaser": "Next chapter: radicals become FUNCTIONS — graphs, starting points, and domains."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-conjugates",
+   "concept": {
+    "id": "rem-re0203-c",
+    "kind": "concept",
+    "body": "The conjugate product skips FOIL's middle: (a + √b)(a − √b) = a² − b. For (2 + √3)(2 − √3): a = 2, b = 3."
+   },
+   "check": {
+    "id": "rem-re0203-k",
+    "kind": "check",
+    "body": "Run the shortcut.",
+    "conceptTag": "re-conjugates",
+    "explanationVariants": [
+     "4 − 3 = 1.",
+     "a² = 4, minus the radicand 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "What is (2 + √3)(2 − √3)?",
+     "answer": 1,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 7,
+       "feedback": "The pattern SUBTRACTS: 4 − 3 = 1, not 4 + 3."
+      },
+      {
+       "value": -1,
+       "feedback": "a² comes first: 4 − 3 = +1, not 3 − 4."
+      }
+     ],
+     "fallbackFeedback": "4 − 3 = 1."
+    }
+   }
+  }
+ ]
+}

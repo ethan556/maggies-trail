@@ -1,0 +1,293 @@
+{
+  "id": "qu-03-03",
+  "slug": "the-discriminant",
+  "title": "The Discriminant",
+  "courseId": "quadratics",
+  "chapterId": "ch3-square-roots-and-the-formula",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "discriminant-cases",
+      "body": "The **discriminant** D = b² − 4ac — the part under the root — tells you how many real solutions a quadratic has before you solve it. **D > 0**: two real roots. **D = 0**: one (repeated) root. **D < 0**: no real roots."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute the discriminant.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x^2 - 5x + 6 = 0, what is the discriminant b^2 - 4ac?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "The − sign matters: b² − 4ac = 25 − 24 = 1, not 25 + 24."
+          },
+          {
+            "value": 25,
+            "feedback": "That's just b². Subtract 4ac: 25 − 24 = 1."
+          }
+        ],
+        "fallbackFeedback": "b² − 4ac = 25 − 24 = 1."
+      },
+      "predict": {
+        "prompt": "For x² − 5x + 6 = 0 the discriminant b² − 4ac is 1. Before solving: how many real solutions?",
+        "options": [
+          {
+            "id": "two",
+            "label": "Two — it's positive"
+          },
+          {
+            "id": "one",
+            "label": "One — it's small"
+          },
+          {
+            "id": "none",
+            "label": "None — it's less than 4ac… wait"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "A positive discriminant makes the formula's ± add and subtract a real √1 = 1 — two distinct answers (2 and 3). Zero would merge them into one; negative would push them off the real line. One number forecasts the whole cast."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the count.",
+      "conceptTag": "quad-discriminant",
+      "explanationVariants": [
+        "D = 1 > 0, so there are two real solutions.",
+        "A positive discriminant means two real roots."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many real solutions does x^2 - 5x + 6 = 0 have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "D = 1 is positive (not zero), so there are two real solutions."
+          },
+          {
+            "value": 0,
+            "feedback": "D = 1 > 0, so it does have real solutions — two of them."
+          }
+        ],
+        "fallbackFeedback": "D = 1 > 0 → two real solutions."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-discriminant__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **zero** discriminant is the boundary case. For x² − 6x + 9 = 0, D = 36 − 36 = 0. The parabola just touches the x-axis at its vertex, giving exactly one repeated solution, x = 3.",
+      "figure": "qu-discriminant-zero"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The boundary case.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 3,
+        "targetK": 0,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 3,
+        "gridMax": 8,
+        "prompt": "Build y = x² − 6x + 9 in vertex form, then look at where the vertex sits relative to the x-axis.",
+        "successFeedback": "y = (x − 3)², vertex (3, 0) — the vertex sits ON the axis, so the curve touches once and never crosses. That is a discriminant of exactly 0: 36 − 36 = 0. The sign of D is the position of the vertex.",
+        "shapeFeedback": "The a-value controls the opening; for x² − 5x + 6 it is 1, opening upward.",
+        "vertexFeedback": "Not there yet. x² − 6x + 9 is a perfect square, so the vertex sits on the axis at x = 3."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A **negative** discriminant means the parabola never reaches the x-axis, so there are no real solutions. For x² + x + 1 = 0, D = 1 − 4 = −3 < 0. (The solutions are complex numbers, a later topic.)",
+      "figure": "qu-discriminant-neg"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "No real roots.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many real solutions does x^2 + x + 1 = 0 have?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "D = 1 − 4 = −3 is negative, so there are no real solutions."
+          },
+          {
+            "value": 1,
+            "feedback": "A negative discriminant gives zero real roots, not one."
+          }
+        ],
+        "fallbackFeedback": "D = −3 < 0 → no real solutions."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Mind the signs.",
+      "conceptTag": "quad-discriminant",
+      "explanationVariants": [
+        "D = (−4)² − 4(1)(−5) = 16 + 20 = 36.",
+        "b² − 4ac = 16 − 4(−5) = 16 + 20 = 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x^2 - 4x - 5 = 0, what is the discriminant?",
+        "answer": 36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "Subtracting 4ac with c = −5 adds: 16 − (−20) = 36, not 16 − 20."
+          },
+          {
+            "value": 16,
+            "feedback": "That's just b². Include −4ac = +20: 16 + 20 = 36."
+          }
+        ],
+        "fallbackFeedback": "16 − 4(1)(−5) = 16 + 20 = 36."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-discriminant__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count from that.",
+      "conceptTag": "quad-discriminant",
+      "explanationVariants": [
+        "D = 36 > 0, so there are two real solutions.",
+        "A positive discriminant means two real roots."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many real solutions does x^2 - 4x - 5 = 0 have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "D = 36 is positive, not zero, so two real solutions."
+          },
+          {
+            "value": 0,
+            "feedback": "D = 36 > 0, so it has two real solutions."
+          }
+        ],
+        "fallbackFeedback": "D = 36 > 0 → two real solutions."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-discriminant__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Decide without solving.",
+      "conceptTag": "quad-discriminant",
+      "explanationVariants": [
+        "D = (−3)² − 4(1)(5) = 9 − 20 = −11 < 0, so no real solutions.",
+        "b² − 4ac = 9 − 20 = −11, which is negative — zero real roots."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many real solutions does x^2 - 3x + 5 = 0 have?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "D = 9 − 20 = −11 is negative, so there are no real solutions."
+          },
+          {
+            "value": 1,
+            "feedback": "A negative discriminant gives zero real roots, not one."
+          }
+        ],
+        "fallbackFeedback": "D = 9 − 20 = −11 < 0 → no real solutions."
+      },
+      "hints": [
+        "Compute the discriminant D = b² − 4ac.",
+        "D = 9 − 20 = −11.",
+        "D < 0 means no real solutions."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-discriminant__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The discriminant reveals the number of real roots before you solve.",
+      "takeaways": [
+        "D = b² − 4ac; watch the signs.",
+        "D > 0 two roots, D = 0 one, D < 0 none.",
+        "D = 0 means the parabola touches the x-axis at its vertex."
+      ],
+      "teaser": "next chapter: quadratics in real-world applications."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-discriminant",
+      "concept": {
+        "id": "rem-qd-c",
+        "kind": "concept",
+        "body": "The discriminant D = b² − 4ac gives the number of real roots: D > 0 two, D = 0 one, D < 0 none. For x² − 5x + 6: D = 25 − 24 = 1 > 0, so two real solutions."
+      },
+      "check": {
+        "id": "rem-qd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-discriminant",
+        "explanationVariants": [
+          "D = 25 − 24 = 1.",
+          "b² − 4ac = 25 − 24 = 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For x^2 - 5x + 6 = 0, what is the discriminant?",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 49,
+              "feedback": "The − sign matters: 25 − 24 = 1."
+            },
+            {
+              "value": 25,
+              "feedback": "That's b² only; subtract 4ac: 25 − 24 = 1."
+            }
+          ],
+          "fallbackFeedback": "b² − 4ac = 25 − 24 = 1."
+        }
+      }
+    }
+  ]
+}

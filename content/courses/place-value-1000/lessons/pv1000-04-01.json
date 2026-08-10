@@ -1,0 +1,356 @@
+{
+  "id": "pv1000-04-01",
+  "slug": "adding-by-place-then-combining",
+  "title": "Adding by Place, Then Combining",
+  "courseId": "place-value-1000",
+  "chapterId": "ch4-adding-and-subtracting-to-1000",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "decompose-combine",
+      "body": "Break each number into hundreds, tens, and ones, then combine each spot separately. 324 + 251: hundreds 300+200=500, tens 20+50=70, ones 4+1=5. Combine: 500+70+5=575."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Combine the piles place by place, then build the answer.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build the sum of 324 + 251.",
+        "target": 575,
+        "requireStandard": true,
+        "maxHundreds": 9,
+        "maxTens": 9,
+        "maxOnes": 9,
+        "commonBuilds": [
+          {
+            "hundreds": 5,
+            "tens": 7,
+            "ones": 6,
+            "feedback": "Check the cubes: 4 + 1 = 5, not 6. Combine each place on its own: 5 flats, 7 rods, 5 cubes."
+          },
+          {
+            "hundreds": 5,
+            "tens": 2,
+            "ones": 5,
+            "feedback": "The rods: 2 + 5 = 7 — both addends bring rods to the pile. 5 flats, 7 rods, 5 cubes."
+          }
+        ],
+        "missFeedback": "Add each place by itself: 3+2 flats, 2+5 rods, 4+1 cubes.",
+        "successFeedback": "575 — each place added on its own, no pile spilling over. Place-by-place is the whole algorithm; trading is just what happens when a pile hits ten."
+      },
+      "predict": {
+        "prompt": "324 + 251, combined by place: 3+2 flats, 2+5 rods, 4+1 cubes. Will any pile overflow (reach 10 or more)?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — every pile stays under 10"
+          },
+          {
+            "id": "ones",
+            "label": "Yes — the cubes overflow"
+          },
+          {
+            "id": "tens",
+            "label": "Yes — the rods overflow"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "5 flats, 7 rods, 5 cubes — every pile stays under ten, so the sum reads straight off as 575. Enjoy it: the very next problem's piles WILL overflow, and that's where trading starts."
+      },
+      "conceptTag": "pv1000-add-by-place",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents add by place.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add by place must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add by place."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-add-by-place",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another add-by-place problem.",
+      "conceptTag": "pv1000-add-by-place",
+      "explanationVariants": [
+        "Hundreds 200+100=300, tens 10+40=50, ones 3+2=5. Combine: 355.",
+        "Combine each spot separately, then add the pieces."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "213 + 142 = ?",
+        "answer": 355,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 335,
+            "feedback": "Check each spot: hundreds 200+100=300, tens 10+40=50, ones 3+2=5. Combine: 355."
+          },
+          {
+            "value": 45,
+            "feedback": "That drops the hundreds. Combine all three spots: 300+50+5=355."
+          }
+        ],
+        "fallbackFeedback": "300 + 50 + 5 = 355."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000AddByPlaceNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes a spot's total is too big for one digit — 10 or more ones means trading 10 ones for 1 ten before you combine everything.",
+      "figure": "pv1000-trade-ones"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add with a ones-trade needed.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "247 + 186 = ?",
+        "answer": 433,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3213,
+            "feedback": "The ones add to 13 — trade 10 ones for 1 extra ten, then combine: 400+30+3=433."
+          },
+          {
+            "value": 423,
+            "feedback": "Don't forget the traded ten from the ones! Ones: 7+6=13, trade 10 for 1 ten. Combine: 433."
+          }
+        ],
+        "fallbackFeedback": "Hundreds 200+100=300, tens 40+80+10(traded)=130, ones 7+6-10=3. Combine: 300+130+3=433."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A trade can cascade — if the tens spot then also has 10 or more, trade 10 tens for 1 hundred too, just like before.",
+      "figure": "pv1000-cascade"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Add with a cascading trade.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "358 + 267 = ?",
+        "answer": 625,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 515,
+            "feedback": "The ones add to 15 (trade 1 ten), then tens add to 12 (trade 1 hundred). Combine carefully: 625."
+          },
+          {
+            "value": 5115,
+            "feedback": "Work through each trade one at a time. The final combined answer is 625."
+          }
+        ],
+        "fallbackFeedback": "Ones: 8+7=15, trade 10 for 1 ten. Tens: 50+60+10=120, trade 100 for 1 hundred. Hundreds: 300+200+100=600. Combine: 600+20+5=625."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another single-trade problem.",
+      "conceptTag": "pv1000-add-trade",
+      "explanationVariants": [
+        "Ones: 5+7=12, trade 10 for 1 ten. Combine: 300+40+2=342.",
+        "Trade 10 ones for 1 ten when the ones spot overflows."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "165 + 177 = ?",
+        "answer": 342,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3212,
+            "feedback": "The ones add to 12 — trade 10 ones for 1 extra ten, then combine: 300+40+2=342."
+          },
+          {
+            "value": 332,
+            "feedback": "Don't forget the traded ten from the ones! Combine carefully: 342."
+          }
+        ],
+        "fallbackFeedback": "165 + 177 = 342."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000AddTradeNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A no-trade problem for confidence.",
+      "conceptTag": "pv1000-add-by-place",
+      "explanationVariants": [
+        "Hundreds 400+300=700, tens 30+20=50, ones 2+6=8. Combine: 758.",
+        "No trades needed — combine each spot directly."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "432 + 326 = ?",
+        "answer": 758,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 748,
+            "feedback": "Check each spot: hundreds 400+300=700, tens 30+20=50, ones 2+6=8. Combine: 758."
+          },
+          {
+            "value": 68,
+            "feedback": "That drops the hundreds. Combine all three spots: 700+50+8=758."
+          }
+        ],
+        "fallbackFeedback": "700 + 50 + 8 = 758."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000AddByPlaceNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier cascading-trade problem.",
+      "conceptTag": "pv1000-add-trade",
+      "explanationVariants": [
+        "Ones: 9+6=15, trade 1 ten. Tens: 70+80+10=160, trade 1 hundred. Hundreds: 400+300+100=800. Combine: 815.",
+        "Work through each trade one at a time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "479 + 336 = ?",
+        "answer": 815,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 705,
+            "feedback": "The ones add to 15 (trade 1 ten), then tens add to 16 (trade 1 hundred). Combine carefully: 815."
+          },
+          {
+            "value": 7015,
+            "feedback": "Work through each trade one at a time. The final combined answer is 815."
+          }
+        ],
+        "fallbackFeedback": "479 + 336 = 815."
+      },
+      "hints": [
+        "Ones: 9+6=15. Trade 10 ones for 1 ten, keep 5 ones.",
+        "Tens: 70+30+10(traded)=110. Trade 100 for 1 hundred, keep 10 as... recount: 7+3+1=11 tens, trade 10 tens for 1 hundred, keep 1 ten.",
+        "Hundreds: 400+300+100(traded)=800. Combine: 800+10+5=815."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000AddTradeNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Add by combining each spot separately, trading 10 of a spot for 1 of the next spot over whenever a spot overflows.",
+      "takeaways": [
+        "Combine hundreds, tens, and ones each on their own.",
+        "A spot with 10 or more trades into the next spot over.",
+        "A trade can cascade through more than one spot."
+      ],
+      "teaser": "next: subtracting the same way, with trading."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-add-by-place",
+      "concept": {
+        "id": "rem-pabp-c",
+        "kind": "concept",
+        "body": "Add by combining each spot separately: hundreds with hundreds, tens with tens, ones with ones, then combine the pieces. 324+251: 500+70+5=575."
+      },
+      "check": {
+        "id": "rem-pabp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-add-by-place",
+        "explanationVariants": [
+          "500+70+5=575.",
+          "Combine each spot separately."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "324 + 251 = ?",
+          "answer": 575,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 555,
+              "feedback": "The tens are off: 2 tens + 5 tens = 7 tens, which gives 575."
+            },
+            {
+              "value": 65,
+              "feedback": "Don't drop the hundreds: 575."
+            }
+          ],
+          "fallbackFeedback": "575."
+        }
+      }
+    },
+    {
+      "conceptTag": "pv1000-add-trade",
+      "concept": {
+        "id": "rem-pat-c",
+        "kind": "concept",
+        "body": "When a spot's total is 10 or more, trade 10 of that spot for 1 of the next spot over before combining. Ones 7+6=13: trade 10 for 1 ten, keep 3 ones."
+      },
+      "check": {
+        "id": "rem-pat-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-add-trade",
+        "explanationVariants": [
+          "Ones 7+6=13, trade 10 for 1 ten. Combine: 433.",
+          "Trade 10 ones for 1 ten when the ones spot overflows."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "247 + 186 = ?",
+          "answer": 433,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3213,
+              "feedback": "Trade the extra ten: 433."
+            },
+            {
+              "value": 423,
+              "feedback": "Don't forget the traded ten: 433."
+            }
+          ],
+          "fallbackFeedback": "433."
+        }
+      }
+    }
+  ]
+}

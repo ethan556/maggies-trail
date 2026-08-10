@@ -1,0 +1,349 @@
+{
+  "id": "c120-03-03",
+  "slug": "past-one-hundred",
+  "title": "Past One Hundred",
+  "courseId": "counting-120",
+  "chapterId": "ch3-read-write",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "hundred-more",
+      "body": "Ten tens make 100. Past it, count on: 100 and 13 more is 113.",
+      "narration": "Ten tens make one hundred. Past it, count on: one hundred and thirteen more is one hundred thirteen."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count past 100.",
+      "conceptTag": "past-hundred",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Start at 98 and count on 4, crossing 100. Tap where you land.",
+        "min": 95,
+        "max": 105,
+        "start": 98,
+        "hop": 1,
+        "hops": 4,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 101,
+            "feedback": "That's 3 hops. One more: 99, 100, 101, 102."
+          },
+          {
+            "value": 103,
+            "feedback": "That's 5 hops. Count just 4 from 98 to land on 102."
+          }
+        ],
+        "missFeedback": "Count up 4 from 98: 99, 100, 101, 102.",
+        "successFeedback": "98, 99, 100, 101, 102 — right past one hundred!"
+      },
+      "predict": {
+        "prompt": "Start at 98 and count on 4. Will you finish before 100, on 100, or past 100?",
+        "options": [
+          {
+            "id": "past",
+            "label": "Past 100"
+          },
+          {
+            "id": "on",
+            "label": "Exactly on 100"
+          },
+          {
+            "id": "before",
+            "label": "Before 100"
+          }
+        ],
+        "outcomeId": "past",
+        "reveal": "Two counts reach 100 — and there are still two more, so you cross the hundred and keep going."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents past hundred.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for past hundred must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines past hundred."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "counting-120:past-hundred",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "After one hundred.",
+      "conceptTag": "past-hundred",
+      "explanationVariants": [
+        "Counting keeps going past 100: 100, then 101.",
+        "One more than 100 is 101 — a hundred and one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number comes right after 100?",
+        "answer": 101,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 110,
+            "feedback": "110 is ten after. Just ONE after 100 is 101."
+          },
+          {
+            "value": 200,
+            "feedback": "200 is a whole hundred later. Right after 100 is 101."
+          }
+        ],
+        "fallbackFeedback": "After 100 comes 101."
+      },
+      "hints": [
+        "Count on one from 100.",
+        "100… then?",
+        "101."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "PastHundredNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Numbers like 113 are 100 and more: 113 is 100 and 13. Write 1, then the rest.",
+      "narration": "Numbers like one hundred thirteen are one hundred and more: one thirteen is one hundred and thirteen. Write one, then the rest.",
+      "figure": "c120-past-hundred"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match hundred-and-more.",
+      "conceptTag": "past-hundred",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each 'hundred and more' to its numeral.",
+        "left": [
+          {
+            "id": "h4",
+            "label": "100 and 4 more"
+          },
+          {
+            "id": "h13",
+            "label": "100 and 13 more"
+          },
+          {
+            "id": "h20",
+            "label": "100 and 20 more"
+          }
+        ],
+        "right": [
+          {
+            "id": "v104",
+            "label": "104"
+          },
+          {
+            "id": "v113",
+            "label": "113"
+          },
+          {
+            "id": "v120",
+            "label": "120"
+          }
+        ],
+        "pairs": {
+          "h4": "v104",
+          "h13": "v113",
+          "h20": "v120"
+        },
+        "pairErrors": [
+          {
+            "left": "h4",
+            "right": "v113",
+            "feedback": "100 and 4 is 104. 113 needs 13 more than 100."
+          },
+          {
+            "left": "h20",
+            "right": "v104",
+            "feedback": "100 and 20 is 120. 104 is only 4 past 100."
+          }
+        ],
+        "missFeedback": "Count on from 100: 4 more is 104, 13 more is 113, 20 more is 120.",
+        "successFeedback": "104, 113, 120 — a hundred and more, matched!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Write it.",
+      "conceptTag": "past-hundred",
+      "explanationVariants": [
+        "One hundred four is 100 and 4: written 104, with a 0 holding the tens.",
+        "104 = 100 + 4. No tens, so a 0 sits in the middle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Write 'one hundred four' as a numeral.",
+        "answer": 104,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1004,
+            "feedback": "That wrote 100 then 4 side by side. One hundred four is 104 — the 0 holds the tens."
+          },
+          {
+            "value": 140,
+            "feedback": "140 is one hundred FORTY. One hundred FOUR is 104."
+          }
+        ],
+        "fallbackFeedback": "100 and 4 is 104."
+      },
+      "hints": [
+        "Start from 100.",
+        "4 more than 100.",
+        "104."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "PastHundredNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The top of the chart.",
+      "conceptTag": "past-hundred",
+      "explanationVariants": [
+        "12 tens make 120 — the last number on the chart.",
+        "10 tens are 100, and 2 more tens make 120."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many tens make 120?",
+        "options": [
+          {
+            "id": "a",
+            "label": "12 tens",
+            "correct": true,
+            "feedback": "Yes — 12 tens is 120: ten tens make 100, two more make 120."
+          },
+          {
+            "id": "b",
+            "label": "20 tens",
+            "feedback": "20 tens would be 200. 120 is 12 tens."
+          },
+          {
+            "id": "c",
+            "label": "112 tens",
+            "feedback": "112 tens would be huge! 120 is just 12 tens."
+          }
+        ]
+      },
+      "hints": [
+        "10 tens make 100.",
+        "How many more tens to 120?",
+        "12 tens."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "PastHundredMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count to the very top!",
+      "conceptTag": "past-hundred",
+      "explanationVariants": [
+        "118, 119, then the 9 rolls: 120 — the chart's last number.",
+        "After 119 comes 120, just like 19 to 20 with a hundred in front."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count on: 118, 119, __. What comes next?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 121,
+            "feedback": "121 skips one. Right after 119 comes 120."
+          },
+          {
+            "value": 110,
+            "feedback": "The count goes UP: after 119 comes 120."
+          }
+        ],
+        "fallbackFeedback": "After 119 comes 120 — the top of the chart."
+      },
+      "hints": [
+        "It works like 18, 19, 20.",
+        "The 9 rolls to 0.",
+        "120."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "PastHundredNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You read and write to 120!",
+      "takeaways": [
+        "Ten tens make 100.",
+        "Past 100, count on: 100 and 13 is 113.",
+        "120 is 12 tens — the chart's top."
+      ],
+      "teaser": "next chapter: counting by tens."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "past-hundred",
+      "concept": {
+        "id": "rem-ph-c",
+        "kind": "concept",
+        "body": "Slow it down. Past 100, the count works the same. 100, 101, 102 — just like 0, 1, 2.",
+        "narration": "Past one hundred, the count works the same. One hundred, one-oh-one, one-oh-two — just like zero, one, two."
+      },
+      "check": {
+        "id": "rem-ph-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "past-hundred",
+        "explanationVariants": [
+          "After 102 comes 103, just like 2 then 3.",
+          "Count on one from 102: 103."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What comes right after 102?",
+          "answer": 103,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 102,
+              "feedback": "102 is where we are. One more is 103."
+            },
+            {
+              "value": 113,
+              "feedback": "113 is ten more. Just one after 102 is 103."
+            }
+          ],
+          "fallbackFeedback": "After 102 comes 103."
+        }
+      }
+    }
+  ]
+}

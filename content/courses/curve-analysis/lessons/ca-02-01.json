@@ -1,0 +1,306 @@
+{
+  "id": "ca-02-01",
+  "slug": "concavity",
+  "title": "Concavity and the Second Derivative",
+  "courseId": "curve-analysis",
+  "chapterId": "ch2-concavity",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "f′ tells you whether the curve is rising. **f″ tells you which way it BENDS.**\n\n**f″ > 0** — the slope is increasing. The curve bends upward: *concave up*, holding water.\n**f″ < 0** — the slope is decreasing. The curve bends downward: *concave down*, spilling it.\n\nNote what this is not: a curve can be falling and concave up at the same time. Direction and bend are independent.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Falling, and bending upward.",
+      "conceptTag": "ca-concavity",
+      "explanationVariants": [
+        "On (−2, 0), f = x³ − 12x has f′ = 3x² − 12 < 0 (falling) and f″ = 6x < 0 (concave down). But on (0, 2), f′ < 0 still, while f″ = 6x > 0 — falling AND concave up.",
+        "Falling means going down. Concave up means the fall is levelling off. Both can be true at once."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A curve has f′ < 0 and f″ > 0. What is it doing?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Falling, but the fall is levelling off — bending back upward.",
+            "correct": true,
+            "feedback": "Right. The slope is negative and INCREASING (toward zero), which is exactly what a car braking to a stop looks like."
+          },
+          {
+            "id": "o2",
+            "label": "Rising and speeding up.",
+            "correct": false,
+            "feedback": "Rising needs f′ > 0. This curve is going down."
+          },
+          {
+            "id": "o3",
+            "label": "Falling faster and faster.",
+            "correct": false,
+            "feedback": "That would be f″ < 0 — a negative slope getting MORE negative. Here f″ is positive, so the slope is rising toward zero."
+          },
+          {
+            "id": "o4",
+            "label": "That combination is impossible.",
+            "correct": false,
+            "feedback": "It is extremely common: any curve approaching a minimum from the left is falling and concave up."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-concavity__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The sign chart of the SECOND derivative.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "f(x) = x³ − 12x, so f″(x) = 6x. Set the sign of f″ on each interval.",
+        "successFeedback": "− then +. The curve bends downward for x < 0 and upward for x > 0, and it switches at x = 0. That switch is an INFLECTION POINT — the place the bend changes its mind. The same sign-chart machinery, pointed at a third function now.",
+        "crossFeedback": "f″ = 6x is a single root at 0, so it must change sign there — negative on the left, positive on the right.",
+        "bounceFeedback": "This root is single, not repeated: f″ crosses zero rather than touching it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "ca-concavity",
+      "predict": {
+        "prompt": "f″(x) = 6x is negative for x < 0. Over there the curve is bending downward. Can it be RISING at the same time?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — bending and rising are separate questions"
+          },
+          {
+            "id": "no",
+            "label": "No — bending down means it must be falling"
+          },
+          {
+            "id": "only",
+            "label": "Only where f is above the axis"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Yes. At x = −3 this curve has f′ = 15 — climbing steeply — while f″ = −18 bends it downward: rising, but flattening as it rises. f′ answers 'which way', f″ answers 'which way is that changing'. Two charts, two questions, and neither one constrains the other."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Inflection points.",
+      "conceptTag": "ca-inflection",
+      "explanationVariants": [
+        "An inflection point is where the CONCAVITY changes — so f″ must change sign there, not merely equal zero.",
+        "It is the same 'sign change, not just a zero' discipline as the first-derivative test, one derivative further up."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What makes x = c an inflection point?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f″ CHANGES SIGN at c — the bend switches direction.",
+            "correct": true,
+            "feedback": "Right. f″(c) = 0 is a suspect; the sign change is the conviction. It is exactly the same discipline as before, one level up."
+          },
+          {
+            "id": "o2",
+            "label": "f″(c) = 0.",
+            "correct": false,
+            "feedback": "Necessary but not sufficient — and x⁴ is the counterexample: f″ = 12x² is zero at 0 but never changes sign, so the curve stays concave up throughout."
+          },
+          {
+            "id": "o3",
+            "label": "f′(c) = 0.",
+            "correct": false,
+            "feedback": "That is a critical point, which is about rising and falling. An inflection is about BENDING."
+          },
+          {
+            "id": "o4",
+            "label": "The curve crosses the x-axis at c.",
+            "correct": false,
+            "feedback": "Crossing the axis is about the sign of f, which has nothing to do with concavity."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-inflection__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So there are now **three** sign charts, and they answer three different questions:\n\n**f** — is the curve above or below the axis?\n**f′** — is it rising or falling?\n**f″** — is it bending up or down?\n\nThree functions, three charts, one machine.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "An inflection that is not there.",
+      "conceptTag": "ca-inflection",
+      "explanationVariants": [
+        "f = x⁴ has f″ = 12x², which is zero at x = 0 but POSITIVE on both sides. No sign change, so no inflection: the curve is concave up throughout.",
+        "The same trap as x³ for the first derivative, and the same answer: a zero without a sign change proves nothing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x⁴ has f″(0) = 0. Is x = 0 an inflection point?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — f″ = 12x² is positive on BOTH sides, so the bend never changes.",
+            "correct": true,
+            "feedback": "Right. It is the x³ trap wearing a different hat: a zero of f″ with no sign change is not an inflection."
+          },
+          {
+            "id": "o2",
+            "label": "Yes, because f″ = 0 there.",
+            "correct": false,
+            "feedback": "f″ = 0 is a suspect, not a conviction — the very lesson this course opened with, now applied one derivative further up."
+          },
+          {
+            "id": "o3",
+            "label": "Yes, because x = 0 is a minimum.",
+            "correct": false,
+            "feedback": "It IS a minimum, but that is a fact about f′, not about the bend. The curve is concave up on both sides."
+          },
+          {
+            "id": "o4",
+            "label": "Only if f is also zero there.",
+            "correct": false,
+            "feedback": "The value of f is irrelevant to concavity. Only the sign of f″ matters."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-inflection__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the inflections.",
+      "conceptTag": "ca-inflection",
+      "hints": [
+        "Differentiate twice: f′ = 4x³ − 12x², then f″ = 12x² − 24x.",
+        "Factor: f″ = 12x(x − 2), which is zero at x = 0 and x = 2.",
+        "Both roots are SINGLE, so f″ changes sign at each. Count the inflection points."
+      ],
+      "explanationVariants": [
+        "f″ = 12x(x − 2) has two single roots, so it changes sign at both: two inflection points, at x = 0 and x = 2.",
+        "Note that x = 0 is ALSO a critical point of f (a saddle) — a single x can be both, and they are separate facts about it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x⁴ − 4x³. How many inflection points does it have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "f″ = 12x(x − 2) has TWO single roots, at 0 and 2, and the sign changes at both."
+          },
+          {
+            "value": 0,
+            "feedback": "f″ certainly changes sign — it is an upward parabola with two distinct roots, so it dips negative between them."
+          },
+          {
+            "value": 3,
+            "feedback": "A quadratic f″ has at most two roots, and here it has exactly two."
+          }
+        ],
+        "fallbackFeedback": "f″ = 12x(x − 2): two single roots, two sign changes, two inflection points."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-inflection__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "f″ is the bend.",
+      "takeaways": [
+        "f″ > 0 bends upward, f″ < 0 bends downward. Direction (f′) and bend (f″) are independent.",
+        "An inflection point needs f″ to CHANGE SIGN, not merely to equal zero — x⁴ is the counterexample.",
+        "Three functions, three sign charts: f says where, f′ says which way, f″ says how it bends."
+      ],
+      "teaser": "Next: use the bend to convict a critical point in one step."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-concavity",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Concave up holds water; concave down spills it. The test is the sign of f″, and nothing else — not whether the curve is rising, not whether it is above the axis.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which way does it bend?",
+        "conceptTag": "ca-concavity",
+        "explanationVariants": [
+          "f″ = 6x is negative for x < 0, so the curve bends downward there.",
+          "Substitute a test value: f″(−1) = −6 < 0."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f″(x) = 6x. Is the curve concave up or down at x = −1?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Concave down — f″(−1) = −6 < 0.",
+              "correct": true,
+              "feedback": "Right: negative second derivative, downward bend."
+            },
+            {
+              "id": "o2",
+              "label": "Concave up",
+              "correct": false,
+              "feedback": "f″(−1) = 6(−1) = −6, which is negative. Substituting a negative x flips the sign."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

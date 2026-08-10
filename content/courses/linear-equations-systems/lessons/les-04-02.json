@@ -1,0 +1,506 @@
+{
+  "id": "les-04-02",
+  "slug": "back-substituting-for-y",
+  "title": "Back-Substituting for y",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch4-substitution",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Substitution gives you x — but a system's solution is a POINT (x, y). To find y, **back-substitute**: plug your x back into the isolated equation (the easy y = one). Then the full solution is (x, y).",
+      "figure": "les-back-subst"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Complete the solution.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "For the system y = 3x and 2x + y = 10, the solution has x = 2. What is y?",
+        "task": "evaluateAtX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "First equation",
+            "m": 3,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 3x",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "first",
+        "rateGoal": "greater",
+        "targetInput": 2,
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "evaluate:first:substitute",
+          "evaluate:first:value"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "That's x, not y — plug x = 2 into y = 3x: y = 3(2) = 6."
+          },
+          {
+            "value": 10,
+            "feedback": "Plug x = 2 into the isolated equation y = 3x: y = 3(2) = 6, not 10."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Back-substitute x = 2 into y = 3x: y = 3(2) = 6.",
+        "answerMode": "numeric",
+        "successFeedback": "Back-substitute x = 2 into y = 3x: y = 3(2) = 6."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Always back-substitute into the ISOLATED equation — it's already solved for y, so it's the easy one. Then CONFIRM the point in both equations to be sure. For x = 2 in y = 3x: y = 6, and (2, 6) checks in both.",
+      "figure": "les-back-subst"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find y by back-substituting.",
+      "conceptTag": "les-back-substitute",
+      "explanationVariants": [
+        "The system y = x − 2 and 2x + y = 10 solves to x = 4; then y = 4 − 2 = 2, giving (4, 2).",
+        "Plug x = 4 into y = x − 2 to get y = 2."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "The system y = x − 2 and 2x + y = 10 has x = 4. What is the full solution (x, y)?",
+        "task": "intersectionPoint",
+        "lines": [
+          {
+            "id": "first",
+            "label": "First equation",
+            "m": 1,
+            "b": -2,
+            "sourceKind": "equation",
+            "sourceText": "y = x − 2",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Second equation",
+            "m": -2,
+            "b": 10,
+            "sourceKind": "equation",
+            "sourceText": "2x + y = 10",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:y"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "pointErrors": [
+          {
+            "values": [
+              4,
+              4
+            ],
+            "feedback": "Plug x = 4 into y = x − 2: y = 4 − 2 = 2, not 4 — so it's (4, 2)."
+          },
+          {
+            "values": [
+              2,
+              4
+            ],
+            "feedback": "x is 4 (given), so it comes first: back-substituting gives y = 2, making it (4, 2)."
+          },
+          {
+            "values": [
+              4,
+              6
+            ],
+            "feedback": "y = x − 2 = 4 − 2 = 2, not 6 — the solution is (4, 2)."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "x is given; back-substitute it into the first equation to get y, in (x, y) order.",
+        "answerMode": "point",
+        "successFeedback": "Right — back-substitute x = 4 into y = x − 2: y = 2."
+      },
+      "variant": {
+        "gen": "back-substitute",
+        "form": "given"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find y for another system.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "The system y = 2x and x + y = 9 has x = 3. What is y?",
+        "task": "evaluateAtX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "First equation",
+            "m": 2,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "first",
+        "rateGoal": "greater",
+        "targetInput": 3,
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "evaluate:first:substitute",
+          "evaluate:first:value"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 3,
+            "feedback": "That's x, not y — plug x = 3 into y = 2x: y = 2(3) = 6."
+          },
+          {
+            "value": 9,
+            "feedback": "Plug x = 3 into y = 2x: y = 6, not 9."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Back-substitute x = 3 into y = 2x: y = 2(3) = 6.",
+        "answerMode": "numeric",
+        "successFeedback": "Back-substitute x = 3 into y = 2x: y = 2(3) = 6."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Solve fully from scratch.",
+      "conceptTag": "les-back-substitute",
+      "explanationVariants": [
+        "y = x + 1 and x + y = 7: substitute to get 2x + 1 = 7 → x = 3; then y = 3 + 1 = 4, so (3, 4).",
+        "Solve x = 3, then back-substitute for y = 4."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Solve the system y = x + 1 and x + y = 7 completely. What is (x, y)?",
+        "task": "intersectionPoint",
+        "lines": [
+          {
+            "id": "first",
+            "label": "First equation",
+            "m": 1,
+            "b": 1,
+            "sourceKind": "equation",
+            "sourceText": "y = x + 1",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Second equation",
+            "m": -1,
+            "b": 7,
+            "sourceKind": "equation",
+            "sourceText": "x + y = 7",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:y"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "pointErrors": [
+          {
+            "values": [
+              3,
+              3
+            ],
+            "feedback": "Back-substitute x = 3 into y = x + 1: y = 4, not 3 — so (3, 4)."
+          },
+          {
+            "values": [
+              4,
+              3
+            ],
+            "feedback": "x is 3 (from substitution), and y = 4 — the point is (3, 4), not (4, 3)."
+          },
+          {
+            "values": [
+              3,
+              7
+            ],
+            "feedback": "y = x + 1 = 3 + 1 = 4, not 7 — the solution is (3, 4)."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Solve for x first, then back-substitute for y; write it (x, y).",
+        "answerMode": "point",
+        "successFeedback": "Right — x = 3 from substitution, then y = 3 + 1 = 4."
+      },
+      "variant": {
+        "gen": "back-substitute"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Confirm the point works.",
+      "conceptTag": "les-back-substitute",
+      "explanationVariants": [
+        "For (2, 6) with y = 3x: 6 = 3(2) ✓; with 2x + y = 10: 2(2) + 6 = 10 ✓. Both hold.",
+        "Substituting (2, 6) into both equations confirms it's the solution."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Does (2, 6) solve the system y = 3x and 2x + y = 10?",
+        "task": "verifyPoint",
+        "lines": [
+          {
+            "id": "first",
+            "label": "First equation",
+            "m": 3,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 3x",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Second equation",
+            "m": -2,
+            "b": 10,
+            "sourceKind": "equation",
+            "sourceText": "2x + y = 10",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "candidatePoint": [
+          2,
+          6
+        ],
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "verify:first",
+          "verify:second"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "Yes — it works in both equations",
+            "claim": "point:yes",
+            "feedback": "Right — 6 = 3(2) ✓ and 2(2) + 6 = 10 ✓."
+          },
+          {
+            "id": "b",
+            "label": "No — it only works in the first",
+            "claim": "misconception:b",
+            "feedback": "Check the second: 2(2) + 6 = 10 ✓ — it works in BOTH, so yes."
+          },
+          {
+            "id": "c",
+            "label": "No — y should be 3",
+            "claim": "misconception:c",
+            "feedback": "y = 3(2) = 6 is correct — and (2, 6) checks in both equations."
+          },
+          {
+            "id": "d",
+            "label": "Only in the second equation",
+            "claim": "misconception:d",
+            "feedback": "It works in the first too: 6 = 3(2) ✓ — so it solves both."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — 6 = 3(2) ✓ and 2(2) + 6 = 10 ✓."
+      },
+      "variant": {
+        "gen": "g8-les-system-verify",
+        "form": "lesVerifyPoint"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full solution with a subtraction.",
+      "conceptTag": "les-back-substitute",
+      "explanationVariants": [
+        "y = 3x − 5 and x + y = 7: substitute to get 4x − 5 = 7 → x = 3; then y = 3(3) − 5 = 4, so (3, 4).",
+        "Solve x = 3, back-substitute: y = 3(3) − 5 = 4."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Solve the system y = 3x − 5 and x + y = 7 completely. What is (x, y)?",
+        "task": "intersectionPoint",
+        "lines": [
+          {
+            "id": "first",
+            "label": "First equation",
+            "m": 3,
+            "b": -5,
+            "sourceKind": "equation",
+            "sourceText": "y = 3x − 5",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Second equation",
+            "m": -1,
+            "b": 7,
+            "sourceKind": "equation",
+            "sourceText": "x + y = 7",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:y"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "pointErrors": [
+          {
+            "values": [
+              3,
+              5
+            ],
+            "feedback": "Back-substitute x = 3 into y = 3x − 5: y = 9 − 5 = 4, not 5 — so (3, 4)."
+          },
+          {
+            "values": [
+              3,
+              7
+            ],
+            "feedback": "y = 3(3) − 5 = 4, not 7 — the solution is (3, 4)."
+          },
+          {
+            "values": [
+              4,
+              3
+            ],
+            "feedback": "x is 3, y is 4 — the point is (3, 4), not (4, 3)."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Find x by substitution, then y from the first equation; order it (x, y).",
+        "answerMode": "point",
+        "successFeedback": "Right — x = 3 from substitution, then y = 3(3) − 5 = 4."
+      },
+      "hints": [
+        "First solve for x by substituting y = 3x − 5 into x + y = 7.",
+        "That gives x + (3x − 5) = 7 → 4x = 12 → x = 3. Now find y.",
+        "Back-substitute x = 3 into y = 3x − 5: y = 9 − 5 = 4, so the solution is (3, 4)."
+      ],
+      "variant": {
+        "gen": "back-substitute"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Back-substitute your x into the isolated equation to complete the (x, y) solution.",
+      "takeaways": [
+        "Solving gives x; back-substitute to find y.",
+        "Use the isolated (y = …) equation — it's the easy one.",
+        "Confirm the final point in BOTH equations."
+      ],
+      "teaser": "Next: using substitution to solve real-world systems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-back-substitute",
+      "concept": {
+        "id": "rem-les0402-c",
+        "kind": "concept",
+        "body": "Substitution gives x; a system's solution is a point (x, y). Back-substitute x into the isolated equation to find y, then confirm the point in both equations."
+      },
+      "check": {
+        "id": "rem-les0402-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-back-substitute",
+        "explanationVariants": [
+          "For the system y = 4x with x = 2: y = 4(2) = 8, so (2, 8).",
+          "Plug x = 2 into y = 4x to get y = 8."
+        ],
+        "widget": {
+          "type": "affineRelationshipLab",
+          "prompt": "The system y = 4x and x + y = 10 has x = 2. What is y?",
+          "task": "evaluateAtX",
+          "lines": [
+            {
+              "id": "first",
+              "label": "First equation",
+              "m": 4,
+              "b": 0,
+              "sourceKind": "equation",
+              "sourceText": "y = 4x",
+              "tablePoints": []
+            }
+          ],
+          "targetLineId": "first",
+          "rateGoal": "greater",
+          "targetInput": 2,
+          "requiredExplorations": 2,
+          "requiredStageKeys": [
+            "evaluate:first:substitute",
+            "evaluate:first:value"
+          ],
+          "tolerance": 0,
+          "choices": [],
+          "numericErrors": [
+            {
+              "value": 2,
+              "feedback": "That's x, not y — plug x = 2 into y = 4x: y = 4(2) = 8."
+            },
+            {
+              "value": 10,
+              "feedback": "Plug x = 2 into y = 4x: y = 8, not 10."
+            }
+          ],
+          "pointErrors": [],
+          "authoredStages": [],
+          "explorationFeedback": "Inspect every designated affine state before checking.",
+          "fallbackFeedback": "Back-substitute x = 2 into y = 4x: y = 4(2) = 8.",
+          "answerMode": "numeric",
+          "successFeedback": "Back-substitute x = 2 into y = 4x: y = 4(2) = 8."
+        }
+      }
+    }
+  ]
+}

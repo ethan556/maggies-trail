@@ -1,0 +1,290 @@
+{
+  "id": "si-06-01",
+  "slug": "the-bell-that-wobble-builds",
+  "title": "The Bell That Wobble Builds",
+  "courseId": "statistical-inference",
+  "chapterId": "ch6-the-bell",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Chapter 2 showed the statistic wobbling from sample to sample. Now stack those wobbles up: draw sample after sample and pile each proportion on a line. The pile that grows has a shape — and it is always the same shape.",
+      "figure": "si-stack-the-wobbles"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Draw 20 samples and watch the pile.",
+      "widget": {
+        "type": "sampleSim",
+        "prompt": "Population truth: 50% purple. Draw 20 samples of 50 and stack their proportions.",
+        "populationP": 0.5,
+        "sizes": [
+          10,
+          50
+        ],
+        "targetSize": 50,
+        "requiredDraws": 20,
+        "seed": 21,
+        "successFeedback": "A mound: tallest at 0.5, thinning symmetrically to both sides. That mound is the sampling distribution taking its bell shape.",
+        "wrongSizeFeedback": "Use samples of 50 — the bigger sample makes the bell tighter and easier to see.",
+        "moreDrawsFeedback": "Keep drawing — the shape needs about 20 stacked samples to show itself."
+      },
+      "predict": {
+        "prompt": "Twenty sample proportions get stacked on a line. What shape does the pile take?",
+        "options": [
+          {
+            "id": "mound",
+            "label": "A mound — tall in the middle, thin at the edges"
+          },
+          {
+            "id": "flat",
+            "label": "Flat — every value equally often"
+          },
+          {
+            "id": "edges",
+            "label": "Two piles at the extremes"
+          }
+        ],
+        "outcomeId": "mound",
+        "reveal": "Middling results are common and extreme ones rare, so the pile mounds up over the truth and thins outward — symmetric, single-peaked: a bell. Chance doesn't spread evenly; it clusters."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does the bell sit tallest?",
+        "options": [
+          {
+            "id": "truth",
+            "label": "Over the population's true value",
+            "correct": true,
+            "feedback": "Yes — sample results cluster around what's actually there: 0.5."
+          },
+          {
+            "id": "zero",
+            "label": "Over zero",
+            "correct": false,
+            "feedback": "The pile centers on the truth, not the origin."
+          },
+          {
+            "id": "random",
+            "label": "Somewhere new each time",
+            "correct": false,
+            "feedback": "With enough draws the peak is stable — it parks over 0.5."
+          }
+        ],
+        "successFeedback": "The bell centers on the truth. That's why one decent sample is *evidence*: it probably fell near the middle."
+      },
+      "body": "Read the pile you just built.",
+      "conceptTag": "si-normal-shape",
+      "explanationVariants": [
+        "The stacked proportions mound over 0.5 because middling samples are common and extreme ones rare — the peak marks the parameter.",
+        "If the peak sat anywhere but the truth, sampling itself would be biased; honest sampling centers the bell on what's really there."
+      ]
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Symmetry check.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A sample proportion of 0.42 and one of 0.58 — which is the bell more surprised by?",
+        "options": [
+          {
+            "id": "neither",
+            "label": "Neither — they sit the same distance from 0.5",
+            "correct": true,
+            "feedback": "Symmetry: 0.08 below and 0.08 above are equally rare."
+          },
+          {
+            "id": "low",
+            "label": "0.42 — undershooting is rarer",
+            "correct": false,
+            "feedback": "The bell has no favorite side; equal distances, equal surprise."
+          },
+          {
+            "id": "high",
+            "label": "0.58 — overshooting is rarer",
+            "correct": false,
+            "feedback": "Same distance from center means the same height on the curve."
+          }
+        ],
+        "successFeedback": "The bell is symmetric about the truth: distance matters, direction doesn't."
+      },
+      "conceptTag": "si-normal-shape",
+      "explanationVariants": [
+        "0.42 and 0.58 are mirror images across the center: the symmetric bell assigns them identical rarity.",
+        "Surprise under the bell is a function of distance from μ alone — direction never enters."
+      ]
+    },
+    {
+      "id": "k1c",
+      "kind": "check",
+      "body": "Where does the pile point?",
+      "conceptTag": "si-normal-shape",
+      "explanationVariants": [
+        "The mound of sample proportions centers on the parameter the samples estimate — with a true 50%, the peak stands at 50.",
+        "Each sample wobbles around the truth, high and low in equal measure, so the stack's center IS the truth: 50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The true proportion is 50%. The pile of twenty sample proportions peaks at about what percent?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That counts the SAMPLES, not where they center. Twenty results stack into one mound, and the mound sits on the truth."
+          },
+          {
+            "value": 68,
+            "feedback": "68 is next lesson's business — the share within one σ. The CENTER of the bell is the parameter itself: 50."
+          }
+        ],
+        "fallbackFeedback": "Samples overshoot and undershoot the truth in equal measure, so the mound centers on the parameter: 50.",
+        "successFeedback": "50 — the bell is honest about its center: it stacks up right over the value the samples estimate."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This mound has a name: the normal distribution. It appears whenever many small chances add up — sample proportions, measurement errors, heights. Same curve, different rulers: what changes is only its center (the mean) and its width (the standard deviation).",
+      "figure": "si-normal-curve"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A bell from samples of 10 vs a bell from samples of 50 — the difference?",
+        "options": [
+          {
+            "id": "width",
+            "label": "Same shape; the 50-bell is narrower",
+            "correct": true,
+            "feedback": "Right — bigger samples wobble less, squeezing the bell."
+          },
+          {
+            "id": "shape",
+            "label": "The 50-bell becomes lopsided",
+            "correct": false,
+            "feedback": "Sample size changes spread, never symmetry."
+          },
+          {
+            "id": "center",
+            "label": "They center on different values",
+            "correct": false,
+            "feedback": "Both center on the same truth — 0.5."
+          }
+        ],
+        "successFeedback": "Sample size tunes the WIDTH of the bell, not its center or symmetry. Tighter bell = steadier statistic."
+      },
+      "body": "Two bells, two sample sizes.",
+      "conceptTag": "si-normal-spread",
+      "explanationVariants": [
+        "Averaging 50 instead of 10 gives chance more room to cancel itself, so the pile tightens; the center stays put.",
+        "Spread shrinks with sample size; symmetry and center are properties of honest sampling, not of n."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A histogram of 1,000 die rolls (values 1–6): also a bell?",
+        "options": [
+          {
+            "id": "flat",
+            "label": "No — that one really is flat",
+            "correct": true,
+            "feedback": "Right: each face is equally likely. The bell belongs to AVERAGES and totals, not to single fair outcomes."
+          },
+          {
+            "id": "yes",
+            "label": "Yes — everything becomes a bell",
+            "correct": false,
+            "feedback": "Single rolls stay flat. Roll 50 dice and average them, though — the averages bell up."
+          },
+          {
+            "id": "spike",
+            "label": "No — it spikes at 3.5",
+            "correct": false,
+            "feedback": "3.5 isn't even a face. Single rolls are uniform; means of many rolls are the ones that bell."
+          }
+        ],
+        "successFeedback": "The bell is the signature of accumulation — many small chances pooled. One fair pick is flat; averages of many picks mound up."
+      },
+      "body": "Not everything is a bell.",
+      "conceptTag": "si-normal-shape",
+      "explanationVariants": [
+        "A single fair die has six equally likely faces — a flat histogram. Only sums and averages of MANY chances build the bell.",
+        "The bell is the fingerprint of accumulation; one isolated random pick keeps whatever shape its own chances have."
+      ],
+      "hints": [
+        "Ask what a histogram of SINGLE rolls looks like — is any face more likely than another?",
+        "Each face has probability 1/6, so 1,000 rolls pile roughly evenly on all six values.",
+        "Flat, not bell. The bell would appear only if you rolled many dice at once and plotted the AVERAGES."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Stacked sample results form a symmetric mound — the normal distribution — centered on the truth, narrower for bigger samples. Next: the bell keeps a strict promise about how much lands within one, two, three widths.",
+      "takeaways": [
+        "Stacked sample statistics form a symmetric mound — the normal distribution — with its peak on the truth.",
+        "Bigger samples narrow the bell; they never move its center or break its symmetry.",
+        "The bell belongs to accumulations (averages, totals) — single fair outcomes keep their own shapes."
+      ],
+      "teaser": "Next: the bell's strict promise — exactly how much lands within one, two, three widths."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-normal-shape",
+      "concept": {
+        "id": "rem-si-normal-shape-c",
+        "kind": "concept",
+        "body": "This mound has a name: the normal distribution. It appears whenever many small chances add up — sample proportions, measurement errors, heights. Same curve, different rulers: what changes is only its center (the mean) and its width (the standard deviation)."
+      },
+      "check": {
+        "id": "rem-si-normal-shape-k",
+        "kind": "check",
+        "body": "Read the pile you just built.",
+        "conceptTag": "si-normal-shape",
+        "explanationVariants": [
+          "The stacked proportions mound over 0.5 because middling samples are common and extreme ones rare — the peak marks the parameter.",
+          "If the peak sat anywhere but the truth, sampling itself would be biased; honest sampling centers the bell on what's really there."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Where does the bell sit tallest?",
+          "options": [
+            {
+              "id": "truth",
+              "label": "Over the population's true value",
+              "correct": true,
+              "feedback": "Yes — sample results cluster around what's actually there: 0.5."
+            },
+            {
+              "id": "zero",
+              "label": "Over zero",
+              "correct": false,
+              "feedback": "The pile centers on the truth, not the origin."
+            },
+            {
+              "id": "random",
+              "label": "Somewhere new each time",
+              "correct": false,
+              "feedback": "With enough draws the peak is stable — it parks over 0.5."
+            }
+          ],
+          "successFeedback": "The bell centers on the truth. That's why one decent sample is *evidence*: it probably fell near the middle."
+        }
+      }
+    }
+  ]
+}

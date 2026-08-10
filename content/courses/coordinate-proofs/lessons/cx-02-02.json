@@ -1,0 +1,325 @@
+{
+  "id": "cx-02-02",
+  "slug": "parallel-proved",
+  "title": "Parallel, Proved",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch2-partition-slope-criteria",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-parallel-proof",
+      "concept": {
+        "id": "rem-cx-parallel-proof-c",
+        "kind": "concept",
+        "body": "Parallel lines have equal slopes — proved by TRANSLATING a slope triangle from one line to the other (translations preserve run and rise). Converse: through one point only one line has a given slope, so distinct same-slope lines can never meet. Shared endpoint + equal slopes = collinear points."
+      },
+      "check": {
+        "id": "rem-cx-parallel-proof-k",
+        "kind": "check",
+        "body": "One slope each.",
+        "conceptTag": "cx-parallel-proof",
+        "explanationVariants": [
+          "Slope 1: 4/8 = 0.5. Slope 2: 3/6 = 0.5. Equal — parallel. Enter 0.5.",
+          "Both measure 1/2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Segment 1 runs (0,0) to (8,4); segment 2 runs (1,7) to (7,10). Compute segment 2's slope (decimal).",
+          "answer": 0.5,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "2 = 6/3 inverts — rise over run: 3/6 = 0.5, matching segment 1."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is the rise alone — divide by the run 6: 0.5."
+            }
+          ],
+          "fallbackFeedback": "(10 − 7)/(7 − 1) = 0.5 — equal slopes, parallel segments."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Algebra 1 handed you the rule: **parallel lines have equal slopes**. Here's the missing WHY. Take any slope triangle on line ℓ and **translate** it (a rigid motion from Grade 8) until its corner lands on line ₘ. Translations preserve direction, so the image triangle's hypotenuse still points along ℓ's direction — if ₘ is parallel, it runs along ₘ exactly: same run, same rise, same slope.",
+      "figure": "cx-parallel-slopes"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Measure both slopes.",
+      "conceptTag": "cx-parallel-proof",
+      "explanationVariants": [
+        "CD's slope: (11 − 5)/(9 − 1) = 6/8 = 0.75 — matching AB's 3/4.",
+        "6/8 reduces to 3/4 = 0.75: parallel confirmed."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Segment AB runs from (0, 0) to (4, 3). Segment CD runs from (1, 5) to (9, 11). Compute CD's slope (as a decimal).",
+        "answer": 0.75,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1.33,
+            "feedback": "1.33 ≈ 8/6 is run over rise — slope stacks RISE over run: 6/8 = 0.75, equal to AB's."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the rise alone — divide by the run 8: 0.75."
+          },
+          {
+            "value": 0.6,
+            "feedback": "0.6 = 6/10 miscounts the run (9 − 1 = 8): 6/8 = 0.75."
+          }
+        ],
+        "fallbackFeedback": "(11 − 5)/(9 − 1) = 0.75 = 3/4: the segments are parallel."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-parallel-proof__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The converse needs one more idea: through a given point there's only ONE line with a given slope (pick the point, the slope forces every other point). So if two DISTINCT lines share a slope, neither can cross the other — a crossing point would put two same-slope lines through one point, collapsing them into one line. Equal slopes ⇔ parallel (or identical).",
+      "figure": "cx-perp-slopes"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ride the parallel line.",
+      "conceptTag": "cx-parallel-proof",
+      "explanationVariants": [
+        "From (2, 1) with slope 3/4: Δx = 8 forces Δy = 6, so y = 1 + 6 = 7.",
+        "y = 1 + (3/4)(10 − 2) = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A line through (2, 1) is parallel to a slope-3/4 line. Find its y-value at x = 10.",
+        "answer": 7,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 = (3/4)(8) is the RISE alone — add the starting height: 1 + 6 = 7."
+          },
+          {
+            "value": 11.67,
+            "feedback": "11.67 rides the RECIPROCAL slope 4/3 — parallel copies the slope exactly: 1 + (3/4)(8) = 7."
+          },
+          {
+            "value": 8,
+            "feedback": "8 reuses Δx as the rise — the slope scales it: rise = (3/4)(8) = 6, so y = 7."
+          }
+        ],
+        "fallbackFeedback": "y = 1 + (3/4)(8) = 7."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-parallel-proof__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The proof's engine.",
+      "conceptTag": "cx-parallel-proof",
+      "explanationVariants": [
+        "Translations preserve direction and distance — so the slope triangle arrives intact on the second line.",
+        "Rigid motion + preserved direction = equal rise/run on both lines."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which fact makes the translation proof work?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Translations preserve segment directions and lengths — the slope triangle lands unchanged on the parallel line",
+            "correct": true,
+            "feedback": "A translated triangle keeps its run and rise exactly, and parallel lines share direction — so the same triangle measures both slopes."
+          },
+          {
+            "id": "o2",
+            "label": "Translations rotate figures into alignment",
+            "correct": false,
+            "feedback": "Translations never rotate — preserving direction is precisely why the argument works."
+          },
+          {
+            "id": "o3",
+            "label": "Parallel lines are always horizontal",
+            "correct": false,
+            "feedback": "Any direction works — the triangle rides the translation at every tilt."
+          },
+          {
+            "id": "o4",
+            "label": "Slope triangles only exist on parallel lines",
+            "correct": false,
+            "feedback": "Every non-vertical line carries slope triangles — the translation shows parallel ones carry CONGRUENT triangles."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-parallel-proof__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Collinear or merely parallel?",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "answerMode": "choice",
+        "prompt": "Segments AB and BC share endpoint B and have equal slopes. What follows?",
+        "coordinateProof": {
+          "kind": "lineRelation",
+          "points": [
+            {
+              "id": "A",
+              "label": "A",
+              "x": 0,
+              "y": 0
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "x": 3,
+              "y": 1
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "x": 6,
+              "y": 2
+            }
+          ],
+          "segments": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "B",
+              "C"
+            ]
+          ]
+        },
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "o1",
+            "label": "A, B, C are collinear — same slope THROUGH a shared point means one line",
+            "claim": "line:collinear",
+            "feedback": "The uniqueness fact: one point + one slope = one line. Sharing B upgrades parallel to collinear — a workhorse test in coordinate proofs."
+          },
+          {
+            "id": "o2",
+            "label": "They're parallel but separate",
+            "claim": "wrong:o2",
+            "feedback": "Separate parallels can't TOUCH — sharing B forces them onto the same line: collinear."
+          },
+          {
+            "id": "o3",
+            "label": "They must be perpendicular",
+            "claim": "wrong:o3",
+            "feedback": "Perpendicular needs slopes multiplying to −1 — EQUAL slopes through a shared point collapse to one line."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing can be concluded",
+            "claim": "wrong:o4",
+            "feedback": "Plenty follows: equal slope + shared point is the standard collinearity test."
+          }
+        ],
+        "numericErrors": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "successFeedback": "The uniqueness fact: one point + one slope = one line. Sharing B upgrades parallel to collinear — a workhorse test in coordinate proofs.",
+        "explorationFeedback": "Open at least two coordinate-proof states before checking.",
+        "fallbackFeedback": "Inspect the coordinate invariants, then choose the supported conclusion."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Trapezoid preview.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Quadrilateral has vertices W(0,0), X(6,2), Y(5,6), Z(2,5). Slope WX = 1/3. Compute slope ZY (as a decimal) — the pair that decides trapezoid-hood.",
+        "answer": 0.33,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 = 3/1 inverts — rise over run is (6 − 5)/(5 − 2) = 1/3 ≈ 0.33: parallel to WX, one parallel pair."
+          },
+          {
+            "value": -0.33,
+            "feedback": "−0.33 flips a sign — both differences are positive: (6−5)/(5−2) = 1/3 ≈ 0.33."
+          }
+        ],
+        "fallbackFeedback": "Slope ZY = 1/3 = slope WX: one parallel pair — the exclusive-trapezoid verdict awaits the OTHER pair (it differs), a full proof in the next chapter."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Complete the parallelogram, by slopes.",
+      "conceptTag": "cx-parallel-proof",
+      "hints": [
+        "A parallelogram needs BOTH opposite pairs parallel — equal slopes twice.",
+        "From D, side DC must copy AB's displacement (parallel AND equal length): C = D + (B − A).",
+        "Compute B − A = (5, 2) and add to D."
+      ],
+      "explanationVariants": [
+        "C = (1 + 5, 6 + 2) = (6, 8). Check both pairs: DC's displacement (5, 2) matches AB's, and BC's displacement (−1, 6) matches AD's — both slope pairs equal, a genuine parallelogram. Enter 6.",
+        "C = D + (B − A) = (6, 8); both displacement pairs match, so both slope pairs match."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Parallelogram ABCD (vertices in order) has A(2, 0), B(7, 2), D(1, 6). Find C. Enter C's x-coordinate.",
+        "answer": 6,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 7 + 1 adds B and D x-coordinates — C copies AB's displacement onto D: 1 + (7 − 2) = 6."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = (7 + 1)/2 averages B and D — that's the DIAGONAL midpoint's x, and C doubles past it: 2(4) − 2 = 6."
+          },
+          {
+            "value": -4,
+            "feedback": "−4 subtracts the displacement (1 − 5) — C rides it FORWARD from D: 1 + 5 = 6."
+          }
+        ],
+        "fallbackFeedback": "C = D + (B − A) = (1 + 5, 6 + 2) = (6, 8) — equal displacements give equal slopes on both pairs."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-parallel-proof__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Equal slopes, at last with a warrant.",
+      "takeaways": [
+        "Translation carries a slope triangle intact between parallel lines: parallel ⇒ equal slopes.",
+        "Uniqueness (one point, one slope, one line) proves the converse — and upgrades shared-point equal slopes to collinearity.",
+        "Parallelogram completion: copy the displacement, and both slope pairs follow."
+      ],
+      "teaser": "Next: the perpendicular rule — where a quarter-turn does the proving."
+    }
+  ]
+}

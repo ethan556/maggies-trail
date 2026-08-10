@@ -1,0 +1,294 @@
+{
+  "id": "asv-02-02",
+  "slug": "composite-figures-with-triangles",
+  "title": "Composite Figures with Triangles",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch2-composite-figures",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A house-shaped figure is a rectangle topped with a triangular roof — two DIFFERENT shape rules, added together. Walls 8 wide, 5 tall: rectangle area 8 × 5 = 40. Roof: base 8, height 3, so 1/2 × 8 × 3 = 12. Total house area: 40 + 12 = **52**. Identify each piece's shape before computing its area.",
+      "figure": "asv-house"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The rectangle part.",
+      "conceptTag": "composite-triangle",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A house's rectangular walls are 8 wide and 5 tall. What is the wall area?",
+        "answer": 40,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 applies the TRIANGLE's ×1/2 to a rectangle by mistake. Rectangles don't halve: 8 × 5 = 40."
+          },
+          {
+            "value": 13,
+            "feedback": "13 adds 8 + 5. Rectangle area multiplies: 8 × 5 = 40."
+          }
+        ],
+        "fallbackFeedback": "8 × 5 = 40."
+      },
+      "predict": {
+        "prompt": "A house shape is a rectangle with a triangle roof. To get the whole area, do you ADD the two pieces or MULTIPLY them?",
+        "options": [
+          {
+            "id": "add",
+            "label": "Add them"
+          },
+          {
+            "id": "multiply",
+            "label": "Multiply them"
+          },
+          {
+            "id": "subtract",
+            "label": "Subtract the triangle"
+          }
+        ],
+        "outcomeId": "add",
+        "reveal": "Each piece covers its own patch of the figure — the total is patch plus patch. Multiplying areas would answer no question at all."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The roof part.",
+      "conceptTag": "composite-triangle",
+      "explanationVariants": [
+        "The roof is a TRIANGLE: 1/2 × 8 × 3 = 12.",
+        "Don't skip the ×1/2 — the roof is a triangle, not a rectangle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The same house's triangular roof has base 8 and height 3. What is the roof area?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 treats the roof like a RECTANGLE (8 × 3), forgetting the roof is a TRIANGLE: 1/2 × 8 × 3 = 12."
+          },
+          {
+            "value": 11,
+            "feedback": "11 adds 8 + 3. Triangle area multiplies then halves: 1/2 × 8 × 3 = 12."
+          }
+        ],
+        "fallbackFeedback": "1/2 × 8 × 3 = 12."
+      },
+      "variant": {
+        "gen": "composite-tri"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Not every composite figure ADDS its pieces — some SUBTRACT a piece that's been cut away. A rectangle with a triangular notch removed (like a corner sliced off) LOSES that triangle's area: 10×6 rectangle (60) minus a base-4-height-3 triangle notch (6) leaves **54**. Look for whether a shape is attached (add) or removed (subtract).",
+      "figure": "asv-subtract"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Add or subtract?",
+      "conceptTag": "composite-triangle",
+      "explanationVariants": [
+        "The notch is CUT AWAY, so it's removed: 60 − 6 = 54.",
+        "A missing triangular piece subtracts from the rectangle's area."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 10×6 rectangle has a triangular notch (base 4, height 3) cut from one corner. What is the remaining area?",
+        "answer": 54,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 66,
+            "feedback": "66 ADDS the notch's area instead of removing it. A cut-away piece SUBTRACTS: 60 − 6 = 54."
+          },
+          {
+            "value": 60,
+            "feedback": "60 is the full rectangle, forgetting the notch was cut away. Remove it: 60 − 6 = 54."
+          }
+        ],
+        "fallbackFeedback": "60 − 6 = 54 — the notch was removed."
+      },
+      "variant": {
+        "gen": "composite-tri",
+        "form": "notchCut"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Attached or removed?",
+      "conceptTag": "composite-triangle",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "For each described figure, sort whether the triangular piece is ADDED or SUBTRACTED.",
+        "buckets": [
+          {
+            "id": "add",
+            "label": "Added (attached piece)"
+          },
+          {
+            "id": "sub",
+            "label": "Subtracted (cut-away piece)"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "A rectangular box with a triangular roof on top",
+            "bucketId": "add",
+            "feedback": "The roof sits ON TOP — it's attached, so its area adds to the rectangle's."
+          },
+          {
+            "id": "d2",
+            "label": "A rectangular sign with a triangular corner sliced off",
+            "bucketId": "sub",
+            "feedback": "Slicing off a corner REMOVES that triangle's area — subtract it."
+          },
+          {
+            "id": "d3",
+            "label": "A pentagon-shaped home plate made from a square plus a triangular point",
+            "bucketId": "add",
+            "feedback": "The triangular point is attached to the square — add its area."
+          },
+          {
+            "id": "d4",
+            "label": "A rectangular garden with a triangular pond dug out of one corner",
+            "bucketId": "sub",
+            "feedback": "Digging OUT removes area — subtract the pond's triangle."
+          }
+        ],
+        "missFeedback": "Ask: is the triangle attached to the main shape (add) or removed/cut away/dug out from it (subtract)?",
+        "successFeedback": "Sorted — attached pieces add, removed pieces subtract."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Full house sum.",
+      "conceptTag": "composite-triangle",
+      "explanationVariants": [
+        "Rectangle 9×4 = 36, roof 1/2×9×2 = 9; total = 36 + 9 = 45.",
+        "Add the two DIFFERENT shape areas: 45."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A shed has rectangular walls 9 wide, 4 tall, and a triangular roof with base 9, height 2. What is the total area?",
+        "answer": 45,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "54 treats the roof like a rectangle (9 × 2 = 18, plus 36 = 54). The roof is a TRIANGLE: 1/2 × 9 × 2 = 9, giving 36 + 9 = 45."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is only the walls, forgetting the roof entirely. Add the roof's area: 36 + 9 = 45."
+          }
+        ],
+        "fallbackFeedback": "Walls 36, roof 9 (1/2 × 9 × 2): total 45."
+      },
+      "variant": {
+        "gen": "composite-tri",
+        "form": "wallsPlusRoof"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A composite you build yourself.",
+      "conceptTag": "composite-triangle",
+      "hints": [
+        "This is a house shape: rectangle plus roof.",
+        "Rectangle: 12 × 6 = 72. Roof: 1/2 × 12 × 5 = 30.",
+        "Add them together."
+      ],
+      "explanationVariants": [
+        "Rectangle 12×6 = 72, roof 1/2×12×5 = 30; total = 72 + 30 = 102.",
+        "Identify each piece's shape, compute separately, then add: 102."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A barn has rectangular walls 12 wide, 6 tall, topped by a triangular roof with base 12 and height 5. What is the total area?",
+        "answer": 102,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 132,
+            "feedback": "132 treats the roof like a rectangle (12 × 5 = 60, plus 72 = 132). The roof is a TRIANGLE: 1/2 × 12 × 5 = 30, giving 72 + 30 = 102."
+          },
+          {
+            "value": 72,
+            "feedback": "72 is only the walls, forgetting the roof. Add the roof's area: 72 + 30 = 102."
+          }
+        ],
+        "fallbackFeedback": "Walls 72, roof 30 (1/2 × 12 × 5): total 102."
+      },
+      "variant": {
+        "gen": "composite-tri",
+        "form": "wallsPlusRoof"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Identify, compute separately, combine.",
+      "takeaways": [
+        "Composite figures mix different shapes — apply each piece's OWN formula.",
+        "An attached piece ADDS to the total; a cut-away piece SUBTRACTS.",
+        "Never apply a triangle's ×1/2 to a rectangle piece, or skip it on a triangle piece."
+      ],
+      "teaser": "chapter finale: composite figures with three or more pieces."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "composite-triangle",
+      "concept": {
+        "id": "rem-ct-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Each piece keeps its own formula.** A rectangle 6×3 (18) plus a triangle roof base 6, height 2 (1/2×6×2=6): total 18 + 6 = 24. Never mix up which formula belongs to which piece."
+      },
+      "check": {
+        "id": "rem-ct-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "composite-triangle",
+        "explanationVariants": [
+          "Rectangle 18, roof 6; total 24.",
+          "Add the two separately-computed pieces: 24."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A shed has rectangular walls 6 wide, 3 tall, and a triangular roof base 6, height 2. What is the total area?",
+          "answer": 24,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 30,
+              "feedback": "30 treats the roof as a rectangle (6×2=12, plus 18=30). The roof is a triangle: 1/2×6×2=6, giving 18+6=24."
+            },
+            {
+              "value": 18,
+              "feedback": "18 is only the walls, forgetting the roof. Add it: 18 + 6 = 24."
+            }
+          ],
+          "fallbackFeedback": "Walls 18, roof 6: total 24."
+        }
+      }
+    }
+  ]
+}

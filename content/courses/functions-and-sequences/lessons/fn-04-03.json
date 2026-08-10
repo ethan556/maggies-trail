@@ -1,0 +1,308 @@
+{
+  "id": "fn-04-03",
+  "slug": "growth-in-the-real-world",
+  "title": "Growth in the Real World",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch4-comparing-and-applying",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "arith-vs-geo",
+      "body": "Arithmetic models **constant addition** (saving $5 every week); geometric models **repeated multiplication** (a population that doubles). Pick the model that matches how the quantity changes over time."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Money stories run on the same dial.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "Dial the weekly amount so that after 4 more weeks (position 5) the savings hit $30.",
+        "mode": "arithmetic",
+        "first": 10,
+        "targetD": 5,
+        "atPosition": 5,
+        "targetTerm": 30,
+        "successFeedback": "$5 a week: 10 + 4·5 = 30. Real-world steady saving IS an arithmetic sequence wearing dollar signs.",
+        "lowFeedback": "Too little per week — four weeks won't reach $30 at that rate.",
+        "highFeedback": "Too much per week — you'd blow past $30 before week four."
+      },
+      "predict": {
+        "prompt": "$10 saved, then $5 added each week. Is this growth a straight line or a curve?",
+        "options": [
+          {
+            "id": "line",
+            "label": "A straight line — the same $5 lands every week"
+          },
+          {
+            "id": "curve",
+            "label": "A curve — money grows faster as it piles up"
+          },
+          {
+            "id": "steps",
+            "label": "Neither — money can't be graphed"
+          }
+        ],
+        "outcomeId": "line",
+        "reveal": "Adding a FIXED $5 is arithmetic: 10, 15, 20, 25, 30 — a straight climb. Curves belong to growth that multiplies (interest); allowance-style saving is a line, and after 4 weeks it reads 10 + 4·5 = 30."
+      },
+      "conceptTag": "fn-growth-apply",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents growth apply.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for growth apply must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines growth apply."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-and-sequences:fn-growth-apply",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Lily pads tripling.",
+      "conceptTag": "fn-growth-apply",
+      "explanationVariants": [
+        "Geometric: a_1 = 3, r = 3, so after 3 days it's 3 · 3³ = 81.",
+        "Three triplings from 3: 3 · 27 = 81."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A pond has 3 lily pads, tripling each day. After 3 more days, how many? (geometric: a_1=3, r=3, 4th term)",
+        "answer": 81,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 243,
+            "feedback": "Triple over 3 days, so r³ not r⁴: 3 · 3³ = 81, not 3 · 3⁴."
+          },
+          {
+            "value": 27,
+            "feedback": "That's 3³. Include the starting 3: 3 · 3³ = 81."
+          }
+        ],
+        "fallbackFeedback": "3 · 3³ = 81."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-growth-apply__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The words tell you the type: \"add / each / per\" signals arithmetic; \"double / triple / times\" signals geometric. Match the model to the language before you compute.",
+      "figure": "fn-words-type"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Bacteria doubling.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A bacteria count starts at 5 and doubles each hour. After 3 more hours? (geometric: a_1=5, r=2, 4th term)",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "Double over 3 hours, so r³ not r⁴: 5 · 2³ = 40, not 5 · 2⁴."
+          },
+          {
+            "value": 20,
+            "feedback": "That's 5 · 2². After 3 hours it's 5 · 2³ = 40."
+          }
+        ],
+        "fallbackFeedback": "5 · 2³ = 40."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Over time, geometric growth overwhelms arithmetic. Adding a fixed amount grows steadily; doubling explodes. Choosing the right model matters for any prediction you make from it.",
+      "figure": "fn-geom-overwhelms"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Saving monthly.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "You save $20 and add $20 each month. After 4 more months? (arithmetic: a_1=20, d=20, 5th term)",
+        "answer": 100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "You add over 4 months, not 5: 20 + 4·20 = 100, not 20 + 5·20."
+          },
+          {
+            "value": 80,
+            "feedback": "a_1 = 20, d = 20, so after 4 months: 20 + 4·20 = 100."
+          }
+        ],
+        "fallbackFeedback": "20 + 4·20 = 100."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A doubling investment.",
+      "conceptTag": "fn-growth-apply",
+      "explanationVariants": [
+        "Geometric: a_1 = 2, r = 2, so after 5 years it's 2 · 2⁵ = 64.",
+        "Five doublings from 2: 2 · 32 = 64."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A share worth $2 doubles each year. After 5 more years? (geometric: a_1=2, r=2, 6th term)",
+        "answer": 64,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 128,
+            "feedback": "Double over 5 years, so r⁵ not r⁶: 2 · 2⁵ = 64, not 2 · 2⁶."
+          },
+          {
+            "value": 32,
+            "feedback": "That's 2⁵. Include the starting 2: 2 · 2⁵ = 64."
+          }
+        ],
+        "fallbackFeedback": "2 · 2⁵ = 64."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-growth-apply__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A steadily growing plant.",
+      "conceptTag": "fn-growth-apply",
+      "explanationVariants": [
+        "Arithmetic: a_1 = 4, d = 3, so after 6 weeks it's 4 + 6·3 = 22.",
+        "Six steps of 3 from 4: 4 + 18 = 22."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A plant is 4 cm and grows 3 cm each week. After 6 more weeks? (arithmetic: a_1=4, d=3, 7th term)",
+        "answer": 22,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "You grow over 6 weeks, not 7: 4 + 6·3 = 22, not 4 + 7·3."
+          },
+          {
+            "value": 21,
+            "feedback": "a_1 = 4, d = 3, so after 6 weeks: 4 + 18 = 22."
+          }
+        ],
+        "fallbackFeedback": "4 + 6·3 = 22."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-growth-apply__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tripling colony.",
+      "conceptTag": "fn-growth-apply",
+      "explanationVariants": [
+        "Geometric: a_1 = 2, r = 3, so after 4 days it's 2 · 3⁴ = 162.",
+        "Four triplings from 2: 2 · 81 = 162."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A colony of 2 triples each day. After 4 more days? (geometric: a_1=2, r=3, 5th term)",
+        "answer": 162,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 486,
+            "feedback": "Triple over 4 days, so r⁴ not r⁵: 2 · 3⁴ = 162, not 2 · 3⁵."
+          },
+          {
+            "value": 54,
+            "feedback": "That's the 4th day's value. After 4 more days from the start: 2 · 3⁴ = 162."
+          }
+        ],
+        "fallbackFeedback": "2 · 3⁴ = 162."
+      },
+      "hints": [
+        "\"Triples\" means geometric with r = 3, a_1 = 2.",
+        "After 4 days use r⁴ = 3⁴ = 81.",
+        "2 · 81 = 162."
+      ],
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-growth-apply__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Match the model to the change: add for arithmetic, multiply for geometric.",
+      "takeaways": [
+        "Constant addition → arithmetic; repeated multiplication → geometric.",
+        "Watch the words: \"add/each\" vs \"double/triple/times.\"",
+        "Geometric growth overtakes arithmetic over time."
+      ],
+      "teaser": "you've completed functions & sequences — notation, domain/range, and both sequence types."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-growth-apply",
+      "concept": {
+        "id": "rem-fga-c",
+        "kind": "concept",
+        "body": "Arithmetic models constant addition; geometric models repeated multiplication. \"Add $5 each week\" is arithmetic; \"doubles each hour\" is geometric. Match the model, then use its nth-term rule."
+      },
+      "check": {
+        "id": "rem-fga-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-growth-apply",
+        "explanationVariants": [
+          "Arithmetic: 10 + 4·5 = 30.",
+          "Four additions of 5 from 10: 30."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "You start with $10 and add $5 each week. After 4 more weeks, how much? (arithmetic: a_1=10, d=5, 5th term)",
+          "answer": 30,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 35,
+              "feedback": "Add over 4 weeks: 10 + 4·5 = 30."
+            },
+            {
+              "value": 25,
+              "feedback": "That's only three weeks of $5. Four more weeks adds 4 × $5: 10 + 20 = 30."
+            }
+          ],
+          "fallbackFeedback": "10 + 4·5 = 30."
+        }
+      }
+    }
+  ]
+}

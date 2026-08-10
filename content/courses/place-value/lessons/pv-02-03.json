@@ -1,0 +1,420 @@
+{
+  "id": "pv-02-03",
+  "slug": "the-halfway-rule",
+  "title": "The Halfway Rule",
+  "courseId": "place-value",
+  "chapterId": "ch2-rounding",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "45 stands EXACTLY halfway between 40 and 50 — five steps to each. Neither neighbor is closer, so distance can't decide. Ties need a **rule**, and the standard one is: **halfway rounds UP**. It's an agreement, not a discovery — like everyone driving on the same side of the road.",
+      "figure": "pv3-halfway"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Stand on the tie spot and feel the problem.",
+      "conceptTag": "round-half",
+      "widget": {
+        "type": "slider",
+        "prompt": "Slide the marker to the EXACT halfway point between 40 and 50.",
+        "min": 40,
+        "max": 50,
+        "step": 1,
+        "start": 40,
+        "target": 45,
+        "visual": "numberline",
+        "unitLabel": "your spot",
+        "lowFeedback": "From here, 40 is still the closer neighbor — keep walking toward the middle.",
+        "highFeedback": "You've passed the middle — from here 50 is already closer. Step back toward the tie spot.",
+        "successFeedback": "45: five steps to 40, five to 50 — a perfect tie. Distance is stuck, so the rule steps in: halfway goes UP, to 50."
+      },
+      "predict": {
+        "prompt": "45 is EXACTLY halfway between 40 and 50. What should rounding do with it?",
+        "options": [
+          {
+            "id": "up",
+            "label": "Send it up to 50"
+          },
+          {
+            "id": "down",
+            "label": "Send it down to 40"
+          },
+          {
+            "id": "stuck",
+            "label": "It can't be rounded — it's a tie"
+          }
+        ],
+        "outcomeId": "up",
+        "reveal": "Distance really is stuck at a perfect tie — so mathematicians agreed on a rule: exact halfway goes UP. Find the tie spot and feel why a rule was needed."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round half.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round half must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round half."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:round-half",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why 45 needs a rule and 47 doesn't.",
+      "conceptTag": "round-half",
+      "explanationVariants": [
+        "47 has a genuinely closer neighbor (50, three steps), so distance decides. 45's distances tie at five each — only a rule can break it.",
+        "Rounding is 'name the closer neighbor.' That instruction fails exactly once per street: at the middle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do we need a special RULE for 45, but not for 47?",
+        "options": [
+          {
+            "id": "a",
+            "label": "47 has a closer neighbor; 45's two distances tie, so distance can't decide",
+            "correct": true,
+            "feedback": "Exactly — the 'closer neighbor' instruction breaks down only at the middle, so a tie-breaking agreement fills the gap."
+          },
+          {
+            "id": "b",
+            "label": "Because 45 ends in 5",
+            "feedback": "True, but that's the symptom — WHY does ending in 5 matter? Because a 5 in the ones puts the number exactly halfway, where distances tie."
+          },
+          {
+            "id": "c",
+            "label": "Because 45 is an odd number",
+            "feedback": "Oddness is a different property — 47 is odd too and needs no rule. The issue is 45's position: dead center on its street."
+          },
+          {
+            "id": "d",
+            "label": "We don't — 45 simply rounds down",
+            "feedback": "Rounding 45 down would be A rule too — just not the standard one. Everyone agrees on halfway-up so answers match."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "round-half"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule in action: 45 → 50, 85 → 90, 350 → 400. It plugs straight into the digit shortcut: a **5 in the deciding spot means UP**. (Honest footnote: it's the standard school rule; some scientists break ties differently — what matters is everyone at the table using the same one.)",
+      "figure": "pv3-halfway"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply the tie-breaker.",
+      "conceptTag": "round-half",
+      "explanationVariants": [
+        "85 is five steps from 80 and five from 90 — a tie, and ties go up: 90.",
+        "Ones digit 5 in the deciding spot means UP by the rule."
+      ],
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "Round 85 to the nearest ten.",
+        "min": 80,
+        "max": 90,
+        "step": 1,
+        "tickStep": 5,
+        "target": 90,
+        "start": 85,
+        "commonPlacements": [
+          {
+            "value": 80,
+            "feedback": "80 rounds the tie DOWN — but the agreed rule sends exact-halfway numbers up. Five in the ones means climb."
+          },
+          {
+            "value": 85,
+            "feedback": "85 is the number itself — but it isn't a ten. Rounding must pick a neighbor, and the tie-rule picks 90."
+          }
+        ],
+        "successFeedback": "85's distances tie (5 and 5). The rule breaks ties upward.",
+        "lowFeedback": "85's distances tie (5 and 5). The rule breaks ties upward.",
+        "highFeedback": "85's distances tie (5 and 5). The rule breaks ties upward."
+      },
+      "variant": {
+        "gen": "round-half",
+        "form": "tieTen"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round half.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round half must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round half."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:round-half",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "First job: recognize WHEN the rule is even needed.",
+      "conceptTag": "round-half",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each number: is it exactly halfway (rule needed), or does it have a closer neighbor?",
+        "buckets": [
+          {
+            "id": "tie",
+            "label": "Exact tie — rule needed",
+            "icon": "⚖️"
+          },
+          {
+            "id": "closer",
+            "label": "Has a closer neighbor",
+            "icon": "🏠"
+          }
+        ],
+        "items": [
+          {
+            "id": "n65",
+            "label": "65 (nearest ten)",
+            "bucketId": "tie",
+            "feedback": "65 sits five steps from 60 and five from 70 — dead center. The rule sends it up to 70."
+          },
+          {
+            "id": "n250",
+            "label": "250 (nearest hundred)",
+            "bucketId": "tie",
+            "feedback": "250 is fifty steps from both 200 and 300 — a perfect hundred-street tie. Rule: up to 300."
+          },
+          {
+            "id": "n74",
+            "label": "74 (nearest ten)",
+            "bucketId": "closer",
+            "feedback": "74 is 4 steps from 70 but 6 from 80 — 70 is genuinely closer. Distance decides; no rule needed."
+          },
+          {
+            "id": "n449",
+            "label": "449 (nearest hundred)",
+            "bucketId": "closer",
+            "feedback": "449 is 49 from 400 and 51 from 500 — one step off a tie, but a real winner exists: 400."
+          }
+        ],
+        "missFeedback": "Count the two distances. Equal → tie, rule needed. Unequal → the closer neighbor just wins.",
+        "successFeedback": "65 and 250 are true ties; 74 and 449 have honest winners. The rule only works the middle of the street."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The tie-breaker scales up to hundred-streets.",
+      "conceptTag": "round-half",
+      "explanationVariants": [
+        "250 is fifty steps from each neighbor — a tie — and ties round up: 300.",
+        "Tens digit 5 with nothing behind it is the exact middle of the 200-to-300 street; the rule lifts it."
+      ],
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "Round 250 to the nearest hundred.",
+        "min": 200,
+        "max": 300,
+        "step": 10,
+        "tickStep": 50,
+        "target": 300,
+        "start": 250,
+        "commonPlacements": [
+          {
+            "value": 200,
+            "feedback": "200 rounds the tie down — but exact-halfway numbers climb by the rule, on hundred-streets too."
+          },
+          {
+            "value": 250,
+            "feedback": "250 isn't a hundred — rounding must land on a neighbor. The tie-rule picks the upper one: 300."
+          }
+        ],
+        "successFeedback": "Fifty steps each way — a tie. Ties go up.",
+        "lowFeedback": "Fifty steps each way — a tie. Ties go up.",
+        "highFeedback": "Fifty steps each way — a tie. Ties go up."
+      },
+      "variant": {
+        "gen": "round-half",
+        "form": "tieHundred"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round half.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round half must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round half."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:round-half",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A two-number warm-up — one of them needs the halfway rule — before the three-name sum.",
+      "conceptTag": "round-half",
+      "explanationVariants": [
+        "15 sits exactly halfway, so the halfway rule rounds it UP to 20; 62 rounds down to 60. Add the pair: 20 + 60 = 80.",
+        "One halfway round (15→20) and one ordinary round (62→60), then a simple addition: 80."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 15 to its nearest ten (remember the halfway rule), round 62 to its nearest ten, then add the two rounded numbers. What do you get?",
+        "answer": 80,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 77,
+            "feedback": "77 is the EXACT sum — round each number first: 15→20 (halfway rounds UP), 62→60, then add: 20+60=80."
+          },
+          {
+            "value": 70,
+            "feedback": "15 sits exactly halfway between 10 and 20 — the halfway rule says round UP, to 20, not down to 10. 20+60=80."
+          },
+          {
+            "value": 90,
+            "feedback": "62's ones digit is 2, safely in the round-DOWN club — it stays at 60, not up to 70. 20+60=80."
+          }
+        ],
+        "fallbackFeedback": "Round each number first (15→?, using the halfway rule; 62→?), then add the two rounded tens."
+      },
+      "variant": {
+        "gen": "round-half",
+        "form": "sumWithTie"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three friends, two ties, one sum.",
+      "conceptTag": "round-half",
+      "hints": [
+        "Round each count separately — two of the three are exact ties.",
+        "45 → 50 (tie, up) · 52 → 50 (ones digit 2, down) · 35 → 40 (tie, up).",
+        "Add the three rounded tens."
+      ],
+      "explanationVariants": [
+        "45 → 50, 52 → 50, 35 → 40; the rounded sum is 50 + 50 + 40 = 140.",
+        "Both ties climbed by the rule; only 52 rounded down. 140 total (exact is 132 — close by)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Ana has 45 stickers, Ben has 52, Cam has 35. Round each count to the nearest ten, then add the rounded counts. What sum do you get?",
+        "answer": 140,
+        "tolerance": 0,
+        "unit": "stickers (about)",
+        "commonErrors": [
+          {
+            "value": 132,
+            "feedback": "132 is the EXACT sum — the question wants the rounded players added: 50 + 50 + 40."
+          },
+          {
+            "value": 120,
+            "feedback": "120 rounded both ties DOWN (40 and 30). The halfway rule sends 45 and 35 UP — to 50 and 40."
+          },
+          {
+            "value": 130,
+            "feedback": "130 let one tie fall — both 45 and 35 are exact halves, and the rule lifts them BOTH."
+          }
+        ],
+        "fallbackFeedback": "Handle each tie with the rule (up!), round 52 normally, then add."
+      },
+      "variant": {
+        "gen": "round-half",
+        "form": "sumWithTie"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Ties can't stall you anymore.",
+      "takeaways": [
+        "A tie happens only at the exact middle — equal steps to both neighbors.",
+        "The standard rule: halfway rounds UP, every time, on every street.",
+        "It's a convention — its power comes from everyone using the same one."
+      ],
+      "teaser": "now put rounding to work: fast, good-enough answers inside real stories."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "round-half",
+      "concept": {
+        "id": "rem-rh-c",
+        "kind": "concept",
+        "body": "Quick rewind. Count the walk **both ways**. 15: five steps back to 10, five forward to 20 — equal, so it's a tie. Ties have one rule: **go up**. Unequal walks never need the rule; the shorter walk just wins."
+      },
+      "check": {
+        "id": "rem-rh-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "round-half",
+        "explanationVariants": [
+          "15 ties (5 steps each way), and ties round up: 20.",
+          "A 5 in the ones is the tie signal — the rule lifts it."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Round 15 to the nearest ten.",
+          "options": [
+            {
+              "id": "a",
+              "label": "20",
+              "correct": true,
+              "feedback": "A perfect tie, broken upward by the rule."
+            },
+            {
+              "id": "b",
+              "label": "10",
+              "feedback": "10 is exactly as far as 20 — five steps. Distance ties, and the agreed rule breaks ties UP."
+            },
+            {
+              "id": "c",
+              "label": "15",
+              "feedback": "15 is where you're standing — not a ten. Rounding must pick a neighbor, and ties pick the upper one."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+ "id": "lg-03-02",
+ "slug": "solving-exponential-equations",
+ "title": "Solving Exponential Equations",
+ "courseId": "logarithms",
+ "chapterId": "ch3-change-of-base-and-exponential-equations",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Base-matching solved 2^x = 8. For 2^x = 10, the tool is **take the log of both sides**: log(2^x) = log 10, and the power property pulls x down — x · log 2 = log 10, so x = (log 10)/(log 2) ≈ **3.32**. Notice: that's exactly log₂ 10 by change of base. Same answer, two roads.",
+   "figure": "lg-take-log"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Pull the exponent down.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "After taking log of both sides of 3^x = 7, the equation becomes:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x · log 3 = log 7",
+      "correct": true,
+      "feedback": "Right — the power property drags the x out front."
+     },
+     {
+      "id": "o2",
+      "label": "x + log 3 = log 7",
+      "correct": false,
+      "feedback": "The exponent MULTIPLIES its log when it descends — it never adds."
+     },
+     {
+      "id": "o3",
+      "label": "3x = log 7",
+      "correct": false,
+      "feedback": "The left side is log(3^x) = x · log 3 — the base 3 keeps its log."
+     },
+     {
+      "id": "o4",
+      "label": "log x · 3 = log 7",
+      "correct": false,
+      "feedback": "The log wraps the POWER 3^x, pulling the exponent x forward: x · log 3."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Full pipeline with a coefficient: 5 · 2^x = 80. **Isolate the power first** (divide by 5): 2^x = 16 — oh, that one matches bases: x = 4. But 5 · 2^x = 90 → 2^x = 18 → x = (log 18)/(log 2) ≈ 4.17. Isolate, then match if you can, log if you can't.",
+   "figure": "lg-isolate-coefficient"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Set up the log solve.",
+   "conceptTag": "lg-exp-solve",
+   "explanationVariants": [
+    "7^x = 20 → x = (log 20)/(log 7) ≈ 1.54.",
+    "Log both sides, divide by log 7."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The exact solution of 7^x = 20 is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = (log 20)/(log 7)",
+      "correct": true,
+      "feedback": "Right — equivalently log₇ 20, between 1 and 2 since 7¹ < 20 < 49."
+     },
+     {
+      "id": "o2",
+      "label": "x = (log 7)/(log 20)",
+      "correct": false,
+      "feedback": "Dividing goes BY log 7 (the base's log) — it lands in the denominator."
+     },
+     {
+      "id": "o3",
+      "label": "x = log (20/7)",
+      "correct": false,
+      "feedback": "log(20/7) ≈ 0.456, but 7^0.456 ≈ 2.4 ≠ 20 — the solution divides two logs."
+     },
+     {
+      "id": "o4",
+      "label": "x = 20/7",
+      "correct": false,
+      "feedback": "20/7 ≈ 2.86, but 7^2.86 ≈ 260 — the unknown is an exponent; logs, not division, extract it."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-exp-solve__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Bracket it first.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Before computing, x = log₇ 20 must lie between:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "1 and 2",
+      "correct": true,
+      "feedback": "Right — 7¹ = 7 < 20 < 49 = 7²."
+     },
+     {
+      "id": "o2",
+      "label": "2 and 3",
+      "correct": false,
+      "feedback": "7² = 49 already exceeds 20 — the exponent is below 2."
+     },
+     {
+      "id": "o3",
+      "label": "0 and 1",
+      "correct": false,
+      "feedback": "7¹ = 7 is still under 20 — the exponent tops 1."
+     },
+     {
+      "id": "o4",
+      "label": "19 and 21",
+      "correct": false,
+      "feedback": "The log is a small EXPONENT, not a near-copy of 20: between 1 and 2."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Isolate first.",
+   "conceptTag": "lg-exp-solve",
+   "explanationVariants": [
+    "4 · 3^x = 36 → 3^x = 9 → x = 2 (bases match after isolating).",
+    "Divide by the coefficient BEFORE any log."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 4 · 3^x = 36.",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "That solves 3^x = 27 — but 36 ÷ 4 = 9, and 3² = 9: x = 2."
+     },
+     {
+      "value": 9,
+      "feedback": "9 is 3^x after isolating — the SOLUTION is its exponent: 2."
+     }
+    ],
+    "fallbackFeedback": "3^x = 9 → x = 2."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-exp-solve__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Exponent expressions.",
+   "conceptTag": "lg-exp-solve",
+   "explanationVariants": [
+    "2^(x+1) = 10 → (x + 1) log 2 = log 10 → x + 1 = 3.32 → x ≈ 2.32.",
+    "The whole exponent descends as a block; unwrap it last."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve 2^(x+1) = 10 (using log₂ 10 ≈ 3.32).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x ≈ 2.32",
+      "correct": true,
+      "feedback": "Right — x + 1 = log₂ 10 ≈ 3.32, then subtract 1."
+     },
+     {
+      "id": "o2",
+      "label": "x ≈ 3.32",
+      "correct": false,
+      "feedback": "3.32 is the WHOLE exponent x + 1 — peel off the 1: x ≈ 2.32."
+     },
+     {
+      "id": "o3",
+      "label": "x ≈ 4.32",
+      "correct": false,
+      "feedback": "The +1 comes OFF (subtract), not on: 3.32 − 1 = 2.32."
+     },
+     {
+      "id": "o4",
+      "label": "x ≈ 1.66",
+      "correct": false,
+      "feedback": "Nothing halves — the block x + 1 equals 3.32, so x ≈ 2.32."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-exp-solve__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full pipeline.",
+   "conceptTag": "lg-exp-solve",
+   "explanationVariants": [
+    "3 · 2^x = 60 → 2^x = 20 → x = (log 20)/(log 2) = log₂ 20 ≈ 4.32.",
+    "Isolate (÷3), then log both sides; sanity 2⁴ = 16 < 20 < 32."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 3 · 2^x = 60. (Use log 20 ≈ 1.301, log 2 ≈ 0.301; round to 2 decimals.)",
+    "answer": 4.32,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5.91,
+      "feedback": "Isolate FIRST: 2^x = 60/3 = 20 — logging the 60 directly bakes the 3 into the exponent."
+     },
+     {
+      "value": 10,
+      "feedback": "That divides 20 by the base 2 — the unknown is an EXPONENT: x = log₂ 20 ≈ 4.32."
+     }
+    ],
+    "fallbackFeedback": "2^x = 20 → x ≈ 1.301/0.301 ≈ 4.32; sanity: 16 < 20 < 32. ✓"
+   },
+   "hints": [
+    "Divide by 3: 2^x = 20.",
+    "Take logs: x · log 2 = log 20.",
+    "x = 1.301/0.301 ≈ 4.32."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-exp-solve__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Isolate the power; match bases if possible, log both sides if not.",
+   "takeaways": [
+    "Taking logs of both sides is legal — equal numbers have equal logs.",
+    "The power property converts an exponent hunt into a division.",
+    "Bracket with integer powers to sanity-check every decimal."
+   ],
+   "teaser": "Next: equations where the LOG holds the unknown — and the domain fights back."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-exp-solve",
+   "concept": {
+    "id": "rem-lg0302-c",
+    "kind": "concept",
+    "body": "The descent in isolation: log(5^x) equals what, by the power property?"
+   },
+   "check": {
+    "id": "rem-lg0302-k",
+    "kind": "check",
+    "body": "Pull it down.",
+    "conceptTag": "lg-exp-solve",
+    "explanationVariants": [
+     "x · log 5.",
+     "The exponent becomes a coefficient of the log."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "log(5^x) = ?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x · log 5",
+       "correct": true,
+       "feedback": "Right — the power property, verbatim."
+      },
+      {
+       "id": "o2",
+       "label": "5 · log x",
+       "correct": false,
+       "feedback": "The EXPONENT descends, not the base: x · log 5."
+      },
+      {
+       "id": "o3",
+       "label": "log 5 + log x",
+       "correct": false,
+       "feedback": "5^x is a power, not the product 5x — its exponent multiplies."
+      },
+      {
+       "id": "o4",
+       "label": "x + log 5",
+       "correct": false,
+       "feedback": "The descending exponent MULTIPLIES the log: x · log 5."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

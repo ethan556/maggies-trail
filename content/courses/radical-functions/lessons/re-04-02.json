@@ -1,0 +1,423 @@
+{
+  "id": "re-04-02",
+  "slug": "extraneous-solutions",
+  "title": "Extraneous Solutions",
+  "courseId": "radical-functions",
+  "chapterId": "ch4-solving-radical-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Squaring has a blind spot: it erases signs, so it can **invent solutions**. Solve √(x + 7) = x + 1: squaring gives x + 7 = x² + 2x + 1 → x² + x − 6 = 0 → x = 2 or x = −3. Check both: √9 = 3 = 2 + 1 ✓, but √4 = 2 while −3 + 1 = **−2** ✗. The −3 is **extraneous**.",
+      "figure": "extraneous-intersection"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch squaring invent a root.",
+      "widget": {
+        "type": "extraneousRootLab",
+        "prompt": "√(x + 2) = x. Square both sides, then find the candidate that squaring invented — the one that was never a solution.",
+        "radical": {
+          "c": 2,
+          "scale": 1
+        },
+        "line": {
+          "m": 1,
+          "b": 0
+        },
+        "probeStart": -1,
+        "targetPhase": "identifyPhantom",
+        "trueRoot": 2,
+        "phantomRoot": -1,
+        "requiredMoves": 2,
+        "successFeedback": "x = −1 is the phantom. Watch what squaring did: the line y = x runs BELOW the axis to the left of zero, where it could never equal a square root — and squaring reflected that stretch upward, straight onto the curve. The crossing at −1 is that reflection, not a solution. At x = −1 the radical is √1 = +1, and +1 is not −1.",
+        "phantomPickedFeedback": "x = 2 is the genuine one: √4 = 2, both sides agree. The question asks for the candidate that only APPEARS after squaring.",
+        "notSquaredFeedback": "Square both sides first. Before you do, there is only one crossing on screen — the phantom does not exist yet, and watching it arrive is the point of the step.",
+        "signRegionFeedback": "The line is below the axis here, so it cannot equal √(x + 2), which is never negative. Squaring destroys that objection by flipping this stretch upward.",
+        "domainConfusionFeedback": "That is neither candidate. Squaring produced exactly two crossings — −1 and 2 — and the judgement is between those."
+      },
+      "predict": {
+        "prompt": "After squaring both sides, which equation must decide whether a candidate is a genuine solution?",
+        "options": [
+          {
+            "id": "original",
+            "label": "The original radical equation"
+          },
+          {
+            "id": "squared",
+            "label": "Only the squared equation"
+          },
+          {
+            "id": "either",
+            "label": "Either one gives the same solution set"
+          }
+        ],
+        "outcomeId": "original",
+        "reveal": "Squaring is not reversible when signs are lost, so it can enlarge the solution set. Every candidate must return to the original equation."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Test candidates in both transformed and original equations and make the creation of an extraneous root visible.",
+        "invariants": [
+          "original-equation-defines-solution-set",
+          "principal-square-root-nonnegative"
+        ],
+        "misconceptions": [
+          "all-roots-of-squared-equation-valid",
+          "final-check-is-optional"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "table",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "radical-equations-with-and-without-extraneous-roots",
+        "delayed": true,
+        "counterfactualPrompt": "Change the constant inside the radical so both algebraic candidates are nonnegative. Does that guarantee both satisfy the original equation? Test before deciding.",
+        "explanation": {
+          "prompt": "Why can squaring both sides create a solution that was not in the original equation?",
+          "options": [
+            {
+              "id": "signloss",
+              "label": "Squaring erases sign information, so a negative candidate can satisfy the squared equation even though a principal square root cannot equal it.",
+              "correct": true,
+              "feedback": "Exactly — the transformation may enlarge the candidate set, so substitution repairs the lost information."
+            },
+            {
+              "id": "arithmetic",
+              "label": "Squaring is sometimes calculated inaccurately, and the check only catches arithmetic mistakes.",
+              "correct": false,
+              "feedback": "Even perfectly executed squaring can create an extraneous root because the operation is not fully reversible."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The picture explains it: the curve y = √(x + 7) and the line y = x + 1 truly cross **once**, at (2, 3). At x = −3 the line sits at −2 — the **mirror image** of the root's +2. Squaring can't tell y from −y, so it reports both. The check is how you un-blur them.",
+      "figure": "re-graph-intersect"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Sort the candidates.",
+      "conceptTag": "re-extraneous",
+      "explanationVariants": [
+        "Squaring x = √(x + 6) gives x² − x − 6 = 0 → x = 3 or −2. Check: √9 = 3 ✓; √4 = 2 ≠ −2 ✗.",
+        "The negative candidate can't equal a principal root — only 3 survives."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve x = √(x + 6). Squaring gives candidates x = 3 and x = −2. What survives the check?",
+        "tokens": [
+          {
+            "id": "x3",
+            "label": "x = 3"
+          },
+          {
+            "id": "xm2",
+            "label": "x = −2"
+          },
+          {
+            "id": "orr",
+            "label": "or"
+          }
+        ],
+        "correct": [
+          "x3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "x3",
+              "orr",
+              "xm2"
+            ],
+            "feedback": "Test −2: the right side is √4 = +2, but the left side is −2 — mismatch, extraneous."
+          },
+          {
+            "sequence": [
+              "xm2",
+              "orr",
+              "x3"
+            ],
+            "feedback": "Test −2: the right side is √4 = +2, but the left side is −2 — mismatch, extraneous."
+          },
+          {
+            "sequence": [
+              "xm2"
+            ],
+            "feedback": "It's 3 that checks: √(3 + 6) = 3 — the negative one is the phantom."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Check each candidate in the ORIGINAL equation — a square root can never equal a negative left side.",
+        "successFeedback": "Right — √9 = 3 ✓, while x = −2 would need √4 to equal −2. ✗"
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-extraneous__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Predict before solving.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In x = √(x + 6), the left side must equal a principal root. What does that tell you BEFORE any algebra?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "any valid solution must have x ≥ 0",
+            "correct": true,
+            "feedback": "Right — x equals a √-output, which is never negative: negative candidates are doomed in advance."
+          },
+          {
+            "id": "o2",
+            "label": "any valid solution must have x ≤ 0",
+            "correct": false,
+            "feedback": "Principal roots are ≥ 0 — the LEFT side must match that, so x ≥ 0."
+          },
+          {
+            "id": "o3",
+            "label": "there must be exactly two solutions",
+            "correct": false,
+            "feedback": "The squared quadratic has two roots, but the original usually keeps only those passing the sign test."
+          },
+          {
+            "id": "o4",
+            "label": "the equation has no solutions",
+            "correct": false,
+            "feedback": "It has one (x = 3) — the sign rule just filters candidates, it doesn't empty them."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another full run.",
+      "conceptTag": "re-extraneous",
+      "explanationVariants": [
+        "√(2x + 3) = x: square → x² − 2x − 3 = 0 → x = 3 or −1; check: √9 = 3 ✓, and −1 fails (root +1 vs −1).",
+        "Only the nonnegative candidate can match a principal root."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve √(2x + 3) = x.",
+        "tokens": [
+          {
+            "id": "x3",
+            "label": "x = 3"
+          },
+          {
+            "id": "xm1",
+            "label": "x = −1"
+          },
+          {
+            "id": "orr",
+            "label": "or"
+          }
+        ],
+        "correct": [
+          "x3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "x3",
+              "orr",
+              "xm1"
+            ],
+            "feedback": "Check −1: left side √(−2 + 3) = 1, right side −1 — the signs disagree."
+          },
+          {
+            "sequence": [
+              "xm1",
+              "orr",
+              "x3"
+            ],
+            "feedback": "Check −1: left side √(−2 + 3) = 1, right side −1 — the signs disagree."
+          },
+          {
+            "sequence": [
+              "xm1"
+            ],
+            "feedback": "−1 is the phantom; it's 3 that checks: √9 = 3. ✓"
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Square to x² = 2x + 3, factor x² − 2x − 3 = 0, then CHECK both candidates against the original.",
+        "successFeedback": "Right — the candidate −1 gives √1 = +1 ≠ −1: extraneous."
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-extraneous__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Extraneous ≠ domain error.",
+      "conceptTag": "re-extraneous",
+      "explanationVariants": [
+        "Extraneous candidates usually sit inside the domain — they fail the SIGN of the equation, not the radicand.",
+        "In the example, −3 + 7 = 4 ≥ 0: legal input, wrong sign."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which best describes a typical extraneous solution of √(x + 7) = x + 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a legal input whose two sides have opposite signs",
+            "correct": true,
+            "feedback": "Right — squaring blurred +2 and −2 together; the check separates them."
+          },
+          {
+            "id": "o2",
+            "label": "an input that makes the radicand negative",
+            "correct": false,
+            "feedback": "That's a domain violation — the classic extraneous root (x = −3 here) keeps the radicand at +4."
+          },
+          {
+            "id": "o3",
+            "label": "an arithmetic slip while squaring",
+            "correct": false,
+            "feedback": "The algebra is CORRECT — extraneous roots appear even with flawless work; that's why checking is mandatory."
+          },
+          {
+            "id": "o4",
+            "label": "a solution that's irrational",
+            "correct": false,
+            "feedback": "Irrational solutions can be perfectly valid — extraneous means it fails the original equation."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-extraneous__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full solve with a phantom.",
+      "conceptTag": "re-extraneous",
+      "explanationVariants": [
+        "√(x + 11) = x − 1: square → x + 11 = x² − 2x + 1 → x² − 3x − 10 = 0 → x = 5 or −2. Check: √16 = 4 = 5 − 1 ✓; √9 = 3 vs −2 − 1 = −3 ✗. Answer: 5.",
+        "The surviving solution makes both sides +4; the phantom pits +3 against −3."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Solve √(x + 11) = x − 1 (give the valid solution).",
+        "task": "radicalEquationExtraneous",
+        "values": [],
+        "extInsideConst": 11,
+        "extRhsShift": 1,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": -2,
+            "feedback": "−2 is the phantom: √9 = +3 but −2 − 1 = −3 — squaring invented it."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is the value of x + 11 at the solution — the SOLUTION itself is x = 5."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Candidates 5 and −2; only 5 checks (√16 = 4 = 5 − 1).",
+        "successFeedback": "Candidates 5 and −2; only 5 checks (√16 = 4 = 5 − 1)."
+      },
+      "hints": [
+        "Square: x + 11 = (x − 1)².",
+        "x² − 3x − 10 = 0 factors as (x − 5)(x + 2).",
+        "Check both: only x = 5 makes the signs agree."
+      ],
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-extraneous__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Squaring can't tell y from −y — the check is part of the solve.",
+      "takeaways": [
+        "Extraneous roots satisfy the SQUARED equation, not the original.",
+        "They're usually legal inputs with a sign mismatch, not domain errors.",
+        "Predict: the side equal to a √ must be ≥ 0."
+      ],
+      "teaser": "Next: equations with radicals on BOTH sides — and quadratics in disguise."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "re-extraneous",
+      "concept": {
+        "id": "rem-re0402-c",
+        "kind": "concept",
+        "body": "The check is one substitution. Candidate x = −3 for √(x + 7) = x + 1: left √4 = 2, right −3 + 1 = −2."
+      },
+      "check": {
+        "id": "rem-re0402-k",
+        "kind": "check",
+        "body": "Call the verdict.",
+        "conceptTag": "re-extraneous",
+        "explanationVariants": [
+          "2 ≠ −2: extraneous — reject it.",
+          "Both sides must MATCH, sign and all."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Left side 2, right side −2. Is x = −3 a solution of √(x + 7) = x + 1?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "no — the sides don't match",
+              "correct": true,
+              "feedback": "Right — reject it; only candidates that check survive."
+            },
+            {
+              "id": "o2",
+              "label": "yes — 2 and −2 have the same size",
+              "correct": false,
+              "feedback": "Equality needs the SIGN too: 2 ≠ −2, so the candidate fails."
+            },
+            {
+              "id": "o3",
+              "label": "yes — it solved the squared equation",
+              "correct": false,
+              "feedback": "The squared equation is a lie detector with false positives — the ORIGINAL must hold, and it doesn't."
+            },
+            {
+              "id": "o4",
+              "label": "can't tell without a graph",
+              "correct": false,
+              "feedback": "The substitution already decided it: 2 ≠ −2, so no."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

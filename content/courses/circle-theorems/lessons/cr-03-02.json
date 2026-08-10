@@ -1,0 +1,331 @@
+{
+  "id": "cr-03-02",
+  "slug": "two-tangent-theorem",
+  "title": "The Two-Tangent Theorem",
+  "courseId": "circle-theorems",
+  "chapterId": "ch3-tangents",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-two-tangent",
+      "concept": {
+        "id": "rem-cr-two-tangent-c",
+        "kind": "concept",
+        "body": "From one external point P, the two tangent segments to a circle are CONGRUENT (HL: shared hypotenuse OP, equal radius legs; then CPCTC). The figure O-T₁-P-T₂ is a kite with right angles at the tangency points, so angle P and the central angle are supplementary, and OP bisects both angles."
+      },
+      "check": {
+        "id": "rem-cr-two-tangent-k",
+        "kind": "check",
+        "body": "Copy the pair.",
+        "conceptTag": "cr-two-tangent",
+        "explanationVariants": [
+          "The two-tangent theorem copies: 9.",
+          "Same external point, same length: 9."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "One tangent segment from Q measures 9. The other tangent segment from Q = ?",
+          "answer": 9,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 18,
+              "feedback": "18 adds the pair — each segment individually measures 9."
+            },
+            {
+              "value": 4.5,
+              "feedback": "4.5 halves — the congruence is a straight copy: 9."
+            }
+          ],
+          "fallbackFeedback": "QT₁ = QT₂ = 9."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "From any external point, exactly TWO tangent lines reach the circle — and their tangent segments are **congruent**: PT₁ = PT₂. Proof in one breath: triangles OT₁P and OT₂P share hypotenuse OP and have equal legs (radii), so HL congruence — then CPCTC hands over the tangent segments.",
+      "figure": "tangent-radius"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Free congruence.",
+      "conceptTag": "cr-two-tangent",
+      "explanationVariants": [
+        "The two-tangent theorem copies the length: PT₂ = 11.",
+        "HL + CPCTC: both tangent segments from P match, 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From external point P, one tangent segment to the circle measures 11. The other tangent segment from P measures ?",
+        "answer": 11,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "22 doubles — each segment is 11; it's the PAIR that's congruent, not summed: 11."
+          },
+          {
+            "value": 5.5,
+            "feedback": "5.5 halves — the theorem copies, full strength: 11."
+          }
+        ],
+        "fallbackFeedback": "PT₁ = PT₂ = 11."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-two-tangent__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Zoom out to the whole figure OT₁PT₂: two radii, two congruent tangent segments — **a kite**, straight from the quadrilateral course, with its right angles at T₁ and T₂. Its angle sum forces a clean supplement: **angle P + central angle T₁OT₂ = 180°**, since the two right angles spend the other 180.",
+      "figure": "cr-two-tangents"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The supplement.",
+      "conceptTag": "cr-two-tangent",
+      "explanationVariants": [
+        "Quadrilateral sum 360, minus the two 90° tangency angles, leaves P + O = 180: central = 180 − 40 = 140°.",
+        "P and the central angle are supplements in the tangent kite: 140°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The two tangents from P meet at 40°. Find the central angle T₁OT₂ between the two radii.",
+        "answer": 140,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40° copies P — the kite's right angles force P and O to SUPPLEMENT: 180 − 40 = 140°."
+          },
+          {
+            "value": 50,
+            "feedback": "50 = 90 − 40 complements — the pair shares 180° (the other 180 went to the two right angles): 140°."
+          },
+          {
+            "value": 320,
+            "feedback": "320 = 360 − 40 charges P against the whole quadrilateral — the two 90°s already claimed 180: central = 140°."
+          }
+        ],
+        "fallbackFeedback": "360 − 90 − 90 − 40 = 140°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-two-tangent__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two tangents from one point are always equal.",
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "tangentLength",
+        "radius": 6,
+        "targetLength": 8,
+        "start": 7,
+        "prompt": "Radius 6. Slide the outside point until each tangent measures 8, and watch the two tangents as you move.",
+        "successFeedback": "The point sits 10 from the centre. But look at what never changed: the two tangents were EQUAL at every position. They must be — the two right triangles share the hypotenuse (the centre-line) and have equal legs (the radii), so they are congruent. The two-tangent theorem is that congruence, nothing more.",
+        "lowFeedback": "Shorter than 8 — the point is too close to the circle.",
+        "highFeedback": "Longer than 8 — bring the point in toward the circle."
+      },
+      "predict": {
+        "prompt": "As an external point moves, how do its two tangent lengths compare?",
+        "options": [
+          {
+            "id": "equal",
+            "label": "They remain equal"
+          },
+          {
+            "id": "near",
+            "label": "The nearer-looking tangent is shorter"
+          },
+          {
+            "id": "swap",
+            "label": "They alternate which one is longer"
+          }
+        ],
+        "outcomeId": "equal",
+        "reveal": "The radii to the tangent points form congruent right triangles with a shared hypotenuse, forcing equal tangent segments."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move the external point while tangent lengths, radii, and right-triangle evidence update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "equal-tangents-common-point"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "visual-nearness-changes-length"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 2,
+        "transferFamily": "circle-tangent-theorems",
+        "counterfactualPrompt": "Move the point farther from the circle. Which measurements change, and why does PA = PB remain true?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why are the two tangent segments equal?",
+          "options": [
+            {
+              "id": "hl",
+              "label": "The two radius-tangent triangles are congruent by hypotenuse-leg.",
+              "correct": true,
+              "feedback": "They share the center-to-point hypotenuse and have equal radii as legs."
+            },
+            {
+              "id": "symmetry",
+              "label": "The drawing happens to look symmetric.",
+              "correct": false,
+              "feedback": "Appearance is not proof; right-triangle congruence supplies the guarantee."
+            },
+            {
+              "id": "diameter",
+              "label": "Every tangent segment equals the diameter.",
+              "correct": false,
+              "feedback": "Tangent length changes with the external point and need not equal the diameter."
+            }
+          ]
+        }
+      },
+      "conceptTag": "cr-two-tangent"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The bisector bonus.",
+      "conceptTag": "cr-two-tangent",
+      "explanationVariants": [
+        "OP is the kite's symmetry axis — it bisects angle P (and the central angle). Half of 40° is 20°.",
+        "The HL congruence already matched the half-angles at P: 20° each."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same figure, angle P = 40°. What angle does OP (the line from P to the center) make with EACH tangent?",
+        "answer": 20,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40° is the WHOLE angle at P — the symmetry axis OP splits it evenly: 20° per side."
+          },
+          {
+            "value": 70,
+            "feedback": "70 = 140/2 halves the CENTRAL angle — that's the split at O. At P: 40/2 = 20°."
+          },
+          {
+            "value": 90,
+            "feedback": "90° belongs at the tangency points — at P the axis bisects: 20°."
+          }
+        ],
+        "fallbackFeedback": "40 ÷ 2 = 20° — OP bisects both kite angles."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-two-tangent__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Belt around a pulley.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A straight belt leaves a circular pulley. At the exact point where the belt lifts off the pulley, the belt is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Tangent to the pulley — perpendicular to the radius at the lift-off point",
+            "correct": true,
+            "feedback": "A taut belt leaving a wheel runs along the tangent line — which is why belt-length problems are tangent-segment problems."
+          },
+          {
+            "id": "o2",
+            "label": "A chord of the pulley",
+            "correct": false,
+            "feedback": "A chord would CUT through the pulley — the belt hugs the outside and departs along the tangent."
+          },
+          {
+            "id": "o3",
+            "label": "Aimed at the pulley's center",
+            "correct": false,
+            "feedback": "Aimed at the center it would be a RADIUS direction — the belt leaves perpendicular to that: tangent."
+          },
+          {
+            "id": "o4",
+            "label": "At a random angle depending on tension",
+            "correct": false,
+            "feedback": "Any non-tangent angle would either cut the pulley or leave slack — taut geometry forces the tangent."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Chained tangents.",
+      "conceptTag": "cr-two-tangent",
+      "hints": [
+        "Each external point owns a matched pair: from A both tangent segments are equal, likewise from B.",
+        "AT = 7 forces the other segment from A to be 7; the tangency point splits AB.",
+        "AB = 18 = (segment from A) + (segment from B)."
+      ],
+      "explanationVariants": [
+        "From A: 7. So the shared tangency point splits AB into 7 + (from B) = 18, giving 11 — and B's OTHER tangent segment is also 11.",
+        "Two-tangent theorem at B copies its 18 − 7 = 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Segment AB = 18 is tangent to a circle at a point between A and B, with the tangency point 7 from A. A second tangent is drawn from B. How long is B's tangent segment on that second line?",
+        "answer": 11,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is A's tangent length — B's runs from B to the tangency point: 18 − 7 = 11, copied to the second tangent by the theorem."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is all of AB — B only owns the part past the tangency point: 11."
+          },
+          {
+            "value": 9,
+            "feedback": "9 halves AB — the tangency point sits at 7 from A, not the midpoint: B's share is 11."
+          }
+        ],
+        "fallbackFeedback": "B's tangent segment = 18 − 7 = 11; the two-tangent theorem copies it to the second line."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-two-tangent__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two touches, one symmetry.",
+      "takeaways": [
+        "PT₁ = PT₂ — HL on the radius triangles, CPCTC on the tangents.",
+        "OT₁PT₂ is a KITE: right angles at the touch points, so angle P + central = 180°, and OP bisects both.",
+        "Tangent segments chain: equal pairs at every external point."
+      ],
+      "teaser": "Next: a triangle wrapped around a circle — tangent pairs at every corner."
+    }
+  ]
+}

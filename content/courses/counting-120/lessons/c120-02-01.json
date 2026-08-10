@@ -1,0 +1,352 @@
+{
+ "id": "c120-02-01",
+ "slug": "rows-of-ten",
+ "title": "Rows of Ten",
+ "courseId": "counting-120",
+ "chapterId": "ch2-120-chart",
+ "minutes": 7,
+ "readingProfile": "early",
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "chart-rows",
+   "body": "The 120 chart is rows of ten. Each row has 10 numbers and ends in a 0: 10, 20, 30.",
+   "narration": "The 120 chart is rows of ten. Each row has ten numbers and ends in a zero: ten, twenty, thirty."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match each row's start to its end.",
+   "conceptTag": "chart-rows",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Each row of ten runs from a start number to an end number. Match them.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "starts at 1"
+     },
+     {
+      "id": "s11",
+      "label": "starts at 11"
+     },
+     {
+      "id": "s21",
+      "label": "starts at 21"
+     }
+    ],
+    "right": [
+     {
+      "id": "e10",
+      "label": "ends at 10"
+     },
+     {
+      "id": "e20",
+      "label": "ends at 20"
+     },
+     {
+      "id": "e30",
+      "label": "ends at 30"
+     }
+    ],
+    "pairs": {
+     "s1": "e10",
+     "s11": "e20",
+     "s21": "e30"
+    },
+    "pairErrors": [
+     {
+      "left": "s11",
+      "right": "e10",
+      "feedback": "The row from 11 counts up ten: 11 to 20, not 10."
+     },
+     {
+      "left": "s21",
+      "right": "e20",
+      "feedback": "The row from 21 ends at 30 — ten numbers: 21, 22, … 30."
+     }
+    ],
+    "missFeedback": "Each row has 10 numbers, so it ends 9 more than its start.",
+    "successFeedback": "1–10, 11–20, 21–30 — every row is a ten!"
+   },
+   "predict": {
+    "prompt": "Every row of ten ends on what kind of number?",
+    "options": [
+     {
+      "id": "tens",
+      "label": "A tens number, like 20 or 30"
+     },
+     {
+      "id": "nine",
+      "label": "A nine number, like 29"
+     },
+     {
+      "id": "any",
+      "label": "It can end anywhere"
+     }
+    ],
+    "outcomeId": "tens",
+    "reveal": "A row finishes where its ten completes — on the round tens number. The next row starts fresh right after it."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "End the row.",
+   "conceptTag": "chart-rows",
+   "explanationVariants": [
+    "The row starting at 21 holds 21–30, so it ends at 30.",
+    "Ten numbers from 21 lands on 30."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A row starts at 21. What number ends it?",
+    "answer": 30,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 ends the row BEFORE this one. The row from 21 ends at 30."
+     },
+     {
+      "value": 31,
+      "feedback": "31 starts the NEXT row. This row ends at 30."
+     }
+    ],
+    "fallbackFeedback": "The row 21–30 ends at 30."
+   },
+   "hints": [
+    "A row has 10 numbers.",
+    "21, 22, … up to?",
+    "30."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartRowsNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Read a row left to right, counting up by one. The next row starts the next ten.",
+   "narration": "Read a row left to right, counting up by one. The next row starts the next ten.",
+   "figure": "c120-chart-row"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Order part of a row.",
+   "conceptTag": "chart-rows",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Drag these into the order they appear across a row.",
+    "items": [
+     {
+      "id": "n34",
+      "label": "34"
+     },
+     {
+      "id": "n31",
+      "label": "31"
+     },
+     {
+      "id": "n33",
+      "label": "33"
+     },
+     {
+      "id": "n35",
+      "label": "35"
+     },
+     {
+      "id": "n32",
+      "label": "32"
+     }
+    ],
+    "correctOrder": [
+     "n31",
+     "n32",
+     "n33",
+     "n34",
+     "n35"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "n35",
+      "second": "n31",
+      "feedback": "A row reads left to right, smallest first: 31, then up."
+     },
+     {
+      "first": "n33",
+      "second": "n32",
+      "feedback": "32 comes before 33 across the row: 31, 32, 33, 34, 35."
+     }
+    ],
+    "missFeedback": "Across a row, numbers go up by one: 31, 32, 33, 34, 35.",
+    "successFeedback": "31, 32, 33, 34, 35 — that's how a row reads!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "How big is a row?",
+   "conceptTag": "chart-rows",
+   "explanationVariants": [
+    "Each row of the chart holds exactly 10 numbers.",
+    "A row is one ten — 10 numbers across."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "How many numbers are in each row of the chart?",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "Don't forget the number that ends in 0. A full row has 10."
+     },
+     {
+      "value": 11,
+      "feedback": "A row stops at the ten. It holds exactly 10 numbers."
+     }
+    ],
+    "fallbackFeedback": "Each row has 10 numbers."
+   },
+   "hints": [
+    "Count a row: 1 to 10.",
+    "How many is that?",
+    "10."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartRowsNumeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Which ends a row?",
+   "conceptTag": "chart-rows",
+   "explanationVariants": [
+    "Row-enders end in 0. 40 ends the row 31–40.",
+    "A number that ends a row is a ten: 40."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which number ends a row?",
+    "options": [
+     {
+      "id": "a",
+      "label": "40",
+      "correct": true,
+      "feedback": "Yes — 40 ends the row 31–40. Row-enders end in 0."
+     },
+     {
+      "id": "b",
+      "label": "45",
+      "feedback": "45 sits in the middle of a row, not the end. Row-enders end in 0."
+     },
+     {
+      "id": "c",
+      "label": "41",
+      "feedback": "41 STARTS a row. Row-enders end in 0, like 40."
+     }
+    ]
+   },
+   "hints": [
+    "Row-enders end in 0.",
+    "Which choice ends in 0?",
+    "40."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartRowsMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Start the next row.",
+   "conceptTag": "chart-rows",
+   "explanationVariants": [
+    "The row 31–40 ends at 40, so the next row starts at 41.",
+    "One more than the row-ender 40 begins the next ten: 41."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The row after 31–40 starts at what number?",
+    "answer": 41,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 50,
+      "feedback": "50 ENDS the next row. It starts at 41."
+     },
+     {
+      "value": 40,
+      "feedback": "40 ends the row before. The next row starts at 41."
+     }
+    ],
+    "fallbackFeedback": "After 40 comes 41 — the start of the next row."
+   },
+   "hints": [
+    "What comes right after 40?",
+    "That begins the next ten.",
+    "41."
+   ],
+   "variant": {
+    "gen": "g1-counting-120",
+    "form": "ChartRowsNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "You know the chart's rows!",
+   "takeaways": [
+    "Each row is ten numbers.",
+    "Rows end in 0: 10, 20, 30…",
+    "The next row starts the next ten."
+   ],
+   "teaser": "next: find any number on the chart."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "chart-rows",
+   "concept": {
+    "id": "rem-rows-c",
+    "kind": "concept",
+    "body": "Slow it down. A row is ten numbers in a line. It starts at a 1-number and ends at a 0-number: 51–60.",
+    "narration": "A row is ten numbers in a line. It starts at a one-number and ends at a zero-number: fifty-one to sixty."
+   },
+   "check": {
+    "id": "rem-rows-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "chart-rows",
+    "explanationVariants": [
+     "The row starting at 51 ends at 60.",
+     "Ten numbers from 51 lands on 60."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A row starts at 51. What number ends it?",
+     "answer": 60,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 50,
+       "feedback": "50 ends the row before. The row from 51 ends at 60."
+      },
+      {
+       "value": 61,
+       "feedback": "61 starts the next row. This one ends at 60."
+      }
+     ],
+     "fallbackFeedback": "The row 51–60 ends at 60."
+    }
+   }
+  }
+ ]
+}

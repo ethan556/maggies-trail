@@ -1,0 +1,258 @@
+{
+ "id": "ca-03-03",
+ "slug": "what-the-mvt-buys",
+ "title": "What the MVT Buys",
+ "courseId": "curve-analysis",
+ "chapterId": "ch3-the-mean-value-theorem",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every lesson so far has ASSUMED that f′ > 0 means the curve rises. Nobody proved it. The MVT does.\n\nTake any x₁ < x₂. The MVT gives a c with f(x₂) − f(x₁) = f′(c)(x₂ − x₁). If f′ is positive everywhere, the right-hand side is positive — so f(x₂) > f(x₁).\n\n**f′ > 0 ⇒ increasing.** Not a picture. A proof.",
+   "figure": "ca-mvt-parallel"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The zero-derivative fact.",
+   "conceptTag": "ca-mvt-consequences",
+   "explanationVariants": [
+    "If f′ = 0 everywhere, the MVT gives f(x₂) − f(x₁) = 0·(x₂ − x₁) = 0 for ANY two points. So f takes the same value everywhere: it is constant.",
+    "This is what makes the + C legitimate: two functions with the same derivative differ by a constant, because their difference has zero derivative."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "f′(x) = 0 for every x. What follows, and why?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "f is constant — the MVT forces f(x₂) − f(x₁) = 0·(x₂ − x₁) = 0 for any two points.",
+      "correct": true,
+      "feedback": "Right, and this is what finally JUSTIFIES the + C: if F′ = G′ then (F − G)′ = 0, so F − G is constant."
+     },
+     {
+      "id": "o2",
+      "label": "f is zero.",
+      "correct": false,
+      "feedback": "f(x) = 7 has zero derivative and is nowhere near zero. Zero SLOPE, not zero value."
+     },
+     {
+      "id": "o3",
+      "label": "f is increasing very slowly.",
+      "correct": false,
+      "feedback": "Not at all — it does not increase. The MVT shows f(x₂) equals f(x₁) exactly, for every pair."
+     },
+     {
+      "id": "o4",
+      "label": "Nothing without more information.",
+      "correct": false,
+      "feedback": "The MVT needs nothing more. Two points and a zero derivative are enough to force equality."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-curve-analysis",
+    "form": "curve-analysis__ca-mvt-consequences__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The debt calculus has been carrying.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Three facts you have been using on credit.",
+    "panels": [
+     {
+      "title": "f′ > 0 means rising",
+      "body": "Used in every sign chart, in the first-derivative test, in every optimisation. It LOOKS obvious. But 'the tangent points up here' and 'the curve is higher over there' are different claims, and only the MVT connects them."
+     },
+     {
+      "title": "f′ = 0 everywhere means constant",
+      "body": "Used silently every time you wrote + C. Two antiderivatives of the same f differ by a constant precisely BECAUSE their difference has zero derivative — and only the MVT says that forces constancy."
+     },
+     {
+      "title": "So the MVT is load-bearing",
+      "body": "It looks like a curiosity about parallel lines. It is actually the beam holding up the first-derivative test, the sign charts, and the whole theory of antiderivatives."
+     }
+    ],
+    "continueFeedback": "Keep going — the third panel is why the theorem has a name.",
+    "successFeedback": "The MVT is not a curiosity. It is the proof underneath the machinery you have been using all course."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Bound a function you cannot see.",
+   "conceptTag": "ca-mvt-consequences",
+   "explanationVariants": [
+    "MVT: f(5) − f(1) = f′(c)·4 for some c. If f′ ≤ 3 everywhere, then f(5) − f(1) ≤ 12, so f(5) ≤ 2 + 12 = 14.",
+    "You never learn what f is. The derivative's bound becomes a bound on the function."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(1) = 2 and f′(x) ≤ 3 for all x. What is the largest possible value of f(5)?",
+    "answer": 14,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "That is the bound on the DERIVATIVE. Over 4 units of x, f can gain at most 3 × 4 = 12, so f(5) ≤ 2 + 12 = 14."
+     },
+     {
+      "value": 12,
+      "feedback": "That is the maximum GAIN. Add the starting value: f(5) ≤ 2 + 12 = 14."
+     },
+     {
+      "value": 17,
+      "feedback": "Check the width: from x = 1 to x = 5 is 4 units, not 5. So the gain is at most 12."
+     }
+    ],
+    "fallbackFeedback": "f(5) − f(1) = f′(c)·4 ≤ 12, so f(5) ≤ 2 + 12 = 14."
+   },
+   "variant": {
+    "gen": "mvt-bound"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "And it settles the last loose end from C4.\n\nIf F′ = G′ everywhere, then (F − G)′ = 0, so **F − G is constant**. That is *why* every antiderivative of f has the form F + C, and why the + C is a complete description of the family rather than a hedge.\n\nThe theorem you almost skipped is the one holding up the integral.",
+   "figure": "dr-inverse-reciprocal"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Why + C is the whole family.",
+   "conceptTag": "ca-mvt-consequences",
+   "explanationVariants": [
+    "If F and G both have derivative f, then (F − G)′ = f − f = 0, so F − G is constant by the MVT. Hence G = F + C, and there are no other antiderivatives.",
+    "Without the MVT you could not rule out some exotic antiderivative that differs from F by something other than a constant."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why is every antiderivative of f of the form F + C, with no exceptions?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Two antiderivatives have the same derivative, so their difference has derivative 0 — and the MVT says that makes it constant.",
+      "correct": true,
+      "feedback": "Right. Without the MVT you could not rule out some stranger relationship, and the + C would be a hope rather than a theorem."
+     },
+     {
+      "id": "o2",
+      "label": "By definition.",
+      "correct": false,
+      "feedback": "The definition says F′ = f. It does not, by itself, say that ALL such F differ by a constant — that is a theorem, and the MVT proves it."
+     },
+     {
+      "id": "o3",
+      "label": "Because constants have zero derivative.",
+      "correct": false,
+      "feedback": "That shows F + C IS an antiderivative. The harder direction — that there are no OTHERS — is what needs the MVT."
+     },
+     {
+      "id": "o4",
+      "label": "It is an assumption we make.",
+      "correct": false,
+      "feedback": "It is proved, not assumed. That is the difference the MVT makes."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-curve-analysis",
+    "form": "curve-analysis__ca-mvt-consequences__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Trap a function.",
+   "conceptTag": "ca-mvt-consequences",
+   "hints": [
+    "Use the MVT on [0, 3]: f(3) − f(0) = f′(c)·3 for some c.",
+    "You are told 2 ≤ f′ ≤ 4, so the gain is between 2×3 = 6 and 4×3 = 12.",
+    "f(0) = 1, so f(3) is between 7 and 13. The question asks for the SMALLEST possible value."
+   ],
+   "explanationVariants": [
+    "The minimum gain is 2 × 3 = 6, so the smallest possible f(3) is 1 + 6 = 7.",
+    "The MVT turns a bound on the derivative into a bound on the function — in both directions at once."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(0) = 1 and 2 ≤ f′(x) ≤ 4 everywhere. What is the SMALLEST possible value of f(3)?",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "That is the LARGEST possible value (gain of 4 × 3 = 12). The smallest uses the slowest allowed growth: 2 × 3 = 6, giving 7."
+     },
+     {
+      "value": 6,
+      "feedback": "That is the minimum GAIN. Add the starting value f(0) = 1 to get 7."
+     },
+     {
+      "value": 2,
+      "feedback": "That is the lower bound on the derivative. Multiply by the width 3 and add f(0) = 1."
+     }
+    ],
+    "fallbackFeedback": "Minimum gain = 2 × 3 = 6, so f(3) ≥ 1 + 6 = 7."
+   },
+   "variant": {
+    "gen": "mvt-bound",
+    "form": "smallest"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The beam under the machinery.",
+   "takeaways": [
+    "f′ > 0 ⇒ increasing, and f′ = 0 everywhere ⇒ constant. Both are PROVED by the MVT, not assumed.",
+    "That second fact is why + C describes the whole family of antiderivatives, with no exceptions.",
+    "A bound on f′ becomes a bound on f — you can constrain a function you have never seen."
+   ],
+   "teaser": "Next chapter: put every chart together and draw the curve."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "ca-mvt-consequences",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "The MVT converts a fact about the DERIVATIVE into a fact about the FUNCTION. If the slope is always positive, the function must rise. If the slope is always zero, it cannot move at all. If the slope is bounded, the function's growth is bounded too.",
+    "figure": "dr-tangent-line"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "From slope to function.",
+    "conceptTag": "ca-mvt-consequences",
+    "explanationVariants": [
+     "f′ = 0 everywhere means f cannot change, so f(10) = f(0) = 5.",
+     "Zero slope, zero movement."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "f′(x) = 0 for all x, and f(0) = 5. Find f(10).",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "That is the DERIVATIVE. The function itself is stuck at its starting value of 5."
+      },
+      {
+       "value": 10,
+       "feedback": "That is x. A zero derivative means f never moves: f(10) = f(0) = 5."
+      }
+     ],
+     "fallbackFeedback": "Zero derivative everywhere ⇒ f is constant ⇒ f(10) = 5."
+    }
+   }
+  }
+ ]
+}

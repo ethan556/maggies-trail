@@ -1,0 +1,231 @@
+{
+ "id": "pp-05-01",
+ "slug": "projectile-as-parametrics",
+ "title": "Projectile Motion: Two Independent Clocks",
+ "courseId": "polar-parametric",
+ "chapterId": "ch5-applied-parametrics",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A thrown ball is the perfect parametric: time t drives BOTH coordinates, but they obey different rules. Horizontally, nothing pushes it — constant velocity: **x = vₓ·t**. Vertically, gravity pulls — constant acceleration: **y = v_y·t − ½g t²**. (We use g ≈ 10 m/s² for clean numbers.)",
+   "figure": "pp-projectile"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Horizontal position.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A ball has vₓ = 15 m/s. Using x = vₓ·t, where is it horizontally at t = 3 s?",
+    "answer": 45,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 18,
+      "feedback": "18 = 15 + 3 adds. Horizontal position is a PRODUCT: 15·3 = 45 m."
+     },
+     {
+      "value": 5,
+      "feedback": "5 = 15/3 divides. Constant velocity means x = 15·3 = 45 m."
+     }
+    ],
+    "fallbackFeedback": "x = 15·3 = 45 m."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Why the two motions don't interfere.",
+   "conceptTag": "pp-projectile",
+   "explanationVariants": [
+    "Gravity acts only vertically, so it changes y but never x — the horizontal motion stays uniform regardless of the fall.",
+    "Horizontal and vertical are independent: this is why a dropped ball and a ball thrown level hit the ground together."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why does the horizontal speed stay constant during flight?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Gravity acts only vertically, leaving horizontal motion untouched",
+      "correct": true,
+      "feedback": "Right — the sole force is vertical, so x keeps its uniform x = vₓ·t."
+     },
+     {
+      "id": "o2",
+      "label": "Because air pushes it forward",
+      "feedback": "This imagines a forward force that isn't there — with gravity the only force and it pointing straight down, nothing acts horizontally, so x stays uniform at vₓ·t."
+     },
+     {
+      "id": "o3",
+      "label": "Because the ball slows down evenly in both directions",
+      "feedback": "Only the VERTICAL motion changes (gravity). Horizontal stays constant."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-projectile__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The vertical equation y = v_y·t − ½g t² is a **downward parabola in t** (recall quadratics): it rises, slows, stops at the top, and falls. The vertical velocity is v_y − g t — it hits **zero at the peak**, then goes negative on the way down.",
+   "figure": "pp-vertical-parabola"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Vertical position.",
+   "conceptTag": "pp-projectile",
+   "explanationVariants": [
+    "y = 20·1 − ½·10·1² = 20 − 5 = 15 m at t = 1 s.",
+    "Plug t = 1: the rise term 20 minus the fall term 5 gives 15 m."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With v_y = 20 m/s and g = 10, use y = v_y·t − ½g t² to find the height at t = 1 s.",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 = v_y·t alone ignores the −½g t² fall term: 20 − 5 = 15 m."
+     },
+     {
+      "value": 10,
+      "feedback": "The fall term is ½·10·1² = 5, not 10: 20 − 5 = 15 m."
+     }
+    ],
+    "fallbackFeedback": "y = 20 − ½·10·1 = 20 − 5 = 15 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-projectile__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Velocity at the peak.",
+   "conceptTag": "pp-projectile",
+   "explanationVariants": [
+    "At the highest point the vertical velocity is 0 — it's momentarily neither rising nor falling; horizontal velocity is still vₓ.",
+    "v_y − g t = 0 defines the peak; the ball still moves sideways at vₓ."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "At the very top of its arc, the ball's VERTICAL velocity is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "zero",
+      "correct": true,
+      "feedback": "Right — v_y − g t = 0 at the peak; only the horizontal velocity remains."
+     },
+     {
+      "id": "o2",
+      "label": "maximum",
+      "feedback": "Vertical velocity is zero at the top — it was maximum at LAUNCH and decreased to 0."
+     },
+     {
+      "id": "o3",
+      "label": "equal to g",
+      "feedback": "g is an acceleration, not the velocity. At the peak the vertical velocity is 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-projectile__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Combine both coordinates.",
+   "conceptTag": "pp-projectile",
+   "explanationVariants": [
+    "At t = 2 s: x = 15·2 = 30 m and y = 20·2 − 5·2² = 40 − 20 = 20 m. The height is 20 m.",
+    "Vertical: 40 rise minus 20 fall = 20 m (this is also the peak, since t = 2 = v_y/g)."
+   ],
+   "hints": [
+    "Vertical uses y = 20t − 5t².",
+    "Substitute t = 2.",
+    "40 − 5·4 = 40 − 20."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A ball has vₓ = 15, v_y = 20 (g = 10). What is its height y at t = 2 s?",
+    "answer": 20,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30 is the horizontal position x = 15·2. The height is y = 40 − 20 = 20 m."
+     },
+     {
+      "value": 40,
+      "feedback": "40 = 20·2 forgets the fall term 5·2² = 20: height is 20 m."
+     }
+    ],
+    "fallbackFeedback": "y = 20·2 − 5·2² = 40 − 20 = 20 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-projectile__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Sideways steady, up-down curved.",
+   "takeaways": [
+    "Horizontal: x = vₓ·t (constant velocity).",
+    "Vertical: y = v_y·t − ½g t² (a downward parabola in t).",
+    "The two motions are independent; vertical velocity is 0 at the peak."
+   ],
+   "teaser": "Next: extracting the peak height, flight time, and range."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-projectile",
+   "concept": {
+    "id": "rem-pp0501-c",
+    "kind": "concept",
+    "body": "Projectile: x = vₓ·t (steady) and y = v_y·t − ½g t² (gravity). Substitute a time into each for the ball's position; vertical velocity v_y − g t is 0 at the top."
+   },
+   "check": {
+    "id": "rem-pp0501-k",
+    "kind": "check",
+    "body": "One height.",
+    "conceptTag": "pp-projectile",
+    "explanationVariants": [
+     "y = 10·1 − ½·10·1² = 10 − 5 = 5 m.",
+     "Rise 10 minus fall 5 gives 5 m."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "v_y = 10, g = 10. Find y at t = 1 s using y = v_y·t − ½g t².",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 10,
+       "feedback": "10 = v_y·t alone; subtract the fall term ½·10·1² = 5: height 5 m."
+      },
+      {
+       "value": 0,
+       "feedback": "At t = 1 the ball is still up: 10 − 5 = 5 m, not 0."
+      }
+     ],
+     "fallbackFeedback": "y = 10 − 5 = 5 m."
+    }
+   }
+  }
+ ]
+}

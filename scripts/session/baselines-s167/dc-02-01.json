@@ -1,0 +1,260 @@
+{
+ "id": "dc-02-01",
+ "slug": "related-rates",
+ "title": "Related Rates: the Chain Rule With Time Hidden",
+ "courseId": "derivatives-in-context",
+ "chapterId": "ch2-related-rates",
+ "minutes": 12,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "If two quantities are linked by an equation, then their **rates of change are linked too** — and the link is the chain rule, with **time as the hidden variable**.\n\nDifferentiate the equation with respect to **t**. Every variable is secretly a function of time, so every one of them picks up a dx/dt, exactly as implicit differentiation picked up a dy/dx.\n\nIt is the same move you already know, wearing a clock.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Differentiate with respect to time.",
+   "conceptTag": "dc-related-rates",
+   "explanationVariants": [
+    "A = πr² gives dA/dt = 2πr · (dr/dt). The chain rule charges you dr/dt because r is a function of t.",
+    "Without the dr/dt you have differentiated with respect to r, which answers a different question entirely."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A circle's area is A = πr². Differentiate with respect to TIME.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "dA/dt = 2πr · (dr/dt)",
+      "correct": true,
+      "feedback": "Right — r depends on t, so the chain rule attaches dr/dt. That factor is the whole subject."
+     },
+     {
+      "id": "o2",
+      "label": "dA/dt = 2πr",
+      "correct": false,
+      "feedback": "That is dA/dr — the derivative with respect to the RADIUS. Differentiating with respect to time adds a factor of dr/dt."
+     },
+     {
+      "id": "o3",
+      "label": "dA/dt = πr²",
+      "correct": false,
+      "feedback": "That is the area itself, undifferentiated."
+     },
+     {
+      "id": "o4",
+      "label": "dA/dt = 2π",
+      "correct": false,
+      "feedback": "The r has vanished. d/dr[πr²] = 2πr, and then the chain rule multiplies by dr/dt."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-related-rates__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Rates chain, exactly as before.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Why related rates is not a new technique.",
+    "panels": [
+     {
+      "title": "You already did this",
+      "body": "In implicit differentiation, every y picked up a dy/dx because y was secretly a function of x. Here every variable picks up a d/dt because it is secretly a function of time. Same move, different hidden variable."
+     },
+     {
+      "title": "The equation is the relation",
+      "body": "Geometry gives you the equation — the area of a circle, Pythagoras for a ladder, the volume of a sphere. Calculus never invents it. Your job is to FIND the right relation, and then differentiate it."
+     },
+     {
+      "title": "Then substitute — but only at the END",
+      "body": "Differentiate first, with the variables still general. Only afterwards substitute the instant's numbers. Substituting first turns a variable into a constant, and its rate silently becomes zero."
+     }
+    ],
+    "continueFeedback": "Keep going — the third panel is the error that ruins these problems.",
+    "successFeedback": "Same chain rule, hidden variable is time. Differentiate FIRST, substitute LAST."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The classic error.",
+   "conceptTag": "dc-related-rates",
+   "explanationVariants": [
+    "If you substitute r = 3 before differentiating, A = 9π becomes a CONSTANT, and its derivative is 0 — which says the area never changes, which is absurd.",
+    "The radius is 3 only at one instant. It is not a constant, and treating it as one destroys the problem."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "To find dA/dt when r = 3, a student writes A = π(3²) = 9π and then differentiates. What goes wrong?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "9π is a constant, so its derivative is 0 — the substitution destroyed the very change being measured.",
+      "correct": true,
+      "feedback": "Right. r = 3 is true at ONE INSTANT, not always. Differentiate with r general, and substitute only at the end."
+     },
+     {
+      "id": "o2",
+      "label": "Nothing — it is a valid shortcut.",
+      "correct": false,
+      "feedback": "It gives dA/dt = 0, which claims the circle is not growing at all. The substitution froze the radius."
+     },
+     {
+      "id": "o3",
+      "label": "The 9π should be 6π.",
+      "correct": false,
+      "feedback": "The arithmetic is fine: π(3)² = 9π. The error is doing it too EARLY."
+     },
+     {
+      "id": "o4",
+      "label": "π should be differentiated too.",
+      "correct": false,
+      "feedback": "π really is a constant, and its derivative really is zero. The problem is that r was treated like one."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-related-rates__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "So the procedure is four lines, always:\n\n1. **Draw it.** Label what varies; do not put numbers on the picture.\n2. **Find the relation** between the quantities (geometry, not calculus).\n3. **Differentiate with respect to t** — every variable pays a d/dt.\n4. **Substitute the instant's values** and solve for the rate you want.\n\nSubstituting at step 2 instead of step 4 is the mistake that ruins the problem.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Now do it properly.",
+   "conceptTag": "dc-related-rates",
+   "explanationVariants": [
+    "dA/dt = 2πr · dr/dt. At the instant r = 3 with dr/dt = 2, that is 2π(3)(2) = 12π.",
+    "Differentiate in general; substitute the instant last. The radius was allowed to vary right up until the final line."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A circle's radius grows at dr/dt = 2 cm/s. Find dA/dt when r = 3, as a multiple of π (give just the number).",
+    "answer": 12,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "That is 2πr at r = 3 without the dr/dt = 2. The chain rule multiplies by the rate: 2π(3)(2) = 12π."
+     },
+     {
+      "value": 9,
+      "feedback": "That is the AREA (9π), not its rate of change."
+     },
+     {
+      "value": 18,
+      "feedback": "Check: dA/dt = 2πr·(dr/dt) = 2π(3)(2) = 12π."
+     }
+    ],
+    "fallbackFeedback": "dA/dt = 2πr·(dr/dt) = 2π(3)(2) = 12π cm²/s."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-related-rates__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The balloon.",
+   "conceptTag": "dc-related-rates",
+   "hints": [
+    "The relation is the volume of a sphere: V = (4/3)πr³.",
+    "Differentiate with respect to t: dV/dt = 4πr² · (dr/dt).",
+    "Now substitute r = 3 and dr/dt = 2."
+   ],
+   "explanationVariants": [
+    "dV/dt = 4πr²·(dr/dt) = 4π(9)(2) = 72π cm³/s.",
+    "Note that r² appears: the bigger the balloon, the faster the volume grows for the same growth in radius. That is the whole reason inflating a big balloon takes so much more air per centimetre."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A spherical balloon's radius grows at 2 cm/s. Find dV/dt when r = 3, as a multiple of π (give just the number).",
+    "answer": 72,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 36,
+      "feedback": "That is 4πr² at r = 3 without the dr/dt = 2. Multiply by the rate: 4π(9)(2) = 72π."
+     },
+     {
+      "value": 36,
+      "feedback": "That is the volume-ish, not the rate. dV/dt = 4πr²·(dr/dt) = 72π."
+     },
+     {
+      "value": 24,
+      "feedback": "Check the derivative: d/dr[(4/3)πr³] = 4πr², which is 36π at r = 3, and then × 2 = 72π."
+     }
+    ],
+    "fallbackFeedback": "dV/dt = 4πr²(dr/dt) = 4π(9)(2) = 72π cm³/s."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-related-rates__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The chain rule, with a clock.",
+   "takeaways": [
+    "Differentiate the RELATION with respect to t; every variable picks up a d/dt, exactly as in implicit differentiation.",
+    "Geometry supplies the equation. Calculus only differentiates it.",
+    "Substitute the instant's numbers LAST. Doing it first freezes a variable and sends its rate to zero."
+   ],
+   "teaser": "Next: the ladder that keeps sliding down the wall."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "dc-related-rates",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Every letter in the equation is secretly a function of time. So when you differentiate with respect to t, every letter pays a d/dt — just as every y paid a dy/dx in implicit differentiation. And substitute the numbers only at the very END.",
+    "figure": "dr-chain-gears"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Pay the d/dt.",
+    "conceptTag": "dc-related-rates",
+    "explanationVariants": [
+     "V = s³ gives dV/dt = 3s²·(ds/dt).",
+     "The chain rule attaches ds/dt because s depends on t."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A cube has volume V = s³. Differentiate with respect to time.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "dV/dt = 3s²·(ds/dt)",
+       "correct": true,
+       "feedback": "Right — s depends on t, so the chain rule charges you ds/dt."
+      },
+      {
+       "id": "o2",
+       "label": "dV/dt = 3s²",
+       "correct": false,
+       "feedback": "That is dV/ds. With respect to TIME you must also multiply by ds/dt."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

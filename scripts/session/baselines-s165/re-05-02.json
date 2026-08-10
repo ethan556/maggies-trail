@@ -1,0 +1,339 @@
+{
+ "id": "re-05-02",
+ "slug": "the-even-numerator-plus-minus",
+ "title": "The Even-Numerator ±",
+ "courseId": "radical-functions",
+ "chapterId": "ch5-rational-exponent-equations-and-models",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Remember x² = 9 giving ±3? The same ghost haunts **even numerators**. Solve x^(2/3) = 9: the 2 up top squares — and squaring erases signs. Check both 27 and −27: 27^(2/3) = 9 ✓, and (−27)^(2/3) = (∛(−27))² = (−3)² = 9 ✓. **Two solutions: x = ±27.**",
+   "figure": "re-even-numerator"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Verify the negative branch.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute (−27)^(2/3): first ∛(−27), then square it. What is the result?",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -9,
+      "feedback": "The SQUARE at the end erases the minus: (−3)² = +9."
+     },
+     {
+      "value": 3,
+      "feedback": "Don't stop at the root — ∛(−27) = −3 still gets squared: 9."
+     }
+    ],
+    "fallbackFeedback": "∛(−27) = −3, and (−3)² = 9."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Odd numerators keep signs, so they stay single-answer: x^(3/5) = 8 has only x = 8^(5/3) = 32. The rule mirrors Chapter 4 exactly: **even powers blur signs (±), odd powers preserve them (one answer)**. Look at the numerator to know which world you're in.",
+   "figure": "re-odd-numerator"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Count the solutions.",
+   "conceptTag": "re-plusminus",
+   "explanationVariants": [
+    "x^(2/5) = 4: the even numerator squares — both 32 and −32 check ((⁵√±32)² = (±2)² = 4). Two solutions.",
+    "Even numerator ⟹ ± on the base."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "How many real solutions does x^(2/5) = 4 have?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "two: x = 32 and x = −32",
+      "correct": true,
+      "feedback": "Right — the fifth root keeps the sign, but the square then erases it: both check."
+     },
+     {
+      "id": "o2",
+      "label": "one: x = 32",
+      "correct": false,
+      "feedback": "Test −32: ⁵√(−32) = −2, and (−2)² = 4 ✓ — the even numerator admits both."
+     },
+     {
+      "id": "o3",
+      "label": "one: x = −32",
+      "correct": false,
+      "feedback": "Both signs work — 32 checks too: (⁵√32)² = 2² = 4."
+     },
+     {
+      "id": "o4",
+      "label": "none",
+      "correct": false,
+      "feedback": "x = 32 works directly: 32^(2/5) = 4."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-plusminus__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Odd numerator control case.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "How many real solutions does x^(3/5) = 8 have?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "one: x = 32",
+      "correct": true,
+      "feedback": "Right — odd powers preserve signs; (−32)^(3/5) = −8 ≠ 8, so only 32."
+     },
+     {
+      "id": "o2",
+      "label": "two: x = ±32",
+      "correct": false,
+      "feedback": "Check −32: its 3/5 power is (−2)³ = −8, NOT 8 — odd numerators keep the sign."
+     },
+     {
+      "id": "o3",
+      "label": "none",
+      "correct": false,
+      "feedback": "32^(3/5) = (⁵√32)³ = 2³ = 8 ✓ — one clean solution."
+     },
+     {
+      "id": "o4",
+      "label": "two: x = 32 and x = −8",
+      "correct": false,
+      "feedback": "−8 gives (−8)^(3/5)... a negative result — the only solution is 32."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Solve with the ±.",
+   "conceptTag": "re-plusminus",
+   "explanationVariants": [
+    "x^(2/3) = 16 → ∛x = ±4 → x = ±64.",
+    "Undo with 3/2 on the positive branch (16^(3/2) = 64), then attach the ±."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Solve x^(2/3) = 16.",
+    "tokens": [
+     {
+      "id": "x64",
+      "label": "x = 64"
+     },
+     {
+      "id": "xm64",
+      "label": "x = −64"
+     },
+     {
+      "id": "orr",
+      "label": "or"
+     },
+     {
+      "id": "pm8",
+      "label": "x = ±8"
+     },
+     {
+      "id": "pm24",
+      "label": "x = ±24"
+     }
+    ],
+    "correct": [
+     "x64",
+     "orr",
+     "xm64"
+    ],
+    "acceptAlso": [
+     [
+      "xm64",
+      "orr",
+      "x64"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "x64"
+      ],
+      "feedback": "The even numerator hides a second branch: (−4)² = 16 too, so −64 also checks."
+     },
+     {
+      "sequence": [
+       "pm8"
+      ],
+      "feedback": "16^(3/2) = (√16)³ = 4³ = 64 — the ± rides on 64, not 8."
+     },
+     {
+      "sequence": [
+       "pm24"
+      ],
+      "feedback": "16 · 3/2 = 24 multiplies — the reciprocal power roots-then-powers: 64."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Raise both sides to the 3/2: x = ±16^(3/2) = ±64 — the even numerator admits both signs.",
+    "successFeedback": "Right — (∛(±64))² = (±4)² = 16: both survive."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-plusminus__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A negative target.",
+   "conceptTag": "re-plusminus",
+   "explanationVariants": [
+    "x^(2/3) is a SQUARE of a real number (∛x)² — it can't be negative: no solution.",
+    "Even-numerator powers land ≥ 0, just like x²."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "How many real solutions does x^(2/3) = −4 have?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "none — an even-numerator power is never negative",
+      "correct": true,
+      "feedback": "Right — (∛x)² ≥ 0 for every real x; −4 is unreachable."
+     },
+     {
+      "id": "o2",
+      "label": "one: x = −8",
+      "correct": false,
+      "feedback": "Test it: (−8)^(2/3) = (∛(−8))² = (−2)² = +4, not −4."
+     },
+     {
+      "id": "o3",
+      "label": "two: x = ±8",
+      "correct": false,
+      "feedback": "Both give +4 — the square at the top can't output a negative."
+     },
+     {
+      "id": "o4",
+      "label": "one: x = 8",
+      "correct": false,
+      "feedback": "8^(2/3) = 4 — positive; nothing reaches −4."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-plusminus__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Both worlds at once.",
+   "conceptTag": "re-plusminus",
+   "explanationVariants": [
+    "x^(4/3) = 16 → ∛x = ±2 → x = ±8: even numerator, two solutions; the VALID positive one is 8.",
+    "16^(3/4) = (⁴√16)³ = 2³ = 8, plus its mirror −8."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "x^(4/3) = 16 has two real solutions, ±a. What is the positive one, a?",
+    "answer": 8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "16 · 3/4 = 12 multiplies — root-then-power instead: (⁴√16)³ = 2³ = 8."
+     },
+     {
+      "value": 64,
+      "feedback": "That's 16^(3/2) — the reciprocal of 4/3 is 3/4: (⁴√16)³ = 8."
+     }
+    ],
+    "fallbackFeedback": "a = 16^(3/4) = 2³ = 8; check (±8)^(4/3) = (±2)⁴ = 16. ✓"
+   },
+   "hints": [
+    "Undo with the reciprocal power 3/4.",
+    "16^(3/4) = (⁴√16)³ = 2³.",
+    "a = 8 (and −8 also solves, since the numerator 4 is even)."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-plusminus__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The numerator's parity decides: even blurs signs, odd keeps them.",
+   "takeaways": [
+    "Even numerator: x = ±k^(n/m) — two real solutions (for k > 0).",
+    "Even-numerator powers can never equal a negative: no solution.",
+    "Odd numerator: exactly one real solution, sign preserved."
+   ],
+   "teaser": "Finale: radical formulas doing real work — skid marks and falling objects."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-plusminus",
+   "concept": {
+    "id": "rem-re0502-c",
+    "kind": "concept",
+    "body": "The simplest even case: x² = 25. Both 5 and −5 square to 25."
+   },
+   "check": {
+    "id": "rem-re0502-k",
+    "kind": "check",
+    "body": "State both.",
+    "conceptTag": "re-plusminus",
+    "explanationVariants": [
+     "x = ±5.",
+     "Squaring erases the sign, so the solve restores both."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Solve x² = 25.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x = 5 or x = −5",
+       "correct": true,
+       "feedback": "Right — both square to 25; x^(2/3) = k works the same way."
+      },
+      {
+       "id": "o2",
+       "label": "x = 5 only",
+       "correct": false,
+       "feedback": "(−5)² = 25 too — even powers always hide the mirror solution."
+      },
+      {
+       "id": "o3",
+       "label": "x = 25 only",
+       "correct": false,
+       "feedback": "25² = 625 — undo the square with a root: ±5."
+      },
+      {
+       "id": "o4",
+       "label": "x = ±12.5",
+       "correct": false,
+       "feedback": "Squaring isn't doubling — the root of 25 is 5, so ±5."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

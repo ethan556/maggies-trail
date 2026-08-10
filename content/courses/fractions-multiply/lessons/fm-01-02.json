@@ -1,0 +1,334 @@
+{
+  "id": "fm-01-02",
+  "slug": "adding-unlike-fractions",
+  "title": "Adding Unlike Fractions",
+  "courseId": "fractions-multiply",
+  "chapterId": "ch1-unlike-denominators",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To add fractions with different denominators, first make the denominators match, then add. For 1/2 + 1/3, rewrite over 6: 1/2 = 3/6 and 1/3 = 2/6. Now add the numerators and keep the denominator: 3/6 + 2/6 = 5/6. The bottom stays 6 — you're counting sixths.",
+      "figure": "fm-add-unlike"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Unlike fractions need a common cut before they can be added.",
+      "widget": {
+        "type": "fractionBar",
+        "targetNum": 5,
+        "targetDen": 6,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 2,
+        "prompt": "1/2 + 1/3. Build the answer on the bar.",
+        "successFeedback": "5/6. Re-cut both into sixths (3/6 and 2/6) and they finally have the same piece size, so you can just count: 3 + 2 = 5 pieces. Adding halves to thirds is impossible until the pieces match.",
+        "lowFeedback": "Less than 5/6 — in sixths, that is 3 + 2 pieces.",
+        "highFeedback": "More than 5/6. Adding the denominators (2/5) is the classic trap — the bottom names the piece, and it must be made the SAME before adding, not added."
+      },
+      "predict": {
+        "prompt": "The bar starts at 1/2. Before you touch it: is 1/2 more or less of the bar than 5/6?",
+        "options": [
+          {
+            "id": "more",
+            "label": "1/2 is more"
+          },
+          {
+            "id": "less",
+            "label": "1/2 is less"
+          },
+          {
+            "id": "same",
+            "label": "They're the same amount"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "With the same whole, the bar settles it: 1/2 covers less than 5/6. Count of pieces and size of pieces work together — neither alone decides the amount."
+      },
+      "conceptTag": "add-unlike",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents add unlike.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add unlike must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add unlike."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-multiply:add-unlike",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the numerators.",
+      "conceptTag": "add-unlike",
+      "variant": {
+        "gen": "frac-unlike-addsub",
+        "form": "addNumerator"
+      },
+      "explanationVariants": [
+        "1/4 = 3/12 and 1/3 = 4/12, so 3 + 4 = 7 twelfths: 7/12.",
+        "Over twelfths, the numerators are 3 and 4, adding to 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "1/4 + 1/3 rewritten is 3/12 + 4/12. What is the numerator of the sum? (the answer will be over 12)",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 subtracts the numerators (4 − 3). Adding gives 3 + 4 = 7, so 7/12."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the denominator, not the numerator. Add the tops: 3 + 4 = 7, giving 7/12."
+          }
+        ],
+        "fallbackFeedback": "Add the numerators: 3 + 4 = 7, so 7/12."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes only one fraction needs rewriting, and sometimes the answer simplifies. For 1/6 + 1/2, rewrite 1/2 as 3/6: 1/6 + 3/6 = 4/6. Then 4/6 simplifies to 2/3 by dividing top and bottom by 2. Always simplify the final answer when you can.",
+      "figure": "fm-add-unlike"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One fraction rewritten.",
+      "conceptTag": "add-unlike",
+      "explanationVariants": [
+        "4/6 + 1/6 = 5/6.",
+        "Only 2/3 needs rewriting (to 4/6); then add to 5/6."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "2/3 + 1/6 = ? (rewrite 2/3 as 4/6 first)",
+        "answerWhole": 0,
+        "answerNum": 5,
+        "answerDen": 6,
+        "allowWhole": false,
+        "form": "any",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 3,
+            "den": 9,
+            "feedback": "3/9 adds tops and bottoms (2+1 over 3+6). Use the common denominator: 4/6 + 1/6 = 5/6."
+          },
+          {
+            "whole": 0,
+            "num": 3,
+            "den": 6,
+            "feedback": "3/6 forgets to rewrite 2/3 as 4/6 first. It's 4/6 + 1/6 = 5/6."
+          }
+        ],
+        "fallbackFeedback": "Rewrite 2/3 as 4/6 so both are sixths, then add the numerators: 4/6 + 1/6 = 5/6.",
+        "successFeedback": "Right — 4/6 + 1/6 = 5/6. Rewrite 2/3 as 4/6, then add the numerators."
+      },
+      "hints": [
+        "Rewrite 2/3 as sixths: 4/6.",
+        "Add: 4/6 + 1/6.",
+        "5/6."
+      ],
+      "variant": {
+        "gen": "frac-unlike-addsub"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Rewrite, then add.",
+      "conceptTag": "add-unlike",
+      "widget": {
+        "type": "numeric",
+        "prompt": "3/8 + 1/4: rewrite 1/4 as 2/8, giving 3/8 + 2/8. What is the numerator of the sum? (over 8)",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 adds without rewriting 1/4 (3 + 1). Rewrite 1/4 as 2/8 first: 3 + 2 = 5, giving 5/8."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is only the rewritten 1/4. Add it to the 3: 3 + 2 = 5, so 5/8."
+          }
+        ],
+        "fallbackFeedback": "Rewrite 1/4 as 2/8, then add: 3 + 2 = 5, so 5/8."
+      },
+      "hints": [
+        "Rewrite 1/4 as eighths: 2/8.",
+        "Add: 3/8 + 2/8.",
+        "Numerator 3 + 2 = 5."
+      ],
+      "explanationVariants": [
+        "3/8 + 2/8 = 5/8.",
+        "Over eighths, add 3 + 2 = 5: 5/8."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The answer simplifies.",
+      "conceptTag": "add-unlike",
+      "explanationVariants": [
+        "4/10 + 1/10 = 5/10 = 1/2.",
+        "The sum 5/10 simplifies to 1/2."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "2/5 + 1/10 = ? (rewrite 2/5 as 4/10, then simplify)",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 2,
+        "allowWhole": false,
+        "form": "lowestTerms",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 3,
+            "den": 15,
+            "feedback": "3/15 adds tops and bottoms (2+1 over 5+10). Use tenths: 4/10 + 1/10 = 5/10 = 1/2."
+          },
+          {
+            "whole": 0,
+            "num": 3,
+            "den": 10,
+            "feedback": "3/10 forgets to rewrite 2/5 as 4/10. It's 4/10 + 1/10 = 5/10 = 1/2."
+          }
+        ],
+        "fallbackFeedback": "Rewrite 2/5 as 4/10, add the tenths (4 + 1 = 5), then simplify 5/10.",
+        "successFeedback": "Right — 4/10 + 1/10 = 5/10, which simplifies to 1/2.",
+        "formFeedback": "That's the right amount — now simplify it: divide the top and bottom by their common factor."
+      },
+      "hints": [
+        "Rewrite 2/5 as tenths: 4/10.",
+        "Add: 4/10 + 1/10 = 5/10.",
+        "Simplify 5/10 to 1/2."
+      ],
+      "variant": {
+        "gen": "frac-unlike-addsub",
+        "form": "addSimplify"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Add and simplify.",
+      "conceptTag": "add-unlike",
+      "hints": [
+        "Rewrite 1/2 as fourths: 2/4.",
+        "Add: 2/4 + 1/4.",
+        "The numerator is 2 + 1."
+      ],
+      "explanationVariants": [
+        "1/2 = 2/4, so 2/4 + 1/4 = 3/4.",
+        "Over fourths, 2 + 1 = 3: the sum is 3/4."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "1/2 + 1/4 = ?",
+        "answerWhole": 0,
+        "answerNum": 3,
+        "answerDen": 4,
+        "allowWhole": false,
+        "form": "any",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 6,
+            "feedback": "2/6 adds tops and bottoms (1+1 over 2+4). Use fourths: 2/4 + 1/4 = 3/4."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 4,
+            "feedback": "2/4 adds only the rewritten 1/2. Add the 1/4 too: 2/4 + 1/4 = 3/4."
+          }
+        ],
+        "fallbackFeedback": "Rewrite 1/2 as 2/4 so both are fourths, then add: 2/4 + 1/4 = 3/4.",
+        "successFeedback": "Right — rewrite 1/2 as 2/4, then 2/4 + 1/4 = 3/4."
+      },
+      "variant": {
+        "gen": "frac-unlike-addsub",
+        "form": "addBare"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Match bottoms, add tops, simplify.",
+      "takeaways": [
+        "Rewrite the fractions over a common denominator first.",
+        "Add the numerators and keep the common denominator — never add the denominators.",
+        "Simplify the final answer whenever top and bottom share a factor."
+      ],
+      "teaser": "next: subtracting unlike fractions the same way."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "add-unlike",
+      "concept": {
+        "id": "rem-au-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Give both fractions the same denominator, then add only the numerators.** For 1/3 + 1/6, rewrite 1/3 as 2/6: 2/6 + 1/6 = 3/6, which simplifies to 1/2. The denominator stays the same — never add the bottoms."
+      },
+      "check": {
+        "id": "rem-au-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "add-unlike",
+        "explanationVariants": [
+          "1/3 = 2/6, so 2/6 + 1/6 = 3/6 = 1/2.",
+          "Over sixths, 2 + 1 = 3, and 3/6 simplifies to 1/2."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "1/3 + 1/6 = ? (rewrite 1/3 as 2/6)",
+          "options": [
+            {
+              "id": "a",
+              "label": "1/2",
+              "correct": true,
+              "feedback": "Right — 2/6 + 1/6 = 3/6, which simplifies to 1/2."
+            },
+            {
+              "id": "b",
+              "label": "2/9",
+              "feedback": "2/9 adds tops and bottoms (1+1 over 3+6). Use sixths: 2/6 + 1/6 = 3/6 = 1/2."
+            },
+            {
+              "id": "c",
+              "label": "2/6",
+              "feedback": "2/6 forgets to rewrite 1/3 as 2/6 first. It's 2/6 + 1/6 = 3/6 = 1/2."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

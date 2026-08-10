@@ -1,0 +1,466 @@
+{
+  "id": "exp-02-01",
+  "slug": "growth-models",
+  "title": "Growth Models",
+  "courseId": "exponential-functions",
+  "chapterId": "ch2-modeling",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-growth",
+      "body": "Real growth is exponential when a quantity multiplies by a fixed factor each period. A colony that triples yearly from 200 is modeled by P(x) = 200 · 3ˣ, where x is the number of years. Evaluate the model to project forward."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Project two years out.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 3,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "P(x) = 200·bˣ. Slide the base until b² reads 9 — the factor a tripling colony needs.",
+        "successFeedback": "Base 3, so b² = 9 and P(2) = 200·9 = 1800. The base IS the growth factor: tripling means multiplying by 3 once per year, and two years compounds it to 9.",
+        "lowFeedback": "b² is still under 9 — a colony growing this slowly is not tripling. Raise the base.",
+        "highFeedback": "b² has passed 9, so this colony more than triples each year. Lower the base."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A doubling model.",
+      "conceptTag": "exp-growth-model",
+      "explanationVariants": [
+        "2³ = 8, then 500 · 8 = 4000.",
+        "A(3) = 500 · 2³ = 500 · 8 = 4000."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Money doubles each period: A(x) = 500 * 2^x. What is A(3)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 500
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "a"
+              },
+              "right": {
+                "op": "const",
+                "id": "b"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 1500,
+            "feedback": "Doubling three times means ×2³ = ×8: 500 · 8 = 4000, not 500 · 3."
+          },
+          {
+            "value": 2000,
+            "feedback": "That's A(2). One more doubling gives A(3) = 4000."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "A(3) = 500 · 2³ = 4000.",
+        "successFeedback": "A(3) = 500 · 2³ = 4000."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "growthModel"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The starting amount is the value at x = 0. For P(x) = 200 · 3ˣ, P(0) = 200 — the population before any growth. Each year then multiplies by 3: 200, 600, 1800, and so on.",
+      "figure": "exp-p0-200"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the start.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For P(x) = 200 * 3^x, what is the starting value P(0)?",
+        "answer": 200,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 600,
+            "feedback": "That's P(1), after one year. At x = 0, 3⁰ = 1, so P(0) = 200."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the growth factor, not the start. P(0) = 200."
+          }
+        ],
+        "fallbackFeedback": "P(0) = 200 · 3⁰ = 200."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Bigger bases grow faster. Compare doubling (×2) with quadrupling (×4): after the same number of steps, the ×4 model is far larger. The base is the engine of exponential growth.",
+      "figure": "exp-bigger-base"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A fast grower.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sample quadruples each step: N(x) = 3 * 4^x. What is N(3)?",
+        "answer": 192,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "That's N(2) = 3 · 16. One more step: 3 · 4³ = 3 · 64 = 192."
+          },
+          {
+            "value": 36,
+            "feedback": "4³ = 64, not 12: N(3) = 3 · 64 = 192."
+          }
+        ],
+        "fallbackFeedback": "N(3) = 3 · 4³ = 3 · 64 = 192."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Four periods of doubling.",
+      "conceptTag": "exp-growth-model",
+      "explanationVariants": [
+        "2⁴ = 16, then 150 · 16 = 2400.",
+        "P(4) = 150 · 2⁴ = 150 · 16 = 2400."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A town grows: P(x) = 150 * 2^x. What is P(4)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 150
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "a"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "b"
+                }
+              },
+              "right": {
+                "op": "const",
+                "id": "b"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 1200,
+            "feedback": "That's P(3) = 150 · 8. One more doubling gives P(4) = 2400."
+          },
+          {
+            "value": 600,
+            "feedback": "That's P(2). Keep doubling: P(3) = 1200, P(4) = 2400."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "P(4) = 150 · 2⁴ = 2400.",
+        "successFeedback": "P(4) = 150 · 2⁴ = 2400."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "growthModel"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Its starting amount.",
+      "conceptTag": "exp-growth-model",
+      "explanationVariants": [
+        "A(0) = 500, since 2⁰ = 1.",
+        "The starting amount is the coefficient, 500."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For A(x) = 500 * 2^x, what is the starting amount A(0)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the coefficient a",
+            "value": 500
+          },
+          {
+            "id": "b",
+            "label": "the base b (b^0 = b / b = 1)",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "b"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 1000,
+            "feedback": "That's A(1). At x = 0, 2⁰ = 1, so A(0) = 500."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the growth factor, not the start. A(0) = 500."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "A(0) = 500 · 2⁰ = 500.",
+        "successFeedback": "A(0) = 500 · 2⁰ = 500."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "startAmount"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three hours of tripling.",
+      "conceptTag": "exp-growth-model",
+      "explanationVariants": [
+        "3³ = 27, then 20 · 27 = 540.",
+        "N(3) = 20 · 3³ = 20 · 27 = 540."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A culture triples every hour: N(x) = 20 * 3^x. How many are there after 3 hours, N(3)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 20
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "a"
+              },
+              "right": {
+                "op": "const",
+                "id": "b"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 180,
+            "feedback": "That's N(2) = 20 · 9. One more hour: 20 · 27 = 540."
+          },
+          {
+            "value": 60,
+            "feedback": "That's N(1) = 20 · 3. After 3 hours use 3³ = 27: 20 · 27 = 540."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "N(3) = 20 · 3³ = 20 · 27 = 540.",
+        "successFeedback": "N(3) = 20 · 3³ = 20 · 27 = 540."
+      },
+      "hints": [
+        "Compute 3³ = 27.",
+        "Multiply by the start, 20.",
+        "20 · 27 = 540."
+      ],
+      "variant": {
+        "gen": "exp-function",
+        "form": "growthModel"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Growth models multiply a starting amount by a factor each period.",
+      "takeaways": [
+        "P(x) = a · bˣ with b > 1 projects growth forward.",
+        "The starting amount is P(0) = a.",
+        "Apply the base once per period — multiply, don't add."
+      ],
+      "teaser": "next: models that shrink — decay."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-growth-model",
+      "concept": {
+        "id": "rem-egm-c",
+        "kind": "concept",
+        "body": "A growth model P(x) = a · bˣ multiplies the start a by b each period. For P(x) = 200 · 3ˣ: P(0) = 200, P(1) = 600, P(2) = 1800. Apply 3 once per year."
+      },
+      "check": {
+        "id": "rem-egm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-growth-model",
+        "explanationVariants": [
+          "3² = 9, then 200 · 9 = 1800.",
+          "P(2) = 200 · 9 = 1800."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For P(x) = 200 * 3^x, what is P(2)?",
+          "answer": 1800,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 600,
+              "feedback": "That's P(1); for P(2) use 3² = 9: 1800."
+            },
+            {
+              "value": 1200,
+              "feedback": "Multiply by 3 twice (×9), not ×3 then ×2."
+            }
+          ],
+          "fallbackFeedback": "P(2) = 200 · 9 = 1800."
+        }
+      }
+    }
+  ]
+}

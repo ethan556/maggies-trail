@@ -1,0 +1,348 @@
+{
+  "id": "tm-02-03",
+  "slug": "similar-shapes",
+  "title": "Similar Shapes",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch2-congruence-similarity",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two shapes are **similar** when one maps onto the other by a dilation, possibly combined with rigid motions. Similar shapes have the SAME ANGLES but PROPORTIONAL side lengths — same shape, possibly different size.",
+      "figure": "dilation"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Similar means the same shape, scaled.",
+      "widget": {
+        "type": "dilationExplore",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 7,
+        "prompt": "Scale the triangle by the factor that doubles every side.",
+        "successFeedback": "k = 2: every side doubles, every angle is untouched, and the image is similar to the original. Similarity is a dilation followed (if needed) by a rigid motion — which is exactly why the angles survive and the lengths do not.",
+        "lowFeedback": "The image is smaller than double.",
+        "highFeedback": "The image is larger than double."
+      },
+      "predict": {
+        "prompt": "You'll scale every length by k = 2. What happens to the shape's AREA?",
+        "options": [
+          {
+            "id": "k",
+            "label": "It grows by ×2"
+          },
+          {
+            "id": "k2",
+            "label": "It grows by ×4"
+          },
+          {
+            "id": "same",
+            "label": "It stays the same"
+          }
+        ],
+        "outcomeId": "k2",
+        "reveal": "Width AND height both scale by 2, so area picks up that factor twice: k² = 4. Lengths scale by k, areas always by k² — watch the two figures to see it."
+      },
+      "conceptTag": "tm-similarity",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents tm similarity.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tm similarity must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tm similarity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "transformations-measurement:tm-similarity",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "In similar shapes, the ratio between matching sides is the same everywhere — that's the scale factor. If a 3-side matches a 6-side (ratio 2), then a 4-side matches an 8-side, and a 5-side matches a 10-side.",
+      "figure": "dilation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the missing side.",
+      "conceptTag": "tm-similarity",
+      "explanationVariants": [
+        "The scale factor is 6 ÷ 3 = 2, so the side matching 5 is 5 × 2 = 10.",
+        "Multiply by the scale factor 2: 5 × 2 = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle A has sides 3, 5, 6. Similar triangle B's side matching A's 3 is 6 (scale factor 2). What is B's side matching A's 5?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's A's side — B's is scaled by 2: 5 × 2 = 10."
+          },
+          {
+            "value": 7,
+            "feedback": "Add isn't the rule — multiply by the scale factor 2: 5 × 2 = 10."
+          }
+        ],
+        "fallbackFeedback": "The scale factor is 6 ÷ 3 = 2, so the matching side is 5 × 2 = 10."
+      },
+      "variant": {
+        "gen": "g8-tm-dilation-similarity",
+        "form": "tmSimilarSideA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Similar shapes and angles.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two triangles are similar. What is true about their angles?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The corresponding angles are equal",
+            "correct": true,
+            "feedback": "Right — similar shapes always have equal corresponding angles."
+          },
+          {
+            "id": "b",
+            "label": "The angles are also scaled by the factor",
+            "correct": false,
+            "feedback": "Angles do NOT scale in a dilation — only lengths do. Corresponding angles stay EQUAL."
+          },
+          {
+            "id": "c",
+            "label": "The angles are all different",
+            "correct": false,
+            "feedback": "Similar shapes have EQUAL corresponding angles — that's part of the definition."
+          },
+          {
+            "id": "d",
+            "label": "Only the largest angle matches",
+            "correct": false,
+            "feedback": "ALL corresponding angles are equal in similar shapes, not just one."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute a scale factor.",
+      "conceptTag": "tm-similarity",
+      "explanationVariants": [
+        "Matching sides 4 and 12 give a scale factor of 12 ÷ 4 = 3.",
+        "Divide the image side by the original: 12 ÷ 4 = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar rectangles have matching sides of 4 and 12. What is the scale factor from the small one to the big one?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's the DIFFERENCE (12 − 4) — the scale factor DIVIDES: 12 ÷ 4 = 3."
+          },
+          {
+            "value": 48,
+            "feedback": "That multiplied the sides — the factor is 12 ÷ 4 = 3."
+          }
+        ],
+        "fallbackFeedback": "The scale factor is the ratio of matching sides: 12 ÷ 4 = 3."
+      },
+      "variant": {
+        "gen": "g8-tm-dilation-similarity",
+        "form": "tmSimilarFactor"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use similarity to find a length.",
+      "conceptTag": "tm-similarity",
+      "explanationVariants": [
+        "Scale factor 12 ÷ 4 = 3, so the side matching a 5 is 5 × 3 = 15.",
+        "Multiply by the scale factor 3: 5 × 3 = 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar shapes have a scale factor of 3 (matching sides 4 and 12). A side of 5 on the small shape matches what side on the big one?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the small shape's side — the big one is scaled by 3: 5 × 3 = 15."
+          },
+          {
+            "value": 8,
+            "feedback": "Add isn't the rule — multiply by the scale factor 3: 5 × 3 = 15."
+          }
+        ],
+        "fallbackFeedback": "Multiply by the scale factor 3: 5 × 3 = 15."
+      },
+      "variant": {
+        "gen": "g8-tm-dilation-similarity",
+        "form": "tmSimilarSideB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Distinguish congruent, similar, and neither.",
+      "conceptTag": "tm-similarity",
+      "explanationVariants": [
+        "Same sides = congruent; proportional sides = similar; unrelated sides = neither. Compare the side ratios.",
+        "Equal → congruent, proportional → similar, otherwise neither."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each pair of triangles by their relationship.",
+        "buckets": [
+          {
+            "id": "cong",
+            "label": "Congruent"
+          },
+          {
+            "id": "sim",
+            "label": "Similar (not congruent)"
+          },
+          {
+            "id": "neither",
+            "label": "Neither"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "sides 3,4,5 and 3,4,5",
+            "bucketId": "cong",
+            "feedback": "Identical sides — congruent."
+          },
+          {
+            "id": "p2",
+            "label": "sides 3,4,5 and 6,8,10",
+            "bucketId": "sim",
+            "feedback": "All sides doubled — similar (factor 2)."
+          },
+          {
+            "id": "p3",
+            "label": "sides 2,3,4 and 4,6,8",
+            "bucketId": "sim",
+            "feedback": "All sides doubled — similar (factor 2)."
+          },
+          {
+            "id": "p4",
+            "label": "sides 3,4,5 and 3,5,7",
+            "bucketId": "neither",
+            "feedback": "Sides neither equal nor proportional — neither."
+          },
+          {
+            "id": "p5",
+            "label": "sides 5,12,13 and 5,12,13",
+            "bucketId": "cong",
+            "feedback": "Identical sides — congruent."
+          }
+        ],
+        "missFeedback": "Not quite — equal sides are congruent, proportional sides are similar, otherwise neither.",
+        "successFeedback": "All sorted — congruence needs equal sides, similarity needs proportional sides."
+      },
+      "hints": [
+        "Check whether the matching sides are EQUAL, PROPORTIONAL, or neither.",
+        "Equal sides → congruent. All sides scaled by the same factor → similar.",
+        "Congruent: 3,4,5 & 3,4,5 / 5,12,13 & 5,12,13. Similar: 3,4,5 & 6,8,10 / 2,3,4 & 4,6,8. Neither: 3,4,5 & 3,5,7."
+      ],
+      "variant": {
+        "gen": "g8-tm-dilation-similarity",
+        "form": "tmSimilarSort"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Similar shapes share the same angles and have proportional sides — linked by a dilation.",
+      "takeaways": [
+        "Similar = mappable by a dilation (plus rigid motions).",
+        "Corresponding angles are equal; corresponding sides are proportional.",
+        "The common ratio of matching sides is the scale factor."
+      ],
+      "teaser": "Next chapter: angle relationships in lines and triangles."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-similarity",
+      "concept": {
+        "id": "rem-tm0203-c",
+        "kind": "concept",
+        "body": "Two shapes are similar when a dilation (plus rigid motions) maps one onto the other. Similar shapes have equal corresponding angles and proportional corresponding sides; the ratio is the scale factor."
+      },
+      "check": {
+        "id": "rem-tm0203-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-similarity",
+        "explanationVariants": [
+          "Scale factor 8 ÷ 4 = 2, so the side matching 3 is 3 × 2 = 6.",
+          "Multiply by the scale factor 2: 3 × 2 = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Two similar shapes have matching sides 4 and 8. A side of 3 on the small shape matches what side on the big one?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "That's the small shape's side — scale it by 2: 3 × 2 = 6."
+            },
+            {
+              "value": 7,
+              "feedback": "Add isn't the rule — multiply by the scale factor 2: 3 × 2 = 6."
+            }
+          ],
+          "fallbackFeedback": "The scale factor is 8 ÷ 4 = 2, so 3 × 2 = 6."
+        }
+      }
+    }
+  ]
+}

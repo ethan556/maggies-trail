@@ -1,0 +1,466 @@
+{
+  "id": "esn-02-02",
+  "slug": "cube-roots-and-solving-x-cubed-equals-p",
+  "title": "Cube Roots & Solving x³ = p",
+  "courseId": "exponents-scientific-notation",
+  "chapterId": "ch2-square-cube-roots",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A CUBE root asks: what number, multiplied by itself three times, gives this result? ∛27 = 3 since 3³ = 27. Perfect cubes to know: 1, 8, 27, 64, 125 (from 1³, 2³, 3³, 4³, 5³).",
+      "figure": "square-vs-cube-solutions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Evaluate a cube root.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "∛64 = ?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21.3,
+            "feedback": "That divides 64 by 3 — a cube root isn't division by 3. 4³ = 64, so ∛64 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8³ = 512, way more than 64 — check 4³ instead: 4×4×4=64."
+          }
+        ],
+        "fallbackFeedback": "4³ = 64, so ∛64 = 4."
+      },
+      "predict": {
+        "prompt": "Does ∛64 ask 'what number multiplied by itself three times gives 64' — or '64 divided by 3'?",
+        "options": [
+          {
+            "id": "cube",
+            "label": "What number, used three times, builds 64"
+          },
+          {
+            "id": "divide",
+            "label": "64 divided by 3"
+          },
+          {
+            "id": "triple",
+            "label": "64 minus itself three times"
+          }
+        ],
+        "outcomeId": "cube",
+        "reveal": "The cube root unbuilds a cube — it hunts the edge whose triple product is 64. Division by 3 answers a completely different question."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's the twist: solving x³ = p has only ONE real solution, even when p is negative! A negative number cubed STAYS negative ((−2)³ = −8), so negatives and positives never collide the way they do with squaring — no ± needed for cube roots.",
+      "figure": "square-vs-cube-solutions"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve a positive cube equation.",
+      "conceptTag": "esn-cube-root-solve",
+      "explanationVariants": [
+        "3³ = 27, so x³ = 27 has the single solution x = 3.",
+        "Only one number cubes to 27: 3."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Which value solves x³ = 27?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x = 3"
+          },
+          {
+            "id": "t1",
+            "label": "or"
+          },
+          {
+            "id": "t2",
+            "label": "x = −3"
+          },
+          {
+            "id": "t3",
+            "label": "x = 9"
+          },
+          {
+            "id": "t4",
+            "label": "x = 13.5"
+          }
+        ],
+        "correct": [
+          "t0"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t2"
+            ],
+            "feedback": "Cube equations don't need ±: (−3)³ = −27, not 27 — only +3 works."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t1",
+              "t0"
+            ],
+            "feedback": "Cube equations don't need ±: (−3)³ = −27, not 27 — only +3 works."
+          },
+          {
+            "sequence": [
+              "t3"
+            ],
+            "feedback": "9³ is far more than 27 — not a solution."
+          },
+          {
+            "sequence": [
+              "t4"
+            ],
+            "feedback": "That's half of 27, not a cube root — check 3³ = 27 instead."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "A cube root keeps its sign — only 3³ = 27; −3 cubes to −27.",
+        "successFeedback": "Right — 3³ = 27, and cube equations have just one real solution."
+      },
+      "variant": {
+        "gen": "root-solve",
+        "form": "cube"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Solve a negative cube equation.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which value solves x³ = −8?",
+        "options": [
+          {
+            "id": "a",
+            "label": "x = −2 (only one solution)",
+            "correct": true,
+            "feedback": "Right — (−2)³ = −8, and only one number cubes to −8."
+          },
+          {
+            "id": "b",
+            "label": "x = 2",
+            "correct": false,
+            "feedback": "2³ = 8, not −8 — the sign matters here, unlike with squares."
+          },
+          {
+            "id": "c",
+            "label": "x = 2 or x = −2",
+            "correct": false,
+            "feedback": "Only −2 works: 2³ = 8 (positive), so 2 does NOT solve x³=−8."
+          },
+          {
+            "id": "d",
+            "label": "No real solution",
+            "correct": false,
+            "feedback": "There IS a real solution — negative numbers have real cube roots, unlike square roots of negatives."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another negative cube.",
+      "conceptTag": "esn-cube-root-solve",
+      "explanationVariants": [
+        "(−3)³ = −27, so x³ = −27 has the single solution x = −3.",
+        "Cubing −3 gives exactly −27, and no other real number does."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Which value solves x³ = −27?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x = −3"
+          },
+          {
+            "id": "t1",
+            "label": "x = 3"
+          },
+          {
+            "id": "t2",
+            "label": "or"
+          }
+        ],
+        "correct": [
+          "t0"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1"
+            ],
+            "feedback": "3³ = 27 (positive), not −27 — the sign matters for cubes."
+          },
+          {
+            "sequence": [
+              "t1",
+              "t2",
+              "t0"
+            ],
+            "feedback": "Only −3 works here — 3³ gives +27, not −27."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t2",
+              "t1"
+            ],
+            "feedback": "Only −3 works here — 3³ gives +27, not −27."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Cubing preserves the sign: only (−3)³ = −27.",
+        "successFeedback": "Right — (−3)³ = −27."
+      },
+      "variant": {
+        "gen": "root-solve",
+        "form": "cubeNegative"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger perfect cube.",
+      "conceptTag": "esn-cube-root-solve",
+      "explanationVariants": [
+        "5³ = 125, so x³ = 125 has the single solution x = 5.",
+        "Only 5 cubes to exactly 125."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Which value solves x³ = 125?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x = 5"
+          },
+          {
+            "id": "t1",
+            "label": "or"
+          },
+          {
+            "id": "t2",
+            "label": "x = −5"
+          },
+          {
+            "id": "t3",
+            "label": "x = 25"
+          },
+          {
+            "id": "t4",
+            "label": "x = 62.5"
+          }
+        ],
+        "correct": [
+          "t0"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t2"
+            ],
+            "feedback": "(−5)³ = −125, not 125 — only +5 solves this one."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t1",
+              "t0"
+            ],
+            "feedback": "(−5)³ = −125, not 125 — only +5 solves this one."
+          },
+          {
+            "sequence": [
+              "t3"
+            ],
+            "feedback": "25³ is enormous compared to 125 — not a solution."
+          },
+          {
+            "sequence": [
+              "t4"
+            ],
+            "feedback": "That's half of 125, not a cube root — check 5³ = 125 instead."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Only 5³ = 125 — the cube of −5 is −125, a different number.",
+        "successFeedback": "Right — 5³ = 125."
+      },
+      "variant": {
+        "gen": "root-solve",
+        "form": "cube"
+      }
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Cube root of a negative, reinforced.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "∛(−64) = ?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "Check the sign — 4³ = 64 (positive), but we need −64, so the answer must be negative: −4."
+          },
+          {
+            "value": -16,
+            "feedback": "That divides −64 by 4 — a cube root isn't division. (−4)³ = −64, so ∛(−64) = −4."
+          }
+        ],
+        "fallbackFeedback": "(−4)³ = −64, so ∛(−64) = −4."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Put it together: solve for the one real solution.",
+      "conceptTag": "esn-cube-root-solve",
+      "explanationVariants": [
+        "(−5)³ = −125, so x³ = −125 has the single solution x = −5.",
+        "Only −5 cubes to exactly −125 — no ± needed for cube equations."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Which value solves x³ = −125?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x = −5"
+          },
+          {
+            "id": "t1",
+            "label": "x = 5"
+          },
+          {
+            "id": "t2",
+            "label": "or"
+          }
+        ],
+        "correct": [
+          "t0"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1"
+            ],
+            "feedback": "5³ = 125 (positive), not −125 — the sign matters for cubes."
+          },
+          {
+            "sequence": [
+              "t1",
+              "t2",
+              "t0"
+            ],
+            "feedback": "Only −5 works — cube equations never need ± like square equations do."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t2",
+              "t1"
+            ],
+            "feedback": "Only −5 works — cube equations never need ± like square equations do."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "(−5)³ = −125 — one real cube root, sign intact.",
+        "successFeedback": "Right — (−5)³ = −125."
+      },
+      "hints": [
+        "Think of a perfect cube close to 125 first, ignoring the sign.",
+        "5³ = 125 — so the magnitude is 5. Now which sign makes it −125?",
+        "(−5)³ = −125, so x = −5 is the one and only real solution."
+      ],
+      "variant": {
+        "gen": "root-solve",
+        "form": "cubeNegative"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cube equations have exactly ONE real solution — negatives included, no ± needed.",
+      "takeaways": [
+        "∛p asks: what number cubed gives p?",
+        "A negative number cubed stays negative, so cube roots of negatives are real, unlike square roots of negatives.",
+        "x³ = p always has exactly one real solution, unlike x² = p's two."
+      ],
+      "teaser": "Next: using roots to solve real area and volume problems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "esn-cube-root-solve",
+      "concept": {
+        "id": "rem-esn0202-c",
+        "kind": "concept",
+        "body": "x³ = p has exactly ONE real solution, even when p is negative, since a negative number cubed stays negative — no ± needed, unlike squaring."
+      },
+      "check": {
+        "id": "rem-esn0202-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "esn-cube-root-solve",
+        "explanationVariants": [
+          "2³ = 8, so x³ = 8 has the single solution x = 2.",
+          "Only +2 cubes to 8 — −2 would cube to −8, not 8."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which value solves x³ = 8?",
+          "options": [
+            {
+              "id": "a",
+              "label": "x = 2 (only one solution)",
+              "correct": true,
+              "feedback": "Right — 2³ = 8."
+            },
+            {
+              "id": "b",
+              "label": "x = 2 or x = −2",
+              "correct": false,
+              "feedback": "(−2)³ = −8, not 8 — only +2 works here."
+            },
+            {
+              "id": "c",
+              "label": "x = 4",
+              "correct": false,
+              "feedback": "4³ = 64, not 8 — check 2³ instead."
+            },
+            {
+              "id": "d",
+              "label": "No real solution",
+              "correct": false,
+              "feedback": "There is one: 2, since 2³ = 8."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

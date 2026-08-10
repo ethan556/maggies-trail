@@ -1,0 +1,343 @@
+{
+  "id": "as100-02-03",
+  "slug": "adding-two-digit-numbers",
+  "title": "Adding Two-Digit Numbers",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch2-add-100",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Add tens with tens, ones with ones. 34 + 52: tens 3+5=8, ones 4+2=6, so 86.",
+      "narration": "Add tens with tens, ones with ones. Thirty-four plus fifty-two: tens three plus five is eight, ones four plus two is six, so eighty-six.",
+      "figure": "as100-add-by-place-86"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the answer.",
+      "conceptTag": "add-2digit",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "34 + 52: add the tens (3+5) and ones (4+2), then build the total.",
+        "target": 86,
+        "requireStandard": true,
+        "commonBuilds": [
+          {
+            "tens": 6,
+            "ones": 8,
+            "feedback": "That builds 68 — the digits swapped. Tens 3+5=8, ones 4+2=6: 86."
+          },
+          {
+            "tens": 8,
+            "ones": 0,
+            "feedback": "That's just the tens (80). Add the ones too: 4+2=6, so 86."
+          }
+        ],
+        "missFeedback": "Tens: 3+5=8 rods. Ones: 4+2=6 cubes. 86.",
+        "successFeedback": "8 tens and 6 ones — 34 + 52 = 86!"
+      },
+      "predict": {
+        "prompt": "You're about to add 34 + 52 with blocks. Will you need to trade 10 ones for a ten?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — the ones will overflow"
+          },
+          {
+            "id": "no",
+            "label": "No — the ones stay under ten"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "The ones make 4 + 2 = 6, which fits without a trade. Regrouping only fires when the ones pile reaches ten — watch for it in the next problems."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents add 2digit.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add 2digit must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add 2digit."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:add-2digit",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Tens with tens, ones with ones.",
+      "conceptTag": "add-2digit",
+      "explanationVariants": [
+        "23 + 45: tens 2+4=6, ones 3+5=8, so 68.",
+        "20+40=60 and 3+5=8, together 68."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "23 + 45 = ?",
+        "answer": 68,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That added ALL digits as ones (2+3+4+5). Tens stay tens: 60 + 8 = 68."
+          },
+          {
+            "value": 58,
+            "feedback": "Tens are 2+4=6, not 5: 68."
+          }
+        ],
+        "fallbackFeedback": "Tens 2+4=6, ones 3+5=8: 68."
+      },
+      "hints": [
+        "Split each number into tens and ones.",
+        "20+40 and 3+5.",
+        "60 + 8 = 68."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Split, add, join: 61 + 27 is 60+20 and 1+7 — that's 80 and 8, so 88.",
+      "narration": "Split, add, join: sixty-one plus twenty-seven is sixty plus twenty and one plus seven — that's eighty and eight, so eighty-eight.",
+      "figure": "as100-split-join-88"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the split to its sum.",
+      "conceptTag": "add-2digit",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each addition to its split-and-joined total.",
+        "left": [
+          {
+            "id": "s1",
+            "label": "61 + 27"
+          },
+          {
+            "id": "s2",
+            "label": "35 + 42"
+          },
+          {
+            "id": "s3",
+            "label": "53 + 26"
+          }
+        ],
+        "right": [
+          {
+            "id": "u88",
+            "label": "88"
+          },
+          {
+            "id": "u77",
+            "label": "77"
+          },
+          {
+            "id": "u79",
+            "label": "79"
+          }
+        ],
+        "pairs": {
+          "s1": "u88",
+          "s2": "u77",
+          "s3": "u79"
+        },
+        "pairErrors": [
+          {
+            "left": "s1",
+            "right": "u77",
+            "feedback": "61 + 27: tens 6+2=8, ones 1+7=8 → 88. 77 is 35 + 42."
+          },
+          {
+            "left": "s3",
+            "right": "u88",
+            "feedback": "53 + 26: tens 5+2=7, ones 3+6=9 → 79. 88 is 61 + 27."
+          }
+        ],
+        "missFeedback": "Tens with tens, ones with ones: 88, 77, 79.",
+        "successFeedback": "Three splits, three joins — all matched!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another split.",
+      "conceptTag": "add-2digit",
+      "explanationVariants": [
+        "35 + 42: tens 3+4=7, ones 5+2=7, so 77.",
+        "30+40=70 and 5+2=7, together 77."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "35 + 42 = ?",
+        "answer": 77,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That added all digits as ones. Tens stay tens: 70 + 7 = 77."
+          },
+          {
+            "value": 87,
+            "feedback": "Tens are 3+4=7, not 8: 77."
+          }
+        ],
+        "fallbackFeedback": "Tens 3+4=7, ones 5+2=7: 77."
+      },
+      "hints": [
+        "Split into tens and ones.",
+        "30+40 and 5+2.",
+        "70 + 7 = 77."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the split.",
+      "conceptTag": "add-2digit",
+      "explanationVariants": [
+        "61 + 27 splits into 60+20 and 1+7 — tens with tens, ones with ones.",
+        "The right split keeps places separate: (60+20) + (1+7)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which split solves 61 + 27?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(60 + 20) and (1 + 7)",
+            "correct": true,
+            "feedback": "Yes — 80 and 8 make 88."
+          },
+          {
+            "id": "b",
+            "label": "(60 + 7) and (1 + 20)",
+            "feedback": "That mixes places — tens paired with ones. Keep tens together: (60+20)+(1+7)."
+          },
+          {
+            "id": "c",
+            "label": "6 + 1 + 2 + 7",
+            "feedback": "That treats every digit as ones (16). The 6 and 2 are TENS: 80 + 8 = 88."
+          }
+        ]
+      },
+      "hints": [
+        "Keep tens with tens.",
+        "60+20 and 1+7.",
+        "80 + 8 = 88."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Split it solo!",
+      "conceptTag": "add-2digit",
+      "explanationVariants": [
+        "61 + 27: tens 6+2=8, ones 1+7=8, so 88.",
+        "60+20=80 and 1+7=8, together 88."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "61 + 27 = ?",
+        "answer": 88,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That added all four digits as ones. Tens stay tens: 80 + 8 = 88."
+          },
+          {
+            "value": 98,
+            "feedback": "Tens are 6+2=8, not 9: 88."
+          }
+        ],
+        "fallbackFeedback": "Tens 6+2=8, ones 1+7=8: 88."
+      },
+      "hints": [
+        "Split both numbers.",
+        "60+20 and 1+7.",
+        "88."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You add big numbers!",
+      "takeaways": [
+        "Split into tens and ones.",
+        "Add tens with tens, ones with ones.",
+        "Join the two sums back."
+      ],
+      "teaser": "next: what if the ones make more than nine? Trade!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "add-2digit",
+      "concept": {
+        "id": "rem-a2-c",
+        "kind": "concept",
+        "body": "Slow it down. 21 + 13: tens 2+1=3, ones 1+3=4. Join: 34.",
+        "narration": "Twenty-one plus thirteen: tens two plus one is three, ones one plus three is four. Join: thirty-four."
+      },
+      "check": {
+        "id": "rem-a2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "add-2digit",
+        "explanationVariants": [
+          "21 + 13: tens 2+1=3, ones 1+3=4, so 34.",
+          "20+10=30 and 1+3=4, together 34."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "21 + 13 = ?",
+          "answer": 34,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "That added all digits as ones. Tens stay tens: 30 + 4 = 34."
+            },
+            {
+              "value": 44,
+              "feedback": "Tens are 2+1=3, not 4: 34."
+            }
+          ],
+          "fallbackFeedback": "Tens 2+1=3, ones 1+3=4: 34."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "id": "tg-05-02",
+  "slug": "mixed-compositions",
+  "title": "Mixed Compositions & the Helper Triangle",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch5-compositions-solving",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "What is cos(arcsin(3/5))? Name the hidden angle: θ = arcsin(3/5) means **sin θ = 3/5 with θ in the branch**. Draw the helper right triangle — opposite 3, hypotenuse 5 — and the missing leg is 4 (recall 3-4-5). So cos θ = **4/5**, no calculator, exactly.",
+      "figure": "tg-cos-arcsin"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the triangle.",
+      "predict": {
+        "prompt": "Opposite is 3, hypotenuse is 5. As you slide the adjacent leg longer, what happens to the hypotenuse reading?",
+        "options": [
+          {
+            "id": "grows",
+            "label": "It grows too, until one exact length makes it read 5"
+          },
+          {
+            "id": "fixed",
+            "label": "It stays 5 no matter what — hypotenuse is fixed by the angle alone"
+          },
+          {
+            "id": "shrinks",
+            "label": "It shrinks, since a longer adjacent leaves less for the hypotenuse"
+          }
+        ],
+        "outcomeId": "grows",
+        "reveal": "The hypotenuse is the far side of a triangle whose other two legs you are setting — stretch either leg and it has to grow to reach across. Only ONE adjacent length makes it land on exactly 5 with opposite held at 3."
+      },
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "The angle's vertex sits at the origin. Opposite is fixed at 3. Drag the point until the hypotenuse reads exactly 5 — its x-coordinate is the adjacent leg.",
+        "anchor": [
+          0,
+          0
+        ],
+        "targetPoint": [
+          4,
+          3
+        ],
+        "gridMin": 0,
+        "gridMax": 6,
+        "startX": 0,
+        "startY": 3,
+        "successFeedback": "√(4² + 3²) = √25 = 5 — the classic 3-4-5 triple. The adjacent leg is 4, and you found it by watching the hypotenuse arrive at 5, not by recalling a formula.",
+        "wrongPointFeedback": "Not yet — read the number under the square root. If it shows 34, you added 5² to 3² instead of using 5 as the HYPOTENUSE (the longest side, opposite the right angle) and solving for the shorter leg: adjacent² = 5² − 3², not 5² + 3². If it shows 2, that subtracted the legs directly (5 − 3) instead of subtracting their SQUARES and rooting the result."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish the composition.",
+      "conceptTag": "tg-mixed-comp",
+      "explanationVariants": [
+        "cos θ = adjacent/hypotenuse = 4/5 = 0.8 — and the identity route agrees: cos θ = √(1 − (3/5)²) = 4/5.",
+        "The branch guarantees θ is Quadrant I here (positive input), so cosine is positive: +0.8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "So cos(arcsin(3/5)) = ? (As a decimal.)",
+        "answer": 0.8,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.6,
+            "feedback": "0.6 = 3/5 is the SINE. Cosine reads the adjacent leg: 4/5 = 0.8."
+          },
+          {
+            "value": 0.75,
+            "feedback": "3/4 mixes the two legs. Cosine is adjacent over HYPOTENUSE: 4/5."
+          }
+        ],
+        "fallbackFeedback": "cos θ = 4/5 = 0.8."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-mixed-comp__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The identity route (recall sin²θ + cos²θ = 1) gives the same answer: cos θ = ±√(1 − v²), and the **branch chooses the sign** — arcsin's outputs in [−π/2, π/2] always have cos θ ≥ 0, so cos(arcsin v) = **+√(1 − v²)** for every valid v, even negative ones.",
+      "figure": "tg-identity-route"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A negative input.",
+      "conceptTag": "tg-mixed-comp",
+      "explanationVariants": [
+        "cos(arcsin(−3/5)) = +√(1 − 9/25) = 4/5: the branch angle −θ has POSITIVE cosine (cosine is even).",
+        "arcsin(−3/5) lands at a negative branch angle, and every branch angle has non-negative cosine: +0.8."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is cos(arcsin(−3/5))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "+4/5 — branch angles always have cos ≥ 0",
+            "correct": true,
+            "feedback": "Right — arcsin(−3/5) = −θ sits in [−π/2, 0), where cosine is still positive: 4/5."
+          },
+          {
+            "id": "o2",
+            "label": "−4/5",
+            "feedback": "Cosine is EVEN: cos(−θ) = cos(θ) = 4/5. Negative sines don't make negative cosines on this branch."
+          },
+          {
+            "id": "o3",
+            "label": "−3/5",
+            "feedback": "−3/5 is the sine (the input). The cosine of the hidden angle is √(1 − 9/25) = +4/5."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-mixed-comp__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A new pairing.",
+      "conceptTag": "tg-mixed-comp",
+      "explanationVariants": [
+        "θ = arccos(5/13): adjacent 5, hypotenuse 13 → opposite 12 (5-12-13); tan θ = 12/5 = 2.4.",
+        "Identity route: sin θ = √(1 − 25/169) = 12/13, and tan = sin/cos = (12/13)/(5/13) = 12/5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is tan(arccos(5/13))? (As a decimal.)",
+        "answer": 2.4,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.42,
+            "feedback": "5/12 inverts the ratio. Tangent is OPPOSITE over adjacent: 12/5 = 2.4."
+          },
+          {
+            "value": 0.92,
+            "feedback": "12/13 is the SINE. Divide by the cosine 5/13: tan = 12/5 = 2.4."
+          },
+          {
+            "value": 2.6,
+            "feedback": "13/5 uses the hypotenuse. Tangent never does: 12/5 = 2.4."
+          }
+        ],
+        "fallbackFeedback": "Triangle 5-12-13: tan θ = 12/5 = 2.4."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-mixed-comp__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full pipeline, exact.",
+      "conceptTag": "tg-mixed-comp",
+      "explanationVariants": [
+        "θ = arctan(3/4): opposite 3, adjacent 4 → hypotenuse 5. sin θ = 3/5 = 0.6; the branch angle for a positive tangent is Quadrant I, so the sign is +.",
+        "Identity route: sin θ = tan θ/√(1 + tan²θ) = (3/4)/√(1 + 9/16) = (3/4)/(5/4) = 3/5."
+      ],
+      "hints": [
+        "Set θ = arctan(3/4): tangent = opposite/adjacent = 3/4.",
+        "Hypotenuse = √(3² + 4²).",
+        "sin θ = opposite / hypotenuse."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is sin(arctan(3/4))? (As a decimal.)",
+        "answer": 0.6,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.75,
+            "feedback": "0.75 = 3/4 is the TANGENT (the input). Sine needs the hypotenuse 5: 3/5 = 0.6."
+          },
+          {
+            "value": 0.8,
+            "feedback": "0.8 = 4/5 is the COSINE of this angle. Sine takes the opposite leg: 3/5 = 0.6."
+          }
+        ],
+        "fallbackFeedback": "Triangle 3-4-5: sin θ = 3/5 = 0.6."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-mixed-comp__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Name the angle, draw the triangle.",
+      "takeaways": [
+        "Set θ = the inner inverse; its definition labels two triangle sides.",
+        "Pythagoras supplies the third; read off the outer function.",
+        "Branch ranges fix the sign: cos(arcsin v) = +√(1 − v²) always."
+      ],
+      "teaser": "Finale: solving trig equations — inverse gives ONE answer, the circle gives them all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-mixed-comp",
+      "concept": {
+        "id": "rem-tg0502-c",
+        "kind": "concept",
+        "body": "For outer(inner-inverse(v)): let θ be the inner angle, draw its right triangle from the ratio v, complete with Pythagoras, then evaluate the outer ratio — sign from the branch."
+      },
+      "check": {
+        "id": "rem-tg0502-k",
+        "kind": "check",
+        "body": "One triangle.",
+        "conceptTag": "tg-mixed-comp",
+        "explanationVariants": [
+          "θ = arccos(0.6): adjacent 3, hypotenuse 5, opposite 4 → sin θ = 4/5 = 0.8.",
+          "Identity: sin θ = √(1 − 0.36) = 0.8, positive on [0, π]."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is sin(arccos(0.6))? (As a decimal.)",
+          "answer": 0.8,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.6,
+              "feedback": "0.6 is the cosine you started with. The sine is √(1 − 0.36) = 0.8."
+            },
+            {
+              "value": 0.4,
+              "feedback": "1 − 0.6 = 0.4 forgets to SQUARE: √(1 − 0.6²) = √0.64 = 0.8."
+            }
+          ],
+          "fallbackFeedback": "√(1 − 0.36) = 0.8."
+        }
+      }
+    }
+  ]
+}

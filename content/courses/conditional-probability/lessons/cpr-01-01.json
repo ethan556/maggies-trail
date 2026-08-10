@@ -1,0 +1,328 @@
+{
+  "id": "cpr-01-01",
+  "slug": "events-as-sets",
+  "title": "Events as Sets of Outcomes",
+  "courseId": "conditional-probability",
+  "chapterId": "ch1-events-and-sample-spaces",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Draw one card from twenty cards numbered 1–20. The twenty outcomes are the **sample space**. An **event** is just a subset of it: \"multiple of 3\" is the set {3, 6, 9, 12, 15, 18}. Because every card is equally likely, a probability is a count: P(A) = (outcomes in A) ÷ 20.",
+      "figure": "cpr-event-as-set"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Each cell is one card. Shade the event.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "The 20 cells are the 20 cards. Shade every card that is a multiple of 3, so the shaded fraction equals P(multiple of 3) = 3/10.",
+        "rows": 4,
+        "cols": 5,
+        "targetNum": 3,
+        "targetDen": 10,
+        "start": 0,
+        "successFeedback": "Six cells — 3, 6, 9, 12, 15, 18. Six out of twenty is 3/10, exactly the fraction you shaded.",
+        "lowFeedback": "Not enough cells yet. Count the multiples of 3 up to 20: 3, 6, 9, 12, 15, 18 — that is six cards, and 6/20 = 3/10.",
+        "highFeedback": "Too many shaded. 21 would be the seventh multiple of 3, but the deck stops at 20 — only six cards qualify."
+      },
+      "predict": {
+        "prompt": "You'll shade 3/10 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 5/10 here — and 3 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-set-ops"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A = multiple of 3. B = greater than 15.",
+      "conceptTag": "cpr-set-ops",
+      "explanationVariants": [
+        "A ∩ B needs **both** conditions at once. Only 18 is a multiple of 3 *and* above 15, so A ∩ B = {18}.",
+        "Overlay the two lists: A = {3,6,9,12,15,18} and B = {16,17,18,19,20}. The only number on both lists is 18."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which set is A ∩ B (the outcomes in A **and** B)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "{18}",
+            "correct": true,
+            "feedback": "Exactly — 18 is the only card that is both a multiple of 3 and greater than 15."
+          },
+          {
+            "id": "o2",
+            "label": "{3, 6, 9, 12, 15, 16, 17, 18, 19, 20}",
+            "correct": false,
+            "feedback": "That is A ∪ B — every card in either event. Intersection keeps only the cards that satisfy both conditions at once."
+          },
+          {
+            "id": "o3",
+            "label": "{16, 17, 19, 20}",
+            "correct": false,
+            "feedback": "Those are the cards in B that are *not* in A. The intersection is what the two events share, not what separates them."
+          },
+          {
+            "id": "o4",
+            "label": "{ } (no outcomes)",
+            "correct": false,
+            "feedback": "Empty would mean the events cannot co-occur, but 18 satisfies both — it is a multiple of 3 and it is above 15."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "set-ops"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count the union carefully.",
+      "conceptTag": "cpr-set-ops",
+      "explanationVariants": [
+        "A has 6 cards, B has 5, and they share 18. Adding 6 + 5 counts 18 twice, so subtract it once: 6 + 5 − 1 = 10.",
+        "List A ∪ B outright: 3, 6, 9, 12, 15, 16, 17, 18, 19, 20 — ten distinct cards."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many cards are in A ∪ B (multiple of 3 **or** greater than 15)?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "That is 6 + 5. Card 18 lives in both events, so a plain sum counts it twice — subtract the shared card once to get 10."
+          },
+          {
+            "value": 1,
+            "feedback": "That is the size of A ∩ B. The union is everything in either event, not only what they share."
+          },
+          {
+            "value": 6,
+            "feedback": "That is only A. The union also collects 16, 17, 19 and 20 from B."
+          }
+        ],
+        "fallbackFeedback": "Count each card once: 3, 6, 9, 12, 15, 16, 17, 18, 19, 20 — ten cards. Adding 6 + 5 double-counts 18."
+      },
+      "variant": {
+        "gen": "set-ops",
+        "form": "unionCount"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Picture the two events as overlapping circles. The middle holds outcomes in **both**; the outer petals hold outcomes in only one; everything outside is in **neither**. That picture is why counting a union means adding the two circles and then removing the middle once — it was counted twice.",
+      "figure": "cpr-union-intersection"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where does each card live?",
+      "conceptTag": "cpr-set-ops",
+      "explanationVariants": [
+        "A = multiples of 3, B = above 15. A card is in the middle only if it clears both tests; 18 is the only one.",
+        "Test each card twice — once against \"multiple of 3\", once against \"greater than 15\" — and its two answers place it."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each card by where it sits for A = multiple of 3 and B = greater than 15.",
+        "buckets": [
+          {
+            "id": "b1",
+            "label": "In A ∩ B"
+          },
+          {
+            "id": "b2",
+            "label": "In A ∪ B, but not both"
+          },
+          {
+            "id": "b3",
+            "label": "In neither"
+          }
+        ],
+        "items": [
+          {
+            "id": "i18",
+            "label": "18",
+            "bucketId": "b1",
+            "feedback": "18 passes both tests: it is 3 × 6, and it is above 15. That is the intersection."
+          },
+          {
+            "id": "i9",
+            "label": "9",
+            "bucketId": "b2",
+            "feedback": "9 is a multiple of 3 but not above 15, so it is in the union through A alone."
+          },
+          {
+            "id": "i17",
+            "label": "17",
+            "bucketId": "b2",
+            "feedback": "17 is above 15 but not a multiple of 3, so it joins the union through B alone."
+          },
+          {
+            "id": "i20",
+            "label": "20",
+            "bucketId": "b2",
+            "feedback": "20 is above 15 but 20 ÷ 3 is not whole, so it is in B only."
+          },
+          {
+            "id": "i7",
+            "label": "7",
+            "bucketId": "b3",
+            "feedback": "7 fails both tests — not a multiple of 3, not above 15 — so it sits outside both circles."
+          },
+          {
+            "id": "i4",
+            "label": "4",
+            "bucketId": "b3",
+            "feedback": "4 is not a multiple of 3 and it is well below 15, so it belongs to neither event."
+          }
+        ],
+        "missFeedback": "Check each card against both conditions separately, then place it where its two answers say.",
+        "successFeedback": "All six placed correctly — you read the Venn picture straight off the two conditions."
+      },
+      "variant": {
+        "gen": "set-ops",
+        "form": "sortCards"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "New events, same machinery.",
+      "conceptTag": "cpr-set-ops",
+      "hints": [
+        "C = even and D = multiple of 5 both live in the 1–20 deck. How big is each?",
+        "C has 10 cards and D has 4 (5, 10, 15, 20). Which cards are in both?",
+        "10 and 20 are in both, so |C ∪ D| = 10 + 4 − 2."
+      ],
+      "explanationVariants": [
+        "|C ∪ D| = |C| + |D| − |C ∩ D| = 10 + 4 − 2 = 12.",
+        "Count the union directly: all ten evens, plus 5 and 15 from D (10 and 20 are already counted) → 12 cards."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "C = even card, D = multiple of 5. How many of the 20 cards are in C ∪ D?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That is 10 + 4 with no correction. Cards 10 and 20 are even *and* multiples of 5, so they were counted twice."
+          },
+          {
+            "value": 2,
+            "feedback": "That is |C ∩ D| — just 10 and 20. The union is far bigger: every even card plus 5 and 15."
+          },
+          {
+            "value": 10,
+            "feedback": "That is C alone. The union also picks up the odd multiples of 5, namely 5 and 15."
+          }
+        ],
+        "fallbackFeedback": "Add and correct: 10 evens + 4 multiples of 5 − 2 shared (10 and 20) = 12 cards."
+      },
+      "variant": {
+        "gen": "set-ops",
+        "form": "unionCount"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Events are sets, and probability is counting.",
+      "takeaways": [
+        "An event is a subset of the sample space; with equally likely outcomes, P(event) = count ÷ total.",
+        "A ∩ B = both at once; A ∪ B = at least one.",
+        "|A ∪ B| = |A| + |B| − |A ∩ B| — the overlap is counted twice unless you remove it."
+      ],
+      "teaser": "Next: the fastest probability trick there is — count what you *don't* want, and subtract."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-set-ops",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two words do all the work. **And** (∩) keeps an outcome only if it passes **both** tests. **Or** (∪) keeps it if it passes **at least one**. So the intersection is always the smaller set — it lives inside the union.",
+        "figure": "cpr-union-intersection"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which is bigger?",
+        "conceptTag": "cpr-set-ops",
+        "explanationVariants": [
+          "Every outcome that passes both tests certainly passes at least one, so A ∩ B always sits inside A ∪ B.",
+          "Intersection is the strict club (two conditions); union is the open door (one condition is enough)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "For any two events, which statement is always true?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A ∩ B can never be larger than A ∪ B",
+              "correct": true,
+              "feedback": "Right — passing both tests means passing at least one, so the intersection is contained in the union."
+            },
+            {
+              "id": "o2",
+              "label": "A ∩ B is always larger than A ∪ B",
+              "correct": false,
+              "feedback": "That reverses it. Requiring two conditions can only shrink a set; requiring just one can only grow it."
+            },
+            {
+              "id": "o3",
+              "label": "A ∩ B and A ∪ B always have the same size",
+              "correct": false,
+              "feedback": "They match only when A and B are the same event. Any outcome in just one of them makes the union strictly bigger."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

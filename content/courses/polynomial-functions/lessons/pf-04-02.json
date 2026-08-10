@@ -1,0 +1,569 @@
+{
+ "id": "pf-04-02",
+ "slug": "factoring-by-grouping",
+ "title": "Factoring by Grouping",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch4-factoring-higher-degree",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Four terms, no common factor overall? **Group in pairs.** x³ + 3x² + 2x + 6: the first pair shares x², the second shares 2 — x²(x + 3) + 2(x + 3). Now both pieces share the binomial **(x + 3)**: pull it out to get **(x + 3)(x² + 2)**.",
+   "figure": "pf-grouping"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find the shared binomial.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Group x³ + 5x² + 4x + 20 as x²(x + 5) + 4(x + 5). What comes next?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "pull out (x + 5): (x + 5)(x² + 4)",
+      "correct": true,
+      "feedback": "Right — the shared binomial factors out like any common factor."
+     },
+     {
+      "id": "o2",
+      "label": "add the groups: x² + 4 + 2(x + 5)",
+      "correct": false,
+      "feedback": "The groups are TERMS of a sum sharing (x + 5) — factor it out, don't merge them."
+     },
+     {
+      "id": "o3",
+      "label": "pull out x²: x²(x + 5 + 4)",
+      "correct": false,
+      "feedback": "Only the first group carries x² — the SHARED factor is the binomial (x + 5)."
+     },
+     {
+      "id": "o4",
+      "label": "stop — it's fully factored",
+      "correct": false,
+      "feedback": "x²(x + 5) + 4(x + 5) is still a SUM — factoring means writing it as a product: (x + 5)(x² + 4)."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Check the leftover piece. x² + 2 = 0 would need x² = −2 — its zeros are the complex pair **±i√2**, so it contributes **no real zeros**. The only real zero of (x + 3)(x² + 2) is **−3**: a cubic whose graph crosses the axis exactly once.",
+   "figure": "pf-check-leftover"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Real zeros only.",
+   "conceptTag": "pf-grouping",
+   "explanationVariants": [
+    "(x + 3) dies at −3; x² + 2 needs x² = −2 — complex only. One real zero.",
+    "The quadratic factor's discriminant is 0 − 8 < 0: no real contribution."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "How many REAL zeros does f(x) = (x + 3)(x² + 2) have, and what are they?",
+    "tokens": [
+     {
+      "id": "a",
+      "label": "x = −3"
+     },
+     {
+      "id": "b",
+      "label": "x = √2"
+     },
+     {
+      "id": "c",
+      "label": "x = −√2"
+     },
+     {
+      "id": "d",
+      "label": "x = 2"
+     },
+     {
+      "id": "orr",
+      "label": "or"
+     }
+    ],
+    "correct": [
+     "a"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "a",
+       "orr",
+       "b",
+       "orr",
+       "c"
+      ],
+      "feedback": "x² + 2 = 0 needs x² = NEGATIVE 2 — ±√2 solve x² = +2, a different equation."
+     },
+     {
+      "sequence": [
+       "a",
+       "orr",
+       "c",
+       "orr",
+       "b"
+      ],
+      "feedback": "x² + 2 = 0 needs x² = NEGATIVE 2 — ±√2 solve x² = +2, a different equation."
+     },
+     {
+      "sequence": [
+       "b",
+       "orr",
+       "a",
+       "orr",
+       "c"
+      ],
+      "feedback": "x² + 2 = 0 needs x² = NEGATIVE 2 — ±√2 solve x² = +2, a different equation."
+     },
+     {
+      "sequence": [
+       "b",
+       "orr",
+       "c",
+       "orr",
+       "a"
+      ],
+      "feedback": "x² + 2 = 0 needs x² = NEGATIVE 2 — ±√2 solve x² = +2, a different equation."
+     },
+     {
+      "sequence": [
+       "c",
+       "orr",
+       "a",
+       "orr",
+       "b"
+      ],
+      "feedback": "x² + 2 = 0 needs x² = NEGATIVE 2 — ±√2 solve x² = +2, a different equation."
+     },
+     {
+      "sequence": [
+       "c",
+       "orr",
+       "b",
+       "orr",
+       "a"
+      ],
+      "feedback": "x² + 2 = 0 needs x² = NEGATIVE 2 — ±√2 solve x² = +2, a different equation."
+     },
+     {
+      "sequence": [
+       "a",
+       "orr",
+       "d"
+      ],
+      "feedback": "x² + 2 is never zero for real x (it's always ≥ 2) — only the −3 survives."
+     },
+     {
+      "sequence": [
+       "d",
+       "orr",
+       "a"
+      ],
+      "feedback": "x² + 2 is never zero for real x (it's always ≥ 2) — only the −3 survives."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Only the linear factor can die for real x — x² + 2 stays at least 2.",
+    "successFeedback": "Right — x² + 2 = 0 sends its pair complex (±i√2)."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-grouping__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Group with a minus.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Factor x³ − 2x² + 5x − 10 by grouping.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(x − 2)(x² + 5)",
+      "correct": true,
+      "feedback": "Right — x²(x − 2) + 5(x − 2), shared binomial out."
+     },
+     {
+      "id": "o2",
+      "label": "(x + 2)(x² − 5)",
+      "correct": false,
+      "feedback": "The pairs share (x − 2): x²(x − 2) and +5(x − 2) — signs come from the grouping."
+     },
+     {
+      "id": "o3",
+      "label": "(x − 2)(x² − 5)",
+      "correct": false,
+      "feedback": "The second group is +5x − 10 = +5(x − 2) — the 5 is positive."
+     },
+     {
+      "id": "o4",
+      "label": "x²(x − 2) + 5x − 10",
+      "correct": false,
+      "feedback": "Finish the job: 5x − 10 = 5(x − 2), and then the binomial factors out."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Grouping's litmus test.",
+   "conceptTag": "pf-grouping",
+   "explanationVariants": [
+    "Grouping works only when both pairs reveal the SAME binomial — that's the checkpoint.",
+    "Different binomials means regroup or try another method."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "After grouping, you get x²(x + 4) + 3(x + 2). What does this tell you?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the grouping failed — the binomials must match",
+      "correct": true,
+      "feedback": "Right — (x + 4) ≠ (x + 2): no shared factor to pull. Regroup or change method."
+     },
+     {
+      "id": "o2",
+      "label": "pull out both binomials",
+      "correct": false,
+      "feedback": "You can only factor out a factor COMMON to both terms — these binomials differ."
+     },
+     {
+      "id": "o3",
+      "label": "the polynomial is prime",
+      "correct": false,
+      "feedback": "A failed grouping isn't proof of primeness — other arrangements or methods may still work."
+     },
+     {
+      "id": "o4",
+      "label": "add the binomials: (2x + 6)",
+      "correct": false,
+      "feedback": "Binomials in separate products don't add — the mismatched pair just means this grouping fails."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-grouping__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Verify by expansion.",
+   "conceptTag": "pf-grouping",
+   "explanationVariants": [
+    "(x + 3)(x² + 2) = x³ + 2x + 3x² + 6 — the original four terms, reordered.",
+    "Expansion is factoring's proofreader: distribute and compare term by term."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Expand (x + 3)(x² + 2) to check the grouping of x³ + 3x² + 2x + 6.",
+    "tokens": [
+     {
+      "id": "x3",
+      "label": "x³"
+     },
+     {
+      "id": "a3",
+      "label": "+ 3x²"
+     },
+     {
+      "id": "a6",
+      "label": "+ 6x²"
+     },
+     {
+      "id": "a5",
+      "label": "+ 5x²"
+     },
+     {
+      "id": "b2",
+      "label": "+ 2x"
+     },
+     {
+      "id": "c6",
+      "label": "+ 6"
+     },
+     {
+      "id": "c5",
+      "label": "+ 5"
+     }
+    ],
+    "correct": [
+     "x3",
+     "a3",
+     "b2",
+     "c6"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "x3",
+       "a3",
+       "b2",
+       "c5"
+      ],
+      "feedback": "The constant is 3 · 2 = 6 — every term must match, and the 5 fails."
+     },
+     {
+      "sequence": [
+       "x3",
+       "a6",
+       "c6"
+      ],
+      "feedback": "Distribute BOTH parts of (x + 3) across both parts of (x² + 2) — four products, not three."
+     },
+     {
+      "sequence": [
+       "x3",
+       "a5",
+       "c6"
+      ],
+      "feedback": "3x² and 2x are different-degree terms — they can't merge into 5x²."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Distribute both parts of (x + 3) across both parts of (x² + 2): four products.",
+    "successFeedback": "Right — x·x² + x·2 + 3·x² + 3·2, all four originals accounted for."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-grouping__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Group and finish completely.",
+   "conceptTag": "pf-grouping",
+   "explanationVariants": [
+    "x²(x − 1) − 4(x − 1) = (x − 1)(x² − 4) = (x − 1)(x − 2)(x + 2): zeros 1, 2, −2.",
+    "This time the leftover quadratic DOES factor — a difference of squares."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Factor x³ − x² − 4x + 4 completely.",
+    "tokens": [
+     {
+      "id": "m1",
+      "label": "(x − 1)"
+     },
+     {
+      "id": "m2",
+      "label": "(x − 2)"
+     },
+     {
+      "id": "p2",
+      "label": "(x + 2)"
+     },
+     {
+      "id": "p1",
+      "label": "(x + 1)"
+     },
+     {
+      "id": "q4",
+      "label": "(x² − 4)"
+     },
+     {
+      "id": "qp4",
+      "label": "(x² + 4)"
+     }
+    ],
+    "correct": [
+     "m1",
+     "m2",
+     "p2"
+    ],
+    "acceptAlso": [
+     [
+      "m1",
+      "p2",
+      "m2"
+     ],
+     [
+      "m2",
+      "m1",
+      "p2"
+     ],
+     [
+      "m2",
+      "p2",
+      "m1"
+     ],
+     [
+      "p2",
+      "m1",
+      "m2"
+     ],
+     [
+      "p2",
+      "m2",
+      "m1"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "m1",
+       "q4"
+      ],
+      "feedback": "x² − 4 still splits — completely means (x − 2)(x + 2) too."
+     },
+     {
+      "sequence": [
+       "q4",
+       "m1"
+      ],
+      "feedback": "x² − 4 still splits — completely means (x − 2)(x + 2) too."
+     },
+     {
+      "sequence": [
+       "p1",
+       "m2",
+       "p2"
+      ],
+      "feedback": "The shared binomial is (x − 1): x²(x − 1) − 4(x − 1)."
+     },
+     {
+      "sequence": [
+       "p1",
+       "p2",
+       "m2"
+      ],
+      "feedback": "The shared binomial is (x − 1): x²(x − 1) − 4(x − 1)."
+     },
+     {
+      "sequence": [
+       "m2",
+       "p1",
+       "p2"
+      ],
+      "feedback": "The shared binomial is (x − 1): x²(x − 1) − 4(x − 1)."
+     },
+     {
+      "sequence": [
+       "m2",
+       "p2",
+       "p1"
+      ],
+      "feedback": "The shared binomial is (x − 1): x²(x − 1) − 4(x − 1)."
+     },
+     {
+      "sequence": [
+       "p2",
+       "p1",
+       "m2"
+      ],
+      "feedback": "The shared binomial is (x − 1): x²(x − 1) − 4(x − 1)."
+     },
+     {
+      "sequence": [
+       "p2",
+       "m2",
+       "p1"
+      ],
+      "feedback": "The shared binomial is (x − 1): x²(x − 1) − 4(x − 1)."
+     },
+     {
+      "sequence": [
+       "m1",
+       "qp4"
+      ],
+      "feedback": "The second group is −4x + 4 = −4(x − 1) — MINUS four, so the cofactor is x² − 4."
+     },
+     {
+      "sequence": [
+       "qp4",
+       "m1"
+      ],
+      "feedback": "The second group is −4x + 4 = −4(x − 1) — MINUS four, so the cofactor is x² − 4."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Group: x²(x − 1) − 4(x − 1) = (x − 1)(x² − 4), then split the difference of squares.",
+    "successFeedback": "Right — grouping gives (x − 1)(x² − 4), and the difference of squares finishes it."
+   },
+   "hints": [
+    "Group: (x³ − x²) + (−4x + 4).",
+    "x²(x − 1) − 4(x − 1) — pull the shared binomial.",
+    "(x − 1)(x² − 4), then split the difference of squares."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-grouping__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Pair up, pull each pair's GCF, then factor out the shared binomial.",
+   "takeaways": [
+    "Grouping works exactly when both pairs expose the SAME binomial.",
+    "The leftover quadratic may factor further — or go complex (x² + k).",
+    "Expansion is the universal check."
+   ],
+   "teaser": "Next: two cube patterns that factor in one move."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-grouping",
+   "concept": {
+    "id": "rem-pf0402-c",
+    "kind": "concept",
+    "body": "Each pair gives up its own GCF first. For x³ + 4x² + 3x + 12: the first pair shares x², the second shares 3."
+   },
+   "check": {
+    "id": "rem-pf0402-k",
+    "kind": "check",
+    "body": "Write the grouped form.",
+    "conceptTag": "pf-grouping",
+    "explanationVariants": [
+     "x²(x + 4) + 3(x + 4) — both reveal (x + 4).",
+     "Matching binomials mean the grouping works: (x + 4)(x² + 3)."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Group x³ + 4x² + 3x + 12 in pairs. What appears?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x²(x + 4) + 3(x + 4)",
+       "correct": true,
+       "feedback": "Right — a shared (x + 4), ready to factor out."
+      },
+      {
+       "id": "o2",
+       "label": "x²(x + 4) + 3(x + 3)",
+       "correct": false,
+       "feedback": "3x + 12 = 3(x + 4) — the 12 is 3 · 4, so the binomials match."
+      },
+      {
+       "id": "o3",
+       "label": "x(x² + 4) + 3(x + 4)",
+       "correct": false,
+       "feedback": "The first pair's GCF is x² (from x³ and 4x²): x²(x + 4)."
+      },
+      {
+       "id": "o4",
+       "label": "(x³ + 3x)(4x² + 12)",
+       "correct": false,
+       "feedback": "Grouping splits the SUM into two pairs — it doesn't multiply pieces together."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

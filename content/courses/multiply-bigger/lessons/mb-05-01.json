@@ -1,0 +1,338 @@
+{
+ "id": "mb-05-01",
+ "slug": "number-patterns",
+ "title": "Number Patterns",
+ "courseId": "multiply-bigger",
+ "chapterId": "ch5-patterns-multistep",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A number pattern follows a rule that repeats. **Additive rules** add or subtract the same amount each time: 3, 7, 11, 15… (rule: +4). **Multiplicative rules** multiply or divide by the same amount each time: 2, 6, 18, 54… (rule: ×3). Spot which kind, and the whole pattern unlocks.",
+   "figure": "mb-pattern"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Additive or multiplicative?",
+   "conceptTag": "patterns",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each pattern by its rule.",
+    "buckets": [
+     {
+      "id": "add",
+      "label": "Add/Subtract same amount",
+      "icon": "➕"
+     },
+     {
+      "id": "mult",
+      "label": "Multiply/Divide same amount",
+      "icon": "✖️"
+     }
+    ],
+    "items": [
+     {
+      "id": "p1",
+      "label": "5, 10, 15, 20",
+      "bucketId": "add",
+      "feedback": "Each term adds 5 — an additive rule."
+     },
+     {
+      "id": "p2",
+      "label": "3, 6, 12, 24",
+      "bucketId": "mult",
+      "feedback": "Each term is 2 times the last — a multiplicative rule."
+     },
+     {
+      "id": "p3",
+      "label": "50, 45, 40, 35",
+      "bucketId": "add",
+      "feedback": "Each term subtracts 5 — still additive (subtracting is just adding a negative amount)."
+     },
+     {
+      "id": "p4",
+      "label": "1, 5, 25, 125",
+      "bucketId": "mult",
+      "feedback": "Each term is 5 times the last — a multiplicative rule."
+     }
+    ],
+    "missFeedback": "Check the gap between terms: a steady add/subtract is additive; a steady multiply/divide is multiplicative.",
+    "successFeedback": "5,10,15,20 and 50,45,40,35 both add or subtract a fixed amount; 3,6,12,24 and 1,5,25,125 both multiply by a fixed amount."
+   },
+   "predict": {
+    "prompt": "The pattern 3, 6, 12, 24 — is its rule ADD 3 or DOUBLE?",
+    "options": [
+     {
+      "id": "double",
+      "label": "Double each time"
+     },
+     {
+      "id": "add",
+      "label": "Add 3 each time"
+     },
+     {
+      "id": "both",
+      "label": "Both rules fit"
+     }
+    ],
+    "outcomeId": "double",
+    "reveal": "Add-3 explains only the first step — 6 to 12 breaks it, doubling doesn't. A rule earns the name only by fitting EVERY step of the pattern."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Extend the pattern.",
+   "conceptTag": "patterns",
+   "explanationVariants": [
+    "Each term adds 5 (9−4=5, 14−9=5, 19−14=5), so the next term is 19+5=24.",
+    "The steady gap of 5 continues: 24 comes after 19."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What comes next: 4, 9, 14, 19, ?",
+    "answer": 24,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 23,
+      "feedback": "23 is one short. Check the gap between terms — each one adds 5, so 19 + 5 = 24."
+     },
+     {
+      "value": 20,
+      "feedback": "20 only adds 1 to 19. This pattern's rule adds 5 each time: 19 + 5 = 24."
+     }
+    ],
+    "fallbackFeedback": "Find the gap between consecutive terms, then add that gap to 19."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbPatternsNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "To find a hidden rule, subtract consecutive terms (additive) or divide them (multiplicative). A pattern can also carry an **extra feature** beyond its rule: starting at 2 and adding 6 each time gives 2, 8, 14, 20, 26 — every single term happens to be even, even though 'even' was never part of the rule itself.",
+   "figure": "mb-pattern"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Spot the hidden feature.",
+   "conceptTag": "patterns",
+   "explanationVariants": [
+    "Starting at an even number and always adding an even amount (6) keeps every term even — a feature the rule didn't state outright.",
+    "2, 8, 14, 20, 26 are all even, since even + even always stays even."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A pattern starts at 2 and adds 6 each time: 2, 8, 14, 20, 26… Which is true of EVERY term?",
+    "options": [
+     {
+      "id": "a",
+      "label": "They're all even numbers",
+      "correct": true,
+      "feedback": "Starting even and always adding an even amount (6) keeps every term even."
+     },
+     {
+      "id": "b",
+      "label": "They're all odd numbers",
+      "feedback": "Starting at an EVEN number and adding an even amount keeps every term even, never odd."
+     },
+     {
+      "id": "c",
+      "label": "They're all multiples of 6",
+      "feedback": "The GAP between terms is 6, but the terms themselves (2, 8, 14…) aren't multiples of 6. What's true of every term is that they're all even."
+     },
+     {
+      "id": "d",
+      "label": "They increase by 2 each time",
+      "feedback": "The gap here is 6, not 2. What's actually true of every term is that they're all even, since the start was even and the added amount was even."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbPatternsMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each pattern to its rule.",
+   "conceptTag": "patterns",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each pattern to the rule that generates it.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "6, 11, 16, 21"
+     },
+     {
+      "id": "s2",
+      "label": "4, 12, 36, 108"
+     },
+     {
+      "id": "s3",
+      "label": "100, 90, 80, 70"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "+5"
+     },
+     {
+      "id": "r2",
+      "label": "×3"
+     },
+     {
+      "id": "r3",
+      "label": "−10"
+     }
+    ],
+    "pairs": {
+     "s1": "r1",
+     "s2": "r2",
+     "s3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "s3",
+      "right": "r2",
+      "feedback": "100 to 90 to 80 SUBTRACTS 10 each time. A ×3 rule would multiply and grow — this pattern steadily shrinks, so it's −10."
+     }
+    ],
+    "missFeedback": "Check the gap (subtract) or the ratio (divide) between consecutive terms.",
+    "successFeedback": "+5, ×3, and −10 — three patterns, three different rules, each one steady."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Extend a multiplicative pattern.",
+   "conceptTag": "patterns",
+   "explanationVariants": [
+    "Each term is 3 times the last (15÷5=3, 45÷15=3, 135÷45=3), so the next term is 135×3=405.",
+    "The steady ×3 rule continues: 405 comes after 135."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What comes next: 5, 15, 45, 135, ?",
+    "answer": 405,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 140,
+      "feedback": "140 adds 5 to 135 — but this pattern MULTIPLIES by 3 each time, not adds: 135 × 3 = 405."
+     },
+     {
+      "value": 270,
+      "feedback": "270 doubles 135 — but the rule here multiplies by 3, not 2: 135 × 3 = 405."
+     }
+    ],
+    "fallbackFeedback": "Divide consecutive terms to find the multiplier, then multiply the last term by it."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbPatternsNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The doubling chain.",
+   "conceptTag": "patterns",
+   "hints": [
+    "Each term doubles the one before it.",
+    "The 4th term is 24 — what's double that?",
+    "Multiply 24 by 2."
+   ],
+   "explanationVariants": [
+    "Doubling each term: 3, 6, 12, 24, 48 — the 5th term is 48.",
+    "24 doubled is 48, the 5th term in this ×2 pattern."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A pattern starts at 3 and multiplies by 2 each time: 3, 6, 12, 24, … What is the 5th term?",
+    "answer": 48,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 96,
+      "feedback": "96 would be the 6th term (doubling 48). The 5th term is one double before that: 24 × 2 = 48."
+     },
+     {
+      "value": 26,
+      "feedback": "26 adds 2 to 24 — but this pattern MULTIPLIES by 2 each time: 24 × 2 = 48."
+     }
+    ],
+    "fallbackFeedback": "Double the 4th term (24) to find the 5th."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbPatternsNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Rules, found and extended.",
+   "takeaways": [
+    "Additive rules add/subtract the same amount; multiplicative rules multiply/divide by the same amount.",
+    "Find the rule with the gap (subtract) or the ratio (divide) between consecutive terms.",
+    "A pattern can carry a hidden feature beyond its rule, like every term being even."
+   ],
+   "teaser": "next: chaining several steps together to solve bigger story problems."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "patterns",
+   "concept": {
+    "id": "rem-pt-c",
+    "kind": "concept",
+    "body": "Quick rewind. To find an additive rule, subtract one term from the next. In 2, 5, 8, 11: each gap is 5 − 2 = 3, so the rule is +3. Use that same gap to find the next term: 11 + 3 = 14."
+   },
+   "check": {
+    "id": "rem-pt-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "patterns",
+    "explanationVariants": [
+     "Each gap is 3, so the next term is 11 + 3 = 14.",
+     "The steady +3 rule continues past 11 to 14."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What comes next: 2, 5, 8, 11, ?",
+     "options": [
+      {
+       "id": "a",
+       "label": "14",
+       "correct": true,
+       "feedback": "Each gap is 3: 11 + 3 = 14."
+      },
+      {
+       "id": "b",
+       "label": "12",
+       "feedback": "12 only adds 1 to 11. The gap in this pattern is 3, so 11 + 3 = 14."
+      },
+      {
+       "id": "c",
+       "label": "16",
+       "feedback": "16 adds 5 — but the gap here is 3, not 5: 11 + 3 = 14."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,289 @@
+{
+ "id": "fna-02-03",
+ "slug": "reading-whole-graphs",
+ "title": "Reading a Whole Graph",
+ "courseId": "function-analysis",
+ "chapterId": "ch2-graph-behavior",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A full graph-read answers four questions in order: **where is it increasing/decreasing**, **where are the extrema**, **what are the domain and range**, and **what story do the numbers tell** (if the axes carry units). One pass, left to right, collecting all four.",
+   "figure": "fna-cubic-behavior"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Range from behavior: the downward parabola.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "y = −(x − 2)² + 9 has absolute maximum value 9 and falls forever on both sides. What is the LARGEST number in its range?",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 is the input of the vertex. The range collects OUTPUTS, and the largest output is the maximum value, 9."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is just one output (at x = 0 or 4). The range tops out at the vertex height, 9."
+     }
+    ],
+    "fallbackFeedback": "Range = (−∞, 9]; its largest element is 9."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Range follows from extrema and end behavior: this parabola's outputs fill **(−∞, 9]** — everything up to and including the summit. The cubic x³ − 3x, despite its local peak and valley, has range **all reals**: its arms escape both upward and downward past every bound.",
+   "figure": "fna-range-extrema"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Range of the vee.",
+   "conceptTag": "fna-graph-read",
+   "explanationVariants": [
+    "y = |x − 3| + 1 has floor value 1 and climbs forever both ways: range [1, ∞).",
+    "Outputs are 1 + (a nonnegative number), so exactly the values ≥ 1 occur."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What is the range of y = |x − 3| + 1?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "["
+     },
+     {
+      "id": "t1",
+      "label": "1"
+     },
+     {
+      "id": "t2",
+      "label": ","
+     },
+     {
+      "id": "t3",
+      "label": "∞"
+     },
+     {
+      "id": "t4",
+      "label": ")"
+     },
+     {
+      "id": "t5",
+      "label": "3"
+     },
+     {
+      "id": "t6",
+      "label": "("
+     },
+     {
+      "id": "t7",
+      "label": "−∞"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t5",
+       "t2",
+       "t3",
+       "t4"
+      ],
+      "feedback": "3 is the corner's INPUT. Range is about outputs, which start at the floor VALUE 1: [1, ∞)."
+     },
+     {
+      "sequence": [
+       "t6",
+       "t7",
+       "t2",
+       "t3",
+       "t4"
+      ],
+      "feedback": "The outputs never dip below 1: |x − 3| is at least 0 and the +1 lifts everything, so the range is [1, ∞), not all reals."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Floor of 1 at the corner, unbounded above: the range is [1, ∞).",
+    "successFeedback": "Right — floor 1 at the corner, unbounded above."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-graph-read__buildExpression"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Local extrema don't cap a range.",
+   "conceptTag": "fna-graph-read",
+   "explanationVariants": [
+    "The cubic's arms run down-left and up-right past every bound, so every real number is an output despite the bumps at ±1.",
+    "f(−10) = −970 and f(10) = 970 — the wiggle between −2 and 2 never limits the reachable outputs."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "y = x³ − 3x has a local max value 2 and a local min value −2. What is its range?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "All real numbers",
+      "correct": true,
+      "feedback": "Yes — the arms escape both ways, so LOCAL extrema place no cap on the range."
+     },
+     {
+      "id": "o2",
+      "label": "[−2, 2]",
+      "feedback": "Those are the heights of the two LOCAL bumps, not global fences: f(3) = 18 is already outside [−2, 2]."
+     },
+     {
+      "id": "o3",
+      "label": "[2, ∞)",
+      "feedback": "The graph spends plenty of time below 2 (f(0) = 0, f(1) = −2) and even runs to −∞ leftward. Range: all reals."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-graph-read__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Attach a story.",
+   "conceptTag": "fna-graph-read",
+   "explanationVariants": [
+    "Increasing then decreasing with a single peak: the ball rises, tops out, and falls — the peak's y is the greatest height.",
+    "The vertex is the moment the climb becomes a fall; its output is the maximum height reached."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "H(t) graphs a ball's height over time: increasing on (0, 2), decreasing on (2, 4), maximum point (2, 20). What does (2, 20) mean?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "At 2 seconds the ball reaches its greatest height, 20 meters",
+      "correct": true,
+      "feedback": "Exactly — x is WHEN (2 s), y is the peak height (20 m)."
+     },
+     {
+      "id": "o2",
+      "label": "The ball travels 20 meters in each of the first 2 seconds",
+      "feedback": "That would be a RATE (m/s). The point (2, 20) is a position on the graph: time 2 s, height 20 m."
+     },
+     {
+      "id": "o3",
+      "label": "The ball lands at time 20",
+      "feedback": "Coordinates reversed — 2 is the time, 20 the height. Landing is where H returns to 0, at t = 4."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-graph-read__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "All four reads at once.",
+   "conceptTag": "fna-graph-read",
+   "explanationVariants": [
+    "Increasing (−∞, 2); absolute max value 9 at x = 2; range (−∞, 9]; and g(5) = −(3)² + 9 = 0 — the graph crosses the axis at x = 5.",
+    "Everything hangs off the vertex (2, 9): climb to it, fall after, outputs capped at 9, and the fall passes height 0 at x = 5 since g(5) = 0."
+   ],
+   "hints": [
+    "Evaluate g(5) directly: substitute x = 5 into −(x − 2)² + 9.",
+    "g(5) = −(5 − 2)² + 9 = −9 + 9.",
+    "−9 + 9 = 0 — the curve touches the x-axis there."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For g(x) = −(x − 2)² + 9, what is g(5)?",
+    "answer": 0,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is the maximum value at the VERTEX x = 2. At x = 5: −(3)² + 9 = −9 + 9 = 0."
+     },
+     {
+      "value": 18,
+      "feedback": "You may have ADDED (5−2)² instead of subtracting: g(5) = −(3)² + 9 = 0, not 9 + 9."
+     },
+     {
+      "value": -9,
+      "feedback": "−(3)² = −9 is only the first term — remember the +9: total 0."
+     }
+    ],
+    "fallbackFeedback": "g(5) = −(5 − 2)² + 9 = −9 + 9 = 0."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-graph-read__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Four questions, one pass.",
+   "takeaways": [
+    "Read behavior, extrema, domain/range, and story together.",
+    "Range comes from extrema PLUS end behavior — local bumps don't cap it.",
+    "With units, every point is a sentence: x is when/where, y is how much."
+   ],
+   "teaser": "Next chapter: symmetry — functions that mirror themselves — and graphs built from pieces."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fna-graph-read",
+   "concept": {
+    "id": "rem-fna0203-c",
+    "kind": "concept",
+    "body": "Range = the outputs actually reached. Find the extreme VALUES, then ask where the arms go: capped side closed, escaping side infinite."
+   },
+   "check": {
+    "id": "rem-fna0203-k",
+    "kind": "check",
+    "body": "One more range.",
+    "conceptTag": "fna-graph-read",
+    "explanationVariants": [
+     "y = x² has floor 0 and opens upward forever: range [0, ∞).",
+     "Squares produce exactly the nonnegative numbers."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What is the range of y = x²?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "[0, ∞)",
+       "correct": true,
+       "feedback": "Right — floor 0 at the vertex, unbounded above."
+      },
+      {
+       "id": "o2",
+       "label": "(−∞, ∞)",
+       "feedback": "x² is never negative — outputs start at 0. Range [0, ∞)."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

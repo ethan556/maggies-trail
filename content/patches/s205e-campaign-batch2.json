@@ -1,0 +1,52 @@
+{
+  "tag": "S205E",
+  "label": "Campaign batch 2 off the prefilter. One insertion (alg1-01-01, solveBalance — proven in-course, zero registration work). Two refusals, one of them on grounds the campaign will keep meeting: a lesson can be a high-scoring CANDIDATE and still be wrong to convert, because a second lab on material an existing rich step already covers pads the rich-step metric without adding a doing-moment.",
+  "conversions": [],
+  "insertions": [
+    {
+      "course": "solving-equations",
+      "lesson": "alg1-01-01",
+      "after": "c2",
+      "step": {
+        "id": "c2b",
+        "kind": "interactive",
+        "body": "You just read the rule. Now make it a consequence: take tiles off ONE side and watch the beam call you out.",
+        "predict": {
+          "prompt": "The pans hold 3x + 5 on the left and 20 on the right. If you take the 5 unit tiles off the left and leave the right alone, what does the beam do?",
+          "options": [
+            { "id": "stays-level", "label": "Stays level — I removed what I meant to remove" },
+            { "id": "tips", "label": "Tips — the sides no longer weigh the same" },
+            { "id": "solves", "label": "It solves the equation for me" }
+          ],
+          "outcomeId": "tips",
+          "reveal": "It tips, immediately. \"Do the same to both sides\" is not etiquette — the beam is weighing a real x, and a one-sided removal makes the two pans genuinely unequal. Take the 5 off BOTH sides and the beam stays level, which is the equation staying true."
+        },
+        "widget": {
+          "type": "solveBalance",
+          "prompt": "Solve 3x + 5 = 20 on the beam: strip the pans down until a single x stands alone.",
+          "a": 3,
+          "b": 5,
+          "c": 20,
+          "successFeedback": "One x on the left, 5 on the right — x = 5. Every move you made was two-sided, so the beam never tipped and the equation never stopped being true. That is the whole two-step machine run backwards: undo the +5, then undo the ×3.",
+          "unbalancedFeedback": "The beam has tipped, so the two sides no longer weigh the same — one of your moves went to a single pan. Undo it and do that step to BOTH pans.",
+          "notIsolatedFeedback": "The beam is still level, so everything you did was fair — but x has not been left alone yet. Keep stripping matching amounts off both pans until one x stands by itself.",
+          "missFeedback": "Take tiles away from both pans until a single x is left on one side."
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "alg1-04-01",
+      "title": "Solving Inequalities (solving-equations)",
+      "why": "REFUSED AS METRIC-PADDING, not for a gate failure — the engine fits. solveBalance supports relation:\"lt\" and would model this lesson's own 2x + 3 < 11 exactly (a=2,b=3,c=11; (c−b)/a = 4, a positive integer, so the tile split is exact; the grader decides inequalities by solution-set equivalence, evaluate.ts:787-792, so x < 4 grades correctly). But step i1 is ALREADY a rich equationOutcomeLab on that same inequality. A second lab on the same 2x + 3 < 11 would raise the rich-step count without giving the learner a doing-moment they do not already have. The campaign's ≥25% target is a proxy for learners getting hands on the mathematics; inserting redundant labs satisfies the proxy while defeating the thing it proxies for. If this lesson is revisited, the unserved content is the NUMBER-LINE side — open vs closed endpoint and ray direction, currently a matchPairs at i2 — which needs an engine that draws a ray on a number line, not another balance.",
+      "gate": "not-a-candidate"
+    },
+    {
+      "lesson": "dr-03-02",
+      "title": "The Quotient Rule (derivative-rules)",
+      "why": "Represents gate. The reveal derives the quotient rule as u·v⁻¹ pushed through the product and chain rules, and the lesson's graded subject is specifically WHERE THE MINUS AND THE SQUARE COME FROM. derivativeRuleLab's mode enum is product|chain only (schema.ts DerivativeRuleLabSpec) and its product mode renders a growing rectangle whose area is width × height (widgets.tsx DerivativeRuleLabW) — it can show the ingredient, u′v + uv′, but has no representation of v⁻², so the −uv′/v² the lesson exists to explain never appears. A lab that stops exactly where the lesson's question starts is not a doing-moment for this lesson. Needs a quotient mode on derivativeRuleLab (a rectangle of fixed area with one side driven, so the reciprocal's inverse-square response is visible); recorded as an engine gap.",
+      "gate": "represents"
+    }
+  ]
+}

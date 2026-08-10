@@ -1,0 +1,327 @@
+{
+  "id": "pv-03-01",
+  "slug": "friendly-number-jumps",
+  "title": "Friendly-Number Jumps",
+  "courseId": "place-value",
+  "chapterId": "ch3-add-subtract",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Big additions shrink when you **jump through friendly numbers** — the tens and hundreds. To add 47 to 268: hop +2 to land on 270 (friendly!), then +40 to 310, then the leftover +5 to 315. Three easy hops instead of one hard climb.",
+      "figure": "pv3-jump"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop the tens yourself.",
+      "conceptTag": "mental-add",
+      "widget": {
+        "type": "slider",
+        "prompt": "Add 30 to 47 by hopping tens on the line. Slide the frog — each hop is +10.",
+        "min": 47,
+        "max": 97,
+        "step": 10,
+        "start": 47,
+        "target": 77,
+        "visual": "numberline",
+        "unitLabel": "landing spot",
+        "lowFeedback": "Not there yet — count your ten-hops. Adding 30 takes exactly three of them.",
+        "highFeedback": "Too many hops — you've added more than 30. Each hop back removes 10.",
+        "successFeedback": "47 → 57 → 67 → 77. Three ten-hops add 30 without touching the ones at all."
+      },
+      "predict": {
+        "prompt": "You'll add 30 to 47 with ten-hops. Which digit of 47 will change?",
+        "options": [
+          {
+            "id": "tens",
+            "label": "Only the tens digit"
+          },
+          {
+            "id": "ones",
+            "label": "Only the ones digit"
+          },
+          {
+            "id": "both",
+            "label": "Both digits"
+          }
+        ],
+        "outcomeId": "tens",
+        "reveal": "Every ten-hop climbs a whole row: the tens digit steps 4 → 5 → 6 → 7 while the ones digit stays 7 the entire way."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mental add.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mental add must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mental add."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:mental-add",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Plan the first hop like a pro.",
+      "conceptTag": "mental-add",
+      "explanationVariants": [
+        "+2 lands on 270 — a friendly number — so the remaining +40 and +5 both land on easy spots (310, 315).",
+        "The strategy: reach the next friendly number first. From 268 that costs exactly 2, and everything after is round-number hopping."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You're adding 268 + 47 with friendly jumps. What's the SMARTEST first hop?",
+        "options": [
+          {
+            "id": "a",
+            "label": "+2, to land on 270",
+            "correct": true,
+            "feedback": "270 is friendly — from there, +40 → 310 and +5 → 315 land on round numbers every hop."
+          },
+          {
+            "id": "b",
+            "label": "+47 all at once",
+            "feedback": "That's the hard climb the strategy avoids! One giant hop over a bumpy landing is exactly what jumps break apart."
+          },
+          {
+            "id": "c",
+            "label": "+40 first",
+            "feedback": "Legal — but you land on 308, not a friendly spot, and the remaining +7 gets bumpy. Friendly-FIRST (+2 to 270) keeps every landing round."
+          },
+          {
+            "id": "d",
+            "label": "+7 first",
+            "feedback": "That lands on 275 — closer, but not friendly. Only +2 reaches the round 270, and round landings are the whole trick."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mental-add",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The slickest jump: **overshoot and repay**. Adding 99? Add a clean 100, then give back the extra 1: 356 + 99 = 456 − 1 = 455. Any number one hop from a friendly landmark loves this trick — 98, 99, 199, 990.",
+      "figure": "pv3-jump"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Overshoot, then settle the bill.",
+      "conceptTag": "mental-add",
+      "explanationVariants": [
+        "456 + 100 = 556, then repay the extra 1: 555.",
+        "99 is one short of 100, so the answer is one short of 456 + 100."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "456 + 99 = ? (Use the overshoot.)",
+        "answer": 555,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 556,
+            "feedback": "556 is the overshoot (456 + 100) — the repay step is still owed. You added 1 too many; give it back."
+          },
+          {
+            "value": 545,
+            "feedback": "545 repaid 10 instead of 1. The overshoot was only 1 over (100 instead of 99), so only 1 goes back."
+          },
+          {
+            "value": 455,
+            "feedback": "455 repaid BEFORE overshooting — that computes 456 − 1. First jump the clean +100, then subtract the extra 1."
+          }
+        ],
+        "fallbackFeedback": "99 = 100 − 1. Add the friendly 100, then take 1 back."
+      },
+      "variant": {
+        "gen": "mental-add",
+        "form": "plusNinetyNine"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Assemble a whole jump plan, friendly-first.",
+      "conceptTag": "mental-add",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the friendly-first jump plan for 385 + 46 in order.",
+        "items": [
+          {
+            "id": "j3",
+            "label": "+40, landing on 430"
+          },
+          {
+            "id": "j1",
+            "label": "Start at 385"
+          },
+          {
+            "id": "j4",
+            "label": "+1, landing on 431"
+          },
+          {
+            "id": "j2",
+            "label": "+5, landing on 390"
+          }
+        ],
+        "correctOrder": [
+          "j1",
+          "j2",
+          "j3",
+          "j4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "j3",
+            "second": "j2",
+            "feedback": "The +40 jumped before the +5 — from 385 that lands on the bumpy 425. Friendly-first: spend +5 to reach 390, and every later hop lands round."
+          }
+        ],
+        "missFeedback": "Friendly-first order: reach the round 390 (+5), then the big hop (+40), then the leftover (+1). The hops must total 46.",
+        "successFeedback": "385 → 390 → 430 → 431. The hops spend 5 + 40 + 1 = 46, and every landing was friendly."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Run a full jump on your own.",
+      "conceptTag": "mental-add",
+      "explanationVariants": [
+        "Friendly-first: 523 + 7 → 530, +60 → 590, +1 → 591.",
+        "Or split 68 into 60 + 8: 523 + 60 = 583, +8 = 591 — different hops, same landing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use jumps: 523 + 68 = ?",
+        "answer": 591,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 581,
+            "feedback": "581 is one ten-hop short — the hops must spend all of 68. Recount: 7 + 60 + 1."
+          },
+          {
+            "value": 601,
+            "feedback": "601 hopped one ten too far — that adds 78. Track what each hop spends; they must total exactly 68."
+          }
+        ],
+        "fallbackFeedback": "Spend the 68 in friendly pieces: +7 (to 530), +60 (to 590), +1."
+      },
+      "variant": {
+        "gen": "mental-add",
+        "form": "addByJumps"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A bonus, a penalty, and two tricks.",
+      "conceptTag": "mental-add",
+      "hints": [
+        "The 99-point bonus wants the overshoot: +100, repay 1.",
+        "267 + 99 = 367 − 1 = 366.",
+        "Now the penalty: lose 30 — three ten-hops back from 366."
+      ],
+      "explanationVariants": [
+        "Bonus: 267 + 99 = 366 (overshoot 367, repay 1). Penalty: 366 − 30 = 336.",
+        "Two moves, both friendly: +100 −1, then −30. Final: 336."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Zoe's score is 267. She wins a 99-point bonus, then loses 30 points. What is her final score?",
+        "answer": 336,
+        "tolerance": 0,
+        "unit": "points",
+        "commonErrors": [
+          {
+            "value": 366,
+            "feedback": "366 is the score after the bonus — step one done! The 30-point penalty still lands. Hop back three tens."
+          },
+          {
+            "value": 337,
+            "feedback": "337 forgot to repay the overshoot's extra 1 (267 + 100 = 367), then lost 30. The 99 bonus is one LESS than 100 — settle that bill first."
+          },
+          {
+            "value": 396,
+            "feedback": "396 ADDED the penalty. Losing points hops backward — the 30 comes off."
+          }
+        ],
+        "fallbackFeedback": "Two moves: overshoot-and-repay for the +99, then three ten-hops back for the −30."
+      },
+      "variant": {
+        "gen": "mental-add",
+        "form": "bonusThenLoss"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Big additions are hops now, not climbs.",
+      "takeaways": [
+        "Jump through friendly numbers — reach the next round landing first.",
+        "Overshoot and repay: +99 is +100 then −1.",
+        "The hops must spend exactly what you're adding — count what each hop costs."
+      ],
+      "teaser": "when the ones spot overflows, the trading post opens — regrouping you can SEE."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mental-add",
+      "concept": {
+        "id": "rem-ma-c",
+        "kind": "concept",
+        "body": "Quick rewind. Adding 9 the easy way: **add 10, step back 1**. 45 + 9: hop to 55, step back to 54. Ten-hops are easy because they never touch the ones digit — so ride a ten-hop, then fix the little difference."
+      },
+      "check": {
+        "id": "rem-ma-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mental-add",
+        "explanationVariants": [
+          "38 + 10 = 48, step back 1: 47.",
+          "9 is one less than 10, so the answer is one less than 38 + 10."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "38 + 9 = ?",
+          "options": [
+            {
+              "id": "a",
+              "label": "47",
+              "correct": true,
+              "feedback": "Ride the ten-hop to 48, then step back 1."
+            },
+            {
+              "id": "b",
+              "label": "48",
+              "feedback": "48 is the overshoot (38 + 10) — the step-back is still owed. 9 is one less than 10."
+            },
+            {
+              "id": "c",
+              "label": "29",
+              "feedback": "29 hopped BACKWARD. Adding 9 moves forward — up to 48, then one step back to 47."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

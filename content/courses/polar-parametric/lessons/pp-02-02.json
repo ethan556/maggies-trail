@@ -1,0 +1,290 @@
+{
+  "id": "pp-02-02",
+  "slug": "rose-curves",
+  "title": "Rose Curves & the Petal Rule",
+  "courseId": "polar-parametric",
+  "chapterId": "ch2-polar-graphs",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**Rose curves** r = a cos(nθ) or a sin(nθ) bloom into petals of length |a|. The count follows a parity rule:\n\n• **n odd → n petals**\n• **n even → 2n petals**\n\nThe odd case retraces itself (negative-r lobes fall on existing petals); the even case draws every lobe separately.",
+      "figure": "pp-rose"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The petal rule, watched rather than recited.",
+      "widget": {
+        "type": "polarTrace",
+        "mode": "rose",
+        "targetPetals": 4,
+        "targetA": 2,
+        "start": 1,
+        "prompt": "r = cos(nθ). Dial n until the rose has exactly 4 petals.",
+        "successFeedback": "n = 2 gives FOUR petals, not two. As θ runs once round, an even n sweeps its petals and then retraces the gaps, doubling the count; an odd n comes back onto its own path instead and keeps n. Notice n = 3 gives only THREE — a bigger n with fewer petals, which is why the rule has to be seen to be believed.",
+        "lowFeedback": "Fewer than 4 petals. Try a larger n — but the count does not simply climb with n.",
+        "highFeedback": "More than 4 petals. Come back down, and notice n = 3 gives only 3 — fewer than n = 2 does."
+      },
+      "predict": {
+        "prompt": "For r = cos(nθ), what happens to the petal count when n is even?",
+        "options": [
+          {
+            "id": "same",
+            "label": "It always equals n"
+          },
+          {
+            "id": "double",
+            "label": "It becomes 2n"
+          },
+          {
+            "id": "zero",
+            "label": "The curve disappears"
+          }
+        ],
+        "outcomeId": "double",
+        "reveal": "For even n, the full sweep creates twice as many distinct petals; the trace makes that symmetry visible."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Change a polar parameter and coordinate angle, radius, tracing direction, and resulting curve family.",
+        "invariants": [
+          "polar-point-depends-on-angle-and-radius",
+          "parameter-controls-symmetry"
+        ],
+        "misconceptions": [
+          "negative-radius-is-invalid",
+          "petal-count-always-equals-n"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "polar-parametric-polarTrace",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this polarTrace away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why can an even rose parameter create 2n petals?",
+          "options": [
+            {
+              "id": "symmetry",
+              "label": "Negative radii and angular symmetry place additional distinct petals during the full trace.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "double",
+              "label": "The app simply doubles every answer.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "angle",
+              "label": "Every angle is counted twice regardless of the equation.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "pp-roses"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count even petals.",
+      "conceptTag": "pp-roses",
+      "explanationVariants": [
+        "n = 4 is even, so every lobe is distinct: 2n = 8 petals.",
+        "Even n doubles: 2·4 = 8 petals."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many petals does r = 2 sin(4θ) have?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "n = 4 is EVEN, so the count is 2n = 8, not n. The negative-r lobes are separate petals."
+          },
+          {
+            "value": 16,
+            "feedback": "It's 2n, not 2n²: 2·4 = 8."
+          }
+        ],
+        "fallbackFeedback": "n = 4 is even → 2n = 8 petals."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-roses__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Petal LENGTH is |a| (the max of r). And the first petal's direction depends on the function: **cos** puts a petal along the polar axis (θ = 0, where cos = 1); **sin** rotates the pattern so a petal points up-ish. Same petal count, different orientation.",
+      "figure": "pp-petal-length"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Petal length.",
+      "conceptTag": "pp-roses",
+      "explanationVariants": [
+        "r = 5 cos(2θ): |a| = 5, so each petal extends 5 units from the pole.",
+        "The petal tip is at distance |a| = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How long is each petal of r = 5 cos(2θ)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is n (the petal-count driver), not the length. Length = |a| = 5."
+          },
+          {
+            "value": 10,
+            "feedback": "10 = 2·5 counts petals (2n), not length. Each petal reaches |a| = 5."
+          }
+        ],
+        "fallbackFeedback": "Petal length = |a| = 5."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-roses__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Both facts at once.",
+      "conceptTag": "pp-roses",
+      "explanationVariants": [
+        "r = 3 sin(5θ): n = 5 odd → 5 petals, each length 3.",
+        "Odd n gives n petals; |a| = 3 sets the length."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Describe r = 3 sin(5θ).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5 petals, each 3 units long",
+            "correct": true,
+            "feedback": "Right — n = 5 odd → 5 petals; |a| = 3 → length 3."
+          },
+          {
+            "id": "o2",
+            "label": "10 petals, each 3 units long",
+            "feedback": "n = 5 is ODD, so 5 petals (not 2n). Length |a| = 3 is right."
+          },
+          {
+            "id": "o3",
+            "label": "5 petals, each 5 units long",
+            "feedback": "Count is 5 (correct), but length is |a| = 3, not n. Petals reach 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-roses__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Total reach.",
+      "conceptTag": "pp-roses",
+      "explanationVariants": [
+        "r = 6 cos(7θ): n = 7 odd → 7 petals, each length 6. Petals × length = 7 × 6 = 42.",
+        "Odd n = 7 petals, |a| = 6; the product is 42."
+      ],
+      "hints": [
+        "n = 7 is odd — how many petals?",
+        "7 petals, each of length |a| = 6.",
+        "Multiply count by length."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For r = 6 cos(7θ), compute (number of petals) × (petal length).",
+        "answer": 42,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 84,
+            "feedback": "84 = 14 × 6 uses 2n petals, but n = 7 is ODD → 7 petals: 7 × 6 = 42."
+          },
+          {
+            "value": 13,
+            "feedback": "13 = 7 + 6 adds them. The problem asks for the PRODUCT: 7 × 6 = 42."
+          }
+        ],
+        "fallbackFeedback": "7 petals × length 6 = 42."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-roses__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Parity blooms.",
+      "takeaways": [
+        "r = a cos(nθ) / a sin(nθ): rose with petal length |a|.",
+        "n odd → n petals; n even → 2n petals.",
+        "cos aligns a petal with the polar axis; sin rotates the bloom."
+      ],
+      "teaser": "Next: shift the balance and get loops, dimples, and hearts."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pp-roses",
+      "concept": {
+        "id": "rem-pp0202-c",
+        "kind": "concept",
+        "body": "Rose r = a·trig(nθ): petal length |a|. Petal count: n petals if n is odd, 2n petals if n is even."
+      },
+      "check": {
+        "id": "rem-pp0202-k",
+        "kind": "check",
+        "body": "One count.",
+        "conceptTag": "pp-roses",
+        "explanationVariants": [
+          "n = 2 is even → 2n = 4 petals.",
+          "Even n doubles: 4 petals."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many petals does r = cos(2θ) have?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "n = 2 is EVEN, so 2n = 4 petals, not n."
+            },
+            {
+              "value": 8,
+              "feedback": "You doubled twice. With n = 2 (even), the rose has 2n = 4 petals."
+            }
+          ],
+          "fallbackFeedback": "n = 2 even → 4 petals."
+        }
+      }
+    }
+  ]
+}

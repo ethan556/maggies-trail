@@ -1,0 +1,317 @@
+{
+  "id": "in-02-02",
+  "slug": "reading-a-off-f",
+  "title": "Reading A Off f",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch2-accumulation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You can describe the accumulation without computing a single area, because the **sign of f decides what A does**:\n\n**f > 0** → A is rising (area is piling on).\n**f = 0** → A is momentarily flat (nothing is being added).\n**f < 0** → A is falling (area is being subtracted).\n\nIf that list sounds familiar, it should. It is the list from `dr-01-02`, with f′ replaced by f.",
+      "figure": "in-ftc-slope-is-height"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Now f dips below the axis. Find where A stops climbing.",
+      "widget": {
+        "type": "accumulateArea",
+        "fn": "shifted",
+        "mode": "point",
+        "targetArea": 0,
+        "targetX": 2,
+        "start": 0,
+        "prompt": "f(x) = x − 2, which is NEGATIVE before x = 2. Drag to the one place where the accumulation curve A is momentarily flat.",
+        "successFeedback": "x = 2 — exactly where f crosses the axis. Before it, f is negative and A falls; after it, f is positive and A climbs. A is flat at precisely the point where f is ZERO. Say that out loud: the SLOPE of A is the HEIGHT of f. You are one lesson away from the theorem this course is named for.",
+        "lowFeedback": "Not yet — f is still negative here, so A is still falling. Keep going right.",
+        "highFeedback": "Past it — f has gone positive, so A has started to climb again. Come back left."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move an upper bound and coordinate accumulated area with the integrand's current value.",
+        "invariants": [
+          "accumulation-changes-at-integrand-rate",
+          "signed-area-can-decrease"
+        ],
+        "misconceptions": [
+          "integral-is-always-positive-area",
+          "accumulation-graph-copies-integrand"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-accumulateArea",
+        "delayed": false
+      },
+      "conceptTag": "in-read-accumulation",
+      "predict": {
+        "prompt": "f(x) = x − 2 is negative before x = 2. The accumulation curve A is momentarily flat where…",
+        "options": [
+          {
+            "id": "fzero",
+            "label": "f = 0"
+          },
+          {
+            "id": "flow",
+            "label": "f is at its lowest"
+          },
+          {
+            "id": "azero",
+            "label": "A itself is zero"
+          }
+        ],
+        "outcomeId": "fzero",
+        "reveal": "Where f = 0, at x = 2. A's slope IS f — that is the whole relationship — so A is flat exactly where f crosses the axis. How high A happens to sit at that moment is a separate question entirely, decided by everything that accumulated before it."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The bottom of A.",
+      "conceptTag": "in-read-accumulation",
+      "explanationVariants": [
+        "A falls while f < 0 and rises once f > 0, so A is at its MINIMUM exactly where f crosses zero from below — at x = 2.",
+        "A critical point of A occurs where its slope is zero, and its slope is f."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x − 2. Where is the accumulation A(x) = ∫₀ˣ f smallest?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "At x = 2, where f crosses zero from below.",
+            "correct": true,
+            "feedback": "Right. A falls while f is negative and climbs once f is positive, so the turning point of A sits on the zero of f."
+          },
+          {
+            "id": "o2",
+            "label": "At x = 0, where the sweep starts.",
+            "correct": false,
+            "feedback": "A(0) = 0, but A then goes NEGATIVE as f dips below the axis. The lowest point comes later, at x = 2."
+          },
+          {
+            "id": "o3",
+            "label": "At x = 4, the far end.",
+            "correct": false,
+            "feedback": "By x = 4 the positive area has been piling on for a while, so A is climbing back up. The minimum was at x = 2."
+          },
+          {
+            "id": "o4",
+            "label": "Where f is smallest.",
+            "correct": false,
+            "feedback": "f is smallest at x = 0 — but A keeps FALLING after that, because f is still negative. A turns when f reaches zero, not when f bottoms out."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-read-accumulation__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the whole shape of A is dictated by f, with no arithmetic at all:\n\nf positive and large → A steeply rising.\nf positive and small → A rising gently.\nf zero → A flat.\nf negative → A falling.\n\nThis is the same reading you did in C1 — only now f is playing the part that f′ played then.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Match the behaviour.",
+      "conceptTag": "in-read-accumulation",
+      "explanationVariants": [
+        "The height of f is the slope of A. Large positive f means A climbs steeply; f = 0 means A is level; negative f means A falls.",
+        "Nothing is being computed here — the shape of one curve is being read off the other."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match what f is doing to what A is doing.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "f is large and positive"
+          },
+          {
+            "id": "w2",
+            "label": "f = 0"
+          },
+          {
+            "id": "w3",
+            "label": "f is negative"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "A is climbing steeply"
+          },
+          {
+            "id": "y2",
+            "label": "A is momentarily flat"
+          },
+          {
+            "id": "y3",
+            "label": "A is falling"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y3",
+            "feedback": "f = 0 means nothing is being ADDED to the area — so A holds still. Falling needs f to be actively negative."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "Negative f means area is being SUBTRACTED, so A goes down, not up."
+          }
+        ],
+        "missFeedback": "The height of f is the slope of A. That single sentence answers all three.",
+        "successFeedback": "Height of f = slope of A. You have now said the Fundamental Theorem three times without naming it."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-read-accumulation__matchPairs"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A can be negative.",
+      "conceptTag": "in-signed-area",
+      "explanationVariants": [
+        "From 0 to 2, f = x − 2 is entirely below the axis, forming a triangle of area 2 BELOW it. So A(2) = −2.",
+        "The accumulation is signed, so it can be negative even though 'area' sounds like it should not be."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x − 2. Find A(2) = ∫₀² (x − 2) dx.",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The region is BELOW the axis, so it counts as negative area. The triangle has area 2, and the integral is −2."
+          },
+          {
+            "value": 0,
+            "feedback": "The region is not empty: it is a triangle with base 2 and height 2. Its signed area is −2."
+          },
+          {
+            "value": -4,
+            "feedback": "The triangle has base 2 and height 2, so its area is (1/2)(2)(2) = 2 — and it is negative: −2."
+          }
+        ],
+        "fallbackFeedback": "A triangle of base 2 and height 2, entirely below the axis: A(2) = −2."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-signed-area__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Describe A without computing it.",
+      "conceptTag": "in-read-accumulation",
+      "hints": [
+        "Do not integrate anything. Ask only about the SIGN of f on each stretch.",
+        "f is negative on (0, 2), so A falls there. f is positive on (2, 4), so A rises.",
+        "A therefore falls to a minimum and then climbs. Count the turning points."
+      ],
+      "explanationVariants": [
+        "A falls on (0, 2), is flat at 2, and rises on (2, 4): exactly ONE turning point, a minimum at x = 2.",
+        "Every turning point of A sits on a sign change of f — which is the sign-chart machinery from precalculus, applied to a brand-new function."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x − 2 on [0, 4]. How many turning points does A(x) = ∫₀ˣ f have?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "f changes sign only ONCE on [0, 4] — at x = 2. Each sign change of f gives one turning point of A."
+          },
+          {
+            "value": 0,
+            "feedback": "A does turn: it falls while f is negative and climbs once f is positive. That is a minimum at x = 2."
+          },
+          {
+            "value": 3,
+            "feedback": "There is a single crossing of the axis, at x = 2, so a single turning point."
+          }
+        ],
+        "fallbackFeedback": "f changes sign once, at x = 2, so A has exactly one turning point — a minimum."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-read-accumulation__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The height of f is the slope of A.",
+      "takeaways": [
+        "f > 0 → A rises. f = 0 → A is flat. f < 0 → A falls.",
+        "Turning points of A sit exactly on the sign changes of f.",
+        "Accumulation is signed: A can go negative, and 'area' below the axis is subtracted."
+      ],
+      "teaser": "Next: say that sentence one more time, and it becomes a theorem."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-read-accumulation",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask only one question at each x: **is area being added, or taken away?** Above the axis, added — A climbs. Below it, taken away — A falls. On the axis, neither — A holds still.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Adding or subtracting?",
+        "conceptTag": "in-read-accumulation",
+        "explanationVariants": [
+          "f is below the axis there, so area is being SUBTRACTED and A falls.",
+          "Negative height, negative contribution."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f is negative on an interval. What is A doing there?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Falling — area is being subtracted.",
+              "correct": true,
+              "feedback": "Right. Negative heights make negative strips."
+            },
+            {
+              "id": "o2",
+              "label": "Rising, because area is always positive.",
+              "correct": false,
+              "feedback": "The accumulation is SIGNED. Strips below the axis carry a negative height and pull A down."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "id": "fm-05-01",
+  "slug": "wholes-into-unit-fractions",
+  "title": "Wholes into Unit Fractions",
+  "courseId": "fractions-multiply",
+  "chapterId": "ch5-unit-fraction-division",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Dividing by a unit fraction asks how many of those pieces fit. 4 ÷ 1/2 means \"how many halves are in 4?\" Each whole holds 2 halves, so 4 wholes hold 8. That's 4 ÷ 1/2 = 8 — dividing by 1/2 gives twice as many pieces.",
+      "figure": "fm-divide-unit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the pieces.",
+      "conceptTag": "whole-div-unit",
+      "predict": {
+        "prompt": "How many halves will it take to hop from 0 all the way to 4?",
+        "options": [
+          {
+            "id": "eight",
+            "label": "8 — two halves per whole, four wholes"
+          },
+          {
+            "id": "two",
+            "label": "2 — there are two halves in anything"
+          },
+          {
+            "id": "four",
+            "label": "4 — one hop per whole"
+          }
+        ],
+        "outcomeId": "eight",
+        "reveal": "Each whole holds two halves, and there are four wholes to cross — so the hops multiply: 4 × 2 = 8. Dividing by 1/n multiplies by n, and the hop count is why."
+      },
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Hop from 0 to 4 one half at a time. The number of hops is 4 ÷ 1/2.",
+        "min": 0,
+        "max": 8,
+        "start": 0,
+        "hop": 1,
+        "hops": 8,
+        "denom": 2,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 2,
+            "feedback": "Two halves reaches only 1 whole. There are four wholes to cross, so keep going — each whole costs two hops."
+          },
+          {
+            "value": 4,
+            "feedback": "Four hops reaches 2, not 4 — an easy slip, because the hop COUNT and the position look alike here. Watch the axis label, not the tally."
+          }
+        ],
+        "missFeedback": "Each hop is one half. Count how many it takes for the marker to reach 4.",
+        "successFeedback": "Eight hops. Every whole took two halves, and four wholes took eight — so 4 ÷ 1/2 = 8. That is why dividing by 1/n multiplies by n: n pieces fit inside each whole."
+      },
+      "hints": [
+        "How many halves in one whole? 2.",
+        "There are 4 wholes.",
+        "4 × 2 = 8."
+      ],
+      "explanationVariants": [
+        "4 ÷ 1/2 = 8 halves.",
+        "Two halves per whole, four wholes: 8 halves."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Smaller pieces.",
+      "conceptTag": "whole-div-unit",
+      "variant": {
+        "gen": "unit-frac-divide",
+        "form": "wholeCountNumeric"
+      },
+      "explanationVariants": [
+        "Each whole has 4 quarters, so 3 wholes have 3 × 4 = 12.",
+        "3 ÷ 1/4 counts the quarters: 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "3 ÷ 1/4: how many quarters fit in 3? (each whole has 4)",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 adds 3 + 4. Count the pieces: each whole has 4 quarters, so 3 × 4 = 12."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the number of wholes, not quarters. Each holds 4, so 3 × 4 = 12 quarters."
+          }
+        ],
+        "fallbackFeedback": "Each whole has 4 quarters, so 3 wholes have 3 × 4 = 12."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So dividing by 1/n **multiplies** by n. It feels odd that dividing makes a bigger number, but smaller pieces means more of them fit. 4 ÷ 1/2 = 4 × 2 = 8. The rule: to divide a whole by a unit fraction, multiply the whole by the fraction's denominator.",
+      "figure": "fm-divide-unit"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply the rule.",
+      "conceptTag": "whole-div-unit",
+      "explanationVariants": [
+        "2 ÷ 1/3 = 2 × 3 = 6.",
+        "Three thirds per whole, two wholes: 6."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "2 ÷ 1/3 = ?",
+        "answerWhole": 6,
+        "answerNum": 0,
+        "answerDen": 1,
+        "allowWhole": true,
+        "form": "any",
+        "commonEntries": [
+          {
+            "whole": 5,
+            "num": 0,
+            "den": 1,
+            "feedback": "5 adds 2 + 3. Dividing by 1/3 multiplies: 2 × 3 = 6."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 3,
+            "feedback": "2/3 multiplies by 1/3 instead of dividing. Dividing by 1/3 gives 2 × 3 = 6."
+          }
+        ],
+        "fallbackFeedback": "Each whole holds 3 thirds, so 2 wholes hold 2 × 3 = 6.",
+        "successFeedback": "Right — 2 × 3 = 6. Each whole holds 3 thirds, so 2 wholes hold 6."
+      },
+      "hints": [
+        "Multiply the whole by the denominator.",
+        "2 × 3.",
+        "6."
+      ],
+      "variant": {
+        "gen": "unit-frac-divide"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Your turn.",
+      "conceptTag": "whole-div-unit",
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 ÷ 1/2 = ? (multiply 5 by the denominator 2)",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 adds 5 + 2. Dividing by 1/2 multiplies: 5 × 2 = 10."
+          },
+          {
+            "value": 3,
+            "feedback": "3 subtracts. Dividing by 1/2 doubles: 5 × 2 = 10 halves."
+          }
+        ],
+        "fallbackFeedback": "5 ÷ 1/2 = 5 × 2 = 10."
+      },
+      "hints": [
+        "Multiply by the denominator 2.",
+        "5 × 2.",
+        "10."
+      ],
+      "explanationVariants": [
+        "5 ÷ 1/2 = 10.",
+        "Two halves per whole, five wholes: 10."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count fifths.",
+      "conceptTag": "whole-div-unit",
+      "explanationVariants": [
+        "2 ÷ 1/5 = 10.",
+        "Five fifths per whole, two wholes: 10."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "How many 1/5 pieces fit in 2?",
+        "answerWhole": 10,
+        "answerNum": 0,
+        "answerDen": 1,
+        "allowWhole": true,
+        "form": "any",
+        "commonEntries": [
+          {
+            "whole": 7,
+            "num": 0,
+            "den": 1,
+            "feedback": "7 adds 2 + 5. Dividing by 1/5 multiplies: 2 × 5 = 10."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 5,
+            "feedback": "2/5 multiplies by 1/5 instead. Dividing by 1/5 gives 2 × 5 = 10."
+          }
+        ],
+        "fallbackFeedback": "Each whole holds 5 fifths, so 2 wholes hold 2 × 5 = 10.",
+        "successFeedback": "Right — 2 × 5 = 10. Each whole holds 5 fifths, so 2 wholes hold 10."
+      },
+      "hints": [
+        "Multiply the whole by 5.",
+        "2 × 5.",
+        "10."
+      ],
+      "variant": {
+        "gen": "unit-frac-divide"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A bigger count.",
+      "conceptTag": "whole-div-unit",
+      "variant": {
+        "gen": "unit-frac-divide",
+        "form": "wholeCountNumeric"
+      },
+      "hints": [
+        "How many thirds in one whole? 3.",
+        "Multiply by the 6 wholes.",
+        "6 × 3."
+      ],
+      "explanationVariants": [
+        "6 ÷ 1/3 = 6 × 3 = 18 thirds.",
+        "Three thirds per whole, six wholes: 18."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "6 ÷ 1/3 = ?",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 adds 6 + 3. Dividing by 1/3 multiplies: 6 × 3 = 18."
+          },
+          {
+            "value": 2,
+            "feedback": "2 divides 6 by 3. Dividing by 1/3 multiplies instead: 6 × 3 = 18."
+          }
+        ],
+        "fallbackFeedback": "6 × 3 = 18 — each whole holds 3 thirds, so 6 wholes hold 18.",
+        "successFeedback": "Right — 6 × 3 = 18. Each whole holds 3 thirds, so 6 wholes hold 18."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Dividing by 1/n multiplies by n.",
+      "takeaways": [
+        "Dividing a whole by a unit fraction counts how many pieces fit.",
+        "To divide by 1/n, multiply the whole by n (the denominator).",
+        "The result is bigger than the whole — smaller pieces means more of them."
+      ],
+      "teaser": "next: dividing a unit fraction by a whole number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "whole-div-unit",
+      "concept": {
+        "id": "rem-wu-c",
+        "kind": "concept",
+        "body": "Quick rewind. **To divide a whole by a unit fraction, multiply by the denominator — it counts how many pieces fit.** For 3 ÷ 1/2: each whole has 2 halves, so 3 × 2 = 6 halves fit in 3."
+      },
+      "check": {
+        "id": "rem-wu-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "whole-div-unit",
+        "explanationVariants": [
+          "3 ÷ 1/2 = 3 × 2 = 6 halves.",
+          "Each whole has 2 halves, so 3 wholes have 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "3 ÷ 1/2: how many halves fit in 3? (each whole has 2)",
+          "answer": 6,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 adds 3 + 2. Count the pieces: 3 × 2 = 6 halves."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is the number of wholes. Each holds 2 halves, so 3 × 2 = 6."
+            }
+          ],
+          "fallbackFeedback": "Each whole has 2 halves, so 3 wholes have 3 × 2 = 6."
+        }
+      }
+    }
+  ]
+}

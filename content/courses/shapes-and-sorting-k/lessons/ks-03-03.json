@@ -1,0 +1,432 @@
+{
+  "id": "ks-03-03",
+  "slug": "sort-and-count",
+  "title": "Sort and Count",
+  "courseId": "shapes-and-sorting-k",
+  "chapterId": "ch3-compare-and-sort",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**Sort** things into groups that match — then **count** each group! Buttons by color: 4 red, 3 blue.",
+      "figure": "ks-sort-count"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort the toys.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each toy into its group.",
+        "buckets": [
+          {
+            "id": "animals",
+            "label": "Animals"
+          },
+          {
+            "id": "vehicles",
+            "label": "Things that drive"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "teddy bear",
+            "bucketId": "animals",
+            "feedback": "A bear is an animal friend."
+          },
+          {
+            "id": "d2",
+            "label": "toy car",
+            "bucketId": "vehicles",
+            "feedback": "Cars drive — into the vehicle group."
+          },
+          {
+            "id": "d3",
+            "label": "toy duck",
+            "bucketId": "animals",
+            "feedback": "A duck is an animal."
+          },
+          {
+            "id": "d4",
+            "label": "toy truck",
+            "bucketId": "vehicles",
+            "feedback": "Trucks drive — vehicle group."
+          }
+        ],
+        "missFeedback": "Ask: is it an animal, or does it drive?",
+        "successFeedback": "Sorted — animals together, drivers together!"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "After sorting, **count** each group. Counting tells which group is biggest!",
+      "figure": "ks-count-groups"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the groups.",
+      "conceptTag": "ks-sort-and-count",
+      "explanationVariants": [
+        "Count each group: 5 spoons, 3 forks — spoons are more.",
+        "5 is more than 3, so the spoon group is bigger."
+      ],
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "You sort silverware: 5 spoons and 3 forks. Tap the group with more.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "spoons",
+            "x": 25,
+            "y": 50,
+            "label": "5 spoons",
+            "icon": "🥄",
+            "count": 5,
+            "correct": true
+          },
+          {
+            "id": "forks",
+            "x": 75,
+            "y": 50,
+            "label": "3 forks",
+            "icon": "🍴",
+            "count": 3,
+            "correct": false,
+            "feedback": "3 is fewer than 5 — SPOONS are more."
+          }
+        ],
+        "missFeedback": "5 and 3 differ — spoons are more.",
+        "successFeedback": "Yes — 5 spoons beats 3 forks."
+      },
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeSortTap"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents sort and count.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sort and count must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sort and count."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-sort-and-count",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort by size.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort the animals by size.",
+        "buckets": [
+          {
+            "id": "big",
+            "label": "Big animals"
+          },
+          {
+            "id": "small",
+            "label": "Small animals"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "elephant",
+            "bucketId": "big",
+            "feedback": "Elephants are giant — big group."
+          },
+          {
+            "id": "d2",
+            "label": "mouse",
+            "bucketId": "small",
+            "feedback": "A mouse fits in a hand — small group."
+          },
+          {
+            "id": "d3",
+            "label": "whale",
+            "bucketId": "big",
+            "feedback": "Whales are enormous — big group."
+          },
+          {
+            "id": "d4",
+            "label": "ladybug",
+            "bucketId": "small",
+            "feedback": "A ladybug sits on a fingertip — small group."
+          }
+        ],
+        "missFeedback": "Ask: is it giant, or could you hold it?",
+        "successFeedback": "Sorted by size — giants together, tiny friends together!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One thing, two sorts.",
+      "conceptTag": "ks-sort-and-count",
+      "explanationVariants": [
+        "A red apple joins the red group when sorting by color, and the food group when sorting by kind — sorts can change!",
+        "The rule decides the group: color rule → red; kind rule → food."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You sort by COLOR, then sort again by KIND. Where does a red apple go each time?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Red group first, then food group",
+            "correct": true,
+            "feedback": "Yes — the sorting rule decides the group."
+          },
+          {
+            "id": "b",
+            "label": "Red group both times",
+            "correct": false,
+            "feedback": "The second sort is by KIND — the apple joins the food group."
+          },
+          {
+            "id": "c",
+            "label": "Food group both times",
+            "correct": false,
+            "feedback": "The first sort is by COLOR — red group first."
+          },
+          {
+            "id": "d",
+            "label": "It cannot be sorted twice",
+            "correct": false,
+            "feedback": "It can! New rule, new group — red, then food."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeSortMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The full count.",
+      "conceptTag": "ks-sort-and-count",
+      "explanationVariants": [
+        "2 red and 4 blue buttons make 6 in all — sorting does not change the total.",
+        "Groups joined again: 2 and 4 make 6."
+      ],
+      "widget": {
+        "type": "tenFrame",
+        "prompt": "You sort 6 buttons into 2 red and 4 blue. The 2 red are already in the frame. Add the blue ones — how many buttons in ALL?",
+        "target": 6,
+        "preFilled": 2,
+        "addColor": "sky",
+        "commonCounts": [
+          {
+            "count": 4,
+            "feedback": "That is just the blue group — ALL means both: 6."
+          },
+          {
+            "count": 2,
+            "feedback": "That is just the red group — together they are 6."
+          },
+          {
+            "count": 8,
+            "feedback": "Sorting never adds buttons — 2 and 4 still make 6."
+          }
+        ],
+        "missFeedback": "Sorting never loses a button — the red 2 and blue 4 together fill the frame to 6.",
+        "successFeedback": "Yes — 2 and 4 joined back make 6. Sorting never loses any!"
+      },
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeSortFrame"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents sort and count.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sort and count must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sort and count."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-sort-and-count",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The grand sort.",
+      "conceptTag": "ks-sort-and-count",
+      "explanationVariants": [
+        "Count each group: 3 circles, 4 squares, 2 triangles. 4 is the most — squares win.",
+        "Compare the counts 3, 4, 2 — the squares' 4 is biggest."
+      ],
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "You sort shapes: 3 circles, 4 squares, 2 triangles. Tap the BIGGEST group.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "circles",
+            "x": 16,
+            "y": 50,
+            "label": "3 circles",
+            "icon": "⚪",
+            "count": 3,
+            "correct": false,
+            "feedback": "3 loses to the squares' 4 — squares are biggest."
+          },
+          {
+            "id": "squares",
+            "x": 50,
+            "y": 50,
+            "label": "4 squares",
+            "icon": "🟦",
+            "count": 4,
+            "correct": true
+          },
+          {
+            "id": "triangles",
+            "x": 84,
+            "y": 50,
+            "label": "2 triangles",
+            "icon": "🔺",
+            "count": 2,
+            "correct": false,
+            "feedback": "2 is the SMALLEST — the biggest group is squares (4)."
+          }
+        ],
+        "missFeedback": "The counts differ: 3, 4, 2 — squares win.",
+        "successFeedback": "Yes — 4 beats 3 and 2. You sorted, counted, and compared!"
+      },
+      "hints": [
+        "Count each group first.",
+        "Circles: 3. Squares: 4. Triangles: 2.",
+        "The biggest count wins — 4 squares."
+      ],
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeSortTap"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents sort and count.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sort and count must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sort and count."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-sort-and-count",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Sort into matching groups, count each, compare — the whole course in one move!",
+      "takeaways": [
+        "Sort by a rule: color, kind, or size.",
+        "Count each group to compare them.",
+        "Sorting never changes the total."
+      ],
+      "teaser": "That completes Shapes & Sorting — Kindergarten math, done!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ks-sort-and-count",
+      "concept": {
+        "id": "rem-ks0303-c",
+        "kind": "concept",
+        "body": "Sort things into matching groups, then count each group. The biggest count is the biggest group."
+      },
+      "check": {
+        "id": "rem-ks0303-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "ks-sort-and-count",
+        "explanationVariants": [
+          "2 cats and 5 dogs: 5 is more, so dogs are the bigger group.",
+          "Count and compare: 5 beats 2."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "You sort pets: 2 cats and 5 dogs. Which group is bigger?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Dogs",
+              "correct": true,
+              "feedback": "Yes — 5 dogs beats 2 cats."
+            },
+            {
+              "id": "b",
+              "label": "Cats",
+              "correct": false,
+              "feedback": "2 is fewer — DOGS (5) are the bigger group."
+            },
+            {
+              "id": "c",
+              "label": "They are equal",
+              "correct": false,
+              "feedback": "2 and 5 differ — dogs are more."
+            },
+            {
+              "id": "d",
+              "label": "Cannot tell",
+              "correct": false,
+              "feedback": "The counts tell you: 5 > 2, dogs win."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

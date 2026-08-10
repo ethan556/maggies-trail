@@ -1,0 +1,269 @@
+{
+  "id": "g7-02-02",
+  "slug": "circumference",
+  "title": "Circumference",
+  "courseId": "geometry-g7",
+  "chapterId": "ch2-circles",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **circumference** is the distance around a circle: **C = πd**, or equally **C = 2πr** (since d = 2r). We leave answers as a number times π (exact): a circle with radius 3 has C = 2 × 3 × π = **6π**.",
+      "figure": "circle-parts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute a circumference.",
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "radiusScale",
+        "radius": 5,
+        "targetRadius": 5,
+        "radiusMax": 10,
+        "askQuantity": "circumference",
+        "prompt": "Drag the radius until the CIRCUMFERENCE reads 10π. Keep an eye on the area as you go.",
+        "successFeedback": "Radius 5: circumference 10π. Notice the area alongside it — 25π, not 10π. The circumference doubled the radius; the area squared it. That gap is why the two formulas are never interchangeable.",
+        "lowFeedback": "The circumference is still under 10π — pull the radius outward.",
+        "highFeedback": "The circumference has passed 10π — ease the radius back in."
+      },
+      "predict": {
+        "prompt": "How does a circle's circumference compare with its DIAMETER?",
+        "options": [
+          {
+            "id": "pi",
+            "label": "A bit more than 3 diameters — that's literally what π is"
+          },
+          {
+            "id": "three",
+            "label": "Exactly 3 diameters"
+          },
+          {
+            "id": "radius",
+            "label": "π times the radius"
+          }
+        ],
+        "outcomeId": "pi",
+        "reveal": "π is defined as the circumference-to-diameter ratio: C = πd = 2πr. With r = 5, d = 10, so C = 10π ≈ 31.4 — just over three laps of the diameter, for every circle at every size."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With a **diameter**, skip the doubling: C = πd directly. Diameter 10 gives C = 10π. Given a radius, double it first; given a diameter, use it as-is. The two formulas are the same fact in two outfits.",
+      "figure": "g7-circumference"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "From a diameter.",
+      "conceptTag": "g7-circumference",
+      "explanationVariants": [
+        "C = πd: with d = 8, the circumference is 8π.",
+        "A diameter goes straight into C = πd: 8π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has diameter 8. What is its circumference as a number times π?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That doubled the DIAMETER — doubling is only for the radius: C = πd = 8π."
+          },
+          {
+            "value": 4,
+            "feedback": "That halved it — with a diameter, use it directly: 8π."
+          }
+        ],
+        "fallbackFeedback": "C = πd = 8π, so the number is 8."
+      },
+      "variant": {
+        "gen": "g7-circumference"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Radius again.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 7. What is its circumference as a number times π?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "That's r² (area thinking) — circumference is 2r: 2 × 7 = 14π."
+          },
+          {
+            "value": 7,
+            "feedback": "Double the radius for C = 2πr: 14π."
+          }
+        ],
+        "fallbackFeedback": "C = 2πr = 14π, so the number is 14."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Round it.",
+      "conceptTag": "g7-circumference",
+      "explanationVariants": [
+        "6π ≈ 6 × 3.14 = 18.84, rounding to 19.",
+        "Multiply the coefficient by 3.14: 6 × 3.14 ≈ 19."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle's circumference is 6π. Using π ≈ 3.14, what is it rounded to the nearest whole number?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's the coefficient of π — multiply by 3.14: 6 × 3.14 ≈ 19."
+          },
+          {
+            "value": 18,
+            "feedback": "Use 3.14, not 3: 6 × 3.14 = 18.84 ≈ 19."
+          }
+        ],
+        "fallbackFeedback": "6π ≈ 18.84, which rounds to 19."
+      },
+      "variant": {
+        "gen": "g7-circumference",
+        "form": "circApprox"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick the formula.",
+      "conceptTag": "g7-circumference",
+      "explanationVariants": [
+        "Both C = πd and C = 2πr give the circumference — d is already twice r.",
+        "C = πd and C = 2πr are the same formula, since d = 2r."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do C = πd and C = 2πr always give the same answer?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Because d = 2r — they're the same formula written two ways",
+            "correct": true,
+            "feedback": "Right — substituting d = 2r into πd gives 2πr."
+          },
+          {
+            "id": "b",
+            "label": "They don't — πd is bigger",
+            "correct": false,
+            "feedback": "They're equal: d already IS 2r, so πd = 2πr always."
+          },
+          {
+            "id": "c",
+            "label": "Only for small circles",
+            "correct": false,
+            "feedback": "d = 2r holds for EVERY circle, so the formulas always agree."
+          },
+          {
+            "id": "d",
+            "label": "Because π changes",
+            "correct": false,
+            "feedback": "π never changes — the formulas agree because d = 2r."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-circumference",
+        "form": "circFormulaWhy"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Around a real track.",
+      "conceptTag": "g7-circumference",
+      "explanationVariants": [
+        "The pond's radius is 10, so C = 2πr = 20π.",
+        "Double the radius: 2 × 10 = 20, so 20π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circular pond has radius 10 m. How far is one full lap around it, as a number times π (meters)?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "That's r² (area) — a LAP is the circumference: 2 × 10 = 20π."
+          },
+          {
+            "value": 10,
+            "feedback": "That's the radius — C = 2πr doubles it: 20π."
+          }
+        ],
+        "fallbackFeedback": "C = 2πr = 2 × 10 × π = 20π meters."
+      },
+      "hints": [
+        "A lap around is the circumference: C = 2πr.",
+        "Double the radius: 2 × 10 = 20.",
+        "One lap is 20π meters."
+      ],
+      "variant": {
+        "gen": "g7-circumference",
+        "form": "circRadius"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Circumference is the distance around: C = πd = 2πr, kept exact as a multiple of π.",
+      "takeaways": [
+        "C = 2πr from a radius; C = πd from a diameter.",
+        "The two formulas agree because d = 2r.",
+        "Round by multiplying the coefficient by 3.14."
+      ],
+      "teaser": "Next: the space inside — a circle's area."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-circumference",
+      "concept": {
+        "id": "rem-g70202-c",
+        "kind": "concept",
+        "body": "Circumference is the distance around: C = 2πr from a radius (double it), or C = πd from a diameter (use it directly). Keep answers as a number times π."
+      },
+      "check": {
+        "id": "rem-g70202-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-circumference",
+        "explanationVariants": [
+          "C = 2πr = 2 × 4 × π = 8π.",
+          "Double the radius: 8π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A circle has radius 4. What is its circumference as a number times π?",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That's r² (area) — circumference DOUBLES the radius: 8π."
+            },
+            {
+              "value": 4,
+              "feedback": "That's the radius — double it: 8π."
+            }
+          ],
+          "fallbackFeedback": "C = 2πr = 8π, so the number is 8."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+ "id": "vec-04-03",
+ "slug": "solving-systems-with-matrices",
+ "title": "Solving Systems with Matrices",
+ "courseId": "vectors-matrices",
+ "chapterId": "ch4-matrices",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A linear system is a matrix equation. The system 2x + y = 5, x + 3y = 10 becomes [[2, 1], [1, 3]]·⟨x, y⟩ = ⟨5, 10⟩ — recall solving these by elimination (se). Now: multiply both sides by the **inverse** to isolate ⟨x, y⟩ = M⁻¹·⟨5, 10⟩. Same answers, matrix machinery.",
+   "figure": "vec-system-matrix"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find the determinant first.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For the system matrix [[2, 1], [1, 3]], what is the determinant?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "7 = 2·3 + 1·1 adds. det = 2·3 − 1·1 = 6 − 1 = 5."
+     },
+     {
+      "value": 6,
+      "feedback": "Subtract the off-diagonal product: 6 − 1 = 5."
+     }
+    ],
+    "fallbackFeedback": "det = 6 − 1 = 5 (nonzero, so a unique solution exists)."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Solve for x.",
+   "conceptTag": "vec-solve-systems",
+   "explanationVariants": [
+    "By Cramer's rule, x = det[[5, 1], [10, 3]]/det = (15 − 10)/5 = 5/5 = 1.",
+    "Replace the x-column with ⟨5, 10⟩, take the determinant, divide by 5: x = 1."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Solve the system 2x + y = 5, x + 3y = 10 for x.",
+    "task": "linearSystemSolve",
+    "values": [],
+    "sysA1": 2,
+    "sysB1": 1,
+    "sysC1": 5,
+    "sysA2": 1,
+    "sysB2": 3,
+    "sysC2": 10,
+    "sysAsk": "x",
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is the value of y. For x: (5·3 − 1·10)/5 = 5/5 = 1."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is the right-hand constant. x = (15 − 10)/5 = 1."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "x = (5·3 − 1·10)/5 = 1.",
+    "successFeedback": "x = (5·3 − 1·10)/5 = 1."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-solve-systems__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Solve for y.",
+   "conceptTag": "vec-solve-systems",
+   "explanationVariants": [
+    "y = det[[2, 5], [1, 10]]/det = (20 − 5)/5 = 15/5 = 3.",
+    "Replace the y-column with ⟨5, 10⟩: (2·10 − 5·1)/5 = 3."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Continuing, solve the same system for y.",
+    "task": "linearSystemSolve",
+    "values": [],
+    "sysA1": 2,
+    "sysB1": 1,
+    "sysC1": 5,
+    "sysA2": 1,
+    "sysB2": 3,
+    "sysC2": 10,
+    "sysAsk": "y",
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 1,
+      "feedback": "1 is x. For y: (2·10 − 5·1)/5 = 15/5 = 3."
+     },
+     {
+      "value": 15,
+      "feedback": "15 is the numerator (before dividing by det = 5): y = 15/5 = 3."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "y = (2·10 − 5·1)/5 = 3.",
+    "successFeedback": "y = (2·10 − 5·1)/5 = 3."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-solve-systems__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "When the determinant is **zero**, the matrix method signals trouble: the system has either **no solution** (parallel lines) or **infinitely many** (the same line). A zero determinant is exactly the algebraic sign that elimination would stall — the two viewpoints agree (recall se's special cases).",
+   "figure": "vec-det-zero"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Diagnose a zero determinant.",
+   "conceptTag": "vec-solve-systems",
+   "explanationVariants": [
+    "System with matrix [[1, 2], [2, 4]] has det 0 — no unique solution (the lines coincide or are parallel).",
+    "A singular coefficient matrix means elimination can't pin down one answer."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A system's coefficient matrix has determinant 0. This means:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No unique solution (parallel or identical lines)",
+      "correct": true,
+      "feedback": "Right — det = 0 signals either no solution or infinitely many, never exactly one."
+     },
+     {
+      "id": "o2",
+      "label": "Exactly one solution",
+      "feedback": "A UNIQUE solution needs a NONZERO determinant. Zero means no unique solution."
+     },
+     {
+      "id": "o3",
+      "label": "The solution is (0, 0)",
+      "feedback": "det = 0 doesn't give (0,0); it means no single solution exists (parallel/identical lines)."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-solve-systems__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A full solve.",
+   "conceptTag": "vec-solve-systems",
+   "explanationVariants": [
+    "System 3x + y = 9, x + 2y = 8: det[[3,1],[1,2]] = 5. x = (9·2 − 1·8)/5 = (18 − 8)/5 = 10/5 = 2; y = (3·8 − 9·1)/5 = 15/5 = 3. So x = 2.",
+    "Cramer's rule with det 5 gives x = 2 (and y = 3); check: 6 + 3 = 9 ✓."
+   ],
+   "hints": [
+    "det = 3·2 − 1·1 = 5.",
+    "x = det[[9, 1], [8, 2]]/5 = (18 − 8)/5.",
+    "= 10/5."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Solve 3x + y = 9, x + 2y = 8 for x.",
+    "task": "linearSystemSolve",
+    "values": [],
+    "sysA1": 3,
+    "sysB1": 1,
+    "sysC1": 9,
+    "sysA2": 1,
+    "sysB2": 2,
+    "sysC2": 8,
+    "sysAsk": "x",
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is y. For x: (9·2 − 1·8)/5 = 10/5 = 2."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is the numerator; divide by det = 5: x = 2."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "x = (9·2 − 1·8)/5 = 10/5 = 2.",
+    "successFeedback": "x = (9·2 − 1·8)/5 = 10/5 = 2."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-solve-systems__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Systems as matrix equations.",
+   "takeaways": [
+    "Write a system as M·⟨x, y⟩ = ⟨constants⟩; solve with M⁻¹ or Cramer's rule.",
+    "Cramer: replace a column with the constants, take determinants, divide by det M.",
+    "det = 0 → no unique solution (matches elimination stalling)."
+   ],
+   "teaser": "Final chapter: matrices as geometric transformations."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "vec-solve-systems",
+   "concept": {
+    "id": "rem-vec0403-c",
+    "kind": "concept",
+    "body": "System M·⟨x,y⟩ = ⟨constants⟩ with det M ≠ 0 has a unique solution (via inverse or Cramer's rule). det M = 0 → no unique solution."
+   },
+   "check": {
+    "id": "rem-vec0403-k",
+    "kind": "check",
+    "body": "One determinant.",
+    "conceptTag": "vec-solve-systems",
+    "explanationVariants": [
+     "For x + y = 3, x − y = 1: matrix [[1, 1], [1, −1]], det = −1 − 1 = −2 ≠ 0, so a unique solution exists.",
+     "Nonzero determinant −2 guarantees one solution."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "The system x + y = 3, x − y = 1 has coefficient matrix [[1, 1], [1, −1]]. What is its determinant?",
+     "answer": -2,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "det = 1·(−1) − 1·1 = −1 − 1 = −2, not 0."
+      },
+      {
+       "value": 2,
+       "feedback": "A sign slipped: det = (1)(−1) − (1)(1) = −1 − 1 = −2."
+      }
+     ],
+     "fallbackFeedback": "1·(−1) − 1·1 = −2."
+    }
+   }
+  }
+ ]
+}

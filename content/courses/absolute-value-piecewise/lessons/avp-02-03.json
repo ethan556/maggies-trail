@@ -1,0 +1,254 @@
+{
+  "id": "avp-02-03",
+  "slug": "absolute-value-inequalities",
+  "title": "Absolute Value Inequalities",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch2-equations-with-abs",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "|x| < 3 asks which points are CLOSER than three units to zero — a band around the origin, from −3 to 3. |x| > 3 asks the opposite: points farther out than three units, which is everything beyond −3 on the left and beyond 3 on the right. One band, or two rays.",
+      "figure": "avp-band-versus-rays"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Place the edge of the band.",
+      "widget": {
+        "type": "numberLinePlace",
+        "step": 1,
+        "tickStep": 1,
+        "start": 0,
+        "commonPlacements": [
+          {
+            "value": -3,
+            "feedback": "That is the LEFT edge — correct distance, wrong side. The right edge sits at +3."
+          },
+          {
+            "value": 6,
+            "feedback": "Six units out is well outside the band; |6| = 6, which is not less than 3."
+          }
+        ],
+        "prompt": "|x| < 3 keeps everything strictly between two edges. Place the RIGHT edge.",
+        "min": -6,
+        "max": 6,
+        "target": 3,
+        "showDistanceFromZero": true,
+        "successFeedback": "+3: the band runs −3 < x < 3, and both edges sit exactly three units from zero. The edge itself is excluded, because the inequality is strict.",
+        "lowFeedback": "Not far enough right — the distance readout is still under 3.",
+        "highFeedback": "Too far right — you have passed the edge at 3."
+      },
+      "predict": {
+        "prompt": "What does the solution of |x| > 4 look like on the number line?",
+        "options": [
+          {
+            "id": "band",
+            "label": "One band around zero"
+          },
+          {
+            "id": "rays",
+            "label": "Two rays heading in opposite directions"
+          },
+          {
+            "id": "point",
+            "label": "A single point"
+          }
+        ],
+        "outcomeId": "rays",
+        "reveal": "“Farther than four units out” can be satisfied by going left or by going right, and those two escapes never touch. The band belongs to <, the pair of rays to > — and using one sandwich for both is the classic error."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Write the band.",
+      "conceptTag": "avp-abs-inequalities",
+      "explanationVariants": [
+        "|x| < 5 means the distance is under 5 in either direction: −5 < x < 5.",
+        "Less-than gives a single sandwich around zero."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is equivalent to |x| < 5?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−5 < x < 5",
+            "correct": true,
+            "feedback": "Yes — one sandwich, because ‘closer than 5’ is a single connected stretch."
+          },
+          {
+            "id": "o2",
+            "label": "x < 5 or x > −5",
+            "correct": false,
+            "feedback": "That is every number at once — the ‘or’ makes the condition impossible to fail."
+          },
+          {
+            "id": "o3",
+            "label": "x < −5 or x > 5",
+            "correct": false,
+            "feedback": "That is the solution of |x| > 5, the outside case."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the direction of the sign decides the SHAPE of the answer, not just its edges. Less-than gives one sandwich, written with a single chain. Greater-than gives two separate rays, joined by ‘or’ — and it cannot be written as a chain, because no number is on both rays at once.",
+      "figure": "avp-sandwich-versus-split"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Write the two rays.",
+      "conceptTag": "avp-abs-inequalities",
+      "explanationVariants": [
+        "|x| ≥ 2 means at least two units out, so x ≤ −2 or x ≥ 2.",
+        "Greater-than-or-equal keeps the edges and takes both outward directions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is equivalent to |x| ≥ 2?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x ≤ −2 or x ≥ 2",
+            "correct": true,
+            "feedback": "Correct — both rays, edges included because the inequality is not strict."
+          },
+          {
+            "id": "o2",
+            "label": "−2 ≤ x ≤ 2",
+            "correct": false,
+            "feedback": "That is the inside band, the solution of |x| ≤ 2 — the exact opposite set."
+          },
+          {
+            "id": "o3",
+            "label": "x ≥ 2 only",
+            "correct": false,
+            "feedback": "That forgets the left ray; −5 is five units out and qualifies too."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Test membership.",
+      "conceptTag": "avp-abs-inequalities",
+      "explanationVariants": [
+        "|−7| = 7, and 7 > 4, so −7 satisfies |x| > 4.",
+        "Distance seven exceeds four, so the point lies on the left ray."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Does x = −7 satisfy |x| > 4? Enter 1 for yes, 0 for no.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "The negative sign is not disqualifying — |−7| = 7, and 7 > 4, so it lands on the left ray."
+          },
+          {
+            "value": 7,
+            "feedback": "That is |−7| itself. The question asks yes or no: enter 1 or 0."
+          }
+        ],
+        "fallbackFeedback": "|−7| = 7 > 4, so yes — enter 1.",
+        "successFeedback": "Yes — the left ray is a full half of this solution set, and it is the half most often dropped."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A shifted band.",
+      "conceptTag": "avp-abs-inequalities",
+      "explanationVariants": [
+        "|x − 3| < 2 means 1 < x < 5, whose integer members are 2, 3 and 4.",
+        "Points strictly within two units of 3 are 2, 3, 4 — three integers."
+      ],
+      "hints": [
+        "Rewrite it as a sandwich centered on the value that makes the inside zero.",
+        "The condition says x sits strictly within 2 units of 3, so 1 < x < 5.",
+        "List the integers strictly between 1 and 5 and count them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many INTEGERS satisfy |x − 3| < 2?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "The edges 1 and 5 are excluded — the inequality is strict, so |1 − 3| = 2 is not less than 2."
+          },
+          {
+            "value": 4,
+            "feedback": "One endpoint slipped in. Strict means both 1 and 5 are out, leaving 2, 3 and 4."
+          }
+        ],
+        "fallbackFeedback": "1 < x < 5 contains the integers 2, 3 and 4 — three of them.",
+        "successFeedback": "3 — and notice the band is centered on 3, the value that makes the inside vanish."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The sign chooses the shape.",
+      "takeaways": [
+        "|x| < k is one band: −k < x < k.",
+        "|x| > k is two rays: x < −k or x > k — never a single chain.",
+        "Shifted versions center the band or the rays on whatever makes the inside zero."
+      ],
+      "teaser": "Next: rules that change formula partway along — functions defined in pieces."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-abs-inequalities",
+      "concept": {
+        "id": "rem-avp-abs-inequalities-c",
+        "kind": "concept",
+        "body": "So the direction of the sign decides the SHAPE of the answer, not just its edges. Less-than gives one sandwich, written with a single chain. Greater-than gives two separate rays, joined by ‘or’ — and it cannot be written as a chain, because no number is on both rays at once."
+      },
+      "check": {
+        "id": "rem-avp-abs-inequalities-k",
+        "kind": "check",
+        "body": "Write the band.",
+        "conceptTag": "avp-abs-inequalities",
+        "explanationVariants": [
+          "|x| < 5 means the distance is under 5 in either direction: −5 < x < 5.",
+          "Less-than gives a single sandwich around zero."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is equivalent to |x| < 5?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "−5 < x < 5",
+              "correct": true,
+              "feedback": "Yes — one sandwich, because ‘closer than 5’ is a single connected stretch."
+            },
+            {
+              "id": "o2",
+              "label": "x < 5 or x > −5",
+              "correct": false,
+              "feedback": "That is every number at once — the ‘or’ makes the condition impossible to fail."
+            },
+            {
+              "id": "o3",
+              "label": "x < −5 or x > 5",
+              "correct": false,
+              "feedback": "That is the solution of |x| > 5, the outside case."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

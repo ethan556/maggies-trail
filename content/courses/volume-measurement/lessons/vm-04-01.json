@@ -1,0 +1,292 @@
+{
+  "id": "vm-04-01",
+  "slug": "layers-of-cubes",
+  "title": "Layers of Cubes",
+  "courseId": "volume-measurement",
+  "chapterId": "ch4-volume-formula",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Last chapter's shortcut has a name. The cubes covering the bottom of a box form the **base layer**, and the number of cubes in it is the **area of the base** — a 4-by-3 base holds 4 × 3 = 12 cubes. Stack that layer once per unit of height: 5 layers hold 12 × 5 = 60 cubes.",
+      "figure": "box-layers"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the base layer.",
+      "conceptTag": "volume-layers",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box's base is 4 cubes long and 3 cubes wide. How many cubes cover the base?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 adds 4 + 3. The base is length × width: 4 × 3 = 12."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is one row. There are 3 rows of 4: 4 × 3 = 12."
+          }
+        ],
+        "fallbackFeedback": "Base cubes = length × width = 4 × 3 = 12."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now stack that base.",
+      "conceptTag": "volume-layers",
+      "explanationVariants": [
+        "12 cubes per layer × 5 layers = 60 cubic units.",
+        "Skip-count five 12s: 12, 24, 36, 48, 60."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "That base holds 12 cubes per layer. The box is 5 layers tall. What is its volume in cubic units?",
+        "answer": 60,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is one layer. Multiply by the 5 layers: 12 × 5 = 60."
+          },
+          {
+            "value": 17,
+            "feedback": "17 adds 12 + 5. Stack means multiply: 12 × 5 = 60."
+          }
+        ],
+        "fallbackFeedback": "12 per layer × 5 layers = 60 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "layers"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You don't have to count the base cube by cube. If the **base area** is known — say 10 square units — then 10 cubes fit in each layer, and the volume is simply **base area × number of layers**. Area covers the floor; height repeats it upward.",
+      "figure": "vm-base-layers"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Straight from the area.",
+      "conceptTag": "volume-layers",
+      "explanationVariants": [
+        "10 × 3 = 30 cubic units.",
+        "Three 10-cube layers make 30."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A box's base area is 10 square units, and the box is 3 layers tall. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "30 cubic units",
+            "correct": true,
+            "feedback": "Right — 10 cubes per layer × 3 layers = 30."
+          },
+          {
+            "id": "b",
+            "label": "13 cubic units",
+            "feedback": "13 adds 10 + 3. Layers repeat the base: 10 × 3 = 30."
+          },
+          {
+            "id": "c",
+            "label": "10 cubic units",
+            "feedback": "10 is one layer only. Stack all 3: 10 × 3 = 30."
+          }
+        ]
+      },
+      "hints": [
+        "10 cubes fill each layer.",
+        "There are 3 such layers.",
+        "10 × 3 = 30."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "layersMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Base first, then stack.",
+      "conceptTag": "volume-layers",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "The base is fixed at 5 by 2 — ten cubes. Raise the height until the box is 3 layers tall, and watch what each new layer is worth.",
+        "targetVolume": 30,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 5,
+        "wStart": 2,
+        "hStart": 1,
+        "lockL": true,
+        "lockW": true,
+        "commonBuilds": [
+          {
+            "volume": 10,
+            "feedback": "10 is the base layer on its own — one layer, not three. The base tells you what a layer is WORTH; the height tells you how many of them there are."
+          },
+          {
+            "volume": 20,
+            "feedback": "20 is two layers. One more to go, and notice it will add another 10 rather than another 1 — a layer is not a unit."
+          }
+        ],
+        "successFeedback": "30 cubes: three layers of ten. That is the whole of length × width × height — the base multiplication tells you a layer's worth, and the height counts the layers. Each step of the slider added 10, never 1.",
+        "lowFeedback": "Not enough layers yet. Each one you add brings another full base of 10 cubes.",
+        "highFeedback": "That is more than 3 layers. Bring the height back down — every extra layer is 10 cubes too many."
+      },
+      "predict": {
+        "prompt": "The base holds 10 cubes. Stacking it 3 layers tall gives a total of…",
+        "options": [
+          {
+            "id": "thirty",
+            "label": "30"
+          },
+          {
+            "id": "thirteen",
+            "label": "13 — the base plus the 3 layers"
+          },
+          {
+            "id": "ten",
+            "label": "10 — the base is the box"
+          }
+        ],
+        "outcomeId": "thirty",
+        "reveal": "30 — three copies of the base. Adding the 3 to the 10 treats a LAYER as if it were a single cube, and the slider settles it: each step up adds ten cubes at once, not one."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A taller stack.",
+      "conceptTag": "volume-layers",
+      "explanationVariants": [
+        "Base 6 × 2 = 12; four layers give 12 × 4 = 48.",
+        "Count by layers: 12, 24, 36, 48."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box's base is 6 cubes by 2 cubes, and it is 4 layers tall. What is its volume in cubic units?",
+        "answer": 48,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is just the base layer (6 × 2). Multiply by the 4 layers: 12 × 4 = 48."
+          },
+          {
+            "value": 16,
+            "feedback": "16 adds 12 + 4. Stacking multiplies: 12 × 4 = 48."
+          }
+        ],
+        "fallbackFeedback": "Base 6 × 2 = 12; 12 × 4 = 48 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "layers"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both steps, no help.",
+      "conceptTag": "volume-layers",
+      "hints": [
+        "Find the base layer first: 3 × 3.",
+        "That's 9 cubes per layer, 4 layers tall.",
+        "9 × 4 = 36."
+      ],
+      "explanationVariants": [
+        "Base 3 × 3 = 9; then 9 × 4 = 36 cubic units.",
+        "Four 9-cube layers: 9, 18, 27, 36."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A box's base is 3 cubes by 3 cubes, and it is 4 layers tall. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "36 cubic units",
+            "correct": true,
+            "feedback": "Right — base 3 × 3 = 9, then 9 × 4 = 36."
+          },
+          {
+            "id": "b",
+            "label": "9 cubic units",
+            "feedback": "9 is only the base layer. Multiply by the 4 layers: 9 × 4 = 36."
+          },
+          {
+            "id": "c",
+            "label": "10 cubic units",
+            "feedback": "10 adds 3 + 3 + 4. Multiply instead: (3 × 3) × 4 = 36."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "layersMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Area, then height.",
+      "takeaways": [
+        "The base layer's cube count equals the area of the base.",
+        "Volume = base area × number of layers (the height).",
+        "Area covers the floor; height repeats it upward."
+      ],
+      "teaser": "next: naming all three edges at once — V = l × w × h."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "volume-layers",
+      "concept": {
+        "id": "rem-vl-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Base layer first, then stack.** A base 2 cubes by 3 cubes holds 2 × 3 = 6 cubes. If the box is 2 layers tall, that's 6 × 2 = 12 cubes. Two multiplications: base, then layers."
+      },
+      "check": {
+        "id": "rem-vl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "volume-layers",
+        "explanationVariants": [
+          "Base 2 × 3 = 6; then 6 × 2 = 12.",
+          "Two 6-cube layers: 6 + 6 = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A box's base is 2 cubes by 3 cubes, and it is 2 layers tall. How many cubic units?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is one layer (2 × 3). Multiply by the 2 layers: 6 × 2 = 12."
+            },
+            {
+              "value": 8,
+              "feedback": "8 adds 6 + 2. Stacking multiplies: 6 × 2 = 12."
+            }
+          ],
+          "fallbackFeedback": "Base 2 × 3 = 6; 6 × 2 = 12 cubic units."
+        }
+      }
+    }
+  ]
+}

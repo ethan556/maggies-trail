@@ -1,0 +1,381 @@
+{
+  "id": "rns-03-03",
+  "slug": "comparing-and-estimating-with-irrationals",
+  "title": "Comparing & Estimating with Irrationals",
+  "courseId": "the-real-number-system",
+  "chapterId": "ch3-approximating-irrationals",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To compare irrationals and rationals fairly, convert everything to decimals first. Notation (radicals, fractions, decimals) can trick the eye — decimals put every number on equal footing for comparison.",
+      "figure": "rns-compare-irr"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order a mixed set.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Order from least to greatest.",
+        "items": [
+          {
+            "id": "threeHalf",
+            "label": "3/2"
+          },
+          {
+            "id": "sqrt3",
+            "label": "√3"
+          },
+          {
+            "id": "sqrt2",
+            "label": "√2"
+          },
+          {
+            "id": "one8",
+            "label": "1.8"
+          }
+        ],
+        "correctOrder": [
+          "sqrt2",
+          "threeHalf",
+          "sqrt3",
+          "one8"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "threeHalf",
+            "second": "sqrt2",
+            "feedback": "√2 ≈ 1.414 is LESS than 1.5 = 3/2, even though a fraction can look 'plainer' — compare the decimals, not the notation."
+          },
+          {
+            "first": "one8",
+            "second": "sqrt3",
+            "feedback": "√3 ≈ 1.732 is LESS than 1.8 — convert to decimals to compare fairly."
+          }
+        ],
+        "missFeedback": "Not quite — convert every value to a decimal, then compare.",
+        "successFeedback": "Right — √2 ≈ 1.414 < 1.5 < √3 ≈ 1.732 < 1.8."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To estimate an expression like π², use a rational approximation for π — like 3.14 — and compute: 3.14² ≈ 9.86, so π² ≈ 9.86. That estimate is close to, but never exactly, the true (irrational) value of π² itself.",
+      "figure": "rns-compare-irr"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compare a root to a decimal.",
+      "conceptTag": "rns-compare-estimate",
+      "variant": {
+        "gen": "g8-rns-compare-estimate",
+        "form": "rnsCompareRootDecimal"
+      },
+      "explanationVariants": [
+        "√5 ≈ 2.236, which is bigger than 2.1.",
+        "Converting √5 to a decimal (≈2.236) makes the comparison to 2.1 direct."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger: √5 or 2.1?",
+        "options": [
+          {
+            "id": "a",
+            "label": "√5, since √5 ≈ 2.236 > 2.1",
+            "correct": true,
+            "feedback": "Right — convert to a decimal and compare directly."
+          },
+          {
+            "id": "b",
+            "label": "2.1, since it has more decimal digits shown",
+            "correct": false,
+            "feedback": "How many digits are WRITTEN doesn't decide size — √5 ≈ 2.236 is genuinely bigger than 2.1."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "correct": false,
+            "feedback": "They're not — √5 ≈ 2.236 ≠ 2.1."
+          },
+          {
+            "id": "d",
+            "label": "Can't compare a root to a decimal",
+            "correct": false,
+            "feedback": "You can — convert the root to its decimal approximation and compare like any two numbers."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Estimate an expression.",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "Estimate π² (π ≈ 3.14159…).",
+        "min": 1,
+        "max": 20,
+        "target": 9.8696,
+        "acceptFactor": 1.2,
+        "lowFeedback": "Too low — try squaring a number a bit bigger than 3.",
+        "highFeedback": "Too high — π is only a little more than 3, so π² shouldn't be too far past 9 or 10.",
+        "successFeedback": "π² ≈ 9.87 — close to 10, since π is just a bit more than 3, and 3² = 9."
+      },
+      "predict": {
+        "prompt": "π is a bit more than 3. Where will π² land?",
+        "options": [
+          {
+            "id": "underten",
+            "label": "Just under 10"
+          },
+          {
+            "id": "nine",
+            "label": "Exactly on 9"
+          },
+          {
+            "id": "high",
+            "label": "Above 12"
+          }
+        ],
+        "outcomeId": "underten",
+        "reveal": "Squaring a-bit-more-than-3 gives a-bit-more-than-9 — the extra 0.14 pushes π² up near 10 but never past it."
+      },
+      "conceptTag": "rns-compare-estimate",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents rns compare estimate.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for rns compare estimate must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines rns compare estimate."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "the-real-number-system:rns-compare-estimate",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compare two close approximations.",
+      "conceptTag": "rns-compare-estimate",
+      "variant": {
+        "gen": "g8-rns-compare-estimate",
+        "form": "rnsComparePiFraction"
+      },
+      "explanationVariants": [
+        "22/7 ≈ 3.1429, slightly more than π ≈ 3.1416.",
+        "Both are close to π, but 22/7 is a famous slight OVER-estimate."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger: 22/7 or π?",
+        "options": [
+          {
+            "id": "a",
+            "label": "22/7, since 22/7 ≈ 3.1429 is slightly more than π ≈ 3.1416",
+            "correct": true,
+            "feedback": "Right — 22/7 is a classic slight over-estimate of π."
+          },
+          {
+            "id": "b",
+            "label": "π, since π is 'more precise' so must be bigger",
+            "correct": false,
+            "feedback": "Precision doesn't decide size — as decimals, 22/7 ≈ 3.1429 edges out π ≈ 3.1416."
+          },
+          {
+            "id": "c",
+            "label": "They're exactly equal",
+            "correct": false,
+            "feedback": "22/7 is only an approximation of π, not an exact match — they differ starting at the thousandths place."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without a calculator",
+            "correct": false,
+            "feedback": "You can tell — 22/7 = 3.142857… and π = 3.141592… — compare digit by digit."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A squaring shortcut.",
+      "conceptTag": "rns-compare-estimate",
+      "variant": {
+        "gen": "g8-rns-compare-estimate",
+        "form": "rnsRootTimesItself"
+      },
+      "explanationVariants": [
+        "Squaring a square root undoes it exactly: √3 × √3 = 3.",
+        "By definition, √3 is the number that squares to 3 — so multiplying it by itself returns exactly 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "√3 × √3 = ?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3, exactly",
+            "correct": true,
+            "feedback": "Right — squaring a square root always returns the original number exactly."
+          },
+          {
+            "id": "b",
+            "label": "≈1.732, since that's what √3 rounds to",
+            "correct": false,
+            "feedback": "That's √3 itself, not √3 times √3 — the product is exactly 3."
+          },
+          {
+            "id": "c",
+            "label": "9, since 3² = 9",
+            "correct": false,
+            "feedback": "That squares the number 3, not √3 — here we're multiplying √3 by itself, which gives 3."
+          },
+          {
+            "id": "d",
+            "label": "Irrational, since √3 is irrational",
+            "correct": false,
+            "feedback": "An irrational number times itself CAN be rational — here, √3 × √3 = 3 exactly, a whole number."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Order a full mixed set.",
+      "conceptTag": "rns-compare-estimate",
+      "variant": {
+        "gen": "g8-rns-compare-estimate",
+        "form": "rnsOrderMixed"
+      },
+      "explanationVariants": [
+        "√8 ≈ 2.828, then 2.9, then 3, then √10 ≈ 3.162 — converting to decimals lines them all up.",
+        "√8 < 2.9 since 2.828 < 2.9, and √10 > 3 since 10 > 9 = 3² — decimals settle both comparisons."
+      ],
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Order from least to greatest.",
+        "items": [
+          {
+            "id": "twoNine",
+            "label": "2.9"
+          },
+          {
+            "id": "sqrt10",
+            "label": "√10"
+          },
+          {
+            "id": "sqrt8",
+            "label": "√8"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          }
+        ],
+        "correctOrder": [
+          "sqrt8",
+          "twoNine",
+          "three",
+          "sqrt10"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "twoNine",
+            "second": "sqrt8",
+            "feedback": "√8 ≈ 2.828 is LESS than 2.9 — compare the decimals."
+          },
+          {
+            "first": "three",
+            "second": "sqrt10",
+            "feedback": "√10 ≈ 3.162 is MORE than 3 — since 10 > 9 = 3², √10 > 3."
+          }
+        ],
+        "missFeedback": "Not quite — convert every value to a decimal, then compare.",
+        "successFeedback": "Right — √8 ≈ 2.828 < 2.9 < 3 < √10 ≈ 3.162."
+      },
+      "hints": [
+        "Convert every value to a decimal first.",
+        "√8 ≈ 2.83, then 2.9, then 3, then √10 ≈ 3.16 — now just line up the decimals.",
+        "In order: √8, 2.9, 3, √10."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Convert to decimals to compare fairly; approximate irrational expressions with rational stand-ins.",
+      "takeaways": [
+        "Convert radicals and fractions to decimals before comparing them.",
+        "Rational approximations (like 3.14 or 22/7) estimate irrational expressions.",
+        "Squaring a square root returns the original number exactly."
+      ],
+      "teaser": "Next up: Grade 8 exponents, roots, and scientific notation — built directly on this course."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rns-compare-estimate",
+      "concept": {
+        "id": "rem-rns0303-c",
+        "kind": "concept",
+        "body": "Convert every value to a decimal before comparing radicals, fractions, and decimals against each other — notation can trick the eye, but decimals can't."
+      },
+      "check": {
+        "id": "rem-rns0303-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rns-compare-estimate",
+        "explanationVariants": [
+          "√7 ≈ 2.646, which is bigger than 2.5.",
+          "Converting √7 to a decimal (≈2.646) makes the comparison to 2.5 direct."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is bigger: √7 or 2.5?",
+          "options": [
+            {
+              "id": "a",
+              "label": "√7, since √7 ≈ 2.646 > 2.5",
+              "correct": true,
+              "feedback": "Right — convert to a decimal and compare directly."
+            },
+            {
+              "id": "b",
+              "label": "2.5, since it's written more simply",
+              "correct": false,
+              "feedback": "How the number is WRITTEN doesn't decide size — √7 ≈ 2.646 is genuinely bigger."
+            },
+            {
+              "id": "c",
+              "label": "They're equal",
+              "correct": false,
+              "feedback": "They're not — √7 ≈ 2.646 ≠ 2.5."
+            },
+            {
+              "id": "d",
+              "label": "Can't compare a root to a decimal",
+              "correct": false,
+              "feedback": "You can — convert the root to its decimal approximation first."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

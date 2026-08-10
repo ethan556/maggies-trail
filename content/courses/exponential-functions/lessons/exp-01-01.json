@@ -1,0 +1,498 @@
+{
+  "id": "exp-01-01",
+  "slug": "evaluating-exponential-functions",
+  "title": "Evaluating Exponential Functions",
+  "courseId": "exponential-functions",
+  "chapterId": "ch1-growth-and-decay",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-growth",
+      "body": "An **exponential function** has the form f(x) = a · bˣ. The **a** is the starting value (at x = 0), and **b** is the base you multiply by at each step. To evaluate, raise b to the power x, then multiply by a."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the exponential that hits the ring.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 3,
+        "targetBase": 2,
+        "startBase": 3,
+        "showMirror": false,
+        "prompt": "Slide the base until b³ lands on the ring at 8.",
+        "successFeedback": "2³ = 8. The base is the number being multiplied repeatedly, and the exponent counts the multiplications: 2 × 2 × 2.",
+        "lowFeedback": "b³ is still under 8 — the base is too small. Raise it.",
+        "highFeedback": "b³ has shot past 8 — the base is too large. Bring it down."
+      },
+      "predict": {
+        "prompt": "Both bases are above 1. Moving the base from 3 to 2, the curve will…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Rise faster"
+          },
+          {
+            "id": "slower",
+            "label": "Rise more slowly"
+          },
+          {
+            "id": "shift",
+            "label": "Slide sideways without changing steepness"
+          }
+        ],
+        "outcomeId": "slower",
+        "reveal": "A bigger base multiplies by more at every step, so 3 outruns 2 — the base IS the growth factor per unit of x, not a sideways shift."
+      },
+      "conceptTag": "exp-evaluate",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents evaluate.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for evaluate must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines evaluate."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponential-functions:exp-evaluate",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Different base.",
+      "conceptTag": "exp-evaluate",
+      "explanationVariants": [
+        "3² = 9, then 5 · 9 = 45.",
+        "f(2) = 5 · 3² = 5 · 9 = 45."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For f(x) = 5 * 3^x, what is f(2)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 5
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "a"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 15,
+            "feedback": "That's f(1) = 5 · 3. For f(2), use 3² = 9: 5 · 9 = 45."
+          },
+          {
+            "value": 225,
+            "feedback": "Raise b first, then multiply: 5 · (3²) = 45, not (5·3)² = 225."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(2) = 5 · 3² = 5 · 9 = 45.",
+        "successFeedback": "f(2) = 5 · 3² = 5 · 9 = 45."
+      },
+      "variant": {
+        "gen": "exp-function"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **initial value** is f(0). Since any base to the 0 power is 1, f(0) = a · 1 = a. For f(x) = 3 · 2ˣ, f(0) = 3. That's the value before any growth happens — the curve's height at x = 0.",
+      "figure": "exp-initial-value"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the initial value.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 7 * 2^x, what is the initial value f(0)?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That's f(1) = 7 · 2. At x = 0, 2⁰ = 1, so f(0) = 7 · 1 = 7."
+          },
+          {
+            "value": 1,
+            "feedback": "2⁰ = 1, but you still multiply by a: f(0) = 7 · 1 = 7."
+          }
+        ],
+        "fallbackFeedback": "f(0) = 7 · 2⁰ = 7 · 1 = 7."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Each increase of 1 in x multiplies the output by b once more. For f(x) = 2ˣ (here a = 1): f(1) = 2, f(2) = 4, f(3) = 8 — doubling each step. Exponential outputs grow by **multiplying**, not adding.",
+      "figure": "exp-multiply-by-b"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A pure power.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2^x, what is f(5)?",
+        "answer": 32,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "2⁵ means five 2's multiplied (2·2·2·2·2 = 32), not 2 · 5."
+          },
+          {
+            "value": 25,
+            "feedback": "The base is 2 and the exponent is 5: 2⁵ = 32, not 5²."
+          }
+        ],
+        "fallbackFeedback": "2⁵ = 2·2·2·2·2 = 32."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One more step out.",
+      "conceptTag": "exp-evaluate",
+      "explanationVariants": [
+        "2⁴ = 16, then 3 · 16 = 48.",
+        "f(4) = 3 · 2⁴ = 3 · 16 = 48."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For f(x) = 3 * 2^x, what is f(4)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 3
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "a"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "b"
+                }
+              },
+              "right": {
+                "op": "const",
+                "id": "b"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 24,
+            "feedback": "That's f(3) = 3 · 8. Go one more step: 3 · 2⁴ = 3 · 16 = 48."
+          },
+          {
+            "value": 96,
+            "feedback": "2⁴ = 16, not 32: f(4) = 3 · 16 = 48."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(4) = 3 · 2⁴ = 3 · 16 = 48.",
+        "successFeedback": "f(4) = 3 · 2⁴ = 3 · 16 = 48."
+      },
+      "variant": {
+        "gen": "exp-function"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Initial value again.",
+      "conceptTag": "exp-evaluate",
+      "explanationVariants": [
+        "f(0) = a = 5, because 3⁰ = 1.",
+        "The initial value is the coefficient a = 5."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For f(x) = 5 * 3^x, what is the initial value f(0)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the coefficient a",
+            "value": 5
+          },
+          {
+            "id": "b",
+            "label": "the base b (b^0 = b / b = 1)",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "b"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 15,
+            "feedback": "That's f(1) = 5 · 3. At x = 0, 3⁰ = 1, so f(0) = 5."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the base b, not the initial value. f(0) = a = 5."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(0) = 5 · 3⁰ = 5.",
+        "successFeedback": "f(0) = 5 · 3⁰ = 5."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "initialValue"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Put it together.",
+      "conceptTag": "exp-evaluate",
+      "explanationVariants": [
+        "3³ = 27, then 2 · 27 = 54.",
+        "f(3) = 2 · 3³ = 2 · 27 = 54."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For f(x) = 2 * 3^x, what is f(3)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount a",
+            "value": 2
+          },
+          {
+            "id": "b",
+            "label": "the base b (one factor per step)",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "a"
+              },
+              "right": {
+                "op": "const",
+                "id": "b"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "b"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 18,
+            "feedback": "That's f(2) = 2 · 9. For f(3), use 3³ = 27: 2 · 27 = 54."
+          },
+          {
+            "value": 216,
+            "feedback": "Raise b first, then multiply: 2 · (3³) = 54, not (2·3)³ = 216."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(3) = 2 · 3³ = 2 · 27 = 54.",
+        "successFeedback": "f(3) = 2 · 3³ = 2 · 27 = 54."
+      },
+      "hints": [
+        "First compute 3³ = 27.",
+        "Then multiply by a = 2.",
+        "2 · 27 = 54."
+      ],
+      "variant": {
+        "gen": "exp-function"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Exponential functions multiply a starting value by a base, repeatedly.",
+      "takeaways": [
+        "f(x) = a · bˣ: a is the start, b is the per-step multiplier.",
+        "Raise b to the power x first, then multiply by a.",
+        "The initial value is f(0) = a, since b⁰ = 1."
+      ],
+      "teaser": "next: does the base make it grow or decay?"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-evaluate",
+      "concept": {
+        "id": "rem-exe-c",
+        "kind": "concept",
+        "body": "To evaluate f(x) = a · bˣ, raise b to the power x, then multiply by a. For f(x) = 3 · 2ˣ: f(2) = 3 · 2² = 3 · 4 = 12. The initial value f(0) = a, since b⁰ = 1."
+      },
+      "check": {
+        "id": "rem-exe-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-evaluate",
+        "explanationVariants": [
+          "2² = 4, then 3 · 4 = 12.",
+          "f(2) = 3 · 2² = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = 3 * 2^x, what is f(2)?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 36,
+              "feedback": "Power first: 3 · (2²) = 12, not (3·2)²."
+            },
+            {
+              "value": 6,
+              "feedback": "That's f(1); for f(2) use 2² = 4: 3 · 4 = 12."
+            }
+          ],
+          "fallbackFeedback": "f(2) = 3 · 4 = 12."
+        }
+      }
+    }
+  ]
+}

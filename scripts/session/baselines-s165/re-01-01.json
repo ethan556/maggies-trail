@@ -1,0 +1,370 @@
+{
+ "id": "re-01-01",
+ "slug": "between-radicals-and-exponents",
+ "title": "Between Radicals & Exponents",
+ "courseId": "radical-functions",
+ "chapterId": "ch1-rational-exponents-with-variables",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "You know the numeric version: 8^(2/3) = (∛8)² = 4. Now let the base be a **variable**: x^(m/n) = ⁿ√(xᵐ). The denominator is the root, the numerator is the power — so x^(3/2) = √(x³), and ∛(x²) = x^(2/3). Two notations, one object.",
+   "figure": "re-rational-exponent"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Radical to exponent.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Write ∛(x⁵) using a rational exponent.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x^(5/3)",
+      "correct": true,
+      "feedback": "Right — power 5 up top, root 3 underneath."
+     },
+     {
+      "id": "o2",
+      "label": "x^(3/5)",
+      "correct": false,
+      "feedback": "The fraction is power-over-root: the 5 (power) goes in the numerator."
+     },
+     {
+      "id": "o3",
+      "label": "x^(5·3)",
+      "correct": false,
+      "feedback": "Root and power don't multiply — they stack as a fraction: 5/3."
+     },
+     {
+      "id": "o4",
+      "label": "x^(5−3)",
+      "correct": false,
+      "feedback": "Nothing subtracts here — the root index becomes the DENOMINATOR: 5/3."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Going the other way is just as mechanical: x^(4/5) = ⁵√(x⁴). And a unit fraction drops the power entirely: x^(1/2) = √x, x^(1/3) = ∛x. Exponent form is usually easier to **compute** with; radical form is easier to **read**.",
+   "figure": "re-other-way"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Exponent to radical.",
+   "conceptTag": "re-convert",
+   "explanationVariants": [
+    "x^(2/7): power 2, seventh root — ⁷√(x²).",
+    "Numerator inside as the power, denominator outside as the root index."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Write x^(2/7) as a radical.",
+    "tokens": [
+     {
+      "id": "r7",
+      "label": "⁷√"
+     },
+     {
+      "id": "r2",
+      "label": "²√"
+     },
+     {
+      "id": "rx2",
+      "label": "(x²)"
+     },
+     {
+      "id": "rx7",
+      "label": "(x⁷)"
+     },
+     {
+      "id": "r2x",
+      "label": "(2x)"
+     },
+     {
+      "id": "big",
+      "label": "(⁷√x)⁹"
+     }
+    ],
+    "correct": [
+     "r7",
+     "rx2"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "r2",
+       "rx7"
+      ],
+      "feedback": "The DENOMINATOR 7 is the root index — the 2 is the power inside."
+     },
+     {
+      "sequence": [
+       "r7",
+       "r2x"
+      ],
+      "feedback": "The 2 is an exponent on x, not a coefficient: x² under the seventh root."
+     },
+     {
+      "sequence": [
+       "big"
+      ],
+      "feedback": "Nothing adds the 2 and 7 — the form is (⁷√x)², power 2."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The denominator of the exponent is the root index; the numerator is the power kept inside the radical.",
+    "successFeedback": "Right — seventh root of x squared."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-convert__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Evaluate through the conversion.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using root-then-power: what is 16^(3/2)?",
+    "answer": 64,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "16 · 3/2 multiplies base by exponent — instead ROOT then POWER: (√16)³ = 4³ = 64."
+     },
+     {
+      "value": 8,
+      "feedback": "That takes the FOURTH root (2³ = 8) — the denominator here is 2: (√16)³ = 4³ = 64."
+     }
+    ],
+    "fallbackFeedback": "(√16)³ = 4³ = 64."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which is the same?",
+   "conceptTag": "re-convert",
+   "explanationVariants": [
+    "√(x⁵) has power 5 and root 2: x^(5/2).",
+    "Read the invisible index: a bare √ is a 2nd root."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which exponent form equals √(x⁵)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x^(5/2)",
+      "correct": true,
+      "feedback": "Right — the bare radical carries an invisible index 2."
+     },
+     {
+      "id": "o2",
+      "label": "x^(2/5)",
+      "correct": false,
+      "feedback": "Power-over-root: the 5 (power) is the numerator, the 2 (root) the denominator."
+     },
+     {
+      "id": "o3",
+      "label": "x^(5) − x^(2)",
+      "correct": false,
+      "feedback": "Roots never subtract exponents apart — they make one fraction: 5/2."
+     },
+     {
+      "id": "o4",
+      "label": "x^(10)",
+      "correct": false,
+      "feedback": "That multiplies 5 · 2 — the root DIVIDES the power: 5/2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-convert__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Unit fraction shortcut.",
+   "conceptTag": "re-convert",
+   "explanationVariants": [
+    "x^(1/4) is the plain fourth root: ⁴√x.",
+    "Numerator 1 means no extra power — just the root."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Write x^(1/4) as a radical.",
+    "tokens": [
+     {
+      "id": "r4",
+      "label": "⁴√"
+     },
+     {
+      "id": "sq",
+      "label": "√"
+     },
+     {
+      "id": "tx",
+      "label": "x"
+     },
+     {
+      "id": "px4",
+      "label": "(x⁴)"
+     },
+     {
+      "id": "slash",
+      "label": "/"
+     },
+     {
+      "id": "four",
+      "label": "4"
+     }
+    ],
+    "correct": [
+     "r4",
+     "tx"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "sq",
+       "px4"
+      ],
+      "feedback": "That's x^(4/2) = x² — the 4 here is the ROOT index, not a power."
+     },
+     {
+      "sequence": [
+       "tx",
+       "slash",
+       "four"
+      ],
+      "feedback": "An exponent of 1/4 takes a root — it never divides the base by 4."
+     },
+     {
+      "sequence": [
+       "r4",
+       "px4"
+      ],
+      "feedback": "That equals x itself — x^(1/4) has no power on the x inside."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "A 1/4 exponent is a pure root: index 4, with no power on the x inside.",
+    "successFeedback": "Right — a unit-fraction exponent is a bare root."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-convert__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Convert and evaluate.",
+   "conceptTag": "re-convert",
+   "explanationVariants": [
+    "27^(4/3) = (∛27)⁴ = 3⁴ = 81.",
+    "Root 3 first (∛27 = 3), then power 4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is 27^(4/3)?",
+    "answer": 81,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 36,
+      "feedback": "27 · 4/3 = 36 multiplies base times exponent — instead: (∛27)⁴ = 3⁴ = 81."
+     },
+     {
+      "value": 12,
+      "feedback": "12 is 3 · 4 — after the cube root gives 3, RAISE to the 4th: 81."
+     }
+    ],
+    "fallbackFeedback": "(∛27)⁴ = 3⁴ = 81."
+   },
+   "hints": [
+    "Denominator first: take the cube root of 27.",
+    "∛27 = 3.",
+    "Then the numerator: 3⁴ = 81."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-convert__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "x^(m/n) = ⁿ√(xᵐ): numerator powers, denominator roots.",
+   "takeaways": [
+    "The root index becomes the exponent's denominator.",
+    "Unit fractions are bare roots: x^(1/n) = ⁿ√x.",
+    "Root first when evaluating — the numbers stay small."
+   ],
+   "teaser": "Next: the exponent rules you know — running on fractions."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-convert",
+   "concept": {
+    "id": "rem-re0101-c",
+    "kind": "concept",
+    "body": "Read the fraction as instructions: in x^(m/n), the top m is the power, the bottom n is the root. For x^(3/4): power 3, root 4."
+   },
+   "check": {
+    "id": "rem-re0101-k",
+    "kind": "check",
+    "body": "Write it out.",
+    "conceptTag": "re-convert",
+    "explanationVariants": [
+     "⁴√(x³) — fourth root of x cubed.",
+     "Numerator inside, denominator on the radical."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Write x^(3/4) as a radical.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "⁴√(x³)",
+       "correct": true,
+       "feedback": "Right — power 3 under a fourth root."
+      },
+      {
+       "id": "o2",
+       "label": "³√(x⁴)",
+       "correct": false,
+       "feedback": "The DENOMINATOR is the root: 4 goes on the radical, 3 inside as the power."
+      },
+      {
+       "id": "o3",
+       "label": "⁴√(3x)",
+       "correct": false,
+       "feedback": "The 3 is a power on x (x³), not a multiplier."
+      },
+      {
+       "id": "o4",
+       "label": "√(x¾)",
+       "correct": false,
+       "feedback": "The whole fraction is the exponent — split it: root 4 outside, power 3 inside."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

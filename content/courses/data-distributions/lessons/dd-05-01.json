@@ -1,0 +1,354 @@
+{
+  "id": "dd-05-01",
+  "slug": "reading-the-whole-picture",
+  "title": "Reading the Whole Picture",
+  "courseId": "data-distributions",
+  "chapterId": "ch5-describing-distributions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "distribution-story",
+      "body": "You now own three lenses, and a real description uses **all of them**. Minutes to get to school: 5, 10, 10, 15, 15, 15, 20, 20, 25. **Shape:** one peak at 15, symmetric. **Center:** median 15 (the mean is 15 too — symmetric data agrees with itself). **Spread:** range 25 − 5 = 20, IQR 20 − 10 = 10. One plot, three questions, one honest paragraph."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Five numbers, one picture.",
+      "widget": {
+        "type": "boxPlot",
+        "axisMin": 0,
+        "axisMax": 20,
+        "targetMin": 2,
+        "targetQ1": 6,
+        "targetMed": 10,
+        "targetQ3": 14,
+        "targetMax": 18,
+        "startMin": 0,
+        "startQ1": 1,
+        "startMed": 2,
+        "startQ3": 3,
+        "startMax": 4,
+        "prompt": "Build the box plot: minimum 2, Q1 6, median 10, Q3 14, maximum 18.",
+        "successFeedback": "The box holds the middle half of the data and the whiskers hold the rest. A box plot throws away every individual value and keeps only the five that describe the spread — which is exactly why it is so good at comparing groups.",
+        "orderFeedback": "The five markers must be in order: min ≤ Q1 ≤ median ≤ Q3 ≤ max.",
+        "valueFeedback": "The markers are in order but not on the right values. Read the five numbers again."
+      },
+      "predict": {
+        "prompt": "Whiskers reach the min and max. Will the LEFT whisker (2 to 6) be shorter or longer than the box (6 to 14)?",
+        "options": [
+          {
+            "id": "shorter",
+            "label": "Shorter than the box"
+          },
+          {
+            "id": "longer",
+            "label": "Longer than the box"
+          },
+          {
+            "id": "equal",
+            "label": "The same length"
+          }
+        ],
+        "outcomeId": "shorter",
+        "reveal": "The left whisker spans 4 while the box spans 8 — the lowest quarter of this data huddles close, and the plot's shape says so at a glance."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Construct a five-number summary and coordinate ordered data with center and spread.",
+        "invariants": [
+          "quartiles-partition-ordered-data",
+          "box-spans-middle-half"
+        ],
+        "misconceptions": [
+          "box-height-is-frequency",
+          "range-equals-iqr"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-boxPlot-new-context",
+        "delayed": false
+      },
+      "conceptTag": "distribution-summary"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "And a spread lens.",
+      "conceptTag": "distribution-summary",
+      "explanationVariants": [
+        "The median 15 steps aside (odd count); lower half 5, 10, 10, 15 gives Q1 = 10, upper half 15, 20, 20, 25 gives Q3 = 20; IQR = 20 − 10 = 10.",
+        "The middle half of the trips runs from 10 to 20 minutes — a band 10 wide."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same trip data. Q1 = 10 and Q3 = 20. What is the IQR?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 adds the quartiles (20 + 10). The IQR is the width between them: 20 − 10 = 10."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is the RANGE (25 − 5) — endpoints, not fences. IQR = Q3 − Q1 = 20 − 10 = 10."
+          }
+        ],
+        "fallbackFeedback": "IQR = Q3 − Q1 = 20 − 10 = 10 minutes."
+      },
+      "hints": [
+        "Which two numbers feed an IQR?",
+        "Q3 = 20 and Q1 = 10.",
+        "Subtract."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddSummaryIqr"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Assemble it **in context, with units**: 'Trips to school center around **15 minutes** (median), with the middle half between 10 and 20 (**IQR 10**); the shape is **symmetric** with a single peak at 15 and no outliers.' Notice what's missing from bad descriptions: a bare '15' answers nothing — fifteen *what*, of *what data*, how *spread out*?",
+      "figure": "distribution-story"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Tag each fragment.",
+      "conceptTag": "distribution-summary",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "A student describes the trip data. Drag each fragment to the lens it uses.",
+        "buckets": [
+          {
+            "id": "shape",
+            "label": "SHAPE",
+            "icon": "⛰️"
+          },
+          {
+            "id": "center",
+            "label": "CENTER",
+            "icon": "🎯"
+          },
+          {
+            "id": "spread",
+            "label": "SPREAD",
+            "icon": "↔️"
+          }
+        ],
+        "items": [
+          {
+            "id": "f1",
+            "label": "\"one symmetric peak at 15\"",
+            "bucketId": "shape",
+            "feedback": "Peaks, symmetry, gaps, and outliers are the plot's SHAPE — how the dots arrange themselves."
+          },
+          {
+            "id": "f2",
+            "label": "\"a typical trip is about 15 minutes\"",
+            "bucketId": "center",
+            "feedback": "'Typical' is a CENTER claim — it locates the middle of the data."
+          },
+          {
+            "id": "f3",
+            "label": "\"the middle half spans 10 minutes\"",
+            "bucketId": "spread",
+            "feedback": "A span is a width — that's the IQR talking, a SPREAD lens."
+          },
+          {
+            "id": "f4",
+            "label": "\"trips stretch from 5 to 25 minutes\"",
+            "bucketId": "spread",
+            "feedback": "Min-to-max stretch is the range — SPREAD, not a location or a shape."
+          }
+        ],
+        "missFeedback": "Ask what the fragment answers: how the dots are arranged (shape), where the middle sits (center), or how wide the data runs (spread).",
+        "successFeedback": "Tagged — a full description hits all three lenses at least once."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the incomplete report.",
+      "conceptTag": "distribution-summary",
+      "explanationVariants": [
+        "'The average is 15' gives one center — no spread, no shape, no units or context. The full report pairs a center with a spread and names the shape.",
+        "One lens out of three: a reader can't tell whether trips vary by minutes or by an hour."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which report of the trip data is INCOMPLETE as a description of the distribution?",
+        "options": [
+          {
+            "id": "a",
+            "label": "\"The average is 15.\"",
+            "correct": true,
+            "feedback": "Right — it's a lone center with no units, no spread, no shape. True, but not a description."
+          },
+          {
+            "id": "b",
+            "label": "\"Trips center near 15 minutes, middle half 10–20, symmetric, no outliers.\"",
+            "feedback": "That one's complete — center (15), spread (IQR band), and shape (symmetric, no outliers) all present. The bare 'average is 15' is the incomplete one."
+          },
+          {
+            "id": "c",
+            "label": "\"Median 15 min; IQR 10 min; single symmetric peak.\"",
+            "feedback": "Compact but complete — one center, one spread, and the shape. The lone '15' report is the one that leaves the reader guessing."
+          }
+        ]
+      },
+      "hints": [
+        "Count the lenses in each report.",
+        "Shape, center, spread — a full report touches all three.",
+        "One report has just a single center."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddIncompleteReport"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Symmetry pays off.",
+      "conceptTag": "distribution-summary",
+      "explanationVariants": [
+        "Symmetric data balances, so the level-out point (mean) lands on the middle position (median): both are 15 here. Big mean–median gaps appear only when data is lopsided.",
+        "The sum is 135 across 9 trips: mean 135 ÷ 9 = 15 — exactly the median, as symmetry predicts."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The trip data sums to 135 across 9 trips. Compute the MEAN — and notice how it compares to the median of 15.",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 135,
+            "feedback": "135 is the sum; divide by the 9 trips: 135 ÷ 9 = 15 — landing exactly on the median, as symmetric data does."
+          },
+          {
+            "value": 16.875,
+            "feedback": "That's 135 ÷ 8 — there are NINE trips. 135 ÷ 9 = 15, matching the median."
+          }
+        ],
+        "fallbackFeedback": "135 ÷ 9 = 15. Mean equals median — the signature of symmetric data."
+      },
+      "hints": [
+        "Mean = sum ÷ count.",
+        "135 divided by 9.",
+        "It should land on the median."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddSummaryMean"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Write the report (by choosing it).",
+      "conceptTag": "distribution-summary",
+      "explanationVariants": [
+        "Option (a) is the only report with all three lenses in context: shape (symmetric peak), center (median 15 minutes), spread (IQR 10). The others repeat one lens or drop the units.",
+        "Check each candidate against the checklist — shape? center? spread? units? Only one passes all four."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Pick the BEST one-sentence description of the trip data.",
+        "options": [
+          {
+            "id": "a",
+            "label": "\"Trips cluster symmetrically around a median of 15 minutes, with the middle half spanning just 10 minutes.\"",
+            "correct": true,
+            "feedback": "Shape, center, spread, units, context — the complete picture in one sentence."
+          },
+          {
+            "id": "b",
+            "label": "\"The mean is 15 and the median is 15.\"",
+            "feedback": "Two CENTERS is still one lens. Trade one for a spread and add the shape: 'symmetric around 15 minutes, IQR 10.'"
+          },
+          {
+            "id": "c",
+            "label": "\"The range is 20 and the IQR is 10.\"",
+            "feedback": "Two SPREADS with no center or shape — how wide, but around what, arranged how? Anchor it: median 15 minutes, symmetric."
+          }
+        ]
+      },
+      "hints": [
+        "A complete report touches shape, center, AND spread.",
+        "Two centers — or two spreads — still cover only one lens.",
+        "Only one option names all three."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddBestDescription"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three lenses, one paragraph.",
+      "takeaways": [
+        "Describe a distribution with shape + center + spread, in context and with units.",
+        "Symmetric data: mean ≈ median (here both 15), and either center serves.",
+        "A single number — however correct — is not a description."
+      ],
+      "teaser": "next: when the data is lopsided, which center and which spread deserve the job?"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "distribution-summary",
+      "concept": {
+        "id": "rem-ds-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Three lenses:** SHAPE is how the dots arrange (peaks, symmetry, outliers); CENTER is where the middle sits (mean or median); SPREAD is how wide the data runs (range or IQR). A full description uses one of each."
+      },
+      "check": {
+        "id": "rem-ds-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "distribution-summary",
+        "explanationVariants": [
+          "'Spans 10 minutes' is a width — spread. Shape describes arrangement; center describes location.",
+          "Widths and stretches are always the spread lens."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "\"The middle half spans 10 minutes\" — which lens is that?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Spread",
+              "correct": true,
+              "feedback": "Yes — a span is a width, and widths are spread (this one is the IQR)."
+            },
+            {
+              "id": "b",
+              "label": "Center",
+              "feedback": "A center would LOCATE the middle (like 'median 15'). 'Spans 10' measures a width — that's spread."
+            },
+            {
+              "id": "c",
+              "label": "Shape",
+              "feedback": "Shape talks arrangement — peaks, symmetry, outliers. A 10-minute span is a width: spread."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

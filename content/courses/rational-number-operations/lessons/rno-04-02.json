@@ -1,0 +1,341 @@
+{
+  "id": "rno-04-02",
+  "slug": "adding-and-subtracting-signed-decimals",
+  "title": "Adding and Subtracting Signed Decimals",
+  "courseId": "rational-number-operations",
+  "chapterId": "ch4-operations-with-rational-numbers",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "integer-jump",
+      "body": "Signed decimals follow the exact same addition rules as integers. -2.5 + 1.75: different signs, so subtract magnitudes (2.5−1.75=0.75) and keep the sign of the bigger one: -0.75."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Add signed decimals.",
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "-2.5 + 1.75 = ? Drag the marker to the sum.",
+        "min": -6,
+        "max": 6,
+        "step": 0.25,
+        "tickStep": 1,
+        "target": -0.75,
+        "start": -2.5,
+        "commonPlacements": [
+          {
+            "value": 0.75,
+            "feedback": "-2.5 has the bigger magnitude, so the answer stays negative: -0.75."
+          },
+          {
+            "value": -4.25,
+            "feedback": "Different signs means SUBTRACT the magnitudes: 2.5−1.75=0.75, not add."
+          }
+        ],
+        "successFeedback": "2.5−1.75=0.75, and -2.5 has the bigger magnitude: -0.75 — you moved right but never reached zero.",
+        "lowFeedback": "That landing is further left than the sum. From −2.5, adding 1.75 moves you right, toward zero.",
+        "highFeedback": "That landing is right of the sum. 1.75 isn't quite enough to carry you from −2.5 across zero."
+      },
+      "predict": {
+        "prompt": "−2.5 + 1.75: which side of zero does the sum land on?",
+        "options": [
+          {
+            "id": "neg",
+            "label": "Negative — 2.5 outweighs 1.75"
+          },
+          {
+            "id": "pos",
+            "label": "Positive — adding a positive ends positive"
+          },
+          {
+            "id": "zero",
+            "label": "Exactly zero — they cancel"
+          }
+        ],
+        "outcomeId": "neg",
+        "reveal": "Different-sign addition is a tug-of-war of magnitudes: 2.5 beats 1.75, so the negative side keeps the difference — −0.75. Adding a positive moves you right, but 1.75 of movement can't cover a 2.5 deficit."
+      },
+      "conceptTag": "rno-decimal-add",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents decimal add.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for decimal add must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines decimal add."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rational-number-operations:rno-decimal-add",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add two negative decimals.",
+      "conceptTag": "rno-decimal-add",
+      "explanationVariants": [
+        "Same sign: add 4.1+2.9=7.0, keep negative: -7.0.",
+        "Both negative decimals add and keep the sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-4.1 + (-2.9) = ?",
+        "answer": -7,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "Both negative, so the sum stays negative: -7.0."
+          },
+          {
+            "value": -1.2,
+            "feedback": "Same sign means ADD: 4.1+2.9=7.0, so -7.0."
+          }
+        ],
+        "fallbackFeedback": "-4.1 + (-2.9) = -7.0."
+      },
+      "variant": {
+        "gen": "g7-signed-decimal-add"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtracting decimals still means adding the opposite: 3.25 − (−1.5) = 3.25 + 1.5 = 4.75.",
+      "figure": "rno-add-opposite"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Subtract a negative decimal.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "3.25 - (-1.5) = ?",
+        "answer": 4.75,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 1.75,
+            "feedback": "Subtracting a NEGATIVE flips to adding a positive: 3.25 − (−1.5) = 3.25 + 1.5 = 4.75."
+          },
+          {
+            "value": -4.75,
+            "feedback": "3.25 + 1.5 = 4.75, not negative."
+          }
+        ],
+        "fallbackFeedback": "3.25 − (−1.5) = 3.25 + 1.5 = 4.75."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Line up the decimal points carefully when adding or subtracting — a misaligned decimal is a common way to get the magnitude wrong.",
+      "figure": "dop-line-up"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Careful decimal alignment.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-4.1 + (-2.9) = ?",
+        "answer": -7,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "Both negative, so the sum stays negative: -7.0."
+          },
+          {
+            "value": -1.2,
+            "feedback": "Same sign means ADD: 4.1+2.9=7.0, so -7.0."
+          }
+        ],
+        "fallbackFeedback": "-4.1 + (-2.9) = -7.0."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another decimal subtraction.",
+      "conceptTag": "rno-decimal-subtract",
+      "explanationVariants": [
+        "-4.1 − (−2.9) = -4.1 + 2.9 = -1.2.",
+        "The opposite of −2.9 is +2.9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-4.1 - (-2.9) = ?",
+        "answer": -1.2,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "Subtracting a NEGATIVE flips to adding a positive: -4.1 − (−2.9) = -4.1 + 2.9 = -1.2."
+          },
+          {
+            "value": 1.2,
+            "feedback": "-4.1 has the bigger magnitude, so the answer stays negative: -1.2."
+          }
+        ],
+        "fallbackFeedback": "-4.1 − (−2.9) = -4.1 + 2.9 = -1.2."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A decimal markdown-style subtraction.",
+      "conceptTag": "rno-decimal-subtract",
+      "explanationVariants": [
+        "0.75 − (−0.25) = 0.75 + 0.25 = 1.0.",
+        "The opposite of −0.25 is +0.25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "0.75 - (-0.25) = ?",
+        "answer": 1,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "Subtracting a NEGATIVE flips to adding a positive: 0.75 − (−0.25) = 0.75 + 0.25 = 1.0."
+          },
+          {
+            "value": -1,
+            "feedback": "0.75 + 0.25 = 1.0, not negative."
+          }
+        ],
+        "fallbackFeedback": "0.75 − (−0.25) = 1.0."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier decimal problem.",
+      "conceptTag": "rno-decimal-subtract",
+      "explanationVariants": [
+        "3.25 − (−1.5) = 3.25 + 1.5 = 4.75.",
+        "The opposite of −1.5 is +1.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "3.25 - (-1.5) = ?",
+        "answer": 4.75,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 1.75,
+            "feedback": "Subtracting a negative flips to adding: 3.25 + 1.5 = 4.75."
+          },
+          {
+            "value": -4.75,
+            "feedback": "3.25 + 1.5 = 4.75, not negative."
+          }
+        ],
+        "fallbackFeedback": "3.25 − (−1.5) = 4.75."
+      },
+      "hints": [
+        "Rewrite as adding the opposite: 3.25 + 1.5.",
+        "Both are now positive, so add normally.",
+        "3.25 + 1.5 = 4.75."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Signed decimals follow the exact same addition/subtraction rules as integers — just watch the decimal point.",
+      "takeaways": [
+        "Same sign: add magnitudes, keep the sign.",
+        "Different signs: subtract magnitudes, keep the bigger one's sign.",
+        "Subtracting still means adding the opposite."
+      ],
+      "teaser": "next: solving real-world problems with all four operations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rno-decimal-add",
+      "concept": {
+        "id": "rem-rda-c",
+        "kind": "concept",
+        "body": "Signed decimals add just like integers: same sign adds magnitudes and keeps the sign; different signs subtract magnitudes and keep the bigger one's sign."
+      },
+      "check": {
+        "id": "rem-rda-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-decimal-add",
+        "explanationVariants": [
+          "2.5−1.75=0.75, keep negative: -0.75.",
+          "Different signs: subtract, keep the bigger sign."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "-2.5 + 1.75 = ?",
+          "answer": -0.75,
+          "tolerance": 0.001,
+          "commonErrors": [
+            {
+              "value": 0.75,
+              "feedback": "-2.5 is bigger, so the answer stays negative: -0.75."
+            },
+            {
+              "value": -4.25,
+              "feedback": "Subtract, don't add: 2.5-1.75=0.75, so -0.75."
+            }
+          ],
+          "fallbackFeedback": "-2.5 + 1.75 = -0.75."
+        }
+      }
+    },
+    {
+      "conceptTag": "rno-decimal-subtract",
+      "concept": {
+        "id": "rem-rds2-c",
+        "kind": "concept",
+        "body": "Subtracting signed decimals means adding the opposite, same as integers. 3.25 − (−1.5) = 3.25 + 1.5 = 4.75."
+      },
+      "check": {
+        "id": "rem-rds2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-decimal-subtract",
+        "explanationVariants": [
+          "3.25 + 1.5 = 4.75.",
+          "The opposite of −1.5 is +1.5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "3.25 - (-1.5) = ?",
+          "answer": 4.75,
+          "tolerance": 0.001,
+          "commonErrors": [
+            {
+              "value": 1.75,
+              "feedback": "Subtracting a negative flips to adding: 4.75."
+            },
+            {
+              "value": -4.75,
+              "feedback": "3.25+1.5=4.75, not negative."
+            }
+          ],
+          "fallbackFeedback": "3.25 - (-1.5) = 4.75."
+        }
+      }
+    }
+  ]
+}

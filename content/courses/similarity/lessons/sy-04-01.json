@@ -1,0 +1,355 @@
+{
+ "id": "sy-04-01",
+ "slug": "three-similar-triangles",
+ "title": "Three Similar Triangles",
+ "courseId": "similarity",
+ "chapterId": "ch4-right-triangle-similarity",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "sy-altitude-similar",
+   "concept": {
+    "id": "rem-sy-altitude-similar-c",
+    "kind": "concept",
+    "body": "In a right triangle, the altitude from the right angle to the hypotenuse creates THREE similar triangles: the two small ones and the original, all similar by AA (each shares the right angle and one acute angle). They are SIMILAR (same shape) — not congruent, since the sizes usually differ."
+   },
+   "check": {
+    "id": "rem-sy-altitude-similar-k",
+    "kind": "check",
+    "body": "How similar, and why.",
+    "conceptTag": "sy-altitude-similar",
+    "explanationVariants": [
+     "Each piece shares the right angle and an acute angle with the whole — AA similarity.",
+     "Two equal angles (right + shared acute) make each small triangle similar to the original."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "The altitude to a right triangle's hypotenuse makes the small triangles similar to the whole by which criterion?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "AA",
+       "correct": true,
+       "feedback": "Each shares the right angle and one acute angle — two equal angles, so AA."
+      },
+      {
+       "id": "o2",
+       "label": "SSS congruence",
+       "correct": false,
+       "feedback": "The triangles differ in size, so not congruent. They're SIMILAR by AA."
+      },
+      {
+       "id": "o3",
+       "label": "SAS~",
+       "correct": false,
+       "feedback": "You don't need side ratios here — the shared angles give AA directly."
+      },
+      {
+       "id": "o4",
+       "label": "HL",
+       "correct": false,
+       "feedback": "HL is a congruence criterion for equal-size right triangles. These are similar by AA."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Drop the **altitude from the right angle** to the hypotenuse of a right triangle, and something remarkable happens: the two smaller triangles you create are each **similar to the whole** — and to each other. Three nested similar triangles from one line. Every angle is shared around, so AA does all the work.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "How many similar triangles?",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "Drop the altitude from the right angle and slide its foot along the hypotenuse. Count the triangles you can see, and watch whether any of them stops being the same shape as the others.",
+    "shape": [
+     [
+      0,
+      0
+     ],
+     [
+      20,
+      0
+     ],
+     [
+      4,
+      8
+     ]
+    ],
+    "center": [
+     0,
+     0
+    ],
+    "targetK": 0.2,
+    "kMin": 0.05,
+    "kMax": 0.95,
+    "kStep": 0.05,
+    "kStart": 0.5,
+    "gridMin": 0,
+    "gridMax": 21,
+    "showRatios": [
+     "altitude"
+    ],
+    "successFeedback": "p = 4, q = 16, h = 8 — and 8² = 64 = 4 × 16. There are three triangles on screen, not two: the small one on the left, the one on the right, and the whole. All three share the right angle, and each shares one acute angle with the whole, so AA makes all three similar — at this position and at every other one you tried.",
+    "lowFeedback": "The foot is left of the target, so p is under 4. Slide right — and notice that the three triangles stay similar the whole way; only their sizes are changing.",
+    "highFeedback": "The foot has gone past, so p is over 4. Ease back left. However far you push it, the apex angle stays right, because the apex is riding the semicircle drawn over the hypotenuse."
+   },
+   "predict": {
+    "prompt": "Drop the altitude from the right angle to the hypotenuse. How many triangles similar to each other are now in the figure?",
+    "options": [
+     {
+      "id": "three",
+      "label": "Three — the two small ones and the original"
+     },
+     {
+      "id": "two",
+      "label": "Two — just the two new small ones"
+     },
+     {
+      "id": "none",
+      "label": "None; cutting a triangle destroys the similarity"
+     }
+    ],
+    "outcomeId": "three",
+    "reveal": "Three. It is easy to count only the two new pieces and forget that the original is still there and still similar to both. That third one is what makes the geometric-mean relationships work, because it is the triangle whose hypotenuse the segments belong to."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Why they're similar.",
+   "conceptTag": "sy-altitude-similar",
+   "explanationVariants": [
+    "Each small triangle shares the right angle and one acute angle with the original, so by AA all three are similar.",
+    "The altitude makes new right angles, and each piece keeps one of the original's acute angles — AA similarity throughout."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why is each small triangle similar to the whole right triangle?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Each shares the right angle and one acute angle with the original (AA)",
+      "correct": true,
+      "feedback": "Two equal angles — the right angle and a shared acute angle — give AA similarity for each piece."
+     },
+     {
+      "id": "o2",
+      "label": "Because the altitude bisects the hypotenuse",
+      "correct": false,
+      "feedback": "The altitude generally does NOT bisect the hypotenuse — the segments are usually unequal. Similarity comes from shared ANGLES."
+     },
+     {
+      "id": "o3",
+      "label": "Because all right triangles are similar",
+      "correct": false,
+      "feedback": "Right triangles are NOT all similar (their acute angles vary). These three are, because they share angles via AA."
+     },
+     {
+      "id": "o4",
+      "label": "Because the sides are all equal",
+      "correct": false,
+      "feedback": "The sides are different lengths — the triangles are similar (same shape), not congruent. AA is the reason."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-altitude-similar__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Matching the corresponding parts is the tricky bit. Line up each small triangle with the whole by their equal angles: the right angle maps to the right angle, and the shared acute angle to itself. Once aligned, the proportional sides give you the powerful **geometric mean** relationships coming next.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Corresponding hypotenuse.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "In this altitude picture, the hypotenuse of each SMALL triangle corresponds to which side of the WHOLE triangle?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the whole triangle's hypotenuse",
+      "correct": true,
+      "feedback": "Corresponding parts match by role: each small hypotenuse (a leg of the original) pairs with the original's hypotenuse under the similarity."
+     },
+     {
+      "id": "o2",
+      "label": "the altitude",
+      "correct": false,
+      "feedback": "The altitude is a LEG of the small triangles, not a hypotenuse. Hypotenuse corresponds to hypotenuse."
+     },
+     {
+      "id": "o3",
+      "label": "a segment of the hypotenuse",
+      "correct": false,
+      "feedback": "The hypotenuse SEGMENTS are legs of the small triangles. Each small hypotenuse corresponds to the whole hypotenuse."
+     },
+     {
+      "id": "o4",
+      "label": "there is no correspondence",
+      "correct": false,
+      "feedback": "There is a clear correspondence — similar triangles always have matching parts, hypotenuse to hypotenuse."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Similar, not congruent.",
+   "conceptTag": "sy-altitude-similar",
+   "explanationVariants": [
+    "The three triangles have the same angles but different sizes — similar, not congruent (unless the original is isosceles).",
+    "Same shape, different size: the altitude picture gives similar triangles."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The three triangles in the altitude picture are…",
+    "options": [
+     {
+      "id": "o1",
+      "label": "similar (same shape, generally different sizes)",
+      "correct": true,
+      "feedback": "Shared angles make them similar; their differing sizes mean they're not congruent in general."
+     },
+     {
+      "id": "o2",
+      "label": "congruent (identical)",
+      "correct": false,
+      "feedback": "They're different sizes, so not congruent — but they ARE similar, sharing all angles."
+     },
+     {
+      "id": "o3",
+      "label": "unrelated",
+      "correct": false,
+      "feedback": "They're closely related — all three are similar by AA."
+     },
+     {
+      "id": "o4",
+      "label": "all isosceles",
+      "correct": false,
+      "feedback": "Nothing forces them isosceles; they're similar right triangles of varying proportions."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-altitude-similar__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "This one configuration secretly proves the **Pythagorean theorem**. Writing the leg geometric-mean relationships and adding them recovers a² + b² = c². The altitude-on-hypotenuse picture isn't just a curiosity — it's one of the cleanest routes to the most famous theorem in geometry.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "The big payoff.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "The altitude-to-hypotenuse similar triangles can be used to prove which famous result?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the Pythagorean theorem (a² + b² = c²)",
+      "correct": true,
+      "feedback": "Adding the two leg geometric-mean relationships recovers a² + b² = c² — a clean proof of the Pythagorean theorem."
+     },
+     {
+      "id": "o2",
+      "label": "the triangle inequality",
+      "correct": false,
+      "feedback": "That's a different result about side sums. The altitude similarity yields the PYTHAGOREAN theorem."
+     },
+     {
+      "id": "o3",
+      "label": "the law of cosines",
+      "correct": false,
+      "feedback": "The law of cosines is a generalization proved differently. This configuration gives the Pythagorean theorem."
+     },
+     {
+      "id": "o4",
+      "label": "that all triangles have angle sum 180°",
+      "correct": false,
+      "feedback": "The angle-sum fact is more basic and unrelated here. This proves a² + b² = c²."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Spot the shared angle.",
+   "conceptTag": "sy-altitude-similar",
+   "hints": [
+    "The small triangle on the left shares which acute angle with the whole triangle?",
+    "It shares the acute angle at the LEFT end of the hypotenuse.",
+    "That shared acute angle plus the right angle gives AA."
+   ],
+   "explanationVariants": [
+    "The left small triangle shares the acute angle at the left vertex AND has a right angle (at the altitude's foot), so by AA it's similar to the whole triangle.",
+    "Shared left acute angle + right angle = AA similarity between the left piece and the original."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The small triangle on the LEFT is similar to the whole triangle because they share…",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the left acute angle plus a right angle (AA)",
+      "correct": true,
+      "feedback": "The common left acute angle and a right angle give two equal angles — AA similarity."
+     },
+     {
+      "id": "o2",
+      "label": "all three sides",
+      "correct": false,
+      "feedback": "The sides differ in length — similarity comes from equal ANGLES (AA), not equal sides."
+     },
+     {
+      "id": "o3",
+      "label": "the hypotenuse",
+      "correct": false,
+      "feedback": "They don't share a hypotenuse — the small triangle's hypotenuse is a LEG of the whole. AA comes from the angles."
+     },
+     {
+      "id": "o4",
+      "label": "only the right angle",
+      "correct": false,
+      "feedback": "One shared angle isn't enough. They also share the left acute angle — two angles, so AA."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-altitude-similar__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One altitude, three triangles.",
+   "takeaways": [
+    "The altitude to the hypotenuse makes two small triangles, each similar to the whole (AA).",
+    "All three share angles, so they're similar — same shape, different sizes.",
+    "This configuration even proves the Pythagorean theorem."
+   ],
+   "teaser": "Next: the exact side relationships — the geometric mean."
+  }
+ ]
+}

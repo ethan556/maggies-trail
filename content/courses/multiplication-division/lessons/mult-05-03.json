@@ -1,0 +1,375 @@
+{
+  "id": "mult-05-03",
+  "slug": "even-times-odd",
+  "title": "Even × Odd: What Happens?",
+  "courseId": "multiplication-division",
+  "chapterId": "ch5-number-patterns",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A parity crystal ball: **even × anything = even**. If either factor is even, the whole product pairs up perfectly. The ONLY way to build an odd product is **odd × odd**. You can call a product's parity before multiplying a single thing.",
+      "figure": "mult3-even-odd"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Predict each product's parity — no multiplying allowed.",
+      "conceptTag": "parity",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort the facts by the parity their product MUST have.",
+        "buckets": [
+          {
+            "id": "even",
+            "label": "Even product",
+            "icon": "🤝"
+          },
+          {
+            "id": "odd",
+            "label": "Odd product",
+            "icon": "🧍"
+          }
+        ],
+        "items": [
+          {
+            "id": "f1",
+            "label": "4 × 7",
+            "bucketId": "even",
+            "feedback": "The 4 is even — an even factor pairs the whole product (it's 28)."
+          },
+          {
+            "id": "f2",
+            "label": "3 × 5",
+            "bucketId": "odd",
+            "feedback": "Both factors odd — the only recipe for an odd product (it's 15)."
+          },
+          {
+            "id": "f3",
+            "label": "6 × 6",
+            "bucketId": "even",
+            "feedback": "Even times even — doubly paired (36). Any even factor is enough."
+          },
+          {
+            "id": "f4",
+            "label": "9 × 3",
+            "bucketId": "odd",
+            "feedback": "Odd × odd — no even factor anywhere to pair things up, so the product stays odd (27)."
+          }
+        ],
+        "missFeedback": "Scan for an even factor: found one → even product. Both factors odd → odd product. That's the whole rule.",
+        "successFeedback": "Called before computing! One even factor forces even; only odd × odd stays odd."
+      },
+      "predict": {
+        "prompt": "4 × 7 is on one card. Without multiplying, its product must be…",
+        "options": [
+          {
+            "id": "even",
+            "label": "Even — one even factor forces it"
+          },
+          {
+            "id": "odd",
+            "label": "Odd — the odd factor decides"
+          },
+          {
+            "id": "unknown",
+            "label": "Impossible to tell without computing"
+          }
+        ],
+        "outcomeId": "even",
+        "reveal": "4 × 7 is seven groups of an EVEN number — every group is made of pairs, and stacking groups keeps every pair intact. One even factor makes the whole product even, and that single rule sorts every card without any arithmetic."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "WHY does an even factor guarantee an even product?",
+      "conceptTag": "parity",
+      "explanationVariants": [
+        "8 groups pair into 4 pairs-of-groups — whatever's inside, the whole pile splits evenly in two.",
+        "8 × 5 = (4 + 4) × 5: two identical halves of 20 each. Anything split into two equal halves is even."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Before computing, you can promise 8 × 5 will be even. Why?",
+        "options": [
+          {
+            "id": "a",
+            "label": "8 is even — the 8 groups pair up completely, so the total splits into two equal halves",
+            "correct": true,
+            "feedback": "Pair the 8 groups into 4 matched pairs: the product is two identical halves — even, no matter what the groups hold."
+          },
+          {
+            "id": "b",
+            "label": "Because 5 ends in 5",
+            "feedback": "The 5 is the ODD one here — alone it makes odd products (like 3 × 5 = 15). The even 8 is what forces evenness."
+          },
+          {
+            "id": "c",
+            "label": "Because 40 is an even number",
+            "feedback": "True — but that's checking AFTER computing. The promise comes before: an even factor guarantees it in advance."
+          },
+          {
+            "id": "d",
+            "label": "It isn't guaranteed until you multiply",
+            "feedback": "It is! Any even factor pairs the whole product. No multiplication with an even factor has ever come out odd."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "parity"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why odd × odd stays odd: odd groups of an odd size — pair up everything you can, and exactly **one loner survives**. And the rule runs backwards, too: if a product is EVEN, at least one of its factors must be even.",
+      "figure": "mult3-even-odd"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Run the rule in reverse.",
+      "conceptTag": "parity",
+      "explanationVariants": [
+        "63 is odd, and only odd × odd makes odd — so both factors are odd. (Indeed 63 = 7 × 9, both odd.)",
+        "If either factor were even, it would pair the whole product into an even number. 63 isn't even, so no even factor exists."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two whole numbers multiply to 63 — an odd number. What do you know about the factors?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Both factors must be odd",
+            "correct": true,
+            "feedback": "Odd products only come from odd × odd. Sure enough: 63 = 7 × 9 (or 21 × 3) — odd every time."
+          },
+          {
+            "id": "b",
+            "label": "Both factors must be even",
+            "feedback": "Even × even is always even — it could never make 63. Even one even factor would pair the product up."
+          },
+          {
+            "id": "c",
+            "label": "One factor is even, one is odd",
+            "feedback": "A single even factor is enough to force an even product. 63 escaped that — so no even factor anywhere."
+          },
+          {
+            "id": "d",
+            "label": "Nothing — parity can't run backwards",
+            "feedback": "It runs both ways! Odd product → no even factor allowed → both factors odd. The crystal ball works in reverse."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "parity",
+        "form": "oddFactors"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Odd rows have a **rhythm** — build one and listen.",
+      "conceptTag": "parity",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the 3s row in order, starting from 3 — then watch the parity rhythm it beats.",
+        "items": [
+          {
+            "id": "n6",
+            "label": "6"
+          },
+          {
+            "id": "n3",
+            "label": "3"
+          },
+          {
+            "id": "n12",
+            "label": "12"
+          },
+          {
+            "id": "n9",
+            "label": "9"
+          }
+        ],
+        "correctOrder": [
+          "n3",
+          "n6",
+          "n9",
+          "n12"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "n12",
+            "second": "n3",
+            "feedback": "12 landed before 3 — but the row climbs by 3s from its own number: 3 first, then 6, 9, 12."
+          }
+        ],
+        "missFeedback": "Skip count by 3: 3, 6, 9, 12 — each cell is the last plus 3.",
+        "successFeedback": "3, 6, 9, 12: odd, even, odd, even — an odd row alternates forever. Even rows (like the 6s) are even ALL the way."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use the rhythm to catch a fact.",
+      "conceptTag": "parity",
+      "explanationVariants": [
+        "7 × 4 has an even factor (4), so it must be even — and it's 28.",
+        "The 7s row beats odd, even, odd, even: its 4th number lands on an even beat, 28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The 7s row alternates odd, even, odd, even… What is 7 × 4?",
+        "answer": 28,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is 6 × 4 — the wrong row. Stay in the 7s: 7, 14, 21, and one more hop of 7."
+          },
+          {
+            "value": 11,
+            "feedback": "11 adds 7 + 4. Four groups of 7 stack higher — skip count the row: 7, 14, 21, 28."
+          },
+          {
+            "value": 27,
+            "feedback": "27 is odd — but the 4th beat of an odd row is EVEN (odd, even, odd, even). Parity alone rejects 27; the answer is 21 + 7."
+          }
+        ],
+        "fallbackFeedback": "Hop the 7s row four times: 7, 14, 21, ? — and remember the 4th beat must be even."
+      },
+      "variant": {
+        "gen": "parity",
+        "form": "rowValue"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller two-step score, before the game's full total.",
+      "conceptTag": "parity",
+      "explanationVariants": [
+        "3 points × 4 levels = 12, then add the 2-point bonus at the end: 12 + 2 = 14.",
+        "The bonus is separate from the per-level rate — multiply first (3×4=12), add second (+2=14)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A game gives 3 points per level for 4 levels, plus a 2-point finish bonus. What is the total score?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is just the level points (3×4) — don't forget the bonus at the end: 12+2=14."
+          },
+          {
+            "value": 20,
+            "feedback": "20 comes from adding the bonus into the RATE first ((3+2)×4) — the bonus is a one-time add-on, applied AFTER the multiplying: 12+2=14."
+          }
+        ],
+        "fallbackFeedback": "Multiply points-per-level by levels first (3×4=12), then add the bonus last: 12+2=14."
+      },
+      "variant": {
+        "gen": "parity",
+        "form": "pointsBonus"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Call the parity first — then earn the number.",
+      "conceptTag": "parity",
+      "hints": [
+        "Parity first: 5 × 7 is odd × odd. What must the level points be?",
+        "5 × 7 = 35 — odd, as promised. Now the bonus joins.",
+        "Odd + even stays odd: 35 + 4."
+      ],
+      "explanationVariants": [
+        "Levels: 5 × 7 = 35 (odd × odd → odd ✓). Bonus: 35 + 4 = 39, still odd since odd + even = odd.",
+        "Parity audit the whole chain: odd × odd = odd, then odd + even = odd — so any even total is automatically wrong. 39 fits."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A game gives 5 points per level for 7 levels, plus a 4-point finish bonus. What is the total score?",
+        "answer": 39,
+        "tolerance": 0,
+        "unit": "points",
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "35 is the levels only — the parity was right (odd × odd), but the 4-point bonus still joins."
+          },
+          {
+            "value": 31,
+            "feedback": "31 SUBTRACTS the bonus. A bonus is points arriving, not leaving — add the 4."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is even — impossible! Odd × odd made 35 (odd), and odd + even stays odd. The parity crystal ball rejects 40 before any recount."
+          }
+        ],
+        "fallbackFeedback": "Two steps: 5 × 7 for the levels (call its parity first!), then add the even bonus — the total must stay odd."
+      },
+      "variant": {
+        "gen": "parity",
+        "form": "pointsBonus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can see a product's parity before it exists.",
+      "takeaways": [
+        "Any even factor forces an even product; only odd × odd makes odd.",
+        "The rule reverses: an odd product proves both factors were odd.",
+        "Odd rows beat odd-even-odd-even; even rows are even throughout."
+      ],
+      "teaser": "one hunt left — multiples paint stripes and staircases across the hundred chart."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "parity",
+      "concept": {
+        "id": "rem-py-c",
+        "kind": "concept",
+        "body": "Quick rewind. Look for an **even factor**. Even means pair-able — and pair-able groups pair up the WHOLE product. 2 × 9: the 2 makes two matching 9s, a perfect pair, so the product (18) is even. No even factor anywhere? Then, and only then, the product is odd."
+      },
+      "check": {
+        "id": "rem-py-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "parity",
+        "explanationVariants": [
+          "The even 2 pairs everything: 2 × 9 = 18, even.",
+          "Two identical groups of 9 are a perfect pair — even by construction."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Without multiplying: 2 × 9 will be…",
+          "options": [
+            {
+              "id": "a",
+              "label": "Even",
+              "correct": true,
+              "feedback": "The 2 is even — it pairs the whole product. (It's 18.)"
+            },
+            {
+              "id": "b",
+              "label": "Odd",
+              "feedback": "The 9 is odd, but one even factor outvotes it — even × odd always lands even."
+            },
+            {
+              "id": "c",
+              "label": "Can't tell without multiplying",
+              "feedback": "You can tell: spot an even factor and the product is even, guaranteed. Only odd × odd ever stays odd."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

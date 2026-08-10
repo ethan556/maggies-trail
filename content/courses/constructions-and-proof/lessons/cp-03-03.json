@@ -1,0 +1,391 @@
+{
+  "id": "cp-03-03",
+  "slug": "why-constructions-work",
+  "title": "Why Constructions Work",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch3-inscribed-polygons",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-why-works",
+      "concept": {
+        "id": "rem-cp-why-works-c",
+        "kind": "concept",
+        "body": "The construction-proof template: (1) name the equal radii the compass guarantees, (2) add any shared side, (3) conclude the triangles are congruent (usually SSS), (4) read off the equal angle or side you wanted. Equal radii are always step one."
+      },
+      "check": {
+        "id": "rem-cp-why-works-k",
+        "kind": "check",
+        "body": "Name step one.",
+        "conceptTag": "cp-why-works",
+        "explanationVariants": [
+          "Construction proofs begin with the compass's guarantee: equal radii from same-opening arcs.",
+          "Before triangles or congruence, you cite the equal lengths the arcs create."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What fact does a construction proof almost always start from?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "equal radii, guaranteed by same-opening compass arcs",
+              "correct": true,
+              "feedback": "The compass's one promise — equal radii — is the seed every construction proof grows from."
+            },
+            {
+              "id": "o2",
+              "label": "the final right angle you want to prove",
+              "correct": false,
+              "feedback": "That's the CONCLUSION, not the start — you can't assume what you're proving. Begin with the equal radii."
+            },
+            {
+              "id": "o3",
+              "label": "a protractor measurement of the angle",
+              "correct": false,
+              "feedback": "Proofs use no measurements — they chain guaranteed facts. The starting fact is equal radii."
+            },
+            {
+              "id": "o4",
+              "label": "the assumption that the drawing is exact",
+              "correct": false,
+              "feedback": "A proof never assumes the drawing is exact — it derives exactness from equal radii and congruence."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A construction is only as good as its REASON. Every compass move creates a fact you can trust: a circle guarantees all its radii are **equal**. That single guarantee — equal radii — is the seed of nearly every construction proof. Spot the equal radii and the reason usually follows.",
+      "figure": "proof-structure"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the equal radii.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the perpendicular-bisector construction, two same-opening arcs from A and from B cross at points X and Y. Which lengths are EQUAL by the compass alone?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "XA = XB and YA = YB (each arc-pair shares one radius)",
+            "correct": true,
+            "feedback": "The A-arc and B-arc use the SAME opening, so X and Y are each equidistant from A and B — that's what puts them on the perpendicular bisector."
+          },
+          {
+            "id": "o2",
+            "label": "XA = YA only",
+            "correct": false,
+            "feedback": "XA and YA come from DIFFERENT centers (A's arc reaches X; whether YA equals it isn't guaranteed). The reliable equalities pair each point with A AND B."
+          },
+          {
+            "id": "o3",
+            "label": "XY = AB",
+            "correct": false,
+            "feedback": "The cross-line XY and the segment AB have no forced relationship in length — the equal radii are the arc distances, not these."
+          },
+          {
+            "id": "o4",
+            "label": "nothing is guaranteed equal without measuring",
+            "correct": false,
+            "feedback": "The whole point of the compass is guaranteed equality: same opening ⇒ equal radii, no ruler needed."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Perform the construction the proof will explain.",
+      "conceptTag": "cp-why-works",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "perpBisector",
+        "span": 10,
+        "target": 6,
+        "start": 2,
+        "prompt": "A and B are 10 apart. Swing the equal arcs and find the smallest whole radius where they cross — these crossings are the X and Y of the proof.",
+        "successFeedback": "Radius 6 — the first whole opening past half of 10. Now name what you actually guaranteed: XA = XB and YA = YB, because each crossing sits on BOTH equal-radius arcs. Those two equalities are the entire input to the proof you order next — everything else is deduction.",
+        "lowFeedback": "The arcs each reach only their own radius from their own end. To touch, the two radii together must beat the 10 between A and B — clear 5.",
+        "highFeedback": "Crossing, yes — but the task asks for the SMALLEST whole radius that manages it. Bring it back down."
+      },
+      "predict": {
+        "prompt": "The proof you are about to order rests on ONE guarantee the compass gives for free. Which is it?",
+        "options": [
+          {
+            "id": "radii",
+            "label": "Every arc's points sit at the SAME distance from its center — equal radii, no measuring"
+          },
+          {
+            "id": "perp",
+            "label": "The compass draws the perpendicular directly"
+          },
+          {
+            "id": "mid",
+            "label": "The compass finds the midpoint by touch"
+          }
+        ],
+        "outcomeId": "radii",
+        "reveal": "The compass never measures and never aims — it only promises equal distance from its center. XA = XB and YA = YB come from that promise alone, and they are exactly the equal pairs the SSS argument in the proof will lean on. Perpendicularity and the midpoint are CONCLUSIONS, not tools."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Equal radii feed the congruence engine. Once you see enough equal segments (and shared sides), triangles become **congruent by SSS** — and congruent triangles hand you equal angles and equal sides for free. Construction proofs are usually: equal radii → congruent triangles → the property you wanted.",
+      "figure": "cnp-equal-radii"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the proof.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the perpendicular-bisector proof in logical order.",
+        "items": [
+          {
+            "id": "t3",
+            "label": "So the two triangles △AXY and △BXY are congruent (SSS)"
+          },
+          {
+            "id": "t1",
+            "label": "The arcs share one opening, so XA = XB and YA = YB"
+          },
+          {
+            "id": "t4",
+            "label": "Therefore ∠AXY = ∠BXY, and XY bisects the angle at X — forcing XY ⊥ AB through the midpoint"
+          },
+          {
+            "id": "t2",
+            "label": "XY is a shared side of both triangles AXY and BXY"
+          }
+        ],
+        "correctOrder": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "t3",
+            "second": "t1",
+            "feedback": "The congruence CONCLUSION can't come before its evidence — establish the equal radii (XA = XB, YA = YB) first."
+          },
+          {
+            "first": "t4",
+            "second": "t3",
+            "feedback": "The final angle/perpendicular result depends on the triangles being congruent — that congruence has to be proven before you use it."
+          }
+        ],
+        "missFeedback": "Build it bottom-up: equal radii and the shared side first, then SSS congruence, then the perpendicular conclusion.",
+        "successFeedback": "Equal radii → shared side → SSS congruence → perpendicular. Each step rests on the ones above it."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which postulate closes it?",
+      "conceptTag": "cp-why-works",
+      "explanationVariants": [
+        "Three pairs of equal sides (XA = XB, YA = YB, XY = XY shared) prove the triangles congruent by SSS.",
+        "No angles are measured in the construction — only equal LENGTHS from the compass — so the matching criterion is side-side-side."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The perpendicular-bisector proof concludes the two triangles are congruent by which criterion?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "SSS (three pairs of equal sides)",
+            "correct": true,
+            "feedback": "XA = XB, YA = YB, and the shared side XY — three equal sides, so SSS."
+          },
+          {
+            "id": "o2",
+            "label": "SAS (two sides and the included angle)",
+            "correct": false,
+            "feedback": "The compass gives only equal LENGTHS, never a known equal angle — so with three equal sides the criterion is SSS."
+          },
+          {
+            "id": "o3",
+            "label": "AAA (three equal angles)",
+            "correct": false,
+            "feedback": "AAA isn't even a congruence criterion (it gives similarity), and no angles are measured here. Use the equal sides: SSS."
+          },
+          {
+            "id": "o4",
+            "label": "HL (hypotenuse-leg)",
+            "correct": false,
+            "feedback": "HL needs a known right angle FIRST — but the right angle is what we're trying to PROVE. The proof gets there via SSS."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-why-works__mcq"
+      }
+    },
+    {
+      "id": "k0",
+      "kind": "check",
+      "body": "What congruence buys you.",
+      "conceptTag": "cp-why-works",
+      "explanationVariants": [
+        "Once triangles are congruent, ALL their corresponding parts are equal — that's how a proof extracts the equal angle or side it was after.",
+        "Congruence is a bridge: prove it once (via equal radii), then cross it to any matching pair of parts."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Once a construction proof shows two triangles are congruent, what can it conclude?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "every pair of corresponding sides and angles is equal",
+            "correct": true,
+            "feedback": "Congruent triangles match in ALL parts — the proof then reads off whichever equal angle or side it needs."
+          },
+          {
+            "id": "o2",
+            "label": "only that the triangles have the same area",
+            "correct": false,
+            "feedback": "Equal area is a weak by-product — congruence gives far more: every corresponding side AND angle matches."
+          },
+          {
+            "id": "o3",
+            "label": "only that the triangles look similar",
+            "correct": false,
+            "feedback": "Congruence is stronger than similarity: not just equal angles but equal SIZES too, part for part."
+          },
+          {
+            "id": "o4",
+            "label": "nothing further without measuring",
+            "correct": false,
+            "feedback": "Congruence itself delivers all corresponding parts equal — no measuring needed, that's the point."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-why-works__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "This is the leap the chapter has been building toward: a careful drawing SHOWS; a proof GUARANTEES. \"It looks perpendicular\" could hide a tiny error forever. \"XY is the perpendicular bisector because △AXY ≅ △BXY by SSS\" is true no matter how shaky the hand that drew it.",
+      "figure": "cnp-drawing-vs-proof"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Show or guarantee?",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each statement by what it does: merely SHOW (evidence) or GUARANTEE (proof)?",
+        "buckets": [
+          {
+            "id": "show",
+            "label": "shows (evidence)"
+          },
+          {
+            "id": "guar",
+            "label": "guarantees (proof)"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "\"I measured the angle and it read 90.0°\"",
+            "bucketId": "show",
+            "feedback": "A measurement is evidence for one case, with error bars — it shows, it doesn't guarantee."
+          },
+          {
+            "id": "s2",
+            "label": "\"It looks perpendicular when I draw it carefully\"",
+            "bucketId": "show",
+            "feedback": "Appearance is the weakest evidence — a hidden tiny error could survive. It shows, never guarantees."
+          },
+          {
+            "id": "s3",
+            "label": "\"△AXY ≅ △BXY by SSS, so ∠AXY = ∠BXY\"",
+            "bucketId": "guar",
+            "feedback": "A logical chain from guaranteed equal radii — this proves it for every case at once."
+          },
+          {
+            "id": "s4",
+            "label": "\"Equal radii force the triangles congruent, so XY ⊥ AB\"",
+            "bucketId": "guar",
+            "feedback": "Derived from the compass's guarantee, with no measurement — a proof."
+          }
+        ],
+        "missFeedback": "Measurements and appearances SHOW; logical chains from guaranteed facts GUARANTEE.",
+        "successFeedback": "Evidence shows a case; proof guarantees all cases."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Drawing versus proof.",
+      "conceptTag": "cp-why-works",
+      "hints": [
+        "What can a very careful drawing NOT rule out?",
+        "A drawing can be off by an amount too small to see.",
+        "Only a logical chain from guaranteed facts removes all doubt."
+      ],
+      "explanationVariants": [
+        "A drawing is evidence, never proof: it could be slightly wrong below the eye's resolution. A proof chains guaranteed facts (equal radii → SSS → perpendicular) to a certainty no drawing can reach.",
+        "Measuring a careful drawing confirms a case; proving it settles ALL cases at once, immune to drawing error."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why isn't a very carefully measured drawing enough to PROVE a construction works?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A drawing can be slightly off in ways too small to see; only a logical chain from guaranteed facts is certain",
+            "correct": true,
+            "feedback": "Measurement has limits and hands shake — a proof from equal radii through SSS is exact and covers every case."
+          },
+          {
+            "id": "o2",
+            "label": "Drawings are always completely wrong",
+            "correct": false,
+            "feedback": "Good drawings are close and useful as evidence — the issue is they can't GUARANTEE exactness, not that they're worthless."
+          },
+          {
+            "id": "o3",
+            "label": "Proofs are just a formality once you've measured",
+            "correct": false,
+            "feedback": "The proof is what upgrades \"looks right in this case\" to \"is right in every case\" — not a formality but the actual guarantee."
+          },
+          {
+            "id": "o4",
+            "label": "You'd need to measure in more than one place",
+            "correct": false,
+            "feedback": "Even infinitely many measurements are still measurements, each with error. A proof needs zero measurements — just valid reasoning."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-why-works__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "From compass to certainty.",
+      "takeaways": [
+        "Every arc guarantees equal radii — the seed fact of construction proofs.",
+        "Equal radii → congruent triangles (usually SSS) → the equal angles/sides you wanted.",
+        "A drawing shows; a proof guarantees — true regardless of drawing error."
+      ],
+      "teaser": "Next chapter: build proofs formally — conjecture, statements, and the reasons that justify each line."
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "id": "iar-03-03",
+  "slug": "a-real-plan",
+  "title": "A Real Plan",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch3-best-point-wins",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The whole pipeline on one problem. A stall sells trays of cookies (x) and pans of brownies (y). Oven space: cookies take 1 slot, brownies 2, and 8 slots exist: x + 2y ≤ 8. Cookie dough limits x ≤ 4. And x, y ≥ 0. Profit: $3 per tray, $4 per pan.",
+      "figure": "iar-stall-constraints"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Translate the story.",
+      "conceptTag": "iar-lp-model",
+      "explanationVariants": [
+        "Slots give x + 2y ≤ 8 (brownies cost two each), dough gives x ≤ 4, and production can't be negative.",
+        "The resource with per-unit weights 1 and 2 caps at 8; a second cap binds x alone."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which system is the feasible region?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x ≥ 0, y ≥ 0, x + 2y ≤ 8, x ≤ 4",
+            "correct": true,
+            "feedback": "Two resources, two sign fences: brownies weigh 2 slots in the oven cap."
+          },
+          {
+            "id": "o2",
+            "label": "x ≥ 0, y ≥ 0, 2x + y ≤ 8, x ≤ 4",
+            "correct": false,
+            "feedback": "That charges COOKIES two slots each — the weights belong the other way."
+          },
+          {
+            "id": "o3",
+            "label": "x + 2y ≤ 8, x ≤ 4 only",
+            "correct": false,
+            "feedback": "Without x, y ≥ 0 the region runs into negative production — not a runnable plan."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the interesting corner.",
+      "conceptTag": "iar-lp-model",
+      "explanationVariants": [
+        "x = 4 in x + 2y = 8 leaves 2y = 4, so y = 2: the corner is (4, 2).",
+        "Where the dough cap meets the oven cap: 4 + 2y = 8 forces y = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The boundaries x = 4 and x + 2y = 8 cross at (4, y). Find y.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's x again. Substitute: 4 + 2y = 8 → 2y = 4 → y = 2."
+          },
+          {
+            "value": 8,
+            "feedback": "That's the whole cap; after x spends 4, 2y = 4 remains."
+          },
+          {
+            "value": 1,
+            "feedback": "2y = 4 gives y = 2 — check the division."
+          }
+        ],
+        "fallbackFeedback": "Substitute x = 4 into x + 2y = 8: 2y = 4, so y = 2. That crossing is the region's new corner."
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Assemble the corner list.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Which points are corners of THIS feasible region — and which aren't?",
+        "buckets": [
+          {
+            "id": "corner",
+            "label": "Corner"
+          },
+          {
+            "id": "not",
+            "label": "Not a corner"
+          }
+        ],
+        "items": [
+          {
+            "id": "a",
+            "label": "(0, 0)",
+            "bucketId": "corner",
+            "feedback": "(0, 0): where x = 0 meets y = 0 — two boundaries crossing make a corner."
+          },
+          {
+            "id": "b",
+            "label": "(4, 0)",
+            "bucketId": "corner",
+            "feedback": "(4, 0): where x = 4 meets y = 0 — a corner."
+          },
+          {
+            "id": "c",
+            "label": "(4, 2)",
+            "bucketId": "corner",
+            "feedback": "(4, 2): where x = 4 meets x + 2y = 8 — the corner you just computed."
+          },
+          {
+            "id": "d",
+            "label": "(0, 4)",
+            "bucketId": "corner",
+            "feedback": "(0, 4): where x = 0 meets x + 2y = 8 — a corner."
+          },
+          {
+            "id": "e",
+            "label": "(8, 0)",
+            "bucketId": "not",
+            "feedback": "(8, 0) satisfies x + 2y = 8 but breaks x ≤ 4 — not even in the region."
+          },
+          {
+            "id": "f",
+            "label": "(2, 3)",
+            "bucketId": "not",
+            "feedback": "(2, 3) sits ON the edge x + 2y = 8, but mid-edge: only where TWO boundaries meet do you get a corner."
+          }
+        ],
+        "missFeedback": "A corner passes ALL constraints and sits on TWO boundaries at once.",
+        "successFeedback": "(8, 0) breaks x ≤ 4, and (2, 3) — feasible, on the oven cap — touches only ONE boundary, so it's edge, not corner. Four vertices: (0,0), (4,0), (4,2), (0,4)."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Plot the champion before the interview confirms it.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the corner where x = 4 meets x + 2y = 8 — the vertex k2 computed.",
+        "cols": 6,
+        "rows": 6,
+        "targets": [
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 4,
+            "feedback": "x + 2y = 4 + 8 = 12 breaks the flour cap x + 2y ≤ 8; corners must satisfy every fence."
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "feedback": "The predict's point: it lies ON x + 2y = 8, but only ONE boundary passes through it — corners need two."
+          }
+        ],
+        "missFeedback": "Two fences must cross there: x = 4 and x + 2y = 8 meet at y = (8 − 4)/2 = 2.",
+        "successFeedback": "(4, 2) — both boundaries pass through it, and the interview will pay it P = 12 + 8 = 20, the champion."
+      },
+      "predict": {
+        "prompt": "(2, 3) satisfies every constraint and even lies on x + 2y = 8. Corner or not?",
+        "options": [
+          {
+            "id": "not",
+            "label": "Not a corner — it touches only one boundary"
+          },
+          {
+            "id": "yes",
+            "label": "A corner — it's on a boundary"
+          },
+          {
+            "id": "out",
+            "label": "Not even feasible"
+          }
+        ],
+        "outcomeId": "not",
+        "reveal": "Feasible and on a boundary — but only ONE boundary. A corner needs two fences meeting: (2, 3) is mid-edge on the oven cap, between the true corners (4, 2) and (0, 4)."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Now the interview. P = 3x + 4y at each vertex: (0,0) → 0; (4,0) → 12; (4,2) → 12 + 8 = 20; (0,4) → 16. The mixed plan wins — four trays, two pans, twenty dollars. Neither all-in plan beats using BOTH resources fully.",
+      "figure": "iar-vertex-interview"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Confirm the champion.",
+      "conceptTag": "iar-lp-model",
+      "explanationVariants": [
+        "3·4 + 4·2 = 12 + 8 = 20 — the best of the four corner scores.",
+        "(4, 2) uses all the dough and all the oven, earning 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What profit does the plan (4, 2) earn under P = 3x + 4y?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That's (0, 4)'s score. The mixed corner adds 12 + 8 = 20."
+          },
+          {
+            "value": 12,
+            "feedback": "That's (4, 0) — brownies left unmade. Two pans add 8 more."
+          },
+          {
+            "value": 14,
+            "feedback": "3·4 + 4·2 = 12 + 8; check the second product."
+          }
+        ],
+        "fallbackFeedback": "P = 3·4 + 4·2 = 12 + 8 = 20. Score the plan by feeding both coordinates to the objective."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The price of a constraint.",
+      "conceptTag": "iar-lp-model",
+      "explanationVariants": [
+        "With more dough (x ≤ 5), the mixed corner slides to (5, 1.5), earning 15 + 6 = 21 — one extra dollar; the dough cap was costing exactly that.",
+        "Relaxing x ≤ 4 to x ≤ 5 moves the binding corner along the oven cap to (5, 1.5), lifting profit from 20 to 21."
+      ],
+      "hints": [
+        "The winning corner sat where dough and oven caps crossed. Move the dough cap to x = 5.",
+        "New crossing: 5 + 2y = 8 → y = 1.5. Score it.",
+        "P = 3·5 + 4·1.5 = 15 + 6 = 21 — compare with 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "If the dough limit relaxes to x ≤ 5, the best profit becomes…",
+        "answer": 21,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That was the OLD optimum. The new corner (5, 1.5) earns 3·5 + 4·1.5 = 21."
+          },
+          {
+            "value": 23,
+            "feedback": "That over-credits: y falls to 1.5 when x rises — the oven cap claws back 2 slots."
+          },
+          {
+            "value": 15,
+            "feedback": "That's the cookies alone; the 1.5 pans add 4·1.5 = 6 more."
+          }
+        ],
+        "fallbackFeedback": "With x ≤ 5 the corner slides to (5, 1.5): P = 15 + 6 = 21. Relaxing a constraint can only help or tie — never hurt."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The full pipeline, once through.",
+      "takeaways": [
+        "Story → constraints → feasible region → corners → scores → best plan.",
+        "The winner used both resources fully — mixed plans often beat all-in ones.",
+        "Relaxing a binding constraint moves the corner and buys extra profit."
+      ],
+      "teaser": "next course idea: where a line meets a curve — systems go nonlinear."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "iar-lp-model",
+      "concept": {
+        "id": "rem-iar-lp-model-c",
+        "kind": "concept",
+        "body": "Now the interview. P = 3x + 4y at each vertex: (0,0) → 0; (4,0) → 12; (4,2) → 12 + 8 = 20; (0,4) → 16. The mixed plan wins — four trays, two pans, twenty dollars. Neither all-in plan beats using BOTH resources fully."
+      },
+      "check": {
+        "id": "rem-iar-lp-model-k",
+        "kind": "check",
+        "body": "Translate the story.",
+        "conceptTag": "iar-lp-model",
+        "explanationVariants": [
+          "Slots give x + 2y ≤ 8 (brownies cost two each), dough gives x ≤ 4, and production can't be negative.",
+          "The resource with per-unit weights 1 and 2 caps at 8; a second cap binds x alone."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which system is the feasible region?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x ≥ 0, y ≥ 0, x + 2y ≤ 8, x ≤ 4",
+              "correct": true,
+              "feedback": "Two resources, two sign fences: brownies weigh 2 slots in the oven cap."
+            },
+            {
+              "id": "o2",
+              "label": "x ≥ 0, y ≥ 0, 2x + y ≤ 8, x ≤ 4",
+              "correct": false,
+              "feedback": "That charges COOKIES two slots each — the weights belong the other way."
+            },
+            {
+              "id": "o3",
+              "label": "x + 2y ≤ 8, x ≤ 4 only",
+              "correct": false,
+              "feedback": "Without x, y ≥ 0 the region runs into negative production — not a runnable plan."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

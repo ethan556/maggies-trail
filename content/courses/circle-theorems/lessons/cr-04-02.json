@@ -1,0 +1,317 @@
+{
+  "id": "cr-04-02",
+  "slug": "tangent-chord-angle",
+  "title": "The Tangent-Chord Angle",
+  "courseId": "circle-theorems",
+  "chapterId": "ch4-secants-power",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-tangent-chord",
+      "concept": {
+        "id": "rem-cr-tangent-chord-c",
+        "kind": "concept",
+        "body": "A tangent and a chord meeting at the tangency point form an angle equal to HALF the arc lying inside that angle — the inscribed-angle rate, surviving in the limit as the second chord becomes the tangent. The two angles on either side of the chord halve the two arcs and are supplementary. Diameter chord: 90° (tangent ⊥ radius again)."
+      },
+      "check": {
+        "id": "rem-cr-tangent-chord-k",
+        "kind": "check",
+        "body": "One halving.",
+        "conceptTag": "cr-tangent-chord",
+        "explanationVariants": [
+          "Half the 80° arc: 40°.",
+          "Tangent-chord rate = inscribed rate: 40°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A chord cuts off an 80° arc; the tangent-chord angle on that side = ?",
+          "answer": 40,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 80,
+              "feedback": "80° is the arc — halve it: 40°."
+            },
+            {
+              "value": 100,
+              "feedback": "100 = 180 − 80 supplements the arc first — just halve: 40°."
+            }
+          ],
+          "fallbackFeedback": "80 ÷ 2 = 40°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One hybrid remains: a **tangent and a chord** meeting at the point of tangency. The angle between them equals **half the intercepted arc** — the same rate as an inscribed angle, because it IS an inscribed angle in the limit: slide one chord endpoint around until the chord becomes the tangent, and the half-arc rule survives the slide.",
+      "figure": "cr-tangent-chord"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Half the cut arc.",
+      "conceptTag": "cr-tangent-chord",
+      "explanationVariants": [
+        "Tangent-chord angle = half the arc the chord cuts off on that side: 140/2 = 70°.",
+        "Same rate as inscribed: 70°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A chord cuts off a 140° arc, and a tangent touches the circle at one of the chord's endpoints. The tangent-chord angle (on the arc's side) = ?",
+        "answer": 70,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 140,
+            "feedback": "140° is the arc itself — rim-vertex pricing takes half: 70°."
+          },
+          {
+            "value": 40,
+            "feedback": "40 = 180 − 140 supplements the arc — the rule halves instead: 70°."
+          },
+          {
+            "value": 35,
+            "feedback": "35 quarters the arc — one halving only: 70°."
+          }
+        ],
+        "fallbackFeedback": "140 ÷ 2 = 70°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-chord__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two angles the chord makes with the tangent — one on each side — halve the two arcs the chord creates, and those arcs sum to 360°. So the two tangent-chord angles sum to 180°: supplements, exactly as a straight line demands. The circle's arithmetic and the line's arithmetic agree.",
+      "figure": "cr-tangent-chord-both"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The other side.",
+      "conceptTag": "cr-tangent-chord",
+      "explanationVariants": [
+        "The other arc is 360 − 140 = 220, and its tangent-chord angle is 110° — or directly, 180 − 70.",
+        "Supplements on the straight tangent line: 110°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same figure (chord cutting arcs 140° and 220°). The tangent-chord angle on the OTHER side of the chord = ?",
+        "answer": 110,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70° is the first side's angle — the other side halves the other arc: 220/2 = 110°."
+          },
+          {
+            "value": 220,
+            "feedback": "220° is the far arc — halve it: 110°."
+          },
+          {
+            "value": 90,
+            "feedback": "90° would need equal arcs (a diameter chord) — here 220/2 = 110°."
+          }
+        ],
+        "fallbackFeedback": "220 ÷ 2 = 110° (check: 70 + 110 = 180 ✓)."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-chord__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The tangent has no second point to lean on — and it does not need one.",
+      "widget": {
+        "type": "circleAngleExplore",
+        "mode": "tangentChord",
+        "targetAngle": 55,
+        "startArc": 80,
+        "prompt": "Make the angle between the tangent and the chord read 55°.",
+        "successFeedback": "An arc of 110° gives a tangent–chord angle of 55° — half the arc it cuts off. It behaves exactly like an inscribed angle whose second point has slid all the way onto A.",
+        "lowFeedback": "The tangent–chord angle is still under 55°. It is half the intercepted arc, so widen the arc.",
+        "highFeedback": "Past 55°. The angle is half the arc, so an arc beyond 110° overshoots."
+      },
+      "predict": {
+        "prompt": "The arc starts at 80°. The angle between the tangent and the chord measures…",
+        "options": [
+          {
+            "id": "half",
+            "label": "Half the arc (40°)"
+          },
+          {
+            "id": "same",
+            "label": "The same as the arc (80°)"
+          },
+          {
+            "id": "double",
+            "label": "Double the arc (160°)"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "It reads 40° — half. Only the CENTRAL angle matches its arc; every angle whose vertex sits on the circle gets exactly half, and dragging the arc will hold that ratio pinned."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move points on a circle while arc, central-angle, and inscribed-angle measures update together.",
+        "invariants": [
+          "central-angle-equals-intercepted-arc",
+          "inscribed-angle-half-intercepted-arc"
+        ],
+        "misconceptions": [
+          "inscribed-angle-equals-arc",
+          "vertex-location-irrelevant"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-tangent-chord"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Limit thinking.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why is the tangent-chord rule “the inscribed angle theorem in the limit”?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Slide one chord of an inscribed angle until its far endpoint merges with the vertex — the chord becomes the tangent, and half-the-arc persists",
+            "correct": true,
+            "feedback": "The tangent is the limiting chord through one point. The inscribed angle's half-rate never flinches during the slide."
+          },
+          {
+            "id": "o2",
+            "label": "Because tangents are infinitely long",
+            "correct": false,
+            "feedback": "Length is irrelevant — it's the LIMIT of the second chord direction that turns inscribed into tangent-chord."
+          },
+          {
+            "id": "o3",
+            "label": "It isn't — the rates differ",
+            "correct": false,
+            "feedback": "Both price at exactly half the intercepted arc — the tangent-chord angle is the inscribed angle's boundary case."
+          },
+          {
+            "id": "o4",
+            "label": "Because the tangent passes through the center",
+            "correct": false,
+            "feedback": "Tangents never pass through the center — the connection is the sliding-chord limit, not the center."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which arc?",
+      "conceptTag": "cr-tangent-chord",
+      "explanationVariants": [
+        "The angle opens toward the arc it halves — the arc INSIDE the angle's mouth.",
+        "Each tangent-chord angle halves the arc lying between its two sides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A tangent-chord angle halves “the intercepted arc.” Which arc is that?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The arc lying inside the angle — between the chord and the tangent direction it opens toward",
+            "correct": true,
+            "feedback": "Each of the two angles at the tangency point captures its own arc; together they halve the full 360° into supplements."
+          },
+          {
+            "id": "o2",
+            "label": "Always the minor arc",
+            "correct": false,
+            "feedback": "The obtuse tangent-chord angle halves the MAJOR arc — whichever arc sits in the angle's mouth."
+          },
+          {
+            "id": "o3",
+            "label": "Always the major arc",
+            "correct": false,
+            "feedback": "The acute angle halves the MINOR arc — the rule follows the angle's opening, not a fixed choice."
+          },
+          {
+            "id": "o4",
+            "label": "The full circle",
+            "correct": false,
+            "feedback": "Half of 360 would make every such angle 180° — each angle claims only the arc it opens onto."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-chord__mcq"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Backward through the tangent.",
+      "conceptTag": "cr-tangent-chord",
+      "hints": [
+        "The 54° tangent-chord angle halves its arc: the near arc is 108°.",
+        "The chord's OTHER arc is 360 − 108.",
+        "An inscribed vertex on the FAR side opens onto the NEAR arc — the very arc the tangent-chord angle already halved."
+      ],
+      "explanationVariants": [
+        "Near arc = 108°; a vertex on the FAR (major) arc opens onto the near arc, so the inscribed angle is 108/2 = 54° — matching the tangent-chord angle exactly (both halve the same arc).",
+        "Tangent-chord and far-side inscribed angles agree at 54°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tangent-chord angle measures 54°. An inscribed angle stands on the same chord, its vertex on the arc NOT cut off by that angle. Find the inscribed angle.",
+        "answer": 54,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27 halves 54 again — both angles halve the SAME 108° arc, so they match at 54°."
+          },
+          {
+            "value": 126,
+            "feedback": "126 = 180 − 54 supplements — that's the answer for a vertex on the NEAR arc. Far-side vertices copy: 54°."
+          },
+          {
+            "value": 108,
+            "feedback": "108° is the intercepted ARC — the inscribed angle takes half: 54°."
+          }
+        ],
+        "fallbackFeedback": "Both halve the 108° arc: inscribed = 54° (this equality is the tangent-chord rule's favorite exam disguise)."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-tangent-chord__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The rim's last rate.",
+      "takeaways": [
+        "Tangent-chord angle = half its intercepted arc — inscribed pricing at the boundary.",
+        "The two angles at the tangency point are supplements (arcs sum to 360°).",
+        "Diameter chord ⇒ 90°, recovering tangent ⊥ radius; far-side inscribed angles match the tangent-chord angle."
+      ],
+      "teaser": "Next: from angles to LENGTHS — the power of a point."
+    }
+  ]
+}

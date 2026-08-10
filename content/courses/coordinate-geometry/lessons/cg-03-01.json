@@ -1,0 +1,558 @@
+{
+  "id": "cg-03-01",
+  "slug": "attributes-carry-down",
+  "title": "Attributes Carry Down",
+  "courseId": "coordinate-geometry",
+  "chapterId": "ch3-shape-families",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Shape categories nest like a **family tree**, and attributes are **inherited**: if EVERY member of a category has an attribute, then every member of any subcategory inside it has that attribute too. Every rectangle has 4 right angles; a square is a kind of rectangle; so every square has 4 right angles — no measuring needed.",
+      "figure": "cg-family-tree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Ride the arrow down.",
+      "conceptTag": "attribute-inherit",
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "Every parallelogram has two pairs of parallel sides. Rectangles are parallelograms. What can you conclude?",
+        "mode": "hierarchy",
+        "nodes": [
+          {
+            "id": "parallelogram",
+            "label": "parallelogram",
+            "attributes": [
+              "2 parallel pairs"
+            ]
+          },
+          {
+            "id": "rectangle",
+            "label": "rectangle",
+            "attributes": [
+              "parallelogram + 4 right angles"
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "parallelogram",
+            "rectangle"
+          ]
+        ],
+        "answerClaim": "inherits",
+        "propertyLabel": "two pairs of parallel sides",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Every rectangle has two pairs of parallel sides",
+            "claim": "inherits",
+            "feedback": "Right — rectangles sit inside the parallelogram category, so they inherit its attribute.",
+            "evidenceKind": "path",
+            "evidenceText": "The property follows the arrow from parallelogram to rectangle.",
+            "highlightNodeIds": [
+              "parallelogram",
+              "rectangle"
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Every parallelogram is a rectangle",
+            "claim": "reverse",
+            "feedback": "That reverses the nesting. Rectangles sit inside parallelograms, not the other way — a tilted parallelogram has no right angles.",
+            "evidenceKind": "reverse",
+            "evidenceText": "The reverse arrow would erase the rectangle's extra right-angle condition.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Only some rectangles have parallel sides",
+            "claim": "conditional",
+            "feedback": "Inheritance is an EVERY, not a some: every member of the subcategory gets the category's attribute.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "Every member of the inside family inherits the property; it is not optional.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — rectangles sit inside the parallelogram category, so they inherit its attribute."
+      },
+      "hints": [
+        "Which category sits inside which?",
+        "Rectangles are inside parallelograms.",
+        "Attributes ride down into the smaller category."
+      ],
+      "explanationVariants": [
+        "Subcategories inherit: all rectangles get the parallel pairs.",
+        "Rectangle ⊂ parallelogram, so the attribute carries down."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use it — no measuring.",
+      "conceptTag": "attribute-inherit",
+      "explanationVariants": [
+        "4 — inherited from the rectangle family.",
+        "Every rectangle has 4; squares are rectangles."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "Every rectangle has 4 right angles. A square is a special rectangle. How many right angles must a square have?",
+        "mode": "hierarchy",
+        "nodes": [
+          {
+            "id": "rectangle",
+            "label": "rectangle",
+            "attributes": [
+              "4 right angles"
+            ]
+          },
+          {
+            "id": "square",
+            "label": "square",
+            "attributes": [
+              "rectangle + 4 equal sides"
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "rectangle",
+            "square"
+          ]
+        ],
+        "answerClaim": "inherits",
+        "propertyLabel": "4 right angles",
+        "choices": [
+          {
+            "id": "a",
+            "label": "4",
+            "claim": "inherits",
+            "feedback": "Right — squares inherit all-rectangle attributes, so 4 right angles is guaranteed.",
+            "evidenceKind": "path",
+            "evidenceText": "The four-right-angle property travels from rectangle to square.",
+            "highlightNodeIds": [
+              "rectangle",
+              "square"
+            ]
+          },
+          {
+            "id": "b",
+            "label": "It depends on the square",
+            "claim": "conditional",
+            "feedback": "It can't depend — every square is a rectangle, and EVERY rectangle has 4 right angles. Inheritance leaves no exceptions.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "No square counterexample can exist because square is inside rectangle.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "2",
+            "claim": "blocked",
+            "feedback": "2 would break the inherited attribute. Squares are rectangles, so all 4 corners are right angles.",
+            "evidenceKind": "blocker",
+            "evidenceText": "Two right angles conflict with the inherited four-corner structure.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — squares inherit all-rectangle attributes, so 4 right angles is guaranteed."
+      },
+      "hints": [
+        "Is a square a rectangle?",
+        "What does every rectangle have?",
+        "Squares inherit it: 4."
+      ],
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgInheritProperty"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The arrow points **only downward**. What's true of the big category is true of the small one inside it — never the reverse. Every square has 4 equal sides, and squares are rectangles; that does NOT make every rectangle equal-sided. Counterexample: a 5-by-2 rectangle has sides 5, 2, 5, 2 — a fine rectangle, sides not all equal.",
+      "figure": "cg-arrow-down"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Catch the backwards argument.",
+      "conceptTag": "attribute-inherit",
+      "explanationVariants": [
+        "Upward inheritance is the error; 5-by-2 is the counterexample.",
+        "Square attributes don't climb the tree."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "\"Every square has 4 equal sides. Squares are rectangles. So every rectangle has 4 equal sides.\" What's wrong with this argument?",
+        "mode": "hierarchy",
+        "nodes": [
+          {
+            "id": "rectangle",
+            "label": "rectangle",
+            "attributes": [
+              "4 right angles"
+            ]
+          },
+          {
+            "id": "square",
+            "label": "square",
+            "attributes": [
+              "rectangle + 4 equal sides"
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "rectangle",
+            "square"
+          ]
+        ],
+        "answerClaim": "reverse-error",
+        "propertyLabel": "four equal sides",
+        "choices": [
+          {
+            "id": "a",
+            "label": "It runs the wrong way — attributes pass down to subcategories, not up",
+            "claim": "reverse-error",
+            "feedback": "Right — a 5-by-2 rectangle has sides 5, 2, 5, 2, so the conclusion is false. Square facts stay with squares.",
+            "evidenceKind": "reverse",
+            "evidenceText": "The proposed argument climbs from square to rectangle, opposite the inheritance arrow.",
+            "highlightNodeIds": [
+              "rectangle",
+              "square"
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Nothing — the conclusion is correct",
+            "claim": "accepts-reverse",
+            "feedback": "Test it on a 5-by-2 rectangle: sides 5, 2, 5, 2 are not all equal. The argument pushed a square attribute up onto all rectangles.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "A 5-by-2 rectangle supplies a visible counterexample to the reversed claim.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Squares aren't really rectangles",
+            "claim": "denies-membership",
+            "feedback": "Squares ARE rectangles — that premise is fine. The flaw is the direction: what's true of squares needn't be true of all rectangles.",
+            "evidenceKind": "path",
+            "evidenceText": "Square membership in rectangle is true; only the direction of inheritance is false.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — a 5-by-2 rectangle has sides 5, 2, 5, 2, so the conclusion is false. Square facts stay with squares."
+      },
+      "hints": [
+        "Which way does the argument push the attribute?",
+        "Try it on a 5-by-2 rectangle.",
+        "Down is valid; up is not."
+      ],
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgInheritanceDirection"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "One inherited number.",
+      "conceptTag": "attribute-inherit",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Every rectangle has 4 right angles of 90° each. What do a rectangle's four angles add up to, in degrees?",
+        "answer": 360,
+        "tolerance": 0,
+        "unit": "°",
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180° is a TRIANGLE's angle sum. A rectangle has four 90° corners: 4 × 90 = 360°."
+          },
+          {
+            "value": 90,
+            "feedback": "90° is one corner. Add all four: 4 × 90 = 360°."
+          }
+        ],
+        "fallbackFeedback": "Four right angles: 4 × 90 = 360°."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A different branch, same rule.",
+      "conceptTag": "attribute-inherit",
+      "explanationVariants": [
+        "Every square inherits equal sides from rhombuses.",
+        "Square ⊂ rhombus carries the attribute down."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "Every rhombus has 4 equal sides. Squares are rhombuses. What MUST be true?",
+        "mode": "hierarchy",
+        "nodes": [
+          {
+            "id": "rhombus",
+            "label": "rhombus",
+            "attributes": [
+              "4 equal sides"
+            ]
+          },
+          {
+            "id": "square",
+            "label": "square",
+            "attributes": [
+              "rhombus + 4 right angles"
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "rhombus",
+            "square"
+          ]
+        ],
+        "answerClaim": "inherits",
+        "propertyLabel": "4 equal sides",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Every square has 4 equal sides",
+            "claim": "inherits",
+            "feedback": "Right — squares inherit the rhombus family's equal sides.",
+            "evidenceKind": "path",
+            "evidenceText": "Four equal sides travel down from rhombus to square.",
+            "highlightNodeIds": [
+              "rhombus",
+              "square"
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Every rhombus is a square",
+            "claim": "reverse",
+            "feedback": "That reverses the nesting — a tilted rhombus with no right angles is not a square. Squares sit inside rhombuses.",
+            "evidenceKind": "reverse",
+            "evidenceText": "A tilted rhombus blocks the reverse claim.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Some squares have unequal sides",
+            "claim": "contradiction",
+            "feedback": "That would contradict inheritance: every square is a rhombus, and EVERY rhombus has equal sides.",
+            "evidenceKind": "blocker",
+            "evidenceText": "Unequal square sides contradict the inherited rhombus condition.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — squares inherit the rhombus family's equal sides."
+      },
+      "hints": [
+        "Which sits inside which?",
+        "Squares are inside rhombuses.",
+        "The attribute rides down."
+      ],
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgInheritProperty"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-step ride down.",
+      "conceptTag": "attribute-inherit",
+      "hints": [
+        "Follow the chain: square → rectangle → parallelogram.",
+        "The attribute starts at the top of the chain.",
+        "It rides down through both levels to the square."
+      ],
+      "explanationVariants": [
+        "The attribute descends two levels: parallelogram → rectangle → square.",
+        "Square ⊂ rectangle ⊂ parallelogram, so squares inherit parallel pairs from the top."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "Every parallelogram has two pairs of parallel sides. Every rectangle is a parallelogram. Every square is a rectangle. What MUST be true of every square?",
+        "mode": "hierarchy",
+        "nodes": [
+          {
+            "id": "parallelogram",
+            "label": "parallelogram",
+            "attributes": [
+              "2 parallel pairs"
+            ]
+          },
+          {
+            "id": "rectangle",
+            "label": "rectangle",
+            "attributes": [
+              "parallelogram + 4 right angles"
+            ]
+          },
+          {
+            "id": "square",
+            "label": "square",
+            "attributes": [
+              "rectangle + 4 equal sides"
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "parallelogram",
+            "rectangle"
+          ],
+          [
+            "rectangle",
+            "square"
+          ]
+        ],
+        "answerClaim": "inherits",
+        "propertyLabel": "two pairs of parallel sides",
+        "choices": [
+          {
+            "id": "a",
+            "label": "It has two pairs of parallel sides — inherited down two levels",
+            "claim": "inherits",
+            "feedback": "Right — the attribute rides from parallelograms through rectangles down to squares.",
+            "evidenceKind": "path",
+            "evidenceText": "The property crosses both arrows to reach every square.",
+            "highlightNodeIds": [
+              "parallelogram",
+              "rectangle",
+              "square"
+            ]
+          },
+          {
+            "id": "b",
+            "label": "It is the only shape with parallel sides",
+            "claim": "exclusive",
+            "feedback": "Inheritance shares attributes downward; it never makes the smallest category the ONLY holder. All parallelograms have them.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The broader parallelogram and rectangle nodes keep the same property too.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Every parallelogram is a square",
+            "claim": "reverse",
+            "feedback": "That reverses the chain twice. Squares sit at the bottom of this branch, inside rectangles, inside parallelograms.",
+            "evidenceKind": "reverse",
+            "evidenceText": "Reversing both arrows would erase the extra conditions at each level.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — the attribute rides from parallelograms through rectangles down to squares."
+      },
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgInheritanceChain"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Down, never up.",
+      "takeaways": [
+        "If every member of a category has an attribute, every subcategory member inherits it.",
+        "The arrow points down only — subcategory attributes don't climb (5-by-2 rectangle!).",
+        "Chains work: attributes ride down through several levels at once."
+      ],
+      "teaser": "next: the whole quadrilateral family tree, branch by branch."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "attribute-inherit",
+      "concept": {
+        "id": "rem-ai-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Inside means inherits.** If squares sit inside the rectangle category, then anything true of ALL rectangles is automatically true of every square. Ask two questions: which group sits inside which, and what does everyone in the big group have?"
+      },
+      "check": {
+        "id": "rem-ai-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "attribute-inherit",
+        "explanationVariants": [
+          "Squares are rectangles, so they inherit the 4 right angles.",
+          "Inside means inherits: 4 right angles, guaranteed."
+        ],
+        "widget": {
+          "type": "shapeHierarchyLab",
+          "prompt": "Every rectangle has 4 right angles, and squares are rectangles. So every square has…",
+          "mode": "hierarchy",
+          "nodes": [
+            {
+              "id": "rectangle",
+              "label": "rectangle",
+              "attributes": [
+                "4 right angles"
+              ]
+            },
+            {
+              "id": "square",
+              "label": "square",
+              "attributes": [
+                "rectangle + 4 equal sides"
+              ]
+            }
+          ],
+          "edges": [
+            [
+              "rectangle",
+              "square"
+            ]
+          ],
+          "answerClaim": "inherits",
+          "propertyLabel": "4 right angles",
+          "choices": [
+            {
+              "id": "a",
+              "label": "4 right angles",
+              "claim": "inherits",
+              "feedback": "Right — inherited from the rectangle category.",
+              "evidenceKind": "path",
+              "evidenceText": "The four right angles travel down the family arrow.",
+              "highlightNodeIds": [
+                "rectangle",
+                "square"
+              ]
+            },
+            {
+              "id": "b",
+              "label": "no right angles",
+              "claim": "blocked",
+              "feedback": "Squares are rectangles, and every rectangle has 4 right angles — inheritance guarantees them.",
+              "evidenceKind": "blocker",
+              "evidenceText": "Zero right angles conflicts with rectangle membership.",
+              "highlightNodeIds": []
+            },
+            {
+              "id": "c",
+              "label": "right angles only sometimes",
+              "claim": "conditional",
+              "feedback": "Inheritance has no sometimes: every square is a rectangle, so every square gets all 4.",
+              "evidenceKind": "counterexample",
+              "evidenceText": "Inheritance applies to every square, not only some.",
+              "highlightNodeIds": []
+            }
+          ],
+          "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+          "successFeedback": "Right — inherited from the rectangle category."
+        }
+      }
+    }
+  ]
+}

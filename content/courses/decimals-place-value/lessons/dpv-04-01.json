@@ -1,0 +1,300 @@
+{
+  "id": "dpv-04-01",
+  "slug": "rounding-to-a-whole",
+  "title": "Rounding to a Whole",
+  "courseId": "decimals-place-value",
+  "chapterId": "ch4-rounding-decimals",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Rounding a decimal to the nearest whole asks: which whole number is it closest to? Look at the **tenths** digit — the first one after the point. If it's 5 or more, round up to the next whole; if it's 4 or less, stay at the current whole. So 3.8 rounds to 4, and 3.2 stays at 3.",
+      "figure": "dpv-round-whole"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rounding to a whole, seen.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 3,
+        "max": 4,
+        "step": 0.1,
+        "tickStep": 0.1,
+        "target": 3.7,
+        "start": 3,
+        "prompt": "Place 3.7, then see which whole number it is closer to.",
+        "successFeedback": "3.7 is past 3.5, so it is nearer 4 than 3 — it rounds to 4. The halfway mark, not the digit, is what decides.",
+        "lowFeedback": "Your marker is below 3.7.",
+        "highFeedback": "Your marker is above 3.7."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 3.7 closer to 3 or to 4?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 3"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 4"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "max",
+        "reveal": "3.7 sits 0.7 from 3 and 0.3 from 4 — the 4 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "round-to-whole",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round to whole.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round to whole must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round to whole."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimals-place-value:round-to-whole",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Round up.",
+      "conceptTag": "round-to-whole",
+      "explanationVariants": [
+        "Tenths digit 8 is 5 or more, so 3.8 rounds up to 4.",
+        "3.8 is closer to 4 than to 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 3.8 to the nearest whole number.",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 rounds down, but the tenths digit is 8 — 5 or more — so 3.8 rounds up to 4."
+          },
+          {
+            "value": 5,
+            "feedback": "5 jumps too far. 3.8 rounds up only to the next whole, 4."
+          }
+        ],
+        "fallbackFeedback": "The tenths digit (8) is 5 or more, so round up to 4."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "What about an exact halfway, like 3.5? It sits the same distance from 3 and from 4. The agreed **convention** is: a tenths digit of exactly 5 rounds **up**. It's a rule people chose for consistency, not a law of nature — but everyone follows it, so 3.5 rounds to 4.",
+      "figure": "dpv-round-whole"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The halfway case.",
+      "conceptTag": "round-to-whole",
+      "explanationVariants": [
+        "Exactly halfway (tenths digit 5) rounds up by convention: 0.5 → 1.",
+        "0.5 is the same distance from 0 and 1, and the rule sends it up to 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 0.5 to the nearest whole number.",
+        "answer": 1,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0.5 is exactly halfway, and the convention rounds a 5 UP — so 0.5 becomes 1."
+          },
+          {
+            "value": 5,
+            "feedback": "5 keeps the tenths digit as if it were a whole. Rounding 0.5 to a whole gives 1."
+          }
+        ],
+        "fallbackFeedback": "A tenths digit of exactly 5 rounds up by convention: 0.5 → 1."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each decimal to its rounded whole.",
+      "conceptTag": "round-to-whole",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each decimal to its nearest whole number.",
+        "left": [
+          {
+            "id": "a1",
+            "label": "0.4"
+          },
+          {
+            "id": "a2",
+            "label": "0.9"
+          },
+          {
+            "id": "a3",
+            "label": "3.5"
+          }
+        ],
+        "right": [
+          {
+            "id": "b1",
+            "label": "0"
+          },
+          {
+            "id": "b2",
+            "label": "1"
+          },
+          {
+            "id": "b3",
+            "label": "4"
+          }
+        ],
+        "pairs": {
+          "a1": "b1",
+          "a2": "b2",
+          "a3": "b3"
+        },
+        "pairErrors": [
+          {
+            "left": "a1",
+            "right": "b2",
+            "feedback": "0.4 has a tenths digit of 4 — below 5 — so it rounds down to 0, not up to 1."
+          }
+        ],
+        "missFeedback": "Check each tenths digit: 5 or more rounds up, 4 or less rounds down.",
+        "successFeedback": "0.4→0 (down), 0.9→1 (up), 3.5→4 (halfway rounds up)."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Bigger whole part.",
+      "conceptTag": "round-to-whole",
+      "explanationVariants": [
+        "Tenths digit 5 rounds 12.5 up to 13.",
+        "12.5 is halfway between 12 and 13, and the convention sends it up to 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 12.5 to the nearest whole number.",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 rounds down, but the tenths digit 5 rounds UP by convention: 12.5 → 13."
+          },
+          {
+            "value": 12.5,
+            "feedback": "12.5 is unrounded. To the nearest whole, the 5 rounds it up to 13."
+          }
+        ],
+        "fallbackFeedback": "The tenths digit is 5, so round up: 12.5 → 13."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rounding money.",
+      "conceptTag": "round-to-whole",
+      "hints": [
+        "To the nearest dollar, look at the cents — the tenths digit stands for dimes.",
+        "$7.49 has 4 in the tenths place (four dimes plus change).",
+        "4 is below 5, so it rounds down."
+      ],
+      "explanationVariants": [
+        "$7.49 has a tenths digit of 4 (below 5), so it rounds down to $7.",
+        "49 cents is less than half a dollar, so $7.49 rounds to $7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round $7.49 to the nearest whole dollar. Enter just the dollar amount.",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 rounds up, but 49 cents is below half a dollar — the tenths digit 4 rounds down to $7."
+          },
+          {
+            "value": 7.49,
+            "feedback": "$7.49 is unrounded. To the nearest dollar, the tenths digit 4 rounds it down to $7."
+          }
+        ],
+        "fallbackFeedback": "The tenths digit is 4 (below 5), so $7.49 rounds down to $7."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Look at the tenths, then decide.",
+      "takeaways": [
+        "To round to the nearest whole, check the tenths digit: 5 or more rounds up, 4 or less rounds down.",
+        "An exact half (tenths digit 5) rounds up by agreed convention.",
+        "The rest of the digits after the tenths don't change the decision."
+      ],
+      "teaser": "next: rounding to a chosen decimal place, not just a whole."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "round-to-whole",
+      "concept": {
+        "id": "rem-rtw-c",
+        "kind": "concept",
+        "body": "Quick rewind. **To round to the nearest whole, look only at the tenths digit.** 5 or more rounds up to the next whole; 4 or less stays. So 6.7 rounds to 7 (7 is 5+), and 6.3 stays at 6 (3 is under 5)."
+      },
+      "check": {
+        "id": "rem-rtw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "round-to-whole",
+        "explanationVariants": [
+          "Tenths digit 7 is 5 or more, so 6.7 rounds up to 7.",
+          "6.7 is closer to 7 than to 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Round 6.7 to the nearest whole number.",
+          "answer": 7,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 rounds down, but the tenths digit 7 is 5 or more — 6.7 rounds up to 7."
+            },
+            {
+              "value": 67,
+              "feedback": "67 drops the point. Rounding 6.7 to a whole gives 7."
+            }
+          ],
+          "fallbackFeedback": "The tenths digit (7) is 5 or more, so round up to 7."
+        }
+      }
+    }
+  ]
+}

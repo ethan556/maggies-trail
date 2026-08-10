@@ -1,0 +1,308 @@
+{
+  "id": "fn-04-02",
+  "slug": "choosing-the-right-formula",
+  "title": "Choosing the Right Formula",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch4-comparing-and-applying",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "arith-vs-geo",
+      "body": "Once you know the type, use its rule: arithmetic a_n = a_1 + (n − 1)d, geometric a_n = a_1 · r^(n−1). First classify the sequence, then apply the matching formula."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "First name the pattern, then run it.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "It's arithmetic. Dial d so the 5th term of 2, 5, 8, 11, … lands on 14.",
+        "mode": "arithmetic",
+        "first": 2,
+        "targetD": 3,
+        "atPosition": 5,
+        "targetTerm": 14,
+        "successFeedback": "d = 3: four gaps — 2 + 4·3 = 14. Naming the pattern type is what unlocked the formula.",
+        "lowFeedback": "Too small — position 5 lands short of 14.",
+        "highFeedback": "Too big — position 5 overshoots 14. One gap in 2, 5, 8 settles it."
+      },
+      "predict": {
+        "prompt": "2, 5, 8, 11, … — is the same amount ADDED each step, or MULTIPLIED?",
+        "options": [
+          {
+            "id": "add",
+            "label": "Added — a steady +3"
+          },
+          {
+            "id": "mult",
+            "label": "Multiplied — a steady ×2.5"
+          },
+          {
+            "id": "both",
+            "label": "Both patterns fit these numbers"
+          }
+        ],
+        "outcomeId": "add",
+        "reveal": "2 → 5 could be +3 or ×2.5 — but 5 → 8 is +3 and NOT ×2.5 (that would be 12.5). Adding wins: arithmetic, so the linear formula applies. The second gap is always the tiebreaker."
+      },
+      "conceptTag": "fn-choose-formula",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents choose formula.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for choose formula must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines choose formula."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-and-sequences:fn-choose-formula",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Geometric nth term.",
+      "conceptTag": "fn-choose-formula",
+      "explanationVariants": [
+        "a_1 = 2, r = 3, so a_5 = 2 · 3⁴ = 162.",
+        "Four factors of 3 from 2: 162."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 2, 6, 18, 54, ... (geometric), what is the 5th term?",
+        "answer": 162,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 486,
+            "feedback": "Use r^(5 − 1) = 3⁴, not 3⁵: 2 · 81 = 162."
+          },
+          {
+            "value": 54,
+            "feedback": "54 is the 4th term (already listed). The 5th is 2 · 3⁴ = 162."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 2 · 3⁴ = 162."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-choose-formula__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The difference is add vs multiply. 3, 6, 9, 12 is arithmetic (+ 3): the 5th term is 3 + 4·3 = 15. But 3, 6, 12, 24 is geometric (× 2): the 5th term is 3 · 2⁴ = 48. Same start, very different growth.",
+      "figure": "fn-arithmetic"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Arithmetic, not geometric.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 3, 6, 9, 12, ... (arithmetic), what is the 5th term?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "Take (5 − 1) = 4 steps of d = 3: 3 + 12 = 15, not 3 + 5·3."
+          },
+          {
+            "value": 14,
+            "feedback": "a_1 = 3, d = 3, so a_5 = 3 + 4·3 = 15."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 3 + 4·3 = 15."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Pick the rule that matches, or you'll be far off. For 1, 2, 4, 8 (geometric, × 2), the 6th term is 1 · 2⁵ = 32 — using the arithmetic rule here would give the wrong answer entirely.",
+      "figure": "fn-geometric"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Geometric growth.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 1, 2, 4, 8, ... (geometric), what is the 6th term?",
+        "answer": 32,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "Use r^(6 − 1) = 2⁵, not 2⁶: 1 · 32 = 32."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is the 5th term. The 6th is 1 · 2⁵ = 32."
+          }
+        ],
+        "fallbackFeedback": "a_6 = 1 · 2⁵ = 32."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Arithmetic, sixth term.",
+      "conceptTag": "fn-choose-formula",
+      "explanationVariants": [
+        "a_1 = 4, d = 3, so a_6 = 4 + 5·3 = 19.",
+        "Five steps of 3 from 4: 19."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 4, 7, 10, 13, ... (arithmetic), what is the 6th term?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "Take (6 − 1) = 5 steps of 3: 4 + 15 = 19, not 4 + 6·3."
+          },
+          {
+            "value": 18,
+            "feedback": "a_1 = 4, d = 3, so a_6 = 4 + 15 = 19."
+          }
+        ],
+        "fallbackFeedback": "a_6 = 4 + 15 = 19."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-choose-formula__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Geometric, fifth term.",
+      "conceptTag": "fn-choose-formula",
+      "explanationVariants": [
+        "a_1 = 1, r = 5, so a_5 = 1 · 5⁴ = 625.",
+        "Four factors of 5 from 1: 625."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 1, 5, 25, 125, ... (geometric), what is the 5th term?",
+        "answer": 625,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3125,
+            "feedback": "Use r^(5 − 1) = 5⁴, not 5⁵: 1 · 625 = 625."
+          },
+          {
+            "value": 125,
+            "feedback": "125 is the 4th term (already listed). The 5th is 1 · 5⁴ = 625."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 1 · 5⁴ = 625."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-choose-formula__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Geometric, seventh term.",
+      "conceptTag": "fn-choose-formula",
+      "explanationVariants": [
+        "a_1 = 2, r = 2, so a_7 = 2 · 2⁶ = 128.",
+        "Six factors of 2 from 2: 128."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 2, 4, 8, 16, ... (geometric), what is the 7th term?",
+        "answer": 128,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 256,
+            "feedback": "Use r^(7 − 1) = 2⁶, not 2⁷: 2 · 64 = 128."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is the 6th term. The 7th is 2 · 2⁶ = 128."
+          }
+        ],
+        "fallbackFeedback": "a_7 = 2 · 2⁶ = 128."
+      },
+      "hints": [
+        "It's geometric with a_1 = 2, r = 2.",
+        "Use exponent (7 − 1) = 6: 2⁶ = 64.",
+        "2 · 64 = 128."
+      ],
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-choose-formula__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Classify first, then use the matching nth-term rule.",
+      "takeaways": [
+        "Arithmetic: a_n = a_1 + (n − 1)d.",
+        "Geometric: a_n = a_1 · r^(n − 1).",
+        "The wrong rule gives a badly wrong answer — classify first."
+      ],
+      "teaser": "next: using sequences to model real growth."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-choose-formula",
+      "concept": {
+        "id": "rem-fcf-c",
+        "kind": "concept",
+        "body": "Classify first, then apply the rule: arithmetic a_n = a_1 + (n − 1)d, geometric a_n = a_1 · r^(n − 1). For 3, 6, 12, 24 (geometric, × 2), the 5th term is 3 · 2⁴ = 48."
+      },
+      "check": {
+        "id": "rem-fcf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-choose-formula",
+        "explanationVariants": [
+          "a_5 = 2 + 4·3 = 14.",
+          "Four steps of 3 from 2: 14."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For 2, 5, 8, 11, ... (arithmetic), what is the 5th term?",
+          "answer": 14,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 17,
+              "feedback": "Use (5 − 1) = 4 steps: 2 + 12 = 14."
+            },
+            {
+              "value": 13,
+              "feedback": "Off by one step. The 5th term adds d four times, not five: 2 + 4(3) = 14."
+            }
+          ],
+          "fallbackFeedback": "a_5 = 2 + 12 = 14."
+        }
+      }
+    }
+  ]
+}

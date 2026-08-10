@@ -1,0 +1,275 @@
+{
+  "id": "dr-04-01",
+  "slug": "the-chain-rule",
+  "title": "The Chain Rule",
+  "courseId": "derivative-rules",
+  "chapterId": "ch4-the-chain-rule",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Three gears. x turns u three times as fast; u turns y five times as fast. How fast does x turn y?\n\nFifteen. **Rates multiply along a chain:**\n\ndy/dx = (dy/du)·(du/dx)\n\nAnd the Leibniz notation is not a coincidence — the du really does cancel, exactly as it looks like it should.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the inside.",
+      "conceptTag": "dr-chain-rule",
+      "explanationVariants": [
+        "For (3x + 1)⁵ the inside is u = 3x + 1 and the outside is u⁵. Differentiate the outside, keep the inside, then multiply by the inside's derivative: 5(3x+1)⁴ · 3 = 15(3x+1)⁴.",
+        "The '· 3' at the end is the whole rule. Forgetting it is the single most common error in calculus."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = (3x + 1)⁵, what is the derivative?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "15(3x + 1)⁴",
+            "correct": true,
+            "feedback": "Right — 5(3x+1)⁴ from the outside, times 3 from the inside. The inner derivative is the part everyone forgets."
+          },
+          {
+            "id": "o2",
+            "label": "5(3x + 1)⁴",
+            "correct": false,
+            "feedback": "The outside is right, but you have not paid for the inside. The bracket changes 3 times as fast as x does, so the whole thing must be multiplied by 3."
+          },
+          {
+            "id": "o3",
+            "label": "5(3)⁴",
+            "correct": false,
+            "feedback": "The inside must stay intact inside the bracket. The power rule acts on the WHOLE bracket, not on the 3 alone."
+          },
+          {
+            "id": "o4",
+            "label": "15(3x + 1)⁵",
+            "correct": false,
+            "feedback": "The power must drop by one: (3x+1)⁴, not ⁵. The 15 is right, though."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-chain-rule__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compose two local rate machines and watch their scale factors multiply.",
+      "widget": {
+        "type": "derivativeRuleLab",
+        "prompt": "Set the inner rate to 3 and the outer rate to 5, then explain the transmitted total rate.",
+        "mode": "chain",
+        "targetInnerRate": 3,
+        "targetOuterRate": 5,
+        "startInnerRate": 1,
+        "startOuterRate": 2,
+        "requiredMoves": 4,
+        "successFeedback": "The inner stage triples change and the outer stage multiplies that result by five, so dy/dx = 15.",
+        "explorationFeedback": "Change both local rates and compare the total after several combinations.",
+        "mechanismFeedback": "Match both target local rates; nested scale factors multiply rather than add."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change local increments or nested rates and expose the mechanism that produces the derivative rule.",
+        "invariants": [
+          "first-order-change-survives-limit",
+          "nested-rates-multiply"
+        ],
+        "misconceptions": [
+          "differentiate-factors-separately",
+          "chain-rule-adds-rates"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-derivativeRuleLab",
+        "delayed": false
+      },
+      "conceptTag": "dr-chain-rule",
+      "predict": {
+        "prompt": "The inner machine multiplies rates by 3; the outer multiplies by 5. The rate transmitted from one end of the chain to the other is…",
+        "options": [
+          {
+            "id": "eight",
+            "label": "8"
+          },
+          {
+            "id": "fifteen",
+            "label": "15"
+          },
+          {
+            "id": "five",
+            "label": "5 — the outer machine has the last word"
+          }
+        ],
+        "outcomeId": "fifteen",
+        "reveal": "15. Rates along a chain MULTIPLY — each stage scales whatever the previous one handed it, so tripling then quintupling is fifteen-fold. That single fact is the chain rule; dy/dx = dy/du · du/dx is bookkeeping laid over it."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Outside, then inside.",
+      "conceptTag": "dr-chain-rule",
+      "explanationVariants": [
+        "Outside: 2(2x + 1). Inside: the derivative of 2x + 1 is 2. So f′ = 2(2x + 1)·2 = 4(2x + 1), which at x = 1 is 12.",
+        "Expanding first gives 4x² + 4x + 1, whose derivative is 8x + 4 = 12 at x = 1 — the same."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = (2x + 1)². Find f′(1).",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That is 2(2x+1) at x = 1 — the outside only. You still owe the inner derivative, a factor of 2."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the inner derivative alone. It must MULTIPLY the outer one, not replace it."
+          },
+          {
+            "value": 9,
+            "feedback": "That is f(1) = 3² = 9, the height, not the slope."
+          }
+        ],
+        "fallbackFeedback": "2(2x+1)·2 = 4(2x+1) → f′(1) = 12."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "State it as a ritual and it stops being frightening:\n\n**Differentiate the outside, leave the inside alone, then multiply by the derivative of the inside.**\n\nSay the last clause out loud every time. \"Times the derivative of the inside\" is the entire difference between a right answer and a wrong one.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A root with an inside.",
+      "conceptTag": "dr-chain-rule",
+      "explanationVariants": [
+        "√(x² + 9) = (x² + 9)^(1/2). Outside: (1/2)(x² + 9)^(−1/2). Inside: 2x. So f′ = x/√(x² + 9), and at x = 4 that is 4/5 = 0.8.",
+        "At x = 4 the bracket is 25, whose root is 5 — the 3-4-5 triangle again."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = √(x² + 9). Find f′(4), as a decimal.",
+        "answer": 0.8,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.1,
+            "feedback": "That is 1/(2√25) = 1/10 — the outside only, with no inner derivative. Multiply by 2x = 8 to get 8/10."
+          },
+          {
+            "value": 5,
+            "feedback": "That is f(4) = √25, the height, not the slope."
+          },
+          {
+            "value": 8,
+            "feedback": "That is the inner derivative 2x at x = 4. It must multiply the outer (1/2)(25)^(−1/2) = 1/10."
+          }
+        ],
+        "fallbackFeedback": "(1/2)(x²+9)^(−1/2)·2x = x/√(x²+9) → 4/5 = 0.8."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Numbers only, chained.",
+      "conceptTag": "dr-chain-rule",
+      "hints": [
+        "You want (f∘g)′(1) = f′(g(1))·g′(1). Work out the INSIDE first.",
+        "g(1) = 4, so the outer derivative must be evaluated at 4, not at 1: f′(4) = 6.",
+        "Then multiply by g′(1) = 5."
+      ],
+      "explanationVariants": [
+        "(f∘g)′(1) = f′(g(1))·g′(1) = f′(4)·5 = 6 × 5 = 30.",
+        "The commonest slip is using f′(1) instead of f′(g(1)). The outer function is evaluated where the INSIDE lands."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "g(1) = 4, g′(1) = 5, f′(1) = 2, f′(4) = 6. Find (f∘g)′(1).",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That used f′(1) = 2 instead of f′(g(1)) = f′(4) = 6. The outer derivative is evaluated where the inside LANDS, which is 4."
+          },
+          {
+            "value": 6,
+            "feedback": "That is f′(4) alone. It must still be multiplied by the inner rate g′(1) = 5."
+          },
+          {
+            "value": 11,
+            "feedback": "The two rates multiply, they do not add: 6 × 5 = 30."
+          }
+        ],
+        "fallbackFeedback": "f′(g(1))·g′(1) = f′(4)·5 = 6 × 5 = 30."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rates multiply along a chain.",
+      "takeaways": [
+        "dy/dx = (dy/du)(du/dx) — each stage scales what the last one delivered, so the scalings multiply.",
+        "Differentiate the outside, leave the inside alone, then MULTIPLY BY THE DERIVATIVE OF THE INSIDE.",
+        "Evaluate the outer derivative where the inside LANDS: f′(g(a)), never f′(a)."
+      ],
+      "teaser": "Next: chains inside chains — and functions that refuse to be solved for y."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-chain-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two steps, and never skip the second. **One:** differentiate the outer function, leaving the inner bracket exactly as it is. **Two:** multiply by the derivative of what is inside the bracket. If your answer has no second factor, you have not finished.",
+        "figure": "dr-chain-gears"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Did you pay for the inside?",
+        "conceptTag": "dr-chain-rule",
+        "explanationVariants": [
+          "Outside: 3(5x)². Inside: the derivative of 5x is 5. So f′ = 3(5x)²·5 = 375x², which at 1 is 375.",
+          "Or simplify first: (5x)³ = 125x³, whose derivative is 375x²."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = (5x)³. Find f′(1).",
+          "answer": 375,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 75,
+              "feedback": "That is 3(5x)² at x = 1 — the outside only. Multiply by the inner derivative, 5."
+            },
+            {
+              "value": 15,
+              "feedback": "That looks like 3 × 5. The outer derivative is 3(5x)² = 75 at x = 1, and then × 5 = 375."
+            }
+          ],
+          "fallbackFeedback": "3(5x)²·5 = 375x² → f′(1) = 375."
+        }
+      }
+    }
+  ]
+}

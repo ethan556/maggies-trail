@@ -1,0 +1,357 @@
+{
+ "id": "la-01-03",
+ "slug": "reading-geometric-figures",
+ "title": "Reading Geometric Figures",
+ "courseId": "lines-angles",
+ "chapterId": "ch1-points-lines-rays",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Real figures mix every term you've learned: points, rays, angles, all at once. Reading one means checking each piece against what you know — how many endpoints, is there a shared vertex, what's the angle's name.",
+   "figure": "la-angle-rays"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Read the figure's pieces.",
+   "conceptTag": "reading-figures",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "A figure has point A, ray AB, ray AC, and angle BAC. Match each label to what it is.",
+    "left": [
+     {
+      "id": "p1",
+      "label": "Point A"
+     },
+     {
+      "id": "p2",
+      "label": "Ray AB"
+     },
+     {
+      "id": "p3",
+      "label": "Angle BAC"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "An exact location, no length"
+     },
+     {
+      "id": "r2",
+      "label": "Starts at A, extends through B forever"
+     },
+     {
+      "id": "r3",
+      "label": "Two rays meeting at vertex A"
+     }
+    ],
+    "pairs": {
+     "p1": "r1",
+     "p2": "r2",
+     "p3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "p2",
+      "right": "r3",
+      "feedback": "That description fits angle BAC, not ray AB. A ray starts at one point and extends forever through another."
+     }
+    ],
+    "missFeedback": "Match each term to its definition: point (a spot), ray (one endpoint, one direction), angle (two rays at a vertex).",
+    "successFeedback": "Point A is a location, ray AB extends from A through B, and angle BAC is the two rays meeting at A."
+   },
+   "predict": {
+    "prompt": "In the angle named 'BAC', which letter sits at the corner?",
+    "options": [
+     {
+      "id": "middle",
+      "label": "A — the middle letter"
+     },
+     {
+      "id": "first",
+      "label": "B — the first letter"
+     },
+     {
+      "id": "last",
+      "label": "C — the last letter"
+     }
+    ],
+    "outcomeId": "middle",
+    "reveal": "Angle names put the vertex in the MIDDLE — the two outer letters ride the rays. Read the corner from the center of the name."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find the shared vertex.",
+   "conceptTag": "reading-figures",
+   "explanationVariants": [
+    "Ray AB and ray AC both start at A — that shared point is the vertex.",
+    "Whichever letter appears in BOTH ray names is the vertex."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A figure shows ray AB and ray AC. Which point is the vertex of the angle they form?",
+    "options": [
+     {
+      "id": "a",
+      "label": "A — it's in both ray names",
+      "correct": true,
+      "feedback": "A appears in both ray AB and ray AC — that shared starting point is the vertex."
+     },
+     {
+      "id": "b",
+      "label": "B — it comes first alphabetically among the endpoints",
+      "feedback": "Alphabetical order isn't the rule. The vertex is whichever point the two rays SHARE: A."
+     },
+     {
+      "id": "c",
+      "label": "C — it's the last letter mentioned",
+      "feedback": "Mention order isn't the rule either. The vertex is the shared starting point of both rays: A."
+     },
+     {
+      "id": "d",
+      "label": "Both B and C",
+      "feedback": "An angle has only ONE vertex. Since both rays start at A, that's the single shared vertex."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laReadingFiguresMcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A figure can hide several angles at once. If three rays share vertex P, going toward Q, R, and S, that's actually THREE separate angles: QPR, RPS, and QPS (the two smaller ones combined).",
+   "figure": "la-angle-rays"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Count the angles.",
+   "conceptTag": "reading-figures",
+   "explanationVariants": [
+    "Three rays from one vertex make three angles: between the first and second ray, the second and third, and the first and third (combined).",
+    "Every pair of rays forms its own angle."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Three rays share vertex P, spreading toward points Q, R, and S. How many different angles do these three rays form?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "angles",
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "1 only counts the outer angle (QPS). Two more hide between the individual pairs: QPR and RPS. Three total."
+     },
+     {
+      "value": 2,
+      "feedback": "2 misses the combined outer angle. QPR, RPS, and the full QPS make three angles in all."
+     }
+    ],
+    "fallbackFeedback": "Count every possible pair of rays: QPR, RPS, and QPS."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laReadingFiguresNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Identify each part of a composite figure.",
+   "conceptTag": "reading-figures",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "A figure has: point M, ray MN, ray MO, angle NMO, and segment NO. Sort each label by its type.",
+    "buckets": [
+     {
+      "id": "bpoint",
+      "label": "Point",
+      "icon": "•"
+     },
+     {
+      "id": "bray",
+      "label": "Ray",
+      "icon": "➡️"
+     },
+     {
+      "id": "bangle",
+      "label": "Angle",
+      "icon": "📐"
+     },
+     {
+      "id": "bsegment",
+      "label": "Segment",
+      "icon": "📏"
+     }
+    ],
+    "items": [
+     {
+      "id": "i1x",
+      "label": "Point M",
+      "bucketId": "bpoint",
+      "feedback": "A single labeled location."
+     },
+     {
+      "id": "i2x",
+      "label": "Ray MN",
+      "bucketId": "bray",
+      "feedback": "One endpoint (M), extending through N forever."
+     },
+     {
+      "id": "i3x",
+      "label": "Angle NMO",
+      "bucketId": "bangle",
+      "feedback": "Two rays (MN and MO) meeting at vertex M."
+     },
+     {
+      "id": "i4x",
+      "label": "Segment NO",
+      "bucketId": "bsegment",
+      "feedback": "Two definite endpoints, N and O."
+     }
+    ],
+    "missFeedback": "Match each label's structure to its type: one point, one ray, one angle, one segment.",
+    "successFeedback": "Point M, ray MN, angle NMO, and segment NO — every piece of the figure, sorted by type."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Name the vertex in a bigger figure.",
+   "conceptTag": "reading-figures",
+   "explanationVariants": [
+    "Angle DEF has vertex E, the middle letter — regardless of how many other points are in the figure.",
+    "The naming rule doesn't change just because the figure is more complex."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A complex figure includes points D, E, F, G, and H. It contains angle DEF. What is this angle's vertex?",
+    "options": [
+     {
+      "id": "a",
+      "label": "E — the middle letter of DEF",
+      "correct": true,
+      "feedback": "No matter how many other points exist in the figure, angle DEF's vertex is still its middle letter: E."
+     },
+     {
+      "id": "b",
+      "label": "G — since it's an extra point in the figure",
+      "feedback": "G isn't even part of this angle's name. The vertex of DEF is its middle letter: E."
+     },
+     {
+      "id": "c",
+      "label": "D — the first letter",
+      "feedback": "D is a point on one ray, not the vertex. The middle letter, E, is the vertex."
+     },
+     {
+      "id": "d",
+      "label": "It depends on the other points in the figure",
+      "feedback": "Extra points elsewhere in the figure don't change this angle's vertex. It's always the middle letter: E."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laReadingFiguresMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The kite frame.",
+   "conceptTag": "reading-figures",
+   "hints": [
+    "Four rays meet at the frame's center point.",
+    "Count every possible pair of rays.",
+    "Each pair forms its own separate angle."
+   ],
+   "explanationVariants": [
+    "With 4 rays sharing one vertex, the pairs are: ray1-ray2, ray1-ray3, ray1-ray4, ray2-ray3, ray2-ray4, ray3-ray4 — six angles in all.",
+    "Every combination of two rays makes a distinct angle: 6 total from 4 rays."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A kite's frame has 4 wooden rays meeting at one center point. How many different angles do these 4 rays form altogether?",
+    "answer": 6,
+    "tolerance": 0,
+    "unit": "angles",
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 just counts the rays themselves, not the angles between them. Every PAIR of rays makes its own angle — six pairs from four rays."
+     },
+     {
+      "value": 3,
+      "feedback": "3 undercounts the pairs. With 4 rays, there are 6 distinct pairs, each forming its own angle."
+     }
+    ],
+    "fallbackFeedback": "List every possible pair among the 4 rays; each pair is one angle."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laReadingFiguresNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Every figure, read piece by piece.",
+   "takeaways": [
+    "A complex figure is just points, rays, angles, and segments layered together.",
+    "The vertex-sharing rule finds an angle's vertex even in a busy figure.",
+    "Several rays from one point hide MULTIPLE angles — count every pair."
+   ],
+   "teaser": "next chapter: lines that never meet, and lines that cross exactly right."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "reading-figures",
+   "concept": {
+    "id": "rem-rf-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Match each piece to its definition, one at a time.** A labeled dot is a point. A one-way arrow from a point is a ray. Two rays sharing a point form an angle, named with the vertex in the middle."
+   },
+   "check": {
+    "id": "rem-rf-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "reading-figures",
+    "explanationVariants": [
+     "Ray JK starts at J and extends through K forever — one endpoint, one direction.",
+     "J is the endpoint; K just shows the direction."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A figure shows ray JK. What best describes it?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Starts at J, extends through K forever",
+       "correct": true,
+       "feedback": "One endpoint (J), one direction of travel."
+      },
+      {
+       "id": "b",
+       "label": "Stops at both J and K",
+       "feedback": "That describes a SEGMENT, not a ray. A ray keeps going past K forever."
+      },
+      {
+       "id": "c",
+       "label": "Extends forever in both directions",
+       "feedback": "That describes a LINE, with no endpoints. A ray has exactly one endpoint, J."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

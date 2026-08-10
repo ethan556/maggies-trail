@@ -1,0 +1,239 @@
+{
+  "id": "nls-02-02",
+  "slug": "a-line-through-the-circle",
+  "title": "A Line Through the Circle",
+  "courseId": "nonlinear-systems",
+  "chapterId": "ch2-line-meets-circle",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Same recipe, rounder curve. Where does y = x + 1 cross x² + y² = 25? Substitute the line into the circle: x² + (x + 1)² = 25. Expand, tidy, solve the quadratic, back-substitute. The only novelty is squaring the binomial carefully.",
+      "figure": "nls-line-meets-circle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Expand without losing the middle.",
+      "conceptTag": "nls-line-circle",
+      "explanationVariants": [
+        "(x + 1)² = x² + 2x + 1, so the equation reads 2x² + 2x + 1 = 25.",
+        "The square of a sum keeps its cross-term: x² + (x² + 2x + 1) = 25."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Substituting y = x + 1 into x² + y² = 25 and expanding gives…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2x² + 2x + 1 = 25",
+            "correct": true,
+            "feedback": "(x + 1)² = x² + 2x + 1 — the 2x middle term survives, as squares of sums demand."
+          },
+          {
+            "id": "o2",
+            "label": "2x² + 1 = 25",
+            "correct": false,
+            "feedback": "That squared term-by-term: (x + 1)² is NOT x² + 1 — the 2x went missing."
+          },
+          {
+            "id": "o3",
+            "label": "x² + x + 1 = 25",
+            "correct": false,
+            "feedback": "The whole (x + 1)² must be squared and added to x², doubling the x²."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Tidy to standard form.",
+      "conceptTag": "nls-line-circle",
+      "explanationVariants": [
+        "2x² + 2x − 24 = 0 divides by 2 into x² + x − 12 = 0.",
+        "Subtract 25, then halve every term: x² + x − 12 = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "2x² + 2x + 1 = 25 simplifies to…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x² + x − 12 = 0",
+            "correct": true,
+            "feedback": "Subtract 25 (giving 2x² + 2x − 24 = 0), divide by 2 — smaller numbers, same roots."
+          },
+          {
+            "id": "o2",
+            "label": "x² + x + 13 = 0",
+            "correct": false,
+            "feedback": "The constant is 1 − 25 = −24 before halving: it lands at −12, negative."
+          },
+          {
+            "id": "o3",
+            "label": "2x² + 2x = 24 has no simpler form",
+            "correct": false,
+            "feedback": "Every term is even — dividing by 2 is free and makes factoring humane."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Factor and read the x's.",
+      "conceptTag": "nls-line-circle",
+      "explanationVariants": [
+        "x² + x − 12 = (x + 4)(x − 3): roots −4 and 3 — the crossings' x-coordinates.",
+        "Factors of −12 summing to +1 are +4 and −3, so x = −4 or x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x² + x − 12 = 0 factors as (x + 4)(x − 3) = 0. What is the POSITIVE solution?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "Sign flip: x + 4 = 0 gives −4; the positive root comes from x − 3 = 0."
+          },
+          {
+            "value": 12,
+            "feedback": "−12 is the constant, not a root; the factor pair is 4 and −3."
+          },
+          {
+            "value": -4,
+            "feedback": "That's the negative solution; the positive one is 3."
+          }
+        ],
+        "fallbackFeedback": "(x + 4)(x − 3) = 0 gives x = −4 or x = 3; the positive one is 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two x's in hand — but a point needs its y. **Back-substitute into the LINE**, not the circle: the line hands each x exactly one y, while the circle would offer two (±) and make you choose. Always recover coordinates from the simpler equation. Then look closely at the two points you get — a famous trio of numbers is hiding in them.",
+      "figure": "nls-back-sub-into-line"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Back-substitute and plot both punctures.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Recover each y from the LINE y = x + 1 and plot both intersections with the circle.",
+        "cols": 8,
+        "rows": 8,
+        "xLabels": [
+          "-4",
+          "-3",
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "yLabels": [
+          "-3",
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 8
+          }
+        ],
+        "connectTargets": false,
+        "pointErrors": [
+          {
+            "x": 8,
+            "y": 7,
+            "feedback": "That's (3, 3): the line lifts it — y = 3 + 1 = 4. One row up."
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "feedback": "(−3, −2) sits on the LINE but not the circle: 9 + 4 ≠ 25. An intersection must satisfy both."
+          }
+        ],
+        "missFeedback": "Feed x = −4 and x = 3 into y = x + 1: the intersections are (−4, −3) and (3, 4).",
+        "successFeedback": "(−4, −3) and (3, 4) — and there's the hidden trio: both points are 3-4-5 triangles from the origin, which is exactly why they sit on a radius-5 circle."
+      },
+      "predict": {
+        "prompt": "Before plotting: will BOTH intersection points pass the circle's own check x² + y² = 25?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both — 16+9 and 9+16 each make 25"
+          },
+          {
+            "id": "one",
+            "label": "Only one will"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — the line check suffices"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "They must — being on the circle is half the definition of intersecting it. (−4)² + (−3)² = 25 and 3² + 4² = 25: the familiar 3-4-5 triple, appearing twice in two sign-costumes."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A vertical shortcut.",
+      "conceptTag": "nls-line-circle",
+      "explanationVariants": [
+        "x = 3 substitutes directly: 9 + y² = 25, so y² = 16 and y = ±4 — two points, (3, 4) and (3, −4).",
+        "Vertical lines substitute into x, leaving y² = 16: both square roots count."
+      ],
+      "hints": [
+        "The line x = 3 is vertical — substitute into the CIRCLE's x.",
+        "9 + y² = 25 leaves y² = 16.",
+        "y = ±4: how many crossings is that?"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many points do x = 3 and x² + y² = 25 share?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "y² = 16 has TWO roots, ±4 — forgetting the negative loses (3, −4), the classic ± slip."
+          },
+          {
+            "value": 0,
+            "feedback": "x = 3 is inside the radius-5 span, so the vertical line must pierce twice."
+          }
+        ],
+        "fallbackFeedback": "Substitute x = 3: 9 + y² = 25, so y = ±4 — two points, (3, 4) and (3, −4). A vertical line inside the circle always cuts twice."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rounder curve, same recipe.",
+      "takeaways": [
+        "Substitute the line, square the binomial WITH its middle term.",
+        "Tidy, factor, back-substitute — then audit in the circle.",
+        "y² = k hands back ±√k: two roots unless k = 0."
+      ],
+      "teaser": "next: tangent lines and clean misses — the circle's version of zero-one-two."
+    }
+  ]
+}

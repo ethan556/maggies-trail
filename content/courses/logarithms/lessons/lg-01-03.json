@@ -1,0 +1,380 @@
+{
+  "id": "lg-01-03",
+  "slug": "the-logarithmic-graph",
+  "title": "The Logarithmic Graph",
+  "courseId": "logarithms",
+  "chapterId": "ch1-log-as-inverse",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Because log₂ x undoes 2^x, its graph is the exponential's **mirror image across the line y = x** — inputs and outputs trade places. (1, 2) on the exponential becomes (2, 1) on the log. The mirror flips the exponential's horizontal asymptote into a **vertical asymptote at x = 0**.",
+      "figure": "log-as-inverse"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The log graph is the exponential in a mirror.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "logarithm",
+        "x": 100,
+        "targetBase": 10,
+        "startBase": 4,
+        "showMirror": true,
+        "prompt": "Slide the base until log_b(100) lands on the ring at 2. Watch both curves move together.",
+        "successFeedback": "log₁₀(100) = 2. The two curves are reflections across y = x — which is why the log crawls while the exponential explodes: each is the other's axes swapped.",
+        "lowFeedback": "log_b(100) is above 2, so the base is under 10. Raise it.",
+        "highFeedback": "log_b(100) is below 2, so the base is above 10 — bring it down."
+      },
+      "predict": {
+        "prompt": "When the exponential and logarithmic graphs are inverses, what geometric relationship should appear?",
+        "options": [
+          {
+            "id": "mirror",
+            "label": "They reflect across y = x"
+          },
+          {
+            "id": "parallel",
+            "label": "They stay parallel"
+          },
+          {
+            "id": "xaxis",
+            "label": "They reflect across the x-axis"
+          }
+        ],
+        "outcomeId": "mirror",
+        "reveal": "Inverse functions swap inputs and outputs, so every point (x, y) becomes (y, x). That coordinate swap is reflection across y = x."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Vary the common base and coordinate inverse points, equations, tables, and reflected graphs.",
+        "invariants": [
+          "exponential-logarithm-inverse-pair",
+          "coordinates-swap-across-y-equals-x",
+          "base-shared-by-inverses"
+        ],
+        "misconceptions": [
+          "logarithm-is-division",
+          "inverse-means-reciprocal-output"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "exponential-logarithmic-inverse-equations",
+        "delayed": true,
+        "counterfactualPrompt": "Change the base while tracking one point on the exponential and its reflected point on the logarithm. What changes and what inverse relationship cannot change?",
+        "explanation": {
+          "prompt": "Why are logarithmic and exponential graphs reflections across y = x?",
+          "options": [
+            {
+              "id": "swap",
+              "label": "Inverse functions exchange input and output, turning every point (x, y) into (y, x).",
+              "correct": true,
+              "feedback": "Exactly — the graph reflection is the geometric form of undoing exponentiation."
+            },
+            {
+              "id": "reciprocal",
+              "label": "A logarithm takes the reciprocal of every exponential output.",
+              "correct": false,
+              "feedback": "Inversion swaps input and output; it does not simply replace y by 1/y."
+            }
+          ]
+        }
+      },
+      "conceptTag": "lg-graph"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The swap dictates everything. The exponential's domain (all reals) becomes the log's **range** (all reals); the exponential's range (y > 0) becomes the log's **domain: x > 0**. Zero and negatives have no logarithm — no exponent turns 2 into −4 or into 0. The graph hugs its wall at x = 0, exactly like last course's vertical asymptotes.",
+      "figure": "lg-swap-domain"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Domain of the log.",
+      "conceptTag": "lg-graph",
+      "explanationVariants": [
+        "2^y = x forces x positive (powers of 2 always are): domain x > 0.",
+        "The log inherits the exponential's RANGE as its domain."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the domain of f(x) = log₂ x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x > 0",
+            "correct": true,
+            "feedback": "Right — only positive numbers are powers of 2."
+          },
+          {
+            "id": "o2",
+            "label": "x ≥ 0",
+            "correct": false,
+            "feedback": "0 is excluded too: 2^y is never 0 (the old horizontal asymptote) — strict inequality."
+          },
+          {
+            "id": "o3",
+            "label": "all real numbers",
+            "correct": false,
+            "feedback": "log₂(−4) would need 2^y = −4 — impossible; that all-reals set is the log's RANGE."
+          },
+          {
+            "id": "o4",
+            "label": "x > 1",
+            "correct": false,
+            "feedback": "Inputs between 0 and 1 work fine — they just give NEGATIVE outputs: log₂(1/2) = −1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-graph__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Where the graph crosses.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does y = log₂ x cross the x-axis?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(1, 0)",
+            "correct": true,
+            "feedback": "Right — log₂ 1 = 0: every log graph passes through (1, 0)."
+          },
+          {
+            "id": "o2",
+            "label": "(0, 1)",
+            "correct": false,
+            "feedback": "That's the EXPONENTIAL's intercept — the mirror swaps it to (1, 0)."
+          },
+          {
+            "id": "o3",
+            "label": "(0, 0)",
+            "correct": false,
+            "feedback": "x = 0 isn't even in the domain — the wall stands there."
+          },
+          {
+            "id": "o4",
+            "label": "(2, 1)",
+            "correct": false,
+            "feedback": "(2, 1) is on the graph (log₂ 2 = 1), but it sits at height 1, not on the axis."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Behavior at the wall.",
+      "conceptTag": "lg-graph",
+      "explanationVariants": [
+        "log₂(1/16) = −4, log₂(1/1024) = −10: tiny inputs give huge NEGATIVE outputs — the graph dives down the wall.",
+        "Approaching 0 from the right, the log plunges toward −∞."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As x approaches 0 from the right, what does log₂ x do?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "plunges toward −∞",
+            "correct": true,
+            "feedback": "Right — log₂(1/1024) = −10 already; smaller inputs dive further."
+          },
+          {
+            "id": "o2",
+            "label": "rises toward +∞",
+            "correct": false,
+            "feedback": "Tiny inputs are DEEP reciprocals of the base: their exponents are hugely NEGATIVE."
+          },
+          {
+            "id": "o3",
+            "label": "approaches 0",
+            "correct": false,
+            "feedback": "The output 0 happens at x = 1 — near the wall the outputs run away, not settle."
+          },
+          {
+            "id": "o4",
+            "label": "approaches log₂ 0",
+            "correct": false,
+            "feedback": "log₂ 0 doesn't exist — no exponent makes 2^y equal 0; the graph dives instead."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-graph__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Growth character.",
+      "conceptTag": "lg-graph",
+      "explanationVariants": [
+        "log₂ x keeps rising forever, just achingly slowly: it hits 10 only at x = 1024, 20 only at x ≈ 10⁶.",
+        "Slow but unbounded — no horizontal asymptote on the right."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For large x, the graph of y = log₂ x:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "keeps rising forever, ever more slowly",
+            "correct": true,
+            "feedback": "Right — it reaches every height eventually (10 at x = 1024), with no ceiling."
+          },
+          {
+            "id": "o2",
+            "label": "levels off at a horizontal asymptote",
+            "correct": false,
+            "feedback": "It has NO ceiling — name any height k and x = 2ᵏ reaches it; only the growth RATE fades."
+          },
+          {
+            "id": "o3",
+            "label": "turns around and decreases",
+            "correct": false,
+            "feedback": "Bigger inputs always need bigger exponents — the log never descends."
+          },
+          {
+            "id": "o4",
+            "label": "stops at y = 10",
+            "correct": false,
+            "feedback": "log₂ 1024 = 10 and log₂ 2048 = 11 — it passes any bound."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-graph__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Shifted log, full profile.",
+      "conceptTag": "lg-graph",
+      "explanationVariants": [
+        "g(x) = log₂(x − 3): the inside dies at 3, so the wall moves to x = 3 and the domain becomes x > 3 — same transformation grammar as always.",
+        "Inside shift right 3: asymptote x = 3, x-intercept at (4, 0) since log₂ 1 = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Profile g(x) = log₂(x − 3): vertical asymptote and domain?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "asymptote x = 3; domain x > 3",
+            "correct": true,
+            "feedback": "Right — the wall follows the inside's zero; the intercept moves to (4, 0)."
+          },
+          {
+            "id": "o2",
+            "label": "asymptote x = −3; domain x > −3",
+            "correct": false,
+            "feedback": "Inside shifts oppose their sign: x − 3 pushes the wall RIGHT to +3."
+          },
+          {
+            "id": "o3",
+            "label": "asymptote x = 0; domain x > 0",
+            "correct": false,
+            "feedback": "That's the parent — the (x − 3) inside drags wall and domain 3 to the right."
+          },
+          {
+            "id": "o4",
+            "label": "asymptote y = 3; domain all reals",
+            "correct": false,
+            "feedback": "Logs have VERTICAL walls (banned inputs) — and the domain shrinks to x > 3."
+          }
+        ]
+      },
+      "hints": [
+        "The wall stands where the INSIDE hits 0.",
+        "x − 3 = 0 at x = 3.",
+        "Domain: inside > 0, so x > 3."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-graph__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The log graph is the exponential mirrored: wall at x = 0, through (1, 0), slow unbounded rise.",
+      "takeaways": [
+        "Domain x > 0 — zero and negatives have no log.",
+        "Every log graph passes (1, 0) and (b, 1).",
+        "Transformation grammar applies: the wall follows the inside's zero."
+      ],
+      "teaser": "Next chapter: the three properties that make logs POWERFUL — straight from exponent rules."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-graph",
+      "concept": {
+        "id": "rem-lg0103-c",
+        "kind": "concept",
+        "body": "The mirror in one move: the exponential passes (0, 1) because 2⁰ = 1. Swap the coordinates for the log."
+      },
+      "check": {
+        "id": "rem-lg0103-k",
+        "kind": "check",
+        "body": "Swap them.",
+        "conceptTag": "lg-graph",
+        "explanationVariants": [
+          "(1, 0) — the log's universal x-intercept.",
+          "Input and output trade places across y = x."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "y = 2ˣ passes through (0, 1). Which point is on y = log₂ x?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(1, 0)",
+              "correct": true,
+              "feedback": "Right — the swap of (0, 1)."
+            },
+            {
+              "id": "o2",
+              "label": "(0, 1)",
+              "correct": false,
+              "feedback": "That's the exponential's point — mirror it: (1, 0)."
+            },
+            {
+              "id": "o3",
+              "label": "(0, −1)",
+              "correct": false,
+              "feedback": "Swapping never negates — trade the 0 and the 1: (1, 0)."
+            },
+            {
+              "id": "o4",
+              "label": "(1, 1)",
+              "correct": false,
+              "feedback": "log₂ 1 = 0, so the height at x = 1 is 0."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

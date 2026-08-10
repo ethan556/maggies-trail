@@ -1,0 +1,318 @@
+{
+  "id": "sy-05-01",
+  "slug": "indirect-measurement",
+  "title": "Indirect Measurement",
+  "courseId": "similarity",
+  "chapterId": "ch5-applications",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "sy-indirect",
+      "concept": {
+        "id": "rem-sy-indirect-c",
+        "kind": "concept",
+        "body": "Indirect measurement uses SIMILAR triangles to find unreachable lengths. Shadow method: person and object both stand at 90° to the ground and the sun's rays share an angle → AA. Mirror method: equal reflection angles → AA. Always pair CORRESPONDING parts (height↔height, near-distance↔far-distance) in the proportion."
+      },
+      "check": {
+        "id": "rem-sy-indirect-k",
+        "kind": "check",
+        "body": "Corresponding parts.",
+        "conceptTag": "sy-indirect",
+        "explanationVariants": [
+          "Height pairs with height; the person's shadow pairs with the object's shadow.",
+          "Match parts by role — never cross height with shadow."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In a shadow proportion, the person's shadow corresponds to…",
+          "options": [
+            {
+              "id": "o1",
+              "label": "the object's shadow",
+              "correct": true,
+              "feedback": "Shadow pairs with shadow, height with height."
+            },
+            {
+              "id": "o2",
+              "label": "the object's height",
+              "correct": false,
+              "feedback": "Don't cross roles — shadow pairs with shadow, not height."
+            },
+            {
+              "id": "o3",
+              "label": "the sun's angle",
+              "correct": false,
+              "feedback": "The angle is what makes them similar; the shadow pairs with the other shadow."
+            },
+            {
+              "id": "o4",
+              "label": "the ground distance between them",
+              "correct": false,
+              "feedback": "That gap isn't in the proportion. Shadow ↔ shadow."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "How do you measure a tree you can't climb? **Similar triangles.** At the same moment, a tree and a person cast shadows; the sun's rays strike both at the same angle, and both stand at 90° to the ground. Two equal angles — AA — so the triangles are similar, and one proportion reveals the height.",
+      "figure": "indirect-measurement"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Shadow proportion.",
+      "predict": {
+        "prompt": "A 6-ft person casts a 4-ft shadow. The tree's shadow is 20 ft — five times as long. How tall is the tree?",
+        "options": [
+          {
+            "id": "five",
+            "label": "Five times the person's height — 30 ft"
+          },
+          {
+            "id": "add",
+            "label": "6 + 16 = 22 ft, since the shadow grew by 16"
+          },
+          {
+            "id": "product",
+            "label": "6 × 20 = 120 ft"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "The sun makes the same angle for both, so person and tree form similar triangles: height and shadow scale together. A shadow five times longer means a height five times taller — 30 ft."
+      },
+      "widget": {
+        "type": "ratioTable",
+        "prompt": "Height and shadow scale together. Fill in the height for a 20-ft shadow, keeping the ratio the rows show.",
+        "colA": "shadow (ft)",
+        "colB": "height (ft)",
+        "rows": [
+          [
+            4,
+            6
+          ],
+          [
+            8,
+            12
+          ]
+        ],
+        "askA": 20,
+        "targetB": 30,
+        "bMax": 40,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "30 ft. Every row holds the same height-to-shadow ratio — 6/4, 12/8, 30/20 all reduce to 1.5. The sun's angle is what forces that: person and tree are the upright sides of two similar triangles, so their shadows scale by the same factor they do.",
+        "lowFeedback": "Too short. A 20-ft shadow is five times the person's 4-ft shadow, so the height has to be five times the person's too.",
+        "highFeedback": "Too tall — check against the rows above. 120 would come from 6 × 20, which forgets to divide by the person's own shadow."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why the triangles are similar.",
+      "conceptTag": "sy-indirect",
+      "explanationVariants": [
+        "Both objects stand at 90° to the ground and the sun's parallel rays hit both at the same angle — two equal angles, so AA similarity.",
+        "Equal sun-ray angle plus the shared right angle gives AA."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What makes the person's triangle similar to the tree's triangle?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Both have a right angle to the ground and share the sun's ray angle (AA)",
+            "correct": true,
+            "feedback": "Two equal angles — the right angle and the common sun-ray angle — give AA similarity."
+          },
+          {
+            "id": "o2",
+            "label": "The shadows are equal",
+            "correct": false,
+            "feedback": "The shadows differ (4 ft vs 20 ft). Similarity comes from the equal ANGLES, not equal shadows."
+          },
+          {
+            "id": "o3",
+            "label": "The person and tree are the same height",
+            "correct": false,
+            "feedback": "They're different heights — that's what you're solving for. The similarity is from the angles."
+          },
+          {
+            "id": "o4",
+            "label": "All triangles are similar",
+            "correct": false,
+            "feedback": "Triangles are not all similar. These two are, by AA — right angle plus shared sun-ray angle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-indirect__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **mirror method** works even in shade. Place a mirror on the ground and step back until you see the treetop in it. Light reflects at equal angles, so your eye-to-mirror triangle is similar to the mirror-to-tree triangle. Measure your height, your distance to the mirror, and the mirror's distance to the tree.",
+      "figure": "indirect-measurement"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Mirror method.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Your eyes are 5 ft up. You stand 2 ft from a mirror and see the treetop; the mirror is 10 ft from the tree. How tall is the tree, in feet?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = 5 × 2 ÷ ... miscomputes. Set up 5/2 = h/10 → h = 5 × 10 ÷ 2 = 25."
+          },
+          {
+            "value": 17,
+            "feedback": "17 = 5 + 10 + 2 adds distances. Use the proportion 5/2 = h/10 → h = 25."
+          }
+        ],
+        "fallbackFeedback": "5/2 = h/10 → h = 5 × 10 ÷ 2 = 25 ft."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What makes mirrors work.",
+      "conceptTag": "sy-indirect",
+      "explanationVariants": [
+        "Light reflects at equal angles, and both the person and tree stand vertically — two equal angles give similar triangles.",
+        "Equal angles of incidence and reflection, plus two right angles to the ground, means AA similarity."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the mirror method create similar triangles?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Light reflects at equal angles, and both objects are vertical — two equal angles (AA)",
+            "correct": true,
+            "feedback": "The equal incidence/reflection angles plus the shared right angle to the ground give AA similarity."
+          },
+          {
+            "id": "o2",
+            "label": "The mirror magnifies the tree",
+            "correct": false,
+            "feedback": "A flat mirror doesn't magnify. Similar triangles arise from the EQUAL reflection angles, not magnification."
+          },
+          {
+            "id": "o3",
+            "label": "The distances are equal",
+            "correct": false,
+            "feedback": "The distances differ (2 ft vs 10 ft). Similarity comes from equal angles, not equal distances."
+          },
+          {
+            "id": "o4",
+            "label": "Mirrors always double lengths",
+            "correct": false,
+            "feedback": "Mirrors don't double lengths. The equal reflection angles create the similar triangles."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-indirect__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Both methods share one recipe: identify the two similar triangles, match corresponding parts (height ↔ height, near-distance ↔ far-distance), write ONE proportion, and solve. The power of indirect measurement is reaching the unreachable with nothing but a shadow, a mirror, and a ratio.",
+      "figure": "sy-indirect-recipe"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Set up correctly.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In a shadow problem, the person's HEIGHT corresponds to the tree's height. What does the person's SHADOW correspond to?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the tree's shadow",
+            "correct": true,
+            "feedback": "Corresponding parts match by role: height↔height and shadow↔shadow. Person's shadow ↔ tree's shadow."
+          },
+          {
+            "id": "o2",
+            "label": "the tree's height",
+            "correct": false,
+            "feedback": "Height corresponds to height and shadow to shadow — don't cross them. Shadow ↔ shadow."
+          },
+          {
+            "id": "o3",
+            "label": "the distance between them",
+            "correct": false,
+            "feedback": "The proportion pairs height with height and shadow with shadow, not the gap between objects."
+          },
+          {
+            "id": "o4",
+            "label": "nothing — shadows aren't used",
+            "correct": false,
+            "feedback": "Shadows are exactly what's compared: the person's shadow corresponds to the tree's shadow."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Solve a shadow problem.",
+      "conceptTag": "sy-indirect",
+      "hints": [
+        "Set up height-over-shadow equal for both triangles.",
+        "5/8 = h/32 (person 5 ft, shadow 8 ft; building shadow 32 ft).",
+        "Cross-multiply: h = 5 × 32 ÷ 8."
+      ],
+      "explanationVariants": [
+        "5/8 = h/32 → h = 5 × 32 ÷ 8 = 20 ft.",
+        "The proportion gives h = 160 ÷ 8 = 20 ft."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 5-ft person casts an 8-ft shadow while a building casts a 32-ft shadow. How tall is the building, in feet?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 29,
+            "feedback": "29 = 5 + 32 − 8 mixes operations. Use 5/8 = h/32 → h = 5 × 32 ÷ 8 = 20."
+          },
+          {
+            "value": 51.2,
+            "feedback": "51.2 = 8 × 32 ÷ 5 inverts the ratio. Set 5/8 = h/32 → h = 20."
+          }
+        ],
+        "fallbackFeedback": "5/8 = h/32 → h = 5 × 32 ÷ 8 = 20 ft."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-indirect__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Reaching the unreachable.",
+      "takeaways": [
+        "Shadows: person and object make similar triangles by AA (right angle + sun-ray angle).",
+        "Mirrors: equal reflection angles make similar triangles even in shade.",
+        "Match height↔height and shadow↔shadow, write one proportion, solve."
+      ],
+      "teaser": "Next: scale drawings and models — similarity you can hold in your hand."
+    }
+  ]
+}

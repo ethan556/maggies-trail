@@ -1,0 +1,386 @@
+{
+  "id": "mb-02-03",
+  "slug": "prime-and-composite",
+  "title": "Prime and Composite",
+  "courseId": "multiply-bigger",
+  "chapterId": "ch2-factors-multiples",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Some numbers make only **one** rectangle. 7 tiles form a 1×7 line and nothing else — no other whole rectangle fits. Numbers like that are **prime**: their only factors are 1 and themselves. Numbers that make more than one rectangle (like 12) are **composite**.",
+      "figure": "mb-prime-composite"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "How many rectangles?",
+      "conceptTag": "prime-composite",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each number by how many different rectangles its tiles can make.",
+        "buckets": [
+          {
+            "id": "prime",
+            "label": "Prime (only 1×n)",
+            "icon": "▬"
+          },
+          {
+            "id": "composite",
+            "label": "Composite (more than one)",
+            "icon": "▦"
+          }
+        ],
+        "items": [
+          {
+            "id": "n7",
+            "label": "7",
+            "bucketId": "prime",
+            "feedback": "Only 1×7 — 7 is prime."
+          },
+          {
+            "id": "n9",
+            "label": "9",
+            "bucketId": "composite",
+            "feedback": "1×9 AND 3×3 — two rectangles, so 9 is composite."
+          },
+          {
+            "id": "n13",
+            "label": "13",
+            "bucketId": "prime",
+            "feedback": "Only 1×13 fits — 13 is prime."
+          },
+          {
+            "id": "n10",
+            "label": "10",
+            "bucketId": "composite",
+            "feedback": "1×10 AND 2×5 — more than one rectangle, so 10 is composite."
+          }
+        ],
+        "missFeedback": "One rectangle (just 1×n) → prime; two or more rectangles → composite.",
+        "successFeedback": "7 and 13 make only a single line (prime); 9 and 10 make extra rectangles (composite)."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Prime or composite?",
+      "conceptTag": "prime-composite",
+      "explanationVariants": [
+        "15 = 3 × 5, so besides 1×15 it also makes a 3×5 rectangle — more than one, so composite.",
+        "15 has factors 1, 3, 5, 15 — four factors means extra rectangles, so it's composite."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is 15 prime or composite?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Composite — it makes 1×15 AND 3×5",
+            "correct": true,
+            "feedback": "The 3×5 rectangle proves extra factors (3 and 5), so 15 is composite."
+          },
+          {
+            "id": "b",
+            "label": "Prime — 15 is odd",
+            "feedback": "Odd doesn't mean prime — 15 = 3 × 5. It has a 3×5 rectangle, so it's composite. (9, 21, 25 are odd composites too.)"
+          },
+          {
+            "id": "c",
+            "label": "Prime — it doesn't end in an even digit",
+            "feedback": "The last digit doesn't decide primality. 15 splits as 3 × 5, giving a second rectangle — composite."
+          },
+          {
+            "id": "d",
+            "label": "Neither",
+            "feedback": "Every whole number above 1 is prime or composite. 15 has the 3×5 rectangle, so it's composite."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbPrimeCompositeMcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The number **1 is the odd one out — neither prime nor composite.** A prime needs exactly two different factors (1 and itself); but 1's only factor is 1, so it has just ONE factor, not two. It fails the prime rule and isn't composite either. 1 sits in its own special box.",
+      "figure": "mb-prime-composite"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The special case.",
+      "conceptTag": "prime-composite",
+      "explanationVariants": [
+        "A prime has exactly two different factors; 1 has only one factor (itself), so it can't be prime — or composite.",
+        "1 makes only a 1×1 square and has a single factor, failing the two-factor prime rule; it's neither."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is 1 prime, composite, or neither?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Neither — 1 has only one factor, but a prime needs exactly two",
+            "correct": true,
+            "feedback": "Primes have two different factors (1 and themselves). 1's only factor is 1, so it's in its own box."
+          },
+          {
+            "id": "b",
+            "label": "Prime — its only factors are 1 and itself",
+            "feedback": "For 1, '1 and itself' are the SAME number — that's one factor, not the two a prime needs. So 1 is neither."
+          },
+          {
+            "id": "c",
+            "label": "Composite — it's a small number",
+            "feedback": "Composite means MORE than one rectangle; 1 makes only 1×1. Small doesn't mean composite. 1 is neither."
+          },
+          {
+            "id": "d",
+            "label": "Both prime and composite",
+            "feedback": "A number is prime or composite, never both — and 1 is actually NEITHER, with too few factors to be prime and too few rectangles to be composite."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbPrimeCompositeMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Hunt the primes under 20.",
+      "conceptTag": "prime-composite",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every PRIME number (only a 1×n rectangle, exactly two factors).",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "p11",
+            "x": 20,
+            "y": 30,
+            "label": "11",
+            "icon": "11",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "p16",
+            "x": 50,
+            "y": 30,
+            "label": "16",
+            "icon": "16",
+            "count": 1,
+            "feedback": "16 makes 2×8 and 4×4 besides 1×16 — lots of rectangles, so composite, not prime."
+          },
+          {
+            "id": "p17",
+            "x": 80,
+            "y": 30,
+            "label": "17",
+            "icon": "17",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "p19",
+            "x": 35,
+            "y": 75,
+            "label": "19",
+            "icon": "19",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "p21",
+            "x": 70,
+            "y": 75,
+            "label": "21",
+            "icon": "21",
+            "count": 1,
+            "feedback": "21 = 3 × 7, so it makes a 3×7 rectangle — composite, not prime."
+          }
+        ],
+        "missFeedback": "A prime makes ONLY the 1×n line. If you can find any other rectangle, it's composite.",
+        "successFeedback": "11, 17, and 19 make only a single line (prime); 16 and 21 have extra rectangles (composite)."
+      },
+      "predict": {
+        "prompt": "Can an ODD number still fail to be prime?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — odd doesn't mean prime"
+          },
+          {
+            "id": "no",
+            "label": "No — every odd number is prime"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Odd only means not divisible by 2 — an odd number can still split other ways, like 21 into 3 × 7. Prime demands exactly two factors."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents prime composite.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for prime composite must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines prime composite."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiply-bigger:prime-composite",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the mistaken prime.",
+      "conceptTag": "prime-composite",
+      "explanationVariants": [
+        "9 looks prime but 9 = 3 × 3 — that 3×3 rectangle is a second option, so 9 is composite.",
+        "The trap: 9 is odd and 'feels' prime, but 3 divides it, giving a 3×3 rectangle. Composite."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these is NOT actually prime: 5, 9, 11, or 23?",
+        "options": [
+          {
+            "id": "a",
+            "label": "9 — it equals 3 × 3, so it's composite",
+            "correct": true,
+            "feedback": "9's sneaky 3×3 rectangle gives it a third factor. The others (5, 11, 23) make only a 1×n line."
+          },
+          {
+            "id": "b",
+            "label": "5",
+            "feedback": "5 makes only 1×5 — a genuine prime. The composite hiding here is 9 = 3 × 3."
+          },
+          {
+            "id": "c",
+            "label": "11",
+            "feedback": "11 has only 1×11 — prime. Look for the one with a hidden rectangle: 9 = 3 × 3."
+          },
+          {
+            "id": "d",
+            "label": "23",
+            "feedback": "23 is prime (only 1×23). The odd-one-out is 9, which splits into 3 × 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbPrimeCompositeMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The prime count.",
+      "conceptTag": "prime-composite",
+      "hints": [
+        "Check each number from 2 to 10 for a rectangle beyond 1×n.",
+        "2, 3, 5, 7 make only a line; 4, 6, 8, 9, 10 have extra rectangles.",
+        "Count just the ones with a single rectangle."
+      ],
+      "explanationVariants": [
+        "From 2 to 10 the primes are 2, 3, 5, 7 — four of them. (4=2×2, 6=2×3, 8=2×4, 9=3×3, 10=2×5 are all composite; 1 is neither.)",
+        "Only 2, 3, 5, 7 make a single 1×n line between 2 and 10 — that's 4 primes."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many PRIME numbers are there from 2 to 10 (including 2 and 10)?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "primes",
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 likely counted 9 as prime — but 9 = 3 × 3 is composite. The primes 2–10 are just 2, 3, 5, 7: four."
+          },
+          {
+            "value": 3,
+            "feedback": "3 may have dropped 2, the smallest prime (it makes only 1×2). The primes 2–10 are 2, 3, 5, 7 — four."
+          }
+        ],
+        "fallbackFeedback": "Check 2–10 one by one; count those making only a 1×n line."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbPrimeCompositeNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rectangle, or many.",
+      "takeaways": [
+        "Prime = exactly two factors (1 and itself) = only a 1×n rectangle.",
+        "Composite = more than two factors = more than one rectangle.",
+        "1 is neither — it has just one factor, too few for either."
+      ],
+      "teaser": "next chapter: the area model — how break-apart multiplies ANY big number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "prime-composite",
+      "concept": {
+        "id": "rem-pc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Prime = a lonely line.** If the only rectangle a number's tiles can make is a single 1×n row, it's prime — its only factors are 1 and itself. The moment a second rectangle appears (like 3×4 for 12), the number is composite."
+      },
+      "check": {
+        "id": "rem-pc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "prime-composite",
+        "explanationVariants": [
+          "7 makes only 1×7 — one rectangle, so prime.",
+          "No rectangle beyond the 1×7 line fits, so 7 is prime."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Is 7 prime or composite?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Prime — only 1×7 fits",
+              "correct": true,
+              "feedback": "A single lonely line: 7 is prime."
+            },
+            {
+              "id": "b",
+              "label": "Composite",
+              "feedback": "7's tiles make only the 1×7 line — no second rectangle — so it's prime, not composite."
+            },
+            {
+              "id": "c",
+              "label": "Neither",
+              "feedback": "Only 1 is neither. 7 makes exactly one rectangle (1×7), which makes it prime."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

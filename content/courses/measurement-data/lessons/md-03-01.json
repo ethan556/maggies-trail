@@ -1,0 +1,365 @@
+{
+  "id": "md-03-01",
+  "slug": "pictographs-with-a-key",
+  "title": "Pictographs with a Key",
+  "courseId": "measurement-data",
+  "chapterId": "ch3-picture-the-data",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A pictograph draws data with pictures — but the pictures lie unless you read the **KEY** first. If the key says '🍎 = 2 votes,' then each apple is worth two, not one. The key is a secret multiplier: symbols × key = the real count.",
+      "figure": "md3-pictograph"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the key, then the row.",
+      "conceptTag": "pictograph",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Key: each ⭐ = 5 points. Match each row of stars to its point total.",
+        "left": [
+          {
+            "id": "r2",
+            "label": "⭐⭐ (2 stars)"
+          },
+          {
+            "id": "r4",
+            "label": "⭐⭐⭐⭐ (4 stars)"
+          },
+          {
+            "id": "r3",
+            "label": "⭐⭐⭐ (3 stars)"
+          }
+        ],
+        "right": [
+          {
+            "id": "p20",
+            "label": "20 points"
+          },
+          {
+            "id": "p10",
+            "label": "10 points"
+          },
+          {
+            "id": "p15",
+            "label": "15 points"
+          }
+        ],
+        "pairs": {
+          "r2": "p10",
+          "r4": "p20",
+          "r3": "p15"
+        },
+        "pairErrors": [
+          {
+            "left": "r2",
+            "right": "p20",
+            "feedback": "Two stars at 5 each is 2 × 5 = 10, not 20. Count the STARS, then multiply by the key."
+          }
+        ],
+        "missFeedback": "Each star is worth 5 — multiply the star count by 5 for every row.",
+        "successFeedback": "2 stars → 10, 3 stars → 15, 4 stars → 20. The key turns symbols into real counts."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply the key.",
+      "conceptTag": "pictograph",
+      "explanationVariants": [
+        "Four symbols at 2 votes each: 4 × 2 = 8 votes. The key multiplies.",
+        "Skip-count by the key: 2, 4, 6, 8 — one hop per apple."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Key: each 🍎 = 2 votes. The apple row shows 4 apples. How many votes?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "votes",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 counted the SYMBOLS — but the key says each one is worth two votes. Multiply: 4 × 2."
+          },
+          {
+            "value": 6,
+            "feedback": "6 added the key to the symbols (4 + 2). The key MULTIPLIES: four apples of 2 votes each."
+          }
+        ],
+        "fallbackFeedback": "Symbols × key value: 4 × 2."
+      },
+      "variant": {
+        "gen": "pictograph",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes a row ends in **half a symbol** — and half a symbol is worth half the key. With '⭐ = 10 points,' a half-star is 5. Pictographs use halves so they don't need a whole symbol for every in-between number.",
+      "figure": "md3-pictograph"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Mind the half.",
+      "conceptTag": "pictograph",
+      "explanationVariants": [
+        "Three full stars are 30, and the half-star adds half of 10 — 5 — for 35 points.",
+        "Full symbols first (3 × 10 = 30), then the half-symbol (half of 10 = 5): 35."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Key: each ⭐ = 10 points. A row shows 3 full stars and 1 half-star. How many points?",
+        "answer": 35,
+        "tolerance": 0,
+        "unit": "points",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 dropped the half-star — half of a 10-point star still counts for 5."
+          },
+          {
+            "value": 40,
+            "feedback": "40 rounded the half-star up to a whole. A half-symbol is exactly HALF the key: 5, not 10."
+          }
+        ],
+        "fallbackFeedback": "3 × 10, plus half of 10."
+      },
+      "variant": {
+        "gen": "pictograph",
+        "form": "halfSymbol"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which rows clear 12 votes?",
+      "conceptTag": "pictograph",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Key: each 🍏 = 3 votes. Tap every row worth MORE than 12 votes.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "row5",
+            "x": 25,
+            "y": 25,
+            "label": "5 apples",
+            "icon": "🍏×5",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "row3",
+            "x": 75,
+            "y": 25,
+            "label": "3 apples",
+            "icon": "🍏×3",
+            "count": 1,
+            "feedback": "3 × 3 = 9 votes — short of 12. Count symbols, then multiply by the key of 3."
+          },
+          {
+            "id": "row6",
+            "x": 25,
+            "y": 75,
+            "label": "6 apples",
+            "icon": "🍏×6",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "row4",
+            "x": 75,
+            "y": 75,
+            "label": "4 apples",
+            "icon": "🍏×4",
+            "count": 1,
+            "feedback": "4 × 3 = 12 votes exactly — that's not MORE than 12. It sits right on the line."
+          }
+        ],
+        "missFeedback": "Multiply each row by the key (3), then compare to 12.",
+        "successFeedback": "5 apples (15) and 6 apples (18) clear 12; 3 apples (9) fall short and 4 apples (12) only tie."
+      },
+      "predict": {
+        "prompt": "Each 🍏 stands for 3 votes. How many apple symbols are worth 12 votes?",
+        "options": [
+          {
+            "id": "four",
+            "label": "4 apples"
+          },
+          {
+            "id": "twelve",
+            "label": "12 apples"
+          },
+          {
+            "id": "three",
+            "label": "3 apples"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Every apple carries THREE votes, so 12 votes is four apples — reading symbols as single votes is the trap."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents pictograph.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for pictograph must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines pictograph."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:pictograph",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why keys at all?",
+      "conceptTag": "pictograph",
+      "explanationVariants": [
+        "A key lets a few symbols stand for a big count — 100 votes as 5 symbols beats drawing 100 tiny pictures.",
+        "The key keeps graphs small and readable: one symbol carries many, so the row stays short."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do pictographs use a key like '🍎 = 2' instead of one symbol per vote?",
+        "options": [
+          {
+            "id": "a",
+            "label": "So a few symbols can stand for a big count — the graph stays small",
+            "correct": true,
+            "feedback": "One symbol carries many, so 20 votes is 10 apples, not 20 — readable at a glance."
+          },
+          {
+            "id": "b",
+            "label": "To make the graph harder to read",
+            "feedback": "Opposite goal! The key makes big counts EASIER to show — a few symbols instead of a crowd."
+          },
+          {
+            "id": "c",
+            "label": "Because pictures can't show the number 1",
+            "feedback": "They can — a key of 1 works fine. Keys bigger than 1 exist to shrink large counts into few symbols."
+          },
+          {
+            "id": "d",
+            "label": "Keys are just decoration",
+            "feedback": "The key is the most important part — without it, you can't know what each symbol is worth."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "pictograph",
+        "form": "keyPurpose"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The reading-log totals.",
+      "conceptTag": "pictograph",
+      "hints": [
+        "Read the key first: each 📕 = 4 books.",
+        "Maya's full books: 3 × 4. Then her half-book adds half the key.",
+        "Half of 4 is 2 — add it to the full-book total."
+      ],
+      "explanationVariants": [
+        "3 full books at 4 each is 12, and the half-book adds half of 4 — that's 2 — for 14 books.",
+        "Full symbols 3 × 4 = 12, half-symbol = 2, total 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A reading log's key says each 📕 = 4 books. Maya's row shows 3 full books and 1 half-book. How many books did she read?",
+        "answer": 14,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 counted only the full books — the half-book adds half the key (half of 4 = 2)."
+          },
+          {
+            "value": 16,
+            "feedback": "16 treated the half-book as a whole one. A half-symbol is worth half the key: 2, making 14."
+          }
+        ],
+        "fallbackFeedback": "3 × 4 for the full books, plus half of 4 for the half-book."
+      },
+      "variant": {
+        "gen": "pictograph",
+        "form": "halfStory"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Pictographs decoded.",
+      "takeaways": [
+        "Read the key first — it's the multiplier for every symbol.",
+        "Real count = symbols × key value.",
+        "A half-symbol is worth half the key, not a whole one."
+      ],
+      "teaser": "next: bar graphs, where the SCALE plays the same trick as the key."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pictograph",
+      "concept": {
+        "id": "rem-pg-c",
+        "kind": "concept",
+        "body": "Quick rewind. A pictograph symbol is like a **coin with a value stamped on it** — the key is the stamp. If 🍎 = 2, each apple is a 2-coin. To total a row, count the coins and multiply by the stamp."
+      },
+      "check": {
+        "id": "rem-pg-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pictograph",
+        "explanationVariants": [
+          "Three apples at 2 votes each: 3 × 2 = 6 votes.",
+          "Skip-count by the key: 2, 4, 6."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Key: each 🍎 = 2 votes. A row of 3 apples is worth…",
+          "options": [
+            {
+              "id": "a",
+              "label": "6 votes",
+              "correct": true,
+              "feedback": "3 apples × 2 = 6."
+            },
+            {
+              "id": "b",
+              "label": "3 votes",
+              "feedback": "3 counts the apples — but each is a 2-coin. Multiply by the key: 6."
+            },
+            {
+              "id": "c",
+              "label": "5 votes",
+              "feedback": "5 added 3 + 2. The key multiplies instead: 3 × 2 = 6."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

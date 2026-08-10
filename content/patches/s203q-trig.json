@@ -1,0 +1,202 @@
+{
+  "tag": "S203Q",
+  "label": "trig batch — unit circle dials, right-triangle ratios, wave parameters",
+  "conversions": [
+    {
+      "course": "trig-functions", "lesson": "tf-01-01", "step": "i1",
+      "widget": {
+        "type": "triangleSolve", "mode": "ratios", "ratio": "opp/hyp",
+        "a": 6, "b": 6, "target": 37, "start": 55, "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "Drag the acute angle to 37° and read the opp/hyp card — then resize the whole triangle and watch whether that reading moves.",
+        "successFeedback": "opp/hyp ≈ 0.6 at 37°, and resizing changed nothing. That is the entire reason sine can be a function of the ANGLE alone: the 3-4-5 triangle and the 6-8-10 triangle are the same shape, so they hand back the same ratio.",
+        "lowFeedback": "The angle is under 37° — the opposite side is too short relative to the hypotenuse.",
+        "highFeedback": "The angle is over 37° — the opposite side is too long relative to the hypotenuse.",
+        "scaleFeedback": "Resize the triangle at least twice before checking. One reading at one size proves nothing about every similar triangle."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-01-02", "step": "i1",
+      "widget": {
+        "type": "triangleSolve", "mode": "ratios", "ratio": "opp/hyp",
+        "a": 6, "b": 6, "target": 30, "start": 55, "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "Hypotenuse 20, θ = 30°. Drag to 30° and read opp/hyp, then use it to find the opposite side.",
+        "successFeedback": "opp/hyp = 0.5 at 30°, so the opposite side is 0.5 × 20 = 10. Solving for a side is always this: the ratio is fixed by the angle, and the hypotenuse scales it.",
+        "lowFeedback": "Under 30° — opp/hyp reads below 0.5.",
+        "highFeedback": "Over 30° — opp/hyp reads above 0.5.",
+        "scaleFeedback": "Resize the triangle a couple of times first; the ratio must hold at every size for the method to work."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-01-03", "step": "i1",
+      "widget": {
+        "type": "triangleSolve", "mode": "ratios", "ratio": "opp/hyp",
+        "a": 6, "b": 6, "target": 30, "start": 60, "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "sin θ = 0.5. Drag the angle until the opp/hyp card reads 0.5 — that is what an inverse sine does.",
+        "successFeedback": "θ = 30°. Finding an angle from a ratio is the same table read backwards, which is all sin⁻¹ means: not a new operation, but the question 'which angle gives this ratio?'.",
+        "lowFeedback": "opp/hyp is still below 0.5 — open the angle further.",
+        "highFeedback": "opp/hyp has gone past 0.5 — close the angle a little.",
+        "scaleFeedback": "Resize the triangle before checking; the angle that gives 0.5 must not depend on the triangle's size."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-04-02", "step": "i1",
+      "widget": {
+        "type": "unitCircleExplore", "trace": "sin", "targetAngle": 0, "angleStart": 0, "angleStep": 15,
+        "dials": [
+          { "param": "amplitude", "min": 1, "max": 5, "step": 1, "start": 1, "target": 2, "feedback": "The swing is wrong. Amplitude is the distance from the midline to the crest, not the crest's height above zero." },
+          { "param": "midline", "min": -3, "max": 3, "step": 1, "start": 0, "target": 1, "feedback": "The wave is centred on the wrong level. The midline is the horizontal line the wave oscillates about." }
+        ],
+        "prompt": "Build y = 2 sin x + 1 with the dials, then read off its maximum.",
+        "successFeedback": "Maximum 3 — midline 1 plus amplitude 2. Watch which dial did what: amplitude changed the SWING and midline changed the CENTRE, and the maximum is their sum, never just the amplitude.",
+        "lowFeedback": "The wave is not yet y = 2 sin x + 1.",
+        "highFeedback": "The wave has overshot y = 2 sin x + 1."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-04-03", "step": "i1",
+      "widget": {
+        "type": "unitCircleExplore", "trace": "sin", "targetAngle": 0, "angleStart": 0, "angleStep": 15,
+        "dials": [
+          { "param": "angularScale", "min": 1, "max": 4, "step": 1, "start": 1, "target": 2, "feedback": "The wave is not repeating at the right rate. The b in sin(bx) counts how many full cycles fit where one used to." }
+        ],
+        "prompt": "Set the dial to build y = sin(2x), then read how far it travels before repeating.",
+        "successFeedback": "Period π ≈ 3.14 — half of 2π, because b = 2 packs two cycles into the space of one. Period = 2π ÷ b, and the dial makes the division visible rather than remembered.",
+        "lowFeedback": "The wave is still stretched — fewer cycles than y = sin(2x).",
+        "highFeedback": "The wave is compressed past y = sin(2x) — too many cycles."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-05-01", "step": "i1",
+      "widget": {
+        "type": "unitCircleExplore", "trace": "cos", "targetAngle": 0, "angleStart": 0, "angleStep": 15,
+        "dials": [
+          { "param": "amplitude", "min": 5, "max": 25, "step": 5, "start": 5, "target": 20, "feedback": "The wheel's radius is wrong. The amplitude is how far the rider swings above and below the centre." },
+          { "param": "midline", "min": 5, "max": 30, "step": 5, "start": 5, "target": 25, "feedback": "The wheel is at the wrong height. The midline is the centre of the wheel above the ground." }
+        ],
+        "prompt": "Build the Ferris wheel h(t) = 25 − 20 cos t with the dials, then read the rider's lowest point.",
+        "successFeedback": "Minimum 5 feet — centre 25 minus radius 20. The cosine starts at its own maximum, so the minus sign puts the rider at the BOTTOM at t = 0, which is where a Ferris wheel loads.",
+        "lowFeedback": "The wheel is not yet 20 feet of swing about a 25-foot centre.",
+        "highFeedback": "The wheel has passed 20 feet of swing about a 25-foot centre."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-05-02", "step": "i1",
+      "widget": {
+        "type": "unitCircleExplore", "trace": "sin", "targetAngle": 0, "angleStart": 0, "angleStep": 15,
+        "dials": [
+          { "param": "amplitude", "min": 1, "max": 15, "step": 1, "start": 1, "target": 10, "feedback": "The swing is wrong. Amplitude is half the distance between the high and the low." },
+          { "param": "midline", "min": 10, "max": 30, "step": 5, "start": 10, "target": 20, "feedback": "The centre is wrong. The midline is the average of the high and the low." }
+        ],
+        "prompt": "Daily temperature runs between 30° and 10°. Build the model with the dials.",
+        "successFeedback": "Amplitude 10, midline 20: half the 20-degree spread, centred on their average. Every wave-fitting problem starts with these two — (high − low)/2 and (high + low)/2 — before any period work begins.",
+        "lowFeedback": "The wave does not yet run between 10 and 30.",
+        "highFeedback": "The wave now swings past the 10-to-30 range."
+      }
+    },
+    {
+      "course": "trig-functions", "lesson": "tf-05-03", "step": "i1",
+      "widget": {
+        "type": "unitCircleExplore", "trace": "sin", "targetAngle": 30, "angleStart": 0, "angleStep": 15,
+        "showGhostCoords": true,
+        "prompt": "Drag the point around the unit circle to 30° and read both coordinates, then square them and add.",
+        "successFeedback": "The coordinates are (cos θ, sin θ), and the point sits on a circle of radius 1 — so cos²θ + sin²θ = 1 at EVERY angle, not just this one. The Pythagorean identity is the circle's equation wearing trigonometric clothes.",
+        "lowFeedback": "Not at 30° yet — keep dragging round.",
+        "highFeedback": "Past 30° — come back a little."
+      }
+    },
+    {
+      "course": "right-triangles-trig", "lesson": "rt-03-03", "step": "i1",
+      "widget": {
+        "type": "triangleSolve", "mode": "ratios", "ratio": "adj/hyp",
+        "a": 6, "b": 6, "target": 37, "start": 60, "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "One acute angle is 37°. Drag to it, read adj/hyp, and note what the other acute angle must be.",
+        "successFeedback": "The other acute angle is 53°, because the two must total 90°. Solving a right triangle completely means one angle plus one side is enough — the third angle comes free, and the ratios supply the rest.",
+        "lowFeedback": "Under 37° still.",
+        "highFeedback": "Over 37° now.",
+        "scaleFeedback": "Resize the triangle a couple of times; the ratio at 37° must not depend on how big it is."
+      }
+    },
+    {
+      "course": "right-triangles-trig", "lesson": "rt-04-01", "step": "i2",
+      "widget": {
+        "type": "triangleSolve", "mode": "ratios", "ratio": "opp/adj",
+        "a": 6, "b": 6, "target": 27, "start": 50, "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "A drone hovers 120 m up; the angle of depression to the pad is 27°. Drag to 27° and read opp/adj — the ratio that links the height to the ground distance.",
+        "successFeedback": "tan 27° ≈ 0.51, so the ground distance is 120 ÷ 0.51 ≈ 235 m. Depression from the drone equals elevation from the pad — alternate angles across parallel horizontals — which is why one angle serves both viewpoints.",
+        "lowFeedback": "Under 27° — opp/adj is reading too small.",
+        "highFeedback": "Over 27° — opp/adj is reading too large.",
+        "scaleFeedback": "Resize the triangle before checking; the tangent of 27° is fixed by the angle alone."
+      }
+    },
+    {
+      "course": "function-transformations", "lesson": "ft-03-03", "step": "i2",
+      "widget": {
+        "type": "quadraticExplore", "targetA": -2, "targetH": 1, "targetK": 8,
+        "aMin": -3, "aMax": 3, "hMin": -5, "hMax": 5, "kMin": -10, "kMax": 10,
+        "aStart": 1, "hStart": 0, "kStart": 0, "gridMax": 10,
+        "prompt": "Build y = −2(x − 1)² + 8 with the three dials, then read its maximum.",
+        "successFeedback": "Maximum 8, at the vertex (1, 8). The negative a is what makes it a maximum rather than a minimum — flip a positive and the vertex changes from the lowest point to the highest without moving at all.",
+        "shapeFeedback": "The opening is wrong. A negative a opens downward; its size controls how narrow the curve is.",
+        "vertexFeedback": "The vertex is not at (1, 8) yet — h shifts it sideways, k shifts it up."
+      }
+    },
+    {
+      "course": "function-transformations", "lesson": "ft-01-03", "step": "i2",
+      "widget": {
+        "type": "quadraticExplore", "targetA": 1, "targetH": 0, "targetK": 3,
+        "aMin": -3, "aMax": 3, "hMin": -5, "hMax": 5, "kMin": -5, "kMax": 5,
+        "aStart": 1, "hStart": 2, "kStart": 0, "gridMax": 8,
+        "prompt": "Build y = x² + 3 and read the smallest output the curve ever produces.",
+        "successFeedback": "Minimum 3 — the vertex. The range is everything from 3 upward, because a squared term is never negative and the +3 lifts the whole curve. Range is read off the vertex, not the equation.",
+        "shapeFeedback": "Leave a at 1 — this parent curve is not stretched.",
+        "vertexFeedback": "The vertex is not at (0, 3) yet."
+      }
+    },
+    {
+      "course": "polynomial-functions", "lesson": "pf-01-01", "step": "i1",
+      "widget": {
+        "type": "quadraticExplore", "targetA": 1, "targetH": -1, "targetK": -4,
+        "aMin": -3, "aMax": 3, "hMin": -5, "hMax": 5, "kMin": -5, "kMax": 5,
+        "aStart": 1, "hStart": 0, "kStart": 0, "gridMax": 8,
+        "prompt": "Build y = x² + 2x − 3 in vertex form and count how many times it meets the x-axis.",
+        "successFeedback": "Vertex (−1, −4), and the curve crosses twice. Degree caps the zeros — a degree-2 curve can meet the axis at most twice, a degree-5 at most five times — and the vertex's position decides how many of those actually happen.",
+        "shapeFeedback": "Leave a at 1; the leading coefficient here is 1.",
+        "vertexFeedback": "Not at the vertex. Half of 2 is 1, so the vertex sits at x = −1."
+      }
+    },
+    {
+      "course": "linear-functions", "lesson": "lf-02-03", "step": "i3",
+      "widget": {
+        "type": "quadraticExplore", "targetA": 0, "targetH": 0, "targetK": 5,
+        "aMin": -3, "aMax": 3, "hMin": -5, "hMax": 5, "kMin": -5, "kMax": 5,
+        "aStart": 2, "hStart": 2, "kStart": 0, "gridMax": 8,
+        "prompt": "Flatten the curve to a = 0 and lift it to k = 5 — the height where a line with y-intercept 5 crosses the vertical axis.",
+        "successFeedback": "With a = 0 the curve is a horizontal line at 5, which is exactly where y = 2x + 5 meets the y-axis: the y-intercept is the output when x = 0. The x-intercept is the mirror question — the input when the output is 0.",
+        "shapeFeedback": "Bring a to 0 to flatten the curve out of its parabola shape.",
+        "vertexFeedback": "The height is not 5 yet — k sets it."
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "trig-functions/tf-02-01, tf-02-02, tf-02-03",
+      "title": "The Radian, Degrees ↔ Radians, Arc Length",
+      "why": "Unit conversion and arc length s = rθ. unitCircleExplore drags an ANGLE and traces a wave; its dials are amplitude, midline, angularScale and phase. Nothing in it represents the radius as a variable, so arc length cannot be modelled, and a degree/radian conversion has no manipulable state at all — it is a restatement, not a quantity. circleMeasureExplore's arcSector mode is the closest candidate and belongs to circle geometry, not the trig course's unit work. Refused."
+    },
+    {
+      "lesson": "right-triangles-trig/rt-04-03, rt-05-04",
+      "title": "Shadows Wires & Surveys, Choosing the Tool",
+      "why": "rt-04-03's step is a two-unknown survey equation x·tan55° = (x+30)·tan40°; triangleSolve holds ONE triangle and cannot represent two triangles sharing a base. rt-05-04 asks which tool fits a given configuration — a classification over methods, the same shape as the statistics checklist refusals. Refused."
+    },
+    {
+      "lesson": "trig-identities-equations, trig-graphs-inverses (deferred, not refused)",
+      "title": "The two remaining trig courses",
+      "why": "NOT REFUSED — deferred. unitCircleExplore has ghost modes (double | negate | cofunction | sum) that look built for exactly the sum/difference and double-angle identities, and a branch field that may carry inverse-trig restriction. Judging fit needs the ghost semantics read from a donor, which this batch did not have room for. Recording as deferred so the fit rate is not inflated by counting them either way."
+    }
+  ]
+}

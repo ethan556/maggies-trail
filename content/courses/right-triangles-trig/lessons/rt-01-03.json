@@ -1,0 +1,319 @@
+{
+ "id": "rt-01-03",
+ "slug": "45-45-90-triangles",
+ "title": "45-45-90 Triangles",
+ "courseId": "right-triangles-trig",
+ "chapterId": "ch1-pythagoras-special-rights",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "rt-454590",
+   "concept": {
+    "id": "rem-rt-454590-c",
+    "kind": "concept",
+    "body": "In a 45-45-90 triangle the sides keep the ratio 1 : 1 : √2 (legs equal; hypotenuse √2 times a leg). Direction check: leg → hypotenuse MULTIPLY by √2 (answer grows); hypotenuse → leg DIVIDE by √2 (answer shrinks)."
+   },
+   "check": {
+    "id": "rem-rt-454590-k",
+    "kind": "check",
+    "body": "Pick the direction.",
+    "conceptTag": "rt-454590",
+    "explanationVariants": [
+     "Leg to hypotenuse grows: 3√2 ≈ 4.24.",
+     "Multiply the leg by √2: 3 × 1.414 ≈ 4.24."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "45-45-90 with legs 3: the hypotenuse is about… (2 decimals)",
+     "answer": 4.24,
+     "tolerance": 0.02,
+     "commonErrors": [
+      {
+       "value": 6,
+       "feedback": "6 = 3 + 3 adds legs. Multiply one leg by √2: ≈ 4.24."
+      },
+      {
+       "value": 2.12,
+       "feedback": "2.12 divides by √2 — that shrinks, but the hypotenuse must GROW: 3√2 ≈ 4.24."
+      }
+     ],
+     "fallbackFeedback": "hyp = 3√2 ≈ 4.24."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Cut a square along its diagonal and you get a **45-45-90 triangle**: two equal legs, two equal 45° angles. Set each leg to 1 and Pythagoras names the hypotenuse: c² = 1 + 1 = 2, so c = √2. The sides of EVERY 45-45-90 triangle keep this ratio — **1 : 1 : √2**.",
+   "figure": "special-right-triangles"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Where does √2 come from?",
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "pythagoreanArea",
+    "pythagorean": {
+     "legA": 1,
+     "legB": 1,
+     "target": "areaMeaning"
+    },
+    "prompt": "Why is the hypotenuse of a 45-45-90 triangle with legs 1 exactly √2?",
+    "tolerance": 0,
+    "choices": [
+     {
+      "id": "a",
+      "label": "Pythagoras: c² = 1² + 1² = 2, so c = √2",
+      "feedback": "Two unit leg-squares sum to 2, and the square root delivers the hypotenuse.",
+      "claim": "pyth:squared-terms-are-areas"
+     },
+     {
+      "id": "b",
+      "label": "Because 45 + 45 = 90 and 90 ÷ 45 ≈ √2... roughly",
+      "feedback": "Angle arithmetic doesn't set side lengths. The theorem does: c = √(1 + 1) = √2.",
+      "claim": "misconception:b"
+     },
+     {
+      "id": "c",
+      "label": "It's a measured average of many drawings",
+      "feedback": "√2 is exact, not empirical: c² = 1² + 1² = 2 forces it.",
+      "claim": "misconception:c"
+     },
+     {
+      "id": "d",
+      "label": "The hypotenuse of any right triangle is √2 times a leg",
+      "feedback": "Only when the legs are EQUAL. Unequal legs give other ratios; here 1-1 legs give c = √2.",
+      "claim": "misconception:d"
+     }
+    ],
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "pyth:leg-squares",
+     "pyth:sum",
+     "pyth:identity"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Two unit leg-squares sum to 2, and the square root delivers the hypotenuse.",
+    "explorationFeedback": "Inspect every required geometric constraint before checking.",
+    "fallbackFeedback": "Choose the conclusion proved by the geometric constraints.",
+    "answerMode": "choice"
+   },
+   "predict": {
+    "prompt": "Legs 1 and 1. Will the hypotenuse come out a whole number?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — nothing whole squares to 2"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — 1 + 1 = 2 exactly"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "c² = 1 + 1 = 2, and 2 sits strictly between 1² = 1 and 2² = 4 — no whole number squares to it. The diagonal of a unit square is √2 ≈ 1.414, the first length in this course that refuses to be a fraction at all."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Leg to hypotenuse.",
+   "conceptTag": "rt-454590",
+   "explanationVariants": [
+    "Hypotenuse = leg × √2 = 5√2 ≈ 7.07.",
+    "Scale the 1 : 1 : √2 ratio by 5: legs 5, 5, hypotenuse 5√2 ≈ 7.07."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A 45-45-90 triangle has legs of 5. Find the hypotenuse (round to 2 decimals).",
+    "answer": 7.07,
+    "tolerance": 0.02,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 = 5 + 5 adds the legs. Multiply ONE leg by √2: 5√2 ≈ 7.07."
+     },
+     {
+      "value": 25,
+      "feedback": "25 = 5² squares a leg but never finishes. c = √(25+25) = √50 = 5√2 ≈ 7.07."
+     },
+     {
+      "value": 3.54,
+      "feedback": "3.54 ≈ 5 ÷ √2 DIVIDES — that's the move for going hypotenuse → leg. Leg → hypotenuse multiplies: 7.07."
+     }
+    ],
+    "fallbackFeedback": "hyp = leg × √2 = 5√2 ≈ 7.07."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-454590__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Going the other way — hypotenuse known, leg wanted — **divide by √2**: leg = hyp ÷ √2 = hyp·√2⁄2. The direction test: the hypotenuse is the longest side, so leg → hyp must grow (×√2) and hyp → leg must shrink (÷√2). If your answer beats the hypotenuse, you multiplied the wrong way.",
+   "figure": "rt-45-45-90"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Hypotenuse to leg.",
+   "conceptTag": "rt-454590",
+   "explanationVariants": [
+    "leg = 10 ÷ √2 = 5√2 ≈ 7.07 — smaller than the hypotenuse, as a leg must be.",
+    "Divide by √2 (or multiply by √2/2): 10·√2⁄2 ≈ 7.07."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A 45-45-90 triangle has hypotenuse 10. Find each leg (round to 2 decimals).",
+    "answer": 7.07,
+    "tolerance": 0.02,
+    "commonErrors": [
+     {
+      "value": 14.14,
+      "feedback": "14.14 = 10√2 MULTIPLIED — but a leg must be SHORTER than the hypotenuse. Divide: 10/√2 ≈ 7.07."
+     },
+     {
+      "value": 5,
+      "feedback": "5 = 10 ÷ 2 halves the hypotenuse — that's the 30-60-90 short-leg move. Here divide by √2: ≈ 7.07."
+     },
+     {
+      "value": 8,
+      "feedback": "8 = 10 − 2 guesses. leg = 10 ÷ √2 = 5√2 ≈ 7.07."
+     }
+    ],
+    "fallbackFeedback": "leg = 10 ÷ √2 ≈ 7.07."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-454590__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Spot the shape.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which everyday object hands you a 45-45-90 triangle directly?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A square napkin folded along its diagonal",
+      "correct": true,
+      "feedback": "The diagonal splits the square into two 45-45-90 triangles — equal legs, 45° corners."
+     },
+     {
+      "id": "o2",
+      "label": "A rectangular door split by its diagonal",
+      "correct": false,
+      "feedback": "Unequal sides give unequal acute angles — right, but not 45-45. Only a SQUARE's diagonal makes 45-45-90."
+     },
+     {
+      "id": "o3",
+      "label": "An equilateral slice of pizza",
+      "correct": false,
+      "feedback": "Equilateral corners are 60° with no right angle. Halving one gives 30-60-90 — next lesson — not 45-45-90."
+     },
+     {
+      "id": "o4",
+      "label": "A circular clock face at 3:00",
+      "correct": false,
+      "feedback": "The hands make a 90° angle but no triangle — and no equal legs are guaranteed. The square's diagonal is the real source."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The square's diagonal.",
+   "conceptTag": "rt-454590-apply",
+   "explanationVariants": [
+    "diagonal = side × √2 = 8√2 ≈ 11.31.",
+    "The diagonal is the hypotenuse of a 45-45-90 triangle with legs 8: 8√2 ≈ 11.31."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A square has sides of 8 cm. How long is its diagonal (cm, 2 decimals)?",
+    "answer": 11.31,
+    "tolerance": 0.02,
+    "commonErrors": [
+     {
+      "value": 16,
+      "feedback": "16 = 8 + 8 walks two sides. The diagonal cuts across: 8√2 ≈ 11.31."
+     },
+     {
+      "value": 5.66,
+      "feedback": "5.66 ≈ 8 ÷ √2 divides — backwards. Side → diagonal multiplies: 8√2 ≈ 11.31."
+     },
+     {
+      "value": 64,
+      "feedback": "64 = 8² is the square's AREA. Its diagonal is 8√2 ≈ 11.31 cm."
+     }
+    ],
+    "fallbackFeedback": "diagonal = 8√2 ≈ 11.31 cm."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-454590-apply__numeric"
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Reverse the diagonal.",
+   "conceptTag": "rt-454590",
+   "hints": [
+    "The hypotenuse is 12; each leg is the hypotenuse divided by √2.",
+    "12 ÷ √2 = 12√2⁄2 = 6√2.",
+    "6√2 ≈ 6 × 1.414 — evaluate."
+   ],
+   "explanationVariants": [
+    "leg = 12 ÷ √2 = 6√2 ≈ 8.49.",
+    "Rationalize: 12/√2 = 12√2/2 = 6√2 ≈ 8.49 — properly shorter than 12."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A 45-45-90 triangle has hypotenuse 12. Find a leg (2 decimals).",
+    "answer": 8.49,
+    "tolerance": 0.02,
+    "commonErrors": [
+     {
+      "value": 16.97,
+      "feedback": "16.97 = 12√2 grows the side — impossible for a leg. Divide instead: 12/√2 ≈ 8.49."
+     },
+     {
+      "value": 6,
+      "feedback": "6 = 12 ÷ 2 halves — the 30-60-90 rule leaking in. In 45-45-90, divide by √2: ≈ 8.49."
+     },
+     {
+      "value": 10,
+      "feedback": "10 = 12 − 2 guesses. leg = 12 ÷ √2 = 6√2 ≈ 8.49."
+     }
+    ],
+    "fallbackFeedback": "leg = 12/√2 = 6√2 ≈ 8.49."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-454590__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Half a square.",
+   "takeaways": [
+    "45-45-90 sides always sit in the ratio 1 : 1 : √2.",
+    "Leg → hypotenuse: multiply by √2. Hypotenuse → leg: divide by √2.",
+    "A square's diagonal = side × √2 — the classic appearance."
+   ],
+   "teaser": "Next: the other special triangle — half an equilateral, with ratio 1 : √3 : 2."
+  }
+ ]
+}

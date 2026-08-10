@@ -1,0 +1,295 @@
+{
+  "id": "ca-02-02",
+  "slug": "the-second-derivative-test",
+  "title": "The Second-Derivative Test",
+  "courseId": "curve-analysis",
+  "chapterId": "ch2-concavity",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A critical point is flat. Ask which way it BENDS and the verdict is instant:\n\n**f′(c) = 0 and f″(c) > 0** → flat, bending upward → a **minimum**.\n**f′(c) = 0 and f″(c) < 0** → flat, bending downward → a **maximum**.\n**f′(c) = 0 and f″(c) = 0** → **inconclusive**. Fall back on the sign chart of f′.\n\nOne substitution instead of a whole chart — when it works.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Convict in one step.",
+      "conceptTag": "ca-second-derivative-test",
+      "explanationVariants": [
+        "f′ = 3x² − 12 is zero at x = ±2. f″ = 6x, so f″(2) = 12 > 0 (a minimum) and f″(−2) = −12 < 0 (a maximum).",
+        "The sign of f″ at the critical point IS the verdict — no interval testing required."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 12x has f″(x) = 6x. Evaluate f″ at the critical point x = 2.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -12,
+            "feedback": "That is f″(−2), at the OTHER critical point — where the curve bends downward and there is a maximum."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the coefficient. Substitute: f″(2) = 6(2) = 12."
+          },
+          {
+            "value": 0,
+            "feedback": "f″ = 6x is zero only at x = 0, which is not a critical point of f at all."
+          }
+        ],
+        "fallbackFeedback": "f″(2) = 12 > 0: flat and bending upward, so x = 2 is a minimum."
+      },
+      "variant": {
+        "gen": "second-deriv-eval"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Where the shortcut runs out.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Three curves, all with f′(0) = 0 and f″(0) = 0.",
+        "panels": [
+          {
+            "title": "x⁴",
+            "body": "f′ = 4x³ and f″ = 12x², so both vanish at 0. And x = 0 is a MINIMUM — the curve is a flat-bottomed bowl."
+          },
+          {
+            "title": "−x⁴",
+            "body": "Same story: both derivatives vanish at 0. But this one is a MAXIMUM. Identical test results, opposite verdicts."
+          },
+          {
+            "title": "x³",
+            "body": "Both vanish at 0 again — and this time it is NEITHER, a saddle. Three curves, one test result, three different answers. That is why f″ = 0 is genuinely inconclusive, and why the first-derivative test never stops working."
+          }
+        ],
+        "continueFeedback": "Keep going — the third curve is what settles it.",
+        "successFeedback": "When f″(c) = 0 the test cannot see the difference between a bowl, a dome and a saddle. Only the sign chart of f′ can."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "That reveal showed the test's blind spot. Now watch it work — on a curve where f″ is nowhere near zero at the points that matter.",
+      "predict": {
+        "prompt": "This is f(x) = x³ − 3x. Its tangent goes flat in two places. Do you expect the second-derivative test to return the same verdict at both?",
+        "options": [
+          {
+            "id": "same-verdict",
+            "label": "Yes — one test, one answer"
+          },
+          {
+            "id": "opposite-verdict",
+            "label": "No — one is a max, the other a min"
+          },
+          {
+            "id": "both-inconclusive",
+            "label": "No — f″ will be 0 at both, like the three curves above"
+          }
+        ],
+        "outcomeId": "opposite-verdict",
+        "reveal": "Drag across both and watch the third pane: f″ = 6x, so it reads −6 at the left flat point and +6 at the right. One test, opposite signs, opposite verdicts."
+      },
+      "widget": {
+        "type": "derivativeTrace",
+        "prompt": "Drag to the flat point that the second-derivative test calls a MAXIMUM — the one where the bend is downward.",
+        "fn": "cubicMix",
+        "mode": "point",
+        "targetX": -1,
+        "start": 2,
+        "showSecond": true,
+        "successFeedback": "f′(−1) = 0 and f″(−1) = −6. Flat tangent, bending downward — the test returns MAXIMUM in a single step, and the top pane shows the peak at (−1, 2). That is the whole point: when f″ is not zero it decides immediately. The three curves above were the case where it cannot.",
+        "lowFeedback": "Not there yet — f′ is still above zero here, so the curve is still climbing toward the peak. The f″ pane is already negative, so the bend is the right one; keep going right until f′ reaches zero.",
+        "highFeedback": "You have gone past the maximum — come back left. Watch the f″ pane on the way: to the right of x = 0 it is positive, and the flat point over there is the MINIMUM. The test wants the flat point where the bend is downward."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "When to fall back.",
+      "conceptTag": "ca-second-derivative-test",
+      "explanationVariants": [
+        "f″(c) = 0 tells you nothing at all — x⁴ (a minimum), −x⁴ (a maximum) and x³ (a saddle) all produce it. Go back to the sign chart of f′.",
+        "The second-derivative test is a shortcut, not a replacement. The first-derivative test always works."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f′(c) = 0 and f″(c) = 0. What can you conclude?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Nothing — use the sign chart of f′ instead.",
+            "correct": true,
+            "feedback": "Right. x⁴, −x⁴ and x³ all give this result and are a minimum, a maximum and a saddle respectively."
+          },
+          {
+            "id": "o2",
+            "label": "It is an inflection point.",
+            "correct": false,
+            "feedback": "It might be — but x⁴ has f″(0) = 0 and is a MINIMUM, with no inflection at all. f″ = 0 needs a sign change to mean anything."
+          },
+          {
+            "id": "o3",
+            "label": "It is a saddle.",
+            "correct": false,
+            "feedback": "x⁴ has f′(0) = f″(0) = 0 and is a genuine minimum. The test simply cannot see the difference."
+          },
+          {
+            "id": "o4",
+            "label": "It is a minimum.",
+            "correct": false,
+            "feedback": "−x⁴ has exactly the same test values and is a maximum. The result is inconclusive, which is a real answer and not a failure."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-second-derivative-test__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So choose your tool:\n\n**Second-derivative test** — fast, and it works whenever f″(c) ≠ 0. One substitution.\n**First-derivative test** — slower, and it NEVER fails. It also handles critical points where f′ does not exist, which f″ cannot even reach.\n\nTry the shortcut. When it shrugs, do the work.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which tool?",
+      "conceptTag": "ca-second-derivative-test",
+      "explanationVariants": [
+        "At a corner, f′ does not exist — so f″ certainly does not either. Only the sign chart of f′ can classify it.",
+        "|x| has a minimum at a point where the second-derivative test cannot even be attempted."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f has a critical point at a CORNER, where f′ does not exist. Which test can classify it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The first-derivative test — look at the sign of f′ on either side.",
+            "correct": true,
+            "feedback": "Right. |x| is the standard case: f′ is −1 to the left and +1 to the right, so it is a minimum, and f″ never enters the argument."
+          },
+          {
+            "id": "o2",
+            "label": "The second-derivative test.",
+            "correct": false,
+            "feedback": "If f′ does not exist at the point, f″ certainly does not. The test cannot even be stated there."
+          },
+          {
+            "id": "o3",
+            "label": "Neither — corners cannot be classified.",
+            "correct": false,
+            "feedback": "They can, easily: the sign of f′ on either side of the corner tells you everything."
+          },
+          {
+            "id": "o4",
+            "label": "Both work equally well.",
+            "correct": false,
+            "feedback": "The second-derivative test needs f″(c) to exist, and at a corner it does not."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-second-derivative-test__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Use the fast tool where it works.",
+      "conceptTag": "ca-second-derivative-test",
+      "hints": [
+        "Differentiate twice: f′ = 3x² − 6x and f″ = 6x − 6.",
+        "Critical points: 3x(x − 2) = 0, so x = 0 and x = 2.",
+        "Evaluate f″ at each: f″(0) = −6 and f″(2) = 6. Which is the MAXIMUM?"
+      ],
+      "explanationVariants": [
+        "f″(0) = −6 < 0, so x = 0 is a maximum, with f(0) = 4.",
+        "The other critical point, x = 2, has f″ = 6 > 0 — a minimum. One substitution each, and both are settled."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 3x² + 4. Find the local MAXIMUM value of f.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is WHERE the maximum occurs. Its VALUE is f(0) = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the other critical point, where f″ = 6 > 0 — a minimum, not a maximum."
+          },
+          {
+            "value": -6,
+            "feedback": "That is f″(0), which identifies the point as a maximum. Its value is f(0) = 4."
+          }
+        ],
+        "fallbackFeedback": "f″(0) = −6 < 0 → x = 0 is a maximum, and f(0) = 4."
+      },
+      "variant": {
+        "gen": "second-deriv-eval",
+        "form": "localMax"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Try the shortcut; keep the workhorse.",
+      "takeaways": [
+        "f′(c) = 0 with f″(c) > 0 is a minimum; with f″(c) < 0, a maximum.",
+        "f″(c) = 0 is genuinely inconclusive — x⁴, −x⁴ and x³ all produce it and are all different.",
+        "The first-derivative test never fails, and it is the only one that can classify a corner."
+      ],
+      "teaser": "Next: assemble all three charts and draw the curve without plotting a single point."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-second-derivative-test",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "At a flat point, ask which way it bends. Bending UP at a flat point means the flat point is the bottom of a bowl — a minimum. Bending DOWN means it is the top of a dome. And if it is not bending at all, the test has nothing to say.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Bowl or dome?",
+        "conceptTag": "ca-second-derivative-test",
+        "explanationVariants": [
+          "f″(c) = −4 < 0 means the curve bends downward at a flat point: the top of a dome, a maximum.",
+          "Negative second derivative at a critical point is always a maximum."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f′(c) = 0 and f″(c) = −4. What is at c?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A local maximum",
+              "correct": true,
+              "feedback": "Right — flat, and bending downward: the top of a dome."
+            },
+            {
+              "id": "o2",
+              "label": "A local minimum",
+              "correct": false,
+              "feedback": "That needs f″ > 0 — bending UPWARD at the flat point. Here it bends down."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

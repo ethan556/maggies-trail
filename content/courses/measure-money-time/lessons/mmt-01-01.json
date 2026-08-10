@@ -1,0 +1,394 @@
+{
+  "id": "mmt-01-01",
+  "slug": "reading-a-ruler",
+  "title": "Reading a Ruler",
+  "courseId": "measure-money-time",
+  "chapterId": "ch1-measure-length",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "ruler-measure",
+      "body": "A ruler measures in **inches**. Line up one end of the object with 0, then read the mark at the other end — that number is the length. A crayon from 0 to 5 is 5 inches long."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Measure a shifted object with a dedicated unit-iteration ruler.",
+      "widget": {
+        "type": "unitRuler",
+        "prompt": "The object runs from mark 3 to mark 9. Align zero with the object’s start, choose one-inch units, and cover it exactly.",
+        "objectStart": 3,
+        "objectEnd": 9,
+        "allowedUnitSizes": [
+          0.5,
+          1,
+          2
+        ],
+        "targetUnitSize": 1,
+        "startUnitSize": 2,
+        "requiredPlacements": 6,
+        "successFeedback": "Six equal one-inch units cover the object. The length is 9 − 3 = 6 inches, not the end label 9.",
+        "alignFeedback": "Move the measuring zero to the object’s starting mark at 3.",
+        "gapOverlapFeedback": "Place exactly six units end to end with no gaps or overlaps.",
+        "unitFeedback": "Use one-inch units; changing unit size changes the count, not the physical length."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Diagnose zero alignment, unit size, gaps, overlaps, and end-label confusion.",
+        "invariants": [
+          "zero-alignment",
+          "equal-unit-size",
+          "gap-free-iteration"
+        ],
+        "misconceptions": [
+          "end-label-is-length",
+          "unit-size-ignored",
+          "gaps-overlaps"
+        ],
+        "representations": [
+          "concrete",
+          "number-line",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "unit-iteration",
+        "delayed": true,
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the unit size while measuring the same object. What changes, and what physical quantity stays fixed?",
+        "explanation": {
+          "prompt": "Why is the final ruler label not always the object’s length?",
+          "options": [
+            {
+              "id": "difference",
+              "label": "Length is the distance between start and end, not the end label alone.",
+              "correct": true,
+              "feedback": "Exactly — subtract the start or iterate units across the interval."
+            },
+            {
+              "id": "label",
+              "label": "The end label always equals the length.",
+              "correct": false,
+              "feedback": "That works only when the object starts at zero."
+            }
+          ]
+        }
+      },
+      "predict": {
+        "prompt": "What must be true when units measure length?",
+        "options": [
+          {
+            "id": "touch",
+            "label": "Equal units touch end to end from the object’s start."
+          },
+          {
+            "id": "gaps",
+            "label": "Small gaps are harmless."
+          },
+          {
+            "id": "label",
+            "label": "The ending ruler label is always the length."
+          }
+        ],
+        "outcomeId": "touch",
+        "reveal": "Measurement iterates equal units from the correct starting point with no gaps or overlaps."
+      },
+      "conceptTag": "mmt-ruler-read"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another ruler reading.",
+      "conceptTag": "mmt-ruler-read",
+      "explanationVariants": [
+        "Starting at 0 and ending at 3 means it's 3 inches long.",
+        "The end mark (3) tells you the length when you start at 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An object starts at 0 and ends at the mark labeled 3 on an inch ruler. How long is it?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 is the start, not the length. It ends at 3, so it's 3 inches."
+          },
+          {
+            "value": 4,
+            "feedback": "Read the end mark itself, not one past it. The length is 3."
+          }
+        ],
+        "fallbackFeedback": "It ends at 3, starting from 0, so it's 3 inches."
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtRulerReadNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "If the object doesn't start at 0, subtract: length = end mark − start mark. Starting at 2 and ending at 7 is 7 − 2 = 5 inches, not 7.",
+      "figure": "mmt-ruler-subtract"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Measure the distance, not the end label.",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Start at 2. Hop one centimeter at a time until the crayon’s end at 7.",
+        "min": 0,
+        "max": 10,
+        "start": 2,
+        "hop": 1,
+        "hops": 5,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 6,
+            "feedback": "That is one centimeter short. Count the spaces you traveled, including the final hop."
+          },
+          {
+            "value": 8,
+            "feedback": "That is one centimeter too far. Stop when the moving marker reaches the object’s end mark."
+          }
+        ],
+        "missFeedback": "Begin at 2 and count equal one-centimeter spaces until 7. The number of hops is the length.",
+        "successFeedback": "5 equal one-centimeter hops connect 2 to 7, so the object is 5 centimeters long."
+      },
+      "conceptTag": "mmt-ruler-read",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents ruler read.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for ruler read must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines ruler read."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-ruler-read",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The same subtraction rule works no matter where the object starts — always end minus start.",
+      "figure": "mmt-any-start"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Measure the distance, not the end label.",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Start at 1. Hop one inch at a time until the pencil’s end at 8.",
+        "min": 0,
+        "max": 10,
+        "start": 1,
+        "hop": 1,
+        "hops": 7,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 7,
+            "feedback": "That is one inch short. Count the spaces you traveled, including the final hop."
+          },
+          {
+            "value": 9,
+            "feedback": "That is one inch too far. Stop when the moving marker reaches the object’s end mark."
+          }
+        ],
+        "missFeedback": "Begin at 1 and count equal one-inch spaces until 8. The number of hops is the length.",
+        "successFeedback": "7 equal one-inch hops connect 1 to 8, so the object is 7 inchs long."
+      },
+      "conceptTag": "mmt-best-unit",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents best unit.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for best unit must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines best unit."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-best-unit",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Choose a unit for a small object.",
+      "conceptTag": "mmt-best-unit",
+      "explanationVariants": [
+        "A pencil is small, so inches fit best.",
+        "For small classroom objects, use inches."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which unit is best to measure the length of a pencil?",
+        "options": [
+          {
+            "id": "a",
+            "label": "inches",
+            "correct": true,
+            "feedback": "Yes — a pencil is small, so inches are the right size unit."
+          },
+          {
+            "id": "b",
+            "label": "feet",
+            "feedback": "Feet are for bigger things, like a room. A pencil is better measured in inches."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtBestUnitMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Choose a unit for a big space.",
+      "conceptTag": "mmt-best-unit",
+      "explanationVariants": [
+        "A hallway is long, so feet fit best.",
+        "For long distances like a hallway, use feet."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which unit is best to measure the length of a hallway?",
+        "options": [
+          {
+            "id": "a",
+            "label": "feet",
+            "correct": true,
+            "feedback": "Yes — a hallway is long, so feet are the right size unit."
+          },
+          {
+            "id": "b",
+            "label": "inches",
+            "feedback": "Inches are for small things, like a pencil. A hallway is better measured in feet."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtBestUnitMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier subtraction.",
+      "conceptTag": "mmt-ruler-read",
+      "explanationVariants": [
+        "9 − 3 = 6 inches.",
+        "Subtract the start from the end: 9 − 3 = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A book starts at 3 and ends at 9 on an inch ruler. How long is it?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is just the end mark. Subtract the start: 9 − 3 = 6."
+          },
+          {
+            "value": 12,
+            "feedback": "That's 9 + 3. Subtract instead: 9 − 3 = 6."
+          }
+        ],
+        "fallbackFeedback": "9 − 3 = 6 inches."
+      },
+      "hints": [
+        "Length is the end mark minus the start mark.",
+        "9 − 3.",
+        "9 − 3 = 6."
+      ],
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtRulerReadNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read a ruler by subtracting the start mark from the end mark, and choose a unit that fits the size.",
+      "takeaways": [
+        "Length = end mark − start mark.",
+        "Small objects: inches. Big distances: feet.",
+        "Starting at 0 makes the end mark the length directly."
+      ],
+      "teaser": "next: estimating a length before measuring it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mmt-ruler-read",
+      "concept": {
+        "id": "rem-mrr-c",
+        "kind": "concept",
+        "body": "Read length on a ruler by subtracting: end mark minus start mark. Starting at 0 makes this easy — the end mark itself is the length. Starting elsewhere, always subtract."
+      },
+      "check": {
+        "id": "rem-mrr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mmt-ruler-read",
+        "explanationVariants": [
+          "Ends at 5, starts at 0: length is 5.",
+          "5 − 0 = 5 inches."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An object starts at 0 and ends at the mark labeled 5 on an inch ruler. How long is it?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "0 is the start; the length is 5."
+            },
+            {
+              "value": 6,
+              "feedback": "Read the end mark itself: 5."
+            }
+          ],
+          "fallbackFeedback": "It's 5 inches long."
+        }
+      }
+    }
+  ]
+}

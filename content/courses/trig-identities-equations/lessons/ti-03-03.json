@@ -1,0 +1,256 @@
+{
+  "id": "ti-03-03",
+  "slug": "applying-sum-difference",
+  "title": "Applying Sum & Difference: Simplify and Prove",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch3-sum-difference",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Read backwards, the formulas COMPRESS. Spot the pattern sin A cos B + cos A sin B and rewrite it as the single **sin(A + B)**. This collapses scary expressions: sin 40° cos 10° + cos 40° sin 10° is just **sin 50° ≈ 0.766** — no evaluation of the parts needed.",
+      "figure": "ti-compress-backwards"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Recognize the pattern.",
+      "predict": {
+        "prompt": "sin 40° cos 10° + cos 40° sin 10° — what single value is this?",
+        "options": [
+          {
+            "id": "s50",
+            "label": "sin 50° — it's the expansion of sin(40° + 10°), read backwards"
+          },
+          {
+            "id": "s30",
+            "label": "sin 30° — the difference"
+          },
+          {
+            "id": "sum",
+            "label": "sin 40° + sin 10°"
+          }
+        ],
+        "outcomeId": "s50",
+        "reveal": "sin 50°. The four-term string is the sum formula already expanded — recognizing the pattern lets you fold it back to one clean value. On the circle: the folded point and the expanded point are the SAME point, at every angle you can drag to."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Direct point at θ + 10°. Pick the formula that IS that point in expanded clothing, then land θ on 40° — folding the entry's string into sin 50°.",
+        "targetAngle": 40,
+        "angleStart": 10,
+        "angleStep": 5,
+        "ghost": "sum",
+        "ghostAngle": 10,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "sin θ cos 10° + cos θ sin 10° (with its cosine partner)"
+          },
+          {
+            "id": "linearity",
+            "label": "sin θ + sin 10° (and cos θ + cos 10°)",
+            "feedback": "Off the circle it goes — coordinates past 1. If this were the expansion, the folded and unfolded forms couldn't name the same point, and compression would be illegal. The cross-terms are what make folding safe."
+          }
+        ],
+        "successFeedback": "At 40° the glued pair reads sin 40° cos 10° + cos 40° sin 10° = sin 50° — the compression the entry asks for, witnessed as one point wearing two outfits. Pattern recognition is just knowing which strings are a point in disguise.",
+        "lowFeedback": "Formula's right — continue to 40°, where the string folds to sin 50°.",
+        "highFeedback": "Past 40° — ease back to where θ + 10° = 50°."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compress a difference.",
+      "conceptTag": "ti-apply-sum-diff",
+      "explanationVariants": [
+        "cos A cos B + sin A sin B is cos(A − B): cos80°cos20° + sin80°sin20° = cos 60° = 1/2.",
+        "The plus between the products signals cosine's DIFFERENCE formula: cos(80° − 20°) = cos 60° = 0.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate cos 80° cos 20° + sin 80° sin 20°. (As a decimal.)",
+        "answer": 0.5,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.866,
+            "feedback": "0.866 = cos 30°. The pattern cosAcosB + sinAsinB is cos(A − B) = cos 60° = 0.5."
+          },
+          {
+            "value": 0.94,
+            "feedback": "That looks like cos 20°. The compression gives cos(80° − 20°) = cos 60° = 0.5."
+          }
+        ],
+        "fallbackFeedback": "cos(80° − 20°) = cos 60° = 1/2."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-apply-sum-diff__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A recurring simplification: **sin(x + π) = −sin x** falls right out of the sum formula (sin x cos π + cos x sin π = sin x·(−1) + 0 = −sin x). Every reflection and shift identity from the graphing chapter is really a sum formula in disguise.",
+      "figure": "ti-sin-plus-pi"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Derive a shift identity.",
+      "conceptTag": "ti-apply-sum-diff",
+      "explanationVariants": [
+        "cos(x + π) = cosx cosπ − sinx sinπ = cosx·(−1) − 0 = −cos x.",
+        "With cos π = −1 and sin π = 0, the formula gives −cos x."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Using the sum formula, cos(x + π) simplifies to:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−cos x",
+            "correct": true,
+            "feedback": "Right — cosx·(−1) − sinx·0 = −cos x, matching the reflection identity."
+          },
+          {
+            "id": "o2",
+            "label": "cos x",
+            "feedback": "cos π = −1, so the first product is −cos x. The result is negative."
+          },
+          {
+            "id": "o3",
+            "label": "−sin x",
+            "feedback": "That's sin(x + π). For COSINE: cosx cosπ − sinx sinπ = −cos x."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-apply-sum-diff__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compress with a variable.",
+      "conceptTag": "ti-apply-sum-diff",
+      "explanationVariants": [
+        "sin(3x)cos(x) − cos(3x)sin(x) = sin(3x − x) = sin(2x).",
+        "The minus between sin·cos and cos·sin is sine's DIFFERENCE: sin(3x − x)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "sin 3x cos x − cos 3x sin x compresses to:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "sin 2x",
+            "correct": true,
+            "feedback": "Right — sin(3x − x) = sin 2x."
+          },
+          {
+            "id": "o2",
+            "label": "sin 4x",
+            "feedback": "The minus sign means a DIFFERENCE: 3x − x = 2x, not a sum."
+          },
+          {
+            "id": "o3",
+            "label": "cos 2x",
+            "feedback": "sin·cos − cos·sin is SINE's difference formula: sin 2x."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-apply-sum-diff__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compress, then evaluate.",
+      "conceptTag": "ti-apply-sum-diff",
+      "explanationVariants": [
+        "sin70°cos25° − cos70°sin25° = sin(70° − 25°) = sin 45° = √2/2 ≈ 0.7071.",
+        "Recognize sine's difference pattern: 70° − 25° = 45°, and sin 45° = √2/2 ≈ 0.7071."
+      ],
+      "hints": [
+        "Which formula has sin·cos − cos·sin?",
+        "That's sin(A − B): here 70° − 25°.",
+        "sin 45° = √2/2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate sin 70° cos 25° − cos 70° sin 25° to four decimals.",
+        "answer": 0.7071,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.6428,
+            "feedback": "0.6428 = sin 40°. The compression gives sin(70° − 25°) = sin 45° ≈ 0.7071."
+          },
+          {
+            "value": 0.9659,
+            "feedback": "0.9659 = sin 75° (a SUM). The minus sign makes it a difference: sin 45° ≈ 0.7071."
+          }
+        ],
+        "fallbackFeedback": "sin(70° − 25°) = sin 45° ≈ 0.7071."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-apply-sum-diff__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Formulas run both ways.",
+      "takeaways": [
+        "Recognize sinA cosB ± cosA sinB → sin(A ± B); the cosine patterns likewise.",
+        "Compressing avoids evaluating individual pieces.",
+        "Shift/reflection identities are sum formulas in disguise."
+      ],
+      "teaser": "Next chapter: the special case A = B — double-angle formulas."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-apply-sum-diff",
+      "concept": {
+        "id": "rem-ti0303-c",
+        "kind": "concept",
+        "body": "Compression: match an expression to sinA cosB ± cosA sinB or cosA cosB ∓ sinA sinB, then write the single combined-angle function."
+      },
+      "check": {
+        "id": "rem-ti0303-k",
+        "kind": "check",
+        "body": "One compression.",
+        "conceptTag": "ti-apply-sum-diff",
+        "explanationVariants": [
+          "sin50°cos40° + cos50°sin40° = sin(50° + 40°) = sin 90° = 1.",
+          "The sum pattern gives sin 90°, which is 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Evaluate sin 50° cos 40° + cos 50° sin 40°. (As a decimal.)",
+          "answer": 1,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.766,
+              "feedback": "0.766 = sin 50° alone. The full expression is sin(50° + 40°) = sin 90° = 1."
+            },
+            {
+              "value": 0,
+              "feedback": "The pattern compresses to sin 90° = 1, not 0."
+            }
+          ],
+          "fallbackFeedback": "sin(50° + 40°) = sin 90° = 1."
+        }
+      }
+    }
+  ]
+}

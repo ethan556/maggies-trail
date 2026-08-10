@@ -1,0 +1,447 @@
+{
+  "id": "exp-04-01",
+  "slug": "reading-exponential-graphs",
+  "title": "Reading Exponential Graphs",
+  "courseId": "exponential-functions",
+  "chapterId": "ch4-graphs-and-comparisons",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-growth",
+      "body": "An exponential graph y = a · bˣ crosses the **y-axis at its initial value a** (where x = 0). From there it rises if b > 1 or falls if 0 < b < 1, always approaching — but never touching — the line y = 0."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the base off the curve.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 4,
+        "startBase": 2,
+        "showMirror": false,
+        "prompt": "The graph passes through (2, 16). Slide the base until your curve does too.",
+        "successFeedback": "4² = 16. Two points are enough to pin an exponential down: the y-intercept gives the starting amount and any second point gives the base.",
+        "lowFeedback": "Your curve is passing below (2, 16) — the base is too small.",
+        "highFeedback": "Your curve is passing above (2, 16) — the base is too large."
+      },
+      "predict": {
+        "prompt": "Both bases are above 1. Moving the base from 2 to 4, the curve will…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Rise faster"
+          },
+          {
+            "id": "slower",
+            "label": "Rise more slowly"
+          },
+          {
+            "id": "shift",
+            "label": "Slide sideways without changing steepness"
+          }
+        ],
+        "outcomeId": "faster",
+        "reveal": "A bigger base multiplies by more at every step, so 4 outruns 2 — the base IS the growth factor per unit of x, not a sideways shift."
+      },
+      "conceptTag": "exp-graph-read",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents graph read.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for graph read must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines graph read."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponential-functions:exp-graph-read",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another intercept.",
+      "conceptTag": "exp-graph-read",
+      "explanationVariants": [
+        "The y-intercept is a = 3, the value at x = 0.",
+        "f(0) = 3, so the graph crosses the y-axis at 3."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "At what value does f(x) = 3 * 4^x cross the y-axis?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the coefficient a",
+            "value": 3
+          },
+          {
+            "id": "b",
+            "label": "the base b (b^0 = b / b = 1)",
+            "value": 4
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "b"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 12,
+            "feedback": "That's f(1). At x = 0, f(0) = 3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the base. The y-intercept is a = 3."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(0) = 3, so the y-intercept is 3.",
+        "successFeedback": "f(0) = 3, so the y-intercept is 3."
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-graph-read__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The curve's direction tells growth from decay at a glance: rising left-to-right is growth (b > 1); falling is decay (0 < b < 1). Both flatten toward the x-axis on one side — that's the asymptote y = 0.",
+      "figure": "exp-rising-falling"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the curve.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A graph rises steeply left to right and crosses the y-axis at 2. Which function is it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "f(x) = 2 * 3^x",
+            "correct": true,
+            "feedback": "Yes — intercept a = 2 and base 3 > 1 means rising (growth)."
+          },
+          {
+            "id": "b",
+            "label": "f(x) = 2 * (1/3)^x",
+            "feedback": "Base 1/3 < 1 would fall (decay), but this graph rises."
+          },
+          {
+            "id": "c",
+            "label": "f(x) = 3 * 2^x",
+            "feedback": "This crosses the y-axis at 3, not 2. You want a = 2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Compare curves by their pieces: the y-intercept is a, and the direction and steepness come from b. Two exponentials can be told apart by **where they start** and **how fast they climb**.",
+      "figure": "exp-y-intercept"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Read the start.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The graph of f(x) = 7 * 2^x has what y-intercept?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That's f(1). The y-intercept is at x = 0, where f(0) = 7."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the base. The y-intercept is a = 7."
+          }
+        ],
+        "fallbackFeedback": "f(0) = 7, so the y-intercept is 7."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Describe the whole graph.",
+      "conceptTag": "exp-graph-read",
+      "explanationVariants": [
+        "Base 1/2 < 1 gives decay, and a = 6 is the y-intercept.",
+        "It falls (decay) and crosses the y-axis at 6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which describes the graph of f(x) = 6 * (1/2)^x?",
+        "options": [
+          {
+            "id": "a",
+            "label": "decay, y-intercept 6",
+            "correct": true,
+            "feedback": "Yes — base 1/2 < 1 falls, and f(0) = 6."
+          },
+          {
+            "id": "b",
+            "label": "growth, y-intercept 6",
+            "feedback": "The intercept is right, but base 1/2 < 1 means decay, not growth."
+          },
+          {
+            "id": "c",
+            "label": "decay, y-intercept 1/2",
+            "feedback": "1/2 is the base; the y-intercept is a = 6."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-graph-read__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more intercept.",
+      "conceptTag": "exp-graph-read",
+      "explanationVariants": [
+        "The y-intercept is a = 10, the value at x = 0.",
+        "f(0) = 10, so it crosses the y-axis at 10."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "At what value does f(x) = 10 * 3^x cross the y-axis?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the coefficient a",
+            "value": 10
+          },
+          {
+            "id": "b",
+            "label": "the base b (b^0 = b / b = 1)",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "b"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 30,
+            "feedback": "That's f(1). At x = 0, f(0) = 10."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the base. The y-intercept is a = 10."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(0) = 10, so the y-intercept is 10.",
+        "successFeedback": "f(0) = 10, so the y-intercept is 10."
+      },
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-graph-read__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the start of a fast grower.",
+      "conceptTag": "exp-graph-read",
+      "explanationVariants": [
+        "The y-intercept is a = 4, the value at x = 0.",
+        "f(0) = 4, so the graph crosses the y-axis at 4."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "The graph of f(x) = 4 * 5^x crosses the y-axis at what value?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the coefficient a",
+            "value": 4
+          },
+          {
+            "id": "b",
+            "label": "the base b (b^0 = b / b = 1)",
+            "value": 5
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "b"
+            },
+            "right": {
+              "op": "const",
+              "id": "b"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 20,
+            "feedback": "That's f(1). The y-axis is at x = 0, where f(0) = 4."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the base. The y-intercept is a = 4."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:b",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(0) = 4, so the y-intercept is 4.",
+        "successFeedback": "f(0) = 4, so the y-intercept is 4."
+      },
+      "hints": [
+        "The y-intercept is the value at x = 0.",
+        "f(0) = 4 · 5⁰ = 4 · 1.",
+        "So the y-intercept is 4."
+      ],
+      "variant": {
+        "gen": "a1-exponential",
+        "form": "exp-graph-read__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read the start from a, the shape from b.",
+      "takeaways": [
+        "The y-intercept is the initial value a (at x = 0).",
+        "b > 1 rises (growth); 0 < b < 1 falls (decay).",
+        "The curve approaches the asymptote y = 0 but never reaches it."
+      ],
+      "teaser": "next: comparing which model grows faster."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-graph-read",
+      "concept": {
+        "id": "rem-egr-c",
+        "kind": "concept",
+        "body": "The y-intercept of y = a · bˣ is a (the value at x = 0). The base b sets direction: b > 1 rises, 0 < b < 1 falls. For f(x) = 5 · 2ˣ, the y-intercept is 5."
+      },
+      "check": {
+        "id": "rem-egr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-graph-read",
+        "explanationVariants": [
+          "f(0) = 5, so the y-intercept is 5.",
+          "The initial value a = 5 is the y-intercept."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The graph of f(x) = 5 * 2^x crosses the y-axis at what value?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "That's f(1); the y-intercept is f(0) = 5."
+            },
+            {
+              "value": 2,
+              "feedback": "2 is the base; the y-intercept is a = 5."
+            }
+          ],
+          "fallbackFeedback": "f(0) = 5, so the y-intercept is 5."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+ "id": "pp-04-01",
+ "slug": "parametric-equations",
+ "title": "Parametric Equations: Curves Over Time",
+ "courseId": "polar-parametric",
+ "chapterId": "ch4-parametric",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Instead of y as a function of x, let BOTH coordinates depend on a third variable — the **parameter** t, often time:\n\nx = x(t),  y = y(t).\n\nAs t advances, the point (x(t), y(t)) traces a curve. This can draw shapes no single y = f(x) can — loops, circles, paths that double back.",
+   "figure": "pp-param-trace"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Plot one instant.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For x = t + 1, y = 2t, where is the point at t = 2? Enter its y-coordinate.",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "y = 2t = 2·2 = 4 (you may have used t itself). The x-coordinate is 3; the y is 4."
+     },
+     {
+      "value": 3,
+      "feedback": "3 is the x-coordinate (t + 1). The y-coordinate is 2t = 4."
+     }
+    ],
+    "fallbackFeedback": "At t = 2: x = 3, y = 4."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Read the path's direction.",
+   "conceptTag": "pp-parametric",
+   "explanationVariants": [
+    "As t increases, both x = t + 1 and y = 2t increase — the point moves up and to the right.",
+    "Larger t → larger x and larger y: motion toward the upper right."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For x = t + 1, y = 2t, as t increases the point moves:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "up and to the right",
+      "correct": true,
+      "feedback": "Right — both coordinates grow with t, so the traced direction is up-right."
+     },
+     {
+      "id": "o2",
+      "label": "down and to the left",
+      "feedback": "Both x and y INCREASE with t (positive coefficients), so the motion is up-right."
+     },
+     {
+      "id": "o3",
+      "label": "in a circle",
+      "feedback": "Linear-in-t coordinates trace a straight LINE, not a circle. Here it heads up-right."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametric__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The same shape can be traced at different **speeds** or **directions** depending on the parametrization. x = cos t, y = sin t draws the unit circle counterclockwise from (1, 0); x = cos t, y = −sin t draws the SAME circle clockwise. The curve is the trail; the parametrization is the journey.",
+   "figure": "pp-different-speeds"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Orientation of a circle.",
+   "conceptTag": "pp-parametric",
+   "explanationVariants": [
+    "x = cos t, y = sin t: at t = 0 it's at (1, 0); at t = π/2 it's at (0, 1) — moving counterclockwise.",
+    "Rising from (1,0) up to (0,1) is the counterclockwise direction."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "x = cos t, y = sin t starts at (1, 0). At t = π/2 it reaches (0, 1), so it travels:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "counterclockwise",
+      "correct": true,
+      "feedback": "Right — (1,0) → (0,1) is the counterclockwise sweep."
+     },
+     {
+      "id": "o2",
+      "label": "clockwise",
+      "feedback": "Clockwise would go (1,0) → (0,−1). Here it rises to (0,1): counterclockwise."
+     },
+     {
+      "id": "o3",
+      "label": "back and forth on a line",
+      "feedback": "Sine and cosine together trace a CIRCLE, and this one goes counterclockwise."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametric__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A non-function path.",
+   "conceptTag": "pp-parametric",
+   "explanationVariants": [
+    "x = t², y = t: at t = ±1 both give x = 1 but y = ±1 — two points share an x, so it's not a function of x, yet parametric form handles it fine.",
+    "The sideways parabola fails the vertical line test but is an easy parametric curve."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why can x = t², y = t trace a curve that's NOT a function y = f(x)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Different t values (like ±1) give the same x but different y",
+      "correct": true,
+      "feedback": "Right — x = 1 pairs with both y = 1 and y = −1; parametric form allows it."
+     },
+     {
+      "id": "o2",
+      "label": "Because t² is always positive",
+      "feedback": "True that x ≥ 0, but the real reason it's not a function is the repeated x with two y-values."
+     },
+     {
+      "id": "o3",
+      "label": "It actually is a function",
+      "feedback": "It fails the vertical line test: x = 1 has y = ±1. Parametric curves needn't be functions."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametric__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Track a point.",
+   "conceptTag": "pp-parametric",
+   "explanationVariants": [
+    "x = 2cos t, y = 2sin t at t = π: x = 2cos π = −2, y = 2sin π = 0. The point is (−2, 0); its x-coordinate is −2.",
+    "Half a turn around a radius-2 circle lands on the negative x-axis at (−2, 0)."
+   ],
+   "hints": [
+    "Substitute t = π into both equations.",
+    "cos π = −1, sin π = 0.",
+    "x = 2(−1), y = 2(0)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For x = 2cos t, y = 2sin t, what is the x-coordinate at t = π?",
+    "answer": -2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "cos π = −1, so x = 2(−1) = −2, not +2."
+     },
+     {
+      "value": 0,
+      "feedback": "0 is the y-coordinate (2sin π). The x-coordinate is 2cos π = −2."
+     }
+    ],
+    "fallbackFeedback": "x = 2cos π = 2(−1) = −2."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametric__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Two clocks, one point.",
+   "takeaways": [
+    "Parametric form: x = x(t), y = y(t); the point traces a curve as t moves.",
+    "Direction and speed depend on the parametrization, not just the shape.",
+    "Parametric curves can violate the vertical line test — loops and doubling-back are fine."
+   ],
+   "teaser": "Next: erasing t to recover a familiar x-y equation."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-parametric",
+   "concept": {
+    "id": "rem-pp0401-c",
+    "kind": "concept",
+    "body": "Parametric: substitute a t-value into x(t) and y(t) to get the point at that instant. Increasing t traces the curve in a definite direction."
+   },
+   "check": {
+    "id": "rem-pp0401-k",
+    "kind": "check",
+    "body": "One point.",
+    "conceptTag": "pp-parametric",
+    "explanationVariants": [
+     "x = 3t at t = 2 is 6.",
+     "Substitute t = 2: 3·2 = 6."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For x = 3t, y = t − 1, what is x at t = 2?",
+     "answer": 6,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "2 is t itself. x = 3t = 3·2 = 6."
+      },
+      {
+       "value": 1,
+       "feedback": "1 is y = t − 1. The x-coordinate is 3t = 6."
+      }
+     ],
+     "fallbackFeedback": "x = 3(2) = 6."
+    }
+   }
+  }
+ ]
+}

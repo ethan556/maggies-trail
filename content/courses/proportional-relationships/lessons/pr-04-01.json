@@ -1,0 +1,308 @@
+{
+  "id": "pr-04-01",
+  "slug": "tax-and-tip",
+  "title": "Tax and Tip",
+  "courseId": "proportional-relationships",
+  "chapterId": "ch4-percent-problems",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "percent-price",
+      "body": "Adding a percent means adding a fraction of the price. A $20 meal with 15% tax: 15% of $20 is $3, so the total is $20 + $3 = $23."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A tip is a percent of the bill.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 40,
+        "targetPercent": 20,
+        "percentStep": 5,
+        "startPercent": 0,
+        "unit": "dollars",
+        "prompt": "The bill is $40. Shade a 20% tip.",
+        "successFeedback": "$8. And notice what the bar shows next: the TOTAL is the bar plus the tip — 120% of the bill, or $48. Percent problems get easy once you can see which whole you are taking a percent OF.",
+        "lowFeedback": "That is under 20% of the bill.",
+        "highFeedback": "That is over 20% of the bill."
+      },
+      "predict": {
+        "prompt": "A 20% tip on a $40 bill — more or less than $10?",
+        "options": [
+          {
+            "id": "less",
+            "label": "Less than $10"
+          },
+          {
+            "id": "more",
+            "label": "More than $10"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly $10"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "A quarter of the bill — 25% — would be $10, and 20% comes in under that: $8. Benchmarking against the quarter turns tip math into a single comparison before you shade a thing."
+      },
+      "conceptTag": "pr-add-percent",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents add percent.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add percent must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add percent."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "proportional-relationships:pr-add-percent",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add tip to a price.",
+      "conceptTag": "pr-add-percent",
+      "explanationVariants": [
+        "8% of $50 is $4, so the total is $54.",
+        "Add the tip amount to the original price: 54."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A meal costs $50. With 8% tip, what is the total?",
+        "answer": 54,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 50.08,
+            "feedback": "8% means 8/100 of $50 = $4, not $0.08. The total is 50 + 4 = 54."
+          },
+          {
+            "value": 4,
+            "feedback": "$4 is just the tip amount. Add it to the price: 50 + 4 = 54."
+          }
+        ],
+        "fallbackFeedback": "8% of $50 is $4, so the total is $50 + $4 = $54."
+      },
+      "variant": {
+        "gen": "pr-add-percent-g7",
+        "form": "percentTip"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The shortcut: multiply the price by (1 + percent/100) in one step. $20 × 1.15 = $23 — the same answer, done in one multiplication.",
+      "figure": "pr-percent-shortcut"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Use the one-step shortcut.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A shirt costs $10. With 25% tax, what is the total?",
+        "answer": 12.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10.25,
+            "feedback": "25% means 25/100 of $10 = $2.50, not $0.25. The total is 10 + 2.50 = 12.50."
+          },
+          {
+            "value": 2.5,
+            "feedback": "$2.50 is just the tax amount. Add it to the price: 10 + 2.50 = 12.50."
+          }
+        ],
+        "fallbackFeedback": "$10 × 1.25 = $12.50."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Larger prices and larger percents work the same way — the method never changes, just the numbers.",
+      "figure": "pr-percent-shortcut"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A bigger tax problem.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A jacket costs $200. With 6% tax, what is the total?",
+        "answer": 212,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 200.06,
+            "feedback": "6% means 6/100 of $200 = $12, not $0.06. The total is 200 + 12 = 212."
+          },
+          {
+            "value": 12,
+            "feedback": "$12 is just the tax amount. Add it to the price: 200 + 12 = 212."
+          }
+        ],
+        "fallbackFeedback": "6% of $200 is $12, so the total is $200 + $12 = $212."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another tax problem.",
+      "conceptTag": "pr-add-percent",
+      "explanationVariants": [
+        "5% of $80 is $4, so the total is $84.",
+        "Add the tax amount to the price: 84."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A jacket costs $80. With 5% tax, what is the total?",
+        "answer": 84,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 80.05,
+            "feedback": "5% means 5/100 of $80 = $4, not $0.05. The total is 80 + 4 = 84."
+          },
+          {
+            "value": 4,
+            "feedback": "$4 is just the tax amount. Add it to the price: 80 + 4 = 84."
+          }
+        ],
+        "fallbackFeedback": "5% of $80 is $4, so the total is $80 + $4 = $84."
+      },
+      "variant": {
+        "gen": "pr-add-percent-g7",
+        "form": "percentTax"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A tip problem.",
+      "conceptTag": "pr-add-percent",
+      "explanationVariants": [
+        "25% of $10 is $2.50, so the total is $12.50.",
+        "Add the tip to the price: 12.50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A meal costs $10. With 25% tip, what is the total?",
+        "answer": 12.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10.25,
+            "feedback": "25% means 25/100 of $10 = $2.50, not $0.25. The total is 10 + 2.50 = 12.50."
+          },
+          {
+            "value": 2.5,
+            "feedback": "$2.50 is just the tip amount. Add it to the price: 10 + 2.50 = 12.50."
+          }
+        ],
+        "fallbackFeedback": "25% of $10 is $2.50, so the total is $10 + $2.50 = $12.50."
+      },
+      "variant": {
+        "gen": "pr-add-percent-g7",
+        "form": "percentTip"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier tax problem.",
+      "conceptTag": "pr-add-percent",
+      "explanationVariants": [
+        "15% of $50 is $7.50, so the total is $57.50.",
+        "Add the tax to the price: 57.50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A meal costs $50. With 15% tax, what is the total?",
+        "answer": 57.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 50.15,
+            "feedback": "15% means 15/100 of $50 = $7.50, not $0.15. The total is 50 + 7.50 = 57.50."
+          },
+          {
+            "value": 7.5,
+            "feedback": "$7.50 is just the tax amount. Add it to the price: 50 + 7.50 = 57.50."
+          }
+        ],
+        "fallbackFeedback": "15% of $50 is $7.50, so the total is $50 + $7.50 = $57.50."
+      },
+      "hints": [
+        "15% of $50 = 0.15 × 50.",
+        "0.15 × 50 = 7.50.",
+        "50 + 7.50 = 57.50."
+      ],
+      "variant": {
+        "gen": "pr-add-percent-g7",
+        "form": "percentTax"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Adding a percent means adding that fraction of the price to the original.",
+      "takeaways": [
+        "Percent of a price = (percent/100) × price.",
+        "Total = original price + the percent amount.",
+        "The shortcut: multiply by (1 + percent/100) in one step."
+      ],
+      "teaser": "next: markups and markdowns."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pr-add-percent",
+      "concept": {
+        "id": "rem-pap2-c",
+        "kind": "concept",
+        "body": "To add a percent to a price, find the percent amount and add it: 15% of $20 is $3, so the total is $20+$3=$23. The percent amount is (percent/100) × price."
+      },
+      "check": {
+        "id": "rem-pap2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pr-add-percent",
+        "explanationVariants": [
+          "15% of $20 is $3, total $23.",
+          "Add the tax amount to the price."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A meal costs $20. With 15% tax, what is the total?",
+          "answer": 23,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 20.15,
+              "feedback": "15% of 20 is 3, not 0.15; total is 23."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is just the tax; add it: 23."
+            }
+          ],
+          "fallbackFeedback": "20 + 3 = 23."
+        }
+      }
+    }
+  ]
+}

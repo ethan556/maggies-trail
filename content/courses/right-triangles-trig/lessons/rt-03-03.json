@@ -1,0 +1,269 @@
+{
+  "id": "rt-03-03",
+  "slug": "solving-completely",
+  "title": "Solving Right Triangles Completely",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch3-solving-right-triangles",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "rt-solve-complete",
+      "concept": {
+        "id": "rem-rt-solve-complete-c",
+        "kind": "concept",
+        "body": "Solving a right triangle completely = all sides + all angles. Inventory what you have. Angle + side: use sin/cos/tan for the other sides, 90° minus the known acute angle for the other angle. Two sides: Pythagoras for the third, one inverse-trig call for an angle, complement for the last. Cross-check with a² + b² = c²."
+      },
+      "check": {
+        "id": "rem-rt-solve-complete-k",
+        "kind": "check",
+        "body": "One missing piece.",
+        "conceptTag": "rt-solve-complete",
+        "explanationVariants": [
+          "√(13² − 5²) = √(169 − 25) = √144 = 12 — the 5-12-13 triple.",
+          "The hypotenuse is known, so SUBTRACT squares: √144 = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Hypotenuse 13, one leg 5. The other leg = ?",
+          "answer": 12,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 13.93,
+              "feedback": "13.93 ≈ √(169 + 25) ADDS — but 13 is the hypotenuse, so its square is the total. Subtract: √144 = 12."
+            },
+            {
+              "value": 8,
+              "feedback": "8 = 13 − 5 subtracts plain lengths. Pythagoras subtracts SQUARES: √(169 − 25) = 12."
+            }
+          ],
+          "fallbackFeedback": "√(13² − 5²) = √144 = 12."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "“Solve the right triangle” means find EVERYTHING: all three sides, all three angles. You never need six separate hunts — the right angle is free, the acute angles sum to 90°, and Pythagoras links the sides. Given one acute angle and one side, or any two sides, the rest cascades.",
+      "figure": "solve-right-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The free angle first.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "ratios",
+        "ratio": "adj/hyp",
+        "a": 6,
+        "b": 6,
+        "target": 37,
+        "start": 60,
+        "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "One acute angle is 37°. Drag to it, read adj/hyp, and note what the other acute angle must be.",
+        "successFeedback": "The other acute angle is 53°, because the two must total 90°. Solving a right triangle completely means one angle plus one side is enough — the third angle comes free, and the ratios supply the rest.",
+        "lowFeedback": "Under 37° still.",
+        "highFeedback": "Over 37° now.",
+        "scaleFeedback": "Resize the triangle a couple of times; the ratio at 37° must not depend on how big it is."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Case one: **an angle and a side.** From θ = 37° and hypotenuse 10, sine and cosine deliver both legs — opposite = 10·sin 37° ≈ 6.02, adjacent = 10·cos 37° ≈ 7.99. Then audit: 6.02² + 7.99² ≈ 100 ✓. The Pythagorean check catches ratio mix-ups before they cost you.",
+      "figure": "rt-angle-side"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Both legs from one angle.",
+      "conceptTag": "rt-solve-complete",
+      "explanationVariants": [
+        "opposite = 10·sin 37° ≈ 6.02 — and the check: 6.02² + 7.99² ≈ 100 = 10².",
+        "SOH with hyp 10: 10 × 0.6018 ≈ 6.02."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "θ = 37°, hypotenuse 10. Find the leg OPPOSITE θ (2 decimals).",
+        "answer": 6.02,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 7.99,
+            "feedback": "7.99 = 10·cos 37° is the ADJACENT leg. Opposite comes from sine: 10·sin 37° ≈ 6.02."
+          },
+          {
+            "value": 7.54,
+            "feedback": "7.54 = 10·tan 37° — but 10 is the HYPOTENUSE, and tangent never uses it. 10·sin 37° ≈ 6.02."
+          }
+        ],
+        "fallbackFeedback": "opp = 10·sin 37° ≈ 6.02."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-solve-complete__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Case two: **two sides, no angle.** Pythagoras finds the third side; inverse trig finds an angle; the complement finishes. Legs 9 and 12: hypotenuse = √(81+144) = √225 = 15. Angle opposite the 9: tan⁻¹(9/12) ≈ 36.87°. Other angle: 90 − 36.87 = 53.13°. Done — three tools, one pass.",
+      "figure": "rt-two-sides"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Third side first.",
+      "conceptTag": "rt-solve-complete",
+      "explanationVariants": [
+        "√(9² + 12²) = √(81 + 144) = √225 = 15 — a scaled 3-4-5.",
+        "Legs 9 and 12 are 3·4 and 4·3... i.e. the 3-4-5 triple scaled by 3, so the hypotenuse is 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Legs 9 and 12. Find the hypotenuse.",
+        "answer": 15,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 = 9 + 12 adds lengths — Pythagoras adds SQUARES: √(81 + 144) = 15."
+          },
+          {
+            "value": 7.94,
+            "feedback": "7.94 ≈ √(144 − 81) subtracts, which finds a LEG when the hypotenuse is known. Both givens are legs: add → 15."
+          },
+          {
+            "value": 225,
+            "feedback": "225 is the hypotenuse SQUARED. Take the square root: 15."
+          }
+        ],
+        "fallbackFeedback": "√(9² + 12²) = √225 = 15."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-solve-complete__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Now the angle.",
+      "conceptTag": "rt-solve-complete",
+      "explanationVariants": [
+        "tan⁻¹(9/12) = tan⁻¹(0.75) ≈ 36.87°.",
+        "Opposite 9, adjacent 12 — tangent's pair — so tan⁻¹(0.75) ≈ 36.87°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same triangle (legs 9 and 12, hypotenuse 15): find the angle OPPOSITE the leg of length 9, in degrees (2 decimals).",
+        "answer": 36.87,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 53.13,
+            "feedback": "53.13° = tan⁻¹(12/9) faces the 12. Your angle faces the 9: tan⁻¹(9/12) ≈ 36.87°."
+          },
+          {
+            "value": 48.59,
+            "feedback": "48.59° = sin⁻¹(9/12) puts a LEG (12) in the hypotenuse's seat. Either tan⁻¹(9/12) or sin⁻¹(9/15): ≈ 36.87°."
+          }
+        ],
+        "fallbackFeedback": "tan⁻¹(9/12) ≈ 36.87° (equivalently sin⁻¹(9/15))."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-solve-complete__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "What's enough to solve?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Besides the right angle, what is the MINIMUM extra information that determines a right triangle completely?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Any two sides, or one side plus one acute angle",
+            "correct": true,
+            "feedback": "Either package pins the triangle: Pythagoras + inverse trig handle two sides; trig ratios + the complement handle side-and-angle."
+          },
+          {
+            "id": "o2",
+            "label": "Both acute angles",
+            "correct": false,
+            "feedback": "Two angles fix only the SHAPE — every similar copy shares them. Without a side, the size floats free."
+          },
+          {
+            "id": "o3",
+            "label": "All three sides are always required",
+            "correct": false,
+            "feedback": "Three sides is more than needed: from any two, Pythagoras rebuilds the third."
+          },
+          {
+            "id": "o4",
+            "label": "One acute angle alone",
+            "correct": false,
+            "feedback": "One angle gives shape but no size — same problem as knowing both angles. A side must anchor the scale."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Solve it end to end.",
+      "conceptTag": "rt-solve-complete",
+      "hints": [
+        "The 40 touches the 25° angle: it's the ADJACENT leg, and you want the hypotenuse.",
+        "cos 25° = 40/hyp — the unknown sits on the bottom.",
+        "Divide: hyp = 40 ÷ cos 25°."
+      ],
+      "explanationVariants": [
+        "cos 25° = 40/hyp → hyp = 40 ÷ cos 25° ≈ 44.14 — longer than 40, as a hypotenuse must be.",
+        "Adjacent known, hypotenuse wanted: divide the adjacent by cos 25° ≈ 0.9063 to get ≈ 44.14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "θ = 25°; the leg ADJACENT to θ is 40. Find the hypotenuse (2 decimals).",
+        "answer": 44.14,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 36.25,
+            "feedback": "36.25 = 40·cos 25° multiplies — yielding a hypotenuse SHORTER than a leg, impossible. Divide: 40 ÷ cos 25° ≈ 44.14."
+          },
+          {
+            "value": 94.65,
+            "feedback": "94.65 = 40 ÷ sin 25° uses sine — but 40 is ADJACENT, cosine's side. 40 ÷ cos 25° ≈ 44.14."
+          },
+          {
+            "value": 18.65,
+            "feedback": "18.65 = 40·tan 25° is the OPPOSITE leg — a real side, but not the one asked. Hypotenuse: ≈ 44.14."
+          }
+        ],
+        "fallbackFeedback": "hyp = 40 ÷ cos 25° ≈ 44.14."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-solve-complete__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The full cascade.",
+      "takeaways": [
+        "Angle + side: trig ratios give the missing sides; 90°-complement gives the angle.",
+        "Two sides: Pythagoras → third side; inverse trig → an angle; complement → the last.",
+        "Always audit with a² + b² = c² and the longest-side rule."
+      ],
+      "teaser": "Next chapter: point these tools at the world — angles of elevation and depression."
+    }
+  ]
+}

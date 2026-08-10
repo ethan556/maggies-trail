@@ -1,0 +1,337 @@
+{
+  "id": "c120-04-01",
+  "slug": "skip-counting-by-tens",
+  "title": "Skip-Counting by Tens",
+  "courseId": "counting-120",
+  "chapterId": "ch4-tens-ones",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "tens-arcs",
+      "body": "Skip-counting by ten jumps ten each time. Start at 23: 23, 33, 43, 53. The ones digit stays 3 — only the tens grow.",
+      "narration": "Skip-counting by ten jumps ten each time. Start at twenty-three: twenty-three, thirty-three, forty-three, fifty-three. The ones digit stays three — only the tens grow."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop by tens.",
+      "conceptTag": "skip-ten",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Start at 23 and make 3 hops of 10. Tap where you land.",
+        "min": 0,
+        "max": 60,
+        "start": 23,
+        "hop": 10,
+        "hops": 3,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 43,
+            "feedback": "That's 2 hops. One more ten: 33, 43, 53."
+          },
+          {
+            "value": 26,
+            "feedback": "That hopped by ONES. Each hop is a whole ten: land on 53."
+          }
+        ],
+        "missFeedback": "Three tens from 23: 33, 43, 53.",
+        "successFeedback": "23, 33, 43, 53 — the 3 never changed!"
+      },
+      "predict": {
+        "prompt": "You'll take 3 equal hops of 10, right from 23. How far from 23 will you end up in total?",
+        "options": [
+          {
+            "id": "total",
+            "label": "30 away"
+          },
+          {
+            "id": "add",
+            "label": "13 away"
+          },
+          {
+            "id": "off",
+            "label": "20 away"
+          }
+        ],
+        "outcomeId": "total",
+        "reveal": "3 equal hops of 10 cover 10 × 3 = 30 — repeated equal jumps ARE multiplication. Adding 10 + 3 = 13 mixes up the jump size with the number of jumps."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents skip ten.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for skip ten must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines skip ten."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "counting-120:skip-ten",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One ten more.",
+      "conceptTag": "skip-ten",
+      "explanationVariants": [
+        "37 + 10 = 47. Only the tens digit grows: 3 tens become 4 tens.",
+        "Add a ten to 37: the 7 stays, the tens go from 3 to 4, giving 47."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count one ten: 37 + 10 = ?",
+        "answer": 47,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 38,
+            "feedback": "That added ONE. A ten-hop adds ten: 37 + 10 = 47."
+          },
+          {
+            "value": 40,
+            "feedback": "That kept only the tens. Add ten to 37: the 7 stays, giving 47."
+          }
+        ],
+        "fallbackFeedback": "37 + 10 = 47 — the 7 stays.",
+        "missFeedback": "Add a whole ten: 37 → 47.",
+        "successFeedback": "47 — one ten bigger!"
+      },
+      "hints": [
+        "Add a whole ten.",
+        "The 7 stays put.",
+        "37 → 47."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "SkipTenNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You can start the tens-count anywhere. From 7: 7, 17, 27, 37, 47. Each jump is a ten.",
+      "narration": "You can start the tens-count anywhere. From seven: seven, seventeen, twenty-seven, thirty-seven, forty-seven. Each jump is a ten.",
+      "figure": "c120-skip-from-7"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Fill the tens-count.",
+      "conceptTag": "skip-ten",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put this tens-count in order: it starts at 15 and jumps by ten.",
+        "items": [
+          {
+            "id": "t45",
+            "label": "45"
+          },
+          {
+            "id": "t15",
+            "label": "15"
+          },
+          {
+            "id": "t35",
+            "label": "35"
+          },
+          {
+            "id": "t25",
+            "label": "25"
+          }
+        ],
+        "correctOrder": [
+          "t15",
+          "t25",
+          "t35",
+          "t45"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "t25",
+            "second": "t15",
+            "feedback": "Start at the smallest: 15 comes first, then add ten each time."
+          }
+        ],
+        "missFeedback": "Each is ten more: 15, 25, 35, 45.",
+        "successFeedback": "15, 25, 35, 45 — every jump a ten!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "From a small start.",
+      "conceptTag": "skip-ten",
+      "explanationVariants": [
+        "4 + 10 = 14. A ten-hop from 4 lands on 14.",
+        "Add a whole ten to 4: 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Start at 4, hop one ten: 4 + 10 = ?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That added ONE. A ten-hop adds ten: 4 + 10 = 14."
+          },
+          {
+            "value": 40,
+            "feedback": "That's 4 tens. One ten added to 4 is 14, not 40."
+          }
+        ],
+        "fallbackFeedback": "4 + 10 = 14."
+      },
+      "hints": [
+        "Add a whole ten.",
+        "4 and one ten.",
+        "14."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "SkipTenNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What stays the same?",
+      "conceptTag": "skip-ten",
+      "explanationVariants": [
+        "When you count by tens, the ONES digit never changes — only the tens grow.",
+        "26, 36, 46 all end in 6: the ones digit holds while the tens climb."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Counting 26, 36, 46, 56 — what stays the same?",
+        "options": [
+          {
+            "id": "a",
+            "label": "the ones digit (6)",
+            "correct": true,
+            "feedback": "Yes — the 6 holds; only the tens climb."
+          },
+          {
+            "id": "b",
+            "label": "the tens digit",
+            "feedback": "The tens CHANGE (2, 3, 4, 5). It's the ones digit 6 that stays."
+          },
+          {
+            "id": "c",
+            "label": "nothing stays",
+            "feedback": "Look at the last digit — 6 every time. The ones digit stays."
+          }
+        ]
+      },
+      "hints": [
+        "Look at the last digit each time.",
+        "26, 36, 46 — all end in?",
+        "6 stays."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "SkipTenMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two tens at once!",
+      "conceptTag": "skip-ten",
+      "explanationVariants": [
+        "58 + 10 + 10 = 78. Two ten-hops: 58, 68, 78.",
+        "Add two whole tens to 58: 78."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Start at 58, hop two tens. Where do you land?",
+        "answer": 78,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 68,
+            "feedback": "That's one hop. Two tens: 58, 68, 78."
+          },
+          {
+            "value": 60,
+            "feedback": "That added just 2. Two TENS is 20 more: 58 + 20 = 78."
+          }
+        ],
+        "fallbackFeedback": "58 + 10 + 10 = 78."
+      },
+      "hints": [
+        "Hop ten, then ten again.",
+        "58 → 68 → 78.",
+        "78."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "SkipTenNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You skip-count by tens!",
+      "takeaways": [
+        "Each ten-hop adds ten.",
+        "The ones digit stays; the tens grow.",
+        "You can start from any number."
+      ],
+      "teaser": "next: counting a big pile as tens and ones."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "skip-ten",
+      "concept": {
+        "id": "rem-sk-c",
+        "kind": "concept",
+        "body": "Slow down. 20, then a ten more is 30, then 40. Each jump adds a whole ten: 20, 30, 40, 50.",
+        "narration": "Slow down. Twenty, then a ten more is thirty, then forty. Each jump adds a whole ten: twenty, thirty, forty, fifty."
+      },
+      "check": {
+        "id": "rem-sk-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "skip-ten",
+        "explanationVariants": [
+          "20 + 10 = 30 — one whole ten more.",
+          "A ten-hop from 20 lands on 30."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "20 + 10 = ?",
+          "answer": 30,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 21,
+              "feedback": "That added ONE. A ten-hop adds ten: 20 + 10 = 30."
+            },
+            {
+              "value": 12,
+              "feedback": "That's the digits swapped. 20 and a ten more is 30."
+            }
+          ],
+          "fallbackFeedback": "20 + 10 = 30."
+        }
+      }
+    }
+  ]
+}

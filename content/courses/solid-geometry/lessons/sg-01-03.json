@@ -1,0 +1,424 @@
+{
+  "id": "sg-01-03",
+  "slug": "reasoning-from-sections",
+  "title": "Reasoning from Sections",
+  "courseId": "solid-geometry",
+  "chapterId": "ch1-sections-revolution",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-section-reasoning",
+      "concept": {
+        "id": "rem-sg-section-reasoning-c",
+        "kind": "concept",
+        "body": "Cross-section patterns identify and size solids: constant congruent circles mean a cylinder, circles shrinking to a point (at the similarity ratio of heights) mean a cone, and circles in every direction mean a sphere — whose largest section, the great circle through the center, carries the true radius, with off-center slices shrinking by π(R² − d²)."
+      },
+      "check": {
+        "id": "rem-sg-section-reasoning-k",
+        "kind": "check",
+        "body": "One reading.",
+        "conceptTag": "sg-section-reasoning",
+        "explanationVariants": [
+          "Slices shrink steadily to a point — the cone's signature.",
+          "A cone."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Parallel slices of a solid are circles that shrink steadily to a single point at the top. The solid is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A cone",
+              "correct": true,
+              "feedback": "Steady shrink to the apex — similarity at work, the cone's fingerprint."
+            },
+            {
+              "id": "o2",
+              "label": "A cylinder",
+              "correct": false,
+              "feedback": "Cylinders keep slices CONSTANT — shrinking says cone."
+            },
+            {
+              "id": "o3",
+              "label": "A sphere",
+              "correct": false,
+              "feedback": "A sphere grows then shrinks, and never linearly — the steady shrink to a point is the cone."
+            },
+            {
+              "id": "o4",
+              "label": "A cube",
+              "correct": false,
+              "feedback": "A cube's parallel slices are constant squares — shrinking circles say cone."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sections are evidence. A solid's slice pattern identifies it (all circles ⇒ sphere; constant congruent circles ⇒ cylinder; shrinking-to-a-point circles ⇒ cone), sizes it (a great circle exposes the true radius), and — next chapter — will price its volume. Reading slices IS reading solids.",
+      "figure": "sg-section-evidence"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Identify from the pattern.",
+      "conceptTag": "sg-section-reasoning",
+      "explanationVariants": [
+        "Parallel slices all congruent ⇒ straight walls; circular ⇒ round base.",
+        "Congruent circles at every height: a cylinder."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Every slice of a solid parallel to its base is a circle congruent to the base. The solid is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A cylinder — constant circular sections mean straight vertical walls over a round base",
+            "correct": true,
+            "feedback": "Constancy is the cylinder's testimony; the cone would shrink, the sphere would bulge and shrink."
+          },
+          {
+            "id": "o2",
+            "label": "A cone",
+            "correct": false,
+            "feedback": "A cone's parallel slices SHRINK toward the apex — congruent slices say cylinder."
+          },
+          {
+            "id": "o3",
+            "label": "A sphere",
+            "correct": false,
+            "feedback": "A sphere's slices grow to the equator then shrink — constant slices say cylinder."
+          },
+          {
+            "id": "o4",
+            "label": "A square prism",
+            "correct": false,
+            "feedback": "Its constant sections are SQUARES — circular ones say cylinder."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-section-reasoning__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Size from a great circle.",
+      "conceptTag": "sg-section-reasoning",
+      "explanationVariants": [
+        "The great circle carries the sphere's true radius: C = 2πr = 12π gives r.",
+        "r = 6; then recall V = (4/3)πr³."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A sphere's great circle has circumference 12π. The sphere's volume coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "c",
+            "label": "the great-circle circumference coefficient",
+            "value": 12
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "divide",
+            "left": {
+              "op": "lit",
+              "value": 4
+            },
+            "right": {
+              "op": "lit",
+              "value": 3
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "const",
+                "id": "c"
+              },
+              "right": {
+                "op": "lit",
+                "value": 2
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "divide",
+                "left": {
+                  "op": "const",
+                  "id": "c"
+                },
+                "right": {
+                  "op": "lit",
+                  "value": 2
+                }
+              },
+              "right": {
+                "op": "divide",
+                "left": {
+                  "op": "const",
+                  "id": "c"
+                },
+                "right": {
+                  "op": "lit",
+                  "value": 2
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 216,
+            "feedback": "216 = 6³ misses the 4/3 — (4/3)(216) = 288."
+          },
+          {
+            "value": 48,
+            "feedback": "48 = (4/3)(36) cubes nothing — r³ = 216, so (4/3)(216) = 288."
+          },
+          {
+            "value": 144,
+            "feedback": "144 = 12² squares the circumference's coefficient — first r = 6, then (4/3)(6³) = 288."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "2πr = 12π ⇒ r = 6; V = (4/3)(216)π = 288π.",
+        "successFeedback": "2πr = 12π ⇒ r = 6; V = (4/3)(216)π = 288π."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-section-reasoning__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The equator is the max.",
+      "conceptTag": "sg-section-reasoning",
+      "explanationVariants": [
+        "Slice area π(R² − d²) falls as d grows — largest at d = 0.",
+        "The claim is exactly the great-circle maximality."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why is the great circle the LARGEST section of a sphere?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Slice area is π(R² − d²), which is biggest when the distance d from the center is 0",
+            "correct": true,
+            "feedback": "The chapter's Pythagorean slice formula settles it in one line — every off-center plane pays a d² penalty."
+          },
+          {
+            "id": "o2",
+            "label": "Because the equator is longest to walk",
+            "correct": false,
+            "feedback": "That's circumference intuition — the AREA argument is π(R² − d²) maximized at d = 0."
+          },
+          {
+            "id": "o3",
+            "label": "It isn't — slanted slices can be bigger",
+            "correct": false,
+            "feedback": "Every planar slice of a sphere is a circle obeying the same distance formula — none beats d = 0."
+          },
+          {
+            "id": "o4",
+            "label": "Because spheres are symmetric",
+            "correct": false,
+            "feedback": "Symmetry says slices are circles; the SIZE ranking needs π(R² − d²), maximized at the center."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-section-reasoning__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Cone slices, measured.",
+      "predict": {
+        "prompt": "A cone is cut by a plane parallel to its base, halfway up. How does that slice's AREA compare with the base?",
+        "options": [
+          {
+            "id": "quarter",
+            "label": "One quarter of it — the radius halves, so the area quarters"
+          },
+          {
+            "id": "half",
+            "label": "Half of it — halfway up, half the area"
+          },
+          {
+            "id": "same",
+            "label": "The same — parallel cuts of a cone are congruent"
+          }
+        ],
+        "outcomeId": "quarter",
+        "reveal": "One quarter. Halfway up, the radius has halved — and area follows the SQUARE of the radius, so it drops to a quarter. This is the k² rule appearing inside a single solid. Sweep the plane and watch the area fall faster than the height."
+      },
+      "widget": {
+        "type": "solidSliceLab",
+        "prompt": "Sweep the section plane up the cone and stop halfway. Watch how much faster the area shrinks than the height climbs.",
+        "solid": "cone",
+        "radius": 8,
+        "height": 12,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.05,
+        "tolerance": 0.03,
+        "comparisonRequired": false,
+        "requiredMoves": 4,
+        "successFeedback": "Halfway up, the radius is 4 and the area is π(4²) ≈ 50.27 — exactly a quarter of the base's π(8²). Height scaled by ½; area scaled by ½². The exponent is not a rule here, it is something the readout did.",
+        "positionFeedback": "Not at the halfway cut yet — keep moving and compare the area readout against the base area as you go.",
+        "comparisonFeedback": "Add the comparison solid to finish the reading.",
+        "invariantFeedback": "Test more heights first — the point is the RATE the area falls, and one slice cannot show a rate."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Two solids, one silhouette.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A cylinder and a square prism have the same height, and the square's side equals the cylinder's diameter. Slicing both parallel to their bases at the same height:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The circle sits inside the square with area π/4 of it — the section RATIO is the same at every height",
+            "correct": true,
+            "feedback": "πr² against (2r)² = 4r² gives π/4 at every level — a constant-ratio fact Cavalieri's principle turns into a volume ratio next chapter."
+          },
+          {
+            "id": "o2",
+            "label": "The circle outgrows the square near the top",
+            "correct": false,
+            "feedback": "Both sections are constant with height — the ratio stays πr² : 4r² = π/4 forever."
+          },
+          {
+            "id": "o3",
+            "label": "The sections are congruent",
+            "correct": false,
+            "feedback": "A circle never equals a square — but their areas keep the fixed ratio π/4."
+          },
+          {
+            "id": "o4",
+            "label": "No comparison is possible",
+            "correct": false,
+            "feedback": "Slice areas compare fine: πr² vs 4r², ratio π/4 at every height."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The mystery vase.",
+      "conceptTag": "sg-section-reasoning",
+      "hints": [
+        "Work the slice formula at both heights: the pattern π(R² − d²) is the sphere's fingerprint.",
+        "At d = 0 the area is 100π — that names R².",
+        "Then at d = 8: π(R² − 64)."
+      ],
+      "explanationVariants": [
+        "100π at the center gives R = 10; at 8 up: π(100 − 64) = 36π — slice radius 6, the 6-8-10 again.",
+        "R² = 100; area at d = 8 is 36π."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A sphere-shaped tank's widest horizontal section (through the center) has area 100π. What is the area coefficient (of π) of the section 8 units above the center?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the widest section area coefficient",
+            "value": 100
+          },
+          {
+            "id": "d",
+            "label": "the height above the centre",
+            "value": 8
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "d"
+            },
+            "right": {
+              "op": "const",
+              "id": "d"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 100,
+            "feedback": "100 is the great circle — 8 up, the slice pays the d² penalty: 100 − 64 = 36."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is d², the penalty itself — the remaining area coefficient is 100 − 64 = 36."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the slice's RADIUS — its area coefficient is 36."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "π(100 − 64) = 36π — the tank confesses its 6-8-10.",
+        "successFeedback": "π(100 − 64) = 36π — the tank confesses its 6-8-10."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-section-reasoning__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Slices testify.",
+      "takeaways": [
+        "Patterns identify: constant circles ⇒ cylinder, shrinking ⇒ cone (similarity runs the rate), all-circles ⇒ sphere.",
+        "A great circle exposes the true radius; off-center slices pay π(R² − d²).",
+        "Constant slice RATIOS (circle-in-square = π/4) will become volume ratios next."
+      ],
+      "teaser": "Next chapter: Cavalieri's principle — equal slices at every height, equal volumes."
+    }
+  ]
+}

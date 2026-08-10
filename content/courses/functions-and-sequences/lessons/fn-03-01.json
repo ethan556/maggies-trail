@@ -1,0 +1,278 @@
+{
+  "id": "fn-03-01",
+  "slug": "common-ratio",
+  "title": "Common Ratio",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch3-geometric-sequences",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "geometric-steps",
+      "body": "A **geometric sequence** multiplies by a constant, the **common ratio r**, at each step. The sequence 2, 6, 18, 54 has r = 3 (because 6 ÷ 2 = 3). Divide any term by the one before it to find r."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the ratio.",
+      "predict": {
+        "prompt": "2, 6, 18, 54 — does each step ADD the same amount or MULTIPLY by the same amount?",
+        "options": [
+          {
+            "id": "mult",
+            "label": "Multiplies by 3"
+          },
+          {
+            "id": "add",
+            "label": "Adds 4"
+          },
+          {
+            "id": "mix",
+            "label": "Adds, then the additions double"
+          }
+        ],
+        "outcomeId": "mult",
+        "reveal": "2 → 6 could be +4 OR ×3 — one gap can lie. But 6 → 18 settles it: +4 gives 10, only ×3 survives. Always check a second gap; that check is what separates arithmetic from geometric."
+      },
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 2,
+        "atPosition": 2,
+        "targetTerm": 6,
+        "rMax": 9,
+        "start": 2,
+        "prompt": "Drag the ratio until term 2 matches the sequence's own second term, 6.",
+        "successFeedback": "r = 3. Dragging to make 2×r land on 6 finds the ratio directly — the whole sequence is just first×r, first×r², first×r³, ... from there.",
+        "lowFeedback": "Term 2 is still under 6 — raise the ratio.",
+        "highFeedback": "Term 2 has passed 6 — ease the ratio back."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A doubling sequence.",
+      "conceptTag": "fn-common-ratio",
+      "explanationVariants": [
+        "6 ÷ 3 = 2, so r = 2.",
+        "Each term is twice the one before, so r = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 3, 6, 12, 24, what is the common ratio?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's 6 − 3. The ratio divides: 6 ÷ 3 = 2."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the second term. Divide: 6 ÷ 3 = 2."
+          }
+        ],
+        "fallbackFeedback": "6 ÷ 3 = 2, so r = 2."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-common-ratio__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Extend by **multiplying** by r. For 2, 6, 18, 54 with r = 3, the next term is 54 · 3 = 162. Because each step multiplies, a geometric sequence grows much faster than an arithmetic one.",
+      "figure": "fn-common-ratio"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The next term.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 2,
+        "atPosition": 5,
+        "targetTerm": 162,
+        "rMax": 9,
+        "start": 2,
+        "prompt": "Drag the ratio to 3, then read off term 5 — the next term after 54.",
+        "successFeedback": "162. Term 5 is 2×3⁴, and the bars show WHY it grows so fast: each step multiplies rather than adds.",
+        "lowFeedback": "Term 5 is still under 162.",
+        "highFeedback": "Term 5 has passed 162."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The ratio can be larger. In 1, 4, 16, 64 each term is × 4, so the next is 64 · 4 = 256. Where an arithmetic sequence would add the same amount, a geometric one multiplies it.",
+      "figure": "fn-ratio-larger"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Multiply by four.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 1,
+        "atPosition": 5,
+        "targetTerm": 256,
+        "rMax": 9,
+        "start": 2,
+        "prompt": "For 1, 4, 16, 64, ..., drag the ratio and read term 5 — the next term.",
+        "successFeedback": "256. r = 4 here, so term 5 is 1×4⁴.",
+        "lowFeedback": "Term 5 is still under 256.",
+        "highFeedback": "Term 5 has passed 256."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ratio of another sequence.",
+      "conceptTag": "fn-common-ratio",
+      "explanationVariants": [
+        "10 ÷ 5 = 2, so r = 2.",
+        "Each term is double the last, so r = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 5, 10, 20, 40, what is the common ratio?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's 10 − 5. The ratio divides: 10 ÷ 5 = 2."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the second term. Divide: 10 ÷ 5 = 2."
+          }
+        ],
+        "fallbackFeedback": "10 ÷ 5 = 2, so r = 2."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-common-ratio__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Extend a tripling sequence.",
+      "conceptTag": "fn-common-ratio",
+      "explanationVariants": [
+        "r = 3, so the next term is 27 · 3 = 81.",
+        "Multiply the last term by 3: 27 · 3 = 81."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 1, 3, 9, 27, what is the next term?",
+        "answer": 81,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "Multiply by r, don't add it: 27 · 3 = 81, not 27 + 3."
+          },
+          {
+            "value": 54,
+            "feedback": "The ratio is 3, not 2: 27 · 3 = 81."
+          }
+        ],
+        "fallbackFeedback": "27 · 3 = 81."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-common-ratio__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A fast-growing sequence.",
+      "conceptTag": "fn-common-ratio",
+      "explanationVariants": [
+        "r = 10 ÷ 2 = 5, so the next term is 250 · 5 = 1250.",
+        "Multiply the last term by 5: 250 · 5 = 1250."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the sequence 2, 10, 50, 250, what is the next term?",
+        "answer": 1250,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 255,
+            "feedback": "Multiply by r, don't add it: 250 · 5 = 1250, not 250 + 5."
+          },
+          {
+            "value": 500,
+            "feedback": "The ratio is 5, not 2: 250 · 5 = 1250."
+          }
+        ],
+        "fallbackFeedback": "250 · 5 = 1250."
+      },
+      "hints": [
+        "Find r: 10 ÷ 2 = 5.",
+        "Multiply the last term by r: 250 · 5.",
+        "250 · 5 = 1250."
+      ],
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-common-ratio__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Geometric sequences step by multiplying by a constant ratio.",
+      "takeaways": [
+        "Find r by dividing consecutive terms.",
+        "Extend by multiplying the last term by r.",
+        "Geometric sequences grow faster than arithmetic ones."
+      ],
+      "teaser": "next: a formula for any term of a geometric sequence."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-common-ratio",
+      "concept": {
+        "id": "rem-fcr-c",
+        "kind": "concept",
+        "body": "A geometric sequence multiplies by a constant r each step. Find r by dividing consecutive terms (6 ÷ 2 = 3), and extend by multiplying the last term by r (54 · 3 = 162)."
+      },
+      "check": {
+        "id": "rem-fcr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-common-ratio",
+        "explanationVariants": [
+          "6 ÷ 2 = 3, so r = 3.",
+          "Each term is triple the last, so r = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the sequence 2, 6, 18, 54, what is the common ratio r?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "That's 6 − 2; divide instead: 6 ÷ 2 = 3."
+            },
+            {
+              "value": 2,
+              "feedback": "2 is the first term; 6 ÷ 2 = 3."
+            }
+          ],
+          "fallbackFeedback": "6 ÷ 2 = 3, so r = 3."
+        }
+      }
+    }
+  ]
+}

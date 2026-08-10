@@ -1,0 +1,447 @@
+{
+  "id": "vec-02-03",
+  "slug": "unit-vectors-and-applications",
+  "title": "Unit Vectors & Combining Motions",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch2-vector-operations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Any vector splits into **length × direction**: v = |v|·û. This lets you REBUILD a vector at a chosen length: to get a vector of length 15 along ⟨3, 4⟩, take 15·û = 15·⟨0.6, 0.8⟩ = ⟨9, 12⟩. Unit vectors are the 'pure direction' you scale to any size.",
+      "figure": "vec-length-direction"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A unit vector is a pure direction.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "add",
+        "ux": 0,
+        "uy": 0,
+        "targetX": 1,
+        "targetY": 0,
+        "vxStart": 3,
+        "vyStart": 2,
+        "gridMax": 6,
+        "prompt": "Land the sum on (1, 0) — the unit vector i, one step east and nothing more.",
+        "successFeedback": "v = (1, 0), length 1. Every vector is a mixture of î and ĵ: (3, 4) is just 3î + 4ĵ. Unit vectors carry direction and nothing else, which is why dividing a vector by its own length is how you strip the size off.",
+        "lowFeedback": "The horizontal part is not 1 yet.",
+        "highFeedback": "The horizontal is right, but there is still some height left. A pure east step has no vertical part at all."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "vec-applications",
+      "predict": {
+        "prompt": "A unit vector has length exactly 1. How many different unit vectors are there in the plane?",
+        "options": [
+          {
+            "id": "many",
+            "label": "Infinitely many — one for every direction"
+          },
+          {
+            "id": "two",
+            "label": "Two — one along each axis"
+          },
+          {
+            "id": "one",
+            "label": "One — length 1 pins it down"
+          }
+        ],
+        "outcomeId": "many",
+        "reveal": "Infinitely many, all sitting on the circle of radius 1. \"Unit\" fixes the length and says nothing whatever about the way it points — which is exactly why v = |v|·û splits a vector cleanly into those two independent facts."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Vectors shine for **combining motions**. A boat heads across a river at ⟨0, 4⟩ (m/s) while the current pushes ⟨3, 0⟩. Its true velocity is the sum ⟨3, 4⟩ — speed 5 m/s, angled downstream. The components handle each direction independently, then combine.",
+      "figure": "vec-combining-motion"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Resultant velocity.",
+      "conceptTag": "vec-applications",
+      "explanationVariants": [
+        "Boat ⟨0, 4⟩ + current ⟨3, 0⟩ = ⟨3, 4⟩, speed √(9 + 16) = 5 m/s.",
+        "The true speed is the magnitude of the resultant: 5 m/s."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A boat's velocity ⟨0, 4⟩ combines with a current ⟨3, 0⟩. What is the resulting speed, in m/s?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x1",
+            "label": "boat_x",
+            "value": 0
+          },
+          {
+            "id": "y1",
+            "label": "boat_y",
+            "value": 4
+          },
+          {
+            "id": "x2",
+            "label": "current_x",
+            "value": 3
+          },
+          {
+            "id": "y2",
+            "label": "current_y",
+            "value": 0
+          }
+        ],
+        "approxFormula": {
+          "op": "sqrt",
+          "arg": {
+            "op": "add",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "x1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "x2"
+                }
+              },
+              "right": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "x1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "x2"
+                }
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "y1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "y2"
+                }
+              },
+              "right": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "y1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "y2"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 7,
+            "feedback": "The resultant is ⟨3, 4⟩; its speed is √(9 + 16) = 5, not 4 + 3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 ignores the current. Combined: ⟨3, 4⟩ → 5 m/s."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "⟨3, 4⟩ → √25 = 5 m/s.",
+        "successFeedback": "⟨3, 4⟩ → √25 = 5 m/s."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-applications__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Opposite vectors cancel.",
+      "conceptTag": "vec-applications",
+      "explanationVariants": [
+        "⟨3, 4⟩ + ⟨−3, −4⟩ = ⟨0, 0⟩ — a vector plus its opposite is the zero vector.",
+        "Equal-and-opposite forces sum to zero: no net motion."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is ⟨3, 4⟩ + ⟨−3, −4⟩?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "⟨0, 0⟩ (they cancel)",
+            "correct": true,
+            "feedback": "Right — a vector plus its negative is the zero vector."
+          },
+          {
+            "id": "o2",
+            "label": "⟨6, 8⟩",
+            "feedback": "The second vector is NEGATIVE: ⟨3 − 3, 4 − 4⟩ = ⟨0, 0⟩."
+          },
+          {
+            "id": "o3",
+            "label": "⟨0, 8⟩",
+            "feedback": "Both components cancel: 3 + (−3) = 0 AND 4 + (−4) = 0, giving ⟨0, 0⟩."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-applications__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Scale a unit vector up.",
+      "conceptTag": "vec-applications",
+      "explanationVariants": [
+        "A length-10 vector along ⟨0.6, 0.8⟩ is 10·⟨0.6, 0.8⟩ = ⟨6, 8⟩.",
+        "Multiply the unit vector by the desired length 10: ⟨6, 8⟩."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A force of magnitude 10 points along the unit vector ⟨0.6, 0.8⟩. The force vector is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "⟨6, 8⟩",
+            "correct": true,
+            "feedback": "Right — 10·⟨0.6, 0.8⟩ = ⟨6, 8⟩."
+          },
+          {
+            "id": "o2",
+            "label": "⟨0.6, 0.8⟩",
+            "feedback": "That's still the UNIT vector (length 1). Scale to 10: ⟨6, 8⟩."
+          },
+          {
+            "id": "o3",
+            "label": "⟨10.6, 10.8⟩",
+            "feedback": "Scaling MULTIPLIES, not adds: 10·⟨0.6, 0.8⟩ = ⟨6, 8⟩."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-applications__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Balance a system.",
+      "conceptTag": "vec-applications",
+      "explanationVariants": [
+        "Two forces ⟨5, 2⟩ and ⟨−1, 3⟩ sum to ⟨4, 5⟩; the third force that balances them (net zero) must be ⟨−4, −5⟩ — its magnitude is √(16 + 25) = √41 ≈ 6.40.",
+        "For equilibrium the third force cancels the resultant ⟨4, 5⟩, so it is ⟨−4, −5⟩, length √41 ≈ 6.40."
+      ],
+      "hints": [
+        "Add the two known forces: ⟨5, 2⟩ + ⟨−1, 3⟩ = ⟨4, 5⟩.",
+        "The balancing force is the opposite: ⟨−4, −5⟩.",
+        "Its magnitude = √(16 + 25)."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Forces ⟨5, 2⟩ and ⟨−1, 3⟩ act on a point. What magnitude of third force balances them? (Two decimals.)",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x1",
+            "label": "F1_x",
+            "value": 5
+          },
+          {
+            "id": "y1",
+            "label": "F1_y",
+            "value": 2
+          },
+          {
+            "id": "x2",
+            "label": "F2_x",
+            "value": -1
+          },
+          {
+            "id": "y2",
+            "label": "F2_y",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "sqrt",
+          "arg": {
+            "op": "add",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "x1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "x2"
+                }
+              },
+              "right": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "x1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "x2"
+                }
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "y1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "y2"
+                }
+              },
+              "right": {
+                "op": "add",
+                "left": {
+                  "op": "const",
+                  "id": "y1"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "y2"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 2,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "9 = 4 + 5 adds the resultant's components. The balancing force ⟨−4, −5⟩ has magnitude √41 ≈ 6.40."
+          },
+          {
+            "value": 41,
+            "feedback": "41 = 4² + 5² skips the root: √41 ≈ 6.40."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Resultant ⟨4, 5⟩; balance ⟨−4, −5⟩; |·| = √41 ≈ 6.40.",
+        "successFeedback": "Resultant ⟨4, 5⟩; balance ⟨−4, −5⟩; |·| = √41 ≈ 6.40."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-applications__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Direction times size.",
+      "takeaways": [
+        "Rebuild a vector at any length: (length)·û.",
+        "Combine independent motions by adding component vectors.",
+        "A balancing (equilibrium) force is the negative of the resultant."
+      ],
+      "teaser": "Next chapter: multiplying two vectors — the dot product and the angle between them."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-applications",
+      "concept": {
+        "id": "rem-vec0203-c",
+        "kind": "concept",
+        "body": "v = |v|·û: scale a unit vector to any length. Combine motions/forces by adding component vectors; equilibrium means the vectors sum to ⟨0, 0⟩."
+      },
+      "check": {
+        "id": "rem-vec0203-k",
+        "kind": "check",
+        "body": "One resultant.",
+        "conceptTag": "vec-applications",
+        "explanationVariants": [
+          "⟨4, 0⟩ + ⟨0, 3⟩ = ⟨4, 3⟩, speed √(16 + 9) = 5.",
+          "Perpendicular parts combine to length 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Velocities ⟨4, 0⟩ and ⟨0, 3⟩ combine. What is the resulting speed?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "The resultant ⟨4, 3⟩ has speed √(16 + 9) = 5, not 4 + 3."
+            },
+            {
+              "value": 12,
+              "feedback": "12 = 4·3 multiplies. Add first (⟨4, 3⟩), then √25 = 5."
+            }
+          ],
+          "fallbackFeedback": "⟨4, 3⟩ → √25 = 5."
+        }
+      }
+    }
+  ]
+}

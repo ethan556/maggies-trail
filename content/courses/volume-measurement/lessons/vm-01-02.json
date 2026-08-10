@@ -1,0 +1,298 @@
+{
+ "id": "vm-01-02",
+ "slug": "converting-customary-units",
+ "title": "Converting Customary Units",
+ "courseId": "volume-measurement",
+ "chapterId": "ch1-unit-conversion",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Customary units use their own factors — not tens. A foot is 12 inches, a yard is 3 feet, a pound is 16 ounces, a gallon is 4 quarts. The direction rule still holds: bigger unit to smaller, multiply. 3 feet = 3 × 12 = 36 inches.",
+   "figure": "vm-customary"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Feet to inches.",
+   "conceptTag": "customary-convert",
+   "widget": {
+    "type": "unitChain",
+    "prompt": "3 ft = ? in. Customary factors aren't tens — the gearing here is 12.",
+    "startValue": 3,
+    "startUnit": "ft",
+    "targetUnit": "in",
+    "hops": [
+     {
+      "from": "ft",
+      "to": "in",
+      "bigger": "from",
+      "factor": 12
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "A foot holds 12 inches, so the crossing multiplies: 3 × 12 = 36 in.",
+    "successFeedback": "36 in. Different factor, same rule: the direction comes from which unit is bigger."
+   },
+   "hints": [
+    "1 ft = 12 in.",
+    "Multiply by 12.",
+    "3 × 12 = 36."
+   ],
+   "explanationVariants": [
+    "3 ft = 3 × 12 = 36 in.",
+    "Each foot holds 12 inches."
+   ],
+   "predict": {
+    "prompt": "Feet to inches uses ×12 instead of ×10 or ×1000. What actually changes about the crossing?",
+    "options": [
+     {
+      "id": "factor",
+      "label": "only the factor — the direction rule is the same"
+     },
+     {
+      "id": "direction",
+      "label": "the direction — customary units convert by dividing"
+     },
+     {
+      "id": "both",
+      "label": "both the factor and the direction"
+     }
+    ],
+    "outcomeId": "factor",
+    "reveal": "The rule survives the factor swap: bigger unit to smaller unit still multiplies. Customary units just use their own gear sizes — 12, 3, 4, 16 — instead of tens."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Pounds to ounces.",
+   "conceptTag": "customary-convert",
+   "explanationVariants": [
+    "2 lb = 2 × 16 = 32 oz.",
+    "Each pound holds 16 ounces, so 2 lb is 32 oz."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "2 lb = ? oz (1 lb = 16 oz)",
+    "answer": 32,
+    "tolerance": 0,
+    "unit": "oz",
+    "commonErrors": [
+     {
+      "value": 18,
+      "feedback": "18 adds 2 + 16. Converting multiplies: 2 × 16 = 32 oz."
+     },
+     {
+      "value": 8,
+      "feedback": "8 uses 4 per pound, but a pound is 16 ounces: 2 × 16 = 32 oz."
+     }
+    ],
+    "fallbackFeedback": "2 × 16 = 32 oz."
+   },
+   "variant": {
+    "gen": "metric-convert",
+    "form": "customary"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Going from a smaller unit up to a bigger one, divide. 48 ounces in pounds: 48 ÷ 16 = 3 lb. Same as before — down the ladder multiply, up the ladder divide — only the factor changes with each pair of units.",
+   "figure": "vm-oz-to-lb"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Ounces to pounds.",
+   "conceptTag": "customary-convert",
+   "explanationVariants": [
+    "48 ÷ 16 = 3 lb.",
+    "Each pound is 16 oz, so 48 oz makes 3 lb."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "48 oz = ? lb (1 lb = 16 oz)",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "lb",
+    "commonErrors": [
+     {
+      "value": 768,
+      "feedback": "768 multiplies (48 × 16). Going up to a bigger unit divides: 48 ÷ 16 = 3 lb."
+     },
+     {
+      "value": 32,
+      "feedback": "32 subtracts 16. To convert, divide: 48 ÷ 16 = 3 lb."
+     }
+    ],
+    "fallbackFeedback": "48 ÷ 16 = 3 lb."
+   },
+   "variant": {
+    "gen": "metric-convert",
+    "form": "customary"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Gallons to quarts.",
+   "conceptTag": "customary-convert",
+   "widget": {
+    "type": "unitChain",
+    "prompt": "2 gal = ? qt. A small gear this time: 4.",
+    "startValue": 2,
+    "startUnit": "gal",
+    "targetUnit": "qt",
+    "hops": [
+     {
+      "from": "gal",
+      "to": "qt",
+      "bigger": "from",
+      "factor": 4
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "A gallon holds 4 quarts: 2 × 4 = 8 qt.",
+    "successFeedback": "8 qt — small factor, same crossing rule."
+   },
+   "hints": [
+    "1 gal = 4 qt.",
+    "Bigger→smaller: multiply.",
+    "2 × 4 = 8."
+   ],
+   "explanationVariants": [
+    "2 gal = 8 qt.",
+    "Each gallon holds 4 quarts."
+   ]
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Which direction?",
+   "conceptTag": "customary-convert",
+   "explanationVariants": [
+    "36 in = 3 ft.",
+    "Divide by 12 going in→ft."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "36 in = ? ft",
+    "options": [
+     {
+      "id": "a",
+      "label": "3 ft",
+      "correct": true,
+      "feedback": "Right — going up to a bigger unit divides: 36 ÷ 12 = 3 ft."
+     },
+     {
+      "id": "b",
+      "label": "432 ft",
+      "feedback": "432 multiplies (36 × 12). in→ft goes to a BIGGER unit, so divide: 3 ft."
+     },
+     {
+      "id": "c",
+      "label": "24 ft",
+      "feedback": "24 subtracts 12. To convert in→ft, divide: 36 ÷ 12 = 3 ft."
+     }
+    ]
+   },
+   "hints": [
+    "in to ft goes smaller→bigger.",
+    "So divide by 12.",
+    "36 ÷ 12 = 3."
+   ],
+   "variant": {
+    "gen": "metric-convert",
+    "form": "customaryMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Yards to feet.",
+   "conceptTag": "customary-convert",
+   "hints": [
+    "yd→ft goes bigger→smaller: multiply.",
+    "1 yd = 3 ft.",
+    "5 × 3."
+   ],
+   "explanationVariants": [
+    "5 yd = 5 × 3 = 15 ft.",
+    "Each yard is 3 feet, so 5 yd is 15 ft."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "5 yd = ? ft (1 yd = 3 ft)",
+    "answer": 15,
+    "tolerance": 0,
+    "unit": "ft",
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 adds 5 + 3. Converting multiplies: 5 × 3 = 15 ft."
+     },
+     {
+      "value": 2,
+      "feedback": "2 divides, but yd→ft goes to a smaller unit, so multiply: 5 × 3 = 15 ft."
+     }
+    ],
+    "fallbackFeedback": "5 × 3 = 15 ft."
+   },
+   "variant": {
+    "gen": "metric-convert",
+    "form": "customary"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Same rule, custom factors.",
+   "takeaways": [
+    "Customary factors: 1 ft = 12 in, 1 yd = 3 ft, 1 lb = 16 oz, 1 gal = 4 qt.",
+    "Bigger unit to smaller: multiply. Smaller to bigger: divide.",
+    "Use the right factor for each pair of units."
+   ],
+   "teaser": "next: conversions that take more than one step."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "customary-convert",
+   "concept": {
+    "id": "rem-cc-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Bigger unit → smaller multiplies; smaller → bigger divides — with the right factor.** 1 ft = 12 in, so 4 ft = 4 × 12 = 48 in. And 24 in = 24 ÷ 12 = 2 ft. Pick the factor for the units, then choose the direction."
+   },
+   "check": {
+    "id": "rem-cc-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "customary-convert",
+    "explanationVariants": [
+     "4 ft = 4 × 12 = 48 in.",
+     "Each foot holds 12 inches."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "4 ft = ? in (1 ft = 12 in)",
+     "answer": 48,
+     "tolerance": 0,
+     "unit": "in",
+     "commonErrors": [
+      {
+       "value": 16,
+       "feedback": "16 adds 4 + 12. Converting multiplies: 4 × 12 = 48 in."
+      },
+      {
+       "value": 32,
+       "feedback": "32 uses 8 per foot, but a foot is 12 inches: 4 × 12 = 48 in."
+      }
+     ],
+     "fallbackFeedback": "4 × 12 = 48 in."
+    }
+   }
+  }
+ ]
+}

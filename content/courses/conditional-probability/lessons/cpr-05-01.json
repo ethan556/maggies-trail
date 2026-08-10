@@ -1,0 +1,368 @@
+{
+  "id": "cpr-05-01",
+  "slug": "permutations",
+  "title": "Permutations: When Order Matters",
+  "courseId": "conditional-probability",
+  "chapterId": "ch5-counting",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sometimes the sample space is far too big to list. Then you **count** it instead.\n\nFill the slots one at a time and multiply. Five runners, three medals: 5 choices for gold, then only 4 runners remain for silver, then 3 for bronze.\n\n5 × 4 × 3 = 60 possible podiums.",
+      "figure": "cpr-permutation-slots"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two independent slots: choose a shirt, then a hat.",
+      "widget": {
+        "type": "treeDiagram",
+        "prompt": "4 shirts and 3 hats. Set the branches so every outfit appears exactly once.",
+        "stage1Label": "shirts",
+        "stage2Label": "hats",
+        "targetA": 4,
+        "targetB": 3,
+        "maxA": 6,
+        "maxB": 6,
+        "aStart": 1,
+        "bStart": 1,
+        "successFeedback": "12 endings: each of the 4 shirts fans out into all 3 hats, so the counts multiply — 4 × 3 = 12.",
+        "lowFeedback": "Fewer endings than there are outfits. Every shirt must reach every hat.",
+        "highFeedback": "More endings than outfits exist. There are only 4 shirts and 3 hats."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Construct a complete multistage sample space and coordinate branches with counting and probability.",
+        "invariants": [
+          "each-path-is-one-outcome",
+          "branch-counts-multiply-across-stages"
+        ],
+        "misconceptions": [
+          "add-choices-along-a-path",
+          "omit-valid-outcomes"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-treeDiagram-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-permutation",
+      "predict": {
+        "prompt": "4 shirts and 3 hats. How many different outfits are there?",
+        "options": [
+          {
+            "id": "seven",
+            "label": "7"
+          },
+          {
+            "id": "twelve",
+            "label": "12"
+          },
+          {
+            "id": "four",
+            "label": "4"
+          }
+        ],
+        "outcomeId": "twelve",
+        "reveal": "12 — each of the 4 shirts pairs with each of the 3 hats, so the branches multiply. Adding gives 7, which counts the garments rather than the outfits: you are filling one slot AND another, not choosing a single item overall."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why does the pool shrink?",
+      "conceptTag": "cpr-permutation",
+      "explanationVariants": [
+        "A runner who took gold cannot also take silver, so the second slot has only 4 candidates: 5 × 4 × 3 = 60.",
+        "Shirts and hats are different — a hat is still available whatever shirt you chose, so nothing shrinks there."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why is the medal count 5 × 4 × 3 rather than 5 × 5 × 5?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A runner can win only one medal, so each pick removes someone from the pool.",
+            "correct": true,
+            "feedback": "Right — the slots interact. That is exactly what makes this a permutation rather than a free choice each time."
+          },
+          {
+            "id": "o2",
+            "label": "Because 5 × 5 × 5 is too big a number to be a probability.",
+            "correct": false,
+            "feedback": "Counting outcomes has no ceiling — 125 would be fine as a count. It is wrong because it lets one runner take two medals."
+          },
+          {
+            "id": "o3",
+            "label": "Because the medals are worth different amounts.",
+            "correct": false,
+            "feedback": "The value of the medals is irrelevant. What matters is that a runner is used up once placed."
+          },
+          {
+            "id": "o4",
+            "label": "Because order does not matter here.",
+            "correct": false,
+            "feedback": "Order matters a great deal — gold-then-silver is a different podium from silver-then-gold. That is why this is a permutation."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "permutation-count"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Arrange them all.",
+      "conceptTag": "cpr-permutation",
+      "explanationVariants": [
+        "4 books in a row: 4 × 3 × 2 × 1 = 24 arrangements — that is 4!.",
+        "The first slot has 4 candidates, the next 3, then 2, then the last book has nowhere else to go."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many ways can 4 different books be arranged in a row?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That is 4², which would be right if each slot were an independent free choice. A book already placed cannot be placed again."
+          },
+          {
+            "value": 12,
+            "feedback": "That is 4 × 3 — only the first two slots. Two books still have to be seated, in 2 × 1 = 2 more ways."
+          },
+          {
+            "value": 10,
+            "feedback": "That is 4 + 3 + 2 + 1. Slots multiply, they do not add — each arrangement of the front pairs with every arrangement of the back."
+          }
+        ],
+        "fallbackFeedback": "4 × 3 × 2 × 1 = 24, written 4!."
+      },
+      "variant": {
+        "gen": "permutation-count",
+        "form": "arrangeAll"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two names for the same machinery:\n\n**n!** — arrange **all** n items: n × (n−1) × … × 1.\n**nPk** — fill only **k** slots from n items: n × (n−1) × … , k factors in total.\n\nBoth assume order matters: swapping two chosen items produces a different result.",
+      "figure": "cpr-permutation-slots"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Fill three slots from eight.",
+      "conceptTag": "cpr-permutation",
+      "explanationVariants": [
+        "8 × 7 × 6 = 336. Three factors, one per slot, each one smaller than the last.",
+        "8P3 = 8!/5! = 336 — the same three factors, with the unused tail cancelling."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 sprinters race for gold, silver and bronze. How many different podiums are possible?",
+        "answer": 336,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 512,
+            "feedback": "That is 8³, which lets the same sprinter take all three medals. Each pick must remove a sprinter from the pool."
+          },
+          {
+            "value": 40320,
+            "feedback": "That is 8! — arranging all eight runners. Only the first three positions are medals; the rest of the finishing order is not being counted."
+          },
+          {
+            "value": 56,
+            "feedback": "That is C(8,3) = 56, the number of unordered trios. Medals distinguish gold from bronze, so order matters here."
+          }
+        ],
+        "fallbackFeedback": "8 × 7 × 6 = 336."
+      },
+      "variant": {
+        "gen": "permutation-count",
+        "form": "podium"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Build the count.",
+      "conceptTag": "cpr-permutation",
+      "explanationVariants": [
+        "Six people, three chairs in a row: 6 × 5 × 4 = 120 seatings.",
+        "6P3 = 120. Each seated person is removed from the pool for the next chair."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build the count for seating 3 of 6 people in 3 distinct chairs.",
+        "tokens": [
+          {
+            "id": "t6",
+            "label": "6"
+          },
+          {
+            "id": "tx1",
+            "label": "×"
+          },
+          {
+            "id": "t5",
+            "label": "5"
+          },
+          {
+            "id": "tx2",
+            "label": "×"
+          },
+          {
+            "id": "t4",
+            "label": "4"
+          },
+          {
+            "id": "t6b",
+            "label": "6"
+          },
+          {
+            "id": "tp",
+            "label": "+"
+          }
+        ],
+        "correct": [
+          "t6",
+          "tx1",
+          "t5",
+          "tx2",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t6",
+              "tx1",
+              "t6b",
+              "tx2",
+              "t4"
+            ],
+            "feedback": "The second chair cannot have 6 candidates — one person is already seated, so it has 5."
+          },
+          {
+            "sequence": [
+              "t6",
+              "tp",
+              "t5",
+              "tx2",
+              "t4"
+            ],
+            "feedback": "Slots multiply. Adding would count each chair separately instead of pairing every choice with every later choice."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "One factor per chair, each one smaller than the last: 6, then 5, then 4.",
+        "successFeedback": "6 × 5 × 4 = 120 seatings — the pool shrinks by one with every chair filled."
+      },
+      "variant": {
+        "gen": "permutation-count",
+        "form": "buildSeat"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Slots with a rule attached.",
+      "conceptTag": "cpr-permutation",
+      "hints": [
+        "Handle the restricted slot first: how many digits can go last if the number must be even?",
+        "The last digit must be 2 or 4 — that is 2 choices. Then fill the remaining slots from what is left.",
+        "After the last digit is chosen, 4 digits remain for the first slot and 3 for the second: 2 × 4 × 3."
+      ],
+      "explanationVariants": [
+        "Choose the final digit first: 2 ways (2 or 4). Then the first digit has 4 choices left and the middle 3, giving 2 × 4 × 3 = 24.",
+        "Of the 60 three-digit numbers from 5 distinct digits, the last digit is equally likely to be any of the five, so exactly 2/5 of them are even: 60 × 2/5 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using the digits 1, 2, 3, 4, 5 with no repeats, how many **three-digit even** numbers can be formed?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "That is every three-digit number from those digits, 5 × 4 × 3. Only those ending in 2 or 4 are even."
+          },
+          {
+            "value": 12,
+            "feedback": "That is 5 × 4 × 3 with the wrong restricted count, or 2 × 3 × 2. Fix the last digit first (2 ways), then 4 and 3 remain for the other two slots."
+          },
+          {
+            "value": 48,
+            "feedback": "That is 2 × 4 × 3 × 2 — one factor too many. There are only three slots to fill."
+          }
+        ],
+        "fallbackFeedback": "Last digit: 2 ways. First: 4 left. Middle: 3 left. 2 × 4 × 3 = 24."
+      },
+      "variant": {
+        "gen": "permutation-count",
+        "form": "evenNumbers"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Count the slots, then multiply.",
+      "takeaways": [
+        "Fill slots one at a time and multiply the number of choices at each step.",
+        "If items cannot repeat, the pool shrinks by one each time — that is nPk, and n! when every item is placed.",
+        "Handle any restricted slot first; the free slots then take whatever is left."
+      ],
+      "teaser": "Next: what changes when gold, silver and bronze become 'just three people on a team'."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-permutation",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Draw one empty box per slot. Write in each box how many candidates are still available when you reach it. Then multiply the boxes. If a chosen item is used up, the next box holds one fewer.",
+        "figure": "cpr-permutation-slots"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Two slots, no repeats.",
+        "conceptTag": "cpr-permutation",
+        "explanationVariants": [
+          "4 candidates for president, then 3 left for vice-president: 4 × 3 = 12.",
+          "One person cannot hold both posts, so the second box holds 3, not 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "From 4 people, choose a president and then a vice-president (different people). How many ways?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That is 4 × 4, which would let one person hold both posts. The president is no longer available for the second slot."
+            },
+            {
+              "value": 7,
+              "feedback": "That is 4 + 3. The two slots multiply: every president pairs with each of the 3 possible deputies."
+            }
+          ],
+          "fallbackFeedback": "4 × 3 = 12."
+        }
+      }
+    }
+  ]
+}

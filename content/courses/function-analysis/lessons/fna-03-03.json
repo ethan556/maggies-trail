@@ -1,0 +1,230 @@
+{
+  "id": "fna-03-03",
+  "slug": "absolute-value-and-steps",
+  "title": "Absolute Value & Step Functions",
+  "courseId": "function-analysis",
+  "chapterId": "ch3-symmetry-piecewise",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Absolute value is piecewise in disguise:\n\n|x| = **−x** if x < 0, and **x** if x ≥ 0.\n\nThe left branch looks alarming — but for negative inputs, −x is **positive**: −(−7) = 7. The V-shaped graph is just two lines, one per branch, meeting at the corner.",
+      "figure": "fna-abs-piecewise"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Trust the left branch.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using the piecewise definition, |−7| uses the rule −x. What does −x equal when x = −7?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "−x means the OPPOSITE of x. When x = −7, its opposite is −(−7) = +7 — the branch exists precisely to flip negatives positive."
+          },
+          {
+            "value": 0,
+            "feedback": "Substitute: −x = −(−7) = 7. Only x = 0 would give 0."
+          }
+        ],
+        "fallbackFeedback": "−(−7) = 7 — the left branch turns negatives positive."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Step functions** are piecewise with **constant** branches: the graph is flat shelves with jumps. Shipping is the classic — a parcel's cost depends on which weight bracket it lands in:\n\nC(w) = **$4** if w ≤ 1 kg, **$7** if 1 < w ≤ 2, **$10** if 2 < w ≤ 3.",
+      "figure": "fna-step-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Land in a bracket.",
+      "conceptTag": "fna-step",
+      "explanationVariants": [
+        "1.4 satisfies 1 < w ≤ 2, so C(1.4) = $7.",
+        "1.4 kg is past the 1-kg shelf but within the 2-kg shelf: $7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using C(w) above, what is the cost in dollars for a 1.4 kg parcel?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "$4 is only for w ≤ 1, and 1.4 > 1 — the parcel jumps to the next shelf, $7."
+          },
+          {
+            "value": 5.6,
+            "feedback": "Step functions don't scale smoothly — there's no $4-per-kg rate. The whole bracket 1 < w ≤ 2 costs a flat $7."
+          }
+        ],
+        "fallbackFeedback": "1 < 1.4 ≤ 2 → $7."
+      },
+      "variant": {
+        "gen": "step-function"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Boundary bracket.",
+      "conceptTag": "fna-step",
+      "explanationVariants": [
+        "w = 1 satisfies w ≤ 1 (not strict), so it still rides the first shelf: $4.",
+        "The ≤ keeps exactly 1 kg on the cheap shelf; only ABOVE 1 does the price jump."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the cost in dollars for a parcel weighing exactly 1 kg?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The first bracket is w ≤ 1 — INCLUSIVE — so exactly 1 kg still costs $4. The $7 shelf starts strictly above 1."
+          },
+          {
+            "value": 5.5,
+            "feedback": "There's no averaging at a jump; the input belongs to exactly one bracket. 1 ≤ 1 → $4."
+          }
+        ],
+        "fallbackFeedback": "w = 1 → first bracket → $4."
+      },
+      "variant": {
+        "gen": "step-function",
+        "form": "atBoundary"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the jump.",
+      "conceptTag": "fna-step",
+      "explanationVariants": [
+        "Crossing w = 2 moves the price from the $7 shelf to the $10 shelf — a jump of $3, with no intermediate prices ever charged.",
+        "Steps change by discrete hops: outputs skip straight from 7 to 10."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What happens to C(w) as a parcel's weight crosses from 2 kg to just over 2 kg?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The cost jumps from $7 to $10 — no price in between is ever charged",
+            "correct": true,
+            "feedback": "Right — that discontinuous hop is the signature of a step function."
+          },
+          {
+            "id": "o2",
+            "label": "The cost rises smoothly through $8 and $9",
+            "feedback": "Smooth rising is what a LINE does. A step function holds flat, then leaps: $7 shelf straight to $10 shelf."
+          },
+          {
+            "id": "o3",
+            "label": "The cost stays $7 until 3 kg",
+            "feedback": "The $7 bracket ends AT 2 kg (1 < w ≤ 2). Just past 2, the third bracket owns the parcel: $10."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "step-function",
+        "form": "jumpDescribe"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rebuild |x − 3| as pieces.",
+      "conceptTag": "fna-step",
+      "explanationVariants": [
+        "|x − 3| flips sign where the inside is 0, at x = 3: it equals −(x − 3) = 3 − x when x < 3, and x − 3 when x ≥ 3.",
+        "Test x = 1: |1 − 3| = 2 and 3 − 1 = 2 ✓; test x = 5: |5 − 3| = 2 = 5 − 3 ✓."
+      ],
+      "hints": [
+        "The split happens where the INSIDE, x − 3, changes sign.",
+        "x − 3 < 0 exactly when x < 3; there the absolute value flips the inside.",
+        "Left branch: −(x − 3) = 3 − x. Right branch: x − 3 itself."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which piecewise definition equals |x − 3|?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "3 − x if x < 3;  x − 3 if x ≥ 3",
+            "correct": true,
+            "feedback": "Right — split at the corner x = 3 and flip the negative side: −(x − 3) = 3 − x."
+          },
+          {
+            "id": "o2",
+            "label": "−x if x < 3;  x if x ≥ 3",
+            "feedback": "That splits |x| at 0, then shifts nothing. Check x = 1: this gives −1, but |1 − 3| = 2. The split — and the flip — must use the inside x − 3."
+          },
+          {
+            "id": "o3",
+            "label": "x − 3 if x < 3;  3 − x if x ≥ 3",
+            "feedback": "Branches reversed: at x = 5 this gives 3 − 5 = −2, but absolute values are never negative. The unflipped rule x − 3 belongs to the x ≥ 3 side."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "step-function",
+        "form": "absPiecewise"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Famous graphs, piecewise hearts.",
+      "takeaways": [
+        "|x| = −x for x < 0, x for x ≥ 0 — the flip makes negatives positive.",
+        "Step functions are constant branches: flat shelves with jumps.",
+        "To split |inside|, break at inside = 0 and flip the negative side."
+      ],
+      "teaser": "Next chapter: composition in depth — whose domain survives when functions chain?"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-step",
+      "concept": {
+        "id": "rem-fna0303-c",
+        "kind": "concept",
+        "body": "In a step function each bracket has ONE flat price. Test the input against each bracket's inequalities; the ≤ and < symbols decide the boundaries."
+      },
+      "check": {
+        "id": "rem-fna0303-k",
+        "kind": "check",
+        "body": "One more parcel.",
+        "conceptTag": "fna-step",
+        "explanationVariants": [
+          "2.5 satisfies 2 < w ≤ 3: $10.",
+          "Past the 2-kg boundary the third shelf owns it: $10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the cost in dollars for a 2.5 kg parcel?",
+          "answer": 10,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "The $7 shelf ends at 2 kg; 2.5 sits in 2 < w ≤ 3, the $10 bracket."
+            },
+            {
+              "value": 8.75,
+              "feedback": "There is no per-kg proration — the whole 2-to-3 kg bracket is a flat $10."
+            }
+          ],
+          "fallbackFeedback": "2 < 2.5 ≤ 3 → $10."
+        }
+      }
+    }
+  ]
+}

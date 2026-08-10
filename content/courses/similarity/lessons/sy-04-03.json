@@ -1,0 +1,303 @@
+{
+ "id": "sy-04-03",
+ "slug": "solving-right-triangles",
+ "title": "Solving Right Triangles",
+ "courseId": "similarity",
+ "chapterId": "ch4-right-triangle-similarity",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sy-solving-right",
+   "concept": {
+    "id": "rem-sy-solving-right-c",
+    "kind": "concept",
+    "body": "Solving a right triangle with geometric means: label the two hypotenuse segments p and q and the whole hypotenuse (p + q). ALTITUDE = √(p·q). Each LEG = √(hypotenuse · its adjacent segment). Match the relationship to what you're solving for, and cross-check with a² + b² = c²."
+   },
+   "check": {
+    "id": "rem-sy-solving-right-k",
+    "kind": "check",
+    "body": "Altitude from segments.",
+    "conceptTag": "sy-solving-right",
+    "explanationVariants": [
+     "Altitude = √(p·q): for segments 4 and 9, √36 = 6.",
+     "The altitude is the geometric mean of the two segments."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "The hypotenuse segments are 4 and 9. Find the altitude.",
+     "answer": 6,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 6.5,
+       "feedback": "6.5 = (4 + 9)/2 is the average. The altitude is √(4 × 9) = 6."
+      },
+      {
+       "value": 13,
+       "feedback": "13 = 4 + 9 is the whole hypotenuse. The altitude is √(4 × 9) = 6."
+      }
+     ],
+     "fallbackFeedback": "h = √(4 × 9) = 6."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "With the geometric-mean toolkit you can solve a right triangle from surprisingly little. Given the two hypotenuse segments, the altitude and both legs all follow. The trick is choosing the RIGHT relationship: altitude from the two segments, each leg from the hypotenuse and its adjacent segment.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Altitude first.",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "This hypotenuse is 15. Slide the foot until the two segments read 3 and 12, and take the altitude from the readout rather than from a formula.",
+    "shape": [
+     [
+      0,
+      0
+     ],
+     [
+      15,
+      0
+     ],
+     [
+      3,
+      6
+     ]
+    ],
+    "center": [
+     0,
+     0
+    ],
+    "targetK": 0.2,
+    "kMin": 0.05,
+    "kMax": 0.95,
+    "kStep": 0.05,
+    "kStart": 0.55,
+    "gridMin": 0,
+    "gridMax": 16,
+    "showRatios": [
+     "altitude"
+    ],
+    "successFeedback": "3 and 12, altitude 6 — since 6² = 36 = 3 × 12. The status line is also reporting the other two means: each leg squared equals the whole hypotenuse times that leg's own segment, 15 × 3 = 45 and 15 × 12 = 180. One figure, three geometric means, all holding at once.",
+    "lowFeedback": "p is under 3 — the foot is too far left and the altitude is still short. Slide right.",
+    "highFeedback": "p is over 3 now. Ease back left. Every position on the way obeys h² = p·q, so there is no risk of losing the relationship while you hunt for the right one."
+   },
+   "predict": {
+    "prompt": "The two hypotenuse segments are 3 and 12. Before computing: the altitude will be…",
+    "options": [
+     {
+      "id": "six",
+      "label": "6 — the square root of the product"
+     },
+     {
+      "id": "fivehalf",
+      "label": "7.5 — halfway between 3 and 12"
+     },
+     {
+      "id": "nine",
+      "label": "9 — the difference between them"
+     }
+    ],
+    "outcomeId": "six",
+    "reveal": "6. The altitude is the geometric mean, √(3 × 12) = √36, not the arithmetic mean 7.5. The two means agree only when the segments are equal, which is the one position where the foot sits at the midpoint."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Then a leg.",
+   "conceptTag": "sy-solving-right",
+   "explanationVariants": [
+    "With segments 3 and 12, the whole hypotenuse is 15; the leg adjacent to 3 is √(15 × 3) = √45.",
+    "leg = √(hyp × adjacent) = √(15 × 3) = √45 = 3√5."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Segments are 3 and 12 (hypotenuse 15). Which expression gives the leg adjacent to the segment of length 3?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "√(15 × 3)",
+      "correct": true,
+      "feedback": "leg = √(hypotenuse × adjacent segment) = √(15 × 3) = √45. That's the geometric-mean rule for a leg."
+     },
+     {
+      "id": "o2",
+      "label": "√(3 × 12)",
+      "correct": false,
+      "feedback": "√(3 × 12) is the ALTITUDE (the two segments). A leg uses the whole hypotenuse × adjacent segment: √(15 × 3)."
+     },
+     {
+      "id": "o3",
+      "label": "√(15 × 12)",
+      "correct": false,
+      "feedback": "√(15 × 12) is the OTHER leg (adjacent to the 12 segment). The leg near 3 is √(15 × 3)."
+     },
+     {
+      "id": "o4",
+      "label": "15 − 3",
+      "correct": false,
+      "feedback": "Subtraction isn't a geometric-mean relationship. The leg is √(15 × 3)."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-solving-right__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Choosing wrong is the classic mistake, so anchor on WHICH segments the mean connects. Altitude ↔ the two little segments. Leg ↔ the whole hypotenuse and the one segment touching that leg. Sketch the picture and label p, q, and the hypotenuse before reaching for a square root.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Pick the relationship.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "You want the altitude of the right triangle. Which two lengths are the geometric mean built from?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the two hypotenuse segments",
+      "correct": true,
+      "feedback": "The altitude is the geometric mean of the two segments: h = √(p·q)."
+     },
+     {
+      "id": "o2",
+      "label": "the whole hypotenuse and a leg",
+      "correct": false,
+      "feedback": "That mixes the relationships. The ALTITUDE uses the two SEGMENTS, not the hypotenuse and a leg."
+     },
+     {
+      "id": "o3",
+      "label": "the two legs",
+      "correct": false,
+      "feedback": "The legs aren't combined for the altitude. Use the two hypotenuse segments: √(p·q)."
+     },
+     {
+      "id": "o4",
+      "label": "the hypotenuse and the altitude",
+      "correct": false,
+      "feedback": "That's circular — you're solving FOR the altitude. It comes from the two segments."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Solve for the altitude.",
+   "conceptTag": "sy-solving-right",
+   "explanationVariants": [
+    "Segments 4 and 16 give altitude √(4 × 16) = √64 = 8.",
+    "h = √(pq) = √(4·16) = 8."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The hypotenuse segments are 4 and 16. Find the altitude.",
+    "answer": 8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 = (4 + 16)/2 is the average. The altitude is √(4 × 16) = √64 = 8."
+     },
+     {
+      "value": 20,
+      "feedback": "20 = 4 + 16 is the whole hypotenuse. The altitude is √(4 × 16) = 8."
+     }
+    ],
+    "fallbackFeedback": "h = √(4 × 16) = √64 = 8."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-solving-right__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "It all ties back to Pythagoras as a check. Once you have both legs and the hypotenuse, confirm a² + b² = c². The geometric-mean relationships and the Pythagorean theorem describe the same right triangle from two angles — they must always agree.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Verify with Pythagoras.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A right triangle has legs 15 and 20. What is the hypotenuse? (√(15² + 20²))",
+    "answer": 25,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 35,
+      "feedback": "35 = 15 + 20 adds the legs directly — but the hypotenuse uses SQUARES: √(225 + 400) = √625 = 25."
+     },
+     {
+      "value": 30,
+      "feedback": "30 doubles 15. Use the Pythagorean theorem: √(15² + 20²) = √625 = 25."
+     }
+    ],
+    "fallbackFeedback": "√(15² + 20²) = √(225 + 400) = √625 = 25."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Full solve.",
+   "conceptTag": "sy-solving-right",
+   "hints": [
+    "Segments are 9 and 16, so the hypotenuse is 25.",
+    "The leg adjacent to the segment 16 is √(hyp × 16) = √(25 × 16).",
+    "√(25 × 16) = √400."
+   ],
+   "explanationVariants": [
+    "The leg adjacent to the 16 segment is √(25 × 16) = √400 = 20.",
+    "leg = √(hyp × adjacent) = √(25 × 16) = 20."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Hypotenuse segments are 9 and 16 (hypotenuse 25). Find the leg adjacent to the segment of length 16.",
+    "answer": 20,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "12 = √(9 × 16) is the ALTITUDE, not this leg. The leg adjacent to 16 is √(25 × 16) = 20."
+     },
+     {
+      "value": 15,
+      "feedback": "15 = √(25 × 9) is the leg adjacent to the OTHER segment (9). The one adjacent to 16 is √(25 × 16) = 20."
+     }
+    ],
+    "fallbackFeedback": "leg = √(25 × 16) = √400 = 20."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-solving-right__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Solving with means.",
+   "takeaways": [
+    "Altitude from the two segments; each leg from the hypotenuse and its adjacent segment.",
+    "Sketch and label p, q, and the hypotenuse before choosing a relationship.",
+    "Cross-check the result with the Pythagorean theorem."
+   ],
+   "teaser": "Next chapter: put similarity to work in the real world — indirect measurement and scale."
+  }
+ ]
+}

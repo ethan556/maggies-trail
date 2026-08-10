@@ -1,0 +1,374 @@
+{
+ "id": "la-02-02",
+ "slug": "lines-that-cross-exactly-right",
+ "title": "Lines That Cross Exactly Right",
+ "courseId": "lines-angles",
+ "chapterId": "ch2-parallel-perpendicular",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "**Perpendicular lines** cross at exactly 90° — a right angle, the same benchmark from Course 9. Diagrams mark the crossing with a small square symbol, not an arrow. A plus sign (+) is the classic perpendicular shape.",
+   "figure": "la-perpendicular"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Construct perpendicular lines and make the right-angle invariant visible.",
+   "conceptTag": "perpendicular-lines",
+   "widget": {
+    "type": "lineRelationLab",
+    "prompt": "Rotate the active blue line until it is perpendicular to the dark line, then translate it and confirm the 90° crossing survives.",
+    "targetRelation": "perpendicular",
+    "baseAngle": 0,
+    "angleStart": 25,
+    "offsetStart": -2,
+    "angleStep": 5,
+    "requiredMoves": 3,
+    "successFeedback": "Perpendicular: the lines cross at exactly 90°, even after translation.",
+    "angleFeedback": "Crossing is not enough. Rotate until the smallest intersection angle is exactly 90°.",
+    "distanceFeedback": "Move both controls so you can distinguish changing angle from changing position."
+   },
+   "predict": {
+    "prompt": "Are all crossing lines perpendicular?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — only square-corner crossings"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — crossing is crossing"
+     },
+     {
+      "id": "tilt",
+      "label": "Only if they look tilted"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "Perpendicular is a special crossing — exactly 90°, a perfect square corner. Lines can cross at a thousand other angles and earn no badge for it."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": true,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Construct a 90-degree line relation and test translation as a counterfactual.",
+    "invariants": [
+     "perpendicular-right-angle"
+    ],
+    "misconceptions": [
+     "all-crossings-perpendicular",
+     "visual-proof"
+    ],
+    "representations": [
+     "diagram",
+     "table",
+     "symbolic",
+     "language"
+    ],
+    "fadeLevel": 1,
+    "transferFamily": "line-relations",
+    "delayed": true,
+    "translationFrom": "diagram",
+    "translationTo": "symbolic",
+    "counterfactualPrompt": "Translate after reaching the target relation. Which invariant survives, and which measurements change?",
+    "explanation": {
+     "prompt": "What changes when you translate instead of rotate?",
+     "options": [
+      {
+       "id": "position",
+       "label": "Position changes while direction stays fixed.",
+       "correct": true,
+       "feedback": "Exactly — that separates translation from rotation."
+      },
+      {
+       "id": "direction",
+       "label": "Direction must change too.",
+       "correct": false,
+       "feedback": "Direction changes only when the line rotates."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Test the definition.",
+   "conceptTag": "perpendicular-lines",
+   "explanationVariants": [
+    "Perpendicular means crossing at exactly 90° — nothing more, nothing less.",
+    "The exact right-angle crossing is the whole definition."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two lines cross, forming a perfect right angle. What are they?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Perpendicular lines",
+      "correct": true,
+      "feedback": "Crossing at exactly 90° is the definition of perpendicular."
+     },
+     {
+      "id": "b",
+      "label": "Parallel lines",
+      "feedback": "Parallel lines NEVER cross. These lines DO cross, and at a right angle — that makes them perpendicular."
+     },
+     {
+      "id": "c",
+      "label": "Intersecting lines only",
+      "feedback": "All perpendicular lines do intersect, but 'intersecting' alone doesn't require a right angle. The right-angle crossing makes these specifically perpendicular."
+     },
+     {
+      "id": "d",
+      "label": "Rays",
+      "feedback": "A ray is about one endpoint and one direction — it isn't a relationship between two crossing lines. A 90° crossing is perpendicular."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laPerpendicularLinesMcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The word **'exactly'** matters, just like Course 9's angle boundaries. Two lines crossing at 89° are close, but not perpendicular — only a true 90° crossing counts. 'Almost perpendicular' isn't a real category.",
+   "figure": "la-perpendicular"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Test the boundary.",
+   "conceptTag": "perpendicular-lines",
+   "explanationVariants": [
+    "89° falls short of the exact 90° needed — these lines are just crossing, not perpendicular.",
+    "Only exactly 90° qualifies as perpendicular."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two lines cross at 89°. Are they perpendicular?",
+    "options": [
+     {
+      "id": "a",
+      "label": "They aren't — perpendicular requires exactly 90°",
+      "correct": true,
+      "feedback": "89° is close, but perpendicular means EXACTLY 90° — one degree off disqualifies it."
+     },
+     {
+      "id": "b",
+      "label": "Yes — 89° is basically 90°",
+      "feedback": "Perpendicular has no 'basically' — it means exactly 90°. At 89°, these lines are just crossing."
+     },
+     {
+      "id": "c",
+      "label": "Yes, since it's so close",
+      "feedback": "Closeness doesn't count here, the same way 89° wasn't 'almost a right angle' back in Course 9. Perpendicular requires exactly 90°."
+     },
+     {
+      "id": "d",
+      "label": "It depends on how the lines are drawn",
+      "feedback": "The angle measure alone decides it: 89° is not 90°, so these lines are not perpendicular."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laPerpendicularLinesMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "More perpendicular spotting.",
+   "conceptTag": "perpendicular-lines",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each example: perpendicular, or just crossing?",
+    "buckets": [
+     {
+      "id": "yes",
+      "label": "Perpendicular (exactly 90°)",
+      "icon": "➕"
+     },
+     {
+      "id": "no",
+      "label": "Just crossing",
+      "icon": "✕"
+     }
+    ],
+    "items": [
+     {
+      "id": "f1",
+      "label": "A flagpole meeting flat ground",
+      "bucketId": "yes",
+      "feedback": "An upright flagpole meets flat ground at exactly 90° — perpendicular."
+     },
+     {
+      "id": "f2",
+      "label": "A leaning ladder against a wall",
+      "bucketId": "no",
+      "feedback": "A leaning ladder meets the ground at an angle other than 90° — just crossing."
+     },
+     {
+      "id": "f3",
+      "label": "The corner of a book page",
+      "bucketId": "yes",
+      "feedback": "A standard book page's corner is a right angle — perpendicular."
+     },
+     {
+      "id": "f4",
+      "label": "Two branches meeting at a Y-shape",
+      "bucketId": "no",
+      "feedback": "A Y-shape's branches typically meet at an angle other than 90° — just crossing."
+     }
+    ],
+    "missFeedback": "Ask whether the crossing forms an exact right angle, or some other angle.",
+    "successFeedback": "The flagpole and book corner cross at exactly 90°; the leaning ladder and Y-branches don't."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One more test.",
+   "conceptTag": "perpendicular-lines",
+   "explanationVariants": [
+    "A small square symbol at a crossing is the standard mark for a right angle — perpendicular.",
+    "That symbol specifically means 90°, nothing else."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A diagram marks a crossing point with a small square symbol. What does this indicate?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The lines are perpendicular, crossing at 90°",
+      "correct": true,
+      "feedback": "The small square is the standard symbol for a right angle — perpendicular lines."
+     },
+     {
+      "id": "b",
+      "label": "The lines are parallel",
+      "feedback": "Parallel lines don't cross at all, so there's no crossing point to mark. The square marks a 90° crossing: perpendicular."
+     },
+     {
+      "id": "c",
+      "label": "The lines form some angle less than 90°",
+      "feedback": "The square symbol specifically means EXACTLY 90°, not just any angle under 90°."
+     },
+     {
+      "id": "d",
+      "label": "The figure is a specific shape, like a square",
+      "feedback": "The small square at a crossing is a symbol for the ANGLE there, not a claim about the whole figure's shape."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laPerpendicularLinesMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The bookshelf.",
+   "conceptTag": "perpendicular-lines",
+   "hints": [
+    "A well-built bookshelf has vertical sides meeting a flat, level shelf.",
+    "Check the crossing angle where the side meets the shelf.",
+    "A properly built shelf meets its side at exactly 90°."
+   ],
+   "explanationVariants": [
+    "A properly built bookshelf's vertical side meets its level shelf at exactly 90° — perpendicular.",
+    "The exact right-angle crossing is what makes a shelf sit flat and sturdy."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A bookshelf's vertical side meets its flat, level shelf at exactly 90°. What is this relationship called?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Perpendicular",
+      "correct": true,
+      "feedback": "An exact 90° crossing between the side and shelf is perpendicular."
+     },
+     {
+      "id": "b",
+      "label": "Parallel",
+      "feedback": "Parallel lines never cross — but the side and shelf clearly meet. A 90° crossing makes them perpendicular."
+     },
+     {
+      "id": "c",
+      "label": "Just crossing, since any two boards that meet do so at some angle",
+      "feedback": "The specific 90° angle described here is exactly what makes it perpendicular, not merely 'crossing at some angle.'"
+     },
+     {
+      "id": "d",
+      "label": "It depends on the bookshelf's overall size",
+      "feedback": "Size doesn't matter here — the 90° crossing angle is what determines perpendicular, regardless of the shelf's dimensions."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laPerpendicularLinesMcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Crossing, precisely.",
+   "takeaways": [
+    "Perpendicular lines cross at exactly 90° — the same right-angle benchmark from Course 9.",
+    "A small square symbol marks a perpendicular crossing in diagrams.",
+    "89° or 91° isn't 'close enough' — only an exact 90° crossing counts."
+   ],
+   "teaser": "next: spotting both parallel and perpendicular pairs in one figure."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "perpendicular-lines",
+   "concept": {
+    "id": "rem-pp-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Perpendicular means crossing at exactly 90°.** A plus sign (+) is the clearest example — its two strokes cross at a perfect right angle, marked with a small square symbol in diagrams."
+   },
+   "check": {
+    "id": "rem-pp-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "perpendicular-lines",
+    "explanationVariants": [
+     "A plus sign's strokes cross at exactly 90° — perpendicular.",
+     "The right-angle crossing is the definition."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "The two strokes of a plus sign (+) cross at exactly 90°. What is this relationship?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Perpendicular",
+       "correct": true,
+       "feedback": "Exactly 90° is perpendicular."
+      },
+      {
+       "id": "b",
+       "label": "Parallel",
+       "feedback": "Parallel lines never cross at all. These clearly do, at exactly 90° — perpendicular."
+      },
+      {
+       "id": "c",
+       "label": "Just an estimate",
+       "feedback": "A plus sign's crossing is precisely 90°, not just an estimate — that makes it perpendicular."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

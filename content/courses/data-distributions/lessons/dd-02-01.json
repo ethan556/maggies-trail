@@ -1,0 +1,412 @@
+{
+  "id": "dd-02-01",
+  "slug": "dot-plots",
+  "title": "Dot Plots",
+  "courseId": "data-distributions",
+  "chapterId": "ch2-dot-plots-histograms",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "dot-plot-pets",
+      "body": "A **dot plot** turns a data set into a picture: a number line for the possible values, one **dot per data value**, stacked when values repeat. The pets data 0,1,1,2,2,2,3,4 becomes stacks of height 1,2,3,1,1 — eight dots for eight students, and the tallest stack (at 2) shows the most common answer at a glance."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Each dot is one data point. Stack the dots above each value to build the plot — the tallest stack marks the most common answer.",
+      "widget": {
+        "type": "dotPlot",
+        "prompt": "Build the dot plot: 1 student read 0 books, 3 read 1, 4 read 2, 2 read 3.",
+        "values": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "target": [
+          1,
+          3,
+          4,
+          2
+        ],
+        "maxPerValue": 6,
+        "successFeedback": "Every stack matches — the peak at 2 books is the most common result.",
+        "partialFeedback": "Some stacks are the wrong height. Each dot is one student — count them from the data."
+      },
+      "predict": {
+        "prompt": "Before you build it: which number of books will have the tallest stack of dots?",
+        "options": [
+          {
+            "id": "one",
+            "label": "1 book"
+          },
+          {
+            "id": "two",
+            "label": "2 books"
+          },
+          {
+            "id": "three",
+            "label": "3 books"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Four students read 2 books — more than any other count — so 2 gets the tallest stack. The tallest stack in a dot plot is the mode: the most common value."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Build and inspect a distribution while coordinating individual values, center, spread, and shape.",
+        "predictionId": "g7-sampling-variability-prediction",
+        "invariants": [
+          "data-values-determine-distribution",
+          "sample-size-is-frequency-total"
+        ],
+        "misconceptions": [
+          "axis-frequency-confusion",
+          "center-only"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "table",
+        "fadeLevel": 2,
+        "transferFamily": "new-distribution-same-statistical-claim",
+        "delayed": true,
+        "counterfactualPrompt": "Move one extreme value farther away. Which measures should change, and which might stay stable?",
+        "explanation": {
+          "prompt": "Why must a claim about a distribution use more than its center?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Spread and shape can differ even when centers match.",
+              "correct": true,
+              "feedback": "Exactly. A distribution is determined by the pattern of all its values."
+            },
+            {
+              "id": "surface",
+              "label": "The mean alone completely describes every dataset.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. A distribution is determined by the pattern of all its values."
+            }
+          ]
+        }
+      },
+      "conceptTag": "dot-plot"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the tallest stack.",
+      "conceptTag": "dot-plot",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the pets dot plot, how many students have exactly 2 pets? (Count the dots above 2.)",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "students",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the VALUE on the number line, not the count of dots above it. Count the stack: 3 dots = 3 students."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is ALL the dots (every student). The question asks only about the stack above 2: 3 dots."
+          }
+        ],
+        "fallbackFeedback": "Three dots sit above 2, so 3 students have 2 pets."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Total the dots.",
+      "conceptTag": "dot-plot",
+      "explanationVariants": [
+        "1+2+3+1+1 = 8 dots — one per student, so 8 students were surveyed.",
+        "The dot count always equals the data-set size."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add up ALL the dots in the pets plot (stacks of 1, 2, 3, 1, 1). How many students does the plot show?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "students",
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 counts the STACKS (distinct values 0-4), not the dots. Each dot is one student: 1+2+3+1+1 = 8."
+          },
+          {
+            "value": 10,
+            "feedback": "10 adds the VALUES on the number line (0+1+2+3+4). Count the DOTS instead: 8."
+          }
+        ],
+        "fallbackFeedback": "1+2+3+1+1 = 8 dots = 8 students."
+      },
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddDotTotal"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Building a dot plot has just two moves: draw a number line covering the smallest to largest value, then place one dot per data value, **stacking upward on repeats**. Nothing is lost — you can recover the entire data set by reading the dots back.",
+      "figure": "dot-plot-pets"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build one yourself.",
+      "conceptTag": "dot-plot",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "The data is 1, 2, 2, 3. Build the dot plot: stack 1 dot in the '1' column, 2 dots in the '2' column (from the bottom), and 1 dot in the '3' column.",
+        "cols": 3,
+        "rows": 3,
+        "xLabels": [
+          "1",
+          "2",
+          "3"
+        ],
+        "yLabels": [
+          "1st",
+          "2nd",
+          "3rd"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 3,
+            "feedback": "A third dot at 2 would mean THREE students answered 2 — the data has only two 2s."
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "feedback": "A second dot at 1 would mean two students answered 1 — the data has only one."
+          }
+        ],
+        "missFeedback": "One dot per data value: the value 1 appears once, 2 appears twice (stack them), 3 appears once.",
+        "successFeedback": "Built — four dots for four data values, with the repeat at 2 stacked."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Place ordered pairs and coordinate each observation across two quantitative variables.",
+        "invariants": [
+          "coordinate-order-matches-variable-order",
+          "one-point-links-one-paired-observation"
+        ],
+        "misconceptions": [
+          "swap-coordinates",
+          "treat-axes-as-unrelated-lists"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-plotPoint-new-context",
+        "delayed": false
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a plot backwards.",
+      "conceptTag": "dot-plot",
+      "explanationVariants": [
+        "Stacks of 2,3,2,1 over the values 10,15,20,25 read back as 10,10,15,15,15,20,20,25.",
+        "Each dot converts back to one data value — the plot IS the data."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A dot plot shows 2 dots over 10, 3 over 15, 2 over 20, and 1 over 25. Which data set does it show?",
+        "options": [
+          {
+            "id": "a",
+            "label": "10, 10, 15, 15, 15, 20, 20, 25",
+            "correct": true,
+            "feedback": "Right — each dot reads back as one value: two 10s, three 15s, two 20s, one 25."
+          },
+          {
+            "id": "b",
+            "label": "10, 15, 20, 25",
+            "feedback": "That lists each value ONCE, ignoring the stack heights. The stacks say how many times each value occurred."
+          },
+          {
+            "id": "c",
+            "label": "2, 3, 2, 1",
+            "feedback": "Those are the stack HEIGHTS (the counts), not the data values themselves. The values are on the number line: 10s, 15s, 20s, 25."
+          }
+        ]
+      },
+      "hints": [
+        "Each dot is one data value.",
+        "The number line gives the value; the stack gives how many.",
+        "Two 10s, three 15s, two 20s, one 25."
+      ],
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddDotDataSet"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Gaps mean something.",
+      "conceptTag": "dot-plot",
+      "explanationVariants": [
+        "An empty spot above a value means NO student gave that answer — a count of zero.",
+        "Gaps are real information: that value simply didn't occur."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A dot plot of quiz scores has no dots above 7. What does that mean?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No student scored 7",
+            "correct": true,
+            "feedback": "Right — an empty column is a count of zero for that value."
+          },
+          {
+            "id": "b",
+            "label": "The value 7 was impossible",
+            "feedback": "7 was possible (it's on the number line) — it just didn't OCCUR. Empty column = zero count."
+          },
+          {
+            "id": "c",
+            "label": "The plot has an error",
+            "feedback": "Gaps are normal and informative — they show which values never appeared in the data."
+          }
+        ]
+      },
+      "hints": [
+        "What does a dot represent?",
+        "One occurrence of that value.",
+        "No dots = zero occurrences."
+      ],
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddDotMissingValue"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Reason from the plot alone.",
+      "conceptTag": "dot-plot",
+      "hints": [
+        "\"More than 15 minutes\" means the stacks above 20 and 25.",
+        "Those stacks have 2 and 1 dots.",
+        "Add them."
+      ],
+      "explanationVariants": [
+        "Values above 15 are 20 (2 dots) and 25 (1 dot): 3 students read more than 15 minutes.",
+        "Count only the stacks strictly right of 15: 2 + 1 = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the reading plot (2 dots over 10, 3 over 15, 2 over 20, 1 over 25), how many students read MORE than 15 minutes?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "students",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 includes the three students AT 15 — but \"more than 15\" is strict, excluding them: 2 + 1 = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "2 counts only the 20-minute stack, missing the student at 25: 2 + 1 = 3."
+          }
+        ],
+        "fallbackFeedback": "Strictly more than 15: the stacks at 20 (2) and 25 (1): 3 students."
+      },
+      "variant": {
+        "gen": "line-plot",
+        "form": "ddDotMoreThan"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One dot per value, stacked on repeats.",
+      "takeaways": [
+        "A dot plot puts one dot per data value above a number line, stacking repeats.",
+        "Total dots = data-set size; stack height = that value's count; gaps = zero counts.",
+        "The plot loses nothing — the whole data set reads back from the dots."
+      ],
+      "teaser": "next: when data gets big, bars replace dots — histograms."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dot-plot",
+      "concept": {
+        "id": "rem-dp-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Stack height = how many times that value occurred.** Data 5,5,6: two dots stack above 5, one dot above 6 — three dots for three values."
+      },
+      "check": {
+        "id": "rem-dp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "dot-plot",
+        "explanationVariants": [
+          "The value 5 occurred twice, so its stack is 2 dots tall.",
+          "Stack height equals that value's count in the data."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For the data 5, 5, 6, how many dots stack above the value 5?",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "dots",
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 is the VALUE, not its count. The value 5 appears twice in the data: 2 dots."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is the whole data set's size. Only the two 5s stack above 5; the 6 gets its own column."
+            }
+          ],
+          "fallbackFeedback": "The data holds two 5s: 2 dots above 5."
+        }
+      }
+    }
+  ]
+}

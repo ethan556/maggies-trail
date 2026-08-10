@@ -1,0 +1,300 @@
+{
+  "id": "ca-04-02",
+  "slug": "the-full-sketch",
+  "title": "The Full Sketch",
+  "courseId": "curve-analysis",
+  "chapterId": "ch4-curve-sketching",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A complete sketch is a **checklist**, and the curve is whatever satisfies all of it:\n\n1. **Zeros and intercepts** — where is f = 0?\n2. **Ends** — what happens as x → ±∞? Any asymptotes?\n3. **Sign chart of f′** — rising, falling, extrema.\n4. **Sign chart of f″** — bending, inflections.\n\nNo plotting. Only one curve fits.",
+      "figure": "ca-first-derivative-story"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Chart one: where does f rise and fall?",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 1
+          },
+          {
+            "x": 4,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "f(x) = x³ − 6x² + 5, so f′(x) = 3x(x − 4). Set the signs of f′.",
+        "successFeedback": "+ − +. The curve climbs to a maximum at x = 0, falls to a minimum at x = 4, then climbs away for good. Two sign changes, two extrema — and the ends of an odd-degree polynomial with a positive lead go down-left and up-right, which is exactly consistent with what you just drew.",
+        "crossFeedback": "Both roots of f′ are single, so the sign flips at each. Two flips, three intervals.",
+        "bounceFeedback": "Neither root of this f′ is repeated, so both are crossings."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "ca-full-sketch",
+      "predict": {
+        "prompt": "f′(x) = 3x(x − 4) holds one sign — negative — all the way from x = 0 to x = 4. Over that whole interval f will…",
+        "options": [
+          {
+            "id": "monotone",
+            "label": "Fall the entire way, with no turn in between"
+          },
+          {
+            "id": "wobble",
+            "label": "Fall, then rise, then fall again"
+          },
+          {
+            "id": "neg",
+            "label": "Stay negative the entire way"
+          }
+        ],
+        "outcomeId": "monotone",
+        "reveal": "Fall the whole way. A turn requires f′ to CHANGE sign, and inside an interval of the chart it does not change at all — that is what the cut marks are for. One sign, one behaviour: this is why a chart with three intervals is a complete description and not a sample."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Chart two: where does it bend?",
+      "conceptTag": "ca-full-sketch",
+      "explanationVariants": [
+        "f″ = 6x − 12 = 6(x − 2), a single root at x = 2 — so the bend flips once: concave down for x < 2, concave up after. One inflection.",
+        "The inflection sits between the two extrema, which is where a cubic always puts it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 6x² + 5. At what x is the inflection point?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is a critical point (a maximum), not an inflection. Inflections come from f″ = 6x − 12 = 0."
+          },
+          {
+            "value": 4,
+            "feedback": "That is the other critical point (a minimum). Solve f″ = 0: 6x = 12 gives x = 2."
+          },
+          {
+            "value": 6,
+            "feedback": "That is a coefficient. f″ = 6x − 12 is zero at x = 2."
+          }
+        ],
+        "fallbackFeedback": "f″ = 6(x − 2) = 0 → x = 2, and the sign changes there."
+      },
+      "variant": {
+        "gen": "full-sketch"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Assemble the shape.",
+      "conceptTag": "ca-full-sketch",
+      "explanationVariants": [
+        "On (0, 2): f′ < 0 (falling) and f″ < 0 (concave down). The curve is falling and the fall is STEEPENING.",
+        "That combination is the stretch just after a maximum, before the inflection slows the descent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f = x³ − 6x² + 5, describe the curve on the interval (0, 2).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Falling, and the fall is steepening (f′ < 0, f″ < 0).",
+            "correct": true,
+            "feedback": "Right — just past the maximum at 0, and not yet at the inflection at 2. The descent is accelerating."
+          },
+          {
+            "id": "o2",
+            "label": "Falling, but levelling off.",
+            "correct": false,
+            "feedback": "That is the stretch AFTER the inflection, on (2, 4), where f″ turns positive and the fall eases."
+          },
+          {
+            "id": "o3",
+            "label": "Rising and bending up.",
+            "correct": false,
+            "feedback": "f′ = 3x(x − 4) is NEGATIVE between 0 and 4, so the curve is going down."
+          },
+          {
+            "id": "o4",
+            "label": "Flat throughout.",
+            "correct": false,
+            "feedback": "f′ is zero only at 0 and 4 — at the endpoints of the interval, not inside it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "full-sketch",
+        "form": "fallingSteepening"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Now the consistency check, which is where errors surface.\n\nBetween two extrema the curve must **change direction exactly once**. Between two inflections the bend must **flip exactly once**. And the ends must agree with the leading term.\n\nIf your sketch violates any of these, one of your charts is wrong — and you will know which.",
+      "figure": "ca-first-derivative-story"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Catch the contradiction.",
+      "conceptTag": "ca-full-sketch",
+      "explanationVariants": [
+        "If f′ > 0 on an entire interval, the curve rises across all of it — so it cannot have a maximum strictly inside. A maximum needs f′ to change sign.",
+        "The charts constrain each other, and that is what makes the method self-checking."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student claims f′ > 0 on all of (1, 5), and that f has a maximum at x = 3. What is wrong?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "An interior maximum needs f′ to change sign — but f′ never changes sign on (1, 5).",
+            "correct": true,
+            "feedback": "Right. The curve climbs through x = 3 without pausing, so nothing there can be a peak. One of the two claims is false."
+          },
+          {
+            "id": "o2",
+            "label": "Nothing — a curve can rise and still have a maximum.",
+            "correct": false,
+            "feedback": "Not strictly inside an interval where it is rising throughout. Points just to the right of 3 are HIGHER than f(3), so f(3) is no maximum."
+          },
+          {
+            "id": "o3",
+            "label": "The maximum should be at x = 1.",
+            "correct": false,
+            "feedback": "x = 1 is an endpoint of the interval, and the claim was about an interior maximum. The contradiction is with the sign of f′, not the location."
+          },
+          {
+            "id": "o4",
+            "label": "f″ must be negative there.",
+            "correct": false,
+            "feedback": "The second derivative is not the issue. The contradiction is already fatal at the first: rising throughout rules out an interior peak."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "full-sketch",
+        "form": "logicalContradiction"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sketch it in your head.",
+      "conceptTag": "ca-full-sketch",
+      "hints": [
+        "f′ = 4x³ − 12x² = 4x²(x − 3): critical points at 0 (double root — a saddle) and 3 (a minimum).",
+        "f″ = 12x² − 24x = 12x(x − 2): inflections at 0 and 2.",
+        "So how many places does the curve TURN? Only the sign changes of f′ count."
+      ],
+      "explanationVariants": [
+        "f′ = 4x²(x − 3) is negative, negative, positive — one sign change. So the curve turns exactly ONCE, at x = 3. The critical point at 0 is a saddle.",
+        "Two critical points, two inflections, but only one turning point. The charts each answer their own question."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x⁴ − 4x³. How many times does the curve change DIRECTION?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "There are two critical points, but only one sign CHANGE in f′. At x = 0 the derivative touches zero and stays negative — the curve falls straight through."
+          },
+          {
+            "value": 0,
+            "feedback": "It certainly turns: at x = 3, f′ crosses from negative to positive. That is one direction change."
+          },
+          {
+            "value": 3,
+            "feedback": "Direction changes come only from sign changes of f′, and f′ = 4x²(x − 3) has just one."
+          }
+        ],
+        "fallbackFeedback": "f′ = 4x²(x − 3) changes sign only at x = 3: one turn."
+      },
+      "variant": {
+        "gen": "full-sketch",
+        "form": "directionChanges"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Four charts, one curve.",
+      "takeaways": [
+        "Zeros, ends, sign of f′, sign of f″ — assemble them and only one curve fits.",
+        "The charts constrain each other, so a contradiction tells you exactly which one to recheck.",
+        "Critical points, inflections and turning points are three different counts, and they rarely agree."
+      ],
+      "teaser": "Next: a graph of f′ alone, and what it tells you about f."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-full-sketch",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Work the checklist in order and never skip ahead. Zeros. Ends. Where it rises and falls. Where it bends. Then draw the ONE curve that agrees with everything you have written down.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which chart answers it?",
+        "conceptTag": "ca-full-sketch",
+        "explanationVariants": [
+          "Inflection points come from the sign chart of f″ — they are about the BEND.",
+          "Extrema come from f′; inflections come from f″."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which chart tells you where the inflection points are?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The sign chart of f″",
+              "correct": true,
+              "feedback": "Right — an inflection is a change in the BEND, and the bend is f″."
+            },
+            {
+              "id": "o2",
+              "label": "The sign chart of f′",
+              "correct": false,
+              "feedback": "That gives extrema — where the curve turns. Inflections are about where it changes its bend."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

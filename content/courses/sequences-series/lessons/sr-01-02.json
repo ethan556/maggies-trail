@@ -1,0 +1,318 @@
+{
+  "id": "sr-01-02",
+  "slug": "working-the-chain",
+  "title": "Working the Chain",
+  "courseId": "sequences-series",
+  "chapterId": "ch1-recursive-explicit",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Recursive rules read the same whatever the hop is. aₙ = aₙ₋₁ − 4 says “previous term minus 4”; aₙ = 3·aₙ₋₁ says “triple the previous term.” The symbol aₙ₋₁ always means one thing: **the term right before the one you're building.**",
+      "figure": "sr-recursive-hop"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Work the chain, then jump past it.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "arithmetic",
+        "first": 3,
+        "targetD": 4,
+        "atPosition": 6,
+        "targetTerm": 23,
+        "targetRTenths": 5,
+        "targetSum": 0,
+        "start": 1,
+        "prompt": "A sequence starts at 3. Set the step so that the 6th term is 23.",
+        "successFeedback": "d = 4: 3, 7, 11, 15, 19, 23. Walking the chain works, but notice the formula does it in one hop — the 6th term is the start plus FIVE steps, not six. aₙ = a₁ + (n − 1)d, and that (n − 1) is where nearly every error lives.",
+        "lowFeedback": "The 6th term falls short of 23 — the step is too small.",
+        "highFeedback": "The 6th term overshoots 23 — the step is too big."
+      },
+      "conceptTag": "sr-recursive",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents sr recursive.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sr recursive must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sr recursive."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "sequences-series:sr-recursive",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "A sequence starts at 3 and its 6th term must be 23. The step you need is…",
+        "options": [
+          {
+            "id": "four",
+            "label": "4"
+          },
+          {
+            "id": "third",
+            "label": "About 3.83 — the 23 shared over 6 terms"
+          },
+          {
+            "id": "twenty",
+            "label": "20 — the whole distance from 3 to 23"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "4. Getting from the 1st term to the 6th is FIVE hops, not six: 3 + 5×4 = 23. Counting the terms instead of the gaps between them is the most reliable way to land one step out, and it is why the formula carries (n − 1) rather than n."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A tripling chain.",
+      "conceptTag": "sr-recursive",
+      "explanationVariants": [
+        "Three triplings from 1: 1 → 3 → 9 → 27.",
+        "a₄ = 3·a₃ = 3·9 = 27 — the chain feeds each answer back in."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using a₁ = 1, aₙ = 3·aₙ₋₁, what is a₄?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 81,
+            "feedback": "81 is a₅ — four triplings. The fourth term takes three: 1 → 3 → 9 → 27."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is a₃ — two triplings in. One more: 3 · 9 = 27."
+          }
+        ],
+        "fallbackFeedback": "Three triplings: 1 → 3 → 9 → 27."
+      },
+      "variant": {
+        "gen": "sr-recursive",
+        "form": "geometric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's recursion's superpower: the hop can be **anything**, even rules no single formula from Algebra 1 covers. a₁ = 1, aₙ = 2·aₙ₋₁ + 1 (“double, then add one”) builds 1, 3, 7, 15, … — not arithmetic, not geometric, yet the chain handles it effortlessly.",
+      "figure": "sr-any-hop"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Double, then add one.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using a₁ = 1, aₙ = 2·aₙ₋₁ + 1, what is a₃?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is a₄ — one hop too many. Two hops reach the third term: 1 → 3 → 7."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is 2·3 with the +1 dropped — the rule is double AND add one: 2·3 + 1 = 7."
+          }
+        ],
+        "fallbackFeedback": "a₂ = 2·1 + 1 = 3, then a₃ = 2·3 + 1 = 7."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The weakness.",
+      "conceptTag": "sr-recursive",
+      "explanationVariants": [
+        "The rule computes a₅₀ from a₄₉, which needs a₄₈, and so on — the whole chain back to the start.",
+        "aₙ₋₁ isn't a formula in n: to use it you must actually hold the previous term."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You want a₅₀ from a₁ = 7, aₙ = aₙ₋₁ + 3 using ONLY the recursive rule. What does that require?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "computing every term a₂ through a₄₉ first",
+            "correct": true,
+            "feedback": "Exactly — forty-eight hops before the one you wanted. That grind is recursion's one weakness."
+          },
+          {
+            "id": "o2",
+            "label": "substituting n = 50 directly",
+            "correct": false,
+            "feedback": "The rule's right side is a₄₉, not an expression in n — there's nothing for 50 to plug into until the previous term exists."
+          },
+          {
+            "id": "o3",
+            "label": "knowing the sequence's last term",
+            "correct": false,
+            "feedback": "Sequences build forward and this one never ends — there's no last term, and the rule only ever asks for the PREVIOUS one."
+          },
+          {
+            "id": "o4",
+            "label": "one multiplication: 50 · 3",
+            "correct": false,
+            "feedback": "50·3 ignores the start and overcounts the hops. The one-line shortcut is 7 + 49·3 — and that's the EXPLICIT rule, not this one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "sr-recursive",
+        "form": "needAllTerms"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "So match the form to the job. “Next term?” — recursive, instantly. “Term number 100?” — explicit, one line. Recursive rules also shine when each value genuinely grows out of the last: balances updated month by month, populations updated season by season.",
+      "figure": "sr-match-form"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Match the tool to the question.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Which rule form answers each question fastest?",
+        "buckets": [
+          {
+            "id": "rec",
+            "label": "recursive rule"
+          },
+          {
+            "id": "exp",
+            "label": "explicit rule"
+          }
+        ],
+        "items": [
+          {
+            "id": "q1",
+            "label": "What's the NEXT term after the one on my screen?",
+            "bucketId": "rec",
+            "feedback": "The next term is one hop from what you already have — that's the recursive rule's exact move; the explicit form would recompute from scratch."
+          },
+          {
+            "id": "q2",
+            "label": "What is a₁₀₀?",
+            "bucketId": "exp",
+            "feedback": "Jumping to a distant position is the explicit rule's one-line specialty — the recursive route would need ninety-nine hops."
+          },
+          {
+            "id": "q3",
+            "label": "Each month's balance is last month's plus $40 — track it month to month.",
+            "bucketId": "rec",
+            "feedback": "“Last month's plus $40” IS a next-from-previous instruction — the situation is already speaking recursively."
+          },
+          {
+            "id": "q4",
+            "label": "Jump straight to the value in row 25.",
+            "bucketId": "exp",
+            "feedback": "“Straight to row 25” means position → term with no chain — the explicit rule's job description."
+          }
+        ],
+        "missFeedback": "Match each question to the form that answers it without extra work: chains for next-step questions, one-line jumps for distant positions.",
+        "successFeedback": "Right tool, right question — that instinct is the whole point of having two forms."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A rule neither formula covers.",
+      "conceptTag": "sr-recursive",
+      "explanationVariants": [
+        "a₂ = 3·2 − 1 = 5, a₃ = 3·5 − 1 = 14, a₄ = 3·14 − 1 = 41.",
+        "Three hops of “triple, subtract 1” starting from 2 land on 41."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using a₁ = 2, aₙ = 3·aₙ₋₁ − 1, what is a₄?",
+        "answer": 41,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is a₃ — one hop short. Feed it back in: 3·14 − 1 = 41."
+          },
+          {
+            "value": 122,
+            "feedback": "122 is a₅ — you applied the rule to 41 itself. The fourth term IS 41; stop one hop sooner."
+          }
+        ],
+        "fallbackFeedback": "Chain it: 2 → 5 → 14 → 41."
+      },
+      "hints": [
+        "Every hop is “triple the previous term, then subtract 1.”",
+        "a₂ = 3·2 − 1 = 5 — keep feeding each answer back into the rule.",
+        "a₃ = 14, so a₄ = 3·14 − 1."
+      ],
+      "variant": {
+        "gen": "sr-recursive",
+        "form": "affine"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chains handle any hop — at a price.",
+      "takeaways": [
+        "aₙ₋₁ always means the term right before the one you're building.",
+        "Recursion covers rules no single nth-term formula does — like “double, add one.”",
+        "Its cost: distant terms need the whole chain. The explicit form is the cure."
+      ],
+      "teaser": "Next: converting between the two forms — so you always hold the right tool."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-recursive",
+      "concept": {
+        "id": "rem-sr0102-c",
+        "kind": "concept",
+        "body": "Feed each answer back in — that's all a chain is. For a₁ = 5, aₙ = 2·aₙ₋₁: a₂ = 2·5 = 10, then a₃ = 2·10 = 20. The output of one hop is the input of the next."
+      },
+      "check": {
+        "id": "rem-sr0102-k",
+        "kind": "check",
+        "body": "One more hop.",
+        "conceptTag": "sr-recursive",
+        "explanationVariants": [
+          "a₃ = 2·a₂ = 2·10 = 20.",
+          "Two doublings from 5: 5 → 10 → 20."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Using a₁ = 5, aₙ = 2·aₙ₋₁, what is a₃?",
+          "answer": 20,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 40,
+              "feedback": "40 is a₄ — three doublings. The third term takes two: 5 → 10 → 20."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is a₂ — halfway there. Double once more: 2·10 = 20."
+            }
+          ],
+          "fallbackFeedback": "Two doublings: 5 → 10 → 20."
+        }
+      }
+    }
+  ]
+}

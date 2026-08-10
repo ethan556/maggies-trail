@@ -1,0 +1,356 @@
+{
+  "id": "pv1000-04-02",
+  "slug": "subtracting-by-place-with-trading",
+  "title": "Subtracting by Place, with Trading",
+  "courseId": "place-value-1000",
+  "chapterId": "ch4-adding-and-subtracting-to-1000",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "decompose-combine",
+      "body": "Subtracting works the same way: break both numbers into hundreds, tens, ones, then subtract each spot. 486 − 253: hundreds 400−200=200, tens 80−50=30, ones 6−3=3. Combine: 233."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Take away place by place, then build what's left.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build what's left of 486 − 253.",
+        "target": 233,
+        "requireStandard": true,
+        "maxHundreds": 9,
+        "maxTens": 9,
+        "maxOnes": 9,
+        "commonBuilds": [
+          {
+            "hundreds": 7,
+            "tens": 3,
+            "ones": 9,
+            "feedback": "That builds 739 = 486 + 253 — the minus sign asks you to take 253 AWAY, not pile it on."
+          },
+          {
+            "hundreds": 2,
+            "tens": 3,
+            "ones": 4,
+            "feedback": "Check the cubes: 6 − 3 = 3, not 4. Each place settles its own bill: 2 flats, 3 rods, 3 cubes."
+          }
+        ],
+        "missFeedback": "Subtract each place by itself: 4−2 flats, 8−5 rods, 6−3 cubes.",
+        "successFeedback": "233 — every place paid its own bill, no trading needed. Keep that trade idea ready: the next problem's ones come up short."
+      },
+      "predict": {
+        "prompt": "486 − 253, place by place: 4−2 flats, 8−5 rods, 6−3 cubes. Will any spot need to TRADE (top digit too small)?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — every top digit is big enough"
+          },
+          {
+            "id": "ones",
+            "label": "Yes — the cubes come up short"
+          },
+          {
+            "id": "tens",
+            "label": "Yes — the rods come up short"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Every top digit covers its bill — 6 ≥ 3, 8 ≥ 5, 4 ≥ 2 — so 233 reads straight off. The next one, 342 − 127, has 2 − 7 waiting in the ones: THAT's when a rod gets traded down."
+      },
+      "conceptTag": "pv1000-subtract-by-place",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents subtract by place.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for subtract by place must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines subtract by place."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-subtract-by-place",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another subtract-by-place problem.",
+      "conceptTag": "pv1000-subtract-by-place",
+      "explanationVariants": [
+        "Hundreds 500-200=300, tens 70-40=30, ones 9-5=4. Combine: 334.",
+        "Subtract each spot separately, then combine the differences."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "579 - 245 = ?",
+        "answer": 334,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 344,
+            "feedback": "Check each spot: hundreds 500-200=300, tens 70-40=30, ones 9-5=4. Combine: 334."
+          },
+          {
+            "value": 824,
+            "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 300+30+4=334."
+          }
+        ],
+        "fallbackFeedback": "300 + 30 + 4 = 334."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractByPlaceNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When a spot doesn't have enough to subtract, trade DOWN — 1 ten breaks into 10 ones, or 1 hundred breaks into 10 tens, giving you enough to subtract.",
+      "figure": "pv1000-trade-down"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Subtract with a trade-down needed.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "342 - 127 = ?",
+        "answer": 215,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 225,
+            "feedback": "The ones (2) aren't enough for 7 — trade 1 ten for 10 ones first: 12-7=5. Combine: 215."
+          },
+          {
+            "value": 469,
+            "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 200+10+5=215."
+          }
+        ],
+        "fallbackFeedback": "Trade 1 ten for 10 ones: ones become 12, tens become 3. 12-7=5, 3-2=1, 3-1=2. Combine: 200+10+5=215."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A trade-down can cascade too — if the tens spot is also short after trading, trade a hundred down into tens first.",
+      "figure": "pv1000-cascade-down"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Subtract with a cascading trade-down.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "402 - 168 = ?",
+        "answer": 234,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 266,
+            "feedback": "The tens spot is empty (0) — trade a hundred down into tens first, then trade a ten into ones. Combine carefully: 234."
+          },
+          {
+            "value": 570,
+            "feedback": "That adds instead of subtracting. The correct difference is 234."
+          }
+        ],
+        "fallbackFeedback": "402 - 168 = 234 (trading through the empty tens spot)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another single-trade-down problem.",
+      "conceptTag": "pv1000-subtract-trade",
+      "explanationVariants": [
+        "Ones (3) aren't enough for 8 — trade 1 ten for 10 ones: 13-8=5. Combine: 251.",
+        "Trade 1 ten for 10 ones when the ones spot is short."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "463 - 212 = ?",
+        "answer": 251,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 149,
+            "feedback": "That doesn't match trading correctly. Recompute: 463-212=251."
+          },
+          {
+            "value": 675,
+            "feedback": "That adds instead of subtracting. The correct difference is 251."
+          }
+        ],
+        "fallbackFeedback": "463 - 212 = 251."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A no-trade problem for confidence.",
+      "conceptTag": "pv1000-subtract-by-place",
+      "explanationVariants": [
+        "Hundreds 700-300=400, tens 60-20=40, ones 8-5=3. Combine: 443.",
+        "No trades needed — subtract each spot directly."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "768 - 325 = ?",
+        "answer": 443,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 453,
+            "feedback": "Check each spot: hundreds 700-300=400, tens 60-20=40, ones 8-5=3. Combine: 443."
+          },
+          {
+            "value": 1093,
+            "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 400+40+3=443."
+          }
+        ],
+        "fallbackFeedback": "400 + 40 + 3 = 443."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractByPlaceNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier trade-down problem.",
+      "conceptTag": "pv1000-subtract-trade",
+      "explanationVariants": [
+        "Ones (1) aren't enough for 4 — trade 1 ten for 10 ones: 11-4=7. Then combine: 217.",
+        "Trade 1 ten for 10 ones when the ones spot is short."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "351 - 134 = ?",
+        "answer": 217,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 223,
+            "feedback": "Recheck the trade: ones (1) aren't enough for 4, trade a ten. The correct difference is 217."
+          },
+          {
+            "value": 485,
+            "feedback": "That adds instead of subtracting. The correct difference is 217."
+          }
+        ],
+        "fallbackFeedback": "351 - 134 = 217."
+      },
+      "hints": [
+        "The ones spot (1) isn't enough for 4 — trade 1 ten for 10 ones.",
+        "Now ones are 11, tens are 4: 11-4=7, 4-3=1.",
+        "Hundreds: 3-1=2. Combine: 200+10+7=217."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Subtract by spot, trading a bigger spot down into a smaller one whenever a spot doesn't have enough.",
+      "takeaways": [
+        "Subtract hundreds, tens, and ones each on their own.",
+        "When a spot is too small, trade 1 of the next spot over into 10 of the smaller spot.",
+        "A trade-down can cascade through more than one spot, even across an empty spot."
+      ],
+      "teaser": "next: adding and subtracting in real situations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-subtract-by-place",
+      "concept": {
+        "id": "rem-psbp-c",
+        "kind": "concept",
+        "body": "Subtract by spot: hundreds with hundreds, tens with tens, ones with ones, then combine the differences. 486-253: 200+30+3=233."
+      },
+      "check": {
+        "id": "rem-psbp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-subtract-by-place",
+        "explanationVariants": [
+          "200+30+3=233.",
+          "Subtract each spot separately."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "486 - 253 = ?",
+          "answer": 233,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 239,
+              "feedback": "The ones are off: 6 − 3 = 3, not 9. That makes 233."
+            },
+            {
+              "value": 739,
+              "feedback": "Subtract, don't add: 233."
+            }
+          ],
+          "fallbackFeedback": "233."
+        }
+      }
+    },
+    {
+      "conceptTag": "pv1000-subtract-trade",
+      "concept": {
+        "id": "rem-pst2-c",
+        "kind": "concept",
+        "body": "When a spot doesn't have enough to subtract, trade 1 of the next spot over into 10 of the smaller spot. Ones (2) short for 7: trade 1 ten for 10 ones, now 12-7=5."
+      },
+      "check": {
+        "id": "rem-pst2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-subtract-trade",
+        "explanationVariants": [
+          "Trade 1 ten for 10 ones: 12-7=5. Combine: 215.",
+          "Trade down when a spot is too small."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "342 - 127 = ?",
+          "answer": 215,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 225,
+              "feedback": "After trading a ten to the ones, only 3 tens are left: 3 − 2 = 1 ten, giving 215."
+            },
+            {
+              "value": 469,
+              "feedback": "Subtract, don't add: 215."
+            }
+          ],
+          "fallbackFeedback": "215."
+        }
+      }
+    }
+  ]
+}

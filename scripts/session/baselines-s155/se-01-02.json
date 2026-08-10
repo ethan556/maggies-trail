@@ -1,0 +1,345 @@
+{
+  "id": "se-01-02",
+  "slug": "solving-by-graphing",
+  "title": "Solving by Graphing",
+  "courseId": "systems-equations",
+  "chapterId": "ch1-graphing",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "line-intercepts",
+      "body": "To solve a system **by graphing**: draw each line (start at its y-intercept, then step by its slope), and find where they **cross**. That crossing point is the solution — read off its x and y, then confirm by substitution."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Slide the point until it lands where both lines cross. That single shared point — on both lines at once — is the system's solution.",
+      "widget": {
+        "type": "systemsExplore",
+        "prompt": "Place the point where y = x and y = −x + 4 cross.",
+        "m1": 1,
+        "b1": 0,
+        "m2": -1,
+        "b2": 4,
+        "xMin": 0,
+        "xMax": 4,
+        "yMin": 0,
+        "yMax": 4,
+        "xStart": 0,
+        "yStart": 0,
+        "successFeedback": "That's it — (2, 2) is the one point on BOTH lines, so it makes y = x and y = −x + 4 true at the same time.",
+        "offLine1Feedback": "Your point isn't on the blue line y = x yet. A solution has to sit on both lines.",
+        "offLine2Feedback": "On y = x, but not on the orange line y = −x + 4. The solution is the single point they share."
+      },
+      "predict": {
+        "prompt": "Two lines with different slopes are on the grid. How many points can satisfy BOTH equations at once?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Exactly one"
+          },
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "many",
+            "label": "Every point on either line"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Lines with different slopes cross exactly once, so exactly one pair sits in both solution sets — the crossing point. Being on ONE line is not enough; the system demands both."
+      },
+      "conceptTag": "solve-by-graphing",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents solve by graphing.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for solve by graphing must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines solve by graphing."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "systems-equations:solve-by-graphing",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Where do they meet, left to right?",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Graph y = 2x − 1 and y = x + 1. What is the x-coordinate of the crossing?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's the y-coordinate at the crossing. The x-value where they meet is 2."
+          },
+          {
+            "value": 0,
+            "feedback": "Set 2x − 1 = x + 1: x = 2, not 0. The lines meet at x = 2."
+          }
+        ],
+        "fallbackFeedback": "Set 2x − 1 = x + 1, so x = 2."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the height there.",
+      "conceptTag": "solve-by-graphing",
+      "explanationVariants": [
+        "At x = 2, y = 2 + 1 = 3, so the lines cross at (2, 3).",
+        "Both lines reach y = 3 when x = 2: 2·2 − 1 = 3 and 2 + 1 = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2x − 1 and y = x + 1, what is the y-coordinate of the crossing?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the x-coordinate. At x = 2, y = 2 + 1 = 3."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is a y-intercept, not the crossing height. At x = 2, y = 3."
+          }
+        ],
+        "fallbackFeedback": "At x = 2, y = 2 + 1 = 3."
+      },
+      "variant": {
+        "gen": "a1-systems",
+        "form": "solve-by-graphing__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked example: **y = 2x** and **y = x + 3**. Plot both and they cross at **(3, 6)**. Check by substituting: 2·3 = 6 ✓ and 3 + 3 = 6 ✓. When the crossing lands on grid lines, graphing reads the solution right off the page.",
+      "figure": "se-graph-cross"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the solution point.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where do y = −x + 4 and y = 2x − 5 cross?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(3, 1)",
+            "correct": true,
+            "feedback": "Yes — −3 + 4 = 1 and 2·3 − 5 = 1, so they meet at (3, 1)."
+          },
+          {
+            "id": "b",
+            "label": "(1, 3)",
+            "feedback": "Coordinates are swapped. Setting the lines equal gives x = 3, y = 1: (3, 1)."
+          },
+          {
+            "id": "c",
+            "label": "(2, 2)",
+            "feedback": "Check: −2 + 4 = 2 but 2·2 − 5 = −1. They don't meet there; it's (3, 1)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Always **check the crossing** by substituting into both equations. A graph read by eye can land a little off, especially between grid lines; the substitution is what proves the point is exactly right.",
+      "figure": "se-check-crossing"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Find where these meet.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the x-coordinate where y = 3x − 4 and y = x + 2 cross?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the y-coordinate at the crossing. The x-value is 3."
+          },
+          {
+            "value": 0,
+            "feedback": "Set 3x − 4 = x + 2: 2x = 6, x = 3, not 0."
+          }
+        ],
+        "fallbackFeedback": "Set 3x − 4 = x + 2, so 2x = 6 and x = 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "And its height.",
+      "conceptTag": "solve-by-graphing",
+      "explanationVariants": [
+        "At x = 3, y = 3 + 2 = 5, so the crossing is (3, 5).",
+        "Both lines hit y = 5 at x = 3: 3·3 − 4 = 5 and 3 + 2 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 3x − 4 and y = x + 2, what is the y-coordinate of the crossing?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's the x-coordinate. At x = 3, y = 3 + 2 = 5."
+          },
+          {
+            "value": 7,
+            "feedback": "Check the height: at x = 3, y = 3 + 2 = 5, not 7."
+          }
+        ],
+        "fallbackFeedback": "At x = 3, y = 3 + 2 = 5."
+      },
+      "variant": {
+        "gen": "a1-systems",
+        "form": "solve-by-graphing__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more crossing.",
+      "conceptTag": "solve-by-graphing",
+      "explanationVariants": [
+        "Set x − 1 = −2x + 8: 3x = 9, x = 3, y = 2, so (3, 2).",
+        "They meet at (3, 2): 3 − 1 = 2 and −2·3 + 8 = 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where do y = x − 1 and y = −2x + 8 cross?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(3, 2)",
+            "correct": true,
+            "feedback": "Yes — 3 − 1 = 2 and −2·3 + 8 = 2, so they meet at (3, 2)."
+          },
+          {
+            "id": "b",
+            "label": "(2, 1)",
+            "feedback": "Check: 2 − 1 = 1 but −2·2 + 8 = 4. They don't meet there; it's (3, 2)."
+          },
+          {
+            "id": "c",
+            "label": "(3, 8)",
+            "feedback": "8 is the second line's y-intercept. At x = 3 the height is 2, so (3, 2)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-systems",
+        "form": "solve-by-graphing__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve this one by graphing.",
+      "conceptTag": "solve-by-graphing",
+      "explanationVariants": [
+        "Set 2x + 1 = −x + 7: 3x = 6, x = 2, y = 5, so the crossing is (2, 5).",
+        "They meet at (2, 5): 2·2 + 1 = 5 and −2 + 7 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2x + 1 and y = −x + 7, what is the y-coordinate of the crossing?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the x-coordinate. At x = 2, y = 2·2 + 1 = 5."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is a y-intercept, not the crossing height. At x = 2, y = 5."
+          }
+        ],
+        "fallbackFeedback": "Set 2x + 1 = −x + 7, so x = 2, then y = 5."
+      },
+      "hints": [
+        "The crossing is where the heights match: set 2x + 1 = −x + 7.",
+        "3x = 6, so x = 2.",
+        "Then y = 2·2 + 1 = 5."
+      ],
+      "variant": {
+        "gen": "a1-systems",
+        "form": "solve-by-graphing__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Graph both lines and read where they meet.",
+      "takeaways": [
+        "Draw each line from its y-intercept, stepping by its slope.",
+        "The crossing point is the solution — read its x and y.",
+        "Confirm the crossing by substituting into both equations."
+      ],
+      "teaser": "next: when a system has one, no, or infinitely many solutions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "solve-by-graphing",
+      "concept": {
+        "id": "rem-sbg-c",
+        "kind": "concept",
+        "body": "Graphing finds the crossing. For y = 2x − 1 and y = x + 1, set the heights equal: 2x − 1 = x + 1, so x = 2 and y = 3. The lines cross at (2, 3)."
+      },
+      "check": {
+        "id": "rem-sbg-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "solve-by-graphing",
+        "explanationVariants": [
+          "Set 2x − 1 = x + 1: x = 2, so the crossing's x-coordinate is 2.",
+          "Subtract x and add 1: x = 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the x-coordinate where y = 2x − 1 and y = x + 1 cross?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "That's the y-coordinate. The x-value is 2."
+            },
+            {
+              "value": 0,
+              "feedback": "2x − 1 = x + 1 gives x = 2, not 0."
+            }
+          ],
+          "fallbackFeedback": "Set 2x − 1 = x + 1, so x = 2."
+        }
+      }
+    }
+  ]
+}

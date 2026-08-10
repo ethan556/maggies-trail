@@ -1,0 +1,271 @@
+{
+  "id": "tm-05-01",
+  "slug": "volume-of-a-cylinder",
+  "title": "Volume of a Cylinder",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch5-volume-round-solids",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **cylinder** is a can: a circle stacked into a column. Its volume is the base circle's area times the height: **V = πr²h**. Because answers involve π, we leave them as a number times π (exact) unless asked to round.",
+      "figure": "round-solids"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute a cylinder volume.",
+      "widget": {
+        "type": "volumeBuilder",
+        "solid": "cylinder",
+        "targetVolume": 36,
+        "rMax": 6,
+        "rStart": 1,
+        "hMax": 6,
+        "hStart": 1,
+        "prompt": "Set the radius and height until the cylinder's volume reads 36π.",
+        "successFeedback": "36π. The base circle is πr² = 9π, and the height stacks four of them — that is all πr²h means: a base area, repeated up the height.",
+        "lowFeedback": "Still under 36π. Widening the radius moves the volume fastest, because r counts twice over.",
+        "highFeedback": "Over 36π. Ease the radius back — squaring makes it the strongest control."
+      },
+      "predict": {
+        "prompt": "A cylinder is a circle raised into a column (r = 3, h = 4). Its volume is…",
+        "options": [
+          {
+            "id": "base",
+            "label": "Base area × height: 9π × 4 = 36π"
+          },
+          {
+            "id": "wrap",
+            "label": "Circumference × height: 24π"
+          },
+          {
+            "id": "mix",
+            "label": "r × h × π = 12π"
+          }
+        ],
+        "outcomeId": "base",
+        "reveal": "Volume stacks the base: each unit of height adds another 9π slab, 36π in all. Circumference × height (24π) measures the LABEL wrapped around the can — its side surface, not its capacity."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The key is squaring the radius FIRST, then multiplying by the height. For r = 5, h = 2: r² = 25, then 25 × 2 = 50, so V = 50π. Squaring the radius is the step most people rush.",
+      "figure": "tm-cylinder-volume"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another cylinder.",
+      "conceptTag": "tm-cylinder-volume",
+      "explanationVariants": [
+        "V = πr²h = π × 5² × 2 = π × 25 × 2 = 50π.",
+        "Square the radius (25), times height (2): 50π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cylinder has radius 5 and height 2. What is its volume as a number times π?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That used 2r (10) instead of r² (25) — square the radius: 5² × 2 = 50."
+          },
+          {
+            "value": 100,
+            "feedback": "That squared 5 then multiplied by 2² — height isn't squared: 25 × 2 = 50."
+          }
+        ],
+        "fallbackFeedback": "V = πr²h = π × 25 × 2 = 50π, so the number is 50."
+      },
+      "variant": {
+        "gen": "g8-tm-cylinder-volume",
+        "form": "tmCylinderA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Round the answer.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cylinder's volume is 36π. Using π ≈ 3.14, what is the volume rounded to the nearest whole number?",
+        "answer": 113,
+        "tolerance": 1,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "That's the coefficient of π — multiply by 3.14: 36 × 3.14 ≈ 113."
+          },
+          {
+            "value": 108,
+            "feedback": "Use π ≈ 3.14, not 3: 36 × 3.14 ≈ 113."
+          }
+        ],
+        "fallbackFeedback": "36π ≈ 36 × 3.14 = 113.04, which rounds to 113."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A taller cylinder.",
+      "conceptTag": "tm-cylinder-volume",
+      "explanationVariants": [
+        "V = πr²h = π × 2² × 10 = π × 4 × 10 = 40π.",
+        "Square r (4), times height (10): 40π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cylinder has radius 2 and height 10. What is its volume as a number times π?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That used r × h without squaring — r² × h = 4 × 10 = 40."
+          },
+          {
+            "value": 400,
+            "feedback": "That squared the height too — only the radius is squared: 4 × 10 = 40."
+          }
+        ],
+        "fallbackFeedback": "V = πr²h = π × 4 × 10 = 40π, so the number is 40."
+      },
+      "variant": {
+        "gen": "g8-tm-cylinder-volume",
+        "form": "tmCylinderB"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What each part means.",
+      "conceptTag": "tm-cylinder-volume",
+      "explanationVariants": [
+        "In V = πr²h, the πr² is the circular BASE area, and h stacks it into a column.",
+        "πr² gives the base circle's area; multiplying by h gives the volume."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the cylinder formula V = πr²h, what does the πr² part represent?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The area of the circular base",
+            "correct": true,
+            "feedback": "Right — πr² is the base circle's area, and h stacks it up."
+          },
+          {
+            "id": "b",
+            "label": "The height of the cylinder",
+            "correct": false,
+            "feedback": "The height is h — πr² is the base circle's AREA."
+          },
+          {
+            "id": "c",
+            "label": "The distance around the circle",
+            "correct": false,
+            "feedback": "That's the circumference (2πr) — πr² is the base AREA."
+          },
+          {
+            "id": "d",
+            "label": "The total volume already",
+            "correct": false,
+            "feedback": "πr² is just the base area; you still multiply by h for the volume."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-cylinder-volume",
+        "form": "tmCylinderBase"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A real-world cylinder.",
+      "conceptTag": "tm-cylinder-volume",
+      "explanationVariants": [
+        "A tank with radius 4 and height 3: V = π × 4² × 3 = π × 16 × 3 = 48π.",
+        "Square r (16), times height (3): 48π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cylindrical water tank has radius 4 and height 3. What is its volume as a number times π?",
+        "answer": 48,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "That used 2r (8) instead of r² (16) — square the radius: 16 × 3 = 48."
+          },
+          {
+            "value": 144,
+            "feedback": "That squared the height too — only r is squared: 16 × 3 = 48."
+          }
+        ],
+        "fallbackFeedback": "V = πr²h = π × 4² × 3 = π × 16 × 3 = 48π, so the number is 48."
+      },
+      "hints": [
+        "Use V = πr²h with r = 4 and h = 3.",
+        "Square the radius first: 4² = 16. Then multiply by the height 3.",
+        "16 × 3 = 48, so V = 48π."
+      ],
+      "variant": {
+        "gen": "g8-tm-cylinder-volume",
+        "form": "tmCylinderTank"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A cylinder's volume is the base circle's area times the height: V = πr²h.",
+      "takeaways": [
+        "V = πr²h — square the radius, then multiply by the height.",
+        "πr² is the base circle's area; h stacks it into a column.",
+        "Leave answers as a number times π, or round using π ≈ 3.14."
+      ],
+      "teaser": "Next: cones, which are one-third of a cylinder."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-cylinder-volume",
+      "concept": {
+        "id": "rem-tm0501-c",
+        "kind": "concept",
+        "body": "A cylinder's volume is V = πr²h: the base circle's area (πr²) times the height. Square the radius first, then multiply by the height."
+      },
+      "check": {
+        "id": "rem-tm0501-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-cylinder-volume",
+        "explanationVariants": [
+          "V = πr²h = π × 3² × 2 = π × 9 × 2 = 18π.",
+          "Square r (9), times height (2): 18π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A cylinder has radius 3 and height 2. What is its volume as a number times π?",
+          "answer": 18,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "That used 2r (6) instead of r² (9) — square the radius: 9 × 2 = 18."
+            },
+            {
+              "value": 36,
+              "feedback": "That squared the height too — only r is squared: 9 × 2 = 18."
+            }
+          ],
+          "fallbackFeedback": "V = πr²h = π × 9 × 2 = 18π, so the number is 18."
+        }
+      }
+    }
+  ]
+}

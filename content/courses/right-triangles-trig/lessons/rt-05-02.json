@@ -1,0 +1,285 @@
+{
+  "id": "rt-05-02",
+  "slug": "law-of-sines",
+  "title": "The Law of Sines",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch5-relationships-and-laws",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "rt-law-sines",
+      "concept": {
+        "id": "rem-rt-law-sines-c",
+        "kind": "concept",
+        "body": "Law of Sines: a/sin A = b/sin B = c/sin C, where each side pairs with the angle OPPOSITE it. To use: (1) find a complete matched pair (side + its opposite angle); (2) if an angle is missing, subtract from 180°; (3) set the target's ratio equal to the pair's and solve. Keep sides glued to their own angles."
+      },
+      "check": {
+        "id": "rem-rt-law-sines-k",
+        "kind": "check",
+        "body": "One clean proportion.",
+        "conceptTag": "rt-law-sines",
+        "explanationVariants": [
+          "x/sin 30° = 10/sin 90° → x = 10 × 0.5/1 = 5.",
+          "The pair 10-with-90° anchors: x = 10·sin 30°/sin 90° = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A triangle has a side of 10 opposite a 90° angle. What side sits opposite the 30° angle? (sin 30° = 0.5, sin 90° = 1)",
+          "answer": 5,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "20 = 10 ÷ 0.5 flips the proportion — the smaller angle takes the SMALLER side: 10 × 0.5 = 5."
+            },
+            {
+              "value": 10,
+              "feedback": "10 copies the given side — but a 30° angle can't face as much side as the 90°. Scale by sin 30°: 5."
+            }
+          ],
+          "fallbackFeedback": "x = 10·sin 30°/sin 90° = 5 — the 30-60-90 short leg, rediscovered."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Drop the right angle and SOH-CAH-TOA loses its footing — no hypotenuse, no “opposite the right angle.” But a quieter pattern survives in EVERY triangle: each side, divided by the sine of its opposite angle, gives the same number. **a/sin A = b/sin B = c/sin C** — the Law of Sines.",
+      "figure": "oblique-triangle-laws"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Big angle, big side.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The Law of Sines makes precise an old intuition. Which one?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Larger angles sit opposite larger sides, in exact sine proportion",
+            "correct": true,
+            "feedback": "Since side = (common ratio) × sin(opposite angle), sides scale with the sines of their angles."
+          },
+          {
+            "id": "o2",
+            "label": "All three sides of a triangle are equal",
+            "correct": false,
+            "feedback": "Only equilateral triangles manage that. The law says sides are PROPORTIONAL to opposite sines — equal only when angles are."
+          },
+          {
+            "id": "o3",
+            "label": "The largest side equals the two smaller sides combined",
+            "correct": false,
+            "feedback": "That would flatten the triangle to a segment — the triangle inequality forbids it. The law ties each side to its opposite SINE."
+          },
+          {
+            "id": "o4",
+            "label": "Angles are proportional to the sides adjacent to them",
+            "correct": false,
+            "feedback": "The pairing runs OPPOSITE, not adjacent: each angle faces the side its sine governs."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Using it takes one matched **pair** — a side together with its opposite angle — plus one more piece. Know A = 40° with a = 12, and B = 65°: then b/sin 65° = 12/sin 40°, so b = 12·sin 65°/sin 40° ≈ 16.92. Keep each side glued to ITS angle; crossing the pairs flips the answer.",
+      "figure": "rt-law-sines"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One matched pair.",
+      "conceptTag": "rt-law-sines",
+      "explanationVariants": [
+        "b = 12·sin 65°/sin 40° ≈ 12 × 0.9063/0.6428 ≈ 16.92 — bigger than 12, as the bigger angle demands.",
+        "Set b/sin B = a/sin A and solve: b = a·sin B/sin A ≈ 16.92."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In triangle ABC: A = 40°, B = 65°, and side a = 12 (opposite A). Find side b (2 decimals).",
+        "answer": 16.92,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 8.51,
+            "feedback": "8.51 = 12·sin 40°/sin 65° crosses the pairs — and shrinks the side facing the BIGGER angle, backwards. b = 12·sin 65°/sin 40° ≈ 16.92."
+          },
+          {
+            "value": 10.88,
+            "feedback": "10.88 = 12·sin 65° multiplies but never divides by sin 40° — half the proportion. Finish it: ≈ 16.92."
+          },
+          {
+            "value": 18.67,
+            "feedback": "18.67 = 12/sin 40° is the common RATIO itself, before multiplying by sin 65°: × 0.9063 → ≈ 16.92."
+          }
+        ],
+        "fallbackFeedback": "b = 12·sin 65°/sin 40° ≈ 16.92."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-sines__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The third angle always rides free: angles sum to 180°, so C = 180 − 40 − 65 = 75° — and the same anchor pair prices side c too. One matched pair unlocks the whole triangle. Sanity check at the end: the biggest side must face the biggest angle.",
+      "figure": "rt-third-angle"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The free third.",
+      "widget": {
+        "type": "triangleAngleLab",
+        "prompt": "The triangle has A = 40° and B = 65°. Drag corner C until angle A reads the size of the remaining angle C.",
+        "fixedA": [
+          1,
+          1
+        ],
+        "fixedB": [
+          7,
+          1
+        ],
+        "startC": [
+          5,
+          5
+        ],
+        "targetAngleA": 75,
+        "tolerance": 3,
+        "gridMax": 8,
+        "requiredMoves": 4,
+        "successFeedback": "C = 75°, since 40 + 65 + 75 = 180. This matters before any Law of Sines work: the rule pairs each angle with the side opposite it, so the third angle has to be found first or the largest side has no angle to pair with.",
+        "targetFeedback": "Not there yet. A and B are 40° and 65°, and the three angles total 180°.",
+        "invariantFeedback": "Keep an eye on the total while dragging — it stays at 180°, which is what lets you find any angle from the other two."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Price the last side.",
+      "conceptTag": "rt-law-sines",
+      "explanationVariants": [
+        "c = 12·sin 75°/sin 40° ≈ 18.03 — the largest side, facing the largest angle (75°). ✓",
+        "Same anchor ratio 12/sin 40°, now scaled by sin 75°: ≈ 18.03."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Still A = 40°, a = 12, and now C = 75°. Find side c (2 decimals).",
+        "answer": 18.03,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 7.99,
+            "feedback": "7.99 = 12·sin 40°/sin 75° crosses the pairs again — the 75° sine belongs on TOP with side c: ≈ 18.03."
+          },
+          {
+            "value": 11.59,
+            "feedback": "11.59 = 12·sin 75° skips the division by sin 40° — the anchor pair funds the ratio: 12·sin 75°/sin 40° ≈ 18.03."
+          }
+        ],
+        "fallbackFeedback": "c = 12·sin 75°/sin 40° ≈ 18.03."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-sines__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What the law needs.",
+      "conceptTag": "rt-law-sines",
+      "explanationVariants": [
+        "The law is a proportion of side-angle PAIRS — without one complete pair, the common ratio has no value.",
+        "Three angles fix only the shape; a matched side-angle pair sets the scale."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which information is NOT enough for the Law of Sines to find a missing side?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "All three angles, but no sides",
+            "correct": true,
+            "feedback": "Angles alone give shape without size — every similar copy qualifies. The law needs one matched side-angle pair as an anchor."
+          },
+          {
+            "id": "o2",
+            "label": "Two angles and any one side",
+            "correct": false,
+            "feedback": "That's plenty: the third angle is free (180° sum), making the known side half of a matched pair."
+          },
+          {
+            "id": "o3",
+            "label": "A side, its opposite angle, and another angle",
+            "correct": false,
+            "feedback": "A complete pair plus one more angle is the textbook setup — fully solvable."
+          },
+          {
+            "id": "o4",
+            "label": "A side, its opposite angle, and another side",
+            "correct": false,
+            "feedback": "A pair plus a side also works (it finds the second side's angle) — the anchor pair is there."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-sines__mcq"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Across the river.",
+      "conceptTag": "rt-law-sines",
+      "hints": [
+        "The 60 m bank is side c, opposite the third angle C = 180 − 72 − 58 = 50° — there's your matched pair.",
+        "The distance from station A to the tree is side a... opposite angle A? Careful: it's opposite the 58° at station B.",
+        "d = 60·sin 58°/sin 50°."
+      ],
+      "explanationVariants": [
+        "C = 50° anchors the pair: d = 60·sin 58°/sin 50° ≈ 66.42 m.",
+        "The side from A faces B's 58°: scale the ratio 60/sin 50° by sin 58° ≈ 66.42 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Surveyors at A and B stand 60 m apart on a riverbank. A tree T sits across the river; angle A (∠TAB) = 72° and angle B (∠TBA) = 58°. Find the distance from A to the tree (2 decimals).",
+        "answer": 66.42,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 74.49,
+            "feedback": "74.49 = 60·sin 72°/sin 50° uses A's own angle on top — that computes the distance from station B (side BT faces ∠A). Side AT faces ∠B = 58°: ≈ 66.42."
+          },
+          {
+            "value": 54.2,
+            "feedback": "54.2 = 60·sin 50°/sin 58° flips the proportion, putting the anchor's sine on top. The unknown side's sine goes on top: 60·sin 58°/sin 50° ≈ 66.42."
+          }
+        ],
+        "fallbackFeedback": "C = 50°; AT = 60·sin 58°/sin 50° ≈ 66.42 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-sines__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Sines beyond the right angle.",
+      "takeaways": [
+        "a/sin A = b/sin B = c/sin C in EVERY triangle — sides scale with opposite sines.",
+        "One matched side-angle pair anchors the ratio; the 180° sum supplies missing angles.",
+        "Audit: biggest side faces biggest angle."
+      ],
+      "teaser": "Next: when you have two sides hugging an angle — or all three sides — the Law of Cosines."
+    }
+  ]
+}

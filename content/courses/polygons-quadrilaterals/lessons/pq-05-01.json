@@ -1,0 +1,357 @@
+{
+ "id": "pq-05-01",
+ "slug": "parallelogram-tests",
+ "title": "Proving a Parallelogram",
+ "courseId": "polygons-quadrilaterals",
+ "chapterId": "ch5-proving-and-placing",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "pq-para-tests",
+   "concept": {
+    "id": "rem-pq-para-tests-c",
+    "kind": "concept",
+    "body": "Four valid parallelogram tests: (1) both pairs of opposite sides congruent; (2) both pairs of opposite angles congruent; (3) diagonals bisect EACH OTHER (mutual); (4) ONE pair of opposite sides both congruent and parallel — the same pair must do both jobs. Mixed pairs (one pair congruent, the other parallel) fails: the isosceles trapezoid is the counterexample."
+   },
+   "check": {
+    "id": "rem-pq-para-tests-k",
+    "kind": "check",
+    "body": "Same pair or mixed?",
+    "conceptTag": "pq-para-tests",
+    "explanationVariants": [
+     "Same-pair congruent-and-parallel is valid test 4; the mixed version is defeated by the isosceles trapezoid.",
+     "The pair must carry BOTH jobs — that's what powers the SAS + CPCTC proof."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Which is a VALID parallelogram test?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "One pair of opposite sides is both congruent AND parallel",
+       "correct": true,
+       "feedback": "Test 4 — the same-pair condition. The diagonal splits it into SAS-congruent triangles, and CPCTC parallels the other pair."
+      },
+      {
+       "id": "o2",
+       "label": "One pair congruent, the other pair parallel",
+       "correct": false,
+       "feedback": "The isosceles trapezoid meets this and is no parallelogram — mixed pairs certify nothing."
+      },
+      {
+       "id": "o3",
+       "label": "One diagonal bisects the other",
+       "correct": false,
+       "feedback": "One-way bisection describes a kite. The valid test needs MUTUAL bisection."
+      },
+      {
+       "id": "o4",
+       "label": "All four sides congruent to each other's opposites... in one pair only",
+       "correct": false,
+       "feedback": "A single congruent pair alone (without its parallelism) is defeated by the isosceles trapezoid's legs."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Chapter 2 ran one direction: IF a parallelogram, THEN properties. Now reverse the arrows. Each property has a **converse test**: show a quadrilateral has both pairs of opposite sides congruent, or both pairs of opposite angles congruent, or diagonals that bisect each other — and it MUST be a parallelogram. Properties describe; tests certify.",
+   "figure": "parallelogram-congruent-triangles"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Properties vs tests.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What's the logical difference between a parallelogram PROPERTY and a parallelogram TEST?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A property flows FROM knowing it's a parallelogram; a test flows TOWARD that conclusion — converse directions",
+      "correct": true,
+      "feedback": "Same sentence, opposite arrows: property = parallelogram ⇒ fact; test = fact ⇒ parallelogram. Each converse needs its own proof."
+     },
+     {
+      "id": "o2",
+      "label": "They're identical statements",
+      "correct": false,
+      "feedback": "A statement and its converse can differ in truth — here both happen to hold, but only because each converse was separately proved."
+     },
+     {
+      "id": "o3",
+      "label": "Tests are approximate; properties are exact",
+      "correct": false,
+      "feedback": "Both are exact theorems — the difference is pure direction: describing a known parallelogram vs certifying an unknown quadrilateral."
+     },
+     {
+      "id": "o4",
+      "label": "Properties are for rectangles only",
+      "correct": false,
+      "feedback": "Chapter 2's properties covered ALL parallelograms — and each one's converse becomes a general-purpose test."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The workhorse tests: (1) both pairs of opposite sides congruent; (2) both pairs of opposite angles congruent; (3) diagonals bisect each other; (4) **one pair of opposite sides BOTH congruent and parallel** — the one-pair shortcut. Test 4's proof: the diagonal + alternate interior angles gives SAS, then CPCTC delivers the second parallel pair.",
+   "figure": "pq-parallelogram-tests"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Certify by diagonals.",
+   "conceptTag": "pq-para-tests",
+   "explanationVariants": [
+    "For the diagonals to bisect each other, AO must equal OC: x + 4 = 3x − 10 gives x = 7, so AO = 11.",
+    "Set the halves equal (that's the test's requirement) and solve: x = 7, AO = 7 + 4 = 11."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Quadrilateral ABCD has diagonals meeting at O, with AO = x + 4 and OC = 3x − 10. For what value of AO does the diagonal-bisection test apply (given BO = OD already)?",
+    "answer": 11,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "7 is x — the test needs the segment length: AO = x + 4 = 11."
+     },
+     {
+      "value": 22,
+      "feedback": "22 is the full diagonal AC after the test passes. AO alone is half: 11."
+     },
+     {
+      "value": 3,
+      "feedback": "3 solves x + 4 = 3x − ... incorrectly — collect terms: 14 = 2x, x = 7, AO = 11."
+     }
+    ],
+    "fallbackFeedback": "x + 4 = 3x − 10 → x = 7 → AO = 11 (and AC = 22)."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-tests__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "One tempting shortcut FAILS: “one pair of sides congruent, and the OTHER pair parallel.” The isosceles trapezoid from Chapter 4 defeats it — parallel bases, congruent legs, and definitely not a parallelogram. Test 4 works only because the SAME pair carries both jobs. Mixed pairs certify nothing.",
+   "figure": "pq-failing-shortcut"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The counterexample.",
+   "conceptTag": "pq-para-tests",
+   "explanationVariants": [
+    "An isosceles trapezoid has exactly that data — parallel bases, congruent legs — and only ONE parallel pair, so it's no parallelogram.",
+    "Chapter 4's isosceles trapezoid is the standing counterexample to the mixed-pairs shortcut."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "“One pair of opposite sides is parallel, and the OTHER pair is congruent.” Which figure proves this is NOT a valid parallelogram test?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "An isosceles trapezoid",
+      "correct": true,
+      "feedback": "Parallel bases + congruent legs, yet only one parallel pair — the data holds, the conclusion fails. Counterexample complete."
+     },
+     {
+      "id": "o2",
+      "label": "A square",
+      "correct": false,
+      "feedback": "A square IS a parallelogram — it can't witness the test failing. You need a figure with the data but WITHOUT parallelogram-hood."
+     },
+     {
+      "id": "o3",
+      "label": "A kite",
+      "correct": false,
+      "feedback": "A typical kite has NO parallel sides, so it doesn't even satisfy the test's data — it can't test the implication."
+     },
+     {
+      "id": "o4",
+      "label": "There is none — the test is valid",
+      "correct": false,
+      "feedback": "The isosceles trapezoid defeats it: bases parallel, legs congruent, not a parallelogram. Same-pair is what makes test 4 work."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-tests__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Pick the certified ones.",
+   "conceptTag": "pq-para-tests",
+   "explanationVariants": [
+    "Both diagonal-bisection (test 3) and same-pair congruent-and-parallel (test 4) certify; the mixed-pair claim does not.",
+    "Valid: tests 3 and 4. Invalid: the isosceles-trapezoid-shaped shortcut."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which single fact about quadrilateral PQRS certifies it is a parallelogram?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "PQ ≅ SR and PQ ∥ SR (the same pair, both jobs)",
+      "correct": true,
+      "feedback": "Test 4: one pair doing double duty. The diagonal + SAS + CPCTC proof makes the other pair parallel for free."
+     },
+     {
+      "id": "o2",
+      "label": "PQ ≅ SR and PS ∥ QR (mixed pairs)",
+      "correct": false,
+      "feedback": "Mixed pairs is the isosceles-trapezoid trap — congruent legs with the OTHER pair parallel certifies nothing."
+     },
+     {
+      "id": "o3",
+      "label": "Diagonal PR bisects diagonal QS (one-way)",
+      "correct": false,
+      "feedback": "One-way bisection is a KITE behavior — the test needs MUTUAL bisection, each diagonal cutting the other in half."
+     },
+     {
+      "id": "o4",
+      "label": "One pair of congruent angles",
+      "correct": false,
+      "feedback": "The angle test needs BOTH pairs of opposite angles congruent — a single pair leaves the shape loose."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-tests__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Coordinate-free thinking.",
+   "widget": {
+    "type": "coordinateProofLab",
+    "prompt": "The jig's two rods are the diagonals: equal in length, crossing at their midpoints. Inspect midpoints and distances, and move D until both conditions hold at once.",
+    "fixed": [
+     [
+      1,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "target": [
+     1,
+     5
+    ],
+    "start": [
+     5,
+     3
+    ],
+    "targetClaim": "rectangle",
+    "gridMin": 0,
+    "gridMax": 10,
+    "requiredEvidence": [
+     "midpoints",
+     "distances"
+    ],
+    "requiredMoves": 3,
+    "successFeedback": "A rectangle — and no coordinates were needed to predict it. Mutual bisection alone forces a parallelogram; adding equal diagonals is the extra condition that squares the corners. The jig holds those two facts in hardware, so the elastic has no other shape available to it.",
+    "positionFeedback": "D is not at (1, 5) yet. Check which condition is failing: if the midpoint dots are apart the rods are not crossing at their centres, and if the side lengths disagree the elastic is not even closing a parallelogram.",
+    "evidenceFeedback": "Inspect both midpoints AND distances, and move D a few times first. Either fact alone is too weak — bisection without equal diagonals gives a slanted parallelogram, and this claim needs both."
+   },
+   "predict": {
+    "prompt": "Two rods of EQUAL length are pinned so they cross at each other's exact midpoints. Elastic joins the four ends. The shape is always…",
+    "options": [
+     {
+      "id": "rect",
+      "label": "A rectangle"
+     },
+     {
+      "id": "rhombus",
+      "label": "A rhombus"
+     },
+     {
+      "id": "any",
+      "label": "Any parallelogram — it depends on the crossing angle"
+     }
+    ],
+    "outcomeId": "rect",
+    "reveal": "Always a rectangle. Crossing at the midpoints makes it a parallelogram; the rods being equal makes the diagonals congruent, and a parallelogram with congruent diagonals is a rectangle. The crossing angle changes how long and thin it is, never whether the corners are square."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Minimal repair.",
+   "conceptTag": "pq-para-tests",
+   "hints": [
+    "The builder has one pair congruent and the OTHER pair parallel — the invalid mix.",
+    "The cheapest valid upgrade keeps what's known and completes a real test.",
+    "Which single measurement converts the data into test 1, 3, or 4?"
+   ],
+   "explanationVariants": [
+    "Showing the PARALLEL pair is also congruent completes test 4 (same pair, both jobs) — one measurement.",
+    "Alternatively the other diagonal check would work, but measuring the parallel pair's lengths is the single-step repair."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A builder knows: AB ≅ CD, and AD ∥ BC. Which ONE additional measurement certifies a parallelogram?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Show AD ≅ BC — then the parallel pair is also congruent (test 4)",
+      "correct": true,
+      "feedback": "Now AD carries both jobs: congruent AND parallel. One clean measurement upgrades the invalid mix into a valid certificate."
+     },
+     {
+      "id": "o2",
+      "label": "Show AB ∥ AD",
+      "correct": false,
+      "feedback": "AB and AD are CONSECUTIVE sides — in a parallelogram they're never parallel (they meet at a vertex). That would break the shape, not certify it."
+     },
+     {
+      "id": "o3",
+      "label": "Measure one diagonal's length",
+      "correct": false,
+      "feedback": "A single diagonal length certifies nothing — the diagonal test needs both diagonals CUT AT MIDPOINTS, a different setup."
+     },
+     {
+      "id": "o4",
+      "label": "No single measurement can ever suffice",
+      "correct": false,
+      "feedback": "One does: AD ≅ BC turns the parallel pair into a congruent-AND-parallel pair — test 4 fires immediately."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-tests__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Reverse the arrows.",
+   "takeaways": [
+    "Tests: both side pairs ≅, both angle pairs ≅, diagonals mutually bisect, or ONE pair both ≅ and ∥.",
+    "The mixed-pairs shortcut fails — the isosceles trapezoid is the standing counterexample.",
+    "Equal rods crossing at midpoints = rectangle: tests stack with ch3 upgrades."
+   ],
+   "teaser": "Next: always, sometimes, or never — navigating the whole family tree."
+  }
+ ]
+}

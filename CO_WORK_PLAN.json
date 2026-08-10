@@ -1,0 +1,139 @@
+{
+  "session": "S208",
+  "controller": "fable",
+  "canonicalState": {
+    "readFrom": [
+      "HANDOVER_S208.md",
+      "SESSION207_EXECUTION_REPORT.md",
+      "SESSION207_CONTENT_CHANGE_LEDGER.md",
+      "PRODUCT_STATE.md",
+      "scripts/engine-capabilities.json"
+    ],
+    "baseline": {
+      "lessons": 1701,
+      "widgetTypes": 126,
+      "tests": "≈11,928 across 281 files, all green at S207 seal",
+      "hsRichMix": "23.7% (untouched until MMIP v1 stable)",
+      "contentFreeze": "no authored lesson content may change; hash proof against SESSION210_LESSON_HASHES.json (re-baselined S210: 2 authorized insertions, see SESSION210_CONTENT_CHANGE_LEDGER.md)"
+    },
+    "environment": {
+      "box": "2-core / 8 GB cloud container",
+      "trapA": "Playwright must reuse a production next start server on 127.0.0.1:3100; never let it spawn next dev",
+      "trapB": "run src/lib/variants.test.ts and src/lib/content.widgets.audit.test.ts solo",
+      "trapC": "never background a monolithic vitest run; foreground directory-scoped batches with --reporter=dot",
+      "qaSerialization": "one QA worker runs the full chain; implementation workers run ONLY targeted vitest on their own files"
+    }
+  },
+  "wave1": {
+    "goal": "MMIP v1 proof on solveBalance + reusable Representation Synchronization Graph + morph primitives + harness, then freeze APIs",
+    "tasks": [
+      {
+        "id": "O1",
+        "priority": "P0",
+        "model": "opus",
+        "scope": "solveBalance full bidirectional MMIP: tiles ↔ term controls ↔ symbolic equation editing from one canonical mathematical state",
+        "ownedFiles": [
+          "src/lib/mmip/solveBalanceModel.ts (new)",
+          "src/lib/mmip/mmipTypes.ts (new)",
+          "docs/MMIP_V1_API.md (new)"
+        ],
+        "sharedFilesNeeded": [
+          "src/components/widgets.tsx (WRITE LOCK — sole writer during window 1)",
+          "src/lib/schema.ts (additive only; no existing spec field may change meaning)"
+        ],
+        "dependencies": [],
+        "acceptance": [
+          "tile action → symbol updates; symbol edit → tiles update; single canonical state, no parallel truth sources",
+          "renderer/evaluator agreement provable in tests",
+          "breakability, undo, distribute strategies, inequality witnesses, term↔tile Spotlight all survive (existing solveBalance tests stay green unmodified)",
+          "keyboard + screen-reader state parity for every new affordance; touch targets ≥44px",
+          "no authored lesson wording changes; classic (non-MMIP) rendering byte-identical when feature not engaged",
+          "MMIP v1 API frozen and documented for S2/O2 consumption"
+        ],
+        "risk": "high"
+      },
+      {
+        "id": "O2",
+        "priority": "P0",
+        "model": "opus",
+        "scope": "Representation Synchronization Graph: reusable dependency architecture, proof on line/function family (graph ↔ equation ↔ table ↔ slope triangle), ≥2 representations editable",
+        "ownedFiles": [
+          "src/lib/mmip/repSyncGraph.ts (new)",
+          "src/lib/mmip/lineFamilyModel.ts (new)",
+          "src/lib/mmip/repSyncGraph.test.ts (new)"
+        ],
+        "sharedFilesNeeded": [
+          "NONE in phase 1 — pure module + tests; widgets.tsx wiring deferred to integration window after O1 releases lock"
+        ],
+        "dependencies": [],
+        "acceptance": [
+          "any node can be the interaction origin; propagation is acyclic per edit, deterministic, and stale-state-free",
+          "line family proof: slope/intercept/point/table-row edits all converge to one canonical model",
+          "unit tests derive expected values independently (search/recompute, not the module's own functions)",
+          "API compatible with O1's canonical-state contract (read O1's mmipTypes.ts before finalizing)"
+        ],
+        "risk": "high"
+      },
+      {
+        "id": "S1",
+        "priority": "P0",
+        "model": "sonnet",
+        "scope": "MMIP test harness: round-trip sync, stale-state, equivalent states, undo, keyboard parity, reduced motion, SR state, mobile, answer-leak, renderer/evaluator agreement",
+        "ownedFiles": [
+          "src/lib/mmip/mmipHarness.test.ts (new)",
+          "src/components/widgets.mmip.solveBalance.s208.test.tsx (new)"
+        ],
+        "sharedFilesNeeded": ["NONE — read-only on all existing files"],
+        "dependencies": ["reads O1's frozen API when available; starts with harness skeleton against existing solveBalance behavior"],
+        "acceptance": [
+          "expected mathematics derived independently of implementation",
+          "no existing test weakened; no timeout raised",
+          "harness covers both O1 (solveBalance) and O2 (repSyncGraph) surfaces"
+        ],
+        "risk": "medium"
+      },
+      {
+        "id": "S2",
+        "priority": "P0",
+        "model": "sonnet",
+        "scope": "Equation Morph prototype implementing motion semantics (join/leave/collapse/partition/branch/gather) against O1's frozen API",
+        "ownedFiles": [
+          "src/lib/mmip/equationMorph.ts (new)",
+          "src/lib/mmip/equationMorph.test.ts (new)"
+        ],
+        "sharedFilesNeeded": ["NONE — module + tests; wiring into SolveBalanceW is thin and done in the integration window"],
+        "dependencies": ["O1 API freeze"],
+        "acceptance": [
+          "each operation maps to its named motion semantic; no string crossfades",
+          "reduced-motion path preserves meaning (state change still legible)",
+          "pure/deterministic: morph plan is a pure function of (before-state, operation, after-state)"
+        ],
+        "risk": "medium"
+      },
+      {
+        "id": "GATE",
+        "priority": "P0",
+        "model": "opus+fable",
+        "scope": "Integration review + serialized QA chain + MMIP v1 freeze + package",
+        "ownedFiles": ["SESSION208_EXECUTION_REPORT.md", "SESSION208_CONTENT_CHANGE_LEDGER.md", "HANDOVER_S209.md"],
+        "dependencies": ["O1", "O2", "S1", "S2"],
+        "acceptance": ["full serialized gate chain green per HANDOVER_S208 §5", "hash proof 1701/1701", "fresh-extraction reprove"],
+        "risk": "medium"
+      }
+    ]
+  },
+  "fileLockTable": [
+    { "file": "src/components/widgets.tsx", "owner": "O1", "writeWindow": "wave1-window1", "dependents": ["S2 wiring", "O2 wiring", "integration"] },
+    { "file": "src/lib/schema.ts", "owner": "O1 (additive only)", "writeWindow": "wave1-window1", "dependents": ["all"] },
+    { "file": "src/lib/mmip/* (new dir)", "owner": "per-task ownedFiles above; no cross-writes", "writeWindow": "wave1", "dependents": [] },
+    { "file": "scripts/engine-capabilities.json", "owner": "FABLE ONLY after integration review", "writeWindow": "gate", "dependents": [] },
+    { "file": "content/**", "owner": "FROZEN — nobody", "writeWindow": "never in wave 1", "dependents": [] }
+  ],
+  "wave2Preview": "Frozen MMIP v1 propagates by isolated engine module: algebra workspace, function lab, quadratic lab, geometry, K-5, data, trig/matrices, calculus. Not started until wave-1 exit gate passes.",
+  "closedShortcuts": [
+    "no buildExpression rating inflation",
+    "no bulk numeric→exactNumberLab conversion",
+    "no steppedReveal manipulation claims",
+    "no C-class rating lifts without a genuinely responding model"
+  ]
+}

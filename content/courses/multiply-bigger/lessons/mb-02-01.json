@@ -1,0 +1,365 @@
+{
+  "id": "mb-02-01",
+  "slug": "factor-pairs",
+  "title": "Factor Pairs",
+  "courseId": "multiply-bigger",
+  "chapterId": "ch2-factors-multiples",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **factor** is a number that divides evenly — no leftovers. The easiest way to see factors: arrange that many tiles into a rectangle. 12 tiles make a 3×4 rectangle with none left over, so 3 and 4 are factors of 12. Every rectangle you can build hands you a **factor pair**.",
+      "figure": "mb-factor-pairs"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Which rectangles use exactly 12 tiles?",
+      "conceptTag": "factors",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every rectangle that uses EXACTLY 12 tiles with none left over.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "r34",
+            "x": 20,
+            "y": 30,
+            "label": "3 by 4",
+            "icon": "3×4",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r26",
+            "x": 50,
+            "y": 30,
+            "label": "2 by 6",
+            "icon": "2×6",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r55",
+            "x": 80,
+            "y": 30,
+            "label": "5 by 5",
+            "icon": "5×5",
+            "count": 1,
+            "feedback": "5×5 = 25 tiles, not 12. A 5-row rectangle of 12 would leave 2 tiles over — so 5 isn't a factor of 12."
+          },
+          {
+            "id": "r112",
+            "x": 35,
+            "y": 75,
+            "label": "1 by 12",
+            "icon": "1×12",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r35",
+            "x": 70,
+            "y": 75,
+            "label": "3 by 5",
+            "icon": "3×5",
+            "count": 1,
+            "feedback": "3×5 = 15 tiles. For 12, a 3-row rectangle needs 4 per row (3×4), not 5."
+          }
+        ],
+        "missFeedback": "Only rectangles whose two sides MULTIPLY to 12 use exactly 12 tiles.",
+        "successFeedback": "1×12, 2×6, and 3×4 all make 12 — so 12's factors so far are 1, 2, 3, 4, 6, 12."
+      },
+      "predict": {
+        "prompt": "Two DIFFERENT rectangles can both use exactly 12 tiles with none left over — true or false?",
+        "options": [
+          {
+            "id": "true",
+            "label": "True"
+          },
+          {
+            "id": "false",
+            "label": "False — only one shape fits 12"
+          }
+        ],
+        "outcomeId": "true",
+        "reveal": "12 breaks into more than one factor pair, and every pair is its own rectangle — the same total, several honest shapes."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents factors.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for factors must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines factors."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiply-bigger:factors",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Is it a factor?",
+      "conceptTag": "factors",
+      "explanationVariants": [
+        "20 ÷ 4 = 5 with nothing left over, so 4 is a factor of 20 (a 4×5 rectangle works).",
+        "4 divides 20 evenly — the 4-row rectangle fills exactly, no leftover tiles."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is 4 a factor of 20?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — 20 ÷ 4 = 5 with no leftover (a 4×5 rectangle)",
+            "correct": true,
+            "feedback": "4 divides 20 evenly into 5 — a clean rectangle, so 4 is a factor."
+          },
+          {
+            "id": "b",
+            "label": "No — 4 is smaller than 20",
+            "feedback": "Being smaller doesn't disqualify it — what matters is dividing evenly. 20 ÷ 4 = 5, no leftover, so yes."
+          },
+          {
+            "id": "c",
+            "label": "No — only 20 and 1 are factors",
+            "feedback": "Those are two factors, but 20 has more: 2, 4, 5, 10 all divide it evenly. 20 ÷ 4 = 5 ✓."
+          },
+          {
+            "id": "d",
+            "label": "Only if you count the remainder",
+            "feedback": "A factor leaves NO remainder — and 20 ÷ 4 has none. That clean fit is exactly what makes 4 a factor."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsMcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To find ALL of a number's factors, hunt in **pairs**, climbing from 1: 1×24, 2×12, 3×8, 4×6… When the two numbers in a pair meet or cross (here after 4×6, since 5 doesn't divide 24 and 6×4 repeats), you've found them all. Climbing in order guarantees you miss none.",
+      "figure": "mb-factor-pairs"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Complete the pair.",
+      "conceptTag": "factors",
+      "explanationVariants": [
+        "6 pairs with the number that multiplies by 6 to give 18: 18 ÷ 6 = 3.",
+        "6 × ? = 18, so the partner is 3 (a 6×3 rectangle)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One factor pair of 18 is 6 and ___. What number completes the pair?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is 18 − 6 — but factor PAIRS multiply, not add. 6 × ? = 18 means ? = 18 ÷ 6 = 3."
+          },
+          {
+            "value": 108,
+            "feedback": "108 is 18 × 6 — too big. The partner multiplies WITH 6 to make 18: 18 ÷ 6 = 3."
+          }
+        ],
+        "fallbackFeedback": "6 times what equals 18? Divide: 18 ÷ 6."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order 16's factor pairs.",
+      "conceptTag": "factors",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put 16's factor pairs in order, starting from the one with the SMALLEST first number.",
+        "items": [
+          {
+            "id": "p44",
+            "label": "4 × 4"
+          },
+          {
+            "id": "p116",
+            "label": "1 × 16"
+          },
+          {
+            "id": "p28",
+            "label": "2 × 8"
+          }
+        ],
+        "correctOrder": [
+          "p116",
+          "p28",
+          "p44"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "p44",
+            "second": "p116",
+            "feedback": "Climb from the smallest first number: 1×16 starts the list, and 4×4 (where the pair meets) ends it."
+          }
+        ],
+        "missFeedback": "Order by the smaller number in each pair: 1, then 2, then 4 — and 4×4 is where the pair meets, so the list stops.",
+        "successFeedback": "1×16, 2×8, 4×4 — and since 4×4 meets in the middle, those are ALL of 16's factors: 1, 2, 4, 8, 16."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When do you stop hunting?",
+      "conceptTag": "factors",
+      "explanationVariants": [
+        "You've found every factor once the pair's two numbers meet or cross — past that, pairs just repeat in reverse.",
+        "After 5×6 for 30, the next try (6×5) repeats — so meeting-or-crossing is the stop signal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Hunting factor pairs of 30 by climbing 1×30, 2×15, 3×10, 5×6… when do you know you've found them all?",
+        "options": [
+          {
+            "id": "a",
+            "label": "When the pair's numbers meet or cross (6 would just repeat 5×6)",
+            "correct": true,
+            "feedback": "Once the two sides meet or pass each other, every remaining pair is one you already have, reversed."
+          },
+          {
+            "id": "b",
+            "label": "When you reach 30",
+            "feedback": "Climbing all the way to 30 is unnecessary — pairs repeat once the numbers cross near the middle (around 5×6 for 30)."
+          },
+          {
+            "id": "c",
+            "label": "After exactly 5 pairs, always",
+            "feedback": "The count varies by number. The real signal is the pair's two numbers meeting or crossing, not a fixed count."
+          },
+          {
+            "id": "d",
+            "label": "You can never be sure you found them all",
+            "feedback": "You can be certain: climbing in order and stopping when the pair crosses guarantees a complete list."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The class-photo arrangement.",
+      "conceptTag": "factors",
+      "hints": [
+        "Each arrangement is a rectangle: rows × kids-per-row = 24, no one left out.",
+        "Hunt factor pairs of 24 climbing from 1: 1×24, 2×12, 3×8, 4×6.",
+        "Count how many DIFFERENT rectangles that is."
+      ],
+      "explanationVariants": [
+        "24's factor pairs are 1×24, 2×12, 3×8, 4×6 — after 4×6 the numbers cross (5 doesn't divide 24), so there are 4 different rectangular arrangements.",
+        "Climbing in order gives exactly four pairs before they cross: 4 ways to arrange 24 kids in equal rows."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A teacher arranges 24 kids into equal rows with nobody left out. How many DIFFERENT rectangular arrangements are possible (counting e.g. 3×8 and 8×3 as the same rectangle)?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "arrangements",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 counted every factor of 24 (1,2,3,4,6,8,12,24). But each RECTANGLE uses a PAIR, and 3×8 = 8×3 — so 8 factors make 4 pairs."
+          },
+          {
+            "value": 6,
+            "feedback": "6 may have slipped in a non-factor. 24's pairs are exactly 1×24, 2×12, 3×8, 4×6 — four rectangles (5 and 7 don't divide 24)."
+          }
+        ],
+        "fallbackFeedback": "List the factor PAIRS of 24 climbing from 1, and count the pairs."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbFactorsNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Factors, found by rectangle.",
+      "takeaways": [
+        "A factor divides evenly — it makes a clean rectangle with no leftover tiles.",
+        "Hunt factors in pairs, climbing from 1; stop when the pair meets or crosses.",
+        "Each rectangle is one factor pair (n×m and m×n are the same rectangle)."
+      ],
+      "teaser": "next: multiples — the landing spots when you skip-count."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "factors",
+      "concept": {
+        "id": "rem-fa-c",
+        "kind": "concept",
+        "body": "Quick rewind. A factor makes a **clean rectangle** — no tiles left over. To test if 3 is a factor of 15, try to build a 3-row rectangle from 15 tiles: 3 rows of 5 fills exactly (3×5 = 15), so yes. Leftover tiles would mean 'not a factor.'"
+      },
+      "check": {
+        "id": "rem-fa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "factors",
+        "explanationVariants": [
+          "15 ÷ 3 = 5 with no leftover, so 3 is a factor.",
+          "3 rows of 5 fills 15 exactly — a clean rectangle, so 3 is a factor."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Is 3 a factor of 15?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Yes — 15 ÷ 3 = 5, no leftover",
+              "correct": true,
+              "feedback": "A clean 3×5 rectangle — 3 is a factor."
+            },
+            {
+              "id": "b",
+              "label": "No",
+              "feedback": "15 ÷ 3 = 5 exactly, no tiles left over — so 3 IS a factor of 15."
+            },
+            {
+              "id": "c",
+              "label": "Only with a remainder of 1",
+              "feedback": "There's no remainder: 3 × 5 = 15 exactly. 3 is a clean factor."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

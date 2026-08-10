@@ -1,0 +1,313 @@
+{
+  "id": "cr-05-03",
+  "slug": "cyclic-quadrilaterals",
+  "title": "Cyclic Quadrilaterals",
+  "courseId": "circle-theorems",
+  "chapterId": "ch5-arcs-sectors-cyclic",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-cyclic-quad",
+      "concept": {
+        "id": "rem-cr-cyclic-quad-c",
+        "kind": "concept",
+        "body": "A cyclic quadrilateral has all four vertices on one circle, and its OPPOSITE angles are supplementary (each pair halves two arcs that tile the full 360°). The converse also holds, making the supplement test a complete membership check. Rectangles, squares, and isosceles trapezoids always pass; other parallelograms and kites generally fail."
+      },
+      "check": {
+        "id": "rem-cr-cyclic-quad-k",
+        "kind": "check",
+        "body": "One supplement.",
+        "conceptTag": "cr-cyclic-quad",
+        "explanationVariants": [
+          "180 − 70 = 110°.",
+          "Cyclic opposites supplement: 110°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Cyclic quadrilateral, one angle 70°. Its opposite angle = ?",
+          "answer": 110,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 70,
+              "feedback": "70 copies — the opposite angle supplements: 110°."
+            },
+            {
+              "value": 290,
+              "feedback": "290 = 360 − 70 overshoots — the pair shares 180: 110°."
+            }
+          ],
+          "fallbackFeedback": "180 − 70 = 110°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **cyclic quadrilateral** has all four vertices on one circle. Its signature: **opposite angles are supplementary.** Why: opposite angles are inscribed angles opening onto complementary arcs — the two arcs together make the whole 360°, so the two angles halve it: 180° between them.",
+      "figure": "inscribed-angle-halves"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The supplement.",
+      "conceptTag": "cr-cyclic-quad",
+      "explanationVariants": [
+        "Opposite angles of a cyclic quadrilateral sum to 180: C = 180 − 95 = 85°.",
+        "Supplementary pair: 85°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Cyclic quadrilateral ABCD has angle A = 95°. Find the opposite angle C.",
+        "answer": 85,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 95,
+            "feedback": "95° copies A — opposite angles SUPPLEMENT in a cyclic quadrilateral: 180 − 95 = 85°."
+          },
+          {
+            "value": 265,
+            "feedback": "265 = 360 − 95 charges A against the whole circle — the pair shares only 180: 85°."
+          },
+          {
+            "value": 47.5,
+            "feedback": "47.5 halves — the relationship is a supplement, not a halving: 85°."
+          }
+        ],
+        "fallbackFeedback": "180 − 95 = 85°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-cyclic-quad__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The proof in one line: angle A halves arc BCD, angle C halves arc DAB, and those arcs tile the whole circle — A + C = ½(360) = 180. The CONVERSE holds too: if a quadrilateral's opposite angles are supplementary, a circle passes through all four vertices. Supplementarity is the entrance ticket.",
+      "figure": "cr-cyclic-quad"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ticket check.",
+      "conceptTag": "cr-cyclic-quad",
+      "explanationVariants": [
+        "Check a supplement: 88 + 92 = 180 ✓ — the converse admits it to a circle.",
+        "Opposite pairs 88/92 and 105/75 both hit 180: cyclic."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A quadrilateral has consecutive angles 88°, 105°, 92°, 75°. Is it cyclic?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — opposite pairs (88, 92) and (105, 75) each sum to 180°",
+            "correct": true,
+            "feedback": "Both supplements check, so the converse seats all four vertices on one circle."
+          },
+          {
+            "id": "o2",
+            "label": "No — the angles aren't all equal",
+            "correct": false,
+            "feedback": "Equality isn't required (that's a rectangle's privilege) — SUPPLEMENTARY opposite pairs are, and both pairs pass: cyclic."
+          },
+          {
+            "id": "o3",
+            "label": "No — 88 + 105 ≠ 180",
+            "correct": false,
+            "feedback": "88 and 105 are CONSECUTIVE — the test pairs OPPOSITE angles: 88 + 92 = 180 and 105 + 75 = 180. Cyclic."
+          },
+          {
+            "id": "o4",
+            "label": "Cannot tell from angles alone",
+            "correct": false,
+            "feedback": "For this question angles suffice — the supplement test is a full characterization (both directions)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-cyclic-quad__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which specials are always cyclic?",
+      "conceptTag": "cr-cyclic-quad",
+      "explanationVariants": [
+        "A quadrilateral is cyclic iff opposite angles supplement. Rectangles: 90 + 90 = 180 always. General parallelograms: opposite angles are EQUAL, so they'd each need to be 90.",
+        "Rectangles (and squares) pass automatically; isosceles trapezoids do too; other parallelograms fail."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "From the quadrilateral course's cast, which is ALWAYS cyclic?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The rectangle — every angle 90°, so opposite pairs always hit 180°",
+            "correct": true,
+            "feedback": "Rectangles (squares included) pass the supplement test automatically — their circumscribed circle's center is the diagonals' crossing, with the congruent diagonals as diameters."
+          },
+          {
+            "id": "o2",
+            "label": "Every parallelogram",
+            "correct": false,
+            "feedback": "Parallelograms make opposite angles EQUAL — equal AND supplementary forces 90°, so only the rectangles among them are cyclic."
+          },
+          {
+            "id": "o3",
+            "label": "Every kite",
+            "correct": false,
+            "feedback": "A kite is cyclic only when its two side-angles are right — generic kites fail the supplement test."
+          },
+          {
+            "id": "o4",
+            "label": "The general trapezoid",
+            "correct": false,
+            "feedback": "Only the ISOSCELES trapezoid is always cyclic (its base-angle pairs supplement across the parallel sides) — generic trapezoids fail."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-cyclic-quad__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two opposite corners, one circle, one constraint.",
+      "widget": {
+        "type": "circleAngleExplore",
+        "mode": "cyclic",
+        "targetAngle": 110,
+        "startArc": 80,
+        "prompt": "Make the OPPOSITE angle read 110°. Watch the two angles as you drag: they are locked together.",
+        "successFeedback": "An arc of 140° puts 70° at P, and the opposite corner takes the rest of the circle: 180 − 70 = 110°. The two arcs make a full 360°, so the two angles must make 180° — always, whatever shape the quadrilateral takes.",
+        "lowFeedback": "The opposite angle is still under 110°. It is 180° minus the angle at P, so shrinking the arc raises it.",
+        "highFeedback": "The opposite angle has gone past 110°. Opening the arc raises the angle at P, which lowers its opposite."
+      },
+      "predict": {
+        "prompt": "You'll drag the arc bigger, growing one angle of the cyclic quadrilateral. Its OPPOSITE angle will…",
+        "options": [
+          {
+            "id": "shrink",
+            "label": "Shrink, keeping the sum at 180°"
+          },
+          {
+            "id": "grow",
+            "label": "Grow along with it"
+          },
+          {
+            "id": "stay",
+            "label": "Stay exactly the same"
+          }
+        ],
+        "outcomeId": "shrink",
+        "reveal": "Opposite angles watch complementary arcs — one sees an arc, the other sees the REST of the circle, and those two arcs always total 360°. Halve each and the angles are locked at 180° together: one grows, the other must give way."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move points on a circle while arc, central-angle, and inscribed-angle measures update together.",
+        "invariants": [
+          "central-angle-equals-intercepted-arc",
+          "inscribed-angle-half-intercepted-arc"
+        ],
+        "misconceptions": [
+          "inscribed-angle-equals-arc",
+          "vertex-location-irrelevant"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-cyclic-quad"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "One angle rules them all.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cyclic quadrilateral has one angle of 117°. Its opposite angle = ?",
+        "answer": 63,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 117,
+            "feedback": "117 copies — cyclic opposites SUPPLEMENT: 180 − 117 = 63°."
+          },
+          {
+            "value": 243,
+            "feedback": "243 = 360 − 117 uses the full circle — the opposite pair shares 180°: 63°."
+          }
+        ],
+        "fallbackFeedback": "180 − 117 = 63°."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Algebra on the circle.",
+      "conceptTag": "cr-cyclic-quad",
+      "hints": [
+        "Opposite angles A and C supplement: 2x + 3x = 180.",
+        "Solve for x first.",
+        "Then evaluate angle C = 3x."
+      ],
+      "explanationVariants": [
+        "5x = 180 gives x = 36, so C = 3(36) = 108° (and A = 72°; 72 + 108 = 180 ✓).",
+        "x = 36; C = 108°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In cyclic quadrilateral ABCD, angle A = 2x and its opposite angle C = 3x. Find angle C in degrees.",
+        "answer": 108,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "72° = 2x is angle A — the question asks C = 3x = 108°."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is x itself — evaluate C = 3x = 108°."
+          },
+          {
+            "value": 90,
+            "feedback": "90° assumes a rectangle — the supplement equation 5x = 180 gives x = 36, C = 108°."
+          }
+        ],
+        "fallbackFeedback": "2x + 3x = 180 ⇒ x = 36 ⇒ C = 108°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-cyclic-quad__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Four corners, one circle.",
+      "takeaways": [
+        "Cyclic quadrilateral: opposite angles supplementary — they halve complementary arcs of the full 360°.",
+        "The converse holds: supplementary opposite pairs guarantee a circumscribing circle.",
+        "Always cyclic from the quadrilateral cast: rectangles, squares, isosceles trapezoids; parallelograms only when they're rectangles."
+      ],
+      "teaser": "That closes the circle course — angles, chords, tangents, powers, and the arcs that price them all."
+    }
+  ]
+}

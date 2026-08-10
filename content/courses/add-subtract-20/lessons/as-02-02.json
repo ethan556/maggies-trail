@@ -1,0 +1,335 @@
+{
+  "id": "as-02-02",
+  "slug": "split-to-make-ten",
+  "title": "Split to Make Ten",
+  "courseId": "add-subtract-20",
+  "chapterId": "ch2-making-ten",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "make-ten-bridge",
+      "body": "To add 8 + 5, **split** the 5. Give 8 what it needs to make ten — that's 2. Then 3 is left.",
+      "narration": "To add eight plus five, split the five. Give eight what it needs to make ten, that's two. Then three is left."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Fill 8 up to ten.",
+      "conceptTag": "make-ten-first",
+      "widget": {
+        "type": "tenFrame",
+        "prompt": "8 dots are here. Tap to add just enough to make 10.",
+        "target": 10,
+        "preFilled": 8,
+        "addColor": "tangerine",
+        "commonCounts": [
+          {
+            "count": 9,
+            "feedback": "One more cell is still empty. 8 needs 2 to make ten."
+          }
+        ],
+        "missFeedback": "8 needs 2 more to fill the ten-frame.",
+        "successFeedback": "8 and 2 makes ten — now 3 of the 5 are left!"
+      },
+      "predict": {
+        "prompt": "6 needed 4 dots to make ten. Now 8 dots are here — will 8 need MORE or FEWER dots than 6 did?",
+        "options": [
+          {
+            "id": "fewer",
+            "label": "Fewer — 8 is closer to ten"
+          },
+          {
+            "id": "more",
+            "label": "More"
+          },
+          {
+            "id": "same",
+            "label": "The same number"
+          }
+        ],
+        "outcomeId": "fewer",
+        "reveal": "The fuller the frame, the smaller the gap — 8 sits closer to ten than 6 did, so it takes fewer dots to finish."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents make ten first.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for make ten first must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines make ten first."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-20:make-ten-first",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "How many are left?",
+      "conceptTag": "make-ten-first",
+      "explanationVariants": [
+        "You gave 2 of the 5 to make ten. 5 take away 2 leaves 3.",
+        "The 5 splits into 2 (to fill ten) and 3 (left over)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 took 2 from the 5 to make ten. How many of the 5 are LEFT?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That added 5 and 2. You gave 2 AWAY, so count what's left: 5 − 2 = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "That's the amount you gave to make ten. What stays behind is 5 − 2 = 3."
+          }
+        ],
+        "fallbackFeedback": "The 5 splits into 2 and 3. After giving 2, there are 3 left."
+      },
+      "hints": [
+        "The 5 splits in two parts.",
+        "One part, 2, filled the ten.",
+        "5 − 2 = the leftover."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "MakeTenFirstNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Now add the leftover to ten. 10 and 3 more is **13**. So 8 + 5 = 13!",
+      "narration": "Now add the leftover to ten. Ten and three more is thirteen. So eight plus five equals thirteen.",
+      "figure": "as-make-ten-13"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add the leftover.",
+      "conceptTag": "make-ten-first",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "You made a ten. Now hop the 3 leftover. Start at 10, hop 3.",
+        "min": 5,
+        "max": 15,
+        "start": 10,
+        "hop": 1,
+        "hops": 3,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 12,
+            "feedback": "That's 2 hops. One more: 11, 12, 13."
+          },
+          {
+            "value": 14,
+            "feedback": "That's 4 hops. Only hop the 3 leftover: 11, 12, 13."
+          }
+        ],
+        "missFeedback": "From 10, hop the 3 leftover: 11, 12, 13.",
+        "successFeedback": "10 and 3 lands on 13 — that's 8 + 5!"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents make ten first.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for make ten first must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines make ten first."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-20:make-ten-first",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read the teen.",
+      "conceptTag": "make-ten-first",
+      "explanationVariants": [
+        "10 and 3 more is 13 — one ten and three ones.",
+        "A ten plus 3 ones is written 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "10 + 3 = ?",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That added just 1 and 3. Don't drop the ten: 10 + 3 = 13."
+          },
+          {
+            "value": 30,
+            "feedback": "That's 10 threes. Here you ADD: 10 + 3 = 13."
+          }
+        ],
+        "fallbackFeedback": "A ten and 3 ones is 13."
+      },
+      "hints": [
+        "Keep the whole ten.",
+        "Ten, then 3 more.",
+        "1 ten and 3 ones."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "MakeTenFirstNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Split it right.",
+      "conceptTag": "make-ten-first",
+      "explanationVariants": [
+        "8 needs 2 to make ten, so the 5 splits into 2 and 3.",
+        "Fill the ten first (2), and the rest of the 5 is 3: split 2 and 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To add 8 + 5 by making ten, how do you split the 5?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Into 2 and 3",
+            "correct": true,
+            "feedback": "Yes — 2 fills 8 up to ten, and 3 is left."
+          },
+          {
+            "id": "b",
+            "label": "Into 1 and 4",
+            "feedback": "That gives 8 only 1, reaching 9 — not ten. 8 needs 2, so split 2 and 3."
+          },
+          {
+            "id": "c",
+            "label": "Into 5 and 0",
+            "feedback": "That gives nothing to make ten. 8 needs 2 first, so split the 5 into 2 and 3."
+          }
+        ]
+      },
+      "hints": [
+        "How much does 8 need for ten?",
+        "It needs 2.",
+        "So the 5 splits into 2 and the rest."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "MakeTenFirstMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Your turn to bridge.",
+      "conceptTag": "make-ten-first",
+      "explanationVariants": [
+        "9 needs 1 to make ten; the 4 splits into 1 and 3; 10 + 3 = 13.",
+        "Fill 9 to ten with 1, and 3 of the 4 are left: 10 and 3 is 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 + 4 = ? (Make ten: 9 needs 1, then add what's left.)",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "9 needs only 1 to make ten, so 3 are left — not 4. 10 + 3 = 13."
+          },
+          {
+            "value": 12,
+            "feedback": "One short — after the ten there are 3 left: 10 + 3 = 13."
+          }
+        ],
+        "fallbackFeedback": "9 + 1 = 10, then 3 of the 4 are left: 10 + 3 = 13."
+      },
+      "hints": [
+        "How much does 9 need for ten?",
+        "Just 1, leaving 3 of the 4.",
+        "10 + 3 = 13."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "MakeTenFirstNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You bridged ten!",
+      "takeaways": [
+        "Split the second number to fill the first up to ten.",
+        "Add the leftover to ten to get a teen number.",
+        "8 + 5 = 10 + 3 = 13."
+      ],
+      "teaser": "next: make ten with lots of different sums."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "make-ten-first",
+      "concept": {
+        "id": "rem-mf-c",
+        "kind": "concept",
+        "body": "Slow it down. For 8 + 5: 8 needs 2 to make ten. The 5 splits into 2 and 3. Ten and 3 is 13.",
+        "narration": "For eight plus five: eight needs two to make ten. The five splits into two and three. Ten and three is thirteen."
+      },
+      "check": {
+        "id": "rem-mf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "make-ten-first",
+        "explanationVariants": [
+          "8 needs 2 to reach ten — that's how much of the 5 goes first.",
+          "To fill 8 up to ten, add 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many does 8 need to make ten?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "8 + 3 = 11 — too many. 8 needs just 2 for ten."
+            },
+            {
+              "value": 1,
+              "feedback": "8 + 1 = 9 — one short. 8 needs 2 for ten."
+            }
+          ],
+          "fallbackFeedback": "Count empty cells after 8: two. 8 needs 2."
+        }
+      }
+    }
+  ]
+}

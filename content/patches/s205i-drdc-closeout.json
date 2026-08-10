@@ -1,0 +1,20 @@
+{
+  "tag": "S205I",
+  "label": "dr/dc steppedReveal cluster closeout. Zero insertions, two refusals — and that is the finding, not a failure. Of the 9 dr/dc lessons carrying a steppedReveal, 1 converted (dc-02-01, S205D) and 5 now refuse on cited structural grounds. The cluster is close to exhausted, which matters because the campaign has been framed around a wall that can supply at most 9.2% of the remaining gap.",
+  "conversions": [],
+  "insertions": [],
+  "refusals": [
+    {
+      "lesson": "dr-04-03",
+      "title": "Implicit Differentiation in Practice (derivative-rules)",
+      "why": "NEAR MISS, refused on notation. The lesson's relation is x² + y² = 25 and relatedRatesLab's invariant is literally x² + y² = L², so with ladderLength 5 the geometry is EXACT: at x = 3, y = 4, and with horizontalRate 1 the lab's readout is numerically −3/4, the lesson's own answer (because dy/dx = (dy/dt)/(dx/dt) and dx/dt = 1). The models and reaches gates both pass. It fails REPRESENTS for a reason that is not mathematical: the renderer hardcodes time-rate language — 'ladder foot', 'Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0', a dy/dt readout (widgets.tsx RelatedRatesLabW). dr-04-03 teaches dy/dx and never introduces t, so the lab would put notation on screen that the lesson has not taught and does not use, and a learner reconciling dy/dt with dy/dx is doing work the lesson did not ask for. ENGINE GAP, small and well-specified: a static mode on relatedRatesLab that swaps the dt labels for dy/dx and drops the time framing. That one change converts this lesson.",
+      "gate": "represents"
+    },
+    {
+      "lesson": "dc-02-03",
+      "title": "Choosing the Relation (derivatives-in-context)",
+      "why": "Models gate. The reveal is a filling cone: V = (1/3)πr²h with two varying quantities, closed by similar triangles (r = h/2) into dV/dt = (1/4)πh²·dh/dt. relatedRatesLab draws a LADDER and only a ladder — its spec is ladderLength / horizontalRate / targetX (schema.ts RelatedRatesLabSpec), with no cone, no second geometric relation, and no volume readout. The lesson's whole point is CHOOSING the relation that eliminates a variable, and an engine with one hardwired relation cannot pose a choice. Engine gap: a related-rates engine parameterised by the geometry (cone, sphere, ladder) rather than one fixed shape.",
+      "gate": "models"
+    }
+  ]
+}

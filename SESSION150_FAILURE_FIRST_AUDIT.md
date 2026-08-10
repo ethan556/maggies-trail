@@ -1,0 +1,80 @@
+# Session 150 Failure-First Audit
+
+- Checks: **74/74**
+- Failed: **0**
+- Result: **PASS**
+
+- ✓ ConditionalTableLabSpec is a plain ZodObject
+- ✓ GraphStoryLabSpec is a plain ZodObject
+- ✓ ProportionalReasoningLabSpec is a plain ZodObject
+- ✓ PlaceValueTransformLabSpec is a plain ZodObject
+- ✓ QuotientReasoningLabSpec is a plain ZodObject
+- ✓ AffineRelationshipLabSpec is a plain ZodObject
+- ✓ ExactNumberLabSpec is a plain ZodObject
+- ✓ GeometricConstraintLabSpec is a plain ZodObject
+- ✓ PointSetReasoningLabSpec is a plain ZodObject
+- ✓ conditional-table validation relocated
+- ✓ graph-story validation relocated
+- ✓ percent-change variant repair retained
+- ✓ S140 collision-free form retained
+- ✓ signed-fraction unreduced repair retained
+- ✓ shape-hierarchy narration bounded
+- ✓ triangle aria collision repaired
+- ✓ composite add/subtract language retained
+- ✓ conditional-table gate retained
+- ✓ equation-outcome option class exists
+- ✓ point-set schema and union registration
+- ✓ point-set integrity relocated
+- ✓ point-set all eight surfaces
+- ✓ capability registry only authoritative root
+- ✓ point-set capability manipulative
+- ✓ range uses endpoints only
+- ✓ range update recomputes endpoints
+- ✓ range blindness explicit
+- ✓ path length preserves order
+- ✓ axis distance uses coordinate changes
+- ✓ sequence constant-rate integrity
+- ✓ fabricated exploration filtered
+- ✓ point-set renderer pure truth
+- ✓ point-set reveal does not overwrite
+- ✓ point-set native stage controls
+- ✓ coordinate wrapper forms
+- ✓ range wrapper forms
+- ✓ CML catalog point-set
+- ✓ CML mesh point-set
+- ✓ CML kernel point-set
+- ✓ mastery direct point-set
+- ✓ wide-stage point-set
+- ✓ valid point-set sample
+- ✓ direct truth test exists
+- ✓ renderer test exists
+- ✓ source transpilation passed
+- ✓ content JSON passed
+- ✓ authored content passed
+- ✓ seeded sweep passed
+- ✓ mutations passed
+- ✓ backlog only two intentional assessments
+- ✓ zero representation missing
+- ✓ registration retains all sealed types, core-complete
+- ✓ player contract passed
+- ✓ no authored variant drift
+- ✓ exact two lesson boundary
+- ✓ exact thirteen widget boundary
+- ✓ 1127 non-target lessons byte-identical
+- ✓ all lesson hashes present
+- ✓ historical signed sweep refreshed
+- ✓ historical shape sweep refreshed
+- ✓ historical conditional sweep refreshed
+- ✓ historical graph sweep refreshed
+- ✓ historical proportional sweep refreshed
+- ✓ historical place-value sweep refreshed
+- ✓ historical quotient sweep refreshed
+- ✓ historical affine sweep refreshed
+- ✓ historical exact sweep refreshed
+- ✓ historical geometric sweep refreshed
+- ✓ current source hash matches sweep
+- ✓ S147 content proof authorizes S150 follow-through
+- ✓ S148 content proof authorizes S150 follow-through
+- ✓ S149 content proof authorizes S150 follow-through
+- ✓ product state generator excludes git dependency
+- ✓ diff tooling has no host path

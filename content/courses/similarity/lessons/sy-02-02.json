@@ -1,0 +1,316 @@
+{
+ "id": "sy-02-02",
+ "slug": "sss-similarity",
+ "title": "The SSS Similarity Criterion",
+ "courseId": "similarity",
+ "chapterId": "ch2-similarity-criteria",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sy-sss-similar",
+   "concept": {
+    "id": "rem-sy-sss-similar-c",
+    "kind": "concept",
+    "body": "SSS~ (SSS similarity): all THREE pairs of sides must share the SAME ratio. Steps: (1) order each triangle's sides; (2) divide corresponding pairs; (3) if all three ratios are equal, the triangles are similar and that ratio is the scale factor. One mismatched ratio means NOT similar."
+   },
+   "check": {
+    "id": "rem-sy-sss-similar-k",
+    "kind": "check",
+    "body": "How many ratios must match?",
+    "conceptTag": "sy-sss-similar",
+    "explanationVariants": [
+     "SSS~ requires all three side ratios to be equal.",
+     "Every one of the three pairs must share the same ratio."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For SSS~ similarity, how many of the three side ratios must be equal?",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "2 isn't enough — a third mismatched ratio breaks similarity. All 3 must match."
+      },
+      {
+       "value": 1,
+       "feedback": "1 matching ratio says nothing. SSS~ needs all 3 side ratios equal."
+      }
+     ],
+     "fallbackFeedback": "All 3 ratios must be equal."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "**SSS~** (SSS similarity): if all **three** pairs of sides are proportional — the same ratio for every pair — the triangles are similar. No angle needs checking; proportional sides alone force matching angles. It's congruence's SSS with 'equal' upgraded to 'in a constant ratio.'",
+   "figure": "sss-similar"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Test all three ratios.",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "The preimage is the 3-4-5 triangle. Drag k until the image is the 9-12-15 triangle, and check all three sides as you go — not just the one you are watching.",
+    "shape": [
+     [
+      0,
+      0
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "center": [
+     0,
+     0
+    ],
+    "targetK": 3,
+    "kMin": 0.5,
+    "kMax": 3.5,
+    "kStep": 0.5,
+    "kStart": 0.5,
+    "gridMin": 0,
+    "gridMax": 14,
+    "showRatios": [
+     "length"
+    ],
+    "successFeedback": "k = 3, and 3-4-5 has become 9-12-15 — every side tripled, which the perimeter readout reports as one number. That is SSS~: not three separate coincidences but a single dilation, so the triangles are similar and the scale factor is 3.",
+    "lowFeedback": "Not yet — the image is still short of 9-12-15. Keep raising k, and watch all three sides climb in step rather than one catching up to the others.",
+    "highFeedback": "Too far: the image has passed 9-12-15. Bring k down. No value of k stretches one side without stretching the other two by the same amount, which is the whole point."
+   },
+   "predict": {
+    "prompt": "Triangle A is 3-4-5, triangle B is 9-12-15. Checking SSS~ means checking…",
+    "options": [
+     {
+      "id": "all",
+      "label": "All three ratios, and finding they are equal"
+     },
+     {
+      "id": "one",
+      "label": "One ratio — the others must follow"
+     },
+     {
+      "id": "angles",
+      "label": "The angles, since sides cannot settle similarity"
+     }
+    ],
+    "outcomeId": "all",
+    "reveal": "All three — the criterion is that they agree, and agreement is the thing being tested. What the dilation shows is why they agree when they do: one factor is acting on every side at once."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The catch with SSS~.",
+   "conceptTag": "sy-sss-similar",
+   "explanationVariants": [
+    "ALL three ratios must match. If even one differs, the triangles aren't similar — proportionality must be uniform.",
+    "A single mismatched ratio breaks SSS~; every pair needs the same scale factor."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Triangle A: 3, 4, 5. Triangle B: 6, 8, 9. Are they similar by SSS~?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No — 6/3 = 2 and 8/4 = 2, but 9/5 = 1.8, so the ratios differ",
+      "correct": true,
+      "feedback": "Two ratios are 2 but the third is 1.8 — not all equal, so NOT similar. Every ratio must match."
+     },
+     {
+      "id": "o2",
+      "label": "Yes — the sides are close enough",
+      "correct": false,
+      "feedback": "'Close' isn't proportional. 9/5 = 1.8 ≠ 2, so SSS~ fails — the triangles are not similar."
+     },
+     {
+      "id": "o3",
+      "label": "Yes — two of the three ratios match",
+      "correct": false,
+      "feedback": "SSS~ needs ALL three to match. One mismatch (9/5 = 1.8) breaks similarity."
+     },
+     {
+      "id": "o4",
+      "label": "Cannot be determined",
+      "correct": false,
+      "feedback": "It can: compute all three ratios. Since 1.8 ≠ 2, they're not similar."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-sss-similar__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "To apply SSS~, pair sides **smallest-to-smallest, largest-to-largest** before taking ratios. Matching them out of order gives wrong ratios and false conclusions. Order the sides in each triangle, then divide corresponding pairs — all equal means similar.",
+   "figure": "sss-similar"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Find the ratio.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Triangle A has sides 5, 7, 10 and similar triangle B has smallest side 15. What is the scale factor from A to B?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 = 15 − 5 subtracts. Scale factor DIVIDES corresponding sides: 15 ÷ 5 = 3."
+     },
+     {
+      "value": 0.333,
+      "feedback": "0.333 = 5 ÷ 15 inverts it. From A to B, divide B's side by A's: 15 ÷ 5 = 3."
+     }
+    ],
+    "fallbackFeedback": "15 ÷ 5 = 3 (pairing smallest to smallest)."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Complete the triangle.",
+   "conceptTag": "sy-sss-similar",
+   "explanationVariants": [
+    "With scale factor 3, multiply each of A's sides: the side matching A's 7 is 7 × 3 = 21.",
+    "Every side of B is 3× the corresponding side of A: 7 × 3 = 21."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Triangle A has sides 5, 7, 10; similar triangle B has scale factor 3. What is B's side corresponding to A's 7?",
+    "answer": 21,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 = 7 + 3 adds. Multiply by the scale factor: 7 × 3 = 21."
+     },
+     {
+      "value": 2.33,
+      "feedback": "2.33 = 7 ÷ 3 divides the wrong way. B is LARGER: 7 × 3 = 21."
+     }
+    ],
+    "fallbackFeedback": "7 × 3 = 21."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-sss-similar__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "SSS~ vs congruent SSS, side by side: congruent SSS needs three EQUAL sides (ratio exactly 1); SSS~ needs three PROPORTIONAL sides (any constant ratio). Congruence is the special case where that ratio is 1. Same logic, one relaxed condition — and that's the pattern across all three similarity criteria.",
+   "figure": "sss-similar"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Congruent or just similar?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two triangles have all three sides in the ratio 1 : 1. They are…",
+    "options": [
+     {
+      "id": "o1",
+      "label": "congruent (a special case of similar)",
+      "correct": true,
+      "feedback": "Ratio 1 means the sides are equal — congruent, which is similarity with scale factor 1."
+     },
+     {
+      "id": "o2",
+      "label": "similar but definitely not congruent",
+      "correct": false,
+      "feedback": "Ratio 1 makes the sides EQUAL, so they ARE congruent — the special case of similar at k = 1."
+     },
+     {
+      "id": "o3",
+      "label": "not similar",
+      "correct": false,
+      "feedback": "Equal ratios (even 1:1) mean similar; ratio 1 additionally makes them congruent."
+     },
+     {
+      "id": "o4",
+      "label": "impossible to have ratio 1",
+      "correct": false,
+      "feedback": "Ratio 1 is perfectly possible — it just means equal sides, i.e. congruent triangles."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Verify similarity.",
+   "conceptTag": "sy-sss-similar",
+   "hints": [
+    "Compute all three ratios, pairing smallest-smallest and largest-largest.",
+    "Triangle A: 6, 9, 12. Triangle B: 8, 12, 16. Divide corresponding sides.",
+    "8/6, 12/9, 16/12 — are they all equal?"
+   ],
+   "explanationVariants": [
+    "8/6 = 4/3, 12/9 = 4/3, 16/12 = 4/3 — all equal to 4/3, so similar by SSS~. The scale factor is 4/3.",
+    "Every ratio reduces to 4/3, confirming SSS~ similarity; the common scale factor is 4/3."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Triangle A: 6, 9, 12. Triangle B: 8, 12, 16. Are they similar, and what is the scale factor?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Yes, similar with scale factor 4/3 (all ratios equal 4/3)",
+      "correct": true,
+      "feedback": "8/6 = 12/9 = 16/12 = 4/3 — uniform ratio, so SSS~ similar with factor 4/3."
+     },
+     {
+      "id": "o2",
+      "label": "No, the sides aren't equal",
+      "correct": false,
+      "feedback": "SSS~ needs PROPORTIONAL, not equal, sides. All ratios are 4/3, so they ARE similar."
+     },
+     {
+      "id": "o3",
+      "label": "Yes, with scale factor 2",
+      "correct": false,
+      "feedback": "Scale factor 2 would need B = 12, 18, 24. Here the ratio is 8/6 = 4/3, not 2."
+     },
+     {
+      "id": "o4",
+      "label": "No, only two ratios match",
+      "correct": false,
+      "feedback": "All three match: 8/6 = 12/9 = 16/12 = 4/3. Similar by SSS~."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-sss-similar__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "All three, in proportion.",
+   "takeaways": [
+    "SSS~: all three side pairs in the SAME ratio ⇒ similar (no angle needed).",
+    "Pair smallest-to-smallest, largest-to-largest before dividing.",
+    "Congruent SSS is the special case with ratio 1."
+   ],
+   "teaser": "Next: putting the criteria to work — choosing AA, SAS~, or SSS~ in a proof."
+  }
+ ]
+}

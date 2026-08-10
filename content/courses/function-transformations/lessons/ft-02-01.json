@@ -1,0 +1,302 @@
+{
+  "id": "ft-02-01",
+  "slug": "vertical-shifts",
+  "title": "Vertical Shifts",
+  "courseId": "function-transformations",
+  "chapterId": "ch2-shifts",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Add a number **outside** the function and the whole graph slides **up**; subtract and it slides **down**. y = x² + 3 is the parent parabola lifted 3 — same shape, new position. The number outside acts **after** the function, so it moves outputs.",
+      "figure": "transformation-shifts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Lift the whole parabola — and watch the equation keep score.",
+      "widget": {
+        "type": "quadraticExplore",
+        "prompt": "Slide the parabola so its vertex sits at (0, 5) — the graph of y = x² + 5. Watch the equation update as you move k.",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 5,
+        "successFeedback": "y = x² + 5: every output gained 5, so the vertex rode from (0, 0) up to (0, 5) — a rigid vertical slide.",
+        "shapeFeedback": "You changed a — that steepens or flips the parabola. A vertical SLIDE leaves the shape alone: put a back to 1 and move only k.",
+        "vertexFeedback": "The vertex sits at (h, k). Up 5 means k = 5 with h still 0 — moving h would drag the parabola sideways instead of up."
+      },
+      "predict": {
+        "prompt": "You'll raise k from 0 to 5 in y = a(x − h)² + k. Every point on the parabola will move…",
+        "options": [
+          {
+            "id": "up5",
+            "label": "Up exactly 5 — the arms too, not just the vertex"
+          },
+          {
+            "id": "vertexOnly",
+            "label": "Mostly the vertex — the arms lag behind"
+          },
+          {
+            "id": "right5",
+            "label": "Right 5 — k slides it sideways"
+          }
+        ],
+        "outcomeId": "up5",
+        "reveal": "Adding 5 outside the square adds 5 to EVERY output at once, so the whole curve rises rigidly by 5 — vertex and arms together. Sideways motion would need the number inside the parentheses (h), not k."
+      },
+      "conceptTag": "ft-vshift",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents vshift.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for vshift must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines vshift."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-vshift",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Every point moves the same amount. If the parent has f(2) = 4, then f(x) + 5 gives 4 + 5 = **9** at x = 2 — the point (2, 4) slides to (2, 9). Compute the parent first, then apply the shift.",
+      "figure": "ft-vertical-shift"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Shift a point down.",
+      "conceptTag": "ft-vshift",
+      "explanationVariants": [
+        "Parent first: 3² = 9. Then shift down: 9 − 4 = 5.",
+        "On y = x² − 4, the point above x = 3 sits 4 below the parent's (3, 9), at (3, 5)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = x² − 4, what is y when x = 3?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "The shift is DOWN: subtract 4 from the parent's 9, giving 5 — adding would be x² + 4."
+          },
+          {
+            "value": 9,
+            "feedback": "That's the parent's output — this graph sits 4 lower: 9 − 4 = 5."
+          }
+        ],
+        "fallbackFeedback": "3² = 9, then 9 − 4 = 5."
+      },
+      "variant": {
+        "gen": "vertical-shift"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the rule for a downward slide.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which rule moves the graph of y = |x| DOWN 7 units?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = |x| − 7",
+            "correct": true,
+            "feedback": "Right — subtracting 7 OUTSIDE the bars lowers every output by 7."
+          },
+          {
+            "id": "o2",
+            "label": "y = |x − 7|",
+            "correct": false,
+            "feedback": "The 7 inside the bars changes the INPUT — that slides the graph sideways (right 7), not down."
+          },
+          {
+            "id": "o3",
+            "label": "y = |x| + 7",
+            "correct": false,
+            "feedback": "Adding outside moves the graph UP 7 — to go down, subtract."
+          },
+          {
+            "id": "o4",
+            "label": "y = −|x|",
+            "correct": false,
+            "feedback": "A minus sign in front FLIPS the V upside down — it doesn't slide it. Down 7 needs a −7 after the bars."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The corner rides along.",
+      "conceptTag": "ft-vshift",
+      "explanationVariants": [
+        "|x| has its corner at (0, 0); the +2 lifts it to (0, 2) — corner height 2.",
+        "Every output of |x| gains 2, so the lowest point rises from 0 to 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the y-coordinate of the corner of y = |x| + 2?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "The +2 is added to outputs — the corner rises to +2; a subtraction would drop it."
+          },
+          {
+            "value": 0,
+            "feedback": "That's the parent corner — the +2 carries it up to 2."
+          }
+        ],
+        "fallbackFeedback": "The corner (0, 0) shifts up 2 to (0, 2)."
+      },
+      "variant": {
+        "gen": "vertical-shift",
+        "form": "cornerY"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Describe the move.",
+      "conceptTag": "ft-vshift",
+      "explanationVariants": [
+        "The +3 sits OUTSIDE the root, acting on outputs — that's a vertical move, up 3.",
+        "√x + 3 computes the root first, then adds 3 to the result: every point rises 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Compared to y = √x, the graph of y = √x + 3 is moved…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "up 3",
+            "correct": true,
+            "feedback": "Right — the +3 acts after the root, lifting every output."
+          },
+          {
+            "id": "o2",
+            "label": "right 3",
+            "correct": false,
+            "feedback": "Sideways moves come from changing the INSIDE, like √(x − 3). This +3 is outside — vertical."
+          },
+          {
+            "id": "o3",
+            "label": "left 3",
+            "correct": false,
+            "feedback": "Left 3 would be √(x + 3), with the 3 inside the root. Outside the root means up."
+          },
+          {
+            "id": "o4",
+            "label": "down 3",
+            "correct": false,
+            "feedback": "Down needs a subtraction: √x − 3. A plus outside lifts the graph."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "vertical-shift",
+        "form": "whichDirection"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Evaluate through a shift.",
+      "conceptTag": "ft-vshift",
+      "explanationVariants": [
+        "Parent first: 2³ = 8. Then the shift: 8 − 6 = 2.",
+        "y = x³ − 6 sits 6 below the parent cubic, so above x = 2 it reads 8 − 6 = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = x³ − 6, what is y when x = 2?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's the parent's 2³ — this graph is shifted DOWN 6: 8 − 6 = 2."
+          },
+          {
+            "value": 14,
+            "feedback": "The 6 is subtracted, not added: 8 − 6 = 2, while 14 would be x³ + 6."
+          }
+        ],
+        "fallbackFeedback": "2³ = 8, then 8 − 6 = 2."
+      },
+      "hints": [
+        "Handle the parent first: what is 2³?",
+        "2³ = 2 × 2 × 2 = 8.",
+        "Now apply the shift: 8 − 6 = 2."
+      ],
+      "variant": {
+        "gen": "vertical-shift"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Outside numbers move outputs: up for +, down for −.",
+      "takeaways": [
+        "f(x) + k slides the graph up k; f(x) − k slides it down k.",
+        "Every point moves equally — compute the parent, then shift.",
+        "The shape never changes; only the position does."
+      ],
+      "teaser": "Next: the sneaky one — numbers INSIDE the function move it sideways."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-vshift",
+      "concept": {
+        "id": "rem-ft0201-c",
+        "kind": "concept",
+        "body": "A number added or subtracted OUTSIDE the function moves the graph up (+) or down (−) by that amount. Compute the parent value first, then shift it."
+      },
+      "check": {
+        "id": "rem-ft0201-k",
+        "kind": "check",
+        "body": "One more vertical shift.",
+        "conceptTag": "ft-vshift",
+        "explanationVariants": [
+          "Parent: 4² = 16; then 16 + 3 = 19.",
+          "y = x² + 3 sits 3 above the parent, so above x = 4 it reads 16 + 3 = 19."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "On the graph of y = x² + 3, what is y when x = 4?",
+          "answer": 19,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That's the parent 4² — add the shift: 16 + 3 = 19."
+            },
+            {
+              "value": 13,
+              "feedback": "The 3 is ADDED: 16 + 3 = 19; subtracting would be x² − 3."
+            }
+          ],
+          "fallbackFeedback": "4² = 16, then 16 + 3 = 19."
+        }
+      }
+    }
+  ]
+}

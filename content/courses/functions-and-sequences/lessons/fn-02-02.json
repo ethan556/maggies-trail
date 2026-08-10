@@ -1,0 +1,310 @@
+{
+  "id": "fn-02-02",
+  "slug": "the-nth-term-formula",
+  "title": "The nth Term Formula",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch2-arithmetic-sequences",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "arithmetic-steps",
+      "body": "The nth term of an arithmetic sequence is a_n = a_1 + (n − 1)d: the start, plus (n − 1) steps of d. For 3, 7, 11, … (a_1 = 3, d = 4), the 5th term is 3 + 4·4 = 19."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The nth-term formula is a machine that jumps straight there.",
+      "widget": {
+        "type": "functionMachine",
+        "a": 3,
+        "b": -1,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 14,
+        "prompt": "The sequence 2, 5, 8, 11, … has nth term aₙ = 3n − 1. Which position holds the value 14?",
+        "successFeedback": "n = 5. The formula is the point of the exercise: it lets you reach the 5th term — or the 500th — without walking the chain one step at a time.",
+        "lowFeedback": "That term is below 14 — go further along the sequence.",
+        "highFeedback": "That term is past 14 — come back toward the start."
+      },
+      "predict": {
+        "prompt": "The sequence 2, 5, 8, 11, 14 jumps by 3. Without adding step by step, the 100th term is…",
+        "options": [
+          {
+            "id": "formula",
+            "label": "3·100 − 1 = 299"
+          },
+          {
+            "id": "plus",
+            "label": "14 + 100 = 114"
+          },
+          {
+            "id": "bare",
+            "label": "3·100 = 300"
+          }
+        ],
+        "outcomeId": "formula",
+        "reveal": "The nth-term formula 3n − 1 jumps straight to any position: n = 100 gives 299, no ninety-five extra additions. The machine will confirm the same formula at small n — that's what makes it trustworthy at large n."
+      },
+      "conceptTag": "fn-nth-term",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents nth term.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for nth term must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines nth term."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-and-sequences:fn-nth-term",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A new start and step.",
+      "conceptTag": "fn-nth-term",
+      "explanationVariants": [
+        "a_6 = 2 + (6 − 1)·5 = 2 + 25 = 27.",
+        "Five steps of 5 from 2: 2 + 25 = 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 2, d = 5, what is the 6th term?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 32,
+            "feedback": "Take (6 − 1) = 5 steps, not 6: 2 + 5·5 = 27, not 2 + 6·5."
+          },
+          {
+            "value": 30,
+            "feedback": "2 + (6 − 1)·5 = 2 + 25 = 27."
+          }
+        ],
+        "fallbackFeedback": "a_6 = 2 + 5·5 = 27."
+      },
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "nthPos"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The (n − 1) matters: to reach the 5th term you take **4** steps from the first, not 5. For a_1 = 10, d = 3, the 4th term is 10 + 3·3 = 19 — three steps, because the first term is already \"step zero.\"",
+      "figure": "fn-n-minus-one"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the steps carefully.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 10, d = 3, what is the 4th term?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "Take (4 − 1) = 3 steps, not 4: 10 + 3·3 = 19, not 10 + 4·3."
+          },
+          {
+            "value": 21,
+            "feedback": "10 + (4 − 1)·3 = 10 + 9 = 19."
+          }
+        ],
+        "fallbackFeedback": "a_4 = 10 + 3·3 = 19."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The formula reaches far-off terms without listing them all. For a_1 = 1, d = 2 (the odd numbers 1, 3, 5, …), the 10th term is 1 + 9·2 = 19 — no need to write out nine steps.",
+      "figure": "fn-far-term"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A distant term.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 1, d = 2, what is the 10th term?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "Take (10 − 1) = 9 steps, not 10: 1 + 9·2 = 19, not 1 + 10·2."
+          },
+          {
+            "value": 20,
+            "feedback": "1 + (10 − 1)·2 = 1 + 18 = 19."
+          }
+        ],
+        "fallbackFeedback": "a_10 = 1 + 9·2 = 19."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Seventh term.",
+      "conceptTag": "fn-nth-term",
+      "explanationVariants": [
+        "a_7 = 5 + (7 − 1)·4 = 5 + 24 = 29.",
+        "Six steps of 4 from 5: 5 + 24 = 29."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 5, d = 4, what is the 7th term?",
+        "answer": 29,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 33,
+            "feedback": "Take (7 − 1) = 6 steps, not 7: 5 + 6·4 = 29, not 5 + 7·4."
+          },
+          {
+            "value": 28,
+            "feedback": "5 + (7 − 1)·4 = 5 + 24 = 29."
+          }
+        ],
+        "fallbackFeedback": "a_7 = 5 + 6·4 = 29."
+      },
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "nthPos"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A negative step.",
+      "conceptTag": "fn-nth-term",
+      "explanationVariants": [
+        "a_6 = 50 + (6 − 1)·(−5) = 50 − 25 = 25.",
+        "Five steps of −5 from 50: 50 − 25 = 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 50, d = -5, what is the 6th term?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "Take (6 − 1) = 5 steps, not 6: 50 − 5·5 = 25, not 50 − 6·5."
+          },
+          {
+            "value": 30,
+            "feedback": "50 + (6 − 1)·(−5) = 50 − 25 = 25."
+          }
+        ],
+        "fallbackFeedback": "a_6 = 50 − 25 = 25."
+      },
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "nthNeg"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Eighth term.",
+      "conceptTag": "fn-nth-term",
+      "explanationVariants": [
+        "a_8 = 7 + (8 − 1)·6 = 7 + 42 = 49.",
+        "Seven steps of 6 from 7: 7 + 42 = 49."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 7, d = 6, what is the 8th term?",
+        "answer": 49,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "Take (8 − 1) = 7 steps, not 8: 7 + 7·6 = 49, not 7 + 8·6."
+          },
+          {
+            "value": 48,
+            "feedback": "7 + (8 − 1)·6 = 7 + 42 = 49."
+          }
+        ],
+        "fallbackFeedback": "a_8 = 7 + 7·6 = 49."
+      },
+      "hints": [
+        "Use a_n = a_1 + (n − 1)d with n = 8.",
+        "(8 − 1)·6 = 42.",
+        "7 + 42 = 49."
+      ],
+      "variant": {
+        "gen": "fn-arith-seq",
+        "form": "nthPos"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The nth term is the start plus (n − 1) steps of d.",
+      "takeaways": [
+        "a_n = a_1 + (n − 1)d.",
+        "Use (n − 1) steps — the first term is step zero.",
+        "The formula reaches any position directly."
+      ],
+      "teaser": "next: reading the rule straight from a sequence."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-nth-term",
+      "concept": {
+        "id": "rem-fnt-c",
+        "kind": "concept",
+        "body": "The nth term is a_n = a_1 + (n − 1)d — the start plus (n − 1) steps of d. For a_1 = 3, d = 4: the 5th term is 3 + 4·4 = 19. Use (n − 1) steps, not n."
+      },
+      "check": {
+        "id": "rem-fnt-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-nth-term",
+        "explanationVariants": [
+          "a_5 = 3 + 4·4 = 19.",
+          "Four steps of 4 from 3: 19."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For a_1 = 3, d = 4, what is the 5th term?",
+          "answer": 19,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 23,
+              "feedback": "Use (5 − 1) = 4 steps: 3 + 16 = 19."
+            },
+            {
+              "value": 20,
+              "feedback": "That's 4 × 5, which drops the starting value. The 5th term is a₁ + 4d = 3 + 16 = 19."
+            }
+          ],
+          "fallbackFeedback": "a_5 = 3 + 16 = 19."
+        }
+      }
+    }
+  ]
+}

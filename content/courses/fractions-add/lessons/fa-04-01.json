@@ -1,0 +1,399 @@
+{
+  "id": "fa-04-01",
+  "slug": "improper-to-mixed",
+  "title": "Improper to Mixed",
+  "courseId": "fractions-add",
+  "chapterId": "ch4-mixed-numbers",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An improper fraction like 11/8 has a numerator bigger than its denominator — more than one whole's worth of pieces. You already know how to divide with a remainder (Course 6). Converting is the same move: **divide the numerator by the denominator.** The quotient is the whole number; the remainder rides on top of the same denominator.",
+      "figure": "fa-improper-mixed"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "More than a whole.",
+      "widget": {
+        "type": "fractionBar",
+        "targetNum": 7,
+        "targetDen": 4,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 4,
+        "prompt": "Build 1 3/4 as a single fraction — an improper one.",
+        "successFeedback": "7/4. One whole is 4/4, and 3 more quarters makes 7 quarters. An improper fraction is not improper at all — it is just a count of pieces that happens to pass the whole.",
+        "lowFeedback": "Less than 1 3/4. Remember the whole itself is 4 quarters before you add the extra 3.",
+        "highFeedback": "More than 1 3/4. That is 4 quarters for the whole plus 3 more — 7 in total, not more."
+      },
+      "predict": {
+        "prompt": "The bar starts at 1/4. Before you touch it: is 1/4 more or less of the bar than 7/4?",
+        "options": [
+          {
+            "id": "more",
+            "label": "1/4 is more"
+          },
+          {
+            "id": "less",
+            "label": "1/4 is less"
+          },
+          {
+            "id": "same",
+            "label": "They're the same amount"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "With the same whole, the bar settles it: 1/4 covers less than 7/4. Count of pieces and size of pieces work together — neither alone decides the amount."
+      },
+      "conceptTag": "improper-to-mixed",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents improper to mixed.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for improper to mixed must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines improper to mixed."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:improper-to-mixed",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the whole number.",
+      "conceptTag": "improper-to-mixed",
+      "explanationVariants": [
+        "11÷8=1 remainder 3, so the whole number part is 1, and the fraction part is 3/8.",
+        "8 fits into 11 exactly once, leaving 3 left over."
+      ],
+      "widget": {
+        "type": "mixedRegroup",
+        "prompt": "Convert 11/8 to a mixed number. Make wholes until the leftover is smaller than one whole.",
+        "mode": "convert",
+        "den": 8,
+        "aWhole": 0,
+        "aNum": 11,
+        "targetForm": "mixed",
+        "commonResults": [
+          {
+            "whole": 0,
+            "num": 11,
+            "feedback": "11 is the original numerator, not yet divided. 11÷8=1 remainder 3 — the whole number is 1."
+          }
+        ],
+        "fallbackFeedback": "Divide the numerator by the denominator; the quotient is the whole number.",
+        "successFeedback": "11/8 = 1 3/8 — eight of the eleven parts made one whole, and 3 parts were left over."
+      },
+      "variant": {
+        "gen": "mixed-convert"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents improper to mixed.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for improper to mixed must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines improper to mixed."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:improper-to-mixed",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The remainder becomes the new numerator, but it keeps the **same denominator** as the original fraction — not some new number. For 22/7: 22÷7=3 remainder 1, so it's 3 and 1 out of the original 7ths: **3 1/7.**",
+      "figure": "fa-improper-mixed"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the fraction part.",
+      "conceptTag": "improper-to-mixed",
+      "explanationVariants": [
+        "15÷4=3 remainder 3, so the fraction part is 3/4 — the remainder over the original denominator.",
+        "4 fits into 15 three times, with 3 left over."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 15/4 to a mixed number: 3 ?/4. What is the numerator of the fraction part?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the DENOMINATOR, which stays the same — not the remainder. 15÷4=3 remainder 3, so the numerator is 3."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is the original numerator, not yet divided. 15÷4=3 remainder 3 — the new numerator is 3."
+          }
+        ],
+        "fallbackFeedback": "Divide 15 by 4; the remainder becomes the new numerator, over the same denominator."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faImproperToMixedNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Exact whole, or a true mixed number?",
+      "conceptTag": "improper-to-mixed",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each improper fraction: does it convert to an EXACT whole number, or a true mixed number with a fraction part?",
+        "buckets": [
+          {
+            "id": "whole",
+            "label": "Exact whole number",
+            "icon": "🎯"
+          },
+          {
+            "id": "mixed",
+            "label": "True mixed number",
+            "icon": "➕"
+          }
+        ],
+        "items": [
+          {
+            "id": "f1",
+            "label": "9/9",
+            "bucketId": "whole",
+            "feedback": "9÷9=1 remainder 0 — no fraction part left over, just the whole number 1."
+          },
+          {
+            "id": "f2",
+            "label": "7/3",
+            "bucketId": "mixed",
+            "feedback": "7÷3=2 remainder 1 — a true mixed number, 2 1/3."
+          },
+          {
+            "id": "f3",
+            "label": "12/4",
+            "bucketId": "whole",
+            "feedback": "12÷4=3 remainder 0 — exactly the whole number 3."
+          },
+          {
+            "id": "f4",
+            "label": "13/5",
+            "bucketId": "mixed",
+            "feedback": "13÷5=2 remainder 3 — a true mixed number, 2 3/5."
+          }
+        ],
+        "missFeedback": "Divide the numerator by the denominator — a remainder of 0 means an exact whole number.",
+        "successFeedback": "9/9 and 12/4 divide evenly (remainder 0); 7/3 and 13/5 leave a remainder, so they're true mixed numbers."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A trickier conversion.",
+      "conceptTag": "improper-to-mixed",
+      "explanationVariants": [
+        "22÷7=3 remainder 1, so the whole number part is 3.",
+        "7 fits into 22 three times, with 1 left over."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 22/7 to a mixed number. What is the WHOLE NUMBER part?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the REMAINDER, not the whole number. 22÷7=3 remainder 1 — the whole number is 3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 overshoots — 7×4=28, which is more than 22. 22÷7 gives a quotient of 3, with 1 left over."
+          }
+        ],
+        "fallbackFeedback": "Divide 22 by 7; the quotient is the whole number."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faImproperToMixedNumeric"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Sometimes nothing is left over.",
+      "conceptTag": "improper-to-mixed",
+      "explanationVariants": [
+        "12/4 makes three full groups of 4 quarters and nothing is left, so it is the whole number 3 — not a mixed number at all.",
+        "Every 4 quarters trade for 1 whole: 12 ÷ 4 = 3 exactly, remainder 0, so the fraction part disappears."
+      ],
+      "widget": {
+        "type": "mixedRegroup",
+        "prompt": "Convert 12/4. Make wholes until the leftover is smaller than one whole.",
+        "mode": "convert",
+        "den": 4,
+        "aWhole": 0,
+        "aNum": 12,
+        "targetForm": "mixed",
+        "commonResults": [
+          {
+            "whole": 2,
+            "num": 4,
+            "feedback": "4/4 is a whole itself, so 2 4/4 still has an exchange left in it. Make that last whole and the leftover drops to zero."
+          },
+          {
+            "whole": 0,
+            "num": 12,
+            "feedback": "12/4 is where you started — nothing has been exchanged. Every 4 quarters make one whole, and 12 quarters make exactly 3."
+          }
+        ],
+        "fallbackFeedback": "Keep making wholes while 4 or more quarters remain; here they run out exactly.",
+        "successFeedback": "12/4 = 3 exactly — three groups of 4 quarters, with no leftover fraction at all."
+      },
+      "variant": {
+        "gen": "mixed-convert"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents improper to mixed.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for improper to mixed must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines improper to mixed."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:improper-to-mixed",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The flour measurement.",
+      "conceptTag": "improper-to-mixed",
+      "hints": [
+        "Divide 17 by 4.",
+        "4 fits into 17 four times (4×4=16).",
+        "That leaves a remainder of 1."
+      ],
+      "explanationVariants": [
+        "17÷4=4 remainder 1, so the recipe needs 4 whole cups plus 1/4 cup more.",
+        "4×4=16, and 17−16=1 left over."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A recipe calls for 17/4 cups of flour. As a mixed number, how many WHOLE cups does it need (before the leftover fraction)?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "cups",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the REMAINDER (the leftover fraction's numerator), not the whole number. 17÷4=4 remainder 1 — 4 whole cups."
+          },
+          {
+            "value": 17,
+            "feedback": "17 is the original numerator, not yet divided. 17÷4=4 remainder 1 — the whole number is 4."
+          }
+        ],
+        "fallbackFeedback": "Divide 17 by 4; the quotient is the number of whole cups."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faImproperToMixedNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Wholes, separated from the extra.",
+      "takeaways": [
+        "Convert an improper fraction by dividing the numerator by the denominator.",
+        "The quotient becomes the whole number; the remainder becomes the new numerator.",
+        "The new numerator keeps the ORIGINAL denominator — a remainder of 0 means an exact whole number."
+      ],
+      "teaser": "next: converting back the other way, from mixed number to improper fraction."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "improper-to-mixed",
+      "concept": {
+        "id": "rem-im-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Divide the numerator by the denominator.** For 9/4: 9÷4=2 remainder 1. The whole number is 2; the remainder (1) rides on the same denominator (4): 2 1/4."
+      },
+      "check": {
+        "id": "rem-im-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "improper-to-mixed",
+        "explanationVariants": [
+          "9÷4=2 remainder 1, giving 2 1/4.",
+          "4 fits into 9 twice, with 1 left over."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Convert 9/4 to a mixed number.",
+          "options": [
+            {
+              "id": "a",
+              "label": "2 1/4",
+              "correct": true,
+              "feedback": "9÷4=2 remainder 1."
+            },
+            {
+              "id": "b",
+              "label": "4 1/9",
+              "feedback": "That flips the roles. Dividing 9 by 4 gives quotient 2, remainder 1: 2 1/4."
+            },
+            {
+              "id": "c",
+              "label": "2 4/9",
+              "feedback": "The fraction part should ride on the ORIGINAL denominator (4), not 9. 9÷4=2 remainder 1: 2 1/4."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

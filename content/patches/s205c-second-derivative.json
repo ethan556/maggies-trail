@@ -1,0 +1,53 @@
+{
+  "tag": "S205C",
+  "label": "The f″ mode's first real payoff: ca-02-02 (The Second-Derivative Test). The authored reveal shows the test FAILING — x⁴, −x⁴, x³ all have f′(0)=0 and f″(0)=0 with three different verdicts. Inserted after it is the complement the lesson never had: the test WORKING, on x³−3x, where f″=6x is −6 at one critical point and +6 at the other. Same test, opposite signs, opposite verdicts — and the learner drags across the inflection at x=0 to watch the sign flip. Reveal keeps its teaching; the lab supplies the doing.",
+  "conversions": [],
+  "insertions": [
+    {
+      "course": "curve-analysis",
+      "lesson": "ca-02-02",
+      "after": "i1",
+      "step": {
+        "id": "i1b",
+        "kind": "interactive",
+        "body": "That reveal showed the test's blind spot. Now watch it work — on a curve where f″ is nowhere near zero at the points that matter.",
+        "predict": {
+          "prompt": "This is f(x) = x³ − 3x. Its tangent goes flat in two places. Do you expect the second-derivative test to return the same verdict at both?",
+          "options": [
+            { "id": "same-verdict", "label": "Yes — one test, one answer" },
+            { "id": "opposite-verdict", "label": "No — one is a max, the other a min" },
+            { "id": "both-inconclusive", "label": "No — f″ will be 0 at both, like the three curves above" }
+          ],
+          "outcomeId": "opposite-verdict",
+          "reveal": "Drag across both and watch the third pane: f″ = 6x, so it reads −6 at the left flat point and +6 at the right. One test, opposite signs, opposite verdicts."
+        },
+        "widget": {
+          "type": "derivativeTrace",
+          "prompt": "Drag to the flat point that the second-derivative test calls a MAXIMUM — the one where the bend is downward.",
+          "fn": "cubicMix",
+          "mode": "point",
+          "targetX": -1,
+          "start": 2,
+          "showSecond": true,
+          "successFeedback": "f′(−1) = 0 and f″(−1) = −6. Flat tangent, bending downward — the test returns MAXIMUM in a single step, and the top pane shows the peak at (−1, 2). That is the whole point: when f″ is not zero it decides immediately. The three curves above were the case where it cannot.",
+          "lowFeedback": "Not there yet — f′ is still above zero here, so the curve is still climbing toward the peak. The f″ pane is already negative, so the bend is the right one; keep going right until f′ reaches zero.",
+          "highFeedback": "You have gone past the maximum — come back left. Watch the f″ pane on the way: to the right of x = 0 it is positive, and the flat point over there is the MINIMUM. The test wants the flat point where the bend is downward."
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "ca-03-01",
+      "title": "Rolle's Theorem (curve-analysis)",
+      "why": "LEDGER CORRECTION, NOT A NEW REFUSAL. The S205B patch recorded this id against reasoning about concavity, f″ and inflection — but ca-03-01 is Rolle's Theorem. The concavity lesson is ca-02-01 and the f″-test lesson is ca-02-02 (this patch's target). The cited engine gap was real and is now closed; the lesson id attached to it was wrong. Rolle's Theorem itself remains unconverted for a different and still-standing reason: its steppedReveal argues the EXISTENCE claim (equal endpoint heights force a flat tangent somewhere between), and derivativeTrace has no way to let a learner vary the endpoints — fn is a fixed four-item enum (schema.ts:3136) with no interval controls, so the learner cannot test the hypothesis by breaking it. Needs an engine with a movable interval; recorded as an engine gap.",
+      "gate": "represents"
+    },
+    {
+      "lesson": "ca-02-01",
+      "title": "Concavity and the Second Derivative (curve-analysis)",
+      "why": "Already Tier A (total 32) on a fresh tier scan, and its interactive step is a signChart, not a steppedReveal — it is not on the wall and not eligible for conversion. Named here only because the S205B ledger's mis-filed refusal pointed at concavity and a future session would otherwise re-adjudicate it from scratch.",
+      "gate": "not-a-candidate"
+    }
+  ]
+}

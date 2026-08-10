@@ -1,0 +1,330 @@
+{
+  "id": "dm-02-01",
+  "slug": "fitting-and-reading-a-line",
+  "title": "Fitting a Line, and Reading What It Says",
+  "courseId": "data-and-models",
+  "chapterId": "ch2-modeling-with-two-variables",
+  "minutes": 13,
+  "standards": [
+    "S-ID.B.6a",
+    "S-ID.B.6c",
+    "S-ID.C.7"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When two quantities move together, a line drawn through the middle of the scatter can **predict** one from the other. Fitting that line by hand means dragging it until the gaps above and below balance out — a real skill, not a guess, and it is exactly what a spreadsheet's trendline button does automatically underneath.",
+      "figure": "scatter-best-fit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Six students: hours studied vs. test score. Fit the trend.",
+      "predict": {
+        "prompt": "Minutes studied versus test score: as study time goes up, scores go up too. Will the fitted line's slope be positive or negative?",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — more study time, higher scores"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — more study time, lower scores"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "Positive. More of the input (minutes) goes with more of the output (score), so the line climbs left to right — a positive slope."
+      },
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit a line to hours studied (x) versus test score (y).",
+        "points": [
+          [
+            1,
+            65
+          ],
+          [
+            2,
+            71
+          ],
+          [
+            3,
+            74
+          ],
+          [
+            4,
+            79
+          ],
+          [
+            5,
+            86
+          ],
+          [
+            6,
+            89
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 7,
+        "yMin": 55,
+        "yMax": 95,
+        "tolerance": 0.4,
+        "mMin": -2,
+        "mMax": 8,
+        "mStep": 0.5,
+        "mStart": 0,
+        "bMin": 40,
+        "bMax": 80,
+        "bStep": 2,
+        "bStart": 50,
+        "successFeedback": "About y = 5x + 60. Every extra hour of study lines up with roughly 5 more points — the line's slope is that rate, read directly off how steeply it climbs.",
+        "slopeFeedback": "The tilt is off — this line climbs at the wrong rate for the trend.",
+        "offsetFeedback": "The tilt looks right, but the line needs to slide to sit through the middle of the cloud."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name what the slope means in context.",
+      "conceptTag": "dm-fit-and-read",
+      "explanationVariants": [
+        "Slope is the rate: each extra hour is worth about 5 more points.",
+        "Read the slope as 'points gained per hour' — that is what it counts."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using y = 5x + 60, about how many extra points does ONE more hour of study predict?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 is the intercept — the STARTING score at zero hours, not the rate per hour."
+          },
+          {
+            "value": 65,
+            "feedback": "65 is the score AT one hour (5×1+60), not the CHANGE per hour."
+          }
+        ],
+        "fallbackFeedback": "The slope, 5, is points gained per additional hour."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Separate fitting a line from what fitting MEANS.",
+      "conceptTag": "dm-fit-and-read",
+      "explanationVariants": [
+        "A good fit minimizes the total size of the gaps — points can still land above or below it.",
+        "'Best fit' does not mean every point sits ON the line."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does it mean for a line to 'fit' a scatter of points well?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The gaps between the points and the line are small overall, balanced above and below",
+            "correct": true,
+            "feedback": "A good fit keeps the leftover gaps — the residuals — small in total, not zero; some points sit above the line, some below, roughly balanced."
+          },
+          {
+            "id": "b",
+            "label": "Every single point lies exactly on the line",
+            "correct": false,
+            "feedback": "Real data almost never lines up perfectly — a good fit balances small gaps, it doesn't erase them."
+          },
+          {
+            "id": "c",
+            "label": "The line touches the highest and lowest points",
+            "correct": false,
+            "feedback": "Connecting the extremes ignores everything in between — a fitted line follows the OVERALL trend, not just the two most extreme points."
+          },
+          {
+            "id": "d",
+            "label": "The line has the steepest possible slope",
+            "correct": false,
+            "feedback": "Steepest isn't the goal — matching the DATA's actual trend is, however steep or shallow that happens to be."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A spreadsheet or calculator finds this SAME line — not by eye, but by testing every possible tilt and choosing the one where the leftover gaps, squared and added up, are as small as they can be. It is the identical goal fitting by hand chases; **technology just automates the search**, and lands on the same answer a careful hand-fit approximates.",
+      "figure": "bv-residuals-steer-the-line"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Temperature (°F) vs. hot cocoa cups sold. Fit the trend.",
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit a line to temperature (x) versus cups sold (y).",
+        "points": [
+          [
+            30,
+            120
+          ],
+          [
+            40,
+            100
+          ],
+          [
+            50,
+            82
+          ],
+          [
+            60,
+            58
+          ],
+          [
+            70,
+            42
+          ]
+        ],
+        "xMin": 20,
+        "xMax": 80,
+        "yMin": 0,
+        "yMax": 140,
+        "tolerance": 0.4,
+        "mMin": -4,
+        "mMax": 2,
+        "mStep": 0.5,
+        "mStart": 0,
+        "bMin": 140,
+        "bMax": 220,
+        "bStep": 5,
+        "bStart": 200,
+        "successFeedback": "About y = −2x + 180 — a negative slope, because every degree warmer costs about 2 cups of sales. The direction flips, but finding it is the exact same process as before.",
+        "slopeFeedback": "The tilt is off for this falling trend.",
+        "offsetFeedback": "The tilt is close, but the line needs to slide toward the middle of this cloud."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use the model to predict, not just describe.",
+      "conceptTag": "dm-fit-and-read",
+      "explanationVariants": [
+        "y = −2x + 180 at x = 45 gives 180 − 90 = 90.",
+        "Plug the input into the equation exactly like any other function."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using y = −2x + 180, predict cups sold at 45°F.",
+        "answer": 90,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 135,
+            "feedback": "135 uses x = 45 as if the slope were +... check the sign: −2(45) = −90, then 180 − 90 = 90."
+          },
+          {
+            "value": 88,
+            "feedback": "88 is close but not exact — −2(45) = −90 exactly, and 180 − 90 = 90."
+          }
+        ],
+        "fallbackFeedback": "−2(45) + 180 = 90 cups."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a model you didn't fit yourself.",
+      "conceptTag": "dm-fit-and-read",
+      "explanationVariants": [
+        "Slope 8 means $8 more revenue per ad; intercept 200 means $200 in sales with zero ads run.",
+        "Whatever produced the numbers, slope is always the rate and intercept is always the value at x = 0."
+      ],
+      "hints": [
+        "A calculator's trendline gives y = 8x + 200 for ads run (x) vs. weekly revenue in dollars (y).",
+        "The slope, 8, is the rate — dollars per ad.",
+        "The intercept, 200, is the value when x = 0 — revenue with no ads at all."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A store's calculator fits weekly revenue to y = 8x + 200, where x is ads run. What do the 8 and the 200 mean?",
+        "options": [
+          {
+            "id": "a",
+            "label": "$8 more revenue per extra ad; $200 in revenue with zero ads",
+            "correct": true,
+            "feedback": "Slope is always the rate of change (dollars per ad here); the intercept is always the value at x = 0 — baseline revenue with no advertising at all."
+          },
+          {
+            "id": "b",
+            "label": "8 ads produce $200 in revenue",
+            "correct": false,
+            "feedback": "That treats the two numbers as one combined fact. They are separate: a RATE (8) and a STARTING value (200)."
+          },
+          {
+            "id": "c",
+            "label": "$200 more revenue per extra ad; a baseline of $8",
+            "correct": false,
+            "feedback": "The roles are swapped — check which number multiplies x (the rate) and which stands alone (the baseline)."
+          },
+          {
+            "id": "d",
+            "label": "The numbers only make sense with the original data in hand",
+            "correct": false,
+            "feedback": "That is exactly what a trendline equation is for — reading slope and intercept, no raw data required."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Fitting a line, and reading what it says.",
+      "takeaways": [
+        "A fitted line minimizes the total size of the leftover gaps — it doesn't have to pass through every point.",
+        "Technology finds the identical line a careful hand-fit approximates, by testing every tilt for the smallest squared gaps.",
+        "Slope is always the rate of change; the intercept is always the value when the input is zero."
+      ],
+      "teaser": "next: how GOOD is a fit — residuals, and the number that grades a line's fit at a glance."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dm-fit-and-read",
+      "concept": {
+        "id": "rem-dfr-c",
+        "kind": "concept",
+        "body": "Rewind. In y = mx + b, m is the SLOPE — how much y changes for one more unit of x — and b is the INTERCEPT, the value of y when x is 0. They answer two different questions: m answers 'how fast', b answers 'starting where'."
+      },
+      "check": {
+        "id": "rem-dfr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "dm-fit-and-read",
+        "explanationVariants": [
+          "In y = 3x + 10, the slope is the number multiplying x: 3.",
+          "The intercept stands alone; the slope multiplies x."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the equation y = 3x + 10, what is the slope?",
+          "answer": 3,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "10 is the intercept — the value when x = 0. The slope multiplies x: 3."
+            },
+            {
+              "value": 13,
+              "feedback": "13 adds them together. The slope is just the number in front of x: 3."
+            }
+          ],
+          "fallbackFeedback": "The number multiplying x is the slope: 3."
+        }
+      }
+    }
+  ]
+}

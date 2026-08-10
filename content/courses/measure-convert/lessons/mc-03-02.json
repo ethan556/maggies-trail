@@ -1,0 +1,320 @@
+{
+  "id": "mc-03-02",
+  "slug": "measuring-with-a-protractor",
+  "title": "Measuring with a Protractor",
+  "courseId": "measure-convert",
+  "chapterId": "ch3-angles-as-measurement",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A protractor counts the exact degrees between two rays. Here's a tool you already own: a **clock face.** A full trip around the clock is 360°, split into 12 equal hours — so each hour mark is 360÷12=**30°.** The angle from 12 to 3 o'clock spans 3 hours: 3×30=90°.",
+      "figure": "mc-protractor"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Slide to a clock angle.",
+      "conceptTag": "protractor-reading",
+      "widget": {
+        "type": "slider",
+        "prompt": "Slide to show the angle from 12 o'clock to 4 o'clock.",
+        "min": 0,
+        "max": 360,
+        "step": 30,
+        "start": 0,
+        "target": 120,
+        "visual": "numberline",
+        "unitLabel": "°",
+        "lowFeedback": "Keep sliding — 4 hours means 4 jumps of 30° each.",
+        "highFeedback": "That's past 4 hours' worth. 4 jumps of 30° stop at 120°.",
+        "successFeedback": "4 hours × 30° = 120° — four hour-jumps around the clock face."
+      },
+      "predict": {
+        "prompt": "Each clock hour is worth 30°. From 12 o'clock to 4 o'clock — more than a quarter turn (90°) or less?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than 90°"
+          },
+          {
+            "id": "less",
+            "label": "Less than 90°"
+          },
+          {
+            "id": "exactly",
+            "label": "Exactly 90°"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "Three hours already make the quarter turn (3 × 30° = 90°) — a fourth hour pushes the angle past it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents protractor reading.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for protractor reading must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines protractor reading."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-convert:protractor-reading",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read a bigger clock angle.",
+      "conceptTag": "protractor-reading",
+      "explanationVariants": [
+        "12 to 6 o'clock spans 6 hours: 6×30=180° — a straight angle, exactly halfway around.",
+        "Half the clock face is 6 hours, which is 180°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the angle from 12 o'clock to 6 o'clock?",
+        "answer": 180,
+        "tolerance": 0,
+        "unit": "degrees",
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "90° would be 12 to 3 o'clock (3 hours). 12 to 6 is 6 hours: 6×30=180°."
+          },
+          {
+            "value": 360,
+            "feedback": "360° is the whole clock face, back to 12. 12 to 6 is only halfway: 6×30=180°."
+          }
+        ],
+        "fallbackFeedback": "Count the hours from 12 to 6, then multiply by 30."
+      },
+      "variant": {
+        "gen": "g4-measure",
+        "form": "mcProtractorReadingNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A real protractor just measures more precisely than whole clock-hours — counting single degrees instead of 30° jumps. But the idea is identical: count how many degree-units fit between the two rays, whatever size those units are.",
+      "figure": "mc-protractor"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another clock reading.",
+      "conceptTag": "protractor-reading",
+      "explanationVariants": [
+        "12 to 2 o'clock spans 2 hours: 2×30=60°.",
+        "Two hour-jumps of 30° each."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the angle from 12 o'clock to 2 o'clock?",
+        "answer": 60,
+        "tolerance": 0,
+        "unit": "degrees",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30° is just ONE hour-jump (12 to 1). Two hours is 2×30=60°."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the hour count itself, not the degree measure. Multiply by 30: 2×30=60°."
+          }
+        ],
+        "fallbackFeedback": "Count the hours (2), then multiply by 30."
+      },
+      "variant": {
+        "gen": "g4-measure",
+        "form": "mcProtractorReadingNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Slide to another reading.",
+      "conceptTag": "protractor-reading",
+      "widget": {
+        "type": "slider",
+        "prompt": "Slide to show the angle from 12 o'clock to 5 o'clock.",
+        "min": 0,
+        "max": 360,
+        "step": 30,
+        "start": 0,
+        "target": 150,
+        "visual": "numberline",
+        "unitLabel": "°",
+        "lowFeedback": "Keep sliding — 5 hours means 5 jumps of 30° each.",
+        "highFeedback": "That's past 5 hours' worth. 5 jumps of 30° stop at 150°.",
+        "successFeedback": "5 hours × 30° = 150°."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents protractor reading.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for protractor reading must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines protractor reading."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-convert:protractor-reading",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a wide angle.",
+      "conceptTag": "protractor-reading",
+      "explanationVariants": [
+        "12 to 9 o'clock the short way spans 9 hours: 9×30=270°... but the SHORTER path from 12 to 9 actually goes the other direction, spanning just 3 hours: 3×30=90°.",
+        "The shorter path from 12 to 9 goes backward through 11, 10 — just 3 hours."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the SHORTER angle between 12 o'clock and 9 o'clock?",
+        "options": [
+          {
+            "id": "a",
+            "label": "90° — going backward through 11 and 10 is only 3 hours",
+            "correct": true,
+            "feedback": "Counting the short way (12→11→10→9) is 3 hours: 3×30=90°."
+          },
+          {
+            "id": "b",
+            "label": "270° — counting forward through 1, 2, 3...",
+            "feedback": "That's the LONGER way around (9 hours). The shorter path goes backward through 11 and 10 — just 3 hours, 90°."
+          },
+          {
+            "id": "c",
+            "label": "9° — matching the hour number",
+            "feedback": "The hour number itself isn't the degree count. Counting hour-jumps the short way: 3×30=90°."
+          },
+          {
+            "id": "d",
+            "label": "180° — halfway around",
+            "feedback": "180° would be 12 to 6. From 12 to 9 the short way is only 3 hours: 90°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-measure",
+        "form": "mcProtractorReadingMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The rotating sign.",
+      "conceptTag": "protractor-reading",
+      "hints": [
+        "Starting at 12, the sign rotates to point at 7 o'clock.",
+        "Count the short way, since a sign usually rotates the shorter distance.",
+        "From 12 to 7 backward through 11, 10, 9, 8 is 5 hours."
+      ],
+      "explanationVariants": [
+        "The shorter path from 12 to 7 (backward through 11, 10, 9, 8) is 5 hours: 5×30=150°.",
+        "Counting backward is shorter here: 5 hour-jumps, 150°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rotating sign starts pointing at 12 o'clock and turns to point at 7 o'clock, the SHORTER way. How many degrees did it rotate?",
+        "answer": 150,
+        "tolerance": 0,
+        "unit": "degrees",
+        "commonErrors": [
+          {
+            "value": 210,
+            "feedback": "210° is the LONGER way around (7 hours forward). The shorter path goes backward through 11, 10, 9, 8 — only 5 hours: 150°."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the hour number itself, not the degree measure. Counting the short way: 5 hours × 30° = 150°."
+          }
+        ],
+        "fallbackFeedback": "Count hour-jumps the SHORTER way around, then multiply by 30."
+      },
+      "variant": {
+        "gen": "g4-measure",
+        "form": "mcProtractorReadingNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Reading an angle, hour by hour.",
+      "takeaways": [
+        "A clock face splits 360° into 12 equal 30° hours.",
+        "Count the hour-jumps between two positions, then multiply by 30.",
+        "A real protractor does the same counting, just in single-degree units instead of 30° jumps."
+      ],
+      "teaser": "next: sorting angles into their four family names."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "protractor-reading",
+      "concept": {
+        "id": "rem-pr-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Each clock-hour is 30°.** Count the hour-jumps between two positions, then multiply by 30. From 12 to 3 is 3 hours: 3×30=90°."
+      },
+      "check": {
+        "id": "rem-pr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "protractor-reading",
+        "explanationVariants": [
+          "12 to 3 is 3 hours: 3×30=90°.",
+          "Three hour-jumps of 30° each."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the angle from 12 o'clock to 3 o'clock?",
+          "options": [
+            {
+              "id": "a",
+              "label": "90°",
+              "correct": true,
+              "feedback": "3 hours × 30° = 90°."
+            },
+            {
+              "id": "b",
+              "label": "30°",
+              "feedback": "30° is just one hour-jump. Three hours is 3×30=90°."
+            },
+            {
+              "id": "c",
+              "label": "3°",
+              "feedback": "3 is the hour count, not the degree measure. Multiply by 30: 90°."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

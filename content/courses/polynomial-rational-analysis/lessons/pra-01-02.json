@@ -1,0 +1,275 @@
+{
+ "id": "pra-01-02",
+ "slug": "testing-candidates",
+ "title": "Putting Candidates on Trial",
+ "courseId": "polynomial-rational-analysis",
+ "chapterId": "ch1-rational-root",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A candidate c is a real zero exactly when **f(c) = 0** — the Factor Theorem's verdict: then (x − c) divides f. Testing is just evaluation, so be systematic: try the easy integers first (±1, ±2, …), and each **failure still helps** by shrinking the list.",
+   "figure": "pra-zero-test"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Try the first candidate.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x³ + 2x² − 5x − 6. Test c = 1: what is f(1)?",
+    "answer": -8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "Check the arithmetic: 1 + 2 − 5 − 6 = −8, not 0 — so 1 is NOT a zero, and (x − 1) is not a factor."
+     },
+     {
+      "value": 8,
+      "feedback": "Watch the signs: 1 + 2 − 5 − 6 = −8. The negative matters — but either way, not a zero."
+     }
+    ],
+    "fallbackFeedback": "f(1) = 1 + 2 − 5 − 6 = −8: candidate rejected."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Next candidate.",
+   "conceptTag": "pra-rrt-test",
+   "explanationVariants": [
+    "f(2) = 8 + 8 − 10 − 6 = 0 — candidate 2 is a zero, so (x − 2) is a factor.",
+    "2³ + 2·4 = 16; 5·2 + 6 = 16; they cancel: f(2) = 0."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Same f. Test c = 2: what is f(2)?",
+    "task": "polynomialEvaluate",
+    "values": [],
+    "polyCoefficients": [
+     1,
+     2,
+     -5,
+     -6
+    ],
+    "polyAt": 2,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 4,
+      "feedback": "Recompute term by term: 8 + 8 − 10 − 6. The middle pair 8 − 10 = −2, then 8 − 2 − 6 = 0."
+     },
+     {
+      "value": -8,
+      "feedback": "−8 was f(1), the previous trial. f(2) = 8 + 8 − 10 − 6 = 0."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "f(2) = 8 + 8 − 10 − 6 = 0: a zero — (x − 2) is a factor.",
+    "successFeedback": "f(2) = 8 + 8 − 10 − 6 = 0: a zero — (x − 2) is a factor."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-rrt-test__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "One success changes the game: **divide f by (x − c)** and the degree drops by one. Synthetic division does it fast (recall: bring down, multiply by c, add across). For a cubic, one found root leaves a **quadratic** — solvable by any method you like.",
+   "figure": "pra-divide-factor"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Fractions go on trial too.",
+   "conceptTag": "pra-rrt-test",
+   "explanationVariants": [
+    "g(1/2) = 2·(1/8) − 3·(1/4) − 3·(1/2) + 2 = 1/4 − 3/4 − 3/2 + 2 = 0 — the fraction candidate IS a zero.",
+    "Quarters: 1/4 − 3/4 = −1/2; −1/2 − 3/2 = −2; −2 + 2 = 0."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "g(x) = 2x³ − 3x² − 3x + 2. Testing the candidate c = 1/2 gives g(1/2) = ?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "0 — so (2x − 1) is a factor",
+      "correct": true,
+      "feedback": "Right: 1/4 − 3/4 − 3/2 + 2 = 0. A zero at p/q = 1/2 corresponds to the factor (qx − p) = (2x − 1)."
+     },
+     {
+      "id": "o2",
+      "label": "1/2 — close, but not a zero",
+      "feedback": "Add in quarters: 1/4 − 3/4 − 6/4 + 8/4 = 0/4 = 0. It IS a zero."
+     },
+     {
+      "id": "o3",
+      "label": "2 — the constant survives",
+      "feedback": "The other terms don't cancel to leave 2: in quarters, 1/4 − 3/4 − 6/4 + 8/4 = 0. The whole sum is 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-rrt-test__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Read a synthetic verdict.",
+   "conceptTag": "pra-rrt-test",
+   "explanationVariants": [
+    "A remainder of 0 in the corner IS the statement f(c) = 0 — candidate confirmed, quotient row ready.",
+    "Remainder 0 means the division came out exact: (x − c) divides f."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "You run synthetic division of f by candidate c and the final (remainder) slot shows 0. What have you learned?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "c is a zero AND the other numbers in the bottom row are the quotient's coefficients",
+      "correct": true,
+      "feedback": "Both at once — that's why synthetic division is the efficient trial: verdict and quotient in one pass."
+     },
+     {
+      "id": "o2",
+      "label": "Only that c is a zero; the quotient needs a separate division",
+      "feedback": "The bottom row already IS the quotient (one degree lower) — no second division needed."
+     },
+     {
+      "id": "o3",
+      "label": "c is not a zero",
+      "feedback": "Remainder 0 is the SUCCESS signal: f(c) equals the remainder, which is 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-rrt-test__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Trial by elimination.",
+   "conceptTag": "pra-rrt-test",
+   "explanationVariants": [
+    "Evaluate each offer: g(1) = 2 − 3 − 3 + 2 = −2 (reject); g(−2) = −16 − 12 + 6 + 2 = −20 (reject); g(2) = 16 − 12 − 6 + 2 = 0 — a zero.",
+    "Only x = 2 zeroes g: the big terms 16 and −12 − 6 + 2 cancel exactly."
+   ],
+   "hints": [
+    "Evaluate g at each offered candidate; stop at the first 0.",
+    "g(1) = 2 − 3 − 3 + 2. g(2) = 16 − 12 − 6 + 2.",
+    "g(1) = −2 (reject); g(2) = 0."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "g(x) = 2x³ − 3x² − 3x + 2. Which of these candidates is actually a zero?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "2"
+     },
+     {
+      "id": "t2",
+      "label": "1"
+     },
+     {
+      "id": "t3",
+      "label": "−2"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2"
+      ],
+      "feedback": "g(1) = 2 − 3 − 3 + 2 = −2 ≠ 0 — rejected, and (x − 1) is not a factor."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t3"
+      ],
+      "feedback": "g(−2) = −16 − 12 + 6 + 2 = −20 ≠ 0 — rejected."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Evaluate g at each candidate — a zero makes the whole expression collapse to 0.",
+    "successFeedback": "g(2) = 16 − 12 − 6 + 2 = 0 — confirmed, so (x − 2) is a factor."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-rrt-test__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Trials shrink the problem.",
+   "takeaways": [
+    "Candidate c is a zero iff f(c) = 0 (Factor Theorem).",
+    "Synthetic division tests AND divides in one pass.",
+    "Each found root drops the degree by one."
+   ],
+   "teaser": "Next: running the full pipeline to a complete factorization."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pra-rrt-test",
+   "concept": {
+    "id": "rem-pra0102-c",
+    "kind": "concept",
+    "body": "To test candidate c: substitute it into f. Zero out = zero found = (x − c) is a factor. Anything else = rejected."
+   },
+   "check": {
+    "id": "rem-pra0102-k",
+    "kind": "check",
+    "body": "One quick trial.",
+    "conceptTag": "pra-rrt-test",
+    "explanationVariants": [
+     "f(−1) = −1 + 2 + 5 − 6 = 0 — a zero.",
+     "Substituting −1: (−1)³ = −1, 2(1) = 2, −5(−1) = +5, then −6; total 0."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "f(x) = x³ + 2x² − 5x − 6. What is f(−1)?",
+     "answer": 0,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": -10,
+       "feedback": "Careful with (−1)³ = −1 and −5(−1) = +5: −1 + 2 + 5 − 6 = 0."
+      },
+      {
+       "value": 2,
+       "feedback": "Sum all four terms: −1 + 2 + 5 − 6 = 0 — the +5 (from −5·(−1)) is easy to drop."
+      }
+     ],
+     "fallbackFeedback": "f(−1) = −1 + 2 + 5 − 6 = 0: −1 is a zero."
+    }
+   }
+  }
+ ]
+}

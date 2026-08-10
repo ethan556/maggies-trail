@@ -1,0 +1,351 @@
+{
+  "id": "rns-01-03",
+  "slug": "converting-repeating-decimals-to-fractions",
+  "title": "Converting a Repeating Decimal to a Fraction",
+  "courseId": "the-real-number-system",
+  "chapterId": "ch1-rational-decimals",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To turn a repeating decimal into a fraction: let x equal the decimal, multiply by a power of 10 that shifts one full repeating block to the left of the decimal point, then subtract the original x. The repeating parts cancel, leaving a simple equation to solve for x.",
+      "figure": "rns-convert-repeating"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the trick in action.",
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "repeatToFraction",
+        "answerMode": "explore",
+        "prompt": "Convert 0.333… to a fraction.",
+        "repeatBlock": "3",
+        "candidates": [],
+        "requiredExplorations": 3,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [
+          {
+            "title": "Step 1",
+            "body": "Let x = 0.333… (one repeating digit: 3)."
+          },
+          {
+            "title": "Step 2",
+            "body": "Multiply both sides by 10 (one digit repeats, so shift by one place): 10x = 3.333…"
+          },
+          {
+            "title": "Step 3",
+            "body": "Subtract: 10x − x = 3.333… − 0.333… = 3, so 9x = 3, and x = 3/9 = 1/3."
+          }
+        ],
+        "successFeedback": "Exactly — subtracting cancels the repeating part, leaving a plain equation.",
+        "explorationFeedback": "Inspect at least 3 exact quotient states before checking.",
+        "fallbackFeedback": "Reveal the next step."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "For a TWO-digit repeating block, multiply by 100 instead of 10, so the whole block shifts past the decimal point. Example: x = 0.454545…, so 100x = 45.4545…, and 100x − x = 45, giving 99x = 45, so x = 45/99 = 5/11 once simplified.",
+      "figure": "rns-convert-repeating"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Convert 0.777… to a fraction.",
+      "conceptTag": "rns-convert-to-fraction",
+      "explanationVariants": [
+        "x=0.777…, 10x=7.777…, 10x−x=7, so 9x=7 and x=7/9.",
+        "One repeating digit means multiply by 10; subtracting leaves 9x = 7."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "repeatToFraction",
+        "answerMode": "fraction",
+        "prompt": "0.777… equals:",
+        "repeatBlock": "7",
+        "candidates": [],
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "fractionErrors": [
+          {
+            "whole": 0,
+            "num": 7,
+            "den": 10,
+            "feedback": "That would only be true if the decimal STOPPED at 0.7 — but it repeats forever, so it's 7/9."
+          },
+          {
+            "whole": 0,
+            "num": 7,
+            "den": 99,
+            "feedback": "7/99 would be for a two-digit repeating block, but only one digit (7) repeats here."
+          },
+          {
+            "whole": 7,
+            "num": 7,
+            "den": 9,
+            "feedback": "That misplaces a digit — 0.777… is less than 1, so the fraction must be too."
+          }
+        ],
+        "authoredStages": [],
+        "successFeedback": "Right — 10x − x = 7, so 9x = 7, x = 7/9.",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "One repeating digit goes over 9: x = 7/9 from 9x = 7."
+      },
+      "variant": {
+        "gen": "repeat-decimal"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "One more single-digit conversion.",
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "repeatToFraction",
+        "answerMode": "choice",
+        "prompt": "0.222… equals:",
+        "repeatBlock": "2",
+        "candidates": [],
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "2/9",
+            "claim": "fraction:2/9",
+            "feedback": "Right — 10x − x = 2, so 9x = 2, x = 2/9."
+          },
+          {
+            "id": "b",
+            "label": "2/10",
+            "claim": "misconception:b",
+            "feedback": "That's only the rounded first digit — the 2s repeat forever, giving 2/9."
+          },
+          {
+            "id": "c",
+            "label": "2/99",
+            "claim": "misconception:c",
+            "feedback": "2/99 is for a two-digit block — only one digit (2) repeats here."
+          },
+          {
+            "id": "d",
+            "label": "1/5",
+            "claim": "misconception:d",
+            "feedback": "1/5 = 0.2 exactly (terminating) — that's not the same as 0.222… repeating."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Right — 10x − x = 2, so 9x = 2, x = 2/9.",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Convert 0.454545… to a fraction in lowest terms.",
+      "conceptTag": "rns-convert-to-fraction",
+      "explanationVariants": [
+        "100x − x = 45 gives 99x = 45, so x = 45/99, which simplifies to 5/11.",
+        "Two repeating digits means multiply by 100 first, then simplify 45/99 by dividing by 9."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "repeatToFraction",
+        "answerMode": "fraction",
+        "prompt": "0.454545… (block \"45\" repeats) equals:",
+        "repeatBlock": "45",
+        "candidates": [],
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "fractionErrors": [
+          {
+            "whole": 0,
+            "num": 45,
+            "den": 100,
+            "feedback": "That treats it like a terminating decimal — but it repeats forever, so divide by 99, not 100."
+          }
+        ],
+        "authoredStages": [],
+        "successFeedback": "Right — 45/99 simplifies to 5/11 (divide both by 9).",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "A two-digit repeating block goes over 99: 45/99, then simplify."
+      },
+      "variant": {
+        "gen": "repeat-decimal",
+        "form": "twoDigit"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Convert 0.181818… to a fraction in lowest terms.",
+      "conceptTag": "rns-convert-to-fraction",
+      "explanationVariants": [
+        "100x − x = 18 gives 99x = 18, so x = 18/99, which simplifies to 2/11.",
+        "Multiply by 100 for the two-digit block \"18\", then simplify 18/99 by dividing by 9."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "repeatToFraction",
+        "answerMode": "fraction",
+        "prompt": "0.181818… (block \"18\" repeats) equals:",
+        "repeatBlock": "18",
+        "candidates": [],
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "fractionErrors": [
+          {
+            "whole": 0,
+            "num": 18,
+            "den": 100,
+            "feedback": "That treats it as terminating, but it repeats forever — divide by 99, not 100."
+          }
+        ],
+        "authoredStages": [],
+        "successFeedback": "Right — 18/99 simplifies to 2/11 (divide both by 9).",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "A two-digit repeating block goes over 99: 18/99, then simplify."
+      },
+      "variant": {
+        "gen": "repeat-decimal",
+        "form": "twoDigit"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A three-digit repeating block.",
+      "conceptTag": "rns-convert-to-fraction",
+      "explanationVariants": [
+        "A 3-digit block needs ×1000: 1000x − x = 123 gives 999x = 123, so x = 123/999 = 41/333 (divide by 3).",
+        "Match the power of 10 to the block length (3 digits → ×1000), then simplify 123/999 by their greatest common factor, 3."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "repeatToFraction",
+        "answerMode": "fraction",
+        "prompt": "0.123123123… (block \"123\" repeats) equals, in lowest terms:",
+        "repeatBlock": "123",
+        "candidates": [],
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "fractionErrors": [
+          {
+            "whole": 0,
+            "num": 123,
+            "den": 1000,
+            "feedback": "That treats it as terminating — but it repeats forever, so divide by 999, not 1000."
+          },
+          {
+            "whole": 0,
+            "num": 41,
+            "den": 330,
+            "feedback": "That's a simplification slip — 999 ÷ 3 = 333, not 330."
+          }
+        ],
+        "authoredStages": [],
+        "successFeedback": "Right — 123/999 simplifies to 41/333 by dividing both by 3.",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "A three-digit repeating block goes over 999: 123/999, then divide by the GCF."
+      },
+      "hints": [
+        "How many digits are in the repeating block? That tells you which power of 10 to multiply by.",
+        "The block \"123\" has 3 digits, so multiply x by 1000, then subtract x from 1000x.",
+        "1000x − x = 999x = 123, so x = 123/999 — now simplify by dividing both by their greatest common factor, 3, to get 41/333."
+      ],
+      "variant": {
+        "gen": "repeat-decimal",
+        "form": "threeDigit"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiply to shift one block past the decimal, subtract, then simplify.",
+      "takeaways": [
+        "The power of 10 matches the repeating block's length (1 digit → ×10, 2 digits → ×100, …).",
+        "Subtracting the original x cancels the infinite repeating part.",
+        "Always simplify the resulting fraction by the greatest common factor."
+      ],
+      "teaser": "Next chapter: numbers whose decimals never repeat at all — irrational numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rns-convert-to-fraction",
+      "concept": {
+        "id": "rem-rns0103-c",
+        "kind": "concept",
+        "body": "To convert a repeating decimal: let x = the decimal, multiply by 10 (one repeating digit) or 100 (two digits) to shift a full block past the decimal point, subtract x, then solve and simplify."
+      },
+      "check": {
+        "id": "rem-rns0103-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rns-convert-to-fraction",
+        "explanationVariants": [
+          "10x − x = 6 gives 9x = 6, so x = 6/9 = 2/3.",
+          "One repeating digit means ×10; subtracting leaves 9x = 6, simplified to 2/3."
+        ],
+        "widget": {
+          "type": "quotientReasoningLab",
+          "task": "repeatToFraction",
+          "answerMode": "choice",
+          "prompt": "0.666… equals, in lowest terms:",
+          "repeatBlock": "6",
+          "candidates": [],
+          "requiredExplorations": 4,
+          "tolerance": 0,
+          "choices": [
+            {
+              "id": "a",
+              "label": "2/3",
+              "claim": "fraction:2/3",
+              "feedback": "Right — 6/9 simplifies to 2/3."
+            },
+            {
+              "id": "b",
+              "label": "6/9, unsimplified",
+              "claim": "misconception:b",
+              "feedback": "That's correct before simplifying — divide both by 3 to reach 2/3."
+            },
+            {
+              "id": "c",
+              "label": "6/10",
+              "claim": "misconception:c",
+              "feedback": "That's just the rounded first digit, not the exact repeating value."
+            },
+            {
+              "id": "d",
+              "label": "3/4",
+              "claim": "misconception:d",
+              "feedback": "3/4 = 0.75, a different number entirely."
+            }
+          ],
+          "numericErrors": [],
+          "fractionErrors": [],
+          "authoredStages": [],
+          "successFeedback": "Right — 6/9 simplifies to 2/3.",
+          "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+          "fallbackFeedback": "Use the exact quotient states to decide."
+        }
+      }
+    }
+  ]
+}

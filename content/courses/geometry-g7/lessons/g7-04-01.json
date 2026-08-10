@@ -1,0 +1,344 @@
+{
+  "id": "g7-04-01",
+  "slug": "when-sides-make-a-triangle",
+  "title": "When Sides Make a Triangle",
+  "courseId": "geometry-g7",
+  "chapterId": "ch4-triangles-cross-sections",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Not every three lengths can form a triangle. The **triangle inequality** decides: the two **shorter** sides together must **beat** the longest side. Sides 3, 4, 5 work because 3 + 4 > 5. Sides 2, 3, 6 fail because 2 + 3 < 6.",
+      "figure": "right-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test three sides.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Can the lengths 5, 5, and 9 form a triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — 5 + 5 = 10, which beats 9",
+            "correct": true,
+            "feedback": "Right — the two shorter sides (5 + 5 = 10) beat the longest (9), so the triangle closes."
+          },
+          {
+            "id": "b",
+            "label": "No — 5 + 9 is too big",
+            "correct": false,
+            "feedback": "You compare the two SHORTER sides to the longest: 5 + 5 = 10 > 9, so yes."
+          },
+          {
+            "id": "c",
+            "label": "No — the sides aren't all different",
+            "correct": false,
+            "feedback": "Repeated sides are fine — the test is 5 + 5 > 9, which passes."
+          },
+          {
+            "id": "d",
+            "label": "Only if it's a right triangle",
+            "correct": false,
+            "feedback": "The triangle inequality doesn't care about angles: 5 + 5 > 9, so it forms."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "For three lengths to close into a triangle, the two SHORTER ones together must…?",
+        "options": [
+          {
+            "id": "beat",
+            "label": "Beat the longest one"
+          },
+          {
+            "id": "equal",
+            "label": "Equal the longest one"
+          },
+          {
+            "id": "any",
+            "label": "Nothing — any three lengths close"
+          }
+        ],
+        "outcomeId": "beat",
+        "reveal": "The two short sides must reach past the long side's far end, or the shape gapes open. Exactly equal just collapses flat — strictly longer, or no triangle."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Picture why: the longest side is the floor, and the two shorter sides must reach over it to meet. If they're too short to arch over — like 2 and 3 across a floor of 6 — the sides fall flat and never touch.",
+      "figure": "g7-triangle-inequality"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A failing set.",
+      "conceptTag": "g7-triangle-inequality",
+      "explanationVariants": [
+        "1 + 2 = 3, which only EQUALS the longest side — the sides lie flat, so no triangle.",
+        "The shorter pair must BEAT the longest: 1 + 2 = 3 is not more than 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Can the lengths 1, 2, and 3 form a triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — 1 + 2 only equals 3, so the sides lie flat",
+            "correct": true,
+            "feedback": "Right — equal isn't enough; the shorter pair must BEAT the longest side."
+          },
+          {
+            "id": "b",
+            "label": "Yes — 1 + 2 = 3 works",
+            "correct": false,
+            "feedback": "Equality fails: the sides collapse into a flat line — the pair must be GREATER than 3."
+          },
+          {
+            "id": "c",
+            "label": "Yes — any three lengths work",
+            "correct": false,
+            "feedback": "They don't: the two shorter sides must beat the longest, and 1 + 2 = 3 doesn't."
+          },
+          {
+            "id": "d",
+            "label": "No — triangles need equal sides",
+            "correct": false,
+            "feedback": "Unequal sides are fine — the failure here is 1 + 2 not exceeding 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-triangle-inequality"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort the side sets.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each set of side lengths.",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Forms a triangle"
+          },
+          {
+            "id": "no",
+            "label": "Cannot form a triangle"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "3, 4, 5",
+            "bucketId": "yes",
+            "feedback": "3 + 4 = 7 beats 5 — the sides close into a triangle."
+          },
+          {
+            "id": "d2",
+            "label": "2, 3, 6",
+            "bucketId": "no",
+            "feedback": "2 + 3 = 5 falls short of 6 — the short sides can't reach across."
+          },
+          {
+            "id": "d3",
+            "label": "4, 4, 4",
+            "bucketId": "yes",
+            "feedback": "4 + 4 = 8 beats 4 — an equilateral triangle forms easily."
+          },
+          {
+            "id": "d4",
+            "label": "2, 2, 5",
+            "bucketId": "no",
+            "feedback": "2 + 2 = 4 falls short of 5 — no triangle."
+          }
+        ],
+        "missFeedback": "Not quite — add the two SHORTER sides and check they beat the longest.",
+        "successFeedback": "All sorted — the shorter pair must out-reach the longest side."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The exact rule.",
+      "conceptTag": "g7-triangle-inequality",
+      "explanationVariants": [
+        "The sum of the two shorter sides must be GREATER than the longest side — equal collapses flat.",
+        "Strictly greater: shorter pair > longest side."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What exactly must be true of three lengths to form a triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The two shorter sides must sum to MORE than the longest",
+            "correct": true,
+            "feedback": "Right — strictly more; equal makes the sides lie flat."
+          },
+          {
+            "id": "b",
+            "label": "The two shorter sides must sum to at least the longest",
+            "correct": false,
+            "feedback": "Equal fails (the sides go flat) — the sum must be strictly GREATER."
+          },
+          {
+            "id": "c",
+            "label": "All three sides must be different",
+            "correct": false,
+            "feedback": "Equal sides are fine (4, 4, 4 works) — the test is the shorter pair beating the longest."
+          },
+          {
+            "id": "d",
+            "label": "The longest side must be under 10",
+            "correct": false,
+            "feedback": "Size doesn't matter — only whether the shorter pair out-reaches the longest side."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-triangle-inequality",
+        "form": "ruleApplied"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The biggest missing side.",
+      "conceptTag": "g7-triangle-inequality",
+      "explanationVariants": [
+        "With sides 4 and 6, the third side must be less than 4 + 6 = 10 — so 9 works, 10 doesn't.",
+        "The third side stays under the sum: less than 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two sides of a triangle are 4 and 6. Which CANNOT be the third side?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 works: 4 + 6 = 10 beats 9 — the impossible one is 10 itself."
+          },
+          {
+            "value": 5,
+            "feedback": "5 works: check 4 + 5 = 9 > 6 — the impossible one is 10."
+          },
+          {
+            "value": 3,
+            "feedback": "3 works: 3 + 4 = 7 > 6 — the impossible one is 10."
+          }
+        ],
+        "fallbackFeedback": "Add the two given sides: the third side must be strictly LESS than 4 + 6.",
+        "successFeedback": "Right — 4 + 6 = 10 only equals it, so the triangle collapses flat: 10 is impossible."
+      },
+      "variant": {
+        "gen": "g7-triangle-inequality",
+        "form": "upperBoundary"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count the possibilities.",
+      "conceptTag": "g7-triangle-inequality",
+      "explanationVariants": [
+        "Whole-number sides with 2 and 7: the third side s needs 7 − 2 < s < 7 + 2, so s = 6, 7, or 8 — three choices.",
+        "s must beat 5 and stay under 9: 6, 7, 8 — three values."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has sides 2 and 7. How many WHOLE-NUMBER lengths could the third side be?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's the upper limit (2 + 7) — the side must be BETWEEN 5 and 9: only 6, 7, 8 work, so 3."
+          },
+          {
+            "value": 5,
+            "feedback": "5 exactly fails (2 + 5 = 7 lies flat) — only 6, 7, 8 work: 3 values."
+          }
+        ],
+        "fallbackFeedback": "The third side s needs 5 < s < 9: s = 6, 7, or 8 — three whole numbers."
+      },
+      "hints": [
+        "The third side must beat 7 − 2 = 5 and stay under 7 + 2 = 9.",
+        "List the whole numbers strictly between 5 and 9.",
+        "6, 7, and 8 — three possibilities."
+      ],
+      "variant": {
+        "gen": "g7-triangle-inequality",
+        "form": "wholeCount"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three lengths form a triangle only if the two shorter sides out-reach the longest.",
+      "takeaways": [
+        "Shorter pair > longest side — strictly greater.",
+        "Equal sums collapse flat (1, 2, 3 fails).",
+        "The third side lives strictly between the difference and the sum."
+      ],
+      "teaser": "Next: the flat shapes hiding inside solids."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-triangle-inequality",
+      "concept": {
+        "id": "rem-g70401-c",
+        "kind": "concept",
+        "body": "Three lengths form a triangle only when the two shorter sides add to MORE than the longest side. Equal collapses flat: 3 + 4 > 5 works; 2 + 3 = 5 or less fails."
+      },
+      "check": {
+        "id": "rem-g70401-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-triangle-inequality",
+        "explanationVariants": [
+          "2 + 3 = 5 falls short of 6, so no triangle forms.",
+          "The shorter pair (5) can't reach across the 6."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Can the lengths 2, 3, and 6 form a triangle?",
+          "options": [
+            {
+              "id": "a",
+              "label": "No — 2 + 3 = 5 can't reach across 6",
+              "correct": true,
+              "feedback": "Right — the short sides fall short of the longest, so no triangle."
+            },
+            {
+              "id": "b",
+              "label": "Yes — three lengths always work",
+              "correct": false,
+              "feedback": "They don't — here 2 + 3 = 5 is less than 6, so the sides never meet."
+            },
+            {
+              "id": "c",
+              "label": "Yes — 6 is the base",
+              "correct": false,
+              "feedback": "A base still needs the other sides to reach over it: 2 + 3 = 5 < 6 fails."
+            },
+            {
+              "id": "d",
+              "label": "Only with a right angle",
+              "correct": false,
+              "feedback": "Angles don't rescue it — 2 + 3 < 6 means no triangle at all."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

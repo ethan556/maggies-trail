@@ -1,0 +1,280 @@
+{
+  "id": "re-04-01",
+  "slug": "square-both-sides",
+  "title": "Square Both Sides",
+  "courseId": "radical-functions",
+  "chapterId": "ch4-solving-radical-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A radical equation traps x under a root. The escape move: **isolate the radical, then square both sides**. √(x + 5) = 3 → square → x + 5 = 9 → **x = 4**. Verify: √9 = 3. ✓ Squaring undoes the root — as long as the root stood alone first.",
+      "figure": "re-isolate-square"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Square both sides — then pay the bill.",
+      "predict": {
+        "prompt": "Squaring √(x + 6) = x will hand you two candidates. How many of them solve the ORIGINAL equation?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both — squaring is reversible"
+          },
+          {
+            "id": "one",
+            "label": "Exactly one — squaring can invent an extra"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — squaring wrecks the equation"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Squaring keeps every true solution and can add impostors wherever the line dipped below the axis. Here exactly one candidate survives the return trip — finding which one is the work ahead."
+      },
+      "widget": {
+        "type": "extraneousRootLab",
+        "prompt": "√(x + 6) = x. Square both sides, then find the candidate that survives the original equation.",
+        "radical": {
+          "c": 6,
+          "scale": 1
+        },
+        "line": {
+          "m": 1,
+          "b": 0
+        },
+        "probeStart": -4,
+        "targetPhase": "identifyTrue",
+        "trueRoot": 3,
+        "phantomRoot": -2,
+        "requiredMoves": 2,
+        "successFeedback": "x = 3 survives: √9 = 3, and both curves meet above the axis, where a square root can actually live. The other crossing, at −2, sits on the reflected stretch — the line was at −2 there, and √4 = +2 never equals −2. Squaring created that meeting; the original never had it.",
+        "phantomPickedFeedback": "−2 satisfies only the SQUARED pair. Probe it on the original: the radical reads √4 = +2 while the line reads −2 — they never met. That crossing was manufactured when squaring reflected the line's negative stretch upward.",
+        "notSquaredFeedback": "Square both sides first — the candidates are born from x² = x + 6, and until the squaring happens the second crossing is not on screen to judge.",
+        "signRegionFeedback": "The line is negative on this stretch, and √(x + 6) never is — nothing here can solve the original. Squaring flips this very stretch upward, and that reflection is where the false candidate will come from.",
+        "domainConfusionFeedback": "That x is neither candidate. Squaring gives x² = x + 6, whose roots are exactly −2 and 3 — the survivor is one of those two."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Isolate first** — squaring a sum is a mess. For √x + 2 = 7, subtract 2 before squaring: √x = 5, so x = **25**. Squaring the original left side would give x + 4√x + 4, which still holds a radical: no progress.",
+      "figure": "re-isolate-first"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Isolate, then square.",
+      "conceptTag": "re-solve",
+      "explanationVariants": [
+        "√x + 3 = 10 → √x = 7 → x = 49.",
+        "Move the 3 first; then one square finishes it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve √x + 3 = 10.",
+        "answer": 49,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "Isolate BEFORE squaring: √x = 7, so x = 49 (squaring the 10 skips the −3 step)."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is √x — one more step: square it. x = 49."
+          }
+        ],
+        "fallbackFeedback": "√x = 7 → x = 49."
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-solve__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A coefficient on the radical.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 2√x = 12.",
+        "answer": 36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 144,
+            "feedback": "Divide by 2 FIRST: √x = 6, then square: 36 (squaring 12 forgets the 2)."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is √x — squaring gives x = 36."
+          }
+        ],
+        "fallbackFeedback": "√x = 6 → x = 36; check 2·6 = 12. ✓"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Radical equals a number times itself.",
+      "conceptTag": "re-solve",
+      "explanationVariants": [
+        "√(3x + 1) = 4 → 3x + 1 = 16 → x = 5.",
+        "Square, then a two-step linear solve."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve √(3x + 1) = 4.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That skips the squaring (3x + 1 = 4 → x = 1) — square FIRST: 3x + 1 = 16, so x = 5."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is 3x — one more step, divide by 3: x = 5."
+          }
+        ],
+        "fallbackFeedback": "3x + 1 = 16 → 3x = 15 → x = 5."
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-solve__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When no solution exists.",
+      "conceptTag": "re-solve",
+      "explanationVariants": [
+        "√(x + 1) outputs only nonnegative values — it can never equal −2. Squaring would 'find' x = 3, a phantom.",
+        "Check the target's sign BEFORE solving: a principal root can't be negative."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does √(x + 1) = −2 have?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "none — a principal root is never negative",
+            "correct": true,
+            "feedback": "Right — and blindly squaring would produce x = 3, which fails the check: √4 = +2 ≠ −2."
+          },
+          {
+            "id": "o2",
+            "label": "one: x = 3",
+            "correct": false,
+            "feedback": "Test it: √(3 + 1) = √4 = +2, not −2 — squaring invented that answer."
+          },
+          {
+            "id": "o3",
+            "label": "one: x = −5",
+            "correct": false,
+            "feedback": "x = −5 puts −4 under the root — not even in the domain."
+          },
+          {
+            "id": "o4",
+            "label": "two: x = 3 and x = −5",
+            "correct": false,
+            "feedback": "The left side is always ≥ 0; it can never reach −2 — zero solutions."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-solve__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full pipeline.",
+      "conceptTag": "re-solve",
+      "explanationVariants": [
+        "3√(x − 1) − 6 = 0 → 3√(x − 1) = 6 → √(x − 1) = 2 → x − 1 = 4 → x = 5.",
+        "Add 6, divide by 3, square, add 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 3√(x − 1) − 6 = 0.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 37,
+            "feedback": "Divide by 3 BEFORE squaring: √(x − 1) = 2 → x = 5 (squaring the 6 gives the wrong 36 + 1)."
+          },
+          {
+            "value": 3,
+            "feedback": "√(x − 1) = 2 squares to x − 1 = 4 — then ADD 1: x = 5."
+          }
+        ],
+        "fallbackFeedback": "√(x − 1) = 2 → x − 1 = 4 → x = 5; check 3·2 − 6 = 0. ✓"
+      },
+      "hints": [
+        "Isolate the radical: 3√(x − 1) = 6, then divide by 3.",
+        "√(x − 1) = 2 — now square.",
+        "x − 1 = 4 → x = 5."
+      ],
+      "variant": {
+        "gen": "a2-radicals",
+        "form": "re-solve__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Isolate the radical, square once, solve, and always check.",
+      "takeaways": [
+        "Squaring undoes an isolated root — never square a sum.",
+        "Coefficients divide off before the square.",
+        "A principal root can't equal a negative — spot the no-solution case early."
+      ],
+      "teaser": "Next: WHY the check is mandatory — squaring can invent solutions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "re-solve",
+      "concept": {
+        "id": "rem-re0401-c",
+        "kind": "concept",
+        "body": "The two-step core: square, then solve. √x = 6 squares to x = 36."
+      },
+      "check": {
+        "id": "rem-re0401-k",
+        "kind": "check",
+        "body": "Run it once.",
+        "conceptTag": "re-solve",
+        "explanationVariants": [
+          "x = 36; check √36 = 6. ✓",
+          "Squaring both sides removes the radical in one move."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve √x = 6.",
+          "answer": 36,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "Squaring means 6 · 6 = 36, not 6 · 2."
+            },
+            {
+              "value": 3,
+              "feedback": "Don't halve — UNDO the root by squaring: 36."
+            }
+          ],
+          "fallbackFeedback": "6² = 36."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,349 @@
+{
+  "id": "fr-01-03",
+  "slug": "counting-pieces-a-b",
+  "title": "Counting Pieces: a/b",
+  "courseId": "fractions",
+  "chapterId": "ch1-whats-a-fraction",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Take MORE than one piece and the top number simply counts them: three pieces of a fourth-cut is **3/4**. A fraction is a count of units — 3/4 is really **1/4 + 1/4 + 1/4**, three copies of the building block stacked up.",
+      "figure": "frac-three-fourths"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build a fraction from a pizza story.",
+      "conceptTag": "build-fraction",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A pizza is fair-cut into 6 slices; you take 5. Build the fraction of the pizza you took.",
+        "tokens": [
+          {
+            "id": "t5",
+            "label": "5"
+          },
+          {
+            "id": "tsl",
+            "label": "/"
+          },
+          {
+            "id": "t6",
+            "label": "6"
+          },
+          {
+            "id": "t1",
+            "label": "1"
+          }
+        ],
+        "correct": [
+          "t5",
+          "tsl",
+          "t6"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t6",
+              "tsl",
+              "t5"
+            ],
+            "feedback": "6/5 swapped the jobs — that reads 'cut into 5, take 6': more than a whole pizza! The take-count (5) rides on top; the cut-count (6) sits below."
+          },
+          {
+            "sequence": [
+              "t1",
+              "tsl",
+              "t6"
+            ],
+            "feedback": "1/6 is the single slice LEFT in the box. The question asks what you took: five of the six."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Top = slices you took (5); bottom = slices the cut made (6).",
+        "successFeedback": "5/6 — five taken of six cut. (The 1/6 left behind completes the whole.)"
+      },
+      "predict": {
+        "prompt": "You took 5 of the 6 slices. Is your share more than half the pizza?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "Half of six slices is three — five slices sails well past it. Benchmarking against a half reads a fraction before any symbols do."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The top number's job.",
+      "conceptTag": "build-fraction",
+      "explanationVariants": [
+        "The top counts the pieces you're talking about — in 5/6, five taken pieces.",
+        "Bottom describes the cutting; top does the counting. Two numbers, two jobs."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does the TOP number of 5/6 count?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The pieces you're taking",
+            "correct": true,
+            "feedback": "Five pieces in your hands — the top is the take-count."
+          },
+          {
+            "id": "b",
+            "label": "The pieces the cut made",
+            "feedback": "That's the BOTTOM number's job — the 6 records the cut. The top counts what you take."
+          },
+          {
+            "id": "c",
+            "label": "The pieces left over",
+            "feedback": "The leftovers are whatever the top DIDN'T take (here, 1). The top counts the taken ones."
+          },
+          {
+            "id": "d",
+            "label": "How big each piece is",
+            "feedback": "Piece size comes from the cut — the bottom number. The top just counts pieces."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "build-fraction"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Read any fraction like a **recipe**: the bottom says how to cut, the top says how many to take. 2/3 = 'cut into 3, take 2.' 7/8 = 'cut into 8, take 7.' The jobs never swap — cut downstairs, take on top.",
+      "figure": "frac-two-thirds"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fractions are counts of units.",
+      "conceptTag": "build-fraction",
+      "explanationVariants": [
+        "4/6 means four sixth-pieces — the top literally counts them: 1/6, 2/6, 3/6, 4/6.",
+        "Read the recipe: cut into 6, take 4 — four pieces, each a sixth."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You hold 4/6 of a ribbon. How many sixth-pieces are in your hand?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "pieces",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the CUT count — how the whole ribbon was divided. Your hand holds what the top counts: four."
+          },
+          {
+            "value": 24,
+            "feedback": "24 multiplied the two numbers — but a fraction isn't a times problem. The top already IS the piece count: 4."
+          }
+        ],
+        "fallbackFeedback": "The top number counts your pieces directly."
+      },
+      "variant": {
+        "gen": "build-fraction",
+        "form": "howManyUnits"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which pictures really show 3/4?",
+      "conceptTag": "build-fraction",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each picture: does it show 3/4, or not?",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Shows 3/4",
+            "icon": "✅"
+          },
+          {
+            "id": "no",
+            "label": "Doesn't",
+            "icon": "❌"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "A bar in 4 equal pieces, 3 shaded",
+            "bucketId": "yes",
+            "feedback": "Fair fourths, three taken — the honest 3/4."
+          },
+          {
+            "id": "p2",
+            "label": "A bar in 3 pieces, all shaded",
+            "bucketId": "no",
+            "feedback": "All three of three is 3/3 — a whole bar. 3/4 leaves one fourth unshaded."
+          },
+          {
+            "id": "p3",
+            "label": "A bar in 4 UNEQUAL pieces, 3 shaded",
+            "bucketId": "no",
+            "feedback": "Unfair cut, no names — without equal pieces, the shading can't be called 3/4 of anything."
+          },
+          {
+            "id": "p4",
+            "label": "A bar in 8 equal pieces, 3 shaded",
+            "bucketId": "no",
+            "feedback": "Three of EIGHT is 3/8 — right count, wrong cut. The bottom must match the pieces."
+          }
+        ],
+        "missFeedback": "Check both numbers against the picture: a fair cut into 4, and exactly 3 taken.",
+        "successFeedback": "Only the fair four-cut with 3 shaded earns the name — 3/3, unfair cuts, and 3/8 all fail one of the two jobs."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Back to the building blocks.",
+      "conceptTag": "build-fraction",
+      "explanationVariants": [
+        "3/4 stacks three fourth-units: 1/4 + 1/4 + 1/4. The top is the copy count.",
+        "Count up in fourths on your fingers: one fourth, two fourths, three fourths — that climb IS 3/4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which sum builds 3/4?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/4 + 1/4 + 1/4",
+            "correct": true,
+            "feedback": "Three copies of the fourth-unit, stacked — that's exactly what the 3 on top means."
+          },
+          {
+            "id": "b",
+            "label": "1/3 + 1/3 + 1/3",
+            "feedback": "Those are THIRDS — three of them make a whole (3/3). 3/4 stacks fourth-pieces."
+          },
+          {
+            "id": "c",
+            "label": "3 + 4",
+            "feedback": "Adding top and bottom mixes the two jobs. The 4 describes the cut; only the 3 counts pieces."
+          },
+          {
+            "id": "d",
+            "label": "4/4 + 4/4 + 4/4",
+            "feedback": "Each 4/4 is a WHOLE — that sum is three entire bars. 3/4 is three quarter-pieces of one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "build-fraction",
+        "form": "whichSum"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The veggie tray.",
+      "conceptTag": "build-fraction",
+      "hints": [
+        "The tray's cut is 12 — every count in this story is in twelfths.",
+        "Carrots and peppers together claim how many cups?",
+        "The dip gets whatever the 12 cups have left."
+      ],
+      "explanationVariants": [
+        "Carrots + peppers claim 5 + 4 = 9 cups, so the dip holds the remaining 12 − 9 = 3 — that's 3/12 of the tray.",
+        "Account for every cup: 5 + 4 + 3 = 12. The three unclaimed cups are the dip's twelfths."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A veggie tray has 12 equal cups. 5 hold carrots and 4 hold peppers; every other cup holds dip. How many TWELFTHS of the tray hold dip?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "twelfths",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 counts the carrot-and-pepper cups — the veggies. The dip lives in the cups they DIDN'T claim."
+          },
+          {
+            "value": 7,
+            "feedback": "7 removed only the carrots (12 − 5). The peppers claim cups too — subtract both: 12 − 5 − 4."
+          }
+        ],
+        "fallbackFeedback": "Total cups minus carrot cups minus pepper cups."
+      },
+      "variant": {
+        "gen": "build-fraction",
+        "form": "trayRemainder"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can build any fraction now.",
+      "takeaways": [
+        "The top counts the pieces you take; a/b = a copies of 1/b.",
+        "Read it as a recipe: bottom cuts, top takes.",
+        "A picture earns a fraction name only if the cut is fair AND both numbers match it."
+      ],
+      "teaser": "the two numbers are about to get their official names — and one of them can never be zero."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "build-fraction",
+      "concept": {
+        "id": "rem-bf-c",
+        "kind": "concept",
+        "body": "Quick rewind. Build fractions **piece by piece**: 2/5 is 1/5 + 1/5 — count it on your fingers in fifths: 'one fifth, two fifths.' The top number is just how high you counted."
+      },
+      "check": {
+        "id": "rem-bf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "build-fraction",
+        "explanationVariants": [
+          "2/3 is two third-pieces: 1/3 + 1/3.",
+          "Count in thirds: one third, two thirds — you stopped at two, so the top is 2."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "2/3 is the same as…",
+          "options": [
+            {
+              "id": "a",
+              "label": "1/3 + 1/3",
+              "correct": true,
+              "feedback": "Two copies of the third-unit — stacked, they're 2/3."
+            },
+            {
+              "id": "b",
+              "label": "1/3 + 1/2",
+              "feedback": "Those pieces come from DIFFERENT cuts — a third and a half don't stack into 2/3. Same-cut pieces only."
+            },
+            {
+              "id": "c",
+              "label": "2 + 3",
+              "feedback": "The numbers have jobs, not values to add — cut into 3, take 2 pieces."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

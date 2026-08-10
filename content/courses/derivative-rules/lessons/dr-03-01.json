@@ -1,0 +1,301 @@
+{
+  "id": "dr-03-01",
+  "slug": "the-product-rule",
+  "title": "The Product Rule",
+  "courseId": "derivative-rules",
+  "chapterId": "ch3-products-and-quotients",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A rectangle has width u and height v, and its area is uv. Grow both a little.\n\nThe new area gains a **strip along the top** (u·dv), a **strip along the side** (v·du), and a **tiny corner** (du·dv) — a product of two tiny things, too small to survive the limit.\n\n(uv)′ = u′v + uv′. The area grows on **two sides**, which is why one term is never enough.",
+      "figure": "dr-product-rule-box"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Test the illegal shortcut, once, so it dies properly.",
+      "conceptTag": "dr-product-rule",
+      "explanationVariants": [
+        "x² · x³ = x⁵, whose derivative is 5x⁴ — at x = 2 that is 80. The shortcut f′g′ = 2x · 3x² = 6x³ gives 48. Two different functions.",
+        "The product rule gives 2x·x³ + x²·3x² = 2x⁴ + 3x⁴ = 5x⁴ ✓, agreeing with the direct route."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x² · x³. Compute f′(2) HONESTLY (simplify to x⁵ if you like).",
+        "answer": 80,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "That is f′·g′ = 2x · 3x² = 6x³ at x = 2 — the shortcut, and it is wrong. The true derivative is 5x⁴ = 80. Two tiny growths on two sides, not one."
+          },
+          {
+            "value": 32,
+            "feedback": "That is f(2) = 2⁵ = 32, the height."
+          },
+          {
+            "value": 40,
+            "feedback": "Close to the shape of the answer but not it: x⁵ differentiates to 5x⁴, which at 2 is 5 × 16 = 80."
+          }
+        ],
+        "fallbackFeedback": "x²·x³ = x⁵ → 5x⁴ → 80. The shortcut f′g′ would say 48, and it is simply a different function."
+      },
+      "variant": {
+        "gen": "deriv-product"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Grow a product geometrically, then shrink the input change until only first-order effects survive.",
+      "widget": {
+        "type": "derivativeRuleLab",
+        "prompt": "Shrink h and track the original rectangle, two first-order strips, and the second-order corner.",
+        "mode": "product",
+        "targetH": 0.1,
+        "startH": 1,
+        "requiredMoves": 4,
+        "successFeedback": "The two strips survive division by h, while the corner still contains h and vanishes. That is why (uv)′ = u′v + uv′.",
+        "explorationFeedback": "Move h through several values so you can compare how quickly strips and corner shrink.",
+        "mechanismFeedback": "Keep shrinking h until the divided corner contribution is at most 0.1."
+      },
+      "predict": {
+        "prompt": "When both factors change, which pieces survive after dividing by h and taking h → 0?",
+        "options": [
+          {
+            "id": "two",
+            "label": "The two first-order strips"
+          },
+          {
+            "id": "corner",
+            "label": "Only the tiny corner"
+          },
+          {
+            "id": "all",
+            "label": "All three pieces equally"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "The two first-order strips remain, while the second-order corner is still multiplied by h and vanishes in the limit."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Change local increments or nested rates and expose the mechanism that produces the derivative rule.",
+        "invariants": [
+          "first-order-change-survives-limit",
+          "nested-rates-multiply"
+        ],
+        "misconceptions": [
+          "differentiate-factors-separately",
+          "chain-rule-adds-rates"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "derivative-rules-derivativeRuleLab",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this derivativeRuleLab away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why does the product rule have two main terms?",
+          "options": [
+            {
+              "id": "strips",
+              "label": "Each factor contributes one first-order strip, while the shared corner is second-order and vanishes.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "memory",
+              "label": "It is only a pattern that must be memorized.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "corner",
+              "label": "The corner becomes the only surviving term.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "dr-product-rule"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply it where you cannot simplify.",
+      "conceptTag": "dr-product-rule",
+      "explanationVariants": [
+        "u = x², u′ = 2x; v = x + 1, v′ = 1. So f′ = 2x(x+1) + x²(1) = 2x² + 2x + x² = 3x² + 2x. At x = 1 that is 5.",
+        "Or expand first: x³ + x², whose derivative is 3x² + 2x. The rule and the expansion agree, as they must."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x²(x + 1). Find f′(1).",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That is u′v′ = 2x · 1 at x = 1 — the shortcut again. The rule needs BOTH terms: 2x(x+1) + x²(1)."
+          },
+          {
+            "value": 4,
+            "feedback": "Check the arithmetic: 2(1)(2) + 1(1) = 4 + 1 = 5. It is easy to drop the second term."
+          },
+          {
+            "value": 3,
+            "feedback": "That is 3x² at x = 1, missing the +2x. The full derivative is 3x² + 2x = 5."
+          }
+        ],
+        "fallbackFeedback": "2x(x+1) + x²(1) = 3x² + 2x → f′(1) = 5. (Expanding first gives the same thing.)"
+      },
+      "variant": {
+        "gen": "deriv-product",
+        "form": "polyProduct"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule is **symmetric**: u′v + uv′ is the same as v′u + vu′. It does not matter which factor you call u.\n\nWhat does matter is that you take **both** turns. Every wrong answer in this chapter comes from taking one.",
+      "figure": "dr-product-rule-box"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two turns, always.",
+      "conceptTag": "dr-product-rule",
+      "explanationVariants": [
+        "u = 3x, u′ = 3; v = x² − 1, v′ = 2x. f′ = 3(x² − 1) + 3x(2x) = 3x² − 3 + 6x² = 9x² − 3. At x = 2: 33.",
+        "Expanding gives 3x³ − 3x, whose derivative is 9x² − 3 — the same."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 3x(x² − 1). Find f′(2).",
+        "answer": 33,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That is 3 · (2x) at x = 2 — u′v′ once more. Take both turns: 3(x² − 1) + 3x(2x)."
+          },
+          {
+            "value": 36,
+            "feedback": "Close: 9x² at x = 2 is 36, but the −3 is still there. 9x² − 3 = 33."
+          },
+          {
+            "value": 21,
+            "feedback": "Check each term: 3(4 − 1) = 9 and 3(2)(4) = 24, and 9 + 24 = 33."
+          }
+        ],
+        "fallbackFeedback": "3(x² − 1) + 3x(2x) = 9x² − 3 → f′(2) = 33."
+      },
+      "variant": {
+        "gen": "deriv-product",
+        "form": "polyProduct"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A product you cannot expand away.",
+      "conceptTag": "dr-product-rule",
+      "hints": [
+        "You are told f(3) = 2, f′(3) = 5, g(3) = 4, g′(3) = −1. You do not know the functions — and you do not need to.",
+        "(fg)′ = f′g + fg′. Substitute the four numbers at x = 3.",
+        "f′(3)·g(3) + f(3)·g′(3) = 5(4) + 2(−1)."
+      ],
+      "explanationVariants": [
+        "(fg)′(3) = f′(3)g(3) + f(3)g′(3) = 5(4) + 2(−1) = 20 − 2 = 18.",
+        "The rule needs only the four values, never the formulas — which is exactly why it is stated in terms of u and v."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(3) = 2, f′(3) = 5, g(3) = 4, g′(3) = −1. Find (f·g)′(3).",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "That is f′(3)·g′(3) = 5 × (−1) — the illegal shortcut. The rule is f′g + fg′."
+          },
+          {
+            "value": 20,
+            "feedback": "That is only the first term, f′(3)g(3) = 20. The second, f(3)g′(3) = −2, is still owed."
+          },
+          {
+            "value": 22,
+            "feedback": "Sign slip: g′(3) is −1, so the second term is 2 × (−1) = −2, giving 20 − 2 = 18."
+          }
+        ],
+        "fallbackFeedback": "f′g + fg′ = 5(4) + 2(−1) = 18."
+      },
+      "variant": {
+        "gen": "deriv-product",
+        "form": "abstract"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two sides, two terms.",
+      "takeaways": [
+        "(uv)′ = u′v + uv′ — each factor takes a turn changing while the other holds still.",
+        "The tiny corner du·dv dies in the limit: it is a product of two small things.",
+        "f′g′ is not a rule. Test it on x²·x³ and watch it give 48 where the truth is 80."
+      ],
+      "teaser": "Next: the same argument, upside down — the quotient rule."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-product-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Say it out loud: **first times the derivative of the second, plus the second times the derivative of the first.** Two terms, always. If you have written one term, you are not finished.",
+        "figure": "dr-product-rule-box"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Both turns.",
+        "conceptTag": "dr-product-rule",
+        "explanationVariants": [
+          "u = x, u′ = 1; v = x + 2, v′ = 1. So f′ = 1(x + 2) + x(1) = 2x + 2, and at x = 1 that is 4.",
+          "Expanding gives x² + 2x, whose derivative is 2x + 2 — the same."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x(x + 2). Find f′(1).",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "That is u′v′ = 1 × 1. The rule has two terms: 1(x + 2) + x(1)."
+            },
+            {
+              "value": 3,
+              "feedback": "One term short: (1 + 2) = 3, plus x(1) = 1, gives 4."
+            }
+          ],
+          "fallbackFeedback": "1(x+2) + x(1) = 2x + 2 → f′(1) = 4."
+        }
+      }
+    }
+  ]
+}

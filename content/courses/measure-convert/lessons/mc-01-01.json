@@ -1,0 +1,313 @@
+{
+ "id": "mc-01-01",
+ "slug": "metric-prefixes-as-badges",
+ "title": "Metric Prefixes as Badges",
+ "courseId": "measure-convert",
+ "chapterId": "ch1-converting-units",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Remember the kilo-badge from big numbers? A kilogram works exactly the same way: **kilo means ×1000.** 1 kilogram = 1,000 grams. The same badge that turned a thousand into 'kilo' on a big number now turns a thousand grams into one kilogram.",
+   "figure": "mc-prefixes"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the badge to its meaning.",
+   "conceptTag": "metric-badges",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each metric prefix to what it means.",
+    "left": [
+     {
+      "id": "p1",
+      "label": "kilo-"
+     },
+     {
+      "id": "p2",
+      "label": "centi-"
+     },
+     {
+      "id": "p3",
+      "label": "milli-"
+     }
+    ],
+    "right": [
+     {
+      "id": "m1",
+      "label": "×1,000 of the base unit"
+     },
+     {
+      "id": "m2",
+      "label": "100 of these make one base unit"
+     },
+     {
+      "id": "m3",
+      "label": "1,000 of these make one base unit"
+     }
+    ],
+    "pairs": {
+     "p1": "m1",
+     "p2": "m2",
+     "p3": "m3"
+    },
+    "pairErrors": [
+     {
+      "left": "p2",
+      "right": "m3",
+      "feedback": "1,000 of these make one base unit describes MILLI-, not centi-. Centi- means 100 make a base unit."
+     }
+    ],
+    "missFeedback": "Kilo climbs the ladder ×1000; centi and milli count how many small pieces fit into one base unit.",
+    "successFeedback": "Kilo is ×1000 bigger; centi needs 100 to make a whole; milli needs 1,000."
+   },
+   "predict": {
+    "prompt": "Does the prefix 'kilo' make a unit BIGGER or SMALLER?",
+    "options": [
+     {
+      "id": "bigger",
+      "label": "Bigger — a thousand of them"
+     },
+     {
+      "id": "smaller",
+      "label": "Smaller — a thousandth"
+     },
+     {
+      "id": "neither",
+      "label": "Neither — it's just a name"
+     }
+    ],
+    "outcomeId": "bigger",
+    "reveal": "Kilo stamps ×1000 on whatever it touches — a kilometer is a thousand meters, a kilogram a thousand grams. The prefix is the multiplier."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Apply the kilo badge.",
+   "conceptTag": "metric-badges",
+   "explanationVariants": [
+    "The kilo badge means ×1000, so 1 kilogram is 1,000 grams.",
+    "Same badge, same rule: kilo always means a thousand of the base unit."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "1 kilogram = how many grams? Cross the chain — the mass never changes, only the counting unit.",
+    "startValue": 1,
+    "startUnit": "kg",
+    "targetUnit": "g",
+    "hops": [
+     {
+      "from": "kg",
+      "to": "g",
+      "bigger": "from",
+      "factor": 1000
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "The prefix kilo- means a thousand: one kilogram is 1000 grams, so the crossing multiplies.",
+    "successFeedback": "1000 g. That is what kilo- means — one badge of a thousand."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Here's the useful part: the badge works **no matter what you're measuring.** Kilo means ×1000 whether it's attached to grams (mass), meters (length), or anything else. One badge system, many quantities — that's the whole point of the metric system.",
+   "figure": "mc-prefixes"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The same badge, a different quantity.",
+   "conceptTag": "metric-badges",
+   "explanationVariants": [
+    "Kilo still means ×1000, whether it's grams or meters — 1 kilometer is 1,000 meters.",
+    "The badge doesn't care what it's measuring."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "1 kilometer = how many meters?",
+    "startValue": 1,
+    "startUnit": "km",
+    "targetUnit": "m",
+    "hops": [
+     {
+      "from": "km",
+      "to": "m",
+      "bigger": "from",
+      "factor": 1000
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "Kilo- is the same badge whatever it sits on: one kilometer is 1000 meters.",
+    "successFeedback": "1000 m — the prefix carries the same factor across every unit it joins."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Sort by badge, not by quantity.",
+   "conceptTag": "metric-badges",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each pair by which badge connects them — even though they measure different things.",
+    "buckets": [
+     {
+      "id": "kilo",
+      "label": "Kilo badge (×1000)",
+      "icon": "⬆️"
+     },
+     {
+      "id": "centi",
+      "label": "Centi badge (100 make one)",
+      "icon": "💯"
+     }
+    ],
+    "items": [
+     {
+      "id": "b1",
+      "label": "1 kilogram = 1,000 grams",
+      "bucketId": "kilo",
+      "feedback": "Mass, but still the ×1000 kilo badge."
+     },
+     {
+      "id": "b2",
+      "label": "1 meter = 100 centimeters",
+      "bucketId": "centi",
+      "feedback": "Length, using the 100-make-one centi badge."
+     },
+     {
+      "id": "b3",
+      "label": "1 kilometer = 1,000 meters",
+      "bucketId": "kilo",
+      "feedback": "Length this time, but the same ×1000 kilo badge as mass."
+     },
+     {
+      "id": "b4",
+      "label": "1 liter = 100 centiliters",
+      "bucketId": "centi",
+      "feedback": "Volume, using the same centi badge as length."
+     }
+    ],
+    "missFeedback": "Ignore what's being measured — just match the badge word to its multiplier.",
+    "successFeedback": "Kilo means ×1000 for mass AND length; centi means 100-make-one for length AND volume."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Apply the centi badge.",
+   "conceptTag": "metric-badges",
+   "explanationVariants": [
+    "The centi badge means 100 of them make one base unit — so 1 meter is 100 centimeters.",
+    "100 centimeters line up to make exactly one meter."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "1 meter = how many centimeters?",
+    "startValue": 1,
+    "startUnit": "m",
+    "targetUnit": "cm",
+    "hops": [
+     {
+      "from": "m",
+      "to": "cm",
+      "bigger": "from",
+      "factor": 100
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "Centi- means a hundredth, so a meter holds 100 centimeters and the crossing multiplies.",
+    "successFeedback": "100 cm. Centi- is a hundredth of the unit, so it takes 100 of them to rebuild it."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The delivery order.",
+   "conceptTag": "metric-badges",
+   "hints": [
+    "Each bag is 1 kilogram — apply the kilo badge to find grams per bag.",
+    "1 kilogram = 1,000 grams.",
+    "Multiply that by 5 bags."
+   ],
+   "explanationVariants": [
+    "Each 1 kg bag is 1,000 g; 5 bags is 5×1,000=5,000 g.",
+    "Applying the kilo badge first, then multiplying by the bag count."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A store receives 5 bags of rice, each labeled 1 kilogram. What is the total weight in grams?",
+    "answer": 5000,
+    "tolerance": 0,
+    "unit": "grams",
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 forgets to apply the kilo badge at all. Each bag is 1,000 g, so 5 bags is 5×1,000=5,000 g."
+     },
+     {
+      "value": 500,
+      "feedback": "500 applies only part of the badge. Each kilogram is 1,000 g (not 100), so 5×1,000=5,000 g."
+     }
+    ],
+    "fallbackFeedback": "Convert one bag to grams first (×1000), then multiply by 5."
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One badge, every quantity.",
+   "takeaways": [
+    "Kilo means ×1000 of the base unit, no matter what's being measured.",
+    "Centi means 100 of the small unit make one base unit.",
+    "The same badge system works for mass, length, and volume alike."
+   ],
+   "teaser": "next: putting the length badges to work — converting between mm, cm, m, and km."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "metric-badges",
+   "concept": {
+    "id": "rem-mb-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Kilo always means ×1000.** It doesn't matter if it's kilograms, kilometers, or kiloliters — the badge multiplies by 1,000 every time. 1 kilogram = 1,000 grams; 1 kilometer = 1,000 meters."
+   },
+   "check": {
+    "id": "rem-mb-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "metric-badges",
+    "explanationVariants": [
+     "Kilo means ×1000: 1 kiloliter is 1,000 liters.",
+     "The badge multiplies by a thousand, whatever the unit."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "1 kiloliter = how many liters?",
+     "options": [
+      {
+       "id": "a",
+       "label": "1,000 liters",
+       "correct": true,
+       "feedback": "Kilo always means ×1000."
+      },
+      {
+       "id": "b",
+       "label": "100 liters",
+       "feedback": "100 belongs to a centi badge. Kilo means ×1000: 1,000 liters."
+      },
+      {
+       "id": "c",
+       "label": "10 liters",
+       "feedback": "Too small a jump. Kilo means ×1000: 1,000 liters."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

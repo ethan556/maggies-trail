@@ -1,0 +1,334 @@
+{
+  "id": "exp-03-02",
+  "slug": "equations-with-a-coefficient",
+  "title": "Equations with a Coefficient",
+  "courseId": "exponential-functions",
+  "chapterId": "ch3-exponential-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-growth",
+      "body": "When a coefficient sits in front, **isolate the power first**. For 3 · 2ˣ = 24: divide both sides by 3 to get 2ˣ = 8, then match bases: 8 = 2³, so x = 3. Undo the multiplication before matching."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Divide, then match.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 3,
+        "targetBase": 2,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "3 · 2ˣ = 24 divides down to 2ˣ = 8 first. Slide the base until base³ reads 8.",
+        "successFeedback": "Base 2, and 2³ = 8, so x = 3. The leading 3 is not part of the exponential — it is a coefficient that has to be cleared by division BEFORE the base-matching even starts.",
+        "lowFeedback": "base³ is still under 8.",
+        "highFeedback": "base³ has passed 8."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A base of 3.",
+      "conceptTag": "exp-coeff-equation",
+      "explanationVariants": [
+        "Divide by 2: 54/2 = 27 = 3³, so x = 3.",
+        "27 = 3³, so after dividing out the 2, x = 3."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Solve 2 * 3^x = 54.",
+        "task": "exponentSolve",
+        "values": [],
+        "esCoef": 2,
+        "esBaseNum": 3,
+        "esBaseDen": 1,
+        "esRhsNum": 54,
+        "esRhsDen": 1,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 27,
+            "feedback": "27 is 3ˣ after dividing — keep going: 27 = 3³, so x = 3."
+          },
+          {
+            "value": 18,
+            "feedback": "Divide by 2, not the exponent: 54/2 = 27 = 3³, so x = 3."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "exp:base",
+          "exp:isolate",
+          "exp:power",
+          "exp:read"
+        ],
+        "requiredExplorations": 4,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "54/2 = 27 = 3³, so x = 3.",
+        "successFeedback": "54/2 = 27 = 3³, so x = 3."
+      },
+      "variant": {
+        "gen": "exp-solve"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The coefficient never becomes part of the exponent. For 5 · 2ˣ = 40: divide by 5 → 2ˣ = 8 → x = 3. The 5 only scales the output; the exponent comes from the power alone.",
+      "figure": "exp-coefficient-40"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Scale it away.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 5 * 2^x = 40.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 2ˣ after dividing — finish: 8 = 2³, so x = 3."
+          },
+          {
+            "value": 35,
+            "feedback": "Divide by 5, don't subtract it: 40/5 = 8 = 2³, so x = 3."
+          }
+        ],
+        "fallbackFeedback": "40/5 = 8 = 2³, so x = 3."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The method is always the same: divide out the coefficient, then match bases. For 4 · 3ˣ = 36: divide by 4 → 3ˣ = 9 → x = 2.",
+      "figure": "exp-divide-first"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Your turn.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 4 * 3^x = 36.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is 3ˣ after dividing — finish: 9 = 3², so x = 2."
+          },
+          {
+            "value": 32,
+            "feedback": "Divide by 4, don't subtract it: 36/4 = 9 = 3², so x = 2."
+          }
+        ],
+        "fallbackFeedback": "36/4 = 9 = 3², so x = 2."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Bigger coefficient.",
+      "conceptTag": "exp-coeff-equation",
+      "explanationVariants": [
+        "Divide by 7: 56/7 = 8 = 2³, so x = 3.",
+        "8 = 2³, so after dividing out the 7, x = 3."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Solve 7 * 2^x = 56.",
+        "task": "exponentSolve",
+        "values": [],
+        "esCoef": 7,
+        "esBaseNum": 2,
+        "esBaseDen": 1,
+        "esRhsNum": 56,
+        "esRhsDen": 1,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 2ˣ after dividing — finish: 8 = 2³, so x = 3."
+          },
+          {
+            "value": 49,
+            "feedback": "Divide by 7, don't subtract it: 56/7 = 8 = 2³, so x = 3."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "exp:base",
+          "exp:isolate",
+          "exp:power",
+          "exp:read"
+        ],
+        "requiredExplorations": 4,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "56/7 = 8 = 2³, so x = 3.",
+        "successFeedback": "56/7 = 8 = 2³, so x = 3."
+      },
+      "variant": {
+        "gen": "exp-solve"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Base five.",
+      "conceptTag": "exp-coeff-equation",
+      "explanationVariants": [
+        "Divide by 2: 50/2 = 25 = 5², so x = 2.",
+        "25 = 5², so after dividing out the 2, x = 2."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Solve 2 * 5^x = 50.",
+        "task": "exponentSolve",
+        "values": [],
+        "esCoef": 2,
+        "esBaseNum": 5,
+        "esBaseDen": 1,
+        "esRhsNum": 50,
+        "esRhsDen": 1,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is 5ˣ after dividing — finish: 25 = 5², so x = 2."
+          },
+          {
+            "value": 48,
+            "feedback": "Divide by 2, don't subtract it: 50/2 = 25 = 5², so x = 2."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "exp:base",
+          "exp:isolate",
+          "exp:power",
+          "exp:read"
+        ],
+        "requiredExplorations": 4,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "50/2 = 25 = 5², so x = 2.",
+        "successFeedback": "50/2 = 25 = 5², so x = 2."
+      },
+      "variant": {
+        "gen": "exp-solve"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Put it together.",
+      "conceptTag": "exp-coeff-equation",
+      "explanationVariants": [
+        "Divide by 6: 48/6 = 8 = 2³, so x = 3.",
+        "8 = 2³, so after dividing out the 6, x = 3."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Solve 6 * 2^x = 48.",
+        "task": "exponentSolve",
+        "values": [],
+        "esCoef": 6,
+        "esBaseNum": 2,
+        "esBaseDen": 1,
+        "esRhsNum": 48,
+        "esRhsDen": 1,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 2ˣ after dividing — finish: 8 = 2³, so x = 3."
+          },
+          {
+            "value": 42,
+            "feedback": "Divide by 6, don't subtract it: 48/6 = 8 = 2³, so x = 3."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "exp:base",
+          "exp:isolate",
+          "exp:power",
+          "exp:read"
+        ],
+        "requiredExplorations": 4,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "48/6 = 8 = 2³, so x = 3.",
+        "successFeedback": "48/6 = 8 = 2³, so x = 3."
+      },
+      "hints": [
+        "Divide both sides by 6 first.",
+        "48/6 = 8; now solve 2ˣ = 8.",
+        "8 = 2³, so x = 3."
+      ],
+      "variant": {
+        "gen": "exp-solve"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Isolate the power by dividing, then match bases as before.",
+      "takeaways": [
+        "Divide out the coefficient before matching bases.",
+        "The coefficient scales the output, not the exponent.",
+        "Then bˣ = k solves by rewriting k as a power of b."
+      ],
+      "teaser": "next: decay and negative exponents."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-coeff-equation",
+      "concept": {
+        "id": "rem-ece-c",
+        "kind": "concept",
+        "body": "Divide out the coefficient first, then match bases. For 3 · 2ˣ = 24: 24/3 = 8, then 8 = 2³, so x = 3. The coefficient is not part of the exponent."
+      },
+      "check": {
+        "id": "rem-ece-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-coeff-equation",
+        "explanationVariants": [
+          "24/3 = 8 = 2³, so x = 3.",
+          "After dividing by 3, 2ˣ = 8, so x = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve 3 * 2^x = 24.",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 is 2ˣ; finish: 8 = 2³, so x = 3."
+            },
+            {
+              "value": 21,
+              "feedback": "Divide by 3, don't subtract: 24/3 = 8."
+            }
+          ],
+          "fallbackFeedback": "24/3 = 8 = 2³, so x = 3."
+        }
+      }
+    }
+  ]
+}

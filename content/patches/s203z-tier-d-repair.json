@@ -1,0 +1,83 @@
+{
+  "tag": "S203Z",
+  "label": "Tier D repair — the two convertible with existing engines (lineRelationLab, dilationExplore)",
+  "conversions": [
+    {
+      "course": "constructions-and-proof",
+      "lesson": "cp-05-03",
+      "step": "i3",
+      "widget": {
+        "type": "lineRelationLab",
+        "targetRelation": "parallel",
+        "baseAngle": 0,
+        "angleStart": 35,
+        "offsetStart": 2,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "prompt": "You have measured the corresponding angles and found them equal. Turn the blue line until its angle matches the dark line's — and watch whether that alone is enough to force them parallel.",
+        "successFeedback": "Equal angles, and the lines are parallel — that is the CONVERSE doing the work, not the original theorem. The forward theorem starts from parallel and hands you equal angles; here you started from equal angles and got parallel. Same two facts, opposite arrows, and only the converse licenses this direction.",
+        "angleFeedback": "The angles still differ, so the lines still converge somewhere. Match the angle exactly — the converse needs EQUAL corresponding angles, not merely close ones.",
+        "distanceFeedback": "The direction is right. Sliding the line changes where it sits but never whether it is parallel — position is not what the converse is about."
+      }
+    },
+    {
+      "course": "geometry-foundations",
+      "lesson": "gf-05-01",
+      "step": "i3",
+      "widget": {
+        "type": "transformExplore",
+        "shape": [
+          [
+            1,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "target": [
+          [
+            1,
+            -2
+          ],
+          [
+            4,
+            -2
+          ],
+          [
+            1,
+            -5
+          ]
+        ],
+        "gridMin": -6,
+        "gridMax": 6,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -6,
+        "dyMax": 6,
+        "allowReflect": true,
+        "prompt": "Land the shape exactly on its target using a rigid motion — translate, and reflect if you need to. Watch the side lengths and the corner angles the whole way.",
+        "successFeedback": "It lands exactly, and nothing about the shape itself ever changed: every side kept its length and every corner kept its angle. That is what 'rigid' means — BOTH distances and angle measures survive, which is why congruent figures match part-for-part for free.",
+        "offsetFeedback": "Not on the target yet. Translation slides the shape without altering a single length or angle — keep moving it.",
+        "reflectFeedback": "A reflection flips the shape across the axis. Like translation it is rigid: the mirror image has identical side lengths and identical angles, just a reversed orientation."
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "exponents-polynomials/ep-02-01",
+      "title": "Degree & Like Terms",
+      "why": "Searched the full manip>=2 catalogue for a polynomial-TERM engine and found none — no z.literal matching polynomial/term/degree/coefficient exists in schema.ts. algebraTiles was the nearest candidate and was checked directly: its only targets are targetX and targetConst, i.e. a LINEAR ax + b tiling, so it cannot represent 3x² + 5x⁴ − x at all, let alone its degree. Every question in this lesson (degree, leading coefficient, constant term, which pair are like terms) reads a symbolic expression's NOTATION rather than manipulating a quantity. Refused — a genuine engine gap, not a fit failure."
+    },
+    {
+      "lesson": "geometry-foundations/gf-03-03, gf-04-03",
+      "title": "Rotations as Functions, Rotational Symmetry",
+      "why": "DEFERRED, NOT REFUSED — pending an engine decision. Both lessons are entirely about ROTATION: coordinate rules ((x,y)→(−y,x) etc.), composing turns by adding angles, and rotational symmetry order. transformExplore's full schema was read directly and has shape/target/gridMin/gridMax/dxMin/dxMax/dyMin/dyMax/allowReflect — translation and reflection only, NO rotation field of any kind. dilationExplore scales from a centre but does not turn. This is the rotation-engine gap flagged since S203S as a build candidate; these two lessons are the concrete case for it, and both would convert immediately if a rotation-capable engine existed. Recorded as deferred so the fit rate is not charged for an engine that has not been built."
+    }
+  ]
+}

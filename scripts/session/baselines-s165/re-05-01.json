@@ -1,0 +1,256 @@
+{
+ "id": "re-05-01",
+ "slug": "solving-with-reciprocal-powers",
+ "title": "Solving with Reciprocal Powers",
+ "courseId": "radical-functions",
+ "chapterId": "ch5-rational-exponent-equations-and-models",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Chapter 1 planted the key: **reciprocal exponents cancel**. To solve x^(3/2) = 8, raise both sides to the power 2/3: x = 8^(2/3) = (∛8)² = **4**. One move undoes the exponent — no radical juggling required.",
+   "figure": "re-reciprocal-cancel"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Undo a unit fraction.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve x^(1/3) = 2.",
+    "answer": 8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "The reciprocal of 1/3 is 3 — CUBE the 2: 2³ = 8, not 2 · 3."
+     },
+     {
+      "value": 1.26,
+      "feedback": "Don't take another root — x^(1/3) = 2 means x is 2 CUBED: 8."
+     }
+    ],
+    "fallbackFeedback": "Raise both sides to the 3rd power: x = 2³ = 8."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Check the reciprocal arithmetic: (x^(3/2))^(2/3) = x^(3/2 · 2/3) = x¹. And evaluate the other side the easy way: 8^(2/3) roots first — ∛8 = 2, then 2² = 4. Verify the answer forward: 4^(3/2) = (√4)³ = 2³ = 8. ✓",
+   "figure": "re-reciprocal-check"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The full move.",
+   "conceptTag": "re-power-solve",
+   "explanationVariants": [
+    "x^(3/2) = 27 → x = 27^(2/3) = (∛27)² = 9.",
+    "Reciprocal power 2/3; root first: ∛27 = 3, then square."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve x^(3/2) = 27.",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is ∛27 — finish the reciprocal power: square it, x = 9."
+     },
+     {
+      "value": 18,
+      "feedback": "The exponent 2/3 roots-then-powers — it never multiplies: 27 · 2/3 = 18 is the wrong move."
+     }
+    ],
+    "fallbackFeedback": "x = 27^(2/3) = 3² = 9; check 9^(3/2) = 27. ✓"
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-power-solve__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Choose the undo power.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To solve x^(2/5) = 4, raise both sides to which power?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "5/2",
+      "correct": true,
+      "feedback": "Right — 2/5 · 5/2 = 1: x = 4^(5/2) = (√4)⁵ = 32."
+     },
+     {
+      "id": "o2",
+      "label": "2/5",
+      "correct": false,
+      "feedback": "Repeating the same power gives x^(4/25) — the UNDO is the reciprocal, 5/2."
+     },
+     {
+      "id": "o3",
+      "label": "−2/5",
+      "correct": false,
+      "feedback": "A negative power takes a reciprocal of the VALUE — flipping the fraction (5/2) is what cancels."
+     },
+     {
+      "id": "o4",
+      "label": "5",
+      "correct": false,
+      "feedback": "5 alone leaves x² = 4⁵ — the reciprocal needs both parts: 5/2."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Finish that solve.",
+   "conceptTag": "re-power-solve",
+   "explanationVariants": [
+    "x = 4^(5/2) = (√4)⁵ = 2⁵ = 32.",
+    "Root first (√4 = 2), then the fifth power."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve x^(2/5) = 4 (from the previous step: x = 4^(5/2)).",
+    "answer": 32,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "4 · 5/2 = 10 multiplies — instead root-then-power: (√4)⁵ = 32."
+     },
+     {
+      "value": 1024,
+      "feedback": "That's 4⁵ — take the square root FIRST: 2⁵ = 32."
+     }
+    ],
+    "fallbackFeedback": "(√4)⁵ = 2⁵ = 32; check 32^(2/5) = (⁵√32)² = 4. ✓"
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-power-solve__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Isolate before undoing.",
+   "conceptTag": "re-power-solve",
+   "explanationVariants": [
+    "2x^(3/2) = 16 → x^(3/2) = 8 → x = 8^(2/3) = 4.",
+    "Divide off the 2 first — the reciprocal power applies to a LONE x^(3/2)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 2x^(3/2) = 16.",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 is x^(3/2) after dividing — one more move: 8^(2/3) = 4."
+     },
+     {
+      "value": 6.35,
+      "feedback": "Divide by 2 BEFORE the reciprocal power: x^(3/2) = 8, so x = 4 exactly."
+     }
+    ],
+    "fallbackFeedback": "x^(3/2) = 8 → x = 8^(2/3) = 4."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-power-solve__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "With a shift.",
+   "conceptTag": "re-power-solve",
+   "explanationVariants": [
+    "(x + 1)^(3/2) = 8 → x + 1 = 8^(2/3) = 4 → x = 3.",
+    "Undo the power first, then the +1."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve (x + 1)^(3/2) = 8.",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is x + 1 — subtract the 1: x = 3."
+     },
+     {
+      "value": 63,
+      "feedback": "The undo is the 2/3 POWER, not squaring: x + 1 = 4 (squaring 8 gives the wrong 64 − 1)."
+     }
+    ],
+    "fallbackFeedback": "x + 1 = 8^(2/3) = 4 → x = 3; check 4^(3/2) = 8. ✓"
+   },
+   "hints": [
+    "Raise both sides to 2/3: the left becomes x + 1.",
+    "8^(2/3) = (∛8)² = 4.",
+    "x + 1 = 4 → x = 3."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-power-solve__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Raise to the reciprocal — the exponent cancels to 1.",
+   "takeaways": [
+    "x^(m/n) = k solves as x = k^(n/m).",
+    "Evaluate k^(n/m) root-first to keep numbers small.",
+    "Isolate the power, undo the exponent, then unwrap any inside shifts."
+   ],
+   "teaser": "Next: the one wrinkle — EVEN numerators hide a ± just like x² did."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-power-solve",
+   "concept": {
+    "id": "rem-re0501-c",
+    "kind": "concept",
+    "body": "The reciprocal cancels: to solve x^(1/2) = 5, raise both sides to the 2nd power."
+   },
+   "check": {
+    "id": "rem-re0501-k",
+    "kind": "check",
+    "body": "One clean square.",
+    "conceptTag": "re-power-solve",
+    "explanationVariants": [
+     "x = 5² = 25.",
+     "(x^(1/2))² = x¹, and 5² = 25."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve x^(1/2) = 5.",
+     "answer": 25,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2.24,
+       "feedback": "Don't root again — x^(1/2) = 5 means x is 5 SQUARED: 25."
+      },
+      {
+       "value": 10,
+       "feedback": "Squaring means 5 · 5 = 25, not 5 · 2."
+      }
+     ],
+     "fallbackFeedback": "x = 5² = 25."
+    }
+   }
+  }
+ ]
+}

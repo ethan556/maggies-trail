@@ -1,0 +1,465 @@
+{
+ "id": "rf-03-03",
+ "slug": "unlike-denominators",
+ "title": "Adding & Subtracting, Unlike Denominators",
+ "courseId": "rational-functions",
+ "chapterId": "ch3-adding-and-subtracting",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The full pipeline: **find the LCD, convert each fraction, combine tops, simplify.** 3/x + 2/(x + 1) over LCD x(x + 1): tops become 3(x + 1) and 2x, so the sum is (3x + 3 + 2x)/(x(x + 1)) = **(5x + 3)/(x(x + 1))**.",
+   "figure": "rf-lcd-pipeline"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Track one conversion.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "In 3/x + 2/(x + 1) over the LCD x(x + 1), the first fraction's numerator becomes:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "3(x + 1)",
+      "correct": true,
+      "feedback": "Right — 3/x gains the missing factor (x + 1) on top."
+     },
+     {
+      "id": "o2",
+      "label": "3x",
+      "correct": false,
+      "feedback": "x is ALREADY under the 3 — the missing factor is (x + 1), which multiplies the top."
+     },
+     {
+      "id": "o3",
+      "label": "3",
+      "correct": false,
+      "feedback": "The bottom grew by (x + 1); the top must match, or the value changes."
+     },
+     {
+      "id": "o4",
+      "label": "3x(x + 1)",
+      "correct": false,
+      "feedback": "Only the MISSING factor joins the top — the x stays downstairs."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Subtraction adds the Chapter-opening trap on top of the pipeline. 5/(x − 2) − 3/x over x(x − 2): (5x − 3(x − 2))/(x(x − 2)) = (5x − 3x + 6)/(x(x − 2)) = **(2x + 6)/(x(x − 2))**. Distribute the −3 into BOTH terms: −3 · −2 = **+6**.",
+   "figure": "rf-subtract-pipeline"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Run a subtraction.",
+   "conceptTag": "rf-unlike",
+   "explanationVariants": [
+    "(4x − 2(x + 1))/(x(x + 1)) = (4x − 2x − 2)/(x(x + 1)) = (2x − 2)/(x(x + 1)).",
+    "Convert both, then the minus distributes into 2(x + 1)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Subtract: 4/(x + 1) − 2/x.",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "(2x − 2)"
+     },
+     {
+      "id": "t2",
+      "label": "(2x + 2)"
+     },
+     {
+      "id": "t3",
+      "label": "(4x − 2)"
+     },
+     {
+      "id": "two",
+      "label": "2"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "den",
+      "label": "x(x + 1)"
+     },
+     {
+      "id": "bad",
+      "label": "(x + 1 − x)"
+     }
+    ],
+    "correct": [
+     "t1",
+     "div",
+     "den"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "den"
+      ],
+      "feedback": "The −2 multiplies the WHOLE (x + 1): −2x − 2, so the constant is −2."
+     },
+     {
+      "sequence": [
+       "two",
+       "div",
+       "bad"
+      ],
+      "feedback": "Unlike fractions don't subtract level-by-level — convert to the LCD x(x + 1) first."
+     },
+     {
+      "sequence": [
+       "t3",
+       "div",
+       "den"
+      ],
+      "feedback": "The 2/x fraction converts by (x + 1): its top becomes 2(x + 1) = 2x + 2, not just 2."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Convert both to the LCD x(x + 1): 4x/(x(x + 1)) − 2(x + 1)/(x(x + 1)), then subtract the tops.",
+    "successFeedback": "Right — 4x − 2(x + 1) = 2x − 2 over the LCD."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-unlike__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Verify numerically.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Check 3/x + 2/(x + 1) = (5x + 3)/(x(x + 1)) at x = 2: compute 3/2 + 2/3 as a fraction a/6. What is a?",
+    "answer": 13,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "3/2 + 2/3 = 9/6 + 4/6 = 13/6 — convert BOTH to sixths before adding tops."
+     },
+     {
+      "value": 6,
+      "feedback": "6 is the DENOMINATOR of the sum — the combined NUMERATOR is 9 + 4 = 13."
+     }
+    ],
+    "fallbackFeedback": "9/6 + 4/6 = 13/6, matching (5x + 3)/(x(x + 1)) at x = 2. ✓"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Combine over a factored LCD.",
+   "conceptTag": "rf-unlike",
+   "explanationVariants": [
+    "LCD (x − 3)(x + 3): tops x(x + 3) and 6·1... careful — 6/(x² − 9) already sits on the LCD; x/(x − 3) gains (x + 3): (x² + 3x + 6)/((x − 3)(x + 3)).",
+    "Only the first fraction converts; then add tops."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Add: x/(x − 3) + 6/(x² − 9).",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "(x² + 3x + 6)"
+     },
+     {
+      "id": "t2",
+      "label": "(x + 6)"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "d1",
+      "label": "(x − 3)(x + 3)"
+     },
+     {
+      "id": "d2",
+      "label": "(x − 3)²(x + 3)"
+     },
+     {
+      "id": "d3",
+      "label": "(x² − 9 + x − 3)"
+     }
+    ],
+    "correct": [
+     "t1",
+     "div",
+     "d1"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "d1"
+      ],
+      "feedback": "The first top converts to x(x + 3) = x² + 3x — it doesn't stay a bare x."
+     },
+     {
+      "sequence": [
+       "t1",
+       "div",
+       "d2"
+      ],
+      "feedback": "x² − 9 contributes no second (x − 3) — the LCD is (x − 3)(x + 3), single copies."
+     },
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "d3"
+      ],
+      "feedback": "Denominators never ADD — build the LCD and convert the tops."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Factor x² − 9 = (x − 3)(x + 3), convert x/(x − 3) by (x + 3), and add the tops over the LCD.",
+    "successFeedback": "Right — x(x + 3) + 6 over the LCD."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-unlike__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Simplify the result.",
+   "conceptTag": "rf-unlike",
+   "explanationVariants": [
+    "Convert both: ((x + 1) + (x − 1))/((x − 1)(x + 1)) = 2x/(x² − 1).",
+    "Symmetric tops: the constants cancel, the x's double."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Add: 1/(x − 1) + 1/(x + 1).",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "2x"
+     },
+     {
+      "id": "t2",
+      "label": "2"
+     },
+     {
+      "id": "t3",
+      "label": "(2x + 2)"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "den",
+      "label": "(x² − 1)"
+     }
+    ],
+    "correct": [
+     "t1",
+     "div",
+     "den"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "den"
+      ],
+      "feedback": "The converted tops are (x + 1) and (x − 1) — they sum to 2x, not 2."
+     },
+     {
+      "sequence": [
+       "t1",
+       "div",
+       "t1"
+      ],
+      "feedback": "The bottom is the PRODUCT (x − 1)(x + 1) = x² − 1, not the sum 2x."
+     },
+     {
+      "sequence": [
+       "t3",
+       "div",
+       "den"
+      ],
+      "feedback": "The +1 and −1 cancel in the sum: (x + 1) + (x − 1) = 2x exactly."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Convert both to the LCD (x − 1)(x + 1) = x² − 1, then add the tops: (x + 1) + (x − 1) = 2x.",
+    "successFeedback": "Right — (x + 1) + (x − 1) = 2x over the LCD (x − 1)(x + 1) = x² − 1."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-unlike__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full pipeline with simplification.",
+   "conceptTag": "rf-unlike",
+   "explanationVariants": [
+    "3/(x + 2) − 1/x over x(x + 2): (3x − (x + 2))/(x(x + 2)) = (2x − 2)/(x(x + 2)) = 2(x − 1)/(x(x + 2)).",
+    "Convert, subtract with the distributed minus, factor the 2."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Subtract and factor the numerator: 3/(x + 2) − 1/x.",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "2(x − 1)"
+     },
+     {
+      "id": "t2",
+      "label": "2(x + 1)"
+     },
+     {
+      "id": "t3",
+      "label": "(3x − 1)"
+     },
+     {
+      "id": "two",
+      "label": "2"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "den",
+      "label": "x(x + 2)"
+     },
+     {
+      "id": "bad",
+      "label": "(x + 2 − x)"
+     }
+    ],
+    "correct": [
+     "t1",
+     "div",
+     "den"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "den"
+      ],
+      "feedback": "The minus reaches the +2: 3x − x − 2 gives −2, factoring as 2(x MINUS 1)."
+     },
+     {
+      "sequence": [
+       "t3",
+       "div",
+       "den"
+      ],
+      "feedback": "1/x converts by (x + 2): the subtracted top is the whole (x + 2), not a bare 1."
+     },
+     {
+      "sequence": [
+       "two",
+       "div",
+       "bad"
+      ],
+      "feedback": "Unlike bottoms can't subtract directly — the LCD x(x + 2) hosts the combined tops."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Over the LCD x(x + 2): 3x − (x + 2) = 2x − 2, which factors as 2(x − 1).",
+    "successFeedback": "Right — 3x − x − 2 = 2x − 2 = 2(x − 1)."
+   },
+   "hints": [
+    "LCD: x(x + 2); tops convert to 3x and (x + 2).",
+    "Subtract: 3x − (x + 2) = 2x − 2.",
+    "Factor: 2(x − 1) over x(x + 2)."
+   ],
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-unlike__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "LCD, convert, combine, simplify — with the minus fully distributed.",
+   "takeaways": [
+    "Each top gains exactly its missing factors.",
+    "A fraction already on the LCD converts by 1 — leave it alone.",
+    "Factor the combined numerator; cancellations hide there."
+   ],
+   "teaser": "Next chapter: the GRAPHS — asymptotes, holes, and the reciprocal shape."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "rf-unlike",
+   "concept": {
+    "id": "rem-rf0303-c",
+    "kind": "concept",
+    "body": "One conversion, one add: 1/x + 1/(2x). LCD 2x: the first top converts to 2, the second stays 1."
+   },
+   "check": {
+    "id": "rem-rf0303-k",
+    "kind": "check",
+    "body": "Combine.",
+    "conceptTag": "rf-unlike",
+    "explanationVariants": [
+     "(2 + 1)/(2x) = 3/(2x).",
+     "1/x converts by 2; 1/(2x) is already there."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Add: 1/x + 1/(2x).",
+     "options": [
+      {
+       "id": "o1",
+       "label": "3/(2x)",
+       "correct": true,
+       "feedback": "Right — 2/(2x) + 1/(2x) = 3/(2x)."
+      },
+      {
+       "id": "o2",
+       "label": "2/(3x)",
+       "correct": false,
+       "feedback": "The LCD is 2x (highest power of each factor) — tops become 2 and 1, summing to 3."
+      },
+      {
+       "id": "o3",
+       "label": "2/(2x)",
+       "correct": false,
+       "feedback": "Both tops count: 2 + 1 = 3 over 2x."
+      },
+      {
+       "id": "o4",
+       "label": "1/(3x)... adding bottoms",
+       "correct": false,
+       "feedback": "Denominators never add — convert to the LCD 2x, then add tops: 3/(2x)."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,307 @@
+{
+  "id": "gf-03-01",
+  "slug": "translations-as-functions",
+  "title": "Translations as Functions",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch3-transformation-functions",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-translation-rule",
+      "concept": {
+        "id": "rem-gf-translation-rule-c",
+        "kind": "concept",
+        "body": "A rule like (x, y) → (x + 3, y − 2) is two tiny instructions wearing one arrow: new x = old x + 3, new y = old y − 2. Work the slots one at a time and the point moves itself."
+      },
+      "check": {
+        "id": "rem-gf-translation-rule-k",
+        "kind": "check",
+        "body": "One slot at a time.",
+        "conceptTag": "gf-translation-rule",
+        "explanationVariants": [
+          "x-slot: 4 + 3 = 7. (The y-slot would give 6 − 2 = 4.)",
+          "The +3 belongs to x only — apply it to the first coordinate."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Apply (x, y) → (x + 3, y − 2) to the point (4, 6). What is the image's x-coordinate?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is 4 − 3 — the x-slot says ADD 3, not subtract: 4 + 3 = 7."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is the preimage x. The rule moves every point — new x = 4 + 3 = 7."
+            }
+          ],
+          "fallbackFeedback": "New x = old x + 3 = 7."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **transformation is a function on points**: feed in a point (the **preimage**), get out a point (the **image**, marked with a prime: P → P′). A **translation** slides every point the same amount, written as a coordinate rule: **(x, y) → (x + 5, y + 2)** means \"add 5 to every x, add 2 to every y.\" One rule, applied to every point at once.",
+      "figure": "mapping-notation-anatomy"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Apply the rule by hand.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "P is at (2, 3). Apply the translation (x, y) → (x + 3, y + 1) and plot the image P′.",
+        "cols": 8,
+        "rows": 8,
+        "targets": [
+          {
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 3,
+            "feedback": "That's P itself — the preimage. The rule moves it: add 3 to the x, add 1 to the y."
+          },
+          {
+            "x": 5,
+            "y": 3,
+            "feedback": "The x moved (+3) but the y didn't. The rule changes BOTH coordinates: y becomes 3 + 1 = 4."
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "feedback": "The shifts swapped: that's x + 1 and y + 3. Keep each number with its own letter: x + 3, y + 1."
+          }
+        ],
+        "missFeedback": "Feed the coordinates through the rule one at a time: x: 2 + 3 = 5, y: 3 + 1 = 4.",
+        "successFeedback": "P′ = (5, 4) — the function ate (2, 3) and returned (5, 4)."
+      },
+      "predict": {
+        "prompt": "Every point feeds the rule (x, y) → (x + 3, y + 1). Can two different points land on the same image?",
+        "options": [
+          {
+            "id": "never",
+            "label": "Never — one output each, and the shift can be undone"
+          },
+          {
+            "id": "some",
+            "label": "Sometimes, near the edges"
+          },
+          {
+            "id": "always",
+            "label": "Always"
+          }
+        ],
+        "outcomeId": "never",
+        "reveal": "A translation is one-to-one: undo it by subtracting (3, 1) and every image betrays its unique source. P(2, 3) lands on (5, 4), and nothing else can — rigid motions never fold the plane."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Coordinate horizontal and vertical movement to construct an ordered pair on the plane.",
+        "invariants": [
+          "ordered-pair-axis-meaning"
+        ],
+        "misconceptions": [
+          "xy-reversal"
+        ],
+        "representations": [
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "geometry-foundations",
+        "delayed": false
+      },
+      "conceptTag": "gf-translation-rule"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A rule with a subtraction.",
+      "conceptTag": "gf-translation-rule",
+      "explanationVariants": [
+        "Apply each part to its own coordinate: x: 10 − 4 = 6; y: 2 + 7 = 9. Image (6, 9), so a = 6.",
+        "x − 4 means slide LEFT 4: the x-coordinate drops from 10 to 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The translation (x, y) → (x − 4, y + 7) sends (10, 2) to (a, 9). Find a.",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is 10 + 4 — the minus sign flipped. x − 4 slides LEFT: 10 − 4 = 6."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the preimage x, unchanged — but the rule's first slot says every x moves by −4: 10 − 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "Substitute into the x-slot: 10 − 4 = 6."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-translation-rule__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Finding the rule** runs the machine backward: subtract preimage coordinates from image coordinates. A(3, 5) → A′(8, 2) gives shifts 8 − 3 = +5 and 2 − 5 = −3, so the rule is (x, y) → (x + 5, y − 3). Always image MINUS preimage — order matters.",
+      "figure": "gf-find-rule"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read off one shift.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A point's y-coordinate goes from 5 (preimage) to 2 (image) under a translation. What number fills the y-slot of the rule (x, y) → (x + 5, y + ▢)?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the SIZE of the shift but not its direction — the y went DOWN from 5 to 2, so the slot holds image − preimage = 2 − 5 = −3."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is 5 + 2 — the coordinates added. The shift is their DIFFERENCE, image minus preimage: 2 − 5 = −3."
+          }
+        ],
+        "fallbackFeedback": "Image minus preimage: 2 − 5 = −3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the whole rule.",
+      "conceptTag": "gf-translation-rule",
+      "explanationVariants": [
+        "Shifts are image − preimage: 8 − 3 = +5 and 2 − 5 = −3, so (x, y) → (x + 5, y − 3).",
+        "Test the candidate on A: 3 + 5 = 8 ✓ and 5 − 3 = 2 ✓ — it reproduces A′ exactly."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A translation sends A(3, 5) to A′(8, 2). What is the rule?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(x, y) → (x + 5, y − 3)",
+            "correct": true,
+            "feedback": "8 − 3 = +5 right, 2 − 5 = −3 down — and plugging A back in lands exactly on A′."
+          },
+          {
+            "id": "o2",
+            "label": "(x, y) → (x − 5, y + 3)",
+            "correct": false,
+            "feedback": "That's the rule from A′ BACK to A — preimage minus image. Compute image − preimage instead: +5 and −3."
+          },
+          {
+            "id": "o3",
+            "label": "(x, y) → (x + 8, y + 2)",
+            "correct": false,
+            "feedback": "8 and 2 are A′'s COORDINATES, not the shifts. The shift is how far the point MOVED: image minus preimage."
+          },
+          {
+            "id": "o4",
+            "label": "(x, y) → (x + 5, y + 3)",
+            "correct": false,
+            "feedback": "The x-shift is right, but the y fell from 5 to 2 — a NEGATIVE shift: y − 3, not y + 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-translation-rule__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Translations **chain**. Doing (x + 2, y − 5) and then (x − 7, y + 1) is one combined translation: the shifts just add, slot by slot: 2 + (−7) = −5 and −5 + 1 = −4, net rule (x − 5, y − 4). Two slides make a slide.",
+      "figure": "gf-translations-chain"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "First slide only.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Start at (6, 9). Apply just the FIRST translation, (x, y) → (x + 2, y − 5). What is the x-coordinate of the result?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the new y (9 − 5). The question asks for the x-coordinate: 6 + 2 = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the starting x, unmoved — but the rule adds 2 to every x: 6 + 2 = 8."
+          }
+        ],
+        "fallbackFeedback": "x-slot only: 6 + 2 = 8."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Chain the slides.",
+      "conceptTag": "gf-translation-rule",
+      "hints": [
+        "Handle the x-coordinates alone — the y's can't interfere.",
+        "Two x-shifts happen in turn: +2, then −7.",
+        "6 + 2 = 8, then 8 − 7 — or add the net shift 2 − 7 = −5 to 6."
+      ],
+      "explanationVariants": [
+        "x: 6 + 2 = 8, then 8 − 7 = 1. (Net shift −5: 6 − 5 = 1 — same answer, one step.)",
+        "Combine the rules first: x-shifts add to 2 + (−7) = −5, so x goes 6 → 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Start at (6, 9). Apply (x, y) → (x + 2, y − 5), THEN (x, y) → (x − 7, y + 1). What is the x-coordinate of the final image?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is 6 + 2 + 7 — the −7 turned positive. The second slide goes LEFT: 8 − 7 = 1."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is where x sits after the FIRST slide only. The second rule still has to act: 8 − 7 = 1."
+          }
+        ],
+        "fallbackFeedback": "6 + 2 − 7 = 1 — shifts add, signs and all."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-translation-rule__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Slides are functions.",
+      "takeaways": [
+        "A transformation is a function: preimage in, image (with a prime) out.",
+        "Translation rule slots act on their own letters: (x + a, y + b).",
+        "Find a rule by image − preimage; chain rules by ADDING shifts."
+      ],
+      "teaser": "Next: reflections — the rule flips a sign, and the mirror line hides a perpendicular bisector."
+    }
+  ]
+}

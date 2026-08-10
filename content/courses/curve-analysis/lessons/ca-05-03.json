@@ -1,0 +1,297 @@
+{
+  "id": "ca-05-03",
+  "slug": "applied-optimisation",
+  "title": "Applied Optimisation",
+  "courseId": "curve-analysis",
+  "chapterId": "ch5-optimisation",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A farmer has 100 m of fence and a long straight wall. He wants the largest rectangular pen, using the wall as one side.\n\n**Fence used** = 2x + y = 100, where x is the depth and y the width along the wall.\n**Area** = xy = x(100 − 2x).\n\nOne variable, and a domain of 0 < x < 50. The wall is the whole point: it means only three sides need fencing.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the wall.",
+      "conceptTag": "ca-optimisation-applied",
+      "explanationVariants": [
+        "Three sides are fenced: two of depth x and one of width y. So 2x + y = 100 and y = 100 − 2x. The area is x(100 − 2x).",
+        "Forgetting the wall gives 2x + 2y = 100 and a completely different (and smaller) answer."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "100 m of fence, three sides only (the wall is the fourth). Which area formula is right?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A = x(100 − 2x)",
+            "correct": true,
+            "feedback": "Right — two depths and one width use the fence, so y = 100 − 2x."
+          },
+          {
+            "id": "o2",
+            "label": "A = x(50 − x)",
+            "correct": false,
+            "feedback": "That is the four-sided pen, where 2x + 2y = 100 gives y = 50 − x. The wall means you only fence THREE sides, so more fence is left for the width."
+          },
+          {
+            "id": "o3",
+            "label": "A = x(100 − x)",
+            "correct": false,
+            "feedback": "That uses only ONE depth. There are two sides of length x, so the fence they consume is 2x."
+          },
+          {
+            "id": "o4",
+            "label": "A = 100x",
+            "correct": false,
+            "feedback": "That ignores the constraint entirely — it says the width is 100 no matter how deep the pen is, which would need infinite fence."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-optimisation-applied__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One critical point, and the sign chart proves it is a maximum.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 25,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": false,
+        "prompt": "A′(x) = 100 − 4x, a line with NEGATIVE slope. Set the signs of A′.",
+        "successFeedback": "+ then −. The area climbs until x = 25 and falls after — so x = 25 is the maximum, and A(25) = 25 × 50 = 1250 m². Note the shape of the answer: the depth (25 + 25 = 50 m of fence) exactly equals the width (50 m). Half the fence goes each way, which is a pattern worth noticing.",
+        "crossFeedback": "A′ = 100 − 4x is a single root at 25, so the sign flips there — and since the leading coefficient is negative, it goes from + to −.",
+        "bounceFeedback": "This root is single, not repeated: A′ crosses zero rather than touching it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "ca-optimisation-applied",
+      "predict": {
+        "prompt": "A′(x) = 100 − 4x is a line with negative slope. Its sign chart will read…",
+        "options": [
+          {
+            "id": "pm",
+            "label": "Positive, then negative"
+          },
+          {
+            "id": "mp",
+            "label": "Negative, then positive"
+          },
+          {
+            "id": "pp",
+            "label": "Positive throughout"
+          }
+        ],
+        "outcomeId": "pm",
+        "reveal": "Positive then negative — so the area climbs, stops, and falls away: a maximum, established by the chart alone with no second derivative anywhere in sight. A line of negative slope crosses zero exactly once and only in that direction, which is why one critical point plus one sign change is already a complete argument."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute it.",
+      "conceptTag": "ca-optimisation-applied",
+      "explanationVariants": [
+        "A′ = 100 − 4x = 0 gives x = 25, and A(25) = 25 × (100 − 50) = 25 × 50 = 1250 m².",
+        "Both endpoints are degenerate: A(0) = 0 (no depth) and A(50) = 0 (no width)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the maximum area of the pen, in square metres.",
+        "answer": 1250,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2500,
+            "feedback": "That is 50 × 50 — a square pen, which would need 150 m of fence for three sides. You only have 100."
+          },
+          {
+            "value": 625,
+            "feedback": "That is 25², the depth squared. The width is 100 − 50 = 50, so the area is 25 × 50 = 1250."
+          },
+          {
+            "value": 50,
+            "feedback": "That is the width y at the optimum. Multiply by the depth 25 to get the area."
+          }
+        ],
+        "fallbackFeedback": "A′ = 100 − 4x = 0 → x = 25, and A(25) = 25 × 50 = 1250 m²."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-optimisation-applied__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two habits that survive every problem of this kind:\n\n**Check the endpoints, always.** Here they are degenerate (A = 0), but in a problem with a real constraint at the edge, the answer can live there — and a critical point that beats the interior can still lose to an edge.\n\n**Sanity-check the shape.** Half the fence went to the two depths and half to the width. If your answer has a wildly lopsided pen, suspect an algebra slip.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When the answer IS at an endpoint.",
+      "conceptTag": "ca-optimisation-applied",
+      "explanationVariants": [
+        "If the profit function is increasing on the whole allowed range, there is no interior critical point — the best you can do is the largest allowed value. The answer is at the endpoint.",
+        "This is exactly the EVT case from chapter 1: an endpoint maximum, with a steep tangent and no flat spot in sight."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A profit function P(x) has P′(x) > 0 for every x in the allowed range [0, 40]. Where is the maximum profit?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "At x = 40 — the right endpoint. Profit is still climbing when the range runs out.",
+            "correct": true,
+            "feedback": "Right, and there is no critical point at all: the tangent is never flat. This is why the endpoints must ALWAYS be checked."
+          },
+          {
+            "id": "o2",
+            "label": "There is no maximum, since P′ is never zero.",
+            "correct": false,
+            "feedback": "On a CLOSED interval the EVT guarantees a maximum. It just does not have to be at a critical point — here it is at the edge."
+          },
+          {
+            "id": "o3",
+            "label": "At x = 0.",
+            "correct": false,
+            "feedback": "That is where profit is SMALLEST: the function climbs from there all the way to 40."
+          },
+          {
+            "id": "o4",
+            "label": "Somewhere in the middle.",
+            "correct": false,
+            "feedback": "An interior maximum needs f′ to change sign. Here f′ is positive throughout — the curve climbs right up to the edge."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-optimisation-applied__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, from scratch.",
+      "conceptTag": "ca-optimisation-applied",
+      "hints": [
+        "Name the variables. If the two numbers are x and 20 − x, what is the quantity to minimise?",
+        "S = x² + (20 − x)². Expand it: S = 2x² − 40x + 400.",
+        "S′ = 4x − 40 = 0 gives x = 10. Now compute S(10)."
+      ],
+      "explanationVariants": [
+        "S = x² + (20 − x)², so S′ = 2x − 2(20 − x) = 4x − 40 = 0 at x = 10. Then S = 100 + 100 = 200.",
+        "Equal numbers again — and this time they MINIMISE the sum of squares, where a moment ago they maximised the product. Both facts come from the same symmetry."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two numbers add to 20. What is the SMALLEST possible sum of their squares?",
+        "answer": 200,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 400,
+            "feedback": "That is 20² — what you get if one number is 0 and the other is 20. That is an ENDPOINT, and it is the maximum, not the minimum."
+          },
+          {
+            "value": 100,
+            "feedback": "That is 10², the square of one number. The sum of BOTH squares is 100 + 100 = 200."
+          },
+          {
+            "value": 10,
+            "feedback": "That is the value of x at the optimum. The sum of squares there is 200."
+          }
+        ],
+        "fallbackFeedback": "S = x² + (20 − x)² → S′ = 4x − 40 = 0 → x = 10, so S = 100 + 100 = 200."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-optimisation-applied__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Translate, reduce, differentiate, compare.",
+      "takeaways": [
+        "The constraint eliminates a variable; the domain rejects the impossible answers; the derivative finds the candidates.",
+        "ALWAYS compare with the endpoints — a curve that is still climbing when the range runs out has its maximum at the edge.",
+        "Equal shares turn up again and again (10 × 10, and half the fence each way). It is worth noticing when it happens."
+      ],
+      "teaser": "That is curve analysis. The next course takes these derivatives out into the world: motion, related rates, and L'Hôpital's rule."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-optimisation-applied",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Draw the picture and label it. Write the constraint from the picture, and the quantity you want from the picture. Then the algebra tells you what to differentiate — never the other way round.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Write the constraint.",
+        "conceptTag": "ca-optimisation-applied",
+        "explanationVariants": [
+          "Three sides fenced: two depths (2x) and one width (y). So 2x + y = 100.",
+          "The wall is free, so it does not appear in the fence equation at all."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A pen against a wall uses 100 m of fence on three sides — two of depth x, one of width y. What is the constraint?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "2x + y = 100",
+              "correct": true,
+              "feedback": "Right — the wall costs nothing, so only three sides consume fence."
+            },
+            {
+              "id": "o2",
+              "label": "2x + 2y = 100",
+              "correct": false,
+              "feedback": "That fences all FOUR sides. The wall is already there, so the fourth side is free."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+ "id": "bv-03-03",
+ "slug": "how-far-to-trust-a-prediction",
+ "title": "How Far to Trust a Prediction",
+ "courseId": "bivariate-statistics",
+ "chapterId": "ch3-using-the-line",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Predictions are most reliable **inside** the range of the data. Stretching far **beyond** it — called **extrapolation** — is risky: the trend may not continue. A line fit to weeks 1–6 may say little about week 50.",
+   "figure": "scatter-best-fit"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Inside or outside?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A line is fit to data from x = 1 to x = 10. A prediction at x = 5 is likely more trustworthy than one at x = 40 because…",
+    "options": [
+     {
+      "id": "a",
+      "label": "x = 5 is inside the measured range; x = 40 is far beyond it",
+      "correct": true,
+      "feedback": "Right — predictions inside the data range are more reliable."
+     },
+     {
+      "id": "b",
+      "label": "x = 5 is a smaller number",
+      "correct": false,
+      "feedback": "Size isn't the point — x = 5 is INSIDE the data range, x = 40 is far outside it."
+     },
+     {
+      "id": "c",
+      "label": "x = 40 is even",
+      "correct": false,
+      "feedback": "Even or odd is irrelevant — trust depends on staying inside the measured range."
+     },
+     {
+      "id": "d",
+      "label": "both are equally reliable",
+      "correct": false,
+      "feedback": "They're not — x = 5 is inside the data, so its prediction is more reliable than x = 40's."
+     }
+    ]
+   },
+   "predict": {
+    "prompt": "A line was fit to data from x = 1 to 10. Does the line KNOW what happens beyond x = 10?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — it just extends the pattern on faith"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — math extends knowledge"
+     },
+     {
+      "id": "better",
+      "label": "Beyond the data it's MORE accurate"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "The line only ever saw x = 1 to 10 — past that it assumes the pattern continues, which the data never promised. Predictions inside the data deserve more trust."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Data can also curve outside the range you measured. A plant grows steadily for weeks, then stops at full height — a straight line would keep predicting impossible growth. Real trends often bend once you leave the data.",
+   "figure": "bv-extrapolate"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Name the risky move.",
+   "conceptTag": "bv-prediction-limits",
+   "variant": {"gen": "g8-bv-prediction-limits", "form": "bvLimitExtrapolate"},
+   "explanationVariants": [
+    "Predicting far beyond the measured data is extrapolation, and it can be unreliable.",
+    "Stretching the line well past the data is extrapolation."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Using a line fit to ages 6–12 to predict a 40-year-old's height is an example of…",
+    "options": [
+     {
+      "id": "a",
+      "label": "Extrapolation — predicting far beyond the data",
+      "correct": true,
+      "feedback": "Right — reaching far past the measured range is extrapolation, and it's risky."
+     },
+     {
+      "id": "b",
+      "label": "A reliable prediction",
+      "correct": false,
+      "feedback": "Age 40 is far outside the 6–12 data — that's risky extrapolation, not reliable."
+     },
+     {
+      "id": "c",
+      "label": "Finding the slope",
+      "correct": false,
+      "feedback": "This is about how far the prediction reaches, not computing slope — it's extrapolation."
+     },
+     {
+      "id": "d",
+      "label": "Interpolation",
+      "correct": false,
+      "feedback": "Interpolation is predicting INSIDE the data — age 40 is far outside, so it's extrapolation."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Spot the unreliable prediction.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A line fit to a plant's first 6 weeks predicts it will be 3 meters tall at week 100. What's the problem?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The plant likely stops growing — the line can't be trusted that far out",
+      "correct": true,
+      "feedback": "Right — real growth levels off; the line over-predicts far beyond the data."
+     },
+     {
+      "id": "b",
+      "label": "The slope was computed wrong",
+      "correct": false,
+      "feedback": "The math may be fine — the issue is trusting the line 94 weeks past the data."
+     },
+     {
+      "id": "c",
+      "label": "Weeks can't be that large",
+      "correct": false,
+      "feedback": "Week 100 is a valid time — the problem is the trend won't stay linear that far out."
+     },
+     {
+      "id": "d",
+      "label": "3 meters is a round number",
+      "correct": false,
+      "feedback": "The value's roundness isn't the issue — it's extrapolating far beyond the data."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Best prediction to trust.",
+   "conceptTag": "bv-prediction-limits",
+   "variant": {"gen": "g8-bv-prediction-limits", "form": "bvLimitTrust"},
+   "explanationVariants": [
+    "A prediction at x = 8, inside data spanning x = 1 to 12, is the most trustworthy.",
+    "The prediction inside the data range (x = 8) is safest."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A line is fit to data from x = 1 to x = 12. Which prediction is the most trustworthy?",
+    "options": [
+     {
+      "id": "a",
+      "label": "x = 8",
+      "correct": true,
+      "feedback": "Right — x = 8 sits inside the measured range, so its prediction is most reliable."
+     },
+     {
+      "id": "b",
+      "label": "x = 20",
+      "correct": false,
+      "feedback": "x = 20 is beyond the data (1–12) — less reliable than a prediction inside the range."
+     },
+     {
+      "id": "c",
+      "label": "x = 100",
+      "correct": false,
+      "feedback": "x = 100 is far past the data — that's risky extrapolation."
+     },
+     {
+      "id": "d",
+      "label": "x = 50",
+      "correct": false,
+      "feedback": "x = 50 is well outside the 1–12 range — a prediction inside it (like x = 8) is safer."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Why trends bend.",
+   "conceptTag": "bv-prediction-limits",
+   "variant": {"gen": "g8-bv-prediction-limits", "form": "bvLimitWhy"},
+   "explanationVariants": [
+    "Outside the measured data a real relationship can curve or level off, so a straight line may mislead.",
+    "Beyond the data, trends can change, so the line may not hold."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why can a line of best fit give a bad prediction far outside the data range?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The real trend may curve or level off out there",
+      "correct": true,
+      "feedback": "Right — beyond the data the relationship can change, so the line misleads."
+     },
+     {
+      "id": "b",
+      "label": "Lines can't be extended",
+      "correct": false,
+      "feedback": "You CAN extend a line — the risk is that the real trend may not stay straight."
+     },
+     {
+      "id": "c",
+      "label": "The slope becomes zero",
+      "correct": false,
+      "feedback": "The slope stays the same — the issue is the true trend may bend beyond the data."
+     },
+     {
+      "id": "d",
+      "label": "Predictions are always wrong",
+      "correct": false,
+      "feedback": "Predictions inside the data are usually fine — it's far extrapolation that's risky."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Judge three predictions.",
+   "conceptTag": "bv-prediction-limits",
+   "variant": {"gen": "g8-bv-prediction-limits", "form": "bvLimitSort"},
+   "explanationVariants": [
+    "Inside the data range = reliable; far outside = risky extrapolation.",
+    "Sort by whether the x is inside the measured range or far beyond it."
+   ],
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "A line is fit to data from x = 2 to x = 15. Sort each prediction.",
+    "buckets": [
+     {
+      "id": "ok",
+      "label": "Reliable (inside the data)"
+     },
+     {
+      "id": "risky",
+      "label": "Risky (far extrapolation)"
+     }
+    ],
+    "items": [
+     {
+      "id": "d1",
+      "label": "predict y at x = 6",
+      "bucketId": "ok",
+      "feedback": "x = 6 is inside 2–15 — reliable."
+     },
+     {
+      "id": "d2",
+      "label": "predict y at x = 90",
+      "bucketId": "risky",
+      "feedback": "x = 90 is far beyond 15 — risky extrapolation."
+     },
+     {
+      "id": "d3",
+      "label": "predict y at x = 12",
+      "bucketId": "ok",
+      "feedback": "x = 12 is inside 2–15 — reliable."
+     },
+     {
+      "id": "d4",
+      "label": "predict y at x = 200",
+      "bucketId": "risky",
+      "feedback": "x = 200 is far past the data — risky extrapolation."
+     }
+    ],
+    "missFeedback": "Not quite — inside the 2–15 range is reliable; far beyond it is risky extrapolation.",
+    "successFeedback": "All sorted — trust predictions inside the data, doubt far extrapolations."
+   },
+   "hints": [
+    "Check whether each x lands inside the data span 2–15.",
+    "Inside the range → reliable; far outside → risky.",
+    "x = 6 and x = 12 are inside; x = 90 and x = 200 are far beyond."
+   ]
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Trust predictions inside the data range; far extrapolation is risky because trends can bend.",
+   "takeaways": [
+    "Predictions inside the measured range are the most reliable.",
+    "Extrapolation — reaching far beyond the data — can mislead.",
+    "Real relationships may curve or level off outside the data."
+   ],
+   "teaser": "Next chapter: two-way tables for categorical data."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "bv-prediction-limits",
+   "concept": {
+    "id": "rem-bv0303-c",
+    "kind": "concept",
+    "body": "Predictions are most reliable inside the range of the data. Extrapolation — predicting far beyond the measured data — is risky because the real trend may curve or level off."
+   },
+   "check": {
+    "id": "rem-bv0303-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "bv-prediction-limits",
+    "explanationVariants": [
+     "A prediction inside the data range (x = 7 within 1–12) is the most trustworthy.",
+     "Inside the measured range is the reliable choice."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A line is fit to data from x = 1 to x = 12. Which prediction is most trustworthy?",
+     "options": [
+      {
+       "id": "a",
+       "label": "x = 7",
+       "correct": true,
+       "feedback": "Right — x = 7 is inside the data range, so it's most reliable."
+      },
+      {
+       "id": "b",
+       "label": "x = 40",
+       "correct": false,
+       "feedback": "x = 40 is far beyond the data (1–12) — risky extrapolation."
+      },
+      {
+       "id": "c",
+       "label": "x = 80",
+       "correct": false,
+       "feedback": "x = 80 is well outside the range — a prediction inside it is safer."
+      },
+      {
+       "id": "d",
+       "label": "x = 500",
+       "correct": false,
+       "feedback": "x = 500 is far past the data — that's risky extrapolation."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

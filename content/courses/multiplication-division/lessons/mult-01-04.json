@@ -1,0 +1,427 @@
+{
+  "id": "mult-01-04",
+  "slug": "hops-on-the-number-line",
+  "title": "Hops on the Number Line",
+  "courseId": "multiplication-division",
+  "chapterId": "ch1-equal-groups",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **number line** turns skip counting into jumps you can see. Start at 0 and make hops of the **same length**. Three hops of 4 lands you on 12 — that's 3 × 4 drawn as motion. Same idea as equal groups, now stretched along a line.",
+      "figure": "number-line-jumps"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Every hop moves the frog the **same distance**.",
+      "conceptTag": "number-line",
+      "widget": {
+        "type": "slider",
+        "prompt": "This frog only hops 3 spaces at a time. Slide it along its hops until it lands exactly on 12.",
+        "min": 0,
+        "max": 18,
+        "step": 3,
+        "start": 0,
+        "target": 12,
+        "visual": "numberline",
+        "unitLabel": "landing spot",
+        "lowFeedback": "Not there yet — each hop carries the frog 3 more. Keep hopping forward.",
+        "highFeedback": "The frog hopped past 12! Hop back — each hop back is 3 spaces too.",
+        "successFeedback": "Four hops of 3 land on 12. You just drew 4 × 3 = 12!"
+      },
+      "predict": {
+        "prompt": "The frog hops 3 spaces at a time. Predict: how many hops to land exactly on 12?",
+        "options": [
+          {
+            "id": "four",
+            "label": "4 hops"
+          },
+          {
+            "id": "three",
+            "label": "3 hops"
+          },
+          {
+            "id": "nine",
+            "label": "9 hops"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Four hops of 3 land on 3, 6, 9, 12 — equal jumps on the line ARE multiplication: 4 × 3 = 12, drawn as distance."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents number line.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for number line must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines number line."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:number-line",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read a jump picture: **how many hops**, and **how long is each**?",
+      "conceptTag": "number-line",
+      "explanationVariants": [
+        "The picture shows 4 separate hops, each 5 long: 4 hops of 5, written 4 × 5.",
+        "Count the jumps (4), measure one jump (5). Hops-first: 4 × 5, landing on 20."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A number line shows a rabbit making 4 hops of 5, starting at 0. Which multiplication matches the picture?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4 × 5",
+            "correct": true,
+            "feedback": "4 hops of 5 — hops first, hop length second. It lands on 20."
+          },
+          {
+            "id": "b",
+            "label": "4 + 5",
+            "feedback": "4 + 5 would be ONE hop of 5 starting from 4. This rabbit makes 4 whole hops — four 5s."
+          },
+          {
+            "id": "c",
+            "label": "5 × 4",
+            "feedback": "5 × 4 lands on the same spot, but it describes 5 hops of 4 — a different picture. This one shows 4 hops of 5. (Soon you'll see why both land on 20!)"
+          },
+          {
+            "id": "d",
+            "label": "5 × 5",
+            "feedback": "5 × 5 needs 5 hops — count the jumps in the picture again: there are only 4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "hop-multiply"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Every jump picture has three parts: the **hop length**, the **number of hops**, and the **landing spot**. Hops × hop length = landing spot (when you start at 0). Know any two parts, and you can figure out the third.",
+      "figure": "number-line-jumps"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Hops × hop length = landing spot.",
+      "conceptTag": "number-line",
+      "explanationVariants": [
+        "5 hops of 4: count 4, 8, 12, 16, 20. The kangaroo lands on 20 — that's 5 × 4.",
+        "Each hop adds 4, and there are 5 of them: 4 + 4 + 4 + 4 + 4 = 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A kangaroo starts at 0 and makes 5 hops of 4. What number does it land on?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 adds 5 + 4 — one hop's worth of mixing. The kangaroo hops 4, five separate times."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is where hop number 4 lands — one hop short. Count all five: 4, 8, 12, 16, and one more."
+          },
+          {
+            "value": 24,
+            "feedback": "24 would take 6 hops of 4. This kangaroo makes exactly 5 — recount the jumps."
+          }
+        ],
+        "fallbackFeedback": "Hop it out loud, adding 4 each time: 4, 8, 12, 16, 20 — five hops."
+      },
+      "variant": {
+        "gen": "hop-multiply",
+        "form": "landOn"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A frog's landing spots make a **pattern** on the line.",
+      "conceptTag": "number-line",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "A frog hops by 3s from 0 and makes three hops. Tap every number it lands on.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 6,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "p2",
+            "x": 10,
+            "y": 50,
+            "label": "Number 2",
+            "icon": "2️⃣",
+            "count": 1,
+            "feedback": "2 is one space short of the first landing — hops of 3 from 0 touch down on 3 first."
+          },
+          {
+            "id": "p3",
+            "x": 24,
+            "y": 50,
+            "label": "Number 3",
+            "icon": "3️⃣",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "p4",
+            "x": 38,
+            "y": 50,
+            "label": "Number 4",
+            "icon": "4️⃣",
+            "count": 1,
+            "feedback": "4 is one past 3 — the frog is already in the air there. It only touches multiples of 3."
+          },
+          {
+            "id": "p6",
+            "x": 52,
+            "y": 50,
+            "label": "Number 6",
+            "icon": "6️⃣",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "p8",
+            "x": 66,
+            "y": 50,
+            "label": "Number 8",
+            "icon": "8️⃣",
+            "count": 1,
+            "feedback": "8 sits between landings — from 6, a hop of 3 flies over 7 and 8 and lands on 9."
+          },
+          {
+            "id": "p9",
+            "x": 80,
+            "y": 50,
+            "label": "Number 9",
+            "icon": "9️⃣",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "p12",
+            "x": 94,
+            "y": 50,
+            "label": "Number 12",
+            "icon": "🔢",
+            "count": 1,
+            "feedback": "12 would be the FOURTH landing. This frog stops after three hops: 3, 6, 9."
+          }
+        ],
+        "missFeedback": "Hop with the frog from 0: land on 3, then 6, then 9. Tap exactly those three landings.",
+        "successFeedback": "3, 6, 9 — three hops of 3, and the landings are the 3-times table appearing on the line."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents number line.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for number line must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines number line."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:number-line",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Now read a picture **backward**: the landing is known, the hop length isn't.",
+      "conceptTag": "number-line",
+      "explanationVariants": [
+        "Six equal hops share the trip to 18 evenly: each hop is 3, because 6 × 3 = 18.",
+        "Ask: 6 hops of WHAT lands on 18? Test it — 6 hops of 3 gives 3, 6, 9, 12, 15, 18."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A jump picture shows: start at 0, land on 18, using 6 equal hops. How long is each hop?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3",
+            "correct": true,
+            "feedback": "6 hops of 3 reach 18, because 6 × 3 = 18."
+          },
+          {
+            "id": "b",
+            "label": "6",
+            "feedback": "6 is how MANY hops there are. Hops of 6 taken 6 times would fly to 36 — too far."
+          },
+          {
+            "id": "c",
+            "label": "12",
+            "feedback": "12 comes from 18 − 6. But hops share the trip by splitting it into equal pieces, not by subtracting."
+          },
+          {
+            "id": "d",
+            "label": "24",
+            "feedback": "24 is bigger than the whole trip! One hop can't be longer than the landing spot itself."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "hop-multiply",
+        "form": "hopLength"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller there-and-back, before the grasshopper's big trip.",
+      "conceptTag": "number-line",
+      "explanationVariants": [
+        "4 hops of 3 lands on 4×3=12. One hop back is 3 less: 12−3=9.",
+        "Find the forward landing spot first (4×3=12), then subtract one hop's length for the trip back (12−3=9)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A frog hops by 3s from 0 up to 12 (that's 4 hops). Then it turns around and makes 1 hop back. What number is it standing on now?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is where it landed BEFORE turning around — the hop back still moves it: 12−3=9."
+          },
+          {
+            "value": 15,
+            "feedback": "15 adds the hop back instead of subtracting it — turning around means going backward: 12−3=9."
+          }
+        ],
+        "fallbackFeedback": "Find the forward landing spot first (4×3=12), then subtract one hop for the trip back (12−3=9)."
+      },
+      "variant": {
+        "gen": "hop-multiply",
+        "form": "turnAround"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A there-and-back puzzle.",
+      "conceptTag": "number-line",
+      "hints": [
+        "Two parts: first the grasshopper hops forward to 30, then it turns around and hops back twice.",
+        "Backward hops are the same length: each one takes away 5. Two of them take away how much?",
+        "It stood on 30, then lost 5 + 5 = 10. Where is 10 back from 30?"
+      ],
+      "explanationVariants": [
+        "Forward: hops of 5 reach 30. Backward: two hops of 5 undo 10, so 30 − 10 = 20.",
+        "Each backward hop retraces one forward hop. Two hops back from 30 lands where hop 4 landed: 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A grasshopper hops by 5s from 0 up to 30. Then it turns around and makes 2 hops back. What number is it standing on now?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is how far it hopped BACK (2 hops of 5). The question asks where it's standing — take that 10 away from 30."
+          },
+          {
+            "value": 28,
+            "feedback": "28 subtracts 2 — the number of hops. But each hop is 5 spaces long, so two hops move it 10."
+          },
+          {
+            "value": 40,
+            "feedback": "40 keeps hopping forward. The grasshopper turned around at 30 — backward hops make the number smaller."
+          }
+        ],
+        "fallbackFeedback": "Stand at 30, then hop back 5 and back 5 again: 30 → 25 → ?"
+      },
+      "variant": {
+        "gen": "hop-multiply",
+        "form": "turnAround"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can see multiplication move now.",
+      "takeaways": [
+        "A number line shows multiplication as equal hops from 0.",
+        "Hops × hop length = landing spot.",
+        "Know any two of the three parts and the picture gives you the third."
+      ],
+      "teaser": "flip the hops around — why do 3 × 4 and 4 × 3 land on the exact same spot?"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "number-line",
+      "concept": {
+        "id": "rem-nl-c",
+        "kind": "concept",
+        "body": "Quick rewind. On a number line, multiplication is **equal hops starting at 0**. Hops of 5 taken 2 times: land on 5, then 10 — so 2 × 5 = 10. The hop length is the group size; the number of hops is how many groups."
+      },
+      "check": {
+        "id": "rem-nl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "number-line",
+        "explanationVariants": [
+          "3 hops of 2 from 0: land on 2, 4, then 6. So 3 × 2 = 6.",
+          "Each hop adds 2, three times: 2 + 2 + 2 = 6."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Starting at 0, you make 3 hops of 2. Where do you land?",
+          "options": [
+            {
+              "id": "a",
+              "label": "6",
+              "correct": true,
+              "feedback": "2, then 4, then 6 — three hops of 2 is 3 × 2 = 6."
+            },
+            {
+              "id": "b",
+              "label": "5",
+              "feedback": "5 adds 3 + 2 — that mixes the hop count with the hop length. Hop 2 three separate times."
+            },
+            {
+              "id": "c",
+              "label": "9",
+              "feedback": "9 would be 3 hops of 3. These hops are only 2 long — count 2, 4, 6."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

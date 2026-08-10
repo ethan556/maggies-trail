@@ -1,0 +1,269 @@
+{
+ "id": "pq-01-02",
+ "slug": "exterior-angles",
+ "title": "Exterior Angles: One Full Lap",
+ "courseId": "polygons-quadrilaterals",
+ "chapterId": "ch1-angle-sums",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "pq-exterior-sum",
+   "concept": {
+    "id": "rem-pq-exterior-sum-c",
+    "kind": "concept",
+    "body": "Exterior angle = the turn between one side extended and the next side. Walking the whole boundary returns you to your starting heading, so the exterior angles of every polygon sum to 360° — no formula, no dependence on n. At each vertex, interior + exterior = 180° because they share a straight line."
+   },
+   "check": {
+    "id": "rem-pq-exterior-sum-k",
+    "kind": "check",
+    "body": "Lap logic.",
+    "conceptTag": "pq-exterior-sum",
+    "explanationVariants": [
+     "The turns complete one rotation: 360 − (90 + 130) = 140°.",
+     "Three exterior angles of a triangle total 360: the third is 140°."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Two exterior angles of a triangle are 90° and 130°. The third?",
+     "answer": 140,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 320,
+       "feedback": "320 treats the total as 540 — that's a pentagon's INTERIOR sum. Exterior lap: 360 − 220 = 140°."
+      },
+      {
+       "value": 220,
+       "feedback": "220 is the two turns so far. Complete the lap: 360 − 220 = 140°."
+      }
+     ],
+     "fallbackFeedback": "360 − 220 = 140°."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Walk the boundary of any polygon. At each vertex you TURN through the **exterior angle** — the angle between one side extended and the next side. Finish the lap and you're facing your starting direction again: one complete rotation. So the exterior angles of ANY polygon — 3 sides or 300, regular or lopsided — sum to exactly **360°**.",
+   "figure": "exterior-angle-walk"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The universal sum.",
+   "conceptTag": "pq-exterior-sum",
+   "explanationVariants": [
+    "One full lap = one full turn = 360°, regardless of the number of sides.",
+    "The walker ends facing the way they started; the turns total a single rotation: 360°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Exterior angles of a 23-gon (one at each vertex): what do they sum to?",
+    "answer": 360,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3780,
+      "feedback": "3780 = (23 − 2) × 180 is the INTERIOR sum. Exterior angles always close one lap: 360°."
+     },
+     {
+      "value": 4140,
+      "feedback": "4140 = 23 × 180 pairs every interior with its exterior — the exteriors ALONE make one turn: 360°."
+     }
+    ],
+    "fallbackFeedback": "Every polygon's exterior angles sum to 360°."
+   },
+   "variant": {
+    "gen": "polygon-angles",
+    "form": "exteriorSum"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "At each vertex the interior and exterior angles sit on a straight line, so they're **supplementary**: interior + exterior = 180°. An interior of 108° leaves an exterior of 72°. This little exchange rate lets you hop between the two worlds at will.",
+   "figure": "pq-linear-pair"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Cross the line.",
+   "conceptTag": "pq-exterior-sum",
+   "explanationVariants": [
+    "Exterior = 180 − 108 = 72° — the two share a straight line at the vertex.",
+    "Supplementary pair: 108 + 72 = 180°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A vertex has interior angle 108°. Its exterior angle?",
+    "answer": 72,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 252,
+      "feedback": "252 = 360 − 108 subtracts from the wrong total — the pair shares a straight LINE (180°), not a full turn: 72°."
+     },
+     {
+      "value": 54,
+      "feedback": "54 = 108 ÷ 2 halves the interior — there's no halving here. Supplement: 180 − 108 = 72°."
+     }
+    ],
+    "fallbackFeedback": "180 − 108 = 72°."
+   },
+   "variant": {
+    "gen": "polygon-angles",
+    "form": "exteriorFromInterior"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why one lap?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why do a polygon's exterior angles always total 360°, no matter its shape?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Walking the boundary returns you to your starting direction — the turns make exactly one full rotation",
+      "correct": true,
+      "feedback": "The turns are the exterior angles, and closing the loop means facing the original heading: 360° in total."
+     },
+     {
+      "id": "o2",
+      "label": "Because each exterior angle equals 360 divided by the number of sides",
+      "correct": false,
+      "feedback": "That's only true for REGULAR polygons. Irregular ones share the turns unevenly — yet still complete one lap: 360°."
+     },
+     {
+      "id": "o3",
+      "label": "Because interior angles also sum to 360°",
+      "correct": false,
+      "feedback": "Interior sums GROW with n — (n − 2) × 180. It's the exteriors that stay pinned at one rotation."
+     },
+     {
+      "id": "o4",
+      "label": "It's a rule with occasional exceptions for concave shapes",
+      "correct": false,
+      "feedback": "For convex polygons the lap argument holds without exception — the sum is exactly 360°. (Concave shapes need signed turns — beyond this course.)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Fill the last turn.",
+   "conceptTag": "pq-exterior-sum",
+   "explanationVariants": [
+    "360 − (85 + 60 + 70 + 75) = 360 − 290 = 70°.",
+    "The five turns must complete one lap: what's missing from 360 is 70°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Four exterior angles of a pentagon are 85°, 60°, 70°, and 75°. The fifth?",
+    "answer": 70,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 250,
+      "feedback": "250 = 540 − 290 reaches for the INTERIOR sum. Exterior angles close a 360° lap: 360 − 290 = 70°."
+     },
+     {
+      "value": 290,
+      "feedback": "290 is the four turns so far — the fifth finishes the lap: 360 − 290 = 70°."
+     }
+    ],
+    "fallbackFeedback": "360 − 290 = 70°."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-exterior-sum__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Exterior first, always?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "You need the interior angle sum of a 50-gon and also one exterior angle question. Which fact requires NO formula at all?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The exterior sum — it's 360° for every polygon",
+      "correct": true,
+      "feedback": "The lap argument is size-blind: 3 sides or 50, the turns total one rotation."
+     },
+     {
+      "id": "o2",
+      "label": "The interior sum — it's always 180°",
+      "correct": false,
+      "feedback": "180° is the TRIANGLE's interior sum only; a 50-gon holds (50 − 2) × 180 = 8640°. The formula-free one is the exterior 360°."
+     },
+     {
+      "id": "o3",
+      "label": "Both need the (n − 2) formula",
+      "correct": false,
+      "feedback": "Only the interior sum does. Exteriors ignore n entirely: one lap, 360°."
+     },
+     {
+      "id": "o4",
+      "label": "Neither — both depend on side length",
+      "correct": false,
+      "feedback": "Angle sums never see side LENGTHS at all — and the exterior sum doesn't even see the side COUNT: 360°."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Count sides from one turn.",
+   "conceptTag": "pq-exterior-sum",
+   "hints": [
+    "In a regular polygon all exterior angles are equal, and together they make 360°.",
+    "So n × 24 = 360.",
+    "n = 360 ÷ 24."
+   ],
+   "explanationVariants": [
+    "Equal turns summing to 360: n = 360/24 = 15 sides.",
+    "Fifteen turns of 24° complete the lap: 15 × 24 = 360. ✓"
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Each exterior angle of a regular polygon measures 24°. How many sides?",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7.5,
+      "feedback": "7.5 = 180 ÷ 24 divides into a straight line — the turns fill a full LAP: 360 ÷ 24 = 15. (And a polygon can't have half a side.)"
+     },
+     {
+      "value": 336,
+      "feedback": "336 = 360 − 24 subtracts instead of counting turns. Each turn is 24° of the 360° lap: 360 ÷ 24 = 15 sides."
+     }
+    ],
+    "fallbackFeedback": "n = 360 ÷ 24 = 15."
+   },
+   "variant": {
+    "gen": "polygon-angles",
+    "form": "sidesFromExterior"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One lap, always.",
+   "takeaways": [
+    "Exterior angles of any polygon sum to 360° — walking the boundary is one full turn.",
+    "At each vertex, interior + exterior = 180° (straight line).",
+    "Regular polygon: n × (each exterior) = 360, so n = 360 ÷ exterior."
+   ],
+   "teaser": "Next: regular polygons in full — every angle identical, every formula exact."
+  }
+ ]
+}

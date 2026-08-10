@@ -1,0 +1,325 @@
+{
+  "id": "ns-03-01",
+  "slug": "greatest-common-factor",
+  "title": "Greatest Common Factor",
+  "courseId": "number-system",
+  "chapterId": "ch3-factors-multiples",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "factor-pairs",
+      "body": "A **factor** of a number divides it evenly. 12's factors are 1, 2, 3, 4, 6, 12; 18's are 1, 2, 3, 6, 9, 18. The numbers on BOTH lists are the **common factors** (1, 2, 3, 6), and the biggest of those is the **greatest common factor**: GCF(12, 18) = **6**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "List and compare.",
+      "conceptTag": "gcf",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Hop from 0 with a stride you choose. Find the LARGEST stride that still lands exactly on both 8 and 12.",
+        "min": 0,
+        "max": 16,
+        "start": 0,
+        "hop": 1,
+        "hops": 4,
+        "direction": "forward",
+        "hopSizeTargets": [
+          8,
+          12
+        ],
+        "hopSizeMin": 1,
+        "hopSizeMax": 12,
+        "commonLandings": [],
+        "successFeedback": "A stride of 4 lands on 4, 8, 12, 16 — both marks hit, and nothing bigger manages it. That is what “greatest common factor” means: not the largest factor of either number, but the largest stride that reaches both. Try 6: it lands on 12 and skips 8 entirely.",
+        "notLargestFeedback": "This stride does land on both marks — so it IS a common factor. But the question asks for the GREATEST one. Stretch the stride further and watch whether both marks survive.",
+        "missesTargetFeedback": "Watch the marks: this stride skips one of them. A common factor has to land on BOTH numbers, so a stride that reaches 8 but steps over 12 (or the reverse) does not qualify, however large it is.",
+        "missFeedback": "Not there yet — adjust the stride and watch which marks it lands on."
+      },
+      "predict": {
+        "prompt": "The greatest COMMON factor of 8 and 12 — can it be bigger than 8?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a factor of 8 can't exceed 8"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — 12 is"
+          },
+          {
+            "id": "product",
+            "label": "It equals 8 × 12"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Every common factor must divide BOTH numbers — and nothing above 8 divides 8. The GCF lives at or below the smaller number, never above it."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Greatest, not just any.",
+      "conceptTag": "gcf",
+      "explanationVariants": [
+        "3 divides both 15 and 25? No — 25 isn't divisible by 3. The shared factors are 1 and 5, so GCF = 5.",
+        "List factors of each: 15 → 1,3,5,15; 25 → 1,5,25. Greatest shared is 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the GCF of 15 and 25.",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is always a common factor, but here 5 also divides both 15 and 25 — and 5 > 1, so the GCF is 5."
+          },
+          {
+            "value": 3,
+            "feedback": "3 divides 15 but NOT 25 (25 ÷ 3 isn't whole), so 3 isn't a common factor. The greatest shared factor is 5."
+          }
+        ],
+        "fallbackFeedback": "15 → 1, 3, 5, 15; 25 → 1, 5, 25. Greatest shared: 5."
+      },
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "gcfPair"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes the only common factor is **1** — those numbers are called **relatively prime**. GCF(9, 16) = 1: nothing but 1 divides both. And sometimes one number's factor list sits entirely inside the other's, so the GCF is the smaller number itself: GCF(6, 12) = 6.",
+      "figure": "ns-gcf"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the relatively-prime pair.",
+      "conceptTag": "gcf",
+      "explanationVariants": [
+        "9's factors are 1, 3, 9; 16's are 1, 2, 4, 8, 16 — the only overlap is 1.",
+        "No number above 1 divides both 9 and 16, so they're relatively prime: GCF = 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which pair has a GCF of exactly 1 (relatively prime)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "9 and 16",
+            "correct": true,
+            "feedback": "Right — 9 (1,3,9) and 16 (1,2,4,8,16) share only 1."
+          },
+          {
+            "id": "b",
+            "label": "8 and 12",
+            "feedback": "These share 1, 2, and 4 — their GCF is 4, not 1. Relatively prime means the ONLY shared factor is 1."
+          },
+          {
+            "id": "c",
+            "label": "6 and 9",
+            "feedback": "Both are divisible by 3, so their GCF is 3, not 1. Look for a pair sharing nothing above 1."
+          }
+        ]
+      },
+      "hints": [
+        "List each pair's factors.",
+        "Which pair shares nothing but 1?",
+        "9 and 16 have no common factor above 1."
+      ],
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "relativelyPrime"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each pair to its GCF.",
+      "conceptTag": "gcf",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each pair of numbers to its greatest common factor.",
+        "left": [
+          {
+            "id": "p1",
+            "label": "16 and 24"
+          },
+          {
+            "id": "p2",
+            "label": "20 and 30"
+          },
+          {
+            "id": "p3",
+            "label": "15 and 25"
+          },
+          {
+            "id": "p4",
+            "label": "9 and 16"
+          }
+        ],
+        "right": [
+          {
+            "id": "g8",
+            "label": "8"
+          },
+          {
+            "id": "g10",
+            "label": "10"
+          },
+          {
+            "id": "g5",
+            "label": "5"
+          },
+          {
+            "id": "g1",
+            "label": "1"
+          }
+        ],
+        "pairs": {
+          "p1": "g8",
+          "p2": "g10",
+          "p3": "g5",
+          "p4": "g1"
+        },
+        "pairErrors": [
+          {
+            "left": "p1",
+            "right": "g10",
+            "feedback": "10 doesn't divide 16, so it can't be GCF(16, 24). The greatest shared factor of 16 and 24 is 8."
+          },
+          {
+            "left": "p2",
+            "right": "g8",
+            "feedback": "8 doesn't divide 20 or 30. GCF(20, 30) is 10; GCF(16, 24) is 8."
+          }
+        ],
+        "missFeedback": "For each pair, find the largest number that divides BOTH. 16 & 24 → 8; 20 & 30 → 10; 15 & 25 → 5; 9 & 16 → 1.",
+        "successFeedback": "All matched — the GCF is always the largest factor shared by both numbers."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A GCF in disguise.",
+      "conceptTag": "gcf",
+      "explanationVariants": [
+        "The biggest tray size that fills both evenly is the GCF: GCF(16, 24) = 8 cookies per tray.",
+        "8 divides both 16 and 24, and nothing bigger does — so 8 is the largest equal tray."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You have 16 chocolate and 24 vanilla cookies, split onto identical trays with no mixing and none left over. What is the MOST cookies one tray can hold?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "cookies",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 works (it divides both), but it's not the MOST. 8 also divides both 16 and 24, and 8 > 4 — so 8 cookies per tray is the answer."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is the total number of cookies (16 + 24), not the tray size. The largest tray dividing both evenly is GCF(16, 24) = 8."
+          }
+        ],
+        "fallbackFeedback": "The largest number dividing both 16 and 24 is 8 — that's the biggest equal tray."
+      },
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "gcfContext"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three numbers this time.",
+      "conceptTag": "gcf",
+      "hints": [
+        "Find the factors shared by all THREE numbers.",
+        "What divides 12, 18, and 24?",
+        "The common factors are 1, 2, 3, 6 — pick the greatest."
+      ],
+      "explanationVariants": [
+        "Common factors of 12, 18, 24: 1, 2, 3, 6. The greatest is 6.",
+        "6 divides 12, 18, and 24; nothing bigger divides all three."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the greatest common factor of 12, 18, and 24.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 divides 12 and 24, but NOT 18 (18 ÷ 12 isn't whole). The factor must divide all THREE — the greatest that does is 6."
+          },
+          {
+            "value": 2,
+            "feedback": "2 divides all three, but it's not the greatest. 6 also divides 12, 18, and 24, and 6 > 2."
+          }
+        ],
+        "fallbackFeedback": "The greatest factor shared by 12, 18, and 24 is 6."
+      },
+      "variant": {
+        "gen": "lcm-pair",
+        "form": "gcfThree"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The biggest shared divisor.",
+      "takeaways": [
+        "A factor divides a number evenly; common factors divide both numbers.",
+        "The GCF is the LARGEST common factor — not just any shared one.",
+        "GCF = 1 means relatively prime; if one list sits inside the other, the GCF is the smaller number."
+      ],
+      "teaser": "next: the flip side — least common MULTIPLES."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "gcf",
+      "concept": {
+        "id": "rem-gcf-c",
+        "kind": "concept",
+        "body": "Quick rewind. **List both, circle the biggest shared one.** Factors of 6: 1, 2, 3, 6. Factors of 9: 1, 3, 9. Shared: 1 and 3. The greatest is 3, so GCF(6, 9) = 3."
+      },
+      "check": {
+        "id": "rem-gcf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "gcf",
+        "explanationVariants": [
+          "6 → 1,2,3,6; 9 → 1,3,9. Greatest shared is 3.",
+          "3 divides both 6 and 9, and nothing bigger does."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find the GCF of 6 and 9.",
+          "answer": 3,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is shared, but 3 also divides both 6 and 9 — and 3 > 1, so the GCF is 3."
+            },
+            {
+              "value": 18,
+              "feedback": "18 is a common MULTIPLE, not a factor. The greatest shared FACTOR of 6 and 9 is 3."
+            }
+          ],
+          "fallbackFeedback": "6 → 1,2,3,6; 9 → 1,3,9. Greatest shared: 3."
+        }
+      }
+    }
+  ]
+}

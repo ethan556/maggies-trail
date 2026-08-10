@@ -1,0 +1,282 @@
+{
+ "id": "re-04-03",
+ "slug": "radical-equals-radical-and-beyond",
+ "title": "Radical = Radical & Beyond",
+ "courseId": "radical-functions",
+ "chapterId": "ch4-solving-radical-equations",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Radicals on **both sides**? One square clears them together: √(2x + 3) = √(x + 7) → 2x + 3 = x + 7 → **x = 4**. Check: √11 = √11. ✓ With matching roots, the check rarely fails — but the domain still must admit the answer.",
+   "figure": "re-both-sides"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Clear both at once.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve √(3x − 2) = √(x + 8).",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3x − 2 = x + 8 → 2x = 10 → x = 5 (3 halves the wrong difference)."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is the value of 2x — divide by 2: x = 5."
+     }
+    ],
+    "fallbackFeedback": "3x − 2 = x + 8 → 2x = 10 → x = 5; check: √13 both sides. ✓"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Cube roots are even friendlier: **cubing never invents solutions**, because cubing keeps signs (only even powers blur them). ∛(x − 4) = 2 → x − 4 = 8 → x = 12, no check drama. The extraneous risk belongs to EVEN powers alone.",
+   "figure": "re-cube-roots"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A cube-root equation.",
+   "conceptTag": "re-both-sides",
+   "explanationVariants": [
+    "∛(2x + 11) = 3 → 2x + 11 = 27 → x = 8.",
+    "Cube both sides, then a two-step solve — no phantom risk."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve ∛(2x + 11) = 3.",
+    "answer": 8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -1,
+      "feedback": "That SQUARES instead (2x + 11 = 9 → x = −1) — a cube root undoes with the CUBE: 2x + 11 = 27, x = 8."
+     },
+     {
+      "value": 16,
+      "feedback": "16 is 2x — finish the division: x = 8."
+     }
+    ],
+    "fallbackFeedback": "2x + 11 = 27 → x = 8."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-both-sides__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Why no check needed?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why can't cubing both sides create extraneous solutions?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "cubing preserves signs — different numbers stay different",
+      "correct": true,
+      "feedback": "Right — y and −y cube to DIFFERENT values, so no two candidates merge."
+     },
+     {
+      "id": "o2",
+      "label": "cube roots have no domain limits",
+      "correct": false,
+      "feedback": "True but beside the point — the phantom-proofing comes from cubing keeping y ≠ −y apart."
+     },
+     {
+      "id": "o3",
+      "label": "cubing is the same as squaring twice",
+      "correct": false,
+      "feedback": "It isn't (that's the 6th power) — and the real reason is sign preservation: (−2)³ ≠ 2³."
+     },
+     {
+      "id": "o4",
+      "label": "it can — you must always check",
+      "correct": false,
+      "feedback": "Checking never hurts, but odd powers are injective: cubing genuinely cannot invent solutions."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Both sides, with a filter.",
+   "conceptTag": "re-both-sides",
+   "explanationVariants": [
+    "√(x² − 9) = 4: square → x² = 25 → x = ±5, and BOTH check: (±5)² − 9 = 16, √16 = 4. Two solutions.",
+    "The x² inside welcomes negative inputs — both candidates are legal and both match."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve √(x² − 9) = 4.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = 5 or x = −5",
+      "correct": true,
+      "feedback": "Right — the square inside treats ±5 identically; both give √16 = 4."
+     },
+     {
+      "id": "o2",
+      "label": "x = 5 only",
+      "correct": false,
+      "feedback": "Check −5 too: (−5)² − 9 = 16 and √16 = 4 ✓ — the x² erases the minus BEFORE the root."
+     },
+     {
+      "id": "o3",
+      "label": "x = 25",
+      "correct": false,
+      "feedback": "x² = 25 needs a square ROOT: x = ±5."
+     },
+     {
+      "id": "o4",
+      "label": "no solution",
+      "correct": false,
+      "feedback": "x = 5 works: √(25 − 9) = √16 = 4."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-both-sides__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Choose the right power.",
+   "conceptTag": "re-both-sides",
+   "explanationVariants": [
+    "A fourth root undoes with the fourth power: (⁴√x)⁴ = x.",
+    "Match the power to the root's index."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "To solve ⁴√(x + 2) = 2, what should you raise both sides to?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the 4th power: x + 2 = 16",
+      "correct": true,
+      "feedback": "Right — index 4 undoes with power 4; then x = 14."
+     },
+     {
+      "id": "o2",
+      "label": "the 2nd power",
+      "correct": false,
+      "feedback": "Squaring once leaves √(x + 2) = 4 — still a radical. Go straight to the 4th power: x + 2 = 16."
+     },
+     {
+      "id": "o3",
+      "label": "the 1/4 power",
+      "correct": false,
+      "feedback": "That takes ANOTHER fourth root — the undo move is the fourth POWER."
+     },
+     {
+      "id": "o4",
+      "label": "the 4th root",
+      "correct": false,
+      "feedback": "The equation already has a fourth root — apply its inverse, the fourth power."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-both-sides__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Capstone with everything.",
+   "conceptTag": "re-both-sides",
+   "explanationVariants": [
+    "√(x + 4) = x − 2: square → x + 4 = x² − 4x + 4 → x² − 5x = 0 → x = 0 or 5. Check: x = 0 gives √4 = 2 vs −2 ✗; x = 5 gives √9 = 3 = 5 − 2 ✓.",
+    "x(x − 5) = 0 offers two candidates; the sign check keeps only 5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve √(x + 4) = x − 2 (give the valid solution).",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "0 is the phantom: √4 = +2 but 0 − 2 = −2 — signs clash."
+     },
+     {
+      "value": 9,
+      "feedback": "9 is x + 4 at the solution — the solution itself is x = 5."
+     }
+    ],
+    "fallbackFeedback": "Candidates 0 and 5; only 5 survives the check (√9 = 3 = 5 − 2)."
+   },
+   "hints": [
+    "Square: x + 4 = (x − 2)² = x² − 4x + 4.",
+    "x² − 5x = 0 factors as x(x − 5).",
+    "Check both candidates in the ORIGINAL — only one matches signs."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-both-sides__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Match the power to the root; check whenever the power is even.",
+   "takeaways": [
+    "Root = root: one squaring clears both.",
+    "Odd powers (cubing) preserve signs — no extraneous risk.",
+    "Even-power solves end with a mandatory check."
+   ],
+   "teaser": "Final chapter: exponent equations like x^(3/2) = 8 — and radical formulas at work."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-both-sides",
+   "concept": {
+    "id": "rem-re0403-c",
+    "kind": "concept",
+    "body": "Matching radicals cancel in one square: √(x + 1) = √(2x − 3) becomes x + 1 = 2x − 3."
+   },
+   "check": {
+    "id": "rem-re0403-k",
+    "kind": "check",
+    "body": "Finish the linear part.",
+    "conceptTag": "re-both-sides",
+    "explanationVariants": [
+     "x + 1 = 2x − 3 → 4 = x.",
+     "Collect x on one side: the radicals are already gone."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve √(x + 1) = √(2x − 3).",
+     "answer": 4,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "x + 1 = 2x − 3 gathers to 4 = x — check the collection: add 3, subtract x."
+      },
+      {
+       "value": -4,
+       "feedback": "Moving terms: 1 + 3 = 2x − x gives POSITIVE 4."
+      }
+     ],
+     "fallbackFeedback": "x + 1 = 2x − 3 → x = 4; check: √5 = √5. ✓"
+    }
+   }
+  }
+ ]
+}

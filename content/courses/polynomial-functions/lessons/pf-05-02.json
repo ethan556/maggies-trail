@@ -1,0 +1,289 @@
+{
+ "id": "pf-05-02",
+ "slug": "turning-points-and-degree",
+ "title": "Turning Points & Degree",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch5-graphs-and-models",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **turning point** is where the graph switches direction — a hilltop or valley floor. The rule from Chapter 1, now in reverse: degree n allows **at most n − 1** turning points, so a graph showing **4 turning points needs degree at least 5**. Wiggles put a floor under the degree.",
+   "figure": "pf-turning-point"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Floor the degree.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A polynomial graph shows exactly 6 turning points. What is the SMALLEST possible degree?",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "Turning points cap at degree MINUS one — 6 turns need degree ≥ 6 + 1 = 7."
+     },
+     {
+      "value": 5,
+      "feedback": "Degree 5 allows at most 4 turning points — 6 turns demand at least degree 7."
+     }
+    ],
+    "fallbackFeedback": "n − 1 ≥ 6 forces n ≥ 7."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Parity adds a second clue. **Even-degree** graphs (ends matching) have an **odd** number of turning points; **odd-degree** graphs (ends opposing) have an **even** number — 0, 2, 4, ... A cubic can run straight through with zero turns, but a parabola must turn exactly once.",
+   "figure": "pf-parity"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Parity check.",
+   "conceptTag": "pf-turning",
+   "explanationVariants": [
+    "Ends matching means even degree, and even degree forces an ODD turn count — 3 fits (degree 4 works).",
+    "To come back the way it came, the graph must turn an odd number of times."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A graph rises on BOTH ends and shows some turning points. Which count is possible?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "3",
+      "correct": true,
+      "feedback": "Right — both-ends-up is even degree; even degree turns an odd number of times (3 fits degree 4)."
+     },
+     {
+      "id": "o2",
+      "label": "2",
+      "correct": false,
+      "feedback": "Two turns would leave the graph heading the way it started... rising-to-falling needs a final ODD turn to rise again."
+     },
+     {
+      "id": "o3",
+      "label": "0",
+      "correct": false,
+      "feedback": "With no turns the graph goes one way forever — it can't rise on BOTH ends."
+     },
+     {
+      "id": "o4",
+      "label": "4",
+      "correct": false,
+      "feedback": "An even count strands the right end going down — matching ends need an odd number of turns."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-turning__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Count from a description.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A quartic (degree 4) graph falls, turns up, turns down, then turns up and rises. How many turning points is that?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "Count the TURNS, not the pieces: up, down, up = 3 direction changes."
+     },
+     {
+      "value": 2,
+      "feedback": "Three switches are described — down→up, up→down, down→up: 3, the quartic maximum."
+     }
+    ],
+    "fallbackFeedback": "Three direction changes — exactly the degree-4 maximum of 4 − 1 = 3."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Possible or not?",
+   "conceptTag": "pf-turning",
+   "explanationVariants": [
+    "Degree 3 allows at most 2 turning points — 4 turns is impossible.",
+    "n − 1 = 2 is a hard ceiling for a cubic."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Can a degree-3 polynomial have 4 turning points?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "no — a cubic allows at most 2",
+      "correct": true,
+      "feedback": "Right — the ceiling is degree − 1 = 2."
+     },
+     {
+      "id": "o2",
+      "label": "yes — with a big leading coefficient",
+      "correct": false,
+      "feedback": "Coefficient size changes steepness, never the turn budget — the cap is structural: 2."
+     },
+     {
+      "id": "o3",
+      "label": "yes — if it has 3 zeros",
+      "correct": false,
+      "feedback": "Zeros and turning points are different counts — a cubic's turns still cap at 2."
+     },
+     {
+      "id": "o4",
+      "label": "only if it bounces",
+      "correct": false,
+      "feedback": "A bounce IS a turning point, but it still spends from the same n − 1 = 2 budget."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-turning__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Turns and parity together.",
+   "conceptTag": "pf-turning",
+   "explanationVariants": [
+    "5 turning points: the degree must be ≥ 6, and 5 is odd so the degree is EVEN — smallest: 6.",
+    "Odd turn count ⟹ even degree; the floor n ≥ 6 finishes it."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A graph shows exactly 5 turning points. What is the smallest possible degree?",
+    "task": "polynomialMinimumDegree",
+    "values": [],
+    "pmdTurningPoints": 5,
+    "pmdEndBehavior": "unconstrained",
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 5,
+      "feedback": "Degree 5 caps at 4 turns — and an odd turn count (5) needs an EVEN degree anyway: 6."
+     },
+     {
+      "value": 7,
+      "feedback": "Degree 6 already allows 5 turns (6 − 1 = 5) — no need to jump to 7."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "n − 1 ≥ 5 gives n ≥ 6, and even degree matches the odd turn count: 6.",
+    "successFeedback": "n − 1 ≥ 5 gives n ≥ 6, and even degree matches the odd turn count: 6."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-turning__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Reason from a graph story.",
+   "conceptTag": "pf-turning",
+   "explanationVariants": [
+    "Opposing ends → odd degree; 2 turning points fits a cubic (2 ≤ 3 − 1): smallest degree 3.",
+    "Even turn count (2) confirms odd degree; the floor is 2 + 1 = 3."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A graph falls on the left, rises on the right, and shows exactly 2 turning points. What is the smallest possible degree?",
+    "task": "polynomialMinimumDegree",
+    "values": [],
+    "pmdTurningPoints": 2,
+    "pmdEndBehavior": "opposite",
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 2,
+      "feedback": "Degree 2 turns exactly once — two turns need at least degree 3 (and opposing ends confirm ODD degree)."
+     },
+     {
+      "value": 5,
+      "feedback": "Degree 5 is possible but not smallest — a plain cubic already delivers 2 turns and opposing ends."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "Odd degree with n − 1 ≥ 2: n = 3 works — the classic cubic S-curve.",
+    "successFeedback": "Odd degree with n − 1 ≥ 2: n = 3 works — the classic cubic S-curve."
+   },
+   "hints": [
+    "Opposing ends mean the degree is odd.",
+    "Turning points ≤ degree − 1, so degree ≥ 3.",
+    "The smallest odd degree ≥ 3 is 3 itself."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-turning__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Turns floor the degree; end behavior fixes its parity.",
+   "takeaways": [
+    "Turning points ≤ degree − 1, always.",
+    "Matching ends: even degree, odd turn count. Opposing ends: odd degree, even turn count.",
+    "Coefficients change steepness, never the turn budget."
+   ],
+   "teaser": "Last lesson: run everything backward — build polynomials to order."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-turning",
+   "concept": {
+    "id": "rem-pf0502-c",
+    "kind": "concept",
+    "body": "The cap is degree minus one. A degree-5 polynomial's turn budget: 5 − 1."
+   },
+   "check": {
+    "id": "rem-pf0502-k",
+    "kind": "check",
+    "body": "State the budget.",
+    "conceptTag": "pf-turning",
+    "explanationVariants": [
+     "At most 4 turning points.",
+     "n − 1 with n = 5 gives 4."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "What is the MAXIMUM number of turning points for a degree-5 polynomial?",
+     "answer": 4,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 5,
+       "feedback": "5 is the max ZERO count — turning points cap one lower: 4."
+      },
+      {
+       "value": 6,
+       "feedback": "The budget runs one BELOW the degree: 5 − 1 = 4."
+      }
+     ],
+     "fallbackFeedback": "5 − 1 = 4."
+    }
+   }
+  }
+ ]
+}

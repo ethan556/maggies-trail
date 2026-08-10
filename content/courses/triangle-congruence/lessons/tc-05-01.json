@@ -1,0 +1,318 @@
+{
+ "id": "tc-05-01",
+ "slug": "the-triangle-inequality",
+ "title": "The Triangle Inequality",
+ "courseId": "triangle-congruence",
+ "chapterId": "ch5-triangle-inequalities",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "tc-triangle-inequality",
+   "concept": {
+    "id": "rem-tc-triangle-inequality-c",
+    "kind": "concept",
+    "body": "Two forms of the same rule. TEST: three lengths form a triangle iff the two shortest sum to MORE than the longest. RANGE: given two sides a and b, the third must satisfy |a − b| < third < a + b. Greater than the difference, less than the sum."
+   },
+   "check": {
+    "id": "rem-tc-triangle-inequality-k",
+    "kind": "check",
+    "body": "Valid triangle?",
+    "conceptTag": "tc-triangle-inequality",
+    "explanationVariants": [
+     "Check the two shortest: 2 + 3 = 5, which is NOT more than 6 — so no triangle.",
+     "2 + 3 = 5 < 6 fails the inequality; these can't form a triangle."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Can sides 2, 3, and 6 form a triangle?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "No — 2 + 3 = 5, which is less than 6",
+       "correct": true,
+       "feedback": "The two shortest sides fall short of the longest, so no triangle forms."
+      },
+      {
+       "id": "o2",
+       "label": "Yes — all sides are different",
+       "correct": false,
+       "feedback": "Different lengths don't guarantee a triangle; here 2 + 3 < 6 fails the inequality."
+      },
+      {
+       "id": "o3",
+       "label": "Yes — 6 is the longest",
+       "correct": false,
+       "feedback": "Having a longest side is fine, but 2 + 3 = 5 can't reach across 6. No triangle."
+      },
+      {
+       "id": "o4",
+       "label": "Only if it's a right triangle",
+       "correct": false,
+       "feedback": "Right or not, 2 + 3 < 6 means the sides can't close into any triangle."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Not every trio of lengths makes a triangle. The **Triangle Inequality** says the sum of any two sides must **exceed** the third. If two sides can't reach across the gap left by the third, they never meet — the triangle collapses flat or fails entirely. Check all three pairings to be safe.",
+   "figure": "hinge-inequality"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Can it form a triangle?",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each set of three lengths: can they form a triangle?",
+    "buckets": [
+     {
+      "id": "yes",
+      "label": "forms a triangle"
+     },
+     {
+      "id": "no",
+      "label": "cannot form a triangle"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "3, 4, 5",
+      "bucketId": "yes",
+      "feedback": "3 + 4 = 7 > 5, and the other pairs work too — a valid triangle (in fact right)."
+     },
+     {
+      "id": "s2",
+      "label": "2, 3, 10",
+      "bucketId": "no",
+      "feedback": "2 + 3 = 5, far short of 10 — the two short sides can't reach across. No triangle."
+     },
+     {
+      "id": "s3",
+      "label": "5, 6, 7",
+      "bucketId": "yes",
+      "feedback": "5 + 6 = 11 > 7, and all pairings exceed the third — valid."
+     },
+     {
+      "id": "s4",
+      "label": "4, 4, 9",
+      "bucketId": "no",
+      "feedback": "4 + 4 = 8 < 9 — the two equal sides fall short of the long one. No triangle."
+     }
+    ],
+    "missFeedback": "For each set, check that the two SHORTEST sides sum to MORE than the longest.",
+    "successFeedback": "Two shortest must outreach the longest."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The quick test.",
+   "conceptTag": "tc-triangle-inequality",
+   "explanationVariants": [
+    "You only need to check that the two SHORTEST sides sum to more than the longest — if that holds, all three pairings do.",
+    "The tightest pairing is the two small sides vs the big one; pass that and the triangle exists."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What's the fastest way to test whether three lengths form a triangle?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Check that the two shortest sides sum to more than the longest",
+      "correct": true,
+      "feedback": "The two smallest summing past the largest is the hardest condition — if it holds, the triangle is valid."
+     },
+     {
+      "id": "o2",
+      "label": "Check that the two longest sides sum to more than the shortest",
+      "correct": false,
+      "feedback": "That's the EASIEST pairing and almost always passes — it doesn't catch failures. Test the two SHORTEST vs the longest."
+     },
+     {
+      "id": "o3",
+      "label": "Add all three sides and compare to 180",
+      "correct": false,
+      "feedback": "180 is about ANGLES, not side lengths. Compare the two shortest sides' sum to the longest side."
+     },
+     {
+      "id": "o4",
+      "label": "Check that all three sides are equal",
+      "correct": false,
+      "feedback": "Triangles needn't be equilateral. The test is the two shortest sides exceeding the longest."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-triangle-inequality__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The inequality also **bounds the third side**. Given two sides, the third must be more than their **difference** and less than their **sum**: |a − b| < third < a + b. Too short and the sides overlap; too long and they can't close. That window is exactly the buildable range.",
+   "figure": "hinge-inequality"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The upper bound.",
+   "widget": {
+    "type": "triangleSolve",
+    "mode": "sss",
+    "prompt": "Sides 5 and 8 are fixed. Drag the third side as far as it will go — note where it stops — then bring it to where the angle facing it reads exactly 60°.",
+    "a": 5,
+    "b": 8,
+    "target": 60,
+    "start": 2,
+    "successFeedback": "A third side of 7, with the angle opposite it at exactly 60°. The more important reading is where the dial ran out: it stops at 12, because at 13 the two short sides would lie flat along the third and enclose nothing. That is the upper bound — the third side must be LESS than 5 + 8, and the triangle stops existing rather than merely looking wrong.",
+    "lowFeedback": "The angle opposite the third side is still under 60°, which means the third side is too short. Lengthen it — and notice the two fixed sides opening apart as you do.",
+    "highFeedback": "The angle has gone past 60°, so the third side is too long. Shorten it. Keep pushing the other way and you will meet the dial's ceiling, which is the inequality itself."
+   },
+   "predict": {
+    "prompt": "Two sides measure 5 and 8. As you stretch the third side longer and longer, the triangle will…",
+    "options": [
+     {
+      "id": "stops",
+      "label": "Stop existing once the third side reaches 13"
+     },
+     {
+      "id": "flat",
+      "label": "Keep existing, just getting flatter forever"
+     },
+     {
+      "id": "any",
+      "label": "Exist for any third side at all"
+     }
+    ],
+    "outcomeId": "stops",
+    "reveal": "It stops. At exactly 13 the sides 5 and 8 lie flat end to end along the third side, enclosing no area at all, and beyond that they cannot reach. The bound is not a rule bolted onto triangles — it is the point where two sides can no longer meet."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The lower bound.",
+   "conceptTag": "tc-triangle-inequality",
+   "explanationVariants": [
+    "The third side must exceed the DIFFERENCE of the other two: 8 − 5 = 3.",
+    "Lower bound is |a − b| = |8 − 5| = 3; the third side must be greater than 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With two sides 5 and 8, the third side must be GREATER than what value?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "13 is the UPPER bound (5 + 8) — the third must be LESS than that. The lower bound is the DIFFERENCE: 8 − 5 = 3."
+     },
+     {
+      "value": 0,
+      "feedback": "0 is too weak — a side of length 2 would fail (2 + 5 < 8). The real floor is |8 − 5| = 3."
+     }
+    ],
+    "fallbackFeedback": "Third side > difference: 8 − 5 = 3."
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-triangle-inequality__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Sides and angles line up in order: the **largest angle sits opposite the largest side**, the smallest opposite the smallest. So in a 5-6-7 triangle, the biggest angle faces the 7. This side-angle ranking lets you order a triangle's angles just by glancing at its sides.",
+   "figure": "tc-angle-side"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Largest angle.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "In a triangle with sides 5, 6, and 7, which side is the largest angle opposite to?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the side of length 7",
+      "correct": true,
+      "feedback": "The largest angle always sits opposite the largest side — here that's the 7."
+     },
+     {
+      "id": "o2",
+      "label": "the side of length 5",
+      "correct": false,
+      "feedback": "The 5 is the SMALLEST side, so it faces the SMALLEST angle. The largest angle is opposite the 7."
+     },
+     {
+      "id": "o3",
+      "label": "the side of length 6",
+      "correct": false,
+      "feedback": "The 6 is the middle side, facing the middle angle. The largest angle is opposite the longest side, 7."
+     },
+     {
+      "id": "o4",
+      "label": "they are all equal",
+      "correct": false,
+      "feedback": "The sides differ (5, 6, 7), so the angles differ too — the largest faces the 7."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Count the possibilities.",
+   "conceptTag": "tc-triangle-inequality",
+   "hints": [
+    "Two sides are 7 and 10. What's the range for the third side?",
+    "The third side must satisfy 10 − 7 < x < 10 + 7, i.e. 3 < x < 17.",
+    "Count the INTEGER values strictly between 3 and 17."
+   ],
+   "explanationVariants": [
+    "The third side satisfies 3 < x < 17, so integer values run 4, 5, …, 16 — that's 13 values.",
+    "Integers strictly between 3 and 17 are 4 through 16 inclusive: 16 − 4 + 1 = 13."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two sides of a triangle are 7 and 10. How many INTEGER values are possible for the third side?",
+    "answer": 13,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 14,
+      "feedback": "14 counts 3 through 16 — but the third side must be strictly GREATER than 3, so start at 4: values 4..16 = 13."
+     },
+     {
+      "value": 17,
+      "feedback": "17 is the upper bound itself, which is excluded. Integers strictly between 3 and 17 are 4..16 = 13."
+     }
+    ],
+    "fallbackFeedback": "3 < x < 17 → integers 4..16 → 13 values."
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-triangle-inequality__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "What makes a triangle.",
+   "takeaways": [
+    "Triangle Inequality: any two sides must sum to more than the third.",
+    "Third side is bounded: |a − b| < third < a + b.",
+    "Largest angle sits opposite the largest side."
+   ],
+   "teaser": "Next: fix two sides and open the angle between them — the hinge theorem."
+  }
+ ]
+}

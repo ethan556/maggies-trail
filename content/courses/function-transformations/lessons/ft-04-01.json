@@ -1,0 +1,279 @@
+{
+  "id": "ft-04-01",
+  "slug": "adding-and-subtracting-functions",
+  "title": "Adding & Subtracting Functions",
+  "courseId": "function-transformations",
+  "chapterId": "ch4-combining-composing",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Functions can be combined like numbers: **(f + g)(x) = f(x) + g(x)**. Evaluate each function at the same input, then combine the two outputs. Throughout this chapter: **f(x) = x²** and **g(x) = 2x + 1**.",
+      "figure": "function-machine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Add two outputs.",
+      "widget": {
+        "type": "functionMachine",
+        "a": 1,
+        "b": 0,
+        "square": true,
+        "stage2": {
+          "a": 2,
+          "b": 1,
+          "square": false
+        },
+        "join": "add",
+        "inputMin": 0,
+        "inputMax": 8,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 16,
+        "prompt": "Both machines take the SAME input: f squares it, g doubles and adds 1. Find the input where their outputs add to 16.",
+        "successFeedback": "At x = 3: f gives 9, g gives 7, and 9 + 7 = 16. Adding functions means running both on the same input and adding what comes out — not combining the machines into one.",
+        "lowFeedback": "The two outputs still add to less than 16 — raise the input.",
+        "highFeedback": "Past 16 now — the squaring machine climbs fast, so ease the input back."
+      },
+      "predict": {
+        "prompt": "(f + g)(3) with f(x) = x² and g(x) = 2x + 1. What actually gets added?",
+        "options": [
+          {
+            "id": "outputs",
+            "label": "The two OUTPUTS at x = 3"
+          },
+          {
+            "id": "inputs",
+            "label": "The input 3, once for each function"
+          },
+          {
+            "id": "chain",
+            "label": "f(3), fed onward into g"
+          }
+        ],
+        "outcomeId": "outputs",
+        "reveal": "Function addition adds outputs at the SAME input: f(3) = 9 and g(3) = 7, so (f + g)(3) = 16. Feeding one result into the other is composition — a different operation with a different answer, and it's coming in two lessons."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtraction cares about order: **(f − g)(x) = f(x) − g(x)** — f's output minus g's. At x = 2, f gives 4 and g gives 5, so (f − g)(2) = 4 − 5 = −1 while (g − f)(2) = +1.",
+      "figure": "ft-subtract-funcs"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Subtract in the right order.",
+      "conceptTag": "ft-arith",
+      "explanationVariants": [
+        "f(2) = 4 and g(2) = 5, so (f − g)(2) = 4 − 5 = −1.",
+        "The first-named function's output comes first: f's 4 minus g's 5 is −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "With f(x) = x² and g(x) = 2x + 1, what is (f − g)(2)?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Order flipped — (f − g) means f's output FIRST: 4 − 5 = −1, not 5 − 4."
+          },
+          {
+            "value": 9,
+            "feedback": "That's 4 + 5 — the minus sign means subtract g's output: 4 − 5 = −1."
+          }
+        ],
+        "fallbackFeedback": "f(2) = 4, g(2) = 5: 4 − 5 = −1."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-arith__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Multiply two outputs.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "With the same f and g, what is (f · g)(2)?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's 4 + 5 — the dot means MULTIPLY the outputs: 4 × 5 = 20."
+          },
+          {
+            "value": -1,
+            "feedback": "That's 4 − 5 — the dot multiplies: 4 × 5 = 20."
+          }
+        ],
+        "fallbackFeedback": "f(2) = 4, g(2) = 5: 4 × 5 = 20."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A bigger input.",
+      "conceptTag": "ft-arith",
+      "explanationVariants": [
+        "f(4) = 16 and g(4) = 2 × 4 + 1 = 9, so the sum is 25.",
+        "Evaluate both at 4 first: 16 and 9; then add: 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is (f + g)(4)?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "g(4) = 2 × 4 + 1 = 9, not 8 — keep the +1: 16 + 9 = 25."
+          },
+          {
+            "value": 144,
+            "feedback": "That's 16 × 9 — a PLUS sign adds the outputs: 16 + 9 = 25."
+          }
+        ],
+        "fallbackFeedback": "f(4) = 16, g(4) = 9: 16 + 9 = 25."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-arith__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What the notation means.",
+      "conceptTag": "ft-arith",
+      "explanationVariants": [
+        "(f − g)(x) evaluates each function separately at x, then subtracts g's output from f's.",
+        "Combining by arithmetic never feeds one function into the other — both see the same raw x."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does (f − g)(x) mean?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "evaluate f(x) and g(x) separately, then subtract g's output from f's",
+            "correct": true,
+            "feedback": "Right — same input to both, then ordinary subtraction of the outputs."
+          },
+          {
+            "id": "o2",
+            "label": "feed g's output into f",
+            "correct": false,
+            "feedback": "That's COMPOSITION, written f(g(x)). The minus sign here is plain subtraction of two outputs."
+          },
+          {
+            "id": "o3",
+            "label": "the same thing as (g − f)(x)",
+            "correct": false,
+            "feedback": "Order matters in subtraction: 4 − 5 = −1 but 5 − 4 = +1 — the two differ in sign."
+          },
+          {
+            "id": "o4",
+            "label": "multiply f's output by g's, then negate",
+            "correct": false,
+            "feedback": "That would be −(f · g)(x). The minus between names subtracts, it doesn't multiply."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-arith__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Subtraction at x = 5.",
+      "conceptTag": "ft-arith",
+      "explanationVariants": [
+        "f(5) = 25 and g(5) = 2 × 5 + 1 = 11, so (f − g)(5) = 25 − 11 = 14.",
+        "Evaluate both at 5, then subtract: 25 − 11 = 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is (f − g)(5)?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -14,
+            "feedback": "(f − g) puts f's output first: 25 − 11 = +14; g − f would give −14."
+          },
+          {
+            "value": 36,
+            "feedback": "That's 25 + 11 — the minus subtracts g's output: 25 − 11 = 14."
+          }
+        ],
+        "fallbackFeedback": "f(5) = 25, g(5) = 11: 25 − 11 = 14."
+      },
+      "hints": [
+        "Evaluate each function at 5 separately first.",
+        "f(5) = 5² = 25, and g(5) = 2 × 5 + 1 = 11.",
+        "Now subtract in order: 25 − 11 = 14."
+      ],
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-arith__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Arithmetic on functions = arithmetic on their outputs at the same input.",
+      "takeaways": [
+        "(f + g)(x) = f(x) + g(x); same idea for −, ·.",
+        "Order matters in subtraction: (f − g) puts f's output first.",
+        "Both functions receive the same raw input x."
+      ],
+      "teaser": "Next: the deeper combination — feeding one function's output INTO another."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-arith",
+      "concept": {
+        "id": "rem-ft0401-c",
+        "kind": "concept",
+        "body": "To compute (f + g)(x) or (f − g)(x), evaluate each function at x separately, then add or subtract the two OUTPUTS in the written order."
+      },
+      "check": {
+        "id": "rem-ft0401-k",
+        "kind": "check",
+        "body": "One more combination.",
+        "conceptTag": "ft-arith",
+        "explanationVariants": [
+          "f(1) = 1 and g(1) = 2 × 1 + 1 = 3: sum 4.",
+          "Evaluate both at 1: 1 and 3; then add: 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "With f(x) = x² and g(x) = 2x + 1, what is (f + g)(1)?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "f(1) = 1 must join in: 1 + 3 = 4."
+            },
+            {
+              "value": 6,
+              "feedback": "g(1) = 2 × 1 + 1 = 3, not 5 — then 1 + 3 = 4."
+            }
+          ],
+          "fallbackFeedback": "f(1) = 1, g(1) = 3: 1 + 3 = 4."
+        }
+      }
+    }
+  ]
+}

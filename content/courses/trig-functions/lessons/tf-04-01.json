@@ -1,0 +1,288 @@
+{
+  "id": "tf-04-01",
+  "slug": "the-wave-from-the-circle",
+  "title": "The Wave from the Circle",
+  "courseId": "trig-functions",
+  "chapterId": "ch4-sine-cosine-graphs",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Let θ run and track sin θ — the unit circle's HEIGHT. It climbs 0 → 1 (top), falls back through 0, dips to −1 (bottom), and returns: one full lap, one full **wave**. And because lap θ + 2π revisits the same point, the wave repeats forever: sine is **periodic with period 2π**.",
+      "figure": "tf-sine-wave"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The wave is the circle, unrolled.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 90° and watch the height (the sine) as you go.",
+        "successFeedback": "At 90° the height is 1 — its maximum — while the horizontal coordinate has fallen to 0. Plot that height against the angle as you rotate, and you have drawn the sine wave. The wave is not a new object; it is this circle, unrolled.",
+        "lowFeedback": "Keep rotating — the height is still climbing.",
+        "highFeedback": "You have gone past 90°, and the height has started to fall again."
+      },
+      "predict": {
+        "prompt": "You'll rotate the point from 0° to 90°. What does its HEIGHT do along the way?",
+        "options": [
+          {
+            "id": "climb",
+            "label": "Climbs the whole way"
+          },
+          {
+            "id": "climbfall",
+            "label": "Climbs, then falls back"
+          },
+          {
+            "id": "fall",
+            "label": "Falls the whole way"
+          }
+        ],
+        "outcomeId": "climb",
+        "reveal": "Across the first quarter turn the height — the sine — rises from 0 all the way to its maximum of 1. The falling only begins past 90°, on the way toward 180°."
+      },
+      "conceptTag": "tf-wave-read",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents tf wave read.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tf wave read must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tf wave read."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "trig-functions:tf-wave-read",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The ceiling.",
+      "conceptTag": "tf-wave-read",
+      "explanationVariants": [
+        "The unit circle's height never exceeds its radius: max of sin x is 1, reached at the top (90°).",
+        "Height and repeat are different measurements — 1 up, 2π across."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the MAXIMUM value of y = sin x?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6.28,
+            "feedback": "6.28 is the period — the horizontal repeat distance. The HEIGHT tops out at the circle's radius: 1."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is where sine STARTS (and crosses), not its peak. The top of the unit circle is height 1."
+          }
+        ],
+        "fallbackFeedback": "max sin x = 1, at the circle's top."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-wave-read__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Cosine draws the SAME wave from the x-coordinate — identical shape, different starting pose. At θ = 0 the point is (1, 0): so **cosine starts at its peak** (cos 0 = 1) while **sine starts at the midline, rising** (sin 0 = 0). One wave, two entrances.",
+      "figure": "tf-cosine-wave"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Two entrances.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "At x = 0, how do the graphs of sin x and cos x differ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Sine starts at 0 and rises; cosine starts at its peak, 1",
+            "correct": true,
+            "feedback": "Right — the starting point (1, 0) has height 0 and full x-coordinate 1."
+          },
+          {
+            "id": "o2",
+            "label": "They start at the same value",
+            "correct": false,
+            "feedback": "sin 0 = 0 but cos 0 = 1 — same wave shape, different entrances."
+          },
+          {
+            "id": "o3",
+            "label": "Cosine starts at 0",
+            "correct": false,
+            "feedback": "Starting at 0 is SINE's entrance — cosine reads the x-coordinate, which is 1 at the start."
+          },
+          {
+            "id": "o4",
+            "label": "Sine starts at its minimum",
+            "correct": false,
+            "feedback": "Sine starts at the MIDLINE and rises — its minimum −1 waits until 3π/2 (the circle's bottom)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Half a lap in.",
+      "conceptTag": "tf-wave-read",
+      "explanationVariants": [
+        "cos π = −1: half a lap moves the point to (−1, 0), the far left.",
+        "Half a period always carries a wave from peak to trough."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is cos x at x = π?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is cos 0 — the peak. Half a period later the wave sits at its TROUGH: cos π = −1."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is sin π — the height. Cosine reads the x-coordinate of (−1, 0): −1."
+          }
+        ],
+        "fallbackFeedback": "cos π = −1."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-wave-read__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Real waves rarely swing between ±1 — but two reads recover any wave's anatomy. **Midline = (max + min)/2** — the horizontal center the wave oscillates around. **Amplitude = (max − min)/2** — how far it swings from that center. Average for the center, half-the-span for the swing.",
+      "figure": "tf-amplitude"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Find the center.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A wave oscillates between a max of 7 and a min of 1. What is its midline height?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is (7 − 1)/2 — the AMPLITUDE (the swing). The midline AVERAGES: (7 + 1)/2 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is 7 + 1 without the halving — the center is the average: 4."
+          }
+        ],
+        "fallbackFeedback": "(7 + 1)/2 = 4."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Now the swing.",
+      "conceptTag": "tf-wave-read",
+      "explanationVariants": [
+        "Amplitude = (max − min)/2 = (7 − 1)/2 = 3.",
+        "Check: midline 4 plus swing 3 reaches the max 7; minus reaches the min 1. ✓"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same wave (max 7, min 1). What is its amplitude?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the MIDLINE — the center height. The amplitude is the swing away from it: (7 − 1)/2 = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the full max-to-min span — amplitude is HALF that, the reach from the center: 3."
+          }
+        ],
+        "fallbackFeedback": "(7 − 1)/2 = 3."
+      },
+      "hints": [
+        "The amplitude measures from the CENTER to the peak, not trough to peak.",
+        "Full span: 7 − 1 = 6.",
+        "Half of it is the swing — and midline 4 ± 3 should reproduce 7 and 1."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-wave-read__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The circle unrolled.",
+      "takeaways": [
+        "sin x is the circle's height unrolled — periodic, period 2π, swinging ±1.",
+        "Cosine is the same wave entering at its peak; sine enters at the midline, rising.",
+        "Any wave: midline = (max+min)/2, amplitude = (max−min)/2."
+      ],
+      "teaser": "Next: stretching and lifting the wave — amplitude and midline as dials in the rule."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-wave-read",
+      "concept": {
+        "id": "rem-tf0401-c",
+        "kind": "concept",
+        "body": "Two reads on one wave. Max 5, min −1. The midline is the AVERAGE: (5 + (−1))/2 = 2 — the height the wave centers on. The amplitude is HALF THE SPAN: (5 − (−1))/2 = 3 — the swing. Center 2, swing 3: 2 + 3 = 5 and 2 − 3 = −1 rebuild the extremes."
+      },
+      "check": {
+        "id": "rem-tf0401-k",
+        "kind": "check",
+        "body": "Average for the center.",
+        "conceptTag": "tf-wave-read",
+        "explanationVariants": [
+          "Midline = (5 + (−1))/2 = 2.",
+          "Careful with the negative: 5 + (−1) = 4, halved is 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A wave has max 5 and min −1. What is its midline height?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is the amplitude — the swing (5 − (−1))/2. The midline AVERAGES the extremes: 2."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is 5 + (−1) before halving — the average needs the divide: 4/2 = 2."
+            }
+          ],
+          "fallbackFeedback": "(5 + (−1))/2 = 2."
+        }
+      }
+    }
+  ]
+}

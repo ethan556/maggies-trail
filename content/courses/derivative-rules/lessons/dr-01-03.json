@@ -1,0 +1,318 @@
+{
+  "id": "dr-01-03",
+  "slug": "where-the-derivative-fails",
+  "title": "Where the Derivative Fails",
+  "courseId": "derivative-rules",
+  "chapterId": "ch1-the-derivative-as-a-function",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A derivative is a **limit**, and limits can fail.\n\nAt a corner, the slope coming from the left and the slope coming from the right disagree. Two different answers means the limit does not exist — so f′ does not exist there, however smooth the curve looks elsewhere.",
+      "figure": "dr-corner-no-tangent"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Drag across the corner and watch f′ break.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "abs",
+        "mode": "point",
+        "targetSlope": 0,
+        "targetX": 0,
+        "start": -3,
+        "prompt": "f(x) = |x|. Drag x to the one place where the derivative does NOT exist.",
+        "successFeedback": "x = 0. Look at what f′ did underneath: it sat at −1 all the way in from the left, jumped to +1 on the right, and left a HOLE at 0. Both one-sided slopes exist and they disagree — and a limit with two answers has no answer. The curve is perfectly continuous there; continuity was never enough.",
+        "lowFeedback": "Not there yet — the tangent still fits perfectly, sloping down at −1. Keep sliding right.",
+        "highFeedback": "Past it — the tangent fits again, now sloping up at +1. Come back to the corner."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move along a function and coordinate position, local slope, and derivative graph.",
+        "invariants": [
+          "derivative-records-local-slope",
+          "corners-break-differentiability"
+        ],
+        "misconceptions": [
+          "derivative-copies-function-height",
+          "slope-at-corner-is-zero"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-derivativeTrace",
+        "delayed": false
+      },
+      "conceptTag": "dr-differentiability",
+      "predict": {
+        "prompt": "f(x) = |x| has no derivative at x = 0. The reason is that…",
+        "options": [
+          {
+            "id": "undef",
+            "label": "The function is not defined there"
+          },
+          {
+            "id": "disagree",
+            "label": "The slope from the left and the slope from the right disagree"
+          },
+          {
+            "id": "zero",
+            "label": "The function equals zero there"
+          }
+        ],
+        "outcomeId": "disagree",
+        "reveal": "They disagree — −1 from the left, +1 from the right — and a limit that returns two answers returns none. |x| is perfectly defined and perfectly continuous at 0. Differentiability is the stronger promise, and this is exactly where it fails while continuity survives."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Continuous, but not differentiable.",
+      "conceptTag": "dr-differentiability",
+      "explanationVariants": [
+        "|x| is continuous at 0 — you can draw it without lifting the pen — but the left slope is −1 and the right slope is +1, so the limit defining f′(0) does not exist.",
+        "Differentiability implies continuity. The converse is false, and |x| is the counterexample."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "|x| is continuous at x = 0 but has no derivative there. What does that tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Continuity is necessary for differentiability, but not sufficient.",
+            "correct": true,
+            "feedback": "Right, and the implication runs one way only: differentiable ⇒ continuous, never the reverse."
+          },
+          {
+            "id": "o2",
+            "label": "Continuity and differentiability are the same thing.",
+            "correct": false,
+            "feedback": "|x| is the standing refutation: continuous everywhere, differentiable everywhere except one point."
+          },
+          {
+            "id": "o3",
+            "label": "|x| must be discontinuous at 0.",
+            "correct": false,
+            "feedback": "It is not — the two halves meet at (0, 0) with no gap and no jump. The failure is in the SLOPE, not the value."
+          },
+          {
+            "id": "o4",
+            "label": "The derivative is 0 at the corner, by symmetry.",
+            "correct": false,
+            "feedback": "Symmetry is a tempting argument and it is wrong: the one-sided slopes are −1 and +1, and a limit with two answers has none."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-differentiability__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Four ways to break.",
+      "conceptTag": "dr-differentiability",
+      "explanationVariants": [
+        "A corner (two one-sided slopes), a cusp (slopes running to ±∞ in opposite directions), a vertical tangent (slope infinite), and any discontinuity — all kill f′.",
+        "In every case the defining limit fails to produce one finite number."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "At which of these does f′ FAIL to exist?",
+        "buckets": [
+          {
+            "id": "no",
+            "label": "No derivative",
+            "icon": "🚫"
+          },
+          {
+            "id": "yes",
+            "label": "Derivative exists",
+            "icon": "✅"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "A corner, like |x| at 0",
+            "bucketId": "no",
+            "feedback": "Two one-sided slopes that disagree — the limit has no single value."
+          },
+          {
+            "id": "s2",
+            "label": "A jump discontinuity",
+            "bucketId": "no",
+            "feedback": "If f is not even continuous, no tangent can exist. Differentiable ⇒ continuous, so not-continuous ⇒ not-differentiable."
+          },
+          {
+            "id": "s3",
+            "label": "A vertical tangent, like ∛x at 0",
+            "bucketId": "no",
+            "feedback": "The slope runs off to infinity, and infinity is not a number. The tangent exists as a LINE but the derivative does not exist as a VALUE."
+          },
+          {
+            "id": "s4",
+            "label": "A smooth minimum, like x² at 0",
+            "bucketId": "yes",
+            "feedback": "Perfectly differentiable: f′(0) = 0. A flat tangent is still a tangent."
+          }
+        ],
+        "missFeedback": "Ask whether the limit [f(x+h) − f(x)]/h settles on ONE finite number.",
+        "successFeedback": "Corners, cusps, vertical tangents and discontinuities all break the limit. A flat tangent breaks nothing."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-differentiability__dragBucket"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So \"differentiable\" is a stronger promise than \"continuous\": it says the curve is **locally straight**. Magnify a differentiable point far enough and the curve becomes indistinguishable from its tangent.\n\nMagnify a corner and it stays a corner, forever. That is the honest test.",
+      "figure": "dr-corner-no-tangent"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Local straightness.",
+      "conceptTag": "dr-local-linearity",
+      "explanationVariants": [
+        "Zooming into a differentiable point flattens the curve onto its tangent — that is what having a derivative MEANS geometrically.",
+        "A corner survives every magnification, which is exactly why no tangent fits it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You magnify a graph at a point and it becomes indistinguishable from a straight line. What have you shown?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f is differentiable there — locally straight is what having a derivative looks like.",
+            "correct": true,
+            "feedback": "Right, and it is the geometric meaning of the limit: the closer you look, the better the tangent fits."
+          },
+          {
+            "id": "o2",
+            "label": "f is a straight line.",
+            "correct": false,
+            "feedback": "Only NEAR that point. Zoom back out and it may be a wild curve — local straightness is a local claim."
+          },
+          {
+            "id": "o3",
+            "label": "f′ = 0 there.",
+            "correct": false,
+            "feedback": "The line you see can have any slope. Locally straight says a tangent EXISTS, not that it is flat."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — every graph looks straight up close.",
+            "correct": false,
+            "feedback": "Not so: magnify |x| at its corner and it stays bent at exactly the same angle, no matter how far you zoom."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-local-linearity__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count the failures.",
+      "conceptTag": "dr-differentiability",
+      "hints": [
+        "Go through the list and ask, at each x: does the limit [f(x+h) − f(x)]/h give one finite number?",
+        "A jump kills it. A corner kills it. A vertical tangent kills it. A flat tangent does not.",
+        "There are three failures and one perfectly good derivative."
+      ],
+      "explanationVariants": [
+        "The jump at x = −2, the corner at x = 0 and the vertical tangent at x = 3 all destroy the limit: three failures. The smooth minimum at x = 5 has f′ = 0, which is a perfectly good derivative.",
+        "A flat tangent is a tangent. An absent one is not."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A function has a jump at x = −2, a corner at x = 0, a vertical tangent at x = 3, and a smooth minimum at x = 5. At how many of these four points does f′ FAIL to exist?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "The smooth minimum is fine — a horizontal tangent is still a tangent, and f′ = 0 there. Only the first three break."
+          },
+          {
+            "value": 2,
+            "feedback": "All three of the jump, the corner and the vertical tangent break the limit. Only the smooth minimum survives."
+          },
+          {
+            "value": 1,
+            "feedback": "Each of the jump, the corner and the vertical tangent kills the limit in its own way — that is three failures."
+          }
+        ],
+        "fallbackFeedback": "Jump, corner and vertical tangent: three failures. The smooth minimum has f′ = 0, which exists."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-differentiability__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A derivative is a limit, and limits can fail.",
+      "takeaways": [
+        "Differentiable ⇒ continuous. The converse is false, and |x| at 0 is the counterexample.",
+        "Corners, cusps, vertical tangents and discontinuities all destroy f′.",
+        "Differentiable means locally straight: zoom in far enough and the curve becomes its tangent."
+      ],
+      "teaser": "Next chapter: stop taking limits by hand. One rule handles every power at once."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-differentiability",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask the one question the definition asks: does [f(x+h) − f(x)]/h settle on a single finite number as h → 0? A corner gives two answers. A jump gives none. A vertical tangent gives infinity. Only a settled, finite value counts.",
+        "figure": "dr-corner-no-tangent"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "One number, or not?",
+        "conceptTag": "dr-differentiability",
+        "explanationVariants": [
+          "Approaching the corner from the left gives −1 and from the right gives +1, so the limit has two answers and therefore none.",
+          "Two one-sided limits that disagree is exactly how a limit fails."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "At the corner of |x|, the left slope is −1 and the right slope is +1. Does f′(0) exist?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "No — the two sides disagree, so the limit has no single value.",
+              "correct": true,
+              "feedback": "Right. A limit must settle on ONE number, and these two never meet."
+            },
+            {
+              "id": "o2",
+              "label": "Yes — it is the average, 0.",
+              "correct": false,
+              "feedback": "Averaging two disagreeing one-sided limits is not something the definition permits. When they disagree, the limit does not exist."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

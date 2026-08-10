@@ -1,0 +1,292 @@
+{
+ "id": "sc-01-02",
+ "slug": "comparison-and-p-series",
+ "title": "Comparison and the p-Series",
+ "courseId": "series-convergence",
+ "chapterId": "ch1-convergence-beyond-geometric",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "If your terms are **smaller** than those of a series you already know converges, yours converges too — it is trapped underneath a finite ceiling.\n\nAnd if they are **bigger** than those of a known divergent series, yours diverges as well.\n\nThat is the comparison test, and it turns every series you know into a **ruler** for measuring new ones.",
+   "figure": "dr-power-rule-pattern"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The ruler you need most.",
+   "conceptTag": "sc-comparison",
+   "explanationVariants": [
+    "The p-series Σ1/nᵖ converges exactly when **p > 1**. So Σ1/n² converges (to π²/6), and Σ1/n — the harmonic — diverges, because p = 1 is not greater than 1.",
+    "That single boundary at p = 1 is the most useful fact in the chapter: it is the ruler against which almost everything gets measured."
+   ],
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Which of these p-series converge?",
+    "buckets": [
+     {
+      "id": "conv",
+      "label": "Converges",
+      "icon": "✅"
+     },
+     {
+      "id": "div",
+      "label": "Diverges",
+      "icon": "🚫"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "Σ 1/n² (p = 2)",
+      "bucketId": "conv",
+      "feedback": "p = 2 > 1, so it converges — to π²/6 ≈ 1.645, as it happens."
+     },
+     {
+      "id": "s2",
+      "label": "Σ 1/n (p = 1)",
+      "bucketId": "div",
+      "feedback": "The harmonic series. p = 1 is NOT greater than 1, and it diverges — the standing counterexample of the chapter."
+     },
+     {
+      "id": "s3",
+      "label": "Σ 1/√n (p = 1/2)",
+      "bucketId": "div",
+      "feedback": "p = 1/2 < 1, so the terms fade even more slowly than the harmonic's. It diverges too."
+     },
+     {
+      "id": "s4",
+      "label": "Σ 1/n³ (p = 3)",
+      "bucketId": "conv",
+      "feedback": "p = 3 > 1. The bigger p is, the faster the terms fade and the more comfortably it converges."
+     }
+    ],
+    "missFeedback": "The whole rule is one boundary: Σ1/nᵖ converges if and only if p > 1.",
+    "successFeedback": "p > 1 converges; p ≤ 1 diverges. The harmonic series sits exactly on the boundary, on the wrong side of it."
+   },
+   "variant": {
+    "gen": "g13-series-convergence",
+    "form": "series-convergence__sc-comparison__dragBucket"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why a smaller pile must be finite.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "The comparison argument, in three moves.",
+    "panels": [
+     {
+      "title": "Start with a ceiling you trust",
+      "body": "Σ1/n² converges. Its partial sums pile up and stop, under a ceiling at π²/6 ≈ 1.645. That fact is your ruler."
+     },
+     {
+      "title": "Sit underneath it",
+      "body": "Every term of Σ1/(n² + 1) is SMALLER than the matching term of Σ1/n². So its partial sums are smaller at every stage — the whole pile sits underneath the other one."
+     },
+     {
+      "title": "So it must stop too",
+      "body": "A pile of positive terms that is always climbing but never passes 1.645 has nowhere to go but a limit. It converges. Notice you never found out WHAT it converges to — and you never needed to."
+     }
+    ],
+    "continueFeedback": "Keep going — the third panel is why the test proves anything at all.",
+    "successFeedback": "Trapped under a finite ceiling and always climbing: it must settle. The test proves convergence without ever computing the sum."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Use the ruler.",
+   "conceptTag": "sc-comparison",
+   "explanationVariants": [
+    "1/(n² + 1) < 1/n² for every n, and Σ1/n² converges. So the smaller series converges too.",
+    "Compare term by term with a series you already trust. That is the entire method."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Does Σ 1/(n² + 1) converge?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Yes — each term is smaller than 1/n², and Σ1/n² converges.",
+      "correct": true,
+      "feedback": "Right. Trapped under a convergent pile and always climbing, it has nowhere to go but a limit."
+     },
+     {
+      "id": "o2",
+      "label": "No — adding 1 to the denominator makes no difference.",
+      "correct": false,
+      "feedback": "It makes the terms SMALLER, which can only help. And Σ1/n² already converges, so the comparison closes the case."
+     },
+     {
+      "id": "o3",
+      "label": "Yes, because the terms go to zero.",
+      "correct": false,
+      "feedback": "True but not sufficient — the harmonic series has terms going to zero and diverges. The comparison is what does the real work."
+     },
+     {
+      "id": "o4",
+      "label": "Impossible to say without computing the sum.",
+      "correct": false,
+      "feedback": "You never need the sum. Convergence is about whether a ceiling EXISTS, not about where it is."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-series-convergence",
+    "form": "series-convergence__sc-comparison__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The comparison must go the **right way**.\n\nTo prove **convergence**, sit under something convergent.\nTo prove **divergence**, sit above something divergent.\n\nA series smaller than a divergent one proves nothing at all — Σ1/n² is smaller than Σ1/n, and one converges while the other does not.",
+   "figure": "dr-flat-not-turning"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The comparison that proves nothing.",
+   "conceptTag": "sc-comparison",
+   "explanationVariants": [
+    "Being SMALLER than a divergent series is no help: Σ1/n² is smaller than the divergent Σ1/n, and it converges perfectly well.",
+    "The inequality has to point the same way as the conclusion you want."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student says: 'Σ1/n² is smaller than the divergent Σ1/n, so it must diverge too.' What is wrong?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Being smaller than a divergent series proves nothing — Σ1/n² is smaller, and it converges.",
+      "correct": true,
+      "feedback": "Right. Comparison only works in the direction that matches your conclusion: under a convergent ceiling, or over a divergent floor."
+     },
+     {
+      "id": "o2",
+      "label": "Σ1/n does not actually diverge.",
+      "correct": false,
+      "feedback": "It does — the harmonic series is the standing counterexample of the chapter. The error is the DIRECTION of the comparison."
+     },
+     {
+      "id": "o3",
+      "label": "The terms are not positive.",
+      "correct": false,
+      "feedback": "Both series have entirely positive terms. That is not the problem."
+     },
+     {
+      "id": "o4",
+      "label": "Nothing is wrong.",
+      "correct": false,
+      "feedback": "Σ1/n² converges to π²/6, so the conclusion is simply false. The reasoning ran the wrong way."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-series-convergence",
+    "form": "series-convergence__sc-comparison__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Choose a ruler.",
+   "conceptTag": "sc-comparison",
+   "hints": [
+    "Compare Σ 1/(n − 1) (from n = 2 onward) with the harmonic series Σ1/n.",
+    "For n ≥ 2, is 1/(n − 1) bigger or smaller than 1/n? A smaller denominator makes a BIGGER fraction.",
+    "So each term is bigger than the matching harmonic term — and the harmonic diverges."
+   ],
+   "explanationVariants": [
+    "1/(n − 1) > 1/n, and Σ1/n diverges. Sitting ABOVE a divergent series means diverging too.",
+    "The direction is what matters: above a divergent floor, you cannot settle."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Does Σ 1/(n − 1), from n = 2 onward, converge?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No — each term is BIGGER than 1/n, and the harmonic series diverges.",
+      "correct": true,
+      "feedback": "Right: sitting above a divergent floor, the pile can never settle. (It is the harmonic series in disguise, shifted by one.)"
+     },
+     {
+      "id": "o2",
+      "label": "Yes — the terms go to zero.",
+      "correct": false,
+      "feedback": "So do the harmonic's, and it diverges. Fading terms are necessary, never sufficient."
+     },
+     {
+      "id": "o3",
+      "label": "Yes, by comparison with Σ1/n².",
+      "correct": false,
+      "feedback": "These terms are far BIGGER than 1/n², so that comparison points the wrong way and proves nothing."
+     },
+     {
+      "id": "o4",
+      "label": "Impossible to decide.",
+      "correct": false,
+      "feedback": "One comparison settles it: 1/(n − 1) > 1/n, and Σ1/n diverges."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-series-convergence",
+    "form": "series-convergence__sc-comparison__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Every known series is a ruler.",
+   "takeaways": [
+    "Σ1/nᵖ converges exactly when p > 1. The harmonic series sits ON the boundary, on the wrong side.",
+    "To prove convergence, sit UNDER something convergent. To prove divergence, sit OVER something divergent.",
+    "A comparison pointing the wrong way proves nothing at all — and you never need to know the actual sum."
+   ],
+   "teaser": "Next: a series that converges only because its terms keep changing their minds."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "sc-comparison",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Find a series you already know. If your terms are SMALLER than a convergent one, you converge. If they are BIGGER than a divergent one, you diverge. Any other combination tells you nothing — the inequality has to point the same way as your conclusion.",
+    "figure": "dr-power-rule-pattern"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Which direction?",
+    "conceptTag": "sc-comparison",
+    "explanationVariants": [
+     "Smaller than a CONVERGENT series proves convergence.",
+     "Smaller than a divergent one proves nothing at all."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Your terms are smaller than those of a convergent series. What follows?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Yours converges too.",
+       "correct": true,
+       "feedback": "Right — trapped under a finite ceiling, and always climbing."
+      },
+      {
+       "id": "o2",
+       "label": "Nothing follows.",
+       "correct": false,
+       "feedback": "Something does: a positive pile that always climbs and never passes a finite ceiling has to settle."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

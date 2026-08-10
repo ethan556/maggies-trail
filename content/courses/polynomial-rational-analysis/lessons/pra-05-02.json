@@ -1,0 +1,287 @@
+{
+ "id": "pra-05-02",
+ "slug": "the-boundary-rule",
+ "title": "The Boundary Rule: Zeros Close, Excluded Values Never",
+ "courseId": "polynomial-rational-analysis",
+ "chapterId": "ch5-rational-inequalities",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "With ≥ or ≤, boundary membership splits by KIND: a **top's zero** may join (the expression equals 0 there), but a **bottom's zero can never join any solution** — the expression has no value at all there (recall excluded values). Zeros close; excluded values stay open, always.",
+   "figure": "pra-boundary-kind"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Apply the rule.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Where is (x − 3)/(x + 1) ≥ 0?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x < −1 or x ≥ 3",
+      "correct": true,
+      "feedback": "Right — the zero 3 joins (value 0 ≥ 0 ✓); the excluded −1 never can."
+     },
+     {
+      "id": "o2",
+      "label": "x ≤ −1 or x ≥ 3",
+      "feedback": "At x = −1 the expression is UNDEFINED — undefined can't satisfy ≥ 0. That boundary stays open."
+     },
+     {
+      "id": "o3",
+      "label": "x < −1 or x > 3",
+      "feedback": "With ≥ (not >), the top's zero qualifies: at x = 3 the value is exactly 0. Close that end: x ≥ 3."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The second standing rule (recall from rational equations): **never multiply both sides by a variable denominator** in an inequality — its sign is unknown, so you don't know whether to flip the inequality. The sign chart needs no multiplication at all.",
+   "figure": "pra-second-rule"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "See the damage.",
+   "conceptTag": "pra-boundary-rule",
+   "explanationVariants": [
+    "Multiplying x/(x − 2) ≤ 3 by (x − 2) assumes it's positive; for x < 2 it's negative and the ≤ should flip. The chart method needs no such gamble.",
+    "At x = 0 the original holds (0 ≤ 3 ✓), but the multiplied version x ≤ 3x − 6 gives 0 ≤ −6 ✗ — solutions vanish."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student solves x/(x − 2) ≤ 3 by multiplying both sides by (x − 2), getting x ≥ 3. What went wrong?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "For x < 2 the factor is negative, so the inequality should have flipped there — the whole region x < 2 was lost",
+      "correct": true,
+      "feedback": "Exactly — one multiplication, two cases, and the student silently picked one. Test x = 0: 0/(−2) = 0 ≤ 3 ✓, yet 0 ≥ 3 ✗."
+     },
+     {
+      "id": "o2",
+      "label": "Nothing — x ≥ 3 is the full solution",
+      "feedback": "x = 0 satisfies the original: 0/(0 − 2) = 0 ≤ 3 ✓. The lost region x < 2 is real."
+     },
+     {
+      "id": "o3",
+      "label": "They should have multiplied by (x − 2)² instead of (x − 2)",
+      "feedback": "Squaring does dodge the sign issue, but it inflates degrees and still needs the x ≠ 2 exclusion — the sign chart is the clean route."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-boundary-rule__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Boundary bookkeeping on a double harvest.",
+   "conceptTag": "pra-boundary-rule",
+   "explanationVariants": [
+    "For ≤ 0 with chart +, −, + and cuts −4 (zero) and 2 (excluded): −4 joins, 2 never does: −4 ≤ x < 2.",
+    "Close at the numerator's zero, open at the denominator's: [−4, 2)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Where is (x + 4)/(x − 2) ≤ 0?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "−4"
+     },
+     {
+      "id": "t1",
+      "label": "≤"
+     },
+     {
+      "id": "t2",
+      "label": "x"
+     },
+     {
+      "id": "t3",
+      "label": "<"
+     },
+     {
+      "id": "t4",
+      "label": "2"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t2",
+       "t1",
+       "t4"
+      ],
+      "feedback": "x = 2 zeroes the DENOMINATOR — no value exists there, so it can never join. Open at 2."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t3",
+       "t2",
+       "t3",
+       "t4"
+      ],
+      "feedback": "The zero −4 gives value 0, and 0 ≤ 0 holds — close that end: −4 ≤ x < 2."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Kind decides the boundary: the numerator zero closes, the denominator zero never joins.",
+    "successFeedback": "Right — kind decides: the zero −4 closes, the excluded 2 stays open."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-boundary-rule__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A hole-style trap.",
+   "conceptTag": "pra-boundary-rule",
+   "explanationVariants": [
+    "x = 1 zeroes BOTH top and bottom — it's excluded (denominator zero wins): even for ≥, x = 1 stays out.",
+    "The reduced form x + ... simplifies, but the ORIGINAL expression is undefined at 1: boundary open."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For ((x − 1)(x + 2))/(x − 1) ≥ 0, can x = 1 join the solution?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No — the original expression is undefined at x = 1 (denominator zero), even though the factor cancels",
+      "correct": true,
+      "feedback": "Right — cancellation is algebra on the FORMULA; the function still has no value at 1 (a hole). Excluded values never join."
+     },
+     {
+      "id": "o2",
+      "label": "Yes — after cancelling, the expression is x + 2, which is 3 ≥ 0 at x = 1",
+      "feedback": "The simplified formula lies about the domain (recall the composition lesson's same trap): the original divides by zero at 1."
+     },
+     {
+      "id": "o3",
+      "label": "Yes — zeros of the top always join for ≥",
+      "feedback": "Only when they're NOT also zeros of the bottom. Here the denominator is zero at 1 too — undefined wins."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-boundary-rule__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full boundary audit.",
+   "conceptTag": "pra-boundary-rule",
+   "explanationVariants": [
+    "Cuts: zeros 0 and 6 (top), excluded 3 (bottom). Chart of x(x − 6)/(x − 3): test −1: (−1)(−7)/(−4) < 0; 1: (1)(−5)/(−2) > 0; 4: (4)(−2)/(1) < 0; 7: 7·1/4 > 0. For ≤ 0: x ≤ 0 or 3 < x ≤ 6 — closed at 0 and 6, open at 3. That's TWO closed endpoints.",
+    "Three cuts; the two numerator zeros close (0 and 6), the excluded 3 never does: 2 closed boundary points."
+   ],
+   "hints": [
+    "Classify each cut: which come from the top, which from the bottom?",
+    "Zeros 0 and 6 may close under ≤; the excluded 3 cannot.",
+    "Both numerator zeros actually land in ≤-0 intervals — count them."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For x(x − 6)/(x − 3) ≤ 0, how many boundary points are INCLUDED (closed) in the solution?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "Only cuts where the expression EQUALS 0 can close: 0 and 6. The excluded value 3 is undefined — never included."
+     },
+     {
+      "value": 0,
+      "feedback": "With ≤, the numerator's zeros do join: at x = 0 and x = 6 the expression is exactly 0. Two closed points."
+     },
+     {
+      "value": 1,
+      "feedback": "Both 0 AND 6 are zeros of the top sitting on the solution's edge — two closed points, not one."
+     }
+    ],
+    "fallbackFeedback": "Closed at the zeros 0 and 6; open at the excluded 3: two."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-boundary-rule__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Kind decides the boundary.",
+   "takeaways": [
+    "Numerator zeros may close under ≥/≤; denominator zeros never join.",
+    "Never multiply an inequality by a variable denominator.",
+    "A cancelled common factor still leaves the point excluded (hole)."
+   ],
+   "teaser": "Finale: inequalities that need rearranging before any chart exists."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pra-boundary-rule",
+   "concept": {
+    "id": "rem-pra0502-c",
+    "kind": "concept",
+    "body": "At each cut ask: does the expression have the VALUE 0 here (top zero only)? Then ≥/≤ may include it. Undefined (bottom zero)? Never include it."
+   },
+   "check": {
+    "id": "rem-pra0502-k",
+    "kind": "check",
+    "body": "One audit.",
+    "conceptTag": "pra-boundary-rule",
+    "explanationVariants": [
+     "x = 5 zeroes the denominator: the expression is undefined there — excluded from any solution.",
+     "Only x = −8, the top's zero, could ever close; 5 cannot."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "For (x + 8)/(x − 5) ≥ 0, which cut point can be INCLUDED in the solution?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x = −8 only",
+       "correct": true,
+       "feedback": "Right — there the value is 0 ≥ 0. At 5, no value exists."
+      },
+      {
+       "id": "o2",
+       "label": "x = 5 only",
+       "feedback": "5 zeroes the DENOMINATOR — undefined, never included. The includable cut is the zero −8."
+      },
+      {
+       "id": "o3",
+       "label": "Both −8 and 5",
+       "feedback": "Only the numerator's zero qualifies: −8. The excluded value 5 stays out always."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

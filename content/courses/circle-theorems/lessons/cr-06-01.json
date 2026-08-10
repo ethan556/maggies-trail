@@ -1,0 +1,296 @@
+{
+  "id": "cr-06-01",
+  "slug": "why-all-circles-are-similar",
+  "title": "Why All Circles Are Similar",
+  "courseId": "circle-theorems",
+  "chapterId": "ch6-all-circles-are-similar",
+  "minutes": 10,
+  "standards": [
+    "G-C.A.1"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "For similarity, most shapes need conditions checked — matching angles, proportional sides. A circle needs none of that. Every circle's circumference is 2πr and every circle's area is πr² — the SAME two formulas, for every circle there is. Only the radius changes from one circle to the next, and that single number is enough to connect any two circles by exactly one dilation.",
+      "figure": "cr-circle-scaling"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A circle has radius 4. Before multiplying by π, what does the circumference formula's '2r' part equal?",
+      "predict": {
+        "prompt": "A circle's radius doubles, from 4 to 8. In the circumference formula C = 2πr, will the '2r' part double as well, or grow some other way?",
+        "options": [
+          {
+            "id": "double",
+            "label": "Double — 2r is built directly from r, so it scales the same way r does"
+          },
+          {
+            "id": "other",
+            "label": "Some other way — formulas rarely scale that simply"
+          }
+        ],
+        "outcomeId": "double",
+        "reveal": "Double. 2r is just 2 times r — whatever r does, 2r does right alongside it. Doubling r doubles 2r, no more and no less."
+      },
+      "widget": {
+        "type": "scaledCircleLab",
+        "prompt": "A circle has radius 4. In C = 2πr, what does 2r equal?",
+        "realRadius": 4,
+        "ask": "circumferenceCoef",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "8",
+            "value": 8,
+            "feedback": "2 × 4 = 8 — exactly the '2r' piece of the circumference formula, before π ever enters."
+          },
+          {
+            "id": "wrong-1",
+            "label": "4",
+            "value": 4,
+            "feedback": "4 is r by itself. The formula asks for 2r: 2 × 4 = 8."
+          },
+          {
+            "id": "wrong-2",
+            "label": "16",
+            "value": 16,
+            "feedback": "16 is 4² — that's the area formula's r² piece, not circumference's 2r."
+          }
+        ],
+        "fallbackFeedback": "2r means 2 times the radius: 2 × 4 = 8.",
+        "successFeedback": "8. Circumference is always 2πr — this '2r' piece is a straight multiple of r, which is exactly why circumference scales in lockstep with radius."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply the same formula piece to a new radius.",
+      "conceptTag": "cr-circles-similar",
+      "explanationVariants": [
+        "2 × 6 = 12.",
+        "2r is always double the radius, whatever the radius is."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a circle of radius 6, what does 2r equal?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is r alone. The formula piece is 2r: 2 × 6 = 12."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is 6², the AREA formula's r² piece, not circumference's 2r."
+          }
+        ],
+        "fallbackFeedback": "2 × 6 = 12."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compare 2r across two different circles.",
+      "conceptTag": "cr-circles-similar",
+      "explanationVariants": [
+        "Radius 9 is 3 times radius 3, and 2r follows exactly: 2(9) = 18 is 3 times 2(3) = 6.",
+        "Whatever factor connects two radii, 2r scales by that exact same factor."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Circle A has radius 3 (2r = 6). Circle B has radius 9, three times as large. What is Circle B's 2r?",
+        "options": [
+          {
+            "id": "a",
+            "label": "18 — three times Circle A's 2r, matching the tripled radius",
+            "correct": true,
+            "feedback": "2(9) = 18, and 18 is exactly 3 × 6. The '2r' piece scales by the SAME factor as the radius — always, for any two circles."
+          },
+          {
+            "id": "b",
+            "label": "6 — the same as Circle A",
+            "correct": false,
+            "feedback": "2r depends on r. Circle B's radius is different (9, not 3), so its 2r is different too: 2(9) = 18."
+          },
+          {
+            "id": "c",
+            "label": "54 — nine times Circle A's 2r",
+            "correct": false,
+            "feedback": "54 would match a SQUARED relationship (3² = 9 times), which is how area behaves, not circumference's linear 2r."
+          },
+          {
+            "id": "d",
+            "label": "12 — double Circle A's 2r",
+            "correct": false,
+            "feedback": "The radius tripled, not doubled. 2r triples right along with it: 2(9) = 18."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Area's formula is πr² — built from r SQUARED, not r alone. That one difference changes everything about how it scales: double the radius and the '2r' piece doubles, but the 'r²' piece quadruples. Circumference and area are both built from the same radius, but they answer to that radius in genuinely different ways.",
+      "figure": "cr-linear-vs-quadratic"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Same circle, radius 4. This time, find the area formula's 'r²' piece.",
+      "widget": {
+        "type": "scaledCircleLab",
+        "prompt": "A circle has radius 4. In A = πr², what does r² equal?",
+        "realRadius": 4,
+        "ask": "areaCoef",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "16",
+            "value": 16,
+            "feedback": "4² = 16 — the 'r²' piece of the area formula, before π ever enters."
+          },
+          {
+            "id": "wrong-1",
+            "label": "8",
+            "value": 8,
+            "feedback": "8 is 2r, the CIRCUMFERENCE formula's piece. Area needs r squared: 4² = 16."
+          },
+          {
+            "id": "wrong-2",
+            "label": "4",
+            "value": 4,
+            "feedback": "4 is r alone, not r squared. 4² = 16."
+          }
+        ],
+        "fallbackFeedback": "r² means r multiplied by itself: 4 × 4 = 16.",
+        "successFeedback": "16. Area is always πr² — the 'r²' piece grows by the SQUARE of whatever the radius does, a fundamentally different rule from circumference's straight multiple."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Apply the area formula's piece to the same new radius as before.",
+      "conceptTag": "cr-circles-similar",
+      "explanationVariants": [
+        "6² = 36.",
+        "r² means r times itself."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a circle of radius 6, what does r² equal?",
+        "answer": 36,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is 2r, the CIRCUMFERENCE piece. Area needs r squared: 6² = 36."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is r alone, not r squared. 6 × 6 = 36."
+          }
+        ],
+        "fallbackFeedback": "6 × 6 = 36."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compare how far each piece grew when the radius doubled.",
+      "conceptTag": "cr-circles-similar",
+      "explanationVariants": [
+        "Radius 4→8: 2r went 8→16 (×2, matching the doubled radius); r² went 16→64 (×4, the SQUARE of that same factor).",
+        "Track each piece's own growth factor separately, then compare the two factors."
+      ],
+      "hints": [
+        "From radius 4 to radius 8, the 2r piece went from 8 to 16.",
+        "Over the same change, the r² piece went from 16 to 64.",
+        "16/8 = 2, but 64/16 = 4 — compare those two growth factors."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Radius doubles from 4 to 8. The 2r piece goes from 8 to 16. The r² piece goes from 16 to 64. Which piece grew by the LARGER factor?",
+        "options": [
+          {
+            "id": "a",
+            "label": "r² — it quadrupled, while 2r only doubled",
+            "correct": true,
+            "feedback": "16 → 64 is ×4; 8 → 16 is only ×2. Doubling the radius quadruples area's r² piece but only doubles circumference's 2r piece — the k versus k² difference, made concrete."
+          },
+          {
+            "id": "b",
+            "label": "2r — it doubled, which is a bigger jump than quadrupling",
+            "correct": false,
+            "feedback": "×4 (16→64) is a LARGER growth factor than ×2 (8→16), even though quadrupling sounds smaller in casual language than doubling."
+          },
+          {
+            "id": "c",
+            "label": "They grew by the same factor",
+            "correct": false,
+            "feedback": "×2 and ×4 are different factors — r² grew by the square of what 2r grew by."
+          },
+          {
+            "id": "d",
+            "label": "Neither piece grew — only π would change the actual circumference or area",
+            "correct": false,
+            "feedback": "π is a fixed constant that never changes; the growth shown here is entirely from the radius changing, in each piece's own way."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two formulas built from the same radius, scaling in different ways.",
+      "takeaways": [
+        "Circumference's '2r' piece is a straight multiple of r — it scales by exactly the same factor as the radius.",
+        "Area's 'r²' piece is built from r squared — it scales by the SQUARE of whatever factor the radius scales by.",
+        "Because π is the same universal constant for every circle, any two circles' measurements are connected by a single scale factor — which is exactly what makes every pair of circles similar, no conditions to check."
+      ],
+      "teaser": "next chapter: inscribed and circumscribed circles of a triangle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cr-circles-similar",
+      "concept": {
+        "id": "rem-ccs-c",
+        "kind": "concept",
+        "body": "Rewind. Circumference's formula piece is 2r — double the radius. Area's formula piece is r² — the radius multiplied by itself. For radius 5: 2r = 10, but r² = 25."
+      },
+      "check": {
+        "id": "rem-ccs-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "cr-circles-similar",
+        "explanationVariants": [
+          "2 × 7 = 14.",
+          "2r is double the radius, nothing more."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For a circle of radius 7, what does 2r equal?",
+          "answer": 14,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 49,
+              "feedback": "49 is 7² — that's the AREA piece. Circumference's piece is 2r: 2 × 7 = 14."
+            },
+            {
+              "value": 7,
+              "feedback": "7 is r alone. The piece asked for is 2r: 2 × 7 = 14."
+            }
+          ],
+          "fallbackFeedback": "2 × 7 = 14."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "id": "vec-03-01",
+  "slug": "the-dot-product",
+  "title": "The Dot Product: Vectors to a Number",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch3-dot-product",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **dot product** multiplies two vectors into a single NUMBER (a scalar):\n\n⟨a, b⟩ · ⟨c, d⟩ = ac + bd.\n\nMultiply matching components, then add. ⟨3, 4⟩ · ⟨1, 2⟩ = 3·1 + 4·2 = 11. The result isn't a vector — it measures how much the two vectors point the same way.",
+      "figure": "vec-dot-angle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The dot product turns two arrows into one number.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "dot",
+        "ux": 3,
+        "uy": 4,
+        "targetDot": 25,
+        "vxStart": 1,
+        "vyStart": 0,
+        "gridMax": 6,
+        "prompt": "u = (3, 4). Steer v until the dot product reads 25.",
+        "successFeedback": "v = (3, 4) — v equal to u. Then u · v = 3² + 4² = 25, which is |u|² exactly. The dot product of a vector with itself is its length squared, and that is the first clue that this strange number is secretly about geometry.",
+        "lowFeedback": "The dot product is below 25 — v is either too short or pointing away from u.",
+        "highFeedback": "The dot product is above 25. It maxes out when v points the same way as u and matches its length."
+      },
+      "predict": {
+        "prompt": "Look at the two arrows before you move anything. The dot product u · v of the STARTING pair is…",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — they lean the same way"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — they lean apart"
+          },
+          {
+            "id": "zero",
+            "label": "Zero — they're perpendicular"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "u · v = 3·1 + 4·0 = 3. One number tells the geometry: positive means the angle is under 90°, zero means exactly 90°, negative means past it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "vec-dot"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A scalar, not a vector.",
+      "conceptTag": "vec-dot",
+      "explanationVariants": [
+        "The dot product outputs a NUMBER: ⟨2, 3⟩ · ⟨4, 1⟩ = 8 + 3 = 11, a scalar with no direction.",
+        "Unlike addition, the dot product collapses two vectors to one number."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is ⟨2, 3⟩ · ⟨4, 1⟩?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x1",
+            "label": "u_x",
+            "value": 2
+          },
+          {
+            "id": "y1",
+            "label": "u_y",
+            "value": 3
+          },
+          {
+            "id": "x2",
+            "label": "v_x",
+            "value": 4
+          },
+          {
+            "id": "y2",
+            "label": "v_y",
+            "value": 1
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "x1"
+            },
+            "right": {
+              "op": "const",
+              "id": "x2"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "y1"
+            },
+            "right": {
+              "op": "const",
+              "id": "y2"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "Multiply matching components first: 2·4 + 3·1 = 8 + 3 = 11 (14 would be 2·4 + 3·2)."
+          },
+          {
+            "value": 35,
+            "feedback": "That looks like (2+3)(4+1) = 35. The dot product is 2·4 + 3·1 = 11."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "2·4 + 3·1 = 11.",
+        "successFeedback": "2·4 + 3·1 = 11."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-dot__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The sign of the dot product reveals the rough angle: **positive** if the vectors point generally the same way (< 90° apart), **zero** if perpendicular, **negative** if generally opposite (> 90°). This is the dot product's superpower — it detects alignment.",
+      "figure": "vec-dot-sign"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Detect perpendicularity.",
+      "conceptTag": "vec-dot",
+      "explanationVariants": [
+        "⟨3, 4⟩ · ⟨4, −3⟩ = 12 − 12 = 0 — a zero dot product means the vectors are perpendicular.",
+        "The 12's cancel: dot = 0, so the angle is exactly 90°."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is ⟨3, 4⟩ · ⟨4, −3⟩?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x1",
+            "label": "u_x",
+            "value": 3
+          },
+          {
+            "id": "y1",
+            "label": "u_y",
+            "value": 4
+          },
+          {
+            "id": "x2",
+            "label": "v_x",
+            "value": 4
+          },
+          {
+            "id": "y2",
+            "label": "v_y",
+            "value": -3
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "x1"
+            },
+            "right": {
+              "op": "const",
+              "id": "x2"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "y1"
+            },
+            "right": {
+              "op": "const",
+              "id": "y2"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 24,
+            "feedback": "24 adds the products; the second is NEGATIVE: 12 + (−12) = 0."
+          },
+          {
+            "value": 12,
+            "feedback": "Include both terms: 3·4 + 4·(−3) = 12 − 12 = 0."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "12 − 12 = 0 — the vectors are perpendicular.",
+        "successFeedback": "12 − 12 = 0 — the vectors are perpendicular."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-dot__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the sign.",
+      "conceptTag": "vec-dot",
+      "explanationVariants": [
+        "⟨1, 0⟩ · ⟨−2, 5⟩ = −2 + 0 = −2 < 0, so the vectors point more than 90° apart.",
+        "A negative dot product signals an obtuse angle between them."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The dot product ⟨1, 0⟩ · ⟨−2, 5⟩ = −2. This means the angle between them is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "greater than 90° (obtuse)",
+            "correct": true,
+            "feedback": "Right — a negative dot product means the vectors point more than 90° apart."
+          },
+          {
+            "id": "o2",
+            "label": "exactly 90°",
+            "feedback": "That would need a dot product of ZERO. −2 is negative → obtuse."
+          },
+          {
+            "id": "o3",
+            "label": "less than 90°",
+            "feedback": "Acute angles give POSITIVE dot products. −2 < 0 means obtuse."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-dot__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find a perpendicular partner.",
+      "conceptTag": "vec-dot",
+      "explanationVariants": [
+        "For ⟨2, 6⟩, a perpendicular vector has dot product 0: ⟨6, −2⟩ gives 12 − 12 = 0. (Swap and negate one component.)",
+        "Perpendicular to ⟨a, b⟩ is ⟨b, −a⟩: here ⟨6, −2⟩."
+      ],
+      "hints": [
+        "Perpendicular means the dot product is 0.",
+        "Try ⟨b, −a⟩ = ⟨6, −2⟩.",
+        "Check: ⟨2, 6⟩ · ⟨6, −2⟩ = 12 − 12."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is ⟨2, 6⟩ · ⟨6, −2⟩? (Confirming they're perpendicular.)",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x1",
+            "label": "u_x",
+            "value": 2
+          },
+          {
+            "id": "y1",
+            "label": "u_y",
+            "value": 6
+          },
+          {
+            "id": "x2",
+            "label": "v_x",
+            "value": 6
+          },
+          {
+            "id": "y2",
+            "label": "v_y",
+            "value": -2
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "x1"
+            },
+            "right": {
+              "op": "const",
+              "id": "x2"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "y1"
+            },
+            "right": {
+              "op": "const",
+              "id": "y2"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 24,
+            "feedback": "The second product is negative: 12 + (−12) = 0, confirming perpendicularity."
+          },
+          {
+            "value": 12,
+            "feedback": "Both terms: 2·6 + 6·(−2) = 12 − 12 = 0."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "12 − 12 = 0 — perpendicular.",
+        "successFeedback": "12 − 12 = 0 — perpendicular."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-dot__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two vectors, one number.",
+      "takeaways": [
+        "Dot product ⟨a, b⟩ · ⟨c, d⟩ = ac + bd, a scalar.",
+        "Positive → acute, zero → perpendicular, negative → obtuse.",
+        "Perpendicular to ⟨a, b⟩ is ⟨b, −a⟩ (dot product 0)."
+      ],
+      "teaser": "Next: turning the dot product into an exact angle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-dot",
+      "concept": {
+        "id": "rem-vec0301-c",
+        "kind": "concept",
+        "body": "Dot product ⟨a,b⟩·⟨c,d⟩ = ac + bd (a scalar). Zero means perpendicular; positive means acute; negative means obtuse."
+      },
+      "check": {
+        "id": "rem-vec0301-k",
+        "kind": "check",
+        "body": "One dot product.",
+        "conceptTag": "vec-dot",
+        "explanationVariants": [
+          "⟨1, 2⟩ · ⟨3, 4⟩ = 3 + 8 = 11.",
+          "Multiply matching, add: 11."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute ⟨1, 2⟩ · ⟨3, 4⟩.",
+          "answer": 11,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "Include both products: 1·3 + 2·4 = 3 + 8 = 11."
+            },
+            {
+              "value": 21,
+              "feedback": "That's (1+2)(3+4). The dot product is 1·3 + 2·4 = 11."
+            }
+          ],
+          "fallbackFeedback": "1·3 + 2·4 = 11."
+        }
+      }
+    }
+  ]
+}

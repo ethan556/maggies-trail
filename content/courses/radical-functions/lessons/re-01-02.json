@@ -1,0 +1,342 @@
+{
+ "id": "re-01-02",
+ "slug": "exponent-rules-go-rational",
+ "title": "Exponent Rules Go Rational",
+ "courseId": "radical-functions",
+ "chapterId": "ch1-rational-exponents-with-variables",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every exponent rule from Algebra 1 survives with fractions. **Product:** x^(1/2) · x^(3/2) = x^(1/2 + 3/2) = x². **Quotient:** subtract. **Power of a power:** multiply — (x⁶)^(1/3) = x^(6/3) = x². Same three rules, fraction arithmetic inside. (Assume all variables are positive.)",
+   "figure": "re-exponent-rules"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Add the fractions.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Simplify x^(1/2) · x^(3/2) = x^?. What is the exponent?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "The exponents ADD as fractions: 1/2 + 3/2 = 4/2 = 2, not 3."
+     },
+     {
+      "value": 1,
+      "feedback": "That SUBTRACTS the exponents (3/2 − 1/2 = 1) — the product rule ADDS: 4/2 = 2."
+     }
+    ],
+    "fallbackFeedback": "1/2 + 3/2 = 4/2 = 2."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Power-of-a-power is the workhorse: (x⁶)^(1/3) asks for a third of six x-factors — x². And it runs in reverse to **undo** exponents: raising x^(2/3) to the power 3/2 gives x^(2/3 · 3/2) = x¹ = x. Reciprocal exponents cancel — that's the key to solving equations later.",
+   "figure": "re-power-of-power"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Multiply the exponents.",
+   "conceptTag": "re-rules",
+   "explanationVariants": [
+    "(x⁸)^(3/4) = x^(8 · 3/4) = x⁶.",
+    "8 · 3/4: a quarter of 8 is 2, times 3 is 6."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Simplify (x⁸)^(3/4) = x^?. What is the exponent?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "e",
+      "label": "the exponent 8",
+      "value": 8
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "const",
+      "id": "e"
+     },
+     "right": {
+      "op": "divide",
+      "left": {
+       "op": "lit",
+       "value": 3
+      },
+      "right": {
+       "op": "lit",
+       "value": 4
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 11,
+      "feedback": "Power-of-a-power MULTIPLIES: 8 · 3/4 = 6, not 8 + 3."
+     },
+     {
+      "value": 32,
+      "feedback": "That's 8 · 4 — the exponent is the FRACTION 3/4: 8 · 3/4 = 6."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "8 · 3/4 = 6.",
+    "successFeedback": "8 · 3/4 = 6."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-rules__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Quotient rule.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Simplify x^(5/2) ÷ x^(1/2) = x^?. What is the exponent?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "5/2 − 1/2 = 4/2 = 2 — subtract, then reduce the fraction."
+     },
+     {
+      "value": 5,
+      "feedback": "Division SUBTRACTS exponents: 5/2 − 1/2 = 2, it doesn't keep the 5/2."
+     }
+    ],
+    "fallbackFeedback": "5/2 − 1/2 = 4/2 = 2."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Reciprocal exponents.",
+   "conceptTag": "re-rules",
+   "explanationVariants": [
+    "(x^(3/5))^(5/3) = x^(3/5 · 5/3) = x¹ = x — reciprocals cancel to 1.",
+    "Multiplying a fraction by its reciprocal always gives exponent 1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Simplify (x^(3/5))^(5/3).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x",
+      "correct": true,
+      "feedback": "Right — 3/5 · 5/3 = 1: the powers undo each other."
+     },
+     {
+      "id": "o2",
+      "label": "x^(9/25)",
+      "correct": false,
+      "feedback": "That squares 3/5 — power-of-a-power multiplies the two DIFFERENT exponents: 3/5 · 5/3 = 1."
+     },
+     {
+      "id": "o3",
+      "label": "x²",
+      "correct": false,
+      "feedback": "3/5 · 5/3 = 15/15 = 1 — nothing doubles."
+     },
+     {
+      "id": "o4",
+      "label": "1",
+      "correct": false,
+      "feedback": "The exponent becomes 1, so the answer is x¹ = x — the base survives."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-rules__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Mixed product.",
+   "conceptTag": "re-rules",
+   "explanationVariants": [
+    "x^(1/3) · x^(1/6): common denominator 6 gives 2/6 + 1/6 = 3/6 = 1/2 — so √x.",
+    "The sum lands on 1/2, the square root."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Simplify x^(1/3) · x^(1/6).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x^(1/2)",
+      "correct": true,
+      "feedback": "Right — 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2."
+     },
+     {
+      "id": "o2",
+      "label": "x^(1/9)",
+      "correct": false,
+      "feedback": "Product rule ADDS exponents (1/3 + 1/6 = 1/2) — it never adds denominators."
+     },
+     {
+      "id": "o3",
+      "label": "x^(1/18)",
+      "correct": false,
+      "feedback": "The exponents add, they don't multiply: 1/3 + 1/6 = 1/2."
+     },
+     {
+      "id": "o4",
+      "label": "x^(2/9)",
+      "correct": false,
+      "feedback": "Common denominator is 6, not 9: 2/6 + 1/6 = 1/2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-rules__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Three rules, one expression.",
+   "conceptTag": "re-rules",
+   "explanationVariants": [
+    "(x^(1/2) · x^(5/2))² = (x³)² = x⁶: add inside first (1/2 + 5/2 = 3), then multiply by 2.",
+    "Inside-out: product rule, then power rule."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Simplify (x^(1/2) · x^(5/2))² = x^?. What is the exponent?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "the exponent 1/2",
+      "value": 0.5
+     },
+     {
+      "id": "b",
+      "label": "the exponent 5/2",
+      "value": 2.5
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "lit",
+      "value": 2
+     },
+     "right": {
+      "op": "add",
+      "left": {
+       "op": "const",
+       "id": "a"
+      },
+      "right": {
+       "op": "const",
+       "id": "b"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 9,
+      "feedback": "That SQUARES the inner exponent (3² = 9) — the outer power MULTIPLIES it: 3 · 2 = 6."
+     },
+     {
+      "value": 3,
+      "feedback": "The outer square still applies: (x³)² = x⁶ — multiply by 2."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "1/2 + 5/2 = 3, then 3 · 2 = 6.",
+    "successFeedback": "1/2 + 5/2 = 3, then 3 · 2 = 6."
+   },
+   "hints": [
+    "Work inside the parentheses first: add 1/2 + 5/2.",
+    "That's 6/2 = 3, so the inside is x³.",
+    "Now the outer power: (x³)² = x⁶."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-rules__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Same three rules — add to multiply, subtract to divide, multiply for powers of powers.",
+   "takeaways": [
+    "Fraction arithmetic replaces integer arithmetic; the rules don't change.",
+    "Reciprocal exponents cancel to x¹ — the future equation-solving move.",
+    "Work inside parentheses first."
+   ],
+   "teaser": "Next: using exponents to simplify radicals full of variables."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-rules",
+   "concept": {
+    "id": "rem-re0102-c",
+    "kind": "concept",
+    "body": "Product rule with fractions: keep the base, add the exponents. x^(1/4) · x^(1/4) adds 1/4 + 1/4."
+   },
+   "check": {
+    "id": "rem-re0102-k",
+    "kind": "check",
+    "body": "Add the small ones.",
+    "conceptTag": "re-rules",
+    "explanationVariants": [
+     "1/4 + 1/4 = 2/4 = 1/2: the product is x^(1/2) = √x.",
+     "Same denominators add directly: 2/4, then reduce."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "x^(1/4) · x^(1/4) = x^(1/a). What is a?",
+     "answer": 2,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "1/4 + 1/4 = 2/4 = 1/2 — the sum REDUCES; the exponent is 1/2, so a = 2."
+      },
+      {
+       "value": 8,
+       "feedback": "Adding fractions keeps the denominator: 1/4 + 1/4 = 2/4 = 1/2, not 1/8."
+      }
+     ],
+     "fallbackFeedback": "1/4 + 1/4 = 1/2, so a = 2."
+    }
+   }
+  }
+ ]
+}

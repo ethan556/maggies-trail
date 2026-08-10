@@ -1,0 +1,290 @@
+{
+  "id": "dpv-04-02",
+  "slug": "rounding-to-any-decimal-place",
+  "title": "Rounding to Any Decimal Place",
+  "courseId": "decimals-place-value",
+  "chapterId": "ch4-rounding-decimals",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The same rule rounds to any place, not just wholes. Pick your target place, then look at the digit **one place to its right** — the *decider*. To round to the nearest tenth, look at the hundredths digit: 5 or more rounds the tenths up, 4 or less leaves it. So 3.16 rounds to 3.2.",
+      "figure": "dpv-round-whole"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rounding to the nearest tenth.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 2,
+        "max": 3,
+        "step": 0.01,
+        "tickStep": 0.1,
+        "target": 2.46,
+        "start": 2,
+        "prompt": "Place 2.46. Then ask which TENTH mark it is nearest.",
+        "successFeedback": "2.46 sits between 2.4 and 2.5, and past their midpoint of 2.45 — so it rounds to 2.5. Rounding to a place means choosing the nearest mark at THAT place, and the line shows which one it is.",
+        "lowFeedback": "Your marker is below 2.46.",
+        "highFeedback": "Your marker is above 2.46."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 2.46 closer to 2 or to 3?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 2"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 3"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "2.46 sits 0.46 from 2 and 0.54 from 3 — the 2 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "round-any-decimal-place",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round any decimal place.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round any decimal place must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round any decimal place."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimals-place-value:round-any-decimal-place",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Decider says up.",
+      "conceptTag": "round-any-decimal-place",
+      "explanationVariants": [
+        "The hundredths digit 8 is 5 or more, so 0.78 rounds up to 0.8.",
+        "0.78 is closer to 0.8 than to 0.7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 0.78 to the nearest tenth.",
+        "answer": 0.8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.7,
+            "feedback": "0.7 rounds down, but the decider (hundredths digit 8) is 5 or more — so the tenths rounds up to 0.8."
+          },
+          {
+            "value": 1,
+            "feedback": "1 rounds to the nearest whole. Keeping the tenths place, 0.78 rounds to 0.8."
+          }
+        ],
+        "fallbackFeedback": "The hundredths digit (8) is 5 or more, so round the tenths up: 0.8."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To round to the nearest **hundredth**, the target moves one place right — so the decider does too, becoming the **thousandths** digit. Look there: 5 or more rounds the hundredths up. The rule never changes; only which place you target and which you check.",
+      "figure": "dpv-round-whole"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Round to the nearest hundredth.",
+      "conceptTag": "round-any-decimal-place",
+      "explanationVariants": [
+        "The thousandths digit 6 is 5 or more, so 0.376 rounds up to 0.38.",
+        "Targeting hundredths, the decider is thousandths: 6 rounds up to 0.38."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 0.376 to the nearest hundredth.",
+        "answer": 0.38,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.37,
+            "feedback": "0.37 rounds down, but the decider (thousandths digit 6) is 5 or more — so the hundredths rounds up to 0.38."
+          },
+          {
+            "value": 0.4,
+            "feedback": "0.4 rounds to the nearest tenth, not hundredth. Targeting hundredths, 0.376 rounds to 0.38."
+          }
+        ],
+        "fallbackFeedback": "The thousandths digit (6) is 5 or more, so round the hundredths up: 0.38."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which digit is the decider?",
+      "conceptTag": "round-any-decimal-place",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To round 2.735 to the nearest hundredth, which digit do you check?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The thousandths digit (5)",
+            "correct": true,
+            "feedback": "Targeting hundredths, the decider is one place right — thousandths, the 5."
+          },
+          {
+            "id": "b",
+            "label": "The hundredths digit (3)",
+            "feedback": "That's the target place itself, not the decider. Check one place right: the thousandths 5."
+          },
+          {
+            "id": "c",
+            "label": "The tenths digit (7)",
+            "feedback": "Tenths is two places left of the decider. For nearest hundredth, check the thousandths: 5."
+          },
+          {
+            "id": "d",
+            "label": "The ones digit (2)",
+            "feedback": "The whole-number part doesn't decide a hundredths rounding. Check the thousandths digit: 5."
+          }
+        ]
+      },
+      "hints": [
+        "The decider is one place RIGHT of the target.",
+        "Target is hundredths.",
+        "One place right is thousandths — the 5."
+      ],
+      "explanationVariants": [
+        "Nearest hundredth → check the thousandths digit, the 5.",
+        "The decider always sits one place right of the target place."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Halfway still rounds up.",
+      "conceptTag": "round-any-decimal-place",
+      "explanationVariants": [
+        "The hundredths digit is exactly 5, which rounds the tenths up by convention: 3.2.",
+        "3.15 sits halfway, and the 5 sends the tenths up to 3.2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 3.15 to the nearest tenth.",
+        "answer": 3.2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3.1,
+            "feedback": "3.1 rounds down, but the decider is exactly 5 — which rounds up by convention, giving 3.2."
+          },
+          {
+            "value": 3.15,
+            "feedback": "3.15 is unrounded. To the nearest tenth, the decider 5 rounds it up to 3.2."
+          }
+        ],
+        "fallbackFeedback": "The hundredths digit is exactly 5, which rounds up by convention: 3.2."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two places, then round one.",
+      "conceptTag": "round-any-decimal-place",
+      "hints": [
+        "Target is the hundredths place; find the decider one place right.",
+        "In 2.348, the thousandths digit is 8.",
+        "8 is 5 or more, so the hundredths (4) rounds up to 5."
+      ],
+      "explanationVariants": [
+        "Rounding 2.348 to the nearest hundredth: the thousandths digit 8 rounds the hundredths up, 2.34 → 2.35.",
+        "The decider (8) is 5 or more, so 2.348 rounds up to 2.35."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 2.348 to the nearest hundredth. (enter as a decimal)",
+        "answer": 2.35,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2.34,
+            "feedback": "2.34 rounds down, but the decider (thousandths digit 8) is 5 or more — so the hundredths rounds up to 2.35."
+          },
+          {
+            "value": 2.4,
+            "feedback": "2.4 rounds to the nearest tenth. Targeting the hundredths, 2.348 rounds to 2.35."
+          }
+        ],
+        "fallbackFeedback": "The thousandths digit (8) is 5 or more, so round the hundredths up: 2.35."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Target a place; check the one to its right.",
+      "takeaways": [
+        "To round to any place, look at the digit one place to its right — the decider.",
+        "5 or more rounds the target place up; 4 or less leaves it.",
+        "Nearest tenth checks hundredths; nearest hundredth checks thousandths."
+      ],
+      "teaser": "next: rounding decimals inside real word problems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "round-any-decimal-place",
+      "concept": {
+        "id": "rem-radp-c",
+        "kind": "concept",
+        "body": "Quick rewind. **To round to a place, check the digit just to its right.** For the nearest tenth, look at the hundredths digit: 5 or more rounds the tenths up, 4 or less keeps it. So 0.63 → 0.6 (the 3 is under 5) and 0.68 → 0.7 (the 8 is 5+)."
+      },
+      "check": {
+        "id": "rem-radp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "round-any-decimal-place",
+        "explanationVariants": [
+          "The hundredths digit 3 is below 5, so 0.63 rounds to 0.6.",
+          "0.63 is closer to 0.6 than to 0.7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Round 0.63 to the nearest tenth.",
+          "answer": 0.6,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 0.7,
+              "feedback": "0.7 rounds up, but the hundredths digit 3 is below 5 — so 0.63 rounds down to 0.6."
+            },
+            {
+              "value": 0.63,
+              "feedback": "0.63 is unrounded. To the nearest tenth, it rounds to 0.6."
+            }
+          ],
+          "fallbackFeedback": "The hundredths digit (3) is below 5, so round down to 0.6."
+        }
+      }
+    }
+  ]
+}

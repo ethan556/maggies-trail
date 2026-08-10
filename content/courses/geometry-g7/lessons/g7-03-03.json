@@ -1,0 +1,293 @@
+{
+  "id": "g7-03-03",
+  "slug": "solving-for-unknown-angles",
+  "title": "Solving for Unknown Angles",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3-angle-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Angle facts become **equations**. If x and 2x fit a square corner, then x + 2x = 90, so 3x = 90 and **x = 30**. Write the fact as an equation, combine the x's, divide.",
+      "figure": "angle-pairs"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Combine the copies, then balance.",
+      "widget": {
+        "type": "balanceScale",
+        "prompt": "The pans weigh angle-degrees: 3x on the left, 90 on the right. Level them.",
+        "a": 3,
+        "b": 0,
+        "c": 90,
+        "xMin": 0,
+        "xMax": 40,
+        "xStart": 10,
+        "successFeedback": "x = 30 balances it: 3 · 30 = 90. The angles are 30° and 60° — complementary, in a 1 : 2 ratio.",
+        "lowFeedback": "The left pan is light — three copies of that x don't reach 90 yet.",
+        "highFeedback": "The left pan is heavy — three copies of that x overshoot 90."
+      },
+      "predict": {
+        "prompt": "x and 2x together square off a right angle: x + 2x = 90. So x is…",
+        "options": [
+          {
+            "id": "thirty",
+            "label": "30° — three equal shares of 90"
+          },
+          {
+            "id": "fortyfive",
+            "label": "45° — half of 90"
+          },
+          {
+            "id": "sixty",
+            "label": "60°"
+          }
+        ],
+        "outcomeId": "thirty",
+        "reveal": "x + 2x is 3x — three copies of one unknown splitting 90° evenly: x = 30, and its partner 2x = 60. Halving to 45 assumes the two angles are equal, but 2x is twice its partner by construction."
+      },
+      "conceptTag": "g7-angle-equations",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents angle equations.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for angle equations must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines angle equations."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-g7:g7-angle-equations",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same recipe works on a straight line. If x and 3x are supplementary: x + 3x = 180, so 4x = 180 and x = 45. The only question is which total to use — 90° for corners, 180° for lines.",
+      "figure": "g7-solve-angles"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve a line.",
+      "conceptTag": "g7-angle-equations",
+      "explanationVariants": [
+        "x + 3x = 180 → 4x = 180 → x = 45.",
+        "Combine to 4x = 180, divide: x = 45."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Angles x and 3x sit together on a straight line. Solve for x (in degrees).",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "That divided 180 by 3 — combine FIRST: x + 3x = 4x, so 180 ÷ 4 = 45."
+          },
+          {
+            "value": 22.5,
+            "feedback": "That used 90° — a straight LINE holds 180°: 4x = 180, x = 45."
+          }
+        ],
+        "fallbackFeedback": "x + 3x = 180 → 4x = 180 → x = 45."
+      },
+      "variant": {
+        "gen": "angle-equation"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which equation?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Angles x and (x + 20) fit a square corner. Which equation finds x?",
+        "options": [
+          {
+            "id": "a",
+            "label": "x + (x + 20) = 90",
+            "correct": true,
+            "feedback": "Right — the two angles fill 90°, so their sum equals 90."
+          },
+          {
+            "id": "b",
+            "label": "x + (x + 20) = 180",
+            "correct": false,
+            "feedback": "A square CORNER holds 90° — 180° is for a straight line."
+          },
+          {
+            "id": "c",
+            "label": "x = x + 20",
+            "correct": false,
+            "feedback": "The angles aren't equal — together they FILL the corner: x + (x + 20) = 90."
+          },
+          {
+            "id": "d",
+            "label": "x − 20 = 90",
+            "correct": false,
+            "feedback": "Both angles join the corner: x + (x + 20) = 90."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Finish that solve.",
+      "conceptTag": "g7-angle-equations",
+      "explanationVariants": [
+        "x + x + 20 = 90 → 2x = 70 → x = 35.",
+        "2x + 20 = 90; subtract 20 (2x = 70); divide: 35."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x + (x + 20) = 90. What is x, in degrees?",
+        "answer": 35,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "That's x + 20 (the OTHER angle) — x itself is 35."
+          },
+          {
+            "value": 45,
+            "feedback": "Don't ignore the +20: 2x = 90 − 20 = 70, so x = 35."
+          }
+        ],
+        "fallbackFeedback": "2x + 20 = 90 → 2x = 70 → x = 35."
+      },
+      "variant": {
+        "gen": "angle-equation",
+        "form": "complement"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Vertical with algebra.",
+      "conceptTag": "g7-angle-equations",
+      "explanationVariants": [
+        "Vertical angles are equal: 2x = 80, so x = 40.",
+        "Set the verticals equal: 2x = 80 → x = 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two lines cross. One angle is 2x degrees and the angle directly across from it is 80°. Solve for x.",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "That's the angle itself — vertical angles give 2x = 80, so x = 40."
+          },
+          {
+            "value": 50,
+            "feedback": "Verticals are EQUAL (2x = 80), not supplementary: x = 40."
+          }
+        ],
+        "fallbackFeedback": "Vertical angles are equal: 2x = 80 → x = 40."
+      },
+      "variant": {
+        "gen": "angle-equation",
+        "form": "vertical"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A three-angle line.",
+      "conceptTag": "g7-angle-equations",
+      "explanationVariants": [
+        "x + 2x + 60 = 180 → 3x = 120 → x = 40.",
+        "Combine (3x + 60 = 180), subtract 60, divide: x = 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Angles x, 2x, and 60° together fill a straight line. Solve for x (in degrees).",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "That solved 2x = 120 alone — combine ALL of it: 3x + 60 = 180, x = 40."
+          },
+          {
+            "value": 10,
+            "feedback": "A straight line holds 180°, not 90°: 3x = 120, x = 40."
+          }
+        ],
+        "fallbackFeedback": "x + 2x + 60 = 180 → 3x = 120 → x = 40."
+      },
+      "hints": [
+        "The three angles total 180° (a straight line).",
+        "Write x + 2x + 60 = 180, then combine: 3x + 60 = 180.",
+        "3x = 120, so x = 40."
+      ],
+      "variant": {
+        "gen": "angle-equation",
+        "form": "lineThree"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Turn angle facts into equations: pick the right total, combine the x's, divide.",
+      "takeaways": [
+        "Corners give sum = 90; straight lines give sum = 180; verticals give equality.",
+        "Combine like terms before dividing.",
+        "Check by adding the solved angles back to the total."
+      ],
+      "teaser": "next chapter: building triangles from given conditions — and finding out when the conditions leave a choice."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-angle-equations",
+      "concept": {
+        "id": "rem-g70303-c",
+        "kind": "concept",
+        "body": "Turn angle facts into equations: complementary pairs sum to 90, straight-line angles sum to 180, vertical angles are equal. Combine the x-terms, then divide. x + 2x = 90 gives 3x = 90, so x = 30."
+      },
+      "check": {
+        "id": "rem-g70303-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-angle-equations",
+        "explanationVariants": [
+          "x + x = 90 → 2x = 90 → x = 45.",
+          "Two equal complementary angles: each is 45°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Angles x and x are complementary. Solve for x (in degrees).",
+          "answer": 45,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 90,
+              "feedback": "That's the pair's TOTAL — each angle is half: x = 45."
+            },
+            {
+              "value": 30,
+              "feedback": "2x = 90, so x = 45 (30 would need 3x = 90)."
+            }
+          ],
+          "fallbackFeedback": "x + x = 90 → 2x = 90 → x = 45."
+        }
+      }
+    }
+  ]
+}

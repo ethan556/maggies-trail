@@ -1,0 +1,243 @@
+{
+  "id": "vec-01-03",
+  "slug": "displacement-between-points",
+  "title": "Displacement: Vectors Between Points",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch1-vectors-components",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A vector from point A to point B is the **displacement** — subtract tail from tip, coordinate by coordinate:\n\nAB = ⟨x_B − x_A, y_B − y_A⟩.\n\nFrom A(1, 2) to B(4, 6): ⟨4 − 1, 6 − 2⟩ = ⟨3, 4⟩. The vector records the trip, not the starting spot.",
+      "figure": "vec-displacement"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute a displacement.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "add",
+        "ux": 0,
+        "uy": 0,
+        "targetX": 3,
+        "targetY": 4,
+        "vxStart": 1,
+        "vyStart": 0,
+        "gridMax": 6,
+        "prompt": "A(1, 2) to B(4, 6) is a displacement of ⟨3, 4⟩. Land the sum there and read its length.",
+        "successFeedback": "Length 5, from 3² + 4² = 25. A displacement vector's magnitude is the straight-line distance between the two points — the Pythagorean theorem wearing a vector's clothes, since 3 across and 4 up is exactly a 3-4-5 right triangle.",
+        "lowFeedback": "Short of (3, 4) — keep extending the arrow.",
+        "highFeedback": "Past (3, 4) now."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Order matters.",
+      "conceptTag": "vec-displacement",
+      "explanationVariants": [
+        "From P(−2, 5) to Q(1, 1): ⟨1 − (−2), 1 − 5⟩ = ⟨3, −4⟩ — tip minus tail, so watch the signs.",
+        "Subtracting P from Q gives ⟨3, −4⟩; reversing the order would flip both signs."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "The displacement from P(−2, 5) to Q(1, 1) is:",
+        "answer": [
+          3,
+          -4
+        ],
+        "delimiter": "angle",
+        "commonEntries": [
+          {
+            "values": [
+              -3,
+              4
+            ],
+            "feedback": "That's Q → P (reversed). From P to Q, subtract P from Q: ⟨3, −4⟩."
+          },
+          {
+            "values": [
+              -1,
+              6
+            ],
+            "feedback": "Subtract componentwise (tip − tail), not add: ⟨1−(−2), 1−5⟩ = ⟨3, −4⟩."
+          }
+        ],
+        "fallbackFeedback": "Displacement is tip − tail: subtract P from Q componentwise.",
+        "successFeedback": "Right — ⟨1 − (−2), 1 − 5⟩ = ⟨3, −4⟩."
+      },
+      "variant": {
+        "gen": "vec-displacement"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two vectors are **equal** if they have the same components — regardless of where they're drawn. The displacement ⟨3, 4⟩ starting at the origin and the same ⟨3, 4⟩ starting at (10, 10) are the SAME vector: identical magnitude and direction. Position is not part of a vector's identity.",
+      "figure": "vec-equal-vectors"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Equal vectors.",
+      "conceptTag": "vec-displacement",
+      "explanationVariants": [
+        "From A(0, 0) to B(2, 3) and from C(5, 5) to D(7, 8) both give ⟨2, 3⟩ — equal vectors, different locations.",
+        "Same components ⟨2, 3⟩ means the vectors are equal no matter the start."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which displacement equals the vector from A(0, 0) to B(2, 3)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "From C(5, 5) to D(7, 8)",
+            "correct": true,
+            "feedback": "Right — ⟨7 − 5, 8 − 5⟩ = ⟨2, 3⟩, the same vector."
+          },
+          {
+            "id": "o2",
+            "label": "From C(5, 5) to D(3, 2)",
+            "feedback": "That's ⟨−2, −3⟩, the OPPOSITE direction. Equal needs ⟨2, 3⟩."
+          },
+          {
+            "id": "o3",
+            "label": "From C(2, 3) to D(0, 0)",
+            "feedback": "That's ⟨−2, −3⟩ (reversed). The equal vector is ⟨2, 3⟩: try C(5,5)→D(7,8)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "vec-displacement",
+        "form": "equalVector"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The zero vector.",
+      "conceptTag": "vec-displacement",
+      "explanationVariants": [
+        "From A to A the displacement is ⟨0, 0⟩ — the zero vector, with magnitude 0 and no defined direction.",
+        "No trip means the zero vector: ⟨0, 0⟩."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The displacement from a point to itself is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "⟨0, 0⟩, the zero vector",
+            "correct": true,
+            "feedback": "Right — no movement gives ⟨0, 0⟩, magnitude 0, direction undefined."
+          },
+          {
+            "id": "o2",
+            "label": "⟨1, 1⟩",
+            "feedback": "Zero movement means zero components: ⟨0, 0⟩."
+          },
+          {
+            "id": "o3",
+            "label": "undefined",
+            "feedback": "It's well-defined: the zero vector ⟨0, 0⟩ (its DIRECTION is what's undefined)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-displacement__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Displacement and length.",
+      "conceptTag": "vec-displacement",
+      "explanationVariants": [
+        "From M(3, −1) to N(0, 3): ⟨0 − 3, 3 − (−1)⟩ = ⟨−3, 4⟩, magnitude √(9 + 16) = 5.",
+        "Subtract tail from tip for ⟨−3, 4⟩; its length is 5."
+      ],
+      "hints": [
+        "Displacement = ⟨x_N − x_M, y_N − y_M⟩.",
+        "⟨0 − 3, 3 − (−1)⟩ = ⟨−3, 4⟩.",
+        "Magnitude = √(9 + 16)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the distance from M(3, −1) to N(0, 3)? (The magnitude of the displacement.)",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The displacement is ⟨−3, 4⟩; its magnitude is √(9 + 16) = 5, not 3 + 4."
+          },
+          {
+            "value": 1,
+            "feedback": "⟨−3, 4⟩ — don't add signed components. √((−3)² + 4²) = 5."
+          }
+        ],
+        "fallbackFeedback": "⟨−3, 4⟩ → √25 = 5."
+      },
+      "variant": {
+        "gen": "vec-displacement",
+        "form": "magnitude"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The trip, not the start.",
+      "takeaways": [
+        "Displacement A→B = ⟨x_B − x_A, y_B − y_A⟩ (tip minus tail).",
+        "Equal vectors share components regardless of location.",
+        "The zero vector ⟨0, 0⟩ has length 0 and undefined direction."
+      ],
+      "teaser": "Next chapter: adding and scaling vectors."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-displacement",
+      "concept": {
+        "id": "rem-vec0103-c",
+        "kind": "concept",
+        "body": "Displacement A→B = ⟨x_B − x_A, y_B − y_A⟩ (tip minus tail). Equal vectors have identical components regardless of where they start."
+      },
+      "check": {
+        "id": "rem-vec0103-k",
+        "kind": "check",
+        "body": "One displacement.",
+        "conceptTag": "vec-displacement",
+        "explanationVariants": [
+          "From A(2, 1) to B(5, 5): ⟨5 − 2, 5 − 1⟩ = ⟨3, 4⟩.",
+          "Tip minus tail gives ⟨3, 4⟩."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The displacement from A(2, 1) to B(5, 5) is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "⟨3, 4⟩",
+              "correct": true,
+              "feedback": "Right — ⟨5 − 2, 5 − 1⟩ = ⟨3, 4⟩."
+            },
+            {
+              "id": "o2",
+              "label": "⟨7, 6⟩",
+              "feedback": "That ADDS the coordinates. Displacement SUBTRACTS: ⟨3, 4⟩."
+            },
+            {
+              "id": "o3",
+              "label": "⟨−3, −4⟩",
+              "feedback": "That's B → A (reversed). From A to B: ⟨3, 4⟩."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

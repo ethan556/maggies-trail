@@ -1,0 +1,28 @@
+{
+  "tag": "S203Y",
+  "label": "refusal re-audit — pra-05-01 recovered via signChart, an engine never checked when it was refused",
+  "conversions": [
+    {
+      "course": "polynomial-rational-analysis",
+      "lesson": "pra-05-01",
+      "step": "i1",
+      "widget": {
+        "type": "signChart",
+        "prompt": "(x − 3)/(x + 1) has TWO kinds of cut: a zero, where the function genuinely reaches 0, and an excluded value, where it is undefined. Place both, then mark the sign on each interval.",
+        "roots": [{ "x": 3, "mult": 1 }],
+        "poles": [{ "x": -1, "mult": 1 }],
+        "leadingPositive": true,
+        "successFeedback": "Positive, negative, positive — and the two cuts are not the same kind of thing. x = 3 sits ON the axis: the numerator is zero there, so the function is genuinely 0. x = −1 is the dashed line: the denominator is zero, so the function is undefined and the sign flips ACROSS a value it never takes. Both cut the chart; only one is a solution.",
+        "crossFeedback": "A sign was missed across an odd-multiplicity cut. Both x = 3 and x = −1 have multiplicity 1, so the sign flips at each one.",
+        "bounceFeedback": "A sign was flipped where it should have held, or held where it should have flipped — check each cut's multiplicity before deciding whether the sign changes there."
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "polynomial-rational-analysis/pra-01-01, pra-01-03, pra-02-01, pra-02-02, pra-02-03, pra-03-02",
+      "title": "Rational root candidates, synthetic division, FTA zero-counting, conjugate pairs, building from mixed zeros, slant division",
+      "why": "RE-CONFIRMED in S203Y after pra-05-01 (originally refused in the SAME bulk group) turned out to be recoverable. Each of these six was re-read individually against signChart, the engine that rescued pra-05-01: listing divisors of a constant, running a synthetic-division tableau, counting zeros by the Fundamental Theorem, applying the Conjugate Root Theorem, computing a sum/product of complex roots, and polynomial long division. signChart models the SIGN of a factored expression across its cuts — it has no representation for a division tableau, a candidate list, or a multiplicity count as a computed answer. These six are genuinely symbolic procedures and the refusals stand, now on a checked basis rather than a bulk one."
+    }
+  ]
+}

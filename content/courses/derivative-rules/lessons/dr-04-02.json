@@ -1,0 +1,260 @@
+{
+ "id": "dr-04-02",
+ "slug": "chains-within-chains",
+ "title": "Chains Within Chains",
+ "courseId": "derivative-rules",
+ "chapterId": "ch4-the-chain-rule",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Nothing changes when the chain gets longer. Peel one layer at a time, from the outside in, and multiply everything you collect.\n\nFor √((2x + 1)³): the outside is a square root, then a cube, then a linear bracket. Three layers, three factors.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Peel, do not panic.",
+   "conceptTag": "dr-chain-nested",
+   "explanationVariants": [
+    "Layers: (·)^(1/2), then (·)³, then 2x + 1. So f′ = (1/2)((2x+1)³)^(−1/2) · 3(2x+1)² · 2.",
+    "Three layers, three factors, multiplied together. Each factor is the derivative of one layer with the layers inside it left intact."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "How many factors will the derivative of √((2x + 1)³) have?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Three — one for the root, one for the cube, one for the bracket.",
+      "correct": true,
+      "feedback": "Right. Every layer contributes exactly one factor, and the innermost is the one people drop."
+     },
+     {
+      "id": "o2",
+      "label": "Two — a chain rule only ever has two.",
+      "correct": false,
+      "feedback": "The chain rule has two factors PER APPLICATION, and here it is applied twice. Layers, not applications, is the count that matters."
+     },
+     {
+      "id": "o3",
+      "label": "One — you can simplify it away.",
+      "correct": false,
+      "feedback": "It does simplify to (2x+1)^(3/2), which is still a chain: outer power, inner bracket. You never escape the inside."
+     },
+     {
+      "id": "o4",
+      "label": "Four.",
+      "correct": false,
+      "feedback": "Count the layers: root, cube, linear. Three layers, three factors."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivative-rules",
+    "form": "derivative-rules__dr-chain-nested__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Combining rules without panic.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "A product whose factors both need a chain rule.",
+    "panels": [
+     {
+      "title": "Structure first",
+      "body": "For x²·(3x + 1)⁴, the OUTERMOST operation is a multiplication. So the product rule comes first, before anything else."
+     },
+     {
+      "title": "Then each piece",
+      "body": "Product rule: 2x·(3x+1)⁴ + x²·[d/dx (3x+1)⁴]. That bracket is a separate, smaller problem — and it needs the chain rule: 4(3x+1)³·3 = 12(3x+1)³."
+     },
+     {
+      "title": "Assemble",
+      "body": "f′ = 2x(3x+1)⁴ + 12x²(3x+1)³. Outermost rule first, inner rules afterwards, one at a time. Never two rules in one line."
+     }
+    ],
+    "continueFeedback": "Keep going — the discipline is the outside-in order.",
+    "successFeedback": "Outermost operation decides the first rule. Everything inside becomes a smaller problem you solve next."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Chain inside a product.",
+   "conceptTag": "dr-chain-nested",
+   "explanationVariants": [
+    "u = x, u′ = 1; v = (2x+1)³, v′ = 3(2x+1)²·2 = 6(2x+1)². So f′ = (2x+1)³ + x·6(2x+1)². At x = 0: 1 + 0 = 1.",
+    "At x = 0 the bracket is 1, so both powers of it are 1 — which is why the arithmetic collapses so pleasantly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x(2x + 1)³. Find f′(0).",
+    "answer": 1,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "The second term vanishes at x = 0 (because of the factor x), but the FIRST term does not: (2·0+1)³ = 1."
+     },
+     {
+      "value": 6,
+      "feedback": "That is the inner factor 6(2x+1)² at x = 0 — but it is multiplied by x, which is 0. The surviving term is (2x+1)³ = 1."
+     },
+     {
+      "value": 3,
+      "feedback": "Check the product rule: 1·(2x+1)³ + x·6(2x+1)². At x = 0 that is 1 + 0."
+     }
+    ],
+    "fallbackFeedback": "(2x+1)³ + 6x(2x+1)² → at x = 0: 1 + 0 = 1."
+   },
+   "variant": {
+    "gen": "g13-derivative-rules",
+    "form": "derivative-rules__dr-chain-nested__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Some functions refuse to be written as y = f(x) at all. x² + y² = 25 defines a whole circle, and no single formula gives y.\n\n**Differentiate the equation anyway.** Treat y as a function of x, and every time you differentiate a y, the chain rule makes you pay a dy/dx.",
+   "figure": "dr-implicit-circle"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The dy/dx that appears from nowhere.",
+   "conceptTag": "dr-implicit",
+   "explanationVariants": [
+    "d/dx[y²] = 2y·(dy/dx), because y is a function of x and the chain rule demands the inner derivative.",
+    "The dy/dx is not an extra decoration — it is the inner derivative the chain rule always requires."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Differentiating y² with respect to x gives what?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "2y·(dy/dx)",
+      "correct": true,
+      "feedback": "Right — y is a function of x, so the chain rule charges you its derivative. That is the whole trick of implicit differentiation."
+     },
+     {
+      "id": "o2",
+      "label": "2y",
+      "correct": false,
+      "feedback": "That would be right if you were differentiating with respect to y. With respect to x, the chain rule adds a factor of dy/dx."
+     },
+     {
+      "id": "o3",
+      "label": "2x",
+      "correct": false,
+      "feedback": "There is no x in y². The variable being squared is y."
+     },
+     {
+      "id": "o4",
+      "label": "0, because y is not x.",
+      "correct": false,
+      "feedback": "y is not a constant — it changes as x changes, which is exactly why it has a derivative dy/dx."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivative-rules",
+    "form": "derivative-rules__dr-implicit__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The slope on a circle.",
+   "conceptTag": "dr-implicit",
+   "hints": [
+    "Differentiate x² + y² = 25 term by term with respect to x, remembering the chain rule on y².",
+    "You get 2x + 2y·(dy/dx) = 0. Now solve for dy/dx.",
+    "dy/dx = −x/y. Substitute the point (3, 4) and give a decimal."
+   ],
+   "explanationVariants": [
+    "2x + 2y·y′ = 0 → y′ = −x/y = −3/4 = −0.75.",
+    "And that is exactly perpendicular to the radius, whose slope is 4/3 — a fact the geometry course asserted and calculus has now derived."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "x² + y² = 25. Find dy/dx at the point (3, 4), as a decimal.",
+    "answer": -0.75,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 0.75,
+      "feedback": "The sign is wrong. 2x + 2y·y′ = 0 gives y′ = −x/y, and at (3, 4) that is −3/4: the circle is FALLING there, in the upper right quadrant."
+     },
+     {
+      "value": 1.333,
+      "feedback": "That is 4/3 — the slope of the RADIUS to that point. The tangent is perpendicular to it, so its slope is the negative reciprocal, −3/4."
+     },
+     {
+      "value": -1.333,
+      "feedback": "Close, but inverted: dy/dx = −x/y = −3/4, not −y/x."
+     }
+    ],
+    "fallbackFeedback": "2x + 2y·y′ = 0 → y′ = −x/y = −3/4 = −0.75."
+   },
+   "variant": {
+    "gen": "g13-derivative-rules",
+    "form": "derivative-rules__dr-implicit__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Peel the layers; pay for every y.",
+   "takeaways": [
+    "Longer chains change nothing: one factor per layer, multiplied together, outside in.",
+    "When rules combine, the OUTERMOST operation decides which rule comes first.",
+    "Implicit differentiation is just the chain rule: every y you differentiate costs you a dy/dx."
+   ],
+   "teaser": "Next chapter: the derivatives of the function library — and the one curve that is its own derivative."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "dr-implicit",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Differentiate both sides with respect to x, exactly as normal — but every time a y appears, remember it is secretly a function of x, so the chain rule attaches a dy/dx. Then collect the dy/dx terms and solve for it like any other unknown.",
+    "figure": "dr-implicit-circle"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Pay for the y.",
+    "conceptTag": "dr-implicit",
+    "explanationVariants": [
+     "d/dx[y³] = 3y²·(dy/dx). The 3y² is the outside; the dy/dx is the inside.",
+     "Any power of y picks up a dy/dx when differentiated with respect to x."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Differentiate y³ with respect to x.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "3y²·(dy/dx)",
+       "correct": true,
+       "feedback": "Right — outside gives 3y², and the chain rule charges you the inner derivative dy/dx."
+      },
+      {
+       "id": "o2",
+       "label": "3y²",
+       "correct": false,
+       "feedback": "That is the derivative with respect to Y. With respect to x, the chain rule adds dy/dx."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,358 @@
+{
+ "id": "mb-01-02",
+ "slug": "comparison-stories",
+ "title": "Comparison Stories",
+ "courseId": "multiply-bigger",
+ "chapterId": "ch1-times-as-many",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every times-as-many sentence hides an equation. 'Maya has 4 times as many as Leo' is **Maya = 4 × Leo** — the bigger pile equals the copy count times the smaller pile. Write the equation first, and the story solves itself.",
+   "figure": "mb-times-compare"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build the equation.",
+   "conceptTag": "comparison-equations",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Build the equation for: 'The oak (40 ft) is 5 times as tall as the sapling (s).'",
+    "tokens": [
+     {
+      "id": "t40",
+      "label": "40"
+     },
+     {
+      "id": "teq",
+      "label": "="
+     },
+     {
+      "id": "t5",
+      "label": "5"
+     },
+     {
+      "id": "tx",
+      "label": "×"
+     },
+     {
+      "id": "ts",
+      "label": "s"
+     },
+     {
+      "id": "tp",
+      "label": "+"
+     }
+    ],
+    "correct": [
+     "t40",
+     "teq",
+     "t5",
+     "tx",
+     "ts"
+    ],
+    "acceptAlso": [
+     [
+      "t40",
+      "teq",
+      "ts",
+      "tx",
+      "t5"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t40",
+       "teq",
+       "t5",
+       "tp",
+       "ts"
+      ],
+      "feedback": "40 = 5 + s says the oak is 5 feet MORE — a different story. 'Times as tall' copies: 40 = 5 × s."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Bigger = copy-count × smaller: the oak's 40 equals 5 copies of the sapling.",
+    "successFeedback": "40 = 5 × s — five sapling-copies stack to the oak. (So s = 40 ÷ 5 = 8 ft.)"
+   },
+   "predict": {
+    "prompt": "'The oak (40 ft) is 5 times as tall as the sapling s.' Which equation matches?",
+    "options": [
+     {
+      "id": "oak",
+      "label": "40 = 5 × s — the oak equals five saplings"
+     },
+     {
+      "id": "sap",
+      "label": "s = 5 × 40 — the sapling gets the 5"
+     },
+     {
+      "id": "even",
+      "label": "40 = s — they're really equal"
+     }
+    ],
+    "outcomeId": "oak",
+    "reveal": "The oak is the BIG one, so it weighs in as five saplings: 40 = 5 × s, giving s = 8. Writing s = 5 × 40 grows the sapling to 200 ft — the classic reversal in comparison stories."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Solve the sapling.",
+   "conceptTag": "comparison-equations",
+   "explanationVariants": [
+    "40 = 5 × s means s is 40 shared into 5 copies: 40 ÷ 5 = 8 feet.",
+    "Fact family: 5 × 8 = 40, so the sapling is 8 ft."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The oak is 40 ft — 5 times as tall as the sapling. How tall is the sapling?",
+    "answer": 8,
+    "tolerance": 0,
+    "unit": "ft",
+    "commonErrors": [
+     {
+      "value": 200,
+      "feedback": "200 multiplied 40 × 5 — but the oak's 40 already IS the five-copy height. One copy (the sapling) is 40 ÷ 5."
+     },
+     {
+      "value": 35,
+      "feedback": "35 subtracted 5 — unwinding '5 feet TALLER'. '5 times as tall' unwinds by division: 40 ÷ 5 = 8."
+     }
+    ],
+    "fallbackFeedback": "40 is five sapling-copies: 40 ÷ 5."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbComparisonEquationsNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The unknown can hide in any seat. **Big unknown:** 'Nia has 3 times Leo's 6' → n = 3 × 6. **Small unknown:** 'Nia's 18 is 3 times Leo' → 18 = 3 × L. **Copy-count unknown:** 'Nia's 18 is how many times Leo's 6?' → 18 = ? × 6. Find the seat, then multiply or divide.",
+   "figure": "mb-times-compare"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find the copy count.",
+   "conceptTag": "comparison-equations",
+   "explanationVariants": [
+    "The question asks how many 7-copies stack to 28: 28 ÷ 7 = 4 times as many.",
+    "Equation with the copy count unknown: 28 = ? × 7, and ? = 28 ÷ 7 = 4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Dev read 28 pages; Ana read 7. Dev read how many TIMES as many pages as Ana?",
+    "answer": 4,
+    "tolerance": 0,
+    "unit": "times",
+    "commonErrors": [
+     {
+      "value": 21,
+      "feedback": "21 found the GAP (28 − 7) — that answers 'how many MORE'. 'How many TIMES' counts copies: 28 ÷ 7 = 4."
+     },
+     {
+      "value": 196,
+      "feedback": "196 multiplied 28 × 7 — but the copy count is the missing factor: 28 = ? × 7, so divide."
+     }
+    ],
+    "fallbackFeedback": "How many 7s stack to 28? Divide: 28 ÷ 7."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbComparisonEquationsNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Seat the unknown.",
+   "conceptTag": "comparison-equations",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "For each story, which seat is the unknown in?",
+    "buckets": [
+     {
+      "id": "big",
+      "label": "Big pile unknown (multiply)",
+      "icon": "❓×"
+     },
+     {
+      "id": "small",
+      "label": "Small pile unknown (divide)",
+      "icon": "÷❓"
+     },
+     {
+      "id": "count",
+      "label": "Copy count unknown (divide)",
+      "icon": "?×"
+     }
+    ],
+    "items": [
+     {
+      "id": "st1",
+      "label": "\"Mia has 6 times as many as Jo's 3 — how many does Mia have?\"",
+      "bucketId": "big",
+      "feedback": "Mia (the big pile) is unknown: m = 6 × 3, multiply."
+     },
+     {
+      "id": "st2",
+      "label": "\"Kai's 30 is 6 times Lena's pile — how many does Lena have?\"",
+      "bucketId": "small",
+      "feedback": "Lena (the small pile) is unknown: 30 = 6 × L, so divide 30 ÷ 6."
+     },
+     {
+      "id": "st3",
+      "label": "\"Tom's 30 is how many times Raj's 5?\"",
+      "bucketId": "count",
+      "feedback": "The copy count is unknown: 30 = ? × 5, so divide 30 ÷ 5."
+     },
+     {
+      "id": "st4",
+      "label": "\"A rope is 4 times as long as a 9-cm ribbon — how long is the rope?\"",
+      "bucketId": "big",
+      "feedback": "The rope (big) is unknown: r = 4 × 9, multiply."
+     }
+    ],
+    "missFeedback": "Ask which quantity the question mark sits on: the big pile → multiply; the small pile or the copy count → divide.",
+    "successFeedback": "Two multiply-seats (big pile unknown) and two divide-seats — the equation tells you the operation."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Pick the right equation.",
+   "conceptTag": "comparison-equations",
+   "explanationVariants": [
+    "The mural's 27 IS the big pile, equal to 3 copies of the sketch: 27 = 3 × s. Solving needs division, 27 ÷ 3 = 9.",
+    "Big = count × small always: 27 (big) = 3 × sketch. The sketch seat is unknown → divide."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "'A 27-ft mural is 3 times as long as the sketch.' Which equation matches?",
+    "options": [
+     {
+      "id": "a",
+      "label": "27 = 3 × s",
+      "correct": true,
+      "feedback": "Big = copies × small: the 27-ft mural equals 3 sketch-copies. So s = 27 ÷ 3 = 9 ft."
+     },
+     {
+      "id": "b",
+      "label": "s = 3 × 27",
+      "feedback": "That makes the SKETCH three copies of the mural — backwards! The mural is the big one: 27 = 3 × s."
+     },
+     {
+      "id": "c",
+      "label": "27 = s + 3",
+      "feedback": "Plus 3 is the '3 feet LONGER' story. '3 times as long' copies the sketch: 27 = 3 × s."
+     },
+     {
+      "id": "d",
+      "label": "27 = 3 − s",
+      "feedback": "Subtraction shrinks — no comparison story lives there. Times-as-long means copies: 27 = 3 × s."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbComparisonEquationsMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The bake-sale ledger.",
+   "conceptTag": "comparison-equations",
+   "hints": [
+    "Write the equation first: cookies = 6 × brownies.",
+    "The cookies count (42) is the BIG pile — the brownie seat is unknown.",
+    "Big = count × small, so divide the big pile by the count."
+   ],
+   "explanationVariants": [
+    "42 = 6 × b puts brownies in the divide seat: 42 ÷ 6 = 7 brownies.",
+    "Check by rebuilding: 6 × 7 = 42 cookies ✓ — the equation balances."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A bake sale sold 42 cookies — 6 times as many as the brownies it sold. How many brownies?",
+    "answer": 7,
+    "tolerance": 0,
+    "unit": "brownies",
+    "commonErrors": [
+     {
+      "value": 252,
+      "feedback": "252 multiplied 42 × 6 — but 42 already IS the six-copy pile. The brownies are one copy: 42 ÷ 6."
+     },
+     {
+      "value": 36,
+      "feedback": "36 subtracted 6 — that unwinds '6 more cookies'. '6 times as many' unwinds by division: 42 ÷ 6 = 7."
+     }
+    ],
+    "fallbackFeedback": "42 = 6 × brownies → divide 42 by 6."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbComparisonEquationsNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Stories become equations.",
+   "takeaways": [
+    "Big pile = copy count × small pile — write it before solving.",
+    "Unknown big → multiply; unknown small or unknown count → divide.",
+    "Rebuild to check: count × small should equal the big pile."
+   ],
+   "teaser": "next: the trap that catches everyone — 'more' versus 'times.'"
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "comparison-equations",
+   "concept": {
+    "id": "rem-ce-c",
+    "kind": "concept",
+    "body": "Quick rewind. Every comparison equation has three seats: **big = count × small.** Read the story, fill the two seats you know, and the empty seat tells you the move — multiply to reach the big seat, divide to reach either other seat."
+   },
+   "check": {
+    "id": "rem-ce-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "comparison-equations",
+    "explanationVariants": [
+     "Big unknown: b = 2 × 8 = 16.",
+     "Two copies of 8: 16."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "'Bo has 2 times as many as Cy's 8.' Bo has…",
+     "options": [
+      {
+       "id": "a",
+       "label": "16 — big = 2 × 8",
+       "correct": true,
+       "feedback": "The big seat is unknown: multiply, 2 × 8 = 16."
+      },
+      {
+       "id": "b",
+       "label": "4 — divide 8 by 2",
+       "feedback": "Dividing finds a SMALLER pile — but Bo is the BIG one: 2 × 8 = 16."
+      },
+      {
+       "id": "c",
+       "label": "10 — add 2",
+       "feedback": "Adding answers '2 more than'. '2 times' copies the pile: 2 × 8 = 16."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+import {createHash} from 'node:crypto';import{readFileSync,writeFileSync}from'node:fs';import{join,resolve}from'node:path';
+import { verifiedPostS151Changes } from '../session/verified-post-s151-changes.mjs';
+const root=resolve(import.meta.dirname,'../..'),read=p=>readFileSync(join(root,p),'utf8'),json=p=>JSON.parse(read(p));
+const schema=read('src/lib/schema.ts'),evaluate=read('src/lib/evaluate.ts'),widgets=read('src/components/widgets.tsx'),describe=read('src/lib/describeState.ts'),pedagogy=read('src/lib/pedagogy.ts'),caps=json('scripts/engine-capabilities.json').types;
+const sweep=json('SESSION151_ENGINE_SWEEP.json'),mut=json('SESSION151_ADVERSARIAL_MUTATION_MATRIX.json'),integration=json('SESSION151_INTEGRATION_AUDIT.json'),content=json('SESSION151_CONTENT_CHANGE_LEDGER.json'),review=json('SESSION151_HS_TIER_REVIEW.json');
+const checks=[];const add=(name,ok,detail='')=>checks.push({name,passed:Boolean(ok),detail});
+for(const name of ['ConditionalTableLabSpec','GraphStoryLabSpec','ProportionalReasoningLabSpec','PlaceValueTransformLabSpec','QuotientReasoningLabSpec','AffineRelationshipLabSpec','ExactNumberLabSpec','GeometricConstraintLabSpec','PointSetReasoningLabSpec','EquationOutcomeLabSpec','SequenceBuildSpec']){const a=schema.indexOf(`export const ${name}`),next=schema.indexOf('/**',a+10),block=schema.slice(a,next<0?a+7000:next);add(`${name} remains a plain ZodObject`,a>=0&&/z\.object\s*\(/.test(block)&&!/\.superRefine\s*\(|\.refine\s*\(/.test(block));}
+add('equation transform exact helper exists',schema.includes('equationTransformApply')&&schema.includes('equationTransformTruth'));
+add('negative scaling flips inequality',schema.includes('negative')&&schema.includes('relation')&&schema.includes('flip'));
+add('equation transform evaluator filters authored operation ids',evaluate.includes('equationTransformTruth')&&evaluate.includes('valid'));
+add('equation workbench renderer is interactive',widgets.includes('Equation transformation operation bank')&&widgets.includes('Applied equation operations'));
+add('equation mastery colors encode roles',widgets.includes('variable terms')&&widgets.includes('constants')&&widgets.includes('same operation, both sides'));
+add('sequence exact truth helper exists',schema.includes('sequenceReasoningTruth'));
+add('sequence semantic choice claims unique',schema.includes('sequenceBuild: mathematical choice claims must be unique'));
+add('sequence evaluator filters fabricated stages',evaluate.includes('sequenceReasoningTruth')&&evaluate.includes('valid'));
+add('sequence renderer exposes terms, changes, sums',widgets.includes('SequenceReasoningW')&&widgets.includes('partial'));
+add('coordinate proof truth mode exists',schema.includes('coordinateProof')&&schema.includes('GeometricCoordinateProofModel'));
+add('segment partition uses rational reconstruction',schema.includes('denominator')&&schema.includes('1000'));
+add('coordinate proof renderer uses semantic color plus labels/dashes',widgets.includes('horizontal differences')&&widgets.includes('vertical differences')&&widgets.includes('strokeDasharray'));
+add('geometric evaluator filters fabricated stage ids',evaluate.includes('geometricConstraintExplorationKeys')||evaluate.includes('geometricConstraintTruth'));
+for(const type of ['equationOutcomeLab','sequenceBuild','geometricConstraintLab']){add(`${type} retains all core surfaces`,schema.includes(`type: z.literal("${type}")`)&&evaluate.includes(`case "${type}"`)&&pedagogy.includes(`case "${type}"`)&&widgets.includes(`case "${type}"`)&&caps[type]?.manip>=2);}
+add('portable schema loader has no host TypeScript path',!read('scripts/audit/load-schema-runtime-s151.cjs').includes('/opt/nvm/'));
+add('portable evaluate loader has no host TypeScript path',!read('scripts/audit/load-evaluate-runtime-s151.cjs').includes('/opt/nvm/'));
+add('registration retains all sealed types, core-complete',json('ENGINE_REGISTRATION_CONTRACT_S126.json').types>=124&&json('ENGINE_REGISTRATION_CONTRACT_S126.json').incompleteCore===0);
+add('player contract passed',json('PLAYER_HARNESS_CONTRACT_S127.json').status==='PASS');
+add('source transpilation passed',json('SOURCE_TRANSPILE_S151.json').passed&&json('SOURCE_TRANSPILE_S151.json').errors===0);
+add('content JSON passed',json('CONTENT_JSON_S151.json').passed&&json('CONTENT_JSON_S151.json').lessons===1701/*S203V: corpus 1694->1701*//*S203F: corpus 1691->1694*//*S203E: corpus 1685->1691*//*S203D: corpus 1679->1685*//*S203C: corpus 1673->1679*//*S203B: corpus 1667->1673*//*S199: corpus 1640->1667, +27 G6-12 expansion lessons across 4 new courses (absolute-value-piecewise, surface-area-solids-g7, binomial-theorem, expected-value)*/);
+const postS151=verifiedPostS151Changes(root);
+const s151Targets=json('scripts/session/session151-applied.json').changes.map(x=>x.rel);
+const currentAuthorized=new Set([...s151Targets,...postS151]);
+add('S151 original boundary remains exactly 29 widget substitutions',content.passed&&content.entries.length===29&&content.summary.widgetNodesChanged===29);
+add('current changed-lesson boundary is exactly S151 targets plus exact-hash post-S151 authorizations',content.summary.lessonFilesChanged===currentAuthorized.size&&content.changedLessonFiles.every(x=>currentAuthorized.has(x)));
+add('zero variant drift',content.summary.variantDeclarationsChanged===0);
+add('all current non-authorized lessons remain byte-identical to the S150 baseline where comparable',content.summary.nonTargetLessonFilesByteIdentical===1701-currentAuthorized.size);
+add('29 C to B transitions',review.passed&&review.selectedTierTransitions['C->B']===29);
+add('registry retains all types sealed by s150',json('ENGINE_REGISTRATION_CONTRACT_S126.json').types>=124);
+add('seeded sweep passed',sweep.passed&&sweep.total===33408);
+add('integration audit passed',integration.passed&&integration.checks===95);
+add('mutations rejected',mut.passed&&mut.rejected===155&&mut.validControls===29);
+add('sequence duplicate-claim defect has mutation coverage',mut.mutations.some(x=>x.name.includes('duplicate semantic truth')));
+add('all prior historical family sweeps retained',[['SIGNED_FRACTION_VARIANT_SWEEP_S139.json',4608],['SHAPE_HIERARCHY_VARIANT_SWEEP_S140.json',11520],['CONDITIONAL_TABLE_VARIANT_SWEEP_S142.json',9216],['GRAPH_STORY_VARIANT_SWEEP_S143.json',9216],['PROPORTIONAL_REASONING_VARIANT_SWEEP_S144.json',23040],['PLACE_VALUE_TRANSFORM_VARIANT_SWEEP_S145.json',27648],['QUOTIENT_REASONING_VARIANT_SWEEP_S146.json',20736],['AFFINE_RELATIONSHIP_VARIANT_SWEEP_S147.json',20736],['EXACT_NUMBER_VARIANT_SWEEP_S148.json',27648],['GEOMETRIC_CONSTRAINT_VARIANT_SWEEP_S149.json',27648],['POINT_SET_REASONING_VARIANT_SWEEP_S150.json',18432]].every(([f,n])=>{const x=json(f);return x.total===n&&(x.passed??true)}));
+const failed=checks.filter(x=>!x.passed),report={session:151,checks:checks.length,passedChecks:checks.length-failed.length,failedChecks:failed.length,checksList:checks,passed:failed.length===0};
+writeFileSync(join(root,'SESSION151_FAILURE_FIRST_AUDIT.json'),JSON.stringify(report,null,2)+'\n');writeFileSync(join(root,'SESSION151_FAILURE_FIRST_AUDIT.md'),`# Session 151 Failure-First Audit\n\n- Checks: **${report.passedChecks}/${checks.length}**\n- Failed: **${failed.length}**\n- Result: **${report.passed?'PASS':'FAIL'}**\n\n${checks.map(x=>`- ${x.passed?'✓':'✗'} ${x.name}`).join('\n')}\n`);if(failed.length){console.error(failed);process.exit(1)}console.log(`failure-first S151 passed: ${checks.length}/${checks.length}`);

@@ -1,0 +1,261 @@
+{
+  "id": "lc-02-02",
+  "slug": "the-zero-over-zero-form",
+  "title": "The 0/0 Form: Factor and Cancel",
+  "courseId": "limits-continuity",
+  "chapterId": "ch2-limit-laws",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When substitution gives **0/0**, that's the **indeterminate form** — it doesn't mean the limit is 0 or undefined; it means 'more work needed.' The fix for rational functions: **factor** the numerator and denominator, **cancel** the shared factor causing the 0/0, then substitute into what remains.",
+      "figure": "lc-indeterminate"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The 0/0 form, magnified.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "removable",
+        "a": 2,
+        "leftValue": 4,
+        "rightValue": 4,
+        "fAtA": null,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "f(x) = (x² − 4)/(x − 2) gives 0/0 at x = 2. Magnify there and decide whether the limit exists.",
+        "successFeedback": "Cancelling (x − 2) leaves x + 2, which is 4 at x = 2 — and the graph agrees: both sides go to 4 while the hole stays open. Cancelling is not cheating, because a limit never asks about x = 2 itself, only about x NEAR 2.",
+        "moreZoomFeedback": "Magnify further. 0/0 is not an answer, it is a signal that the point itself is telling you nothing — so go and look at its neighbourhood.",
+        "wrongVerdictFeedback": "0/0 means f(2) is undefined; it does not mean the limit fails. Watch the readouts: both sides settle on 4 and stay there."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 2. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          },
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          }
+        ],
+        "outcomeId": "agree",
+        "reveal": "Both sides close in on 4 — even though the point itself is missing. A limit only asks where the sides are HEADING, so it exists here despite the hole."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Zoom toward the target input and compare visible local behavior with the symbolic limit claim.",
+        "invariants": [
+          "local-behavior-survives-zoom",
+          "limit-depends-on-approach"
+        ],
+        "misconceptions": [
+          "graph-pixel-is-proof",
+          "function-value-equals-limit"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "limits-continuity-graphZoom",
+        "delayed": false
+      },
+      "conceptTag": "lc-factor"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Factor and cancel.",
+      "conceptTag": "lc-factor",
+      "explanationVariants": [
+        "x² − 5x + 6 = (x − 2)(x − 3), so (x² − 5x + 6)/(x − 2) = x − 3 for x ≠ 2, giving lim = 2 − 3 = −1.",
+        "Cancel (x − 2): left with x − 3 → −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find lim(x→2) (x² − 5x + 6)/(x − 2). (Factor: (x − 2)(x − 3).)",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0/0 is indeterminate, not 0. Cancel to x − 3 → −1."
+          },
+          {
+            "value": 1,
+            "feedback": "After cancelling: x − 3 = 2 − 3 = −1, not 1."
+          }
+        ],
+        "fallbackFeedback": "(x − 2)(x − 3)/(x − 2) = x − 3 → −1."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-factor__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why cancelling is legal: for a limit, x approaches 2 but never EQUALS 2, so x − 2 ≠ 0 the whole time and dividing it out is valid. The cancelled expression matches the original everywhere near 2 — exactly where the limit lives. The removed factor was just the hole.",
+      "figure": "lc-cancel-legal"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another factor-cancel.",
+      "conceptTag": "lc-factor",
+      "explanationVariants": [
+        "x² + x − 6 = (x + 3)(x − 2), so the ratio over (x − 2) is x + 3 → 2 + 3 = 5.",
+        "Cancel (x − 2): x + 3 → 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find lim(x→2) (x² + x − 6)/(x − 2). (Factor: (x + 3)(x − 2).)",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0/0 is indeterminate. Cancel to x + 3 → 5."
+          },
+          {
+            "value": 6,
+            "feedback": "x + 3 at x = 2 is 5, not 6."
+          }
+        ],
+        "fallbackFeedback": "(x + 3)(x − 2)/(x − 2) = x + 3 → 5."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-factor__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Difference of squares.",
+      "conceptTag": "lc-factor",
+      "explanationVariants": [
+        "x² − 4 = (x − 2)(x + 2), so (x² − 4)/(x − 2) = x + 2 → 4.",
+        "Cancel (x − 2): x + 2 → 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find lim(x→2) (x² − 4)/(x − 2).",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0/0 → factor. (x−2)(x+2)/(x−2) = x + 2 → 4."
+          },
+          {
+            "value": 2,
+            "feedback": "After cancelling, x + 2 = 4, not 2."
+          }
+        ],
+        "fallbackFeedback": "(x − 2)(x + 2)/(x − 2) = x + 2 → 4."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-factor__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Factor a cubic-ish form.",
+      "conceptTag": "lc-factor",
+      "explanationVariants": [
+        "x² − 7x + 12 = (x − 3)(x − 4), so over (x − 3) it's x − 4 → 3 − 4 = −1.",
+        "Cancel (x − 3): x − 4 → −1."
+      ],
+      "hints": [
+        "Factor x² − 7x + 12 into two binomials.",
+        "(x − 3)(x − 4).",
+        "Cancel (x − 3), then substitute x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find lim(x→3) (x² − 7x + 12)/(x − 3).",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0/0 is indeterminate. Cancel to x − 4 → −1."
+          },
+          {
+            "value": 1,
+            "feedback": "x − 4 at x = 3 is −1, not 1."
+          }
+        ],
+        "fallbackFeedback": "(x − 3)(x − 4)/(x − 3) = x − 4 → −1."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-factor__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "0/0 means keep going.",
+      "takeaways": [
+        "0/0 is indeterminate — a signal to factor, not an answer.",
+        "Factor numerator and denominator, cancel the shared factor, then substitute.",
+        "Cancelling is valid because x nears a without equalling it."
+      ],
+      "teaser": "Next: resolving 0/0 when a square root blocks factoring."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lc-factor",
+      "concept": {
+        "id": "rem-lc0202-c",
+        "kind": "concept",
+        "body": "0/0 is indeterminate. For rationals, factor top and bottom, cancel the shared factor (valid since x→a but x≠a), then substitute into what's left."
+      },
+      "check": {
+        "id": "rem-lc0202-k",
+        "kind": "check",
+        "body": "One factor-cancel.",
+        "conceptTag": "lc-factor",
+        "explanationVariants": [
+          "x² − 1 = (x − 1)(x + 1), so over (x − 1) it's x + 1 → 2.",
+          "Cancel (x − 1): x + 1 → 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find lim(x→1) (x² − 1)/(x − 1).",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "Substituting gives 0/0, which is undefined — not zero. Factor first: (x−1)(x+1)/(x−1) = x + 1 → 2."
+            },
+            {
+              "value": 1,
+              "feedback": "x + 1 at x = 1 is 2, not 1."
+            }
+          ],
+          "fallbackFeedback": "(x − 1)(x + 1)/(x − 1) = x + 1 → 2."
+        }
+      }
+    }
+  ]
+}

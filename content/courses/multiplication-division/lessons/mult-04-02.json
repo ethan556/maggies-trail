@@ -1,0 +1,371 @@
+{
+ "id": "mult-04-02",
+ "slug": "whats-unknown",
+ "title": "What's Unknown: Group Size or Group Count?",
+ "courseId": "multiplication-division",
+ "chapterId": "ch4-word-problems",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every equal-groups story has three slots: **groups × size = total**. Any one of the three can be the mystery. Before touching the numbers, point at the empty slot: is the story missing the total, the size of each group, or how many groups?",
+   "figure": "mult3-missing-factor"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Same numbers, three different mysteries.",
+   "conceptTag": "unknown-position",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each story to the slot it leaves empty.",
+    "left": [
+     {
+      "id": "l1",
+      "label": "3 boxes, 5 pens in each. How many pens?"
+     },
+     {
+      "id": "l2",
+      "label": "15 pens split evenly into 3 boxes. How many in each?"
+     },
+     {
+      "id": "l3",
+      "label": "15 pens, packed 5 to a box. How many boxes?"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "The group size is unknown"
+     },
+     {
+      "id": "r2",
+      "label": "The group count is unknown"
+     },
+     {
+      "id": "r3",
+      "label": "The total is unknown"
+     }
+    ],
+    "pairs": {
+     "l1": "r3",
+     "l2": "r1",
+     "l3": "r2"
+    },
+    "pairErrors": [
+     {
+      "left": "l2",
+      "right": "r2",
+      "feedback": "\"How many in each?\" asks about the size INSIDE one box — the 3 boxes are already counted. The group count isn't the mystery here."
+     }
+    ],
+    "missFeedback": "Read each question's last line: \"how many pens?\" wants the total, \"how many in each?\" wants the size, \"how many boxes?\" wants the count.",
+    "successFeedback": "Three stories, one fact family, three different empty slots."
+   },
+   "predict": {
+    "prompt": "'15 pens split evenly into 3 boxes' — which number is the story missing?",
+    "options": [
+     {
+      "id": "size",
+      "label": "The size of each group"
+     },
+     {
+      "id": "count",
+      "label": "The number of groups"
+     },
+     {
+      "id": "total",
+      "label": "The total"
+     }
+    ],
+    "outcomeId": "size",
+    "reveal": "The total (15) and the group count (3 boxes) are given; how many pens land in EACH box is the hole. Division stories always leave exactly one slot empty — naming the slot is what picks the equation."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Point at the empty slot before computing anything.",
+   "conceptTag": "unknown-position",
+   "explanationVariants": [
+    "The total (20) and the group size (5 per plate) are both given — the missing slot is how many plates: the group count.",
+    "Fill the frame: ___ plates × 5 cupcakes = 20 cupcakes. The blank sits in the groups slot."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "20 cupcakes are placed 5 to a plate. Which slot is the unknown?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The group count — how many plates",
+      "correct": true,
+      "feedback": "Total (20) ✓ given, size (5 per plate) ✓ given. The plates are the blank: 20 ÷ 5 = 4 of them."
+     },
+     {
+      "id": "b",
+      "label": "The group size",
+      "feedback": "The size is right there — 5 to a plate. The story never says how many PLATES get used."
+     },
+     {
+      "id": "c",
+      "label": "The total",
+      "feedback": "The total leads the story: 20 cupcakes. What's never stated is the number of plates."
+     },
+     {
+      "id": "d",
+      "label": "Nothing — all three are given",
+      "feedback": "Count the givens: 20 (total), 5 (size)… and the plates? The story stays silent — that's your mystery."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "unknown-position"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The empty slot picks the operation. **Missing total → multiply** the groups up. **Missing size or count → divide**, because the total is known and gets split. One frame — groups × size = total — sorts every one of these stories.",
+   "figure": "mult3-which-op"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The blank sits in the groups slot this time.",
+   "conceptTag": "unknown-position",
+   "explanationVariants": [
+    "___ × 4 = 32: the total is known, so divide it by the size — 32 ÷ 4 = 8 bags.",
+    "Count 4s up to 32: 4, 8, 12, 16, 20, 24, 28, 32 — eight groups."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A mystery number of bags each hold 4 rolls. There are 32 rolls in all. How many bags?",
+    "answer": 8,
+    "tolerance": 0,
+    "unit": "bags",
+    "commonErrors": [
+     {
+      "value": 28,
+      "feedback": "28 takes one bag's worth (4) off the total once. The blank counts how many WHOLE 4s live inside 32."
+     },
+     {
+      "value": 36,
+      "feedback": "36 adds 32 + 4, growing the pile. The total is already known — a missing group count means divide."
+     },
+     {
+      "value": 128,
+      "feedback": "128 multiplies 32 × 4 — but the total isn't missing, the bags are. Multiply only when the TOTAL is the blank."
+     }
+    ],
+    "fallbackFeedback": "Fill the frame: ___ bags × 4 rolls = 32 rolls. Split the total by the size."
+   },
+   "variant": {
+    "gen": "unknown-position",
+    "form": "missingCount"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Build the division that hunts a missing **size**.",
+   "conceptTag": "unknown-position",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "6 tables seat 24 kids in all, the same number at each table. Build the division that finds EACH table's kids.",
+    "tokens": [
+     {
+      "id": "t24",
+      "label": "24"
+     },
+     {
+      "id": "td",
+      "label": "÷"
+     },
+     {
+      "id": "t6",
+      "label": "6"
+     },
+     {
+      "id": "t4",
+      "label": "4"
+     },
+     {
+      "id": "tx",
+      "label": "×"
+     }
+    ],
+    "correct": [
+     "t24",
+     "td",
+     "t6"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t6",
+       "td",
+       "t24"
+      ],
+      "feedback": "Division starts from the known total — 24 kids get split across the 6 tables, so 24 leads."
+     },
+     {
+      "sequence": [
+       "t24",
+       "tx",
+       "t6"
+      ],
+      "feedback": "× is for a missing TOTAL — but 24 already IS the total. A missing group size splits it: ÷."
+     },
+     {
+      "sequence": [
+       "t24",
+       "td",
+       "t4"
+      ],
+      "feedback": "24 ÷ 4 = 6 answers a DIFFERENT story — one where the size (4) is known and the tables are missing. Here the 6 tables are known; divide by them."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The total (24) is known and the group count (6) is known — split total by count to find each table's size.",
+    "successFeedback": "24 ÷ 6 = 4 kids at each table. Missing size → divide the total."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Only one of these stories is missing its **total**.",
+   "conceptTag": "unknown-position",
+   "explanationVariants": [
+    "\"How many trophies?\" asks for the total, built from 7 equal shelves of 3: 7 × 3 = 21.",
+    "The other two stories state 21 up front — their blanks are the size and the count instead."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which story has the TOTAL as its unknown?",
+    "options": [
+     {
+      "id": "a",
+      "label": "7 shelves with 3 trophies each — how many trophies?",
+      "correct": true,
+      "feedback": "The total is the blank, so multiply the groups up: 7 × 3 = 21 trophies."
+     },
+     {
+      "id": "b",
+      "label": "21 trophies split evenly across 7 shelves — how many on each?",
+      "feedback": "This story hands you the total (21) — its blank is the group SIZE. That calls for 21 ÷ 7."
+     },
+     {
+      "id": "c",
+      "label": "21 trophies, displayed 3 to a shelf — how many shelves?",
+      "feedback": "The total (21) is given here too — the blank is the group COUNT: 21 ÷ 3 shelves."
+     },
+     {
+      "id": "d",
+      "label": "All three of them",
+      "feedback": "Two of the stories announce \"21 trophies\" in their first breath — a stated total can't be the unknown."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "unknown-position",
+    "form": "totalUnknown"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Find the slot, fill it, then read carefully.",
+   "conceptTag": "unknown-position",
+   "hints": [
+    "Which slot is empty at the start — total, size, or count? The hall's rows need their size.",
+    "30 chairs ÷ 6 rows = 5 chairs in each row.",
+    "In EACH row, 2 of those 5 chairs are broken. How many good ones per row?"
+   ],
+   "explanationVariants": [
+    "Missing size: 30 ÷ 6 = 5 chairs per row. Then per row: 5 − 2 = 3 good chairs.",
+    "Frame: 6 rows × ___ = 30 gives 5. The 2 broken live inside each row, so each row keeps 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A hall has 30 chairs arranged in 6 equal rows. In each row, 2 chairs are broken. How many GOOD chairs are in each row?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "chairs",
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 is each row's full count — the missing size, found! But 2 of each row's chairs are broken. Subtract them."
+     },
+     {
+      "value": 28,
+      "feedback": "28 subtracts 2 from the whole hall of 30 — but 2 chairs are broken in EACH row. First find one row's size, then remove its 2."
+     },
+     {
+      "value": 24,
+      "feedback": "24 takes the 6 rows away from the 30 chairs. The 6 isn't chairs leaving — it's how many ways the 30 split."
+     }
+    ],
+    "fallbackFeedback": "Two steps: fill the size slot (30 ÷ 6), then subtract the 2 broken chairs from ONE row."
+   },
+   "variant": {
+    "gen": "unknown-position",
+    "form": "goodPerGroup"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "You know where the mystery lives.",
+   "takeaways": [
+    "Every equal-groups story fits: groups × size = total.",
+    "Point at the empty slot before computing.",
+    "Missing total → multiply; missing size or count → divide."
+   ],
+   "teaser": "give the mystery a name — a letter can hold its place while you hunt it."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "unknown-position",
+   "concept": {
+    "id": "rem-up-c",
+    "kind": "concept",
+    "body": "Quick rewind. Say the frame out loud for any story: **groups × size = total**. Then check off what the story gives you. Exactly one slot stays quiet — that's the unknown, and that's what the question at the end is asking about."
+   },
+   "check": {
+    "id": "rem-up-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "unknown-position",
+    "explanationVariants": [
+     "Total (12) ✓, size (6 per box) ✓ — the silent slot is the number of boxes.",
+     "Frame it: ___ boxes × 6 eggs = 12 eggs. The blank is the group count."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "12 eggs are packed 6 to a box. Which slot is unknown?",
+     "options": [
+      {
+       "id": "a",
+       "label": "The group count (boxes)",
+       "correct": true,
+       "feedback": "Total and size are given; the boxes are the blank — 12 ÷ 6 = 2 of them."
+      },
+      {
+       "id": "b",
+       "label": "The group size",
+       "feedback": "The size is stated: 6 to a box. What the story never says is how many boxes."
+      },
+      {
+       "id": "c",
+       "label": "The total",
+       "feedback": "The total opens the story: 12 eggs. The quiet slot is the box count."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

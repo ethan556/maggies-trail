@@ -1,0 +1,270 @@
+{
+  "id": "pp-01-03",
+  "slug": "rectangular-to-polar",
+  "title": "Rectangular → Polar: Watch the Quadrant",
+  "courseId": "polar-parametric",
+  "chapterId": "ch1-polar-coordinates",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Reversing the triangle: **r = √(x² + y²)** (Pythagoras — the hypotenuse) and **tan θ = y/x**. But arctan only returns angles in (−π/2, π/2), so it lands in the wrong quadrant for any point on the left. Always CHECK the quadrant and adjust θ by π if needed.",
+      "figure": "pp-rect-to-polar"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find r.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the point (1, √3), what is r?",
+        "answer": 2,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = x² + y² BEFORE the square root: r = √(1 + 3) = √4 = 2."
+          },
+          {
+            "value": 1.73,
+            "feedback": "1.73 ≈ √3 is just y. r = √(1² + (√3)²) = √4 = 2."
+          }
+        ],
+        "fallbackFeedback": "r = √(1 + 3) = √4 = 2."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find θ (Quadrant I).",
+      "conceptTag": "pp-to-polar",
+      "explanationVariants": [
+        "tan θ = √3/1 = √3, so θ = π/3 — and (1, √3) is in Q1, where arctan is correct as-is.",
+        "arctan(√3) = π/3; no adjustment needed in the first quadrant."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For (1, √3), what is θ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π/3",
+            "correct": true,
+            "feedback": "Right — tan θ = √3 gives π/3, and the point is in Q1 so no adjustment."
+          },
+          {
+            "id": "o2",
+            "label": "π/6",
+            "feedback": "tan(π/6) = 1/√3, not √3. Here y/x = √3, giving θ = π/3."
+          },
+          {
+            "id": "o3",
+            "label": "2π/3",
+            "feedback": "2π/3 is a Q2 angle, but (1, √3) is in Q1 (both positive). θ = π/3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "to-polar"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The quadrant trap: for (−1, √3), tan θ = √3/(−1) = −√3, and arctan(−√3) = −π/3 — pointing into Quadrant IV. But the point is in **Quadrant II**! Add π: θ = −π/3 + π = **2π/3**. Whenever x < 0, add π to arctan's answer.",
+      "figure": "pp-quadrant-trap"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fix the quadrant.",
+      "conceptTag": "pp-to-polar",
+      "explanationVariants": [
+        "(−1, √3) is in Q2; arctan gives −π/3, so add π → 2π/3, which correctly points up-left.",
+        "x < 0 signals the π adjustment: −π/3 + π = 2π/3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For (−1, √3), the correct polar angle is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2π/3",
+            "correct": true,
+            "feedback": "Right — arctan gives −π/3, but x < 0 (Q2) means add π: 2π/3."
+          },
+          {
+            "id": "o2",
+            "label": "−π/3",
+            "feedback": "That's arctan's raw output, pointing into Q4. The point is in Q2 — add π to get 2π/3."
+          },
+          {
+            "id": "o3",
+            "label": "π/3",
+            "feedback": "π/3 is Q1. The point (−1, √3) is up-LEFT (Q2): θ = 2π/3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "to-polar",
+        "form": "angleQuadrant"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A third-quadrant point.",
+      "conceptTag": "pp-to-polar",
+      "explanationVariants": [
+        "(−1, −1): r = √2; arctan(−1/−1) = arctan(1) = π/4, but the point is in Q3, so add π → 5π/4.",
+        "Both coordinates negative → Q3; π/4 + π = 5π/4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For (−1, −1), the correct polar angle is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5π/4",
+            "correct": true,
+            "feedback": "Right — arctan(1) = π/4, and x < 0 (Q3) means add π: 5π/4."
+          },
+          {
+            "id": "o2",
+            "label": "π/4",
+            "feedback": "π/4 points into Q1, but (−1, −1) is in Q3. Add π: 5π/4."
+          },
+          {
+            "id": "o3",
+            "label": "−π/4",
+            "feedback": "−π/4 is Q4. Both coords are negative → Q3: 5π/4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "to-polar",
+        "form": "angleQuadrant"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Compute r for a new point — graded this time — before the full conversion.",
+      "conceptTag": "pp-to-polar",
+      "explanationVariants": [
+        "r = √(x²+y²) = √(3²+4²) = √(9+16) = √25 = 5.",
+        "Treat (3, 4) as legs of a right triangle: the hypotenuse (r) is √(9+16)=5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the point (3, 4), what is r?",
+        "answer": 5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 adds x+y (3+4) instead of using the distance formula. r = √(x²+y²) = √(9+16) = 5."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is x²+y² (9+16) — one step early. Take the SQUARE ROOT to get r: √25=5."
+          },
+          {
+            "value": 12,
+            "feedback": "12 multiplies x×y (3×4) instead of using the distance formula. r = √(x²+y²) = √25 = 5."
+          }
+        ],
+        "fallbackFeedback": "r is the distance from the origin: r = √(x²+y²) = √(9+16) = 5."
+      },
+      "variant": {
+        "gen": "to-polar",
+        "form": "radius"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full reverse conversion.",
+      "conceptTag": "pp-to-polar",
+      "explanationVariants": [
+        "(−2√3, 2): r = √(12 + 4) = √16 = 4; tan θ = 2/(−2√3) = −1/√3 → arctan = −π/6, but x < 0 (Q2) so add π → 5π/6. Report r + θ ≈ 4 + 2.618 = 6.618.",
+        "r = 4 and θ = 5π/6 ≈ 2.6180; their sum ≈ 6.6180."
+      ],
+      "hints": [
+        "r = √((−2√3)² + 2²) = √(12 + 4).",
+        "tan θ = 2/(−2√3) = −1/√3 → arctan = −π/6; but x < 0, so add π.",
+        "θ = 5π/6 ≈ 2.618; add to r = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert (−2√3, 2) to polar and report r + θ (θ in radians), to four decimals.",
+        "answer": 6.618,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 3.4764,
+            "feedback": "3.4764 = 4 + (−π/6) uses arctan's raw angle. Since x < 0, θ = 5π/6: sum ≈ 6.618."
+          },
+          {
+            "value": 4.5236,
+            "feedback": "4.5236 = 4 + π/6 has the wrong sign/quadrant. Q2 gives θ = 5π/6 ≈ 2.618: total ≈ 6.618."
+          }
+        ],
+        "fallbackFeedback": "r = 4, θ = 5π/6 ≈ 2.618; r + θ ≈ 6.618."
+      },
+      "variant": {
+        "gen": "to-polar",
+        "form": "rPlusTheta"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Pythagoras, then check.",
+      "takeaways": [
+        "r = √(x² + y²); tan θ = y/x.",
+        "arctan lands in (−π/2, π/2) — add π whenever x < 0.",
+        "Sketch the quadrant to confirm the angle points the right way."
+      ],
+      "teaser": "Next chapter: equations in r and θ trace beautiful curves."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pp-to-polar",
+      "concept": {
+        "id": "rem-pp0103-c",
+        "kind": "concept",
+        "body": "Rectangular → polar: r = √(x²+y²); θ from tan θ = y/x, but ADD π to arctan's result whenever x < 0 (the point is on the left half)."
+      },
+      "check": {
+        "id": "rem-pp0103-k",
+        "kind": "check",
+        "body": "One radius.",
+        "conceptTag": "pp-to-polar",
+        "explanationVariants": [
+          "(3, 4): r = √(9 + 16) = √25 = 5 — the 3-4-5 triangle.",
+          "Pythagoras: √25 = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For (3, 4), what is r?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 = 3 + 4 adds the legs. r SQUARES then roots: √(9 + 16) = 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 = x² + y² before the root: r = √25 = 5."
+            }
+          ],
+          "fallbackFeedback": "r = √(9 + 16) = 5."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+{
+  "id": "si-02-01",
+  "slug": "the-statistic-wobbles",
+  "title": "The Statistic Wobbles",
+  "courseId": "statistical-inference",
+  "chapterId": "ch2-sampling-variability",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The population has one fixed number — the **parameter**, p. You never see it.\n\nWhat you see is a **statistic**, p̂: the answer your particular sample happened to give. Draw a new sample and you get a new p̂.\n\nThe truth stands still. The estimate moves. Every idea in this course is about how much it moves.",
+      "figure": "si-parameter-vs-statistic"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "60% of this town really does support the plan. You do not know that — you only get to poll.",
+      "widget": {
+        "type": "sampleSim",
+        "prompt": "Keep the poll at 25 people and run at least 20 of them. Watch where the answers land.",
+        "populationP": 0.6,
+        "sizes": [
+          25,
+          100
+        ],
+        "targetSize": 25,
+        "requiredDraws": 20,
+        "seed": 21,
+        "successFeedback": "Every one of those polls was honest, random and correctly conducted — and they still disagree with each other by 20 points or more. That scatter is sampling variability, and it is not a mistake anyone made.",
+        "wrongSizeFeedback": "Come back to the 25-person poll for now. The point of this step is to see how far apart honest polls of the SAME size can land.",
+        "moreDrawsFeedback": "A few polls cannot show you the scatter. Run more — the pattern only appears once there is a crowd of them."
+      },
+      "predict": {
+        "prompt": "You'll run 20 honest, random polls of 25 people each, from a population where 60% say yes. The results will land…",
+        "options": [
+          {
+            "id": "scatter",
+            "label": "Scattered widely around 60%"
+          },
+          {
+            "id": "tight",
+            "label": "All within a point or two of 60%"
+          },
+          {
+            "id": "exact",
+            "label": "Mostly at exactly 60%"
+          }
+        ],
+        "outcomeId": "scatter",
+        "reveal": "Honest same-size polls disagree — here by 20 points or more — with nobody making a mistake. That scatter is sampling variability, and it's why one poll is never the whole story."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Run repeated random samples and coordinate sample size with center and sampling variability.",
+        "invariants": [
+          "population-parameter-fixed",
+          "random-sampling-targets-population"
+        ],
+        "misconceptions": [
+          "one-sample-is-the-population",
+          "larger-sample-changes-truth"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-sampleSim-new-context",
+        "delayed": false
+      },
+      "conceptTag": "si-parameter-statistic"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What did the scatter show?",
+      "conceptTag": "si-parameter-statistic",
+      "explanationVariants": [
+        "Every poll used the same honest method. They differ because each one happened to catch a different 25 people — that is sampling variability, not error.",
+        "The parameter (60%) never moved during the simulation. Only the statistic moved."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Your 20 polls of 25 people gave answers spread over roughly 40 points. What does that tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Honest random samples disagree with each other — the estimate wobbles even when nothing is wrong.",
+            "correct": true,
+            "feedback": "Right. This scatter is built into sampling, and the whole subject is about measuring it rather than pretending it away."
+          },
+          {
+            "id": "o2",
+            "label": "Some of those polls were conducted badly.",
+            "correct": false,
+            "feedback": "None of them was. They used the same random method — they simply caught different people, and different people answer differently."
+          },
+          {
+            "id": "o3",
+            "label": "The true support level keeps changing.",
+            "correct": false,
+            "feedback": "The truth sat at 60% the whole time, marked by the dashed line. The town did not change its mind between your polls."
+          },
+          {
+            "id": "o4",
+            "label": "The polls are biased, since so many missed 60%.",
+            "correct": false,
+            "feedback": "Bias would push the pile to one side of the truth. Look at it: the dots land on both sides, centred on 60%. That is variability, not bias."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-parameter-statistic__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which is the parameter?",
+      "conceptTag": "si-parameter-statistic",
+      "explanationVariants": [
+        "The parameter describes the whole population and is fixed. The statistic describes your one sample and changes every time you sample again.",
+        "You compute a statistic; you can only estimate a parameter."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each quantity to what it is.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "p = 0.60, the town's true support"
+          },
+          {
+            "id": "w2",
+            "label": "p̂ = 0.56, from your poll of 25"
+          },
+          {
+            "id": "w3",
+            "label": "p̂ = 0.68, from your neighbour's poll of 25"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "the parameter — fixed, unknown, one of it"
+          },
+          {
+            "id": "y2",
+            "label": "a statistic — known, and it moved"
+          },
+          {
+            "id": "y3",
+            "label": "another statistic — same method, different answer"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "The town's true support is not something you computed from a sample — it is the fixed thing you are trying to estimate."
+          },
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "Your poll's 0.56 came from 25 people, so it is a statistic. Poll again and it changes; a parameter never does."
+          }
+        ],
+        "missFeedback": "Ask: did this number come from the whole population (parameter) or from one sample (statistic)?",
+        "successFeedback": "One parameter, many statistics — and the statistics scatter around the parameter."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-parameter-statistic__matchPairs"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So a single poll is not \"the answer\". It is **one draw** from a whole spread of answers your method could have produced.\n\nThat spread is the thing worth studying. It has a shape, a centre, and a width — and each of those tells you something you can act on.",
+      "figure": "si-sampling-dist-sizes"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Where is the pile centred?",
+      "conceptTag": "si-sampling-variability",
+      "explanationVariants": [
+        "An honest random method overshoots as often as it undershoots, so the pile centres on the true value. That property is called being unbiased.",
+        "Centred on the truth is exactly what bias-free means — it does not mean any single poll is right."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Your 20 honest polls landed on both sides of 60%. What does the CENTRE of that pile tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The method is unbiased — it misses in both directions equally, so it centres on the truth.",
+            "correct": true,
+            "feedback": "Right. Unbiased is a property of the method, not of any single poll."
+          },
+          {
+            "id": "o2",
+            "label": "Each individual poll is accurate.",
+            "correct": false,
+            "feedback": "Most of them missed by several points. Unbiasedness is about the pile as a whole, not about any one dot in it."
+          },
+          {
+            "id": "o3",
+            "label": "The polls were too small.",
+            "correct": false,
+            "feedback": "The centre would sit on 60% for any size. Size changes the WIDTH of the pile, not where it sits — which is the next lesson."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — a centre is just an average.",
+            "correct": false,
+            "feedback": "It is the most important average in the subject: it says the method is aimed at the truth. A biased method centres somewhere else."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-sampling-variability__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the wobble as evidence.",
+      "conceptTag": "si-parameter-statistic",
+      "hints": [
+        "Both pollsters used honest random samples of the same size. Ask what could make two honest polls differ.",
+        "Sampling variability alone routinely produces gaps of this size at n = 25 — you just watched it happen.",
+        "So neither pollster needs to have made a mistake, and neither one is 'the real number'."
+      ],
+      "explanationVariants": [
+        "Two honest polls of 25 people can easily differ by 12 points through sampling variability alone, so the disagreement is not evidence that anyone erred.",
+        "Each poll is one dot from the same pile. Dots in a pile disagree with each other; that is what a pile is."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two pollsters use identical honest methods and 25-person random samples. One reports 52%, the other 64%. Who made a mistake?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Neither — a 12-point gap between honest 25-person polls is ordinary sampling variability.",
+            "correct": true,
+            "feedback": "Right. You saw that scatter with your own hands. The fix is not to accuse anyone; it is to report the wobble alongside the number."
+          },
+          {
+            "id": "o2",
+            "label": "The one who reported 52% — the true value is higher.",
+            "correct": false,
+            "feedback": "In the real world you do not know the true value, so you cannot convict a poll by comparing it with a truth you cannot see."
+          },
+          {
+            "id": "o3",
+            "label": "Both — honest polls should agree.",
+            "correct": false,
+            "feedback": "Honest polls agree only about the method, never about the exact number. Disagreement of this size is expected at n = 25, not evidence of malpractice."
+          },
+          {
+            "id": "o4",
+            "label": "Whichever one had the smaller sample.",
+            "correct": false,
+            "feedback": "Their samples are the same size. And in any case a smaller sample is not a wrong sample — it is a wobblier one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-parameter-statistic__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One truth, many answers.",
+      "takeaways": [
+        "The parameter p is fixed and unseen; the statistic p̂ is computed and moves with every sample.",
+        "Honest random samples disagree with each other. That scatter is sampling variability, not error.",
+        "An unbiased method produces a pile centred on the truth — even though almost none of its individual polls hit it."
+      ],
+      "teaser": "Next: change the sample size and watch the pile change shape."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-parameter-statistic",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask where the number came from. From every member of the population? Then it is a parameter — fixed, and usually unknowable. From the people you happened to ask? Then it is a statistic — knowable, and different every time you ask again.",
+        "figure": "si-parameter-vs-statistic"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Parameter or statistic?",
+        "conceptTag": "si-parameter-statistic",
+        "explanationVariants": [
+          "\"43% of the 200 students we surveyed\" is computed from a sample, so it is a statistic.",
+          "Survey another 200 students and the 43% will move. Parameters do not move."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "\"43% of the 200 students we surveyed walk to school.\" Parameter or statistic?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A statistic — it came from a sample.",
+              "correct": true,
+              "feedback": "Right, and it would come out differently with a different 200 students."
+            },
+            {
+              "id": "o2",
+              "label": "A parameter — it is a percentage of students.",
+              "correct": false,
+              "feedback": "Being a percentage is not the test. The test is whether it came from the whole population or from a sample. This one came from 200 people."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

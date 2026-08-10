@@ -1,0 +1,423 @@
+{
+  "id": "lf-02-02",
+  "slug": "graphing-from-slope-intercept",
+  "title": "Graphing from Slope-Intercept",
+  "courseId": "linear-functions",
+  "chapterId": "ch2-slope-intercept",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "line-intercepts",
+      "body": "You can graph **y = mx + b** without a table. **Step 1:** plot b on the y-axis — that's the point (0, b), where the line starts. **Step 2:** from there, use the slope as **rise over run** to step to the next point. **Step 3:** connect them into a line."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Where do you begin?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To graph y = 3x + 2, where do you put your first point?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(0, 2), on the y-axis",
+            "correct": true,
+            "feedback": "Yes — the y-intercept b = 2 sits at (0, 2), where x = 0."
+          },
+          {
+            "id": "b",
+            "label": "(0, 3)",
+            "feedback": "That used the slope 3 as the starting height. The intercept is b = 2, so start at (0, 2)."
+          },
+          {
+            "id": "c",
+            "label": "(2, 0), on the x-axis",
+            "feedback": "That puts 2 on the wrong axis. The y-intercept is at x = 0: the point (0, 2)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the starting height.",
+      "conceptTag": "slope-intercept-graph",
+      "explanationVariants": [
+        "For y = 2x + 4, b = 4, so the line crosses the y-axis at (0, 4).",
+        "Set x = 0: y = 2·0 + 4 = 4. The y-intercept is 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2x + 4, what is the y-intercept (the y-value where x = 0)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the slope. The y-intercept is the number added on: b = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "That adds 2 + 4. Keep them apart: the y-intercept is just b = 4."
+          }
+        ],
+        "fallbackFeedback": "The y-intercept is b, the constant added on: 4."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-graph__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "slope-triangle",
+      "body": "The slope is your **step**. Slope 2 means **up 2, right 1**. Slope 1/3 means **up 1, right 3**. From the y-intercept, take that step to land on a second point — then a third. Same step each time keeps you on the line."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Plot the points the line passes through, and watch them line up.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Mark three points that the line y = 2x + 1 passes through: (1, 3), (2, 5), and (3, 7).",
+        "cols": 6,
+        "rows": 8,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 7
+          }
+        ],
+        "connectTargets": true,
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 4,
+            "feedback": "At x = 2, y = 2·2 + 1 = 5, not 4. Each right-1 step goes up 2, not 1."
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "feedback": "At x = 3, y = 2·3 + 1 = 7. Check the slope step: up 2 for every right 1."
+          }
+        ],
+        "missFeedback": "Use y = 2x + 1: at x = 1, 2, 3 the heights are 3, 5, 7.",
+        "successFeedback": "They line up — a constant up-2, right-1 step traces a straight line."
+      },
+      "conceptTag": "slope-intercept-graph",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents slope intercept graph.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for slope intercept graph must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines slope intercept graph."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-functions:slope-intercept-graph",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "On y = 2x + 1, take any point and step one to the right. The next point is…",
+        "options": [
+          {
+            "id": "one",
+            "label": "1 higher"
+          },
+          {
+            "id": "two",
+            "label": "2 higher"
+          },
+          {
+            "id": "three",
+            "label": "3 higher"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "2 higher — that is precisely what slope 2 means, and the three points say it out loud: 3, 5, 7. The +1 decides where the line starts; the 2 decides how it steps, and it takes the same step every single time."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Take one step.",
+      "conceptTag": "slope-intercept-graph",
+      "explanationVariants": [
+        "From (0, 1) with slope 2, step up 2 and right 1 to reach (1, 3).",
+        "Slope 2 = rise 2 over run 1. Starting at (0, 1): x goes 0→1, y goes 1→3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Starting at the y-intercept (0, 1) with slope 2, which point comes next on the line?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(1, 3)",
+            "correct": true,
+            "feedback": "Yes — right 1 (x: 0→1) and up 2 (y: 1→3) lands on (1, 3)."
+          },
+          {
+            "id": "b",
+            "label": "(1, 2)",
+            "feedback": "That went up only 1. A slope of 2 rises 2 for each run of 1: (1, 3)."
+          },
+          {
+            "id": "c",
+            "label": "(2, 1)",
+            "feedback": "That stepped right 2 and up 0 — rise and run are swapped. Slope 2 is up 2, right 1: (1, 3)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-graph__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A **negative** slope steps **down**. For y = -x + 6, start at (0, 6), then go down 1, right 1 to each next point. Positive slopes climb left-to-right; negative slopes descend.",
+      "figure": "lf-neg-slope-down"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "One more line to plot.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Mark three points on the line y = x + 2: (1, 3), (2, 4), and (3, 5).",
+        "cols": 6,
+        "rows": 8,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "connectTargets": true,
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 3,
+            "feedback": "At x = 2, y = 2 + 2 = 4, not 3. Slope 1 steps up 1 for each right 1."
+          },
+          {
+            "x": 3,
+            "y": 4,
+            "feedback": "At x = 3, y = 3 + 2 = 5. Keep the up-1, right-1 step going."
+          }
+        ],
+        "missFeedback": "Use y = x + 2: at x = 1, 2, 3 the heights are 3, 4, 5.",
+        "successFeedback": "Slope 1 gives a gentle up-1, right-1 climb."
+      },
+      "conceptTag": "slope-intercept-graph",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents slope intercept graph.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for slope intercept graph must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines slope intercept graph."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-functions:slope-intercept-graph",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A line that starts below zero.",
+      "conceptTag": "slope-intercept-graph",
+      "explanationVariants": [
+        "For y = 5x - 2, b = -2, so the line crosses the y-axis at (0, -2), below the origin.",
+        "Set x = 0: y = 5·0 - 2 = -2. The y-intercept is -2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 5x - 2, what is the y-intercept (the y-value where x = 0)?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the slope. The y-intercept is the constant: -2."
+          },
+          {
+            "value": 2,
+            "feedback": "The sign matters: the constant is -2, so the line crosses at (0, -2), below the origin."
+          }
+        ],
+        "fallbackFeedback": "The y-intercept is b, the constant with its sign: -2."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-graph__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Where does it cross the x-axis?",
+      "conceptTag": "slope-intercept-graph",
+      "explanationVariants": [
+        "The x-intercept is where y = 0. For y = 2x - 6: 0 = 2x - 6, so 2x = 6 and x = 3.",
+        "Set y = 0 and solve 2x - 6 = 0: add 6 (2x = 6), divide by 2 (x = 3)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The line y = 2x - 6 crosses the x-axis where y = 0. Find the x-intercept.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "That's b, the y-intercept (0, -6). The x-intercept is where y = 0: solve 0 = 2x - 6 to get x = 3."
+          },
+          {
+            "value": -3,
+            "feedback": "It looks like you divided -6 by 2. Set y = 0 first: 2x = 6, so x = +3."
+          }
+        ],
+        "fallbackFeedback": "Set y = 0: 0 = 2x - 6 → 2x = 6 → x = 3."
+      },
+      "hints": [
+        "The x-intercept is where the line hits the x-axis, so y = 0.",
+        "Substitute y = 0: 0 = 2x - 6.",
+        "Solve: 2x = 6, so x = 3."
+      ],
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-graph__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two numbers place a whole line.",
+      "takeaways": [
+        "Start at (0, b), the y-intercept, on the y-axis.",
+        "Step by the slope: rise over run (down for a negative slope).",
+        "The x-intercept is different: it's where y = 0, found by solving."
+      ],
+      "teaser": "next: telling the x-intercept and y-intercept apart, every time."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "slope-intercept-graph",
+      "concept": {
+        "id": "rem-sig-c",
+        "kind": "concept",
+        "body": "Graphing starts at the y-intercept. For y = 2x + 3, b = 3, so your first dot is (0, 3) on the y-axis. The slope 2 then steps you up 2, right 1 to the next dot."
+      },
+      "check": {
+        "id": "rem-sig-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "slope-intercept-graph",
+        "explanationVariants": [
+          "b = 3 in y = 2x + 3, so the first point is (0, 3).",
+          "The y-intercept sits at x = 0, height b = 3: the point (0, 3)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "To graph y = 2x + 3, where is your first point?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(0, 3)",
+              "correct": true,
+              "feedback": "Yes — start at the y-intercept b = 3, which is (0, 3)."
+            },
+            {
+              "id": "b",
+              "label": "(0, 2)",
+              "feedback": "That used the slope 2. The starting height is the intercept b = 3: (0, 3)."
+            },
+            {
+              "id": "c",
+              "label": "(3, 0)",
+              "feedback": "That puts 3 on the x-axis. The y-intercept is at x = 0: (0, 3)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

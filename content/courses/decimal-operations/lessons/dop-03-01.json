@@ -1,0 +1,300 @@
+{
+  "id": "dop-03-01",
+  "slug": "estimating-the-quotient",
+  "title": "Estimating the Quotient",
+  "courseId": "decimal-operations",
+  "chapterId": "ch3-two-digit-division",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Before dividing by a two-digit number, estimate. Round the divisor to the nearest ten and pick a nearby **compatible** dividend that divides evenly. For 187 ÷ 22, round 22 to 20, then use 180 ÷ 20 = about 9. The estimate tells you roughly how big the answer should be.",
+      "figure": "dop-estimate-quotient"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Estimate first, then trust or doubt the answer.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "tickStep": 10,
+        "target": 30,
+        "start": 0,
+        "prompt": "632 ÷ 21. Place your ESTIMATE of the quotient on the line before computing anything.",
+        "successFeedback": "About 30, because 21 is close to 20 and 600 ÷ 20 = 30. An estimate is not a guess — it is a cheap calculation whose job is to catch an expensive mistake.",
+        "lowFeedback": "That is low. 21 goes into 632 more times than that — try 600 ÷ 20.",
+        "highFeedback": "That is high. 21 × 40 is already 840, well past 632."
+      },
+      "predict": {
+        "prompt": "632 ÷ 21 is close to 630 ÷ 21 = 30. Will the true quotient be a shade more or less than 30?",
+        "options": [
+          {
+            "id": "more",
+            "label": "A shade more"
+          },
+          {
+            "id": "less",
+            "label": "A shade less"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly 30"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "21 × 30 = 630 lands just under 632, leaving a small remainder — so the quotient sits a shade over 30. Estimating first gives the exact division a home to land in."
+      },
+      "conceptTag": "estimate-quotient",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents estimate quotient.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for estimate quotient must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines estimate quotient."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:estimate-quotient",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A compatible number is one that divides the rounded divisor cleanly. For 356 ÷ 58, round 58 to 60, then reach for a multiple of 60 near 356 — that's 360. So 360 ÷ 60 = 6. Choosing the multiple that divides evenly is the whole skill.",
+      "figure": "dop-estimate-quotient"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Pick the compatible dividend.",
+      "conceptTag": "estimate-quotient",
+      "explanationVariants": [
+        "Round 58 to 60; the multiple of 60 nearest 356 is 360, giving 360 ÷ 60 = 6.",
+        "360 is compatible with 60, so 356 ÷ 58 ≈ 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate 356 ÷ 58 using 360 ÷ 60. About what is it?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 would use 300 ÷ 60, but 360 is nearer 356. 360 ÷ 60 = 6."
+          },
+          {
+            "value": 60,
+            "feedback": "60 drops a place. 360 ÷ 60 = 6 — how many 60s fit in 360."
+          }
+        ],
+        "fallbackFeedback": "Use 360 ÷ 60 = 6."
+      },
+      "variant": {
+        "gen": "estimate-round"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A bigger quotient.",
+      "conceptTag": "estimate-quotient",
+      "explanationVariants": [
+        "Round 29 to 30; the multiple of 30 near 612 is 600, so 600 ÷ 30 = 20.",
+        "600 ÷ 30 = 20, so 612 ÷ 29 is about 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate 612 ÷ 29 using 600 ÷ 30. About what is it?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 divides only the leading digits (6 ÷ 3). Keep the places: 600 ÷ 30 = 20."
+          },
+          {
+            "value": 200,
+            "feedback": "200 adds a place. 600 ÷ 30 = 20 — how many 30s fit in 600."
+          }
+        ],
+        "fallbackFeedback": "Use 600 ÷ 30 = 20."
+      },
+      "variant": {
+        "gen": "estimate-round",
+        "form": "tensAns"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Why estimate first?",
+      "conceptTag": "estimate-quotient",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does an estimate give you before you do the full division?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A rough size for the answer, to catch big mistakes",
+            "correct": true,
+            "feedback": "Exactly — if your exact answer lands far from the estimate, you know to recheck."
+          },
+          {
+            "id": "b",
+            "label": "The exact remainder",
+            "feedback": "An estimate doesn't give the remainder — it gives a rough size for the quotient, as a sanity check."
+          },
+          {
+            "id": "c",
+            "label": "Nothing useful",
+            "feedback": "An estimate is a useful check: it tells you roughly how big the answer should be."
+          }
+        ]
+      },
+      "hints": [
+        "An estimate is a sanity check.",
+        "It tells you the rough size.",
+        "It catches answers that are way off."
+      ],
+      "explanationVariants": [
+        "The estimate is a size check for the real answer.",
+        "It flags an exact answer that's wildly off."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Estimate to catch an error.",
+      "conceptTag": "estimate-quotient",
+      "explanationVariants": [
+        "420 ÷ 20 = 21, so 423 ÷ 19 is about 21 — an answer like 2 would be clearly wrong.",
+        "The estimate 21 tells you the quotient is around twenty-something."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate 423 ÷ 19 using 420 ÷ 20. About what is it?",
+        "answer": 21,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 divides only leading digits (4 ÷ 2). Keep the places: 420 ÷ 20 = 21."
+          },
+          {
+            "value": 20,
+            "feedback": "20 uses 400 ÷ 20, but 420 is nearer 423. 420 ÷ 20 = 21."
+          }
+        ],
+        "fallbackFeedback": "Use 420 ÷ 20 = 21."
+      },
+      "variant": {
+        "gen": "estimate-round",
+        "form": "tensAns"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Round both, then estimate.",
+      "conceptTag": "estimate-quotient",
+      "hints": [
+        "Round 48 to 50.",
+        "Pick a multiple of 50 near 245 — that's 250.",
+        "250 ÷ 50 = ?"
+      ],
+      "explanationVariants": [
+        "Round 48 to 50, use 250 ÷ 50 = 5, so 245 ÷ 48 is about 5.",
+        "250 ÷ 50 = 5 — the estimate for 245 ÷ 48."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate 245 ÷ 48 with compatible numbers. About what is it?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 would use 200 ÷ 50, but 250 is nearer 245. 250 ÷ 50 = 5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 would use 300 ÷ 50, which overshoots 245. The nearer compatible is 250 ÷ 50 = 5."
+          }
+        ],
+        "fallbackFeedback": "Round 48 to 50, use 250 ÷ 50 = 5."
+      },
+      "variant": {
+        "gen": "estimate-round",
+        "form": "compatible"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Round to compatible numbers, then divide.",
+      "takeaways": [
+        "Round the divisor to the nearest ten and pick a nearby dividend that divides evenly.",
+        "The estimate gives the rough size of the quotient.",
+        "Use it as a check: a full answer far from the estimate signals a mistake."
+      ],
+      "teaser": "next: the full long-division steps with a two-digit divisor."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "estimate-quotient",
+      "concept": {
+        "id": "rem-eq-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Round the divisor to the nearest ten, then use a nearby dividend that divides evenly.** For 152 ÷ 31: round 31 to 30, use 150 ÷ 30 = 5. That's your estimate — the quotient should be about 5."
+      },
+      "check": {
+        "id": "rem-eq-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "estimate-quotient",
+        "explanationVariants": [
+          "Round 31 to 30, use 150 ÷ 30 = 5.",
+          "150 ÷ 30 = 5, so 152 ÷ 31 is about 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Estimate 152 ÷ 31 using 150 ÷ 30. About what is it?",
+          "answer": 5,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 50,
+              "feedback": "50 drops a place. 150 ÷ 30 = 5 — how many 30s fit in 150."
+            },
+            {
+              "value": 4,
+              "feedback": "4 would use 120 ÷ 30, but 150 is nearer 152. 150 ÷ 30 = 5."
+            }
+          ],
+          "fallbackFeedback": "Use 150 ÷ 30 = 5."
+        }
+      }
+    }
+  ]
+}

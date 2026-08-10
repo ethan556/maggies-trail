@@ -1,0 +1,425 @@
+{
+  "id": "fg-01-01",
+  "slug": "what-is-a-function",
+  "title": "What Is a Function",
+  "courseId": "functions-g8",
+  "chapterId": "ch1-what-is-a-function",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **function** is a rule that takes an input and gives back exactly ONE output — like a machine: put a number in, get exactly one number out. A drink machine where pressing 'cola' always dispenses cola is a function; pressing one button and getting a random drink is not.",
+      "figure": "function-machine"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Feed the machine an input and watch its rule produce exactly one output. Change the input and the output follows — that single, predictable output is what makes it a function.",
+      "widget": {
+        "type": "functionMachine",
+        "prompt": "Find the input that makes this machine output 10.",
+        "a": 3,
+        "b": -2,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 10,
+        "successFeedback": "Input 4 → 3 × 4 − 2 = 10. Each input gives exactly one output — that's the rule of a function.",
+        "lowFeedback": "The output is below 10 — the rule needs a larger input to get there.",
+        "highFeedback": "The output is above 10 — try a smaller input."
+      },
+      "predict": {
+        "prompt": "To find the INPUT that makes the machine output 10, will you undo its steps in FORWARD order or BACKWARD order?",
+        "options": [
+          {
+            "id": "backward",
+            "label": "Backward — undo the last step first"
+          },
+          {
+            "id": "forward",
+            "label": "Forward — same order as the machine"
+          },
+          {
+            "id": "either",
+            "label": "Either order works"
+          }
+        ],
+        "outcomeId": "backward",
+        "reveal": "Unwrapping reverses wrapping: the machine's LAST move gets undone FIRST. Working backward through the steps walks the output home to its input."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Vary the input and coordinate the output, table row, graph point, and equation.",
+        "predictionId": "g8-functions-covariation-prediction",
+        "invariants": [
+          "one-output-per-input",
+          "rule-consistent"
+        ],
+        "misconceptions": [
+          "input-output-reversal",
+          "additive-rule-only"
+        ],
+        "representations": [
+          "table",
+          "symbolic",
+          "graph",
+          "language"
+        ],
+        "translationFrom": "table",
+        "translationTo": "graph",
+        "fadeLevel": 2,
+        "transferFamily": "unfamiliar-story-to-graph",
+        "delayed": true,
+        "counterfactualPrompt": "Increase the input by one repeatedly. What pattern must appear in the outputs, table, and graph?",
+        "explanation": {
+          "prompt": "What makes this mapping a function?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Each input is transformed by the same rule into exactly one output.",
+              "correct": true,
+              "feedback": "Exactly. A function requires one output per input, not unique outputs overall."
+            },
+            {
+              "id": "surface",
+              "label": "Different inputs must always have different outputs.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. A function requires one output per input, not unique outputs overall."
+            }
+          ]
+        }
+      },
+      "conceptTag": "fg-function-definition"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Identify the function machine.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these acts like a function?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A vending machine where button B3 always gives the same snack",
+            "correct": true,
+            "feedback": "Right — one input (B3) always maps to exactly one output (that snack)."
+          },
+          {
+            "id": "b",
+            "label": "A machine where button B3 gives a random snack each time",
+            "correct": false,
+            "feedback": "That's NOT a function — the same input (B3) can give different outputs, breaking the one-output rule."
+          },
+          {
+            "id": "c",
+            "label": "A machine with no buttons at all",
+            "correct": false,
+            "feedback": "Without inputs there's nothing to map — a function needs inputs that each produce one output."
+          },
+          {
+            "id": "d",
+            "label": "A machine where pressing any button breaks it",
+            "correct": false,
+            "feedback": "That produces no reliable output at all — a function must give exactly one output per input."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The key test: for each input, is there exactly ONE output? If a single input could give two different outputs, it's not a function. If different inputs happen to share the same output, that's totally fine — that rule can still be a function.",
+      "figure": "fg-function-test"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply the one-output rule.",
+      "conceptTag": "fg-function-definition",
+      "explanationVariants": [
+        "Each person has exactly one birthday, so 'person → birthday' is a function.",
+        "No person can have two different birthdays, so every input maps to one output."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is the rule 'each person → their birthday' a function?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — each person has exactly one birthday",
+            "correct": true,
+            "feedback": "Right — one input (person) always gives one output (birthday)."
+          },
+          {
+            "id": "b",
+            "label": "No — because many people share the same birthday",
+            "correct": false,
+            "feedback": "Different inputs sharing an output is fine — what matters is that each single person has only ONE birthday, which they do."
+          },
+          {
+            "id": "c",
+            "label": "No — birthdays repeat every year",
+            "correct": false,
+            "feedback": "A person's birth DATE is a single fixed value — the rule still gives one output per person."
+          },
+          {
+            "id": "d",
+            "label": "Only if everyone has a different birthday",
+            "correct": false,
+            "feedback": "Functions don't require unique outputs — they just require one output per input."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgFunctionBirthday"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "See a mapping that breaks the rule.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why is 'a student → a class they take' usually NOT a function?",
+        "panels": [
+          {
+            "title": "Step 1",
+            "body": "Take one student as the input."
+          },
+          {
+            "title": "Step 2",
+            "body": "That student takes Math, Science, AND History — three different classes."
+          },
+          {
+            "title": "Step 3",
+            "body": "One input (the student) gives THREE outputs, so it breaks the one-output rule — not a function."
+          }
+        ],
+        "continueFeedback": "Reveal the next step.",
+        "successFeedback": "Exactly — one input producing several outputs is the signature of a non-function."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Different inputs, same output — still a function?",
+      "conceptTag": "fg-function-definition",
+      "explanationVariants": [
+        "Yes — many students can share one teacher, but each student still has exactly one output, so it's a function.",
+        "Repeated outputs across different inputs are allowed; only repeated outputs FROM ONE input break the rule."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rule: 'each student → their homeroom teacher.' Thirty students share Mr. Lee. Is it a function?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — each student has exactly one teacher",
+            "correct": true,
+            "feedback": "Right — sharing an output across inputs is fine; each single student still maps to one teacher."
+          },
+          {
+            "id": "b",
+            "label": "No — because thirty students share one teacher",
+            "correct": false,
+            "feedback": "Shared outputs are allowed — the rule only fails if ONE student had two teachers, which isn't the case."
+          },
+          {
+            "id": "c",
+            "label": "No — a teacher can't be an output",
+            "correct": false,
+            "feedback": "Anything can be an output — a name, a number, a teacher. What matters is one output per input."
+          },
+          {
+            "id": "d",
+            "label": "Only if each student had a different teacher",
+            "correct": false,
+            "feedback": "Functions don't require unique outputs — repeats across inputs are fine."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgFunctionSharedOutput"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the non-function.",
+      "conceptTag": "fg-function-definition",
+      "explanationVariants": [
+        "'A number → a number that adds with it to make 10' gives one output (10 minus the input) — a function. The others each let one input map to several outputs.",
+        "Only the 'adds to 10' rule assigns exactly one output to each input."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these is a FUNCTION?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Each number → the number that adds with it to make 10",
+            "correct": true,
+            "feedback": "Right — every input has exactly one partner (10 minus it)."
+          },
+          {
+            "id": "b",
+            "label": "Each number → a number smaller than it",
+            "correct": false,
+            "feedback": "One input has MANY smaller numbers — that's several outputs, so not a function."
+          },
+          {
+            "id": "c",
+            "label": "Each person → a movie they like",
+            "correct": false,
+            "feedback": "A person can like many movies — several outputs for one input, not a function."
+          },
+          {
+            "id": "d",
+            "label": "Each city → a person who lives there",
+            "correct": false,
+            "feedback": "A city has many residents — one input, many outputs, so not a function."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgChooseFunction"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sort rules into functions and non-functions.",
+      "conceptTag": "fg-function-definition",
+      "explanationVariants": [
+        "Functions: 'number → its double' and 'person → their age' (one output each). Not functions: 'number → its factors' and 'person → a friend' (many outputs each).",
+        "Check each: does every single input give exactly one output? Only then is it a function."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each rule: function or not?",
+        "buckets": [
+          {
+            "id": "fn",
+            "label": "Function"
+          },
+          {
+            "id": "no",
+            "label": "Not a function"
+          }
+        ],
+        "items": [
+          {
+            "id": "r1",
+            "label": "each number → its double",
+            "bucketId": "fn",
+            "feedback": "Doubling gives exactly one output per input — a function."
+          },
+          {
+            "id": "r2",
+            "label": "each number → all its factors",
+            "bucketId": "no",
+            "feedback": "A number has many factors — one input, many outputs, so not a function."
+          },
+          {
+            "id": "r3",
+            "label": "each person → their exact age in years",
+            "bucketId": "fn",
+            "feedback": "Each person has exactly one age — a function."
+          },
+          {
+            "id": "r4",
+            "label": "each person → a friend of theirs",
+            "bucketId": "no",
+            "feedback": "A person can have many friends — one input, many outputs, so not a function."
+          },
+          {
+            "id": "r5",
+            "label": "each square → its area",
+            "bucketId": "fn",
+            "feedback": "A square of a given size has exactly one area — a function."
+          }
+        ],
+        "missFeedback": "Not quite — recheck each rule: does every single input give exactly ONE output?",
+        "successFeedback": "All sorted — a function gives exactly one output per input, no matter how the outputs repeat."
+      },
+      "hints": [
+        "For each rule, pick one input and ask: how many outputs does it produce?",
+        "'Double' and 'exact age' give one output each; 'all factors' and 'a friend' give many.",
+        "Functions: 'number → its double', 'person → their age', 'square → its area'. Not functions: 'number → its factors', 'person → a friend'."
+      ],
+      "variant": {
+        "gen": "g8-fn-function-definition",
+        "form": "fgSortFunctionRules"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A function gives exactly one output for each input — that's the whole rule.",
+      "takeaways": [
+        "One input → exactly one output means it's a function.",
+        "One input → several outputs means it's NOT a function.",
+        "Different inputs sharing an output is perfectly fine."
+      ],
+      "teaser": "Next: testing tables and lists of pairs for the one-output rule."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-function-definition",
+      "concept": {
+        "id": "rem-fg0101-c",
+        "kind": "concept",
+        "body": "A function gives exactly ONE output for each input. If one input could give two different outputs, it's not a function. Different inputs sharing an output is allowed."
+      },
+      "check": {
+        "id": "rem-fg0101-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-function-definition",
+        "explanationVariants": [
+          "Each number has exactly one square, so 'number → its square' is a function.",
+          "Squaring gives one output per input, so it passes the function test."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Is 'each number → its square' a function?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Yes — each number has exactly one square",
+              "correct": true,
+              "feedback": "Right — one input gives one output."
+            },
+            {
+              "id": "b",
+              "label": "No — because 2 and −2 both square to 4",
+              "correct": false,
+              "feedback": "Different inputs sharing an output is fine — each single number still has one square."
+            },
+            {
+              "id": "c",
+              "label": "No — squares get too big",
+              "correct": false,
+              "feedback": "Output size doesn't matter — each input still gives exactly one output."
+            },
+            {
+              "id": "d",
+              "label": "Only for positive numbers",
+              "correct": false,
+              "feedback": "Every number, positive or negative, has exactly one square — it's a function throughout."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

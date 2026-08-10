@@ -1,0 +1,145 @@
+===== node scripts/audit/source-transpile-s143.mjs =====
+source transpilation S143 passed: 15/15 files; TypeScript 5.8.3
+===== node scripts/audit/content-json-s143.mjs =====
+content JSON S143 passed: 1129 lessons, 1129 unique ids
+===== node scripts/session/content-change-proof-s143.mjs =====
+Session 143 content proof passed: 1129 lessons; graph-story 2 files / 14 widget nodes / 1 additive prediction / 0 variant declarations; repair 1 file / 1 string
+===== node scripts/audit/signed-fraction-variant-sweep-s139.cjs =====
+signed-fraction variant sweep: 4608/4608; 2304 multiply, 2304 divide
+===== node scripts/audit/shape-hierarchy-variant-sweep-s140.cjs =====
+/mnt/data/_merge_repo/scripts/audit/shape-hierarchy-variant-sweep-s140.cjs:16
+for(const [gen,form] of forms){const key=`${gen}/${form}`;counts.forms[key]=0;for(const band of bands)for(let seed=0;seed<384;seed++){const r=v.variantForGenForm(gen,form,`s140-${seed}`,band);if(!r||r.widget.type!=="shapeHierarchyLab")throw Error(`${key}/${band}/${seed}: causal surface lost`);const w=r.widget;if(!Array.isArray(w.nodes)||w.nodes.length<1||!Array.isArray(w.choices)||w.choices.length<3)throw Error(`${key}/${band}/${seed}: malformed output`);const winners=w.choices.filter(c=>correct(w,c));if(winners.length!==1)throw Error(`${key}/${band}/${seed}: ${winners.length} correct claims`);if(r.answer!==winners[0].id)throw Error(`${key}/${band}/${seed}: answer mismatch`);if(new Set(w.choices.map(c=>c.id)).size!==w.choices.length||new Set(w.choices.map(c=>c.label)).size!==w.choices.length)throw Error(`${key}/${band}/${seed}: duplicate choices`);for(const c of w.choices)if(!c.feedback||!c.evidenceText)throw Error(`${key}/${band}/${seed}: missing diagnosis/evidence`);if(w.mode==="triangle"&&w.triangleAngles&&Math.abs(w.triangleAngles.reduce((a,b)=>a+b,0)-180)>1e-9)throw Error(`${key}/${band}/${seed}: bad angle sum`);if(w.mode==="triangle"&&w.triangleSides){const s=[...w.triangleSides].sort((a,b)=>a-b);if(s[0]+s[1]<=s[2])throw Error(`${key}/${band}/${seed}: degenerate triangle`)}counts.total++;counts.forms[key]++;counts.modes[w.mode]++}}
+                                                                                                                                                                                                                                           ^
+
+Error: shape-hierarchy/cgParallelogramTrapezoid/support/0: causal surface lost
+    at Object.<anonymous> (/mnt/data/_merge_repo/scripts/audit/shape-hierarchy-variant-sweep-s140.cjs:16:242)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.16.0
+===== node scripts/audit/shape-hierarchy-variant-sweep-s140.cjs =====
+shape-hierarchy variant sweep: 11520/11520; {"hierarchy":3456,"triangle":3456,"verdict":4608}
+===== node scripts/audit/conditional-table-variant-sweep-s142.cjs =====
+conditional-table sweep: 9216/9216; {"rowTotal":1152,"grandTotal":1152,"cell":1152,"colTotal":1152,"relativeRow":2304,"relativeWhole":2304}
+===== node scripts/audit/graph-story-variant-sweep-s143.cjs =====
+graph-story sweep: 9216/9216; read 4608; build 4608; source files 13
+===== npm run gen:reports =====
+
+> gen:reports
+> node scripts/flagship-tier.mjs && node scripts/measure/playbook-status.mjs && node scripts/gen-product-state.mjs && node scripts/audit/excellence-backlog-s126.mjs && node scripts/audit/engine-registration-contract.mjs && node scripts/audit/player-harness-contract-s127.mjs && node scripts/audit/reuse-wave-s128.mjs && node scripts/audit/estimate-compare-s129.mjs && node scripts/audit/grid-read-s130.mjs && node scripts/audit/distribution-compare-s131.mjs && node scripts/audit/trial-probability-s132.mjs && node scripts/audit/compound-event-s133.mjs && node scripts/audit/composite-area-s136.mjs && node scripts/audit/geometry-roundup-s137.mjs && node scripts/audit/percent-change-s138.mjs && node scripts/audit/signed-fraction-s139.mjs && node scripts/audit/shape-hierarchy-s140.mjs && node scripts/audit/equation-outcome-s141.mjs && node scripts/audit/conditional-table-s142.mjs && node scripts/audit/graph-story-variant-sweep-s143.cjs && node scripts/audit/graph-story-s143.mjs && node scripts/audit/graph-story-mutations-s143.mjs
+
+tiers: A 609 B 225 C 271 D 24 | K-8 A 315 B 194 | C-only load-bearing 39 | backlog 39
+playbook: 16 enhancements · 0 unbuilt · 0 built-but-unused
+product-state: 84 courses · 1129 lessons · 10487 steps · 117 widgets (111 manipulatives) · tiers A609/B225/C271/D24 · 10201 tests/174 files · MCQ-heavy 153 · reading-heavy 7
+excellence-s126: 39/39 classified, 0 unreviewed | dispositions {"build":23,"extend":12,"intentional-assessment":2,"multi-engine":2} | representations no=27 partial=10 | honest prediction ceilings=9
+engine registration passed: 117/117 core-complete; describeState 71/117
+player harness contract passed: 36/36 checks, 71 projected browser executions
+reuse-wave-s128: 4 steps exact-fit; 3 false reuses preserved; S128 backlog 64 -> 62; current 39
+estimate-compare-s129 passed: 4 exact-choice experiences; mmt-02-01 C20 -> B27; S129 queue 62 -> 61; current 39
+grid-read-s130 passed: 16 fixed-grid experiences; two C22 -> B28; queue 61 -> 39
+distribution-compare-s131 passed: 26 experiences; three lessons -> honest B; queue 59 -> 39
+trial-probability-s132 passed: 15 experiences; two lessons -> honest B; Session-132 queue ceiling 54, current 39; registry floor 108, current 117
+compound-event-s133: 8/8 fixed experiences; 4/4 variant declarations; registration 6/6
+composite-area-s136: 13/13 experiences; 7/7 variants; registration 8/8
+geometry-roundup-s137: 6/6 experiences; 2 engines; queue 39
+percent-change-s138: 7/7 experiences; queue 39
+signed-fraction-s139: 9/9 experiences; 4608 variants; queue 39
+shape-hierarchy-s140: 19/19 experiences; 11520 variants; queue 39
+equation-outcome-s141: 7/7; variants 3456; queue 39
+conditional-table-s142: 14/14; variants 9216; queue 39
+graph-story sweep: 9216/9216; read 4608; build 4608; source files 13
+graph-story-s143: 14/14; variants 9216; queue 39
+graph-story mutations: 20/20 rejected; controls 2/2
+===== node scripts/session/verify-generated.mjs =====
+tiers: A 609 B 225 C 271 D 24 | K-8 A 315 B 194 | C-only load-bearing 39 | backlog 39
+playbook: 16 enhancements · 0 unbuilt · 0 built-but-unused
+product-state: 84 courses · 1129 lessons · 10487 steps · 117 widgets (111 manipulatives) · tiers A609/B225/C271/D24 · 10201 tests/174 files · MCQ-heavy 153 · reading-heavy 7
+excellence-s126: 39/39 classified, 0 unreviewed | dispositions {"build":23,"extend":12,"intentional-assessment":2,"multi-engine":2} | representations no=27 partial=10 | honest prediction ceilings=9
+engine registration passed: 117/117 core-complete; describeState 71/117
+player harness contract passed: 36/36 checks, 71 projected browser executions
+reuse-wave-s128: 4 steps exact-fit; 3 false reuses preserved; S128 backlog 64 -> 62; current 39
+estimate-compare-s129 passed: 4 exact-choice experiences; mmt-02-01 C20 -> B27; S129 queue 62 -> 61; current 39
+grid-read-s130 passed: 16 fixed-grid experiences; two C22 -> B28; queue 61 -> 39
+distribution-compare-s131 passed: 26 experiences; three lessons -> honest B; queue 59 -> 39
+trial-probability-s132 passed: 15 experiences; two lessons -> honest B; Session-132 queue ceiling 54, current 39; registry floor 108, current 117
+compound-event-s133: 8/8 fixed experiences; 4/4 variant declarations; registration 6/6
+composite-area-s136: 13/13 experiences; 7/7 variants; registration 8/8
+geometry-roundup-s137: 6/6 experiences; 2 engines; queue 39
+percent-change-s138: 7/7 experiences; queue 39
+signed-fraction-s139: 9/9 experiences; 4608 variants; queue 39
+shape-hierarchy-s140: 19/19 experiences; 11520 variants; queue 39
+equation-outcome-s141: 7/7; variants 3456; queue 39
+conditional-table sweep: 9216/9216; {"rowTotal":1152,"grandTotal":1152,"cell":1152,"colTotal":1152,"relativeRow":2304,"relativeWhole":2304}
+conditional-table-s142: 14/14; variants 9216; queue 39
+graph-story sweep: 9216/9216; read 4608; build 4608; source files 13
+graph-story-s143: 14/14; variants 9216; queue 39
+graph-story mutations: 20/20 rejected; controls 2/2
+source transpilation S143 passed: 15/15 files; TypeScript 5.8.3
+content JSON S143 passed: 1129 lessons, 1129 unique ids
+generated freshness passed: 47 artifacts byte-stable after regeneration
+===== node scripts/session/verify-generated.mjs =====
+tiers: A 609 B 225 C 271 D 24 | K-8 A 315 B 194 | C-only load-bearing 39 | backlog 39
+playbook: 16 enhancements · 0 unbuilt · 0 built-but-unused
+product-state: 84 courses · 1129 lessons · 10487 steps · 117 widgets (111 manipulatives) · tiers A609/B225/C271/D24 · 10201 tests/174 files · MCQ-heavy 153 · reading-heavy 7
+excellence-s126: 39/39 classified, 0 unreviewed | dispositions {"build":23,"extend":12,"intentional-assessment":2,"multi-engine":2} | representations no=27 partial=10 | honest prediction ceilings=9
+engine registration passed: 117/117 core-complete; describeState 71/117
+player harness contract passed: 36/36 checks, 71 projected browser executions
+reuse-wave-s128: 4 steps exact-fit; 3 false reuses preserved; S128 backlog 64 -> 62; current 39
+estimate-compare-s129 passed: 4 exact-choice experiences; mmt-02-01 C20 -> B27; S129 queue 62 -> 61; current 39
+grid-read-s130 passed: 16 fixed-grid experiences; two C22 -> B28; queue 61 -> 39
+distribution-compare-s131 passed: 26 experiences; three lessons -> honest B; queue 59 -> 39
+trial-probability-s132 passed: 15 experiences; two lessons -> honest B; Session-132 queue ceiling 54, current 39; registry floor 108, current 117
+compound-event-s133: 8/8 fixed experiences; 4/4 variant declarations; registration 6/6
+composite-area-s136: 13/13 experiences; 7/7 variants; registration 8/8
+geometry-roundup-s137: 6/6 experiences; 2 engines; queue 39
+percent-change-s138: 7/7 experiences; queue 39
+signed-fraction-s139: 9/9 experiences; 4608 variants; queue 39
+shape-hierarchy-s140: 19/19 experiences; 11520 variants; queue 39
+equation-outcome-s141: 7/7; variants 3456; queue 39
+conditional-table sweep: 9216/9216; {"rowTotal":1152,"grandTotal":1152,"cell":1152,"colTotal":1152,"relativeRow":2304,"relativeWhole":2304}
+conditional-table-s142: 14/14; variants 9216; queue 39
+graph-story sweep: 9216/9216; read 4608; build 4608; source files 13
+graph-story-s143: 14/14; variants 9216; queue 39
+graph-story mutations: 20/20 rejected; controls 2/2
+source transpilation S143 passed: 15/15 files; TypeScript 5.8.3
+content JSON S143 passed: 1129 lessons, 1129 unique ids
+generated freshness passed: 47 artifacts byte-stable after regeneration
+===== node scripts/audit/engine-registration-contract.mjs =====
+engine registration passed: 117/117 core-complete; describeState 71/117
+===== node scripts/audit/player-harness-contract-s127.mjs =====
+player harness contract passed: 36/36 checks, 71 projected browser executions
+===== node scripts/session/native-clean.mjs =====
+Native integrity passed: 1433 JSON files, 830 source files, 1115 local imports, 45 internal links, 2 assets, 216 buttons, 25 API routes.
+native clean-copy gate passed
+===== node scripts/session/tidy-clean.mjs =====
+tidy failed with 2 issues:
+- root _merge_repo does not encode a session number
+- SESSION_NOTES.md: latest heading is Session 143, expected -1
+node:internal/errors:983
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /opt/nvm/versions/node/v22.16.0/bin/node /tmp/maggies-tidy-clean-oUhYFG/_merge_repo/scripts/session/verify-tidy.mjs
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:882:11)
+    at execFileSync (node:child_process:918:15)
+    at file:///mnt/data/_merge_repo/scripts/session/tidy-clean.mjs:25:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 8358,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v22.16.0

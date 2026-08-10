@@ -1,0 +1,446 @@
+{
+  "id": "sp-03-02",
+  "slug": "estimating-probability-from-trials",
+  "title": "Estimating Probability from Trials",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch3-understanding-probability",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "probability-line",
+      "body": "When you don't know the exact probability, run trials and count. A coin landing on heads 6 times out of 10 flips gives a relative frequency of 6/10 = 3/5."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find a relative frequency.",
+      "widget": {
+        "type": "trialProbabilityLab",
+        "prompt": "A coin landed on heads 6 times out of 10 flips. What is the relative frequency of heads?",
+        "mode": "experimental",
+        "favourable": 6,
+        "total": 10,
+        "successLabel": "heads",
+        "totalLabel": "flips",
+        "outcomes": [],
+        "choices": [
+          {
+            "id": "a",
+            "label": "3/5",
+            "num": 3,
+            "den": 5,
+            "feedback": "Yes — 6 out of 10 simplifies to 3/5."
+          },
+          {
+            "id": "b",
+            "label": "6/4",
+            "num": 6,
+            "den": 4,
+            "feedback": "That compares heads to tails, not heads to the TOTAL flips. 6 out of 10 is 3/5."
+          },
+          {
+            "id": "c",
+            "label": "1/2",
+            "num": 1,
+            "den": 2,
+            "feedback": "That would be exactly 5 out of 10. The actual result was 6 out of 10, which is 3/5."
+          }
+        ],
+        "fallbackFeedback": "Compare favourable outcomes with the complete set of equally likely outcomes or trials.",
+        "successFeedback": "Yes — 6 out of 10 simplifies to 3/5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another relative frequency.",
+      "conceptTag": "sp-relative-freq",
+      "explanationVariants": [
+        "18 out of 30 simplifies to 3/5.",
+        "Relative frequency = occurrences ÷ total trials."
+      ],
+      "widget": {
+        "type": "trialProbabilityLab",
+        "prompt": "A spinner landed on red 18 times out of 30 spins. What is the relative frequency of red?",
+        "mode": "experimental",
+        "favourable": 18,
+        "total": 30,
+        "successLabel": "red spins",
+        "totalLabel": "spins",
+        "outcomes": [],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "3/5",
+            "num": 3,
+            "den": 5,
+            "feedback": "Yes — 18/30 simplifies to 3/5."
+          },
+          {
+            "id": "trap-1",
+            "label": "18/12",
+            "num": 18,
+            "den": 12,
+            "feedback": "That compares red to non-red, not red to the TOTAL spins. 18 out of 30 is 3/5."
+          },
+          {
+            "id": "trap-2",
+            "label": "1/3",
+            "num": 1,
+            "den": 3,
+            "feedback": "1/3 of 30 would be 10, not 18. The actual relative frequency is 18/30 = 3/5."
+          }
+        ],
+        "fallbackFeedback": "Relative frequency is successes over TOTAL trials: 18 over 30.",
+        "successFeedback": "Yes — 18/30 simplifies to 3/5."
+      },
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "trialRelFreq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Experimental probability (from trials) doesn't always exactly match theoretical probability (from counting outcomes) — but with enough trials, it tends to get close.",
+      "figure": "sp-experimental"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Compare experimental to theoretical.",
+      "widget": {
+        "type": "trialProbabilityLab",
+        "prompt": "A die's THEORETICAL probability of rolling a 6 is 1/6. After 60 rolls, a 6 came up 12 times. What is the EXPERIMENTAL probability?",
+        "mode": "experimental",
+        "favourable": 12,
+        "total": 60,
+        "successLabel": "sixes",
+        "totalLabel": "rolls",
+        "outcomes": [],
+        "choices": [
+          {
+            "id": "a",
+            "label": "1/5",
+            "num": 1,
+            "den": 5,
+            "feedback": "Yes — 12 out of 60 simplifies to 1/5, close to but not exactly the theoretical 1/6."
+          },
+          {
+            "id": "b",
+            "label": "1/6",
+            "num": 1,
+            "den": 6,
+            "feedback": "1/6 is the THEORETICAL probability. The experimental result here (12 out of 60) is 1/5."
+          },
+          {
+            "id": "c",
+            "label": "12/48",
+            "num": 12,
+            "den": 48,
+            "feedback": "That compares successes to failures, not successes to the TOTAL rolls. 12 out of 60 is 1/5."
+          }
+        ],
+        "fallbackFeedback": "Compare favourable outcomes with the complete set of equally likely outcomes or trials.",
+        "successFeedback": "Yes — 12 out of 60 simplifies to 1/5, close to but not exactly the theoretical 1/6.",
+        "referenceNum": 1,
+        "referenceDen": 6
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "More trials generally give a more reliable estimate — a probability based on 1000 trials is more trustworthy than one based on just 10.",
+      "figure": "sp-experimental"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A relative frequency with bigger numbers.",
+      "widget": {
+        "type": "trialProbabilityLab",
+        "prompt": "A basketball player made 45 out of 60 free throws. What is the relative frequency of making a free throw?",
+        "mode": "experimental",
+        "favourable": 45,
+        "total": 60,
+        "successLabel": "made shots",
+        "totalLabel": "attempts",
+        "outcomes": [],
+        "choices": [
+          {
+            "id": "a",
+            "label": "3/4",
+            "num": 3,
+            "den": 4,
+            "feedback": "Yes — 45/60 simplifies to 3/4."
+          },
+          {
+            "id": "b",
+            "label": "45/15",
+            "num": 45,
+            "den": 15,
+            "feedback": "That compares makes to misses, not makes to the TOTAL attempts. 45 out of 60 is 3/4."
+          },
+          {
+            "id": "c",
+            "label": "2/3",
+            "num": 2,
+            "den": 3,
+            "feedback": "2/3 of 60 would be 40, not 45. The actual relative frequency is 45/60 = 3/4."
+          }
+        ],
+        "fallbackFeedback": "Compare favourable outcomes with the complete set of equally likely outcomes or trials.",
+        "successFeedback": "Yes — 45/60 simplifies to 3/4."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another trial-based estimate.",
+      "conceptTag": "sp-relative-freq",
+      "explanationVariants": [
+        "14 out of 20 simplifies to 7/10.",
+        "Relative frequency = occurrences ÷ total trials."
+      ],
+      "widget": {
+        "type": "trialProbabilityLab",
+        "prompt": "A weighted coin landed on heads 14 times out of 20 flips. What is the relative frequency of heads?",
+        "mode": "experimental",
+        "favourable": 14,
+        "total": 20,
+        "successLabel": "heads",
+        "totalLabel": "flips",
+        "outcomes": [],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "7/10",
+            "num": 7,
+            "den": 10,
+            "feedback": "Yes — 14/20 simplifies to 7/10."
+          },
+          {
+            "id": "trap-1",
+            "label": "14/6",
+            "num": 14,
+            "den": 6,
+            "feedback": "That compares heads to tails, not heads to the TOTAL flips. 14 out of 20 is 7/10."
+          },
+          {
+            "id": "trap-2",
+            "label": "1/2",
+            "num": 1,
+            "den": 2,
+            "feedback": "That would be exactly 10 out of 20. The actual result was 14 out of 20, which is 7/10."
+          }
+        ],
+        "fallbackFeedback": "Relative frequency is heads over TOTAL flips: 14 over 20.",
+        "successFeedback": "Yes — 14/20 simplifies to 7/10."
+      },
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "trialRelFreq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Recognize a landmark value.",
+      "conceptTag": "sp-likelihood-words",
+      "explanationVariants": [
+        "A probability of 0 means impossible.",
+        "0 is the bottom of the probability scale."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A probability of 0 describes an event that is...",
+        "options": [
+          {
+            "id": "a",
+            "label": "impossible",
+            "correct": true,
+            "feedback": "Yes — a probability of 0 means the event cannot happen."
+          },
+          {
+            "id": "b",
+            "label": "certain",
+            "feedback": "Certain means a probability of 1, the opposite end. 0 means impossible."
+          },
+          {
+            "id": "c",
+            "label": "likely",
+            "feedback": "Likely means a probability near 1. A probability of 0 means impossible."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-likelihood-words",
+        "form": "spLikelihoodImpossible"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier experimental-vs-theoretical comparison.",
+      "conceptTag": "sp-relative-freq",
+      "explanationVariants": [
+        "24 out of 40 simplifies to 3/5.",
+        "Relative frequency = occurrences ÷ total trials."
+      ],
+      "widget": {
+        "type": "trialProbabilityLab",
+        "prompt": "A spinner's theoretical probability of blue is 1/2. After 40 spins, blue came up 24 times. What is the EXPERIMENTAL probability of blue?",
+        "mode": "experimental",
+        "favourable": 24,
+        "total": 40,
+        "successLabel": "blue spins",
+        "totalLabel": "spins",
+        "outcomes": [],
+        "choices": [
+          {
+            "id": "correct",
+            "label": "3/5",
+            "num": 3,
+            "den": 5,
+            "feedback": "Yes — 24 out of 40 simplifies to 3/5."
+          },
+          {
+            "id": "trap-1",
+            "label": "1/2",
+            "num": 1,
+            "den": 2,
+            "feedback": "1/2 is the theoretical probability. The experimental result here (24 out of 40) is 3/5."
+          },
+          {
+            "id": "trap-2",
+            "label": "24/16",
+            "num": 24,
+            "den": 16,
+            "feedback": "That compares successes to failures, not successes to the TOTAL spins. 24 out of 40 is 3/5."
+          }
+        ],
+        "fallbackFeedback": "The experimental result is blue spins over TOTAL spins: 24 over 40.",
+        "successFeedback": "Yes — 24 out of 40 simplifies to 3/5.",
+        "referenceNum": 1,
+        "referenceDen": 2
+      },
+      "hints": [
+        "Relative frequency = occurrences ÷ total trials.",
+        "24 ÷ 40.",
+        "24/40 simplifies to 3/5."
+      ],
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "trialRelFreq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Experimental probability comes from real trials: occurrences divided by total trials — it estimates, but doesn't always exactly match, the theoretical probability.",
+      "takeaways": [
+        "Relative frequency = occurrences ÷ total trials.",
+        "Experimental probability can differ from theoretical probability.",
+        "More trials generally give a more reliable estimate."
+      ],
+      "teaser": "next: putting theoretical and experimental probability together."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-relative-freq",
+      "concept": {
+        "id": "rem-srf-c",
+        "kind": "concept",
+        "body": "Relative frequency (experimental probability) = occurrences ÷ total trials. A coin landing on heads 6 out of 10 flips: 6/10 = 3/5."
+      },
+      "check": {
+        "id": "rem-srf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-relative-freq",
+        "explanationVariants": [
+          "6 out of 10 simplifies to 3/5.",
+          "Relative frequency = occurrences ÷ total trials."
+        ],
+        "widget": {
+          "type": "trialProbabilityLab",
+          "prompt": "A coin landed on heads 6 times out of 10 flips. What is the relative frequency of heads?",
+          "mode": "experimental",
+          "favourable": 6,
+          "total": 10,
+          "successLabel": "heads",
+          "totalLabel": "flips",
+          "outcomes": [],
+          "choices": [
+            {
+              "id": "a",
+              "label": "3/5",
+              "num": 3,
+              "den": 5,
+              "feedback": "Yes — 3/5."
+            },
+            {
+              "id": "b",
+              "label": "6/4",
+              "num": 6,
+              "den": 4,
+              "feedback": "Compare to the total, not to tails: 3/5."
+            },
+            {
+              "id": "c",
+              "label": "1/2",
+              "num": 1,
+              "den": 2,
+              "feedback": "That would be 5 out of 10. The actual is 6/10 = 3/5."
+            }
+          ],
+          "fallbackFeedback": "Compare favourable outcomes with the complete set of equally likely outcomes or trials.",
+          "successFeedback": "Yes — 3/5."
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-likelihood-words",
+      "concept": {
+        "id": "rem-slw2-c",
+        "kind": "concept",
+        "body": "The probability scale's endpoints: 0 means impossible, 1 means certain."
+      },
+      "check": {
+        "id": "rem-slw2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-likelihood-words",
+        "explanationVariants": [
+          "A probability of 0 means impossible.",
+          "0 is the bottom of the scale."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A probability of 0 describes an event that is...",
+          "options": [
+            {
+              "id": "a",
+              "label": "impossible",
+              "correct": true,
+              "feedback": "Yes — impossible."
+            },
+            {
+              "id": "b",
+              "label": "certain",
+              "feedback": "Certain is 1, the opposite end."
+            },
+            {
+              "id": "c",
+              "label": "likely",
+              "feedback": "Likely events sit near 1 on the scale. A probability of 0 means it cannot happen at all."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

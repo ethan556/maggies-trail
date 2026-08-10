@@ -1,0 +1,304 @@
+{
+  "id": "asv-02-01",
+  "slug": "decomposing-l-shapes",
+  "title": "Decomposing L-Shapes",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch2-composite-figures",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "l-shape-decompose",
+      "body": "An L-shaped figure isn't a single rectangle — but it splits into two. Cut it with one straight line and you get a bottom rectangle and a top rectangle; **add their areas** for the total. A 10-by-8 L with a 4-by-3 corner missing splits into a 10×5 rectangle (50) plus a 6×3 rectangle (18): total **68**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Split and add.",
+      "conceptTag": "decompose-lshape",
+      "widget": {
+        "type": "numeric",
+        "prompt": "An L-shape splits into a 6×4 rectangle and a 3×2 rectangle. What is the total area?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is only the BIGGER piece (6×4), leaving out the 3×2 piece entirely. Add both: 24 + 6 = 30."
+          },
+          {
+            "value": 144,
+            "feedback": "144 multiplies the two pieces together instead of adding them. Combining pieces of one shape means ADDING: 24 + 6 = 30."
+          }
+        ],
+        "fallbackFeedback": "6×4 = 24, and 3×2 = 6; total = 24 + 6 = 30."
+      },
+      "predict": {
+        "prompt": "An L-shape has no formula of its own. Can its area still be found exactly?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — cut it into rectangles and add"
+          },
+          {
+            "id": "no",
+            "label": "No — L-shapes need estimating"
+          },
+          {
+            "id": "trace",
+            "label": "Only by counting every square"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Any straight-sided shape splits into rectangles — find each piece's area and add. Decomposing beats memorizing a formula for every shape."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A different split.",
+      "conceptTag": "decompose-lshape",
+      "explanationVariants": [
+        "8×3 = 24 and 5×4 = 20; total = 24 + 20 = 44.",
+        "Add the two rectangle pieces: 44."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An L-shape splits into an 8×3 rectangle and a 5×4 rectangle. What is the total area?",
+        "answer": 44,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is only the second piece (5×4), missing the 8×3 piece. Add both: 24 + 20 = 44."
+          },
+          {
+            "value": 480,
+            "feedback": "480 multiplies the two piece-areas together. Combine by ADDING: 24 + 20 = 44."
+          }
+        ],
+        "fallbackFeedback": "8×3 = 24, and 5×4 = 20; total = 44."
+      },
+      "variant": {
+        "gen": "lshape-decompose"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "There's a second, equally valid path: picture the L-shape's **bounding box** — the full rectangle it would be without the missing corner — then **subtract the cut-out** piece. The 10-by-8 example: bounding box 10×8 = 80, minus the 4×3 cut = 12, giving 80 − 12 = 68. Same answer, different route — a genuine check on your work.",
+      "figure": "l-shape-decompose"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtract instead.",
+      "conceptTag": "decompose-lshape",
+      "explanationVariants": [
+        "Bounding box 6×6 = 36, minus the 3×2 cut (6): 36 − 6 = 30 — matching the addition method exactly.",
+        "Both routes agree: 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The same L-shape from before has a 6×6 bounding box with a 3×2 corner cut out. Using SUBTRACTION, what is the total area?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "36 is just the bounding box, forgetting to subtract the cut-out corner: 36 − 6 = 30."
+          },
+          {
+            "value": 42,
+            "feedback": "42 ADDS the cut instead of subtracting it. A missing corner is REMOVED: 36 − 6 = 30."
+          }
+        ],
+        "fallbackFeedback": "36 − 6 = 30 — the bounding box minus the cut-out corner."
+      },
+      "variant": {
+        "gen": "lshape-decompose",
+        "form": "boxMinusCorner"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Both methods, side by side.",
+      "conceptTag": "decompose-lshape",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Each L-shape description should give the SAME area both ways. Match each to its total.",
+        "left": [
+          {
+            "id": "m1",
+            "label": "Bounding 8×7 minus 3×4 cut"
+          },
+          {
+            "id": "m2",
+            "label": "Two rectangles: 8×3 and 5×4"
+          },
+          {
+            "id": "m3",
+            "label": "Bounding 10×8 minus 4×3 cut"
+          },
+          {
+            "id": "m4",
+            "label": "Two rectangles: 10×5 and 6×3"
+          }
+        ],
+        "right": [
+          {
+            "id": "v44",
+            "label": "44"
+          },
+          {
+            "id": "v68",
+            "label": "68"
+          }
+        ],
+        "pairs": {
+          "m1": "v44",
+          "m2": "v44",
+          "m3": "v68",
+          "m4": "v68"
+        },
+        "pairErrors": [
+          {
+            "left": "m1",
+            "right": "v68",
+            "feedback": "8×7 − 3×4 = 56 − 12 = 44, not 68. That's the SAME L-shape as the 8×3-and-5×4 split."
+          },
+          {
+            "left": "m3",
+            "right": "v44",
+            "feedback": "10×8 − 4×3 = 80 − 12 = 68, not 44. That matches the 10×5-and-6×3 split."
+          }
+        ],
+        "missFeedback": "Compute each description: subtraction gives bounding box minus cut; addition gives the two rectangle pieces summed. Two descriptions describe the SAME shape.",
+        "successFeedback": "Matched — subtraction and addition describe the same two L-shapes, landing on the same two totals."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick your method.",
+      "conceptTag": "decompose-lshape",
+      "explanationVariants": [
+        "Either method works: bounding 9×6 (54) minus cut 3×2 (6) = 48; or rectangles 9×4 (36) plus 6×2 (12) = 48.",
+        "Both routes land on 48 — pick whichever is easier to picture."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An L-shape has a 9×6 bounding box with a 3×2 corner missing. Find its area using either method.",
+        "answer": 48,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "54 is just the bounding box, forgetting the cut: 54 − 6 = 48."
+          },
+          {
+            "value": 60,
+            "feedback": "60 ADDS the cut area instead of removing it. A missing corner subtracts: 54 − 6 = 48."
+          }
+        ],
+        "fallbackFeedback": "9×6 = 54, minus the 3×2 cut (6): 48."
+      },
+      "variant": {
+        "gen": "lshape-decompose",
+        "form": "boxMinusCorner"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Verify both ways yourself.",
+      "conceptTag": "decompose-lshape",
+      "hints": [
+        "Bounding box: 12×9. Cut corner: 5×4.",
+        "Subtraction: 108 − 20.",
+        "Or split into two rectangles and add — both should agree."
+      ],
+      "explanationVariants": [
+        "Bounding 12×9 = 108, minus cut 5×4 = 20: 108 − 20 = 88. (Equivalently, two rectangles would also sum to 88.)",
+        "Subtraction method: 108 − 20 = 88."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An L-shaped patio has a 12×9 bounding box with a 5×4 corner missing (a flower bed). What is the patio's area?",
+        "answer": 88,
+        "tolerance": 0,
+        "unit": "square feet",
+        "commonErrors": [
+          {
+            "value": 108,
+            "feedback": "108 is the full bounding box, forgetting to remove the flower bed corner: 108 − 20 = 88."
+          },
+          {
+            "value": 128,
+            "feedback": "128 ADDS the corner instead of subtracting it. The missing corner is REMOVED: 108 − 20 = 88."
+          }
+        ],
+        "fallbackFeedback": "108 − 20 = 88 square feet."
+      },
+      "variant": {
+        "gen": "lshape-decompose",
+        "form": "boxMinusCorner"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two routes, one answer.",
+      "takeaways": [
+        "Split an L-shape into two rectangles and ADD their areas.",
+        "Or take the bounding box and SUBTRACT the missing corner — same answer either way.",
+        "Using both methods on the same shape is a built-in check on your work."
+      ],
+      "teaser": "next: composite figures built with triangles, not just rectangles."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decompose-lshape",
+      "concept": {
+        "id": "rem-dl-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Two rectangles, added — or bounding box, minus the cut.** A 5×5 bounding box with a 2×2 corner missing: 25 − 4 = 21. Or split into pieces that also sum to 21. Either way works."
+      },
+      "check": {
+        "id": "rem-dl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decompose-lshape",
+        "explanationVariants": [
+          "25 − 4 = 21.",
+          "Bounding box minus the missing corner: 21."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An L-shape has a 5×5 bounding box with a 2×2 corner missing. What is its area?",
+          "answer": 21,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 25,
+              "feedback": "25 is just the bounding box. Subtract the missing corner: 25 − 4 = 21."
+            },
+            {
+              "value": 29,
+              "feedback": "29 adds the corner instead of subtracting it. A missing piece is REMOVED: 25 − 4 = 21."
+            }
+          ],
+          "fallbackFeedback": "25 − 4 = 21."
+        }
+      }
+    }
+  ]
+}

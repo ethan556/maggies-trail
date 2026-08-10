@@ -1,0 +1,294 @@
+{
+  "id": "esn-02-03",
+  "slug": "roots-in-context",
+  "title": "Roots in Context",
+  "courseId": "exponents-scientific-notation",
+  "chapterId": "ch2-square-cube-roots",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A square garden with area 81 sq ft has a side length that solves side² = 81 — since a physical length can't be negative, only the POSITIVE solution makes sense here: side = 9 ft. Real-world root problems often drop the negative solution for exactly this reason.",
+      "figure": "esn-root-context"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find a square side length.",
+      "widget": {
+        "type": "areaModel",
+        "prompt": "A square rug has an area of 36 square feet. What is its side length, in feet? Set the side until the square covers 36.",
+        "targetArea": 36,
+        "wMax": 12,
+        "hMax": 12,
+        "wStart": 1,
+        "hStart": 1,
+        "square": true,
+        "successFeedback": "6 × 6 = 36 — the side is 6 ft.",
+        "lowFeedback": "That square covers less than 36 square feet. Widen the side and watch the area climb.",
+        "highFeedback": "That square covers more than 36 square feet. Each extra foot of side adds a whole strip."
+      },
+      "conceptTag": "esn-roots-context",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents roots context.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for roots context must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines roots context."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponents-scientific-notation:esn-roots-context",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "A square rug covers 36 square feet. Its side length is…",
+        "options": [
+          {
+            "id": "six",
+            "label": "6 feet"
+          },
+          {
+            "id": "half",
+            "label": "18 feet — half of 36"
+          },
+          {
+            "id": "nine",
+            "label": "9 feet"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "6 feet, because 6 × 6 = 36. Halving gives 18, which would be right if area were side + side — but area is side TIMES side, so undoing it takes a square root rather than a halving."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A cube-shaped box with volume 125 cubic inches has an edge length that solves edge³ = 125 — and since cube equations have only ONE real solution anyway, there's no sign ambiguity to resolve here: edge = 5 in.",
+      "figure": "esn-root-context"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find a cube edge length.",
+      "conceptTag": "esn-roots-context",
+      "explanationVariants": [
+        "edge³ = 27, and 3³ = 27, so the edge length is 3 cm.",
+        "Only one number cubes to 27: 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cube-shaped block has a volume of 27 cubic centimeters. What is its edge length, in centimeters?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's a third of 27, not its cube root — 3³ = 27, so the edge is 3 cm."
+          },
+          {
+            "value": 13.5,
+            "feedback": "That's half of 27, not a cube root — check 3³ = 27 instead."
+          }
+        ],
+        "fallbackFeedback": "edge³ = 27, and 3³ = 27, so the edge length is 3 cm."
+      },
+      "variant": {
+        "gen": "g8-esn-root-context",
+        "form": "esnRootCube"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another square-area context.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square window has an area of 144 square inches. What is its side length, in inches?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "That's half of 144, not its square root — 12² = 144, so the side is 12 in."
+          },
+          {
+            "value": -12,
+            "feedback": "A physical side length can't be negative — use the positive solution: 12 in."
+          }
+        ],
+        "fallbackFeedback": "side² = 144, and 12² = 144, so the side is 12 in."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Distinguish which root the context needs.",
+      "conceptTag": "esn-roots-context",
+      "explanationVariants": [
+        "A square area problem needs side² = p, solved with a square root; a cube volume problem needs edge³ = p, solved with a cube root.",
+        "Area is 2-dimensional (length × length, so squared); volume here is 3-dimensional (length × length × length, so cubed)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A cube-shaped tank has a volume of 64 cubic meters. Which equation finds its edge length e?",
+        "options": [
+          {
+            "id": "a",
+            "label": "e³ = 64",
+            "correct": true,
+            "feedback": "Right — volume is 3-dimensional, so the edge is cubed."
+          },
+          {
+            "id": "b",
+            "label": "e² = 64",
+            "correct": false,
+            "feedback": "That's the equation for an AREA problem, not volume — volume needs e³=64."
+          },
+          {
+            "id": "c",
+            "label": "e × 3 = 64",
+            "correct": false,
+            "feedback": "Volume isn't edge times 3 — it's edge cubed (edge×edge×edge)."
+          },
+          {
+            "id": "d",
+            "label": "e = 64",
+            "correct": false,
+            "feedback": "That skips the cubing relationship entirely — the correct equation is e³=64."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-esn-root-context",
+        "form": "esnRootEquation"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A square-area problem, solved.",
+      "conceptTag": "esn-roots-context",
+      "explanationVariants": [
+        "side² = 100, and 10² = 100, so the side length is 10 m.",
+        "The positive square root of 100 is 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square field has an area of 100 square meters. What is its side length, in meters?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 50,
+            "feedback": "That's half of 100, not its square root — 10² = 100, so the side is 10 m."
+          },
+          {
+            "value": -10,
+            "feedback": "A physical side length can't be negative — use the positive solution: 10 m."
+          }
+        ],
+        "fallbackFeedback": "side² = 100, and 10² = 100, so the side is 10 m."
+      },
+      "variant": {
+        "gen": "g8-esn-root-context",
+        "form": "esnRootSquare"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A mixed context problem.",
+      "conceptTag": "esn-roots-context",
+      "explanationVariants": [
+        "Volume is 3-dimensional, so edge³ = 216; since 6³ = 216, the edge length is 6 ft.",
+        "Set up edge³ = 216 (volume, cubic), then solve: 6³ = 216."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cube-shaped crate has a volume of 216 cubic feet. What is its edge length, in feet?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "That's a third of 216, not its cube root — 6³ = 216, so the edge is 6 ft."
+          },
+          {
+            "value": 36,
+            "feedback": "That's a sixth of 216, and also 6² rather than 6³ — check 6×6×6 = 216."
+          }
+        ],
+        "fallbackFeedback": "edge³ = 216, and 6³ = 216, so the edge length is 6 ft."
+      },
+      "hints": [
+        "Volume is length × length × length — set up edge³ = 216.",
+        "Look for a perfect cube close to 216 (try 5³, 6³, 7³…).",
+        "6³ = 216, so the edge length is 6 ft."
+      ],
+      "variant": {
+        "gen": "g8-esn-root-context",
+        "form": "esnRootCubeLarge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Match the equation to the dimension: area problems square, volume problems cube.",
+      "takeaways": [
+        "A physical length is always positive, so real-world square-root problems use only the positive solution.",
+        "Area (2D) problems set up side² = p; volume (3D) problems set up edge³ = p.",
+        "Cube-root context problems never have a sign ambiguity to resolve, since x³=p has just one real solution."
+      ],
+      "teaser": "Next chapter: writing very large and very small numbers in scientific notation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "esn-roots-context",
+      "concept": {
+        "id": "rem-esn0203-c",
+        "kind": "concept",
+        "body": "A physical length is always positive. Square-area problems set up side²=p (use only the positive root); cube-volume problems set up edge³=p (only one real solution anyway)."
+      },
+      "check": {
+        "id": "rem-esn0203-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "esn-roots-context",
+        "explanationVariants": [
+          "side² = 49, and 7² = 49, so the side length is 7 in.",
+          "The positive square root of 49 is 7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A square tile has an area of 49 square inches. What is its side length, in inches?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 24.5,
+              "feedback": "That's half of 49, not its square root — 7² = 49, so the side is 7 in."
+            },
+            {
+              "value": -7,
+              "feedback": "A physical side length can't be negative — use the positive solution: 7 in."
+            }
+          ],
+          "fallbackFeedback": "side² = 49, and 7² = 49, so the side is 7 in."
+        }
+      }
+    }
+  ]
+}

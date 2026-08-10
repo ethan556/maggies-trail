@@ -1,0 +1,250 @@
+{
+ "id": "dc-03-02",
+ "slug": "differentials",
+ "title": "Differentials and Error",
+ "courseId": "derivatives-in-context",
+ "chapterId": "ch3-linearisation",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Same idea, new notation — and the notation is what makes it useful.\n\n**dy = f′(x) · dx**\n\nRead it as: *a small change dx in the input produces a change of about f′(x)·dx in the output.* The derivative is the exchange rate between the two.\n\nThat is exactly how a small measurement error propagates into the answer.",
+   "figure": "dr-tangent-line"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Propagate an error.",
+   "conceptTag": "dc-differentials",
+   "explanationVariants": [
+    "V = s³ gives dV = 3s²·ds. With s = 10 and ds = 0.1, dV = 3(100)(0.1) = 30 cm³.",
+    "The true change is 10.1³ − 1000 = 30.301, so the differential is accurate to one part in a hundred."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A cube's side is measured as 10 cm with an error of up to 0.1 cm. Estimate the resulting error in the VOLUME, in cm³.",
+    "answer": 30,
+    "tolerance": 0.5,
+    "commonErrors": [
+     {
+      "value": 0.1,
+      "feedback": "That is the error in the SIDE. The derivative converts it: dV = 3s²·ds = 3(100)(0.1) = 30 cm³."
+     },
+     {
+      "value": 3,
+      "feedback": "That is 3 × ds × 10 — a factor of s missing. dV = 3s²·ds = 300 × 0.1 = 30."
+     },
+     {
+      "value": 1000,
+      "feedback": "That is the volume itself, not the error in it."
+     }
+    ],
+    "fallbackFeedback": "dV = 3s²·ds = 3(100)(0.1) = 30 cm³ — and the true change is 30.301."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-differentials__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why a 1% error in the side is a 3% error in the volume.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Relative error, and why cubing triples it.",
+    "panels": [
+     {
+      "title": "The absolute error",
+      "body": "dV = 3s²·ds. With s = 10 and ds = 0.1 that is 30 cm³ — which sounds enormous next to a 0.1 cm error in the side."
+     },
+     {
+      "title": "The relative error",
+      "body": "But the volume itself is 1000. So dV/V = 30/1000 = 3%, while the side's relative error is 0.1/10 = 1%. Relative errors are the honest comparison."
+     },
+     {
+      "title": "And that 3 is the exponent",
+      "body": "dV/V = 3s²·ds / s³ = 3·(ds/s). The relative error is multiplied by THE POWER. Cubing triples it; squaring doubles it; a square root HALVES it. That is a rule worth carrying out of this course."
+     }
+    ],
+    "continueFeedback": "Keep going — the third panel is the reusable fact.",
+    "successFeedback": "Relative error is multiplied by the exponent. Cube a measurement and you triple its percentage error."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "So there are two errors, and they answer different questions:\n\n**Absolute error** — dV = 30 cm³. How far off, in real units.\n**Relative error** — dV/V = 3%. How far off, as a proportion.\n\nAnd the exponent rule: for V = sⁿ, the relative error in V is **n times** the relative error in s.",
+   "figure": "dr-power-rule-pattern"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Apply the exponent rule.",
+   "conceptTag": "dc-differentials",
+   "explanationVariants": [
+    "A = πr² has exponent 2, so a 1% error in r gives a 2% error in the area.",
+    "dA/A = 2πr·dr / πr² = 2(dr/r). The π cancels and the exponent survives."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A circle's radius is measured with a 1% error. What is the resulting percentage error in the AREA?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "The area depends on r SQUARED, so the relative error doubles: 2%."
+     },
+     {
+      "value": 4,
+      "feedback": "The exponent is 2, not 4. dA/A = 2(dr/r) = 2%."
+     },
+     {
+      "value": 3,
+      "feedback": "That is the rule for a CUBE (volume). An area goes with the square, so the factor is 2."
+     }
+    ],
+    "fallbackFeedback": "dA/A = 2(dr/r) = 2 × 1% = 2%."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-differentials__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "And it works downward too.",
+   "conceptTag": "dc-differentials",
+   "explanationVariants": [
+    "√s = s^(1/2), so the relative error is HALVED: a 4% error in s gives a 2% error in √s.",
+    "Roots are forgiving. That is why taking a square root of a noisy measurement is a way of quietening it."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A quantity s is measured with a 4% error. What is the error in √s?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "About 2% — the exponent is 1/2, so the relative error is halved.",
+      "correct": true,
+      "feedback": "Right. Roots are forgiving: taking a square root of a noisy measurement quietens the noise."
+     },
+     {
+      "id": "o2",
+      "label": "Also 4%.",
+      "correct": false,
+      "feedback": "Only if the exponent were 1. Here it is 1/2, so the relative error is halved."
+     },
+     {
+      "id": "o3",
+      "label": "8% — the error doubles.",
+      "correct": false,
+      "feedback": "Doubling happens when you SQUARE. A square root does the opposite."
+     },
+     {
+      "id": "o4",
+      "label": "16%.",
+      "correct": false,
+      "feedback": "That would be squaring the error itself, which is not what the rule says. Multiply the relative error by the EXPONENT, which is 1/2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-differentials__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "From error to tolerance.",
+   "conceptTag": "dc-differentials",
+   "hints": [
+    "Work backwards. You want dV/V ≤ 3%, and dV/V = 3(ds/s).",
+    "So 3(ds/s) ≤ 0.03, giving ds/s ≤ 0.01 — a 1% tolerance on the side.",
+    "The side is 10 cm, so ds ≤ 0.01 × 10."
+   ],
+   "explanationVariants": [
+    "3(ds/s) ≤ 0.03 gives ds/s ≤ 1%, and with s = 10 that means ds ≤ 0.1 cm.",
+    "This is how engineering tolerances are actually set: decide what error you can live with in the OUTPUT, and the exponent rule tells you how precisely you must measure the input."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A cube's volume must be accurate to within 3%. How precisely must the 10 cm side be measured, in cm?",
+    "answer": 0.1,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 0.3,
+      "feedback": "That is 3% of the SIDE. But the volume's error is THREE times the side's, so the side must be measured to 1%, i.e. 0.1 cm."
+     },
+     {
+      "value": 0.03,
+      "feedback": "That is 3% written as a decimal, not a length. Apply it to s = 10 after dividing by the exponent 3."
+     },
+     {
+      "value": 1,
+      "feedback": "That is 10% of the side — far too loose. It would give a 30% error in the volume."
+     }
+    ],
+    "fallbackFeedback": "3(ds/s) ≤ 0.03 → ds/s ≤ 1% → ds ≤ 0.1 cm."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-differentials__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The derivative is an exchange rate.",
+   "takeaways": [
+    "dy = f′(x)·dx — a small input change buys an output change of about f′(x) times as much.",
+    "For y = xⁿ, the RELATIVE error is multiplied by n. Cubing triples it; a square root halves it.",
+    "Run it backwards to set tolerances: decide the error you can accept in the output, and the rule tells you how precisely to measure the input."
+   ],
+   "teaser": "Next: where linearisation stops working — and why."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "dc-differentials",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "A small error in the input becomes an error in the output, and the derivative is the conversion factor: **dy = f′(x)·dx**. Big derivative, big amplification. That is all a differential says.",
+    "figure": "dr-tangent-line"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Convert the error.",
+    "conceptTag": "dc-differentials",
+    "explanationVariants": [
+     "dA = 2πr·dr = 2π(5)(0.1) ≈ 3.14 cm².",
+     "The derivative 2πr is the exchange rate."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A = πr². With r = 5 and dr = 0.1, estimate dA, to two decimals.",
+     "answer": 3.14,
+     "tolerance": 0.05,
+     "commonErrors": [
+      {
+       "value": 0.1,
+       "feedback": "That is the error in the RADIUS. Multiply by the derivative 2πr = 10π ≈ 31.4 to get about 3.14."
+      },
+      {
+       "value": 78.5,
+       "feedback": "That is the AREA itself (25π), not the error in it."
+      }
+     ],
+     "fallbackFeedback": "dA = 2πr·dr = 10π(0.1) ≈ 3.14 cm²."
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,383 @@
+{
+  "id": "ep-04-03",
+  "slug": "difference-of-squares",
+  "title": "Difference of Squares",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch4-factoring",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "foil-box",
+      "body": "A **difference of two squares** factors specially: a² − b² = (a + b)(a − b). Recognize two perfect squares with a minus between them — there's no middle term to split, because the outer and inner products cancel."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the second number.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 3,
+        "targetB": -3,
+        "asks": "middle",
+        "startA": 0,
+        "startB": 0,
+        "requiredMoves": 3,
+        "prompt": "Build (x + 3)(x − 3) as a rectangle and watch what happens to the middle strips.",
+        "successFeedback": "+3 and −3: the strips are +3x and −3x, and they cancel. That cancellation is the whole difference-of-squares pattern — x² − 9 has no middle term because the two partitions are opposites.",
+        "productMiddleFeedback": "The corner is right but the strips are not cancelling. For a difference of squares the two partitions must be opposites.",
+        "partialFeedback": "Keep dragging toward +3 and −3.",
+        "signFeedback": "One partition must be positive and the other negative — that is what makes the middle vanish."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A bigger square.",
+      "conceptTag": "factor-difference-squares",
+      "explanationVariants": [
+        "25 = 5², so a = 5: (x + 5)(x − 5).",
+        "The square root of 25 is 5, so a = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Factor (x^2 - 25) as (x + 5)(x - a). Find a.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is b², not b. Since 5² = 25, a = 5."
+          },
+          {
+            "value": 10,
+            "feedback": "That's 2·5. You need the square root of 25, which is 5."
+          }
+        ],
+        "fallbackFeedback": "25 = 5², so a = 5."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-difference-squares__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: x² − 9. Both x² and 9 are perfect squares (9 = 3²), separated by a minus. So x² − 9 = (x + 3)(x − 3). Multiply back: the middle −3x + 3x cancels, leaving x² − 9.",
+      "figure": "ep-diff-squares"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the factors.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Factor (x^2 - 36).",
+        "options": [
+          {
+            "id": "a",
+            "label": "(x + 6)(x - 6)",
+            "correct": true,
+            "feedback": "Yes — 36 = 6², so x² − 36 = (x + 6)(x − 6)."
+          },
+          {
+            "id": "b",
+            "label": "(x - 6)(x - 6)",
+            "feedback": "That's (x − 6)², which gives x² − 12x + 36. For x² − 36, use (x + 6)(x − 6)."
+          },
+          {
+            "id": "c",
+            "label": "(x + 6)(x + 6)",
+            "feedback": "That's (x + 6)² = x² + 12x + 36. A difference of squares needs opposite signs."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A **coefficient** can be a square too: 4x² = (2x)². So 4x² − 9 = (2x)² − 3² = (2x + 3)(2x − 3). Take the square root of each square to get a and b.",
+      "figure": "ep-coeff-square"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Square-root the coefficient.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Factor (4x^2 - 9) as (2x + 3)(2x - a). Find a.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is b². Since 3² = 9, a = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "That's 2·3. You need the square root of 9, which is 3."
+          }
+        ],
+        "fallbackFeedback": "9 = 3², so a = 3: (2x + 3)(2x − 3)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Factor this one.",
+      "conceptTag": "factor-difference-squares",
+      "explanationVariants": [
+        "25 = 5², so x² − 25 = (x + 5)(x − 5).",
+        "The a² − b² pattern with a = x, b = 5."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Factor (x^2 - 25).",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(x + 5)"
+          },
+          {
+            "id": "t1",
+            "label": "(x - 5)"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [
+          [
+            "t1",
+            "t0"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1",
+              "t1"
+            ],
+            "feedback": "That's (x − 5)² = x² − 10x + 25. Use opposite signs: (x + 5)(x − 5)."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t0"
+            ],
+            "feedback": "That's (x + 5)². A difference of squares needs one plus and one minus."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "A difference of squares splits into a CONJUGATE pair: one +, one −.",
+        "successFeedback": "Yes — 25 = 5², so (x + 5)(x − 5)."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-difference-squares__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Coefficient squared.",
+      "conceptTag": "factor-difference-squares",
+      "explanationVariants": [
+        "4x² = (2x)² and 9 = 3², so (2x + 3)(2x − 3).",
+        "The a² − b² pattern with a = 2x, b = 3."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Factor (4x^2 - 9).",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(2x + 3)"
+          },
+          {
+            "id": "t1",
+            "label": "(2x - 3)"
+          },
+          {
+            "id": "t2",
+            "label": "(4x + 3)"
+          },
+          {
+            "id": "t3",
+            "label": "(x - 3)"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [
+          [
+            "t1",
+            "t0"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1",
+              "t1"
+            ],
+            "feedback": "That's (2x − 3)² = 4x² − 12x + 9. Use opposite signs: (2x + 3)(2x − 3)."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t3"
+            ],
+            "feedback": "That doesn't multiply back to 4x² − 9. The square roots are 2x and 3: (2x + 3)(2x − 3)."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t2"
+            ],
+            "feedback": "That doesn't multiply back to 4x² − 9. The square roots are 2x and 3: (2x + 3)(2x − 3)."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Root each square: √(4x²) = 2x and √9 = 3, in a conjugate pair.",
+        "successFeedback": "Yes — (2x)² − 3² = 4x² − 9."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-difference-squares__buildExpression"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both parts have coefficients.",
+      "conceptTag": "factor-difference-squares",
+      "explanationVariants": [
+        "9x² = (3x)² and 4 = 2², so (3x + 2)(3x − 2).",
+        "The a² − b² pattern with a = 3x, b = 2."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Factor (9x^2 - 4).",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(3x + 2)"
+          },
+          {
+            "id": "t1",
+            "label": "(3x - 2)"
+          },
+          {
+            "id": "t2",
+            "label": "(9x + 4)"
+          },
+          {
+            "id": "t3",
+            "label": "(x - 4)"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1"
+        ],
+        "acceptAlso": [
+          [
+            "t1",
+            "t0"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1",
+              "t1"
+            ],
+            "feedback": "That's (3x − 2)² = 9x² − 12x + 4. Use opposite signs: (3x + 2)(3x − 2)."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t3"
+            ],
+            "feedback": "That doesn't multiply back to 9x² − 4. The square roots are 3x and 2: (3x + 2)(3x − 2)."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t2"
+            ],
+            "feedback": "That doesn't multiply back to 9x² − 4. The square roots are 3x and 2: (3x + 2)(3x − 2)."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Root each square: √(9x²) = 3x and √4 = 2, in a conjugate pair.",
+        "successFeedback": "Yes — (3x)² − 2² = 9x² − 4."
+      },
+      "hints": [
+        "Both 9x² and 4 are perfect squares.",
+        "Their square roots are 3x and 2.",
+        "a² − b² = (a + b)(a − b) gives (3x + 2)(3x − 2)."
+      ],
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "factor-difference-squares__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A difference of squares splits into a sum times a difference.",
+      "takeaways": [
+        "a² − b² = (a + b)(a − b) — no middle term.",
+        "Coefficients can be squares too: 4x² = (2x)².",
+        "A sum of squares (a² + b²) does not factor this way."
+      ],
+      "teaser": "you've finished exponents & polynomials — next: quadratic equations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "factor-difference-squares",
+      "concept": {
+        "id": "rem-fds-c",
+        "kind": "concept",
+        "body": "A difference of squares factors as a² − b² = (a + b)(a − b). For x² − 9: since 9 = 3², it's (x + 3)(x − 3). The middle term cancels when you multiply back."
+      },
+      "check": {
+        "id": "rem-fds-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "factor-difference-squares",
+        "explanationVariants": [
+          "9 = 3², so a = 3.",
+          "The square root of 9 is 3, so a = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Factor (x^2 - 9) as (x + 3)(x - a). Find a.",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is b². Since 3² = 9, a = 3."
+            },
+            {
+              "value": 6,
+              "feedback": "You need the square root of 9, which is 3."
+            }
+          ],
+          "fallbackFeedback": "9 = 3², so a = 3."
+        }
+      }
+    }
+  ]
+}

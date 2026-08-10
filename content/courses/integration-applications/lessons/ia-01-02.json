@@ -1,0 +1,294 @@
+{
+  "id": "ia-01-02",
+  "slug": "the-disc-method",
+  "title": "Spinning a Strip Into a Disc",
+  "courseId": "integration-applications",
+  "chapterId": "ch1-slicing",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Take the region under a curve and **spin it around the x-axis**. It sweeps out a solid.\n\nNow take one thin strip of that region. What does IT sweep out? A **disc** — a coin of radius f(x) and thickness dx.\n\nIts volume is **πr²·dx = π[f(x)]²·dx**. Add up the coins:\n\n**V = π∫ₐᵇ [f(x)]² dx**\n\nThe integral has not changed. Only what you measure on the slice.",
+      "figure": "ia-strip-to-disc"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the strips become coins.",
+      "widget": {
+        "type": "sliceSum",
+        "mode": "disc",
+        "tolerance": 0.05,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Revolve y = x on [0, 2] about the x-axis — a cone. Inspect a slice (it is a disc), then raise the count until the stack of discs lands within 0.05 of the exact 8π/3 ≈ 8.3776.",
+        "successFeedback": "A stack of coins, converging on 8π/3. Look at what one slice is worth: its radius is f(x) — the HEIGHT of the curve — and its face is πr². That is the only thing that changed from area to volume. Slice, measure the slice, add them up.",
+        "lowFeedback": "The stack is under 8π/3. The left rule undershoots a widening cone — raise the count, or try the midpoint rule.",
+        "highFeedback": "The stack is over 8π/3. The right rule overshoots — each disc is as fat as the RIGHT edge of its slice. Raise the count and it will settle."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Refine cross-sectional slices and connect their accumulated volume estimate to a limiting integral.",
+        "invariants": [
+          "volume-is-sum-of-thin-slices",
+          "cross-section-rule-controls-each-slice"
+        ],
+        "misconceptions": [
+          "volume-is-base-area-only",
+          "slice-thickness-does-not-matter"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-applications-sliceSum",
+        "delayed": false
+      },
+      "conceptTag": "ia-disc",
+      "predict": {
+        "prompt": "A strip spins into a disc, and its height becomes the disc's radius. Double the strip's height and the disc's area is multiplied by…",
+        "options": [
+          {
+            "id": "four",
+            "label": "4"
+          },
+          {
+            "id": "two",
+            "label": "2"
+          },
+          {
+            "id": "none",
+            "label": "Nothing — the radius changed, not the area"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Four. The height becomes the RADIUS, and a disc's area goes as r², so doubling one quadruples the other. That square is the whole difference between an area integral and a volume integral: same slicing, same adding, one squared measurement in the middle."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The radius IS the height.",
+      "conceptTag": "ia-disc",
+      "explanationVariants": [
+        "Revolving about the x-axis, the distance from the axis to the curve is f(x) — so the radius of the disc is f(x), and its face is π[f(x)]².",
+        "That single identification — radius = height of the curve — is what turns an area problem into a volume problem."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A region under y = f(x) is revolved about the x-axis. What is the radius of the disc at x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f(x) — the height of the curve above the axis.",
+            "correct": true,
+            "feedback": "Right. The axis is the spindle, so the distance out to the curve IS the radius. Everything else follows."
+          },
+          {
+            "id": "o2",
+            "label": "x",
+            "correct": false,
+            "feedback": "x is how far ALONG the axis the disc sits, not how far out the curve is. The radius is measured perpendicular to the spin axis."
+          },
+          {
+            "id": "o3",
+            "label": "πf(x)²",
+            "correct": false,
+            "feedback": "That is the disc's AREA, not its radius. Radius first, then square it and multiply by π."
+          },
+          {
+            "id": "o4",
+            "label": "dx",
+            "correct": false,
+            "feedback": "dx is the disc's THICKNESS — how thin the coin is. Its radius is f(x)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-disc__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Set up the integral.",
+      "conceptTag": "ia-disc",
+      "explanationVariants": [
+        "V = π∫₀² x² dx = π[x³/3]₀² = 8π/3 ≈ 8.378.",
+        "And that is the classic cone formula (1/3)πr²h with r = 2 and h = 2 — the calculus and the geometry agree, as they must."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Revolve y = x on [0, 2] about the x-axis. Find the volume, as a decimal to three places.",
+        "answer": 8.378,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 4.189,
+            "feedback": "That is half of it — perhaps you used (1/2) instead of (1/3), or forgot to square the radius. V = π∫₀² x² dx = 8π/3 ≈ 8.378."
+          },
+          {
+            "value": 2.667,
+            "feedback": "That is 8/3 without the π. The disc's face is πr², so the π rides along all the way."
+          },
+          {
+            "value": 12.566,
+            "feedback": "That is 4π — check the antiderivative: ∫₀² x² dx = 8/3, so V = 8π/3 ≈ 8.378."
+          }
+        ],
+        "fallbackFeedback": "V = π∫₀² x² dx = 8π/3 ≈ 8.378 — which is the cone formula (1/3)π(2²)(2), as it must be."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-disc__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice how little actually changed.\n\n**Area** — slice, measure the HEIGHT, add: ∫f dx.\n**Volume** — slice, measure the DISC, add: ∫πf² dx.\n\nSame slicing. Same summing. The only difference is what you measure on one slice. That single sentence is the whole of this course, and it is worth carrying into every problem you meet.",
+      "figure": "ia-strip-to-disc"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Square the function, not the integral.",
+      "conceptTag": "ia-disc",
+      "explanationVariants": [
+        "V = π∫[f(x)]² dx — the SQUARING happens inside, on the function, before integrating. Squaring the finished integral is a different (and wrong) number.",
+        "For f = x on [0,2]: π∫x² = 8π/3 ≈ 8.38. But (∫x)² = 2² = 4, and π(4) = 12.57 — a completely different answer."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the disc-method volume: π∫[f(x)]² dx, or π(∫f(x) dx)²?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π∫[f(x)]² dx — square the FUNCTION, then integrate.",
+            "correct": true,
+            "feedback": "Right. Each disc's face is π[f(x)]², and you add the faces. Squaring the total area afterwards means nothing at all."
+          },
+          {
+            "id": "o2",
+            "label": "π(∫f(x) dx)² — integrate, then square.",
+            "correct": false,
+            "feedback": "Try it on f = x over [0, 2]: the true volume is 8π/3 ≈ 8.38, but this gives π(2)² = 12.57. Squaring does not pass through an integral."
+          },
+          {
+            "id": "o3",
+            "label": "They are equal.",
+            "correct": false,
+            "feedback": "They are not — 8.38 against 12.57 on the simplest possible example. The square must be taken slice by slice."
+          },
+          {
+            "id": "o4",
+            "label": "Either, depending on the curve.",
+            "correct": false,
+            "feedback": "Only the first is ever right. The disc's area depends on the radius AT THAT SLICE, so the squaring happens inside."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-disc__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A parabola, spun.",
+      "conceptTag": "ia-disc",
+      "hints": [
+        "Radius = f(x) = x², so the disc's face is π(x²)² = πx⁴.",
+        "V = π∫₀¹ x⁴ dx.",
+        "The antiderivative is x⁵/5, so V = π(1/5)."
+      ],
+      "explanationVariants": [
+        "V = π∫₀¹ (x²)² dx = π∫₀¹ x⁴ dx = π/5 ≈ 0.628.",
+        "Note the squaring turned x² into x⁴ — the fourth power came from the DISC, not from the curve."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Revolve y = x² on [0, 1] about the x-axis. Find the volume, to three decimals.",
+        "answer": 0.628,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.047,
+            "feedback": "That is π/3 — you integrated x² rather than (x²)² = x⁴. The radius gets SQUARED."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is 1/5 without the π. The disc's face is πr², so the π survives to the end."
+          },
+          {
+            "value": 0.333,
+            "feedback": "That is 1/3, which is ∫x² — the AREA under the curve, not the volume of the solid."
+          }
+        ],
+        "fallbackFeedback": "V = π∫₀¹ x⁴ dx = π/5 ≈ 0.628."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-disc__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The strip becomes a coin.",
+      "takeaways": [
+        "Revolve a strip about the x-axis and it sweeps out a disc of radius f(x) and thickness dx.",
+        "V = π∫[f(x)]² dx — square the FUNCTION, slice by slice, then integrate. Never square the finished integral.",
+        "Slice, measure the slice, add them up. Only the measurement ever changes."
+      ],
+      "teaser": "Next: what happens when the solid has a hole in it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ia-disc",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "One strip, spun about the axis, sweeps out a coin. The coin's RADIUS is the height of the curve, f(x). Its FACE is πr². Its thickness is dx. Add up the coins and you have the solid.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "The face of one coin.",
+        "conceptTag": "ia-disc",
+        "explanationVariants": [
+          "Radius 3 gives a face of π(3²) = 9π ≈ 28.27.",
+          "Square the radius, then multiply by π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A disc has radius 3. Find its face area, to two decimals.",
+          "answer": 28.27,
+          "tolerance": 0.05,
+          "commonErrors": [
+            {
+              "value": 9.42,
+              "feedback": "That is 3π — you multiplied by π but forgot to SQUARE the radius. It is π(3²) = 9π ≈ 28.27."
+            },
+            {
+              "value": 9,
+              "feedback": "That is r² without the π."
+            }
+          ],
+          "fallbackFeedback": "π(3²) = 9π ≈ 28.27."
+        }
+      }
+    }
+  ]
+}

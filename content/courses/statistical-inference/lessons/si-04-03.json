@@ -1,0 +1,288 @@
+{
+  "id": "si-04-03",
+  "slug": "what-significance-does-not-say",
+  "title": "What \"Significant\" Does Not Say",
+  "courseId": "statistical-inference",
+  "chapterId": "ch4-is-the-difference-real",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "\"Significant\" answers exactly one question: **could chance alone have done this?**\n\nIt does not answer:\n\n– Is the effect **big**?\n– Does it **matter**?\n– Is it **true**?\n\nWith a large enough sample, an effect of 0.3 points on a 100-point test becomes significant. It is real, and it is worthless.",
+      "figure": "si-effect-vs-significance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Real, and trivial.",
+      "conceptTag": "si-significance-limits",
+      "explanationVariants": [
+        "A huge sample shrinks the wobble, so even a 0.3-point gap sits far outside what chance produces. Significance says the gap is real; it says nothing about the gap being useful.",
+        "Effect size is a separate question, answered in the units of the problem: 0.3 points on a 100-point test."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An app is tested on 100,000 students and raises scores by 0.3 points on a 100-point test, with p < 0.001. Should the school buy it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Probably not — the effect is real but far too small to be worth the cost.",
+            "correct": true,
+            "feedback": "Right. The p-value certifies that 0.3 is not a fluke. It has no opinion on whether 0.3 is worth paying for."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — p < 0.001 is very strong evidence.",
+            "correct": false,
+            "feedback": "Strong evidence for a tiny effect is still evidence for a tiny effect. Strength of evidence and size of effect are separate axes."
+          },
+          {
+            "id": "o3",
+            "label": "Yes — with 100,000 students, the effect must be large.",
+            "correct": false,
+            "feedback": "Backwards. A large sample lets you DETECT tiny effects, so a huge n and a tiny effect are a natural pairing."
+          },
+          {
+            "id": "o4",
+            "label": "No — with p < 0.001, the result is too good to be true.",
+            "correct": false,
+            "feedback": "A small p-value is not suspicious in itself, and with n = 100,000 it is exactly what you would expect even from a trivial effect."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-significance-limits__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two axes, four studies.",
+      "conceptTag": "si-significance-limits",
+      "explanationVariants": [
+        "Significance and effect size vary independently: a big effect can be non-significant in a small study, and a tiny effect can be significant in a huge one.",
+        "Always read both: is it real (p), and is it big enough to act on (effect size)?"
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Which of these findings is worth acting on?",
+        "buckets": [
+          {
+            "id": "act",
+            "label": "Worth acting on",
+            "icon": "✅"
+          },
+          {
+            "id": "skip",
+            "label": "Not (yet)",
+            "icon": "🤔"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "+12 points, p = 0.002, n = 800",
+            "bucketId": "act",
+            "feedback": "Big effect, and chance struggles to explain it. Both questions answered well."
+          },
+          {
+            "id": "s2",
+            "label": "+0.2 points, p = 0.001, n = 200,000",
+            "bucketId": "skip",
+            "feedback": "Real, and pointless. The enormous sample detected an effect too small to change any decision."
+          },
+          {
+            "id": "s3",
+            "label": "+11 points, p = 0.30, n = 12",
+            "bucketId": "skip",
+            "feedback": "Promising size, but twelve students cannot rule out luck. This is a reason to run a bigger study, not to act."
+          },
+          {
+            "id": "s4",
+            "label": "+9 points, p = 0.01, n = 500",
+            "bucketId": "act",
+            "feedback": "A useful size with evidence behind it — the pairing you actually want."
+          }
+        ],
+        "missFeedback": "Check both axes: is chance ruled out (p), and is the effect big enough to matter (size)?",
+        "successFeedback": "Real and big is the only combination worth acting on. Real and tiny, or big and unproven, are both reasons to wait."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-significance-limits__dragBucket"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch a trivial effect become 'significant'.",
+      "widget": {
+        "type": "samplingBiasLab",
+        "prompt": "Draw from 50,000 users at increasing sample sizes. Watch what happens to a difference that is real but tiny as the sample grows.",
+        "populationLabel": "50,000 users",
+        "targetMethod": "random",
+        "targetSize": 400,
+        "sizeMin": 20,
+        "sizeMax": 500,
+        "sizeStep": 20,
+        "sizeStart": 20,
+        "requiredDraws": 6,
+        "successFeedback": "As n rises the wobble shrinks, so a smaller and smaller true difference stops being explainable by chance. That is all 'significant' means. A 0.3-point gain on a 100-point test is significant at n = 100,000 and still worthless — significance is about chance, never about size.",
+        "methodFeedback": "A biased method produces a difference that is not real at all, which significance testing cannot detect. Fix the design before asking about p.",
+        "sizeFeedback": "Push the size higher. The effect being demonstrated only becomes visible once the wobble is small enough to make a tiny gap stand out.",
+        "drawsFeedback": "Repeat the draw — the claim is about how the SPREAD of estimates behaves as n grows, which needs more than one."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three more things a significant result does not give you:\n\n**Proof.** About 1 significant result in 20 is a fluke when nothing is going on.\n**Generalisation.** It applies to the population you sampled, not to everyone.\n**Cause** — unless the treatment was randomly assigned. Significance and causation are different questions with different guardians.",
+      "figure": "si-claim-ladder"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which guardian?",
+      "conceptTag": "si-significance-limits",
+      "explanationVariants": [
+        "Random assignment buys causation. A small p-value buys only 'chance alone is a poor explanation of this gap'.",
+        "Significance in an observational study means the association is unlikely to be a fluke — the lurking variable is still standing there untouched."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An observational study finds coffee drinkers sleep 40 minutes less, p < 0.001. What follows?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The association is unlikely to be a fluke — but coffee causing it is still unproven.",
+            "correct": true,
+            "feedback": "Right. The p-value defends against chance; only random assignment defends against lurking variables. Two different guards, two different gates."
+          },
+          {
+            "id": "o2",
+            "label": "Coffee causes people to sleep less.",
+            "correct": false,
+            "feedback": "Nobody flipped a coin here: the drinkers chose coffee themselves. People who already sleep badly may reach for coffee, so the arrow can run the other way entirely."
+          },
+          {
+            "id": "o3",
+            "label": "Nothing, because observational studies mean nothing.",
+            "correct": false,
+            "feedback": "That overcorrects. The study establishes a real association, which is genuinely useful — it just cannot be promoted to a cause."
+          },
+          {
+            "id": "o4",
+            "label": "The result would be causal if the sample were larger.",
+            "correct": false,
+            "feedback": "Sample size never converts an association into a cause. Only the design can do that."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-significance-limits__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rewrite the headline.",
+      "conceptTag": "si-significance-limits",
+      "hints": [
+        "Check the design first: was anything randomly assigned? Then check the effect size, in its real units.",
+        "It is an observational study, so 'cuts risk' is a causal claim the design cannot carry.",
+        "And the effect is 0.4 percentage points — real, perhaps, but tiny. Both problems must appear in the honest version."
+      ],
+      "explanationVariants": [
+        "The honest version keeps the association, drops the causal verb, and states the effect in its actual units: people who ate the food had a 0.4-point lower rate, and the study cannot say the food did it.",
+        "Two separate overreaches: 'cuts' asserts cause from an observational design, and the headline hides how small 0.4 percentage points is."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "\"Eating kale cuts heart-disease risk (p < 0.001)\" — from an observational study where kale-eaters had a 0.4-percentage-point lower rate. Which rewrite is honest?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"Kale-eaters had a 0.4-point lower rate — a small, reliable association, not evidence that kale is the cause.\"",
+            "correct": true,
+            "feedback": "Right — it fixes both overreaches: the causal verb and the hidden effect size."
+          },
+          {
+            "id": "o2",
+            "label": "\"Kale is strongly linked to heart health (p < 0.001).\"",
+            "correct": false,
+            "feedback": "\"Strongly\" describes the evidence against chance, and readers will hear it as the size of the effect. The effect is 0.4 points, which is not strong at all."
+          },
+          {
+            "id": "o3",
+            "label": "\"Kale may cut heart-disease risk slightly.\"",
+            "correct": false,
+            "feedback": "Better on size, but \"may cut\" still smuggles in the causal claim that an observational design cannot support."
+          },
+          {
+            "id": "o4",
+            "label": "\"There is no evidence kale affects heart disease.\"",
+            "correct": false,
+            "feedback": "That throws away a real finding. There IS an association, well-supported against chance — it simply is not a cause, and it is small."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-significance-limits__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Significant answers one question and stays silent on the rest.",
+      "takeaways": [
+        "Significance rules out chance. It says nothing about the SIZE of the effect — and a huge sample makes trivial effects significant.",
+        "It is not proof (about 1 in 20 clears the bar by luck) and it does not generalise beyond the population sampled.",
+        "It never buys causation. Only random assignment does that."
+      ],
+      "teaser": "Last chapter: take these tools into the wild and judge real claims."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-significance-limits",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask two questions of every finding, never one. **Is it real?** — that is the p-value's job. **Is it big?** — that is the effect size's job, measured in the units of the problem. A yes to the first and a no to the second means: real, and not worth doing.",
+        "figure": "si-effect-vs-significance"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which question is unanswered?",
+        "conceptTag": "si-significance-limits",
+        "explanationVariants": [
+          "p < 0.001 answers 'is it real'. Nothing here answers 'is it big enough to matter'.",
+          "The size of the effect must be reported in real units — minutes, points, dollars — or the finding cannot be acted on."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A study reports only: \"the effect was statistically significant (p < 0.001)\". What is missing?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The size of the effect.",
+              "correct": true,
+              "feedback": "Right. Without it you know chance is a poor explanation, but not whether the finding is worth a penny."
+            },
+            {
+              "id": "o2",
+              "label": "Nothing — p < 0.001 says it all.",
+              "correct": false,
+              "feedback": "It says only that chance is unlikely to have produced the gap. A gap of 0.1 points can clear that bar with a big enough sample."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

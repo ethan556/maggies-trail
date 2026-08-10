@@ -1,0 +1,697 @@
+{
+  "id": "fg-04-03",
+  "slug": "sketching-graphs-from-stories",
+  "title": "Sketching Graphs from Stories",
+  "courseId": "functions-g8",
+  "chapterId": "ch4-linear-vs-nonlinear",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Turn a story into a graph by breaking it into stages and giving each a shape: steady increase → straight rising line, holding steady → flat, decreasing → falling line. Chain the pieces in order to sketch the whole story.",
+      "figure": "fg-story-graph"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Choose the matching shape.",
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "build",
+        "prompt": "A pool fills at a steady rate, then the hose is turned off (water level holds). Which graph shape fits?",
+        "axisContext": "waterLevel",
+        "distanceRule": "notDistance",
+        "xAxisLabel": "time",
+        "yAxisLabel": "water level",
+        "segments": [
+          {
+            "id": "s1",
+            "label": "Fills steadily",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "s2",
+            "label": "Hose off",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          }
+        ],
+        "choices": [],
+        "bank": [
+          {
+            "id": "b1",
+            "label": "straight rising line",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "b2",
+            "label": "flat horizontal segment",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "b3",
+            "label": "straight falling line",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          },
+          {
+            "id": "b4",
+            "label": "rising curve that gets steeper",
+            "kind": "riseConcaveUp",
+            "meaning": "The output increases faster and faster."
+          }
+        ],
+        "wrongSequences": [
+          {
+            "kinds": [
+              "flat",
+              "riseSteady"
+            ],
+            "feedback": "That's the reverse order — it FILLS first (rising), THEN holds (flat).",
+            "label": "A flat line, then rising"
+          },
+          {
+            "kinds": [
+              "fallSteady",
+              "riseSteady"
+            ],
+            "feedback": "The water never decreases here — it rises, then holds steady.",
+            "label": "A falling line, then rising"
+          },
+          {
+            "kinds": [
+              "riseConcaveUp"
+            ],
+            "feedback": "Steady filling is a straight line, not a steepening curve — then it goes flat.",
+            "label": "A steep curve upward the whole time"
+          }
+        ],
+        "successFeedback": "Right — steady filling rises steadily, then holding steady is flat.",
+        "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+        "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+        "answerLabel": "A rising line, then flat"
+      },
+      "predict": {
+        "prompt": "Before you assemble the stages, what graph feature should appear after the hose is turned off?",
+        "options": [
+          {
+            "id": "flat",
+            "label": "A flat horizontal segment"
+          },
+          {
+            "id": "rise",
+            "label": "Another rising segment"
+          },
+          {
+            "id": "fall",
+            "label": "A falling segment"
+          }
+        ],
+        "outcomeId": "flat",
+        "reveal": "Turning the hose off makes the water level hold steady, so the second stage must be flat. Now build both stages in order."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The order and direction of the stages matter. 'Rises, then falls' looks different from 'falls, then rises.' Read the story left to right and lay the shapes down in the same order.",
+      "figure": "fg-story-graph"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two-stage story.",
+      "conceptTag": "fg-graph-stories",
+      "variant": {
+        "gen": "g8-fn-graph-stories",
+        "form": "fgStoryAccelerateSteady"
+      },
+      "explanationVariants": [
+        "A car speeds up (distance rising ever steeper), then drives steadily (straight rising line): a curve steepening, then a straight climb.",
+        "Speeding up curves upward; steady speed is a straight slanted line."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "build",
+        "prompt": "A car speeds up from rest, then holds a steady speed. On a DISTANCE-vs-time graph, which fits?",
+        "axisContext": "distanceFromOrigin",
+        "distanceRule": "awayOnly",
+        "xAxisLabel": "time",
+        "yAxisLabel": "distance",
+        "segments": [
+          {
+            "id": "s1",
+            "label": "Speeds up from rest",
+            "kind": "riseConcaveUp",
+            "meaning": "The output increases faster and faster."
+          },
+          {
+            "id": "s2",
+            "label": "Holds steady speed",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          }
+        ],
+        "choices": [],
+        "bank": [
+          {
+            "id": "b1",
+            "label": "rising curve that gets steeper",
+            "kind": "riseConcaveUp",
+            "meaning": "The output increases faster and faster."
+          },
+          {
+            "id": "b2",
+            "label": "straight rising line",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "b3",
+            "label": "flat horizontal segment",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "b4",
+            "label": "straight falling line",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          }
+        ],
+        "wrongSequences": [
+          {
+            "kinds": [
+              "flat",
+              "riseSteady"
+            ],
+            "feedback": "The car is moving the whole time — distance rises throughout, first curving, then straight.",
+            "label": "A flat line, then a rising line"
+          },
+          {
+            "kinds": [
+              "riseSteady",
+              "flat"
+            ],
+            "feedback": "The car never stops — after speeding up it keeps moving, so the line keeps rising (doesn't go flat).",
+            "label": "A straight line, then a flat line"
+          },
+          {
+            "kinds": [
+              "fallSteady"
+            ],
+            "feedback": "Distance from the start INCREASES as the car drives — the graph rises, not falls.",
+            "label": "A falling line the whole time"
+          }
+        ],
+        "successFeedback": "Right — speeding up makes distance curve upward; steady speed is a straight slanted climb.",
+        "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+        "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+        "answerLabel": "A curve that steepens, then a straight rising line"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Down then up.",
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "build",
+        "prompt": "A balloon slowly loses height, lands, then is picked up and carried higher. Which shape fits its HEIGHT graph?",
+        "axisContext": "height",
+        "distanceRule": "notDistance",
+        "xAxisLabel": "time",
+        "yAxisLabel": "height",
+        "segments": [
+          {
+            "id": "s1",
+            "label": "Loses height",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          },
+          {
+            "id": "s2",
+            "label": "Lands",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "s3",
+            "label": "Carried higher",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          }
+        ],
+        "choices": [],
+        "bank": [
+          {
+            "id": "b1",
+            "label": "straight falling line",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          },
+          {
+            "id": "b2",
+            "label": "flat horizontal segment",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "b3",
+            "label": "straight rising line",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          }
+        ],
+        "wrongSequences": [
+          {
+            "kinds": [
+              "riseSteady",
+              "fallSteady"
+            ],
+            "feedback": "It LOSES height first (falling), lands (flat), then rises — three stages, starting downward.",
+            "label": "Rising, then falling"
+          },
+          {
+            "kinds": [
+              "flat"
+            ],
+            "feedback": "The height changes in stages — it can't be flat throughout.",
+            "label": "Flat the whole time"
+          },
+          {
+            "kinds": [
+              "riseSteady"
+            ],
+            "feedback": "It starts by LOSING height (falling), so it can't rise the whole time.",
+            "label": "Rising the whole time"
+          }
+        ],
+        "successFeedback": "Right — losing height falls, landing holds flat, carrying up rises.",
+        "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+        "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+        "answerLabel": "Falling, then flat, then rising"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Match the steady-then-stop story.",
+      "conceptTag": "fg-graph-stories",
+      "variant": {
+        "gen": "g8-fn-graph-stories",
+        "form": "fgStorySteadyStop"
+      },
+      "explanationVariants": [
+        "Walking at a steady pace is a straight rising distance line; stopping is flat. So: straight rising, then flat.",
+        "Steady walking → straight line; stopping → flat line."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "build",
+        "prompt": "Someone walks at a steady pace, then stops to wait. On a distance-vs-time graph, which fits?",
+        "axisContext": "distanceFromOrigin",
+        "distanceRule": "awayOnly",
+        "xAxisLabel": "time",
+        "yAxisLabel": "distance",
+        "segments": [
+          {
+            "id": "s1",
+            "label": "Walks steadily",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "s2",
+            "label": "Stops to wait",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          }
+        ],
+        "choices": [],
+        "bank": [
+          {
+            "id": "b1",
+            "label": "straight rising line",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "b2",
+            "label": "flat horizontal segment",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "b3",
+            "label": "rising curve that gets steeper",
+            "kind": "riseConcaveUp",
+            "meaning": "The output increases faster and faster."
+          },
+          {
+            "id": "b4",
+            "label": "straight falling line",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          }
+        ],
+        "wrongSequences": [
+          {
+            "kinds": [
+              "riseConcaveUp",
+              "flat"
+            ],
+            "feedback": "Steady pace is a STRAIGHT line (constant rate), not a steepening curve; then flat for the stop.",
+            "label": "A curve that steepens, then flat"
+          },
+          {
+            "kinds": [
+              "flat",
+              "riseSteady"
+            ],
+            "feedback": "They walk FIRST (rising), then stop (flat) — this has the order reversed.",
+            "label": "A flat line, then a rising line"
+          },
+          {
+            "kinds": [
+              "fallSteady",
+              "flat"
+            ],
+            "feedback": "Distance increases while walking (rising), not falling; then flat when stopped.",
+            "label": "A falling line, then flat"
+          }
+        ],
+        "successFeedback": "Right — steady pace is a straight climb; stopping is flat.",
+        "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+        "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+        "answerLabel": "A straight rising line, then a flat line"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Increasing rate.",
+      "conceptTag": "fg-graph-stories",
+      "variant": {
+        "gen": "g8-fn-graph-stories",
+        "form": "fgStoryIncreasingGrowth"
+      },
+      "explanationVariants": [
+        "Money that grows faster and faster each year is a curve getting STEEPER — nonlinear, bending upward.",
+        "Faster-and-faster growth curves upward, steepening over time."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "build",
+        "prompt": "Savings grow by MORE each year than the year before. Which graph shape fits?",
+        "axisContext": "savings",
+        "distanceRule": "notDistance",
+        "xAxisLabel": "time",
+        "yAxisLabel": "savings",
+        "segments": [
+          {
+            "id": "s1",
+            "label": "Grows by more each year",
+            "kind": "riseConcaveUp",
+            "meaning": "The output increases faster and faster."
+          }
+        ],
+        "choices": [],
+        "bank": [
+          {
+            "id": "b1",
+            "label": "rising curve that gets steeper",
+            "kind": "riseConcaveUp",
+            "meaning": "The output increases faster and faster."
+          },
+          {
+            "id": "b2",
+            "label": "straight rising line",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "b3",
+            "label": "flat horizontal segment",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "b4",
+            "label": "straight falling line",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          }
+        ],
+        "wrongSequences": [
+          {
+            "kinds": [
+              "riseSteady"
+            ],
+            "feedback": "A straight line means the SAME growth each year — here it grows by MORE each year, so it curves.",
+            "label": "A straight rising line"
+          },
+          {
+            "kinds": [
+              "flat"
+            ],
+            "feedback": "Flat means no growth — but the savings grow (and speed up), so it rises and steepens.",
+            "label": "A flat line"
+          },
+          {
+            "kinds": [
+              "fallSteady"
+            ],
+            "feedback": "Falling means shrinking — the savings GROW, so the graph rises (and steepens).",
+            "label": "A falling line"
+          }
+        ],
+        "successFeedback": "Right — growing by more each year makes the graph curve upward, steepening.",
+        "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+        "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+        "answerLabel": "A curve that gets steeper over time"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Match the full multi-stage story.",
+      "conceptTag": "fg-graph-stories",
+      "variant": {
+        "gen": "g8-fn-graph-stories",
+        "form": "fgStoryFastStopSlow"
+      },
+      "explanationVariants": [
+        "Drives fast (steep straight rise), stops at a light (flat), then drives slowly (gentle straight rise): steep line, flat, gentle line.",
+        "Three stages: steep rising, flat, gentle rising — in that order."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "build",
+        "prompt": "A car drives fast, stops at a red light, then drives slowly. On a DISTANCE-vs-time graph, which sequence of shapes fits?",
+        "axisContext": "distanceFromOrigin",
+        "distanceRule": "awayOnly",
+        "xAxisLabel": "time",
+        "yAxisLabel": "distance",
+        "segments": [
+          {
+            "id": "s1",
+            "label": "Drives fast",
+            "kind": "riseSteep",
+            "meaning": "The output increases at a faster constant rate."
+          },
+          {
+            "id": "s2",
+            "label": "Stops at red light",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "s3",
+            "label": "Drives slowly",
+            "kind": "riseGentle",
+            "meaning": "The output increases at a slower constant rate."
+          }
+        ],
+        "choices": [],
+        "bank": [
+          {
+            "id": "b1",
+            "label": "steep rising line",
+            "kind": "riseSteep",
+            "meaning": "The output increases at a faster constant rate."
+          },
+          {
+            "id": "b2",
+            "label": "flat horizontal segment",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "b3",
+            "label": "gentle rising line",
+            "kind": "riseGentle",
+            "meaning": "The output increases at a slower constant rate."
+          },
+          {
+            "id": "b4",
+            "label": "straight falling line",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          }
+        ],
+        "wrongSequences": [
+          {
+            "kinds": [
+              "riseGentle",
+              "flat",
+              "riseSteep"
+            ],
+            "feedback": "That reverses fast and slow — it drives FAST first (steep), then SLOW last (gentle).",
+            "label": "Gentle rising line, then flat, then steep rising line"
+          },
+          {
+            "kinds": [
+              "riseSteep",
+              "fallSteady",
+              "flat"
+            ],
+            "feedback": "Stopping at a light is FLAT, not falling — the car doesn't go backward.",
+            "label": "Steep rising line, then falling, then flat"
+          },
+          {
+            "kinds": [
+              "flat",
+              "riseSteep",
+              "riseGentle"
+            ],
+            "feedback": "The car drives FIRST (steep rise), then stops (flat) — it doesn't start out stopped.",
+            "label": "Flat, then steep rising, then gentle rising"
+          }
+        ],
+        "successFeedback": "Right — fast is steep, stopped is flat, slow is a gentle rise.",
+        "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+        "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+        "answerLabel": "Steep rising line, then flat, then gentle rising line"
+      },
+      "hints": [
+        "Break the story into its three stages and give each a shape.",
+        "Fast driving = steep rising line; stopped = flat; slow driving = gentle rising line.",
+        "In order: steep rising, then flat, then gentle rising."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Build a graph from a story by turning each stage into a shape, in order.",
+      "takeaways": [
+        "Steady change → straight line; holding steady → flat; speeding up → steepening curve.",
+        "Read the story left to right and lay shapes in the same order.",
+        "Direction and order of stages both matter to the final sketch."
+      ],
+      "teaser": "That closes Grade 8 Functions — next up: Linear Equations & Systems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-graph-stories",
+      "concept": {
+        "id": "rem-fg0403-c",
+        "kind": "concept",
+        "body": "Turn a story into a graph by breaking it into stages: steady change → straight line, holding steady → flat, speeding up → steepening curve. Lay the shapes in story order."
+      },
+      "check": {
+        "id": "rem-fg0403-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-graph-stories",
+        "explanationVariants": [
+          "Filling steadily then stopping is a rising line, then flat.",
+          "Steady fill → rising line; stopped → flat line."
+        ],
+        "widget": {
+          "type": "graphStoryLab",
+          "mode": "build",
+          "prompt": "A bucket fills steadily, then the tap is shut off. Which graph shape fits its water level?",
+          "axisContext": "waterLevel",
+          "distanceRule": "notDistance",
+          "xAxisLabel": "time",
+          "yAxisLabel": "water level",
+          "segments": [
+            {
+              "id": "s1",
+              "label": "Fills steadily",
+              "kind": "riseSteady",
+              "meaning": "The output increases at a constant rate."
+            },
+            {
+              "id": "s2",
+              "label": "Tap shut off",
+              "kind": "flat",
+              "meaning": "The output does not change."
+            }
+          ],
+          "choices": [],
+          "bank": [
+            {
+              "id": "b1",
+              "label": "straight rising line",
+              "kind": "riseSteady",
+              "meaning": "The output increases at a constant rate."
+            },
+            {
+              "id": "b2",
+              "label": "flat horizontal segment",
+              "kind": "flat",
+              "meaning": "The output does not change."
+            },
+            {
+              "id": "b3",
+              "label": "straight falling line",
+              "kind": "fallSteady",
+              "meaning": "The output decreases at a constant rate."
+            },
+            {
+              "id": "b4",
+              "label": "rising curve that gets steeper",
+              "kind": "riseConcaveUp",
+              "meaning": "The output increases faster and faster."
+            }
+          ],
+          "wrongSequences": [
+            {
+              "kinds": [
+                "flat",
+                "riseSteady"
+              ],
+              "feedback": "It fills FIRST (rising), then holds (flat) — this reverses the order.",
+              "label": "A flat line, then rising"
+            },
+            {
+              "kinds": [
+                "fallSteady"
+              ],
+              "feedback": "The water level rises while filling, not falls; then holds flat.",
+              "label": "A falling line"
+            },
+            {
+              "kinds": [
+                "riseConcaveUp"
+              ],
+              "feedback": "Steady filling is a straight line, not a steepening curve.",
+              "label": "A steepening curve"
+            }
+          ],
+          "successFeedback": "Right — steady filling rises, then holding steady is flat.",
+          "explorationFeedback": "Build the graph by adding one labelled stage for each part of the story, in the same order.",
+          "fallbackFeedback": "Match each stage to its direction, rate, or stopped interval, then keep the story order unchanged.",
+          "answerLabel": "A rising line, then flat"
+        }
+      }
+    }
+  ]
+}

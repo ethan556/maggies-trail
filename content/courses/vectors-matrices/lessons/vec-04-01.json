@@ -1,0 +1,324 @@
+{
+ "id": "vec-04-01",
+ "slug": "matrix-arithmetic",
+ "title": "Matrices & the Matrix-Vector Product",
+ "courseId": "vectors-matrices",
+ "chapterId": "ch4-matrices",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **2×2 matrix** is a square of four numbers, [[a, b], [c, d]]. Add matrices entry by entry, and scale by multiplying every entry. The real power is the **matrix-vector product**, which sends a vector to a new vector:\n\n[[a, b], [c, d]]·⟨x, y⟩ = ⟨ax + by, cx + dy⟩.",
+   "figure": "vec-det-area"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Apply a matrix to a vector.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute [[2, 0], [0, 3]]·⟨1, 1⟩. Enter the y-component.",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "The y-component is c·x + d·y = 0·1 + 3·1 = 3 (you may have kept the input's 1)."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is the x-component (2·1 + 0·1). The y-component is 0·1 + 3·1 = 3."
+     }
+    ],
+    "fallbackFeedback": "y = 0·1 + 3·1 = 3 (the result is ⟨2, 3⟩)."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A full product.",
+   "conceptTag": "vec-matrix-arith",
+   "explanationVariants": [
+    "[[1, 2], [3, 4]]·⟨1, 1⟩ = ⟨1·1 + 2·1, 3·1 + 4·1⟩ = ⟨3, 7⟩.",
+    "Row by row: top row dotted with ⟨1,1⟩ is 3, bottom row is 7."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Compute [[1, 2], [3, 4]]·⟨1, 1⟩.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "⟨3, 7⟩",
+      "correct": true,
+      "feedback": "Right — ⟨1+2, 3+4⟩ = ⟨3, 7⟩: each row dotted with the vector."
+     },
+     {
+      "id": "o2",
+      "label": "⟨1, 4⟩",
+      "feedback": "Use the WHOLE row: top is 1·1 + 2·1 = 3, bottom is 3·1 + 4·1 = 7 → ⟨3, 7⟩."
+     },
+     {
+      "id": "o3",
+      "label": "⟨4, 6⟩",
+      "feedback": "That adds columns. Each output is a ROW dotted with the vector: ⟨3, 7⟩."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-matrix-arith__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Each output component is a **row of the matrix dotted with the vector** (recall the dot product). The top row makes the new x; the bottom row makes the new y. A matrix is a machine that recombines a vector's coordinates by fixed recipes — the rows.",
+   "figure": "vec-matrix-row-dot"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Add two matrices.",
+   "conceptTag": "vec-matrix-arith",
+   "explanationVariants": [
+    "[[1,2],[3,4]] + [[5,6],[7,8]] = [[6,8],[10,12]] — add matching entries.",
+    "Entry by entry: 1+5, 2+6, 3+7, 4+8."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the top-left entry of [[1, 2], [3, 4]] + [[5, 6], [7, 8]]?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "6",
+      "correct": true,
+      "feedback": "Right — 1 + 5 = 6 (add matching entries)."
+     },
+     {
+      "id": "o2",
+      "label": "8",
+      "feedback": "8 is the top-RIGHT entry (2 + 6). Top-left is 1 + 5 = 6."
+     },
+     {
+      "id": "o3",
+      "label": "3",
+      "feedback": "Add the two top-left entries: 1 + 5 = 6."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-matrix-arith__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Scale a matrix.",
+   "conceptTag": "vec-matrix-arith",
+   "explanationVariants": [
+    "2·[[1, 2], [3, 4]] = [[2, 4], [6, 8]] — multiply every entry by 2.",
+    "Scalar multiplication hits all four entries: the bottom-right becomes 8."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "What is the bottom-right entry of 2·[[1, 2], [3, 4]]?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "k",
+      "label": "the scalar",
+      "value": 2
+     },
+     {
+      "id": "e",
+      "label": "the matrix entry",
+      "value": 4
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "const",
+      "id": "k"
+     },
+     "right": {
+      "op": "const",
+      "id": "e"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is the bottom-right BEFORE scaling. 2·4 = 8."
+     },
+     {
+      "value": 6,
+      "feedback": "6 = 2·3 is the bottom-LEFT. The bottom-right is 2·4 = 8."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "2·4 = 8.",
+    "successFeedback": "2·4 = 8."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-matrix-arith__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Chain a computation.",
+   "conceptTag": "vec-matrix-arith",
+   "explanationVariants": [
+    "[[3, 1], [2, 4]]·⟨2, 1⟩ = ⟨3·2 + 1·1, 2·2 + 4·1⟩ = ⟨7, 8⟩; its x-component is 7.",
+    "Top row: 6 + 1 = 7; bottom row: 4 + 4 = 8 → ⟨7, 8⟩."
+   ],
+   "hints": [
+    "New x = top row · ⟨2, 1⟩.",
+    "3·2 + 1·1.",
+    "= 6 + 1."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Compute [[3, 1], [2, 4]]·⟨2, 1⟩ and enter the x-component.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "row-1 col-1",
+      "value": 3
+     },
+     {
+      "id": "b",
+      "label": "row-1 col-2",
+      "value": 1
+     },
+     {
+      "id": "x",
+      "label": "vector x",
+      "value": 2
+     },
+     {
+      "id": "y",
+      "label": "vector y",
+      "value": 1
+     }
+    ],
+    "approxFormula": {
+     "op": "add",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "a"
+      },
+      "right": {
+       "op": "const",
+       "id": "x"
+      }
+     },
+     "right": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "b"
+      },
+      "right": {
+       "op": "const",
+       "id": "y"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 6,
+      "feedback": "Include the whole top row: 3·2 + 1·1 = 6 + 1 = 7."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is the y-component (2·2 + 4·1). The x-component is 3·2 + 1·1 = 7."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "x = 3·2 + 1·1 = 7.",
+    "successFeedback": "x = 3·2 + 1·1 = 7."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-matrix-arith__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Rows are recipes.",
+   "takeaways": [
+    "Add/scale matrices entry by entry.",
+    "Matrix-vector product: each output = a row dotted with the vector.",
+    "[[a,b],[c,d]]·⟨x,y⟩ = ⟨ax+by, cx+dy⟩."
+   ],
+   "teaser": "Next: the determinant and the inverse matrix."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "vec-matrix-arith",
+   "concept": {
+    "id": "rem-vec0401-c",
+    "kind": "concept",
+    "body": "Matrix-vector product: [[a,b],[c,d]]·⟨x,y⟩ = ⟨ax+by, cx+dy⟩ — each output is a matrix row dotted with the vector. Add/scale matrices entry by entry."
+   },
+   "check": {
+    "id": "rem-vec0401-k",
+    "kind": "check",
+    "body": "One product.",
+    "conceptTag": "vec-matrix-arith",
+    "explanationVariants": [
+     "[[1,0],[0,1]]·⟨5, 7⟩ = ⟨5, 7⟩ — the identity matrix leaves a vector unchanged.",
+     "The identity returns the vector as-is: ⟨5, 7⟩."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Compute [[1, 0], [0, 1]]·⟨5, 7⟩.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "⟨5, 7⟩",
+       "correct": true,
+       "feedback": "Right — the identity matrix leaves the vector unchanged."
+      },
+      {
+       "id": "o2",
+       "label": "⟨7, 5⟩",
+       "feedback": "The identity doesn't swap: ⟨1·5+0·7, 0·5+1·7⟩ = ⟨5, 7⟩."
+      },
+      {
+       "id": "o3",
+       "label": "⟨0, 0⟩",
+       "feedback": "The 1's on the diagonal preserve each component: ⟨5, 7⟩."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

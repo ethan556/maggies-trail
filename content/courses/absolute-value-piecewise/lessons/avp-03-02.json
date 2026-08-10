@@ -1,0 +1,258 @@
+{
+  "id": "avp-03-02",
+  "slug": "graphing-piecewise-functions",
+  "title": "Graphing Piecewise Functions",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch3-functions-in-pieces",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Graphing a piecewise rule means drawing each formula only over the inputs it governs, then deciding what happens where the branches meet. At the boundary exactly one branch owns the point — the one whose condition includes it — and the graph marks that with a filled dot and the other with an open one.",
+      "figure": "avp-branch-over-its-domain"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot the boundary point, owner included.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "f(x) = x + 3 for x < 1, and f(x) = 2x for x ≥ 1. Plot the point ON the graph at x = 1.",
+        "cols": 5,
+        "rows": 5,
+        "xLabels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "targets": [
+          {
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 3,
+            "y": 5,
+            "feedback": "That is the FIRST branch's value, 1 + 3 = 4 — but x < 1 excludes x = 1. The branch marked x ≥ 1 owns the boundary, and it gives 2."
+          },
+          {
+            "x": 5,
+            "y": 3,
+            "feedback": "Right height, wrong input: that is x = 3. The boundary being asked about is x = 1."
+          }
+        ],
+        "missFeedback": "x = 1 satisfies x ≥ 1, so use the second branch: f(1) = 2(1) = 2. Plot (1, 2).",
+        "successFeedback": "(1, 2): the ≥ branch owns the boundary, so the filled dot sits there and the other branch gets an open circle at (1, 4)."
+      },
+      "predict": {
+        "prompt": "At the boundary x = 1, which branch decides the graph's actual point?",
+        "options": [
+          {
+            "id": "first",
+            "label": "The first one listed"
+          },
+          {
+            "id": "owner",
+            "label": "The one whose condition includes x = 1"
+          },
+          {
+            "id": "both",
+            "label": "Both — the graph has two points there"
+          }
+        ],
+        "outcomeId": "owner",
+        "reveal": "Ownership is written into the inequality signs, not the ordering of the lines on the page. Here x ≥ 1 includes the boundary and x < 1 does not, so the second branch supplies the point — and the graph shows a filled dot there and an open circle where the first branch stopped short."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Evaluate at the boundary.",
+      "conceptTag": "avp-piecewise-graph",
+      "explanationVariants": [
+        "x = 1 satisfies x ≥ 1, so f(1) = 2(1) = 2.",
+        "The ≥ branch includes its endpoint, so it supplies f(1)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For that same f, what is f(1)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is 1 + 3 from the first branch, but x < 1 is strict — it does not include x = 1."
+          },
+          {
+            "value": 6,
+            "feedback": "That looks like both branches combined. Only one branch ever applies to a given input."
+          }
+        ],
+        "fallbackFeedback": "1 satisfies x ≥ 1, so f(1) = 2(1) = 2.",
+        "successFeedback": "2 — the boundary belongs to whichever branch's condition includes it."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The open circle is not decoration — it records that the branch approaches a height it never attains. When the two branches meet at the same height the dots coincide and the graph is continuous; when they do not, the graph jumps, and the size of that jump is visible on the page.",
+      "figure": "avp-open-closed-circle"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Continuous or jumping?",
+      "conceptTag": "avp-piecewise-graph",
+      "explanationVariants": [
+        "The first branch approaches 1 + 3 = 4 while the second starts at 2, so the graph jumps by 2.",
+        "The branch heights at the boundary disagree, so there is a break."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is that f continuous at x = 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — it jumps from a height of 4 down to 2",
+            "correct": true,
+            "feedback": "Right: the branches disagree at the boundary, so the graph breaks."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — piecewise functions are always continuous",
+            "correct": false,
+            "feedback": "Nothing forces the branches to agree; when they disagree the graph jumps."
+          },
+          {
+            "id": "o3",
+            "label": "Yes — both branches are lines",
+            "correct": false,
+            "feedback": "Straight branches can still meet at different heights, which is exactly what happens here."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate away from the boundary.",
+      "conceptTag": "avp-piecewise-graph",
+      "explanationVariants": [
+        "x = −1 satisfies x < 1, so f(−1) = −1 + 3 = 2.",
+        "Negative input, first branch, add three."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the same f, what is f(−1)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "That is the second branch, 2(−1). But −1 satisfies x < 1, so the first branch governs."
+          },
+          {
+            "value": 4,
+            "feedback": "That is f evaluated at 1 on the first branch. The input here is −1: −1 + 3 = 2."
+          }
+        ],
+        "fallbackFeedback": "−1 < 1, so use x + 3: −1 + 3 = 2.",
+        "successFeedback": "2 — same height as f(1), reached by a different branch entirely."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Size the jump.",
+      "conceptTag": "avp-piecewise-graph",
+      "explanationVariants": [
+        "The first branch approaches 4 and the second gives 2, a gap of 2.",
+        "|4 − 2| = 2, the vertical distance between the open circle and the filled dot."
+      ],
+      "hints": [
+        "Compute what each branch says at x = 1, even the one that stops short.",
+        "The first branch approaches 1 + 3; the second attains 2(1).",
+        "The gap is the distance between 4 and 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How tall is the jump in that graph at x = 1?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "Zero would mean the branches meet. Here one approaches 4 and the other gives 2."
+          },
+          {
+            "value": 6,
+            "feedback": "That adds the two heights instead of comparing them. The gap is their difference."
+          }
+        ],
+        "fallbackFeedback": "The branches give 4 and 2 at the boundary, so the jump measures 4 − 2 = 2.",
+        "successFeedback": "2 — and measuring a gap by subtracting is the same distance idea this course opened with."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Branches, boundaries, and dots.",
+      "takeaways": [
+        "Draw each branch only over the inputs its condition names.",
+        "The boundary point belongs to the branch whose condition includes it: filled dot there, open circle on the other.",
+        "Branches that meet at different heights make the graph jump."
+      ],
+      "teaser": "Next: rules that jump on purpose — postage, parking, and tax brackets."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-piecewise-graph",
+      "concept": {
+        "id": "rem-avp-piecewise-graph-c",
+        "kind": "concept",
+        "body": "The open circle is not decoration — it records that the branch approaches a height it never attains. When the two branches meet at the same height the dots coincide and the graph is continuous; when they do not, the graph jumps, and the size of that jump is visible on the page."
+      },
+      "check": {
+        "id": "rem-avp-piecewise-graph-k",
+        "kind": "check",
+        "body": "Evaluate at the boundary.",
+        "conceptTag": "avp-piecewise-graph",
+        "explanationVariants": [
+          "x = 1 satisfies x ≥ 1, so f(1) = 2(1) = 2.",
+          "The ≥ branch includes its endpoint, so it supplies f(1)."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For that same f, what is f(1)?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "That is 1 + 3 from the first branch, but x < 1 is strict — it does not include x = 1."
+            },
+            {
+              "value": 6,
+              "feedback": "That looks like both branches combined. Only one branch ever applies to a given input."
+            }
+          ],
+          "fallbackFeedback": "1 satisfies x ≥ 1, so f(1) = 2(1) = 2.",
+          "successFeedback": "2 — the boundary belongs to whichever branch's condition includes it."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "id": "dop-05-02",
+  "slug": "multiplying-decimals",
+  "title": "Multiplying Decimals",
+  "courseId": "decimal-operations",
+  "chapterId": "ch5-decimal-multiply-divide",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The rule scales to bigger numbers. For 2.5 × 1.4, multiply as wholes: 25 × 14 = 350. Both factors have one decimal place, so two total — place the point two from the right: 3.50, which is 3.5. Multiply first, count places second, every time.",
+      "figure": "dop-count-places"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiplying can make things SMALLER.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "tickStep": 0.1,
+        "target": 0.24,
+        "start": 0.5,
+        "prompt": "0.6 × 0.4. Place the product on the line.",
+        "successFeedback": "0.24 — smaller than BOTH factors. Multiplying by a number below 1 is taking a part of something, and a part is less than the whole. The 'multiplication makes bigger' rule was only ever true for whole numbers above 1.",
+        "lowFeedback": "Below 0.24. You are taking 0.4 of 0.6, which is a bit under a half of 0.6.",
+        "highFeedback": "Above 0.24. Both factors are under 1, so the product must be smaller than either of them."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 0.24 closer to 0 or to 1?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 0"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 1"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "0.24 sits 0.24 from 0 and 0.76 from 1 — the 0 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "decimal-multiply",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents decimal multiply.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for decimal multiply must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines decimal multiply."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:decimal-multiply",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two places again.",
+      "conceptTag": "decimal-multiply",
+      "explanationVariants": [
+        "36 × 7 = 252, two decimal places → 2.52.",
+        "One place in each factor, two total: 252 → 2.52."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "3.6 × 0.7 (36 × 7 = 252, two decimal places). Give the product. (enter as a decimal)",
+        "answer": 2.52,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 25.2,
+            "feedback": "25.2 uses one place. Both factors have one place — two total — so 252 becomes 2.52."
+          },
+          {
+            "value": 0.252,
+            "feedback": "0.252 uses three places. There are two total, so 252 becomes 2.52."
+          }
+        ],
+        "fallbackFeedback": "36 × 7 = 252, two places → 2.52."
+      },
+      "variant": {
+        "gen": "decimal-mul-places"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Estimation guards the point. For 2.5 × 1.4, round to about 3 × 1 = 3 — so the answer should be near 3, which 3.5 is. That instantly rules out 35 (way too big) and 0.35 (way too small). A quick estimate catches a misplaced point every time.",
+      "figure": "dop-estimate-quotient"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Three places this time.",
+      "conceptTag": "decimal-multiply",
+      "explanationVariants": [
+        "25 × 4 = 100, three decimal places → 0.100 = 0.1.",
+        "0.25 (two places) + 0.4 (one) = three total: 100 → 0.100 = 0.1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "0.25 × 0.4 (25 × 4 = 100, three decimal places → 0.100). Give the product. (enter as a decimal)",
+        "answer": 0.1,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1.0 uses one place. There are three total (two + one), so 100 becomes 0.100 = 0.1."
+          },
+          {
+            "value": 0.01,
+            "feedback": "0.01 uses four places. Three total places make 100 into 0.100 = 0.1."
+          }
+        ],
+        "fallbackFeedback": "25 × 4 = 100, three places → 0.100 = 0.1."
+      },
+      "variant": {
+        "gen": "decimal-mul-places",
+        "form": "threePlaces"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Let the estimate pick.",
+      "conceptTag": "decimal-multiply",
+      "widget": {
+        "type": "mcq",
+        "prompt": "4.2 × 0.3: the digits give 42 × 3 = 126. Estimating 4 × 0.3 ≈ 1.2, which product is right?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1.26",
+            "correct": true,
+            "feedback": "Yes — the estimate ~1.2 confirms two decimal places: 126 → 1.26."
+          },
+          {
+            "id": "b",
+            "label": "12.6",
+            "feedback": "12.6 is ten times the estimate of ~1.2. Two decimal places make 126 into 1.26."
+          },
+          {
+            "id": "c",
+            "label": "0.126",
+            "feedback": "0.126 is far below the estimate of ~1.2. Two decimal places give 1.26."
+          }
+        ]
+      },
+      "hints": [
+        "Estimate: 4 × 0.3 ≈ 1.2.",
+        "The answer should be near 1.2.",
+        "126 with two places is 1.26."
+      ],
+      "explanationVariants": [
+        "The estimate ~1.2 points to 1.26.",
+        "Two places on 126 gives 1.26, matching the estimate."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Confirm it yourself.",
+      "conceptTag": "decimal-multiply",
+      "explanationVariants": [
+        "42 × 3 = 126, two decimal places → 1.26.",
+        "The estimate ~1.2 confirms 1.26, not 12.6 or 0.126."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "4.2 × 0.3. Give the product. (enter as a decimal)",
+        "answer": 1.26,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12.6,
+            "feedback": "12.6 uses one place and overshoots the estimate ~1.2. Two places make 126 into 1.26."
+          },
+          {
+            "value": 0.126,
+            "feedback": "0.126 uses three places, far below ~1.2. Two total places give 1.26."
+          }
+        ],
+        "fallbackFeedback": "42 × 3 = 126, two places → 1.26."
+      },
+      "variant": {
+        "gen": "decimal-mul-places",
+        "form": "bareMul"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Multiply, count, and check.",
+      "conceptTag": "decimal-multiply",
+      "hints": [
+        "As wholes: 15 × 12 = 180.",
+        "Places: 1.5 (one) + 1.2 (one) = two.",
+        "Estimate ~2 × 1 = 2 to confirm the point."
+      ],
+      "explanationVariants": [
+        "15 × 12 = 180, two decimal places → 1.80 = 1.8; estimate ~2 confirms it.",
+        "Two total places put 180 at 1.80 = 1.8, matching the estimate ~2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "1.5 × 1.2. Give the product. (enter as a decimal)",
+        "answer": 1.8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 places no decimals and dwarfs the estimate ~2. Two places make 180 into 1.80 = 1.8."
+          },
+          {
+            "value": 0.18,
+            "feedback": "0.18 uses three places, far below ~2. Two places give 1.80 = 1.8."
+          }
+        ],
+        "fallbackFeedback": "15 × 12 = 180, two places → 1.80 = 1.8 (estimate ~2 confirms)."
+      },
+      "variant": {
+        "gen": "decimal-mul-places",
+        "form": "bareMul"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiply, count places, estimate to check.",
+      "takeaways": [
+        "Multiply as whole numbers, then place the total decimal places from both factors.",
+        "A quick estimate (round each factor) confirms the point is in the right spot.",
+        "If your answer is ten times off the estimate, the point is misplaced."
+      ],
+      "teaser": "last up: dividing decimals by shifting the point."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decimal-multiply",
+      "concept": {
+        "id": "rem-dm-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply as wholes, count total places, then estimate to check.** For 1.5 × 0.4: 15 × 4 = 60, two places → 0.60 = 0.6. Estimate ~2 × 0.4 ≈ 0.8, close to 0.6, so the point is right."
+      },
+      "check": {
+        "id": "rem-dm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decimal-multiply",
+        "explanationVariants": [
+          "15 × 4 = 60, two decimal places → 0.60 = 0.6.",
+          "Two total places make 60 into 0.60 = 0.6; estimate ~0.8 confirms."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "1.5 × 0.4 (15 × 4 = 60, two decimal places → 0.60). Give the product. (enter as a decimal)",
+          "answer": 0.6,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6.0 places no decimals. Two total places make 60 into 0.60 = 0.6."
+            },
+            {
+              "value": 0.06,
+              "feedback": "0.06 uses three places. Two total places make 60 into 0.60 = 0.6."
+            }
+          ],
+          "fallbackFeedback": "15 × 4 = 60, two places → 0.60 = 0.6."
+        }
+      }
+    }
+  ]
+}

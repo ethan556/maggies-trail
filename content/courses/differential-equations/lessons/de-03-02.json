@@ -1,0 +1,293 @@
+{
+  "id": "de-03-02",
+  "slug": "logistic-growth",
+  "title": "When the Rate Runs Out of Room",
+  "courseId": "differential-equations",
+  "chapterId": "ch3-growth-and-decay",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Exponential growth is a lie told about the short term. Nothing grows forever — food runs out, space runs out.\n\nSo make k **stop being constant**. Let it shrink to zero as the population approaches a ceiling K:\n\n**dP/dt = kP(1 − P/K)**\n\nWhen P is small the bracket is nearly 1 and growth is nearly exponential. When P nears K the bracket goes to zero and growth stops. **The logistic equation is what happens when k stops being constant.**",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Every curve runs to the same ceiling.",
+      "widget": {
+        "type": "slopeField",
+        "equation": "logistic",
+        "targetY0": 4,
+        "startY0": 7,
+        "prompt": "dP/dt = 1.8P(1 − P/4). Drag the starting value to the ceiling itself — the one curve that never moves.",
+        "successFeedback": "P = 4, the carrying capacity, where every segment is flat. Now drag away: from below the curve climbs to 4 in an S-shape; from ABOVE it falls to 4. Every solution ends in the same place. The ceiling is not something the model was told about — it is a consequence of the bracket (1 − P/K) shutting the growth down.",
+        "lowFeedback": "Below the ceiling — the curve is climbing toward it, and it will not stop until it arrives.",
+        "highFeedback": "Above the ceiling — too many for the food supply, so the population FALLS back to it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change an initial condition and trace a solution that remains tangent to the local direction field.",
+        "invariants": [
+          "field-slope-depends-on-position",
+          "solution-follows-local-slopes"
+        ],
+        "misconceptions": [
+          "all-solutions-share-one-curve",
+          "field-arrows-are-motion-vectors"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "differential-equations-slopeField",
+        "delayed": false
+      },
+      "conceptTag": "de-logistic",
+      "predict": {
+        "prompt": "dP/dt = 1.8P(1 − P/4). Start a population exactly at 4 — the carrying capacity. Over time it will…",
+        "options": [
+          {
+            "id": "stay",
+            "label": "Sit at 4 and never move"
+          },
+          {
+            "id": "over",
+            "label": "Creep above 4, since it is still growing"
+          },
+          {
+            "id": "under",
+            "label": "Fall back below 4"
+          }
+        ],
+        "outcomeId": "stay",
+        "reveal": "It never moves. At P = 4 the factor (1 − P/4) is exactly zero, so the whole rate is zero — a row of perfectly flat slope marks. Equilibrium is not growth that has become slow; it is growth that has become nothing, and the equation says so before any curve is drawn."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Small P behaves exponentially.",
+      "conceptTag": "de-logistic",
+      "explanationVariants": [
+        "When P is far below K, the bracket (1 − P/K) is close to 1, so dP/dt ≈ kP — ordinary exponential growth. The ceiling only bites when you get near it.",
+        "That is why the early stage of an epidemic, or of a species colonising an island, looks exponential."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In dP/dt = kP(1 − P/K), what happens when P is very small compared with K?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The bracket is nearly 1, so dP/dt ≈ kP — it grows exponentially.",
+            "correct": true,
+            "feedback": "Right, and that is why the early stage of any logistic process looks exponential. The ceiling only makes itself felt as you approach it."
+          },
+          {
+            "id": "o2",
+            "label": "Growth stops.",
+            "correct": false,
+            "feedback": "Growth stops at the CEILING, not at the floor. A small population has plenty of room and grows nearly unchecked."
+          },
+          {
+            "id": "o3",
+            "label": "The population falls.",
+            "correct": false,
+            "feedback": "For 0 < P < K both factors are positive, so dP/dt > 0 — the population grows."
+          },
+          {
+            "id": "o4",
+            "label": "It grows linearly.",
+            "correct": false,
+            "feedback": "With the bracket close to 1, the equation is essentially dP/dt = kP — proportional growth, which is exponential, not linear."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-logistic__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The inflection point has a meaning.",
+      "conceptTag": "de-logistic",
+      "explanationVariants": [
+        "The growth RATE kP(1 − P/K) is a downward parabola in P with roots 0 and K, so it peaks at P = K/2 — half the ceiling.",
+        "That is the inflection point of the S-curve: the moment the growth stops accelerating and starts easing off."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dP/dt = 1.8P(1 − P/4). At what population is the growth rate FASTEST?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is the ceiling, where growth has stopped completely. The fastest growth is at HALF of it."
+          },
+          {
+            "value": 0,
+            "feedback": "An empty population grows at zero. The rate peaks in the middle: P = K/2 = 2."
+          },
+          {
+            "value": 1.8,
+            "feedback": "That is the rate constant k, not a population. The rate is a downward parabola with roots 0 and 4, so it peaks at 2."
+          }
+        ],
+        "fallbackFeedback": "The rate is a downward parabola with roots 0 and 4: it peaks at P = 2, exactly half the carrying capacity."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-logistic__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the logistic curve has a shape you can now read entirely off the equation:\n\n**Below K/2** — growing, and growing FASTER. (concave up)\n**At K/2** — the inflection: fastest growth, and the moment it starts easing.\n**Above K/2** — still growing, but slowing. (concave down)\n**At K** — stopped.\n\nAn S-curve, and every feature of it is forced by kP(1 − P/K).",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the S.",
+      "conceptTag": "de-logistic",
+      "explanationVariants": [
+        "Between K/2 and K the population is still growing (dP/dt > 0) but the rate is falling — so the curve is concave down, easing toward the ceiling.",
+        "Growing and slowing at the same time: that is the top half of every S-curve, and it is what makes it an S."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A logistic population sits between K/2 and K. What is it doing?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Still growing, but ever more slowly — easing toward the ceiling.",
+            "correct": true,
+            "feedback": "Right: dP/dt is still positive but shrinking. Growing and slowing at once, which is the top half of the S."
+          },
+          {
+            "id": "o2",
+            "label": "Shrinking.",
+            "correct": false,
+            "feedback": "Below the ceiling both factors are positive, so the population is still growing. It only shrinks if it somehow overshoots K."
+          },
+          {
+            "id": "o3",
+            "label": "Growing faster and faster.",
+            "correct": false,
+            "feedback": "That is the BOTTOM half, below K/2. Past the inflection, the growth rate is falling."
+          },
+          {
+            "id": "o4",
+            "label": "Holding steady.",
+            "correct": false,
+            "feedback": "It holds steady only AT the ceiling. Between K/2 and K it is still climbing, just less and less eagerly."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-logistic__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the long run, and the middle.",
+      "conceptTag": "de-logistic",
+      "hints": [
+        "The carrying capacity is where the bracket vanishes: 1 − P/500 = 0.",
+        "So K = 500, and the fastest growth is at half of that.",
+        "The question asks for the population at the inflection point."
+      ],
+      "explanationVariants": [
+        "K = 500, so growth is fastest at P = 250 — half the carrying capacity.",
+        "And that is the practical use of the model: it tells a fishery or an epidemic where the turning point is, before it arrives."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dP/dt = 0.3P(1 − P/500). At what population is growth fastest?",
+        "answer": 250,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 500,
+            "feedback": "That is the carrying capacity K, where growth STOPS. The fastest growth is at K/2 = 250."
+          },
+          {
+            "value": 0.3,
+            "feedback": "That is the rate constant k, not a population."
+          },
+          {
+            "value": 150,
+            "feedback": "Half of the carrying capacity is 250, not 150. Read K from the bracket: 1 − P/500 = 0 gives K = 500."
+          }
+        ],
+        "fallbackFeedback": "K = 500, so the growth rate peaks at K/2 = 250."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-logistic__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "What happens when k stops being constant.",
+      "takeaways": [
+        "dP/dt = kP(1 − P/K): nearly exponential when P is small, stopping dead at the ceiling K.",
+        "Equilibria at 0 (unstable) and K (stable). Every positive solution runs to K, from above or below.",
+        "The inflection sits at K/2 — the fastest growth is at HALF the carrying capacity, not at the top."
+      ],
+      "teaser": "Last chapter: what to do when the equation cannot be solved at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "de-logistic",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Read the bracket. **(1 − P/K)** is nearly 1 when P is small (so growth is nearly exponential) and nearly 0 when P nears K (so growth shuts down). The bracket is the ceiling, written as algebra.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Find the ceiling.",
+        "conceptTag": "de-logistic",
+        "explanationVariants": [
+          "The bracket vanishes when P = 800, so the carrying capacity is 800.",
+          "Set 1 − P/800 = 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "dP/dt = 0.4P(1 − P/800). What is the carrying capacity?",
+          "answer": 800,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 400,
+              "feedback": "That is where growth is FASTEST (half the ceiling). The ceiling itself is where the bracket vanishes: P = 800."
+            },
+            {
+              "value": 0.4,
+              "feedback": "That is the rate constant k, not a population."
+            }
+          ],
+          "fallbackFeedback": "1 − P/800 = 0 → P = 800."
+        }
+      }
+    }
+  ]
+}

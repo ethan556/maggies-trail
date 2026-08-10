@@ -1,0 +1,337 @@
+{
+ "id": "as100-04-03",
+ "slug": "choose-the-two-steps",
+ "title": "Choose the Two Steps",
+ "courseId": "add-subtract-100",
+ "chapterId": "ch4-two-step",
+ "minutes": 8,
+ "readingProfile": "early",
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The hard part is **choosing** the steps. Gained, found, more → add. Gave, lost, used → subtract. Then do them in order.",
+   "narration": "The hardest part is choosing the two steps. Read for what each event does: gained, found, more mean add. Gave, lost, used mean subtract. Then do them in order.",
+   "figure": "as100-choose-steps"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match each event to its operation.",
+   "conceptTag": "choose-steps",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Add or subtract? Match each event.",
+    "left": [
+     {
+      "id": "e1",
+      "label": "found 12 more coins"
+     },
+     {
+      "id": "e2",
+      "label": "spent 8 coins"
+     },
+     {
+      "id": "e3",
+      "label": "won 20 coins"
+     }
+    ],
+    "right": [
+     {
+      "id": "add1",
+      "label": "add 12"
+     },
+     {
+      "id": "sub1",
+      "label": "subtract 8"
+     },
+     {
+      "id": "add2",
+      "label": "add 20"
+     }
+    ],
+    "pairs": {
+     "e1": "add1",
+     "e2": "sub1",
+     "e3": "add2"
+    },
+    "pairErrors": [
+     {
+      "left": "e2",
+      "right": "add1",
+      "feedback": "'Spent' means the coins LEAVE — subtract 8, don't add."
+     },
+     {
+      "left": "e1",
+      "right": "sub1",
+      "feedback": "'Found more' means coins ARRIVE — add 12."
+     }
+    ],
+    "missFeedback": "Gain words add; spend/lose words subtract.",
+    "successFeedback": "Every event has its operation — now the order!"
+   },
+   "predict": {
+    "prompt": "What decides whether a story step is ADD or SUBTRACT — the size of its numbers, or what HAPPENS in it?",
+    "options": [
+     {
+      "id": "action",
+      "label": "What happens — joining or leaving"
+     },
+     {
+      "id": "numbers",
+      "label": "The size of the numbers"
+     },
+     {
+      "id": "words",
+      "label": "Whether it asks 'how many'"
+     }
+    ],
+    "outcomeId": "action",
+    "reveal": "Arriving, joining, and finding join amounts — leaving, popping, and giving away remove them. The EVENT picks the operation; the numbers just ride along."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Watch a tricky word.",
+   "conceptTag": "choose-steps",
+   "explanationVariants": [
+    "'Left' after giving some away is a subtraction: 40 − 15 = 25, then + 12 = 37.",
+    "Gave away (subtract), then got more (add): 25 + 12 = 37."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "40 pencils, gave away 15, then bought 12. How many now?",
+    "answer": 37,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 25,
+      "feedback": "That's only step one — 12 were bought: 25 + 12 = 37."
+     },
+     {
+      "value": 13,
+      "feedback": "That subtracted the 12 too. Buying ADDS: 25 + 12 = 37."
+     }
+    ],
+    "fallbackFeedback": "40 − 15 = 25, then 25 + 12 = 37."
+   },
+   "hints": [
+    "Gave away first: 40 − 15 = 25.",
+    "Then bought 12.",
+    "25 + 12 = 37."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ChooseStepsNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Beware the keyword trap: *more* does not always mean add. \"How many **more** does Sam have?\" is a compare — that's a subtraction.",
+   "narration": "Beware the keyword trap: more does not always mean add. How many more does Sam have is a compare — that's a subtraction.",
+   "figure": "as100-keyword-trap"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Order the full solve.",
+   "conceptTag": "choose-steps",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "23 apples, buy 40, then use 18 for pie. Drag the steps in order.",
+    "items": [
+     {
+      "id": "o-use",
+      "label": "subtract 18 (used for pie) → 45"
+     },
+     {
+      "id": "o-buy",
+      "label": "add 40 (bought) → 63"
+     },
+     {
+      "id": "o-ans",
+      "label": "answer: 45 apples"
+     }
+    ],
+    "correctOrder": [
+     "o-buy",
+     "o-use",
+     "o-ans"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "o-use",
+      "second": "o-buy",
+      "feedback": "The buying happens before the baking. Add 40 first (63), then use 18: 45."
+     }
+    ],
+    "missFeedback": "Buy first (add 40 → 63), then use for pie (subtract 18 → 45).",
+    "successFeedback": "Buy, use, answer — 45 apples!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Solve the pie story.",
+   "conceptTag": "choose-steps",
+   "explanationVariants": [
+    "23 + 40 = 63, then 63 − 18 = 45.",
+    "Buy (add), then use (subtract): 45 apples."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "23 apples, buy 40, then use 18 for pie. How many now?",
+    "answer": 45,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 63,
+      "feedback": "That's only step one — 18 used for pie: 63 − 18 = 45."
+     },
+     {
+      "value": 81,
+      "feedback": "That added all three. The 18 are USED, so subtract: 63 − 18 = 45."
+     }
+    ],
+    "fallbackFeedback": "23 + 40 = 63, then 63 − 18 = 45."
+   },
+   "hints": [
+    "Buy first: 23 + 40 = 63.",
+    "Then use 18.",
+    "63 − 18 = 45."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ChooseStepsNumeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Spot the compare.",
+   "conceptTag": "choose-steps",
+   "explanationVariants": [
+    "'How many more' compares two amounts — you subtract: 52 − 38 = 14.",
+    "Comparing means finding the difference: 52 − 38 = 14, even though it says 'more.'"
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Mia has 52 stamps, Sam has 38. How many MORE does Mia have?",
+    "options": [
+     {
+      "id": "a",
+      "label": "subtract: 52 − 38 = 14",
+      "correct": true,
+      "feedback": "Yes — 'how many more' compares, so find the difference: 14."
+     },
+     {
+      "id": "b",
+      "label": "add: 52 + 38 = 90",
+      "feedback": "The word 'more' here COMPARES two people, not joins. Subtract: 52 − 38 = 14."
+     },
+     {
+      "id": "c",
+      "label": "add: 52 + 14 = 66",
+      "feedback": "That uses the answer as a step. The compare is 52 − 38 = 14."
+     }
+    ]
+   },
+   "hints": [
+    "'How many more' compares.",
+    "Comparing = difference.",
+    "52 − 38 = 14."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ChooseStepsMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Pick the steps AND solve!",
+   "conceptTag": "choose-steps",
+   "explanationVariants": [
+    "64 − 15 = 49, then 49 − 22 = 27.",
+    "Used some (subtract), then used more (subtract): 27 left."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "64 crayons, 15 break, then 22 are given away. How many now?",
+    "answer": 27,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 49,
+      "feedback": "That's only step one — 22 given away: 49 − 22 = 27."
+     },
+     {
+      "value": 71,
+      "feedback": "That added the 22 (64 − 15 + 22). Given away means subtract: 49 − 22 = 27."
+     }
+    ],
+    "fallbackFeedback": "64 − 15 = 49, then 49 − 22 = 27."
+   },
+   "hints": [
+    "Broke first: 64 − 15 = 49.",
+    "Then 22 given away.",
+    "49 − 22 = 27."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ChooseStepsNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Chapter done — you choose AND solve!",
+   "takeaways": [
+    "Gain words add; lose words subtract.",
+    "'How many more' compares — subtract.",
+    "Do the two steps in story order."
+   ],
+   "teaser": "next chapter: odd and even numbers."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "choose-steps",
+   "concept": {
+    "id": "rem-cs-c",
+    "kind": "concept",
+    "body": "Slow down. 20 grapes, ate 5, then got 8 more. Ate → subtract: 20 − 5 = 15. Then add: 15 + 8 = 23.",
+    "narration": "Slow it down. Twenty grapes, ate five, then got eight more. Ate means subtract: twenty minus five is fifteen. Got more means add: fifteen plus eight is twenty-three."
+   },
+   "check": {
+    "id": "rem-cs-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "choose-steps",
+    "explanationVariants": [
+     "20 − 5 = 15, then 15 + 8 = 23.",
+     "Ate (subtract), then got more (add): 23."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "20 grapes, ate 5, then got 8 more. How many now?",
+     "answer": 23,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 15,
+       "feedback": "That's only step one — 8 more came: 15 + 8 = 23."
+      },
+      {
+       "value": 7,
+       "feedback": "That subtracted the 8 too. Got more ADDS: 15 + 8 = 23."
+      }
+     ],
+     "fallbackFeedback": "20 − 5 = 15, then 15 + 8 = 23."
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,160 @@
+# Session 151 Adversarial Mutation Matrix
+
+- Rejected: **155/155**
+- Valid controls accepted: **29/29**
+
+- ✓ alg1-01-02 fabricated operation ids
+- ✓ alg1-01-02 reversed operation order
+- ✓ alg1-01-02 duplicate operation ids
+- ✓ alg1-01-02 missing operation reference
+- ✓ alg1-01-03 fabricated operation ids
+- ✓ alg1-01-03 reversed operation order
+- ✓ alg1-01-03 duplicate operation ids
+- ✓ alg1-01-03 missing operation reference
+- ✓ alg1-01-03 normalize scalar carrier
+- ✓ alg1-01-03 solution-changing rewrite
+- ✓ alg1-02-01 fabricated operation ids
+- ✓ alg1-02-01 reversed operation order
+- ✓ alg1-02-01 duplicate operation ids
+- ✓ alg1-02-01 missing operation reference
+- ✓ alg1-02-01 normalize scalar carrier
+- ✓ alg1-02-01 solution-changing rewrite
+- ✓ alg1-02-02 fabricated operation ids
+- ✓ alg1-02-02 reversed operation order
+- ✓ alg1-02-02 duplicate operation ids
+- ✓ alg1-02-02 missing operation reference
+- ✓ alg1-02-02 normalize scalar carrier
+- ✓ alg1-02-02 solution-changing rewrite
+- ✓ alg1-02-03 fabricated operation ids
+- ✓ alg1-02-03 reversed operation order
+- ✓ alg1-02-03 duplicate operation ids
+- ✓ alg1-02-03 missing operation reference
+- ✓ alg1-02-03 normalize scalar carrier
+- ✓ alg1-02-03 solution-changing rewrite
+- ✓ alg1-04-01 fabricated operation ids
+- ✓ alg1-04-01 reversed operation order
+- ✓ alg1-04-01 duplicate operation ids
+- ✓ alg1-04-01 missing operation reference
+- ✓ alg1-04-01 normalize scalar carrier
+- ✓ alg1-04-01 solution-changing rewrite
+- ✓ alg1-04-02 fabricated operation ids
+- ✓ alg1-04-02 reversed operation order
+- ✓ alg1-04-02 duplicate operation ids
+- ✓ alg1-04-02 missing operation reference
+- ✓ alg1-04-02 normalize scalar carrier
+- ✓ alg1-04-02 solution-changing rewrite
+- ✓ alg1-04-03 fabricated operation ids
+- ✓ alg1-04-03 reversed operation order
+- ✓ alg1-04-03 duplicate operation ids
+- ✓ alg1-04-03 missing operation reference
+- ✓ sr-01-01 fabricated exploration
+- ✓ sr-01-01 missing required exploration
+- ✓ sr-01-01 semantic misconception
+- ✓ sr-01-01 duplicate semantic truth
+- ✓ sr-01-01 impossible exploration demand
+- ✓ sr-01-03 fabricated exploration
+- ✓ sr-01-03 missing required exploration
+- ✓ sr-01-03 numeric misconception
+- ✓ sr-01-03 numeric trap collision
+- ✓ sr-01-03 impossible exploration demand
+- ✓ sr-02-01 fabricated exploration
+- ✓ sr-02-01 missing required exploration
+- ✓ sr-02-01 numeric misconception
+- ✓ sr-02-01 numeric trap collision
+- ✓ sr-02-01 impossible exploration demand
+- ✓ sr-02-02 fabricated exploration
+- ✓ sr-02-02 missing required exploration
+- ✓ sr-02-02 numeric misconception
+- ✓ sr-02-02 numeric trap collision
+- ✓ sr-02-02 impossible exploration demand
+- ✓ sr-02-03 fabricated exploration
+- ✓ sr-02-03 missing required exploration
+- ✓ sr-02-03 semantic misconception
+- ✓ sr-02-03 duplicate semantic truth
+- ✓ sr-02-03 impossible exploration demand
+- ✓ sr-03-01 fabricated exploration
+- ✓ sr-03-01 missing required exploration
+- ✓ sr-03-01 numeric misconception
+- ✓ sr-03-01 numeric trap collision
+- ✓ sr-03-01 impossible exploration demand
+- ✓ sr-03-02 fabricated exploration
+- ✓ sr-03-02 missing required exploration
+- ✓ sr-03-02 numeric misconception
+- ✓ sr-03-02 numeric trap collision
+- ✓ sr-03-02 impossible exploration demand
+- ✓ sr-03-03 fabricated exploration
+- ✓ sr-03-03 missing required exploration
+- ✓ sr-03-03 numeric misconception
+- ✓ sr-03-03 numeric trap collision
+- ✓ sr-03-03 impossible exploration demand
+- ✓ sr-04-01 fabricated exploration
+- ✓ sr-04-01 missing required exploration
+- ✓ sr-04-01 numeric misconception
+- ✓ sr-04-01 numeric trap collision
+- ✓ sr-04-01 impossible exploration demand
+- ✓ sr-04-02 fabricated exploration
+- ✓ sr-04-02 missing required exploration
+- ✓ sr-04-02 numeric misconception
+- ✓ sr-04-02 numeric trap collision
+- ✓ sr-04-02 impossible exploration demand
+- ✓ sr-04-03 fabricated exploration
+- ✓ sr-04-03 missing required exploration
+- ✓ sr-04-03 numeric misconception
+- ✓ sr-04-03 numeric trap collision
+- ✓ sr-04-03 impossible exploration demand
+- ✓ sr-05-03 fabricated exploration
+- ✓ sr-05-03 missing required exploration
+- ✓ sr-05-03 semantic misconception
+- ✓ sr-05-03 duplicate semantic truth
+- ✓ sr-05-03 impossible exploration demand
+- ✓ cx-02-01 fabricated geometry exploration
+- ✓ cx-02-01 geometry check before exploration
+- ✓ cx-02-01 geometry numeric misconception
+- ✓ cx-02-01 geometry trap collision
+- ✓ cx-02-01 duplicate coordinate point id
+- ✓ cx-02-02 fabricated geometry exploration
+- ✓ cx-02-02 geometry check before exploration
+- ✓ cx-02-02 geometry semantic misconception
+- ✓ cx-02-02 duplicate geometry truth carrier
+- ✓ cx-02-02 duplicate coordinate point id
+- ✓ cx-02-03 fabricated geometry exploration
+- ✓ cx-02-03 geometry check before exploration
+- ✓ cx-02-03 geometry semantic misconception
+- ✓ cx-02-03 duplicate geometry truth carrier
+- ✓ cx-02-03 duplicate coordinate point id
+- ✓ cx-03-01 fabricated geometry exploration
+- ✓ cx-03-01 geometry check before exploration
+- ✓ cx-03-01 geometry semantic misconception
+- ✓ cx-03-01 duplicate geometry truth carrier
+- ✓ cx-03-01 duplicate coordinate point id
+- ✓ cx-03-03 fabricated geometry exploration
+- ✓ cx-03-03 geometry check before exploration
+- ✓ cx-03-03 geometry semantic misconception
+- ✓ cx-03-03 duplicate geometry truth carrier
+- ✓ cx-03-03 duplicate coordinate point id
+- ✓ cx-04-01 fabricated geometry exploration
+- ✓ cx-04-01 geometry check before exploration
+- ✓ cx-04-01 geometry semantic misconception
+- ✓ cx-04-01 duplicate geometry truth carrier
+- ✓ cx-04-01 duplicate coordinate point id
+- ✓ cx-04-02 fabricated geometry exploration
+- ✓ cx-04-02 geometry check before exploration
+- ✓ cx-04-02 geometry semantic misconception
+- ✓ cx-04-02 duplicate geometry truth carrier
+- ✓ cx-04-02 duplicate coordinate point id
+- ✓ cx-04-03 fabricated geometry exploration
+- ✓ cx-04-03 geometry check before exploration
+- ✓ cx-04-03 geometry numeric misconception
+- ✓ cx-04-03 geometry trap collision
+- ✓ cx-04-03 duplicate coordinate point id
+- ✓ cx-05-03 fabricated geometry exploration
+- ✓ cx-05-03 geometry check before exploration
+- ✓ cx-05-03 geometry numeric misconception
+- ✓ cx-05-03 geometry trap collision
+- ✓ EquationOutcomeLabSpec refine-wrapper union collapse
+- ✓ SequenceBuildSpec refine-wrapper union collapse
+- ✓ GeometricConstraintLabSpec refine-wrapper union collapse
+- ✓ equation mastery colors missing
+- ✓ sequence exact stages missing
+- ✓ coordinate proof diagram missing non-color semantics
+- ✓ fabricated-key filtering removed

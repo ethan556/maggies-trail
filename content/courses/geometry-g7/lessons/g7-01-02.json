@@ -1,0 +1,341 @@
+{
+  "id": "g7-01-02",
+  "slug": "from-real-to-drawing",
+  "title": "From Real to Drawing",
+  "courseId": "geometry-g7",
+  "chapterId": "ch1-scale-drawings",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Going the other way — real length to drawing length — is a **division**. At 1 cm = 4 m, a 20 m real wall needs 20 ÷ 4 = **5 cm** on paper. Divide by the scale amount.",
+      "figure": "scale-drawing"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A scale drawing is a dilation.",
+      "widget": {
+        "type": "dilationExplore",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 7,
+        "prompt": "A plan is drawn at twice the size of the model. Scale the rectangle to match.",
+        "successFeedback": "k = 2. A scale drawing is nothing but a dilation with the scale factor as k — same shape, same angles, every length multiplied.",
+        "lowFeedback": "The drawing is smaller than twice the size.",
+        "highFeedback": "The drawing is larger than twice the size."
+      },
+      "predict": {
+        "prompt": "You'll double every length (k = 2). What happens to the rectangle's AREA?",
+        "options": [
+          {
+            "id": "x2",
+            "label": "It doubles"
+          },
+          {
+            "id": "x4",
+            "label": "It quadruples"
+          },
+          {
+            "id": "same",
+            "label": "It stays the same"
+          }
+        ],
+        "outcomeId": "x4",
+        "reveal": "Both the width AND the height double, so the area picks up a factor of 2 twice: k² = 4. Scaling lengths by k always scales area by k² — watch the copy swallow four of the original."
+      },
+      "conceptTag": "g7-scale-to-actual",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents scale to actual.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for scale to actual must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines scale to actual."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-g7:g7-scale-to-actual",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One scale, two directions: **drawing → real multiplies**, **real → drawing divides**. Ask which way you're going before touching the numbers — the most common error is multiplying both ways.",
+      "figure": "g7-scale-directions"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another conversion.",
+      "conceptTag": "g7-scale-to-actual",
+      "explanationVariants": [
+        "At 1 cm = 5 m, a 30 m garden needs 30 ÷ 5 = 6 cm.",
+        "Real → drawing divides: 30 ÷ 5 = 6 cm."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At the scale 1 cm = 5 m, how many centimeters should a 30 m garden be in the drawing?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 150,
+            "feedback": "That multiplied — real → drawing DIVIDES: 30 ÷ 5 = 6 cm."
+          },
+          {
+            "value": 25,
+            "feedback": "Divide, don't subtract: 30 ÷ 5 = 6 cm."
+          }
+        ],
+        "fallbackFeedback": "30 ÷ 5 = 6 cm on the drawing."
+      },
+      "variant": {
+        "gen": "g7-scale-to-actual"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the operation.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each task by the operation it needs (scale 1 cm = 2 m).",
+        "buckets": [
+          {
+            "id": "mult",
+            "label": "Multiply by 2"
+          },
+          {
+            "id": "div",
+            "label": "Divide by 2"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "drawing shows 6 cm — find the real meters",
+            "bucketId": "mult",
+            "feedback": "Drawing → real multiplies: 6 × 2 = 12 m."
+          },
+          {
+            "id": "d2",
+            "label": "real fence is 14 m — find the drawing cm",
+            "bucketId": "div",
+            "feedback": "Real → drawing divides: 14 ÷ 2 = 7 cm."
+          },
+          {
+            "id": "d3",
+            "label": "drawing shows 9 cm — find the real meters",
+            "bucketId": "mult",
+            "feedback": "Drawing → real multiplies: 9 × 2 = 18 m."
+          },
+          {
+            "id": "d4",
+            "label": "real wall is 8 m — find the drawing cm",
+            "bucketId": "div",
+            "feedback": "Real → drawing divides: 8 ÷ 2 = 4 cm."
+          }
+        ],
+        "missFeedback": "Not quite — drawing → real multiplies by the scale; real → drawing divides by it.",
+        "successFeedback": "All sorted — multiply to grow into real life, divide to shrink onto paper."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Real to drawing again.",
+      "conceptTag": "g7-scale-to-actual",
+      "explanationVariants": [
+        "At 1 cm = 2 m, a 14 m fence needs 14 ÷ 2 = 7 cm.",
+        "Divide: 14 ÷ 2 = 7 cm."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At the scale 1 cm = 2 m, how many centimeters should a 14 m fence be in the drawing?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 28,
+            "feedback": "That multiplied — real → drawing DIVIDES: 14 ÷ 2 = 7 cm."
+          },
+          {
+            "value": 12,
+            "feedback": "Divide, don't subtract: 14 ÷ 2 = 7 cm."
+          }
+        ],
+        "fallbackFeedback": "14 ÷ 2 = 7 cm on the drawing."
+      },
+      "variant": {
+        "gen": "g7-scale-to-actual",
+        "form": "drawFence"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which direction?",
+      "conceptTag": "g7-scale-to-actual",
+      "explanationVariants": [
+        "Finding a drawing length from a real length goes real → drawing, which divides by the scale amount.",
+        "Real → drawing divides; drawing → real multiplies."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You know a real length and want its length in the scale drawing. What do you do with the scale amount?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Divide the real length by it",
+            "correct": true,
+            "feedback": "Right — real → drawing divides by the scale amount."
+          },
+          {
+            "id": "b",
+            "label": "Multiply the real length by it",
+            "correct": false,
+            "feedback": "Multiplying goes drawing → real — going ONTO the paper divides."
+          },
+          {
+            "id": "c",
+            "label": "Add it",
+            "correct": false,
+            "feedback": "The scale is a rate, not an amount to add — real → drawing divides by it."
+          },
+          {
+            "id": "d",
+            "label": "Subtract it",
+            "correct": false,
+            "feedback": "The scale converts by division here, not subtraction."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-scale-to-actual",
+        "form": "scaleDirection"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-step plan.",
+      "conceptTag": "g7-scale-to-actual",
+      "explanationVariants": [
+        "The 12 m pool is 12 ÷ 4 = 3 cm; the 8 m deck is 8 ÷ 4 = 2 cm; together 3 + 2 = 5 cm.",
+        "Convert each (3 cm and 2 cm), then add: 5 cm."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At 1 cm = 4 m, a 12 m pool and an 8 m deck sit end to end. How many centimeters long is the pair in the drawing?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "That's the real total (12 + 8 m) — convert to drawing cm: 20 ÷ 4 = 5 cm."
+          },
+          {
+            "value": 80,
+            "feedback": "That multiplied — real → drawing DIVIDES: (12 + 8) ÷ 4 = 5 cm."
+          }
+        ],
+        "fallbackFeedback": "12 ÷ 4 = 3 cm, 8 ÷ 4 = 2 cm; together 5 cm (or 20 ÷ 4 = 5)."
+      },
+      "hints": [
+        "Find the total real length first: 12 + 8 = 20 m.",
+        "Real → drawing divides by the scale amount (4).",
+        "20 ÷ 4 = 5 cm."
+      ],
+      "variant": {
+        "gen": "g7-scale-to-actual",
+        "form": "drawCombined"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Real → drawing divides by the scale amount; drawing → real multiplies.",
+      "takeaways": [
+        "Drawing → real: multiply by the scale amount.",
+        "Real → drawing: divide by the scale amount.",
+        "Decide the direction before computing."
+      ],
+      "teaser": "Next: what a scale does to area."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-scale-to-actual",
+      "concept": {
+        "id": "rem-g70102-c",
+        "kind": "concept",
+        "body": "One scale, two directions: drawing → real multiplies by the scale amount; real → drawing divides by it. At 1 cm = 4 m, a 20 m wall needs 20 ÷ 4 = 5 cm."
+      },
+      "check": {
+        "id": "rem-g70102-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-scale-to-actual",
+        "explanationVariants": [
+          "At 1 cm = 3 m, a 12 m wall needs 12 ÷ 3 = 4 cm.",
+          "Real → drawing divides: 12 ÷ 3 = 4 cm."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "At the scale 1 cm = 3 m, how many centimeters should a 12 m wall be in the drawing?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 36,
+              "feedback": "That multiplied — real → drawing DIVIDES: 12 ÷ 3 = 4 cm."
+            },
+            {
+              "value": 9,
+              "feedback": "Divide, don't subtract: 12 ÷ 3 = 4 cm."
+            }
+          ],
+          "fallbackFeedback": "12 ÷ 3 = 4 cm on the drawing."
+        }
+      }
+    }
+  ]
+}

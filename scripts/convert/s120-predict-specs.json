@@ -1,0 +1,175 @@
+{
+  "note": "S120e — predict-only. Each of these lessons already runs a lab that clears every Tier-A gate except the prediction. Nothing but a `predict` block is added: the widget, the body and every authored field are left exactly as they are, and the converter asserts the widget is byte-identical after the edit. Each prompt was written against the lesson's own prose, and each wrong option is a misconception the lab can actually refute.",
+  "conversions": [
+    {
+      "dir": "differential-equations",
+      "lesson": "de-01-01",
+      "step": "i1",
+      "oldType": "slopeField",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "dy/dx = x — the slope depends on x alone. Start two curves at different heights. Compared with each other they will be…",
+        "options": [
+          { "id": "shifted", "label": "The same shape, one sitting above the other" },
+          { "id": "different", "label": "Different shapes entirely" },
+          { "id": "cross", "label": "Different at first, then crossing somewhere" }
+        ],
+        "outcomeId": "shifted",
+        "reveal": "The same shape, shifted. Every point in a vertical column has the same slope, because x is the same all the way up it — so the whole family is one curve translated up and down. That translation is the + C, and this is the picture it has been standing in for."
+      }
+    },
+    {
+      "dir": "differential-equations",
+      "lesson": "de-02-01",
+      "step": "i1",
+      "oldType": "slopeField",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "dy/dx = 0.5y — here the slope depends on y instead. Two curves started at different heights will…",
+        "options": [
+          { "id": "spread", "label": "Spread further and further apart" },
+          { "id": "parallel", "label": "Stay a fixed distance apart" },
+          { "id": "meet", "label": "Close together and meet" }
+        ],
+        "outcomeId": "spread",
+        "reveal": "They spread. The solutions are y = Ae^(0.5x), so the constant MULTIPLIES rather than adds — the gap between two of them is itself an exponential. That is the difference between a family built by shifting and a family built by scaling, and you can read which one you have off where the constant sits."
+      }
+    },
+    {
+      "dir": "differential-equations",
+      "lesson": "de-03-01",
+      "step": "i1",
+      "oldType": "slopeField",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "dy/dt = 0.5y. Move straight up the page — same t, larger y. The slope marks there will be…",
+        "options": [
+          { "id": "steeper", "label": "Steeper" },
+          { "id": "same", "label": "The same — t has not changed" },
+          { "id": "shallower", "label": "Shallower" }
+        ],
+        "outcomeId": "steeper",
+        "reveal": "Steeper, and by exactly the same factor the height grew. \"Rate proportional to amount\" is not a description of exponential growth — it is the instruction that produces it, and the field shows the instruction being obeyed at every height."
+      }
+    },
+    {
+      "dir": "differential-equations",
+      "lesson": "de-03-02",
+      "step": "i1",
+      "oldType": "slopeField",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "dP/dt = 1.8P(1 − P/4). Start a population exactly at 4 — the carrying capacity. Over time it will…",
+        "options": [
+          { "id": "stay", "label": "Sit at 4 and never move" },
+          { "id": "over", "label": "Creep above 4, since it is still growing" },
+          { "id": "under", "label": "Fall back below 4" }
+        ],
+        "outcomeId": "stay",
+        "reveal": "It never moves. At P = 4 the factor (1 − P/4) is exactly zero, so the whole rate is zero — a row of perfectly flat slope marks. Equilibrium is not growth that has become slow; it is growth that has become nothing, and the equation says so before any curve is drawn."
+      }
+    },
+    {
+      "dir": "differential-equations",
+      "lesson": "de-04-01",
+      "step": "i1",
+      "oldType": "slopeField",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "Euler's method walks in straight tangent steps. On dy/dx = 0.5y, whose curves bend upward, its answer will land…",
+        "options": [
+          { "id": "low", "label": "Below the true curve" },
+          { "id": "high", "label": "Above the true curve" },
+          { "id": "exact", "label": "On it — the field is exact at every point" }
+        ],
+        "outcomeId": "low",
+        "reveal": "Below. A curve that bends upward pulls away above its own tangent, so every straight step lands under it, and the next step starts from that deficit. The error is not random noise — it is one-directional and it compounds, which is why halving the step size is worth doing."
+      }
+    },
+    {
+      "dir": "integration-applications",
+      "lesson": "ia-01-01",
+      "step": "i1",
+      "oldType": "sliceSum",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "Between x = 0 and x = 1, which curve is on top — y = x or y = x²?",
+        "options": [
+          { "id": "line", "label": "y = x" },
+          { "id": "para", "label": "y = x² — squaring makes things bigger" },
+          { "id": "swap", "label": "They swap over somewhere inside the interval" }
+        ],
+        "outcomeId": "line",
+        "reveal": "y = x. Squaring makes numbers bigger only above 1; between 0 and 1 it makes them SMALLER, so the parabola sits underneath. They touch only at the two ends. That is why each strip's height is x − x², and why writing it the other way round hands back a negative answer that no area could have."
+      }
+    },
+    {
+      "dir": "integration-applications",
+      "lesson": "ia-01-02",
+      "step": "i1",
+      "oldType": "sliceSum",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "A strip spins into a disc, and its height becomes the disc's radius. Double the strip's height and the disc's area is multiplied by…",
+        "options": [
+          { "id": "four", "label": "4" },
+          { "id": "two", "label": "2" },
+          { "id": "none", "label": "Nothing — the radius changed, not the area" }
+        ],
+        "outcomeId": "four",
+        "reveal": "Four. The height becomes the RADIUS, and a disc's area goes as r², so doubling one quadruples the other. That square is the whole difference between an area integral and a volume integral: same slicing, same adding, one squared measurement in the middle."
+      }
+    },
+    {
+      "dir": "integration-applications",
+      "lesson": "ia-02-01",
+      "step": "i1",
+      "oldType": "sliceSum",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "Keep every slice's size the same but make each cross-section a SQUARE of side r instead of a circle of radius r. The total volume will be…",
+        "options": [
+          { "id": "less", "label": "Smaller" },
+          { "id": "more", "label": "Bigger — a square has corners the circle lacks" },
+          { "id": "same", "label": "The same — the slices are the same size" }
+        ],
+        "outcomeId": "less",
+        "reveal": "Smaller. A square of side r has area r², while the circle of radius r has πr² ≈ 3.14 r² — the circle is inscribed in a square of side 2r, not r. Notice what had to change to answer that: one formula. Slice, find ONE cross-section's area, integrate. The circle was never load-bearing."
+      }
+    },
+    {
+      "dir": "integration-applications",
+      "lesson": "ia-04-01",
+      "step": "i1",
+      "oldType": "accumulateArea",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "The velocity starts negative and later turns positive. The accumulated displacement stops falling at the instant when…",
+        "options": [
+          { "id": "zero", "label": "The velocity reaches zero" },
+          { "id": "min", "label": "The velocity is at its most negative" },
+          { "id": "back", "label": "The object gets back to where it started" }
+        ],
+        "outcomeId": "zero",
+        "reveal": "When v hits zero. Displacement falls exactly while v is negative, so the turn is where v crosses the axis — not where the object happens to return, and not where it is moving fastest backwards. That crossing is also the moment displacement and total distance stop agreeing."
+      }
+    },
+    {
+      "dir": "integration-accumulation",
+      "lesson": "in-02-02",
+      "step": "i1",
+      "oldType": "accumulateArea",
+      "capability": "predict-only (B → A)",
+      "predict": {
+        "prompt": "f(x) = x − 2 is negative before x = 2. The accumulation curve A is momentarily flat where…",
+        "options": [
+          { "id": "fzero", "label": "f = 0" },
+          { "id": "flow", "label": "f is at its lowest" },
+          { "id": "azero", "label": "A itself is zero" }
+        ],
+        "outcomeId": "fzero",
+        "reveal": "Where f = 0, at x = 2. A's slope IS f — that is the whole relationship — so A is flat exactly where f crosses the axis. How high A happens to sit at that moment is a separate question entirely, decided by everything that accumulated before it."
+      }
+    }
+  ]
+}

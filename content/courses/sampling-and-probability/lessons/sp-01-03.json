@@ -1,0 +1,352 @@
+{
+  "id": "sp-01-03",
+  "slug": "sampling-in-real-situations",
+  "title": "Sampling in Real Situations",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch1-random-sampling-and-making-inferences",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "sample-to-population",
+      "body": "Real decisions rely on sampling every day — companies test products, cities plan services, schools check preferences. All of it starts with a random, representative sample."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A product-testing estimate.",
+      "predict": {
+        "prompt": "2 defects in a sample of 50 phones. The factory made 5000 — a hundred times as many. Will the estimated defect count be small or large?",
+        "options": [
+          {
+            "id": "twohundred",
+            "label": "Large in count, small in rate — about 200"
+          },
+          {
+            "id": "two",
+            "label": "Still about 2 — defects are rare"
+          },
+          {
+            "id": "fifty",
+            "label": "About 50 — one per hundred phones"
+          }
+        ],
+        "outcomeId": "twohundred",
+        "reveal": "A rare rate can still be a big count once the population is large. 2 in 50 is 4%, and 4% of 5000 is 200 — the RATE stayed tiny while the count grew a hundredfold."
+      },
+      "widget": {
+        "type": "ratioTable",
+        "prompt": "The sample is 2 defects out of 50 phones. Fill in the row for all 5000 phones, keeping the ratio the same.",
+        "colA": "phones checked",
+        "colB": "defective",
+        "rows": [
+          [
+            50,
+            2
+          ],
+          [
+            500,
+            20
+          ]
+        ],
+        "askA": 5000,
+        "targetB": 200,
+        "bMax": 400,
+        "bStep": 10,
+        "bStart": 0,
+        "successFeedback": "200. The rate held at 2 in every 50 — 4% — all the way down the column, but a hundredfold bigger population turns a rare defect into 200 phones. Rate and count are different questions, and a sample answers the first in order to estimate the second.",
+        "lowFeedback": "Too low. Each 50 phones brings about 2 defects, and 5000 holds a hundred of those groups — count them up.",
+        "highFeedback": "Too high. Only 2 in every 50 are defective, so even 5000 phones cannot reach past 200."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A biased-sample check, real-world.",
+      "conceptTag": "sp-realworld-bias",
+      "explanationVariants": [
+        "Randomly selecting from ALL customers avoids favoring any one group.",
+        "Surveying only satisfied customers who left reviews skews the result."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A company wants to know overall customer satisfaction. Which method is LEAST biased?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Randomly call 300 customers from the full purchase records",
+            "correct": true,
+            "feedback": "Yes — a random call list from all customers avoids bias."
+          },
+          {
+            "id": "b",
+            "label": "Read the reviews customers chose to post online",
+            "feedback": "People who post reviews tend to have unusually strong (positive or negative) opinions — biased."
+          },
+          {
+            "id": "c",
+            "label": "Survey people calling in with complaints",
+            "feedback": "Complaint callers are, by definition, unhappy customers — a heavily biased group."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-sampling-bias",
+        "form": "spBiasCustomer"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A sample estimate is a best guess, not a guarantee — it can still differ from the true number, especially with a smaller sample.",
+      "figure": "sp-sample-size"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A voting-preference estimate.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 100 voters, 55 support a new law. If the district has 8000 voters, estimate how many support it.",
+        "answer": 4400,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "That's just the sample count. Scale it up: 55/100 of 8000 = 4400."
+          },
+          {
+            "value": 8000,
+            "feedback": "That's every voter, not just supporters. Scale the ratio: 4400."
+          }
+        ],
+        "fallbackFeedback": "55/100 of 8000 is 4400."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The full sampling process: choose a random method, collect the sample, scale the ratio, and stay aware that a bigger sample builds more confidence.",
+      "figure": "sample-to-population"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A reliability comparison, real-world.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which random sample gives a more reliable estimate of a city's average household income?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A random sample of 1000 households",
+            "correct": true,
+            "feedback": "Yes — a bigger random sample gives a more reliable estimate."
+          },
+          {
+            "id": "b",
+            "label": "A random sample of 12 households",
+            "feedback": "Too small — a sample this size can swing widely by chance."
+          },
+          {
+            "id": "c",
+            "label": "Both are equally reliable",
+            "feedback": "Sample size matters — the bigger one is more reliable."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another product-testing estimate.",
+      "conceptTag": "sp-realworld-estimate",
+      "explanationVariants": [
+        "3/60 = 1/20, and 1/20 of 6000 is 300.",
+        "Scale the sample's ratio up to the full population."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 60 batteries, 3 fail early. If the factory made 6000 batteries, estimate how many fail early.",
+        "answer": 300,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's just the sample count. Scale it up: 3/60 of 6000 = 300."
+          },
+          {
+            "value": 6000,
+            "feedback": "That's all the batteries, not just failures. Scale the ratio: 300."
+          }
+        ],
+        "fallbackFeedback": "3/60 of 6000 is 300."
+      },
+      "variant": {
+        "gen": "g7-sp-sample-estimate",
+        "form": "spEstimateFactory"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another biased-sample check.",
+      "conceptTag": "sp-realworld-bias",
+      "explanationVariants": [
+        "A random draw from the full student list avoids bias.",
+        "Asking only students in one class or club skews the result."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A school wants to know how students get to school. Which method is LEAST biased?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Randomly select 100 students from the whole school roster",
+            "correct": true,
+            "feedback": "Yes — a random draw from the full roster avoids bias."
+          },
+          {
+            "id": "b",
+            "label": "Ask students waiting at the bus stop",
+            "feedback": "Bus-stop students obviously ride the bus — heavily biased toward that answer."
+          },
+          {
+            "id": "c",
+            "label": "Ask students in the school parking lot",
+            "feedback": "Parking-lot students are biased toward driving or being driven — not representative."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-sampling-bias",
+        "form": "spBiasSchool"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full mixed challenge.",
+      "conceptTag": "sp-realworld-estimate",
+      "explanationVariants": [
+        "35/70 = 1/2, and 1/2 of 4200 is 2100.",
+        "Scale the sample's ratio up to the full population."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 70 concertgoers, 35 bought a T-shirt. If 4200 people attended, estimate how many bought a T-shirt.",
+        "answer": 2100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "That's just the sample count. Scale it up: 35/70 of 4200 = 2100."
+          },
+          {
+            "value": 4200,
+            "feedback": "That's everyone, not just T-shirt buyers. Scale the ratio: 2100."
+          }
+        ],
+        "fallbackFeedback": "35/70 of 4200 is 2100."
+      },
+      "hints": [
+        "Find the sample's ratio: 35 out of 70 = 1/2.",
+        "Apply that same ratio to 4200: 1/2 of 4200.",
+        "1/2 × 4200 = 2100."
+      ],
+      "variant": {
+        "gen": "g7-sp-sample-estimate",
+        "form": "spEstimateEvent"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Real sampling decisions combine three ideas: scale the ratio, keep the sample random, and trust bigger samples more.",
+      "takeaways": [
+        "Scaling a sample's ratio works the same in any real-world context.",
+        "Always check whether a sample was truly random or secretly biased.",
+        "Bigger random samples give more confidence in the estimate."
+      ],
+      "teaser": "you've completed random sampling and making inferences — more of this course is still ahead."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-realworld-estimate",
+      "concept": {
+        "id": "rem-sre-c",
+        "kind": "concept",
+        "body": "Scale a sample's ratio up to the full population in any real-world context: (trait count ÷ sample size) × population size."
+      },
+      "check": {
+        "id": "rem-sre-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-realworld-estimate",
+        "explanationVariants": [
+          "2/50 of 5000 is 200.",
+          "Scale the sample's ratio up to the population."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In a sample of 50 phones, 2 have a screen defect. If the factory made 5000 phones, estimate how many have a defect.",
+          "answer": 200,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "Scale up the sample count: 200."
+            },
+            {
+              "value": 5000,
+              "feedback": "That's everyone, not just defects: 200."
+            }
+          ],
+          "fallbackFeedback": "200."
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-realworld-bias",
+      "concept": {
+        "id": "rem-srb-c",
+        "kind": "concept",
+        "body": "A random sample drawn from the whole population avoids bias. Sampling only from a convenient or self-selected group (reviewers, complainers, people already present) skews the result."
+      },
+      "check": {
+        "id": "rem-srb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-realworld-bias",
+        "explanationVariants": [
+          "A random call list from all customers avoids bias.",
+          "Self-selected groups (reviewers, complainers) skew results."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A company wants to know overall customer satisfaction. Which method is LEAST biased?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Randomly call 300 customers from the full purchase records",
+              "correct": true,
+              "feedback": "Yes — random selection avoids bias."
+            },
+            {
+              "id": "b",
+              "label": "Read the reviews customers chose to post online",
+              "feedback": "Reviewers are a biased, self-selected group."
+            },
+            {
+              "id": "c",
+              "label": "Survey people calling in with complaints",
+              "feedback": "Complaint callers are a biased, unhappy group."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

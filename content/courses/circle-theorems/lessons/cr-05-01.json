@@ -1,0 +1,293 @@
+{
+  "id": "cr-05-01",
+  "slug": "arc-length",
+  "title": "Arc Length",
+  "courseId": "circle-theorems",
+  "chapterId": "ch5-arcs-sectors-cyclic",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-arc-length",
+      "concept": {
+        "id": "rem-cr-arc-length-c",
+        "kind": "concept",
+        "body": "Arc measure (degrees) and arc length (distance) are different quantities linked by a fraction: a θ-degree arc is θ/360 of the circle, so its length is (θ/360) · 2πr. Recall C = 2πr from Grade 7. The trig course's s = rθ (radians) is the same formula with the fraction absorbed into the angle unit."
+      },
+      "check": {
+        "id": "rem-cr-arc-length-k",
+        "kind": "check",
+        "body": "One share.",
+        "conceptTag": "cr-arc-length",
+        "explanationVariants": [
+          "A 90° arc is a quarter of the circle: (1/4)(2π · 8) = 4π ≈ 12.57.",
+          "Quarter of 16π: ≈ 12.57."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Radius 8, arc 90°. Arc length (2 decimals) = ?",
+          "answer": 12.57,
+          "tolerance": 0.05,
+          "commonErrors": [
+            {
+              "value": 50.27,
+              "feedback": "50.27 ≈ 16π is the whole circumference — the arc takes a quarter: ≈ 12.57."
+            },
+            {
+              "value": 90,
+              "feedback": "90 is the degree measure — length = (90/360)(16π) ≈ 12.57."
+            }
+          ],
+          "fallbackFeedback": "(90/360)(16π) = 4π ≈ 12.57."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Arc MEASURE counts degrees; arc LENGTH measures distance — and the bridge is a fraction. An arc of θ degrees claims θ/360 of the circle, so it claims that same fraction of the circumference (2πr, from your Grade 7 circle work): **arc length = (θ/360) · 2πr**. Degrees price the share; the radius prices the whole.",
+      "figure": "sector-arc"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A sixth of the way around.",
+      "conceptTag": "cr-arc-length",
+      "explanationVariants": [
+        "60/360 = 1/6 of the circumference 2π(9) = 18π: arc = 3π ≈ 9.42.",
+        "(60/360)(18π) = 3π ≈ 9.42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 9, arc measure 60°. Find the arc LENGTH (2 decimals; use π ≈ 3.14159).",
+        "answer": 9.42,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 is the arc's degree MEASURE — its length takes 1/6 of the 18π circumference: 3π ≈ 9.42."
+          },
+          {
+            "value": 56.55,
+            "feedback": "56.55 ≈ 18π is the WHOLE circumference — the arc claims only 60/360 of it: ≈ 9.42."
+          },
+          {
+            "value": 4.71,
+            "feedback": "4.71 ≈ 1.5π halves the answer — the fraction is 60/360 = 1/6, not 1/12: ≈ 9.42."
+          }
+        ],
+        "fallbackFeedback": "(60/360) · 2π(9) = 3π ≈ 9.42."
+      },
+      "variant": {
+        "gen": "circle-sector"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A bigger share.",
+      "conceptTag": "cr-arc-length",
+      "explanationVariants": [
+        "150/360 = 5/12 of 2π(12) = 24π: arc = 10π ≈ 31.42.",
+        "(150/360)(24π) = 10π ≈ 31.42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 12, arc measure 150°. Arc length (2 decimals) = ?",
+        "answer": 31.42,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 75.4,
+            "feedback": "75.4 ≈ 24π is the full circumference — take the 150/360 share: 10π ≈ 31.42."
+          },
+          {
+            "value": 150,
+            "feedback": "150 is degrees — convert to distance via the fraction: (150/360)(24π) ≈ 31.42."
+          },
+          {
+            "value": 15.71,
+            "feedback": "15.71 ≈ 5π uses radius 6 or halves — with r = 12 the share is 10π ≈ 31.42."
+          }
+        ],
+        "fallbackFeedback": "(150/360) · 24π = 10π ≈ 31.42."
+      },
+      "variant": {
+        "gen": "circle-sector"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The trigonometry course prices the same arc as **s = rθ** with θ in radians — and the two formulas are one. Convert 60° = π/3 rad: s = 9 · π/3 = 3π, exactly the fraction route's answer. Radians BUILD the fraction into the angle unit; degrees keep it explicit. Same arc, two bookkeeping systems.",
+      "figure": "cr-arc-length"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Reconcile the routes.",
+      "conceptTag": "cr-arc-length",
+      "explanationVariants": [
+        "Fraction route: (90/360)(2π · 4) = 2π. Radian route: 90° = π/2, s = 4(π/2) = 2π. Same ≈ 6.28.",
+        "Both systems price the quarter-circle at 2π ≈ 6.28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 4, arc 90°. Compute the arc length by EITHER route (2 decimals) — they must agree.",
+        "answer": 6.28,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 12.57,
+            "feedback": "12.57 ≈ 4π doubles — the quarter share of 8π is 2π ≈ 6.28 (and s = 4 · π/2 agrees)."
+          },
+          {
+            "value": 3.14,
+            "feedback": "3.14 ≈ π halves — (90/360)(8π) = 2π ≈ 6.28."
+          },
+          {
+            "value": 90,
+            "feedback": "90 is the degree measure — the length is 2π ≈ 6.28 by both routes."
+          }
+        ],
+        "fallbackFeedback": "(90/360)(8π) = 2π = 4 · (π/2) ≈ 6.28 — fraction and radian routes agree."
+      },
+      "variant": {
+        "gen": "circle-sector"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "An arc is a fraction of the way round.",
+      "predict": {
+        "prompt": "A 60° arc sits in a circle of radius 6. What fraction of the whole circumference is it?",
+        "options": [
+          {
+            "id": "sixth",
+            "label": "One sixth — because 60° is one sixth of 360°"
+          },
+          {
+            "id": "depends",
+            "label": "It depends on the radius as well as the angle"
+          },
+          {
+            "id": "sixtieth",
+            "label": "60/360 of the DIAMETER rather than the circumference"
+          }
+        ],
+        "outcomeId": "sixth",
+        "reveal": "One sixth, and the radius never enters the fraction. An arc is the same share of the circumference that its angle is of the full turn — (1/6)(12π) = 2π. Open the angle and watch the fraction track the angle alone."
+      },
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "arcSector",
+        "radius": 6,
+        "targetAngle": 60,
+        "start": 15,
+        "prompt": "Radius 6. Open the angle to 60° and read the arc length.",
+        "successFeedback": "60° is one sixth of the turn, so the arc is one sixth of the circumference: (1/6)(12π) = 2π ≈ 6.28. There is no arc-length formula to memorise — there is a fraction of a lap, and the fraction is the angle over 360.",
+        "lowFeedback": "Not far enough round — the arc is still shorter than a sixth of the circle.",
+        "highFeedback": "Too far round — you have passed 60°."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate circle measurements while tangent, chord, radius, and power relationships update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "circle-measures-remain-linked"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "diagram-not-to-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-arc-length"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The running track.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A running track's curve is a semicircle of radius 30 m. How far does the curve carry you (2 decimals)?",
+        "answer": 94.25,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 188.5,
+            "feedback": "188.5 ≈ 60π is the FULL circle — a semicircle takes half: 30π ≈ 94.25 m."
+          },
+          {
+            "value": 30,
+            "feedback": "30 m is the radius — the semicircular path is (180/360)(2π · 30) = 30π ≈ 94.25 m."
+          }
+        ],
+        "fallbackFeedback": "(180/360)(60π) = 30π ≈ 94.25 m."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Backward to the angle.",
+      "conceptTag": "cr-arc-length",
+      "hints": [
+        "The fraction formula runs in reverse: 8π = (θ/360)(2π · 15).",
+        "The circumference is 30π; what fraction of it is 8π?",
+        "θ = (8π/30π) · 360."
+      ],
+      "explanationVariants": [
+        "8π/30π = 4/15 of the circle: θ = (4/15)(360) = 96°.",
+        "θ = 360 · 8/30 = 96°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 15, and an arc on it has length 8π. Find the arc's degree measure.",
+        "answer": 96,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 25.13,
+            "feedback": "25.13 ≈ 8π is the arc LENGTH — the measure asks degrees: (8π/30π)(360) = 96°."
+          },
+          {
+            "value": 192,
+            "feedback": "192 doubles — the circumference is 2π(15) = 30π, not 15π: fraction 8/30, so 96°."
+          },
+          {
+            "value": 48,
+            "feedback": "48 halves — 8/30 of 360 is 96°."
+          }
+        ],
+        "fallbackFeedback": "(8π / 30π) × 360 = 96°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-arc-length__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance along the rim.",
+      "takeaways": [
+        "Arc length = (θ/360) · 2πr — the degree share of the circumference.",
+        "It agrees exactly with trig's s = rθ (radians build the fraction into the unit).",
+        "Linear in BOTH θ and r; runs backward to find any missing piece."
+      ],
+      "teaser": "Next: the same fraction prices the pie slice itself — sector area."
+    }
+  ]
+}

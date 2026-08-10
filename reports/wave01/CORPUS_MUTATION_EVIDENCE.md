@@ -1,0 +1,13 @@
+# Wave 01 corpus-freshness mutation evidence
+
+```text
+target=content/courses/expressions-equations/lessons/ee-05-02.json
+original_sha256=69dafdb236cc0e3d50580c5ecf1f63b689b341f78007358b7022f948acf2c032
+mutated_sha256=1e527bc8286da1377b97b2b2deb2459b6df8f669bb86d5ddbf628e16f295c373
+generator_exit=1
+restored_sha256=69dafdb236cc0e3d50580c5ecf1f63b689b341f78007358b7022f948acf2c032
+product_state_before_sha256=eaac012ec63de72fbd5eed2e7a7bb3b77db5c6b89a37e635517a1649680720e5
+product_state_after_sha256=eaac012ec63de72fbd5eed2e7a7bb3b77db5c6b89a37e635517a1649680720e5
+stderr:
+gen-product-state: STALE curriculum manifest (manifest b6461fe5b12d211f98ac3f65fe9aa14fa2e36288aa93a4bbfda7b3476525cf19, live 636dcf46fe6190e2d5cda99ee2024eb8e0f2228f8cca76547796a9ebdc2f9ad9) — refusing to generate product state
+```

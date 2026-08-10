@@ -1,0 +1,251 @@
+{
+  "id": "iar-03-01",
+  "slug": "feasible-first",
+  "title": "Feasible First",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch3-best-point-wins",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Rename the picture: in a planning problem, the inequalities are CONSTRAINTS — limits on time, money, materials — and the region they trap is the FEASIBLE region: every plan you could actually run. Nothing new mathematically; the fences just started meaning something.",
+      "figure": "iar-constraints-feasible"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Constraints in costume.",
+      "conceptTag": "iar-feasible",
+      "explanationVariants": [
+        "x ≥ 0 and y ≥ 0 say you can't make negative batches; x + y ≤ 6 caps total batches at 6 — say, six oven-hours.",
+        "The sign fences forbid negative production; the sum fence is a shared resource limit."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "x batches of muffins, y of scones, one oven-hour each, 6 oven-hours total. Which system says 'possible plans only'?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x ≥ 0, y ≥ 0, x + y ≤ 6",
+            "correct": true,
+            "feedback": "Nonnegative batches, and total oven time within the 6 hours available."
+          },
+          {
+            "id": "o2",
+            "label": "x + y = 6",
+            "correct": false,
+            "feedback": "Equality forces using ALL the oven time — a legal plan may use less."
+          },
+          {
+            "id": "o3",
+            "label": "x ≥ 0, y ≥ 0, x + y ≥ 6",
+            "correct": false,
+            "feedback": "≥ 6 demands at LEAST six hours of baking — the resource works the other way."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot a feasible plan.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot a plan that bakes 2 muffin batches and stays feasible (x = 2, pick a legal y).",
+        "cols": 7,
+        "rows": 7,
+        "xLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 3,
+            "y": 6,
+            "feedback": "On these axes that's (2, 5): 2 + 5 = 7 breaks the 6-hour cap."
+          },
+          {
+            "x": 3,
+            "y": 7,
+            "feedback": "(2, 6) needs 8 oven-hours — two over the cap."
+          }
+        ],
+        "missFeedback": "Keep x = 2 and choose y with 2 + y ≤ 6 — up to 4 scone batches.",
+        "successFeedback": "2 + y ≤ 6 leaves y from 0 to 4: five feasible plans on that column alone. Feasible = runnable, not necessarily best."
+      },
+      "predict": {
+        "prompt": "With x = 2 fixed, how many whole-number values of y are feasible?",
+        "options": [
+          {
+            "id": "five",
+            "label": "Five: y = 0 through 4"
+          },
+          {
+            "id": "four",
+            "label": "Four: y = 1 through 4"
+          },
+          {
+            "id": "seven",
+            "label": "Seven: y = 0 through 6"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "y can be 0, 1, 2, 3, or 4 — five plans, because 2 + y ≤ 6 caps y at 4 and y ≥ 0 floors it at 0. The feasible region is a menu, and constraints decide its length."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The feasible region's SHAPE comes from its boundaries: here x = 0, y = 0, and x + y = 6 cut a triangle with corners (0, 0), (6, 0), (0, 6). You already know how to find those corners — solve boundary pairs. The corners are about to earn their keep.",
+      "figure": "iar-region-corners"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Corner inventory.",
+      "conceptTag": "iar-feasible",
+      "explanationVariants": [
+        "The boundary pairs give (0, 0), (6, 0), and (0, 6) — the triangle's three vertices.",
+        "x = 0 with y = 0, x + y = 6 with each axis: three crossings, three corners."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The corners of the feasible triangle x ≥ 0, y ≥ 0, x + y ≤ 6 are…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(0, 0), (6, 0), (0, 6)",
+            "correct": true,
+            "feedback": "Each is a crossing of two boundaries — origin plus the two intercepts of the cap line."
+          },
+          {
+            "id": "o2",
+            "label": "(0, 0), (3, 3), (6, 6)",
+            "correct": false,
+            "feedback": "(6, 6) needs 12 oven-hours — far outside. (3, 3) is inside, but on only ONE boundary."
+          },
+          {
+            "id": "o3",
+            "label": "(6, 0), (0, 6), (6, 6)",
+            "correct": false,
+            "feedback": "(6, 6) fails the cap: corners must satisfy ALL constraints, boundaries included."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "An all-muffin day.",
+      "conceptTag": "iar-feasible",
+      "explanationVariants": [
+        "Spending everything on muffins means y = 0 and the cap allows x up to 6 — the corner (6, 0).",
+        "On the x-axis the cap binds at x = 6: six muffin batches, zero scones."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "If the bakery makes ONLY muffins, what is the largest feasible x?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "Three splits the cap with scones; alone, muffins can take all 6 hours."
+          },
+          {
+            "value": 0,
+            "feedback": "Zero muffins is the all-SCONE plan; only-muffins maxes at x = 6."
+          }
+        ],
+        "fallbackFeedback": "Only muffins means y = 0, so the binding constraint caps x at 6. The intercepts of the constraints ARE the single-product plans."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A second resource arrives.",
+      "conceptTag": "iar-feasible",
+      "explanationVariants": [
+        "Adding x ≤ 4 slices off the right tip: (6, 0) dies (6 > 4) and new corners (4, 0) and (4, 2) appear.",
+        "The flour cap cuts the triangle at x = 4, replacing the (6, 0) corner with two new ones on that line."
+      ],
+      "hints": [
+        "Which OLD corner violates the new fence x ≤ 4?",
+        "(6, 0) has x = 6 — it's gone. Where does x = 4 cross y = 0 and x + y = 6?",
+        "New corners: (4, 0), and (4, 2) from 4 + y = 6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Add a flour limit x ≤ 4. What happens to the corner (6, 0)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It leaves the region; (4, 0) and (4, 2) become corners",
+            "correct": true,
+            "feedback": "New constraints can only shrink feasibility — the clipped tip grows two fresh vertices on x = 4."
+          },
+          {
+            "id": "o2",
+            "label": "It stays — old corners are permanent",
+            "correct": false,
+            "feedback": "(6, 0) now fails x ≤ 4: it's not even feasible, let alone a corner."
+          },
+          {
+            "id": "o3",
+            "label": "The region becomes empty",
+            "correct": false,
+            "feedback": "Plenty survives — (0, 0) alone passes all four fences."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Feasible means runnable.",
+      "takeaways": [
+        "Constraints are inequalities wearing work clothes.",
+        "The feasible region is every plan that passes all of them.",
+        "New constraints only shrink the region — and re-carve its corners."
+      ],
+      "teaser": "next: among all feasible plans, which is BEST? The corners answer."
+    }
+  ]
+}

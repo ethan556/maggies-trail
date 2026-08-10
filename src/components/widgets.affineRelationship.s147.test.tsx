@@ -1,0 +1,14 @@
+// @vitest-environment jsdom
+import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { useState } from "react";
+import { WidgetRenderer } from "./widgets";
+import { evaluate } from "@/lib/evaluate";
+import type { TAffineRelationshipLab } from "@/lib/schema";
+const spec:TAffineRelationshipLab={type:"affineRelationshipLab",task:"intersectionPoint",answerMode:"point",prompt:"Where do the two plans cost the same?",lines:[{id:"a",label:"Plan A",m:3,b:2,sourceKind:"equation",sourceText:"y = 3x + 2",tablePoints:[]},{id:"b",label:"Plan B",m:2,b:5,sourceKind:"context",sourceText:"starts at 5 and rises 2",tablePoints:[]}],rateGoal:"greater",choices:[],numericErrors:[],pointErrors:[{values:[-3,-7],feedback:"The sign changed while solving."}],authoredStages:[],requiredStageKeys:["intersection:equate","intersection:verify"],requiredExplorations:2,tolerance:0,successFeedback:"Both relationships equal 11 at x = 3.",explorationFeedback:"Open the equation and verification stages.",fallbackFeedback:"Set the outputs equal."};
+function Host({holder,tone}:{holder:{value:unknown};tone?:"info"}){const [value,setValue]=useState<unknown>(null);return <WidgetRenderer spec={spec} value={value} disabled={false} tone={tone} onChange={next=>{holder.value=next;setValue(next)}}/>}
+describe("affineRelationshipLab renderer",()=>{
+ it("uses keyboard-reachable stages and does not leak the final point initially",()=>{const holder={value:null as unknown};render(<Host holder={holder}/>);expect(screen.queryByText(/Correct affine result/)).toBeNull();expect(screen.queryByText(/^\(3, 11\)$/)).toBeNull();const buttons=screen.getAllByRole("button",{name:/Open affine stage/});expect(buttons.length).toBeGreaterThanOrEqual(4);buttons.forEach(button=>{expect(button.className).toContain("min-h-14");fireEvent.click(button)});fireEvent.change(screen.getByRole("spinbutton",{name:"Enter affine x-coordinate"}),{target:{value:"3"}});fireEvent.change(screen.getByRole("spinbutton",{name:"Enter affine y-coordinate"}),{target:{value:"11"}});expect(evaluate(spec,holder.value).correct).toBe(true)});
+ it("keeps line meaning in labels and dash patterns rather than color alone",()=>{render(<WidgetRenderer spec={spec} value={{revealed:["line:a:slope"]}} disabled={false} onChange={()=>{}}/>);expect(screen.getAllByText(/Plan A/).length).toBeGreaterThanOrEqual(1);expect(screen.getAllByText(/Plan B/).length).toBeGreaterThanOrEqual(1);expect(document.querySelectorAll("line[stroke-dasharray]").length).toBeGreaterThan(0)});
+ it("reveals a ghost without overwriting learner work",()=>{const holder={value:null as unknown};render(<Host holder={holder} tone="info"/>);expect(screen.getByTestId("arl-ghost").textContent).toContain("(3, 11)");expect(holder.value).toBeNull()});
+});

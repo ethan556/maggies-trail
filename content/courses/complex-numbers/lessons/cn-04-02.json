@@ -1,0 +1,506 @@
+{
+ "id": "cn-04-02",
+ "slug": "the-formula-goes-complex",
+ "title": "The Formula Goes Complex",
+ "courseId": "complex-numbers",
+ "chapterId": "ch4-complex-roots",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The quadratic formula never needed the discriminant to be positive. For x² − 4x + 13 = 0: D = b² − 4ac = 16 − 52 = **−36**. Then √D = √(−36) = 6i, and x = (4 ± 6i)/2 = **2 ± 3i**. Same formula, new number system.",
+   "figure": "discriminant-cases"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Compute a negative discriminant.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For x² − 4x + 13 = 0, what is the discriminant b² − 4ac?",
+    "answer": -36,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 36,
+      "feedback": "The size is right but 16 − 52 is NEGATIVE: −36 — that's exactly what makes the roots complex."
+     },
+     {
+      "value": 68,
+      "feedback": "That's 16 + 52 — the formula SUBTRACTS 4ac: 16 − 52 = −36."
+     }
+    ],
+    "fallbackFeedback": "(−4)² − 4(1)(13) = 16 − 52 = −36."
+   },
+   "predict": {
+    "prompt": "For x² − 4x + 13 = 0 you'll compute b² − 4ac. Its sign will be…",
+    "options": [
+     {
+      "id": "neg",
+      "label": "Negative — 16 can't beat 52"
+     },
+     {
+      "id": "pos",
+      "label": "Positive — b² is a square"
+     },
+     {
+      "id": "zero",
+      "label": "Exactly zero"
+     }
+    ],
+    "outcomeId": "neg",
+    "reveal": "b² = 16 but 4ac = 52, so the discriminant sinks to −36. Below zero means the parabola never touches the x-axis — the square root goes imaginary and both roots turn complex: x = 2 ± 3i."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Finishing matters: x = (4 ± 6i)/2 divides **both parts** by 2, giving 2 ± 3i. Notice the answers are **conjugates** — same real part, opposite imaginary signs. Real-coefficient quadratics always deliver complex roots in conjugate pairs.",
+   "figure": "cn-divide-both"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Finish that solve.",
+   "conceptTag": "cn-formula-complex",
+   "explanationVariants": [
+    "x = (4 ± 6i)/2 — dividing both parts by 2 gives 2 ± 3i.",
+    "−b = 4 and √D = 6i, all over 2a = 2: x = 2 ± 3i."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What are the solutions of x² − 4x + 13 = 0?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "2"
+     },
+     {
+      "id": "t2",
+      "label": "−2"
+     },
+     {
+      "id": "t3",
+      "label": "4"
+     },
+     {
+      "id": "t4",
+      "label": "±"
+     },
+     {
+      "id": "t5",
+      "label": "3"
+     },
+     {
+      "id": "t6",
+      "label": "6"
+     },
+     {
+      "id": "t7",
+      "label": "i"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t4",
+     "t5",
+     "t7"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t3",
+       "t4",
+       "t6",
+       "t7"
+      ],
+      "feedback": "That skips the ÷2a step — divide both parts by 2: 2 ± 3i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t4",
+       "t6",
+       "t7"
+      ],
+      "feedback": "The 2 divided but the 6i didn't — the ÷2 hits BOTH parts: 2 ± 3i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4",
+       "t5",
+       "t7"
+      ],
+      "feedback": "−b = −(−4) = +4, so the real part is +2."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The formula gives (4 ± √(−36))/2 — halve BOTH the 4 and the 6i.",
+    "successFeedback": "Right — (4 ± 6i)/2 = 2 ± 3i, a conjugate pair."
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-formula-complex__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Another discriminant.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For x² + 2x + 5 = 0, what is the discriminant?",
+    "answer": -16,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "That's 4 + 20 — the discriminant subtracts: 4 − 20 = −16."
+     },
+     {
+      "value": 16,
+      "feedback": "16 is the size only — 4 − 20 = NEGATIVE sixteen, which is what sends the roots complex."
+     }
+    ],
+    "fallbackFeedback": "2² − 4(1)(5) = 4 − 20 = −16."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Solve it through.",
+   "conceptTag": "cn-formula-complex",
+   "explanationVariants": [
+    "x = (−2 ± 4i)/2 = −1 ± 2i.",
+    "−b = −2 and √(−16) = 4i, over 2: −1 ± 2i."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What are the solutions of x² + 2x + 5 = 0?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "−1"
+     },
+     {
+      "id": "t2",
+      "label": "1"
+     },
+     {
+      "id": "t3",
+      "label": "−2"
+     },
+     {
+      "id": "t4",
+      "label": "±"
+     },
+     {
+      "id": "t5",
+      "label": "2"
+     },
+     {
+      "id": "t6",
+      "label": "4"
+     },
+     {
+      "id": "t7",
+      "label": "i"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t4",
+     "t5",
+     "t7"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4",
+       "t5",
+       "t7"
+      ],
+      "feedback": "−b = −2 here (b is +2), so the real part is −1."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t4",
+       "t6",
+       "t7"
+      ],
+      "feedback": "The 4i still needs the ÷2: spread ±2i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t3",
+       "t4",
+       "t6",
+       "t7"
+      ],
+      "feedback": "Neither part has been divided by 2a = 2 yet: −1 ± 2i."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "(−2 ± √(−16))/2 — halve both parts: −1 ± 2i.",
+    "successFeedback": "Right — (−2 ± 4i)/2 = −1 ± 2i."
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-formula-complex__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The pair rule.",
+   "conceptTag": "cn-formula-complex",
+   "explanationVariants": [
+    "The ± in the formula flips only the imaginary sign, so the partner of 3 + 5i is 3 − 5i.",
+    "Real-coefficient quadratics give complex roots as conjugate pairs: a ± bi."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "A quadratic with real coefficients has 3 + 5i as one root. What is the other?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "3"
+     },
+     {
+      "id": "t1",
+      "label": "−3"
+     },
+     {
+      "id": "t2",
+      "label": "5"
+     },
+     {
+      "id": "t3",
+      "label": "+"
+     },
+     {
+      "id": "t4",
+      "label": "−"
+     },
+     {
+      "id": "t5",
+      "label": "i"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t4",
+     "t2",
+     "t5"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t1",
+       "t4",
+       "t2",
+       "t5"
+      ],
+      "feedback": "That flips the real part too — only the imaginary sign changes: 3 − 5i."
+     },
+     {
+      "sequence": [
+       "t1",
+       "t3",
+       "t2",
+       "t5"
+      ],
+      "feedback": "The real part stays put — the pair is 3 ± 5i."
+     },
+     {
+      "sequence": [
+       "t2",
+       "t3",
+       "t0",
+       "t5"
+      ],
+      "feedback": "The parts don't swap — the partner is the CONJUGATE, 3 − 5i."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Real coefficients force roots in CONJUGATE pairs — keep the real part, flip only the imaginary sign.",
+    "successFeedback": "Right — the conjugate: same real part, flipped imaginary sign."
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-formula-complex__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Formula, start to finish.",
+   "conceptTag": "cn-formula-complex",
+   "explanationVariants": [
+    "D = 36 − 100 = −64; x = (6 ± 8i)/2 = 3 ± 4i.",
+    "√(−64) = 8i, −b = 6, 2a = 2: divide both parts to get 3 ± 4i."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Solve x² − 6x + 25 = 0.",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "3"
+     },
+     {
+      "id": "t2",
+      "label": "−3"
+     },
+     {
+      "id": "t3",
+      "label": "6"
+     },
+     {
+      "id": "t4",
+      "label": "±"
+     },
+     {
+      "id": "t5",
+      "label": "4"
+     },
+     {
+      "id": "t6",
+      "label": "8"
+     },
+     {
+      "id": "t7",
+      "label": "i"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t4",
+     "t5",
+     "t7"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t3",
+       "t4",
+       "t6",
+       "t7"
+      ],
+      "feedback": "The ÷2a step is missing — halve both parts: 3 ± 4i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t4",
+       "t6",
+       "t7"
+      ],
+      "feedback": "The 8i must be halved along with the 6: spread ±4i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4",
+       "t5",
+       "t7"
+      ],
+      "feedback": "−b = −(−6) = +6, so the real part is +3."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "(6 ± √(−64))/2 — halve both the 6 and the 8i.",
+    "successFeedback": "Right — D = −64, so x = (6 ± 8i)/2 = 3 ± 4i."
+   },
+   "hints": [
+    "Compute D = b² − 4ac first: 36 − 100.",
+    "√(−64) = 8i, and −b = 6.",
+    "x = (6 ± 8i)/2 — divide BOTH parts by 2."
+   ],
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-formula-complex__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Negative discriminant? The formula still works — √D just wears an i.",
+   "takeaways": [
+    "D < 0 gives √D = i√|D| and a conjugate pair of roots.",
+    "The ÷2a divides BOTH the real and imaginary parts.",
+    "x = −b/(2a) ± (√|D|/(2a))i — center and spread."
+   ],
+   "teaser": "Next: the complete discriminant story — every quadratic has exactly two roots."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "cn-formula-complex",
+   "concept": {
+    "id": "rem-cn0402-c",
+    "kind": "concept",
+    "body": "The discriminant is D = b² − 4ac, signs and all. For x² + 9 = 0: a = 1, b = 0, c = 9."
+   },
+   "check": {
+    "id": "rem-cn0402-k",
+    "kind": "check",
+    "body": "Compute one cleanly.",
+    "conceptTag": "cn-formula-complex",
+    "explanationVariants": [
+     "D = 0² − 4(1)(9) = −36.",
+     "With b = 0, the whole discriminant is −4ac = −36."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For x² + 9 = 0, what is the discriminant?",
+     "answer": -36,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 36,
+       "feedback": "The 4ac term is SUBTRACTED: 0 − 36 = −36."
+      },
+      {
+       "value": 9,
+       "feedback": "9 is just c — the discriminant is b² − 4ac = 0 − 36 = −36."
+      }
+     ],
+     "fallbackFeedback": "0 − 4(1)(9) = −36."
+    }
+   }
+  }
+ ]
+}

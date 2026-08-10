@@ -1,0 +1,245 @@
+{
+ "id": "fna-05-03",
+ "slug": "verifying-inverses",
+ "title": "Verifying Inverses: the Composition Identity",
+ "courseId": "function-analysis",
+ "chapterId": "ch5-inverses-formalized",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "How do you **prove** g really is f's inverse? Compose them: g must undo f and f must undo g —\n\n**f(g(x)) = x and g(f(x)) = x**\n\nfor every x in the right domains. If either composition returns anything but plain x, they are not inverses.",
+   "figure": "fna-inverse-reflection"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Test one direction numerically.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = 2x + 6 and g(x) = (x − 6)/2. What is f(g(10))?",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 26,
+      "feedback": "26 = f(10) skips g. Inside first: g(10) = 2, then f(2) = 10 — back where we started."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is g(10), the intermediate. Finish with f: 2·2 + 6 = 10."
+     }
+    ],
+    "fallbackFeedback": "g(10) = 2, then f(2) = 10 — the chain returns its input."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Now the algebra, not just one number.",
+   "conceptTag": "fna-inverse-verify",
+   "explanationVariants": [
+    "f(g(x)) = 2·((x − 6)/2) + 6 = (x − 6) + 6 = x — the 2s cancel, then the 6s cancel.",
+    "Substituting g into f, every operation meets its undo: divide-by-2 meets times-2, minus-6 meets plus-6."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Simplify f(g(x)) = 2·((x − 6)/2) + 6 fully.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x",
+      "correct": true,
+      "feedback": "Right — 2·(x − 6)/2 = x − 6, then + 6 restores x. That identity (with the reverse one) proves they're inverses."
+     },
+     {
+      "id": "o2",
+      "label": "x − 6",
+      "feedback": "Don't stop early — after the 2s cancel to x − 6, f still ADDS 6: (x − 6) + 6 = x."
+     },
+     {
+      "id": "o3",
+      "label": "x + 6",
+      "feedback": "The −6 inside cancels the +6 outside; nothing survives but x."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-inverse-verify__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "**Both** directions are required, and one numeric check is evidence, not proof — the identity must hold as **algebra**. Graphically, the identity means f and f⁻¹ are mirror images across the line **y = x**: the point (a, b) on f reflects to (b, a) on f⁻¹.",
+   "figure": "fna-both-directions"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Use the reflection.",
+   "conceptTag": "fna-inverse-verify",
+   "explanationVariants": [
+    "(2, 10) on f reflects across y = x to (10, 2) on f⁻¹ — coordinates swap.",
+    "f(2) = 10 means f⁻¹(10) = 2, i.e. the point (10, 2)."
+   ],
+   "widget": {
+    "type": "pointEntry",
+    "prompt": "The point (2, 10) lies on the graph of f. Which point must lie on the graph of f⁻¹?",
+    "answer": [
+     10,
+     2
+    ],
+    "delimiter": "paren",
+    "commonEntries": [
+     {
+      "values": [
+       -2,
+       -10
+      ],
+      "feedback": "That's reflection through the ORIGIN. Inverses reflect across y = x, swapping the coordinates: (10, 2)."
+     },
+     {
+      "values": [
+       2,
+       -10
+      ],
+      "feedback": "That reflects over the x-axis. The inverse swaps the pair: since f(2) = 10, f⁻¹(10) = 2."
+     }
+    ],
+    "fallbackFeedback": "The inverse SWAPS the pair: (2, 10) on f puts (10, 2) on f⁻¹.",
+    "successFeedback": "Right — inverses swap inputs and outputs, which is exactly reflection across y = x."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-inverse-verify__pointEntry"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Catch a false inverse.",
+   "conceptTag": "fna-inverse-verify",
+   "explanationVariants": [
+    "h(j(3)): j(3) = 2, then h(2) = 7 ≠ 3 — the +1 was handled in the wrong order, so they are not inverses.",
+    "A true undo reverses the order of operations: h multiplies then adds, so its inverse must subtract first, then divide — j(x) = (x − 1)/3, not x/3 + 1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "h(x) = 3x + 1 and j(x) = x/3 + 1. Compute h(j(3)). Are they inverses?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "h(j(3)) = 7 ≠ 3, so no — j undoes the operations in the wrong order",
+      "correct": true,
+      "feedback": "Right — j(3) = 2, then h(2) = 7. A true inverse must subtract 1 FIRST, then divide: j(x) = (x − 1)/3."
+     },
+     {
+      "id": "o2",
+      "label": "Yes — j divides by 3, which undoes h's multiplication",
+      "feedback": "It undoes the ×3 but mishandles the +1: h(j(3)) = h(2) = 7, not 3. Both operations must be undone, in reverse order."
+     },
+     {
+      "id": "o3",
+      "label": "h(j(3)) = 3, so yes",
+      "feedback": "Compute it: j(3) = 3/3 + 1 = 2, then h(2) = 3·2 + 1 = 7 — the chain fails to return 3."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-inverse-verify__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Prove it both ways.",
+   "conceptTag": "fna-inverse-verify",
+   "explanationVariants": [
+    "g(f(−3)) = g(0) = −3 and f(g(−3)) = f(−4.5) = −3: both directions return the input, consistent with g = f⁻¹.",
+    "f sends −3 → 0; g sends 0 back to −3. Then g sends −3 → −4.5 and f returns it: −3. Round trips both ways."
+   ],
+   "hints": [
+    "Compute f(−3) first, then feed the result to g.",
+    "f(−3) = 2(−3) + 6 = 0. Now g(0) = (0 − 6)/2.",
+    "g(0) = −3 — the round trip returns the starting input."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = 2x + 6, g(x) = (x − 6)/2. What is g(f(−3))?",
+    "answer": -3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "Watch the signs: f(−3) = 0, then g(0) = (0 − 6)/2 = −3, not +3."
+     },
+     {
+      "value": 0,
+      "feedback": "0 is f(−3), the intermediate stop. g still runs: (0 − 6)/2 = −3."
+     },
+     {
+      "value": -6,
+      "feedback": "−6 is 0 − 6 before the ÷2. Finish: −6/2 = −3."
+     }
+    ],
+    "fallbackFeedback": "f(−3) = 0; g(0) = −3 — back to the start."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-inverse-verify__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The identity is the proof.",
+   "takeaways": [
+    "f(g(x)) = x AND g(f(x)) = x — both, as algebra — proves inverses.",
+    "One numeric round trip is evidence, not proof; one failure is disproof.",
+    "Graphs of inverses mirror across y = x: (a, b) ↔ (b, a)."
+   ],
+   "teaser": "Course complete — next course: polynomial and rational functions under the analysis microscope."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fna-inverse-verify",
+   "concept": {
+    "id": "rem-fna0503-c",
+    "kind": "concept",
+    "body": "To verify inverses: substitute one into the other and simplify. Anything other than plain x — even x + 3 — means NOT inverses."
+   },
+   "check": {
+    "id": "rem-fna0503-k",
+    "kind": "check",
+    "body": "One round trip.",
+    "conceptTag": "fna-inverse-verify",
+    "explanationVariants": [
+     "f(8) = 2·8 + 6 = 22, then g(22) = (22 − 6)/2 = 8.",
+     "f sends 8 to 22; g sends 22 straight back to 8."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "f(x) = 2x + 6, g(x) = (x − 6)/2. What is g(f(8))?",
+     "answer": 8,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 22,
+       "feedback": "22 is f(8), the halfway point. g brings it home: (22 − 6)/2 = 8."
+      },
+      {
+       "value": 16,
+       "feedback": "16 = 22 − 6 before the ÷2. Finish: 16/2 = 8."
+      }
+     ],
+     "fallbackFeedback": "f(8) = 22; g(22) = 8."
+    }
+   }
+  }
+ ]
+}

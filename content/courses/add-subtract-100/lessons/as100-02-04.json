@@ -1,0 +1,347 @@
+{
+  "id": "as100-02-04",
+  "slug": "trade-ten-ones",
+  "title": "Trade Ten Ones",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch2-add-100",
+  "minutes": 8,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "regroup-bundle",
+      "body": "37 + 25: the ones make 12 — too many! Trade ten ones for a rod: 6 tens 2 ones, 62.",
+      "narration": "Thirty-seven plus twenty-five: the ones make twelve — too many! Trade ten ones for a rod: six tens two ones, sixty-two."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build 62 the traded way.",
+      "conceptTag": "regroup-add",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "37 + 25 makes 5 tens and 12 ones. Trade ten ones for a rod and build 62 in standard form.",
+        "target": 62,
+        "requireStandard": true,
+        "commonBuilds": [
+          {
+            "tens": 5,
+            "ones": 12,
+            "feedback": "That's 62's untraded pile — 5 tens 12 ones. Now TRADE ten ones for one rod: 6 tens 2 ones."
+          },
+          {
+            "tens": 6,
+            "ones": 12,
+            "feedback": "That builds 72 — you added the new rod but kept all 12 ones. Trading REMOVES ten ones: 6 tens 2 ones."
+          }
+        ],
+        "missFeedback": "12 ones = 1 rod + 2 ones. So 5+1 = 6 tens, 2 ones.",
+        "successFeedback": "Ten ones became a rod — 6 tens 2 ones is 62!"
+      },
+      "predict": {
+        "prompt": "37 + 25 piles up as 5 tens and 12 ones. Is that already 62?",
+        "options": [
+          {
+            "id": "value",
+            "label": "In value, yes — but the ones overflow, so trade ten of them"
+          },
+          {
+            "id": "fivetwelve",
+            "label": "No — it makes 512"
+          },
+          {
+            "id": "seventeen",
+            "label": "No — it makes 17"
+          }
+        ],
+        "outcomeId": "value",
+        "reveal": "5 tens + 12 ones is WORTH 62 — the amount is right, the form isn't. Ten of those ones bundle into a sixth rod: 6 tens, 2 ones. Trading changes the look, never the value."
+      },
+      "variant": {
+        "gen": "base-ten-build",
+        "form": "tradeUp"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents regroup add.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for regroup add must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines regroup add."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:regroup-add",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish the trade.",
+      "conceptTag": "regroup-add",
+      "explanationVariants": [
+        "37 + 25: ones 7+5=12, trade ten → tens 3+2+1=6, ones 2: 62.",
+        "30+20=50, 7+5=12, and 50+12=62."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "37 + 25 = ?",
+        "answer": 62,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 52,
+            "feedback": "The traded ten got dropped! Ones 7+5=12 carries one ten: 62, not 52."
+          },
+          {
+            "value": 512,
+            "feedback": "That wrote the 12 next to the 5 tens. Trade ten of the 12: 6 tens 2 ones = 62."
+          }
+        ],
+        "fallbackFeedback": "Ones 7+5=12 → trade → 6 tens 2 ones = 62."
+      },
+      "hints": [
+        "Add the ones first: 7+5.",
+        "12 ones trades into 1 ten and 2.",
+        "5+1 tens = 6 tens: 62."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "RegroupAddNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The traded rod joins the tens. Never drop it, never keep the ten loose ones.",
+      "narration": "The traded rod joins the tens. Never drop it, never keep the ten loose ones.",
+      "figure": "as100-trade-ten"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which sums need a trade?",
+      "conceptTag": "regroup-add",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each sum to whether its ones need a trade.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "48 + 36"
+          },
+          {
+            "id": "w2",
+            "label": "43 + 25"
+          },
+          {
+            "id": "w3",
+            "label": "29 + 17"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "trade! ones make 14"
+          },
+          {
+            "id": "y2",
+            "label": "safe — ones make 8"
+          },
+          {
+            "id": "y3",
+            "label": "trade! ones make 16"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "43 + 25 has ones 3+5=8 — under ten, so it's the safe one."
+          },
+          {
+            "left": "w1",
+            "right": "y3",
+            "feedback": "48 + 36 has ones 8+6=14, not 16. 16 comes from 9+7."
+          }
+        ],
+        "missFeedback": "Add just the ones digits: 8+6=14, 3+5=8, 9+7=16. Ten or more → trade.",
+        "successFeedback": "You can spot a trade before it happens!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Trade a bigger one.",
+      "conceptTag": "regroup-add",
+      "explanationVariants": [
+        "48 + 36: ones 8+6=14, trade ten → tens 4+3+1=8, ones 4: 84.",
+        "40+30=70, 8+6=14, and 70+14=84."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "48 + 36 = ?",
+        "answer": 84,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 74,
+            "feedback": "The traded ten got dropped! Ones 8+6=14 carries one ten: 84, not 74."
+          },
+          {
+            "value": 714,
+            "feedback": "That wrote 14 next to the 7 tens. Trade ten of the 14: 8 tens 4 ones = 84."
+          }
+        ],
+        "fallbackFeedback": "Ones 8+6=14 → trade → 8 tens 4 ones = 84."
+      },
+      "hints": [
+        "Ones first: 8+6.",
+        "14 trades into 1 ten and 4.",
+        "7+1 tens = 8 tens: 84."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "RegroupAddNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When do we trade?",
+      "conceptTag": "regroup-add",
+      "explanationVariants": [
+        "A trade happens when the ones reach ten or more — like 7+5=12.",
+        "Ten-or-more ones can't fit one digit, so ten of them become a rod."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When do the ones need a trade?",
+        "options": [
+          {
+            "id": "a",
+            "label": "when they make 10 or more",
+            "correct": true,
+            "feedback": "Yes — ten ones become one rod; only the leftovers stay as ones."
+          },
+          {
+            "id": "b",
+            "label": "when they make exactly 9",
+            "feedback": "9 ones still fit in one digit — a trade starts at TEN."
+          },
+          {
+            "id": "c",
+            "label": "every single time",
+            "feedback": "Sums like 43 + 25 (ones 3+5=8) need no trade — only ten-or-more does."
+          }
+        ]
+      },
+      "hints": [
+        "A digit holds up to 9.",
+        "Ten ones = one rod.",
+        "Trade at 10 or more."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full trade, solo!",
+      "conceptTag": "regroup-add",
+      "explanationVariants": [
+        "29 + 17: ones 9+7=16, trade ten → tens 2+1+1=4, ones 6: 46.",
+        "20+10=30, 9+7=16, and 30+16=46."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "29 + 17 = ?",
+        "answer": 46,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "The traded ten got dropped! Ones 9+7=16 carries one ten: 46, not 36."
+          },
+          {
+            "value": 316,
+            "feedback": "That wrote 16 next to the 3 tens. Trade ten of the 16: 4 tens 6 ones = 46."
+          }
+        ],
+        "fallbackFeedback": "Ones 9+7=16 → trade → 4 tens 6 ones = 46."
+      },
+      "hints": [
+        "Ones first: 9+7.",
+        "16 trades into 1 ten and 6.",
+        "3+1 tens = 4 tens: 46."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "RegroupAddNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chapter done — you can trade!",
+      "takeaways": [
+        "Ones at 10+ trade ten for a rod.",
+        "The traded rod joins the tens.",
+        "Check the ones first to spot a trade."
+      ],
+      "teaser": "next chapter: subtracting — sometimes a rod breaks back into ones!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "regroup-add",
+      "concept": {
+        "id": "rem-rg-c",
+        "kind": "concept",
+        "body": "Slow it down. 15 + 17: ones 5+7=12. Ten of them become a rod. Tens 1+1+1=3, ones 2: 32.",
+        "narration": "Fifteen plus seventeen: ones five plus seven is twelve. Ten of them become a rod. Tens one plus one plus one is three, ones two: thirty-two."
+      },
+      "check": {
+        "id": "rem-rg-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "regroup-add",
+        "explanationVariants": [
+          "15 + 17: ones 5+7=12, trade ten → 3 tens 2 ones: 32.",
+          "10+10=20, 5+7=12, and 20+12=32."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "15 + 17 = ?",
+          "answer": 32,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 22,
+              "feedback": "The traded ten got dropped! Ones 5+7=12 carries one ten: 32."
+            },
+            {
+              "value": 212,
+              "feedback": "That wrote 12 next to the 2 tens. Trade: 3 tens 2 ones = 32."
+            }
+          ],
+          "fallbackFeedback": "Ones 5+7=12 → trade → 3 tens 2 ones = 32."
+        }
+      }
+    }
+  ]
+}

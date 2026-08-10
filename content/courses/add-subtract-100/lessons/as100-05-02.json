@@ -1,0 +1,324 @@
+{
+ "id": "as100-05-02",
+ "slug": "adding-odds-and-evens",
+ "title": "Adding Odds & Evens",
+ "courseId": "add-subtract-100",
+ "chapterId": "ch5-odd-even",
+ "minutes": 7,
+ "readingProfile": "early",
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Two evens always make an even: 4 + 6 = 10. Both pair up cleanly, so their total does too. **even + even = even.**",
+   "narration": "Two evens always make an even: four plus six is ten. Both pair up cleanly, so their total does too. Even plus even is even.",
+   "figure": "as100-even-even"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Try two evens.",
+   "conceptTag": "parity-sum",
+   "widget": {
+    "type": "numeric",
+    "prompt": "8 + 6 = ? (both even)",
+    "answer": 14,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "Recount: 8 + 6 = 14 — and 14 is even, as two evens should make."
+     },
+     {
+      "value": 15,
+      "feedback": "Recount: 8 + 6 = 14, an even number."
+     }
+    ],
+    "fallbackFeedback": "8 + 6 = 14, which is even.",
+    "missFeedback": "8 + 6 = 14 — even, as expected.",
+    "successFeedback": "14 — even, just like every even + even!"
+   },
+   "predict": {
+    "prompt": "8 and 6 are both EVEN. Before adding: will their sum be even or odd?",
+    "options": [
+     {
+      "id": "even",
+      "label": "Even"
+     },
+     {
+      "id": "odd",
+      "label": "Odd"
+     },
+     {
+      "id": "either",
+      "label": "Could be either"
+     }
+    ],
+    "outcomeId": "even",
+    "reveal": "Two even numbers are each made of pairs — stacking pairs on pairs leaves nothing sticking out. Even plus even lands even, every time."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Odd plus odd — surprise!",
+   "conceptTag": "parity-sum",
+   "explanationVariants": [
+    "3 + 5 = 8. Each odd has one leftover; the two leftovers pair together, making the total even.",
+    "odd + odd = even: the lonely dots find each other. 3 + 5 = 8."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "3 + 5 = ? (both odd)",
+    "answer": 8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "Recount: 3 + 5 = 8 — and two odds make an EVEN, because the leftovers pair up."
+     },
+     {
+      "value": 9,
+      "feedback": "Recount: 3 + 5 = 8, which is even."
+     }
+    ],
+    "fallbackFeedback": "3 + 5 = 8 — odd + odd = even."
+   },
+   "hints": [
+    "Add them: 3 + 5.",
+    "The two leftovers pair up.",
+    "8 — even."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ParitySumNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "**odd + even = odd.** One leftover has no partner: 4 + 7 = 11. And doubles are always even — they pair perfectly.",
+   "narration": "Odd plus even is odd. One leftover has no partner: four plus seven is eleven. And doubles are always even — a number plus itself pairs perfectly.",
+   "figure": "as100-even-odd"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each sum to its parity.",
+   "conceptTag": "parity-sum",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Without adding, match each to odd or even.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "even + even (6 + 8)"
+     },
+     {
+      "id": "s2",
+      "label": "odd + odd (5 + 9)"
+     },
+     {
+      "id": "s3",
+      "label": "odd + even (7 + 4)"
+     }
+    ],
+    "right": [
+     {
+      "id": "pe1",
+      "label": "even (14)"
+     },
+     {
+      "id": "pe2",
+      "label": "even (14) — leftovers pair"
+     },
+     {
+      "id": "po1",
+      "label": "odd (11)"
+     }
+    ],
+    "pairs": {
+     "s1": "pe1",
+     "s2": "pe2",
+     "s3": "po1"
+    },
+    "pairErrors": [
+     {
+      "left": "s3",
+      "right": "pe1",
+      "feedback": "odd + even leaves one lonely dot → odd. 7 + 4 = 11."
+     },
+     {
+      "left": "s2",
+      "right": "po1",
+      "feedback": "odd + odd = even — the two leftovers pair up. 5 + 9 = 14."
+     }
+    ],
+    "missFeedback": "Same parity → even; different parity → odd.",
+    "successFeedback": "Parity rules mastered — no adding required!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Different parities.",
+   "conceptTag": "parity-sum",
+   "explanationVariants": [
+    "7 + 4 = 11. The odd 7 has a leftover the even 4 can't fill, so the total is odd.",
+    "odd + even = odd: 11."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "7 + 4 = ? (odd + even)",
+    "answer": 11,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "Recount: 7 + 4 = 11 — and odd + even is ODD, so a 10 (even) can't be right."
+     },
+     {
+      "value": 12,
+      "feedback": "Recount: 7 + 4 = 11, which is odd."
+     }
+    ],
+    "fallbackFeedback": "7 + 4 = 11 — odd + even = odd."
+   },
+   "hints": [
+    "Add them: 7 + 4.",
+    "One leftover stays lonely.",
+    "11 — odd."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ParitySumNumeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Doubles are special.",
+   "conceptTag": "parity-sum",
+   "explanationVariants": [
+    "A double is a number plus itself, so it always pairs perfectly — every double is even.",
+    "7 + 7 pairs each dot with its twin: 14, even. All doubles are even."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Every double (like 7 + 7) is always...",
+    "options": [
+     {
+      "id": "a",
+      "label": "even",
+      "correct": true,
+      "feedback": "Yes — a number plus itself always pairs perfectly, so doubles are even."
+     },
+     {
+      "id": "b",
+      "label": "odd",
+      "feedback": "A double pairs every dot with its twin — no leftover — so it's always even, like 7 + 7 = 14."
+     },
+     {
+      "id": "c",
+      "label": "sometimes odd",
+      "feedback": "Never odd — every double pairs perfectly. 7 + 7 = 14, even."
+     }
+    ]
+   },
+   "hints": [
+    "A double is n + n.",
+    "Every dot has a twin.",
+    "Always even."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ParitySumMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Predict, then check!",
+   "conceptTag": "parity-sum",
+   "explanationVariants": [
+    "9 + 6: odd + even = odd. And 9 + 6 = 15, which is indeed odd.",
+    "Different parities make an odd sum: 15."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "9 + 6 = ? (predict its parity first, then add)",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 14,
+      "feedback": "odd + even must be ODD, but 14 is even. Recount: 9 + 6 = 15."
+     },
+     {
+      "value": 16,
+      "feedback": "Recount: 9 + 6 = 15, an odd number — as odd + even should be."
+     }
+    ],
+    "fallbackFeedback": "9 + 6 = 15 — odd + even = odd."
+   },
+   "hints": [
+    "9 is odd, 6 is even.",
+    "Different parities → odd.",
+    "9 + 6 = 15."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "ParitySumNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Course complete — parity mastered!",
+   "takeaways": [
+    "Same parity adds to even; different adds to odd.",
+    "Odd + odd = even (leftovers pair up).",
+    "Every double is even."
+   ],
+   "teaser": "you've finished Addition & Subtraction within 100!"
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "parity-sum",
+   "concept": {
+    "id": "rem-ps-c",
+    "kind": "concept",
+    "body": "Slow down. 2 + 2 = 4: two evens, and 4 is even. Two full pairs plus two full pairs stay in pairs.",
+    "narration": "Slow down. Two plus two is four: two evens, and four is even. Two full pairs plus two full pairs stay in pairs."
+   },
+   "check": {
+    "id": "rem-ps-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "parity-sum",
+    "explanationVariants": [
+     "2 + 2 = 4, even — two evens make an even.",
+     "Both pair cleanly, so 4 is even."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "2 + 2 = ? (both even)",
+     "answer": 4,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 3,
+       "feedback": "Recount: 2 + 2 = 4, an even number."
+      },
+      {
+       "value": 5,
+       "feedback": "Recount: 2 + 2 = 4 — even, as two evens make."
+      }
+     ],
+     "fallbackFeedback": "2 + 2 = 4, which is even."
+    }
+   }
+  }
+ ]
+}

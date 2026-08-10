@@ -1,0 +1,301 @@
+{
+  "id": "vm-03-02",
+  "slug": "counting-cubes",
+  "title": "Counting Cubes",
+  "courseId": "volume-measurement",
+  "chapterId": "ch3-unit-cubes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Counting cubes one by one is slow for a big box. Here's the shortcut: a box packed with cubes is made of equal **layers**. Count the cubes in **one layer**, then multiply by the **number of layers**. If the bottom is 3 cubes long and 2 cubes wide, each layer holds 3 × 2 = 6 cubes. Four such layers hold 6 × 4 = 24 cubes.",
+      "figure": "vm-count-cubes"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Volume is how many unit cubes fit.",
+      "widget": {
+        "type": "volumeBuilder",
+        "targetVolume": 24,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 1,
+        "hStart": 1,
+        "prompt": "Build a box that holds exactly 24 unit cubes.",
+        "successFeedback": "4 × 3 × 2 = 24. Volume is a COUNT of cubes before it is a formula — and several boxes hold 24, which is the first hint that length × width × height is just a fast way of counting them.",
+        "lowFeedback": "Fewer than 24 cubes fit — make the box bigger.",
+        "highFeedback": "More than 24 cubes fit — make the box smaller."
+      },
+      "predict": {
+        "prompt": "Is there more than one box shape that holds exactly 24 cubes?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — several boxes work"
+          },
+          {
+            "id": "no",
+            "label": "No — just one"
+          },
+          {
+            "id": "cube",
+            "label": "Only a perfect cube"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "24 factors three ways at once — different length-width-height triples build different boxes with the very same count of cubes."
+      },
+      "conceptTag": "count-cubes",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents count cubes.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for count cubes must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines count cubes."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "volume-measurement:count-cubes",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now stack the layers.",
+      "conceptTag": "count-cubes",
+      "explanationVariants": [
+        "One layer is 3 × 2 = 6; four layers give 6 × 4 = 24.",
+        "Stack four 6-cube layers: 6 + 6 + 6 + 6 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "That same box (a layer of 3 × 2 = 6 cubes) is 4 layers tall. What is its volume in cubic units?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is one layer. Multiply by the 4 layers: 6 × 4 = 24."
+          },
+          {
+            "value": 9,
+            "feedback": "9 adds 3 + 2 + 4. Multiply instead: (3 × 2) × 4 = 24."
+          }
+        ],
+        "fallbackFeedback": "6 cubes per layer × 4 layers = 24 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "layers"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You can slice a box into layers from any direction and get the same count. That's why volume is just **length × width × height**. Take a box 2 cubes long, 2 wide, and 3 tall: one layer is 2 × 2 = 4 cubes, and 3 layers give 4 × 3 = 12. Multiplying all three edges — 2 × 2 × 3 — gives the same 12.",
+      "figure": "vm-slice-layers"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Multiply three edges.",
+      "conceptTag": "count-cubes",
+      "explanationVariants": [
+        "2 × 2 × 3 = 12.",
+        "Three 4-cube layers make 12."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A box is 2 cubes long, 2 wide, and 3 tall. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "12 cubic units",
+            "correct": true,
+            "feedback": "Right — 2 × 2 × 3 = 12 cubic units."
+          },
+          {
+            "id": "b",
+            "label": "7 cubic units",
+            "feedback": "7 adds 2 + 2 + 3. Volume multiplies: 2 × 2 × 3 = 12."
+          },
+          {
+            "id": "c",
+            "label": "4 cubic units",
+            "feedback": "4 is one layer (2 × 2). Multiply by the 3 layers: 4 × 3 = 12."
+          }
+        ]
+      },
+      "hints": [
+        "Find one layer: 2 × 2.",
+        "That's 4 cubes, three layers tall.",
+        "4 × 3 = 12."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "dimensionsMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Your turn on a wider box.",
+      "conceptTag": "count-cubes",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box is 4 cubes long, 3 wide, and 2 tall. How many cubic units?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 adds 4 + 3 + 2. Multiply the edges: 4 × 3 × 2 = 24."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is one layer (4 × 3). There are 2 layers: 12 × 2 = 24."
+          }
+        ],
+        "fallbackFeedback": "4 × 3 × 2 = 24 cubic units."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A long, short box.",
+      "conceptTag": "count-cubes",
+      "explanationVariants": [
+        "5 × 2 × 2 = 20 cubic units.",
+        "A 10-cube layer, two high: 10 × 2 = 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box is 5 cubes long, 2 wide, and 2 tall. What is its volume in cubic units?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 adds 5 + 2 + 2. Multiply instead: 5 × 2 × 2 = 20."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is one layer (5 × 2). Multiply by the 2 layers: 10 × 2 = 20."
+          }
+        ],
+        "fallbackFeedback": "5 × 2 × 2 = 20 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A fresh box, no picture.",
+      "conceptTag": "count-cubes",
+      "hints": [
+        "Find one layer first: 3 × 3.",
+        "That's 9 cubes per layer, and 2 layers.",
+        "9 × 2 = 18."
+      ],
+      "explanationVariants": [
+        "3 × 3 × 2 = 18 cubic units.",
+        "A 9-cube layer stacked twice: 9 × 2 = 18."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A box is 3 cubes long, 3 wide, and 2 tall. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "18 cubic units",
+            "correct": true,
+            "feedback": "Right — 3 × 3 × 2 = 18 cubic units."
+          },
+          {
+            "id": "b",
+            "label": "8 cubic units",
+            "feedback": "8 adds 3 + 3 + 2. Volume multiplies the edges: 3 × 3 × 2 = 18."
+          },
+          {
+            "id": "c",
+            "label": "9 cubic units",
+            "feedback": "9 is one layer (3 × 3). There are 2 layers: 9 × 2 = 18."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "dimensionsMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Layers make it fast.",
+      "takeaways": [
+        "A box's volume = cubes in one layer × the number of layers.",
+        "That shortcut is length × width × height.",
+        "Slice from any direction and the count comes out the same."
+      ],
+      "teaser": "next chapter: turning this count into the formula V = l × w × h."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "count-cubes",
+      "concept": {
+        "id": "rem-cc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Count one layer, then multiply by the layers.** A box with a 2 × 3 = 6-cube bottom, stacked 2 high, holds 6 × 2 = 12 cubes. Layer first, then how many layers."
+      },
+      "check": {
+        "id": "rem-cc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "count-cubes",
+        "explanationVariants": [
+          "6 × 2 = 12 cubic units.",
+          "Two 6-cube layers: 6 + 6 = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A box has a bottom layer of 6 cubes and is 2 layers tall. How many cubic units?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is one layer. Multiply by the 2 layers: 6 × 2 = 12."
+            },
+            {
+              "value": 8,
+              "feedback": "8 adds 6 + 2. Multiply instead: 6 × 2 = 12."
+            }
+          ],
+          "fallbackFeedback": "6 per layer × 2 layers = 12 cubic units."
+        }
+      }
+    }
+  ]
+}

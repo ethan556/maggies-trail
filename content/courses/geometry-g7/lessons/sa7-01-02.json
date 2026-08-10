@@ -1,0 +1,269 @@
+{
+  "id": "sa7-01-02",
+  "slug": "surface-area-of-rectangular-prisms",
+  "title": "Surface Area of Rectangular Prisms",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3c-wrapping-solids",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "With the net understood, surface area becomes a routine you can trust: find the three distinct face areas, add them, double. The only real hazard is mixing it up with volume — they use the same three numbers and answer completely different questions.",
+      "figure": "sa7-three-faces-routine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build a box to a required wrapping area.",
+      "widget": {
+        "type": "netFold",
+        "prompt": "A gift box needs exactly 62 square units of wrapping. Build it.",
+        "targetSurfaceArea": 62,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 2,
+        "wStart": 2,
+        "hStart": 2,
+        "successFeedback": "5 by 3 by 2: faces of 15, 10 and 6, doubled, give 62 square units of paper.",
+        "lowFeedback": "Not enough paper yet — grow a dimension.",
+        "highFeedback": "More paper than needed — shrink a dimension."
+      },
+      "predict": {
+        "prompt": "Double every dimension of a box. What happens to its surface area?",
+        "options": [
+          {
+            "id": "double",
+            "label": "It doubles"
+          },
+          {
+            "id": "quadruple",
+            "label": "It multiplies by 4"
+          },
+          {
+            "id": "octuple",
+            "label": "It multiplies by 8"
+          }
+        ],
+        "outcomeId": "quadruple",
+        "reveal": "Every face is a product of TWO lengths, so doubling both doubles it twice: each face quadruples, and so does the total. Volume, which multiplies three lengths, would multiply by 8 — the clearest sign that these two measures are genuinely different questions."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Now fill the same box instead of wrapping it.",
+      "widget": {
+        "type": "volumeBuilder",
+        "commonBuilds": [
+          {
+            "volume": 62,
+            "feedback": "62 is the SURFACE AREA of this box, in square units. Volume counts what fits inside, in cubic units."
+          },
+          {
+            "volume": 24,
+            "feedback": "Not quite full — lengthen it one more unit."
+          }
+        ],
+        "prompt": "That box is 3 wide and 2 high, both locked. Set its length so it HOLDS exactly 30 cubic units.",
+        "targetVolume": 30,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 3,
+        "hStart": 2,
+        "lockW": true,
+        "lockH": true,
+        "successFeedback": "Length 5: the very same 5 by 3 by 2 box that needed 62 square units of paper holds only 30 cubic units of filling. Same box, two different measures.",
+        "lowFeedback": "Not full yet — lengthen the box.",
+        "highFeedback": "Overfilled — shorten the box."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Surface area or volume?",
+      "conceptTag": "sa7-sa-rectangular",
+      "explanationVariants": [
+        "Paint covers the outside, so the quantity needed is surface area.",
+        "Anything that wraps, coats or covers is a surface-area question."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You want to PAINT the outside of a storage chest. Which measure do you need?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Surface area",
+            "correct": true,
+            "feedback": "Yes — paint covers the outside skin, measured in square units."
+          },
+          {
+            "id": "o2",
+            "label": "Volume",
+            "correct": false,
+            "feedback": "Volume tells you what FITS INSIDE the chest, which paint never touches."
+          },
+          {
+            "id": "o3",
+            "label": "Perimeter",
+            "correct": false,
+            "feedback": "Perimeter measures a flat boundary in linear units; a chest's surface is two-dimensional."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Units settle the question when words do not. Surface area lands in square units because every face is a length times a length. Volume lands in cubic units because it multiplies three lengths. If your answer's units do not match the question's, the wrong measure was computed.",
+      "figure": "sa7-units-squared"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute one.",
+      "conceptTag": "sa7-sa-rectangular",
+      "explanationVariants": [
+        "Faces of 6×4 = 24, 6×5 = 30 and 4×5 = 20 double to 148.",
+        "Three distinct faces, summed and doubled."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 6 by 4 by 5 box: what is its surface area, in square units?",
+        "answer": 148,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "That is the volume 6×4×5 = 120 — cubic units, a different question."
+          },
+          {
+            "value": 74,
+            "feedback": "The three distinct faces sum to 74; each has a twin, so double it."
+          }
+        ],
+        "fallbackFeedback": "2(24 + 30 + 20) = 148 square units.",
+        "successFeedback": "148 square units — and note the volume of the very same box is 120, a different number for a different question."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Same numbers, other question.",
+      "conceptTag": "sa7-sa-rectangular",
+      "explanationVariants": [
+        "Volume multiplies all three: 6×4×5 = 120 cubic units.",
+        "Volume fills; surface area wraps."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "That same 6 by 4 by 5 box: what is its VOLUME, in cubic units?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 148,
+            "feedback": "That is the surface area you just computed. Volume multiplies the three dimensions instead of pairing them."
+          },
+          {
+            "value": 15,
+            "feedback": "That adds the dimensions. Volume multiplies them: 6×4×5."
+          }
+        ],
+        "fallbackFeedback": "6×4×5 = 120 cubic units.",
+        "successFeedback": "120 cubic units — same box, same three numbers, entirely different measure."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work backwards from a face.",
+      "conceptTag": "sa7-sa-rectangular",
+      "explanationVariants": [
+        "A cube of surface area 54 has faces of 54 ÷ 6 = 9, so its edge is 3.",
+        "Divide by six to get one face, then take the square root."
+      ],
+      "hints": [
+        "A cube's six faces are identical, so start by finding ONE face's area.",
+        "54 ÷ 6 tells you the area of a single square face.",
+        "A square face of area 9 has side 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cube has surface area 54 square units. What is its edge length?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That is the area of one FACE. The edge is the square root of it."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the number of faces, not a length."
+          }
+        ],
+        "fallbackFeedback": "One face is 54 ÷ 6 = 9 square units, so the edge is √9 = 3.",
+        "successFeedback": "3 — surface area run in reverse, which is how most real measuring problems arrive."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Wrap versus fill.",
+      "takeaways": [
+        "Surface area of a box is 2(lw + lh + wh), in square units.",
+        "Volume is lwh, in cubic units — the same three numbers answering a different question.",
+        "Doubling every dimension multiplies surface area by 4 and volume by 8."
+      ],
+      "teaser": "Next: solids whose ends are triangles — where the pairs stop being so obliging."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa7-sa-rectangular",
+      "concept": {
+        "id": "rem-sa7-sa-rectangular-c",
+        "kind": "concept",
+        "body": "Units settle the question when words do not. Surface area lands in square units because every face is a length times a length. Volume lands in cubic units because it multiplies three lengths. If your answer's units do not match the question's, the wrong measure was computed."
+      },
+      "check": {
+        "id": "rem-sa7-sa-rectangular-k",
+        "kind": "check",
+        "body": "Surface area or volume?",
+        "conceptTag": "sa7-sa-rectangular",
+        "explanationVariants": [
+          "Paint covers the outside, so the quantity needed is surface area.",
+          "Anything that wraps, coats or covers is a surface-area question."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "You want to PAINT the outside of a storage chest. Which measure do you need?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Surface area",
+              "correct": true,
+              "feedback": "Yes — paint covers the outside skin, measured in square units."
+            },
+            {
+              "id": "o2",
+              "label": "Volume",
+              "correct": false,
+              "feedback": "Volume tells you what FITS INSIDE the chest, which paint never touches."
+            },
+            {
+              "id": "o3",
+              "label": "Perimeter",
+              "correct": false,
+              "feedback": "Perimeter measures a flat boundary in linear units; a chest's surface is two-dimensional."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

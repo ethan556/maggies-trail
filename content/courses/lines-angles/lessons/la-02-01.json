@@ -1,0 +1,375 @@
+{
+ "id": "la-02-01",
+ "slug": "lines-that-never-meet",
+ "title": "Lines That Never Meet",
+ "courseId": "lines-angles",
+ "chapterId": "ch2-parallel-perpendicular",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "**Parallel lines** stay exactly the same distance apart, forever — no matter how far you extend them, they never touch. Railroad tracks are the classic example: the two rails never get closer or farther apart, and never cross.",
+   "figure": "la-parallel"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Construct parallel lines and test what rotation and translation change.",
+   "conceptTag": "parallel-lines",
+   "widget": {
+    "type": "lineRelationLab",
+    "prompt": "Make the active blue line parallel to the dark line. Move BOTH controls so you can see that translation changes position but not direction.",
+    "targetRelation": "parallel",
+    "baseAngle": 0,
+    "angleStart": 35,
+    "offsetStart": 0,
+    "angleStep": 5,
+    "requiredMoves": 3,
+    "successFeedback": "Parallel: same direction, constant distance, and no intersection even when extended.",
+    "angleFeedback": "The lines still have different directions. Match their angles so the gap stays constant.",
+    "distanceFeedback": "Use both rotation and translation. Parallel lines need the same direction and a nonzero gap."
+   },
+   "predict": {
+    "prompt": "Two lines slanting by exactly the SAME amount — will they ever meet?",
+    "options": [
+     {
+      "id": "never",
+      "label": "Never"
+     },
+     {
+      "id": "eventually",
+      "label": "Eventually, far away"
+     },
+     {
+      "id": "paper",
+      "label": "Only off the edge of the paper"
+     }
+    ],
+    "outcomeId": "never",
+    "reveal": "Equal slant means the gap between them never changes — extend them across the universe and they stay strangers. That's what parallel promises."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": true,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Construct parallel lines while separating rotation from translation.",
+    "invariants": [
+     "parallel-equal-distance",
+     "direction-preserved-under-translation"
+    ],
+    "misconceptions": [
+     "appearance-only",
+     "translation-changes-angle"
+    ],
+    "representations": [
+     "diagram",
+     "table",
+     "symbolic",
+     "language"
+    ],
+    "fadeLevel": 1,
+    "transferFamily": "line-relations",
+    "delayed": true,
+    "translationFrom": "diagram",
+    "translationTo": "symbolic",
+    "counterfactualPrompt": "Translate after reaching the target relation. Which invariant survives, and which measurements change?",
+    "explanation": {
+     "prompt": "What changes when you translate instead of rotate?",
+     "options": [
+      {
+       "id": "position",
+       "label": "Position changes while direction stays fixed.",
+       "correct": true,
+       "feedback": "Exactly — that separates translation from rotation."
+      },
+      {
+       "id": "direction",
+       "label": "Direction must change too.",
+       "correct": false,
+       "feedback": "Direction changes only when the line rotates."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Test the definition.",
+   "conceptTag": "parallel-lines",
+   "explanationVariants": [
+    "Parallel lines never cross, no matter how far they're extended — that's the entire test.",
+    "Same distance apart forever means they never meet."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two lines are the same distance apart everywhere and, when extended forever, never touch. What are they?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Parallel lines",
+      "correct": true,
+      "feedback": "Constant distance and never touching — the exact definition of parallel."
+     },
+     {
+      "id": "b",
+      "label": "Perpendicular lines",
+      "feedback": "Perpendicular lines CROSS at a right angle — these lines never cross at all. They're parallel."
+     },
+     {
+      "id": "c",
+      "label": "Intersecting lines",
+      "feedback": "Intersecting lines meet at a point. Lines that never touch are parallel."
+     },
+     {
+      "id": "d",
+      "label": "Rays",
+      "feedback": "A ray is about endpoints and direction, not about a relationship between two lines. Two lines that never meet are parallel."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelLinesMcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Diagrams mark parallel lines with matching arrow symbols — a single arrowhead (›) on each line in one parallel pair, double arrowheads (››) on a different pair. The matching arrows tell you which lines belong together.",
+   "figure": "la-parallel"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Read the arrow marks.",
+   "conceptTag": "parallel-lines",
+   "explanationVariants": [
+    "Lines marked with the same arrow symbol are parallel to each other.",
+    "Matching marks signal a matching relationship."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In a diagram, line P and line R both have a single arrowhead mark; line Q has a double arrowhead mark. Which lines are parallel to each other?",
+    "options": [
+     {
+      "id": "a",
+      "label": "P and R",
+      "correct": true,
+      "feedback": "Matching single-arrowhead marks mean P and R are parallel to each other."
+     },
+     {
+      "id": "b",
+      "label": "P and Q",
+      "feedback": "P and Q have DIFFERENT marks (single vs. double) — they're not marked as a parallel pair. P and R share the same mark."
+     },
+     {
+      "id": "c",
+      "label": "Q and R",
+      "feedback": "Q and R have different marks too. The matching pair is P and R, both with single arrowheads."
+     },
+     {
+      "id": "d",
+      "label": "All three lines",
+      "feedback": "Only lines with the SAME mark are parallel to each other. P and R match; Q is marked differently."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelLinesMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "More parallel spotting.",
+   "conceptTag": "parallel-lines",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each example: parallel, or not?",
+    "buckets": [
+     {
+      "id": "yes",
+      "label": "Parallel",
+      "icon": "═"
+     },
+     {
+      "id": "no",
+      "label": "Not parallel",
+      "icon": "✕"
+     }
+    ],
+    "items": [
+     {
+      "id": "f1",
+      "label": "Two opposite sides of a rectangular door",
+      "bucketId": "yes",
+      "feedback": "A rectangle's opposite sides stay the same distance apart — parallel."
+     },
+     {
+      "id": "f2",
+      "label": "The two edges of an open pair of scissors",
+      "bucketId": "no",
+      "feedback": "The blades meet at the pivot — not parallel."
+     },
+     {
+      "id": "f3",
+      "label": "The rungs of a ladder",
+      "bucketId": "yes",
+      "feedback": "Each rung stays parallel to the others."
+     },
+     {
+      "id": "f4",
+      "label": "The letter X",
+      "bucketId": "no",
+      "feedback": "The two strokes of an X cross in the middle — not parallel."
+     }
+    ],
+    "missFeedback": "Ask whether the two lines would ever touch if stretched out forever.",
+    "successFeedback": "Door edges and ladder rungs stay apart forever; scissor blades and the letter X both cross."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One more test.",
+   "conceptTag": "parallel-lines",
+   "explanationVariants": [
+    "Lines that are gradually getting closer together would eventually meet — that rules out parallel.",
+    "Parallel requires a CONSTANT distance, not just a similar direction."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two lines point in almost the same direction, but they're slowly getting closer together. Are they parallel?",
+    "options": [
+     {
+      "id": "a",
+      "label": "They aren't — getting closer means they'll eventually meet",
+      "correct": true,
+      "feedback": "Parallel lines keep a CONSTANT distance forever. Slowly closing the gap means they'll eventually touch — not parallel."
+     },
+     {
+      "id": "b",
+      "label": "Yes — they point in almost the same direction",
+      "feedback": "Almost the same direction isn't the test — constant distance is. Since the gap is shrinking, they aren't parallel."
+     },
+     {
+      "id": "c",
+      "label": "Yes — as long as they haven't touched yet",
+      "feedback": "Not yet touching isn't the same as never touching. If the gap keeps shrinking, they eventually will."
+     },
+     {
+      "id": "d",
+      "label": "Impossible to know without seeing them cross",
+      "feedback": "The description already tells you: a shrinking gap means they aren't staying the same distance apart. Not parallel."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelLinesMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The parking lot.",
+   "conceptTag": "parallel-lines",
+   "hints": [
+    "Painted parking-space lines are meant to stay evenly spaced.",
+    "Check whether each pair stays the same distance apart.",
+    "A properly painted lot has every space line parallel to its neighbors."
+   ],
+   "explanationVariants": [
+    "Properly painted parking lines stay the same distance apart along their whole length — parallel.",
+    "Even spacing everywhere is exactly the parallel test."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A parking lot has painted lines dividing it into equal-width spaces, each line staying the same distance from its neighbors along its whole length. Are neighboring lines parallel?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Yes — they stay the same distance apart everywhere",
+      "correct": true,
+      "feedback": "Constant spacing along the whole length is exactly the definition of parallel."
+     },
+     {
+      "id": "b",
+      "label": "No — parking lines are too short to be parallel",
+      "feedback": "Length doesn't disqualify a pair from being parallel — constant distance does, and that's exactly what's described here."
+     },
+     {
+      "id": "c",
+      "label": "Only if the parking lot is perfectly square",
+      "feedback": "The lot's overall shape doesn't matter — what matters is whether the LINES themselves keep a constant distance apart, which they do here."
+     },
+     {
+      "id": "d",
+      "label": "Can't tell without measuring every point",
+      "feedback": "The description already confirms constant spacing along the whole length — that's sufficient to call them parallel."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelLinesMcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Never touching, by definition.",
+   "takeaways": [
+    "Parallel lines stay the same distance apart forever and never cross.",
+    "Matching arrow marks in a diagram show which lines are parallel to each other.",
+    "A shrinking gap between two lines means they aren't parallel — they'll eventually meet."
+   ],
+   "teaser": "next: lines that cross at exactly the right angle."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "parallel-lines",
+   "concept": {
+    "id": "rem-pl-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Parallel lines never cross, no matter how far they extend.** Picture two straight fence lines running side by side, always the same distance apart — that's the whole idea."
+   },
+   "check": {
+    "id": "rem-pl-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "parallel-lines",
+    "explanationVariants": [
+     "Two fence lines always the same distance apart never cross — parallel.",
+     "Constant distance is the test."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Two fence lines run side by side, always the same distance apart. Are they parallel?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Yes",
+       "correct": true,
+       "feedback": "Constant distance apart, never crossing — parallel."
+      },
+      {
+       "id": "b",
+       "label": "Only if they're very long",
+       "feedback": "Length isn't the test — constant distance is, and that's true here regardless of length."
+      },
+      {
+       "id": "c",
+       "label": "Can't tell",
+       "feedback": "The description already gives the answer: always the same distance apart means parallel."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

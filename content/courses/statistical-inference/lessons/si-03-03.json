@@ -1,0 +1,312 @@
+{
+  "id": "si-03-03",
+  "slug": "reading-a-poll",
+  "title": "Reading a Poll Without Being Fooled",
+  "courseId": "statistical-inference",
+  "chapterId": "ch3-margin-of-error",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "\"A leads B, 48% to 45%.\" With a margin of ±3, A's band runs 45–51 and B's runs 42–48. They overlap.\n\nSo a truth of 47% for both is perfectly consistent with this poll. The lead is **inside the wobble** — which is what commentators mean, when they are careful, by a statistical tie.",
+      "figure": "si-poll-overlap"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Is the lead real?",
+      "conceptTag": "si-read-poll",
+      "explanationVariants": [
+        "A's band is 45–51 and B's is 42–48. Any true value in the overlap, such as 47%, fits both — so the poll cannot establish who is ahead.",
+        "The 3-point lead is no bigger than the 3-point margin, so it is exactly the size of the noise."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A: 48%, B: 45%, margin ±3 points. What does the poll support?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The bands overlap, so the poll cannot say who is ahead.",
+            "correct": true,
+            "feedback": "Right. A lead no bigger than the margin is a lead the data cannot see."
+          },
+          {
+            "id": "o2",
+            "label": "A is ahead, since 48 > 45.",
+            "correct": false,
+            "feedback": "That reads the point estimates as if they were exact. Each one is the middle of a band, and the bands overlap heavily."
+          },
+          {
+            "id": "o3",
+            "label": "A is ahead by exactly 3 points.",
+            "correct": false,
+            "feedback": "The gap between two wobbling estimates wobbles too — in fact it wobbles MORE than either estimate alone."
+          },
+          {
+            "id": "o4",
+            "label": "The poll is useless.",
+            "correct": false,
+            "feedback": "It is not useless: it rules out a landslide for either side. It simply cannot resolve a 3-point gap at this sample size."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-read-poll__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two bands, one question.",
+      "widget": {
+        "type": "distributionCompareLab",
+        "prompt": "A leads B, 48% to 45%, with a margin of ±3 points on each. The gap is 3 points and the margin is 3 points — judge what the poll actually supports.",
+        "mode": "judge",
+        "gapUnits": 1,
+        "groupALabel": "Candidate A",
+        "groupBLabel": "Candidate B",
+        "judgeOptions": [
+          {
+            "id": "overlap",
+            "label": "The bands overlap — the poll cannot separate them",
+            "correct": true,
+            "feedback": "A runs 45–51 and B runs 42–48. They share 45–48, so a tie, or even B ahead, sits comfortably inside what this poll can see."
+          },
+          {
+            "id": "aleads",
+            "label": "A is ahead — the poll shows a real lead",
+            "feedback": "That reads the headline number and ignores the band. A 3-point gap with a ±3 margin on each side is exactly the case where the poll cannot tell."
+          },
+          {
+            "id": "tied",
+            "label": "They are exactly tied",
+            "feedback": "The poll cannot establish a tie either. It rules out a large lead for either candidate and says nothing more precise than that."
+          },
+          {
+            "id": "bleads",
+            "label": "B is ahead",
+            "feedback": "B ahead is inside the bands, but so is A ahead. 'Cannot separate' is the honest reading, not a reversal."
+          }
+        ],
+        "successFeedback": "The bands overlap, so the poll cannot separate them. A lead smaller than the margin is not a lead — it is a headline.",
+        "fallbackFeedback": "Compare the bands, not the numbers: A runs 45–51, B runs 42–48, and they share 45–48."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which headline is honest?",
+      "conceptTag": "si-read-poll",
+      "explanationVariants": [
+        "An honest headline reports the uncertainty rather than hiding it inside a verb like \"leads\" or \"surges\".",
+        "Movement inside the margin is not movement. Two polls a week apart can differ by several points with nothing having changed."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Poll 1: A 48%. Poll 2 (a week later): A 50%. Margin ±3 both times. Sort the headlines.",
+        "buckets": [
+          {
+            "id": "ok",
+            "label": "Supported by the data",
+            "icon": "✅"
+          },
+          {
+            "id": "bad",
+            "label": "Overreach",
+            "icon": "⚠️"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "\"A surges 2 points after debate\"",
+            "bucketId": "bad",
+            "feedback": "A 2-point move sits well inside a ±3 margin. Two polls of the same unchanged electorate routinely differ by this much."
+          },
+          {
+            "id": "s2",
+            "label": "\"A's support is unchanged within the margin of error\"",
+            "bucketId": "ok",
+            "feedback": "Accurate and dull, which is usually the sign of an honest reading."
+          },
+          {
+            "id": "s3",
+            "label": "\"A now leads with a clear majority\"",
+            "bucketId": "bad",
+            "feedback": "50% ± 3 spans 47–53, so it does not establish a majority at all — let alone a clear one."
+          },
+          {
+            "id": "s4",
+            "label": "\"Both polls are consistent with support near 49%\"",
+            "bucketId": "ok",
+            "feedback": "49% sits inside both bands, so this is a fair summary of what the two polls jointly allow."
+          }
+        ],
+        "missFeedback": "Ask whether the claimed movement is bigger than the margin. If it is not, the movement is noise.",
+        "successFeedback": "Two of those headlines describe the data; two describe the noise as if it were news."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-read-poll__dragBucket"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three questions to ask any poll, in order:\n\n**Who was asked, and how were they chosen?** (bias — the margin cannot see it)\n**How many?** (the margin — how much wobble)\n**Is the effect bigger than the margin?** (whether the finding survives its own uncertainty)\n\nSkip the first and the other two are decoration.",
+      "figure": "si-claim-ladder"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Order the questions.",
+      "conceptTag": "si-read-poll",
+      "explanationVariants": [
+        "Sampling method comes first, because a broken frame makes every downstream number meaningless — including the margin.",
+        "A margin of error computed on a self-selected sample is a precise answer to a question nobody asked."
+      ],
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the three questions in the order that protects you best.",
+        "items": [
+          {
+            "id": "c",
+            "label": "Is the gap bigger than the margin?"
+          },
+          {
+            "id": "a",
+            "label": "How were the people chosen?"
+          },
+          {
+            "id": "b",
+            "label": "How many were asked?"
+          }
+        ],
+        "correctOrder": [
+          "a",
+          "b",
+          "c"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "b",
+            "second": "a",
+            "feedback": "Sample size is the easier question, but it is the second one. A big sample chosen badly is worse than a small sample chosen well."
+          },
+          {
+            "first": "c",
+            "second": "a",
+            "feedback": "That checks the arithmetic before checking whether the arithmetic applies. If the sample is biased, comparing the gap with the margin is meaningless."
+          }
+        ],
+        "missFeedback": "Bias first (it cannot be fixed later), then sample size, then whether the effect clears the margin.",
+        "successFeedback": "Method, then size, then significance. Any other order lets a well-computed number smuggle in a broken sample."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-read-poll__dragOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two claims, one poll.",
+      "conceptTag": "si-read-poll",
+      "hints": [
+        "Build both bands first: 53 ± 4 and 47 ± 4.",
+        "The bands are 49–57 and 43–51. Ask which claims survive when the truth could be anywhere inside them.",
+        "For \"a majority\", the question is whether the whole band sits above 50."
+      ],
+      "explanationVariants": [
+        "The band for A is 49–57, which dips below 50, so a majority is not established. But A's band (49–57) and B's (43–51) still overlap between 49 and 51, so even the lead is not certain.",
+        "A 6-point gap with a 4-point margin on each number is a close call, not a settled one — the two bands share the strip from 49 to 51."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A: 53%, B: 47%, margin ±4 on each. Which is the most defensible reading?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A is probably ahead, but the bands still overlap slightly and a majority for A is not established.",
+            "correct": true,
+            "feedback": "Right. A's band (49–57) dips under 50, and it still shares ground with B's (43–51). \"Probably ahead\" is as far as the data reaches."
+          },
+          {
+            "id": "o2",
+            "label": "A has a clear majority of 53%.",
+            "correct": false,
+            "feedback": "A's band runs from 49% to 57%, and 49% is not a majority. The point estimate alone cannot establish one."
+          },
+          {
+            "id": "o3",
+            "label": "The race is a dead heat with no information at all.",
+            "correct": false,
+            "feedback": "That overcorrects. The bands overlap only slightly, so the poll does lean toward A — it just cannot promise it."
+          },
+          {
+            "id": "o4",
+            "label": "A leads by exactly 6 points.",
+            "correct": false,
+            "feedback": "The gap between two wobbling numbers wobbles more than either. Quoting it as exact is the mistake this whole lesson is about."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-read-poll__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read the band, not the number.",
+      "takeaways": [
+        "A lead smaller than the margin is a lead the poll cannot see — the bands overlap and a tie stays on the table.",
+        "The gap between two estimates is noisier than either estimate, so it needs a bigger margin, not the same one.",
+        "Ask how people were chosen BEFORE you ask how many — bias cannot be repaired downstream."
+      ],
+      "teaser": "Next: the SHAPE all that wobble builds — the bell curve, its 68-95-99.7 promise, and a ruler called z."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-read-poll",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Draw both bands before you say anything. If they share any ground, the poll cannot tell you which one is really higher. If they are cleanly apart, it can.",
+        "figure": "si-poll-overlap"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Do the bands touch?",
+        "conceptTag": "si-read-poll",
+        "explanationVariants": [
+          "55 ± 2 is 53–57 and 46 ± 2 is 44–48. They do not overlap, so the poll does support a real lead.",
+          "A 9-point gap with 2-point margins is far bigger than the wobble."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A: 55% ± 2, B: 46% ± 2. Does the poll support a real lead for A?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Yes — the bands (53–57 and 44–48) do not overlap.",
+              "correct": true,
+              "feedback": "Right. The gap is much larger than the margin, so it cannot be explained by wobble."
+            },
+            {
+              "id": "o2",
+              "label": "No — you can never compare two poll numbers.",
+              "correct": false,
+              "feedback": "You can, and here the comparison is clean: the two bands share no ground at all."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

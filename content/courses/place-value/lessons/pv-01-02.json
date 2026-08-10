@@ -1,0 +1,378 @@
+{
+  "id": "pv-01-02",
+  "slug": "build-and-break-numbers",
+  "title": "Build and Break Numbers",
+  "courseId": "place-value",
+  "chapterId": "ch1-inside-a-number",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every number can **explode into its worth-pieces**: 452 = 400 + 50 + 2. That's called expanded form. Building goes the other way — snap the pieces back together. Nothing is ever lost in either direction; it's the same number, unpacked or packed.",
+      "figure": "pv3-expanded"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Explode a number yourself — every piece carries its spot's worth.",
+      "conceptTag": "expanded-form",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Break 375 into its worth-pieces. Build the expanded form, biggest piece first.",
+        "tokens": [
+          {
+            "id": "t300",
+            "label": "300"
+          },
+          {
+            "id": "tp1",
+            "label": "+"
+          },
+          {
+            "id": "t70",
+            "label": "70"
+          },
+          {
+            "id": "tp2",
+            "label": "+"
+          },
+          {
+            "id": "t5",
+            "label": "5"
+          },
+          {
+            "id": "t7",
+            "label": "7"
+          },
+          {
+            "id": "t30",
+            "label": "30"
+          }
+        ],
+        "correct": [
+          "t300",
+          "tp1",
+          "t70",
+          "tp2",
+          "t5"
+        ],
+        "acceptAlso": [
+          [
+            "t300",
+            "tp2",
+            "t70",
+            "tp1",
+            "t5"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t300",
+              "tp1",
+              "t7",
+              "tp2",
+              "t5"
+            ],
+            "feedback": "The 7 parks in the TENS spot of 375 — its piece is worth 70, not 7. Worth-pieces carry their spot."
+          },
+          {
+            "sequence": [
+              "t300",
+              "tp1",
+              "t30",
+              "tp2",
+              "t5"
+            ],
+            "feedback": "30 would come from a 3 in the tens spot — but 375's tens digit is 7. Its middle piece is 70."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Read the spots of 375: 3 hundreds (300), 7 tens (70), 5 ones (5) — joined with +.",
+        "successFeedback": "375 = 300 + 70 + 5. Exploded, and nothing lost."
+      },
+      "predict": {
+        "prompt": "In 375's expanded form, the middle digit 7 shows up as…",
+        "options": [
+          {
+            "id": "seventy",
+            "label": "70 — its spot makes it seventy"
+          },
+          {
+            "id": "seven",
+            "label": "7 — a digit is a digit"
+          },
+          {
+            "id": "sevenhundred",
+            "label": "700"
+          }
+        ],
+        "outcomeId": "seventy",
+        "reveal": "The 7 sits in the tens spot, so its worth-piece is 70: 375 = 300 + 70 + 5. Writing + 7 instead would shortchange the number by 63 — expanded form pays each digit its full place value."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Empty spots leave no piece behind.",
+      "conceptTag": "expanded-form",
+      "explanationVariants": [
+        "608 has 6 hundreds, 0 tens, 8 ones — the zero's piece is nothing, so only 600 + 8 remain.",
+        "The placeholder 0 holds a spot inside the number, but in pieces it simply vanishes: no tens piece exists."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is 608 exploded into worth-pieces?",
+        "options": [
+          {
+            "id": "a",
+            "label": "600 + 8",
+            "correct": true,
+            "feedback": "6 hundreds and 8 ones; the empty tens spot contributes no piece at all."
+          },
+          {
+            "id": "b",
+            "label": "60 + 8",
+            "feedback": "That reads the 6 as tens — but in 608 the 6 parks in the hundreds. Its piece is 600."
+          },
+          {
+            "id": "c",
+            "label": "600 + 80",
+            "feedback": "The 8 sits in the ONES spot — the zero holds the tens. There's no 80 hiding in 608."
+          },
+          {
+            "id": "d",
+            "label": "6 + 0 + 8",
+            "feedback": "Those are the bare digits with their worth stripped off. Pieces keep their spots: the 6 is worth 600."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "expanded-form",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why explode numbers at all? **Pieces let you work on one spot at a time.** For 452 + 30, only the tens piece changes: 50 + 30 = 80, so the answer is 400 + 80 + 2 = 482. The hundreds and ones never even wake up.",
+      "figure": "pv3-expanded"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Snap pieces together — carefully.",
+      "conceptTag": "expanded-form",
+      "explanationVariants": [
+        "500 + 40 + 3: one digit per spot — 5, 4, 3 — gives 543.",
+        "Stack the pieces: five hundreds, four tens, three ones snap into 543."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Snap together: 500 + 40 + 3 = ?",
+        "answer": 543,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 added the bare digits (5 + 4 + 3), throwing the worth away. The pieces are 500, 40, and 3 — whole values."
+          },
+          {
+            "value": 5403,
+            "feedback": "5403 glued the pieces' digits side by side. Snapping means each piece fills its own SPOT: 5 in hundreds, 4 in tens, 3 in ones."
+          },
+          {
+            "value": 534,
+            "feedback": "534 swapped the tens and ones — the 40 piece fills the tens spot (4), the 3 piece fills the ones."
+          }
+        ],
+        "fallbackFeedback": "One piece per spot: hundreds from the 500, tens from the 40, ones from the 3."
+      },
+      "variant": {
+        "gen": "expanded-form",
+        "form": "snapExpanded"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Zeros make near-twin numbers — pieces tell them apart.",
+      "conceptTag": "expanded-form",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each number to its worth-pieces. Watch where the zeros sit!",
+        "left": [
+          {
+            "id": "l1",
+            "label": "290"
+          },
+          {
+            "id": "l2",
+            "label": "209"
+          },
+          {
+            "id": "l3",
+            "label": "920"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "200 + 90"
+          },
+          {
+            "id": "r2",
+            "label": "200 + 9"
+          },
+          {
+            "id": "r3",
+            "label": "900 + 20"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r2",
+          "l3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r1",
+            "feedback": "200 + 90 has nine TENS — that's 290. In 209 the zero holds the tens spot, so its 9 is just nine ones."
+          }
+        ],
+        "missFeedback": "Explode each one: which spot does its zero hold, and which spots have real pieces?",
+        "successFeedback": "290, 209, 920 — same digits, different spots, three different numbers. Pieces never lie."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use pieces to add without a pencil.",
+      "conceptTag": "expanded-form",
+      "explanationVariants": [
+        "Only the tens piece changes: 452 is 400 + 50 + 2, and 50 + 30 = 80, so 400 + 80 + 2 = 482.",
+        "Adding 30 is adding 3 tens — the tens digit climbs from 5 to 8 while the others sleep."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "452 + 30 = ? (Explode, change one piece, snap back.)",
+        "answer": 482,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 455,
+            "feedback": "455 added 3 ONES. But 30 is 3 tens — it belongs to the middle piece: 50 + 30."
+          },
+          {
+            "value": 752,
+            "feedback": "752 added 3 HUNDREDS. The 30 piece is tens-sized — only the tens spot should move."
+          },
+          {
+            "value": 485,
+            "feedback": "485 moved the tens AND the ones. Adding 30 touches exactly one piece: the 50 becomes 80, and the 2 stays put."
+          }
+        ],
+        "fallbackFeedback": "Pieces: 400 + 50 + 2. The +30 joins the tens piece only."
+      },
+      "variant": {
+        "gen": "expanded-form",
+        "form": "addTensExpanded"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Explode, rearrange, snap.",
+      "conceptTag": "expanded-form",
+      "hints": [
+        "Snap the pieces together first: 600 + 70 + 9 = ?",
+        "679. Now find its tens digit (7) and ones digit (9).",
+        "Swap those two digits — the hundreds digit never moves."
+      ],
+      "explanationVariants": [
+        "Snap: 679. Swap tens and ones: the 7 and 9 trade spots → 697.",
+        "After the swap the pieces read 600 + 90 + 7, which snaps into 697."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A number explodes into 600 + 70 + 9. Swap its tens digit with its ones digit, then snap it back together. What number do you get?",
+        "answer": 697,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 679,
+            "feedback": "679 is the number BEFORE the swap — the snap worked! Now trade the tens digit (7) with the ones digit (9)."
+          },
+          {
+            "value": 976,
+            "feedback": "976 moved the 9 all the way to the hundreds. Only the tens and ones trade places; the 6 stays home."
+          },
+          {
+            "value": 769,
+            "feedback": "769 swapped the hundreds with the tens. The swap is between the LAST two spots: 7 and 9."
+          }
+        ],
+        "fallbackFeedback": "Snap first (679), then trade just the last two digits."
+      },
+      "variant": {
+        "gen": "expanded-form",
+        "form": "swapTensOnes"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Numbers come apart in your hands now.",
+      "takeaways": [
+        "Expanded form: each digit becomes a piece worth its spot.",
+        "Empty spots leave no piece — but inside the number, their zero still holds the place.",
+        "Pieces let you change one spot at a time — mental math's favorite trick."
+      ],
+      "teaser": "which number is bigger? The spots settle every argument in one glance."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "expanded-form",
+      "concept": {
+        "id": "rem-ef-c",
+        "kind": "concept",
+        "body": "Quick rewind. To explode a number, give **each digit its spot's worth**: in 46, the 4 is in tens (piece: 40) and the 6 is in ones (piece: 6). So 46 = 40 + 6. To snap back, drop each piece into its spot."
+      },
+      "check": {
+        "id": "rem-ef-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "expanded-form",
+        "explanationVariants": [
+          "83's 8 parks in tens: piece 80. The 3 is three ones: 80 + 3.",
+          "Say it out loud — eighty-three — and the pieces name themselves."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is 83 exploded?",
+          "options": [
+            {
+              "id": "a",
+              "label": "80 + 3",
+              "correct": true,
+              "feedback": "Eight tens and three ones — the pieces of 83."
+            },
+            {
+              "id": "b",
+              "label": "8 + 3",
+              "feedback": "Those are bare digits — the 8's spot makes it worth 80. Pieces keep their worth."
+            },
+            {
+              "id": "c",
+              "label": "800 + 3",
+              "feedback": "800 needs a hundreds spot, but 83 has only two spots. The 8 is eight TENS: 80."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

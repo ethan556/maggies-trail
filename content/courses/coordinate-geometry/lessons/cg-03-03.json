@@ -1,0 +1,480 @@
+{
+  "id": "cg-03-03",
+  "slug": "the-triangle-family",
+  "title": "The Triangle Family",
+  "courseId": "coordinate-geometry",
+  "chapterId": "ch3-shape-families",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Triangles get **two family systems at once**. By **sides**: scalene (no equal sides), isosceles (at least two equal — that's our definition), equilateral (all three equal). By **angles**: acute (all under 90°), right (one exactly 90°), obtuse (one over 90°). Every triangle earns one label from EACH system.",
+      "figure": "triangle-families"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sides first.",
+      "conceptTag": "triangle-family",
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "A triangle has sides 5, 5, and 8. Which side-family is it in?",
+        "mode": "triangle",
+        "nodes": [
+          {
+            "id": "triangle",
+            "label": "fixed triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "triangleSides": [
+          5,
+          5,
+          8
+        ],
+        "triangleQuestion": "side",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Isosceles",
+            "claim": "isosceles",
+            "feedback": "Right — the pair of 5s makes it isosceles (at least two equal sides).",
+            "evidenceKind": "classification",
+            "evidenceText": "The fixed givens classify the triangle as isosceles.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Equilateral",
+            "claim": "equilateral",
+            "feedback": "Equilateral needs ALL THREE sides equal — the 8 breaks that. Two equal sides makes isosceles.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the equilateral claim.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Scalene",
+            "claim": "scalene",
+            "feedback": "Scalene means NO equal sides, but 5 and 5 match. That pair makes it isosceles.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the scalene claim.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — the pair of 5s makes it isosceles (at least two equal sides)."
+      },
+      "hints": [
+        "Count the matching sides.",
+        "5 and 5 match; 8 doesn't.",
+        "Two equal → isosceles."
+      ],
+      "explanationVariants": [
+        "The 5-5 pair puts it in isosceles.",
+        "At least two equal sides is all isosceles asks."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now angles.",
+      "conceptTag": "triangle-family",
+      "explanationVariants": [
+        "A 90° angle makes it right.",
+        "Exactly 90° is the right-family test."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "A triangle has angles 90°, 45°, 45°. Which angle-family is it in?",
+        "mode": "triangle",
+        "nodes": [
+          {
+            "id": "triangle",
+            "label": "fixed triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "triangleAngles": [
+          90,
+          45,
+          45
+        ],
+        "triangleQuestion": "angle",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Right",
+            "claim": "right",
+            "feedback": "Right — one angle is exactly 90°. (Its equal 45s also make it isosceles — one label from each system.)",
+            "evidenceKind": "classification",
+            "evidenceText": "The fixed givens classify the triangle as right.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Acute",
+            "claim": "acute",
+            "feedback": "Acute needs ALL angles under 90°, and one is exactly 90°. That single square corner makes it a right triangle.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the acute claim.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Obtuse",
+            "claim": "obtuse",
+            "feedback": "Obtuse needs an angle OVER 90°. The biggest here is exactly 90°, which is the right-triangle mark.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the obtuse claim.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — one angle is exactly 90°. (Its equal 45s also make it isosceles — one label from each system.)"
+      },
+      "hints": [
+        "Find the biggest angle.",
+        "Is it under, exactly, or over 90°?",
+        "Exactly 90° → right."
+      ],
+      "variant": {
+        "gen": "attributes",
+        "form": "cgTriangleAngleFamily"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The systems **combine**: that 90-45-45 triangle is a **right isosceles** triangle — one label from each system, worn together. And since equilateral means all three sides equal, every equilateral triangle is automatically **isosceles** too (three equal sides certainly contains two). One more tool: a triangle's angles always add to **180°**.",
+      "figure": "cg-right-isosceles"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Split 180 three ways.",
+      "conceptTag": "triangle-family",
+      "explanationVariants": [
+        "Three equal angles adding to 180° must each be 180 ÷ 3 = 60°.",
+        "Equal shares of 180: 60 + 60 + 60."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An equilateral triangle's three angles are all equal and add to 180°. How many degrees is each angle?",
+        "answer": 60,
+        "tolerance": 0,
+        "unit": "°",
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "90° would make it a right angle — but 3 × 90 = 270, too much for a triangle. Equal shares of 180 are 60° each."
+          },
+          {
+            "value": 120,
+            "feedback": "120 divides 360 by 3 — that's a full turn, not a triangle's angle sum. Use 180: 180 ÷ 3 = 60°."
+          }
+        ],
+        "fallbackFeedback": "180 ÷ 3 = 60° per angle."
+      },
+      "variant": {
+        "gen": "angle-sum",
+        "form": "cgTriangleEqualAngle"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "An impossible combination.",
+      "conceptTag": "triangle-family",
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "Can a triangle be RIGHT and EQUILATERAL at the same time?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "equilateral triangle",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "right triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "relation": "disjoint",
+        "subjectLabel": "equilateral triangle",
+        "predicateLabel": "right triangle",
+        "blocker": "Three 60° angles cannot include a 90° angle.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "No — an equilateral triangle's angles are all 60°, and right needs a 90°",
+            "claim": "never",
+            "feedback": "Right — every equilateral angle is exactly 60°, so a 90° corner can never appear.",
+            "evidenceKind": "blocker",
+            "evidenceText": "Three 60° angles cannot include a 90° angle.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Yes — as long as all its sides are equal",
+            "claim": "always",
+            "feedback": "Equal sides force all three angles to 60°, and 60 ≠ 90. The side condition itself blocks the right angle.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always claim fails the required blocker test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Yes — every right triangle is equilateral",
+            "claim": "always-reverse",
+            "feedback": "A right triangle's angles are 90 plus two others — they can't all be 60°, so a right triangle is never equilateral.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always-reverse claim fails the required blocker test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — every equilateral angle is exactly 60°, so a 90° corner can never appear."
+      },
+      "hints": [
+        "What are an equilateral triangle's angles?",
+        "All 60° — no exceptions.",
+        "Right needs a 90°; 60 ≠ 90."
+      ],
+      "explanationVariants": [
+        "60° everywhere leaves no room for 90°.",
+        "The two labels demand incompatible angles."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One triangle, two labels?",
+      "conceptTag": "triangle-family",
+      "explanationVariants": [
+        "Equilateral sits inside isosceles.",
+        "Three equal sides includes two equal sides."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "A triangle has sides 7, 7, 7. Which statement is correct?",
+        "mode": "triangle",
+        "nodes": [
+          {
+            "id": "triangle",
+            "label": "fixed triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "triangleSides": [
+          7,
+          7,
+          7
+        ],
+        "triangleQuestion": "sideInclusive",
+        "choices": [
+          {
+            "id": "a",
+            "label": "It is both equilateral and isosceles",
+            "claim": "equilateral+isosceles",
+            "feedback": "Right — all three equal makes it equilateral, and having (at least) two equal makes it isosceles too.",
+            "evidenceKind": "classification",
+            "evidenceText": "The fixed givens classify the triangle as equilateral and isosceles.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "It is equilateral but NOT isosceles",
+            "claim": "equilateral",
+            "feedback": "That treats isosceles as EXACTLY two equal sides. Our definition is at least two — so equilateral triangles qualify automatically.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the equilateral claim.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "It is scalene",
+            "claim": "scalene",
+            "feedback": "Scalene means no equal sides — but all three here are 7. This triangle sits at the top of the equal-sides ladder.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the scalene claim.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — all three equal makes it equilateral, and having (at least) two equal makes it isosceles too."
+      },
+      "hints": [
+        "Our isosceles rule: at least two equal.",
+        "Does 7, 7, 7 have at least two equal?",
+        "Yes — so both labels apply."
+      ],
+      "variant": {
+        "gen": "attributes",
+        "form": "cgTriangleSideHierarchy"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both systems at once.",
+      "conceptTag": "triangle-family",
+      "hints": [
+        "Take the systems one at a time.",
+        "Angles 30, 60, 90: what's the biggest angle?",
+        "All sides different: which side-family?"
+      ],
+      "explanationVariants": [
+        "The 90° makes it right; the all-different sides make it scalene: right scalene.",
+        "Angle system says right (one 90°); side system says scalene (no equal pair)."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "A triangle has angles 30°, 60°, 90°, and all three sides are different lengths. Which pair of labels fits it?",
+        "mode": "triangle",
+        "nodes": [
+          {
+            "id": "triangle",
+            "label": "fixed triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "triangleSides": [
+          3,
+          4,
+          5
+        ],
+        "triangleAngles": [
+          30,
+          60,
+          90
+        ],
+        "triangleQuestion": "dual",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Right scalene",
+            "claim": "right+scalene",
+            "feedback": "Right — the 90° angle gives right, and three different sides give scalene.",
+            "evidenceKind": "classification",
+            "evidenceText": "The fixed givens classify the triangle as right and scalene.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Right isosceles",
+            "claim": "right+isosceles",
+            "feedback": "The angle label is correct, but isosceles needs at least two equal sides — this one has none. Side system says scalene.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the right and isosceles claim.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Obtuse scalene",
+            "claim": "obtuse+scalene",
+            "feedback": "The side label is correct, but obtuse needs an angle OVER 90° — the biggest here is exactly 90°, which means right.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The fixed givens contradict the obtuse and scalene claim.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — the 90° angle gives right, and three different sides give scalene."
+      },
+      "variant": {
+        "gen": "attributes",
+        "form": "cgTriangleDualLabel"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two systems, one triangle.",
+      "takeaways": [
+        "Sides: scalene / isosceles (at least two equal) / equilateral; angles: acute / right / obtuse.",
+        "Every triangle wears one label from each system — like right isosceles.",
+        "Equilateral is always isosceles, and never right: its angles are locked at 60°."
+      ],
+      "teaser": "last chapter: put the whole family tree to work classifying anything."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "triangle-family",
+      "concept": {
+        "id": "rem-tf-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Count the equal sides.** None equal → scalene. At least two equal → isosceles. All three equal → equilateral (which still counts as isosceles). The angle labels are a separate question — sides first."
+      },
+      "check": {
+        "id": "rem-tf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "triangle-family",
+        "explanationVariants": [
+          "The 4-4 pair makes it isosceles.",
+          "Two equal sides is the isosceles test, and 4 = 4."
+        ],
+        "widget": {
+          "type": "shapeHierarchyLab",
+          "prompt": "A triangle has sides 4, 6, 4. Which side-family is it in?",
+          "mode": "triangle",
+          "nodes": [
+            {
+              "id": "triangle",
+              "label": "fixed triangle",
+              "attributes": []
+            }
+          ],
+          "edges": [],
+          "triangleSides": [
+            4,
+            6,
+            4
+          ],
+          "triangleQuestion": "side",
+          "choices": [
+            {
+              "id": "a",
+              "label": "Isosceles",
+              "claim": "isosceles",
+              "feedback": "Right — the two 4s make at least one equal pair.",
+              "evidenceKind": "classification",
+              "evidenceText": "The fixed givens classify the triangle as isosceles.",
+              "highlightNodeIds": []
+            },
+            {
+              "id": "b",
+              "label": "Scalene",
+              "claim": "scalene",
+              "feedback": "Scalene means no equal sides, but 4 and 4 match. One pair is enough for isosceles.",
+              "evidenceKind": "counterexample",
+              "evidenceText": "The fixed givens contradict the scalene claim.",
+              "highlightNodeIds": []
+            },
+            {
+              "id": "c",
+              "label": "Equilateral",
+              "claim": "equilateral",
+              "feedback": "Equilateral needs all three equal — the 6 breaks that. The 4-4 pair makes it isosceles.",
+              "evidenceKind": "counterexample",
+              "evidenceText": "The fixed givens contradict the equilateral claim.",
+              "highlightNodeIds": []
+            }
+          ],
+          "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+          "successFeedback": "Right — the two 4s make at least one equal pair."
+        }
+      }
+    }
+  ]
+}

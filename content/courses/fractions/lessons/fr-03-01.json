@@ -1,0 +1,434 @@
+{
+  "id": "fr-03-01",
+  "slug": "same-point-different-names",
+  "title": "Same Point, Different Names",
+  "courseId": "fractions",
+  "chapterId": "ch3-equivalent",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Remember the strange landing? 2/4 stood on the very same spot as 1/2. Two fractions are **equivalent** when they name the SAME point — the same amount. Not roughly equal, not close: one spot on the line, wearing two names.",
+      "figure": "frac-equiv-numline"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Build your own equal fraction. Drag the two sliders until your bar's shaded length matches the target half.",
+      "widget": {
+        "type": "fractionBar",
+        "prompt": "Slide numerator and denominator to make a fraction equal to 1/2.",
+        "targetNum": 1,
+        "targetDen": 2,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 1,
+        "successFeedback": "Equal! The numbers are bigger but the shaded length is exactly the same as 1/2 — an equivalent fraction.",
+        "lowFeedback": "Your shaded bar is shorter than the target half. Shade more — raise the numerator, or use fewer parts.",
+        "highFeedback": "Your shaded bar is longer than half. Shade less — lower the numerator, or split into more parts."
+      },
+      "predict": {
+        "prompt": "The bar starts at 1/1. Before you touch it: is 1/1 more or less of the bar than 1/2?",
+        "options": [
+          {
+            "id": "more",
+            "label": "1/1 is more"
+          },
+          {
+            "id": "less",
+            "label": "1/1 is less"
+          },
+          {
+            "id": "same",
+            "label": "They're the same amount"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "With the same whole, the bar settles it: 1/1 covers more than 1/2. Count of pieces and size of pieces work together — neither alone decides the amount."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Repartition the same whole and connect the bar, number-line point, and fraction symbol.",
+        "predictionId": "g3-fraction-equivalence-prediction",
+        "invariants": [
+          "magnitude-preserved",
+          "whole-preserved"
+        ],
+        "misconceptions": [
+          "denominator-size-conflation",
+          "unequal-whole"
+        ],
+        "representations": [
+          "diagram",
+          "number-line",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "number-line",
+        "fadeLevel": 1,
+        "transferFamily": "equivalent-fraction-new-orientation",
+        "delayed": true,
+        "counterfactualPrompt": "Double both the shaded parts and total parts. What changes visually, and what stays at the same number-line point?",
+        "explanation": {
+          "prompt": "Why can two different-looking fractions be equivalent?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "They name the same portion of the same whole and land at the same magnitude.",
+              "correct": true,
+              "feedback": "Exactly. Partition count may change while magnitude stays fixed."
+            },
+            {
+              "id": "surface",
+              "label": "A fraction with a larger denominator is always larger.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Partition count may change while magnitude stays fixed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "equivalent"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find 1/2's other name on a sixths line.",
+      "conceptTag": "equivalent",
+      "widget": {
+        "type": "slider",
+        "prompt": "This 0→1 trip is cut into SIXTHS. Slide to the spot where 1/2 lives — count your sixth-jumps.",
+        "min": 0,
+        "max": 6,
+        "step": 1,
+        "start": 0,
+        "target": 3,
+        "visual": "numberline",
+        "unitLabel": "sixth-jumps from 0",
+        "lowFeedback": "Not halfway yet — keep jumping toward the middle of the trip.",
+        "highFeedback": "Past the middle — halfway is behind you. Slide back.",
+        "successFeedback": "Three sixth-jumps land exactly halfway — the same spot as 1/2. Two names, one point: 3/6 = 1/2."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents equivalent.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for equivalent must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines equivalent."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions:equivalent",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What 'equivalent' really means.",
+      "conceptTag": "equivalent",
+      "explanationVariants": [
+        "Equivalent fractions name one exact point — the same amount of the trip, the same amount of the bar.",
+        "2/4 and 1/2 aren't neighbors or near-misses; they are two labels glued to a single spot."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "2/4 and 1/2 are equivalent. What does that mean?",
+        "options": [
+          {
+            "id": "a",
+            "label": "They name the exact same point — the same amount",
+            "correct": true,
+            "feedback": "One spot, two names. That's the whole idea of equivalence."
+          },
+          {
+            "id": "b",
+            "label": "They're close together on the line",
+            "feedback": "Closer than close — they're the SAME point. Equivalence means zero gap, not a small one."
+          },
+          {
+            "id": "c",
+            "label": "Their top numbers are equal",
+            "feedback": "The tops differ (2 and 1)! Equivalence is about the AMOUNT the whole fraction covers, not matching digits."
+          },
+          {
+            "id": "d",
+            "label": "2/4 is a little more, because it has more pieces",
+            "feedback": "More pieces, yes — but SMALLER ones. Two fourths together cover exactly what one half covers. Same amount."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equivalent-fractions"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Picture two rulers on the same 0→1 trip: a halves ruler and a fourths ruler. Lay them together and the 1/2 mark sits exactly under the 2/4 mark. **Finer cuts never move points — they just hand out more names for them.**",
+      "figure": "frac-equiv-numline"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "1/2 on an eighths ruler.",
+      "conceptTag": "equivalent",
+      "explanationVariants": [
+        "Halfway along an 8-jump trip is 4 jumps — half of 8. So 4/8 covers 1/2's point.",
+        "The eighths ruler puts a mark ON 1/2's spot and calls it 4/8 — a new name for the old point."
+      ],
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "On an EIGHTHS ruler, which mark sits on the same point as 1/2?",
+        "min": 0,
+        "max": 8,
+        "step": 1,
+        "tickStep": 1,
+        "target": 4,
+        "start": 0,
+        "fractionDen": 8,
+        "commonPlacements": [
+          {
+            "value": 1,
+            "feedback": "1/8 is one tiny jump from 0 — nowhere near halfway. Half of the 8 jumps is 4."
+          },
+          {
+            "value": 5,
+            "feedback": "5/8 sits one jump PAST the middle — half of 8 jumps is exactly 4, so 4/8 is the name."
+          },
+          {
+            "value": 8,
+            "feedback": "8/8 is the whole trip — that's 1, the far end. Halfway takes only half the jumps: 4/8."
+          }
+        ],
+        "successFeedback": "Four of eight jumps is half the trip — 1/2's spot, wearing its eighths name.",
+        "lowFeedback": "That mark is short of the middle — half of the 8 jumps is 4.",
+        "highFeedback": "That mark is past the middle — half of the 8 jumps is 4."
+      },
+      "variant": {
+        "gen": "equivalent-fractions",
+        "form": "findMark"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents equivalent.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for equivalent must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines equivalent."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions:equivalent",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the names that share a point.",
+      "conceptTag": "equivalent",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each fraction to its equivalent — the name that lands on the same spot.",
+        "left": [
+          {
+            "id": "l12",
+            "label": "1/2"
+          },
+          {
+            "id": "l13",
+            "label": "1/3"
+          },
+          {
+            "id": "l22",
+            "label": "2/2"
+          }
+        ],
+        "right": [
+          {
+            "id": "r26",
+            "label": "2/6"
+          },
+          {
+            "id": "r66",
+            "label": "6/6"
+          },
+          {
+            "id": "r36",
+            "label": "3/6"
+          }
+        ],
+        "pairs": {
+          "l12": "r36",
+          "l13": "r26",
+          "l22": "r66"
+        },
+        "pairErrors": [
+          {
+            "left": "l13",
+            "right": "r36",
+            "feedback": "3/6 is halfway (3 is half of 6) — that's 1/2's spot. A third of a six-jump trip is 2 jumps: 1/3 = 2/6."
+          }
+        ],
+        "missFeedback": "Think in sixth-jumps: halfway is 3 of 6; a third of the way is 2 of 6; the whole trip is 6 of 6.",
+        "successFeedback": "1/2 = 3/6, 1/3 = 2/6, 2/2 = 6/6 — the sixths ruler renames all three points."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Repair Rio's reasoning.",
+      "conceptTag": "equivalent",
+      "explanationVariants": [
+        "The two fourths are each SMALLER than the one half — two smalls exactly rebuild one big. Piece counts only compare when piece sizes match.",
+        "Lay them on the bar: the two fourth-pieces tile precisely over the half. Nothing sticks out — same amount."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rio says 2/4 is MORE than 1/2 'because two pieces beat one piece.' What's the repair?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The pieces are different sizes — two fourths together cover exactly one half",
+            "correct": true,
+            "feedback": "Piece counts only settle it when piece sizes match. Here, two smalls = one big, precisely."
+          },
+          {
+            "id": "b",
+            "label": "Rio is right — more pieces is more",
+            "feedback": "Check it on the line: 2/4 and 1/2 stand on the SAME point. Two smaller pieces exactly rebuild the one bigger piece."
+          },
+          {
+            "id": "c",
+            "label": "Actually 1/2 is more",
+            "feedback": "Neither is more — that's the punchline. The two names share one spot: equivalent."
+          },
+          {
+            "id": "d",
+            "label": "Fractions with different bottoms can never be compared",
+            "feedback": "They can — the line compares anything. These two just happen to TIE exactly: same point."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equivalent-fractions",
+        "form": "whoIsRight"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Mia's measuring cup.",
+      "conceptTag": "equivalent",
+      "hints": [
+        "Mia's cup only shows eighth-marks — she needs 1/2's eighths name.",
+        "Half the trip means half the jumps.",
+        "Half of 8 jumps is…"
+      ],
+      "explanationVariants": [
+        "Half of the 8 eighth-jumps is 4 — Mia fills to the 4/8 mark, the eighths name for 1/2.",
+        "Check on the cup: 4 marks up out of 8 is exactly the middle — 1/2's spot."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A recipe says 'fill the cup to 1/2.' Mia's cup only has EIGHTH marks (?/8). Which mark does she fill to? Enter the top number.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 copied the bottom of 1/2 — but on an eighths cup, the marks count EIGHTHS. Halfway up 8 marks is mark 4."
+          },
+          {
+            "value": 8,
+            "feedback": "The 8/8 mark is a FULL cup — the recipe wants half. Half of the 8 marks is 4."
+          }
+        ],
+        "fallbackFeedback": "Half the cup = half the marks: work out half of 8."
+      },
+      "variant": {
+        "gen": "equivalent-fractions",
+        "form": "cupMark"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One point, many names.",
+      "takeaways": [
+        "Equivalent = the exact same point, the exact same amount.",
+        "Finer cuts never move a point — they only add names for it.",
+        "More pieces isn't more amount when the pieces are smaller."
+      ],
+      "teaser": "next: WHY the amount holds still — watch a bar get traded, piece for piece."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "equivalent",
+      "concept": {
+        "id": "rem-eq-c",
+        "kind": "concept",
+        "body": "Quick rewind. Think of nicknames: **Sam and Samuel are one person** — two names, one kid. 1/2 and 2/4 work the same way: two names, one point on the line. Equivalent fractions never argue about who's bigger, because they're the same spot."
+      },
+      "check": {
+        "id": "rem-eq-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "equivalent",
+        "explanationVariants": [
+          "Equivalent fractions share a single point — 2/4 stands exactly on 1/2's spot.",
+          "Two names, one place: neither is bigger, because there's only one amount being named."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "2/4 and 1/2 name…",
+          "options": [
+            {
+              "id": "a",
+              "label": "The same point",
+              "correct": true,
+              "feedback": "One spot, two names — that's equivalence."
+            },
+            {
+              "id": "b",
+              "label": "Two neighboring points",
+              "feedback": "Zero gap between them — they stand on one shared point, not next to each other."
+            },
+            {
+              "id": "c",
+              "label": "Two points, with 2/4 a bit farther along",
+              "feedback": "Two fourth-jumps land exactly where one half-jump does — the same spot, no 'a bit' about it."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

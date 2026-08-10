@@ -1,0 +1,316 @@
+{
+  "id": "dr-01-02",
+  "slug": "reading-f-prime-off-f",
+  "title": "Reading f′ Off the Shape of f",
+  "courseId": "derivative-rules",
+  "chapterId": "ch1-the-derivative-as-a-function",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The sign of f′ is the direction of f.\n\n**f′ > 0** → f is rising.\n**f′ < 0** → f is falling.\n**f′ = 0** → f is momentarily flat.\n\nAnd the *size* of f′ is the steepness. Nothing else about f matters to f′ — not its height, not its sign.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A cubic this time. Find the one flat spot — then look at what the curve does there.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "cubic",
+        "mode": "point",
+        "targetSlope": 0,
+        "targetX": 0,
+        "start": -3,
+        "prompt": "f(x) = x³. Drag x to the ONE place where the tangent is flat.",
+        "successFeedback": "x = 0, where f′ = 0 — and look at the curve: it does NOT turn. It flattens for an instant and carries on climbing. So f′ = 0 does not mean 'peak or valley'; it means 'momentarily flat', and that is a suspect, not a conviction. Notice too what f′ = 3x² did underneath: it touched zero and bounced back up, never going negative.",
+        "lowFeedback": "Still to the left of the flat spot — the tangent is tilted uphill. Keep sliding right.",
+        "highFeedback": "Past the flat spot — the tangent is tilted uphill again. Come back left."
+      },
+      "predict": {
+        "prompt": "You'll ride the tangent to x = 0. When you arrive, the tangent line will be tilting…",
+        "options": [
+          {
+            "id": "up",
+            "label": "Uphill (positive slope)"
+          },
+          {
+            "id": "down",
+            "label": "Downhill (negative slope)"
+          },
+          {
+            "id": "flat",
+            "label": "Perfectly flat (slope 0)"
+          }
+        ],
+        "outcomeId": "flat",
+        "reveal": "At x = 0 the tangent lies flat — slope exactly 0. Flat tangents are where a curve turns: the derivative's zeros mark the hilltops and valley floors."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move along a function and coordinate position, local slope, and derivative graph.",
+        "invariants": [
+          "derivative-records-local-slope",
+          "corners-break-differentiability"
+        ],
+        "misconceptions": [
+          "derivative-copies-function-height",
+          "slope-at-corner-is-zero"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-derivativeTrace",
+        "delayed": false
+      },
+      "conceptTag": "dr-flat-not-turning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The trap, named.",
+      "conceptTag": "dr-flat-not-turning",
+      "explanationVariants": [
+        "At x = 0 the cubic has f′ = 0 but keeps rising on both sides — a flat pause, not a turn. A turning point needs f′ to CHANGE SIGN.",
+        "f′(x) = 3x² is zero at 0 and positive everywhere else, so f never stops climbing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = x³, f′(0) = 0. Does f have a peak or a valley at x = 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Neither — it flattens and keeps climbing. f′ never changes sign.",
+            "correct": true,
+            "feedback": "Right. A turning point needs f′ to change SIGN, not merely to touch zero. This is exactly the bounce-versus-cross idea from sign charts, arriving in calculus."
+          },
+          {
+            "id": "o2",
+            "label": "A valley, because f′ = 0.",
+            "correct": false,
+            "feedback": "f′ = 0 is necessary for a turning point but nowhere near sufficient. Look at the curve: it never turns."
+          },
+          {
+            "id": "o3",
+            "label": "A peak, because the tangent is horizontal.",
+            "correct": false,
+            "feedback": "Horizontal tangents happen at peaks, at valleys, AND at flat pauses like this one. The tangent alone cannot tell you which."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to say without f″.",
+            "correct": false,
+            "feedback": "You can already say it from f′ alone: f′ = 3x² is positive either side of 0, so the curve rises into the point and rises out of it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-flat-not-turning__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Match the shape to the sign.",
+      "conceptTag": "dr-sign-of-derivative",
+      "explanationVariants": [
+        "Rising means positive f′; falling means negative; a horizontal tangent means f′ = 0; and the steepest point is where |f′| is largest.",
+        "The derivative reports direction and steepness — nothing about height."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match what f is doing to what f′ is doing.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "f is climbing steeply"
+          },
+          {
+            "id": "w2",
+            "label": "f is falling gently"
+          },
+          {
+            "id": "w3",
+            "label": "f has a horizontal tangent"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "f′ is large and positive"
+          },
+          {
+            "id": "y2",
+            "label": "f′ is small and negative"
+          },
+          {
+            "id": "y3",
+            "label": "f′ = 0"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "Falling means f′ is NEGATIVE. The word 'gently' is about size; the word 'falling' is about sign."
+          },
+          {
+            "left": "w1",
+            "right": "y3",
+            "feedback": "f′ = 0 is a flat tangent — the opposite of climbing steeply."
+          }
+        ],
+        "missFeedback": "Sign of f′ = direction of f. Size of f′ = steepness of f.",
+        "successFeedback": "Direction from the sign, steepness from the size. Height does not enter into it."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-sign-of-derivative__matchPairs"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So f′ = 0 marks a **critical point** — a place worth investigating, not a verdict.\n\nTo know whether it is a peak, a valley, or a flat pause, you must ask what f′ does *either side* of it. That question is a whole course of its own (`curve-analysis`), and this is the moment it is born.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find the critical points.",
+      "conceptTag": "dr-critical-point",
+      "explanationVariants": [
+        "f′(x) = 3x² − 12 = 0 → x² = 4 → x = ±2. Two critical points.",
+        "Setting the derivative to zero is how critical points are FOUND; deciding what they are is a separate question."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 12x has f′(x) = 3x² − 12. How many critical points does f have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "3x² − 12 = 0 gives x² = 4, and a square equals 4 at TWO values: x = 2 and x = −2."
+          },
+          {
+            "value": 0,
+            "feedback": "3x² − 12 does hit zero — at x = ±2. A derivative that is a parabola crosses the axis twice here."
+          },
+          {
+            "value": 3,
+            "feedback": "A quadratic derivative has at most two zeros. 3x² = 12 gives exactly two."
+          }
+        ],
+        "fallbackFeedback": "3x² − 12 = 0 → x = ±2, so two critical points."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-critical-point__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sign, not size.",
+      "conceptTag": "dr-sign-of-derivative",
+      "hints": [
+        "You are asked where f is FALLING, which is a question about the sign of f′.",
+        "f′(x) = 3x² − 12 is negative when 3x² < 12, i.e. when x² < 4.",
+        "x² < 4 means −2 < x < 2. Count the integers strictly inside."
+      ],
+      "explanationVariants": [
+        "f′ < 0 when x² < 4, i.e. −2 < x < 2. The integers strictly inside are −1, 0 and 1 — three of them.",
+        "Between the two critical points the derivative dips below the axis, and that dip is exactly where f falls."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f′(x) = 3x² − 12. How many INTEGER values of x have f falling (f′ < 0)?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That counts −2 and 2 as well, but there f′ = 0 exactly — flat, not falling. The inequality is strict."
+          },
+          {
+            "value": 4,
+            "feedback": "Check the endpoints: at x = ±2 the derivative is 0, not negative. Only −1, 0, 1 are strictly inside."
+          },
+          {
+            "value": 2,
+            "feedback": "There are three integers strictly between −2 and 2: −1, 0 and 1 — zero counts."
+          }
+        ],
+        "fallbackFeedback": "3x² − 12 < 0 ⟺ −2 < x < 2, so x = −1, 0, 1: three integers."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-sign-of-derivative__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "f′ reports direction and steepness. Nothing else.",
+      "takeaways": [
+        "Sign of f′ = direction of f; size of f′ = steepness. Height never enters.",
+        "f′ = 0 marks a critical point — a suspect, not a conviction. x³ flattens at 0 and keeps climbing.",
+        "To convict a critical point you must look at f′ on BOTH sides of it."
+      ],
+      "teaser": "Next: the places where f′ does not exist at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-flat-not-turning",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "A horizontal tangent says the curve has stopped climbing *for an instant*. It does not say it has changed its mind. To turn, f′ must go from one sign to the other — touching zero is not enough.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Did it change its mind?",
+        "conceptTag": "dr-flat-not-turning",
+        "explanationVariants": [
+          "f′(x) = 3x² is positive either side of 0, so the curve rises in and rises out: no turn.",
+          "A sign change is the whole test. No sign change, no turning point."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f′(x) = 3x² is zero at x = 0. Is x = 0 a turning point of f?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "No — f′ is positive on both sides, so f keeps rising.",
+              "correct": true,
+              "feedback": "Right. Zero without a sign change is a pause, not a turn."
+            },
+            {
+              "id": "o2",
+              "label": "Yes — the tangent is horizontal there.",
+              "correct": false,
+              "feedback": "A horizontal tangent is necessary but not sufficient. Ask what f′ does either side: here it is positive both times."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

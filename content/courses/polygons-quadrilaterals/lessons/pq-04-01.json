@@ -1,0 +1,263 @@
+{
+  "id": "pq-04-01",
+  "slug": "trapezoids",
+  "title": "Trapezoids",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch4-trapezoids-kites",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-trapezoid",
+      "concept": {
+        "id": "rem-pq-trapezoid-c",
+        "kind": "concept",
+        "body": "A trapezoid (our convention) has exactly one pair of parallel sides: the bases. Each leg is a transversal between them, so a leg's two angles are supplementary (sum 180°). An ISOSCELES trapezoid — congruent legs — additionally has congruent base-angle pairs and congruent diagonals. All four angles still total 360°."
+      },
+      "check": {
+        "id": "rem-pq-trapezoid-k",
+        "kind": "check",
+        "body": "One leg, two angles.",
+        "conceptTag": "pq-trapezoid",
+        "explanationVariants": [
+          "Along a leg the angles supplement: 180 − 100 = 80°.",
+          "Co-interior between the parallel bases: 80°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A trapezoid's leg meets one base at 100°. The same leg meets the other base at ?",
+          "answer": 80,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 100,
+              "feedback": "100° copies — same-side transversal angles between parallels SUPPLEMENT instead: 80°."
+            },
+            {
+              "value": 260,
+              "feedback": "260 = 360 − 100 spends the whole quadrilateral — the leg pair shares just 180°: 80°."
+            }
+          ],
+          "fallbackFeedback": "180° − 100° = 80°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Leave the parallelogram branch: a **trapezoid** has **exactly one pair of parallel sides** (our convention, matching the family tree — some books say “at least one”). The parallel sides are the **bases**; the other two are **legs**. With only one parallel pair, most parallelogram machinery switches off — but not all.",
+      "figure": "quad-family-tree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "What survives?",
+      "widget": {
+        "type": "shapeFamilyBuilder",
+        "prompt": "Build a trapezoid: four sides, and exactly one pair of parallel sides.",
+        "targetName": "trapezoid",
+        "targetSides": 4,
+        "targetRightAngles": 0,
+        "targetEqualSides": 0,
+        "targetParallelPairs": 1,
+        "startSides": 3,
+        "successFeedback": "One parallel pair, not two — that single difference is what separates a trapezoid from a parallelogram, and it is why a parallelogram counts as a trapezoid under the inclusive definition but not the exclusive one.",
+        "sidesFeedback": "Start inside the quadrilateral family with four sides.",
+        "attributesFeedback": "A trapezoid needs exactly one pair of parallel sides."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Leg-wise supplements.",
+      "conceptTag": "pq-trapezoid",
+      "explanationVariants": [
+        "The leg is a transversal between the parallel bases: 180 − 74 = 106°.",
+        "Co-interior angles along a leg are supplementary: 106°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a trapezoid, a leg meets the bottom base at 74°. At what angle does the SAME leg meet the top base (in degrees)?",
+        "answer": 106,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 74,
+            "feedback": "74° copies the angle — equal pairs (alternate interior) sit on OPPOSITE sides of the transversal. Same-side angles supplement: 106°."
+          },
+          {
+            "value": 16,
+            "feedback": "16 = 90 − 74 complements — but parallel-line partners along a leg SUPPLEMENT: 180 − 74 = 106°."
+          },
+          {
+            "value": 286,
+            "feedback": "286 = 360 − 74 uses the full-circle leftovers — the two leg angles share only a straight line's worth: 106°."
+          }
+        ],
+        "fallbackFeedback": "180° − 74° = 106°."
+      },
+      "variant": {
+        "gen": "pq-trapezoid"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **isosceles trapezoid** — congruent legs — recovers some elegance: **base angles are congruent in pairs** (both bottom angles match; both top angles match), and the **diagonals are congruent**, rectangle-style. It's the trapezoid branch's answer to the special parallelograms.",
+      "figure": "pq-isosceles-trap"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Isosceles inventory.",
+      "conceptTag": "pq-trapezoid",
+      "explanationVariants": [
+        "Bottom pair: 65° and 65°. Top pair: each supplements a bottom angle along its leg — 115° and 115°.",
+        "Congruent base pairs + leg-wise supplements: 65, 65, 115, 115."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An isosceles trapezoid has a bottom base angle of 65°. Find each TOP base angle (in degrees).",
+        "answer": 115,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65° is the OTHER bottom angle (base pairs match). The top angles supplement along the legs: 180 − 65 = 115°."
+          },
+          {
+            "value": 25,
+            "feedback": "25 = 90 − 65 complements — co-interior partners between parallels SUPPLEMENT: 115°."
+          },
+          {
+            "value": 130,
+            "feedback": "130 = 2 × 65 doubles — no doubling rule lives here. 180 − 65 = 115°."
+          }
+        ],
+        "fallbackFeedback": "180° − 65° = 115° (twice — the top pair matches)."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "isoscelesTop"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Angle audit.",
+      "conceptTag": "pq-trapezoid",
+      "explanationVariants": [
+        "65 + 65 + 115 + 115 = 360 — exactly the ch1 quadrilateral sum (4 − 2) × 180.",
+        "Two pairs of supplements always total 2 × 180 = 360."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Check that isosceles trapezoid (65, 65, 115, 115): what do the four angles total?",
+        "answer": 360,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180 is a TRIANGLE's total. Four sides fan into two triangles: (4 − 2) × 180 = 360."
+          },
+          {
+            "value": 540,
+            "feedback": "540 belongs to pentagons ((5 − 2) × 180). Quadrilaterals: 360."
+          }
+        ],
+        "fallbackFeedback": "65 + 65 + 115 + 115 = 360 ✓ — matching (4 − 2) × 180 from ch1."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "quadTotal"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which diagonals match?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Congruent diagonals appear in which two families met so far?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Rectangles and isosceles trapezoids",
+            "correct": true,
+            "feedback": "Two different routes to the same reward: right angles buy it for rectangles, congruent legs buy it for isosceles trapezoids."
+          },
+          {
+            "id": "o2",
+            "label": "Rhombi and kites",
+            "correct": false,
+            "feedback": "Those two share PERPENDICULAR diagonals — the congruent-diagonal club is rectangles + isosceles trapezoids."
+          },
+          {
+            "id": "o3",
+            "label": "All parallelograms and all trapezoids",
+            "correct": false,
+            "feedback": "Generic members of both families have unequal diagonals — the special conditions (right angles / congruent legs) earn the equality."
+          },
+          {
+            "id": "o4",
+            "label": "Only squares",
+            "correct": false,
+            "feedback": "Squares qualify via their rectangle parent, but they're not alone — every rectangle and every isosceles trapezoid joins them."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Solve the whole trapezoid.",
+      "conceptTag": "pq-trapezoid",
+      "hints": [
+        "Isosceles: the second bottom angle copies the first.",
+        "Each top angle supplements a bottom angle along its leg.",
+        "The largest angle is a top one: 180 − 58."
+      ],
+      "explanationVariants": [
+        "Bottom pair: 58°, 58°. Top pair: 122°, 122°. Largest: 122°.",
+        "Supplement of 58 along either leg: 122° — and the audit 58+58+122+122 = 360 confirms it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An isosceles trapezoid has a bottom base angle of 58°. What is its LARGEST angle, in degrees?",
+        "answer": 122,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 58,
+            "feedback": "58° is the SMALLEST pair — congruent bottom angles. The top pair supplements them: 180 − 58 = 122°."
+          },
+          {
+            "value": 302,
+            "feedback": "302 = 360 − 58 removes one angle from the whole sum — the top angle only shares a straight line with its leg-partner: 122°."
+          },
+          {
+            "value": 116,
+            "feedback": "116 = 2 × 58 doubles the base angle — the rule is the leg-wise SUPPLEMENT: 122°."
+          }
+        ],
+        "fallbackFeedback": "180° − 58° = 122°."
+      },
+      "variant": {
+        "gen": "pq-trapezoid",
+        "form": "largestAngle"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One parallel pair, chosen well.",
+      "takeaways": [
+        "Trapezoid (our convention): EXACTLY one parallel pair; bases parallel, legs not.",
+        "Along each leg, base angles are supplementary — the surviving transversal fact.",
+        "Isosceles trapezoids add congruent base-angle pairs and congruent diagonals."
+      ],
+      "teaser": "Next: the trapezoid's headline theorem — the midsegment that averages the bases."
+    }
+  ]
+}

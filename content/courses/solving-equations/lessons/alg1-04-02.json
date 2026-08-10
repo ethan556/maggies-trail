@@ -1,0 +1,446 @@
+{
+  "id": "alg1-04-02",
+  "slug": "the-flip-rule",
+  "title": "The Flip Rule",
+  "courseId": "solving-equations",
+  "chapterId": "ch4-inequalities",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "flip-arrow",
+      "body": "One move breaks the pattern: **multiplying or dividing by a negative flips the inequality**. Solve −2x < 6 by dividing by −2 — and the `<` becomes `>`: **x > −3**. The number line mirrors across zero, so the direction reverses.",
+      "narration": "One move breaks the pattern: multiplying or dividing by a negative flips the inequality. Solve negative two x less than six by dividing by negative two — and the less-than becomes greater-than: x greater than negative three. The number line mirrors across zero, so the direction reverses."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Does the step flip the sign?",
+      "conceptTag": "flip-rule",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each move to whether it flips the inequality.",
+        "left": [
+          {
+            "id": "m1",
+            "label": "divide both sides by −2"
+          },
+          {
+            "id": "m2",
+            "label": "subtract 5 from both sides"
+          },
+          {
+            "id": "m3",
+            "label": "multiply both sides by −3"
+          }
+        ],
+        "right": [
+          {
+            "id": "f1",
+            "label": "FLIP — divided by a negative"
+          },
+          {
+            "id": "f2",
+            "label": "no flip — just subtracting"
+          },
+          {
+            "id": "f3",
+            "label": "FLIP — multiplied by a negative"
+          }
+        ],
+        "pairs": {
+          "m1": "f1",
+          "m2": "f2",
+          "m3": "f3"
+        },
+        "pairErrors": [
+          {
+            "left": "m2",
+            "right": "f1",
+            "feedback": "Subtracting NEVER flips — only multiplying or dividing by a negative does. Subtracting 5 leaves the sign alone."
+          },
+          {
+            "left": "m1",
+            "right": "f3",
+            "feedback": "Dividing by −2 flips, yes — but the 'multiplied' label is for ×(−3). Match the move to its own reason."
+          }
+        ],
+        "missFeedback": "Only ×/÷ by a NEGATIVE flips. Adding or subtracting never does.",
+        "successFeedback": "You can spot a flip before you make it!"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Flip it.",
+      "conceptTag": "flip-rule",
+      "explanationVariants": [
+        "−2x < 6: divide by −2 and FLIP the sign → x > −3.",
+        "Dividing by a negative reverses <: the boundary is −3 and x is GREATER than it."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve −2x < 6.",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">"
+          },
+          {
+            "id": "t2",
+            "label": "−3"
+          },
+          {
+            "id": "t3",
+            "label": "<"
+          },
+          {
+            "id": "t4",
+            "label": "3"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "The sign didn't flip. Dividing by a NEGATIVE reverses <: x > −3."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "Sign flipped correctly, but 6 ÷ (−2) = −3, not 3: x > −3."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Divide by −2 — dividing by a negative FLIPS the inequality.",
+        "successFeedback": "Yes — dividing by −2 flips < to >, giving x > −3."
+      },
+      "hints": [
+        "Divide by −2.",
+        "Dividing by a negative flips <.",
+        "x > −3."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "flip-rule__buildExpression"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The trap is forgetting to flip. Adding or subtracting a negative number does **not** flip — only ×/÷ by a negative coefficient does. Check: is the number multiplying x negative?",
+      "narration": "The trap is forgetting to flip. Adding or subtracting a negative number does not flip — only multiplying or dividing by a negative coefficient does. Check: is the number multiplying x negative?",
+      "figure": "alg1-flip-rule"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the flip solve.",
+      "conceptTag": "flip-rule",
+      "widget": {
+        "type": "equationOutcomeLab",
+        "mode": "transform",
+        "answerMode": "sequence",
+        "prompt": "Solve −3x + 1 > 10. Drag the steps into order.",
+        "leftDisplay": "−3x + 1",
+        "rightDisplay": "10",
+        "leftCoeff": -3,
+        "leftConstant": 1,
+        "rightCoeff": 0,
+        "rightConstant": 10,
+        "relation": "gt",
+        "variable": "x",
+        "choices": [],
+        "operations": [
+          {
+            "id": "n-sub",
+            "label": "subtract 1 → −3x > 9",
+            "kind": "addConstant",
+            "value": -1,
+            "feedback": "Subtract 1 (no flip), then divide by −3 (flip): x < −3."
+          },
+          {
+            "id": "n-note",
+            "label": "the coefficient is negative — a flip is coming",
+            "kind": "normalize",
+            "feedback": "Subtract 1 (no flip), then divide by −3 (flip): x < −3."
+          },
+          {
+            "id": "n-flip",
+            "label": "divide by −3 AND flip → x < −3",
+            "kind": "scale",
+            "value": -0.3333333333333333,
+            "feedback": "Isolate the −3x term first (subtract 1), THEN divide by −3 and flip. The +1 has no negative, so no flip there."
+          }
+        ],
+        "correctOrder": [
+          "n-sub",
+          "n-note",
+          "n-flip"
+        ],
+        "requiredMoves": 3,
+        "numericErrors": [],
+        "tolerance": 0,
+        "explorationFeedback": "Apply the same legal operation to both sides and inspect how the variable and constants move.",
+        "fallbackFeedback": "Subtract 1 (no flip), then divide by −3 (flip): x < −3.",
+        "successFeedback": "Subtract, spot the negative, divide and flip — x < −3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two steps, one flip.",
+      "conceptTag": "flip-rule",
+      "explanationVariants": [
+        "−3x + 1 > 10: subtract 1 (−3x > 9), divide by −3 and flip → x < −3.",
+        "The +1 doesn't flip; dividing by −3 does: x < −3."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve −3x + 1 > 10.",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "<"
+          },
+          {
+            "id": "t2",
+            "label": "−3"
+          },
+          {
+            "id": "t3",
+            "label": ">"
+          },
+          {
+            "id": "t4",
+            "label": "3"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "The flip got missed. Dividing by −3 reverses >: x < −3."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "Sign flipped right, but 9 ÷ (−3) = −3, not 3: x < −3."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Subtract 1, then divide by −3 and flip the sign.",
+        "successFeedback": "Yes — −3x > 9, then ÷(−3) flips > to <: x < −3."
+      },
+      "hints": [
+        "Subtract 1: −3x > 9.",
+        "Divide by −3 — and flip.",
+        "x < −3."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "flip-rule__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the real flip.",
+      "conceptTag": "flip-rule",
+      "explanationVariants": [
+        "Only ×/÷ by a negative flips. In 5 − x > 2, you'd subtract 5 then divide by −1 (the −x) — THAT division flips.",
+        "Subtracting 5 doesn't flip; dividing by the −1 on x does."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which step forces a flip?",
+        "options": [
+          {
+            "id": "a",
+            "label": "dividing both sides by −1",
+            "correct": true,
+            "feedback": "Yes — dividing by −1 (a negative) reverses the inequality."
+          },
+          {
+            "id": "b",
+            "label": "adding −4 to both sides",
+            "feedback": "Adding a negative is still just adding — no flip. Only ×/÷ by a negative flips."
+          },
+          {
+            "id": "c",
+            "label": "subtracting 5 from both sides",
+            "feedback": "Subtraction never flips. The flip comes from ×/÷ by a negative."
+          }
+        ]
+      },
+      "hints": [
+        "Adding/subtracting never flips.",
+        "Look for ×/÷ by a negative.",
+        "Dividing by −1 flips."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "flip-rule__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full flip, solo!",
+      "conceptTag": "flip-rule",
+      "explanationVariants": [
+        "−x + 4 ≤ 1: subtract 4 (−x ≤ −3), divide by −1 and flip → x ≥ 3.",
+        "The −1 on x forces the flip: x ≥ 3."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve −x + 4 ≤ 1.",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "≥"
+          },
+          {
+            "id": "t2",
+            "label": "3"
+          },
+          {
+            "id": "t3",
+            "label": "≤"
+          },
+          {
+            "id": "t4",
+            "label": "−3"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "The flip got missed. Dividing by −1 reverses ≤: x ≥ 3."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "Sign flipped right, but −3 ÷ (−1) = 3, not −3: x ≥ 3."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Subtract 4, then divide by −1 — the flip comes with the negative divide.",
+        "successFeedback": "Yes — −x ≤ −3, then ÷(−1) flips ≤ to ≥: x ≥ 3."
+      },
+      "hints": [
+        "Subtract 4: −x ≤ −3.",
+        "Divide by −1 — and flip.",
+        "x ≥ 3."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "flip-rule__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The flip rule is yours!",
+      "takeaways": [
+        "×/÷ by a negative flips the inequality.",
+        "Adding or subtracting never flips.",
+        "Spot a negative coefficient before you divide."
+      ],
+      "teaser": "next: multi-step inequalities with variables on both sides."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "flip-rule",
+      "concept": {
+        "id": "rem-fr-c",
+        "kind": "concept",
+        "body": "Slow it down with −x < 2. Divide by −1 and FLIP: x > −2. Test it: x = 0 gives −0 = 0 < 2 ✓, and 0 > −2 ✓. The flip keeps the true values true.",
+        "narration": "Slow it down with negative x less than two. Divide by negative one and flip: x greater than negative two. Test it: x equals zero gives zero less than two, and zero is greater than negative two. The flip keeps the true values true."
+      },
+      "check": {
+        "id": "rem-fr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "flip-rule",
+        "explanationVariants": [
+          "−x < 2: divide by −1 and flip → x > −2.",
+          "Dividing by −1 reverses <: x > −2."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Solve −x < 2.",
+          "options": [
+            {
+              "id": "a",
+              "label": "x > −2",
+              "correct": true,
+              "feedback": "Yes — dividing by −1 flips < to >: x > −2."
+            },
+            {
+              "id": "b",
+              "label": "x < −2",
+              "feedback": "The sign didn't flip. Dividing by −1 (negative) reverses <: x > −2."
+            },
+            {
+              "id": "c",
+              "label": "x > 2",
+              "feedback": "Flipped right, but 2 ÷ (−1) = −2: x > −2."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "id": "vm-03-01",
+  "slug": "what-volume-means",
+  "title": "What Volume Means",
+  "courseId": "volume-measurement",
+  "chapterId": "ch3-unit-cubes",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**Volume** is the amount of space a solid shape fills. To measure it, we fill the shape with **unit cubes** — little cubes that are 1 unit long on every edge. One unit cube takes up exactly **1 cubic unit** of space. So volume is really just a count: how many unit cubes fit inside?",
+      "figure": "unit-cube"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Start with a single cube.",
+      "conceptTag": "volume-meaning",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A single unit cube is 1 unit on every edge. How much space does it fill?",
+        "answer": 1,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 counts the edges meeting at a corner. The whole cube fills 1 cubic unit."
+          },
+          {
+            "value": 6,
+            "feedback": "6 counts the flat faces. One unit cube still fills only 1 cubic unit."
+          }
+        ],
+        "fallbackFeedback": "Count the space one unit cube fills: 1 cubic unit.",
+        "successFeedback": "Right — one unit cube is exactly 1 cubic unit."
+      },
+      "hints": [
+        "One cube, not its parts.",
+        "Edges and faces aren't the space.",
+        "A unit cube = 1 cubic unit."
+      ],
+      "explanationVariants": [
+        "One unit cube fills 1 cubic unit.",
+        "The cube is the unit of volume itself."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now a small solid.",
+      "conceptTag": "volume-meaning",
+      "explanationVariants": [
+        "5 cubes fill 5 cubic units.",
+        "Volume equals the number of unit cubes: 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A solid is built from 5 unit cubes stuck together. What is its volume?",
+        "answer": 5,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 cubic unit is a single cube. This solid uses 5 of them."
+          },
+          {
+            "value": 8,
+            "feedback": "8 isn't the count here. Count the cubes: 5 of them make 5 cubic units."
+          }
+        ],
+        "fallbackFeedback": "Each cube adds 1 cubic unit — count the cubes.",
+        "successFeedback": "Right — 5 unit cubes means 5 cubic units."
+      },
+      "hints": [
+        "Count the cubes.",
+        "Each cube is 1 cubic unit.",
+        "5 cubes = 5 cubic units."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "unitCubes"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When the cubes have real sizes, the count gets a label. If each cube is 1 centimeter on every edge, one cube is **1 cubic centimeter (cm³)**, and the volume in cm³ equals the number of cubes. Bigger cubes give bigger units: **cubic inches (in³)** or **cubic meters (m³)**. The little **3** means three dimensions — length, width, and height.",
+      "figure": "vm-cube-unit"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Attach the right label.",
+      "conceptTag": "volume-meaning",
+      "explanationVariants": [
+        "8 centimeter-cubes = 8 cm³.",
+        "The count is 8, and the unit is cubic: cm³."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box is completely filled by 8 cubes, each 1 cm on every edge. What is the box's volume?",
+        "answer": 8,
+        "unit": "cm³",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 cm³ is one cube's space. The box holds 8 of them: 8 cm³."
+          },
+          {
+            "value": 24,
+            "feedback": "24 multiplies by the 3 edges. Volume is the cube count: 8 cm³."
+          }
+        ],
+        "fallbackFeedback": "The cube count IS the volume: 8 cm³.",
+        "successFeedback": "Right — 8 one-centimeter cubes fill 8 cubic centimeters."
+      },
+      "hints": [
+        "How many cubes fill it?",
+        "The label is cubic — cm³.",
+        "8 cubes = 8 cm³."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "unitCubes"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count a flat layer.",
+      "conceptTag": "volume-meaning",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "One flat layer, 2 cubes deep and 1 cube tall. Slide the length out to 3 and watch the cube count as each new column lands.",
+        "targetVolume": 6,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 2,
+        "hStart": 1,
+        "lockW": true,
+        "lockH": true,
+        "commonBuilds": [
+          {
+            "volume": 4,
+            "feedback": "4 cubes is a layer only 2 across. Each column you add is worth 2 cubes, not 1, because the layer is 2 deep — count the columns, then count what each one brings."
+          },
+          {
+            "volume": 2,
+            "feedback": "2 cubes is a single column. That is the depth, standing alone: one column of a layer that needs to run 3 across."
+          }
+        ],
+        "successFeedback": "6 cubes. Three columns, each 2 deep — and that is why area is a multiplication rather than an addition. The 3 and the 2 are not two things to combine; the 2 is how much every one of the 3 is worth.",
+        "lowFeedback": "Fewer cubes than the layer needs. Keep extending the length — each step out adds another 2-deep column.",
+        "highFeedback": "Too many now. The layer is only meant to run 3 columns; pull the length back."
+      },
+      "predict": {
+        "prompt": "A flat layer of unit cubes is 3 across and 2 deep. How many cubes fill it?",
+        "options": [
+          {
+            "id": "six",
+            "label": "6"
+          },
+          {
+            "id": "five",
+            "label": "5 — the 3 and the 2 together"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "6. Each of the 3 columns holds 2 cubes, so the count multiplies. Adding gives 5, which counts along the two edges and misses every cube in the middle — the fastest way to see the difference is to watch a whole 2-cube column arrive each time the length grows by one."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more layer count.",
+      "conceptTag": "volume-meaning",
+      "explanationVariants": [
+        "2 rows × 4 cubes = 8 cubic units.",
+        "Skip-count the rows of four: 4, then 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A single layer has 2 rows of 4 unit cubes. How many cubic units is that?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 adds 2 + 4. Rows times length: 2 × 4 = 8."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is just one row. There are 2 rows of 4: 2 × 4 = 8."
+          }
+        ],
+        "fallbackFeedback": "Two rows of 4 is 2 × 4 = 8 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "singleLayer"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A shape with a stack on top.",
+      "conceptTag": "volume-meaning",
+      "hints": [
+        "Count the bottom layer, then the cubes on top.",
+        "6 in the layer, 2 stacked above.",
+        "6 + 2 = 8."
+      ],
+      "explanationVariants": [
+        "Total cubes = 6 + 2 = 8 cubic units.",
+        "The stack adds 2 to the layer's 6, giving 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A model has a flat bottom layer of 6 unit cubes, with 2 more unit cubes stacked on top. What is its total volume?",
+        "answer": 8,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 counts only the bottom layer. Add the 2 on top: 6 + 2 = 8."
+          },
+          {
+            "value": 12,
+            "feedback": "12 doubles the layer. Only 2 cubes sit on top: 6 + 2 = 8."
+          }
+        ],
+        "fallbackFeedback": "Layer plus stack: 6 + 2 = 8 cubic units.",
+        "successFeedback": "Right — 6 in the layer plus 2 on top = 8 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "stackedCubes"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Volume is a count.",
+      "takeaways": [
+        "Volume is the amount of space a solid fills, counted in unit cubes.",
+        "One unit cube = 1 cubic unit; the number of cubes is the volume.",
+        "Real sizes add a cubic label: cm³, in³, or m³."
+      ],
+      "teaser": "next: counting whole boxes fast — one layer times the number of layers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "volume-meaning",
+      "concept": {
+        "id": "rem-vm-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Volume is a cube count.** Fill the shape with unit cubes and count them — that many **cubic units**. A solid made of 4 unit cubes has a volume of 4 cubic units. No formula yet, just counting."
+      },
+      "check": {
+        "id": "rem-vm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "volume-meaning",
+        "explanationVariants": [
+          "3 cubes = 3 cubic units.",
+          "Each cube is 1 cubic unit; three of them make 3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A solid is built from 3 unit cubes. What is its volume?",
+          "options": [
+            {
+              "id": "a",
+              "label": "3 cubic units",
+              "correct": true,
+              "feedback": "Right — 3 unit cubes = 3 cubic units."
+            },
+            {
+              "id": "b",
+              "label": "1 cubic unit",
+              "feedback": "1 cubic unit is a single cube. Here there are 3: 3 cubic units."
+            },
+            {
+              "id": "c",
+              "label": "9 cubic units",
+              "feedback": "9 isn't the count. Count the cubes: 3 of them = 3 cubic units."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

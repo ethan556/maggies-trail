@@ -1,0 +1,459 @@
+{
+  "id": "pv1000-03-01",
+  "slug": "reading-and-writing-3-digit-numbers",
+  "title": "Reading and Writing 3-Digit Numbers",
+  "courseId": "place-value-1000",
+  "chapterId": "ch3-reading-writing-and-comparing",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "hundred-tens-ones",
+      "body": "Every 3-digit number has a word form too. 347 is \"three hundred forty-seven\" — hundreds first, then the tens-ones part."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A zero holds a place open.",
+      "widget": {
+        "type": "placeValue",
+        "target": 507,
+        "maxHundreds": 9,
+        "maxTens": 12,
+        "maxOnes": 15,
+        "hStart": 0,
+        "tStart": 0,
+        "oStart": 0,
+        "prompt": "Build 507.",
+        "successFeedback": "5 hundreds, NO tens, 7 ones. The zero is not nothing — it is the guard that keeps the 5 in the hundreds place. Take it away and you have 57, a completely different number.",
+        "lowFeedback": "Your blocks add to less than 507.",
+        "highFeedback": "Your blocks add to more than 507."
+      },
+      "predict": {
+        "prompt": "507 has a 0 in the tens. When you build it, the tens control must…",
+        "options": [
+          {
+            "id": "zero",
+            "label": "Sit at 0 — but the spot still exists"
+          },
+          {
+            "id": "skip",
+            "label": "Be skipped — 57 means the same"
+          },
+          {
+            "id": "one",
+            "label": "Hold at least a 1"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "The zero holds the tens spot OPEN: drop it and the 5 slides next to the 7, collapsing 507 into 57. A placeholder zero contributes nothing to the total and everything to the meaning."
+      },
+      "conceptTag": "pv1000-write-words",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents write words.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for write words must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines write words."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-write-words",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Write another number in words.",
+      "conceptTag": "pv1000-write-words",
+      "explanationVariants": [
+        "6 hundreds, then eight: six hundred eight.",
+        "Hundreds word first, then the rest."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build 608 in word form from the tiles.",
+        "tokens": [
+          {
+            "id": "six",
+            "label": "six"
+          },
+          {
+            "id": "hundred",
+            "label": "hundred"
+          },
+          {
+            "id": "eight",
+            "label": "eight"
+          },
+          {
+            "id": "eighty",
+            "label": "eighty"
+          },
+          {
+            "id": "sixty",
+            "label": "sixty"
+          }
+        ],
+        "correct": [
+          "six",
+          "hundred",
+          "eight"
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "six",
+              "hundred",
+              "eighty"
+            ],
+            "feedback": "608 has 0 tens and 8 ones — that's \"eight,\" not \"eighty.\""
+          },
+          {
+            "sequence": [
+              "sixty",
+              "eight"
+            ],
+            "feedback": "Don't drop the hundreds: six hundred eight, not sixty-eight."
+          }
+        ],
+        "missFeedback": "Say the hundreds first, then jump straight to the ones — 608 has no tens to speak.",
+        "successFeedback": "Yes — 6 hundreds, then eight (no tens to say)."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000WriteWordsBuildExpression"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Going the other way: read the words back into digits. Find the hundreds word first, then the tens-ones part.",
+      "figure": "pv1000-words-to-digits"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Turn words back into a number.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number is \"three hundred forty-seven\"?",
+        "answer": 347,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 34,
+            "feedback": "Don't drop the hundreds — three hundred is 300, plus forty-seven is 347."
+          },
+          {
+            "value": 3047,
+            "feedback": "That's 4 digits. Three hundred forty-seven is a 3-digit number: 347."
+          }
+        ],
+        "fallbackFeedback": "Three hundred forty-seven = 347."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A zero in the tens or ones spot changes what you'd SAY, but the number is still there — 503 is \"five hundred three,\" not \"five hundred zero three.\"",
+      "figure": "pv1000-zero-say"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Words to number, with a zero spot.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number is \"five hundred three\"?",
+        "answer": 503,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 53,
+            "feedback": "Don't drop the hundreds — five hundred is 500, plus three is 503."
+          },
+          {
+            "value": 530,
+            "feedback": "\"Three\" means the ones spot, not tens: 503, not 530."
+          }
+        ],
+        "fallbackFeedback": "Five hundred three = 503."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Write a number with a zero tens spot.",
+      "conceptTag": "pv1000-write-words",
+      "explanationVariants": [
+        "5 hundreds, 0 tens, 3 ones: five hundred three.",
+        "Skip \"zero\" — just say the hundreds, then the ones."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build 503 in word form from the tiles.",
+        "tokens": [
+          {
+            "id": "five",
+            "label": "five"
+          },
+          {
+            "id": "hundred",
+            "label": "hundred"
+          },
+          {
+            "id": "three",
+            "label": "three"
+          },
+          {
+            "id": "thirty",
+            "label": "thirty"
+          },
+          {
+            "id": "zero",
+            "label": "zero"
+          }
+        ],
+        "correct": [
+          "five",
+          "hundred",
+          "three"
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "five",
+              "hundred",
+              "thirty"
+            ],
+            "feedback": "503 has 0 tens and 3 ones — that's \"three,\" not \"thirty.\""
+          },
+          {
+            "sequence": [
+              "five",
+              "hundred",
+              "zero",
+              "three"
+            ],
+            "feedback": "Don't say \"zero\" out loud — just skip straight to \"three.\""
+          }
+        ],
+        "missFeedback": "Start with the hundreds, skip the empty tens spot, and finish with the ones.",
+        "successFeedback": "Yes — the empty tens spot isn't spoken, just skipped."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000WriteWordsBuildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another words-to-number conversion.",
+      "conceptTag": "pv1000-read-words",
+      "explanationVariants": [
+        "Six hundred is 600, plus nineteen is 619.",
+        "Hundreds word first, then the rest."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number is \"six hundred nineteen\"?",
+        "answer": 619,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 69,
+            "feedback": "Don't drop the hundreds — six hundred is 600, plus nineteen is 619."
+          },
+          {
+            "value": 6019,
+            "feedback": "That's 4 digits. Six hundred nineteen is a 3-digit number: 619."
+          }
+        ],
+        "fallbackFeedback": "Six hundred nineteen = 619."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000ReadWordsNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier word-form conversion.",
+      "conceptTag": "pv1000-write-words",
+      "explanationVariants": [
+        "9 hundreds, 0 tens, 0 ones: nine hundred.",
+        "Skip both empty spots — just say the hundreds word."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build 900 in word form from the tiles.",
+        "tokens": [
+          {
+            "id": "nine",
+            "label": "nine"
+          },
+          {
+            "id": "hundred",
+            "label": "hundred"
+          },
+          {
+            "id": "ninety",
+            "label": "ninety"
+          },
+          {
+            "id": "z1",
+            "label": "zero"
+          },
+          {
+            "id": "z2",
+            "label": "zero"
+          }
+        ],
+        "correct": [
+          "nine",
+          "hundred"
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "nine",
+              "hundred",
+              "z1",
+              "z2"
+            ],
+            "feedback": "Don't say \"zero\" twice — just \"nine hundred\" is enough."
+          },
+          {
+            "sequence": [
+              "nine",
+              "hundred",
+              "z2",
+              "z1"
+            ],
+            "feedback": "Don't say \"zero\" twice — just \"nine hundred\" is enough."
+          },
+          {
+            "sequence": [
+              "ninety"
+            ],
+            "feedback": "That drops the hundreds entirely. 900 is \"nine hundred,\" not \"ninety.\""
+          }
+        ],
+        "missFeedback": "With nothing in the tens or ones spots, the word form stops after the hundreds.",
+        "successFeedback": "Yes — with 0 tens and 0 ones, just say \"nine hundred.\""
+      },
+      "hints": [
+        "900 has 9 hundreds, 0 tens, 0 ones.",
+        "Empty spots aren't spoken out loud.",
+        "The word form is just \"nine hundred.\""
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000WriteWordsBuildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Word form says the hundreds first, then the tens-ones part — empty spots are simply skipped, never spoken as \"zero.\"",
+      "takeaways": [
+        "Word form: hundreds word, then tens-ones.",
+        "Empty spots aren't said out loud.",
+        "You can convert either direction: number to words, or words to number."
+      ],
+      "teaser": "next: comparing 3-digit numbers with symbols."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-write-words",
+      "concept": {
+        "id": "rem-pww-c",
+        "kind": "concept",
+        "body": "Word form says the hundreds first, then the tens-ones part, skipping any empty spots. 347 is \"three hundred forty-seven\"; 608 is \"six hundred eight\" (the empty tens spot isn't spoken)."
+      },
+      "check": {
+        "id": "rem-pww-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-write-words",
+        "explanationVariants": [
+          "3 hundreds, then forty-seven.",
+          "Hundreds word first, then the rest."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Write 347 in word form.",
+          "options": [
+            {
+              "id": "a",
+              "label": "three hundred forty-seven",
+              "correct": true,
+              "feedback": "Yes."
+            },
+            {
+              "id": "b",
+              "label": "three forty-seven",
+              "feedback": "The 3 stands for 3 hundreds, so it has to be said: three hundred forty-seven."
+            },
+            {
+              "id": "c",
+              "label": "three hundred seven-forty",
+              "feedback": "Tens before ones: forty-seven."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conceptTag": "pv1000-read-words",
+      "concept": {
+        "id": "rem-prw-c",
+        "kind": "concept",
+        "body": "To read words back into a number, find the hundreds word first, then the tens-ones part. \"Six hundred nineteen\" = 600 + 19 = 619."
+      },
+      "check": {
+        "id": "rem-prw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-read-words",
+        "explanationVariants": [
+          "600 + 19 = 619.",
+          "Hundreds word first, then the rest."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What number is \"six hundred nineteen\"?",
+          "answer": 619,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 69,
+              "feedback": "Don't drop the hundreds: 619."
+            },
+            {
+              "value": 6019,
+              "feedback": "You wrote the 6 and the 19 side by side. Six hundred nineteen is a single 3-digit number: 619."
+            }
+          ],
+          "fallbackFeedback": "619."
+        }
+      }
+    }
+  ]
+}

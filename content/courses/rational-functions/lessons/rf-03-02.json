@@ -1,0 +1,591 @@
+{
+ "id": "rf-03-02",
+ "slug": "building-the-lcd",
+ "title": "Building the Polynomial LCD",
+ "courseId": "rational-functions",
+ "chapterId": "ch3-adding-and-subtracting",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Unlike denominators need the **least common denominator** — with polynomials, take **each distinct factor at its highest power**. For (x + 1) and x(x + 1): factors x and (x + 1), so LCD = **x(x + 1)**. Never multiply blindly; collect factors.",
+   "figure": "rf-lcd"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Collect the factors.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the LCD of 1/(x − 2) and 1/(x(x − 2))?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x(x − 2)",
+      "correct": true,
+      "feedback": "Right — factors x and (x − 2), each once: the second denominator already contains the first."
+     },
+     {
+      "id": "o2",
+      "label": "x(x − 2)²",
+      "correct": false,
+      "feedback": "(x − 2) appears at power 1 in BOTH — the LCD takes each factor's HIGHEST power, which is 1."
+     },
+     {
+      "id": "o3",
+      "label": "x",
+      "correct": false,
+      "feedback": "The LCD must contain (x − 2) too — both denominators demand it."
+     },
+     {
+      "id": "o4",
+      "label": "x²(x − 2)",
+      "correct": false,
+      "feedback": "x appears only to the first power anywhere — no square needed."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Factor before collecting. For 1/(x² − 4) and 1/(x + 2): factor x² − 4 = (x − 2)(x + 2), so the factors in play are (x − 2) and (x + 2) — LCD = **(x − 2)(x + 2)**, and the second fraction only needs the missing (x − 2). The LCD is a shopping list, not a product of everything.",
+   "figure": "rf-factor-before"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Factor, then collect.",
+   "conceptTag": "rf-lcd",
+   "explanationVariants": [
+    "x² − 9 = (x − 3)(x + 3); with (x + 3), the list is (x − 3), (x + 3) — LCD (x − 3)(x + 3).",
+    "The second denominator's factor is already on the list."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What is the LCD of 1/(x² − 9) and 1/(x + 3)?",
+    "tokens": [
+     {
+      "id": "a",
+      "label": "(x − 3)"
+     },
+     {
+      "id": "b",
+      "label": "(x + 3)"
+     },
+     {
+      "id": "c",
+      "label": "(x² − 9)"
+     },
+     {
+      "id": "d",
+      "label": "(x + 3)²"
+     }
+    ],
+    "correct": [
+     "a",
+     "b"
+    ],
+    "acceptAlso": [
+     [
+      "b",
+      "a"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "c",
+       "b"
+      ],
+      "feedback": "That repeats (x + 3) twice — factor first: x² − 9 = (x − 3)(x + 3) already covers it."
+     },
+     {
+      "sequence": [
+       "b",
+       "c"
+      ],
+      "feedback": "That repeats (x + 3) twice — factor first: x² − 9 = (x − 3)(x + 3) already covers it."
+     },
+     {
+      "sequence": [
+       "a"
+      ],
+      "feedback": "The LCD must serve BOTH bottoms — (x + 3) is required by each."
+     },
+     {
+      "sequence": [
+       "d"
+      ],
+      "feedback": "That squares a factor appearing only ONCE anywhere — and drops the required (x − 3)."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Factor x² − 9 = (x − 3)(x + 3) first — the LCD takes each distinct factor once.",
+    "successFeedback": "Right — x² − 9 already contains (x + 3); nothing new to add."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-lcd__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Repeated factor, higher power.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the LCD of 1/(x + 1)² and 1/(x + 1)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(x + 1)²",
+      "correct": true,
+      "feedback": "Right — highest power of the only factor: 2."
+     },
+     {
+      "id": "o2",
+      "label": "(x + 1)³",
+      "correct": false,
+      "feedback": "Powers don't ADD across denominators — take the highest: 2."
+     },
+     {
+      "id": "o3",
+      "label": "(x + 1)",
+      "correct": false,
+      "feedback": "The first denominator needs BOTH copies — the LCD must contain (x + 1)²."
+     },
+     {
+      "id": "o4",
+      "label": "2(x + 1)",
+      "correct": false,
+      "feedback": "The exponent 2 is a POWER, not a coefficient: (x + 1)², not 2(x + 1)."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Convert to the LCD.",
+   "conceptTag": "rf-lcd",
+   "explanationVariants": [
+    "To rewrite 5/(x + 2) over (x − 2)(x + 2), multiply top and bottom by the MISSING factor (x − 2): top becomes 5(x − 2).",
+    "Same clever-form-of-1 move as rationalizing: (x − 2)/(x − 2)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Rewriting 5/(x + 2) with denominator (x − 2)(x + 2), the numerator becomes:",
+    "tokens": [
+     {
+      "id": "five",
+      "label": "5"
+     },
+     {
+      "id": "m",
+      "label": "(x − 2)"
+     },
+     {
+      "id": "p",
+      "label": "(x + 2)"
+     }
+    ],
+    "correct": [
+     "five",
+     "m"
+    ],
+    "acceptAlso": [
+     [
+      "m",
+      "five"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "five",
+       "p"
+      ],
+      "feedback": "(x + 2) is already downstairs — the MISSING factor (x − 2) is what multiplies."
+     },
+     {
+      "sequence": [
+       "p",
+       "five"
+      ],
+      "feedback": "(x + 2) is already downstairs — the MISSING factor (x − 2) is what multiplies."
+     },
+     {
+      "sequence": [
+       "five"
+      ],
+      "feedback": "Changing the bottom without paying the top changes the VALUE — the top must also gain (x − 2)."
+     },
+     {
+      "sequence": [
+       "five",
+       "m",
+       "p"
+      ],
+      "feedback": "Only the missing factor joins — the top gains (x − 2) alone."
+     },
+     {
+      "sequence": [
+       "five",
+       "p",
+       "m"
+      ],
+      "feedback": "Only the missing factor joins — the top gains (x − 2) alone."
+     },
+     {
+      "sequence": [
+       "m",
+       "five",
+       "p"
+      ],
+      "feedback": "Only the missing factor joins — the top gains (x − 2) alone."
+     },
+     {
+      "sequence": [
+       "m",
+       "p",
+       "five"
+      ],
+      "feedback": "Only the missing factor joins — the top gains (x − 2) alone."
+     },
+     {
+      "sequence": [
+       "p",
+       "five",
+       "m"
+      ],
+      "feedback": "Only the missing factor joins — the top gains (x − 2) alone."
+     },
+     {
+      "sequence": [
+       "p",
+       "m",
+       "five"
+      ],
+      "feedback": "Only the missing factor joins — the top gains (x − 2) alone."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The bottom gained (x − 2), so the top must gain the same (x − 2) — multiply 5 by it.",
+    "successFeedback": "Right — multiply by (x − 2)/(x − 2): the top picks up the missing factor."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-lcd__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Three denominators.",
+   "conceptTag": "rf-lcd",
+   "explanationVariants": [
+    "Factors across x, x², and x + 5: highest power of x is 2, plus (x + 5) — LCD x²(x + 5).",
+    "Shopping list: x² (covers x too) and (x + 5)."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What is the LCD of 1/x, 1/x², and 1/(x + 5)?",
+    "tokens": [
+     {
+      "id": "x",
+      "label": "x"
+     },
+     {
+      "id": "x2",
+      "label": "x²"
+     },
+     {
+      "id": "x3",
+      "label": "x³"
+     },
+     {
+      "id": "f",
+      "label": "(x + 5)"
+     },
+     {
+      "id": "f2",
+      "label": "(x + 5)²"
+     }
+    ],
+    "correct": [
+     "x2",
+     "f"
+    ],
+    "acceptAlso": [
+     [
+      "f",
+      "x2"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "x3",
+       "f"
+      ],
+      "feedback": "x's powers don't add (1 + 2 = 3) — the LCD takes the HIGHEST, x²."
+     },
+     {
+      "sequence": [
+       "f",
+       "x3"
+      ],
+      "feedback": "x's powers don't add (1 + 2 = 3) — the LCD takes the HIGHEST, x²."
+     },
+     {
+      "sequence": [
+       "x",
+       "f"
+      ],
+      "feedback": "The 1/x² fraction needs BOTH copies of x — x² is required."
+     },
+     {
+      "sequence": [
+       "f",
+       "x"
+      ],
+      "feedback": "The 1/x² fraction needs BOTH copies of x — x² is required."
+     },
+     {
+      "sequence": [
+       "x2",
+       "f2"
+      ],
+      "feedback": "'Safe' overshoots — no denominator squares (x + 5); the LEAST common denominator doesn't either."
+     },
+     {
+      "sequence": [
+       "f2",
+       "x2"
+      ],
+      "feedback": "'Safe' overshoots — no denominator squares (x + 5); the LEAST common denominator doesn't either."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Take each base at its highest power: x² from 1/x², and one (x + 5).",
+    "successFeedback": "Right — x at its highest power 2, times the distinct (x + 5)."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-lcd__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "LCD with everything.",
+   "conceptTag": "rf-lcd",
+   "explanationVariants": [
+    "x² + 3x = x(x + 3) and x² − 9 = (x − 3)(x + 3): factors x, (x + 3), (x − 3) — LCD x(x + 3)(x − 3).",
+    "Factor both, merge the lists, no duplicates."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What is the LCD of 1/(x² + 3x) and 1/(x² − 9)?",
+    "tokens": [
+     {
+      "id": "x",
+      "label": "x"
+     },
+     {
+      "id": "p",
+      "label": "(x + 3)"
+     },
+     {
+      "id": "m",
+      "label": "(x − 3)"
+     },
+     {
+      "id": "c1",
+      "label": "(x² + 3x)"
+     },
+     {
+      "id": "c2",
+      "label": "(x² − 9)"
+     },
+     {
+      "id": "p2",
+      "label": "(x + 3)²"
+     }
+    ],
+    "correct": [
+     "x",
+     "p",
+     "m"
+    ],
+    "acceptAlso": [
+     [
+      "x",
+      "m",
+      "p"
+     ],
+     [
+      "p",
+      "x",
+      "m"
+     ],
+     [
+      "p",
+      "m",
+      "x"
+     ],
+     [
+      "m",
+      "x",
+      "p"
+     ],
+     [
+      "m",
+      "p",
+      "x"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "c1",
+       "c2"
+      ],
+      "feedback": "Blind multiplication double-counts (x + 3) — factor first and take each factor once."
+     },
+     {
+      "sequence": [
+       "c2",
+       "c1"
+      ],
+      "feedback": "Blind multiplication double-counts (x + 3) — factor first and take each factor once."
+     },
+     {
+      "sequence": [
+       "x",
+       "m"
+      ],
+      "feedback": "Both denominators demand (x + 3) — it can't be dropped."
+     },
+     {
+      "sequence": [
+       "m",
+       "x"
+      ],
+      "feedback": "Both denominators demand (x + 3) — it can't be dropped."
+     },
+     {
+      "sequence": [
+       "x",
+       "p2",
+       "m"
+      ],
+      "feedback": "(x + 3) appears to the FIRST power in each — no square in the LCD."
+     },
+     {
+      "sequence": [
+       "x",
+       "m",
+       "p2"
+      ],
+      "feedback": "(x + 3) appears to the FIRST power in each — no square in the LCD."
+     },
+     {
+      "sequence": [
+       "p2",
+       "x",
+       "m"
+      ],
+      "feedback": "(x + 3) appears to the FIRST power in each — no square in the LCD."
+     },
+     {
+      "sequence": [
+       "p2",
+       "m",
+       "x"
+      ],
+      "feedback": "(x + 3) appears to the FIRST power in each — no square in the LCD."
+     },
+     {
+      "sequence": [
+       "m",
+       "x",
+       "p2"
+      ],
+      "feedback": "(x + 3) appears to the FIRST power in each — no square in the LCD."
+     },
+     {
+      "sequence": [
+       "m",
+       "p2",
+       "x"
+      ],
+      "feedback": "(x + 3) appears to the FIRST power in each — no square in the LCD."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Factor both: x(x + 3) and (x − 3)(x + 3) — the LCD is each distinct factor once: x, (x + 3), (x − 3).",
+    "successFeedback": "Right — the shared (x + 3) counts once; x and (x − 3) join it."
+   },
+   "hints": [
+    "Factor both: x(x + 3) and (x − 3)(x + 3).",
+    "Merge the factor lists: x, (x + 3), (x − 3).",
+    "Each at its highest power (all 1s): x(x + 3)(x − 3)."
+   ],
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-lcd__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Factor first; the LCD is each distinct factor at its highest power.",
+   "takeaways": [
+    "Blind multiplication overshoots whenever factors are shared.",
+    "Repeated factors take the HIGHEST power, never the sum.",
+    "Convert by multiplying with missing-factor-over-itself."
+   ],
+   "teaser": "Next: the full add-and-subtract pipeline over that LCD."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "rf-lcd",
+   "concept": {
+    "id": "rem-rf0302-c",
+    "kind": "concept",
+    "body": "Numbers first: LCD of 1/6 and 1/4. Factor: 6 = 2·3, 4 = 2². Highest powers: 2² and 3 → 12."
+   },
+   "check": {
+    "id": "rem-rf0302-k",
+    "kind": "check",
+    "body": "Same shopping-list move.",
+    "conceptTag": "rf-lcd",
+    "explanationVariants": [
+     "LCD = 12 — not 24.",
+     "The shared 2 counts at its highest power (2²), once."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "What is the LCD of 1/6 and 1/4?",
+     "answer": 12,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 24,
+       "feedback": "24 double-counts the shared 2 — highest powers only: 4 · 3 = 12."
+      },
+      {
+       "value": 2,
+       "feedback": "2 is the common FACTOR — the LCD must contain both denominators: 12."
+      }
+     ],
+     "fallbackFeedback": "2² · 3 = 12."
+    }
+   }
+  }
+ ]
+}

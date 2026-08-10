@@ -1,0 +1,375 @@
+{
+  "id": "qu-01-03",
+  "slug": "stretch-flip-and-shift",
+  "title": "Stretch, Flip, and Shift",
+  "courseId": "quadratics",
+  "chapterId": "ch1-graphing-parabolas",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-vertex",
+      "body": "The number **a** in y = ax² reshapes the parent parabola: |a| > 1 makes it **narrower**, |a| < 1 makes it **wider**, and a negative a **flips** it to open downward. It never moves the vertex — only the width and direction change."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compare widths.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Compared with y = x^2, the graph of y = 3x^2 is...",
+        "options": [
+          {
+            "id": "a",
+            "label": "narrower",
+            "correct": true,
+            "feedback": "Yes — a = 3 has |a| > 1, so the parabola is narrower (steeper)."
+          },
+          {
+            "id": "b",
+            "label": "wider",
+            "feedback": "A coefficient bigger than 1 steepens the curve, making it narrower, not wider."
+          },
+          {
+            "id": "c",
+            "label": "exactly the same",
+            "feedback": "The 3 changes the width: |3| > 1 makes it narrower."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Spot the downward one.",
+      "conceptTag": "quad-transform",
+      "explanationVariants": [
+        "A parabola opens downward exactly when its leading coefficient is negative — here, −2x².",
+        "The negative coefficient (−2) flips the U to open down."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these opens downward?",
+        "options": [
+          {
+            "id": "a",
+            "label": "y = -2x^2",
+            "correct": true,
+            "feedback": "Yes — the coefficient −2 is negative, so it opens downward."
+          },
+          {
+            "id": "b",
+            "label": "y = 2x^2",
+            "feedback": "A positive coefficient opens upward. You want the negative one."
+          },
+          {
+            "id": "c",
+            "label": "y = x^2 + 3",
+            "feedback": "This just shifts the upward parabola up by 3; it still opens upward."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-transform__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **vertical shift** moves the whole parabola up or down: y = x² + k has vertex (0, k). Add to go up, subtract to go down. The shape and axis stay the same; only the height of the vertex changes.",
+      "figure": "qu-vertical-shift"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Vertical shift.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = x^2 + 7, what is the y-coordinate of the vertex?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "The + 7 lifts the vertex to height 7, not 0."
+          },
+          {
+            "value": -7,
+            "feedback": "The shift is +7 (up), so the vertex y is +7."
+          }
+        ],
+        "fallbackFeedback": "y = x² + 7 has vertex (0, 7)."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A **horizontal shift** hides in the parentheses: y = (x − h)² moves right by h. Combine everything into y = a(x − h)² + k — stretch/flip by a, shift right by h, shift up by k — and the vertex lands at (h, k).",
+      "figure": "qu-horizontal-shift"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Horizontal shift.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = (x - 6)^2, what is the x-coordinate of the vertex?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "(x − 6) is zero at x = 6, so the shift is right to x = 6."
+          },
+          {
+            "value": 0,
+            "feedback": "The (x − 6) moves the vertex to x = 6, away from the origin."
+          }
+        ],
+        "fallbackFeedback": "x − 6 = 0 gives vertex x = 6."
+      }
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Now all three dials at once. Drag a, h, and k and watch the parabola and its vertex move to match the target.",
+      "widget": {
+        "type": "quadraticExplore",
+        "prompt": "Drag a, h, and k to match y = −2(x + 3)² + 1.",
+        "targetA": -2,
+        "targetH": -3,
+        "targetK": 1,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 7,
+        "successFeedback": "Matched — a = −2 flips it downward and narrows it, and the vertex sits at (−3, 1).",
+        "shapeFeedback": "Watch the width and direction: a controls how narrow the U is and whether it opens up or down. Set a first.",
+        "vertexFeedback": "The shape is right — now move the vertex. h slides it left/right and k up/down, to reach (−3, 1)."
+      },
+      "predict": {
+        "prompt": "You'll move h DOWN in y = a(x − h)² + k. Which way does the parabola slide?",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right"
+          },
+          {
+            "id": "left",
+            "label": "To the left"
+          },
+          {
+            "id": "upward",
+            "label": "Straight up"
+          }
+        ],
+        "outcomeId": "left",
+        "reveal": "Raising h moves the vertex RIGHT even though h is subtracted — (x − h)² is smallest exactly when x = h, so the low point chases h. The minus sign is why so many people guess the wrong direction."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Vary a, h, and k and coordinate the parabola, vertex, symmetric table values, and vertex-form equation.",
+        "invariants": [
+          "vertex-is-h-k",
+          "a-controls-opening-and-width",
+          "parabola-symmetric-about-x-equals-h"
+        ],
+        "misconceptions": [
+          "h-sign-not-reversed",
+          "a-translates-vertex"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "quadratic-vertex-form-transformations",
+        "delayed": true,
+        "counterfactualPrompt": "Hold a and k fixed while changing h from −3 to 2. Predict the vertex and axis before moving the slider.",
+        "explanation": {
+          "prompt": "Why does h locate the horizontal position even though the expression contains x − h?",
+          "options": [
+            {
+              "id": "zero",
+              "label": "The squared part is smallest when x − h = 0, which occurs at x = h.",
+              "correct": true,
+              "feedback": "Correct — the vertex follows the x-value that makes the squared term zero."
+            },
+            {
+              "id": "opposite",
+              "label": "The vertex is always at x = −h because subtraction reverses every coordinate.",
+              "correct": false,
+              "feedback": "Set the inside equal to zero: x − h = 0 gives x = h."
+            }
+          ]
+        }
+      },
+      "conceptTag": "quad-transform"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Combine two shifts.",
+      "conceptTag": "quad-transform",
+      "explanationVariants": [
+        "(x + 2) is zero at x = −2, so the vertex x is −2.",
+        "y = (x + 2)² + 5 has vertex (−2, 5); the x-coordinate is −2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = (x + 2)^2 + 5, what is the x-coordinate of the vertex?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "(x + 2) is zero at x = −2, so the vertex x is −2."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the vertex y (the + k). The x-coordinate is −2."
+          }
+        ],
+        "fallbackFeedback": "x + 2 = 0 gives x = −2."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-transform__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Describe the shift.",
+      "conceptTag": "quad-transform",
+      "explanationVariants": [
+        "(x − 3) shifts right 3, and − 4 shifts down 4.",
+        "y = (x − 3)² − 4 has vertex (3, −4): right 3, down 4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The graph of y = (x - 3)^2 - 4 is y = x^2 shifted how?",
+        "options": [
+          {
+            "id": "a",
+            "label": "right 3 and down 4",
+            "correct": true,
+            "feedback": "Yes — (x − 3) shifts right 3, and − 4 shifts down 4, so the vertex is (3, −4)."
+          },
+          {
+            "id": "b",
+            "label": "left 3 and up 4",
+            "feedback": "(x − 3) shifts right, not left, and − 4 shifts down. It's right 3, down 4."
+          },
+          {
+            "id": "c",
+            "label": "right 3 and up 4",
+            "feedback": "The − 4 shifts down, not up: right 3 and down 4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-transform__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Vertex after stretch and shift.",
+      "conceptTag": "quad-transform",
+      "explanationVariants": [
+        "In 2(x + 3)² − 1, the vertex is (−3, −1); the y-coordinate is the − 1.",
+        "The a = 2 changes width only; the + k term is −1, so the vertex y is −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2(x + 3)^2 - 1, what is the y-coordinate of the vertex?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The + k term is −1, so the vertex y is −1."
+          },
+          {
+            "value": -3,
+            "feedback": "−3 is the x-coordinate (from x + 3 = 0). The y-coordinate is −1."
+          }
+        ],
+        "fallbackFeedback": "Vertex (−3, −1); the y-coordinate is −1."
+      },
+      "hints": [
+        "Vertex form a(x − h)² + k has vertex (h, k).",
+        "Here (x + 3) gives h = −3, and the + k is −1.",
+        "The vertex y-coordinate is −1."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-transform__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every parabola is the parent U stretched, flipped, and shifted.",
+      "takeaways": [
+        "a sets width and direction; |a| > 1 narrower, a < 0 opens down.",
+        "+ k shifts vertically; (x − h) shifts horizontally (right by h).",
+        "y = a(x − h)² + k has vertex (h, k)."
+      ],
+      "teaser": "next chapter: solving quadratics by factoring."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-transform",
+      "concept": {
+        "id": "rem-qt-c",
+        "kind": "concept",
+        "body": "In y = a(x − h)² + k: a stretches (|a|>1 narrower) and flips if negative; (x − h) shifts right by h; + k shifts up by k. The vertex lands at (h, k). For (x + 2)² + 5, vertex (−2, 5)."
+      },
+      "check": {
+        "id": "rem-qt-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-transform",
+        "explanationVariants": [
+          "(x + 2) is zero at x = −2, so the vertex x is −2.",
+          "The vertex is (−2, 5); its x-coordinate is −2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For y = (x + 2)^2 + 5, what is the x-coordinate of the vertex?",
+          "answer": -2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "Sign flip. (x + 2) means h = −2, so the vertex sits at x = −2."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is the vertex y. The x-coordinate is −2."
+            }
+          ],
+          "fallbackFeedback": "x + 2 = 0 gives x = −2."
+        }
+      }
+    }
+  ]
+}

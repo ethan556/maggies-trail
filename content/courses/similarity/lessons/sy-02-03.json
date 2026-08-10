@@ -1,0 +1,355 @@
+{
+ "id": "sy-02-03",
+ "slug": "choosing-a-criterion",
+ "title": "Choosing a Criterion",
+ "courseId": "similarity",
+ "chapterId": "ch2-similarity-criteria",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sy-criterion-choice",
+   "concept": {
+    "id": "rem-sy-criterion-choice-c",
+    "kind": "concept",
+    "body": "Choosing a similarity criterion: know two ANGLES → AA; know two proportional SIDES and the angle BETWEEN them → SAS~; know all THREE proportional sides → SSS~. Look for free parts first: a shared angle is equal to itself, and parallel lines create equal corresponding angles (often enabling AA)."
+   },
+   "check": {
+    "id": "rem-sy-criterion-choice-k",
+    "kind": "check",
+    "body": "Angles only?",
+    "conceptTag": "sy-criterion-choice",
+    "explanationVariants": [
+     "With only angle information, AA is the criterion — two equal angles suffice.",
+     "No sides given means AA, the angle-only criterion."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "You know two pairs of equal angles and no side lengths. Which criterion proves similarity?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "AA",
+       "correct": true,
+       "feedback": "Two equal angle pairs is exactly AA — no sides needed."
+      },
+      {
+       "id": "o2",
+       "label": "SAS~",
+       "correct": false,
+       "feedback": "SAS~ needs side lengths for the proportion. With only angles, use AA."
+      },
+      {
+       "id": "o3",
+       "label": "SSS~",
+       "correct": false,
+       "feedback": "SSS~ needs three side ratios. Only angles are given, so AA."
+      },
+      {
+       "id": "o4",
+       "label": "SSS congruence",
+       "correct": false,
+       "feedback": "That needs equal sides and gives congruence. Two equal angles → AA similarity."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Three similarity criteria, one decision. **AA** when you know two angles. **SAS~** when you know two proportional sides and the angle between them. **SSS~** when you know all three sides. Inventory what's given — and what's free (shared angles are equal, parallel lines make equal angles) — then pick the criterion whose pattern you can complete.",
+   "figure": "aa-similar"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the givens.",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each situation by the similarity criterion it fits.",
+    "buckets": [
+     {
+      "id": "aa",
+      "label": "AA"
+     },
+     {
+      "id": "sas",
+      "label": "SAS~"
+     },
+     {
+      "id": "sss",
+      "label": "SSS~"
+     }
+    ],
+    "items": [
+     {
+      "id": "g1",
+      "label": "Two pairs of equal angles",
+      "bucketId": "aa",
+      "feedback": "Two equal angles is exactly AA — the third follows from the angle sum."
+     },
+     {
+      "id": "g2",
+      "label": "Two proportional sides and the included angle equal",
+      "bucketId": "sas",
+      "feedback": "Proportional sides with the angle between them is SAS~."
+     },
+     {
+      "id": "g3",
+      "label": "Three pairs of proportional sides",
+      "bucketId": "sss",
+      "feedback": "All three sides proportional is SSS~ — no angle needed."
+     },
+     {
+      "id": "g4",
+      "label": "A shared angle and the two sides around it proportional",
+      "bucketId": "sas",
+      "feedback": "The shared (equal) angle is included between the proportional sides — SAS~."
+     }
+    ],
+    "missFeedback": "Count what you're given: angles only → AA; two sides + included angle → SAS~; three sides → SSS~.",
+    "successFeedback": "Match the given parts to the criterion's pattern."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Parallel lines give what?",
+   "conceptTag": "sy-criterion-choice",
+   "explanationVariants": [
+    "Parallel lines cut by a transversal make equal corresponding (or alternate) angles — a free angle pair, often setting up AA.",
+    "A parallel line inside a triangle creates equal angles with the base, handing you AA."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A line parallel to one side of a triangle crosses the other two sides. Which criterion does this most naturally set up?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "AA — the parallel line creates equal corresponding angles",
+      "correct": true,
+      "feedback": "Parallel lines make equal corresponding angles, giving two equal angle pairs — AA similarity."
+     },
+     {
+      "id": "o2",
+      "label": "SSS~ — three proportional sides",
+      "correct": false,
+      "feedback": "You aren't handed three side ratios directly; the parallel line gives equal ANGLES, pointing to AA."
+     },
+     {
+      "id": "o3",
+      "label": "SAS congruence",
+      "correct": false,
+      "feedback": "This is a SIMILARITY setup (the small triangle is a scaled copy), and it comes from equal ANGLES: AA."
+     },
+     {
+      "id": "o4",
+      "label": "None — parallel lines don't help",
+      "correct": false,
+      "feedback": "Parallel lines are very helpful — they create the equal angles that make AA work."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-criterion-choice__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Once similar, the payoff is a **proportion**. Write corresponding sides as equal ratios and solve for the unknown — cross-multiply. The hardest part is usually matching corresponding sides correctly; the similarity statement's letter order (or the figure's angle marks) tells you which side pairs with which.",
+   "figure": "aa-similar"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Solve the proportion.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "△ABC ~ △DEF. AB = 8 corresponds to DE = 12, and BC = 10. Find EF.",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 14,
+      "feedback": "14 = 10 + 4 adds the difference (12 − 8). Use the ratio 12/8 = 1.5: EF = 10 × 1.5 = 15."
+     },
+     {
+      "value": 6.67,
+      "feedback": "6.67 = 10 × 8/12 inverts the ratio. DEF is larger, so EF = 10 × 12/8 = 15."
+     }
+    ],
+    "fallbackFeedback": "Ratio 12/8 = 1.5; EF = 10 × 1.5 = 15."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which is easiest here?",
+   "conceptTag": "sy-criterion-choice",
+   "explanationVariants": [
+    "When only angle information is available, AA is the quickest — no sides required.",
+    "Two equal angles is the lightest route to similarity: AA."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "You can see two pairs of equal angles but have NO side lengths. Which criterion should you use?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "AA",
+      "correct": true,
+      "feedback": "AA needs only two equal angle pairs — perfect when no sides are known."
+     },
+     {
+      "id": "o2",
+      "label": "SAS~",
+      "correct": false,
+      "feedback": "SAS~ requires side lengths for the proportion — you have none. Use AA."
+     },
+     {
+      "id": "o3",
+      "label": "SSS~",
+      "correct": false,
+      "feedback": "SSS~ needs all three side ratios — impossible without lengths. AA uses only angles."
+     },
+     {
+      "id": "o4",
+      "label": "None — you need at least one side",
+      "correct": false,
+      "feedback": "AA needs NO sides at all. Two equal angle pairs is enough."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-criterion-choice__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "A reliable proof recipe: (1) mark everything given plus the free parts; (2) name the criterion whose pattern is complete; (3) state the similarity; (4) write the proportion for the target; (5) solve. Similarity proofs are shorter than congruence proofs — often just one criterion and one proportion.",
+   "figure": "aa-similar"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Order a similarity proof.",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "DE ∥ BC in △ABC (D on AB, E on AC). Prove △ADE ~ △ABC. Order the steps.",
+    "items": [
+     {
+      "id": "t3",
+      "label": "So △ADE ~ △ABC (AA)"
+     },
+     {
+      "id": "t1",
+      "label": "∠ADE = ∠ABC (corresponding angles, DE ∥ BC)"
+     },
+     {
+      "id": "t4",
+      "label": "Therefore AD/AB = AE/AC (corresponding sides of similar triangles)"
+     },
+     {
+      "id": "t2",
+      "label": "∠A = ∠A (shared angle, reflexive)"
+     }
+    ],
+    "correctOrder": [
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "t3",
+      "second": "t1",
+      "feedback": "The AA conclusion needs both equal angle pairs stated first — the corresponding-angles line comes before it."
+     },
+     {
+      "first": "t4",
+      "second": "t3",
+      "feedback": "The side proportion follows FROM the similarity, so △ADE ~ △ABC must be established first."
+     }
+    ],
+    "missFeedback": "Two equal angles (corresponding + shared), conclude AA similarity, then write the side proportion.",
+    "successFeedback": "Equal angles → AA → similar → proportional sides."
+   }
+  },
+  {
+   "id": "i4",
+   "kind": "interactive",
+   "body": "See the ratios stay locked before you compute them.",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "DE ∥ BC in △ABC (D on AB, E on AC). Slide the cutter to six tenths of the way from A toward B, so AD is 1.5 times DB, then read what AE/EC is forced to do.",
+    "shape": [[0, 0], [10, 0], [3, 6]],
+    "center": [0, 0],
+    "targetK": 0.6,
+    "kMin": 0.2,
+    "kMax": 0.9,
+    "kStep": 0.1,
+    "kStart": 0.3,
+    "gridMin": 0,
+    "gridMax": 11,
+    "showRatios": ["segments"],
+    "successFeedback": "Both readouts show 1.50. AD/DB = 0.6/0.4 = 1.5, and AE/EC matches it exactly — the same ratio the challenge below uses to solve for AC.",
+    "lowFeedback": "Too early — AD/DB is still under 1.5. Keep sliding toward B; watch AE/EC follow AD/DB the whole way, never lagging behind.",
+    "highFeedback": "Past it — AD/DB has climbed above 1.5. Ease back toward A; notice overshooting moved AE/EC by the same amount, never just one ratio alone."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Pick and solve.",
+   "conceptTag": "sy-criterion-choice",
+   "hints": [
+    "The parallel line gives you AA similarity between the small and large triangle.",
+    "Set up AD/AB = AE/AC with the known lengths.",
+    "AD=6, AB=6+4=10, AE=9; solve 6/10 = 9/AC... careful: AE corresponds to full AC."
+   ],
+   "explanationVariants": [
+    "By AA (parallel line), △ADE ~ △ABC, so AD/AB = AE/AC: 6/10 = 9/AC gives AC = 9 × 10 ÷ 6 = 15.",
+    "The proportion 6/10 = 9/AC solves to AC = 90 ÷ 6 = 15."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "In △ABC, DE ∥ BC with D on AB and E on AC. AD = 6, DB = 4, and AE = 9. Find AC.",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "13 = 9 + 4 adds the wrong pieces. Use AD/AB = AE/AC: 6/10 = 9/AC → AC = 15."
+     },
+     {
+      "value": 5.4,
+      "feedback": "5.4 = 9 × 6 ÷ 10 solves an inverted ratio. Set 6/10 = 9/AC → AC = 9 × 10 ÷ 6 = 15."
+     }
+    ],
+    "fallbackFeedback": "AA similarity: 6/10 = 9/AC → AC = 9 × 10 ÷ 6 = 15."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-criterion-choice__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The right tool.",
+   "takeaways": [
+    "AA for angles, SAS~ for two sides + included angle, SSS~ for three sides.",
+    "Free parts: shared angles (reflexive), parallel-line angles.",
+    "Prove similar, then write and solve a proportion for the unknown."
+   ],
+   "teaser": "Next chapter: a parallel line splits two sides proportionally — the side-splitter theorem."
+  }
+ ]
+}

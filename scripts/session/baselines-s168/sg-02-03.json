@@ -1,0 +1,306 @@
+{
+ "id": "sg-02-03",
+ "slug": "what-cavalieri-doesnt-say",
+ "title": "What Cavalieri Doesn't Say",
+ "courseId": "solid-geometry",
+ "chapterId": "ch2-cavalieri",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sg-cavalieri-limits",
+   "concept": {
+    "id": "rem-sg-cavalieri-limits-c",
+    "kind": "concept",
+    "body": "Know the principle's edges: (1) it certifies VOLUME only — shearing keeps volume but lengthens the lateral surface along the slant; (2) its converse fails — equal volumes never imply matching cross-sections (a 1×1×12 post and a 2×2×3 block both hold 12); (3) 'equal sections at EVERY level' is strict — solids matching only at sampled heights (a barrel vs a cylinder) can differ in volume."
+   },
+   "check": {
+    "id": "rem-sg-cavalieri-limits-k",
+    "kind": "check",
+    "body": "One edge.",
+    "conceptTag": "sg-cavalieri-limits",
+    "explanationVariants": [
+     "Volume follows slices (unchanged); surface follows the boundary (stretched).",
+     "Volume same; surface larger."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A stack of books is pushed into a lean. What changes?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Volume stays the same; the outside surface of the stack grows",
+       "correct": true,
+       "feedback": "Every level keeps its book (volume); the sides now run along a slant (surface)."
+      },
+      {
+       "id": "o2",
+       "label": "Both stay the same",
+       "correct": false,
+       "feedback": "The sides lengthen with the lean — surface grows even as volume holds."
+      },
+      {
+       "id": "o3",
+       "label": "Volume shrinks",
+       "correct": false,
+       "feedback": "Each book is intact at its level — volume is untouched; only surface grows."
+      },
+      {
+       "id": "o4",
+       "label": "Both grow",
+       "correct": false,
+       "feedback": "Volume reads slices, and every slice is the same book: unchanged. Surface alone grows."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A principle is defined by its edges. Cavalieri certifies VOLUME only — shear a stack and the volume holds, but the leaning stack's outside gets LONGER: lateral surface grows with slant. And the converse fails: two solids can share a volume while their slices disagree at every single level.",
+   "figure": "sg-volume-only"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Surface betrayal.",
+   "conceptTag": "sg-cavalieri-limits",
+   "explanationVariants": [
+    "The lateral face of the sheared stack runs along the slant, length 13 instead of 12.",
+    "Volume equal; lateral surface larger — Cavalieri never covered it."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A right prism (height 12) is sheared so its slant edge is 13 (top shifted 5). Compared to the original:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Same volume, but MORE lateral surface — the sides now run along the longer slant",
+      "correct": true,
+      "feedback": "Volume reads slices (unchanged); surface reads the boundary, which stretched from 12 to 13 along the lean. Cavalieri's silence on surfaces is deliberate."
+     },
+     {
+      "id": "o2",
+      "label": "Same volume and same surface area",
+      "correct": false,
+      "feedback": "The lateral faces lengthened with the slant (12 → 13) — surface grew even as volume held."
+     },
+     {
+      "id": "o3",
+      "label": "Less volume, same surface",
+      "correct": false,
+      "feedback": "Backwards on both: slices preserve the volume; the boundary stretched."
+     },
+     {
+      "id": "o4",
+      "label": "More volume too",
+      "correct": false,
+      "feedback": "The slices never changed — volume is exactly equal; only the surface grew."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-cavalieri-limits__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The failed converse.",
+   "conceptTag": "sg-cavalieri-limits",
+   "explanationVariants": [
+    "Equal volumes with UNMATCHED slices: find one example and the converse dies.",
+    "A 1×1×12 post and a 2×2×3 block both hold 12 — sections 1 vs 4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Does equal volume imply equal cross-sections at each level?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "It doesn't — a 1×1×12 post and a 2×2×3 block both hold volume 12 with sections 1 and 4 (they don't even share a height)",
+      "correct": true,
+      "feedback": "One counterexample settles a converse — volume is an integral, and integrals forget the layer-by-layer details."
+     },
+     {
+      "id": "o2",
+      "label": "Yes — that's Cavalieri's principle",
+      "correct": false,
+      "feedback": "Cavalieri runs slices-to-volume; the reverse direction fails on the 12-vs-12 post-and-block pair."
+     },
+     {
+      "id": "o3",
+      "label": "Yes, for solids of the same height",
+      "correct": false,
+      "feedback": "Even same-height pairs fail: a cone and a cylinder of a third the base area share height and volume with slice-by-slice disagreement."
+     },
+     {
+      "id": "o4",
+      "label": "Only for spheres",
+      "correct": false,
+      "feedback": "There is no rescuing family for a false converse — volume equality never promises slice equality."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-cavalieri-limits__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Diagnose the misuse.",
+   "conceptTag": "sg-cavalieri-limits",
+   "explanationVariants": [
+    "Cavalieri's hypothesis is EVERY level — a bulge between checkpoints breaks it.",
+    "The middle bulge means sections differ somewhere: the principle never fires."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student claims a barrel equals a cylinder by Cavalieri because 'they match at the top, bottom, and they're the same height.' The error:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The barrel BULGES between the ends — sections differ at middle heights, so the every-level hypothesis fails",
+      "correct": true,
+      "feedback": "The barrel is precisely the between-checkpoints counterexample: matching ends, fatter middle, strictly more volume."
+     },
+     {
+      "id": "o2",
+      "label": "Cavalieri needs equal surface areas first",
+      "correct": false,
+      "feedback": "Surfaces never enter the hypothesis — the failure is the unmatched MIDDLE sections."
+     },
+     {
+      "id": "o3",
+      "label": "Barrels aren't solids",
+      "correct": false,
+      "feedback": "Barrels slice fine — the trouble is that their slices don't match the cylinder's at every height."
+     },
+     {
+      "id": "o4",
+      "label": "There is no error",
+      "correct": false,
+      "feedback": "There is: the bulge violates 'every level', and the barrel holds MORE than the end-matched cylinder."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-cavalieri-limits__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Volume vs surface, priced.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "The sheared prism from k1 has a square 4×4 base and vertical height 12. Its volume = ?",
+    "answer": 192,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 208,
+      "feedback": "208 = 16 × 13 charges the SLANT — Cavalieri bills vertical height: 16 × 12 = 192."
+     },
+     {
+      "value": 96,
+      "feedback": "96 halves — prisms take full Bh: 192."
+     }
+    ],
+    "fallbackFeedback": "Bh = 16 × 12 = 192 — while the lateral surface (running along 13) grew, this number didn't."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Scope check.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which conclusion is actually LICENSED by Cavalieri's principle?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A leaning cylinder holds exactly what its upright twin holds",
+      "correct": true,
+      "feedback": "Same circles at every level — the principle's home turf."
+     },
+     {
+      "id": "o2",
+      "label": "A leaning cylinder has the same lateral surface as its upright twin",
+      "correct": false,
+      "feedback": "Surface stretches with slant — outside the principle's jurisdiction."
+     },
+     {
+      "id": "o3",
+      "label": "Two tanks holding equal water have equal cross-sections",
+      "correct": false,
+      "feedback": "That's the failed converse — the post-and-block pair refutes it."
+     },
+     {
+      "id": "o4",
+      "label": "Solids matching at three heights match in volume",
+      "correct": false,
+      "feedback": "Three checkpoints aren't 'every level' — the barrel lives in the gaps."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The honest bill.",
+   "conceptTag": "sg-cavalieri-limits",
+   "hints": [
+    "Volume: Cavalieri with vertical height. Surface: the slant does the work.",
+    "The lateral surface of the sheared square prism is 4 rectangles along the slant edge 13.",
+    "Perimeter of the base times slant: 16 × 13."
+   ],
+   "explanationVariants": [
+    "Lateral surface = (perimeter)(slant) = 16 × 13 = 208 — versus the upright twin's 16 × 12 = 192. The shear added 16 of surface while adding zero volume.",
+    "16 × 13 = 208."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Same sheared prism (4×4 base, vertical height 12, slant edge 13). Its LATERAL surface area (the four side faces) = ?",
+    "answer": 208,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 192,
+      "feedback": "192 is the UPRIGHT twin's lateral surface (16 × 12) — the sheared sides run along 13: 16 × 13 = 208."
+     },
+     {
+      "value": 416,
+      "feedback": "416 doubles — four sides of 4 × 13 total (16)(13) = 208."
+     },
+     {
+      "value": 52,
+      "feedback": "52 = 4 × 13 is ONE face — all four: 208."
+     }
+    ],
+    "fallbackFeedback": "Perimeter × slant = 16 × 13 = 208 — the surface pays for the lean that volume got free."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-cavalieri-limits__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Edges of the principle.",
+   "takeaways": [
+    "Cavalieri certifies volume ONLY — shearing preserves volume but grows lateral surface (12 → 13 per side).",
+    "The converse fails: equal volumes never promise matching slices (post vs block).",
+    "'Every level' is strict — barrels beat end-matched cylinders in the unchecked middle."
+   ],
+   "teaser": "Next chapter: Cavalieri becomes the engine that JUSTIFIES the volume formulas."
+  }
+ ]
+}

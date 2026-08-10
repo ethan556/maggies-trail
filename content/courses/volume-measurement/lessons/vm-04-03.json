@@ -1,0 +1,303 @@
+{
+  "id": "vm-04-03",
+  "slug": "volume-b-h",
+  "title": "V = B × h",
+  "courseId": "volume-measurement",
+  "chapterId": "ch4-volume-formula",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Group the formula differently. In V = l × w × h, the first pair l × w is the **area of the base, B**. So the same formula reads **V = B × h**: base area times height. If a problem hands you B directly — \"the base area is 15 square units\" — skip straight to B × h. One formula, two groupings.",
+      "figure": "vm-base-height"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "V = B × h: the base, stacked h times.",
+      "widget": {
+        "type": "volumeBuilder",
+        "targetVolume": 60,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 1,
+        "hStart": 1,
+        "prompt": "Build a box of volume 60 whose base is 5 by 4.",
+        "successFeedback": "5 × 4 × 3 = 60. The base holds 20 cubes, and there are 3 layers of it — that is all V = B × h means: count one layer, then stack it.",
+        "lowFeedback": "Under 60 cubes — a bigger box is needed.",
+        "highFeedback": "Over 60 cubes — smaller."
+      },
+      "predict": {
+        "prompt": "The base is 5 by 4 — that's 20 squares. How many cubes does EACH layer of the box add?",
+        "options": [
+          {
+            "id": "twenty",
+            "label": "20 cubes"
+          },
+          {
+            "id": "sixty",
+            "label": "60 cubes"
+          },
+          {
+            "id": "nine",
+            "label": "9 cubes"
+          }
+        ],
+        "outcomeId": "twenty",
+        "reveal": "A layer is the base made solid — 20 cubes every time. The height just counts how many identical layers you stack."
+      },
+      "conceptTag": "volume-bh",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents volume bh.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for volume bh must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines volume bh."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "volume-measurement:volume-bh",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Again, straight from B.",
+      "conceptTag": "volume-bh",
+      "explanationVariants": [
+        "V = B × h = 9 × 6 = 54 cubic units.",
+        "Nine cubes per layer, six layers: 9 × 6 = 54."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A prism's base area is 9 square units and its height is 6 units. What is its volume in cubic units?",
+        "answer": 54,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 adds 9 + 6. B × h multiplies: 9 × 6 = 54."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is one layer — the base. Stack all 6: 9 × 6 = 54."
+          }
+        ],
+        "fallbackFeedback": "V = 9 × 6 = 54 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "layers"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When B isn't given, compute it first. A base 6 units by 2 units has B = 6 × 2 = 12; with height 3, V = 12 × 3 = 36. Check the other grouping: 6 × 2 × 3 = 36 too. **Both routes always land on the same number** — choose whichever grouping the problem hands you.",
+      "figure": "vm-compute-b"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute B, then stack.",
+      "conceptTag": "volume-bh",
+      "explanationVariants": [
+        "(6 × 2) × 3 = 36.",
+        "B = 12 stacked 3 high is 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A box's base is 6 units by 2 units, and its height is 3 units. What is its volume?",
+        "answer": 36,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 adds 6 + 2 + 3. Multiply: (6 × 2) × 3 = 36."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is B, the base area. Multiply by the height: 12 × 3 = 36."
+          }
+        ],
+        "fallbackFeedback": "Base area times height: (6 × 2) × 3 = 36.",
+        "successFeedback": "Right — B = 6 × 2 = 12, then 12 × 3 = 36."
+      },
+      "hints": [
+        "Find B first: 6 × 2.",
+        "B = 12; height is 3.",
+        "12 × 3 = 36."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "layers"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "See the groupings agree.",
+      "conceptTag": "volume-bh",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a 3 × 4 × 5 box: B = 3 × 4 = 12 and h = 5. What is B × h, in cubic units?",
+        "answer": 60,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is B by itself. Multiply by the height: 12 × 5 = 60."
+          },
+          {
+            "value": 17,
+            "feedback": "17 adds 12 + 5. B × h multiplies: 12 × 5 = 60."
+          }
+        ],
+        "fallbackFeedback": "B × h = 12 × 5 = 60 — the same as 3 × 4 × 5."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which formula matches?",
+      "conceptTag": "volume-bh",
+      "explanationVariants": [
+        "V = B × h.",
+        "Base area times height gives the volume."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A box has base area B and height h. Which formula gives its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "V = B × h",
+            "correct": true,
+            "feedback": "Right — the base area times the height, since B already equals l × w."
+          },
+          {
+            "id": "b",
+            "label": "V = B + h",
+            "feedback": "Adding mixes square units with a length. Layers stack by multiplying: V = B × h."
+          },
+          {
+            "id": "c",
+            "label": "V = B × l",
+            "feedback": "The length is already inside B (B = l × w). What's missing is the height: V = B × h."
+          }
+        ]
+      },
+      "hints": [
+        "B replaces l × w.",
+        "What repeats the base upward?",
+        "Multiply B by the height."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "volumeFormula"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tank, from words.",
+      "conceptTag": "volume-bh",
+      "hints": [
+        "You're given B and h directly.",
+        "V = B × h = 20 × 5.",
+        "20 × 5 = 100."
+      ],
+      "explanationVariants": [
+        "V = B × h = 20 × 5 = 100 cubic units.",
+        "Twenty cubes per layer, five layers: 100."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A fish tank's base area is 20 square units and it is 5 units tall. What is its volume?",
+        "answer": 100,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 adds 20 + 5. The formula multiplies: 20 × 5 = 100."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is the base area — one layer. Stack all 5: 20 × 5 = 100."
+          }
+        ],
+        "fallbackFeedback": "One layer is 20; five layers: 20 × 5 = 100.",
+        "successFeedback": "Right — V = B × h = 20 × 5 = 100 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "layers"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One formula, two groupings.",
+      "takeaways": [
+        "V = B × h: base area times height.",
+        "It's V = l × w × h with the base pair grouped as B.",
+        "Given B, multiply straight away; otherwise compute B = l × w first."
+      ],
+      "teaser": "next chapter: shapes built from two boxes — find each volume and add."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "volume-bh",
+      "concept": {
+        "id": "rem-bh-c",
+        "kind": "concept",
+        "body": "Quick rewind. **B is the base area — one layer of cubes.** The height h says how many layers stack up. So V = B × h. If B = 10 and h = 2, the volume is 10 × 2 = 20 cubic units. Multiply, never add."
+      },
+      "check": {
+        "id": "rem-bh-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "volume-bh",
+        "explanationVariants": [
+          "V = B × h = 10 × 2 = 20.",
+          "Two 10-cube layers: 10 + 10 = 20."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A box's base area is 10 square units and its height is 2 units. What is its volume in cubic units?",
+          "answer": 20,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "12 adds 10 + 2. B × h multiplies: 10 × 2 = 20."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is the base — one layer. Multiply by the 2 layers: 10 × 2 = 20."
+            }
+          ],
+          "fallbackFeedback": "V = 10 × 2 = 20 cubic units."
+        }
+      }
+    }
+  ]
+}

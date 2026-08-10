@@ -1,0 +1,294 @@
+{
+  "id": "qu-02-03",
+  "slug": "special-products-roots-and-the-graph",
+  "title": "Special Products, Roots & the Graph",
+  "courseId": "quadratics",
+  "chapterId": "ch2-solving-by-factoring",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-roots",
+      "body": "A **difference of squares** x² − a² = 0 factors as (x − a)(x + a) = 0, so x = a or x = −a. The two roots are mirror images across the axis of symmetry — the parabola crosses the x-axis symmetrically."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve a difference of squares.",
+      "widget": {
+        "type": "quadraticExplore",
+        "form": "roots",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 0,
+        "rMin": -9,
+        "rMax": 9,
+        "aMin": -3,
+        "aMax": 3,
+        "aStart": 1,
+        "r1Start": 0,
+        "r2Start": 0,
+        "gridMax": 9,
+        "targetR1": 3,
+        "targetR2": -3,
+        "prompt": "Drag the crossings until the expansion reads x² − 9. Note where the middle term goes.",
+        "successFeedback": "Roots 3 and −3, and the middle term vanished: −(3 + (−3)) = 0. That is what makes it a difference of squares — opposite roots cancel the x term exactly.",
+        "shapeFeedback": "Leave a at 1 for this one.",
+        "vertexFeedback": "Not yet. For the middle term to disappear the two crossings must be equal and opposite."
+      },
+      "predict": {
+        "prompt": "x² − 9 = 0: how many solutions does it have?",
+        "options": [
+          {
+            "id": "two",
+            "label": "Two — 3 and −3"
+          },
+          {
+            "id": "one",
+            "label": "One — just 3"
+          },
+          {
+            "id": "none",
+            "label": "None — squares can't reach 9… wait"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Both 3² and (−3)² make 9, so the graph of x² − 9 cuts the axis TWICE, symmetric about zero. Dropping the −3 is the most commonly lost solution in algebra — the difference of squares (x−3)(x+3) hands you both."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another one.",
+      "conceptTag": "quad-diff-squares-solve",
+      "explanationVariants": [
+        "x² − 25 = (x − 5)(x + 5), so the roots are ±5; the larger is 5.",
+        "Since a² = 25, a = 5, and the larger root is 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 - 25 = 0. What is the larger solution?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "That's the smaller root; the larger is 5."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is a². Take the square root: a = 5, so the roots are ±5."
+          }
+        ],
+        "fallbackFeedback": "a² = 25 → a = 5; larger root is 5."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-diff-squares-solve__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The roots are exactly where the parabola **crosses the x-axis**. For x² − 9, the crossings are x = −3 and x = 3, symmetric about the axis x = 0. The vertex sits at the bottom, halfway between the two roots.",
+      "figure": "qu-roots-cross"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sum of symmetric roots.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x^2 - 16 = 0, what is the sum of the solutions?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "The roots are +4 and −4, which cancel: 4 + (−4) = 0."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is a². The roots ±4 sum to 0, since they're symmetric about the axis."
+          }
+        ],
+        "fallbackFeedback": "Roots are 4 and −4, so their sum is 0."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "For x² + bx + c with roots r₁ and r₂: the **sum** of the roots is −b and the **product** is c. It's a quick check — if your two roots don't multiply to c and add to −b, refactor.",
+      "figure": "qu-sum-product"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Product of the roots.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x^2 - x - 6 = 0, what is the product of the solutions?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "The product equals c, which is −6 here (keep the sign)."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is −b (the sum of the roots). The product is c = −6."
+          }
+        ],
+        "fallbackFeedback": "Product of roots = c = −6."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Sum of the roots.",
+      "conceptTag": "quad-diff-squares-solve",
+      "explanationVariants": [
+        "The sum of the roots is −b, and b = −7, so the sum is 7.",
+        "Roots 3 and 4 add to 7, which is −b."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x^2 - 7x + 12 = 0, what is the sum of the solutions?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is c, the product of the roots. The sum is −b = 7."
+          },
+          {
+            "value": -7,
+            "feedback": "The sum is −b = −(−7) = +7."
+          }
+        ],
+        "fallbackFeedback": "Sum of roots = −b = 7."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-diff-squares-solve__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Larger root, bigger numbers.",
+      "conceptTag": "quad-diff-squares-solve",
+      "explanationVariants": [
+        "x² − 49 = (x − 7)(x + 7), so the roots are ±7; the larger is 7.",
+        "a² = 49 → a = 7, so the larger root is 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x^2 - 49 = 0. What is the larger solution?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -7,
+            "feedback": "That's the smaller root; the larger is 7."
+          },
+          {
+            "value": 49,
+            "feedback": "49 is a². Take the square root: a = 7, so roots ±7."
+          }
+        ],
+        "fallbackFeedback": "a² = 49 → a = 7; larger root is 7."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-diff-squares-solve__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Use the product shortcut.",
+      "conceptTag": "quad-diff-squares-solve",
+      "explanationVariants": [
+        "The product of the roots is c = −15 (the roots are −5 and 3, and (−5)(3) = −15).",
+        "Product of roots = c = −15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x^2 + 2x - 15 = 0, what is the product of the solutions?",
+        "answer": -15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "The product equals c = −15; keep the sign."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is b. The product of the roots is c = −15 (the sum would be −b = −2)."
+          }
+        ],
+        "fallbackFeedback": "Product of roots = c = −15."
+      },
+      "hints": [
+        "For x² + bx + c, the product of the roots is c.",
+        "Here c = −15.",
+        "So the product is −15."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-diff-squares-solve__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Difference of squares splits cleanly, and sum/product of roots give a fast check.",
+      "takeaways": [
+        "x² − a² = (x − a)(x + a), with roots ±a.",
+        "Sum of roots = −b; product of roots = c.",
+        "Roots are the parabola's x-axis crossings, symmetric about the axis."
+      ],
+      "teaser": "next chapter: the quadratic formula for any quadratic."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-diff-squares-solve",
+      "concept": {
+        "id": "rem-qds-c",
+        "kind": "concept",
+        "body": "A difference of squares x² − a² factors as (x − a)(x + a), so the roots are ±a. For x² − 25, a² = 25 so a = 5, and the roots are 5 and −5."
+      },
+      "check": {
+        "id": "rem-qds-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-diff-squares-solve",
+        "explanationVariants": [
+          "a² = 25 → a = 5; the larger root is 5.",
+          "x² − 25 = (x − 5)(x + 5); larger root 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve x^2 - 25 = 0. What is the larger solution?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -5,
+              "feedback": "That's the smaller root; the larger is 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is a²; take the square root to get a = 5."
+            }
+          ],
+          "fallbackFeedback": "a² = 25 → a = 5; larger root is 5."
+        }
+      }
+    }
+  ]
+}

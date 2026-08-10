@@ -1,0 +1,345 @@
+{
+  "id": "cp-02-03",
+  "slug": "parallel-through-a-point",
+  "title": "A Parallel through a Point",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch2-perpendiculars-parallels",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-parallel-through-point",
+      "concept": {
+        "id": "rem-cp-parallel-through-point-c",
+        "kind": "concept",
+        "body": "Angle-pair cheat sheet for a transversal crossing two PARALLEL lines: corresponding angles are EQUAL, alternate interior angles are EQUAL, and co-interior (same-side interior) angles are SUPPLEMENTARY — they add to 180°. Match the pair name to the rule before computing."
+      },
+      "check": {
+        "id": "rem-cp-parallel-through-point-k",
+        "kind": "check",
+        "body": "Match the rule.",
+        "conceptTag": "cp-parallel-through-point",
+        "explanationVariants": [
+          "Corresponding angles across parallels are equal, so the partner of 70° is 70°.",
+          "Same position at each crossing = corresponding = equal measure."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A transversal crosses two parallel lines; one angle is 70°. Its CORRESPONDING angle is…",
+          "options": [
+            {
+              "id": "o1",
+              "label": "70°",
+              "correct": true,
+              "feedback": "Corresponding angles across parallel lines are equal."
+            },
+            {
+              "id": "o2",
+              "label": "110°",
+              "correct": false,
+              "feedback": "110° = 180 − 70 is the co-interior/linear-pair relationship. CORRESPONDING angles are equal: 70°."
+            },
+            {
+              "id": "o3",
+              "label": "20°",
+              "correct": false,
+              "feedback": "20° = 90 − 70 is a complement — not an angle-pair rule here. Corresponding angles are equal: 70°."
+            },
+            {
+              "id": "o4",
+              "label": "35°",
+              "correct": false,
+              "feedback": "35° halves the angle — no transversal rule halves. Corresponding angles are equal: 70°."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To draw a line through P **parallel** to a given line, borrow a transversal. Draw any line from P crossing the given line; then **copy the angle** it makes, up at P, in the matching (corresponding) position. Equal corresponding angles force the two lines parallel — the converse you'll prove later, used here as a builder.",
+      "figure": "parallel-through-point"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Copy the angle up.",
+      "predict": {
+        "prompt": "The parallel construction copies an angle from the given line up to P. Why does copying an angle force the two lines never to meet?",
+        "options": [
+          {
+            "id": "corresponding",
+            "label": "Equal corresponding angles at a transversal is exactly the condition for two lines to be parallel"
+          },
+          {
+            "id": "distance",
+            "label": "Because the copy is made the same distance away from the line"
+          },
+          {
+            "id": "looks",
+            "label": "It doesn't force it — the copy just makes them look parallel"
+          }
+        ],
+        "outcomeId": "corresponding",
+        "reveal": "Equal corresponding angles IS parallelism — it is the converse of the transversal theorem, and it is a proof rather than an appearance. The compass never measures a distance to the line; it only carries an angle, and that alone is enough."
+      },
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Construct the line through P parallel to the given line. Reveal each stage.",
+        "panels": [
+          {
+            "title": "Draw a transversal",
+            "body": "Draw any line through P that also crosses the given line, meeting it at Q. This transversal makes an angle at Q.",
+            "figure": "parallel-through-point"
+          },
+          {
+            "title": "Arc the angle at Q",
+            "body": "With the compass, draw an arc across both sides of the angle at Q — the standard copy-an-angle first move.",
+            "figure": "parallel-through-point"
+          },
+          {
+            "title": "Copy that arc to P",
+            "body": "Using the same radius and the copy-angle steps, reproduce the identical angle at P, opening in the corresponding direction.",
+            "figure": "parallel-through-point"
+          },
+          {
+            "title": "Draw the parallel",
+            "body": "The new ray through P makes the same corresponding angle with the transversal — so it is parallel to the given line.",
+            "figure": "parallel-through-point"
+          }
+        ],
+        "continueFeedback": "Reveal each stage of copying the angle.",
+        "successFeedback": "The line through P shares the transversal's angle, so it runs parallel to the given line."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Carry the angle yourself.",
+      "conceptTag": "cp-parallel-through-point",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "parallelThroughPoint",
+        "span": 10,
+        "target": 6,
+        "start": 3,
+        "prompt": "The arc has to span the 10 between the arms of the angle being copied. Open the compass until it reaches — the smallest whole radius that does it.",
+        "successFeedback": "Radius 6 — the first whole opening that clears half of 10. The copied angle is equal, and equal corresponding angles force the two lines never to meet. The compass carried an ANGLE, not a distance, and that alone settles parallelism.",
+        "lowFeedback": "The copied arc is too small to mark the matching angle. It must span more than the 10 between the arms — the radius has to clear 5.",
+        "highFeedback": "The angle still copies exactly, but you were asked for the SMALLEST whole radius that reaches. Ease back down."
+      },
+      "predict": {
+        "prompt": "The construction copies the angle the transversal makes with the given line, up to P. Does the compass ever measure how FAR P is from the line?",
+        "options": [
+          {
+            "id": "never",
+            "label": "Never — it only carries an angle, and equal corresponding angles are enough"
+          },
+          {
+            "id": "distance",
+            "label": "Yes — it must set the same distance, or the lines would converge"
+          },
+          {
+            "id": "both",
+            "label": "Yes — it needs both the angle and the distance to guarantee parallel"
+          }
+        ],
+        "outcomeId": "never",
+        "reveal": "Never. Distance never enters the construction. Equal corresponding angles at a transversal is exactly the condition for two lines to be parallel — so carrying the angle alone is a proof, and the separation between the lines is simply whatever P made it."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What forces the lines parallel?",
+      "conceptTag": "cp-parallel-through-point",
+      "explanationVariants": [
+        "Equal CORRESPONDING angles (the one at Q copied to P) guarantee the lines are parallel — that's the corresponding-angles converse the construction relies on.",
+        "The transversal cuts both lines at the same angle, so they can never converge — they're parallel."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Copying the angle from Q up to P guarantees the lines are parallel because…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "equal corresponding angles imply the lines are parallel",
+            "correct": true,
+            "feedback": "When a transversal makes equal corresponding angles with two lines, those lines are parallel — the construction manufactures exactly that equality."
+          },
+          {
+            "id": "o2",
+            "label": "P and Q are the same distance apart as the lines",
+            "correct": false,
+            "feedback": "Distance between the points isn't what's copied — the ANGLE is. Equal corresponding angles are what force parallelism."
+          },
+          {
+            "id": "o3",
+            "label": "the transversal is perpendicular to both lines",
+            "correct": false,
+            "feedback": "The transversal is a slanted line, not a perpendicular. Parallelism follows from the equal angles it makes, whatever their size."
+          },
+          {
+            "id": "o4",
+            "label": "any two lines through P and Q are parallel",
+            "correct": false,
+            "feedback": "Most such lines cross. Only when the corresponding angles MATCH do the two lines stay parallel."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-parallel-through-point__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The copied angle is your choice of position, but the fact is fixed: with a transversal, **corresponding angles are equal** exactly when the lines are parallel. Its partners follow — alternate interior angles equal, and co-interior (same-side interior) angles summing to 180°.",
+      "figure": "cnp-copied-angle-parallel"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Alternate angle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A transversal crosses two parallel lines. One angle measures 55°. Its ALTERNATE interior angle measures how many degrees?",
+        "answer": 55,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 125,
+            "feedback": "125° is the CO-INTERIOR partner (they sum to 180). ALTERNATE interior angles are EQUAL: 55°."
+          },
+          {
+            "value": 35,
+            "feedback": "35° is the complement (90 − 55) — not an angle-pair relationship here. Alternate interior angles are equal: 55°."
+          }
+        ],
+        "fallbackFeedback": "Alternate interior angles across parallels are equal: 55°."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Co-interior angles.",
+      "conceptTag": "cp-parallel-through-point",
+      "explanationVariants": [
+        "Co-interior (same-side interior) angles are SUPPLEMENTARY across parallels: 180 − 55 = 125°.",
+        "The two same-side interior angles fill a straight-line configuration, so they add to 180°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Across the same two parallel lines, the CO-INTERIOR (same-side interior) angle to that 55° angle measures how many degrees?",
+        "answer": 125,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "55° would make them EQUAL — that's the alternate/corresponding relationship. Co-interior angles are SUPPLEMENTARY: 180 − 55 = 125°."
+          },
+          {
+            "value": 305,
+            "feedback": "305° comes from 360 − 55 — a full-turn idea. Co-interior angles sum to a straight angle: 180 − 55 = 125°."
+          }
+        ],
+        "fallbackFeedback": "Co-interior angles are supplementary: 180 − 55 = 125°."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-parallel-through-point__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One elegant payoff: through a point NOT on a line, there is **exactly one** parallel to it. Existence — the construction just built it. Uniqueness — any second line through P would make a different angle with the transversal, so it would have to cross the given line. One point, one parallel.",
+      "figure": "cnp-one-parallel"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Corresponding angle up top.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the parallel construction, the transversal makes a 63° angle with the given line at Q. To force the new line parallel, what angle must the copy at P make in the corresponding position, in degrees?",
+        "answer": 63,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 117,
+            "feedback": "117° = 180 − 63 would make the copied angle SUPPLEMENTARY — that bends the new line into a crossing. Corresponding angles must be EQUAL: 63°."
+          },
+          {
+            "value": 27,
+            "feedback": "27° = 90 − 63 is a complement, unrelated to the copy. To match the corresponding angle, copy 63° exactly."
+          }
+        ],
+        "fallbackFeedback": "Copy the corresponding angle equal: 63°."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "How many parallels?",
+      "conceptTag": "cp-parallel-through-point",
+      "hints": [
+        "The construction proves at least one parallel exists. Could there be a second?",
+        "A different line through P makes a DIFFERENT corresponding angle with the transversal.",
+        "A different corresponding angle means the lines are NOT parallel — so they'd meet."
+      ],
+      "explanationVariants": [
+        "Through a point off a line there is EXACTLY one parallel: the construction gives existence, and any other line through P makes a different corresponding angle, forcing it to cross the given line.",
+        "Existence + uniqueness: one line has the matching angle (parallel); every other tilts and intersects."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Through a point P not on line ℓ, how many lines can be drawn parallel to ℓ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "exactly one",
+            "correct": true,
+            "feedback": "The construction builds one; any other line through P makes a different angle with the transversal and so must meet ℓ. Existence and uniqueness together."
+          },
+          {
+            "id": "o2",
+            "label": "none — a point off the line blocks all parallels",
+            "correct": false,
+            "feedback": "The construction just drew one, so at least one exists. \"None\" is ruled out immediately."
+          },
+          {
+            "id": "o3",
+            "label": "infinitely many, fanning out from P",
+            "correct": false,
+            "feedback": "Only the line with the MATCHING corresponding angle stays parallel; every other tilt crosses ℓ. Just one qualifies."
+          },
+          {
+            "id": "o4",
+            "label": "exactly two, one on each side",
+            "correct": false,
+            "feedback": "Both \"sides\" through P with the right angle are the SAME line. There is a single parallel, not a pair."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-parallel-through-point__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One point, one parallel.",
+      "takeaways": [
+        "Parallel through P: draw a transversal, then copy its angle to P in the corresponding spot.",
+        "Equal corresponding angles ⇒ parallel; alternate interior equal; co-interior sum to 180°.",
+        "Through a point off a line, exactly one parallel exists — existence by construction, uniqueness by angles."
+      ],
+      "teaser": "Next chapter: turn the compass on itself — inscribe a triangle, square, and hexagon in a circle."
+    }
+  ]
+}

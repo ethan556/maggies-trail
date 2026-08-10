@@ -1,0 +1,299 @@
+{
+  "id": "tg-02-02",
+  "slug": "cosine-is-shifted-sine",
+  "title": "One Wave, Two Names",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch2-cosine-equivalence",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Slide the sine wave LEFT by π/2 and it starts at a peak — exactly cosine's posture. That's an identity:\n\n**cos x = sin(x + π/2)**  and equally  **sin x = cos(x − π/2)**\n\nEvery sinusoid can wear either name; only the phase constant changes.",
+      "figure": "tg-slide-to-cosine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test the identity at a point.",
+      "predict": {
+        "prompt": "sin(x + 90°) and cos x — the same wave, or merely similar?",
+        "options": [
+          {
+            "id": "same",
+            "label": "The same — the two points will sit on top of each other everywhere"
+          },
+          {
+            "id": "close",
+            "label": "Similar but not equal — they'll drift apart somewhere"
+          },
+          {
+            "id": "quad",
+            "label": "Equal only in the first quadrant"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "The same wave under two names. Drag θ anywhere — past 90°, through the third quadrant, all the way around — and the point computed from the cofunction formula never leaves the direct point. An identity is a coincidence that survives every drag."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "One point is plotted directly at 90° − θ; the other is computed from a formula in θ. Pick the formula that keeps them glued through the whole drag, then land θ on 45° — where the two names meet their mirror.",
+        "targetAngle": 45,
+        "angleStart": 0,
+        "angleStep": 5,
+        "ghost": "cofunction",
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "(sin θ, cos θ) — swap the coordinates"
+          },
+          {
+            "id": "signError",
+            "label": "(sin θ, −cos θ) — swap and flip",
+            "feedback": "Swapping is right; the flip is the slip. Watch the formula point mirror across the x-axis and detach the moment θ leaves 0° — cofunctions trade places without changing sign."
+          }
+        ],
+        "successFeedback": "Glued at every θ — at 45° the swap changes nothing at all, because the point IS its own mirror there. sin(π) = cos(π/2) = 0 in the entry above is one snapshot of a coincidence you just watched hold everywhere.",
+        "lowFeedback": "The formula holds — now finish the drag to 45°, where the two coordinates meet.",
+        "highFeedback": "Past 45° — back up to the diagonal, where sine and cosine trade places invisibly."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which direction is the slide?",
+      "conceptTag": "tg-cos-sin",
+      "explanationVariants": [
+        "sin(x + π/2): plus inside means LEFT by π/2 — sine's peak at π/2 slides to 0, cosine's peak position.",
+        "Cosine is 'sine, a quarter period early': the sine shape pulled left π/2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "cos x = sin(x + π/2) says cosine is the sine wave:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "shifted left by π/2",
+            "correct": true,
+            "feedback": "Right — the +π/2 inside pulls sine left a quarter period, landing its peak on x = 0."
+          },
+          {
+            "id": "o2",
+            "label": "shifted right by π/2",
+            "feedback": "Plus inside is a LEFT slide (recall the phase lesson). Right by π/2 would be sin(x − π/2) = −cos x."
+          },
+          {
+            "id": "o3",
+            "label": "reflected over the x-axis",
+            "feedback": "A reflection would need a minus sign OUTSIDE (−sin) or a flip inside — sin(x + π/2) has neither; it's a pure quarter-period slide. The reflection identity is the different one: sin(x + π) = −sin x."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-sin__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Choosing a name is about **convenience**: if a graph's rising midline-crossing is easiest to spot, write it as sine from there; if a **peak** is the clean landmark, write cosine with C at the peak. Same curve, cheaper bookkeeping.",
+      "figure": "tg-naming-convenience"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name a wave from its peak.",
+      "conceptTag": "tg-cos-sin",
+      "explanationVariants": [
+        "Peak at x = π/3: cosine form puts C at the peak — y = 5 cos(x − π/3).",
+        "Cosine starts at a peak, so anchor it there: shift a plain cosine right to π/3."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A sinusoid with amplitude 5, midline 0, period 2π has a PEAK at x = π/3. Its cosine form is:",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "y = 5 cos(x"
+          },
+          {
+            "id": "t1",
+            "label": "y = 5 sin(x"
+          },
+          {
+            "id": "t2",
+            "label": "−"
+          },
+          {
+            "id": "t3",
+            "label": "+"
+          },
+          {
+            "id": "t4",
+            "label": "π/3"
+          },
+          {
+            "id": "t5",
+            "label": ")"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t2",
+          "t4",
+          "t5"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t4",
+              "t5"
+            ],
+            "feedback": "Plus inside shifts LEFT, putting the peak at −π/3. The peak is at +π/3: minus inside."
+          },
+          {
+            "sequence": [
+              "t1",
+              "t2",
+              "t4",
+              "t5"
+            ],
+            "feedback": "Sine STARTS at the midline, not a peak — anchored at π/3 it would cross the midline there. Use cosine for a peak anchor."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Cosine peaks at its start, so anchor on cosine and shift RIGHT to move the peak to +π/3.",
+        "successFeedback": "Right — cosine's natural start is a peak, so C lands exactly on it."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-sin__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Translate between names.",
+      "conceptTag": "tg-cos-sin",
+      "explanationVariants": [
+        "sin x = cos(x − π/2): sine is cosine delayed a quarter period, so the missing constant is π/2.",
+        "Cosine peaks at 0; sine peaks at π/2 — cosine must be slid RIGHT π/2 to become sine."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Complete the twin identity: sin x = cos(x − ___).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π/2",
+            "correct": true,
+            "feedback": "Right — slide cosine right a quarter period and its peak lands on sine's peak at π/2."
+          },
+          {
+            "id": "o2",
+            "label": "π",
+            "feedback": "cos(x − π) = −cos x, an upside-down cosine — not sine. The quarter-period π/2 does it."
+          },
+          {
+            "id": "o3",
+            "label": "2π",
+            "feedback": "A full-period slide changes nothing: cos(x − 2π) = cos x. Use the quarter period π/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-sin__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two names, one check.",
+      "conceptTag": "tg-cos-sin",
+      "explanationVariants": [
+        "Both rules at x = 0: 3 sin(0 + π/2) = 3·1 = 3 and 3 cos 0 = 3 — equal, as the identity demands. The value is 3.",
+        "sin(π/2) = 1 = cos 0, scaled by 3."
+      ],
+      "hints": [
+        "Evaluate 3 sin(x + π/2) at x = 0.",
+        "sin(π/2) = 1.",
+        "3 · 1 — and confirm 3 cos 0 gives the same."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 3 sin(x + π/2) and y = 3 cos x claim to be the same wave. What do BOTH give at x = 0?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "sin(0) = 0, but the argument is 0 + π/2: sin(π/2) = 1, so both rules give 3."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is sin(π/2) before the amplitude. Scale by 3: both give 3."
+          }
+        ],
+        "fallbackFeedback": "3 sin(π/2) = 3 = 3 cos 0."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-sin__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Aliases, not rivals.",
+      "takeaways": [
+        "cos x = sin(x + π/2); sin x = cos(x − π/2).",
+        "Anchor cosine at a peak, sine at a rising midline-crossing.",
+        "Any sinusoid has both names; pick the cheaper one."
+      ],
+      "teaser": "Next: reflections join the game — many rules, one graph."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-cos-sin",
+      "concept": {
+        "id": "rem-tg0202-c",
+        "kind": "concept",
+        "body": "Cosine = sine slid left π/2. To convert names, adjust the phase constant by a quarter period — nothing else changes."
+      },
+      "check": {
+        "id": "rem-tg0202-k",
+        "kind": "check",
+        "body": "One conversion check.",
+        "conceptTag": "tg-cos-sin",
+        "explanationVariants": [
+          "sin(π/6 + π/2) = sin(2π/3) = cos(π/6) ≈ 0.87 — the identity at one more point.",
+          "cos(π/6) = √3/2 ≈ 0.87, and the shifted sine matches it exactly."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Check cos x = sin(x + π/2) at x = π/6: what is cos(π/6), rounded to hundredths?",
+          "answer": 0.87,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.5,
+              "feedback": "0.5 is sin(π/6). COSINE of π/6 is √3/2 ≈ 0.87 (recall exact values)."
+            },
+            {
+              "value": 0.71,
+              "feedback": "0.71 is cos(π/4). At π/6, cosine is √3/2 ≈ 0.87."
+            }
+          ],
+          "fallbackFeedback": "cos(π/6) = √3/2 ≈ 0.87."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,458 @@
+{
+  "id": "les-04-03",
+  "slug": "systems-in-the-real-world",
+  "title": "Systems in the Real World",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch4-substitution",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Real problems often hide a system. When two quantities are related two different ways — like a total AND a difference — write one equation for each, then solve with substitution. Two facts, two equations, one solution.",
+      "figure": "les-system-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Set up and solve.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Two numbers add to 10, and the larger equals 4 times the smaller. Using y = 4x and x + y = 10, what is the smaller number x?",
+        "task": "intersectionX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "Larger relationship",
+            "m": 4,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 4x",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Total relationship",
+            "m": -1,
+            "b": 10,
+            "sourceKind": "equation",
+            "sourceText": "x + y = 10",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:verify"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 10,
+            "feedback": "Substitute y = 4x first: x + 4x = 10 gives 5x = 10, so x = 2, not 10."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the LARGER number (y) — the smaller x solves 5x = 10, giving x = 2."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Substitute: x + 4x = 10 → 5x = 10 → x = 2 (the smaller number).",
+        "answerMode": "numeric",
+        "successFeedback": "Substitute: x + 4x = 10 → 5x = 10 → x = 2 (the smaller number)."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Once you have one unknown, back-substitute for the other, then answer the actual question. For x = 2 in y = 4x, the larger number is y = 8 — and 2 + 8 = 10 ✓, 8 = 4(2) ✓. Both facts check out.",
+      "figure": "les-back-subst"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the second quantity.",
+      "conceptTag": "les-systems-word",
+      "explanationVariants": [
+        "With x = 2 (smaller) and y = 4x, the larger number is y = 4(2) = 8.",
+        "Back-substitute x = 2 into y = 4x to get the larger number, 8."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "From the last problem (two numbers adding to 10, larger = 4× smaller, smaller x = 2), what is the larger number y?",
+        "task": "evaluateAtX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "Larger relationship",
+            "m": 4,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 4x",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "first",
+        "rateGoal": "greater",
+        "targetInput": 2,
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "evaluate:first:substitute",
+          "evaluate:first:value"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the smaller number x — the larger is y = 4(2) = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "Back-substitute x = 2 into y = 4x: y = 8, not 6."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Back-substitute x = 2 into y = 4x: y = 4(2) = 8.",
+        "answerMode": "numeric",
+        "successFeedback": "Back-substitute x = 2 into y = 4x: y = 4(2) = 8."
+      },
+      "variant": {
+        "gen": "g8-les-systems-word",
+        "form": "lesWordLarger"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A different real system.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A rope is cut into two pieces totaling 9 meters, and the long piece is twice the short one. Using y = 2x and x + y = 9, what is the short piece x, in meters?",
+        "task": "intersectionX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "Long-piece relationship",
+            "m": 2,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Total relationship",
+            "m": -1,
+            "b": 9,
+            "sourceKind": "equation",
+            "sourceText": "x + y = 9",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:verify"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "Substitute y = 2x first: x + 2x = 9 gives 3x = 9, so x = 3, not 9."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the LONG piece (y) — the short piece x solves 3x = 9, giving x = 3."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Substitute: x + 2x = 9 → 3x = 9 → x = 3 meters (the short piece).",
+        "answerMode": "numeric",
+        "successFeedback": "Substitute: x + 2x = 9 → 3x = 9 → x = 3 meters (the short piece)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The other piece.",
+      "conceptTag": "les-systems-word",
+      "explanationVariants": [
+        "With x = 3 (short) and y = 2x, the long piece is y = 2(3) = 6 meters.",
+        "Back-substitute x = 3 into y = 2x to get 6 meters."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "For that rope (short piece x = 3, long = 2× short), how long is the long piece y, in meters?",
+        "task": "evaluateAtX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "Long-piece relationship",
+            "m": 2,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "first",
+        "rateGoal": "greater",
+        "targetInput": 3,
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "evaluate:first:substitute",
+          "evaluate:first:value"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 3,
+            "feedback": "That's the short piece — the long piece is y = 2(3) = 6."
+          },
+          {
+            "value": 9,
+            "feedback": "The long piece is y = 2(3) = 6, not 9 (9 is the total)."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Back-substitute x = 3 into y = 2x: y = 2(3) = 6 meters.",
+        "answerMode": "numeric",
+        "successFeedback": "Back-substitute x = 3 into y = 2x: y = 2(3) = 6 meters."
+      },
+      "variant": {
+        "gen": "g8-les-systems-word",
+        "form": "lesWordRope"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A money system.",
+      "conceptTag": "les-systems-word",
+      "explanationVariants": [
+        "Tickets total 7, and adult (y) = child (x) + 1... using y = x + 1 and x + y = 7: x + (x+1) = 7 → 2x = 6 → x = 3 child tickets.",
+        "Substitute and solve: 3 child tickets."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A family buys 7 tickets total. There is one more adult ticket than child tickets. Using y = x + 1 (adults) and x + y = 7, how many CHILD tickets x?",
+        "task": "intersectionX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "Adult-ticket relationship",
+            "m": 1,
+            "b": 1,
+            "sourceKind": "equation",
+            "sourceText": "y = x + 1",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Total relationship",
+            "m": -1,
+            "b": 7,
+            "sourceKind": "equation",
+            "sourceText": "x + y = 7",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:verify"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 7,
+            "feedback": "Substitute y = x+1 first: x + (x+1) = 7 gives 2x = 6, so x = 3, not 7."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the number of ADULT tickets (y) — the child count x solves 2x = 6, giving x = 3."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Substitute: x + (x + 1) = 7 → 2x + 1 = 7 → 2x = 6 → x = 3 child tickets.",
+        "answerMode": "numeric",
+        "successFeedback": "Substitute: x + (x + 1) = 7 → 2x + 1 = 7 → 2x = 6 → x = 3 child tickets."
+      },
+      "variant": {
+        "gen": "g8-les-systems-word",
+        "form": "lesWordTickets"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full real-world system.",
+      "conceptTag": "les-systems-word",
+      "explanationVariants": [
+        "Two prices total $10; the book (y) costs $2 more than 3× the pen (x)... using y = 3x + 2 and x + y = 10: x + (3x+2) = 10 → 4x = 8 → x = 2 (pen $2), then y = 8 (book $8).",
+        "Substitute to get 4x + 2 = 10, so x = 2; the pen costs $2."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A pen and a book cost $10 together. The book costs $2 more than 3 times the pen. Using y = 3x + 2 (book) and x + y = 10, what does the pen cost, x, in dollars?",
+        "task": "intersectionX",
+        "lines": [
+          {
+            "id": "first",
+            "label": "Book-price relationship",
+            "m": 3,
+            "b": 2,
+            "sourceKind": "equation",
+            "sourceText": "y = 3x + 2",
+            "tablePoints": []
+          },
+          {
+            "id": "second",
+            "label": "Total relationship",
+            "m": -1,
+            "b": 10,
+            "sourceKind": "equation",
+            "sourceText": "x + y = 10",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:verify"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 10,
+            "feedback": "Substitute y = 3x+2 first: x + (3x+2) = 10 gives 4x = 8, so x = 2, not 10."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the BOOK's cost (y) — the pen x solves 4x = 8, giving x = 2."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Substitute: x + (3x + 2) = 10 → 4x + 2 = 10 → 4x = 8 → x = 2 dollars (the pen).",
+        "answerMode": "numeric",
+        "successFeedback": "Substitute: x + (3x + 2) = 10 → 4x + 2 = 10 → 4x = 8 → x = 2 dollars (the pen)."
+      },
+      "hints": [
+        "Substitute the book's expression y = 3x + 2 into x + y = 10.",
+        "That gives x + (3x + 2) = 10, which combines to 4x + 2 = 10.",
+        "Subtract 2: 4x = 8, so x = 2 — the pen costs $2 (and the book $8)."
+      ],
+      "variant": {
+        "gen": "g8-les-systems-word",
+        "form": "lesWordPurchase"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Turn a two-fact real problem into a system, then solve it with substitution.",
+      "takeaways": [
+        "Two relationships between two unknowns become two equations.",
+        "Substitute, solve for one unknown, back-substitute for the other.",
+        "Check both facts and answer the actual question asked."
+      ],
+      "teaser": "This closes Grade 8 Linear Equations & Systems — next up: Transformations & Measurement."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-systems-word",
+      "concept": {
+        "id": "rem-les0403-c",
+        "kind": "concept",
+        "body": "A two-fact real problem hides a system: write one equation per fact, solve by substitution, back-substitute for the other unknown, then answer the actual question."
+      },
+      "check": {
+        "id": "rem-les0403-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-systems-word",
+        "explanationVariants": [
+          "Two numbers add to 9, larger = 2× smaller: y = 2x and x + y = 9 give x + 2x = 9 → x = 3.",
+          "Substitute and solve: the smaller number is 3."
+        ],
+        "widget": {
+          "type": "affineRelationshipLab",
+          "prompt": "Two numbers add to 9, and the larger is twice the smaller. Using y = 2x and x + y = 9, what is the smaller number x?",
+          "task": "intersectionX",
+          "lines": [
+            {
+              "id": "first",
+              "label": "Larger relationship",
+              "m": 2,
+              "b": 0,
+              "sourceKind": "equation",
+              "sourceText": "y = 2x",
+              "tablePoints": []
+            },
+            {
+              "id": "second",
+              "label": "Total relationship",
+              "m": -1,
+              "b": 9,
+              "sourceKind": "equation",
+              "sourceText": "x + y = 9",
+              "tablePoints": []
+            }
+          ],
+          "rateGoal": "greater",
+          "requiredExplorations": 3,
+          "requiredStageKeys": [
+            "intersection:equate",
+            "intersection:x",
+            "intersection:verify"
+          ],
+          "tolerance": 0,
+          "choices": [],
+          "numericErrors": [
+            {
+              "value": 9,
+              "feedback": "Substitute y = 2x first: x + 2x = 9 gives 3x = 9, so x = 3, not 9."
+            },
+            {
+              "value": 6,
+              "feedback": "6 is the LARGER number (y) — the smaller x solves 3x = 9, giving x = 3."
+            }
+          ],
+          "pointErrors": [],
+          "authoredStages": [],
+          "explorationFeedback": "Inspect every designated affine state before checking.",
+          "fallbackFeedback": "Substitute: x + 2x = 9 → 3x = 9 → x = 3.",
+          "answerMode": "numeric",
+          "successFeedback": "Substitute: x + 2x = 9 → 3x = 9 → x = 3."
+        }
+      }
+    }
+  ]
+}

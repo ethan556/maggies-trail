@@ -1,0 +1,298 @@
+{
+  "id": "sc-02-01",
+  "slug": "taylor-polynomials",
+  "title": "Building a Function Out of Powers",
+  "courseId": "series-convergence",
+  "chapterId": "ch2-taylor-series",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In C2 you replaced a curve near a point with its **tangent line** — one derivative's worth of information.\n\nWhy stop at one? Match the second derivative too, and the third, and you get a **polynomial that hugs the curve** further and further out:\n\n**T(x) = f(0) + f′(0)x + f″(0)x²/2! + f‴(0)x³/3! + …**\n\nA linearisation is just the first two terms. A Taylor series is what happens when you never stop.",
+      "figure": "dr-tangent-line"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Add terms and watch it hug.",
+      "widget": {
+        "type": "taylorApprox",
+        "fn": "exp",
+        "mode": "terms",
+        "atX": 1,
+        "tolerance": 0.01,
+        "targetN": 4,
+        "nStart": 0,
+        "targetXTenths": 10,
+        "xStart": 3,
+        "prompt": "eˣ against its Taylor polynomial. Add terms until the polynomial is within 0.01 of e at x = 1 — using the FEWEST terms that will do it.",
+        "successFeedback": "Four terms past the constant: 1 + x + x²/2 + x³/6 + x⁴/24 gives 2.7083 against e = 2.7183. And watch what each new term DID — the polynomial hugged the curve further and further from the centre. For eˣ it never lets go, at any x. The factorials in the denominators are what crush the higher terms and make that possible.",
+        "lowFeedback": "Not enough terms yet — the polynomial is still more than 0.01 away from e at x = 1. Add another.",
+        "highFeedback": "That works, but it is more terms than you need. Come back down to the SMALLEST number that gets inside the tolerance."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Add local derivative information term by term and compare a polynomial approximation with its target function.",
+        "invariants": [
+          "matched-derivatives-anchor-local-approximation",
+          "more-terms-expand-local-accuracy"
+        ],
+        "misconceptions": [
+          "series-equals-function-everywhere",
+          "highest-degree-term-dominates-near-center"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "series-convergence-taylorApprox",
+        "delayed": false
+      },
+      "conceptTag": "sc-taylor",
+      "predict": {
+        "prompt": "e ≈ 2.71828. Adding terms of 1 + x + x²/2! + x³/3! + … at x = 1, getting within 0.01 of e will take…",
+        "options": [
+          {
+            "id": "few",
+            "label": "A couple of terms"
+          },
+          {
+            "id": "six",
+            "label": "About half a dozen terms"
+          },
+          {
+            "id": "lots",
+            "label": "Dozens of terms"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "About six. The factorials in the denominators grow far faster than xⁿ can at x = 1, so each new term is a small fraction of the one before and the partial sums close in fast. That collapse is the reason a polynomial can stand in for a transcendental function at all."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The first two terms are old friends.",
+      "conceptTag": "sc-taylor",
+      "explanationVariants": [
+        "f(0) + f′(0)x is exactly the linearisation from C2 — the tangent line. Taylor simply keeps going.",
+        "So every Taylor polynomial CONTAINS the tangent line, and the extra terms are corrections for the curvature the tangent ignored."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What are the first two terms of a Taylor polynomial, f(0) + f′(0)x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The tangent line at 0 — the linearisation from C2.",
+            "correct": true,
+            "feedback": "Right. Taylor is linearisation that refuses to stop: the next term corrects for the curvature the tangent ignored."
+          },
+          {
+            "id": "o2",
+            "label": "The secant line.",
+            "correct": false,
+            "feedback": "A secant needs two points. This is built from derivatives AT one point, which is a tangent."
+          },
+          {
+            "id": "o3",
+            "label": "The function itself.",
+            "correct": false,
+            "feedback": "Only if f happens to be linear. For a curve it is an approximation — an extremely good one near 0, and a poor one far away."
+          },
+          {
+            "id": "o4",
+            "label": "The average value of f.",
+            "correct": false,
+            "feedback": "Nothing is being averaged. These are the value and the slope at a single point."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-taylor__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why factorials?",
+      "conceptTag": "sc-taylor",
+      "explanationVariants": [
+        "Differentiating xⁿ n times gives n!, so dividing by n! makes the nth derivative of the term come out as exactly f⁽ⁿ⁾(0) — the coefficient is engineered to make the derivatives MATCH.",
+        "Each term is built to fix one derivative and disturb none of the earlier ones."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the xⁿ term carry a 1/n! ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Differentiating xⁿ n times produces n!, so the 1/n! cancels it and makes the nth derivative come out right.",
+            "correct": true,
+            "feedback": "Right — each term is engineered to fix ONE derivative and leave the earlier ones undisturbed. That is the whole construction."
+          },
+          {
+            "id": "o2",
+            "label": "To make the terms small.",
+            "correct": false,
+            "feedback": "It does make them small, which is why the series converges so well — but that is a CONSEQUENCE, not the reason. The reason is matching the derivatives."
+          },
+          {
+            "id": "o3",
+            "label": "It is a convention.",
+            "correct": false,
+            "feedback": "Remove it and the polynomial's derivatives no longer agree with f's. The factorial is forced, not chosen."
+          },
+          {
+            "id": "o4",
+            "label": "To make the series alternate.",
+            "correct": false,
+            "feedback": "Alternation comes from the signs of the derivatives, not from the factorials. eˣ has all-positive terms and factorials throughout."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-taylor__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three series worth knowing, all centred at 0:\n\n**eˣ = 1 + x + x²/2! + x³/3! + …** — every x.\n**sin x = x − x³/3! + x⁵/5! − …** — every x, odd powers only.\n**1/(1 − x) = 1 + x + x² + …** — only for **|x| < 1**.\n\nThat last is the geometric series from Algebra 2, in a new place. And it is the one that gives up.",
+      "figure": "sc-taylor-hug-peel"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute one.",
+      "conceptTag": "sc-taylor",
+      "explanationVariants": [
+        "1 + 1 + 1/2 + 1/6 + 1/24 = 2.7083, against e = 2.7183 — an error under 0.01 with five terms.",
+        "The factorials crush the later terms so fast that a handful of them pins down a transcendental number to two decimals."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use 1 + x + x²/2 + x³/6 + x⁴/24 at x = 1 to estimate e. Give four decimals.",
+        "answer": 2.7083,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 2.7183,
+            "feedback": "That is e itself. The five-term polynomial gives 2.7083 — close, but not exact, and the difference is the error you were bounding."
+          },
+          {
+            "value": 2.6667,
+            "feedback": "That is the FOUR-term sum, 1 + 1 + 1/2 + 1/6. Add the x⁴/24 = 1/24 term as well."
+          },
+          {
+            "value": 2.5,
+            "feedback": "That is three terms. Keep going: 1 + 1 + 0.5 + 0.1667 + 0.0417 = 2.7083."
+          }
+        ],
+        "fallbackFeedback": "1 + 1 + 0.5 + 0.1667 + 0.0417 = 2.7083, against e = 2.7183."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-taylor__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "How many terms do you need?",
+      "conceptTag": "sc-taylor",
+      "hints": [
+        "The errors at x = 1 run 1.718, 0.718, 0.218, 0.0516, 0.0099, 0.0016 as you add terms.",
+        "You want the error under 0.01 — so scan that list for the FIRST one that qualifies.",
+        "0.0516 is too big; 0.0099 is not. Count how many x-terms that is."
+      ],
+      "explanationVariants": [
+        "The x⁴ term brings the error to 0.0099, just inside 0.01. So four terms past the constant — five terms in all.",
+        "Each factorial crushes the next error by roughly the next integer, which is why the accuracy improves so violently."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For eˣ at x = 1, how many terms AFTER the constant are needed to get within 0.01 of e?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "Three terms past the constant give 2.6667, an error of 0.0516 — still five times too big."
+          },
+          {
+            "value": 5,
+            "feedback": "Five works (error 0.0016), but it is one more than you need. The x⁴ term already brings you to 0.0099."
+          },
+          {
+            "value": 2,
+            "feedback": "Two terms give 2.5, an error of 0.218. Nowhere near."
+          }
+        ],
+        "fallbackFeedback": "The x⁴ term lands the error at 0.0099, just inside 0.01: four terms past the constant."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-taylor__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Linearisation that never stops.",
+      "takeaways": [
+        "A Taylor polynomial matches f's value, slope, curvature and beyond — one derivative per term.",
+        "The 1/n! is forced: it cancels the n! that differentiating xⁿ produces, so each term fixes exactly one derivative.",
+        "eˣ and sin x converge everywhere. 1/(1 − x) does not — and that is the next lesson."
+      ],
+      "teaser": "Next: the boundary where the polynomial gives up."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sc-taylor",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Each term buys you one more derivative's worth of agreement. The constant matches the height; the x-term matches the slope; the x² term matches the curvature. Keep buying and the polynomial hugs the curve further and further out.",
+        "figure": "dr-tangent-line"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "What does each term buy?",
+        "conceptTag": "sc-taylor",
+        "explanationVariants": [
+          "The x² term is the first one that can match the CURVATURE — the second derivative.",
+          "One term, one derivative."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which derivative does the x² term of a Taylor polynomial fix?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The second — the curvature.",
+              "correct": true,
+              "feedback": "Right: one term, one derivative, in order."
+            },
+            {
+              "id": "o2",
+              "label": "The first — the slope.",
+              "correct": false,
+              "feedback": "The slope is fixed by the x-term. The x² term is the first that can bend."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

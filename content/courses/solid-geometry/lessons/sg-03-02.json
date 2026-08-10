@@ -1,0 +1,419 @@
+{
+  "id": "sg-03-02",
+  "slug": "the-one-third-story",
+  "title": "The One-Third Story",
+  "courseId": "solid-geometry",
+  "chapterId": "ch3-volume-justifications",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-third-story",
+      "concept": {
+        "id": "rem-sg-third-story-c",
+        "kind": "concept",
+        "body": "The ⅓ in pyramid and cone volume is earned twice over: a cube tiles into THREE congruent square pyramids (so that pyramid is exactly ⅓Bh), and similarity + Cavalieri spread the result — every pyramid or cone with the same base area and height has sections shrinking by the same (z/h)² law, hence the same volume. Oblique versions ride along free."
+      },
+      "check": {
+        "id": "rem-sg-third-story-k",
+        "kind": "check",
+        "body": "One third.",
+        "conceptTag": "sg-third-story",
+        "explanationVariants": [
+          "⅓ × base × height.",
+          "⅓(30)(8) = 80."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Pyramid: base area 30, height 8. Volume = ?",
+          "answer": 80,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 240,
+              "feedback": "240 is the full prism Bh — the pyramid claims a third: 80."
+            },
+            {
+              "value": 120,
+              "feedback": "120 halves — the split is ⅓: 80."
+            }
+          ],
+          "fallbackFeedback": "⅓(30)(8) = 80."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Where does ⅓ come from? Take a cube of side 6: it splits into **three congruent square pyramids**, each with a face of the cube as base and the same far corner as apex. Three identical pieces filling Bh exactly ⇒ each pyramid is ⅓Bh. The third is a TILING fact, before it is a formula.",
+      "figure": "cone-fills-cylinder"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The tiling count.",
+      "conceptTag": "sg-third-story",
+      "explanationVariants": [
+        "Cube 6³ = 216 splits into three congruent pyramids.",
+        "Each: 216/3 = 72 — and ⅓Bh = ⅓(36)(6) = 72 agrees."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A cube of side 6 (volume 216) is tiled by three congruent pyramids. Each pyramid's volume = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "V",
+            "label": "the cube volume",
+            "value": 216
+          },
+          {
+            "id": "n",
+            "label": "the number of congruent pyramids",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "divide",
+          "left": {
+            "op": "const",
+            "id": "V"
+          },
+          "right": {
+            "op": "const",
+            "id": "n"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 108,
+            "feedback": "108 halves — the tiling uses THREE congruent pyramids: 216/3 = 72."
+          },
+          {
+            "value": 216,
+            "feedback": "216 is the whole cube — one pyramid claims a third: 72."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is the base area — the volume is ⅓(36)(6) = 72."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "216 ÷ 3 = 72 = ⅓(36)(6) — the ⅓ is literally one of three tiles.",
+        "successFeedback": "216 ÷ 3 = 72 = ⅓(36)(6) — the ⅓ is literally one of three tiles."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-third-story__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "From pyramid to every pyramid.",
+      "conceptTag": "sg-third-story",
+      "explanationVariants": [
+        "The tiling proves ⅓ for ONE pyramid shape; Cavalieri spreads it.",
+        "Any pyramid's sections shrink by the same similarity law — equal base + height ⇒ equal sections at every level."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The cube tiling certifies ⅓Bh for one special pyramid. Why does EVERY pyramid (any base, even oblique) obey it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Similarity shrinks every pyramid's sections identically — area scale (z/h)² — so equal base + height means equal sections at every level: Cavalieri transfers the ⅓",
+            "correct": true,
+            "feedback": "The tiling seeds one true case; similarity (the sy course's k² law on each slice) + Cavalieri propagate it to all pyramids at once."
+          },
+          {
+            "id": "o2",
+            "label": "All pyramids tile a cube",
+            "correct": false,
+            "feedback": "Most don't — the tiling is the SEED case; Cavalieri does the spreading via matched shrinking sections."
+          },
+          {
+            "id": "o3",
+            "label": "It's an approximation that engineers accept",
+            "correct": false,
+            "feedback": "It's exact — seeded by the tiling, propagated by slice-matching."
+          },
+          {
+            "id": "o4",
+            "label": "Pyramids are a third as heavy",
+            "correct": false,
+            "feedback": "Weight restates the claim — the ARGUMENT is tiling + similarity-matched sections + Cavalieri."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-third-story__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The cone joins.",
+      "conceptTag": "sg-third-story",
+      "explanationVariants": [
+        "A cone's circular sections shrink by the same (z/h)² law as a matched pyramid's.",
+        "Equal base area + equal height ⇒ Cavalieri hands the cone the ⅓: ⅓π(9)(10) = 30π."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A cone (radius 3, height 10) is matched to a pyramid of base area 9π and height 10. Both volumes' coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "B",
+            "label": "the base area coefficient",
+            "value": 9
+          },
+          {
+            "id": "h",
+            "label": "the height",
+            "value": 10
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "divide",
+            "left": {
+              "op": "lit",
+              "value": 1
+            },
+            "right": {
+              "op": "lit",
+              "value": 3
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "B"
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 90,
+            "feedback": "90 skips the ⅓ — shrinking sections pay a third of Bh: 30."
+          },
+          {
+            "value": 10,
+            "feedback": "10 = ⅓(3)(10) forgets the square — ⅓(9)(10) = 30."
+          },
+          {
+            "value": 60,
+            "feedback": "That's twice the answer — you took two thirds of Bh instead of one third. ⅓(90) = 30."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "⅓(9)(10) = 30 — the figure's cone-in-cylinder claims exactly its third.",
+        "successFeedback": "⅓(9)(10) = 30 — the figure's cone-in-cylinder claims exactly its third."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-third-story__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Slices tell the third.",
+      "predict": {
+        "prompt": "A pyramid has base area 36 and height 6. What is its cross-sectional area halfway up?",
+        "options": [
+          {
+            "id": "nine",
+            "label": "9 — halfway up, the linear scale is ½, so the area is ¼ of 36"
+          },
+          {
+            "id": "eighteen",
+            "label": "18 — half the height, half the area"
+          },
+          {
+            "id": "twelve",
+            "label": "12 — a third, because pyramids are one-third solids"
+          }
+        ],
+        "outcomeId": "nine",
+        "reveal": "9. Halfway up, every horizontal length has halved, so the area is 36 × (½)² = 9. The one-third in the volume formula comes from ACCUMULATING these shrinking slices — it is not a factor you apply to any single one of them."
+      },
+      "widget": {
+        "type": "solidSliceLab",
+        "prompt": "Sweep the plane up the pyramid to the halfway cut, then watch how the shrinking slices accumulate toward one third.",
+        "solid": "cone",
+        "radius": 6,
+        "height": 6,
+        "baseArea": 36,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.05,
+        "tolerance": 0.03,
+        "comparisonRequired": true,
+        "requiredMoves": 5,
+        "successFeedback": "Area 9 at half height — a quarter of the base, because the linear halving is squared. Stack those quartering slices all the way up and the total lands at exactly one third of the enclosing prism. The coefficient was accumulated, not assumed.",
+        "positionFeedback": "Not at the halfway cut — keep moving and read the area against the base area of 36.",
+        "comparisonFeedback": "Bring in the enclosing solid. One third is a COMPARISON, so the thing it is one third OF has to be on screen.",
+        "invariantFeedback": "Test more heights first — the accumulation is the argument, and one slice cannot accumulate."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The ⅔ leftover.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The figure shows the cone inside its matching cylinder. The space BETWEEN them (cylinder minus cone) holds:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "⅔ of the cylinder — and next lesson this leftover shape prices the sphere",
+            "correct": true,
+            "feedback": "1 − ⅓ = ⅔. Hold that ring-sectioned leftover in mind: it is about to become the hemisphere's Cavalieri twin."
+          },
+          {
+            "id": "o2",
+            "label": "⅓ of the cylinder",
+            "correct": false,
+            "feedback": "The CONE holds the third — the leftover holds the other ⅔."
+          },
+          {
+            "id": "o3",
+            "label": "Half the cylinder",
+            "correct": false,
+            "feedback": "The cone fills a third of the cylinder, so the leftover is 1 − ⅓ = ⅔, not a half."
+          },
+          {
+            "id": "o4",
+            "label": "It depends on the radius",
+            "correct": false,
+            "feedback": "The split is ratio-fixed: ⅓ in, ⅔ out, for every matched pair."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The apex doesn't matter.",
+      "conceptTag": "sg-third-story",
+      "hints": [
+        "An OBLIQUE pyramid: apex hovering off-center. Cavalieri against the upright twin.",
+        "Sections at every level are congruent to the upright pyramid's (similarity shrinks both alike, drift is free).",
+        "⅓Bh with the VERTICAL height."
+      ],
+      "explanationVariants": [
+        "Sections match the upright twin's at every level — ⅓(48)(9) = 144 either way.",
+        "⅓ × 48 × 9 = 144."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "An oblique pyramid: base area 48, apex hovering 9 units above the base plane but displaced sideways. Its volume = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "B",
+            "label": "the base area",
+            "value": 48
+          },
+          {
+            "id": "h",
+            "label": "the vertical height",
+            "value": 9
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "divide",
+            "left": {
+              "op": "lit",
+              "value": 1
+            },
+            "right": {
+              "op": "lit",
+              "value": 3
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "B"
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 432,
+            "feedback": "432 charges full Bh — pyramids (leaning or not) pay a third: 144."
+          },
+          {
+            "value": 216,
+            "feedback": "216 halves Bh — the split is ⅓: 144."
+          },
+          {
+            "value": 48,
+            "feedback": "48 is the base area alone — the volume multiplies and thirds: ⅓(48)(9) = 144."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "⅓(48)(9) = 144 — the apex's sideways drift never appears in the bill.",
+        "successFeedback": "⅓(48)(9) = 144 — the apex's sideways drift never appears in the bill."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-third-story__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The third, explained.",
+      "takeaways": [
+        "Seed: a cube tiles into THREE congruent pyramids — ⅓Bh is a tiling fact.",
+        "Spread: similarity shrinks all pyramid/cone sections by (z/h)² — Cavalieri transfers the ⅓ everywhere, oblique included.",
+        "Leftover: cylinder minus cone = ⅔ — remember its ring sections."
+      ],
+      "teaser": "Finale: the sphere surrenders to a cylinder-minus-cone comparison."
+    }
+  ]
+}

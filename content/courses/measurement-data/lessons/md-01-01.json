@@ -1,0 +1,354 @@
+{
+  "id": "md-01-01",
+  "slug": "reading-the-clock",
+  "title": "Reading the Clock",
+  "courseId": "measurement-data",
+  "chapterId": "ch1-time-to-the-minute",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A clock has two hands with two different jobs. The **SHORT hand names the hour** — a slow walker, passing one number per hour. The **LONG hand counts minutes** — a fast walker, lapping the whole face every hour. Read short first, long second.",
+      "figure": "md3-clock-hands"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each part to its job.",
+      "conceptTag": "read-clock",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each clock part to the job it does.",
+        "left": [
+          {
+            "id": "short",
+            "label": "The SHORT hand"
+          },
+          {
+            "id": "long",
+            "label": "The LONG hand"
+          },
+          {
+            "id": "nums",
+            "label": "The numbers 1–12"
+          }
+        ],
+        "right": [
+          {
+            "id": "jmin",
+            "label": "Counts the minutes"
+          },
+          {
+            "id": "jdouble",
+            "label": "Mark the hours AND the five-minute steps"
+          },
+          {
+            "id": "jhour",
+            "label": "Names the hour"
+          }
+        ],
+        "pairs": {
+          "short": "jhour",
+          "long": "jmin",
+          "nums": "jdouble"
+        },
+        "pairErrors": [
+          {
+            "left": "short",
+            "right": "jmin",
+            "feedback": "Swapped hands — the classic clock trap! The SHORT, slow hand names the hour; minute-counting is the long hand's job."
+          }
+        ],
+        "missFeedback": "Short and slow names the hour; long and fast counts minutes; the numbers work double shifts.",
+        "successFeedback": "Short hand → hour, long hand → minutes, and the numbers moonlight as five-minute marks."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read this clock.",
+      "conceptTag": "read-clock",
+      "explanationVariants": [
+        "Short hand at 7 names the hour; long hand straight up at 12 means zero minutes — 7:00 sharp.",
+        "Read in order: short first (7), long second (:00). The 12 is the minute hand's starting gate."
+      ],
+      "widget": {
+        "type": "clockSet",
+        "prompt": "Set the clock to show 7:00.",
+        "targetHour": 7,
+        "targetMinute": 0,
+        "minuteStep": 5,
+        "successFeedback": "Hour 7, zero minutes — the long hand at 12 means the hour is brand new.",
+        "hourFeedback": "Hands swapped! That reading treats the LONG hand as the hour (12) and the short one as minutes (7-mark = 35). Short names the hour: it's 7.",
+        "minuteFeedback": "The long hand pointing at 12 doesn't mean 12 minutes — the 12 is minute ZERO, the top of the lap. 7:00 exactly."
+      },
+      "variant": {
+        "gen": "time-set-clock",
+        "form": "hour"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Coordinate hour and minute positions while composing elapsed time on a 60-minute cycle.",
+        "invariants": [
+          "minute-cycle-is-sixty",
+          "hour-and-minute-hands-coordinate"
+        ],
+        "misconceptions": [
+          "hour-hand-stays-fixed",
+          "minutes-treated-as-base-ten"
+        ],
+        "representations": [
+          "diagram",
+          "number-line",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-clockSet-new-context",
+        "delayed": false
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The minute hand has a secret code: the numbers 1–12 work **double shifts**. For the minute hand, each number is worth FIVE minutes — pointing at 3 means 15, at 6 means 30, at 9 means 45. Count by fives around the face.",
+      "figure": "md3-minute-code"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Crack the code.",
+      "conceptTag": "read-clock",
+      "explanationVariants": [
+        "The 8-mark carries eight fives: 8 × 5 = 40 minutes past the hour.",
+        "Skip-count to it: 5, 10, 15, 20, 25, 30, 35, 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The MINUTE hand points at the number 8. How many minutes past the hour is it?",
+        "answer": 40,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 reads the mark as ones — but minute marks count by FIVES. Eight fives is 40."
+          },
+          {
+            "value": 45,
+            "feedback": "45 belongs to the 9-mark, one number over. The 8-mark carries 8 × 5 = 40."
+          }
+        ],
+        "fallbackFeedback": "Multiply the mark by 5 — that's the minute hand's code."
+      },
+      "variant": {
+        "gen": "read-clock"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Walk the minute hand around.",
+      "conceptTag": "read-clock",
+      "widget": {
+        "type": "slider",
+        "prompt": "Slide the minute hand from the 12 around to the 6, counting fives as you pass each number.",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "start": 0,
+        "target": 6,
+        "visual": "numberline",
+        "unitLabel": "number-mark",
+        "lowFeedback": "Keep walking — count five more minutes at every number you pass.",
+        "highFeedback": "Past the 6 — back up. The 6-mark is the halfway point of the lap.",
+        "successFeedback": "The 6-mark is 6 fives = 30 minutes: half past. A full lap (back to 12) would be 12 fives — the whole hour."
+      },
+      "predict": {
+        "prompt": "You'll walk the minute hand around to the 6. When it points at the 6, how many minutes have passed?",
+        "options": [
+          {
+            "id": "thirty",
+            "label": "More than 6 minutes"
+          },
+          {
+            "id": "six",
+            "label": "Exactly 6 minutes"
+          },
+          {
+            "id": "fewer",
+            "label": "Fewer than 6 minutes"
+          }
+        ],
+        "outcomeId": "thirty",
+        "reveal": "Each number the hand passes is worth FIVE minutes, not one — reaching the 6 takes six fives of minutes, far more than six."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents read clock.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for read clock must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines read clock."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:read-clock",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The drifting hour hand.",
+      "conceptTag": "read-clock",
+      "explanationVariants": [
+        "The hour hand travels WITH the minutes — at half past, it has drifted halfway to the next number.",
+        "That drift is a feature: on a clock with no minute hand at all, the short hand's position still tells you roughly how far into the hour you are."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "At 7:30, where is the HOUR hand?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Halfway between the 7 and the 8",
+            "correct": true,
+            "feedback": "Half the hour gone, half the walk done — the short hand drifts as the minutes pass."
+          },
+          {
+            "id": "b",
+            "label": "Exactly on the 7",
+            "feedback": "It sits ON the 7 only at 7:00 sharp. By half past, it has crept halfway toward 8 — it never waits."
+          },
+          {
+            "id": "c",
+            "label": "On the 6",
+            "feedback": "The 6 is where the MINUTE hand points at :30. The hour hand lives between its two numbers: 7 and 8."
+          },
+          {
+            "id": "d",
+            "label": "Exactly on the 8",
+            "feedback": "It reaches the 8 only when 8:00 arrives — at 7:30 it's mid-journey, halfway there."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "read-clock",
+        "form": "hourBetween"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The playground argument.",
+      "conceptTag": "read-clock",
+      "hints": [
+        "Which hand is SHORT? That one names the hour.",
+        "Short hand a bit past 2 → the hour is 2. Long hand on the 4 → apply the fives code.",
+        "The wrong reading treated the long hand as the hour."
+      ],
+      "explanationVariants": [
+        "Short hand past 2 makes the hour 2; long hand at the 4-mark is 4 × 5 = 20 minutes: 2:20. The 4:10 reading swapped the hands — the long hand became 'hour 4' and the short hand near 2 became 'the 2-mark, 10 minutes.'",
+        "Swap-check: a real 4:10 would need the SHORT hand near 4 and the long hand at the 2-mark — the opposite of this clock."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A clock shows: SHORT hand a bit past the 2, LONG hand on the 4. Dee reads it as 4:10. What time is it really — and what went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2:20 — Dee swapped the hands (and read the 2-mark as ten minutes)",
+            "correct": true,
+            "feedback": "Hour from the short hand (2), minutes from the long one (4-mark = 20). Dee ran the whole read backwards."
+          },
+          {
+            "id": "b",
+            "label": "4:10 — Dee is right",
+            "feedback": "Check which hand is which: the SHORT hand names the hour, and it's near 2, not 4. The long hand at the 4-mark counts 20 minutes."
+          },
+          {
+            "id": "c",
+            "label": "2:04",
+            "feedback": "Right hour, wrong code — the long hand's 4-mark counts by fives: 20 minutes, not 4."
+          },
+          {
+            "id": "d",
+            "label": "4:02",
+            "feedback": "Hands swapped AND the fives code skipped — short-near-2 names hour 2, and the 4-mark carries 20 minutes: 2:20."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "read-clock",
+        "form": "readHands"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can read any clock face now.",
+      "takeaways": [
+        "Short hand names the hour; long hand counts the minutes — read short first.",
+        "Minute marks count by fives: the 8-mark is 40, never 8.",
+        "The hour hand drifts with the minutes — halfway through the hour, halfway to the next number."
+      ],
+      "teaser": "next: saying times sideways — 'ten to eight' and 'quarter past.'"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "read-clock",
+      "concept": {
+        "id": "rem-rc-c",
+        "kind": "concept",
+        "body": "Quick rewind. Memory hook: **the SHORT hand has the SHORT job** — point at one number and name the hour. The LONG hand runs the LONG lap, counting all sixty minutes. Short first, long second, every read."
+      },
+      "check": {
+        "id": "rem-rc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "read-clock",
+        "explanationVariants": [
+          "Short at 3 names hour 3; long at 12 means zero minutes: 3:00.",
+          "The 12 is the minute hand's starting gate — a fresh hour."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "SHORT hand on the 3, LONG hand on the 12. The time is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "3:00",
+              "correct": true,
+              "feedback": "Hour 3, minutes zero — clean and simple."
+            },
+            {
+              "id": "b",
+              "label": "12:15",
+              "feedback": "Swapped — the short hand names the hour, and it points at 3. The long hand at 12 means the hour just began."
+            },
+            {
+              "id": "c",
+              "label": "3:12",
+              "feedback": "The long hand at 12 is minute ZERO — the top of the lap, not twelve minutes."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,481 @@
+{
+ "id": "cr-04-03",
+ "slug": "power-of-a-point",
+ "title": "Power of a Point",
+ "courseId": "circle-theorems",
+ "chapterId": "ch4-secants-power",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cr-power-point",
+   "concept": {
+    "id": "rem-cr-power-point-c",
+    "kind": "concept",
+    "body": "Power of a point: every line through P meets the circle in two points whose distances from P multiply to the SAME number. Inside (crossing chords): piece × piece = piece × piece. Outside (secants): external × whole = external × whole. Tangent limit: PT² = external × whole. The engine is AA similarity from same-arc inscribed angles."
+   },
+   "check": {
+    "id": "rem-cr-power-point-k",
+    "kind": "check",
+    "body": "One product.",
+    "conceptTag": "cr-power-point",
+    "explanationVariants": [
+     "3 · 8 = 24 = 4x ⇒ x = 6.",
+     "Match the products: x = 24/4 = 6."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Chords cross at P: pieces 3 and 8 on one, 4 and x on the other. x = ?",
+     "answer": 6,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 7,
+       "feedback": "7 = 3 + 8 − 4 adds — the law multiplies: 24/4 = 6."
+      },
+      {
+       "value": 24,
+       "feedback": "24 is the shared product — x is its factor partner: 24/4 = 6."
+      }
+     ],
+     "fallbackFeedback": "x = (3 · 8)/4 = 6."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "From angles to lengths. Two chords crossing at P inside a circle obey **PA · PB = PC · PD**: the products of the two pieces match. Why: joining the endpoints creates two triangles with equal inscribed angles (same arcs) — similar by AA, from the similarity course — and the proportion cross-multiplies into the product rule.",
+   "figure": "cr-two-chords"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Crossing chords.",
+   "conceptTag": "cr-power-point",
+   "explanationVariants": [
+    "4 · 6 = 3 · x, so x = 24/3 = 8.",
+    "Match the piece products: 24 = 3x ⇒ 8."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Two chords cross inside a circle. One is split into pieces 4 and 6; the other into 3 and x. Find x.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "first piece",
+      "value": 4
+     },
+     {
+      "id": "b",
+      "label": "second piece",
+      "value": 6
+     },
+     {
+      "id": "c",
+      "label": "known piece of other chord",
+      "value": 3
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "a"
+      },
+      "right": {
+       "op": "const",
+       "id": "b"
+      }
+     },
+     "right": {
+      "op": "const",
+      "id": "c"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 7,
+      "feedback": "7 = 4 + 6 − 3 plays an addition game — the rule MULTIPLIES pieces: 4·6 = 3x ⇒ x = 8."
+     },
+     {
+      "value": 4.5,
+      "feedback": "4.5 = 3·6/4 shuffles into a proportion of the wrong pairs — products of SAME-chord pieces match: 24/3 = 8."
+     },
+     {
+      "value": 24,
+      "feedback": "24 = 4 · 6 is the power itself (the matched product) — x is its partner piece: 24/3 = 8."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "x = (4 · 6)/3 = 8.",
+    "successFeedback": "x = (4 · 6)/3 = 8."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-power-point__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Outside the circle the same law holds in costume: for two secants from P, **PA · PB = PC · PD**, where both distances are measured FROM P — so each product is the secant's **external part times its whole length**. Same AA-similarity engine, same matched products.",
+   "figure": "cr-secant-secant"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Two secants.",
+   "conceptTag": "cr-power-point",
+   "explanationVariants": [
+    "First secant: 5 × 12 = 60. Second: 4 × (4 + x) = 60 ⇒ 4 + x = 15 ⇒ x = 11.",
+    "Match external-times-whole on both: x = 11."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "From external point P, one secant has external part 5 and whole length 12. A second secant has external part 4; its chord (the part inside the circle) has length x. Find x.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "e1",
+      "label": "external part 1",
+      "value": 5
+     },
+     {
+      "id": "w1",
+      "label": "whole secant 1",
+      "value": 12
+     },
+     {
+      "id": "e2",
+      "label": "external part 2",
+      "value": 4
+     }
+    ],
+    "approxFormula": {
+     "op": "subtract",
+     "left": {
+      "op": "divide",
+      "left": {
+       "op": "multiply",
+       "left": {
+        "op": "const",
+        "id": "e1"
+       },
+       "right": {
+        "op": "const",
+        "id": "w1"
+       }
+      },
+      "right": {
+       "op": "const",
+       "id": "e2"
+      }
+     },
+     "right": {
+      "op": "const",
+      "id": "e2"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 15,
+      "feedback": "15 = 60/4 is the second secant's WHOLE length — the chord is what's left after the external 4: 15 − 4 = 11."
+     },
+     {
+      "value": 8.75,
+      "feedback": "8.75 = 5·7/4 multiplied external × internal — the rule pairs external × WHOLE: 5·12 = 4·(4 + x) ⇒ 11."
+     },
+     {
+      "value": 60,
+      "feedback": "60 is the power of the point (each matched product) — x solves 4(4 + x) = 60: x = 11."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "4(4 + x) = 60 ⇒ x = 11.",
+    "successFeedback": "4(4 + x) = 60 ⇒ x = 11."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-power-point__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Let one secant rotate until its two intersection points merge: it becomes a **tangent**, and near × far collapses to **PT · PT = PT²**. The tangent-secant law: **PT² = PA · PB** (external × whole). One law, three costumes — chords, secants, tangent — all called the *power of the point* P.",
+   "figure": "cr-tangent-secant"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Tangent-secant.",
+   "conceptTag": "cr-power-point",
+   "explanationVariants": [
+    "PT² = 4 × 9 = 36, so PT = 6.",
+    "External 4, whole 9: PT = √36 = 6."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "From P, a secant has external part 4 and whole length 9. Find the tangent segment PT from the same point.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "e",
+      "label": "external part",
+      "value": 4
+     },
+     {
+      "id": "w",
+      "label": "whole secant",
+      "value": 9
+     }
+    ],
+    "approxFormula": {
+     "op": "sqrt",
+     "arg": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "e"
+      },
+      "right": {
+       "op": "const",
+       "id": "w"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 36,
+      "feedback": "36 is PT SQUARED — take the root: 6."
+     },
+     {
+      "value": 20,
+      "feedback": "20 = 4 × 5 multiplied external × internal-chord — the law pairs external × WHOLE: 4 × 9 = 36, PT = 6."
+     },
+     {
+      "value": 4.47,
+      "feedback": "4.47 = √20 roots the wrong product — use external × whole: √36 = 6."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "PT = √(4 · 9) = 6.",
+    "successFeedback": "PT = √(4 · 9) = 6."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-power-point__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Spot the similarity.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "The crossing-chords proof joins chord endpoints to form two triangles. Why are they similar?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Two pairs of inscribed angles stand on the same arcs (plus vertical angles at P) — AA similarity",
+      "correct": true,
+      "feedback": "Same-arc inscribed angles are congruent (ch1's corollary); AA fires, and the side proportion cross-multiplies into PA·PB = PC·PD."
+     },
+     {
+      "id": "o2",
+      "label": "They're congruent by SSS",
+      "correct": false,
+      "feedback": "The triangles are usually different SIZES — it's similarity (AA), and the proportion becomes the product rule."
+     },
+     {
+      "id": "o3",
+      "label": "Both contain the center",
+      "correct": false,
+      "feedback": "The center may lie in neither — the engine is same-arc inscribed angles giving AA."
+     },
+     {
+      "id": "o4",
+      "label": "They're both right triangles",
+      "correct": false,
+      "feedback": "Right angles aren't guaranteed anywhere in the figure — the matched INSCRIBED angles (same arcs) supply the AA."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The power, named.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "P sits inside a circle. One chord through P splits into 2 and 9. EVERY chord through P splits into pieces whose product is ?",
+    "answer": 18,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 11,
+      "feedback": "11 = 2 + 9 adds — the invariant is the PRODUCT: 2 × 9 = 18, the same for every chord through P."
+     },
+     {
+      "value": 4.5,
+      "feedback": "4.5 = 9/2 divides — the power multiplies: 18."
+     }
+    ],
+    "fallbackFeedback": "2 × 9 = 18 — the power of P: one number, every chord."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Distance to the well.",
+   "conceptTag": "cr-power-point",
+   "hints": [
+    "The sight line grazing the rim is a TANGENT; the walk straight to the far side is a SECANT through the center.",
+    "PT² = external × whole = d × (d + 14), with PT = 12 and diameter 14.",
+    "144 = d² + 14d — rearrange to d² + 14d − 144 = 0 and use the quadratic formula."
+   ],
+   "explanationVariants": [
+    "d² + 14d − 144 = 0 doesn't factor over the integers — the quadratic formula gives d = (−14 + √(196 + 576))/2 = (−14 + √772)/2 ≈ 6.89 m (the negative root is unphysical).",
+    "d = (−14 + √772)/2 ≈ 6.89 m by the quadratic formula."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "You stand distance d from the NEAR rim of a circular well of diameter 14 m. Your tangent sight line to the rim measures 12 m. Find d (2 decimals).",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "d",
+      "label": "well diameter",
+      "value": 14
+     },
+     {
+      "id": "t",
+      "label": "tangent sight length",
+      "value": 12
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "add",
+      "left": {
+       "op": "negate",
+       "arg": {
+        "op": "const",
+        "id": "d"
+       }
+      },
+      "right": {
+       "op": "sqrt",
+       "arg": {
+        "op": "add",
+        "left": {
+         "op": "multiply",
+         "left": {
+          "op": "const",
+          "id": "d"
+         },
+         "right": {
+          "op": "const",
+          "id": "d"
+         }
+        },
+        "right": {
+         "op": "multiply",
+         "left": {
+          "op": "lit",
+          "value": 4
+         },
+         "right": {
+          "op": "multiply",
+          "left": {
+           "op": "const",
+           "id": "t"
+          },
+          "right": {
+           "op": "const",
+           "id": "t"
+          }
+         }
+        }
+       }
+      }
+     },
+     "right": {
+      "op": "lit",
+      "value": 2
+     }
+    },
+    "approxRound": 2,
+    "answerMode": "numeric",
+    "tolerance": 0.05,
+    "numericErrors": [
+     {
+      "value": 12,
+      "feedback": "12 m is the TANGENT length — d solves d(d + 14) = 144, giving ≈ 6.89 m."
+     },
+     {
+      "value": 10.29,
+      "feedback": "10.29 = 144/14 divides the power by the diameter — the secant's whole length is d + 14, not 14: d(d + 14) = 144 ⇒ ≈ 6.89."
+     },
+     {
+      "value": 2,
+      "feedback": "2 solves d(d + 14) = 32-ish — the power is 12² = 144: d ≈ 6.89."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "d(d + 14) = 144 ⇒ d = (−14 + √772)/2 ≈ 6.89 m.",
+    "successFeedback": "d(d + 14) = 144 ⇒ d = (−14 + √772)/2 ≈ 6.89 m."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-power-point__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One invariant, three costumes.",
+   "takeaways": [
+    "Inside: crossing chords, PA·PB = PC·PD — AA similarity via same-arc inscribed angles.",
+    "Outside: secants pair external × WHOLE; the tangent limit gives PT² = external × whole.",
+    "The matched product is the POWER of the point — one number for every line through P."
+   ],
+   "teaser": "Final chapter: arc lengths, sector areas, and quadrilaterals that live on the circle."
+  }
+ ]
+}

@@ -1,0 +1,299 @@
+{
+  "id": "ti-01-01",
+  "slug": "the-plus-2pik-move",
+  "title": "General Solutions: the +2πk Move",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch1-general-solutions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "On [0, 2π), sin x = 1/2 gave two solutions (recall the twins π/6 and 5π/6). But sine repeats every 2π forever, so EVERY solution is one of those two **plus any whole number of turns**:\n\nx = π/6 + 2πk or x = 5π/6 + 2πk, k any integer.\n\nTwo families capture infinitely many answers.",
+      "figure": "ti-twin-ladder"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why the answers come in families.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 150,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 150°. Then keep going a full turn and watch what happens to the coordinates.",
+        "successFeedback": "At 150° the coordinates are fixed — and a full turn later, at 510°, they are exactly the same point. That is why every trig equation has infinitely many solutions: the circle does not remember how many laps you took. The +2πk is the lap counter.",
+        "lowFeedback": "Not far enough round — 150° sits between 90° and 180°.",
+        "highFeedback": "Past 150° — come back."
+      },
+      "predict": {
+        "prompt": "When the point moves to 90°, which coordinate becomes 1?",
+        "options": [
+          {
+            "id": "x",
+            "label": "The horizontal coordinate, cosine"
+          },
+          {
+            "id": "y",
+            "label": "The vertical coordinate, sine"
+          },
+          {
+            "id": "both",
+            "label": "Both coordinates"
+          }
+        ],
+        "outcomeId": "y",
+        "reveal": "At 90°, the unit-circle point is (0,1), so sine is 1 and cosine is 0."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move the angle and coordinate the circle point, triangle ratios, and trigonometric values.",
+        "invariants": [
+          "radius-remains-one",
+          "coordinates-are-cosine-and-sine"
+        ],
+        "misconceptions": [
+          "sine-is-horizontal",
+          "angle-size-is-arc-height"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "trig-identities-equations-unitCircleExplore",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this unitCircleExplore away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why are cosine and sine the point's coordinates?",
+          "options": [
+            {
+              "id": "projection",
+              "label": "They are the horizontal and vertical projections of a radius of length one.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "labels",
+              "label": "They are arbitrary labels attached to the axes.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "arc",
+              "label": "They both equal the arc length.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "ti-general"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Backwards too.",
+      "conceptTag": "ti-general",
+      "explanationVariants": [
+        "k = −1 gives π/6 − 2π = −11π/6 ≈ −5.76 — negative angles are members too; sin(−11π/6) = 1/2 ✓.",
+        "The ladder runs both directions: every integer k, including negatives."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which value belongs to the family x = π/6 + 2πk?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π/6 − 2π (k = −1)",
+            "correct": true,
+            "feedback": "Right — negative k just spins backwards; the sine is still 1/2 there."
+          },
+          {
+            "id": "o2",
+            "label": "π/6 + π",
+            "feedback": "Adding HALF a turn lands at 7π/6, where sin = −1/2. The family steps by FULL turns 2π."
+          },
+          {
+            "id": "o3",
+            "label": "5π/6",
+            "feedback": "5π/6 solves the equation but belongs to the OTHER family (5π/6 + 2πk) — the twin, not this ladder."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-general__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why two families and not one? Because 2π-stepping from π/6 never reaches 5π/6 (they differ by 2π/3, not a multiple of 2π). The complete answer is always: **each [0, 2π) solution founds its own +2πk family**. Same recipe for cosine with its twins x₁ and 2π − x₁.",
+      "figure": "ti-two-families"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count in a bigger window.",
+      "conceptTag": "ti-general",
+      "explanationVariants": [
+        "Each of the 2 families contributes one member per full turn; [0, 6π) holds 3 turns: 2 × 3 = 6 solutions.",
+        "List them: π/6, 5π/6, then +2π: 13π/6, 17π/6, then +4π: 25π/6, 29π/6 — six."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does sin x = 1/2 have on [0, 6π)?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the count in ONE turn [0, 2π). Three turns triple it: 6."
+          },
+          {
+            "value": 3,
+            "feedback": "Each turn contributes TWO (the twins), not one: 3 turns × 2 = 6."
+          }
+        ],
+        "fallbackFeedback": "2 per turn × 3 turns = 6."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-general__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Write cosine's general answer.",
+      "conceptTag": "ti-general",
+      "explanationVariants": [
+        "cos x = 1/2: base solutions π/3 and 5π/3 (recall 2π − π/3); each grows a +2πk family.",
+        "Two families from the two [0, 2π) twins, stepped by full turns."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The GENERAL solution of cos x = 1/2 is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = π/3 + 2πk or x = 5π/3 + 2πk",
+            "correct": true,
+            "feedback": "Right — cosine's twin pair (x₁ and 2π − x₁), each carrying its own 2πk ladder."
+          },
+          {
+            "id": "o2",
+            "label": "x = π/3 + 2πk only",
+            "feedback": "That misses half the answers — 5π/3, 11π/3, … all have cosine 1/2 too. Two families."
+          },
+          {
+            "id": "o3",
+            "label": "x = π/3 + πk",
+            "feedback": "Stepping by π flips the sign every step: π/3 + π = 4π/3 has cosine −1/2. Full turns only: 2πk, two families."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-general__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Pick the members in a window.",
+      "conceptTag": "ti-general",
+      "explanationVariants": [
+        "Families π/6 + 2πk and 5π/6 + 2πk intersected with [2π, 4π): 13π/6 and 17π/6 — their sum is 30π/6 = 5π ≈ 15.71.",
+        "One member from each family lands in the third turn: 13π/6 ≈ 6.81 and 17π/6 ≈ 8.90; sum ≈ 15.71."
+      ],
+      "hints": [
+        "Add 2π to each base solution π/6 and 5π/6.",
+        "13π/6 ≈ 6.81 and 17π/6 ≈ 8.90 — both inside [2π, 4π)?",
+        "2π ≈ 6.28 and 4π ≈ 12.57: yes. Sum them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sum the solutions of sin x = 1/2 that lie in [2π, 4π), to hundredths.",
+        "answer": 15.71,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 3.14,
+            "feedback": "π is the sum of the BASE pair π/6 + 5π/6. Each gained 2π in this window: total π + 4π = 5π ≈ 15.71."
+          },
+          {
+            "value": 6.81,
+            "feedback": "6.81 is just 13π/6, one member. Add its twin 17π/6 ≈ 8.90: ≈ 15.71."
+          }
+        ],
+        "fallbackFeedback": "13π/6 + 17π/6 = 5π ≈ 15.71."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-general__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two seeds, infinite ladders.",
+      "takeaways": [
+        "General solution = each [0, 2π) twin + 2πk.",
+        "k ranges over ALL integers, negatives included.",
+        "Solutions per window = (families) × (turns in the window)."
+      ],
+      "teaser": "Next: tangent's ladder is twice as dense — and one family suffices."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-general",
+      "concept": {
+        "id": "rem-ti0101-c",
+        "kind": "concept",
+        "body": "Recipe: solve on [0, 2π) via the twins (recall), then append +2πk to EACH solution. Never merge distinct twins into one family."
+      },
+      "check": {
+        "id": "rem-ti0101-k",
+        "kind": "check",
+        "body": "One member test.",
+        "conceptTag": "ti-general",
+        "explanationVariants": [
+          "17π/6 = 5π/6 + 2π: a k = 1 member of the 5π/6 family; sin(17π/6) = 1/2 ✓.",
+          "Subtract full turns until you land in [0, 2π): 17π/6 − 2π = 5π/6, a base solution."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Is 17π/6 a solution of sin x = 1/2?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Yes — it's 5π/6 + 2π",
+              "correct": true,
+              "feedback": "Right — strip one full turn and the base twin appears."
+            },
+            {
+              "id": "o2",
+              "label": "No — it's bigger than 2π",
+              "feedback": "Solutions live beyond [0, 2π) too — that's the whole point of +2πk. 17π/6 − 2π = 5π/6 ✓."
+            },
+            {
+              "id": "o3",
+              "label": "No — sin(17π/6) = −1/2",
+              "feedback": "17π/6 is one FULL turn past 5π/6, so the sine is unchanged: +1/2."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

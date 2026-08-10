@@ -1,0 +1,205 @@
+{
+  "id": "iar-03-02",
+  "slug": "the-corner-principle",
+  "title": "The Corner Principle",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch3-best-point-wins",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Plans differ in value. If profit is P = 2x + y, every feasible point has a score — and we want the highest. Here's the gift: on a straight-fenced region, the maximum of a linear objective always lands ON A CORNER. So don't search the infinite interior; interview the two or three corners.",
+      "figure": "iar-optimum-at-corner"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Score the corners.",
+      "conceptTag": "iar-corner-principle",
+      "explanationVariants": [
+        "P = 2x + y at (6, 0) is 12 — beating (0, 0)'s 0 and (0, 6)'s 6.",
+        "The corner scores are 0, 12, 6; the all-muffin corner wins with 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Feasible triangle corners: (0, 0), (6, 0), (0, 6). For P = 2x + y, what is the LARGEST corner score?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's (0, 6)'s score. (6, 0) earns 2·6 + 0 = 12 — muffins pay double."
+          },
+          {
+            "value": 18,
+            "feedback": "That would need (6, 6) — infeasible. The best corner is (6, 0) at 12."
+          },
+          {
+            "value": 0,
+            "feedback": "The origin scores 0 — the worst corner, not the best."
+          }
+        ],
+        "fallbackFeedback": "Score every corner: P(0,0) = 0, P(6,0) = 12, P(0,6) = 6. The best is 12 — and it sits at a corner, not inside."
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the objective sweep.",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "Slide P: the line 2x + y = P sweeps across the plane. Estimate the LARGEST P whose line still touches the feasible triangle.",
+        "min": 1,
+        "max": 20,
+        "start": 1,
+        "target": 12,
+        "acceptFactor": 1.1,
+        "unitLabel": "profit",
+        "ticks": [
+          4,
+          8,
+          12,
+          16,
+          20
+        ],
+        "lowFeedback": "The line still cuts through the region — richer plans remain. Push P higher.",
+        "highFeedback": "The line has left the triangle entirely — no feasible plan earns that much.",
+        "successFeedback": "P = 12: the sweeping line's last touch is exactly the corner (6, 0). That's WHY corners win — a straight line leaving a straight-sided region exits through a vertex."
+      },
+      "predict": {
+        "prompt": "As P grows, the line 2x + y = P slides without tilting. Its LAST contact with the region will be…",
+        "options": [
+          {
+            "id": "corner",
+            "label": "A corner"
+          },
+          {
+            "id": "middle",
+            "label": "A point mid-edge only"
+          },
+          {
+            "id": "inside",
+            "label": "An interior point"
+          }
+        ],
+        "outcomeId": "corner",
+        "reveal": "A straight line sliding across a polygon exits through a vertex (or, in ties, a whole edge ending in vertices). Either way a corner attains the maximum — that's the corner principle, seen rather than memorized."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the algorithm is short: find the corners (boundary pairs), score each with the objective, keep the best. Different objectives crown different corners — P = x + 3y on the same triangle pays (0, 6) eighteen, dethroning (6, 0). The region sets the menu; the objective picks the meal.",
+      "figure": "iar-corner-algorithm"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "New objective, new king.",
+      "conceptTag": "iar-corner-principle",
+      "explanationVariants": [
+        "P = x + 3y scores the corners 0, 6, 18 — the all-scone corner (0, 6) now wins.",
+        "Tripling y's pay moves the crown: 0 + 3·6 = 18 beats 6 + 0 = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same corners (0, 0), (6, 0), (0, 6), new objective P = x + 3y. What is the best score now?",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That was the OLD objective's champion. With y paying 3, (0, 6) earns 18."
+          },
+          {
+            "value": 6,
+            "feedback": "That's (6, 0)'s new score — muffins only pay 1 apiece now."
+          },
+          {
+            "value": 24,
+            "feedback": "24 would need (6, 6): infeasible then, infeasible still."
+          }
+        ],
+        "fallbackFeedback": "New objective, same corners: P(0,0) = 0, P(6,0) = 6, P(0,6) = 18. Changing the objective can move the winner to a different corner."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Minimums obey corners too.",
+      "conceptTag": "iar-corner-principle",
+      "explanationVariants": [
+        "The minimum also lands on a corner: cost C = x + y is smallest at (0, 0), scoring 0.",
+        "Corner scores 0, 6, 6 — the cheapest plan is the origin, doing nothing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For COST C = x + y on the same triangle, what is the smallest corner score?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "Both loaded corners cost 6, but (0, 0) costs nothing — minima ride corners too."
+          },
+          {
+            "value": 12,
+            "feedback": "12 was the MAXIMUM of the profit objective — under cost C = x + y the corners score 0, 6, and 6, and the minimum is 0."
+          }
+        ],
+        "fallbackFeedback": "Cost wants the SMALLEST score: C(0,0) = 0 beats every other corner. Minimizing and maximizing both happen at corners."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tie on an edge.",
+      "conceptTag": "iar-corner-principle",
+      "explanationVariants": [
+        "P = x + y scores (6, 0) and (0, 6) equally at 6 — the objective line is parallel to the cap edge, so the WHOLE edge is optimal, corners included.",
+        "Both cap-line corners score 6; every point between them does too, since x + y = 6 along that edge."
+      ],
+      "hints": [
+        "Score all three corners under P = x + y.",
+        "(6, 0) → 6 and (0, 6) → 6. What does x + y equal along the whole line between them?",
+        "The edge IS x + y = 6: the objective is constant along it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Under P = x + y, corners (6, 0) and (0, 6) tie at 6. Which feasible plans achieve the maximum?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Every point on the edge x + y = 6",
+            "correct": true,
+            "feedback": "The objective runs parallel to that boundary, so the entire edge maxes out — with its corners still among the winners."
+          },
+          {
+            "id": "o2",
+            "label": "Only the two corners",
+            "correct": false,
+            "feedback": "The midpoint (3, 3) also scores 3 + 3 = 6 — the whole edge ties."
+          },
+          {
+            "id": "o3",
+            "label": "The centroid of the triangle",
+            "correct": false,
+            "feedback": "Interior points satisfy x + y < 6 — strictly poorer than the edge."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Interview the corners.",
+      "takeaways": [
+        "Linear objectives peak (and bottom out) at vertices.",
+        "Algorithm: find corners → score → keep the best.",
+        "Ties spread along an edge, but a corner always shares the crown."
+      ],
+      "teaser": "next: one full plan, start to finish — constraints, corners, best choice."
+    }
+  ]
+}

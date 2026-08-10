@@ -1,0 +1,311 @@
+{
+  "id": "cx-04-02",
+  "slug": "area-by-box-method",
+  "title": "Area by the Box Method",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch4-perimeter-area",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-area-box",
+      "concept": {
+        "id": "rem-cx-area-box-c",
+        "kind": "concept",
+        "body": "Box method: enclose the polygon in the smallest axis-aligned rectangle (width and height are coordinate differences), then subtract the right-triangle corners — each has axis-aligned legs, so each area is ½(leg)(leg) read straight from coordinates. Box minus corners = polygon area. Cross-check with any formula route available."
+      },
+      "check": {
+        "id": "rem-cx-area-box-k",
+        "kind": "check",
+        "body": "One box.",
+        "conceptTag": "cx-area-box",
+        "explanationVariants": [
+          "Box: 4 × 4 = 16; corners: ½(4)(2) = 4 and ½(4)(2) = 4 — the figure keeps 16 − 8.",
+          "16 − 8 = 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Triangle (0, 0), (4, 2), (0, 4). Box = 16, corner triangles total 8. Area = ?",
+          "answer": 8,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 is the box — the triangle keeps box minus corners: 8."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is ONE corner — subtract their TOTAL (8) from 16: 8."
+            }
+          ],
+          "fallbackFeedback": "16 − 8 = 8."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Slanted figures resist base-times-height — so BOX them. Draw the smallest axis-aligned rectangle containing the figure, then subtract the right-triangle corners (each a half-rectangle, trivially priced). Box minus corners = area. Every subtracted piece has axis-aligned legs: no distance formula needed at all.",
+      "figure": "cx-box-method"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Box the triangle.",
+      "conceptTag": "cx-area-box",
+      "explanationVariants": [
+        "The box spans x: 1..5 and y: 1..7 — dimensions 4 × 6 = 24.",
+        "Smallest containing rectangle: 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle (1, 1), (5, 3), (3, 7) — chapter 3's right-isosceles friend. First step: the bounding box's area = ?",
+        "answer": 24,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the final TRIANGLE area — the box comes first: (5−1)(7−1) = 24, corners next."
+          },
+          {
+            "value": 28,
+            "feedback": "28 uses a 4 × 7 box — y spans 1 to 7, a height of 6: 4 × 6 = 24."
+          },
+          {
+            "value": 20,
+            "feedback": "20 = 4 × 5 misreads the height — the box is 4 wide, 6 tall: 24."
+          }
+        ],
+        "fallbackFeedback": "(5 − 1)(7 − 1) = 24."
+      },
+      "variant": {
+        "gen": "coord-area-box"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtract the corners.",
+      "conceptTag": "cx-area-box",
+      "explanationVariants": [
+        "Corners: ½(4)(2) = 4, ½(2)(4) = 4, ½(2)(6) = 6 — total 14.",
+        "24 − 14 = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same box (24). The three right-triangle corners have areas 4, 4, and 6. The triangle's area = ?",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is the CORNERS' total — the triangle is what remains: 24 − 14 = 10."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the whole box — subtract the corners: 10."
+          },
+          {
+            "value": 5,
+            "feedback": "5 halves the answer — the corners were already halved individually: 24 − 14 = 10."
+          }
+        ],
+        "fallbackFeedback": "24 − 14 = 10."
+      },
+      "variant": {
+        "gen": "coord-area-box",
+        "form": "cornerSubtract"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Cross-check with chapter 3's classification: this triangle was RIGHT and ISOSCELES with legs √20 — so its area is ½(√20)(√20) = ½(20) = 10. Two completely different routes, one answer. Coordinate geometry keeps auditing itself; when routes disagree, one of them is lying.",
+      "figure": "cx-box-classify"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The audit pays.",
+      "conceptTag": "cx-area-box",
+      "explanationVariants": [
+        "Legs √20 and √20: ½ · √20 · √20 = ½ · 20.",
+        "√20 × √20 = 20 exactly — no decimals needed: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Verify by the leg route: ½ × √20 × √20 = ?",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is √20 × √20 — the ½ still applies: 10."
+          },
+          {
+            "value": 4.47,
+            "feedback": "4.47 ≈ √20 is one LEG — the area multiplies both legs and halves: 10."
+          },
+          {
+            "value": 40,
+            "feedback": "40 doubles — ½(20) = 10, matching the box method exactly."
+          }
+        ],
+        "fallbackFeedback": "½(20) = 10 — the box method's answer, re-proved."
+      },
+      "variant": {
+        "gen": "coord-area-box",
+        "form": "legRoute"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "When the box shines.",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "answerMode": "choice",
+        "prompt": "The box method's real advantage over cutting a figure into arbitrary triangles:",
+        "coordinateProof": {
+          "kind": "boxAdvantage",
+          "points": [
+            {
+              "id": "A",
+              "label": "A",
+              "x": 0,
+              "y": 0
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "x": 8,
+              "y": 2
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "x": 10,
+              "y": 8
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "x": 2,
+              "y": 6
+            }
+          ]
+        },
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "o1",
+            "label": "Every subtracted corner has AXIS-ALIGNED legs — areas read straight off coordinate differences, no distance formula, no slant heights",
+            "claim": "area:box-axis-aligned-corners",
+            "feedback": "That's the whole trick: the box converts one slanted problem into several unslanted ones. Legs = coordinate differences, done."
+          },
+          {
+            "id": "o2",
+            "label": "It works even for circles",
+            "claim": "wrong:o2",
+            "feedback": "Curved boundaries defeat corner-subtraction — the box serves POLYGONS, where every corner cut is a right triangle."
+          },
+          {
+            "id": "o3",
+            "label": "It avoids subtraction",
+            "claim": "wrong:o3",
+            "feedback": "Subtraction is its engine — what it avoids is slant-height computation, since every corner leg is axis-aligned."
+          },
+          {
+            "id": "o4",
+            "label": "It's always fewer steps than any other method",
+            "claim": "wrong:o4",
+            "feedback": "Next lesson's shoelace often beats it on step count — the box's virtue is that each step is trivial."
+          }
+        ],
+        "numericErrors": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "successFeedback": "That's the whole trick: the box converts one slanted problem into several unslanted ones. Legs = coordinate differences, done.",
+        "explorationFeedback": "Open at least two coordinate-proof states before checking.",
+        "fallbackFeedback": "Inspect the coordinate invariants, then choose the supported conclusion."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A quadrilateral, boxed.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Quadrilateral (0, 0), (8, 2), (10, 8), (2, 6). Its bounding box is 10 × 8 = 80, and the four corner triangles total 36. Area = ?",
+        "answer": 44,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "36 is the CORNERS' total — the figure keeps the rest: 80 − 36 = 44."
+          },
+          {
+            "value": 80,
+            "feedback": "80 is the whole box — subtract the corners: 44."
+          }
+        ],
+        "fallbackFeedback": "80 − 36 = 44 — remember this number; next lesson recomputes it in one line."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Trapezoid three ways.",
+      "conceptTag": "cx-area-box",
+      "hints": [
+        "Route 1: the Grade-7 trapezoid formula — the parallel bases are 8 and 4, the height is 4.",
+        "Route 2 (audit): box 8 × 4 = 32 minus two corner triangles of ½(2)(4) each.",
+        "Both routes must agree."
+      ],
+      "explanationVariants": [
+        "Formula: (8 + 4)/2 × 4 = 24. Box: 32 − 4 − 4 = 24. Agreement — the coordinate audit co-signs g7's formula.",
+        "(8+4)/2 · 4 = 24 = 32 − 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Trapezoid (0, 0), (8, 0), (6, 4), (2, 4) — lesson 1's fence. Compute its area by ANY route.",
+        "answer": 24,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 32,
+            "feedback": "32 is the bounding BOX — subtract the two corner triangles (4 each): 24."
+          },
+          {
+            "value": 48,
+            "feedback": "48 = 12 × 4 uses the SUM of bases un-averaged — the formula averages first: (8+4)/2 × 4 = 24."
+          },
+          {
+            "value": 20.94,
+            "feedback": "20.94 is this trapezoid's PERIMETER from lesson 1 — the area is (8+4)/2 × 4 = 24."
+          }
+        ],
+        "fallbackFeedback": "(8 + 4)/2 × 4 = 24, and the box route (32 − 8) agrees."
+      },
+      "variant": {
+        "gen": "coord-area-box",
+        "form": "trapezoidArea"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Box, subtract, audit.",
+      "takeaways": [
+        "Bounding box minus right-triangle corners — every cut has axis-aligned legs.",
+        "Cross-check areas by a second route (legs, g7 formulas): agreement is the proof of work.",
+        "The 44-area quadrilateral awaits a one-line method…"
+      ],
+      "teaser": "Next: the shoelace formula — areas from a single systematic sweep."
+    }
+  ]
+}

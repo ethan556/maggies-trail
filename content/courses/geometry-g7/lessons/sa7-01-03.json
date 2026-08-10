@@ -1,0 +1,296 @@
+{
+  "id": "sa7-01-03",
+  "slug": "surface-area-of-triangular-prisms-and-pyramids",
+  "title": "Surface Area of Triangular Prisms & Pyramids",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3c-wrapping-solids",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A triangular prism has two triangular ENDS and three rectangular SIDES. The ends match each other, so they still come as a pair; the sides usually do not match at all. Surface area is the same idea as before — add every face — but the bookkeeping has to be done honestly rather than by doubling three products.",
+      "figure": "sa7-triangular-prism-parts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Total the faces on a ledger.",
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A prism 10 long has right-triangle ends with legs 3 and 4 (hypotenuse 5). Add every face.",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "end1",
+            "label": "Triangular end",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 3,
+            "height": 4
+          },
+          {
+            "id": "end2",
+            "label": "Matching end",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 3,
+            "height": 4
+          },
+          {
+            "id": "side3",
+            "label": "Rectangle 3 × 10",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 10
+          },
+          {
+            "id": "side4",
+            "label": "Rectangle 4 × 10",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 4,
+            "height": 10
+          },
+          {
+            "id": "side5",
+            "label": "Rectangle 5 × 10",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 5,
+            "height": 10
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "c1",
+            "label": "132",
+            "value": 132,
+            "feedback": "Correct: two ends of 6 each, plus rectangles of 30, 40 and 50."
+          },
+          {
+            "id": "c2",
+            "label": "126",
+            "value": 126,
+            "feedback": "Only ONE triangular end was counted. A prism is closed at both ends."
+          },
+          {
+            "id": "c3",
+            "label": "144",
+            "value": 144,
+            "feedback": "The ends were computed as full rectangles. A triangle is half its base times height: 6, not 12."
+          },
+          {
+            "id": "c4",
+            "label": "120",
+            "value": 120,
+            "feedback": "That is the three rectangles alone — the two triangular ends are still missing."
+          }
+        ],
+        "fallbackFeedback": "Two ends at (3×4)/2 = 6 each, and rectangles 3×10, 4×10, 5×10. Total 12 + 120.",
+        "successFeedback": "132 square units. Every side rectangle is a side of the triangle times the prism's length — which is why the perimeter of the end times the length gives all three at once."
+      },
+      "predict": {
+        "prompt": "The three rectangular sides of a triangular prism — what do their widths equal?",
+        "options": [
+          {
+            "id": "equal",
+            "label": "All the same — they are matching faces"
+          },
+          {
+            "id": "sides",
+            "label": "The three SIDES of the triangular end"
+          },
+          {
+            "id": "length",
+            "label": "The prism's length, in each case"
+          }
+        ],
+        "outcomeId": "sides",
+        "reveal": "Each rectangle is glued to one edge of the triangle, so its width is that edge and its length is the prism's length. Add the three widths and you have the triangle's perimeter — which is why 'perimeter times length' produces the entire lateral surface in a single product."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One triangular end.",
+      "conceptTag": "sa7-sa-triangular",
+      "explanationVariants": [
+        "A right triangle with legs 3 and 4 has area (3×4)/2 = 6.",
+        "Half of base times height: half of 12 is 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the area of one triangular end with legs 3 and 4?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is 3×4, the whole rectangle. A triangle is half of it."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the hypotenuse — a length, not an area."
+          }
+        ],
+        "fallbackFeedback": "(3×4)/2 = 6 square units.",
+        "successFeedback": "6 — and the prism has two of these, one at each end."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The shortcut worth keeping is lateral surface = perimeter of the end × length. Here the perimeter is 3 + 4 + 5 = 12 and the length is 10, giving 120 in one step. Add the two ends and the prism is finished. The same rule works for ANY prism, whatever polygon its end happens to be.",
+      "figure": "sa7-lateral-shortcut"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use the shortcut.",
+      "conceptTag": "sa7-sa-triangular",
+      "explanationVariants": [
+        "Perimeter 12 times length 10 gives 120 for the three rectangles.",
+        "Perimeter times length collapses all the side faces into one product."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Perimeter of the end is 12, prism length is 10. What is the LATERAL surface area?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 132,
+            "feedback": "That is the whole surface area — lateral means the sides only, without the two ends."
+          },
+          {
+            "value": 22,
+            "feedback": "That adds perimeter and length. The rule multiplies them."
+          }
+        ],
+        "fallbackFeedback": "12 × 10 = 120 square units of sides.",
+        "successFeedback": "120 — and adding the two 6-unit ends gives the 132 you found on the ledger."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A pyramid instead.",
+      "conceptTag": "sa7-sa-triangular",
+      "explanationVariants": [
+        "A square pyramid has one square base and four triangular faces — five in all.",
+        "Pyramids come to a point, so their side faces are triangles, not rectangles."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many faces does a square pyramid have?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5 — a square base and four triangles",
+            "correct": true,
+            "feedback": "Right: pyramids taper to a point, so every side face is a triangle."
+          },
+          {
+            "id": "o2",
+            "label": "6 — like a box",
+            "correct": false,
+            "feedback": "A box has two matching ends; a pyramid has one base and a single apex."
+          },
+          {
+            "id": "o3",
+            "label": "4 — the triangles only",
+            "correct": false,
+            "feedback": "The base is a face too, unless the problem says the pyramid is open."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Assemble a pyramid.",
+      "conceptTag": "sa7-sa-triangular",
+      "explanationVariants": [
+        "Base 6×6 = 36, plus four triangles of (6×5)/2 = 15, giving 36 + 60 = 96.",
+        "One square plus four congruent triangles."
+      ],
+      "hints": [
+        "Handle the base and the four slanted faces separately.",
+        "The base is a 6 by 6 square; each triangular face has base 6 and slant height 5.",
+        "36 for the base, and four triangles of 15 each."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square pyramid has base edge 6 and slant height 5. What is its total surface area?",
+        "answer": 96,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "That is the four triangles alone — the square base has not been added."
+          },
+          {
+            "value": 36,
+            "feedback": "That is the base alone — the four slanted faces are still missing."
+          }
+        ],
+        "fallbackFeedback": "Base 6×6 = 36; each triangle (6×5)/2 = 15, four of them 60. Total 96.",
+        "successFeedback": "96 — base plus lateral, the same two-part bookkeeping every solid uses."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Ends plus sides.",
+      "takeaways": [
+        "A triangular prism has two matching triangular ends and three rectangular sides.",
+        "Lateral surface area of any prism is the end's perimeter times the prism's length.",
+        "A pyramid has one base and triangular faces meeting at an apex."
+      ],
+      "teaser": "Next: stop wrapping and start filling — how much fits inside a right prism."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa7-sa-triangular",
+      "concept": {
+        "id": "rem-sa7-sa-triangular-c",
+        "kind": "concept",
+        "body": "The shortcut worth keeping is lateral surface = perimeter of the end × length. Here the perimeter is 3 + 4 + 5 = 12 and the length is 10, giving 120 in one step. Add the two ends and the prism is finished. The same rule works for ANY prism, whatever polygon its end happens to be."
+      },
+      "check": {
+        "id": "rem-sa7-sa-triangular-k",
+        "kind": "check",
+        "body": "One triangular end.",
+        "conceptTag": "sa7-sa-triangular",
+        "explanationVariants": [
+          "A right triangle with legs 3 and 4 has area (3×4)/2 = 6.",
+          "Half of base times height: half of 12 is 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the area of one triangular end with legs 3 and 4?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "That is 3×4, the whole rectangle. A triangle is half of it."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is the hypotenuse — a length, not an area."
+            }
+          ],
+          "fallbackFeedback": "(3×4)/2 = 6 square units.",
+          "successFeedback": "6 — and the prism has two of these, one at each end."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "id": "pv2-03-01",
+  "slug": "rounding-to-any-place",
+  "title": "Rounding to Any Place",
+  "courseId": "place-value-million",
+  "chapterId": "ch3-rounding-any-place",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You already know the rounding rule: check the neighbor digit one spot to the right of where you're rounding. **That rule never changes, no matter how far left you round.** Rounding 428,619 to the nearest thousand? Check the hundreds digit (6). Since 6 ≥ 5, round up: **429,000.**",
+      "figure": "pv4-round-place"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rounding is a question about which side you are on.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 40000,
+        "max": 50000,
+        "step": 100,
+        "tickStep": 1000,
+        "target": 46800,
+        "start": 40000,
+        "prompt": "Place 46,800 on the line. Then look at which end of the line it is nearer.",
+        "successFeedback": "46,800 sits past the halfway mark of 45,000, so it is nearer 50,000 than 40,000 — that is what 'rounds up to 50,000' MEANS. Rounding is not a rule about the digit 6; it is a question about which side of halfway you landed.",
+        "lowFeedback": "Your marker is below 46,800. Slide it right.",
+        "highFeedback": "Your marker is above 46,800. Slide it left."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 46800 closer to 40000 or to 50000?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 40000"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 50000"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "max",
+        "reveal": "46800 sits 6800 from 40000 and 3200 from 50000 — the 50000 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "round-any-place",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round any place.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round any place must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round any place."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-million:round-any-place",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Round to the nearest thousand.",
+      "conceptTag": "round-any-place",
+      "explanationVariants": [
+        "The hundreds digit in 428,619 is 6, which is ≥5, so the thousands digit rounds up: 429,000.",
+        "Checking one place right of the thousands (the hundreds digit, 6) triggers a round-up to 429,000."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 428,619 to the nearest thousand.",
+        "answer": 429000,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 428000,
+            "feedback": "428,000 rounds down — but the hundreds digit (6) is 5 or more, which rounds UP: 429,000."
+          },
+          {
+            "value": 428600,
+            "feedback": "428,600 only rounds to the nearest hundred, not the nearest thousand. Rounding to the thousand gives 429,000."
+          }
+        ],
+        "fallbackFeedback": "Check the hundreds digit (one place right of thousands) to decide up or down."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same rule climbs even higher: round to the nearest **ten-thousand** by checking the **thousands** digit. For 428,619: the thousands digit is 8, which is ≥5, so round up: **430,000.**",
+      "figure": "pv4-round-place"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Round to the nearest ten-thousand.",
+      "conceptTag": "round-any-place",
+      "explanationVariants": [
+        "The thousands digit in 652,340 is 2, which is <5, so the ten-thousands digit stays the same: 650,000.",
+        "Checking the thousands digit (2) triggers a round-down to 650,000."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 652,340 to the nearest ten-thousand.",
+        "answer": 650000,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 660000,
+            "feedback": "660,000 rounds up — but the thousands digit (2) is less than 5, which rounds DOWN: 650,000."
+          },
+          {
+            "value": 652000,
+            "feedback": "652,000 only rounds to the nearest thousand, not ten-thousand. Rounding to the ten-thousand gives 650,000."
+          }
+        ],
+        "fallbackFeedback": "Check the thousands digit (one place right of ten-thousands) to decide up or down."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Round up, or round down?",
+      "conceptTag": "round-any-place",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each rounding task by whether its check-digit sends it up or down.",
+        "buckets": [
+          {
+            "id": "up",
+            "label": "Rounds UP",
+            "icon": "⬆️"
+          },
+          {
+            "id": "down",
+            "label": "Rounds DOWN",
+            "icon": "⬇️"
+          }
+        ],
+        "items": [
+          {
+            "id": "b1",
+            "label": "374,200 to the nearest hundred-thousand",
+            "bucketId": "up",
+            "feedback": "The ten-thousands digit (7) is ≥5 — rounds up to 400,000."
+          },
+          {
+            "id": "b2",
+            "label": "218,900 to the nearest hundred-thousand",
+            "bucketId": "down",
+            "feedback": "The ten-thousands digit (1) is <5 — rounds down to 200,000."
+          },
+          {
+            "id": "b3",
+            "label": "56,700 to the nearest thousand",
+            "bucketId": "up",
+            "feedback": "The hundreds digit (7) is ≥5 — rounds up to 57,000."
+          },
+          {
+            "id": "b4",
+            "label": "83,200 to the nearest thousand",
+            "bucketId": "down",
+            "feedback": "The hundreds digit (2) is <5 — rounds down to 83,000."
+          }
+        ],
+        "missFeedback": "Find the check-digit (one place right of the target), then compare it to 5.",
+        "successFeedback": "374,200 and 56,700 round up; 218,900 and 83,200 round down — the check-digit decides every time."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The halfway convention.",
+      "conceptTag": "round-any-place",
+      "explanationVariants": [
+        "The hundreds digit in 345,500 is exactly 5 — by the honest halfway convention, that rounds up: 346,000.",
+        "Exactly halfway always follows the agreed rule: round up."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 345,500 to the nearest thousand.",
+        "answer": 346000,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 345000,
+            "feedback": "345,000 rounds down — but exactly halfway (hundreds digit 5) follows the convention of rounding UP: 346,000."
+          },
+          {
+            "value": 350000,
+            "feedback": "350,000 rounds to the nearest ten-thousand, not thousand. Rounding to the thousand gives 346,000."
+          }
+        ],
+        "fallbackFeedback": "A hundreds digit of exactly 5 rounds up, by the same convention you already know."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The rounding rollover.",
+      "conceptTag": "round-any-place",
+      "hints": [
+        "Check the hundreds digit: it's 6, which is 5 or more.",
+        "Rounding up the thousands digit means 999 thousands become 1,000 thousands.",
+        "1,000 thousands is exactly one million."
+      ],
+      "explanationVariants": [
+        "The hundreds digit (6) rounds up; 999 thousand rounds up to 1,000 thousand — which is exactly 1,000,000. The round-up carries all the way through.",
+        "Rounding 999,600 to the nearest thousand rolls every digit over into a brand-new million."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 999,600 to the nearest thousand.",
+        "answer": 1000000,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 999000,
+            "feedback": "999,000 rounds down — but the hundreds digit (6) is ≥5, which rounds UP. Rounding up 999 thousand carries all the way to 1,000,000."
+          },
+          {
+            "value": 1000600,
+            "feedback": "That keeps digits that rounding is meant to clear. Rounding to the nearest thousand zeros out everything after: 1,000,000."
+          }
+        ],
+        "fallbackFeedback": "Round up the thousands digit from 999 — watch what happens when it carries."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rule, every place.",
+      "takeaways": [
+        "Always check the digit exactly one place to the right of your rounding target.",
+        "5 or more rounds up; less than 5 rounds down; exactly 5 follows the honest convention of rounding up.",
+        "A round-up can carry through every digit — even rolling all the way into a new million."
+      ],
+      "teaser": "next: using rounding to make quick real-world estimates."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "round-any-place",
+      "concept": {
+        "id": "rem-ra-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Check the digit one place to the right of your target, no matter which place you're rounding to.** For 4,700 rounded to the nearest thousand: check the hundreds digit (7). Since 7 ≥ 5, round up: 5,000."
+      },
+      "check": {
+        "id": "rem-ra-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "round-any-place",
+        "explanationVariants": [
+          "The hundreds digit (7) is ≥5, so 4,700 rounds up to 5,000.",
+          "Checking the hundreds digit triggers a round-up."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Round 4,700 to the nearest thousand.",
+          "options": [
+            {
+              "id": "a",
+              "label": "5,000",
+              "correct": true,
+              "feedback": "The hundreds digit (7) is ≥5 — rounds up to 5,000."
+            },
+            {
+              "id": "b",
+              "label": "4,000",
+              "feedback": "4,000 rounds down — but the hundreds digit (7) is 5 or more, which rounds up: 5,000."
+            },
+            {
+              "id": "c",
+              "label": "4,700",
+              "feedback": "That's the original number, not rounded at all. To the nearest thousand, it's 5,000."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+{
+  "id": "ns-03-03",
+  "slug": "factoring-with-the-distributive-property",
+  "title": "Factoring with the Distributive Property",
+  "courseId": "number-system",
+  "chapterId": "ch3-factors-multiples",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The GCF has a hidden power: it can be **pulled out of a sum**. 12 + 18 both share the factor 6, so 12 + 18 = 6 × 2 + 6 × 3 = **6 × (2 + 3)**. Check by expanding back: 6 × 5 = 30, and 12 + 18 = 30. This is the distributive property run in reverse — from a sum to a product.",
+      "figure": "ns-factor-distribute"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Pull out the GCF.",
+      "conceptTag": "distributive-factor",
+      "predict": {
+        "prompt": "8 + 12 = 20. Both 2 × (4 + 6) and 4 × (2 + 3) rebuild 20 correctly. Is either one 'the' factored form?",
+        "options": [
+          {
+            "id": "greatest",
+            "label": "Only 4 × (2 + 3) — the GCF is the GREATEST common factor, and 2 is not it"
+          },
+          {
+            "id": "both",
+            "label": "Both — they both multiply back to 20, so both are factored"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — 20 has too many factor pairs for one to be special"
+          }
+        ],
+        "outcomeId": "greatest",
+        "reveal": "Only 4 × (2 + 3). Pulling out 2 leaves 4 + 6, which still shares a factor of 2 — the job is not finished. Pulling out 4 leaves 2 + 3, which shares nothing. That is what 'greatest' buys you: a leftover sum with no common factor left in it."
+      },
+      "widget": {
+        "type": "areaModel",
+        "prompt": "Build a rectangle of area 20 whose width is the GCF of 8 and 12 — so the height is what is left over, 2 + 3.",
+        "targetArea": 20,
+        "wMax": 10,
+        "hMax": 10,
+        "wStart": 1,
+        "hStart": 1,
+        "requireFactors": {
+          "w": 4,
+          "h": 5
+        },
+        "factorFeedback": "Area 20 exactly — but that is not the GREATEST common factor out front. Pulling out 2 leaves 4 + 6, and those still share a 2, so the factoring is unfinished. Widen to the largest factor 8 and 12 actually share.",
+        "lowFeedback": "Under 20. The rectangle has to account for all of 8 + 12 before the split can mean anything.",
+        "highFeedback": "Over 20. The two pieces together are 8 + 12 = 20 exactly — anything larger is not a rewrite of this sum.",
+        "successFeedback": "4 × 5, which is 4 × (2 + 3): the GCF out front, and a leftover sum that shares no factor at all. That is the test for 'greatest' — not that the product works, but that nothing is left to pull out."
+      },
+      "hints": [
+        "What is GCF(8, 12)?",
+        "It's 4.",
+        "8 ÷ 4 = 2 and 12 ÷ 4 = 3 go inside the parentheses."
+      ],
+      "explanationVariants": [
+        "GCF is 4; leftovers 2 and 3: 4 × (2 + 3).",
+        "8 + 12 = 4×2 + 4×3 = 4 × (2 + 3)."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the number inside.",
+      "conceptTag": "distributive-factor",
+      "explanationVariants": [
+        "GCF(15, 20) = 5; 15 ÷ 5 = 3 and 20 ÷ 5 = 4, so 15 + 20 = 5 × (3 + 4).",
+        "After pulling out 5, the second leftover is 20 ÷ 5 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "15 + 20 = 5 × (3 + ?). What number fills the blank?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the original number, not the leftover. After pulling out the GCF 5, the leftover is 20 ÷ 5 = 4."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the GCF itself (already outside the parentheses). The blank is 20 ÷ 5 = 4."
+          }
+        ],
+        "fallbackFeedback": "20 ÷ 5 = 4, so 15 + 20 = 5 × (3 + 4)."
+      },
+      "variant": {
+        "gen": "distributive",
+        "form": "factorMissing"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Always **verify by expanding back** — multiply the GCF across the parentheses and confirm you land on the original sum. 5 × (3 + 4) = 5 × 3 + 5 × 4 = 15 + 20. ✓ If expanding doesn't return the original, either the GCF or a leftover is wrong.",
+      "figure": "ns-factor-distribute"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Catch the bad factoring.",
+      "conceptTag": "distributive-factor",
+      "explanationVariants": [
+        "Expand 6 × (2 + 4) = 12 + 24 = 36, but the original was 12 + 18 = 30 — so the second leftover is wrong.",
+        "12 + 18 factors as 6 × (2 + 3); the (2 + 4) version expands to the wrong total."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student writes 12 + 18 = 6 × (2 + 4). Expanding to check, what goes wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "6 × (2 + 4) = 36, but 12 + 18 = 30 — the second leftover should be 3, not 4",
+            "correct": true,
+            "feedback": "Right — 18 ÷ 6 = 3, not 4. The correct factoring is 6 × (2 + 3), which expands to 30."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — it's correct",
+            "feedback": "Expand it: 6 × (2 + 4) = 6 × 6 = 36, but 12 + 18 = 30. The leftover 4 is wrong; 18 ÷ 6 = 3."
+          },
+          {
+            "id": "c",
+            "label": "The GCF 6 is too big",
+            "feedback": "6 IS the correct GCF of 12 and 18. The error is the leftover: 18 ÷ 6 = 3, so it should be 6 × (2 + 3)."
+          }
+        ]
+      },
+      "hints": [
+        "Expand 6 × (2 + 4) and compare to 12 + 18.",
+        "6 × 6 = 36, but 12 + 18 = 30.",
+        "What is 18 ÷ 6?"
+      ],
+      "variant": {
+        "gen": "distributive",
+        "form": "factorError"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Full factoring, both leftovers.",
+      "conceptTag": "distributive-factor",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Factor 24 + 36 as (GCF) × (a + b). What is the GCF you pull out front?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 divides both, but it's not the GREATEST. 12 also divides 24 and 36, and 12 > 6 — pull out the full GCF 12: 12 × (2 + 3)."
+          },
+          {
+            "value": 60,
+            "feedback": "60 is the SUM (24 + 36), not the GCF. The greatest common factor of 24 and 36 is 12."
+          }
+        ],
+        "fallbackFeedback": "GCF(24, 36) = 12, giving 12 × (2 + 3)."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Now the leftovers.",
+      "conceptTag": "distributive-factor",
+      "explanationVariants": [
+        "After pulling out 12: 24 ÷ 12 = 2 and 36 ÷ 12 = 3, so 24 + 36 = 12 × (2 + 3).",
+        "The parentheses hold 2 + 3, which sums to 5; 12 × 5 = 60. ✓"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "24 + 36 = 12 × (2 + ?). Fill the blank.",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "36 is the original number. The leftover after pulling out 12 is 36 ÷ 12 = 3."
+          },
+          {
+            "value": 24,
+            "feedback": "24 ÷ 12 = 2 is the FIRST leftover (already shown). The blank is the second: 36 ÷ 12 = 3."
+          }
+        ],
+        "fallbackFeedback": "36 ÷ 12 = 3, so 24 + 36 = 12 × (2 + 3)."
+      },
+      "variant": {
+        "gen": "distributive",
+        "form": "factorGcf"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Factor it completely, then evaluate.",
+      "conceptTag": "distributive-factor",
+      "hints": [
+        "First find GCF(20, 30).",
+        "It's 10; leftovers are 2 and 3.",
+        "20 + 30 = 10 × (2 + 3) — now compute that product."
+      ],
+      "explanationVariants": [
+        "20 + 30 = 10 × (2 + 3) = 10 × 5 = 50 — and 20 + 30 = 50, so it checks.",
+        "Pull out 10, add the leftovers (2 + 3 = 5), multiply: 10 × 5 = 50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Factor 20 + 30 as GCF × (sum), then evaluate the product. What value do you get?",
+        "answer": 50,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 uses GCF 5 (5 × 5), but the GREATEST common factor of 20 and 30 is 10: 10 × (2 + 3) = 50 — which also equals 20 + 30 directly."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the sum inside the parentheses (2 + 3), not the final value. Multiply by the GCF: 10 × 5 = 50."
+          }
+        ],
+        "fallbackFeedback": "20 + 30 = 10 × (2 + 3) = 10 × 5 = 50."
+      },
+      "variant": {
+        "gen": "distributive",
+        "form": "factorEvaluate"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "GCF out front, leftovers inside.",
+      "takeaways": [
+        "Pull the GCF out of a sum: a + b = GCF × (a÷GCF + b÷GCF).",
+        "The numbers inside are each original divided by the GCF.",
+        "Always verify by expanding back to the original sum."
+      ],
+      "teaser": "next chapter: numbers below zero for the first time."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "distributive-factor",
+      "concept": {
+        "id": "rem-df-c",
+        "kind": "concept",
+        "body": "Quick rewind. **GCF out front; divide each term by it for the inside.** 6 + 9: GCF is 3, and 6 ÷ 3 = 2, 9 ÷ 3 = 3, so 6 + 9 = 3 × (2 + 3). Check: 3 × 5 = 15 = 6 + 9. ✓"
+      },
+      "check": {
+        "id": "rem-df-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "distributive-factor",
+        "explanationVariants": [
+          "GCF(6, 9) = 3; 9 ÷ 3 = 3, so 6 + 9 = 3 × (2 + 3).",
+          "The second leftover is 9 ÷ 3 = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "6 + 9 = 3 × (2 + ?). Fill the blank.",
+          "answer": 3,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is the original number. After pulling out the GCF 3, the leftover is 9 ÷ 3 = 3."
+            },
+            {
+              "value": 6,
+              "feedback": "6 ÷ 3 = 2 is the first leftover, already shown. The blank is 9 ÷ 3 = 3."
+            }
+          ],
+          "fallbackFeedback": "9 ÷ 3 = 3, so 6 + 9 = 3 × (2 + 3)."
+        }
+      }
+    }
+  ]
+}

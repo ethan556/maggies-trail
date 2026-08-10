@@ -1,0 +1,332 @@
+{
+  "id": "g7-04-03",
+  "slug": "geometry-roundup",
+  "title": "Geometry Roundup",
+  "courseId": "geometry-g7",
+  "chapterId": "ch4-triangles-cross-sections",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One chapter left to close Grade 7 geometry: putting it all together. Scale drawings convert, circles measure, angle facts become equations, side lengths decide triangles, and cuts reveal cross-sections.",
+      "figure": "circle-parts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Scale + circle.",
+      "widget": {
+        "type": "scaledCircleLab",
+        "prompt": "On a 1 cm = 2 m plan, a circular fountain has a drawing radius of 3 cm. What is its REAL radius, in meters?",
+        "realRadius": 6,
+        "ask": "realRadius",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "6 m",
+            "value": 6,
+            "feedback": "The scale chain is exact: 3 × 2 = 6 m."
+          },
+          {
+            "id": "wrong-1",
+            "label": "3 m",
+            "value": 3,
+            "feedback": "That's the drawing radius — convert with the scale: 3 × 2 = 6 m."
+          },
+          {
+            "id": "wrong-2",
+            "label": "12 m",
+            "value": 12,
+            "feedback": "That doubled twice (or used the diameter) — the radius converts once: 3 × 2 = 6 m."
+          }
+        ],
+        "fallbackFeedback": "Drawing → real multiplies by the scale: 3 × 2 = 6 m.",
+        "successFeedback": "The scale chain is exact: 3 × 2 = 6 m.",
+        "drawingRadius": 3,
+        "scale": 2
+      },
+      "predict": {
+        "prompt": "Drawing radius 3 cm on a 1 cm = 2 m plan (real radius 6 m). Is the REAL area just 2 × the drawing's area number?",
+        "options": [
+          {
+            "id": "four",
+            "label": "No — areas scale by 2² = 4"
+          },
+          {
+            "id": "two",
+            "label": "Yes — everything scales by 2"
+          },
+          {
+            "id": "none",
+            "label": "Areas don't scale with the plan"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Lengths scale ×2 but areas ×4: the drawing's 9π becomes a real 36π. Converting the radius FIRST (3 cm → 6 m, then πr²) dodges the trap automatically — scale the length, then square."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Skills chain together. That 6 m radius feeds straight into the circle formulas: circumference C = 2π × 6 = 12π meters of fence, area A = π × 6² = 36π square meters of water.",
+      "figure": "g7-roundup"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Chain into circumference.",
+      "conceptTag": "g7-circumference",
+      "explanationVariants": [
+        "C = 2πr = 2 × 6 × π = 12π.",
+        "Double the radius: 12π."
+      ],
+      "widget": {
+        "type": "scaledCircleLab",
+        "prompt": "The real fountain has radius 6 m. How much fencing wraps around it, as a number times π (meters)?",
+        "realRadius": 6,
+        "ask": "circumferenceCoef",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "12π m",
+            "value": 12,
+            "feedback": "C = 2πr, so 2 × 6 = 12π meters."
+          },
+          {
+            "id": "wrong-1",
+            "label": "36π m",
+            "value": 36,
+            "feedback": "That's r² (the AREA) — fencing follows the circumference: 2 × 6 = 12π."
+          },
+          {
+            "id": "wrong-2",
+            "label": "6π m",
+            "value": 6,
+            "feedback": "That's the radius — C = 2πr doubles it: 12π."
+          }
+        ],
+        "fallbackFeedback": "C = 2πr = 12π meters.",
+        "successFeedback": "C = 2πr, so 2 × 6 = 12π meters."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Chain into area.",
+      "widget": {
+        "type": "scaledCircleLab",
+        "prompt": "The same fountain (radius 6 m): how much water surface does it hold, as a number times π (square meters)?",
+        "realRadius": 6,
+        "ask": "areaCoef",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "36π m²",
+            "value": 36,
+            "feedback": "A = πr², so 6 × 6 = 36π square meters."
+          },
+          {
+            "id": "wrong-1",
+            "label": "12π m²",
+            "value": 12,
+            "feedback": "That's 2r (the circumference) — area SQUARES the radius: 6² = 36π."
+          },
+          {
+            "id": "wrong-2",
+            "label": "6π m²",
+            "value": 6,
+            "feedback": "Square the radius: 6 × 6 = 36π."
+          }
+        ],
+        "fallbackFeedback": "A = πr² = 36π square meters.",
+        "successFeedback": "A = πr², so 6 × 6 = 36π square meters."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Angles in the design.",
+      "conceptTag": "g7-angle-equations",
+      "explanationVariants": [
+        "The two path angles fill a straight line: x + 2x = 180 → 3x = 180 → x = 60.",
+        "Combine to 3x = 180: x = 60."
+      ],
+      "widget": {
+        "type": "angleMeasure",
+        "prompt": "Two garden paths meet the fountain's edge, making angles x and 2x on a straight line. Solve for x (in degrees).",
+        "targetAngle": 60,
+        "angleStart": 90,
+        "angleStep": 30,
+        "linearPair": {
+          "multiplier": 2,
+          "total": 180
+        },
+        "commonAngles": [
+          {
+            "angle": 90,
+            "feedback": "That solved 2x = 180 — combine BOTH terms: 3x = 180, so x = 60."
+          },
+          {
+            "angle": 30,
+            "feedback": "A straight line holds 180°, not 90°: 3x = 180, x = 60."
+          }
+        ],
+        "successFeedback": "The two parts now fill the straight line: 60° + 120° = 180°.",
+        "lowFeedback": "x + 2x = 180 → 3x = 180 → x = 60.",
+        "highFeedback": "x + 2x = 180 → 3x = 180 → x = 60."
+      },
+      "variant": {
+        "gen": "angle-equation",
+        "form": "linearPairLab"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Triangles in the frame.",
+      "conceptTag": "g7-triangle-inequality",
+      "explanationVariants": [
+        "7 + 8 = 15 beats 12, so the three beams close into a triangle.",
+        "Shorter pair 7 + 8 = 15 > 12: a triangle forms."
+      ],
+      "widget": {
+        "type": "triangleClosureLab",
+        "prompt": "A triangular trellis needs beams of 7, 8, and 12 feet. Will they form a triangle?",
+        "sides": [
+          7,
+          8,
+          12
+        ],
+        "angleStart": 30,
+        "angleStep": 5,
+        "requiredMoves": 2,
+        "choices": [
+          {
+            "id": "a",
+            "label": "Yes — 7 + 8 = 15 beats 12",
+            "verdict": "forms",
+            "feedback": "Right — the shorter pair out-reaches the longest beam, so the frame closes."
+          },
+          {
+            "id": "b",
+            "label": "No — 12 is too long",
+            "verdict": "does-not-form",
+            "feedback": "Check the sum: 7 + 8 = 15 > 12, so the beams DO close into a triangle."
+          },
+          {
+            "id": "c",
+            "label": "No — the sides differ",
+            "verdict": "does-not-form",
+            "feedback": "Different sides are fine — 7 + 8 > 12 passes the triangle test."
+          },
+          {
+            "id": "d",
+            "label": "Only if 12 is the base",
+            "verdict": "does-not-form",
+            "feedback": "Position doesn't matter — 7 + 8 > 12 works regardless of which beam is the base."
+          }
+        ],
+        "fallbackFeedback": "Compare 7 + 8 with 12. The shorter pair must strictly out-reach the longest beam.",
+        "successFeedback": "Right — the shorter pair out-reaches the longest beam, so the frame closes."
+      },
+      "variant": {
+        "gen": "g7-triangle-inequality",
+        "form": "frameCheck"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full design review.",
+      "conceptTag": "g7-circle-area",
+      "explanationVariants": [
+        "Real radius: 2 × 2 = 4 m. Area: π × 4² = 16π m².",
+        "Convert (4 m), then square: 16π."
+      ],
+      "widget": {
+        "type": "scaledCircleLab",
+        "prompt": "A second fountain is 2 cm in radius on the 1 cm = 2 m plan. What is its REAL area, as a number times π (square meters)?",
+        "realRadius": 4,
+        "ask": "areaCoef",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "16π m²",
+            "value": 16,
+            "feedback": "The real radius is 4 m, and 4² = 16, so the area is 16π m²."
+          },
+          {
+            "id": "wrong-1",
+            "label": "4π m²",
+            "value": 4,
+            "feedback": "That's the real radius (2 × 2 = 4 m) — now SQUARE it for area: 16π."
+          },
+          {
+            "id": "wrong-2",
+            "label": "8π m²",
+            "value": 8,
+            "feedback": "That's the circumference (2 × 4) — area squares the radius: 4² = 16π."
+          }
+        ],
+        "fallbackFeedback": "Real radius: 2 × 2 = 4 m. A = πr² = 16π m².",
+        "successFeedback": "The real radius is 4 m, and 4² = 16, so the area is 16π m².",
+        "drawingRadius": 2,
+        "scale": 2
+      },
+      "hints": [
+        "Convert the radius to real meters first: 2 cm × 2 m per cm.",
+        "Real radius = 4 m. Area squares it.",
+        "A = π × 4² = 16π square meters."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Scale, circles, angles, triangles, and slices — Grade 7 geometry, complete.",
+      "takeaways": [
+        "Convert with the scale first, then apply circle formulas.",
+        "Angle facts become equations; side sums decide triangles.",
+        "You now hold every 7.G tool — and the πr² behind Grade 8's volumes."
+      ],
+      "teaser": "That completes Grade 7 Geometry — and with it, all five Grade 7 domains."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-circle-area",
+      "concept": {
+        "id": "rem-g70403-c",
+        "kind": "concept",
+        "body": "Chain the skills: convert lengths with the scale FIRST (drawing → real multiplies), then use the circle formulas — C = 2πr doubles the radius, A = πr² squares it."
+      },
+      "check": {
+        "id": "rem-g70403-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-circle-area",
+        "explanationVariants": [
+          "A = πr² = π × 3² = 9π.",
+          "Square 3: 9π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A circle has radius 3. What is its area as a number times π?",
+          "answer": 9,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's 2r (circumference) — area SQUARES: 3² = 9π."
+            },
+            {
+              "value": 3,
+              "feedback": "Square the radius: 3 × 3 = 9π."
+            }
+          ],
+          "fallbackFeedback": "A = πr² = 9π."
+        }
+      }
+    }
+  ]
+}

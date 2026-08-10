@@ -1,0 +1,273 @@
+{
+  "id": "tc-03-03",
+  "slug": "the-midsegment-theorem",
+  "title": "The Midsegment Theorem",
+  "courseId": "triangle-congruence",
+  "chapterId": "ch3-isosceles-and-midsegment",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "tc-midsegment",
+      "concept": {
+        "id": "rem-tc-midsegment-c",
+        "kind": "concept",
+        "body": "Midsegment = the segment joining the MIDPOINTS of two sides. Two guarantees: (1) PARALLEL to the third side; (2) HALF its length. So third side = 2 × midsegment, and midsegment = ½ × third side. Double one way, halve the other."
+      },
+      "check": {
+        "id": "rem-tc-midsegment-k",
+        "kind": "check",
+        "body": "Halve or double?",
+        "conceptTag": "tc-midsegment",
+        "explanationVariants": [
+          "The midsegment is half the third side: 20 ÷ 2 = 10.",
+          "Joining midpoints halves the length: 20 → 10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The third side of a triangle is 20. How long is the midsegment parallel to it?",
+          "answer": 10,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 40,
+              "feedback": "40 doubles it — the midsegment is HALF the third side: 20 ÷ 2 = 10."
+            },
+            {
+              "value": 20,
+              "feedback": "20 is the third side itself. The midsegment is half: 20 ÷ 2 = 10."
+            }
+          ],
+          "fallbackFeedback": "Midsegment = half the third side: 20 ÷ 2 = 10."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Join the **midpoints** of two sides of a triangle and you get a **midsegment** with two striking properties: it's **parallel** to the third side, and it's exactly **half** its length. One little segment, two guarantees — proved with congruent triangles or coordinates.",
+      "figure": "midsegment"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Half the base.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "The join is locked to the midpoints of the two legs. Drag the apex and watch the midsegment's length against the 18-unit base.",
+        "targetCriterion": "SAS",
+        "startCriterion": "SAS",
+        "sideA": 6,
+        "sideB": 8,
+        "targetAngle": 70,
+        "angleStart": 100,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "constraint": "midsegment",
+        "constraintFeedback": "You released the lock — the join is no longer between the two midpoints, so its length has nothing to do with the base any more. Lock it again before reading the midsegment.",
+        "successFeedback": "9 — exactly half of 18, at every apex angle you tried. The midsegment is not close to half the base; it IS half the base, always, because it is built from the two midpoints and nothing else.",
+        "criterionFeedback": "The apex angle is what moves here — the criterion itself is not in question.",
+        "angleFeedback": "The base and the midsegment relationship hold at every angle — bring the apex to 70° to match the target reading.",
+        "evidenceFeedback": "Try the apex at a few different angles first — one drag is not evidence that the ratio always holds."
+      },
+      "predict": {
+        "prompt": "The midsegment joins the MIDPOINTS of two sides. Compared to the 18-unit base it parallels, it will be…",
+        "options": [
+          {
+            "id": "half",
+            "label": "Exactly half as long"
+          },
+          {
+            "id": "same",
+            "label": "The same length — parallel means equal"
+          },
+          {
+            "id": "depends",
+            "label": "It depends on the triangle's shape"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "Cutting both sides at their midpoints creates a small triangle similar to the whole with ratio 1/2 (SAS about the apex), so the midsegment is always exactly half its parallel side — 9 here, and in every triangle, whatever its shape."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which two properties?",
+      "conceptTag": "tc-midsegment",
+      "explanationVariants": [
+        "A midsegment is parallel to the third side AND half its length — both hold at once.",
+        "The midpoint-to-midpoint segment runs parallel to the base and measures half of it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A midsegment of a triangle is guaranteed to be…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "parallel to the third side and half its length",
+            "correct": true,
+            "feedback": "Both properties come together: the midsegment parallels the third side and is exactly half as long."
+          },
+          {
+            "id": "o2",
+            "label": "perpendicular to the third side",
+            "correct": false,
+            "feedback": "It's PARALLEL to the third side, not perpendicular — they never meet at a right angle in general."
+          },
+          {
+            "id": "o3",
+            "label": "equal in length to the third side",
+            "correct": false,
+            "feedback": "It's HALF the third side, not equal — joining midpoints shrinks it by exactly a factor of two."
+          },
+          {
+            "id": "o4",
+            "label": "half the length but not parallel",
+            "correct": false,
+            "feedback": "It's half AND parallel — both hold. The parallelism is as guaranteed as the halving."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-midsegment__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why half and parallel? Coordinates make it clean: place the base on the x-axis and compute the two midpoints. Their difference is exactly half the base vector, and its y-component is zero — so the midsegment is parallel and half-length. A congruence proof reaches the same conclusion.",
+      "figure": "midsegment"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Base from midsegment.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A midsegment measures 7. How long is the third side of the triangle (the side it's parallel to)?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the MIDSEGMENT. The third side is DOUBLE: 7 × 2 = 14."
+          },
+          {
+            "value": 3.5,
+            "feedback": "3.5 halves it the wrong way — the midsegment is half the BASE, so the base is 7 × 2 = 14."
+          }
+        ],
+        "fallbackFeedback": "The third side is twice the midsegment: 7 × 2 = 14."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The midsegment triangle.",
+      "conceptTag": "tc-midsegment",
+      "explanationVariants": [
+        "Connecting all three midpoints makes a middle triangle with each side half the original — so its perimeter is half too.",
+        "Three midsegments, each half a side, form a triangle with half the perimeter."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has perimeter 24. Connecting all three side-midpoints forms a smaller triangle. What is its perimeter?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the ORIGINAL perimeter. Each midsegment is half a side, so the inner perimeter is half: 24 ÷ 2 = 12."
+          },
+          {
+            "value": 48,
+            "feedback": "48 doubles it — the midpoint triangle is SMALLER. Each side halves, so the perimeter is 24 ÷ 2 = 12."
+          }
+        ],
+        "fallbackFeedback": "Each side halves, so the perimeter halves: 24 ÷ 2 = 12."
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-midsegment__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The three midsegments split a triangle into **four** smaller triangles, all congruent to each other and each **similar** to the original at half scale. The middle one is flipped; the three corner ones are translates. It's a tidy self-similar tiling that the midsegment properties guarantee.",
+      "figure": "tc-midsegment"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Four little triangles.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Drawing all three midsegments divides a triangle into how many smaller triangles?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 comes from drawing just ONE midsegment. All THREE midsegments make 4 triangles."
+          },
+          {
+            "value": 3,
+            "feedback": "3 counts only the corner triangles and forgets the flipped middle one: 3 + 1 = 4."
+          }
+        ],
+        "fallbackFeedback": "Three midsegments create 4 congruent smaller triangles."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Midsegment with algebra.",
+      "conceptTag": "tc-midsegment",
+      "hints": [
+        "The midsegment is half the third side — set up that relationship.",
+        "If the midsegment is (2x + 1) and the third side is 22, then 2x + 1 = 22 ÷ 2.",
+        "Solve 2x + 1 = 11 for x."
+      ],
+      "explanationVariants": [
+        "The midsegment equals half the base: 2x + 1 = 22 ÷ 2 = 11 → 2x = 10 → x = 5.",
+        "Set the midsegment to half the third side: 2x + 1 = 11, so x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A midsegment measures (2x + 1) and the side it's parallel to measures 22. Find x.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is the midsegment's LENGTH (half of 22), not x. Since 2x + 1 = 11, solve: x = 5."
+          },
+          {
+            "value": 10.5,
+            "feedback": "10.5 = 22/2 − ... miscomputes. The midsegment is 22 ÷ 2 = 11, so 2x + 1 = 11 gives x = 5."
+          }
+        ],
+        "fallbackFeedback": "2x + 1 = 22 ÷ 2 = 11 → x = 5."
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-midsegment__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Half and parallel.",
+      "takeaways": [
+        "A midsegment joins two side-midpoints; it's parallel to the third side and half its length.",
+        "The third side is double the midsegment; the midpoint triangle has half the perimeter.",
+        "Three midsegments split a triangle into four congruent half-scale triangles."
+      ],
+      "teaser": "Next chapter: the four special centers where a triangle's key lines all meet."
+    }
+  ]
+}

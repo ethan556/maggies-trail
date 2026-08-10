@@ -1,0 +1,294 @@
+{
+  "id": "ee-03-03",
+  "slug": "testing-for-equivalence",
+  "title": "Testing for Equivalence",
+  "courseId": "expressions-equations",
+  "chapterId": "ch3-equivalent-expressions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two expressions are **equivalent** when they give the same value for EVERY input — not just one. 4(n + 1) and 4n + 4 agree at n = 1 (both 8), at n = 7 (both 32), at every n, because distribution guarantees it. Equivalence is a promise about ALL values.",
+      "figure": "ee-equivalence"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Check a promised pair.",
+      "conceptTag": "test-equivalence",
+      "widget": {
+        "type": "numeric",
+        "prompt": "4(n + 1) and 4n + 4 are claimed equivalent. Evaluate BOTH at n = 7 — what shared value do you get?",
+        "answer": 32,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 29,
+            "feedback": "29 comes from the broken expansion 4n + 1 (the 4 missed the 1). Both correct forms give 4 × 8 = 32 and 28 + 4 = 32."
+          },
+          {
+            "value": 11,
+            "feedback": "11 adds 4 + 7 somewhere. Substitute properly: 4(7 + 1) = 32 and 4 × 7 + 4 = 32."
+          }
+        ],
+        "fallbackFeedback": "4(7 + 1) = 32 and 4 × 7 + 4 = 32 — same value, as equivalence promises."
+      },
+      "predict": {
+        "prompt": "If two expressions are TRULY equivalent, at how many values of n must they agree?",
+        "options": [
+          {
+            "id": "all",
+            "label": "Every single value"
+          },
+          {
+            "id": "one",
+            "label": "Just one is enough proof"
+          },
+          {
+            "id": "most",
+            "label": "Most values"
+          }
+        ],
+        "outcomeId": "all",
+        "reveal": "Equivalence is a promise about EVERY input. One matching value is evidence, not proof — but one mismatching value destroys the claim completely."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Break a false claim.",
+      "conceptTag": "test-equivalence",
+      "explanationVariants": [
+        "2(w + 3) = 14 at w = 4, but 2w + 3 = 11 — one differing value is enough to sink the claim.",
+        "A single mismatch disproves equivalence; 14 ≠ 11 ends it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Is 2(w + 3) equivalent to 2w + 3? Evaluate 2(w + 3) at w = 4 to start the test.",
+        "answer": 14,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is the OTHER expression, 2w + 3 (8 + 3). The real one is 2(4 + 3) = 2 × 7 = 14 — and since 14 ≠ 11, they're NOT equivalent."
+          },
+          {
+            "value": 24,
+            "feedback": "24 multiplies 2 × 4 × 3. Add inside first: 4 + 3 = 7, then 2 × 7 = 14."
+          }
+        ],
+        "fallbackFeedback": "2(4 + 3) = 14, but 2w + 3 gives 11 — not equivalent."
+      },
+      "variant": {
+        "gen": "equiv-test"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One warning: expressions can **coincide by luck** at a single value. x + x and x² both give 4 at x = 2 — yet they're NOT equivalent, because at x = 3 they split (6 vs 9). One match proves nothing; one MISMATCH disproves everything. Test at least two values, and prefer awkward ones like 0 or 3.",
+      "figure": "ee-equivalence"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The x = 2 coincidence.",
+      "conceptTag": "test-equivalence",
+      "explanationVariants": [
+        "At x = 3: x + x = 6 but x² = 9 — the x = 2 agreement was a coincidence, not equivalence.",
+        "Doubling and squaring are different machines; they merely cross paths at x = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x + x and x² both equal 4 at x = 2. Evaluate x + x at x = 3 to test whether they're truly equivalent.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is x² at x = 3 — the OTHER expression. x + x gives 3 + 3 = 6, and since 6 ≠ 9, the pair is not equivalent."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the x = 2 value. At x = 3, x + x = 6 (while x² = 9) — they split apart."
+          }
+        ],
+        "fallbackFeedback": "x + x = 3 + 3 = 6, but x² = 9 — the x = 2 match was luck."
+      },
+      "variant": {
+        "gen": "equiv-test",
+        "form": "squareVsDouble"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort the claims.",
+      "conceptTag": "test-equivalence",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each claimed pair: truly equivalent, or not?",
+        "buckets": [
+          {
+            "id": "equiv",
+            "label": "Equivalent (all values)"
+          },
+          {
+            "id": "not",
+            "label": "Not equivalent"
+          }
+        ],
+        "items": [
+          {
+            "id": "c1i",
+            "label": "3(x + 4) and 3x + 12",
+            "bucketId": "equiv",
+            "feedback": "Distribution guarantees this one at every value — 3 reaches both terms."
+          },
+          {
+            "id": "c2i",
+            "label": "2x + 2x and 4x",
+            "bucketId": "equiv",
+            "feedback": "Like terms: two x's plus two x's is four x's, always."
+          },
+          {
+            "id": "c3i",
+            "label": "x + x and x²",
+            "bucketId": "not",
+            "feedback": "They coincide at x = 2 only; at x = 3 they give 6 vs 9. Doubling isn't squaring."
+          },
+          {
+            "id": "c4i",
+            "label": "2(w + 3) and 2w + 3",
+            "bucketId": "not",
+            "feedback": "The right side lost the ×2 on the 3. At w = 4: 14 vs 11 — one mismatch sinks it."
+          }
+        ],
+        "missFeedback": "Test each pair at two values. Pairs backed by distribution or like-terms hold everywhere; the rest break somewhere.",
+        "successFeedback": "Sorted — equivalence needs an identity behind it, not a lucky match."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Zero is a sharp tester.",
+      "conceptTag": "test-equivalence",
+      "explanationVariants": [
+        "At x = 0: 5(x + 2) = 10 but 5x + 2 = 2 — zero kills the broken expansion instantly.",
+        "Testing at 0 isolates the constant terms: 10 vs 2 exposes the missing ×5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Test whether 5(x + 2) equals 5x + 2, using x = 0. What does 5(x + 2) give?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the broken version 5x + 2 at x = 0. The real expression gives 5(0 + 2) = 10 — and 10 ≠ 2 proves they differ."
+          },
+          {
+            "value": 7,
+            "feedback": "7 adds 5 + 2. Substitute x = 0 first: 5 × (0 + 2) = 5 × 2 = 10."
+          }
+        ],
+        "fallbackFeedback": "5(0 + 2) = 10, but 5x + 2 at 0 gives 2 — not equivalent."
+      },
+      "variant": {
+        "gen": "equiv-test",
+        "form": "zeroTest"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full test, your call.",
+      "conceptTag": "test-equivalence",
+      "hints": [
+        "Simplify the left side first: combine 3x + x.",
+        "That's 4x, and 2(2x) is also 4x.",
+        "Both simplify to the same form — check one value to confirm."
+      ],
+      "explanationVariants": [
+        "3x + x combines to 4x, and 2(2x) = 4x — same simplified form, so equivalent everywhere; at x = 5 both give 20.",
+        "Both sides reduce to 4x; a spot-check at x = 5 (20 = 20) confirms."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Are 3x + x and 2(2x) equivalent? Evaluate EITHER at x = 5 (they should agree if so).",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 misses one x on the left (3x alone = 15... or 3x + 1). Combine fully: 3x + x = 4x = 20 at x = 5, matching 2(2 × 5) = 20."
+          },
+          {
+            "value": 35,
+            "feedback": "35 treats 3x + x as 3x · x or glues digits. Combine like terms: 4x, giving 20 at x = 5 — same as 2(2x)."
+          }
+        ],
+        "fallbackFeedback": "Both simplify to 4x: at x = 5 each gives 20 — equivalent."
+      },
+      "variant": {
+        "gen": "equiv-test",
+        "form": "combineCheck"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "All values, or it isn't equivalence.",
+      "takeaways": [
+        "Equivalent expressions agree at EVERY input; one mismatch disproves the claim.",
+        "One lucky match (x + x = x² at 2) proves nothing — test twice, and try 0.",
+        "Distribution and like-terms are the identities that GUARANTEE equivalence."
+      ],
+      "teaser": "next chapter: equations — where the expression finally meets an equals sign."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "test-equivalence",
+      "concept": {
+        "id": "rem-te-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Test at two values; one mismatch ends it.** Claim: x + 2 equals 2x. At x = 2 both give 4 (luck!). At x = 3: x + 2 = 5 but 2x = 6 — mismatch, so NOT equivalent."
+      },
+      "check": {
+        "id": "rem-te-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "test-equivalence",
+        "explanationVariants": [
+          "x + 2 at x = 3 gives 5, while 2x gives 6 — they split, so not equivalent.",
+          "The x = 2 agreement was a coincidence; x = 3 exposes it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "x + 2 and 2x agree at x = 2. Evaluate x + 2 at x = 3 to test them.",
+          "answer": 5,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is 2x at x = 3 — the other expression. x + 2 gives 3 + 2 = 5, and 5 ≠ 6 disproves equivalence."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is the x = 2 value. At x = 3: 3 + 2 = 5 (while 2x = 6) — they differ."
+            }
+          ],
+          "fallbackFeedback": "3 + 2 = 5, but 2 × 3 = 6 — not equivalent."
+        }
+      }
+    }
+  ]
+}

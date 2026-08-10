@@ -1,0 +1,347 @@
+{
+  "id": "pv-03-04",
+  "slug": "check-it-with-an-estimate",
+  "title": "Check It with an Estimate",
+  "courseId": "place-value",
+  "chapterId": "ch3-add-subtract",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The habit that separates pros: **every exact answer gets a one-glance guard**. Before trusting 512 − 289 = 223, think 500 − 300 = 200 — the answer sits nearby, so it survives. You built this guard in the rounding chapter; now it goes on permanent duty.",
+      "figure": "pv3-round-hundred"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Post the guard before the exact work.",
+      "conceptTag": "estimate-check",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "You're about to compute 487 + 316 exactly. First, slide to the guard's estimate.",
+        "min": 50,
+        "max": 5000,
+        "start": 50,
+        "target": 800,
+        "acceptFactor": 2,
+        "unitLabel": "(about)",
+        "ticks": [
+          50,
+          500,
+          5000
+        ],
+        "lowFeedback": "Too small — 487 alone is nearly 500. The guard should stand near the friendly sum.",
+        "highFeedback": "Way past the pile — five hundred plus three hundred can't reach the thousands. Ease back.",
+        "successFeedback": "Guard posted at ≈800 (500 + 300). The exact answer, 803, reports in right beside it."
+      },
+      "predict": {
+        "prompt": "Before computing 487 + 316 exactly: the guard's estimate is about…",
+        "options": [
+          {
+            "id": "eight",
+            "label": "800 — that's 500 + 300"
+          },
+          {
+            "id": "seven",
+            "label": "700"
+          },
+          {
+            "id": "eleven",
+            "label": "1,100"
+          }
+        ],
+        "outcomeId": "eight",
+        "reveal": "487 rounds up to 500 and 316 down to 300: about 800. Now the exact answer (803) has a bodyguard — if your computation lands far from 800, the estimate catches the slip before anyone else does."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents estimate check.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for estimate check must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines estimate check."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:estimate-check",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Some answers are busted before any rounding.",
+      "conceptTag": "estimate-check",
+      "explanationVariants": [
+        "Taking away can't grow a pile: 762 is bigger than the 623 Ben started with — impossible, no rounding needed.",
+        "The size rules from the multiplication course still patrol here: a difference must be smaller than the number you subtract from."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Ben computes 623 − 385 and writes 762. How do you bust it in ONE glance?",
+        "options": [
+          {
+            "id": "a",
+            "label": "762 is bigger than 623 — taking away can't grow the pile",
+            "correct": true,
+            "feedback": "The oldest size rule there is: a subtraction's answer can't beat its starting number. Busted with zero arithmetic."
+          },
+          {
+            "id": "b",
+            "label": "You can't know without redoing the subtraction",
+            "feedback": "You can — one glance shows 762 towering over the 623 he started from. Size checks are free."
+          },
+          {
+            "id": "c",
+            "label": "623 must have been copied wrong",
+            "feedback": "Blaming the copy skips the check! Whatever the numbers, an answer LARGER than the start is impossible for subtraction."
+          },
+          {
+            "id": "d",
+            "label": "Because 762 ends in 2",
+            "feedback": "The last digit is innocent — plenty of good answers end in 2. It's 762's SIZE that betrays it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "estimate-check",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The guard's routine, three beats: **round the players → one friendly computation → compare**. Match? Trust the exact work. Mismatch? Redo it now — a wrong-sized answer caught in seconds beats one marked wrong tomorrow.",
+      "figure": "pv3-round-hundred"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Post the guard for an addition.",
+      "conceptTag": "estimate-check",
+      "explanationVariants": [
+        "298 → 300 (tens digit 9) and 447 → 400 (tens digit 4); the guard stands at 300 + 400 = 700.",
+        "The exact 745 reports in — within a stone's throw of the 700 guard, so it passes."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You're checking 298 + 447. What estimate does the guard use? (Round each to the nearest hundred first.)",
+        "answer": 700,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 745,
+            "feedback": "745 is the EXACT sum — the guard wants the friendly version: 300 + 400."
+          },
+          {
+            "value": 600,
+            "feedback": "600 rounded 298 DOWN to 200 — but its tens digit is 9, practically banging on 300's door."
+          },
+          {
+            "value": 800,
+            "feedback": "800 rounded 447 UP to 500 — but its tens digit is 4, below the middle. 447 stays at 400."
+          }
+        ],
+        "fallbackFeedback": "Round both (298 → ?, 447 → ?), then add the friendly hundreds."
+      },
+      "variant": {
+        "gen": "estimate-check",
+        "form": "guardSum"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Guard duty: 512 − 189, guard posted at 500 − 200 = 300.",
+      "conceptTag": "estimate-check",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Four answers are offered for 512 − 189. Sort them: pass the ≈300 guard, or busted?",
+        "buckets": [
+          {
+            "id": "pass",
+            "label": "Passes the ≈300 guard",
+            "icon": "🛂"
+          },
+          {
+            "id": "bust",
+            "label": "Busted on sight",
+            "icon": "🚨"
+          }
+        ],
+        "items": [
+          {
+            "id": "a323",
+            "label": "323",
+            "bucketId": "pass",
+            "feedback": "323 stands right beside the 300 guard — and it happens to be the exact answer."
+          },
+          {
+            "id": "a703",
+            "label": "703",
+            "bucketId": "bust",
+            "feedback": "703 is more than double the guard — it's near the SUM of the two numbers. The operation flipped somewhere. Busted."
+          },
+          {
+            "id": "a123",
+            "label": "123",
+            "bucketId": "bust",
+            "feedback": "123 sits a whole 200 below the guard — a couple of hundreds went missing. Busted."
+          },
+          {
+            "id": "a313",
+            "label": "313",
+            "bucketId": "pass",
+            "feedback": "313 passes the SIZE check even though the exact answer is 323 — guards catch big blunders and honestly miss small slips."
+          }
+        ],
+        "missFeedback": "Compare each to 300: within a few dozen passes; hundreds away is busted.",
+        "successFeedback": "323 and 313 pass; 703 and 123 are busted. The guard sees size, not digits — powerful, and honest about its limits."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The certainty trick returns — round AGAINST yourself.",
+      "conceptTag": "estimate-check",
+      "explanationVariants": [
+        "Round every class UP (100 + 110 + 130 = 340): if even the inflated classes fit under 350, the real ones must.",
+        "Safe-direction rounding stacks the odds against you on purpose — passing anyway makes the yes certain."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A hall seats 350. Classes of 98, 104, and 121 want in. Using estimates ALONE, can you be sure they all fit?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — round every class UP (100 + 110 + 130 = 340), and they still fit",
+            "correct": true,
+            "feedback": "The inflated versions total 340 ≤ 350 — and real classes are smaller than their inflations. Certain, with zero exact adding."
+          },
+          {
+            "id": "b",
+            "label": "No — three classes never fit in one hall",
+            "feedback": "Check the sizes, not the count: even rounded UP, the three classes total 340 — under the 350 seats."
+          },
+          {
+            "id": "c",
+            "label": "Only exact addition can give certainty",
+            "feedback": "Usually — but rounding AGAINST yourself creates certainty too: if the unfair version passes, the fair one must."
+          },
+          {
+            "id": "d",
+            "label": "Yes, because halls are usually big",
+            "feedback": "Hall trivia isn't proof! The certainty comes from 340 ≤ 350 with every class deliberately over-counted."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "estimate-check",
+        "form": "estimateCertainty"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Catch the slip, then fix it — the full pro workflow.",
+      "conceptTag": "estimate-check",
+      "hints": [
+        "Post the guard first: 534 − 267 ≈ 500 − 300 = 200. Nia's 333 stands 133 away — busted.",
+        "Her slip: smaller-from-larger in every spot (7−4, 6−3, 5−2 all flipped). Redo with trades.",
+        "534 repackages as 4 hundreds, 12 tens, 14 ones — now every spot can pay."
+      ],
+      "explanationVariants": [
+        "Guard: ≈200 busts the 333. Redo: 14 − 7 = 7, 12 − 6 = 6, 4 − 2 = 2 → 267.",
+        "Nia flipped every short spot. Trading instead: two breaks give 4h 12t 14o, and the honest answer is 267."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Nia computes 534 − 267 and writes 333. Post the guard, catch her slip, and enter the CORRECT difference.",
+        "answer": 267,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 333,
+            "feedback": "333 is Nia's slip — smaller-from-larger in every spot (7−4, 6−3, 5−2). The guard's 200 busts it: it's 133 too big. Short spots trade down instead."
+          },
+          {
+            "value": 367,
+            "feedback": "367 traded for the ones but the tens' own trade never charged the hundreds — after lending, the hundreds hold 4, giving 4 − 2 = 2 up front."
+          },
+          {
+            "value": 277,
+            "feedback": "277 is close — off by one ten. After the ones borrowed, the tens hold 12; check 12 − 6 = 6, not 7."
+          }
+        ],
+        "fallbackFeedback": "Guard says ≈200. Repackage 534 (4 hundreds, 12 tens, 14 ones), then subtract spot by spot."
+      },
+      "variant": {
+        "gen": "estimate-check",
+        "form": "correctDifference"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The guard never goes off duty again.",
+      "takeaways": [
+        "Every exact answer gets a guard: round, compute friendly, compare.",
+        "Impossible sizes (a difference bigger than its start) need no rounding at all.",
+        "Safe-direction rounding turns estimates into certainty for yes/no questions."
+      ],
+      "teaser": "next chapter: multiplying by tens — where 4 × 60 is just 4 × 6 tens wearing a costume."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "estimate-check",
+      "concept": {
+        "id": "rem-ec-c",
+        "kind": "concept",
+        "body": "Quick rewind. The guard is three beats: **round each player, do the friendly version, compare**. Checking 61 − 29? Guard: 60 − 30 = 30. An exact answer near 30 passes; one like 92 is busted on sight."
+      },
+      "check": {
+        "id": "rem-ec-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "estimate-check",
+        "explanationVariants": [
+          "41 → 40 and 38 → 40; the guard stands at 40 + 40 = 80 (the exact 79 is right beside it).",
+          "Both players round to 40 — the friendly version is a double."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which guard fits the problem 41 + 38?",
+          "options": [
+            {
+              "id": "a",
+              "label": "40 + 40 = 80",
+              "correct": true,
+              "feedback": "Both players round to 40; the guard stands at 80, one step from the exact 79."
+            },
+            {
+              "id": "b",
+              "label": "41 + 38 = 79, computed exactly",
+              "feedback": "79 is the exact work — the guard is the FRIENDLY version posted beside it: 40 + 40."
+            },
+            {
+              "id": "c",
+              "label": "50 + 50 = 100",
+              "feedback": "Both players rounded UP past their closer tens — 41 and 38 each live nearest to 40."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

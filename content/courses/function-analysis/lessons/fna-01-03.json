@@ -1,0 +1,229 @@
+{
+  "id": "fna-01-03",
+  "slug": "interpreting-rates",
+  "title": "Interpreting Rates: Units & Meaning",
+  "courseId": "function-analysis",
+  "chapterId": "ch1-rates-of-change",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A rate in the real world carries **units**: output units **per** input unit. If V(t) is gallons at t minutes, the average rate of change of V is **gallons per minute**. The number tells you how fast; the **sign** tells you which direction — filling or draining, warming or cooling.",
+      "figure": "fna-rate-units"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A draining tank.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "average",
+        "a": 0,
+        "targetH": 6,
+        "prompt": "Widen the secant to span 6 units and read its slope — the average rate of change over that whole interval.",
+        "successFeedback": "Average rate = rise over run, and the units come with it: a tank going from 48 to 12 gallons over 6 minutes changes at (12 − 48)/6 = −6 gallons per minute. The sign says draining, and the unit says what is being counted per what.",
+        "lowFeedback": "The interval is still narrower than 6.",
+        "highFeedback": "The interval is wider than 6.",
+        "startH": 2
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Always subtract **later minus earlier** in both numerator and denominator. Mixing the order flips the sign and reverses the story: a draining tank suddenly looks like it's filling.",
+      "figure": "fna-later-minus-earlier"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A growing town.",
+      "conceptTag": "fna-rate-interp",
+      "explanationVariants": [
+        "(2400 − 1500)/(3 − 0) = 900/3 = 300 people per year.",
+        "The town gains 900 people spread over 3 years — 300 per year on average."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A town's population grows from 1500 to 2400 over 3 years. What is the average rate of change, in people per year?",
+        "answer": 300,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 900,
+            "feedback": "900 is the total population change. Divide by the 3 years to get people PER YEAR: 300."
+          },
+          {
+            "value": 800,
+            "feedback": "800 = 2400/3 uses the final population, not the CHANGE. Use (2400 − 1500)/3 = 300."
+          }
+        ],
+        "fallbackFeedback": "(2400 − 1500)/3 = 300 people per year."
+      },
+      "variant": {
+        "gen": "rate-interpret"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What does the sign mean here?",
+      "conceptTag": "fna-rate-interp",
+      "explanationVariants": [
+        "A negative rate means the output QUANTITY is decreasing over that interval — here, the water level is dropping.",
+        "Negative rate = downhill secant = the quantity ends lower than it started."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "H(t) is the height of water in a reservoir. The average rate of change of H over a week is −2 feet per day. What happened?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The water level dropped, on average 2 feet each day",
+            "correct": true,
+            "feedback": "Exactly — negative rate means the height is falling, and its size says how fast: 2 feet per day on average."
+          },
+          {
+            "id": "o2",
+            "label": "The water level was 2 feet below normal",
+            "feedback": "A rate compares CHANGE to time — it says nothing about where the level sits relative to normal, only that it fell 2 ft/day."
+          },
+          {
+            "id": "o3",
+            "label": "The reservoir gained 2 feet per day",
+            "feedback": "Gaining would be a POSITIVE rate. The minus sign is the whole story: the level went down."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "rate-interpret",
+        "form": "negativeMeaning"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compare two moving walkers.",
+      "conceptTag": "fna-rate-interp",
+      "explanationVariants": [
+        "Ava: 10 km in 2 h = 5 km/h. Ben: 12 km in 3 h = 4 km/h. Ava's average speed is greater.",
+        "Per hour, Ava covers 5 km and Ben 4 km — Ava is faster on average despite the shorter total."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Ava walks 10 km in 2 hours. Ben walks 12 km in 3 hours. Whose average speed is greater?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Ava's (5 km/h vs 4 km/h)",
+            "correct": true,
+            "feedback": "Right — divide each distance by its own time: 10/2 = 5 beats 12/3 = 4."
+          },
+          {
+            "id": "o2",
+            "label": "Ben's, because he walked farther",
+            "feedback": "Total distance isn't a rate. Ben took MORE time too: 12/3 = 4 km/h, less than Ava's 10/2 = 5 km/h."
+          },
+          {
+            "id": "o3",
+            "label": "They're equal",
+            "feedback": "Equal speeds would need equal distance-per-hour; 5 km/h ≠ 4 km/h."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "rate-interpret",
+        "form": "compareSpeeds"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A cold morning.",
+      "conceptTag": "fna-rate-interp",
+      "explanationVariants": [
+        "(−4 − 8)/(12 − 6) = −12/6 = −2 °C per hour: cooling 2 degrees each hour on average.",
+        "The temperature falls a total of 12 °C across 6 hours — 2 °C of cooling per hour."
+      ],
+      "hints": [
+        "Later minus earlier on top: the noon temperature minus the 6 a.m. temperature.",
+        "Numerator: −4 − 8. Denominator: 12 − 6 hours.",
+        "−4 − 8 = −12 over 6 hours. Keep the negative sign — it means cooling."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At 6 a.m. the temperature is 8 °C; by noon it is −4 °C. What is the average rate of change, in °C per hour?",
+        "answer": -2,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The temperature FELL from 8 to −4, so the rate is negative: (−4 − 8)/6 = −2."
+          },
+          {
+            "value": -12,
+            "feedback": "−12 °C is the total change. Divide by the 6 hours between 6 a.m. and noon: −2 °C per hour."
+          },
+          {
+            "value": -0.67,
+            "feedback": "You may have divided by 12 (the clock time) or 18. The elapsed time is noon − 6 a.m. = 6 hours, giving −12/6 = −2."
+          }
+        ],
+        "fallbackFeedback": "(−4 − 8)/(12 − 6) = −12/6 = −2 °C per hour."
+      },
+      "variant": {
+        "gen": "rate-interpret",
+        "form": "temperature"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rates tell stories.",
+      "takeaways": [
+        "Units of a rate: output units per input unit.",
+        "The sign is the direction: negative means the quantity is falling.",
+        "Always subtract later − earlier, top and bottom."
+      ],
+      "teaser": "Next chapter: where a function rises, falls, and turns — reading whole graphs."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-rate-interp",
+      "concept": {
+        "id": "rem-fna0103-c",
+        "kind": "concept",
+        "body": "Real-world rate = (later output − earlier output) ÷ elapsed input. Attach units: output per input. Negative means decreasing."
+      },
+      "check": {
+        "id": "rem-fna0103-k",
+        "kind": "check",
+        "body": "One more real rate.",
+        "conceptTag": "fna-rate-interp",
+        "explanationVariants": [
+          "(90 − 30)/(4 − 0) = 60/4 = 15 pages per day.",
+          "60 pages over 4 days is 15 per day."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Mia has read 30 pages by day 0 and 90 pages by day 4. What is her average reading rate, in pages per day?",
+          "answer": 15,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 60,
+              "feedback": "60 is the total pages read. Divide by the 4 days for a per-day rate: 15."
+            },
+            {
+              "value": 22.5,
+              "feedback": "22.5 = 90/4 uses the final page count instead of the CHANGE. (90 − 30)/4 = 15."
+            }
+          ],
+          "fallbackFeedback": "(90 − 30)/4 = 15 pages per day."
+        }
+      }
+    }
+  ]
+}

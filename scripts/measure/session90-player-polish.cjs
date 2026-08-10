@@ -1,0 +1,17 @@
+const fs=require('fs'),assert=require('assert');
+const player=fs.readFileSync('src/components/LessonPlayer.tsx','utf8');
+const panel=fs.readFileSync('src/components/CausalMasteryPanel.tsx','utf8');
+const css=fs.readFileSync('src/app/globals.css','utf8');
+const mesh=fs.readFileSync('src/lib/cml/mesh.ts','utf8');
+const catalog=fs.readFileSync('src/lib/cml/catalog.ts','utf8');
+for(const t of ['Discover','Explore','Practice','Challenge','Reflect','lesson-intent-bar','backdrop-blur-xl'])assert(player.includes(t),`player missing ${t}`);
+for(const t of ['Mastery lens','aria-expanded={expanded}','Tap to open','math-color-key','Undo last move','Try a what-if'])assert(panel.includes(t),`panel missing ${t}`);
+for(const t of ['.lesson-stage','.cml-lens','.math-color-key','.lesson-intent-bar'])assert(css.includes(t),`CSS missing ${t}`);
+const profiles=new Set([...catalog.matchAll(/^  ([A-Za-z0-9]+): \{/gm)].map(m=>m[1]));
+const cases=new Set([...mesh.matchAll(/case "([A-Za-z0-9]+)":/g)].map(m=>m[1]));
+assert.deepStrictEqual([...profiles].filter(x=>!cases.has(x)),[],`mesh adapters missing`);
+assert(profiles.has('quadDrag'));
+const check=(course,file,id,type)=>{const d=JSON.parse(fs.readFileSync(`content/courses/${course}/lessons/${file}.json`,'utf8'));const s=d.steps.find(x=>x.id===id);assert(s);assert.equal(s.widget.type,type);};
+for(const id of ['i1','i2','i3'])check('measure-money-time','mmt-01-01',id,'numberLineHop');
+check('coordinate-geometry','cg-03-02','i1','quadDrag');check('functions-g8','fg-01-03','i1','plotPoint');
+console.log(JSON.stringify({profiles:profiles.size,specializedAdapters:cases.size,lessonReplacements:5,status:'PASS'}));

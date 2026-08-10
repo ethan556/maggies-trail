@@ -1,0 +1,307 @@
+{
+  "id": "asv-03-01",
+  "slug": "finding-side-lengths-from-coordinates",
+  "title": "Finding Side Lengths from Coordinates",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch3-coordinate-polygons",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When a side is perfectly horizontal or vertical, its length comes straight from the coordinates: **subtract the coordinate that changes, and take the distance (never negative)**. From (3, 2) to (8, 2), the y stays at 2 but x goes from 3 to 8 — length 8 − 3 = **5**. The unchanging coordinate tells you the side is horizontal (same y) or vertical (same x).",
+      "figure": "asv-coord-length"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot the rectangle.",
+      "conceptTag": "find-side-length",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Mark the four corners of a rectangle at (2,2), (6,2), (6,4), and (2,4).",
+        "cols": 8,
+        "rows": 6,
+        "targets": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 4
+          },
+          {
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "connectTargets": true,
+        "pointErrors": [],
+        "missFeedback": "Each corner keeps either its x or y matching an adjacent corner — that's what makes the sides horizontal or vertical.",
+        "successFeedback": "Rectangle plotted — notice the bottom and top sides share y-values, and the left and right sides share x-values."
+      },
+      "predict": {
+        "prompt": "Corners (2, 2) and (6, 2) share their y. The side between them measures…",
+        "options": [
+          {
+            "id": "sub",
+            "label": "4 — subtract the x's"
+          },
+          {
+            "id": "add",
+            "label": "8 — add them"
+          },
+          {
+            "id": "two",
+            "label": "2"
+          }
+        ],
+        "outcomeId": "sub",
+        "reveal": "A shared height means the side runs flat, so its length is 6 − 2 = 4. Coordinates turn rulers into subtraction: the matching coordinate says WHICH way the side runs, the differing one says HOW FAR."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents find side length.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for find side length must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines find side length."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "area-surface-volume:find-side-length",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the horizontal side.",
+      "conceptTag": "find-side-length",
+      "explanationVariants": [
+        "The y-coordinate stays 2 on both points; the x goes from 2 to 6, so the side is 6 − 2 = 4.",
+        "Same y means horizontal; subtract the x-values: 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The rectangle's bottom side runs from (2,2) to (6,2). What is its length?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "units",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 uses the y-coordinate, which stays the SAME on this side (it's horizontal). The length comes from the x's: 6 − 2 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8 adds the x-values (2 + 6) instead of subtracting. Length is the DIFFERENCE: 6 − 2 = 4."
+          }
+        ],
+        "fallbackFeedback": "x goes from 2 to 6: length = 6 − 2 = 4."
+      },
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "asvAxisDistance"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same rule works for **vertical** sides, just swap which coordinate you're reading: the x stays the same, and you subtract the y's. It also works with **negative coordinates** — the distance is still the difference, taken as a positive number: from (2, −4) to (2, 3), length = 3 − (−4) = **7**.",
+      "figure": "asv-coord-length"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A vertical side.",
+      "conceptTag": "find-side-length",
+      "explanationVariants": [
+        "x stays at 6 on both points; y goes from 2 to 4, so length = 4 − 2 = 2.",
+        "Same x means vertical; subtract the y-values: 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The rectangle's right side runs from (6,2) to (6,4). What is its length?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "units",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 uses the x-coordinate, which stays the SAME on this side (it's vertical). Length comes from the y's: 4 − 2 = 2."
+          },
+          {
+            "value": 6.5,
+            "feedback": "That doesn't come from subtracting the y-coordinates. Length = 4 − 2 = 2."
+          }
+        ],
+        "fallbackFeedback": "y goes from 2 to 4: length = 4 − 2 = 2."
+      },
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "asvAxisDistance"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Negative coordinates, same rule.",
+      "conceptTag": "find-side-length",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A side runs from (−5, 2) to (3, 2). What is its length?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "units",
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "-2 stops at 3 + (−5) without taking the positive distance. Length is always positive: 3 − (−5) = 8."
+          },
+          {
+            "value": -8,
+            "feedback": "Length can't be negative — it's a DISTANCE. 3 − (−5) = 8."
+          }
+        ],
+        "fallbackFeedback": "3 − (−5) = 8 — crossing zero doesn't change the rule."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Vertical, with negatives.",
+      "conceptTag": "find-side-length",
+      "explanationVariants": [
+        "x stays at 4; y goes from −6 to 2, so length = 2 − (−6) = 8.",
+        "Same rule crossing zero: 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A side runs from (4, −6) to (4, 2). What is its length?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "units",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 uses the x-coordinate, which stays the same here (vertical side). Use the y's: 2 − (−6) = 8."
+          },
+          {
+            "value": -4,
+            "feedback": "-4 doesn't match either coordinate's difference correctly. 2 − (−6) = 8."
+          }
+        ],
+        "fallbackFeedback": "2 − (−6) = 8."
+      },
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "asvAxisDistance"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the missing vertex.",
+      "conceptTag": "find-side-length",
+      "hints": [
+        "A rectangle's 4th corner shares an x with one adjacent corner and a y with the other.",
+        "It shares x=2 with (2,3), and y=6 with (8,6).",
+        "The missing point is (2, 6)."
+      ],
+      "explanationVariants": [
+        "The missing corner must share x=2 (matching (2,3)) and y=6 (matching (8,6)): the point is (2,6).",
+        "For a rectangle, opposite corners share coordinates with their neighbors — filling in (2,6) closes the shape."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A rectangle has corners (2,3), (8,3), and (8,6). What is the 4th corner?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(2, 6)",
+            "correct": true,
+            "feedback": "Right — it shares x=2 with (2,3) and y=6 with (8,6), completing the rectangle."
+          },
+          {
+            "id": "b",
+            "label": "(8, 3)",
+            "feedback": "That point is already given — it can't be the missing 4th corner."
+          },
+          {
+            "id": "c",
+            "label": "(6, 2)",
+            "feedback": "This doesn't share an x OR y with the adjacent corners correctly. The 4th corner is (2, 6)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "cgRectangleCorner"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Subtract the coordinate that changes.",
+      "takeaways": [
+        "A horizontal side: same y, subtract the x-values. A vertical side: same x, subtract the y-values.",
+        "Length is always a positive distance, even crossing zero into negatives.",
+        "A rectangle's missing corner shares one coordinate with each neighboring corner."
+      ],
+      "teaser": "next: turning these side lengths into areas."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "find-side-length",
+      "concept": {
+        "id": "rem-fsl-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Same coordinate stays; the other one's difference is the length.** From (1,5) to (1,9): x stays at 1 (vertical side), so subtract the y's: 9 − 5 = 4."
+      },
+      "check": {
+        "id": "rem-fsl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "find-side-length",
+        "explanationVariants": [
+          "x stays at 1; y goes from 5 to 9: length 4.",
+          "Same x means vertical — subtract the y's: 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A side runs from (1,5) to (1,9). What is its length?",
+          "answer": 4,
+          "tolerance": 0,
+          "unit": "units",
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 uses the x-coordinate, which stays the same (vertical side). Use the y's: 9 − 5 = 4."
+            },
+            {
+              "value": 14,
+              "feedback": "14 adds the y-values instead of subtracting. Length is the difference: 9 − 5 = 4."
+            }
+          ],
+          "fallbackFeedback": "9 − 5 = 4."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,486 @@
+{
+  "id": "vec-03-03",
+  "slug": "work-and-projection",
+  "title": "Work: The Dot Product at Play",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch3-dot-product",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In physics, **work** = force · displacement — literally the dot product:\n\nW = F · d.\n\nOnly the part of the force ALONG the motion does work. A force ⟨6, 8⟩ N moving an object ⟨10, 0⟩ m does W = 6·10 + 8·0 = **60 joules** — the vertical 8 contributes nothing to horizontal motion.",
+      "figure": "vec-dot-angle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Work counts only the part of the force that goes your way.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "dot",
+        "ux": 4,
+        "uy": 0,
+        "targetDot": 12,
+        "vxStart": 0,
+        "vyStart": 3,
+        "gridMax": 6,
+        "prompt": "A cart moves 4 m east: u = (4, 0). Steer the force v until the work (the dot product) reads 12.",
+        "successFeedback": "v = (3, 3) gives 4(3) + 0(3) = 12. Only the EASTWARD part of the force did any work — the upward 3 contributed exactly nothing, because the cart never went up. That is why work is a dot product and not a plain multiplication.",
+        "lowFeedback": "The work is under 12. Only the horizontal part of the force counts, so push more to the east.",
+        "highFeedback": "The work is over 12. The eastward component of the force is doing all of it — ease it back."
+      },
+      "predict": {
+        "prompt": "Look at the two arrows before you move anything. The dot product u · v of the STARTING pair is…",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — they lean the same way"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — they lean apart"
+          },
+          {
+            "id": "zero",
+            "label": "Zero — they're perpendicular"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "u · v = 4·0 + 0·3 = 0. One number tells the geometry: positive means the angle is under 90°, zero means exactly 90°, negative means past it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "vec-work"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Perpendicular force, zero work.",
+      "conceptTag": "vec-work",
+      "explanationVariants": [
+        "A force ⟨0, 5⟩ moving an object ⟨4, 0⟩ does W = 0·4 + 5·0 = 0 — perpendicular force does NO work.",
+        "Carrying a bag horizontally: gravity (down) does zero work on horizontal motion."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A vertical force ⟨0, 5⟩ N moves an object horizontally along ⟨4, 0⟩ m. How much work is done? (Joules.)",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "Fx",
+            "label": "force_x",
+            "value": 0
+          },
+          {
+            "id": "Fy",
+            "label": "force_y",
+            "value": 5
+          },
+          {
+            "id": "dx",
+            "label": "disp_x",
+            "value": 4
+          },
+          {
+            "id": "dy",
+            "label": "disp_y",
+            "value": 0
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fx"
+            },
+            "right": {
+              "op": "const",
+              "id": "dx"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fy"
+            },
+            "right": {
+              "op": "const",
+              "id": "dy"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 20,
+            "feedback": "20 = 5·4 multiplies the wrong parts. W = 0·4 + 5·0 = 0 — the force is perpendicular to the motion."
+          },
+          {
+            "value": 9,
+            "feedback": "9 = 5 + 4 adds. Work is the dot product: 0·4 + 5·0 = 0 J."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Perpendicular force does zero work: W = 0 J.",
+        "successFeedback": "Perpendicular force does zero work: W = 0 J."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-work__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **projection** idea underlies this: u · v = |u| |v| cos θ picks out the shadow of one vector on the other. When they align (θ = 0°), the dot product is maximal (full |u||v|); at 90° it's zero. Work measures exactly the force's shadow along the path.",
+      "figure": "vec-projection"
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Aligned force, maximal work.",
+      "conceptTag": "vec-work",
+      "explanationVariants": [
+        "A force ⟨5, 0⟩ along motion ⟨3, 0⟩ does W = 15 J — fully aligned, no wasted component.",
+        "When force and motion share a direction, all the force does work: 5·3 = 15 J."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A force ⟨5, 0⟩ N moves an object ⟨3, 0⟩ m (same direction). Find the work, in joules.",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "Fx",
+            "label": "force_x",
+            "value": 5
+          },
+          {
+            "id": "Fy",
+            "label": "force_y",
+            "value": 0
+          },
+          {
+            "id": "dx",
+            "label": "disp_x",
+            "value": 3
+          },
+          {
+            "id": "dy",
+            "label": "disp_y",
+            "value": 0
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fx"
+            },
+            "right": {
+              "op": "const",
+              "id": "dx"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fy"
+            },
+            "right": {
+              "op": "const",
+              "id": "dy"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 5 + 3 adds. Work is the dot product: 5·3 + 0·0 = 15 J."
+          },
+          {
+            "value": 0,
+            "feedback": "Here force and motion ALIGN, so work is maximal: 5·3 = 15 J, not 0."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "W = 5·3 + 0·0 = 15 J.",
+        "successFeedback": "W = 5·3 + 0·0 = 15 J."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-work__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Force at an angle.",
+      "conceptTag": "vec-work",
+      "explanationVariants": [
+        "F = ⟨3, 4⟩ along d = ⟨5, 0⟩: W = 3·5 + 4·0 = 15 J — only the horizontal 3 does work.",
+        "The 4 (vertical) is perpendicular to the motion and contributes nothing: 15 J."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A force ⟨3, 4⟩ N moves an object along ⟨5, 0⟩ m. What is the work, in joules?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "Fx",
+            "label": "force_x",
+            "value": 3
+          },
+          {
+            "id": "Fy",
+            "label": "force_y",
+            "value": 4
+          },
+          {
+            "id": "dx",
+            "label": "disp_x",
+            "value": 5
+          },
+          {
+            "id": "dy",
+            "label": "disp_y",
+            "value": 0
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fx"
+            },
+            "right": {
+              "op": "const",
+              "id": "dx"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fy"
+            },
+            "right": {
+              "op": "const",
+              "id": "dy"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 35,
+            "feedback": "35 = 3·5 + 4·5 wrongly pairs 4 with 5. d's y-component is 0: W = 15 + 0 = 15 J."
+          },
+          {
+            "value": 20,
+            "feedback": "20 = 4·5 uses the wrong component. Along ⟨5, 0⟩: W = 3·5 = 15 J."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "W = 3·5 + 4·0 = 15 J.",
+        "successFeedback": "W = 3·5 + 4·0 = 15 J."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-work__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Negative work.",
+      "conceptTag": "vec-work",
+      "explanationVariants": [
+        "A friction force ⟨−4, 0⟩ opposing motion ⟨6, 0⟩ does W = −24 J — negative, because the force fights the motion.",
+        "Force opposite to displacement gives negative work: −4·6 = −24 J."
+      ],
+      "hints": [
+        "Work is still F · d, signs included.",
+        "⟨−4, 0⟩ · ⟨6, 0⟩ = (−4)(6) + 0.",
+        "A force opposing motion does NEGATIVE work."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Friction ⟨−4, 0⟩ N acts as an object moves ⟨6, 0⟩ m. What is the work done by friction, in joules?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "Fx",
+            "label": "friction_x",
+            "value": -4
+          },
+          {
+            "id": "Fy",
+            "label": "friction_y",
+            "value": 0
+          },
+          {
+            "id": "dx",
+            "label": "disp_x",
+            "value": 6
+          },
+          {
+            "id": "dy",
+            "label": "disp_y",
+            "value": 0
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fx"
+            },
+            "right": {
+              "op": "const",
+              "id": "dx"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "Fy"
+            },
+            "right": {
+              "op": "const",
+              "id": "dy"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 24,
+            "feedback": "Friction OPPOSES motion, so the work is negative: (−4)(6) = −24 J."
+          },
+          {
+            "value": 2,
+            "feedback": "2 = −4 + 6 adds. Work is the dot product: (−4)(6) = −24 J."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "W = (−4)(6) + 0 = −24 J (friction removes energy).",
+        "successFeedback": "W = (−4)(6) + 0 = −24 J (friction removes energy)."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-work__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Work is alignment times distance.",
+      "takeaways": [
+        "Work W = F · d — only the force component along the motion counts.",
+        "Perpendicular force → zero work; aligned → maximal; opposing → negative.",
+        "The dot product u·v = |u||v|cos θ measures one vector's shadow on the other."
+      ],
+      "teaser": "Next chapter: 2×2 matrices — arithmetic, determinants, and solving systems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-work",
+      "concept": {
+        "id": "rem-vec0303-c",
+        "kind": "concept",
+        "body": "Work W = F · d = (dot product). Perpendicular force does zero work; force opposing motion does negative work."
+      },
+      "check": {
+        "id": "rem-vec0303-k",
+        "kind": "check",
+        "body": "One work value.",
+        "conceptTag": "vec-work",
+        "explanationVariants": [
+          "⟨2, 0⟩ · ⟨7, 0⟩ = 14 J.",
+          "Aligned force and motion: 2·7 = 14 J."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A force ⟨2, 0⟩ N moves an object ⟨7, 0⟩ m. Find the work, in joules.",
+          "answer": 14,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 = 2 + 7 adds. Work is the dot product: 2·7 = 14 J."
+            },
+            {
+              "value": 0,
+              "feedback": "Force and motion align, so work is 2·7 = 14 J, not 0."
+            }
+          ],
+          "fallbackFeedback": "W = 2·7 = 14 J."
+        }
+      }
+    }
+  ]
+}

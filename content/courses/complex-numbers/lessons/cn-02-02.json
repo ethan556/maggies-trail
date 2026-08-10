@@ -1,0 +1,333 @@
+{
+  "id": "cn-02-02",
+  "slug": "powers-of-i",
+  "title": "Powers of i",
+  "courseId": "complex-numbers",
+  "chapterId": "ch2-imaginary-unit",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Keep multiplying by i and a pattern locks in: i¹ = i, i² = −1, i³ = i²·i = **−i**, i⁴ = i²·i² = (−1)(−1) = **1** — and then it repeats. Every power of i is one of just four values, cycling like a quarter turn.",
+      "figure": "powers-of-i-cycle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The powers of i are a lap of the circle.",
+      "widget": {
+        "type": "argandExplore",
+        "mode": "multiply",
+        "mulRe": 0,
+        "mulIm": 1,
+        "targetRe": 1,
+        "targetIm": 0,
+        "reStart": 1,
+        "imStart": 0,
+        "gridMax": 5,
+        "prompt": "w = i again. This time find the z whose product z × i lands on 1.",
+        "successFeedback": "z = −i. One more quarter turn from −i brings you back to 1 — which is why the powers of i cycle i, −1, −i, 1 and then start again. Four quarter turns is one lap, so i⁴ = 1 and i²⁰²⁵ is just i¹ in disguise.",
+        "realFeedback": "The product misses 1 along the real axis. Ask which arrow, turned a quarter turn anticlockwise, points at 1.",
+        "imagFeedback": "The real part is right but the product is not sitting on the real axis. You want the product to be exactly 1, with nothing imaginary left."
+      },
+      "predict": {
+        "prompt": "Same quarter-turn: to land on 1 (pointing right), z must start out pointing…",
+        "options": [
+          {
+            "id": "down",
+            "label": "Straight down: z = −i"
+          },
+          {
+            "id": "right",
+            "label": "Right already: z = 1"
+          },
+          {
+            "id": "up",
+            "label": "Straight up: z = i"
+          }
+        ],
+        "outcomeId": "down",
+        "reveal": "The turn carries 'down' to 'right': −i · i = −i² = 1. Four quarter-turns bring any number home — which is exactly why i⁴ = 1 and the powers of i cycle in fours."
+      },
+      "conceptTag": "cn-i-powers",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents i powers.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for i powers must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines i powers."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-i-powers",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "For big exponents, ride the cycle: since i⁴ = 1, only the **remainder of n ÷ 4** matters. i¹⁰: 10 = 4·2 + 2, remainder 2, so i¹⁰ = i² = −1. Remainder 0 means a whole number of laps: the value is 1.",
+      "figure": "cn-i-cycle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the remainder.",
+      "conceptTag": "cn-i-powers",
+      "explanationVariants": [
+        "10 ÷ 4 leaves remainder 2, so i¹⁰ = i² = −1.",
+        "i¹⁰ = (i⁴)² · i² = 1 · (−1) = −1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is i¹⁰?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−1",
+            "correct": true,
+            "feedback": "Right — remainder 2 lands on i² = −1."
+          },
+          {
+            "id": "o2",
+            "label": "1",
+            "correct": false,
+            "feedback": "10 is even but not a multiple of 4 — remainder 2 gives i², which is −1."
+          },
+          {
+            "id": "o3",
+            "label": "i",
+            "correct": false,
+            "feedback": "That would need remainder 1, but 10 = 4·2 + 2."
+          },
+          {
+            "id": "o4",
+            "label": "−i",
+            "correct": false,
+            "feedback": "That would need remainder 3, but 10 = 4·2 + 2 — the cycle lands on −1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-i-powers"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A bigger power.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is i²³?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−i",
+            "correct": true,
+            "feedback": "Right — 23 = 4·5 + 3, and remainder 3 gives i³ = −i."
+          },
+          {
+            "id": "o2",
+            "label": "i",
+            "correct": false,
+            "feedback": "Remainder 1 would need 21 or 25 — 23 leaves remainder 3, landing on −i."
+          },
+          {
+            "id": "o3",
+            "label": "−1",
+            "correct": false,
+            "feedback": "23 is odd, so it can't land on i² — remainder 3 gives −i."
+          },
+          {
+            "id": "o4",
+            "label": "1",
+            "correct": false,
+            "feedback": "23 isn't a multiple of 4 (that's 20 or 24) — remainder 3 gives −i."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A clean multiple.",
+      "conceptTag": "cn-i-powers",
+      "explanationVariants": [
+        "40 = 4 · 10 exactly, remainder 0 — ten complete laps land back on 1.",
+        "i⁴⁰ = (i⁴)¹⁰ = 1¹⁰ = 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is i⁴⁰?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1",
+            "correct": true,
+            "feedback": "Right — 40 is a multiple of 4: ten full cycles."
+          },
+          {
+            "id": "o2",
+            "label": "−1",
+            "correct": false,
+            "feedback": "−1 needs remainder 2 (like i⁴²) — 40 ÷ 4 leaves remainder 0."
+          },
+          {
+            "id": "o3",
+            "label": "i",
+            "correct": false,
+            "feedback": "Remainder 0, not 1 — a whole number of laps returns to 1."
+          },
+          {
+            "id": "o4",
+            "label": "−i",
+            "correct": false,
+            "feedback": "Remainder 0, not 3 — i⁴⁰ closes the loop at 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-i-powers"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Add up three powers.",
+      "conceptTag": "cn-i-powers",
+      "explanationVariants": [
+        "i⁴, i⁸, i¹² all have remainder 0, so each equals 1: the sum is 3.",
+        "Multiples of 4 always land on 1, and 1 + 1 + 1 = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute i⁴ + i⁸ + i¹² as a real number.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "Each exponent is a MULTIPLE of 4, so each power is +1, not −1: sum 3."
+          },
+          {
+            "value": 0,
+            "feedback": "Nothing cancels — all three terms equal 1, so the sum is 3."
+          }
+        ],
+        "fallbackFeedback": "All three exponents are multiples of 4, so each power is 1: total 3."
+      },
+      "variant": {
+        "gen": "cn-i-powers",
+        "form": "sumOfPowers"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "An alternating sum.",
+      "conceptTag": "cn-i-powers",
+      "explanationVariants": [
+        "i² = −1, i⁴ = 1, i⁶ = −1 (remainder 2): the sum is −1 + 1 − 1 = −1.",
+        "Even powers alternate −1, 1, −1, … by remainder 2, 0, 2 — here that's −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute i² + i⁴ + i⁶ as a real number.",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The pattern is −1, +1, −1 — the odd-man-out is the +1 in the middle, and the sum is −1."
+          },
+          {
+            "value": 3,
+            "feedback": "Not every even power is +1: remainder 2 gives −1, so it's −1 + 1 − 1 = −1."
+          }
+        ],
+        "fallbackFeedback": "i² = −1, i⁴ = 1, i⁶ = −1: sum −1."
+      },
+      "hints": [
+        "Reduce each exponent by its remainder when divided by 4.",
+        "2, 4, 6 leave remainders 2, 0, 2 — values −1, 1, −1.",
+        "Add them: −1 + 1 − 1 = −1."
+      ],
+      "variant": {
+        "gen": "cn-i-powers",
+        "form": "sumOfPowers"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Powers of i cycle through i, −1, −i, 1 — every four steps.",
+      "takeaways": [
+        "i¹ = i, i² = −1, i³ = −i, i⁴ = 1, then repeat.",
+        "For iⁿ, only the remainder of n ÷ 4 matters.",
+        "Remainder 0 means a whole number of laps: the value is 1."
+      ],
+      "teaser": "Next: numbers with BOTH a real and an imaginary part — and where they live."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-i-powers",
+      "concept": {
+        "id": "rem-cn0202-c",
+        "kind": "concept",
+        "body": "To find iⁿ, divide n by 4 and keep the remainder. i⁶: 6 = 4 + 2, remainder 2, so i⁶ = i²."
+      },
+      "check": {
+        "id": "rem-cn0202-k",
+        "kind": "check",
+        "body": "Ride the cycle once.",
+        "conceptTag": "cn-i-powers",
+        "explanationVariants": [
+          "Remainder 2 lands on i² = −1.",
+          "i⁶ = i⁴ · i² = 1 · (−1) = −1."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is i⁶?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "−1",
+              "correct": true,
+              "feedback": "Right — remainder 2 gives i² = −1."
+            },
+            {
+              "id": "o2",
+              "label": "1",
+              "correct": false,
+              "feedback": "1 needs a multiple of 4 (i⁴ or i⁸) — 6 leaves remainder 2: −1."
+            },
+            {
+              "id": "o3",
+              "label": "−i",
+              "correct": false,
+              "feedback": "−i is remainder 3 (like i⁷) — 6 leaves remainder 2: −1."
+            },
+            {
+              "id": "o4",
+              "label": "i",
+              "correct": false,
+              "feedback": "i is remainder 1 (like i⁵) — 6 leaves remainder 2: −1."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

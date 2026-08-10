@@ -1,0 +1,281 @@
+{
+  "id": "tg-01-02",
+  "slug": "the-full-sinusoid",
+  "title": "The Full Sinusoid: Four Dials",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch1-full-sinusoid",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every sinusoid is y = **A** sin(**B**(x − **C**)) + **D**: amplitude A (recall), period 2π/B (recall), phase shift C (new), midline D (recall). Four independent dials. To graph: draw the midline, mark the amplitude band, start a sine shape at x = C, and fit one period of length 2π/B.",
+      "figure": "tg-sinusoid-anatomy"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the dials.",
+      "predict": {
+        "prompt": "y = 3 sin(2(x − 45°)) + 1. Which dial decides the MAXIMUM value of y?",
+        "options": [
+          {
+            "id": "amp",
+            "label": "Amplitude alone — max is 3"
+          },
+          {
+            "id": "ampmid",
+            "label": "Amplitude AND midline — max is 3 + 1 = 4"
+          },
+          {
+            "id": "scale",
+            "label": "The 2 inside — it doubles the height"
+          }
+        ],
+        "outcomeId": "ampmid",
+        "reveal": "Amplitude sets how far the wave swings, the midline sets what it swings AROUND: max = 1 + 3 = 4. The 2 inside changes how fast, never how high. Set the four dials and watch each one move exactly one thing."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Reproduce y = 3 sin(2(x − 45°)) + 1: set each dial and watch what it — and only it — changes, until your wave sits on the dashed target.",
+        "targetAngle": 0,
+        "angleStart": 90,
+        "angleStep": 5,
+        "trace": "sin",
+        "dials": [
+          {
+            "param": "amplitude",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "start": 1,
+            "target": 3,
+            "feedback": "The swing is wrong. Amplitude is the distance from the midline to the crest — this wave rises 3 above its center line, not to 3."
+          },
+          {
+            "param": "angularScale",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "start": 1,
+            "target": 2,
+            "feedback": "The wave repeats at the wrong rate. The 2 multiplies the ANGLE, so the trace advances twice as fast per degree of drag — watch the tip lap the target."
+          },
+          {
+            "param": "phaseDeg",
+            "min": -180,
+            "max": 180,
+            "step": 45,
+            "start": 0,
+            "target": -90,
+            "feedback": "The slide is off. 2(x − 45°) = 2x − 90°: the shift inside the brackets gets multiplied too, so the phase dial needs −90°, not −45° — the factored form hides a doubled delay."
+          },
+          {
+            "param": "midline",
+            "min": -2,
+            "max": 3,
+            "step": 1,
+            "start": 0,
+            "target": 1,
+            "feedback": "The center line is wrong. The + 1 outside lifts the whole wave — crest, trough and axis together — up by one."
+          }
+        ],
+        "successFeedback": "All four dials placed — and the maximum reads 4 off the crest: midline 1 plus amplitude 3. Each dial moved one feature and left the others alone; that separation IS the anatomy of the sinusoid.",
+        "lowFeedback": "Keep adjusting — compare your wave against the dashed target one feature at a time.",
+        "highFeedback": "Keep adjusting — compare your wave against the dashed target one feature at a time."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "And the bottom.",
+      "conceptTag": "tg-four-dials",
+      "explanationVariants": [
+        "Min = D − A = 1 − 3 = −2.",
+        "The wave swings 3 below the midline 1: down to −2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same function. What is the MINIMUM value?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Subtract the amplitude FROM the midline: 1 − 3 = −2, not 3 − 1."
+          },
+          {
+            "value": -3,
+            "feedback": "−3 would be the min around midline 0. This wave rides midline 1: min −2."
+          }
+        ],
+        "fallbackFeedback": "Min = D − A = 1 − 3 = −2."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-four-dials__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Locate the first peak.",
+      "conceptTag": "tg-four-dials",
+      "explanationVariants": [
+        "The sine shape starts (midline, rising) at x = C = π/4; it peaks a quarter-period later. Period = π, quarter = π/4: peak at π/4 + π/4 = π/2.",
+        "Peak where 2(x − π/4) = π/2: x − π/4 = π/4, x = π/2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Same function: y = 3 sin(2(x − π/4)) + 1. Where is its first peak for x ≥ 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = π/2",
+            "correct": true,
+            "feedback": "Right — start at the shift π/4, climb a quarter-period (π/4) to the crest."
+          },
+          {
+            "id": "o2",
+            "label": "x = π/4",
+            "feedback": "π/4 is where the wave CROSSES the midline going up (the sine start). The peak comes a quarter-period later: π/2."
+          },
+          {
+            "id": "o3",
+            "label": "x = π",
+            "feedback": "π is a half-period past the start — the wave is back at the midline heading DOWN. The peak is at π/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-four-dials__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Going the other way — **reading a graph** — use the landmarks in this order: midline D = (max + min)/2; amplitude A = (max − min)/2; period from repeat-distance, then B = 2π/period; finally C = where a rising midline-crossing sits.",
+      "figure": "tg-read-landmarks"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a wave.",
+      "conceptTag": "tg-four-dials",
+      "explanationVariants": [
+        "D = (7 + 1)/2 = 4 and A = (7 − 1)/2 = 3.",
+        "Midline halfway between the extremes: 4; swing: 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sinusoid oscillates between a max of 7 and a min of 1. What is its midline D?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the AMPLITUDE (7 − 1)/2. The midline AVERAGES the extremes: (7 + 1)/2 = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "(7 + 1)/2 = 4 — average, don't subtract."
+          }
+        ],
+        "fallbackFeedback": "D = (7 + 1)/2 = 4 (and A = 3)."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-four-dials__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Write the rule from landmarks.",
+      "conceptTag": "tg-four-dials",
+      "explanationVariants": [
+        "A = (9 − 1)/2 = 4, D = 5, period 6π → B = 2π/(6π) = 1/3, rising midline-crossing at x = π → C = π. Rule: 4 sin((1/3)(x − π)) + 5; B as a decimal ≈ 0.33.",
+        "B = 2π ÷ period = 2π/6π = 1/3 ≈ 0.33."
+      ],
+      "hints": [
+        "B comes only from the period: B = 2π/period.",
+        "Period 6π: B = 2π/(6π).",
+        "Simplify: 1/3 ≈ 0.33."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A wave has max 9, min 1, period 6π, and a rising midline-crossing at x = π. In y = A sin(B(x − C)) + D, what is B? (Round to hundredths.)",
+        "answer": 0.33,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 would give period 2π/3. Period 6π needs B = 2π/(6π) = 1/3 ≈ 0.33."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the period's coefficient of π, not B. B = 2π ÷ 6π = 1/3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the AMPLITUDE. B is the period dial: 1/3 ≈ 0.33."
+          }
+        ],
+        "fallbackFeedback": "B = 2π/6π = 1/3 ≈ 0.33."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-four-dials__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Four dials, one wave.",
+      "takeaways": [
+        "Max/min = D ± A; period = 2π/B; start the shape at x = C.",
+        "Reading a graph: D and A from extremes, B from the period, C from a rising crossing.",
+        "Peaks sit a quarter-period after each rising midline-crossing."
+      ],
+      "teaser": "Next: cosine joins in — and turns out to be a shifted sine."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-four-dials",
+      "concept": {
+        "id": "rem-tg0102-c",
+        "kind": "concept",
+        "body": "Landmark order for reading: D = (max+min)/2 → A = (max−min)/2 → B = 2π/period → C from a rising midline-crossing."
+      },
+      "check": {
+        "id": "rem-tg0102-k",
+        "kind": "check",
+        "body": "Two landmarks.",
+        "conceptTag": "tg-four-dials",
+        "explanationVariants": [
+          "A = (10 − 2)/2 = 4.",
+          "Half the total swing 8: amplitude 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A sinusoid runs between 10 and 2. What is its amplitude A?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is the MIDLINE (10 + 2)/2. Amplitude halves the DIFFERENCE: (10 − 2)/2 = 4."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is the full swing; amplitude is half of it: 4."
+            }
+          ],
+          "fallbackFeedback": "A = (10 − 2)/2 = 4."
+        }
+      }
+    }
+  ]
+}

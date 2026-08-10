@@ -1,0 +1,307 @@
+{
+  "id": "cr-01-03",
+  "slug": "thales-theorem",
+  "title": "Thales' Theorem",
+  "courseId": "circle-theorems",
+  "chapterId": "ch1-central-inscribed",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-thales",
+      "concept": {
+        "id": "rem-cr-thales-c",
+        "kind": "concept",
+        "body": "Thales' theorem: an inscribed angle opening onto a DIAMETER is exactly 90° — the diameter's arc is a 180° semicircle, and inscribed angles take half. Converse: if an inscribed angle is 90°, its chord is a diameter. In the resulting right triangle the diameter is the hypotenuse and the two acute angles are complements."
+      },
+      "check": {
+        "id": "rem-cr-thales-k",
+        "kind": "check",
+        "body": "Half a semicircle.",
+        "conceptTag": "cr-thales",
+        "explanationVariants": [
+          "The diameter's arc is 180°; the inscribed angle is half: 90°, wherever P sits.",
+          "Thales: 90°, always."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "P is a point on a circle; MN is a diameter. Angle MPN = ?",
+          "answer": 90,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 180,
+              "feedback": "180° is the semicircle arc — P sees it at half: 90°."
+            },
+            {
+              "value": 60,
+              "feedback": "60° would suit a 120° arc — a diameter always spans 180°: 90°."
+            }
+          ],
+          "fallbackFeedback": "180 ÷ 2 = 90°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Point the inscribed angle at a **diameter** and the theorem sings: the diameter's arc is a semicircle, 180°, so the inscribed angle is half of that — **exactly 90°, from anywhere on the circle**. That's Thales' theorem, arguably the oldest proved statement in mathematics.",
+      "figure": "thales-right-angle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Instant right angle.",
+      "conceptTag": "cr-thales",
+      "explanationVariants": [
+        "AB is a diameter, so its arc is 180° and any inscribed angle on it is 90°.",
+        "Thales: diameter seen from the rim = right angle, always."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "AB is a diameter of a circle and C is any other point on the circle. Angle ACB measures ?",
+        "answer": 90,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180° is the semicircle ARC — the inscribed angle halves it: 90°."
+          },
+          {
+            "value": 45,
+            "feedback": "45 halves twice — one halving of 180° lands at 90°."
+          },
+          {
+            "value": 60,
+            "feedback": "60° would need a 120° arc — a diameter's arc is a full 180°: 90°."
+          }
+        ],
+        "fallbackFeedback": "180 ÷ 2 = 90°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-thales__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Thales turns every such triangle into a RIGHT triangle whose hypotenuse is the diameter — so the whole right-triangle toolkit (Pythagoras, the trig course) boards the circle. And the two remaining angles? They must complete 180° past the right angle: complements of each other.",
+      "figure": "cr-thales"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The other two.",
+      "conceptTag": "cr-thales",
+      "explanationVariants": [
+        "Angles sum to 180; with 90° spoken for, the acute pair totals 90: the other is 90 − 28 = 62°.",
+        "Thales' acute angles are complements: 62°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle ABC is inscribed with AB a diameter. Angle A = 28°. Find angle B.",
+        "answer": 62,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 28,
+            "feedback": "28° copies angle A — the acute pair are complements, not twins: 90 − 28 = 62°."
+          },
+          {
+            "value": 152,
+            "feedback": "152 = 180 − 28 forgets the right angle at C already holds 90°: the pair shares only 90. 62°."
+          },
+          {
+            "value": 118,
+            "feedback": "118 = 90 + 28 adds instead of completing — angle B finishes the 90: 62°."
+          }
+        ],
+        "fallbackFeedback": "90 − 28 = 62°."
+      },
+      "variant": {
+        "gen": "thales-right-angle"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Push the arc all the way to a semicircle.",
+      "widget": {
+        "type": "circleAngleExplore",
+        "mode": "inscribed",
+        "targetAngle": 90,
+        "startArc": 120,
+        "prompt": "Make the angle at P a right angle. Watch what the chord AB becomes when you get there.",
+        "successFeedback": "At 180° of arc, AB is a diameter and the angle at P is exactly 90°. Thales' theorem is not a separate fact — it is the inscribed-angle rule at its one special arc. And P can still slide anywhere: every point on the semicircle sees the diameter at a right angle.",
+        "lowFeedback": "Under 90° at P. The angle is half the arc, so you need the arc to reach a full 180°.",
+        "highFeedback": "Past 90°, which means the arc has gone beyond a semicircle and AB is no longer a diameter."
+      },
+      "predict": {
+        "prompt": "The arc starts at 120°. The inscribed angle that watches it measures…",
+        "options": [
+          {
+            "id": "half",
+            "label": "Half the arc (60°)"
+          },
+          {
+            "id": "same",
+            "label": "The same as the arc (120°)"
+          },
+          {
+            "id": "double",
+            "label": "Double the arc (240°)"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "It reads 60° — half. Only the CENTRAL angle matches its arc; every angle whose vertex sits on the circle gets exactly half, and dragging the arc will hold that ratio pinned."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move points on a circle while arc, central-angle, and inscribed-angle measures update together.",
+        "invariants": [
+          "central-angle-equals-intercepted-arc",
+          "inscribed-angle-half-intercepted-arc"
+        ],
+        "misconceptions": [
+          "inscribed-angle-equals-arc",
+          "vertex-location-irrelevant"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-thales"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Carpenter's circle-finder.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A carpenter slides a square (a rigid 90° corner) so both edges touch two fixed nails, marking where the corner sits. What does the corner trace, and why?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A circle through the nails — by the converse, the corner always sees the nail-segment as a diameter",
+            "correct": true,
+            "feedback": "Every 90° view of segment AB sits on the circle with AB as diameter — the tool literally draws Thales' converse."
+          },
+          {
+            "id": "o2",
+            "label": "A straight line parallel to the nails",
+            "correct": false,
+            "feedback": "A line would keep a constant distance, but the corner's DISTANCE varies — what stays constant is the 90° view: a circle."
+          },
+          {
+            "id": "o3",
+            "label": "An ellipse with the nails as foci",
+            "correct": false,
+            "feedback": "Ellipses keep a distance SUM constant — this tool keeps an ANGLE constant at 90°, which is Thales' circle."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing recognizable",
+            "correct": false,
+            "feedback": "It's exactly the semicircle on the nail segment — machinists have used this circle-finding trick for centuries."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Hypotenuse = diameter.",
+      "conceptTag": "cr-thales",
+      "explanationVariants": [
+        "Thales makes the legs 10 and 24 a right pair, so the hypotenuse-diameter is √(100 + 576) = 26.",
+        "Pythagoras on the Thales triangle: √676 = 26 — the 5-12-13 triple, doubled."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle inscribed on a diameter has legs 10 and 24. Find the DIAMETER.",
+        "answer": 26,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 34,
+            "feedback": "34 = 10 + 24 adds the legs — the diameter is the HYPOTENUSE: √(10² + 24²) = 26."
+          },
+          {
+            "value": 13,
+            "feedback": "13 is the RADIUS — the diameter doubles it: 26."
+          },
+          {
+            "value": 21.82,
+            "feedback": "21.82 ≈ √(576 − 100) subtracts squares — both givens are LEGS, so add: 26."
+          }
+        ],
+        "fallbackFeedback": "√(10² + 24²) = 26."
+      },
+      "variant": {
+        "gen": "thales-right-angle",
+        "form": "hypotenuse"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The radius, indirectly.",
+      "conceptTag": "cr-thales",
+      "hints": [
+        "The right angle at C certifies (converse!) that AB is a diameter.",
+        "Pythagoras prices AB from the legs 9 and 12.",
+        "The radius is HALF the diameter."
+      ],
+      "explanationVariants": [
+        "AB = √(81 + 144) = 15 (the 3-4-5 family), so the radius is 7.5.",
+        "Converse-of-Thales names AB a diameter; 15/2 = 7.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle ABC is inscribed in a circle with a right angle at C, and legs AC = 9, BC = 12. Find the circle's RADIUS.",
+        "answer": 7.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is the diameter AB — the radius halves it: 7.5."
+          },
+          {
+            "value": 10.5,
+            "feedback": "10.5 = (9 + 12)/2 averages the legs — first Pythagoras (15), then halve: 7.5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 ≈ half of √(144 − 81) subtracts squares — the legs ADD: √225 = 15, radius 7.5."
+          }
+        ],
+        "fallbackFeedback": "AB = 15 (diameter, by the converse); r = 7.5."
+      },
+      "variant": {
+        "gen": "thales-right-angle",
+        "form": "radiusFromLegs"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The diameter's right angle.",
+      "takeaways": [
+        "Thales: any inscribed angle on a diameter is 90° (half the 180° semicircle).",
+        "Converse: a 90° inscribed angle forces its chord to BE a diameter — hypotenuse through the center.",
+        "The acute pair are complements, and Pythagoras prices the diameter from the legs."
+      ],
+      "teaser": "Next chapter: chords — how far they sit from the center, and what equal length buys."
+    }
+  ]
+}

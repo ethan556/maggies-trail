@@ -1,0 +1,307 @@
+{
+  "id": "tno-02-01",
+  "slug": "breaking-a-number-apart",
+  "title": "Breaking a Number Apart",
+  "courseId": "tens-and-ones",
+  "chapterId": "ch2-expanded-form",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "expanded-form",
+      "body": "Expanded form breaks a number into its tens value and ones value. 46 = 40 + 6: the 4 tens are worth 40 and the 6 ones are worth 6. Add them back to get 46."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Break a number into its places.",
+      "widget": {
+        "type": "baseTenCompose",
+        "target": 63,
+        "requireStandard": true,
+        "maxTens": 9,
+        "maxOnes": 20,
+        "prompt": "Build 63 with tens and ones.",
+        "successFeedback": "6 tens and 3 ones — that is what 60 + 3 means. Breaking a number apart is not a trick; it is just reading what the blocks were saying all along.",
+        "missFeedback": "Six ten-sticks make 60, and then you need 3 more single cubes.",
+        "commonBuilds": []
+      },
+      "predict": {
+        "prompt": "63 breaks into tens + ones. Which addition sentence will the blocks show?",
+        "options": [
+          {
+            "id": "sixty",
+            "label": "60 + 3"
+          },
+          {
+            "id": "six",
+            "label": "6 + 3"
+          },
+          {
+            "id": "swap",
+            "label": "6 + 30"
+          }
+        ],
+        "outcomeId": "sixty",
+        "reveal": "6 rods carry 60, not 6 — so 63 = 60 + 3. Writing 6 + 3 = 9 throws away the rods' worth; the breakdown keeps every block counted."
+      },
+      "conceptTag": "tno-expand",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tno expand.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tno expand must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tno expand."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "tens-and-ones:tno-expand",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another one.",
+      "conceptTag": "tno-expand",
+      "explanationVariants": [
+        "58 = 50 + 8, so the ones part is 8.",
+        "The ones digit of 58 is 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "58 = 50 + ?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the tens digit; its value 50 is already written. The ones part is 8."
+          },
+          {
+            "value": 58,
+            "feedback": "The tens part 50 is already there; the missing ones part is 8."
+          }
+        ],
+        "fallbackFeedback": "58 = 50 + 8."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoExpandNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The tens part is the tens digit times ten. In 72, the 7 tens are worth 7 × 10 = 70. The digit is 7, but its value is 70 because it sits in the tens place.",
+      "figure": "tno-tens-worth"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Value of the tens digit.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 72, what is the value of the 7?",
+        "answer": 70,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the digit, but it sits in the tens place, so its value is 7 × 10 = 70."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the ones digit. The 7 is worth 70."
+          }
+        ],
+        "fallbackFeedback": "The 7 is in the tens place, so it's worth 70."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Put the parts back together to check: 70 + 2 = 72. Expanded form and the number are just two ways to write the same amount.",
+      "figure": "tno-expanded-72"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Add the parts back.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "70 + 2 = ?",
+        "answer": 72,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "Don't add the digits 7 and 2. Add the values: 70 + 2 = 72."
+          },
+          {
+            "value": 702,
+            "feedback": "Don't write them side by side. 70 + 2 = 72."
+          }
+        ],
+        "fallbackFeedback": "70 + 2 = 72."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Value of a tens digit.",
+      "conceptTag": "tno-expand",
+      "explanationVariants": [
+        "The 3 in 35 sits in the tens place, so it's worth 30.",
+        "3 tens is 3 × 10 = 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 35, what is the value of the 3?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the digit, but in the tens place it's worth 3 × 10 = 30."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the ones digit. The 3 is worth 30."
+          }
+        ],
+        "fallbackFeedback": "The 3 is in the tens place, so it's worth 30."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoExpandNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Add parts back.",
+      "conceptTag": "tno-expand",
+      "explanationVariants": [
+        "60 + 4 = 64.",
+        "Add the values: sixty and four make 64."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "60 + 4 = ?",
+        "answer": 64,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Don't add the digits 6 and 4. Add the values: 60 + 4 = 64."
+          },
+          {
+            "value": 604,
+            "feedback": "Don't write them side by side. 60 + 4 = 64."
+          }
+        ],
+        "fallbackFeedback": "60 + 4 = 64."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoExpandNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Finish this one.",
+      "conceptTag": "tno-expand",
+      "explanationVariants": [
+        "89 = 80 + 9, so the ones part is 9.",
+        "The ones digit of 89 is 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "89 = 80 + ?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the tens digit; its value 80 is already written. The ones part is 9."
+          },
+          {
+            "value": 89,
+            "feedback": "The tens part 80 is already there; the missing ones part is 9."
+          }
+        ],
+        "fallbackFeedback": "89 = 80 + 9."
+      },
+      "hints": [
+        "The tens part 80 is already written.",
+        "What's left is the ones digit.",
+        "The ones digit of 89 is 9."
+      ],
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoExpandNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Expanded form splits a number into its tens value plus its ones.",
+      "takeaways": [
+        "46 = 40 + 6 (tens value plus ones).",
+        "A tens digit is worth the digit × 10.",
+        "Add the parts back to get the number."
+      ],
+      "teaser": "next: reading expanded form back into a number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tno-expand",
+      "concept": {
+        "id": "rem-tex-c",
+        "kind": "concept",
+        "body": "Expanded form splits a number into its tens value and ones: 46 = 40 + 6. The tens digit's value is the digit × 10, so the 4 in 46 is worth 40."
+      },
+      "check": {
+        "id": "rem-tex-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tno-expand",
+        "explanationVariants": [
+          "46 = 40 + 6, so the ones part is 6.",
+          "The ones digit of 46 is 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "46 = 40 + ?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "40 is already written; the ones part is 6."
+            },
+            {
+              "value": 46,
+              "feedback": "The missing ones part is 6."
+            }
+          ],
+          "fallbackFeedback": "46 = 40 + 6."
+        }
+      }
+    }
+  ]
+}

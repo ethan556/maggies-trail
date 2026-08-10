@@ -1,0 +1,331 @@
+{
+ "id": "pq-01-03",
+ "slug": "regular-polygons",
+ "title": "Regular Polygons",
+ "courseId": "polygons-quadrilaterals",
+ "chapterId": "ch1-angle-sums",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "pq-regular-angles",
+   "concept": {
+    "id": "rem-pq-regular-angles-c",
+    "kind": "concept",
+    "body": "Regular = all sides equal and all angles equal, so totals divide evenly. Each interior angle = (n − 2) × 180 ÷ n; each exterior = 360 ÷ n; the pair at any vertex sums to 180°. To find n from an interior angle: take 180 minus it (the exterior), then divide 360 by that."
+   },
+   "check": {
+    "id": "rem-pq-regular-angles-k",
+    "kind": "check",
+    "body": "One even split.",
+    "conceptTag": "pq-regular-angles",
+    "explanationVariants": [
+     "360 ÷ 5 = 72° per turn in a regular pentagon.",
+     "Five equal turns share the 360° lap: 72° each."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Each exterior angle of a regular pentagon?",
+     "answer": 72,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 108,
+       "feedback": "108° is each INTERIOR angle. The exterior is its supplement — or directly 360/5 = 72°."
+      },
+      {
+       "value": 36,
+       "feedback": "36 = 180 ÷ 5 splits a straight line — the lap is the thing shared: 360 ÷ 5 = 72°."
+      }
+     ],
+     "fallbackFeedback": "360 ÷ 5 = 72°."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **regular** polygon is doubly fair: all sides equal AND all angles equal. Fairness makes each angle computable exactly — divide the totals evenly. Each interior angle: **(n − 2) × 180 ÷ n**. Each exterior angle: **360 ÷ n**. Two formulas, one polygon, joined by interior + exterior = 180°.",
+   "figure": "pq-regular"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Each interior angle.",
+   "conceptTag": "pq-regular-angles",
+   "explanationVariants": [
+    "(8 − 2) × 180 ÷ 8 = 1080 ÷ 8 = 135°.",
+    "Or via the exterior: 360/8 = 45, and 180 − 45 = 135°."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Each interior angle of a regular octagon, in degrees?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "n",
+      "label": "sides",
+      "value": 8
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "subtract",
+       "left": {
+        "op": "const",
+        "id": "n"
+       },
+       "right": {
+        "op": "lit",
+        "value": 2
+       }
+      },
+      "right": {
+       "op": "lit",
+       "value": 180
+      }
+     },
+     "right": {
+      "op": "const",
+      "id": "n"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 1080,
+      "feedback": "1080 is the TOTAL interior sum — the octagon shares it eight ways: 1080 ÷ 8 = 135°."
+     },
+     {
+      "value": 45,
+      "feedback": "45° is each EXTERIOR angle (360/8). Its interior partner is the supplement: 180 − 45 = 135°."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "1080 ÷ 8 = 135°.",
+    "successFeedback": "1080 ÷ 8 = 135°."
+   },
+   "variant": {
+    "gen": "polygon-angles",
+    "form": "regularInterior"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Each exterior angle.",
+   "conceptTag": "pq-regular-angles",
+   "explanationVariants": [
+    "360 ÷ 12 = 30° — twelve equal turns share the lap.",
+    "The lap splits evenly: 30° per vertex."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Each exterior angle of a regular 12-gon?",
+    "answer": 30,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 150,
+      "feedback": "150° is each INTERIOR angle. The exterior is its straight-line partner: 180 − 150 = 30° — or directly 360/12."
+     },
+     {
+      "value": 15,
+      "feedback": "15 = 180 ÷ 12 splits a straight line — the turns split the full LAP: 360 ÷ 12 = 30°."
+     }
+    ],
+    "fallbackFeedback": "360 ÷ 12 = 30°."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-regular-angles__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Going backwards, the exterior route is the shortcut. Told each interior angle is 150°? Don't wrestle (n − 2) × 180/n = 150 — flip to the exterior: 180 − 150 = 30°, then **n = 360/30 = 12**. Supplement first, lap second. Two divisions, done.",
+   "figure": "pq-exterior"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Angle to side count.",
+   "conceptTag": "pq-regular-angles",
+   "explanationVariants": [
+    "Exterior = 180 − 150 = 30°; then n = 360/30 = 12 sides.",
+    "Supplement first (30°), lap second (360/30): a regular 12-gon."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Each interior angle of a regular polygon is 150°. How many sides?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "i",
+      "label": "interior angle",
+      "value": 150
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "lit",
+      "value": 360
+     },
+     "right": {
+      "op": "subtract",
+      "left": {
+       "op": "lit",
+       "value": 180
+      },
+      "right": {
+       "op": "const",
+       "id": "i"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 5,
+      "feedback": "5 = 150 ÷ 30 divides interior by exterior — a ratio with no meaning here. Count TURNS in the lap: 360/30 = 12."
+     },
+     {
+      "value": 6,
+      "feedback": "6 = 180 ÷ 30 counts turns in a straight line — the lap is 360°: n = 360/30 = 12."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "180 − 150 = 30; n = 360/30 = 12.",
+    "successFeedback": "180 − 150 = 30; n = 360/30 = 12."
+   },
+   "variant": {
+    "gen": "polygon-angles",
+    "form": "sidesFromInterior"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Growing n.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "As a regular polygon gains more and more sides, what happens to each interior angle?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "It climbs toward 180° without reaching it — the shape rounds toward a circle",
+      "correct": true,
+      "feedback": "Each exterior angle 360/n shrinks toward 0, so its interior partner 180 − 360/n creeps up on 180°."
+     },
+     {
+      "id": "o2",
+      "label": "It shrinks toward 0°",
+      "correct": false,
+      "feedback": "That's the EXTERIOR angle's fate (360/n → 0). The interior does the opposite, rising toward 180°."
+     },
+     {
+      "id": "o3",
+      "label": "It stays fixed at 108°",
+      "correct": false,
+      "feedback": "108° belongs to the pentagon alone — each n has its own angle, and they march upward toward 180°."
+     },
+     {
+      "id": "o4",
+      "label": "It passes 180° for very large n",
+      "correct": false,
+      "feedback": "At 180° the “corner” flattens into a straight line — a convex polygon can approach but never cross it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Read a familiar shape.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Each interior angle of a regular hexagon? (You can fan it — or supplement 360/6.)",
+    "answer": 120,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 720,
+      "feedback": "720 is the hexagon's TOTAL interior sum — split it six ways: 120°."
+     },
+     {
+      "value": 60,
+      "feedback": "60° is each EXTERIOR angle (360/6). Interior = 180 − 60 = 120°."
+     }
+    ],
+    "fallbackFeedback": "720 ÷ 6 = 120° (or 180 − 360/6)."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Tiles at a point.",
+   "conceptTag": "pq-regular-angles",
+   "hints": [
+    "Tiles meeting at a point must fill 360° exactly, with no gap and no overlap.",
+    "Each regular hexagon corner contributes 120°.",
+    "How many 120° corners complete 360°?"
+   ],
+   "explanationVariants": [
+    "360 ÷ 120 = 3 hexagons meet at each point — the honeycomb pattern.",
+    "Three corners of 120° fill the full 360° around a point exactly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Regular hexagons tile a floor. How many hexagons meet at each point?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 counts the hexagon's SIDES — the question counts corners around a point: 360 ÷ 120 = 3."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is the answer for SQUARES (360/90). Hexagon corners are 120°: 360/120 = 3."
+     }
+    ],
+    "fallbackFeedback": "360 ÷ 120 = 3 — the honeycomb."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-regular-angles__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Fair shares.",
+   "takeaways": [
+    "Regular n-gon: each interior = (n − 2) × 180/n; each exterior = 360/n.",
+    "Reversing from an interior angle: supplement first, then n = 360/exterior.",
+    "Tilings work when corner angles divide 360° — triangles, squares, hexagons."
+   ],
+   "teaser": "Chapter 2: the quadrilateral that runs on parallel rails — the parallelogram."
+  }
+ ]
+}

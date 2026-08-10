@@ -1,0 +1,282 @@
+{
+  "id": "tf-02-02",
+  "slug": "degrees-radians-fluently",
+  "title": "Degrees ↔ Radians, Fluently",
+  "courseId": "trig-functions",
+  "chapterId": "ch2-radians-arc-length",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The angles you'll meet constantly are clean fractions of the anchor: **30° = π/6, 45° = π/4, 60° = π/3, 90° = π/2**. The pattern: the denominator tells how many copies fit in 180°. Six 30s, four 45s, three 60s, two 90s — the smaller the angle, the BIGGER the denominator.",
+      "figure": "tf-clean-fractions"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Pair them up.",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each degree measure to its radian form.",
+        "left": [
+          {
+            "id": "d1",
+            "label": "30°"
+          },
+          {
+            "id": "d2",
+            "label": "45°"
+          },
+          {
+            "id": "d3",
+            "label": "90°"
+          },
+          {
+            "id": "d4",
+            "label": "120°"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "π/6"
+          },
+          {
+            "id": "r2",
+            "label": "π/4"
+          },
+          {
+            "id": "r3",
+            "label": "π/2"
+          },
+          {
+            "id": "r4",
+            "label": "2π/3"
+          }
+        ],
+        "pairs": {
+          "d1": "r1",
+          "d2": "r2",
+          "d3": "r3",
+          "d4": "r4"
+        },
+        "pairErrors": [
+          {
+            "left": "d1",
+            "right": "r2",
+            "feedback": "π/4 is 45° — four of those fill 180. Thirty degrees needs SIX copies: π/6."
+          },
+          {
+            "left": "d3",
+            "right": "r4",
+            "feedback": "2π/3 is 120° — two 60° steps. Ninety degrees is half the anchor: π/2."
+          }
+        ],
+        "missFeedback": "Read each denominator as “how many fit in 180°.”",
+        "successFeedback": "The four workhorse angles, both languages — these unlock the whole unit circle."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the 45s.",
+      "conceptTag": "tf-radians",
+      "explanationVariants": [
+        "135° is three 45° steps, and each step is π/4: so 135° = 3π/4, n = 3.",
+        "135/45 = 3 copies of the quarter-of-π unit."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "135° = nπ/4. What is n?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "n = 4 gives 4π/4 = π = 180° — a step too far. 135° is three 45s: n = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "n = 6 gives 6π/4 = 270° — way past. Count 45° steps: 135/45 = 3."
+          }
+        ],
+        "fallbackFeedback": "135 = 3 × 45, so 3π/4."
+      },
+      "variant": {
+        "gen": "radian-convert",
+        "form": "nFromDegrees"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Reading π-fractions BACK is the same skill reversed: treat the denominator as a step size and count. π/6 steps are 30° each, so 5π/6 is five 30° steps: 150°. No formula grinding — just steps of a known size.",
+      "figure": "tf-read-back"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the steps.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 5π/6 to degrees.",
+        "answer": 150,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30° is a single π/6 step — the 5 got dropped. Five steps of 30°: 150°."
+          },
+          {
+            "value": 210,
+            "feedback": "210° is 7π/6 — one step overcounted. Five 30° steps stop at 150°."
+          }
+        ],
+        "fallbackFeedback": "5 × 30° = 150°."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Halves of π.",
+      "conceptTag": "tf-radians",
+      "explanationVariants": [
+        "3π/2 is three 90° steps: 270°.",
+        "π/2 steps are quarter turns — three of them reach three-quarters of the circle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 3π/2 to degrees.",
+        "answer": 270,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "90° is one π/2 step — there are THREE: 270°."
+          },
+          {
+            "value": 540,
+            "feedback": "540 is 3 × 180 — the /2 went missing. Each step is π/2 = 90°, so 3 × 90 = 270°."
+          }
+        ],
+        "fallbackFeedback": "3 × 90° = 270°."
+      },
+      "variant": {
+        "gen": "radian-convert",
+        "form": "halfPiToDeg"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Angles don't stop at one lap. A negative angle turns CLOCKWISE, and an angle past 2π keeps spinning — a full turn plus a quarter turn lands exactly where the quarter turn does. The landing spot repeats every 2π; the total rotation is what the number records.",
+      "figure": "tf-negative-angle"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Past one lap.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A wheel turns one FULL turn plus a quarter turn. Total rotation in radians? (Round to hundredths.)",
+        "answer": 7.85,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6.28,
+            "feedback": "6.28 is the full turn ALONE — the quarter turn (π/2 ≈ 1.57) still adds on: ≈ 7.85."
+          },
+          {
+            "value": 1.57,
+            "feedback": "1.57 is only the quarter turn — the full 2π lap counts too: 2π + π/2 ≈ 7.85."
+          }
+        ],
+        "fallbackFeedback": "2π + π/2 = 5π/2 ≈ 7.85."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Past the anchor.",
+      "conceptTag": "tf-radians",
+      "explanationVariants": [
+        "7π/6 is seven 30° steps: 210° — one step past the 180° anchor.",
+        "6π/6 = π = 180°; one more π/6 adds 30°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 7π/6 to degrees.",
+        "answer": 210,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 150,
+            "feedback": "150° is 5π/6 — a step short. Seven 30° steps: 210°."
+          },
+          {
+            "value": 330,
+            "feedback": "330° is 11π/6 — counted from the wrong end. Seven sixths is just PAST π (180°), not near a full turn: 210°."
+          }
+        ],
+        "fallbackFeedback": "7 × 30° = 210°."
+      },
+      "hints": [
+        "Each π/6 step is 30° — count seven of them.",
+        "Checkpoint: 6π/6 = π lands exactly on 180°.",
+        "One more step: 180 + 30."
+      ],
+      "variant": {
+        "gen": "radian-convert"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two languages, one dial.",
+      "takeaways": [
+        "30-45-60-90 ↔ π/6, π/4, π/3, π/2 — denominators count copies in 180°.",
+        "Read nπ/d as n steps of size 180/d degrees.",
+        "Angles run negative (clockwise) and past 2π (extra laps)."
+      ],
+      "teaser": "Next: the payoff formula radians were built for — arc length."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-radians",
+      "concept": {
+        "id": "rem-tf0202-c",
+        "kind": "concept",
+        "body": "One π-fraction, decoded. 60° fits into 180° exactly three times, so 60° = π/3 — the denominator IS the count of copies. Ask “how many of this angle fill 180?” and the radian form writes itself."
+      },
+      "check": {
+        "id": "rem-tf0202-k",
+        "kind": "check",
+        "body": "How many fit?",
+        "conceptTag": "tf-radians",
+        "explanationVariants": [
+          "180/60 = 3 copies, so 60° = π/3: n = 3.",
+          "Smaller angles need bigger denominators — 30° takes π/6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "60° = π/n. What is n?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "π/6 is 30° — that denominator counts SIX copies in 180°. Sixty-degree copies number three: π/3."
+            },
+            {
+              "value": 60,
+              "feedback": "The denominator counts copies in 180°, not the degree value itself: 180/60 = 3."
+            }
+          ],
+          "fallbackFeedback": "180 ÷ 60 = 3, so π/3."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "id": "pp-01-01",
+  "slug": "the-polar-system",
+  "title": "A New Address System",
+  "courseId": "polar-parametric",
+  "chapterId": "ch1-polar-coordinates",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Rectangular coordinates locate a point by **how far across and up** (x, y). **Polar** coordinates locate it by **how far out and at what angle**: (r, θ). r is the distance from the origin (the *pole*); θ is the angle from the positive x-axis (the *polar axis*), measured counterclockwise.",
+      "figure": "pp-polar-plot"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read a polar point.",
+      "widget": {
+        "type": "polarTrace",
+        "mode": "limacon",
+        "targetPetals": 1,
+        "targetA": 3,
+        "prompt": "Trace a curve of radius 3 and watch how a polar address is built: a distance out, and an angle round.",
+        "successFeedback": "A polar point is (r, θ) — how far, then which way. (3, π/2) means three units out along the quarter-turn direction, which lands on the positive y-axis. The trace shows the angle sweeping while r stays fixed.",
+        "lowFeedback": "The radius is smaller than 3.",
+        "highFeedback": "The radius is larger than 3.",
+        "start": 1
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Angle sets direction.",
+      "conceptTag": "pp-polar-system",
+      "explanationVariants": [
+        "(2, π) points along angle π — the negative x-axis — so the rectangular point is (−2, 0).",
+        "θ = π faces left; distance 2 lands at (−2, 0)."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Where is the polar point (2, π) in rectangular coordinates?",
+        "answer": [
+          -2,
+          0
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              2,
+              0
+            ],
+            "feedback": "That's angle 0. θ = π points the OTHER way: (−2, 0)."
+          },
+          {
+            "values": [
+              0,
+              2
+            ],
+            "feedback": "(0, 2) would need θ = π/2. Angle π points left: (−2, 0)."
+          }
+        ],
+        "fallbackFeedback": "Convert with x = r cos θ, y = r sin θ: angle π faces the −x direction.",
+        "successFeedback": "Right — angle π faces the negative x-direction, 2 units out."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-polar-system__pointEntry"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A twist rectangular coordinates don't have: **polar addresses aren't unique**. Adding 2π to θ returns the same point, so (3, π/2) = (3, 5π/2). And a **negative r** means 'go backwards': (−3, π/2) points DOWN (opposite π/2), landing at (0, −3) — the same as (3, 3π/2).",
+      "figure": "pp-not-unique"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Negative r.",
+      "conceptTag": "pp-polar-system",
+      "explanationVariants": [
+        "(−2, 0): negative r reverses the angle-0 direction, so it points along negative x → (−2, 0) rectangular.",
+        "A negative radius flips to the opposite ray: (−2, 0) lands where (2, π) does."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The polar point (−2, 0) is the same as which point?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(2, π)",
+            "correct": true,
+            "feedback": "Right — negative r flips the direction, equivalent to adding π to the angle."
+          },
+          {
+            "id": "o2",
+            "label": "(2, 0)",
+            "feedback": "Negative r REVERSES direction. (−2, 0) points along negative x, matching (2, π)."
+          },
+          {
+            "id": "o3",
+            "label": "(−2, π)",
+            "feedback": "That would double-flip back to the positive x-axis. (−2, 0) = (2, π)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-polar-system__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Same point, many names.",
+      "conceptTag": "pp-polar-system",
+      "explanationVariants": [
+        "Adding a full turn 2π keeps the point: (4, π/6) = (4, π/6 + 2π) = (4, 13π/6).",
+        "2π is one lap; the address (4, 13π/6) names the same spot as (4, π/6)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is NOT the same point as (4, π/6)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(4, 7π/6)",
+            "correct": true,
+            "feedback": "Right — 7π/6 is π away (half a turn), pointing the opposite direction: a DIFFERENT point. (It equals (−4, π/6).)"
+          },
+          {
+            "id": "o2",
+            "label": "(4, 13π/6)",
+            "feedback": "13π/6 = π/6 + 2π, a full turn later — SAME point. This one does match."
+          },
+          {
+            "id": "o3",
+            "label": "(−4, 7π/6)",
+            "feedback": "Negative r plus π back: (−4, 7π/6) = (4, π/6), the SAME point."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-polar-system__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Name an equivalent.",
+      "conceptTag": "pp-polar-system",
+      "explanationVariants": [
+        "(3, 3π/4) with negative r: subtract π from the angle and negate r → (−3, 3π/4 − π) = (−3, −π/4). Both name the same point.",
+        "Flip r's sign and shift θ by π: (−3, −π/4) is the negative-r twin of (3, 3π/4)."
+      ],
+      "hints": [
+        "Negative-r form: negate r and add or subtract π from θ.",
+        "(3, 3π/4) → (−3, 3π/4 − π).",
+        "3π/4 − π = −π/4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is a valid negative-r name for (3, 3π/4)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(−3, −π/4)",
+            "correct": true,
+            "feedback": "Right — negate r and shift θ by π: 3π/4 − π = −π/4."
+          },
+          {
+            "id": "o2",
+            "label": "(−3, 3π/4)",
+            "feedback": "You negated r but forgot to shift θ by π — that points to a different spot. Use −π/4."
+          },
+          {
+            "id": "o3",
+            "label": "(3, −π/4)",
+            "feedback": "Same r with θ = −π/4 is a different point (down-right). The negative-r twin is (−3, −π/4)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-polar-system__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance and direction.",
+      "takeaways": [
+        "Polar (r, θ): distance r from the pole, angle θ from the polar axis.",
+        "Addresses aren't unique — add 2π, or negate r and shift θ by π.",
+        "Negative r points along the opposite ray."
+      ],
+      "teaser": "Next: the exact bridge between polar and rectangular."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pp-polar-system",
+      "concept": {
+        "id": "rem-pp0101-c",
+        "kind": "concept",
+        "body": "Polar (r, θ): go out distance r along the ray at angle θ. Negative r reverses the ray; adding 2π to θ repeats the point."
+      },
+      "check": {
+        "id": "rem-pp0101-k",
+        "kind": "check",
+        "body": "One location.",
+        "conceptTag": "pp-polar-system",
+        "explanationVariants": [
+          "(1, π/2) points straight up 1 unit → rectangular (0, 1).",
+          "Angle π/2 is up; distance 1 gives (0, 1)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Where is the polar point (1, π/2)?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(0, 1)",
+              "correct": true,
+              "feedback": "Right — angle π/2 points up, 1 unit."
+            },
+            {
+              "id": "o2",
+              "label": "(1, 0)",
+              "feedback": "That's θ = 0. π/2 points UP: (0, 1)."
+            },
+            {
+              "id": "o3",
+              "label": "(0, −1)",
+              "feedback": "Down would be θ = 3π/2 (or −π/2). π/2 is up: (0, 1)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

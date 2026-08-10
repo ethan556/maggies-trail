@@ -1,0 +1,294 @@
+{
+  "id": "qu-04-02",
+  "slug": "area-problems",
+  "title": "Area Problems",
+  "courseId": "quadratics",
+  "chapterId": "ch4-applications",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "distribute-area",
+      "body": "Area problems often become quadratics. A rectangle x wide and (x + 3) long with area 40 gives x(x + 3) = 40, which becomes x² + 3x − 40 = 0. Solve it, then keep the answer that makes sense as a length."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the width.",
+      "widget": {
+        "type": "quadraticExplore",
+        "form": "roots",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 0,
+        "rMin": -9,
+        "rMax": 9,
+        "aMin": -3,
+        "aMax": 3,
+        "aStart": 1,
+        "r1Start": 0,
+        "r2Start": 0,
+        "gridMax": 9,
+        "targetR1": 5,
+        "targetR2": -8,
+        "prompt": "The rectangle gives x² + 3x − 40 = 0. Drag the crossings until the expansion matches.",
+        "successFeedback": "Roots 5 and −8. Both solve the equation, but a width cannot be negative — so the algebra offers two answers and the SITUATION picks one. The width is 5.",
+        "shapeFeedback": "Leave a at 1.",
+        "vertexFeedback": "Not yet — the crossings must multiply to −40 and add to −3."
+      },
+      "predict": {
+        "prompt": "x² + 3x − 40 = 0 factors to (x + 8)(x − 5), giving TWO solutions. Can both be the rectangle's width?",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Only the positive one — a width can't be negative"
+          },
+          {
+            "id": "both",
+            "label": "Both — every solution counts"
+          },
+          {
+            "id": "neither",
+            "label": "Neither — word problems need whole new methods"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "The algebra offers x = 5 and x = −8, but a rectangle can't be −8 units wide — the story rejects it. Word problems always get this last step: solve, then ask which solutions the situation can actually use."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another rectangle.",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "x² + 5x − 36 = 0 factors as (x + 9)(x − 4) = 0, so the positive width is 4.",
+        "The valid (positive) root is 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle x by x+5 has area 36: x^2 + 5x - 36 = 0. What is the width x?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "A width can't be negative; the valid root is x = 4."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is the area, not the width. Solving gives x = 4."
+          }
+        ],
+        "fallbackFeedback": "(x + 9)(x − 4) = 0; the positive width is 4."
+      },
+      "variant": {
+        "gen": "quad-shape-area",
+        "form": "rectQuadratic"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Only the **positive** root is a real length. x² + 3x − 40 = 0 factors as (x + 8)(x − 5) = 0, giving x = −8 or x = 5. A rectangle can't have width −8, so x = 5. Always discard the negative root in a measurement.",
+      "figure": "qu-positive-root"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Keep the sensible root.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A garden x by x+2 has area 48: x^2 + 2x - 48 = 0. What is the width x?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -8,
+            "feedback": "A width can't be negative; the valid root is x = 6."
+          },
+          {
+            "value": 48,
+            "feedback": "48 is the area, not the width. Solving gives x = 6."
+          }
+        ],
+        "fallbackFeedback": "(x + 8)(x − 6) = 0; the positive width is 6."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Check by plugging back: width 5, length 8, area 5 × 8 = 40. ✓ A quick multiply confirms you picked the right root and set up the equation correctly — a habit worth keeping on every word problem.",
+      "figure": "qu-area-check"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Bigger dimensions.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A field x by x+7 has area 44: x^2 + 7x - 44 = 0. What is the width x?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -11,
+            "feedback": "A width can't be negative; the valid root is x = 4."
+          },
+          {
+            "value": 44,
+            "feedback": "44 is the area, not the width. Solving gives x = 4."
+          }
+        ],
+        "fallbackFeedback": "(x + 11)(x − 4) = 0; the positive width is 4."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Consecutive-ish sides.",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "x² + x − 30 = 0 factors as (x + 6)(x − 5) = 0, so the width is 5.",
+        "The positive root is 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle x by x+1 has area 30: x^2 + x - 30 = 0. What is the width x?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "A width can't be negative; the valid root is x = 5."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is the area, not the width. Solving gives x = 5."
+          }
+        ],
+        "fallbackFeedback": "(x + 6)(x − 5) = 0; the positive width is 5."
+      },
+      "variant": {
+        "gen": "quad-shape-area",
+        "form": "rectQuadratic"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A long, thin one.",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "x² + 9x − 22 = 0 factors as (x + 11)(x − 2) = 0, so the width is 2.",
+        "The positive root is 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle x by x+9 has area 22: x^2 + 9x - 22 = 0. What is the width x?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -11,
+            "feedback": "A width can't be negative; the valid root is x = 2."
+          },
+          {
+            "value": 22,
+            "feedback": "22 is the area, not the width. Solving gives x = 2."
+          }
+        ],
+        "fallbackFeedback": "(x + 11)(x − 2) = 0; the positive width is 2."
+      },
+      "variant": {
+        "gen": "quad-shape-area",
+        "form": "rectQuadratic"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Set up and solve.",
+      "conceptTag": "quad-area",
+      "explanationVariants": [
+        "x(x + 4) = 45 gives x² + 4x − 45 = 0 = (x + 9)(x − 5), so the side is 5.",
+        "The positive root of x² + 4x − 45 = 0 is 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square's side x is extended by 4 to form a rectangle of area 45: x^2 + 4x - 45 = 0. What is the original side x?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "A side can't be negative; the valid root is x = 5."
+          },
+          {
+            "value": 45,
+            "feedback": "45 is the area, not the side. Solving gives x = 5."
+          }
+        ],
+        "fallbackFeedback": "(x + 9)(x − 5) = 0; the positive side is 5."
+      },
+      "hints": [
+        "Find two numbers multiplying to −45 and adding to 4: +9 and −5.",
+        "So (x + 9)(x − 5) = 0, giving x = −9 or x = 5.",
+        "A side is positive, so x = 5."
+      ],
+      "variant": {
+        "gen": "quad-shape-area",
+        "form": "squareExtended"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Model the area, solve the quadratic, keep the positive length.",
+      "takeaways": [
+        "Dimensions × dimensions = area gives a quadratic.",
+        "Discard the negative root — a length must be positive.",
+        "Multiply back to check your dimensions."
+      ],
+      "teaser": "next: putting modeling, solving, and interpreting together."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-area",
+      "concept": {
+        "id": "rem-qa-c",
+        "kind": "concept",
+        "body": "A rectangle x by (x + 3) with area 40 gives x² + 3x − 40 = 0 = (x + 8)(x − 5). The roots are −8 and 5, but a width is positive, so x = 5."
+      },
+      "check": {
+        "id": "rem-qa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-area",
+        "explanationVariants": [
+          "(x + 8)(x − 5) = 0; the positive width is 5.",
+          "Discard −8; the width is 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A rectangle x by x+3 has area 40: x^2 + 3x - 40 = 0. What is the width x?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -8,
+              "feedback": "A width can't be negative; the valid root is 5."
+            },
+            {
+              "value": 40,
+              "feedback": "40 is the area, not the width."
+            }
+          ],
+          "fallbackFeedback": "(x + 8)(x − 5) = 0; width is 5."
+        }
+      }
+    }
+  ]
+}

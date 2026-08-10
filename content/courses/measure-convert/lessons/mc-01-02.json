@@ -1,0 +1,312 @@
+{
+ "id": "mc-01-02",
+ "slug": "converting-length",
+ "title": "Converting Length",
+ "courseId": "measure-convert",
+ "chapterId": "ch1-converting-units",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The length ladder: 10 mm = 1 cm, 100 cm = 1 m, 1,000 m = 1 km. Each step is its own badge. To convert, multiply when going from a bigger unit to a smaller one, and divide when going from smaller to bigger.",
+   "figure": "mc-length-ladder"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the equal lengths.",
+   "conceptTag": "convert-length",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each length to its equivalent in a different unit.",
+    "left": [
+     {
+      "id": "e1",
+      "label": "3 m"
+     },
+     {
+      "id": "e2",
+      "label": "5,000 m"
+     },
+     {
+      "id": "e3",
+      "label": "2 cm"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "300 cm"
+     },
+     {
+      "id": "r2",
+      "label": "5 km"
+     },
+     {
+      "id": "r3",
+      "label": "20 mm"
+     }
+    ],
+    "pairs": {
+     "e1": "r1",
+     "e2": "r2",
+     "e3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "e2",
+      "right": "r3",
+      "feedback": "20 mm belongs to 2 cm. For 5,000 m: divide by 1,000 (the kilo badge) to get 5 km."
+     }
+    ],
+    "missFeedback": "Multiply to go bigger-to-smaller units; divide to go smaller-to-bigger.",
+    "successFeedback": "3 m→300 cm (×100), 5,000 m→5 km (÷1,000), 2 cm→20 mm (×10)."
+   },
+   "predict": {
+    "prompt": "Converting meters into centimeters — will the NUMBER get bigger or smaller?",
+    "options": [
+     {
+      "id": "bigger",
+      "label": "Bigger — smaller units need more of them"
+     },
+     {
+      "id": "smaller",
+      "label": "Smaller — centimeters are smaller"
+     },
+     {
+      "id": "same",
+      "label": "It stays the same"
+     }
+    ],
+    "outcomeId": "bigger",
+    "reveal": "The length doesn't change — but measuring it in tinier units takes MORE of them. Smaller unit, bigger count: the seesaw at the heart of every conversion."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Convert to a bigger unit.",
+   "conceptTag": "convert-length",
+   "explanationVariants": [
+    "100 cm make 1 m, so 400 cm ÷ 100 = 4 m.",
+    "Dividing by the centi badge's 100 gives meters."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "400 cm = how many meters? This crossing goes UP to the bigger unit.",
+    "startValue": 400,
+    "startUnit": "cm",
+    "targetUnit": "m",
+    "hops": [
+     {
+      "from": "cm",
+      "to": "m",
+      "bigger": "to",
+      "factor": 100
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "A meter holds 100 centimeters, so going up to meters divides: 400 ÷ 100 = 4 m.",
+    "successFeedback": "4 m. Going to a bigger unit, the same length needs fewer of them."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Some conversions need **two hops.** To go from meters to millimeters directly, combine both badges: 100 cm/m × 10 mm/cm = 1,000 mm per meter. So 1 km to cm hops through meters: 1 km = 1,000 m = 1,000×100 = 100,000 cm.",
+   "figure": "mc-length-ladder"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A two-hop conversion.",
+   "conceptTag": "convert-length",
+   "explanationVariants": [
+    "1 meter combines both badges: 100×10=1,000, so 7 meters is 7×1,000=7,000 mm.",
+    "Skip the middle step: meters to millimeters is always ×1,000."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "7 meters = how many millimeters?",
+    "startValue": 7,
+    "startUnit": "m",
+    "targetUnit": "mm",
+    "hops": [
+     {
+      "from": "m",
+      "to": "mm",
+      "bigger": "from",
+      "factor": 1000
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "Milli- is a thousandth, so a meter holds 1000 millimeters: 7 × 1000 = 7000 mm.",
+    "successFeedback": "7000 mm — a much smaller counting unit, so a much bigger count."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Order the length units.",
+   "conceptTag": "convert-length",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Put these length units in order, smallest to largest.",
+    "items": [
+     {
+      "id": "km",
+      "label": "kilometer"
+     },
+     {
+      "id": "mm",
+      "label": "millimeter"
+     },
+     {
+      "id": "m",
+      "label": "meter"
+     },
+     {
+      "id": "cm",
+      "label": "centimeter"
+     }
+    ],
+    "correctOrder": [
+     "mm",
+     "cm",
+     "m",
+     "km"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "m",
+      "second": "cm",
+      "feedback": "A centimeter is smaller than a meter (100 cm make 1 m) — centimeter comes before meter."
+     }
+    ],
+    "missFeedback": "Millimeters are the smallest pieces; kilometers are the biggest stretch.",
+    "successFeedback": "Millimeter, centimeter, meter, kilometer — each one a bigger stretch than the last."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Convert between non-adjacent units.",
+   "conceptTag": "convert-length",
+   "explanationVariants": [
+    "2 km = 2,000 m = 2,000×100 = 200,000 cm — combining both hops.",
+    "Kilometers to centimeters skips meters by multiplying ×1,000 then ×100."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "2 kilometers = how many centimeters? Two crossings, through meters.",
+    "startValue": 2,
+    "startUnit": "km",
+    "targetUnit": "cm",
+    "hops": [
+     {
+      "from": "km",
+      "to": "m",
+      "bigger": "from",
+      "factor": 1000
+     },
+     {
+      "from": "m",
+      "to": "cm",
+      "bigger": "from",
+      "factor": 100
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "2 × 1000 = 2000 m, then 2000 × 100 = 200000 cm.",
+    "successFeedback": "200000 cm. Chained gears multiply: 1000 × 100 = 100000 centimeters in a kilometer."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The hiking trail.",
+   "conceptTag": "convert-length",
+   "hints": [
+    "Convert 3 km to meters first.",
+    "3 km = 3,000 m.",
+    "Add the extra 250 m already given."
+   ],
+   "explanationVariants": [
+    "3 km = 3,000 m; adding the 250 m already marked gives 3,000+250=3,250 m total.",
+    "Converting to a single unit before adding avoids mixing km and m."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A trail sign says the summit is 3 km away, plus another 250 m of switchbacks. What is the total distance in meters?",
+    "answer": 3250,
+    "tolerance": 0,
+    "unit": "meters",
+    "commonErrors": [
+     {
+      "value": 253,
+      "feedback": "253 treats the 3 as if it were already in meters. Convert first: 3 km = 3,000 m, then add 250: 3,250."
+     },
+     {
+      "value": 3000,
+      "feedback": "3,000 converts the km correctly but forgets to add the extra 250 m: 3,000+250=3,250."
+     }
+    ],
+    "fallbackFeedback": "Convert 3 km to meters (×1,000), then add 250 m."
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The length ladder, climbed either way.",
+   "takeaways": [
+    "Multiply to convert bigger units into smaller ones; divide to go the other way.",
+    "Some conversions combine two badges in one hop — meter to millimeter is always ×1,000.",
+    "Convert everything to the same unit before adding or comparing."
+   ],
+   "teaser": "next: the same badge logic, applied to mass and volume."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "convert-length",
+   "concept": {
+    "id": "rem-cl-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Multiply going smaller, divide going bigger.** For 2 m to cm: multiply by 100 (2×100=200 cm). For 500 cm to m: divide by 100 (500÷100=5 m)."
+   },
+   "check": {
+    "id": "rem-cl-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "convert-length",
+    "explanationVariants": [
+     "2×100=200 cm.",
+     "Meters to centimeters multiplies by 100."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "2 meters = how many centimeters?",
+     "options": [
+      {
+       "id": "a",
+       "label": "200 cm",
+       "correct": true,
+       "feedback": "2×100=200."
+      },
+      {
+       "id": "b",
+       "label": "20 cm",
+       "feedback": "That's ×10, not ×100. Meters to centimeters is ×100: 200 cm."
+      },
+      {
+       "id": "c",
+       "label": "2,000 cm",
+       "feedback": "That's ×1,000, one badge too many. Meters to centimeters is ×100: 200 cm."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

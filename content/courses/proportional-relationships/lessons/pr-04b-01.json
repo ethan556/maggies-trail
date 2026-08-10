@@ -1,0 +1,188 @@
+{
+  "id": "pr-04b-01",
+  "slug": "simple-interest",
+  "title": "Simple Interest",
+  "courseId": "proportional-relationships",
+  "chapterId": "ch4b-interest-commission-and-error",
+  "minutes": 11,
+  "standards": [
+    "7.RP.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Borrow money and you pay rent on it. That rent is **interest**, and the simple kind is a percent of the original amount, charged once per year.\n\nThe formula is just that sentence: **I = P · r · t** — principal times rate times time. Borrow $500 at 4% for 3 years and each year costs 4% of $500, which is $20, so three years cost $60.",
+      "figure": "pr7-simple-interest"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find one year's interest by shading it.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 500,
+        "targetPercent": 4,
+        "percentStep": 1,
+        "startPercent": 0,
+        "unit": "dollars",
+        "prompt": "A $500 loan charges 4% interest per year. Shade one year's interest.",
+        "successFeedback": "$20 for one year. Three years at simple interest is just three of these: $60. The rate always applies to the original $500, never to the growing total.",
+        "lowFeedback": "That is under 4% of the principal.",
+        "highFeedback": "That is over 4% of the principal."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the whole term.",
+      "conceptTag": "simple-interest",
+      "explanationVariants": [
+        "I = P · r · t = 800 × 0.05 × 2 = 80.",
+        "5% of $800 is $40 per year, and two years is $80."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the simple interest on $800 at 5% per year for 2 years.",
+        "answer": 80,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is one year's interest. The term is 2 years, so double it."
+          },
+          {
+            "value": 880,
+            "feedback": "880 is the total amount owed. The question asks for the interest alone: $80."
+          }
+        ],
+        "fallbackFeedback": "800 × 0.05 × 2 = 80."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Interest and total are different questions.",
+      "conceptTag": "simple-interest",
+      "explanationVariants": [
+        "The interest is 1000 × 0.06 × 1 = $60, so the total owed is 1000 + 60 = $1,060.",
+        "Total = principal + interest, so add the $60 back onto the $1,000."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "$1,000 is borrowed at 6% per year. What is the TOTAL owed after 1 year?",
+        "answer": 1060,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 is the interest alone. The total owed adds it to the principal: 1000 + 60."
+          },
+          {
+            "value": 1006,
+            "feedback": "6% of $1,000 is $60, not $6. Percent means per hundred, so 6% of 1000 is 10 × 6."
+          }
+        ],
+        "fallbackFeedback": "Interest is $60, so the total owed is $1,060."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "\"Simple\" is doing real work in that name. The rate applies to the **principal** every single year, never to the money that has already piled up.\n\nSo the interest grows in equal steps — a straight staircase, $20 then $40 then $60. That is what separates it from compound interest, where each year's interest earns interest of its own.",
+      "figure": "pr7-interest-over-time"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A different rate, same structure.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 1200,
+        "targetPercent": 10,
+        "percentStep": 5,
+        "startPercent": 0,
+        "unit": "dollars",
+        "prompt": "A $1,200 loan charges 10% interest per year. Shade one year's interest.",
+        "successFeedback": "$120 per year. Over 4 years that is 4 × $120 = $480 — four equal steps, because the 10% never applies to anything but the original $1,200.",
+        "lowFeedback": "That is under 10% of the principal.",
+        "highFeedback": "That is over 10% of the principal."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the formula backwards.",
+      "conceptTag": "simple-interest",
+      "explanationVariants": [
+        "I = P · r · t, so 90 = 600 × 0.05 × t, giving t = 90 ÷ 30 = 3 years.",
+        "One year costs 5% of $600 = $30, and $90 is three of those."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "$600 at 5% per year earned $90 in simple interest. How many years was that?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "years",
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 divides 90 by 5 and ignores the principal. One YEAR costs 5% of 600 = $30, so 90 ÷ 30 = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "Two years would give $60. Three years of $30 makes $90."
+          }
+        ],
+        "fallbackFeedback": "One year is 5% of $600 = $30, and 90 ÷ 30 = 3 years."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Half a year is still just a slice of the rate.",
+      "conceptTag": "simple-interest",
+      "explanationVariants": [
+        "I = 2000 × 0.03 × 0.5 = $30. Half a year earns half the annual interest.",
+        "One year would be $60, so six months is $30."
+      ],
+      "hints": [
+        "Work out one full year's interest first.",
+        "3% of $2,000 is $60 for a whole year.",
+        "Six months is half a year, so the interest is half of $60."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the simple interest on $2,000 at 3% per year for 6 months.",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 is a full year's interest. Six months is half of that."
+          },
+          {
+            "value": 600,
+            "feedback": "600 is 30% of the principal. 3% of $2,000 is $60 per year, and half a year is $30."
+          }
+        ],
+        "fallbackFeedback": "A year would be $60, so half a year is $30."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rent on borrowed money, charged on the original amount.",
+      "takeaways": [
+        "I = P · r · t — principal times rate times time, with the rate as a decimal.",
+        "Interest and total owed are different questions: the total adds the principal back.",
+        "Simple interest grows in equal steps because the rate never touches the accumulated interest."
+      ],
+      "teaser": "Next: percents paid to a person for making a sale."
+    }
+  ],
+  "remedials": []
+}

@@ -1,0 +1,402 @@
+{
+  "id": "pv-02-01",
+  "slug": "the-closer-ten",
+  "title": "The Closer Ten",
+  "courseId": "place-value",
+  "chapterId": "ch2-rounding",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every number lives on a street between two tens — its **neighbors**. 47 lives between 40 and 50. Rounding to the nearest ten just means naming the CLOSER neighbor: 47 is 7 steps from 40 but only 3 steps from 50, so 47 rounds to 50.",
+      "figure": "pv3-round-ten"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Walk to the closer neighbor yourself.",
+      "conceptTag": "round-10",
+      "widget": {
+        "type": "slider",
+        "prompt": "47 lives between two tens. Slide the marker to the neighbor that is CLOSER to 47.",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "start": 0,
+        "target": 50,
+        "visual": "numberline",
+        "unitLabel": "the ten you chose",
+        "lowFeedback": "That ten is far below 47 — its two neighbors are the tens right beside it. Which is fewer steps away?",
+        "highFeedback": "You've slid past both of 47's neighbors. Come back toward the tens on either side of 47.",
+        "successFeedback": "50 it is — only 3 steps from 47, while 40 sits 7 steps away. The closer neighbor wins."
+      },
+      "predict": {
+        "prompt": "Before you slide: which ten is closer to 47?",
+        "options": [
+          {
+            "id": "forty",
+            "label": "40"
+          },
+          {
+            "id": "fifty",
+            "label": "50"
+          },
+          {
+            "id": "tie",
+            "label": "They're the same distance"
+          }
+        ],
+        "outcomeId": "fifty",
+        "reveal": "47 sits 7 steps from 40 but only 3 from 50 — the closer neighbor wins, and the slider will show it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round 10.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round 10 must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round 10."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:round-10",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "First, know your neighbors.",
+      "conceptTag": "round-10",
+      "explanationVariants": [
+        "82 sits between the ten it has passed (80) and the next one coming (90).",
+        "Count by tens: …70, 80, 82 is here, 90… — the tens on either side are 80 and 90."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which two tens are 82's neighbors?",
+        "options": [
+          {
+            "id": "a",
+            "label": "80 and 90",
+            "correct": true,
+            "feedback": "82 has just passed 80 and hasn't reached 90 — those are its two neighbors (and 80 is much closer)."
+          },
+          {
+            "id": "b",
+            "label": "70 and 80",
+            "feedback": "That street belongs to numbers in the seventies. 82 has already passed 80 — its street runs from 80 to 90."
+          },
+          {
+            "id": "c",
+            "label": "81 and 83",
+            "feedback": "Those are next-door NUMBERS, but rounding looks for neighbor TENS — the numbers ending in 0 on either side."
+          },
+          {
+            "id": "d",
+            "label": "80 and 100",
+            "feedback": "There's a ten between them: 90. Neighbors must be the very next tens — no skipping."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "round-ten"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The shortcut: look at the **ones digit**. Ones of 1–4 mean the lower ten is closer (round down); ones of 6–9 mean the higher ten is closer (round up). It's not a new rule — it's the step-counting, compressed into one glance. (The 5 gets its own lesson soon.)",
+      "figure": "pv3-round-ten"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One glance at the ones digit.",
+      "conceptTag": "round-10",
+      "explanationVariants": [
+        "63's ones digit is 3 — in the 1–4 club — so the lower ten wins: 60.",
+        "Count the steps: 63 is 3 from 60 but 7 from 70. Closer neighbor: 60."
+      ],
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "Round 63 to the nearest ten.",
+        "min": 60,
+        "max": 70,
+        "step": 1,
+        "tickStep": 5,
+        "target": 60,
+        "start": 63,
+        "commonPlacements": [
+          {
+            "value": 70,
+            "feedback": "70 is the FARTHER neighbor — 63 sits just 3 steps from 60 but 7 steps from 70. Ones digits 1–4 round down."
+          },
+          {
+            "value": 65,
+            "feedback": "65 is the street's halfway mark, not a ten. Rounding lands on a neighbor — a number ending in 0."
+          }
+        ],
+        "successFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins.",
+        "lowFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins.",
+        "highFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins."
+      },
+      "variant": {
+        "gen": "round-ten",
+        "form": "placeOnLine"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents round 10.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for round 10 must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines round 10."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value:round-10",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Everyone on the 30-to-40 street, go home.",
+      "conceptTag": "round-10",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Round each number to its nearest ten.",
+        "buckets": [
+          {
+            "id": "b30",
+            "label": "Rounds to 30",
+            "icon": "3️⃣0️⃣"
+          },
+          {
+            "id": "b40",
+            "label": "Rounds to 40",
+            "icon": "4️⃣0️⃣"
+          }
+        ],
+        "items": [
+          {
+            "id": "n34",
+            "label": "34",
+            "bucketId": "b30",
+            "feedback": "34 is 4 steps from 30 and 6 from 40 — the lower ten is closer."
+          },
+          {
+            "id": "n36",
+            "label": "36",
+            "bucketId": "b40",
+            "feedback": "36 is 6 steps past 30 but only 4 short of 40 — up it goes."
+          },
+          {
+            "id": "n31",
+            "label": "31",
+            "bucketId": "b30",
+            "feedback": "31 barely left 30 — just 1 step away. Easiest round on the street."
+          },
+          {
+            "id": "n38",
+            "label": "38",
+            "bucketId": "b40",
+            "feedback": "38 is only 2 steps from 40 — nearly there already."
+          }
+        ],
+        "missFeedback": "Check each ones digit: 1–4 go home to 30; 6–9 go up to 40.",
+        "successFeedback": "All home: 34 and 31 down to 30; 36 and 38 up to 40. The ones digit called it every time."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What does a rounded number actually MEAN?",
+      "conceptTag": "round-10",
+      "explanationVariants": [
+        "Rounding names the nearest landmark: 30 is the ten closest to 27, three steps away.",
+        "27 doesn't change — we're just describing it by its closest ten for quick thinking."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rounding 27 to the nearest ten gives 30. What does that mean?",
+        "options": [
+          {
+            "id": "a",
+            "label": "30 is the ten closest to 27 — just 3 steps away",
+            "correct": true,
+            "feedback": "Rounding is a nearest-landmark report. 27 keeps being 27; 30 is its closest ten."
+          },
+          {
+            "id": "b",
+            "label": "27 has now become 30",
+            "feedback": "27 never changes! Rounding describes it by its nearest ten — a nickname for quick math, not a makeover."
+          },
+          {
+            "id": "c",
+            "label": "27 was wrong and 30 is the correction",
+            "feedback": "Nothing was wrong — 27 is exact. Rounding trades a little exactness for a lot of speed, on purpose."
+          },
+          {
+            "id": "d",
+            "label": "Any number ending in 7 gets 3 added",
+            "feedback": "Adding 3 is what happened to LAND on the neighbor, not a rule about 7s. The real rule: name the closer ten."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "round-ten",
+        "form": "whatItMeans"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "One more round-and-add warm-up before the two jars.",
+      "conceptTag": "round-10",
+      "explanationVariants": [
+        "22 rounds down to 20 (ones digit 2); 17 rounds up to 20 (ones digit 7). Add the rounded pair: 20 + 20 = 40.",
+        "Two separate rounds first — 22→20 and 17→20 — then one easy addition of tens: 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Round 22 to its nearest ten, round 17 to its nearest ten, then add the two rounded numbers. What do you get?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 39,
+            "feedback": "39 is the EXACT sum — round each number first: 22→20, 17→20, then add: 20+20=40."
+          },
+          {
+            "value": 50,
+            "feedback": "22's ones digit is 2 — in the round-DOWN club (0–4) — so it stays at 20, not up to 30. 20+20=40."
+          },
+          {
+            "value": 30,
+            "feedback": "17's ones digit is 7 — in the round-UP club (5–9) — so it climbs to 20, not down to 10. 20+20=40."
+          }
+        ],
+        "fallbackFeedback": "Round each number to its nearest ten first (22→?, 17→?), then add the two rounded tens."
+      },
+      "variant": {
+        "gen": "round-ten",
+        "form": "roundThenAdd"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Round first, then add — a two-jar estimate.",
+      "conceptTag": "round-10",
+      "hints": [
+        "Round each jar separately before any adding.",
+        "47 rounds to 50 (ones digit 7); 31 rounds to 30 (ones digit 1).",
+        "Now add the two rounded tens."
+      ],
+      "explanationVariants": [
+        "47 → 50 and 31 → 30; the estimate is 50 + 30 = 80.",
+        "Round each player first, then compute the friendly version: 50 + 30 = 80 (the exact 78 sits right beside it)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One jar holds 47 marbles, another holds 31. Round EACH to its nearest ten, then add the rounded numbers. What estimate do you get?",
+        "answer": 80,
+        "tolerance": 0,
+        "unit": "marbles (about)",
+        "commonErrors": [
+          {
+            "value": 78,
+            "feedback": "78 is the EXACT sum — good arithmetic, wrong game! The estimate adds the rounded jars: 50 + 30."
+          },
+          {
+            "value": 70,
+            "feedback": "70 rounded 47 DOWN to 40 — but 47's ones digit is 7, so it climbs to 50."
+          },
+          {
+            "value": 90,
+            "feedback": "90 rounded 31 UP to 40 — but 31 is just 1 step past 30. Its ones digit 1 keeps it down."
+          }
+        ],
+        "fallbackFeedback": "Two rounds first (47 → ?, 31 → ?), then one easy addition of tens."
+      },
+      "variant": {
+        "gen": "round-ten",
+        "form": "roundThenAdd"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can find any number's closest ten.",
+      "takeaways": [
+        "Every number lives between two ten-neighbors; rounding names the closer one.",
+        "Ones digit 1–4 → down; 6–9 → up. It's step-counting in one glance.",
+        "Rounding doesn't change a number — it nicknames it for fast math."
+      ],
+      "teaser": "the same game with bigger neighbors — the closer hundred."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "round-10",
+      "concept": {
+        "id": "rem-r10-c",
+        "kind": "concept",
+        "body": "Quick rewind. Draw the street: 40 —— 47 —— 50. Count steps each way: 7 back to 40, 3 forward to 50. **Fewer steps wins.** That's all rounding is — finding which ten-neighbor takes the shorter walk."
+      },
+      "check": {
+        "id": "rem-r10-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "round-10",
+        "explanationVariants": [
+          "52 is 2 steps from 50 and 8 from 60 — the short walk goes to 50.",
+          "Ones digit 2 is in the 1–4 club: round down."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Round 52 to the nearest ten.",
+          "options": [
+            {
+              "id": "a",
+              "label": "50",
+              "correct": true,
+              "feedback": "Just 2 steps away — the closer neighbor by far."
+            },
+            {
+              "id": "b",
+              "label": "60",
+              "feedback": "60 is 8 steps from 52 — the long walk. The ones digit 2 points down the street to 50."
+            },
+            {
+              "id": "c",
+              "label": "55",
+              "feedback": "55 is the street's middle, not a ten. Rounding must land on a neighbor ending in 0."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

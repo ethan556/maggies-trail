@@ -1,0 +1,311 @@
+{
+  "id": "iar-02-03",
+  "slug": "is-the-point-in",
+  "title": "Is the Point In?",
+  "courseId": "inequalities-and-regions",
+  "chapterId": "ch2-systems-of-inequalities",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Real regions wear several fences: x ≥ 0, y ≥ 0, x + y ≤ 6 is three demands stacked. Membership is still a checklist — run the point through every inequality, and one failure evicts it. The skill is bookkeeping: test each fence, record each verdict, then combine.",
+      "figure": "iar-checklist-fences"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Full checklist on a good point.",
+      "conceptTag": "iar-multi-check",
+      "explanationVariants": [
+        "(2, 3): 2 ≥ 0 ✓, 3 ≥ 0 ✓, 2 + 3 = 5 ≤ 6 ✓ — all three pass, so it's inside.",
+        "Every fence clears: nonneg x, nonneg y, and a sum under the cap."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Check (2, 3) against x ≥ 0, y ≥ 0, x + y ≤ 6.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Inside — passes all three",
+            "correct": true,
+            "feedback": "2 ≥ 0, 3 ≥ 0, and 5 ≤ 6: the checklist comes back clean."
+          },
+          {
+            "id": "o2",
+            "label": "Outside — fails x + y ≤ 6",
+            "correct": false,
+            "feedback": "The sum is 5, and 5 ≤ 6 holds — the cap isn't broken."
+          },
+          {
+            "id": "o3",
+            "label": "Outside — fails y ≥ 0",
+            "correct": false,
+            "feedback": "y = 3 is comfortably nonnegative."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort candidates by their verdicts.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each point: inside the region x ≥ 0, y ≥ 0, x + y ≤ 6 — or outside?",
+        "buckets": [
+          {
+            "id": "in",
+            "label": "Inside"
+          },
+          {
+            "id": "out",
+            "label": "Outside"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "(1, 4)",
+            "bucketId": "in",
+            "feedback": "1 + 4 = 5 ≤ 6, with both coordinates ≥ 0 — inside."
+          },
+          {
+            "id": "p2",
+            "label": "(4, 4)",
+            "bucketId": "out",
+            "feedback": "4 + 4 = 8 breaks x + y ≤ 6 — outside, past the slanted boundary."
+          },
+          {
+            "id": "p3",
+            "label": "(0, 6)",
+            "bucketId": "in",
+            "feedback": "0 + 6 = 6 exactly: the ≤ keeps boundary points, so (0, 6) counts as inside."
+          },
+          {
+            "id": "p4",
+            "label": "(−1, 2)",
+            "bucketId": "out",
+            "feedback": "x = −1 breaks x ≥ 0 before the sum is even checked — outside."
+          },
+          {
+            "id": "p5",
+            "label": "(6, 0)",
+            "bucketId": "in",
+            "feedback": "6 + 0 = 6 exactly and both coordinates ≥ 0 — a boundary point, kept by the ≤."
+          }
+        ],
+        "missFeedback": "Run all three tests per point: x ≥ 0, y ≥ 0, x + y ≤ 6 — one failure means outside.",
+        "successFeedback": "(4, 4) breaks the cap (8 > 6) and (−1, 2) breaks x ≥ 0; the rest pass everything — including the boundary points (0, 6) and (6, 0), which ≤ and ≥ welcome."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Now put the repair on the map — the cap boundary itself.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "c2 repaired (4, 4) by dropping to the cap. Plot that boundary point: x = 4 on x + y = 6.",
+        "cols": 6,
+        "rows": 6,
+        "targets": [
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 4,
+            "feedback": "That is c2's broken point: 4 + 4 = 8 breaks the cap 6. Drop until the sum reads exactly 6."
+          },
+          {
+            "x": 2,
+            "y": 4,
+            "feedback": "Coordinates swapped — keep x = 4 across, then y = 2 up puts the sum at 6."
+          }
+        ],
+        "missFeedback": "Hold x = 4 and make the sum hit the cap exactly: y = 6 − 4 = 2.",
+        "successFeedback": "(4, 2): 4 + 2 = 6, on the fence itself — the largest y that x = 4 allows, which is what ‘repair by the smallest change’ meant."
+      },
+      "predict": {
+        "prompt": "(0, 6) sits exactly on TWO boundaries (x = 0 and x + y = 6). In or out?",
+        "options": [
+          {
+            "id": "in",
+            "label": "In — every fence here includes its boundary"
+          },
+          {
+            "id": "out",
+            "label": "Out — boundaries don't count"
+          },
+          {
+            "id": "half",
+            "label": "Half in — it passes 2 of 3"
+          }
+        ],
+        "outcomeId": "in",
+        "reveal": "Both of its fences are non-strict: 0 ≥ 0 holds and 6 ≤ 6 holds, so (0, 6) is a full member — it's a CORNER of the region. With ≥ and ≤, corners belong to the yard."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When a point fails, say where. (4, 4) passes both sign fences but breaks the cap: 8 > 6. (−1, 2) breaks x ≥ 0 before the cap is even consulted. Diagnosing the broken fence is what lets you FIX a plan, not just reject it.",
+      "figure": "iar-name-the-failure"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Diagnose the failure.",
+      "conceptTag": "iar-multi-check",
+      "explanationVariants": [
+        "(5, 3): signs fine, but 5 + 3 = 8 exceeds 6 — the cap is the broken fence.",
+        "Only x + y ≤ 6 fails; both coordinates are nonnegative."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "(5, 3) is outside x ≥ 0, y ≥ 0, x + y ≤ 6. Which fence broke?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x + y ≤ 6 — the sum is 8",
+            "correct": true,
+            "feedback": "Both signs pass; the total is what's over the line."
+          },
+          {
+            "id": "o2",
+            "label": "x ≥ 0",
+            "correct": false,
+            "feedback": "x = 5 is nonnegative — that fence is intact."
+          },
+          {
+            "id": "o3",
+            "label": "y ≥ 0",
+            "correct": false,
+            "feedback": "y = 3 is nonnegative — look at the sum instead."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Repair by the smallest change.",
+      "conceptTag": "iar-multi-check",
+      "explanationVariants": [
+        "Keeping x = 5 means y can be at most 1, since 5 + y ≤ 6 forces y ≤ 1.",
+        "The cap leaves 6 − 5 = 1 for y — the largest legal y at x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Keep x = 5. What is the LARGEST y that puts (5, y) inside the region?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That was the broken point's y. The cap allows only y ≤ 6 − 5 = 1."
+          },
+          {
+            "value": 6,
+            "feedback": "That's the whole cap; x = 5 already spends 5 of it, leaving 1."
+          },
+          {
+            "value": 0,
+            "feedback": "0 works but isn't the largest — y = 1 still satisfies 5 + 1 ≤ 6."
+          }
+        ],
+        "fallbackFeedback": "With x = 5, the constraint x + y ≤ 6 leaves y ≤ 1. The largest y is 1 — right on the boundary."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Design a member.",
+      "conceptTag": "iar-multi-check",
+      "explanationVariants": [
+        "x = y with x + x ≤ 6 allows x up to 3: the point (3, 3) sits inside, right on the cap.",
+        "Equal coordinates hit the cap at 2x = 6, so (3, 3) is the largest equal-coordinate member."
+      ],
+      "hints": [
+        "The point has equal coordinates: call them both x.",
+        "The cap says x + x ≤ 6. How big can x be?",
+        "2x ≤ 6 gives x ≤ 3 — the largest such point is (3, 3)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The largest point with EQUAL coordinates inside the region has coordinates (a, a). What is a?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That spends the whole cap on one coordinate; both together need 2a ≤ 6."
+          },
+          {
+            "value": 2,
+            "feedback": "2 works, but a = 3 also passes: 3 + 3 = 6 ≤ 6 — the ≤ admits its boundary."
+          }
+        ],
+        "fallbackFeedback": "Equal coordinates means y = x, so x + x ≤ 6 gives x ≤ 3. The largest such point is (3, 3)."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Membership is a checklist.",
+      "takeaways": [
+        "Test every inequality; one failure evicts.",
+        "Non-strict fences admit their boundaries — corners included.",
+        "Naming the broken fence tells you how to repair a plan."
+      ],
+      "teaser": "next: feasible regions — where the checklist becomes a plan's rulebook."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "iar-multi-check",
+      "concept": {
+        "id": "rem-iar-multi-check-c",
+        "kind": "concept",
+        "body": "When a point fails, say where. (4, 4) passes both sign fences but breaks the cap: 8 > 6. (−1, 2) breaks x ≥ 0 before the cap is even consulted. Diagnosing the broken fence is what lets you FIX a plan, not just reject it."
+      },
+      "check": {
+        "id": "rem-iar-multi-check-k",
+        "kind": "check",
+        "body": "Full checklist on a good point.",
+        "conceptTag": "iar-multi-check",
+        "explanationVariants": [
+          "(2, 3): 2 ≥ 0 ✓, 3 ≥ 0 ✓, 2 + 3 = 5 ≤ 6 ✓ — all three pass, so it's inside.",
+          "Every fence clears: nonneg x, nonneg y, and a sum under the cap."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Check (2, 3) against x ≥ 0, y ≥ 0, x + y ≤ 6.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Inside — passes all three",
+              "correct": true,
+              "feedback": "2 ≥ 0, 3 ≥ 0, and 5 ≤ 6: the checklist comes back clean."
+            },
+            {
+              "id": "o2",
+              "label": "Outside — fails x + y ≤ 6",
+              "correct": false,
+              "feedback": "The sum is 5, and 5 ≤ 6 holds — the cap isn't broken."
+            },
+            {
+              "id": "o3",
+              "label": "Outside — fails y ≥ 0",
+              "correct": false,
+              "feedback": "y = 3 is comfortably nonnegative."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

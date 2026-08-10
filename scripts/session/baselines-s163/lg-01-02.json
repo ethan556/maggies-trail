@@ -1,0 +1,306 @@
+{
+  "id": "lg-01-02",
+  "slug": "evaluating-logarithms",
+  "title": "Evaluating Logarithms",
+  "courseId": "logarithms",
+  "chapterId": "ch1-log-as-inverse",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Three instant values every log shares. **log_b 1 = 0** (anything to the 0 is 1). **log_b b = 1** (b¹ = b). And **log_b of a fraction can go negative**: log₂ (1/8) = −3 because 2⁻³ = 1/8. The log's output ranges over ALL real numbers — negatives included.",
+      "figure": "lg-instant-values"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Evaluate it by asking the exponent question.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "logarithm",
+        "x": 81,
+        "targetBase": 3,
+        "startBase": 5,
+        "showMirror": true,
+        "prompt": "Slide the base until log_b(81) lands on the ring at 4.",
+        "successFeedback": "log₃(81) = 4, because 3⁴ = 81. Every logarithm is a question: to what power must the base be raised?",
+        "lowFeedback": "log_b(81) is above 4 — a small base needs more multiplications to climb to 81. Raise the base.",
+        "highFeedback": "log_b(81) is below 4 — a large base reaches 81 in fewer steps. Lower the base."
+      },
+      "conceptTag": "lg-evaluate",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents evaluate.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for evaluate must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines evaluate."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "logarithms:lg-evaluate",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "log_b(81) = 4 asks which base raised to the FOURTH power gives 81. The base is…",
+        "options": [
+          {
+            "id": "nine",
+            "label": "9"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          },
+          {
+            "id": "quart",
+            "label": "81 ÷ 4, about 20.25"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "3, since 3⁴ = 81. The 9 is tempting because 9² = 81 — but that is the base whose SQUARE is 81, and the ring is set at 4, not 2. Move the ring and the same 81 hands back a different base entirely."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two more families. **Base 10** is so common it hides its subscript: log 1000 = 3 (it's log₁₀). And fractional INSIDES pair with negative exponents: log₃ (1/9) = −2 since 3⁻² = 1/9. Fractional ANSWERS appear too: log₉ 3 = 1/2, because 9^(1/2) = √9 = 3 — rational exponents, straight from Radical Functions.",
+      "figure": "lg-common-natural"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Negative output.",
+      "conceptTag": "lg-evaluate",
+      "explanationVariants": [
+        "2^? = 1/16: since 2⁴ = 16, the reciprocal needs the NEGATIVE exponent: −4.",
+        "Reciprocal inside ⟹ negated exponent."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate log₂ (1/16).",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "1/16 is the RECIPROCAL of 2⁴ — reciprocals flip the exponent's sign: −4."
+          },
+          {
+            "value": -8,
+            "feedback": "Halve the reading: 2⁴ = 16 (not 2⁸), so log₂(1/16) = −4."
+          }
+        ],
+        "fallbackFeedback": "2⁻⁴ = 1/16 → −4."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-evaluate__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Hidden base 10.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate log 100000 (base 10 understood).",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10000,
+            "feedback": "The log counts the ZEROS (the exponent on 10), not a tenth of the number: 10⁵ = 100000 → 5."
+          },
+          {
+            "value": 6,
+            "feedback": "Count carefully: 100000 has 5 zeros — 10⁵."
+          }
+        ],
+        "fallbackFeedback": "10⁵ = 100000 → 5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fractional answer.",
+      "conceptTag": "lg-evaluate",
+      "explanationVariants": [
+        "16^? = 4: since 16^(1/2) = √16 = 4, the answer is 1/2.",
+        "The inside is a ROOT of the base — rational exponent territory."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Evaluate log₁₆ 4.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1/2",
+            "correct": true,
+            "feedback": "Right — 16^(1/2) = √16 = 4."
+          },
+          {
+            "id": "o2",
+            "label": "2",
+            "correct": false,
+            "feedback": "That's log₄ 16 — here the roles reverse: 16 must be SHRUNK to 4, needing the exponent 1/2."
+          },
+          {
+            "id": "o3",
+            "label": "4",
+            "correct": false,
+            "feedback": "16⁴ is enormous — the exponent turning 16 into 4 is fractional: 1/2."
+          },
+          {
+            "id": "o4",
+            "label": "−2",
+            "correct": false,
+            "feedback": "Negative exponents make RECIPROCALS (1/256) — a root needs a positive fraction: 1/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-evaluate__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Base equals inside.",
+      "conceptTag": "lg-evaluate",
+      "explanationVariants": [
+        "log₉ 9 = 1: any base to the FIRST power is itself.",
+        "b¹ = b, always."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate log₉ 9.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "The exponent 0 gives 1, not 9 — turning 9 into ITSELF takes the exponent 1."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the base and the inside — the EXPONENT connecting them is 1."
+          }
+        ],
+        "fallbackFeedback": "9¹ = 9 → 1."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-evaluate__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full range in one line.",
+      "conceptTag": "lg-evaluate",
+      "explanationVariants": [
+        "log₄ (1/2): 4^? = 1/2. Since 4^(1/2) = 2, flip the sign for the reciprocal: 4^(−1/2) = 1/2 — answer −1/2.",
+        "Root gives 2; reciprocal negates: −1/2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Evaluate log₄ (1/2).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−1/2",
+            "correct": true,
+            "feedback": "Right — 4^(1/2) = 2, and the reciprocal 1/2 negates the exponent."
+          },
+          {
+            "id": "o2",
+            "label": "1/2",
+            "correct": false,
+            "feedback": "4^(1/2) = 2, not 1/2 — the RECIPROCAL inside demands a negative: −1/2."
+          },
+          {
+            "id": "o3",
+            "label": "−2",
+            "correct": false,
+            "feedback": "4⁻² = 1/16 — too far; the gentle shrink to 1/2 needs only −1/2."
+          },
+          {
+            "id": "o4",
+            "label": "2",
+            "correct": false,
+            "feedback": "4² = 16 grows — the inside 1/2 is SMALLER than 1, forcing a negative exponent."
+          }
+        ]
+      },
+      "hints": [
+        "Ask: 4 to what power gives 1/2?",
+        "4^(1/2) = √4 = 2 — close, but we need the reciprocal of 2.",
+        "Negate: 4^(−1/2) = 1/2."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-evaluate__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Logs output every real number: zero at 1, negatives inside (0, 1), fractions at roots.",
+      "takeaways": [
+        "log_b 1 = 0 and log_b b = 1, for every base.",
+        "Reciprocal inside ⟺ negated exponent.",
+        "Bare 'log' means base 10."
+      ],
+      "teaser": "Next: the log's GRAPH — the exponential's mirror image."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-evaluate",
+      "concept": {
+        "id": "rem-lg0102-c",
+        "kind": "concept",
+        "body": "Negative-exponent recall: 3⁻² means 1/(3²) = 1/9. So log₃ (1/9) asks for that exponent."
+      },
+      "check": {
+        "id": "rem-lg0102-k",
+        "kind": "check",
+        "body": "Name it.",
+        "conceptTag": "lg-evaluate",
+        "explanationVariants": [
+          "−2.",
+          "The reciprocal of 3² pairs with the exponent −2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Evaluate log₃ (1/9).",
+          "answer": -2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "3² = 9, but the inside is 1/9 — the reciprocal flips the sign: −2."
+            },
+            {
+              "value": -9,
+              "feedback": "The exponent (not the inside) is the answer: 3⁻² = 1/9 → −2."
+            }
+          ],
+          "fallbackFeedback": "3⁻² = 1/9 → −2."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+{
+  "id": "mb-03-03",
+  "slug": "two-digit-times-two-digit",
+  "title": "Two-Digit Times Two-Digit",
+  "courseId": "multiply-bigger",
+  "chapterId": "ch3-area-model",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When BOTH numbers are two digits, each splits into tens and ones — so the rectangle divides into **four** smaller ones. For 23 × 45, split 23 into 20 + 3 and 45 into 40 + 5. The four pieces are 20×40, 20×5, 3×40, and 3×5. Multiply all four, add them up.",
+      "figure": "dop-two-by-two"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the four rectangles.",
+      "conceptTag": "area-model-2digit",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "The grid for 23 × 45 has four regions. Tap all four rectangles you must multiply and add.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 3,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "big",
+            "x": 25,
+            "y": 30,
+            "label": "20 × 40",
+            "icon": "20×40",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "tr",
+            "x": 72,
+            "y": 30,
+            "label": "20 × 5",
+            "icon": "20×5",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "bl",
+            "x": 25,
+            "y": 75,
+            "label": "3 × 40",
+            "icon": "3×40",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "br",
+            "x": 72,
+            "y": 75,
+            "label": "3 × 5",
+            "icon": "3×5",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Both numbers split in two, so there are four rectangles — tens×tens, tens×ones, ones×tens, ones×ones.",
+        "successFeedback": "All four: 20×40, 20×5, 3×40, 3×5. Multiply each, then add for the total."
+      },
+      "predict": {
+        "prompt": "The grid splits 23 × 45 by place value. How many separate multiplications will it break into?",
+        "options": [
+          {
+            "id": "four",
+            "label": "Four"
+          },
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "one",
+            "label": "Just one"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Each part of 23 meets each part of 45 — tens × tens, tens × ones, ones × tens, ones × ones. Four rectangles, then one big sum."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents area model 2digit.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for area model 2digit must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines area model 2digit."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiply-bigger:area-model-2digit",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The biggest rectangle.",
+      "conceptTag": "area-model-2digit",
+      "explanationVariants": [
+        "The tens×tens piece is 20 × 40 = 800 — that's 2 tens × 4 tens = 8 hundreds.",
+        "20 × 40 = 800, the largest of the four rectangles."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 23 × 45, what is the tens-by-tens rectangle, 20 × 40?",
+        "answer": 800,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "80 kept only one ten's badge. 20 × 40 is 2 tens × 4 tens = 8 hundreds = 800 — two zeros."
+          },
+          {
+            "value": 8000,
+            "feedback": "8000 has a zero too many. 2 × 4 = 8, then two tens-badges make hundreds: 800."
+          }
+        ],
+        "fallbackFeedback": "2 × 4 = 8, and tens × tens makes hundreds: 800."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbAreaModel2DigitNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Add the four pieces carefully. For 23 × 45: 20×40 = 800, 20×5 = 100, 3×40 = 120, 3×5 = 15. Sum them: 800 + 100 + 120 + 15 = 1035. Every rectangle counts — miss one and the answer falls short. Four easy products beat one scary one.",
+      "figure": "dop-two-by-two"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Add all four.",
+      "conceptTag": "area-model-2digit",
+      "explanationVariants": [
+        "800 + 100 + 120 + 15 = 1035 — all four rectangles of 23 × 45.",
+        "The four pieces total 1035."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The four rectangles of 23 × 45 are 800, 100, 120, and 15. What is 23 × 45?",
+        "answer": 1035,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 900,
+            "feedback": "900 added only 800 + 100 — the two tens pieces. The 3 × 40 = 120 and 3 × 5 = 15 pieces are still missing: total 1035."
+          },
+          {
+            "value": 920,
+            "feedback": "920 left out a piece — check all four: 800 + 100 + 120 + 15 = 1035."
+          },
+          {
+            "value": 1020,
+            "feedback": "1020 dropped the ones×ones rectangle 3 × 5 = 15. Adding it gives 1035."
+          }
+        ],
+        "fallbackFeedback": "Add every rectangle: 800 + 100 + 120 + 15."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbAreaModel2DigitNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the pieces of 16 × 24.",
+      "conceptTag": "area-model-2digit",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "For 16 × 24 (10+6 and 20+4), match each rectangle to its value.",
+        "left": [
+          {
+            "id": "tt",
+            "label": "10 × 20"
+          },
+          {
+            "id": "to",
+            "label": "10 × 4"
+          },
+          {
+            "id": "ot",
+            "label": "6 × 20"
+          },
+          {
+            "id": "oo",
+            "label": "6 × 4"
+          }
+        ],
+        "right": [
+          {
+            "id": "v200",
+            "label": "200"
+          },
+          {
+            "id": "v40",
+            "label": "40"
+          },
+          {
+            "id": "v120",
+            "label": "120"
+          },
+          {
+            "id": "v24",
+            "label": "24"
+          }
+        ],
+        "pairs": {
+          "tt": "v200",
+          "to": "v40",
+          "ot": "v120",
+          "oo": "v24"
+        },
+        "pairErrors": [
+          {
+            "left": "ot",
+            "right": "v40",
+            "feedback": "6 × 20 = 120, not 40. The 40 is 10 × 4. Keep the tens and ones matched to the right factors."
+          }
+        ],
+        "missFeedback": "Multiply each pair: tens×tens, tens×ones, ones×tens, ones×ones.",
+        "successFeedback": "200 + 40 + 120 + 24 = 384 = 16 × 24. Four rectangles, one total."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which piece is missing?",
+      "conceptTag": "area-model-2digit",
+      "explanationVariants": [
+        "For 16 × 24, adding 200 + 40 + 120 = 360 forgets the ones×ones rectangle 6 × 4 = 24; the true total is 384.",
+        "The missing rectangle is 6 × 4 = 24, so 360 is 24 short of 384."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For 16 × 24, Leo added 200 + 40 + 120 = 360. Which rectangle did he forget?",
+        "options": [
+          {
+            "id": "a",
+            "label": "6 × 4 = 24 — the ones-by-ones piece (true total 384)",
+            "correct": true,
+            "feedback": "The smallest rectangle 6 × 4 = 24 was left out. 360 + 24 = 384."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — 360 is right",
+            "feedback": "360 is only three of the four rectangles. The ones×ones piece 6 × 4 = 24 is missing: 384."
+          },
+          {
+            "id": "c",
+            "label": "10 × 20 = 200",
+            "feedback": "200 is already in his sum. The forgotten piece is the ones×ones one: 6 × 4 = 24."
+          },
+          {
+            "id": "d",
+            "label": "16 × 4 = 64",
+            "feedback": "16 × 4 isn't a single rectangle here — the four pieces split both numbers. The missing one is 6 × 4 = 24."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbAreaModel2DigitMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The orchard grid.",
+      "conceptTag": "area-model-2digit",
+      "hints": [
+        "Split both numbers: 12 into 10 + 2, 14 into 10 + 4.",
+        "Four rectangles: 10×10, 10×4, 2×10, 2×4.",
+        "Add 100 + 40 + 20 + 8."
+      ],
+      "explanationVariants": [
+        "12 × 14 = 10×10 + 10×4 + 2×10 + 2×4 = 100 + 40 + 20 + 8 = 168 trees.",
+        "The four pieces 100, 40, 20, 8 total 168."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An orchard is planted in a grid with 12 rows and 14 trees per row. How many trees? (Split 12 = 10+2, 14 = 10+4.)",
+        "answer": 168,
+        "tolerance": 0,
+        "unit": "trees",
+        "commonErrors": [
+          {
+            "value": 140,
+            "feedback": "140 added only 100 + 40 — two rectangles. The 2×10 = 20 and 2×4 = 8 pieces remain: total 168."
+          },
+          {
+            "value": 160,
+            "feedback": "160 dropped the ones×ones rectangle 2 × 4 = 8. Adding it gives 168."
+          }
+        ],
+        "fallbackFeedback": "Add all four: 100 + 40 + 20 + 8."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbAreaModel2DigitNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Four rectangles, any product.",
+      "takeaways": [
+        "Two two-digit numbers each split into tens + ones → four rectangles.",
+        "Multiply tens×tens, tens×ones, ones×tens, ones×ones, then add all four.",
+        "The tiny ones×ones piece is the easiest to forget — always include it."
+      ],
+      "teaser": "next chapter: division with leftovers — when sharing doesn't come out even."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "area-model-2digit",
+      "concept": {
+        "id": "rem-a2-c",
+        "kind": "concept",
+        "body": "Quick rewind. Two two-digit numbers make **four rectangles.** Split each into tens and ones, then pair every part with every part. For 11 × 12: 10×10 = 100, 10×2 = 20, 1×10 = 10, 1×2 = 2. Add all four: 100 + 20 + 10 + 2 = 132. Four pieces, none skipped."
+      },
+      "check": {
+        "id": "rem-a2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "area-model-2digit",
+        "explanationVariants": [
+          "The four pieces of 11 × 12 are 100, 20, 10, 2, and they sum to 132.",
+          "100 + 20 + 10 + 2 = 132."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The four rectangles of 11 × 12 are 100, 20, 10, and 2. What is 11 × 12?",
+          "options": [
+            {
+              "id": "a",
+              "label": "132",
+              "correct": true,
+              "feedback": "100 + 20 + 10 + 2 = 132 — all four added."
+            },
+            {
+              "id": "b",
+              "label": "120",
+              "feedback": "120 added only 100 + 20. The 1×10 = 10 and 1×2 = 2 pieces remain: 132."
+            },
+            {
+              "id": "c",
+              "label": "130",
+              "feedback": "130 dropped the ones×ones piece (1 × 2 = 2). Adding it gives 132."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

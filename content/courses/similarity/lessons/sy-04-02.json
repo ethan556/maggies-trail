@@ -1,0 +1,297 @@
+{
+ "id": "sy-04-02",
+ "slug": "the-geometric-mean",
+ "title": "The Geometric Mean",
+ "courseId": "similarity",
+ "chapterId": "ch4-right-triangle-similarity",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sy-geometric-mean",
+   "concept": {
+    "id": "rem-sy-geometric-mean-c",
+    "kind": "concept",
+    "body": "Two geometric-mean relationships in the altitude picture. ALTITUDE = geometric mean of the two hypotenuse SEGMENTS: h = √(p·q). LEG = geometric mean of the whole HYPOTENUSE and the segment adjacent to that leg: leg = √(hyp·adj). Geometric mean of a and b is always √(ab) — square root of the product, not the average."
+   },
+   "check": {
+    "id": "rem-sy-geometric-mean-k",
+    "kind": "check",
+    "body": "Geometric mean formula.",
+    "conceptTag": "sy-geometric-mean",
+    "explanationVariants": [
+     "Geometric mean of a and b is √(ab): for 9 and 16 that's √144 = 12.",
+     "Multiply then square-root: √(9·16) = 12."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "What is the geometric mean of 9 and 16?",
+     "answer": 12,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 12.5,
+       "feedback": "12.5 = (9 + 16)/2 is the average. Geometric mean is √(9 × 16) = 12."
+      },
+      {
+       "value": 144,
+       "feedback": "144 = 9 × 16 is the product. Take its square root: √144 = 12."
+      }
+     ],
+     "fallbackFeedback": "√(9 × 16) = √144 = 12."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The **geometric mean** of two numbers a and b is √(ab) — the value x where a/x = x/b. It's the 'multiplicative middle,' the way the average is the additive middle. In the altitude picture, the equal ratios between similar triangles turn directly into geometric means.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Compute a geometric mean.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the geometric mean of 4 and 9? (√(4 × 9))",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6.5,
+      "feedback": "6.5 = (4 + 9)/2 is the ARITHMETIC mean (average). The GEOMETRIC mean is √(4 × 9) = √36 = 6."
+     },
+     {
+      "value": 36,
+      "feedback": "36 = 4 × 9 is the product itself. The geometric mean takes its SQUARE ROOT: √36 = 6."
+     }
+    ],
+    "fallbackFeedback": "√(4 × 9) = √36 = 6."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Altitude is a geometric mean.",
+   "conceptTag": "sy-geometric-mean",
+   "explanationVariants": [
+    "The altitude to the hypotenuse is the geometric mean of the two hypotenuse segments: h = √(p·q).",
+    "From the similar triangles, p/h = h/q, so h² = pq and h = √(pq)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The altitude h to the hypotenuse relates to the two hypotenuse segments p and q how?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "h = √(p·q) — the geometric mean of the segments",
+      "correct": true,
+      "feedback": "The similar triangles give p/h = h/q, so h² = pq and h is the geometric mean √(pq)."
+     },
+     {
+      "id": "o2",
+      "label": "h = (p + q)/2 — the average",
+      "correct": false,
+      "feedback": "That's the ARITHMETIC mean. The altitude is the GEOMETRIC mean: h = √(pq)."
+     },
+     {
+      "id": "o3",
+      "label": "h = p + q — the whole hypotenuse",
+      "correct": false,
+      "feedback": "p + q is the full hypotenuse length, not the altitude. The altitude is √(pq)."
+     },
+     {
+      "id": "o4",
+      "label": "h = p·q — the product",
+      "correct": false,
+      "feedback": "The product is under a square root: h = √(pq), not pq itself."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-geometric-mean__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Find the altitude.",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "The hypotenuse is 25. Slide the foot until it splits into 9 and 16, and read the altitude — then keep sliding and check whether h² = p·q was a fact about those two numbers or about every position.",
+    "shape": [
+     [
+      0,
+      0
+     ],
+     [
+      25,
+      0
+     ],
+     [
+      9,
+      12
+     ]
+    ],
+    "center": [
+     0,
+     0
+    ],
+    "targetK": 0.36,
+    "kMin": 0.04,
+    "kMax": 0.96,
+    "kStep": 0.04,
+    "kStart": 0.6,
+    "gridMin": 0,
+    "gridMax": 26,
+    "showRatios": [
+     "altitude"
+    ],
+    "successFeedback": "9 and 16, and the altitude reads 12 — because 12² = 144 = 9 × 16. That is what \"geometric mean\" names: h is the number whose square is the product of the two segments. Every other position you passed through obeyed it too, which is why it is a theorem and not a coincidence about 9 and 16.",
+    "lowFeedback": "p is still under 9, so the left segment is too short and the altitude is shorter than 12. Slide right — h grows while p is the smaller segment, then shrinks again once p overtakes q.",
+    "highFeedback": "p has gone past 9. Ease back left. Watch the altitude as you do: it peaks at the midpoint, where p and q are equal, and falls away toward both ends."
+   },
+   "predict": {
+    "prompt": "The altitude to a hypotenuse splits it into 9 and 16. The altitude's length will be…",
+    "options": [
+     {
+      "id": "twelve",
+      "label": "12 — the square root of 9 × 16"
+     },
+     {
+      "id": "half",
+      "label": "12.5 — half the hypotenuse"
+     },
+     {
+      "id": "seven",
+      "label": "12.5 — the average of 9 and 16 is close enough"
+     }
+    ],
+    "outcomeId": "twelve",
+    "reveal": "12, and the route is the product rather than the sum: √(9 × 16) = √144. Half the hypotenuse is 12.5, which is close enough to 12 to hide the mistake here and to fail badly on any less balanced split — at 4 and 21 the mean is 12.5 and the altitude is only about 9.2."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Each **leg** is a geometric mean too — of the whole hypotenuse and the segment ADJACENT to that leg: leg = √(hypotenuse × adjacent segment). Two flavors: the altitude is the geometric mean of the two SEGMENTS; a leg is the geometric mean of the HYPOTENUSE and its adjacent segment. Keep them straight.",
+   "figure": "geometric-mean"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Find a leg.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A right triangle's hypotenuse is 25, split by the altitude into 9 and 16. The leg adjacent to the segment of 9 has length √(25 × 9). What is that leg?",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 17,
+      "feedback": "17 = 25 − 9 + 1 or a guess. The leg is √(25 × 9) = √225 = 15."
+     },
+     {
+      "value": 34,
+      "feedback": "34 = 25 + 9 adds. The leg is the geometric mean √(25 × 9) = 15."
+     }
+    ],
+    "fallbackFeedback": "leg = √(25 × 9) = √225 = 15."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which geometric mean?",
+   "conceptTag": "sy-geometric-mean",
+   "explanationVariants": [
+    "A leg is the geometric mean of the WHOLE hypotenuse and its adjacent segment; the altitude is the geometric mean of the two SEGMENTS.",
+    "Leg → √(hyp × adjacent segment); altitude → √(segment × segment)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "To find a LEG using the geometric mean, you take the square root of…",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the whole hypotenuse times the segment adjacent to that leg",
+      "correct": true,
+      "feedback": "leg = √(hypotenuse × adjacent segment) — the leg is the geometric mean of the whole and its near segment."
+     },
+     {
+      "id": "o2",
+      "label": "the two hypotenuse segments",
+      "correct": false,
+      "feedback": "That gives the ALTITUDE, not a leg. A leg uses the whole hypotenuse × its adjacent segment."
+     },
+     {
+      "id": "o3",
+      "label": "the two legs",
+      "correct": false,
+      "feedback": "The legs aren't multiplied together here. A leg = √(hypotenuse × adjacent segment)."
+     },
+     {
+      "id": "o4",
+      "label": "the altitude times the hypotenuse",
+      "correct": false,
+      "feedback": "That isn't one of the geometric-mean relationships. Use √(hypotenuse × adjacent segment) for a leg."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-geometric-mean__mcq"
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Back out a segment.",
+   "conceptTag": "sy-geometric-mean",
+   "hints": [
+    "The altitude is the geometric mean: h = √(p·q), so h² = p·q.",
+    "With h = 6 and one segment p = 4, solve 6² = 4·q.",
+    "36 = 4q gives q = 9."
+   ],
+   "explanationVariants": [
+    "Since h² = p·q, we have 36 = 4·q, so q = 36 ÷ 4 = 9.",
+    "From h = √(pq): 6² = 4q → q = 9."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The altitude to a hypotenuse is 6, and one segment of the hypotenuse is 4. What is the OTHER segment?",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 = 6 − 4 subtracts. Use h² = p·q: 36 = 4·q → q = 9."
+     },
+     {
+      "value": 24,
+      "feedback": "24 = 6 × 4 multiplies. From h² = p·q: 36 = 4q → q = 36 ÷ 4 = 9."
+     }
+    ],
+    "fallbackFeedback": "h² = p·q → 36 = 4·q → q = 9."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-geometric-mean__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The multiplicative middle.",
+   "takeaways": [
+    "Geometric mean of a, b is √(ab) — where a/x = x/b.",
+    "Altitude = geometric mean of the two hypotenuse segments: h = √(p·q).",
+    "Leg = geometric mean of the whole hypotenuse and its adjacent segment: √(hyp × adj)."
+   ],
+   "teaser": "Next: use these relationships to solve right triangles quickly."
+  }
+ ]
+}

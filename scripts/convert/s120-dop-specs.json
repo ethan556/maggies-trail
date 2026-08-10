@@ -1,0 +1,116 @@
+{
+  "note": "S120i — the dop- cluster, first of the K-8 Tier C/D backlog. Three of the six convert against engines already in the course; dop-01-02 (grouping symbols), dop-03-03 (interpreting remainders) and dop-05-03 (dividing decimals) are declined, with reasons recorded in KNOWN_ISSUES. Every conceptTag here is a load-bearing remediation target whose best experience was Tier C or D.",
+  "conversions": [
+    {
+      "dir": "decimal-operations",
+      "lesson": "dop-02-03",
+      "step": "i1",
+      "oldType": "numeric",
+      "capability": "columnCalc multiply (multidigit-multiply — was Tier D) — authored predict preserved, it already hands off to 23 × 5",
+      "widget": {
+        "type": "columnCalc",
+        "op": "multiply",
+        "a": 23,
+        "b": 5,
+        "prompt": "The first row of 23 × 45 is 23 × 5. Work it column by column, right to left, and carry when a column passes 9.",
+        "commonResults": [
+          {
+            "value": 15,
+            "feedback": "15 is 3 × 5 with the carry left stranded and the tens column never done. The 15 means one TEN and five ones: the 5 stays in the ones column and the 1 has to travel left to join 2 × 5."
+          },
+          {
+            "value": 105,
+            "feedback": "105 has both columns multiplied but the carry never added in. 2 × 5 = 10, and the 1 carried from the ones column makes it 11 — so the row is 115, not 105."
+          }
+        ],
+        "fallbackFeedback": "Start at the ones: 3 × 5 = 15, so 5 stays and 1 carries. Then 2 × 5 = 10, plus the carried 1.",
+        "successFeedback": "115. That is one row of the two — and the carry is why it is not simply 10 and 15 written side by side. The second row will be 23 × 40, not 23 × 4, which is where the placeholder zero comes from."
+      },
+      "keepPredict": true
+    },
+    {
+      "dir": "decimal-operations",
+      "lesson": "dop-04-01",
+      "step": "i1",
+      "oldType": "mcq",
+      "capability": "columnCalc decimal add (align-points — was Tier C)",
+      "widget": {
+        "type": "columnCalc",
+        "op": "add",
+        "a": 350,
+        "b": 175,
+        "decimals": 2,
+        "prompt": "Add 3.50 + 1.75. The columns are already lined up by place — work right to left and carry whenever a column passes 9.",
+        "commonResults": [
+          {
+            "value": 425,
+            "feedback": "4.25 has the hundredths right but the carry never left the tenths. 5 tenths + 7 tenths is 12 tenths, which is one WHOLE and 2 tenths — the whole belongs in the ones column."
+          }
+        ],
+        "fallbackFeedback": "Start at the hundredths, the rightmost column, and work left. Carry whenever a column total passes 9.",
+        "successFeedback": "5.25. Notice that 3.5 had to be read as 3.50 for the columns to line up — and that once they do, nothing about this is different from adding whole numbers. \"Line up the points\" is only ever \"line up the places\"."
+      },
+      "predict": {
+        "prompt": "To add 3.5 + 1.75 in columns, the 3.5 first has to be written as…",
+        "options": [
+          {
+            "id": "pad",
+            "label": "3.50"
+          },
+          {
+            "id": "as-is",
+            "label": "3.5, with the digits pushed to the right to fill the gap"
+          },
+          {
+            "id": "shift",
+            "label": "35.0"
+          }
+        ],
+        "outcomeId": "pad",
+        "reveal": "3.50 — because 3.5 has no hundredths, and a column with nothing in it is a column holding zero. Pushing the digits right instead would put the 5 under the 5 of 1.75, adding tenths to hundredths. The point is what marks the places; padding just says the empty ones out loud."
+      }
+    },
+    {
+      "dir": "decimal-operations",
+      "lesson": "dop-04-02",
+      "step": "i2",
+      "oldType": "numeric",
+      "capability": "columnCalc decimal add (decimal-regroup — was Tier C)",
+      "widget": {
+        "type": "columnCalc",
+        "op": "add",
+        "a": 75,
+        "b": 380,
+        "decimals": 2,
+        "prompt": "Add 0.75 + 3.80, column by column. Start at the hundredths and carry when a column passes 9.",
+        "commonResults": [
+          {
+            "value": 355,
+            "feedback": "3.55 leaves the carry behind. 7 tenths + 8 tenths is 15 tenths — one whole and 5 tenths — so the 5 stays in the tenths but the whole has to move into the ones column, making 4 wholes, not 3."
+          }
+        ],
+        "fallbackFeedback": "Hundredths first: 5 + 0. Then the tenths, 7 + 8, which passes 9 and carries. Then the ones.",
+        "successFeedback": "4.55. The carry crossed the decimal point, from tenths into ones, and behaved exactly as a carry from tens into hundreds would. The point does not interrupt the columns — it only names where they stop being whole."
+      },
+      "predict": {
+        "prompt": "Adding 0.75 + 3.80, the tenths column gives 7 + 8 = 15 tenths. That carry will travel…",
+        "options": [
+          {
+            "id": "ones",
+            "label": "Across the decimal point, into the ones column"
+          },
+          {
+            "id": "stuck",
+            "label": "Nowhere — a carry cannot cross the decimal point"
+          },
+          {
+            "id": "hundredths",
+            "label": "Right, into the hundredths column"
+          }
+        ],
+        "outcomeId": "ones",
+        "reveal": "Straight across into the ones. Fifteen tenths is one whole and five tenths, and \"one whole\" belongs on the other side of the point. The decimal point is a label on the places, not a wall between them — carries cross it exactly as they cross from tens into hundreds."
+      }
+    }
+  ]
+}

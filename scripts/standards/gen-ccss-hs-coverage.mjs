@@ -1,0 +1,256 @@
+#!/usr/bin/env node
+/**
+ * S203H — generate the high-school coverage map: which existing chapters teach which CCSS-M
+ * high-school sub-standards.
+ *
+ * PROVENANCE, STATED PLAINLY. Authored from a chapter-and-lesson-title reading of all 39 grade
+ * 9–12 courses (542 lessons). That is a WEAKER evidence base than the 6–8 map, which was written
+ * from a lesson-by-lesson reading — titles can flatter content. It is marked
+ * `authored-from-titles` rather than `authored-unreviewed` so the difference is visible in the
+ * artifact rather than only in someone's memory, and so a later pass can upgrade it.
+ *
+ * WHAT THAT MEANS FOR THE NUMBER IT PRODUCES: a title-level map is biased toward OVER-crediting
+ * coverage — a chapter called "Zeros & Factors" is assumed to teach A-APR.B.3. So the uncovered
+ * count this produces is a LOWER BOUND on the real gap. Any standard it reports as missing is
+ * missing; some it reports as covered may be thin.
+ *
+ * Grade 13 (Calculus, Calculus BC) is excluded: it is beyond CCSS-M, and scoring it against a
+ * framework that does not contain it would manufacture a gap that is not real.
+ */
+import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { join, resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
+
+/** "courseSlug/chapterId" -> sub-standard codes it teaches.
+ *  QUALIFIED BY COURSE, and that is not cosmetic: chapter ids are NOT unique. `ch4-applications`
+ *  exists in both `quadratics` and `radicals-and-exponents`, so a bare-id map silently gave the
+ *  radicals chapter the quadratics credits and dropped its own (G-SRT.C.8, G-GPE.B.7). Four ids
+ *  collide corpus-wide. Keying by course removes the whole class of error. */
+const CHAPTERS = {
+  // G9 Algebra 1
+  "absolute-value-piecewise/ch1-the-v": ["F-IF.C.7b", "F-BF.B.3"],
+  "absolute-value-piecewise/ch2-equations-with-abs": ["A-CED.A.1", "A-REI.B.3"],
+  "absolute-value-piecewise/ch3-functions-in-pieces": ["F-IF.C.7b"],
+  "exponential-functions/ch1-growth-and-decay": ["F-LE.A.1a", "F-LE.A.1c"],
+  "exponential-functions/ch2-modeling": ["F-LE.A.2", "F-LE.B.5", "F-IF.C.8b"],
+  "exponential-functions/ch3-exponential-equations": ["A-SSE.B.3c", "A-CED.A.1"],
+  "exponential-functions/ch4-graphs-and-comparisons": ["F-IF.C.7e", "F-LE.A.3"],
+  "exponents-polynomials/ch1-exponent-rules": ["N-RN.A.1", "A-SSE.B.3c"],
+  "exponents-polynomials/ch2-polynomial-basics": ["A-APR.A.1", "A-SSE.A.1a"],
+  "exponents-polynomials/ch3-multiplying-polynomials": ["A-APR.A.1"],
+  "exponents-polynomials/ch4-factoring": ["A-SSE.B.3a", "A-SSE.A.2"],
+  "functions-and-sequences/ch1-function-basics": ["F-IF.A.1", "F-IF.A.2"],
+  "functions-and-sequences/ch2-arithmetic-sequences": ["F-IF.A.3", "F-BF.A.2"],
+  "functions-and-sequences/ch3-geometric-sequences": ["F-IF.A.3", "F-BF.A.2"],
+  "functions-and-sequences/ch4-comparing-and-applying": ["F-LE.A.1a", "F-LE.A.1b"],
+  "inequalities-and-regions/ch1-half-planes": ["A-REI.D.12", "A-REI.D.10"],
+  "inequalities-and-regions/ch2-systems-of-inequalities": ["A-REI.D.12"],
+  "inequalities-and-regions/ch3-best-point-wins": ["A-CED.A.3"],
+  "linear-functions/ch1-slope": ["F-IF.B.6"],
+  "linear-functions/ch2-slope-intercept": ["F-IF.C.7a", "F-LE.B.5"],
+  "linear-functions/ch3-point-slope-standard": ["A-CED.A.2"],
+  "linear-functions/ch4-writing-equations": ["F-BF.A.1a", "G-GPE.B.5"],
+  "nonlinear-systems/ch1-line-meets-parabola": ["A-REI.C.7"],
+  "nonlinear-systems/ch2-line-meets-circle": ["A-REI.C.7", "G-GPE.A.1"],
+  "quadratics/ch1-graphing-parabolas": ["F-IF.C.7a", "F-BF.B.3"],
+  "quadratics/ch2-solving-by-factoring": ["A-SSE.B.3a", "A-REI.B.4b"],
+  "quadratics/ch3-square-roots-and-the-formula": ["A-REI.B.4a", "A-REI.B.4b"],
+  "quadratics/ch4-applications": ["A-CED.A.1", "N-Q.A.2", "F-IF.C.8a"],
+  "radicals-and-exponents/ch4-applications": ["G-SRT.C.8", "G-GPE.B.7"],
+  "radicals-and-exponents/ch1-simplifying-radicals": ["N-RN.A.2"],
+  "radicals-and-exponents/ch2-operations-with-radicals": ["N-RN.A.2", "N-RN.B.3"],
+  "radicals-and-exponents/ch3-rational-exponents": ["N-RN.A.1"],
+  "solving-equations/ch1-multi-step": ["A-REI.B.3", "A-REI.A.1"],
+  "solving-equations/ch2-fractions": ["A-REI.B.3"],
+  "solving-equations/ch3-literal": ["A-CED.A.4"],
+  "solving-equations/ch4-inequalities": ["A-REI.B.3"],
+  "systems-equations/ch1-graphing": ["A-REI.C.6", "A-REI.D.11"],
+  "systems-equations/ch2-substitution": ["A-REI.C.6"],
+  "systems-equations/ch3-elimination": ["A-REI.C.5", "A-REI.C.6"],
+  "systems-equations/ch4-word-problems": ["A-CED.A.2", "A-CED.A.3"],
+
+  // G10 Geometry
+  "circle-theorems/ch1-central-inscribed": ["G-C.A.2"],
+  "circle-theorems/ch2-chords": ["G-C.A.2"],
+  "circle-theorems/ch3-tangents": ["G-C.A.2", "G-C.A.4"],
+  "circle-theorems/ch4-secants-power": ["G-C.A.2"],
+  "circle-theorems/ch5-arcs-sectors-cyclic": ["G-C.B.5", "G-C.A.3"],
+  "conditional-probability/ch1-events-and-sample-spaces": ["S-CP.A.1"],
+  "conditional-probability/ch2-addition-rule-and-tables": ["S-CP.B.7", "S-CP.A.4", "S-ID.B.5"],
+  "conditional-probability/ch3-conditioning": ["S-CP.A.3", "S-CP.B.6", "S-CP.B.8"],
+  "conditional-probability/ch4-independence": ["S-CP.A.2", "S-CP.A.5"],
+  "conditional-probability/ch5-counting": ["S-CP.B.9"],
+  "constructions-and-proof/ch1-toolkit-basics": ["G-CO.D.12"],
+  "constructions-and-proof/ch2-perpendiculars-parallels": ["G-CO.D.12"],
+  "constructions-and-proof/ch3-inscribed-polygons": ["G-CO.D.13"],
+  "constructions-and-proof/ch4-intro-to-proof": ["G-CO.C.9"],
+  "constructions-and-proof/ch5-proving-angle-theorems": ["G-CO.C.9"],
+  "coordinate-proofs/ch1-distance-midpoint": ["G-GPE.B.7", "G-GPE.B.6"],
+  "coordinate-proofs/ch2-partition-slope-criteria": ["G-GPE.B.6", "G-GPE.B.5"],
+  "coordinate-proofs/ch3-classification-proofs": ["G-GPE.B.4"],
+  "coordinate-proofs/ch4-perimeter-area": ["G-GPE.B.7"],
+  "coordinate-proofs/ch5-circle-equation": ["G-GPE.A.1"],
+  "geometry-foundations/ch1-precise-definitions": ["G-CO.A.1"],
+  "geometry-foundations/ch2-measure": ["G-CO.A.1"],
+  "geometry-foundations/ch3-transformation-functions": ["G-CO.A.2", "G-CO.A.4"],
+  "geometry-foundations/ch4-composition-symmetry": ["G-CO.A.5", "G-CO.A.3"],
+  "geometry-foundations/ch5-congruence": ["G-CO.B.6", "G-CO.B.7"],
+  "polygons-quadrilaterals/ch1-angle-sums": ["G-CO.A.3"],
+  "polygons-quadrilaterals/ch2-parallelogram-properties": ["G-CO.C.11"],
+  "polygons-quadrilaterals/ch3-special-parallelograms": ["G-CO.C.11"],
+  "polygons-quadrilaterals/ch4-trapezoids-kites": ["G-CO.C.11"],
+  "polygons-quadrilaterals/ch5-proving-and-placing": ["G-CO.C.11", "G-GPE.B.4"],
+  "right-triangles-trig/ch1-pythagoras-special-rights": ["G-SRT.C.8"],
+  "right-triangles-trig/ch2-the-trig-ratios": ["G-SRT.C.6"],
+  "right-triangles-trig/ch3-solving-right-triangles": ["G-SRT.C.8"],
+  "right-triangles-trig/ch4-elevation-depression": ["G-SRT.C.8", "G-MG.A.1"],
+  "right-triangles-trig/ch5-relationships-and-laws": ["G-SRT.C.7", "G-SRT.D.9", "G-SRT.D.10", "G-SRT.D.11"],
+  "similarity/ch1-dilations-and-scale": ["G-SRT.A.1b", "G-SRT.A.2", "G-SRT.A.3"],  // S203I: G-SRT.A.1a removed — "parallel" appears 0 times in this chapter; the credit rested on the heading
+  "similarity/ch2-similarity-criteria": ["G-SRT.B.5"],
+  "similarity/ch3-side-splitter": ["G-SRT.B.4"],
+  "similarity/ch4-right-triangle-similarity": ["G-SRT.B.4", "G-SRT.B.5"],
+  "similarity/ch5-applications": ["G-SRT.B.5", "G-MG.A.1"],
+  "solid-geometry/ch1-sections-revolution": ["G-GMD.B.4"],
+  "solid-geometry/ch2-cavalieri": ["G-GMD.A.2"],
+  "solid-geometry/ch3-volume-justifications": ["G-GMD.A.1"],
+  "solid-geometry/ch4-composite-solids": ["G-GMD.A.3"],
+  "solid-geometry/ch5-scale-modeling": ["G-MG.A.2", "G-MG.A.3"],
+  "triangle-congruence/ch1-congruence-criteria": ["G-CO.B.8", "G-CO.B.7"],
+  "triangle-congruence/ch2-hl-and-cpctc": ["G-CO.B.8"],
+  "triangle-congruence/ch3-isosceles-and-midsegment": ["G-CO.C.10"],
+  "triangle-congruence/ch4-triangle-centers": ["G-C.A.3", "G-CO.C.10"],
+  "triangle-congruence/ch5-triangle-inequalities": ["G-CO.C.10"],
+
+  // G11 Algebra 2 / Statistics
+  "complex-numbers/ch1-completing-the-square": ["A-SSE.B.3b", "A-REI.B.4a"],
+  "complex-numbers/ch2-imaginary-unit": ["N-CN.A.1", "N-CN.B.4"],
+  "complex-numbers/ch3-complex-arithmetic": ["N-CN.A.2", "N-CN.A.3"],
+  "complex-numbers/ch4-complex-roots": ["N-CN.C.7", "A-REI.B.4b"],
+  "complex-numbers/ch5-roots-and-methods": ["A-APR.B.3", "A-REI.B.4b"],
+  "expected-value/ch1-random-variables": ["S-MD.A.1", "S-MD.A.2", "S-MD.A.3"],
+  "expected-value/ch2-deciding-with-expectation": ["S-MD.B.5a", "S-MD.B.5b", "S-MD.B.6", "S-MD.B.7"],
+  "function-transformations/ch1-families-domain-range": ["F-IF.A.1", "F-IF.B.5"],
+  "function-transformations/ch2-shifts": ["F-BF.B.3"],
+  "function-transformations/ch3-reflections-stretches": ["F-BF.B.3"],
+  "function-transformations/ch4-combining-composing": ["F-BF.A.1b", "F-BF.A.1c"],
+  "function-transformations/ch5-inverse-functions": ["F-BF.B.4a", "F-BF.B.4b", "F-BF.B.4c"],
+  "logarithms/ch1-log-as-inverse": ["F-BF.B.5", "F-IF.C.7e"],
+  "logarithms/ch2-properties-of-logarithms": ["F-BF.B.5"],
+  "logarithms/ch3-change-of-base-and-exponential-equations": ["F-LE.A.4"],
+  "logarithms/ch4-the-natural-base-e": ["F-LE.A.4"],
+  "logarithms/ch5-models-and-logarithmic-scales": ["F-LE.B.5", "N-Q.A.1"],
+  "polynomial-functions/ch1-shape-and-end-behavior": ["F-IF.C.7c"],
+  "polynomial-functions/ch2-zeros-and-factors": ["A-APR.B.2", "A-APR.B.3"],
+  "polynomial-functions/ch3-polynomial-division": ["A-APR.D.6", "A-APR.B.2"],
+  "polynomial-functions/ch4-factoring-higher-degree": ["A-SSE.A.2", "A-SSE.A.1b", "A-APR.C.4"],
+  "polynomial-functions/ch5-graphs-and-models": ["F-IF.C.7c"],  // S203I: F-IF.C.9 removed — the chapter sketches and models, it does not compare functions across representations
+  "radical-functions/ch1-rational-exponents-with-variables": ["N-RN.A.1", "N-RN.A.2"],
+  "radical-functions/ch2-rationalizing-and-radical-arithmetic": ["N-RN.A.2"],
+  "radical-functions/ch3-radical-functions-graphs-and-domains": ["F-IF.C.7b", "F-IF.B.5"],
+  "radical-functions/ch4-solving-radical-equations": ["A-REI.A.2"],
+  "radical-functions/ch5-rational-exponent-equations-and-models": ["A-REI.A.2", "N-Q.A.2"],
+  "rational-functions/ch1-simplifying-rational-expressions": ["A-APR.D.6"],
+  "rational-functions/ch2-multiplying-and-dividing": ["A-APR.D.7"],
+  "rational-functions/ch3-adding-and-subtracting": ["A-APR.D.7"],
+  "rational-functions/ch4-graphs-asymptotes-and-holes": ["F-IF.C.7d"],
+  "rational-functions/ch5-rational-equations-and-variation": ["A-REI.A.2", "A-CED.A.1"],
+  "sequences-series/ch1-recursive-explicit": ["F-BF.A.2", "F-IF.A.3"],
+  "sequences-series/ch2-sigma-notation": [],
+  "sequences-series/ch3-arithmetic-series": [],
+  "sequences-series/ch4-finite-geometric": ["A-SSE.B.4"],
+  "sequences-series/ch5-infinite-geometric": ["A-SSE.B.4"],
+  "statistical-inference/ch1-how-the-data-was-made": ["S-IC.B.3", "S-IC.A.1"],
+  "statistical-inference/ch2-sampling-variability": ["S-IC.A.2"],
+  "statistical-inference/ch3-margin-of-error": ["S-IC.B.4"],
+  "statistical-inference/ch6-the-bell": ["S-ID.A.4"],
+  "statistical-inference/ch4-is-the-difference-real": ["S-IC.B.5"],
+  "statistical-inference/ch5-judging-claims": ["S-IC.B.6", "S-ID.C.9"],
+  "trig-functions/ch1-right-triangle-trig": ["G-SRT.C.6", "G-SRT.C.8"],
+  "trig-functions/ch2-radians-arc-length": ["F-TF.A.1", "G-C.B.5"],
+  "trig-functions/ch3-unit-circle": ["F-TF.A.2", "F-TF.A.3"],
+  "trig-functions/ch4-sine-cosine-graphs": ["F-IF.C.7e", "F-TF.B.5"],
+  "trig-functions/ch5-modeling-identity": ["F-TF.B.5", "F-TF.C.8"],
+
+  // G12 Precalculus
+  "binomial-theorem/ch1-pascals-pattern": ["A-APR.C.5", "S-CP.B.9"],
+  "binomial-theorem/ch2-the-theorem-at-work": ["A-APR.C.5"],
+  "conic-sections/ch1-parabolas": ["G-GPE.A.2"],
+  "conic-sections/ch2-ellipses": ["G-GPE.A.3"],
+  "conic-sections/ch3-hyperbolas": ["G-GPE.A.3"],
+  "conic-sections/ch4-general-form": ["G-GPE.A.1", "G-GPE.A.3"],
+  "conic-sections/ch5-eccentricity-orbits": ["G-GPE.A.3", "G-MG.A.1"],
+  "function-analysis/ch1-rates-of-change": ["F-IF.B.6"],
+  "function-analysis/ch2-graph-behavior": ["F-IF.B.4"],
+  "function-analysis/ch3-symmetry-piecewise": ["F-IF.C.7b", "F-BF.B.3"],
+  "function-analysis/ch4-composition-depth": ["F-BF.A.1c"],
+  "function-analysis/ch5-inverses-formalized": ["F-BF.B.4a", "F-BF.B.4b", "F-BF.B.4d"],
+  "limits-continuity/ch1-limits-graphically": [],
+  "limits-continuity/ch2-limit-laws": [],
+  "limits-continuity/ch3-onesided-infinity": ["F-IF.C.7d"],
+  "limits-continuity/ch4-continuity-ivt": [],
+  "limits-continuity/ch5-derivative": ["F-IF.B.6"],
+  "polar-parametric/ch1-polar-coordinates": [],
+  "polar-parametric/ch2-polar-graphs": [],
+  "polar-parametric/ch3-complex-polar": ["N-CN.B.4", "N-CN.B.5"],
+  "polar-parametric/ch4-parametric": [],
+  "polar-parametric/ch5-applied-parametrics": ["N-Q.A.2"],
+  "polynomial-rational-analysis/ch1-rational-root": ["A-APR.B.3"],
+  "polynomial-rational-analysis/ch2-fta-conjugates": ["N-CN.C.9", "N-CN.C.8"],
+  "polynomial-rational-analysis/ch3-slant-asymptotes": ["F-IF.C.7d", "A-APR.D.6"],
+  "polynomial-rational-analysis/ch4-polynomial-inequalities": ["A-APR.B.3", "A-REI.D.11"],
+  "polynomial-rational-analysis/ch5-rational-inequalities": ["A-APR.D.7", "A-REI.A.2"],
+  "trig-graphs-inverses/ch1-full-sinusoid": ["F-TF.B.5", "F-BF.B.3"],
+  "trig-graphs-inverses/ch2-cosine-equivalence": ["F-TF.A.4"],
+  "trig-graphs-inverses/ch3-tangent-graph": ["F-IF.C.7e"],
+  "trig-graphs-inverses/ch4-inverse-trig": ["F-TF.B.6"],
+  "trig-graphs-inverses/ch5-compositions-solving": ["F-TF.B.7"],
+  "trig-identities-equations/ch1-general-solutions": ["F-TF.B.7"],
+  "trig-identities-equations/ch2-identity-toolkit": ["F-TF.C.8"],
+  "trig-identities-equations/ch3-sum-difference": ["F-TF.C.9"],
+  "trig-identities-equations/ch4-double-angle": ["F-TF.C.9"],
+  "trig-identities-equations/ch5-identity-equations": ["F-TF.B.7"],
+  "vectors-matrices/ch1-vectors-components": ["N-VM.A.1", "N-VM.A.2"],
+  "vectors-matrices/ch2-vector-operations": ["N-VM.B.4a", "N-VM.B.4b", "N-VM.B.4c", "N-VM.B.5a", "N-VM.B.5b"],
+  "vectors-matrices/ch3-dot-product": ["N-VM.A.3"],
+  "vectors-matrices/ch4-matrices": ["N-VM.C.6", "N-VM.C.7", "N-VM.C.8", "N-VM.C.10", "A-REI.C.8", "A-REI.C.9"],
+  "vectors-matrices/ch5-transformations": ["N-VM.C.11", "N-VM.C.12"]
+};
+
+/* Validate against the live tree before writing: every HS chapter mapped, every mapped chapter real,
+ * every code a real standard. A map that silently drifts from the corpus is worse than no map. */
+const known = new Set(JSON.parse(readFileSync(join(root, "content/standards/ccss-hs.json"), "utf8"))
+  .standards.map((s) => s.code));
+const live = new Map();
+const coursesDir = join(root, "content/courses");
+for (const slug of readdirSync(coursesDir)) {
+  const cf = join(coursesDir, slug, "course.json");
+  if (!existsSync(cf)) continue;
+  const c = JSON.parse(readFileSync(cf, "utf8"));
+  if (c.gradeLevel < 9 || c.gradeLevel > 12) continue;
+  for (const ch of c.chapters) live.set(`${slug}/${ch.id}`, `${slug}/${ch.title}`);
+}
+const problems = [];
+for (const id of live.keys()) if (!(id in CHAPTERS)) problems.push(`chapter ${id} is not in the map`);
+for (const id of Object.keys(CHAPTERS)) if (!live.has(id)) problems.push(`map references chapter ${id}, which no grade 9-12 course declares`);
+for (const [id, codes] of Object.entries(CHAPTERS)) {
+  for (const code of codes) if (!known.has(code)) problems.push(`${id}: unknown standard "${code}"`);
+}
+if (problems.length) {
+  for (const p of problems) console.error(`  ${p}`);
+  console.error(`\n${problems.length} problem(s) — nothing written.`);
+  process.exit(1);
+}
+
+const doc = {
+  schemaVersion: 1,
+  status: "authored-from-titles",
+  provenance: "Authored in S203H from a chapter-and-lesson-title reading of all 39 grade 9-12 courses (542 lessons). WEAKER evidence than the 6-8 map, which was written from a lesson-by-lesson reading. Titles flatter content, so this map is biased toward OVER-crediting coverage: the uncovered count it produces is a LOWER BOUND on the real gap. Upgrading it to a lesson-by-lesson reading is worthwhile work.",
+  resolution: "chapter, keyed courseSlug/chapterId",
+  scope: "grades 9-12; grade 13 (Calculus) is outside CCSS-M and is not mapped",
+  chapters: CHAPTERS
+};
+writeFileSync(join(root, "content/standards/ccss-hs-coverage-map.json"), JSON.stringify(doc, null, 2) + "\n");
+const mapped = new Set(Object.values(CHAPTERS).flat());
+console.log(`ccss-hs-coverage-map.json: ${Object.keys(CHAPTERS).length} chapters -> ${mapped.size} distinct sub-standards`);

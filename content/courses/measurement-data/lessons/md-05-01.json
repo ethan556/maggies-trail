@@ -1,0 +1,353 @@
+{
+  "id": "md-05-01",
+  "slug": "walking-the-fence",
+  "title": "Walking the Fence",
+  "courseId": "measurement-data",
+  "chapterId": "ch5-perimeter",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Area filled the inside; **perimeter walks the edge.** It's the total distance all the way around a shape — the length of fence it would take to enclose it. To find it, walk every side and add the lengths as you go.",
+      "figure": "md3-perimeter"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Walk every side of the rectangle.",
+      "conceptTag": "perimeter",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap all FOUR sides of this rectangle — the ones you must walk to get all the way around.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 3,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "top",
+            "x": 50,
+            "y": 8,
+            "label": "top side (8 cm)",
+            "icon": "─8─",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "bottom",
+            "x": 50,
+            "y": 92,
+            "label": "bottom side (8 cm)",
+            "icon": "─8─",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "left",
+            "x": 8,
+            "y": 50,
+            "label": "left side (3 cm)",
+            "icon": "3",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "right",
+            "x": 92,
+            "y": 50,
+            "label": "right side (3 cm)",
+            "icon": "3",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "The fence goes ALL the way around — a rectangle has four sides to walk, not two.",
+        "successFeedback": "Four sides: 8 + 3 + 8 + 3. A rectangle has two lengths AND two widths — walk them all."
+      },
+      "predict": {
+        "prompt": "Walking all the way around this 8-by-3 rectangle — how many times does each measurement get walked?",
+        "options": [
+          {
+            "id": "twice",
+            "label": "The 8 and the 3 each get walked twice"
+          },
+          {
+            "id": "once",
+            "label": "Each side length once"
+          },
+          {
+            "id": "long",
+            "label": "Only the long sides count"
+          }
+        ],
+        "outcomeId": "twice",
+        "reveal": "A rectangle has two matching pairs — going around walks the 8 twice and the 3 twice. That doubling is what perimeter means."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents perimeter.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for perimeter must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines perimeter."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:perimeter",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the whole fence.",
+      "conceptTag": "perimeter",
+      "explanationVariants": [
+        "A rectangle has two 8s and two 3s: 8 + 3 + 8 + 3 = 22 cm of fence.",
+        "Shortcut: (8 + 3) = 11, doubled, because the sides come in matching pairs — 22 cm."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is 8 cm long and 3 cm wide. What is its perimeter?",
+        "answer": 22,
+        "tolerance": 0,
+        "unit": "cm",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 walked only TWO sides (8 + 3). The fence goes all the way around — two 8s and two 3s: 22."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is 8 × 3 — that's the AREA, the squares inside. Perimeter walks the fence: add all four sides."
+          }
+        ],
+        "fallbackFeedback": "Add all four sides: 8 + 3 + 8 + 3."
+      },
+      "variant": {
+        "gen": "perimeter"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A square makes it even easier: **all four sides match, so perimeter = 4 × side.** A square with 7 cm sides has a fence of 4 × 7 = 28 cm. One multiplication does the whole walk.",
+      "figure": "md3-perimeter"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fence the square.",
+      "conceptTag": "perimeter",
+      "explanationVariants": [
+        "Four equal sides of 7: 4 × 7 = 28 cm around.",
+        "Every side is the same, so the walk is just 7 four times: 28 cm."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square has sides of 7 cm. What is its perimeter?",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "cm",
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 walked only two sides. A square's fence has FOUR equal stretches: 7 × 4 = 28."
+          },
+          {
+            "value": 49,
+            "feedback": "49 is 7 × 7 — the AREA inside the square. The fence AROUND adds the four 7-cm sides: 28."
+          }
+        ],
+        "fallbackFeedback": "Four equal sides: 4 × 7."
+      },
+      "variant": {
+        "gen": "perimeter",
+        "form": "squarePerimeter"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Fence or carpet?",
+      "conceptTag": "perimeter",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each real-life job: does it need PERIMETER (the edge) or AREA (the inside)?",
+        "buckets": [
+          {
+            "id": "perim",
+            "label": "Perimeter (edge)",
+            "icon": "🚧"
+          },
+          {
+            "id": "area",
+            "label": "Area (inside)",
+            "icon": "🟩"
+          }
+        ],
+        "items": [
+          {
+            "id": "j1",
+            "label": "Fencing around a yard",
+            "bucketId": "perim",
+            "feedback": "Fence follows the edge — that's perimeter."
+          },
+          {
+            "id": "j2",
+            "label": "Carpet to cover a floor",
+            "bucketId": "area",
+            "feedback": "Carpet fills the inside — that's area."
+          },
+          {
+            "id": "j3",
+            "label": "Trim around a picture frame",
+            "bucketId": "perim",
+            "feedback": "Trim runs along the edge — perimeter."
+          },
+          {
+            "id": "j4",
+            "label": "Paint to cover a wall",
+            "bucketId": "area",
+            "feedback": "Paint covers the whole surface — area."
+          }
+        ],
+        "missFeedback": "Ask: does the job run ALONG the edge (perimeter) or COVER the inside (area)?",
+        "successFeedback": "Fencing and trim follow the edge (perimeter); carpet and paint fill the inside (area)."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The triangle walk.",
+      "conceptTag": "perimeter",
+      "explanationVariants": [
+        "Perimeter adds EVERY side, whatever the shape: 6 + 8 + 10 = 24 cm around the triangle.",
+        "A triangle has three sides — walk all three: 6 + 8 + 10 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has sides of 6 cm, 8 cm, and 10 cm. What is its perimeter?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "cm",
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "48 multiplied 6 × 8 — an area reflex. Perimeter is a WALK: add every side, all three of them."
+          },
+          {
+            "value": 14,
+            "feedback": "14 walked only two sides (6 + 8). The 10-cm side completes the loop: 6 + 8 + 10 = 24."
+          }
+        ],
+        "fallbackFeedback": "Add all three sides: 6 + 8 + 10."
+      },
+      "variant": {
+        "gen": "perimeter",
+        "form": "trianglePerimeter"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The garden fence.",
+      "conceptTag": "perimeter",
+      "hints": [
+        "Fencing follows the edge — that's perimeter.",
+        "A rectangle has two lengths and two widths.",
+        "12 + 5 + 12 + 5, or (12 + 5) doubled."
+      ],
+      "explanationVariants": [
+        "Two 12s and two 5s: 12 + 5 + 12 + 5 = 34 m of fencing.",
+        "Pair shortcut: (12 + 5) = 17, doubled = 34 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangular garden is 12 m long and 5 m wide. How many meters of fencing enclose it?",
+        "answer": 34,
+        "tolerance": 0,
+        "unit": "m",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 is 12 × 5 — the AREA of soil inside. Fencing follows the edge: add all four sides for 34."
+          },
+          {
+            "value": 17,
+            "feedback": "17 walked only two sides (12 + 5). The fence needs both pairs: 12 + 5 + 12 + 5 = 34."
+          }
+        ],
+        "fallbackFeedback": "Add all four sides, or double (12 + 5)."
+      },
+      "variant": {
+        "gen": "perimeter",
+        "form": "gardenFence"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can walk any fence.",
+      "takeaways": [
+        "Perimeter = the distance all the way around — add every side.",
+        "Rectangle: two lengths + two widths, or double (length + width).",
+        "Square: 4 × side. Perimeter is the edge; area is the inside."
+      ],
+      "teaser": "next: the fence is known, but one side is missing — find it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "perimeter",
+      "concept": {
+        "id": "rem-pm-c",
+        "kind": "concept",
+        "body": "Quick rewind. Perimeter is an **ant's walk around the edge** — start at one corner, follow every side back to the start, and add up all the distance walked. Miss a side and the ant falls off; walk them ALL."
+      },
+      "check": {
+        "id": "rem-pm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "perimeter",
+        "explanationVariants": [
+          "All four sides of a 5-cm square: 5 + 5 + 5 + 5 = 20 cm.",
+          "Square shortcut: 4 × 5 = 20 cm around."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A square has 5 cm sides. Its perimeter is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "20 cm",
+              "correct": true,
+              "feedback": "Four 5-cm sides: 4 × 5 = 20."
+            },
+            {
+              "id": "b",
+              "label": "10 cm",
+              "feedback": "10 walked only two sides. A square has FOUR: 5 × 4 = 20."
+            },
+            {
+              "id": "c",
+              "label": "25 cm",
+              "feedback": "25 is 5 × 5 — the area inside. The fence around is 4 × 5 = 20."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

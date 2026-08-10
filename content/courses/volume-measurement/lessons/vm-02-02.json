@@ -1,0 +1,338 @@
+{
+ "id": "vm-02-02",
+ "slug": "using-line-plot-data",
+ "title": "Using Line Plot Data",
+ "courseId": "volume-measurement",
+ "chapterId": "ch2-line-plots",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A line plot isn't just for reading — you can compute with it. To find the **total** length, multiply each measurement by how many X's it has, then add. For the plot 1/4 → XX, 1/2 → XXX, 3/4 → X, that's 2×(1/4) + 3×(1/2) + 1×(3/4).",
+   "figure": "vm-total-length"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "One stack's contribution.",
+   "conceptTag": "line-plot-operations",
+   "widget": {
+    "type": "numberLineHop",
+    "prompt": "Three ribbons, each 1/2 foot, laid end to end. Hop 1/2 at a time and tap where the third ribbon ends.",
+    "min": 0,
+    "max": 6,
+    "start": 0,
+    "hop": 1,
+    "hops": 3,
+    "direction": "forward",
+    "denom": 2,
+    "commonLandings": [
+     {
+      "value": 1,
+      "feedback": "1/2 is one ribbon. Three of them: 3 × 1/2 = 1 1/2 ft."
+     },
+     {
+      "value": 5,
+      "feedback": "That's too many halves. 3 × 1/2 = 3/2 = 1 1/2 ft."
+     }
+    ],
+    "missFeedback": "Each ribbon adds one hop of 1/2. Three hops from 0 land on 3/2 = 1 1/2 ft.",
+    "successFeedback": "1 1/2 ft — three hops of 1/2 land on 3/2. Multiplying a fraction by a whole number is repeated hopping."
+   },
+   "hints": [
+    "Three groups of 1/2.",
+    "3 × 1/2 = 3/2.",
+    "3/2 = 1 1/2."
+   ],
+   "explanationVariants": [
+    "3 × 1/2 = 1 1/2 ft.",
+    "Three halves make one and a half."
+   ],
+   "predict": {
+    "prompt": "Three halves laid end to end: where does the last one stop?",
+    "options": [
+     {
+      "id": "between",
+      "label": "between 1 and 2 — past one whole, short of two"
+     },
+     {
+      "id": "three",
+      "label": "at 3 — three ribbons, three marks"
+     },
+     {
+      "id": "under",
+      "label": "before 1 — halves are less than one"
+     }
+    ],
+    "outcomeId": "between",
+    "reveal": "Two halves already make a whole, so the third half lands past 1 — at 1 1/2. “At 3” counts ribbons instead of length; “before 1” forgets the halves accumulate."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The whole total.",
+   "conceptTag": "line-plot-operations",
+   "explanationVariants": [
+    "Total = 2 3/4 ft.",
+    "11/4 feet all together."
+   ],
+   "widget": {
+    "type": "fractionEntry",
+    "prompt": "Total length of all ribbons in the plot (1/4 → XX, 1/2 → XXX, 3/4 → X)?",
+    "answerWhole": 2,
+    "answerNum": 3,
+    "answerDen": 4,
+    "allowWhole": true,
+    "form": "any",
+    "commonEntries": [
+     {
+      "whole": 1,
+      "num": 1,
+      "den": 2,
+      "feedback": "1 1/2 is just the 1/2-foot stack. Add all three stacks: 2 3/4 ft."
+     },
+     {
+      "whole": 3,
+      "num": 0,
+      "den": 1,
+      "feedback": "Close, but recount: 1/2 + 1 1/2 + 3/4 = 2 3/4 ft, not 3."
+     }
+    ],
+    "fallbackFeedback": "Add every stack: 1/2 + 1 1/2 + 3/4 = 2 3/4 ft.",
+    "successFeedback": "Right — 1/2 + 1 1/2 + 3/4 = 2 3/4 ft (or 11/4).",
+    "unit": "ft"
+   },
+   "hints": [
+    "Each stack: value × count.",
+    "1/2 + 1 1/2 + 3/4, over quarters.",
+    "2/4 + 6/4 + 3/4 = 11/4 = 2 3/4."
+   ],
+   "variant": {
+    "gen": "line-plot-frac"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Two more questions a plot answers. The **difference** between the longest and shortest is a subtraction (3/4 − 1/4). And if you pooled everything and split it **equally** among the items, each share is the total ÷ the number of items. Both are just fraction arithmetic on the data.",
+   "figure": "vm-difference"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Longest minus shortest.",
+   "conceptTag": "line-plot-operations",
+   "explanationVariants": [
+    "3/4 − 1/4 = 1/2 ft.",
+    "The spread is half a foot."
+   ],
+   "widget": {
+    "type": "fractionEntry",
+    "prompt": "In the plot (1/4 → XX, 1/2 → XXX, 3/4 → X), how much longer is the longest ribbon than the shortest?",
+    "answerWhole": 0,
+    "answerNum": 1,
+    "answerDen": 2,
+    "allowWhole": true,
+    "form": "any",
+    "commonEntries": [
+     {
+      "whole": 1,
+      "num": 0,
+      "den": 1,
+      "feedback": "1 ft adds the two lengths. The difference subtracts: 3/4 − 1/4 = 1/2."
+     },
+     {
+      "whole": 0,
+      "num": 3,
+      "den": 4,
+      "feedback": "3/4 is the longest length itself. Subtract the shortest: 3/4 − 1/4 = 1/2."
+     }
+    ],
+    "fallbackFeedback": "Longest minus shortest: 3/4 − 1/4 = 2/4 = 1/2 ft.",
+    "successFeedback": "Right — 3/4 − 1/4 = 2/4 = 1/2 foot.",
+    "unit": "ft"
+   },
+   "hints": [
+    "Longest is 3/4, shortest is 1/4.",
+    "Subtract: 3/4 − 1/4.",
+    "2/4 = 1/2."
+   ],
+   "variant": {
+    "gen": "line-plot-frac",
+    "form": "difference"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Share it out.",
+   "conceptTag": "line-plot-operations",
+   "widget": {
+    "type": "fractionEntry",
+    "prompt": "Four cups hold water: 1/2 → XX, 1 → XX (total 3 cups). If poured together and split equally among the 4 cups, how much is in each?",
+    "answerWhole": 0,
+    "answerNum": 3,
+    "answerDen": 4,
+    "allowWhole": true,
+    "form": "any",
+    "commonEntries": [
+     {
+      "whole": 0,
+      "num": 4,
+      "den": 3,
+      "feedback": "4/3 divides the wrong way. Share the total among the cups: 3 ÷ 4 = 3/4."
+     },
+     {
+      "whole": 12,
+      "num": 0,
+      "den": 1,
+      "feedback": "12 multiplies instead of dividing. Splitting 3 cups among 4 is 3 ÷ 4 = 3/4."
+     }
+    ],
+    "fallbackFeedback": "Share the 3 total cups among the 4 cups: 3 ÷ 4 = 3/4 cup each.",
+    "successFeedback": "Right — total 3 cups ÷ 4 = 3/4 cup each.",
+    "unit": "cup"
+   },
+   "hints": [
+    "Total is 3 cups; there are 4 cups.",
+    "Split equally: 3 ÷ 4.",
+    "3/4 cup each."
+   ],
+   "explanationVariants": [
+    "3 ÷ 4 = 3/4 cup each.",
+    "Equal shares of 3 among 4 are 3/4."
+   ]
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Add over a common denominator.",
+   "conceptTag": "line-plot-operations",
+   "explanationVariants": [
+    "Everything in quarters: 2/4 + 6/4 + 3/4 = 11/4.",
+    "The total is 11 quarters, i.e. 11/4 = 2 3/4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Write the plot's total in quarters: 2/4 + 6/4 + 3/4 = ?/4. What is the numerator?",
+    "answer": 11,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 misses a stack's contribution. Add all three: 2 + 6 + 3 = 11 quarters."
+     },
+     {
+      "value": 9,
+      "feedback": "9 is short by 2. The numerators over 4 are 2, 6, 3: 2 + 6 + 3 = 11."
+     }
+    ],
+    "fallbackFeedback": "2 + 6 + 3 = 11, so 11/4 = 2 3/4."
+   },
+   "variant": {
+    "gen": "line-plot",
+    "form": "quarterNumerator"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A fresh plot's total.",
+   "conceptTag": "line-plot-operations",
+   "hints": [
+    "Value × count for each: 1×(1/4), 2×(1/2), 1×(3/4).",
+    "That's 1/4 + 1 + 3/4.",
+    "1/4 + 3/4 = 1, plus the middle 1."
+   ],
+   "explanationVariants": [
+    "1/4 + 2×(1/2) + 3/4 = 1/4 + 1 + 3/4 = 2 ft.",
+    "The quarters make a whole (1/4 + 3/4) on top of the 1: total 2 ft."
+   ],
+   "widget": {
+    "type": "fractionEntry",
+    "prompt": "Total length of the plot 1/4 → X, 1/2 → XX, 3/4 → X?",
+    "answerWhole": 2,
+    "answerNum": 0,
+    "answerDen": 1,
+    "allowWhole": true,
+    "form": "any",
+    "commonEntries": [
+     {
+      "whole": 1,
+      "num": 1,
+      "den": 2,
+      "feedback": "1 1/2 misses a mark. Value × count: 1/4 + 1 + 3/4 = 2 ft."
+     },
+     {
+      "whole": 2,
+      "num": 1,
+      "den": 2,
+      "feedback": "Recount: 1/4 + 2×(1/2) + 3/4 = 1/4 + 1 + 3/4 = 2 ft."
+     }
+    ],
+    "fallbackFeedback": "Value × count for each mark: 1/4 + 1 + 3/4 = 2 ft.",
+    "successFeedback": "Right — 1/4 + 1 + 3/4 = 2 ft (the quarter and three-quarter combine to 1).",
+    "unit": "ft"
+   },
+   "variant": {
+    "gen": "line-plot-frac"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The plot is a dataset.",
+   "takeaways": [
+    "Total length = each value times its stack count, added over a common denominator.",
+    "Difference = longest − shortest; equal share = total ÷ number of items.",
+    "Every line-plot question is fraction arithmetic on the data."
+   ],
+   "teaser": "next chapter: measuring space itself — volume as unit cubes."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "line-plot-operations",
+   "concept": {
+    "id": "rem-lo-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Total = value × count for each stack, then add.** For a plot 1/2 → XX, 1 → X: that's 2×(1/2) + 1×(1) = 1 + 1 = 2 feet. Multiply each length by its number of X's before adding."
+   },
+   "check": {
+    "id": "rem-lo-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "line-plot-operations",
+    "explanationVariants": [
+     "2×(1/2) + 1 = 1 + 1 = 2 feet.",
+     "Two halves plus one whole is 2 feet."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Total length of the plot 1/2 → XX, 1 → X?",
+     "options": [
+      {
+       "id": "a",
+       "label": "2 ft",
+       "correct": true,
+       "feedback": "Right — 2×(1/2) + 1 = 1 + 1 = 2 feet."
+      },
+      {
+       "id": "b",
+       "label": "1 1/2 ft",
+       "feedback": "1 1/2 counts 1/2 only once. It's 2×(1/2) = 1, plus 1 = 2 ft."
+      },
+      {
+       "id": "c",
+       "label": "1/2 ft",
+       "feedback": "That's one mark. Add both stacks: 2×(1/2) + 1 = 2 ft."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

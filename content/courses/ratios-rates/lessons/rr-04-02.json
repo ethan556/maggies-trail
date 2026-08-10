@@ -1,0 +1,332 @@
+{
+  "id": "rr-04-02",
+  "slug": "a-percent-of-a-number",
+  "title": "A Percent of a Number",
+  "courseId": "ratios-rates",
+  "chapterId": "ch4-percent",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To take a **percent of a number**, use the per-100 rate as a multiplier. **30% of 40**: the rate is 30/100, so 30/100 × 40 = **12**. Reading \"of\" as \"times\" is the whole trick — a percent of an amount is that fraction of it.",
+      "figure": "rr-percent-of"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "A percent bar cuts the whole into 100 equal parts. Slide to a percent and read the matching amount underneath — the two scales always move together.",
+      "widget": {
+        "type": "percentBar",
+        "prompt": "Fill the bar to 25% and read 25% of 80.",
+        "whole": 80,
+        "targetPercent": 25,
+        "percentStep": 5,
+        "startPercent": 0,
+        "unit": "points",
+        "successFeedback": "25% of 80 is 20 — a quarter of the bar means a quarter of the whole.",
+        "lowFeedback": "Not far enough. A quarter of the bar reaches the first of the four marked sections.",
+        "highFeedback": "Too far — that's more than a quarter of the bar."
+      },
+      "predict": {
+        "prompt": "25% of 80: which everyday fraction is 25%?",
+        "options": [
+          {
+            "id": "quarter",
+            "label": "A quarter — so 80 ÷ 4"
+          },
+          {
+            "id": "third",
+            "label": "A third — so 80 ÷ 3"
+          },
+          {
+            "id": "weird",
+            "label": "25 ÷ 80"
+          }
+        ],
+        "outcomeId": "quarter",
+        "reveal": "25% is one quarter: 80 ÷ 4 = 20, and the bar will show exactly a quarter shaded. The common percents are fractions in disguise — 50% halves, 25% quarters, 10% shifts the decimal point."
+      },
+      "conceptTag": "percent-of",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents percent of.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for percent of must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines percent of."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "ratios-rates:percent-of",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Run the rate.",
+      "conceptTag": "percent-of",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 30% of 40?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70 ADDS 30 and 40. \"Percent OF\" means multiply by the rate: 30/100 × 40 = 12."
+          },
+          {
+            "value": 120,
+            "feedback": "120 is 300% of 40 — the decimal slipped. 30/100 × 40 = 12."
+          }
+        ],
+        "fallbackFeedback": "30/100 × 40 = 12."
+      },
+      "hints": [
+        "\"Of\" means times.",
+        "30/100 × 40.",
+        "Or: 3/10 of 40."
+      ],
+      "explanationVariants": [
+        "30/100 of 40 is 12.",
+        "Three tenths of 40 is 12."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The 10% anchor.",
+      "conceptTag": "percent-of",
+      "explanationVariants": [
+        "10% of 40 is 4 (just move the decimal), and 30% is three of those: 4 × 3 = 12.",
+        "Find 10% first, then multiply up — the fast mental path."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the 10% anchor: 10% of 40 is 4. What is 30% of 40?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is only 10%. Thirty percent is THREE tens: 4 × 3 = 12."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is the whole (100%). 30% is three 10%-chunks: 4 × 3 = 12."
+          }
+        ],
+        "fallbackFeedback": "10% of 40 = 4; 30% = 4 × 3 = 12."
+      },
+      "hints": [
+        "10% of 40 = 4.",
+        "30% is how many 10%s?",
+        "Three — so 4 × 3."
+      ]
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The classic trap: a percent is meaningless without its **whole**. 30% of 40 is 12, but 30% of 90 is 27 — same percent, different wholes, different answers. Always ask \"percent of WHAT?\" before you multiply. The whole sets the size of every percent.",
+      "figure": "rr-percent-of"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same percent, new whole.",
+      "conceptTag": "percent-of",
+      "explanationVariants": [
+        "30/100 × 90 = 27 — the bigger whole makes the same percent bigger.",
+        "10% of 90 is 9, and 30% is 9 × 3 = 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 30% of 90?",
+        "answer": 27,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is 30% of 40, the old whole. This time the whole is 90: 30/100 × 90 = 27."
+          },
+          {
+            "value": 60,
+            "feedback": "60 subtracts 30 from 90. Percent OF means multiply: 30/100 × 90 = 27."
+          }
+        ],
+        "fallbackFeedback": "30/100 × 90 = 27."
+      },
+      "hints": [
+        "The whole is 90 now.",
+        "10% of 90 = 9.",
+        "30% = 9 × 3."
+      ]
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which is bigger?",
+      "conceptTag": "percent-of",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is larger: 30% of 40, or 30% of 90?",
+        "options": [
+          {
+            "id": "a",
+            "label": "30% of 90",
+            "correct": true,
+            "feedback": "Right — same rate, bigger whole (90 > 40), so 27 beats 12."
+          },
+          {
+            "id": "b",
+            "label": "30% of 40",
+            "feedback": "Both use 30%, but 40 is the SMALLER whole, giving the smaller result (12 vs 27)."
+          },
+          {
+            "id": "c",
+            "label": "They're equal — same percent",
+            "feedback": "The percent matches, but the WHOLES differ (40 vs 90), so the answers differ: 12 vs 27."
+          }
+        ]
+      },
+      "hints": [
+        "Same rate — compare the wholes.",
+        "90 > 40.",
+        "Bigger whole, bigger part."
+      ],
+      "explanationVariants": [
+        "A fixed percent grows with its whole.",
+        "27 > 12 because 90 > 40."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A store discount.",
+      "conceptTag": "percent-of",
+      "explanationVariants": [
+        "10% of 80 is 8, so 25% is... use quarters instead: 1/4 of 80 = 20.",
+        "25% is 1/4, and a quarter of 80 is 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A $80 jacket is 25% off. How many dollars is the discount?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is the PERCENT, not the dollars. Take 25% OF 80: 1/4 × 80 = $20."
+          },
+          {
+            "value": 55,
+            "feedback": "55 is the SALE price (80 − 25), and even that used the wrong discount. The discount itself is 1/4 × 80 = $20."
+          }
+        ],
+        "fallbackFeedback": "25% of 80 = 1/4 × 80 = $20."
+      },
+      "hints": [
+        "25% = 1/4.",
+        "A quarter of 80.",
+        "80 ÷ 4."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Percent of a percent's whole.",
+      "conceptTag": "percent-of",
+      "hints": [
+        "Find 20% of 50 first.",
+        "10% of 50 = 5, so 20% = 10.",
+        "That 10 is the new amount — no second step needed here; compare carefully."
+      ],
+      "explanationVariants": [
+        "20% of 50 is 10 (10% = 5, doubled); the distractors use the wrong whole or add instead of multiplying.",
+        "10% of 50 = 5, and 20% is two of those: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A class of 50 students has 20% absent today. How many students are absent?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "students",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 is 20 subtracted from 50 — but absences are 20% OF 50, not 50 minus 20. 20/100 × 50 = 10."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is the percent, reused as a count. Take 20% of 50: 10% is 5, so 20% is 10."
+          }
+        ],
+        "fallbackFeedback": "20% of 50 = 10% (5) doubled = 10 students."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Of means times.",
+      "takeaways": [
+        "A percent of a number = the per-100 rate × the number: 30% of 40 = 12.",
+        "The 10% anchor speeds it up: find 10%, then scale.",
+        "A percent needs its whole — 30% of 40 ≠ 30% of 90."
+      ],
+      "teaser": "last percent lesson: over 100, under 100, and working backwards."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "percent-of",
+      "concept": {
+        "id": "rem-po-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Percent of = rate times number.** 20% of 30: write 20% as 20/100, then multiply: 20/100 × 30 = 6. Or anchor on 10%: 10% of 30 is 3, so 20% is 3 × 2 = 6."
+      },
+      "check": {
+        "id": "rem-po-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "percent-of",
+        "explanationVariants": [
+          "20/100 × 30 = 6.",
+          "10% of 30 is 3; doubled is 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is 20% of 30?",
+          "answer": 6,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 50,
+              "feedback": "50 adds 20 and 30. Percent OF means multiply: 20/100 × 30 = 6."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is 20% of 50, a different whole. Here the whole is 30: 20/100 × 30 = 6."
+            }
+          ],
+          "fallbackFeedback": "20/100 × 30 = 6."
+        }
+      }
+    }
+  ]
+}

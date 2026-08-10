@@ -1,0 +1,252 @@
+{
+  "id": "tg-01-03",
+  "slug": "graphing-a-full-wave",
+  "title": "Graphing One Clean Period",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch1-full-sinusoid",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To sketch y = A sin(B(x − C)) + D cleanly, plot the **five key points** of one period: start (midline, rising) at x = C, then quarter-period steps — peak, midline falling, trough, midline rising again. Five dots, one smooth wave through them.",
+      "figure": "tg-five-points"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Step size first.",
+      "predict": {
+        "prompt": "y = 2 sin(2(x − 30°)) − 1: the 2 inside squeezes the wave. How long is ONE full cycle?",
+        "options": [
+          {
+            "id": "d360",
+            "label": "360° — a sine wave always takes a full turn"
+          },
+          {
+            "id": "d180",
+            "label": "180° — twice the speed, half the length"
+          },
+          {
+            "id": "d720",
+            "label": "720° — the 2 stretches it out"
+          }
+        ],
+        "outcomeId": "d180",
+        "reveal": "180°. The pointer's angle is doubled, so the circle completes a lap while x covers only half a turn. Drag through one full cycle and read the period off the axis — then the quarter-step the prose asks for is 180°/4."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Drag θ through exactly ONE full cycle of y = 2 sin(2(x − 30°)) − 1 and stop where the wave first repeats — that distance is the period.",
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "sin",
+        "amplitude": 2,
+        "angularScale": 2,
+        "phaseDeg": -60,
+        "midline": -1,
+        "targetFeature": {
+          "kind": "period",
+          "x": 180,
+          "tol": 5
+        },
+        "successFeedback": "One cycle in 180° — that's π, so each quarter-period step is 45° (π/4, the n = 4 the prose wants). The 2 inside halves the period; nothing else the equation does can change it.",
+        "lowFeedback": "The wave hasn't come back to where it started — you're still inside the first cycle. Keep dragging until the trace repeats its opening move.",
+        "highFeedback": "You've dragged past one full cycle — the wave already repeated behind you. Back up to the first point where the pattern restarts."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Place the five points.",
+      "conceptTag": "tg-five-points",
+      "explanationVariants": [
+        "Start at C = π/6; peak at π/6 + π/4 = 5π/12; midline-fall at π/6 + π/2 = 2π/3; trough at π/6 + 3π/4 = 11π/12; close at π/6 + π = 7π/6.",
+        "Add quarter-steps of π/4 to the start π/6 four times."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For y = 2 sin(2(x − π/6)) − 1, where is the TROUGH of this period?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = 11π/12",
+            "correct": true,
+            "feedback": "Right — start π/6 plus three quarter-steps: π/6 + 3π/4 = 2π/12 + 9π/12 = 11π/12."
+          },
+          {
+            "id": "o2",
+            "label": "x = 3π/4",
+            "feedback": "3π/4 counts three steps from ZERO — but the wave starts at the shift π/6. Add it: 11π/12."
+          },
+          {
+            "id": "o3",
+            "label": "x = 5π/12",
+            "feedback": "5π/12 (one step in) is the PEAK. The trough is two steps later: 11π/12."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-five-points__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Heights at the landmarks.",
+      "conceptTag": "tg-five-points",
+      "explanationVariants": [
+        "Trough height = D − A = −1 − 2 = −3.",
+        "Two below the midline −1: −3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same function. What is y at that trough?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "−1 is the MIDLINE. The trough dips A = 2 below it: −3."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is the PEAK height (−1 + 2). The trough mirrors it below: −3."
+          }
+        ],
+        "fallbackFeedback": "D − A = −1 − 2 = −3."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-five-points__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **negative A** flips the pattern: y = −A sin(…) starts at the midline heading **down** — the five points run start, trough, midline, peak, close. Same dots' x-positions, swapped heights. (Recall reflections: the minus mirrors across the midline.)",
+      "figure": "tg-negative-a-start"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Flip check.",
+      "conceptTag": "tg-five-points",
+      "explanationVariants": [
+        "With A = −3, one quarter-period after the start the wave is at its TROUGH: 5 − 3 = 2.",
+        "Negative A swaps peak and trough positions: the first landmark after the start is the low point, D − |A| = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = −3 sin(x) + 5. What is y one quarter-period after x = 0?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 5 + 3 is the PEAK — but negative A dives first. One quarter in: the trough, 5 − 3 = 2."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the midline, where the wave STARTS. A quarter-period later it bottoms out at 2."
+          }
+        ],
+        "fallbackFeedback": "Trough first (A < 0): y = 5 − 3 = 2."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-five-points__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Assemble a full sketch plan.",
+      "conceptTag": "tg-five-points",
+      "explanationVariants": [
+        "Period 2π/3, quarter π/6; start at C = π/3; peak one step later: π/3 + π/6 = π/2; height D + A = 2 + 4 = 6. The peak point is (π/2, 6): its y is 6.",
+        "Peak where 3(x − π/3) = π/2 → x = π/3 + π/6 = π/2; y = 4·1 + 2 = 6."
+      ],
+      "hints": [
+        "Quarter-period = (2π/3)/4 = π/6; the wave starts at x = π/3.",
+        "The first peak is one quarter-step after the start.",
+        "Peak height = D + A."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 4 sin(3(x − π/3)) + 2. What is the y-VALUE at its first peak after x = π/3?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the amplitude. The peak stands A above the midline 2: y = 6."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the midline. Add the amplitude: 2 + 4 = 6."
+          },
+          {
+            "value": 7,
+            "feedback": "Don't add B: peak = D + A = 2 + 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "Peak y = D + A = 6 (at x = π/2)."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-five-points__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Five dots, one wave.",
+      "takeaways": [
+        "Quarter-period steps from x = C place all five key points.",
+        "Heights cycle midline, D+A, midline, D−A, midline.",
+        "Negative A runs the same dots with peak and trough swapped."
+      ],
+      "teaser": "Next chapter: cosine's graph — the same wave wearing a head start."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-five-points",
+      "concept": {
+        "id": "rem-tg0103-c",
+        "kind": "concept",
+        "body": "Five key points: start at x = C on the midline, then quarter-period hops hitting peak, midline, trough, midline (or trough first if A < 0)."
+      },
+      "check": {
+        "id": "rem-tg0103-k",
+        "kind": "check",
+        "body": "One hop.",
+        "conceptTag": "tg-five-points",
+        "explanationVariants": [
+          "Period 2π, quarter π/2: the first peak of sin x sits at π/2 with height 1.",
+          "One quarter-period from the origin start: (π/2, 1)."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For plain y = sin x, the first peak after x = 0 has what y-value?",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "0 is the start height (midline). One quarter-period later the wave crests at 1."
+            },
+            {
+              "value": 0.5,
+              "feedback": "sin peaks at exactly 1 — the full amplitude."
+            }
+          ],
+          "fallbackFeedback": "Peak of sin x: y = 1 at x = π/2."
+        }
+      }
+    }
+  ]
+}

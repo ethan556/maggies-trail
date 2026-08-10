@@ -1,0 +1,422 @@
+{
+  "id": "sp-03-01",
+  "slug": "how-likely-is-it",
+  "title": "How Likely Is It?",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch3-understanding-probability",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "probability-line",
+      "body": "Probability is a number from 0 to 1 that measures how likely a chance event is. 0 means impossible, 1 means certain, and 1/2 means an even chance."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Think of a probability as an AREA. A die has 6 equally likely outcomes — shade the fraction of the grid that matches rolling a 1 or a 2.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the grid to show P(roll a 1 or a 2) on a six-sided die.",
+        "rows": 1,
+        "cols": 6,
+        "targetNum": 1,
+        "targetDen": 3,
+        "start": 0,
+        "successFeedback": "2 of 6 equal outcomes shaded — an area of 2/6 = 1/3, the probability of rolling a 1 or a 2.",
+        "lowFeedback": "That shaded area is smaller than two outcomes out of six. Shade more.",
+        "highFeedback": "That's more than two outcomes' worth of area. Shade fewer."
+      },
+      "predict": {
+        "prompt": "You'll shade 1/3 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 1.5/3 here — and 1 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "sp-theoretical-prob"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find a die probability.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "When rolling a standard 6-sided die, what is the probability of rolling an even number?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/2",
+            "correct": true,
+            "feedback": "Yes — 3 of the 6 faces (2,4,6) are even: 3/6 = 1/2."
+          },
+          {
+            "id": "b",
+            "label": "1/3",
+            "correct": false,
+            "feedback": "Count the even faces: 2, 4, 6 — that's 3 out of 6, which is 1/2, not 1/3."
+          },
+          {
+            "id": "c",
+            "label": "1/6",
+            "feedback": "That's the chance of one specific number, not all the even ones. 3 even faces out of 6 is 1/2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another die probability.",
+      "conceptTag": "sp-theoretical-prob",
+      "explanationVariants": [
+        "Only 5 and 6 are greater than 4: 2 out of 6 = 1/3.",
+        "Count the favorable outcomes, then divide by the total."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "When rolling a standard 6-sided die, what is the probability of rolling a number greater than 4?",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 3,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 2,
+            "feedback": "That would be 3 out of 6. Only 5 and 6 are greater than 4: 2 out of 6 = 1/3."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 3,
+            "feedback": "That counts too many faces. Only 5 and 6 qualify: 2 out of 6 = 1/3."
+          }
+        ],
+        "fallbackFeedback": "Count the faces greater than 4, then put that count over the 6 total faces.",
+        "successFeedback": "Yes — 5 and 6 are greater than 4: 2 out of 6 = 1/3."
+      },
+      "variant": {
+        "gen": "prob-fraction"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A spinner works the same way: count the sections that match, divide by the total sections.",
+      "figure": "sp-spinner"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find a spinner probability.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A spinner has 8 equal sections, 3 are red. What is the probability of landing on red?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3/8",
+            "correct": true,
+            "feedback": "Yes — 3 red sections out of 8 total: 3/8."
+          },
+          {
+            "id": "b",
+            "label": "3/5",
+            "feedback": "That compares red to non-red sections, not red to the TOTAL. Red out of all 8 sections: 3/8."
+          },
+          {
+            "id": "c",
+            "label": "5/8",
+            "feedback": "That's the non-red sections. Red out of 8 total is 3/8."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The probability scale has landmarks: near 0 is unlikely, around 1/2 is an even chance, near 1 is likely — these words describe the number, they don't replace it.",
+      "figure": "probability-line"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Match a probability to a description.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A probability of 1/20 describes an event that is...",
+        "options": [
+          {
+            "id": "a",
+            "label": "unlikely",
+            "correct": true,
+            "feedback": "Yes — 1/20 is close to 0, so the event is unlikely (though not impossible)."
+          },
+          {
+            "id": "b",
+            "label": "likely",
+            "feedback": "1/20 is close to 0, not close to 1 — that means unlikely, not likely."
+          },
+          {
+            "id": "c",
+            "label": "certain",
+            "feedback": "Certain means a probability of exactly 1. 1/20 is far from that — it's unlikely."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another spinner probability.",
+      "conceptTag": "sp-theoretical-prob",
+      "explanationVariants": [
+        "5 blue sections out of 8 total: 5/8.",
+        "Count the favorable sections, divide by the total."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "A spinner has 8 equal sections, 5 are blue. What is the probability of landing on blue?",
+        "answerWhole": 0,
+        "answerNum": 5,
+        "answerDen": 8,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 5,
+            "den": 3,
+            "feedback": "A probability can't be greater than 1. Blue out of the total 8 sections: 5/8."
+          },
+          {
+            "whole": 0,
+            "num": 3,
+            "den": 8,
+            "feedback": "That's the non-blue sections. Blue out of 8 total is 5/8."
+          }
+        ],
+        "fallbackFeedback": "Put the blue sections over the TOTAL sections: favorable over total.",
+        "successFeedback": "Yes — 5 blue sections out of 8 total: 5/8."
+      },
+      "variant": {
+        "gen": "prob-fraction",
+        "form": "spinner"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A landmark description.",
+      "conceptTag": "sp-likelihood-words",
+      "explanationVariants": [
+        "A probability of exactly 1 means certain.",
+        "1 is the top of the probability scale."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A probability of 1 describes an event that is...",
+        "options": [
+          {
+            "id": "a",
+            "label": "certain",
+            "correct": true,
+            "feedback": "Yes — a probability of 1 means the event is certain to happen."
+          },
+          {
+            "id": "b",
+            "label": "impossible",
+            "feedback": "Impossible means a probability of 0, the opposite end of the scale. 1 means certain."
+          },
+          {
+            "id": "c",
+            "label": "unlikely",
+            "feedback": "Unlikely means a probability near 0. A probability of 1 means certain."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-likelihood-words",
+        "form": "spLikelihoodCertain"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier die probability.",
+      "conceptTag": "sp-theoretical-prob",
+      "explanationVariants": [
+        "1, 2, and 3 are less than 4: 3 out of 6 = 1/2.",
+        "Count the favorable outcomes, then divide by the total."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "When rolling a standard 6-sided die, what is the probability of rolling a number less than 4?",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 2,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 3,
+            "feedback": "That would be 2 out of 6. Three faces (1,2,3) are less than 4: 3/6 = 1/2."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 3,
+            "feedback": "That counts too many faces. Only 1, 2, 3 qualify: 3 out of 6 = 1/2."
+          }
+        ],
+        "fallbackFeedback": "Count the faces less than 4, then put that count over the 6 total faces.",
+        "successFeedback": "Yes — 1, 2, and 3 are less than 4: 3 out of 6 = 1/2."
+      },
+      "hints": [
+        "List the die faces: 1, 2, 3, 4, 5, 6.",
+        "Which are less than 4? 1, 2, 3 — that's 3 faces.",
+        "3 out of 6 faces = 1/2."
+      ],
+      "variant": {
+        "gen": "prob-fraction"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Probability is a number from 0 (impossible) to 1 (certain), found by counting favorable outcomes over the total.",
+      "takeaways": [
+        "Probability = favorable outcomes ÷ total outcomes.",
+        "0 is impossible, 1 is certain, 1/2 is an even chance.",
+        "Words like \"likely\" and \"unlikely\" describe the number, not replace it."
+      ],
+      "teaser": "next: estimating probability from real trials."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-theoretical-prob",
+      "concept": {
+        "id": "rem-stp-c",
+        "kind": "concept",
+        "body": "Probability = favorable outcomes ÷ total outcomes. For a die, rolling an even number: 3 favorable faces (2,4,6) out of 6 total = 1/2."
+      },
+      "check": {
+        "id": "rem-stp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-theoretical-prob",
+        "explanationVariants": [
+          "3 even faces out of 6: 1/2.",
+          "Count favorable outcomes, divide by total."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "When rolling a standard 6-sided die, what is the probability of rolling an even number?",
+          "options": [
+            {
+              "id": "a",
+              "label": "1/2",
+              "correct": true,
+              "feedback": "Yes — 1/2."
+            },
+            {
+              "id": "b",
+              "label": "1/3",
+              "feedback": "3 out of 6 is 1/2, not 1/3."
+            },
+            {
+              "id": "c",
+              "label": "1/6",
+              "feedback": "That's just one face. 3 even faces out of 6 is 1/2."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-likelihood-words",
+      "concept": {
+        "id": "rem-slw-c",
+        "kind": "concept",
+        "body": "The probability scale has landmark words: near 0 is unlikely, around 1/2 is an even chance, near 1 is likely, exactly 0 is impossible, exactly 1 is certain."
+      },
+      "check": {
+        "id": "rem-slw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-likelihood-words",
+        "explanationVariants": [
+          "A probability of 1 means certain.",
+          "1 is the top of the scale."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A probability of 1 describes an event that is...",
+          "options": [
+            {
+              "id": "a",
+              "label": "certain",
+              "correct": true,
+              "feedback": "Yes — certain."
+            },
+            {
+              "id": "b",
+              "label": "impossible",
+              "feedback": "Impossible is 0, the opposite end."
+            },
+            {
+              "id": "c",
+              "label": "unlikely",
+              "feedback": "Unlikely is near 0, not 1."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+ "id": "sg-01-02",
+ "slug": "solids-of-revolution",
+ "title": "Solids of Revolution",
+ "courseId": "solid-geometry",
+ "chapterId": "ch1-sections-revolution",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sg-revolution",
+   "concept": {
+    "id": "rem-sg-revolution-c",
+    "kind": "concept",
+    "body": "A solid of revolution is swept by spinning a flat region about an axis: a rectangle with one side on the axis sweeps a cylinder (width → radius, axis side → height); a right triangle with a leg on the axis sweeps a cone; a semicircle on its diameter sweeps a sphere. The axis choice changes the solid — identify radius (reach from axis) and height (run along axis) before any volume recall."
+   },
+   "check": {
+    "id": "rem-sg-revolution-k",
+    "kind": "check",
+    "body": "One sweep.",
+    "conceptTag": "sg-revolution",
+    "explanationVariants": [
+     "The 4-side lies on the axis (height); the 2-width reaches out (radius).",
+     "Cylinder r = 2, h = 4: V = π(4)(4) = 16π."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A 2-by-4 rectangle spins about its 4-unit side. Volume coefficient (of π) = ?",
+     "answer": 16,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 8,
+       "feedback": "8 = 2 × 4 forgets the square — π(2²)(4) = 16π."
+      },
+      {
+       "value": 32,
+       "feedback": "32 spins about the 2-side (r = 4, h = 2, giving 32π) — the axis here is the 4-side: 16π."
+      }
+     ],
+     "fallbackFeedback": "π(4)(4) = 16π."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Slicing has a reverse gear: **revolution**. Spin a flat region about an axis and it sweeps a solid — the figure's rectangle (one side ON the axis) sweeps a cylinder whose radius is the rectangle's width and whose height is its length along the axis. Spin therefore MANUFACTURES the solids whose sections you just cataloged.",
+   "figure": "solids-of-revolution"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Read the sweep.",
+   "conceptTag": "sg-revolution",
+   "explanationVariants": [
+    "Width 3 becomes the reach from the axis (radius); the 7-side lies along the axis (height).",
+    "Cylinder r = 3, h = 7: V = π(9)(7) = 63π (the formula from Grade 8)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A 3-by-7 rectangle spins about its 7-unit side. The swept cylinder's volume = ? (exact multiple of π — enter the coefficient)",
+    "answer": 63,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 21,
+      "feedback": "21 = 3 × 7 forgets to square the radius — V = πr²h = π(9)(7) = 63π."
+     },
+     {
+      "value": 147,
+      "feedback": "147 = π(49)(3)'s coefficient spins about the WRONG side — the 7-side is the axis, so r = 3: 63π."
+     },
+     {
+      "value": 126,
+      "feedback": "126 doubles — the sweep counts the full circle once: π(9)(7) = 63π."
+     }
+    ],
+    "fallbackFeedback": "r = 3, h = 7: V = 63π."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-revolution__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Axis choice matters.",
+   "conceptTag": "sg-revolution",
+   "explanationVariants": [
+    "About the 12-leg: that leg is the height, the 5-leg reaches out as radius.",
+    "Cone r = 5, h = 12: V = ⅓π(25)(12) = 100π."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A right triangle with legs 5 and 12 spins about its 12-unit leg. The swept cone's volume coefficient (of π) = ?",
+    "answer": 100,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 240,
+      "feedback": "240 spins about the 5-leg instead (r = 12, h = 5) — the stated axis is the 12-leg: ⅓(25)(12) = 100."
+     },
+     {
+      "value": 300,
+      "feedback": "300 skips the ⅓ — a cone claims a third of its cylinder: 100."
+     },
+     {
+      "value": 60,
+      "feedback": "60 = ⅓(5)(12)·? forgets to square r — ⅓(5²)(12) = 100."
+     }
+    ],
+    "fallbackFeedback": "⅓π(5²)(12) = 100π — and about the other leg it would be 240π: the axis is part of the problem."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-revolution__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The full set.",
+   "conceptTag": "sg-revolution",
+   "explanationVariants": [
+    "Rectangle → cylinder; right triangle (leg on axis) → cone; and the sphere needs a curved generator.",
+    "A SEMICIRCLE spun on its diameter sweeps the sphere."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which flat region, spun about the indicated axis, sweeps a SPHERE?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A semicircle, about its diameter",
+      "correct": true,
+      "feedback": "Half the disk sweeps the whole ball — each point traces its circle of latitude. (A FULL circle would sweep the same sphere twice over.)"
+     },
+     {
+      "id": "o2",
+      "label": "A full circle, about a line outside it",
+      "correct": false,
+      "feedback": "An external axis sweeps a TORUS (a donut) — the sphere wants the semicircle on its own diameter."
+     },
+     {
+      "id": "o3",
+      "label": "A rectangle, about one side",
+      "correct": false,
+      "feedback": "That's the cylinder factory — spheres need the curved edge of the semicircle."
+     },
+     {
+      "id": "o4",
+      "label": "A right triangle, about a leg",
+      "correct": false,
+      "feedback": "That sweeps the cone — the sphere's generator is the semicircle."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-revolution__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Sphere by spin.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A semicircle of radius 6 spins about its diameter. The swept sphere's volume coefficient (of π) = ?",
+    "answer": 288,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 216,
+      "feedback": "216 = 6³ misses the 4/3 — V = (4/3)π(216) = 288π (the Grade 8 formula this course will soon JUSTIFY)."
+     },
+     {
+      "value": 144,
+      "feedback": "144 halves the sphere — the semicircle sweeps the FULL ball: 288π."
+     }
+    ],
+    "fallbackFeedback": "(4/3)(6³) = 288 — spinning the half-disk fills all of it."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The offset sweep.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A rectangle spins about an axis PARALLEL to one side but 2 units away (no contact). The swept solid is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A tube (cylinder with a cylindrical hole) — cross-sections perpendicular to the axis are rings",
+      "correct": true,
+      "feedback": "The gap sweeps the hole: outer radius = far side's distance, inner = 2. Washers, stacked — a shape the composite-solids chapter will price by subtraction."
+     },
+     {
+      "id": "o2",
+      "label": "A solid cylinder",
+      "correct": false,
+      "feedback": "Solid needs the region to TOUCH the axis — the 2-unit gap hollows the core: a tube."
+     },
+     {
+      "id": "o3",
+      "label": "A cone",
+      "correct": false,
+      "feedback": "Cones need a slanted edge reaching the axis — a parallel offset rectangle sweeps the straight-walled tube."
+     },
+     {
+      "id": "o4",
+      "label": "A sphere",
+      "correct": false,
+      "feedback": "Spheres come from semicircles — this sweep is the ring-sectioned tube."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Design the generator.",
+   "conceptTag": "sg-revolution",
+   "hints": [
+    "The target cone has r = 9 and h = 12 — the spinning triangle's legs, with the h-leg on the axis.",
+    "The slant edge of the sweep is the triangle's hypotenuse.",
+    "9-12-? is 3-4-5 scaled by 3."
+   ],
+   "explanationVariants": [
+    "Legs 9 and 12 give hypotenuse √(81 + 144) = √225 = 15 — the cone's slant height.",
+    "A 9-12-15 triangle: slant edge 15."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "You need a cone of radius 9 and height 12 by revolution. The right triangle you spin has its 12-leg on the axis — how long is its hypotenuse (the cone's slant edge)?",
+    "answer": 15,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 21,
+      "feedback": "21 = 9 + 12 adds the legs — the hypotenuse is √(81 + 144) = 15."
+     },
+     {
+      "value": 225,
+      "feedback": "225 is the squared hypotenuse — root: 15."
+     },
+     {
+      "value": 13.4,
+      "feedback": "13.4 ≈ √180 miscomputes — 81 + 144 = 225, so 15 (a 3-4-5 scaled by 3)."
+     }
+    ],
+    "fallbackFeedback": "√(9² + 12²) = 15 — the generator's hypotenuse becomes the slant height."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-revolution__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Spin to build.",
+   "takeaways": [
+    "Rectangle (side on axis) → cylinder; right triangle (leg on axis) → cone; semicircle (diameter on axis) → sphere.",
+    "The AXIS is part of the problem: swapping legs swaps 100π for 240π.",
+    "Offset regions sweep holes — rings and tubes, priced later by subtraction."
+   ],
+   "teaser": "Next: the principle that lets slices testify about volume — Cavalieri."
+  }
+ ]
+}

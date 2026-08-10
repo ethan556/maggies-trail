@@ -1,0 +1,310 @@
+{
+  "id": "si-04-02",
+  "slug": "how-unusual-is-unusual",
+  "title": "How Unusual Is Unusual?",
+  "courseId": "statistical-inference",
+  "chapterId": "ch4-is-the-difference-real",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Count the tail. Of all the gaps chance produced, what fraction reached as far as the one you actually saw?\n\nThat fraction is the **p-value**: the chance of data at least this extreme *if the no-effect story were true*.\n\nSmall p-value → the no-effect story explains your data badly.",
+      "figure": "si-null-pile"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count a tail.",
+      "conceptTag": "si-pvalue-idea",
+      "explanationVariants": [
+        "6 of the 252 possible relabellings reach a gap of 4 or more, so the p-value is 6/252 ≈ 0.024, about 2.4%.",
+        "The p-value is a proportion of the null pile, so it is always a count of the tail over the size of the pile."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Of the 252 possible relabellings, 6 produce a gap of 4 or more. What is the p-value, as a percentage (one decimal)?",
+        "answer": 2.4,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That is the raw tail count, not a proportion. Divide it by the size of the pile: 6/252."
+          },
+          {
+            "value": 24,
+            "feedback": "That is a decimal-point slip: 6/252 ≈ 0.024, which is 2.4%, not 24%."
+          },
+          {
+            "value": 97.6,
+            "feedback": "That is the rest of the pile — the relabellings that did NOT reach the observed gap. The p-value counts the tail, not the middle."
+          }
+        ],
+        "fallbackFeedback": "6/252 ≈ 0.024 = 2.4%."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-pvalue-idea__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Same ten students. This time the two methods scored almost the same.",
+      "widget": {
+        "type": "shuffleTest",
+        "prompt": "The gap is now only 0.6. Build the chance pile again, then judge.",
+        "groupALabel": "method A",
+        "groupBLabel": "method B",
+        "groupA": [
+          12,
+          14,
+          15,
+          16,
+          18
+        ],
+        "groupB": [
+          11,
+          13,
+          15,
+          16,
+          17
+        ],
+        "requiredShuffles": 40,
+        "targetVerdict": "chance",
+        "seed": 13,
+        "successFeedback": "Chance manufactures a gap of 0.6 constantly — in the exact count, 198 of the 252 splits reach it, about 79%. A gap this ordinary is no evidence of anything.",
+        "moreShufflesFeedback": "Keep relabelling. The pile has to exist before the observed line means anything.",
+        "wrongVerdictFeedback": "Look where the observed line falls: it is buried in the fat middle of the pile, with most random relabellings reaching past it. Chance produces gaps like this routinely."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Shuffle labels under a null model and compare the observed statistic with the chance distribution.",
+        "invariants": [
+          "observations-fixed-under-relabeling",
+          "null-model-preserves-group-sizes"
+        ],
+        "misconceptions": [
+          "single-shuffle-proves-result",
+          "statistical-significance-means-practical-importance"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-shuffleTest-new-context",
+        "delayed": false
+      },
+      "conceptTag": "si-pvalue-idea",
+      "predict": {
+        "prompt": "This time the two methods differ by only 0.6. When you rebuild the chance pile, gaps of 0.6 or more will turn up…",
+        "options": [
+          {
+            "id": "often",
+            "label": "Often — chance alone produces gaps this big"
+          },
+          {
+            "id": "never",
+            "label": "Almost never"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly 5% of the time"
+          }
+        ],
+        "outcomeId": "often",
+        "reveal": "Often, and that IS the verdict. A p-value asks what fraction of chance-produced gaps reach as far as the one you actually saw; when that fraction is large, your gap is unremarkable. Note what this does not say: not that the methods are identical, only that this evidence cannot tell them apart."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read the second pile.",
+      "conceptTag": "si-pvalue-idea",
+      "explanationVariants": [
+        "About 79% of relabellings reach a gap of 0.6, so the p-value is enormous — chance explains this data perfectly well.",
+        "A large p-value does not prove the methods are identical. It says your data gave you no reason to doubt that they are."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The p-value for the 0.6-point gap is about 0.79. What does that mean?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Data like this are completely ordinary under 'no effect', so the study gives no evidence of a difference.",
+            "correct": true,
+            "feedback": "Right — and note the careful wording: no evidence of a difference is not evidence of no difference."
+          },
+          {
+            "id": "o2",
+            "label": "There is a 79% chance the two methods are identical.",
+            "correct": false,
+            "feedback": "The p-value is computed ASSUMING no effect. It cannot then turn around and give you the probability of that assumption — that is the conditional-reversal error."
+          },
+          {
+            "id": "o3",
+            "label": "The methods are proved to be the same.",
+            "correct": false,
+            "feedback": "With five students per group, a real difference could easily hide. Failing to detect an effect is not the same as showing there is none."
+          },
+          {
+            "id": "o4",
+            "label": "The experiment was done wrong.",
+            "correct": false,
+            "feedback": "Nothing was done wrong. A high p-value is a perfectly respectable result — it just is not an exciting one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-pvalue-idea__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "How small is small enough? By convention, **p < 0.05** — a result that chance would produce less than 1 time in 20 gets called *statistically significant*.\n\nThat 5% is a custom, not a discovery. It buys you a mistake rate: even when nothing is going on, about 1 study in 20 will clear the bar by luck alone.",
+      "figure": "si-effect-vs-significance"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The cost of the threshold.",
+      "conceptTag": "si-pvalue-idea",
+      "explanationVariants": [
+        "A 5% threshold means that when nothing is going on, about 1 in 20 tests will still cross it. Run 20 useless tests and expect one 'discovery'.",
+        "That is why running many tests and reporting only the winner is a way of manufacturing significance out of noise."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A lab runs 20 experiments on treatments that all truly do nothing, using the p < 0.05 threshold. About how many will come out 'significant'?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "The threshold is not free. It is chosen so that, when nothing is going on, about 5% of tests still cross it — and 5% of 20 is 1."
+          },
+          {
+            "value": 5,
+            "feedback": "That is the 5% read as a count. 5% OF 20 experiments is 1 experiment, not 5."
+          },
+          {
+            "value": 20,
+            "feedback": "That would mean every test lies. The threshold lets through about 1 in 20 by luck, not all of them."
+          }
+        ],
+        "fallbackFeedback": "5% of 20 = 1 false positive, on average — even with nothing real to find."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-pvalue-idea__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Spot the manufactured discovery.",
+      "conceptTag": "si-pvalue-idea",
+      "hints": [
+        "Count how many tests were run in total, not just how many were reported.",
+        "With a 5% threshold, running 20 independent tests on nothing at all yields about 1 'significant' result by luck.",
+        "So finding exactly one significant result out of 20 is precisely what pure noise looks like."
+      ],
+      "explanationVariants": [
+        "Testing 20 colours and reporting the one that reached p < 0.05 is exactly the pattern that pure chance produces — about 1 in 20 will clear the bar with nothing behind it.",
+        "The fix is to say how many tests were run, and to raise the bar accordingly, or to repeat the finding on fresh data."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A team tests 20 colours of jellybean for a link with acne. Nineteen show nothing; green comes out at p = 0.04. The headline reads \"Green jellybeans linked to acne\". What is wrong?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "With 20 tests at a 5% threshold, about one false positive is expected — this result is what noise looks like.",
+            "correct": true,
+            "feedback": "Right. The p-value was computed as if green had been the only test, when in fact it was the luckiest of twenty."
+          },
+          {
+            "id": "o2",
+            "label": "p = 0.04 is not small enough to be significant.",
+            "correct": false,
+            "feedback": "It clears the conventional 0.05 bar. The problem is not the number — it is that the bar was attempted twenty times."
+          },
+          {
+            "id": "o3",
+            "label": "Jellybeans cannot plausibly cause acne, so the study is invalid.",
+            "correct": false,
+            "feedback": "Plausibility is worth weighing, but the statistical flaw here is specific and would apply to any 20 tests: the multiple looks were not accounted for."
+          },
+          {
+            "id": "o4",
+            "label": "The sample was too small.",
+            "correct": false,
+            "feedback": "Nothing in the story tells you the sample was small, and a bigger sample would not repair the problem of testing twenty things and reporting one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-pvalue-idea__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The p-value counts the tail — under an assumption.",
+      "takeaways": [
+        "p-value = the chance of data at least this extreme IF the no-effect story were true. It is not the chance that the story is true.",
+        "p < 0.05 is a convention, and it lets about 1 in 20 null results through by luck.",
+        "Many tests, one reported winner: that is how noise gets published. Count the tests, not just the finding."
+      ],
+      "teaser": "Next: a result can be significant and still be worthless."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-pvalue-idea",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Read the p-value in one direction only: given no effect, how often would chance hand me data this extreme? It never tells you the probability that there is no effect. Swapping those two is the same reversal error as confusing P(A|B) with P(B|A).",
+        "figure": "si-null-pile"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which conditional?",
+        "conceptTag": "si-pvalue-idea",
+        "explanationVariants": [
+          "p = 0.03 means: if there were no effect, data this extreme would show up about 3% of the time.",
+          "It does NOT mean there is a 3% chance the effect is absent — that would reverse the condition."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A study reports p = 0.03. Which sentence is right?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "If there were no effect, data this extreme would occur about 3% of the time.",
+              "correct": true,
+              "feedback": "Right — the no-effect assumption is the CONDITION, and the 3% is computed inside it."
+            },
+            {
+              "id": "o2",
+              "label": "There is a 3% chance the effect does not exist.",
+              "correct": false,
+              "feedback": "That reverses the conditional. The p-value assumes no effect and computes the data's rarity; it cannot hand you the probability of its own assumption."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

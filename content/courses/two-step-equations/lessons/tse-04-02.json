@@ -1,0 +1,539 @@
+{
+  "id": "tse-04-02",
+  "slug": "the-sign-flip-rule",
+  "title": "The Sign-Flip Rule",
+  "courseId": "two-step-equations",
+  "chapterId": "ch4-two-step-inequalities",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "inequality-flip",
+      "body": "Dividing an inequality by a NEGATIVE number flips the direction. -2x + 5 > -3: subtract 5 (-2x>-8), divide by -2 — and FLIP: x < 4."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve with a flip.",
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve −2x + 5 > −3. Clear, split, then multiply both sides by −1 — and watch what the beam does to your comparator.",
+        "a": -2,
+        "b": 5,
+        "c": -3,
+        "relation": "gt",
+        "successFeedback": "x < 4. Multiplying both pans by −1 physically swapped which side was heavier, so the > had to become < to keep describing the beam. The flip is not a rule to remember — it is what you just watched happen.",
+        "unbalancedFeedback": "The sentence stopped being true, and not because of a sign flip — a tile moved on one pan only. Undo and make every move happen on both sides.",
+        "notIsolatedFeedback": "The sentence still tells the truth — the moves were legal. But x is not standing alone and positive yet. Keep going: clear, split, then turn the signs around.",
+        "missFeedback": "Keep the x-tiles — they are the thing being solved for. Clear the units from both pans, then split both sides into 2 groups.",
+        "notFlippedFeedback": "Look at the beam and then at the symbol: they disagree. Multiplying both pans by −1 made the heavier side the lighter one, so the sentence you are holding now says the opposite of what the balance shows. Flip the comparator and they agree again."
+      },
+      "predict": {
+        "prompt": "True or false: 2 < 5. Now multiply BOTH sides by −1 — is −2 < −5?",
+        "options": [
+          {
+            "id": "false",
+            "label": "False — the order reverses"
+          },
+          {
+            "id": "true",
+            "label": "True — still less"
+          },
+          {
+            "id": "equal",
+            "label": "They become equal"
+          }
+        ],
+        "outcomeId": "false",
+        "reveal": "−2 sits ABOVE −5 — negating both sides mirrored the number line and flipped the order. That mirror is exactly why the inequality sign must flip too."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Watch the set while you divide.",
+      "widget": {
+        "type": "numberLineRay",
+        "prompt": "−2x > −8 is where the last step left you, and the line already shows which numbers make it true. Get x standing on its own — and when you are done, the line must still show those same numbers.",
+        "variable": "x",
+        "start": {
+          "coeff": {
+            "n": -2,
+            "d": 1
+          },
+          "constant": {
+            "n": -8,
+            "d": 1
+          },
+          "relation": "gt",
+          "inclusive": false
+        },
+        "window": {
+          "min": {
+            "n": -2,
+            "d": 1
+          },
+          "max": {
+            "n": 10,
+            "d": 1
+          },
+          "tickStep": {
+            "n": 1,
+            "d": 1
+          }
+        },
+        "step": {
+          "n": 1,
+          "d": 1
+        },
+        "outOfRange": "clamp",
+        "offLattice": "snap",
+        "transforms": [
+          {
+            "id": "div",
+            "factor": {
+              "n": -1,
+              "d": 2
+            },
+            "label": "÷ (−2) on both sides"
+          },
+          {
+            "id": "mul",
+            "factor": {
+              "n": -2,
+              "d": 1
+            },
+            "label": "× (−2) on both sides"
+          }
+        ],
+        "target": {
+          "coeff": {
+            "n": 1,
+            "d": 1
+          },
+          "constant": {
+            "n": 4,
+            "d": 1
+          },
+          "relation": "lt",
+          "inclusive": false
+        },
+        "requireSolvedForm": true,
+        "successFeedback": "x < 4, and the line finished exactly where it started. Dividing by −2 swung the ray across 4, and turning the sign round swung it straight back — so the flip is not an extra rule to remember, it is the move that puts the set back where the division threw it.",
+        "fallbackFeedback": "Test a number on each side of the endpoint in the original −2x > −8 and see which side really works."
+      },
+      "predict": {
+        "prompt": "You are about to divide both sides of −2x > −8 by −2. What happens to the number line?",
+        "options": [
+          {
+            "id": "reflect",
+            "label": "The ray swings to the other side of 4"
+          },
+          {
+            "id": "slide",
+            "label": "The endpoint slides away from 4"
+          },
+          {
+            "id": "still",
+            "label": "Nothing moves until the sign is changed too"
+          }
+        ],
+        "outcomeId": "reflect",
+        "reveal": "The endpoint stays at 4 — dividing both sides cannot move it, because 4 is where −2x and −8 are equal and that stays true whatever you divide by. What moves is the SET: the ray swings across 4, and numbers that worked a moment ago stop working. Turning the sign round is what brings them back."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another flip.",
+      "conceptTag": "tse-inequality-flip",
+      "explanationVariants": [
+        "Subtract 2 (-3x<12), divide by -3 and FLIP: x>-4.",
+        "Negative coefficient means the direction flips."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: -3x + 2 < 14",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">"
+          },
+          {
+            "id": "t2",
+            "label": "-4"
+          },
+          {
+            "id": "t3",
+            "label": "<"
+          },
+          {
+            "id": "t4",
+            "label": "12"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a NEGATIVE number flips the direction: x>-4, not x<-4."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (-3x<12). Finish by dividing by -3 (and flipping): x>-4."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant, then divide by the NEGATIVE coefficient — and flip the inequality sign.",
+        "successFeedback": "Yes — subtract 2 (-3x<12), divide by -3 and FLIP: x>-4."
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqNegA"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule only triggers when you multiply or divide by a negative — adding or subtracting a negative number never flips anything.",
+      "figure": "inequality-flip"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A flip with subtraction inside.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve: -4x - 3 > 9",
+        "options": [
+          {
+            "id": "a",
+            "label": "x < -3",
+            "correct": true,
+            "feedback": "Yes — add 3 (-4x>12), divide by -4 and FLIP: x<-3."
+          },
+          {
+            "id": "b",
+            "label": "x > -3",
+            "feedback": "Dividing by a NEGATIVE number flips the direction: x<-3, not x>-3."
+          },
+          {
+            "id": "c",
+            "label": "x < 12",
+            "feedback": "That's only the first step (-4x>12). Finish by dividing by -4 (and flipping): x<-3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A useful check: pick a number in your solution set and test it in the ORIGINAL inequality — if it works, you flipped correctly.",
+      "figure": "tse-test-solution"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "One more flip.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve: -5x + 1 < 21",
+        "options": [
+          {
+            "id": "a",
+            "label": "x > -4",
+            "correct": true,
+            "feedback": "Yes — subtract 1 (-5x<20), divide by -5 and FLIP: x>-4."
+          },
+          {
+            "id": "b",
+            "label": "x < -4",
+            "feedback": "Dividing by a NEGATIVE number flips the direction: x>-4, not x<-4."
+          },
+          {
+            "id": "c",
+            "label": "x > 20",
+            "feedback": "That's only the first step (-5x<20). Finish by dividing by -5 (and flipping): x>-4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another negative-coefficient flip.",
+      "conceptTag": "tse-inequality-flip",
+      "explanationVariants": [
+        "Add 4 (-6x>=-24), divide by -6 and FLIP: x<=4.",
+        "Negative coefficient means the direction flips."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: -6x - 4 >= -28",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "<="
+          },
+          {
+            "id": "t2",
+            "label": "4"
+          },
+          {
+            "id": "t3",
+            "label": ">="
+          },
+          {
+            "id": "t4",
+            "label": "-24"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a NEGATIVE number flips the direction: x<=4, not x>=4."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (-6x>=-24). Finish by dividing by -6 (and flipping): x<=4."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant, then divide by the NEGATIVE coefficient — and flip the inequality sign.",
+        "successFeedback": "Yes — add 4 (-6x>=-24), divide by -6 and FLIP: x<=4."
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqNegB"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more sign-flip inequality.",
+      "conceptTag": "tse-inequality-flip",
+      "explanationVariants": [
+        "Subtract 6 (-2x<=-18), divide by -2 and FLIP: x>=9.",
+        "Negative coefficient means the direction flips."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: -2x + 6 <= -12",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">="
+          },
+          {
+            "id": "t2",
+            "label": "9"
+          },
+          {
+            "id": "t3",
+            "label": "<="
+          },
+          {
+            "id": "t4",
+            "label": "-18"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a NEGATIVE number flips the direction: x>=9, not x<=9."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (-2x<=-18). Finish by dividing by -2 (and flipping): x>=9."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant, then divide by the NEGATIVE coefficient — and flip the inequality sign.",
+        "successFeedback": "Yes — subtract 6 (-2x<=-18), divide by -2 and FLIP: x>=9."
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqNegC"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier sign-flip inequality.",
+      "conceptTag": "tse-inequality-flip",
+      "explanationVariants": [
+        "Add 8 (-7x<=-35), divide by -7 and FLIP: x>=5.",
+        "Negative coefficient means the direction flips."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: -7x - 8 <= -43",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">="
+          },
+          {
+            "id": "t2",
+            "label": "5"
+          },
+          {
+            "id": "t3",
+            "label": "<="
+          },
+          {
+            "id": "t4",
+            "label": "-35"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a NEGATIVE number flips the direction: x>=5, not x<=5."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (-7x<=-35). Finish by dividing by -7 (and flipping): x>=5."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant, then divide by the NEGATIVE coefficient — and flip the inequality sign.",
+        "successFeedback": "Yes — add 8 (-7x<=-35), divide by -7 and FLIP: x>=5."
+      },
+      "hints": [
+        "Add 8 to both sides: -7x <= -35.",
+        "Divide both sides by -7 (negative, so FLIP the direction).",
+        "The result is x >= 5."
+      ],
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqNegD"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Dividing (or multiplying) by a negative number flips the inequality's direction — the only case where this happens.",
+      "takeaways": [
+        "The flip happens ONLY when multiplying or dividing by a negative.",
+        "Adding or subtracting never flips anything.",
+        "Test a number from your solution set in the original inequality to check."
+      ],
+      "teaser": "next: two-step inequalities in real situations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tse-inequality-flip",
+      "concept": {
+        "id": "rem-tif-c",
+        "kind": "concept",
+        "body": "Dividing an inequality by a negative number flips the direction. -2x+5>-3: subtract 5 (-2x>-8), divide by -2 and FLIP: x<4."
+      },
+      "check": {
+        "id": "rem-tif-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tse-inequality-flip",
+        "explanationVariants": [
+          "Subtract 5 (-2x>-8), divide by -2 and flip: x<4.",
+          "Negative coefficient means the direction flips."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Solve: -2x + 5 > -3",
+          "options": [
+            {
+              "id": "a",
+              "label": "x < 4",
+              "correct": true,
+              "feedback": "Yes — x < 4."
+            },
+            {
+              "id": "b",
+              "label": "x > 4",
+              "feedback": "Negative coefficient flips: x<4."
+            },
+            {
+              "id": "c",
+              "label": "x < -8",
+              "feedback": "Finish dividing (and flipping): x<4."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

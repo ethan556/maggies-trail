@@ -1,0 +1,454 @@
+{
+ "id": "rf-03-01",
+ "slug": "like-denominators",
+ "title": "Like Denominators",
+ "courseId": "rational-functions",
+ "chapterId": "ch3-adding-and-subtracting",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Same denominator? Same rule as always: **add the tops, keep the bottom**. (3x)/(x + 2) + 5/(x + 2) = (3x + 5)/(x + 2). The denominator is a label — it never adds to itself.",
+   "figure": "rf-add-same-denom"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Add the tops.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Add: (2x)/(x − 1) + 7/(x − 1).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(2x + 7)/(x − 1)",
+      "correct": true,
+      "feedback": "Right — tops add, the shared bottom stays once."
+     },
+     {
+      "id": "o2",
+      "label": "(2x + 7)/(2x − 2)",
+      "correct": false,
+      "feedback": "The denominator is a LABEL — it never doubles: (x − 1) stays as is."
+     },
+     {
+      "id": "o3",
+      "label": "(2x + 7)/(x − 1)²",
+      "correct": false,
+      "feedback": "Adding fractions doesn't multiply their bottoms — that's multiplication's move."
+     },
+     {
+      "id": "o4",
+      "label": "(9x)/(x − 1)",
+      "correct": false,
+      "feedback": "2x + 7 has unlike terms — 2x and 7 can't merge into 9x."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Subtraction has one famous trap: **the minus hits the entire second numerator**. (5x)/(x+3) − (x − 2)/(x+3) = (5x − (x − 2))/(x+3) = (5x − x + 2)/(x+3) = **(4x + 2)/(x+3)**. Parentheses first, then distribute the minus — the −2 becomes +2.",
+   "figure": "rf-subtract-trap"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Distribute the minus.",
+   "conceptTag": "rf-like-denoms",
+   "explanationVariants": [
+    "(7x − (2x − 3))/(x + 1) = (7x − 2x + 3)/(x + 1) = (5x + 3)/(x + 1).",
+    "The minus flips BOTH terms of (2x − 3): −2x and +3."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Subtract: (7x)/(x + 1) − (2x − 3)/(x + 1).",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "(5x + 3)"
+     },
+     {
+      "id": "t2",
+      "label": "(5x − 3)"
+     },
+     {
+      "id": "t3",
+      "label": "(9x − 3)"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "b1",
+      "label": "(x + 1)"
+     },
+     {
+      "id": "b2",
+      "label": "(2x + 2)"
+     }
+    ],
+    "correct": [
+     "t1",
+     "div",
+     "b1"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "b1"
+      ],
+      "feedback": "The minus hits the −3 TOO: −(−3) = +3, giving 5x + 3."
+     },
+     {
+      "sequence": [
+       "t3",
+       "div",
+       "b1"
+      ],
+      "feedback": "Subtract, don't add: 7x MINUS 2x is 5x."
+     },
+     {
+      "sequence": [
+       "t1",
+       "div",
+       "b2"
+      ],
+      "feedback": "The shared denominator stays single — (x + 1) never doubles."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Same denominator: keep (x + 1) once and subtract the WHOLE top: 7x − (2x − 3) = 5x + 3.",
+    "successFeedback": "Right — the minus distributes: 7x − 2x + 3."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-like-denoms__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "A cleaner subtraction.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Subtract: (4x + 1)/(x − 2) − (x + 1)/(x − 2).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "3x/(x − 2)",
+      "correct": true,
+      "feedback": "Right — 4x + 1 − x − 1 = 3x: the 1s cancel."
+     },
+     {
+      "id": "o2",
+      "label": "(3x + 2)/(x − 2)",
+      "correct": false,
+      "feedback": "The minus reaches the second +1: +1 − 1 = 0, leaving just 3x."
+     },
+     {
+      "id": "o3",
+      "label": "(5x + 2)/(x − 2)",
+      "correct": false,
+      "feedback": "This is SUBTRACTION: 4x − x = 3x, and the constants cancel."
+     },
+     {
+      "id": "o4",
+      "label": "3x/(2x − 4)",
+      "correct": false,
+      "feedback": "The common bottom stays single: (x − 2), not its double."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Simplify after combining.",
+   "conceptTag": "rf-like-denoms",
+   "explanationVariants": [
+    "(x² )/(x + 3) + (3x)/(x + 3) = (x² + 3x)/(x + 3) = x(x + 3)/(x + 3) = x.",
+    "Combine, then factor the new top — it shares (x + 3) with the bottom."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Add and simplify: (x²)/(x + 3) + (3x)/(x + 3).",
+    "tokens": [
+     {
+      "id": "x",
+      "label": "x"
+     },
+     {
+      "id": "xsq",
+      "label": "x²"
+     },
+     {
+      "id": "t",
+      "label": "(x² + 3x)"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "b1",
+      "label": "(x + 3)"
+     },
+     {
+      "id": "b2",
+      "label": "(2x + 6)"
+     }
+    ],
+    "correct": [
+     "x"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t",
+       "div",
+       "b1"
+      ],
+      "feedback": "One more step — the top factors as x(x + 3): the whole thing collapses to x."
+     },
+     {
+      "sequence": [
+       "xsq"
+      ],
+      "feedback": "Only ONE factor of the top survives the cancel — x(x + 3)/(x + 3) = x."
+     },
+     {
+      "sequence": [
+       "t",
+       "div",
+       "b2"
+      ],
+      "feedback": "The shared denominator stays single — and then the factored top cancels it: x."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Add the tops over the single (x + 3), factor as x(x + 3), and cancel.",
+    "successFeedback": "Right — x² + 3x = x(x + 3), and the (x + 3)s cancel."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-like-denoms__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Watch the combined zero.",
+   "conceptTag": "rf-like-denoms",
+   "explanationVariants": [
+    "(2x)/(x − 4) − 8/(x − 4) = (2x − 8)/(x − 4) = 2(x − 4)/(x − 4) = 2.",
+    "The difference factors into the denominator exactly — a constant remains."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Subtract and simplify: (2x)/(x − 4) − 8/(x − 4). The result is a constant — what is it?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "c1",
+      "label": "first numerator coefficient",
+      "value": 2
+     },
+     {
+      "id": "c2",
+      "label": "second numerator coefficient",
+      "value": 0
+     }
+    ],
+    "approxFormula": {
+     "op": "subtract",
+     "left": {
+      "op": "const",
+      "id": "c1"
+     },
+     "right": {
+      "op": "const",
+      "id": "c2"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": -2,
+      "feedback": "2x − 8 = 2(x − 4), POSITIVE 2 out front — the minus already spent itself on the 8."
+     },
+     {
+      "value": 8,
+      "feedback": "Factor the combined top: 2x − 8 = 2(x − 4) — the 2 is what survives the cancel."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "2(x − 4)/(x − 4) = 2, for x ≠ 4.",
+    "successFeedback": "2(x − 4)/(x − 4) = 2, for x ≠ 4."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-like-denoms__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full combine-and-simplify.",
+   "conceptTag": "rf-like-denoms",
+   "explanationVariants": [
+    "Numerator: x² + x − (x + 6) = x² + x − x − 6 = x² − 6.",
+    "Combine all three tops over the shared bottom, minding the minus."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Combine: (x²)/(x − 3) + x/(x − 3) − (x + 6)/(x − 3).",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "(x² − 6)"
+     },
+     {
+      "id": "t2",
+      "label": "(x² + 2x + 6)"
+     },
+     {
+      "id": "t3",
+      "label": "(x² + 2x − 6)"
+     },
+     {
+      "id": "div",
+      "label": "/"
+     },
+     {
+      "id": "b1",
+      "label": "(x − 3)"
+     },
+     {
+      "id": "b2",
+      "label": "(3x − 9)"
+     }
+    ],
+    "correct": [
+     "t1",
+     "div",
+     "b1"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "div",
+       "b1"
+      ],
+      "feedback": "The minus distributes over BOTH terms of (x + 6): −x − 6, so the x's cancel."
+     },
+     {
+      "sequence": [
+       "t1",
+       "div",
+       "b2"
+      ],
+      "feedback": "Three like fractions still share ONE denominator: (x − 3)."
+     },
+     {
+      "sequence": [
+       "t3",
+       "div",
+       "b1"
+      ],
+      "feedback": "−(x + 6) turns the middle x's into x − x = 0: the top is x² − 6."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Combine all three tops over the one (x − 3): x² + x − (x + 6) = x² − 6.",
+    "successFeedback": "Right — x² + x − x − 6 = x² − 6; the x's cancel."
+   },
+   "hints": [
+    "Write one fraction: (x² + x − (x + 6))/(x − 3).",
+    "Distribute the minus: x² + x − x − 6.",
+    "The x's cancel: (x² − 6)/(x − 3)."
+   ],
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-like-denoms__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Tops combine; the shared bottom appears once; minus signs distribute fully.",
+   "takeaways": [
+    "Never add a denominator to itself — it's a label.",
+    "−(a − b) = −a + b: the classic sign trap.",
+    "Factor the combined numerator — it often cancels the bottom."
+   ],
+   "teaser": "Next: UNLIKE denominators — building the polynomial LCD."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "rf-like-denoms",
+   "concept": {
+    "id": "rem-rf0301-c",
+    "kind": "concept",
+    "body": "The numeric skeleton: 3/7 + 2/7 = 5/7 — tops add, one 7 below. Same with x's: a/(x+1) + b/(x+1) = (a+b)/(x+1)."
+   },
+   "check": {
+    "id": "rem-rf0301-k",
+    "kind": "check",
+    "body": "Apply it.",
+    "conceptTag": "rf-like-denoms",
+    "explanationVariants": [
+     "(4 + 3)/(x + 1) = 7/(x + 1).",
+     "The bottoms match, so only the tops move."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Add: 4/(x + 1) + 3/(x + 1).",
+     "options": [
+      {
+       "id": "o1",
+       "label": "7/(x + 1)",
+       "correct": true,
+       "feedback": "Right — 4 + 3 over the single shared bottom."
+      },
+      {
+       "id": "o2",
+       "label": "7/(2x + 2)",
+       "correct": false,
+       "feedback": "The denominator never doubles — one (x + 1) labels both pieces."
+      },
+      {
+       "id": "o3",
+       "label": "12/(x + 1)",
+       "correct": false,
+       "feedback": "ADD the tops: 4 + 3 = 7 (12 multiplies them)."
+      },
+      {
+       "id": "o4",
+       "label": "7/(x + 2)",
+       "correct": false,
+       "feedback": "The bottom stays exactly (x + 1) — nothing adds inside it."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

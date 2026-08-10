@@ -1,0 +1,358 @@
+{
+  "id": "cp-02-02",
+  "slug": "perpendicular-from-a-point",
+  "title": "A Perpendicular from a Point",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch2-perpendiculars-parallels",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-perp-from-point",
+      "concept": {
+        "id": "rem-cp-perp-from-point-c",
+        "kind": "concept",
+        "body": "\"Distance from a point to a line\" is NOT the slanted look-shortest segment — it is the PERPENDICULAR one. Every slanted path is the hypotenuse of a right triangle sitting on the perpendicular leg, and the hypotenuse is always the longest side."
+      },
+      "check": {
+        "id": "rem-cp-perp-from-point-k",
+        "kind": "check",
+        "body": "Name the true distance.",
+        "conceptTag": "cp-perp-from-point",
+        "explanationVariants": [
+          "The distance from a point to a line is the length of the perpendicular segment to it.",
+          "Perpendicular = shortest = the official distance; slants are longer hypotenuses."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The distance from a point P to a line is measured along…",
+          "options": [
+            {
+              "id": "o1",
+              "label": "the perpendicular from P to the line",
+              "correct": true,
+              "feedback": "Perpendicular is shortest, and shortest is what \"distance\" means."
+            },
+            {
+              "id": "o2",
+              "label": "the shortest-looking slanted segment you can draw",
+              "correct": false,
+              "feedback": "Any slant is a hypotenuse — longer than the perpendicular leg. Distance is the perpendicular."
+            },
+            {
+              "id": "o3",
+              "label": "a segment to the nearest labeled point on the line",
+              "correct": false,
+              "feedback": "The nearest point is wherever the PERPENDICULAR lands, not a pre-labeled dot. Drop the perpendicular to find it."
+            },
+            {
+              "id": "o4",
+              "label": "the average of all segments from P to the line",
+              "correct": false,
+              "feedback": "Distance is a single shortest length, not an average — the perpendicular segment."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now P floats ABOVE the line and we drop a perpendicular down to it. One arc from P crosses the line at two points; equal arcs from those two points meet below; the line from P through that meeting point lands on the original line at 90° — the **shortest** path from P to the line.",
+      "figure": "perp-from-point"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Drop it in stages.",
+      "predict": {
+        "prompt": "P is OFF the line. The first arc from P cuts the line in two places. Before the rest of the construction runs — what does that pair of points already guarantee?",
+        "options": [
+          {
+            "id": "equidistant",
+            "label": "Both are the same distance from P, so P sits on their perpendicular bisector — and that bisector is the drop"
+          },
+          {
+            "id": "nearest",
+            "label": "One of the two is the nearest point on the line to P"
+          },
+          {
+            "id": "nothing",
+            "label": "Nothing yet — the two points are just construction scaffolding"
+          }
+        ],
+        "outcomeId": "equidistant",
+        "reveal": "The two cuts are one arc from P, so P is equidistant from both — which puts P on the perpendicular bisector of the segment between them. That bisector is the perpendicular you are dropping; the rest of the construction just finds a second point on it so you can draw it."
+      },
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Drop a perpendicular from external point P to the line. Reveal each stage.",
+        "panels": [
+          {
+            "title": "Arc across the line",
+            "body": "Point on P, open wide enough to reach the line. Swing an arc that cuts the line at two points, C and D.",
+            "figure": "perp-from-point"
+          },
+          {
+            "title": "Arc from C",
+            "body": "Now open past halfway. With the point on C, swing an arc on the FAR side of the line from P.",
+            "figure": "perp-from-point"
+          },
+          {
+            "title": "Same-radius arc from D",
+            "body": "Keep the opening. Arc from D; it meets the C-arc at point E.",
+            "figure": "perp-from-point"
+          },
+          {
+            "title": "Draw PE",
+            "body": "The line through P and E crosses the original line at a right angle — the foot of the perpendicular.",
+            "figure": "perp-from-point"
+          }
+        ],
+        "continueFeedback": "Reveal each compass move in order.",
+        "successFeedback": "PE is perpendicular to the line — the shortest drop from P."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Drop it yourself.",
+      "conceptTag": "cp-perp-from-point",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "perpFromPoint",
+        "span": 6,
+        "target": 4,
+        "start": 2,
+        "prompt": "The arc from P cut the line 6 apart. Open the compass until arcs from those two cuts meet below the line — the smallest whole radius that does it.",
+        "successFeedback": "Radius 4 — the first whole opening that clears half of 6. The foot is equidistant from the two cuts the first arc made, so the drop meets the line square. Notice you never measured an angle: the right angle is a consequence of equal distances, not something you set.",
+        "lowFeedback": "The arcs from the two cuts do not reach each other yet. Together they must span more than the 6 between them — the radius has to clear 3.",
+        "highFeedback": "They do meet, but you were asked for the SMALLEST whole radius that reaches. Come back down until they are just about to come apart."
+      },
+      "predict": {
+        "prompt": "The first arc from external point P cuts the line at two places. What is already guaranteed about P, before any further arcs are drawn?",
+        "options": [
+          {
+            "id": "equidistant",
+            "label": "P is equidistant from both cuts — so P is on their perpendicular bisector"
+          },
+          {
+            "id": "nearest",
+            "label": "One of the two cuts is the nearest point on the line to P"
+          },
+          {
+            "id": "nothing",
+            "label": "Nothing yet — the cuts are only scaffolding for the next step"
+          }
+        ],
+        "outcomeId": "equidistant",
+        "reveal": "P is equidistant from both cuts, because both are one arc-radius from P. That places P on the perpendicular bisector of the segment between them — and that bisector IS the perpendicular you are dropping. The rest of the construction only finds a second point on a line P was already on."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Where's the perpendicular bisector hiding?",
+      "conceptTag": "cp-perp-from-point",
+      "explanationVariants": [
+        "The first arc makes PC = PD, and the last pair makes EC = ED. Both P and E are equidistant from C and D, so line PE is the perpendicular bisector of CD — meeting the line at 90°.",
+        "Same story as before: two points (P and E) equally far from C and D fix CD's perpendicular bisector."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Line PE is perpendicular to the original line because…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "P and E are both equidistant from C and D, so PE is the perpendicular bisector of CD",
+            "correct": true,
+            "feedback": "PC = PD from the first arc, EC = ED from the last — two equidistant points determine CD's perpendicular bisector, which meets CD at 90°."
+          },
+          {
+            "id": "o2",
+            "label": "P was directly above the midpoint of CD to begin with",
+            "correct": false,
+            "feedback": "P can sit anywhere above the line — the FIRST arc makes PC = PD automatically, which is what places P on the bisector."
+          },
+          {
+            "id": "o3",
+            "label": "E is the reflection of P over the line",
+            "correct": false,
+            "feedback": "E does end up as P's mirror image, but that's a CONSEQUENCE of the equidistance construction, not the reason the angle is 90°."
+          },
+          {
+            "id": "o4",
+            "label": "any line from P to the line is perpendicular",
+            "correct": false,
+            "feedback": "Most lines from P hit at a slant. Only the perpendicular-bisector-of-CD line squares the corner — that's the one PE traces."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-from-point__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That perpendicular is special: it's the **shortest segment** from P to the line. Any other path from P slants down and forms the hypotenuse of a right triangle whose leg is the perpendicular — and a hypotenuse always beats its leg. \"Distance from a point to a line\" always means this perpendicular length.",
+      "figure": "cnp-shortest-segment"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Shortest versus slanted.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The perpendicular from P to the line has length 4. A slanted segment from P reaches the line 3 units away from the perpendicular's foot. How long is that slanted segment?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is 4 + 3 — but the perpendicular and the offset are the two LEGS of a right triangle, not a straight sum. Use the Pythagorean theorem: √(4² + 3²) = 5."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the perpendicular itself — the slanted path is longer, the hypotenuse: √(4² + 3²) = 5."
+          }
+        ],
+        "fallbackFeedback": "Right triangle with legs 4 and 3: √(16 + 9) = 5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which is shortest?",
+      "conceptTag": "cp-perp-from-point",
+      "explanationVariants": [
+        "The perpendicular is a LEG of every right triangle formed by a slanted path; the slant is the hypotenuse, always longer. So the perpendicular is shortest.",
+        "Any non-perpendicular route makes a right triangle whose hypotenuse (the route) exceeds the leg (the perpendicular)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Among all segments from P down to the line, which is the shortest?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the perpendicular one",
+            "correct": true,
+            "feedback": "Every other segment is a hypotenuse whose leg is the perpendicular — and the hypotenuse always exceeds the leg."
+          },
+          {
+            "id": "o2",
+            "label": "the one reaching the line's left end",
+            "correct": false,
+            "feedback": "Reaching a far point only lengthens the slant. Shortest is straight down — the perpendicular."
+          },
+          {
+            "id": "o3",
+            "label": "they are all the same length",
+            "correct": false,
+            "feedback": "Slanted paths are strictly longer: each is a hypotenuse over the perpendicular leg. Only the perpendicular is minimal."
+          },
+          {
+            "id": "o4",
+            "label": "the one making a 45° angle with the line",
+            "correct": false,
+            "feedback": "A 45° segment is still slanted — a hypotenuse, longer than the perpendicular leg beneath it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-from-point__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The construction also builds a reflection for free: point E is exactly **P mirrored over the line**. The line is the perpendicular bisector of PE — precisely the reflection property from geometry-foundations. Construction and transformation are two views of one picture.",
+      "figure": "cnp-reflection"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Reflection for free.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the drop-a-perpendicular construction, what is the relationship between P and the point E on the far side?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "E is the reflection of P over the line",
+            "correct": true,
+            "feedback": "The line is the perpendicular bisector of PE, and equal distances on opposite sides is exactly the reflection property — E is P's mirror image."
+          },
+          {
+            "id": "o2",
+            "label": "E is the midpoint of the perpendicular PE",
+            "correct": false,
+            "feedback": "The line crosses PE at its midpoint, but E is an ENDPOINT of PE, not its middle. E is where P lands when mirrored."
+          },
+          {
+            "id": "o3",
+            "label": "E is farther from the line than P is",
+            "correct": false,
+            "feedback": "Reflection preserves distance: E sits exactly as far below the line as P is above it — equal, not farther."
+          },
+          {
+            "id": "o4",
+            "label": "E and P are the same distance apart as C and D",
+            "correct": false,
+            "feedback": "PE and CD are independent lengths — PE depends on P's height, CD on the first arc's radius. They needn't match."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Foot of the drop.",
+      "conceptTag": "cp-perp-from-point",
+      "hints": [
+        "Set coordinates: put the line on the x-axis and P at (0, 4).",
+        "The first arc from P meets the x-axis symmetrically — at (−3, 0) and (3, 0) for a radius-5 arc.",
+        "The perpendicular from P is vertical (x = 0); where does x = 0 meet the line?"
+      ],
+      "explanationVariants": [
+        "With P at (0, 4) and the line on the x-axis, the perpendicular is the vertical line x = 0, meeting the line at the foot (0, 0). Its x-coordinate is 0.",
+        "The foot sits directly below P, sharing P's x-coordinate: x = 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Place the line on the x-axis and P at (0, 4). The perpendicular dropped from P meets the line at its foot. What is the x-coordinate of the foot?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is P's y-coordinate — its HEIGHT above the line, not the foot's position. The foot sits straight below P at x = 0."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is where the first ARC crosses the line, not the foot. The perpendicular lands directly under P: x = 0."
+          }
+        ],
+        "fallbackFeedback": "The foot is directly below P: same x-coordinate, x = 0."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-perp-from-point__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The shortest way down.",
+      "takeaways": [
+        "Perpendicular from P: arc to cut the line at C, D; equal arcs from C, D meet at E; draw PE.",
+        "PE is the perpendicular bisector of CD — P and E both equidistant from C and D.",
+        "That perpendicular is the shortest path from P, and E is P reflected over the line."
+      ],
+      "teaser": "Next: slide a whole line sideways — construct a parallel through a point off the line."
+    }
+  ]
+}

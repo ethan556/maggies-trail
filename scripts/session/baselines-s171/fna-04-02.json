@@ -1,0 +1,235 @@
+{
+ "id": "fna-04-02",
+ "slug": "domain-of-a-composition",
+ "title": "The Domain of a Composition",
+ "courseId": "function-analysis",
+ "chapterId": "ch4-composition-depth",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A composition f(g(x)) can break at **two checkpoints**: x must be allowed into **g**, and g's output must be allowed into **f**. The domain of f∘g is every x passing BOTH tests — simplifying the final formula can silently hide the first one.",
+   "figure": "fna-two-checkpoints"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Checkpoint one: the inner function.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Let g(x) = √(x − 2). What is the smallest x that g accepts?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -2,
+      "feedback": "x − 2 ≥ 0 solves to x ≥ 2; the 2 crosses over as POSITIVE."
+     },
+     {
+      "value": 0,
+      "feedback": "x = 0 makes the inside −2, and √(−2) isn't real. Need x − 2 ≥ 0: x ≥ 2."
+     }
+    ],
+    "fallbackFeedback": "Inside ≥ 0: x − 2 ≥ 0, so x ≥ 2."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Checkpoint two: with f(x) = 1/x, the value g(x) must not be **0**. √(x − 2) = 0 exactly at x = 2. So f(g(x)) = 1/√(x − 2) needs x ≥ 2 **and** x ≠ 2 — together, **x > 2**. The boundary point survives g but crashes f.",
+   "figure": "fna-checkpoint-reciprocal"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Apply both checkpoints.",
+   "conceptTag": "fna-compose-domain",
+   "explanationVariants": [
+    "x = 2 passes into g (giving 0) but 1/0 is undefined — the domain is x > 2, so 2 is excluded.",
+    "Both tests: x ≥ 2 from the root, x ≠ 2 from the fraction. Their overlap starts just past 2."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "f(x) = 1/x and g(x) = √(x − 2). What is the domain of f(g(x))?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x > 2",
+      "correct": true,
+      "feedback": "Exactly — the root demands x ≥ 2 and the fraction throws out x = 2, where the root is 0."
+     },
+     {
+      "id": "o2",
+      "label": "x ≥ 2",
+      "feedback": "x = 2 makes g(x) = 0, and f(0) = 1/0 is undefined — the boundary fails checkpoint two."
+     },
+     {
+      "id": "o3",
+      "label": "x ≠ 2",
+      "feedback": "That forgets checkpoint one: anything below 2 makes the square root of a negative. Both tests together give x > 2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-compose-domain__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "An inner cap instead of a floor.",
+   "conceptTag": "fna-compose-domain",
+   "explanationVariants": [
+    "Inside ≥ 0: 5 − x ≥ 0 flips to x ≤ 5 — the largest allowed x is 5.",
+    "h accepts inputs up to where 5 − x hits 0, i.e. x = 5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "h(x) = √(5 − x). What is the LARGEST x that h accepts?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -5,
+      "feedback": "5 − x ≥ 0 gives x ≤ 5 — the bound is +5. (Subtracting x, not adding, flips which side x lands on.)"
+     },
+     {
+      "value": 0,
+      "feedback": "x = 0 works fine (√5), but so does everything up to 5. The boundary is where 5 − x = 0: x = 5."
+     }
+    ],
+    "fallbackFeedback": "5 − x ≥ 0 ⇒ x ≤ 5."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-compose-domain__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Why simplifying can lie.",
+   "conceptTag": "fna-compose-domain",
+   "explanationVariants": [
+    "(√x)² simplifies to x, but the INNER √x already refused negatives — the composition's domain is x ≥ 0, set before any simplifying.",
+    "The domain is decided by the original chain, not the tidied formula: √x must run first, so x ≥ 0."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "g(x) = √x and f(x) = x². The composite f(g(x)) = (√x)² simplifies to x. What is the domain of f(g(x))?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x ≥ 0 — the inner √x sets the domain before simplification",
+      "correct": true,
+      "feedback": "Right — a negative x never survives the first step, so the composition is only defined for x ≥ 0 even though the simplified formula looks harmless."
+     },
+     {
+      "id": "o2",
+      "label": "All real numbers, since it simplifies to x",
+      "feedback": "The simplified formula hides the chain: x = −4 must pass through √(−4) FIRST, which fails. Domain restrictions are set by the original composition."
+     },
+     {
+      "id": "o3",
+      "label": "x > 0 only",
+      "feedback": "x = 0 is fine: √0 = 0, then 0² = 0. Zero passes both checkpoints, so the domain includes it: x ≥ 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-compose-domain__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Both checkpoints at once.",
+   "conceptTag": "fna-compose-domain",
+   "explanationVariants": [
+    "g needs x ≥ 3; f = 1/(x − 2) needs g(x) ≠ 2, i.e. √(x − 3) ≠ 2, i.e. x ≠ 7. Domain: x ≥ 3 with x ≠ 7 — so 7 is the excluded interior point.",
+    "Checkpoint one admits [3, ∞); checkpoint two removes the single x where the root equals 2: x = 7."
+   ],
+   "hints": [
+    "Checkpoint one: what does the square root demand of x?",
+    "Checkpoint two: f(u) = 1/(u − 2) breaks when u = 2. Set √(x − 3) = 2 and solve.",
+    "√(x − 3) = 2 means x − 3 = 4. Which single x does that exclude?"
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = 1/(x − 2), g(x) = √(x − 3). The domain of f(g(x)) is x ≥ 3 except one value. Which x is excluded?",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 breaks f directly, but g never OUTPUTS values near 2 from x = 2 — x = 2 isn't even in g's domain. Find where √(x − 3) equals 2: x = 7."
+     },
+     {
+      "value": 5,
+      "feedback": "√(5 − 3) = √2 ≈ 1.41, not 2 — f accepts that. The root equals 2 when x − 3 = 4, at x = 7."
+     },
+     {
+      "value": 3,
+      "feedback": "x = 3 gives g = 0 and f(0) = 1/(0 − 2) = −1/2, perfectly fine. The break is where the root hits 2: x = 7."
+     }
+    ],
+    "fallbackFeedback": "√(x − 3) = 2 ⇒ x − 3 = 4 ⇒ x = 7."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-compose-domain__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Two checkpoints, one domain.",
+   "takeaways": [
+    "x must enter g, AND g(x) must enter f.",
+    "Solve inner-function restrictions first, then exclude x where g's output breaks f.",
+    "Never read the domain off a simplified formula."
+   ],
+   "teaser": "Next: running composition in reverse — recognizing a function as a chain."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fna-compose-domain",
+   "concept": {
+    "id": "rem-fna0402-c",
+    "kind": "concept",
+    "body": "Domain of f(g(x)): (1) keep only x that g accepts; (2) among those, remove any x whose g(x) breaks f. Both conditions must hold."
+   },
+   "check": {
+    "id": "rem-fna0402-k",
+    "kind": "check",
+    "body": "Run checkpoint two.",
+    "conceptTag": "fna-compose-domain",
+    "explanationVariants": [
+     "f = 1/x breaks when g(x) = 0: √(x − 4) = 0 at x = 4 — so exclude 4 from x ≥ 4.",
+     "The root's own domain is x ≥ 4; the fraction removes the single boundary point where the root is 0."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "f(x) = 1/x, g(x) = √(x − 4). Which single x-value in g's domain must be excluded from f(g(x))?",
+     "answer": 4,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "x = 0 isn't even in g's domain (√(−4) fails). Within x ≥ 4, the fraction only breaks where the root is 0: x = 4."
+      },
+      {
+       "value": -4,
+       "feedback": "x − 4 = 0 at x = +4 — that's the point where g outputs 0 and 1/0 breaks."
+      }
+     ],
+     "fallbackFeedback": "√(x − 4) = 0 at x = 4; f(0) is undefined."
+    }
+   }
+  }
+ ]
+}

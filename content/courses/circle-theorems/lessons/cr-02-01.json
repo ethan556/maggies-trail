@@ -1,0 +1,305 @@
+{
+  "id": "cr-02-01",
+  "slug": "chords-and-arcs",
+  "title": "Chords & Their Arcs",
+  "courseId": "circle-theorems",
+  "chapterId": "ch2-chords",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-chord-arc",
+      "concept": {
+        "id": "rem-cr-chord-arc-c",
+        "kind": "concept",
+        "body": "A chord joins two points ON the circle. In the same circle (or congruent circles), congruent chords cut congruent arcs and congruent central angles — both directions. The engine is triangle congruence on the radii: SSS (chords to angles) or SAS (angles to chords). Special case: the chord of a 60° arc equals the radius."
+      },
+      "check": {
+        "id": "rem-cr-chord-arc-k",
+        "kind": "check",
+        "body": "Use the lock.",
+        "conceptTag": "cr-chord-arc",
+        "explanationVariants": [
+          "The lock copies the measure: congruent chords cut 40° arcs alike.",
+          "Same length, same arc: 40°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Chord PQ cuts a 40° arc; chord RS ≅ PQ in the same circle. Arc of RS = ?",
+          "answer": 40,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "20 halves — halving is inscribed-angle business. Congruent chords copy arcs: 40°."
+            },
+            {
+              "value": 80,
+              "feedback": "80 doubles — the lock is one-to-one: 40°."
+            }
+          ],
+          "fallbackFeedback": "Congruent chords ⇒ equal arcs: 40°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **chord** is a segment with both endpoints on the circle — the diameter is just the chord that happens to pass through the center. Every chord cuts off an arc, and the two are locked together: **congruent chords cut congruent arcs**, and vice versa (in the same circle, or in congruent circles).",
+      "figure": "cr-chord-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Equal chords sit equally far from the centre.",
+      "predict": {
+        "prompt": "Two chords in the SAME circle happen to have the same length. Must they sit the same distance from the centre?",
+        "options": [
+          {
+            "id": "always",
+            "label": "Always — equal chords are always equally far from the centre"
+          },
+          {
+            "id": "position",
+            "label": "Not necessarily — it depends where around the circle each one sits"
+          },
+          {
+            "id": "parallel",
+            "label": "Only if the two chords are parallel to each other"
+          }
+        ],
+        "outcomeId": "always",
+        "reveal": "Always. Half the chord, the distance to the centre, and the radius form a right triangle — fix the radius and the chord and the distance has no freedom left. Slide the chord and watch the distance readout depend on length alone, never on where it sits."
+      },
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "chordDistance",
+        "radius": 10,
+        "targetLength": 12,
+        "start": 0,
+        "prompt": "Radius 10. Slide the chord until it measures 12.",
+        "successFeedback": "A chord of 12 sits 8 from the centre — half-chord 6, distance 8, radius 10: the 6-8-10 triangle. Every chord of length 12 in this circle sits at that same distance, which IS the theorem: equal chords are equidistant from the centre, and they cut off equal arcs. Distance and chord length are locked together by r² = d² + (half-chord)².",
+        "lowFeedback": "The chord is shorter than 12 — it has drifted too far out. Chords shrink as they leave the centre.",
+        "highFeedback": "The chord is longer than 12 — bring it further from the centre."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate circle measurements while tangent, chord, radius, and power relationships update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "circle-measures-remain-linked"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "diagram-not-to-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-chord-arc"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Chord to arc.",
+      "conceptTag": "cr-chord-arc",
+      "explanationVariants": [
+        "Congruent chords cut congruent arcs: the second arc is also 75°.",
+        "Same circle + same chord length = same arc: 75°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In one circle, chord AB cuts a 75° arc. Chord CD is congruent to AB. What arc does CD cut?",
+        "answer": 75,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 150,
+            "feedback": "150 doubles as if an inscribed angle were involved — the chord-arc lock copies the measure directly: 75°."
+          },
+          {
+            "value": 37.5,
+            "feedback": "37.5 halves — halving belongs to INSCRIBED angles. Congruent chords: equal arcs, 75°."
+          },
+          {
+            "value": 105,
+            "feedback": "105 = 180 − 75 supplements — no supplement here, just the SSS lock: 75°."
+          }
+        ],
+        "fallbackFeedback": "Congruent chords ⇒ congruent arcs: 75°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-chord-arc__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The lock runs through the **central angle**: chord ↔ central angle ↔ arc, each pair matched. A 60° central angle is special: its two radii and the chord form a triangle with two equal sides and 60° between them — equilateral, so **the chord of a 60° arc equals the radius**.",
+      "figure": "cr-chord-central"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The equilateral chord.",
+      "conceptTag": "cr-chord-arc",
+      "explanationVariants": [
+        "A 60° central angle makes the radii-chord triangle equilateral: chord = radius = 9.",
+        "Isosceles with a 60° apex is equilateral — all sides 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 9. How long is the chord that cuts a 60° arc?",
+        "answer": 9,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 is the DIAMETER (the 180° chord). The 60° chord closes an equilateral triangle: 9."
+          },
+          {
+            "value": 4.5,
+            "feedback": "4.5 halves the radius — the 60° apex makes all three sides EQUAL: 9."
+          },
+          {
+            "value": 13.5,
+            "feedback": "13.5 = 1.5 × 9 has no triangle behind it — equilateral means chord = radius = 9."
+          }
+        ],
+        "fallbackFeedback": "60° apex between equal radii ⇒ equilateral ⇒ chord = 9."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-chord-arc__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Arc back to chord.",
+      "conceptTag": "cr-chord-arc",
+      "explanationVariants": [
+        "Equal arcs pull equal central angles (arcs ARE their central angles), and SAS on the radii then matches the chords.",
+        "The lock is two-way: 110° arcs ⇒ congruent chords."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two arcs in the same circle both measure 110°. What follows about their chords?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The chords are congruent — the arc-chord lock runs both directions",
+            "correct": true,
+            "feedback": "Equal arcs give equal central angles, and SAS (radius-angle-radius) matches the chords. Converse secured."
+          },
+          {
+            "id": "o2",
+            "label": "Nothing — the theorem only runs from chords to arcs",
+            "correct": false,
+            "feedback": "The converse holds too: equal arcs ⇒ equal central angles ⇒ SAS ⇒ equal chords."
+          },
+          {
+            "id": "o3",
+            "label": "The chords are parallel",
+            "correct": false,
+            "feedback": "Equal arcs say nothing about orientation — the chords could cross. What's guaranteed is equal LENGTH."
+          },
+          {
+            "id": "o4",
+            "label": "The chords are perpendicular",
+            "correct": false,
+            "feedback": "The theorem promises nothing about the angle between the chords — only their congruence, via the central angles."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-chord-arc__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Longest chord.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 7. What is the length of the longest possible chord?",
+        "answer": 14,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the radius — the champion chord is the DIAMETER, twice that: 14 (cutting a 180° semicircle)."
+          },
+          {
+            "value": 44,
+            "feedback": "44 ≈ 2π(7) is the circumference — a path around, not a chord across. The diameter: 14."
+          }
+        ],
+        "fallbackFeedback": "The diameter, 2 × 7 = 14, cutting a 180° arc — no chord can exceed it."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The hexagon shortcut.",
+      "conceptTag": "cr-chord-arc",
+      "hints": [
+        "Six equal arcs share 360° — how big is each?",
+        "Each 60° arc's chord closes an equilateral triangle with the radii.",
+        "Six such chords make the perimeter."
+      ],
+      "explanationVariants": [
+        "Each arc is 60°, so each chord equals the radius 5 — the inscribed regular hexagon's famous property. Perimeter = 6 × 5 = 30.",
+        "Chord-of-60° = radius: six sides of 5 give 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Six points split a circle of radius 5 into six EQUAL arcs, and consecutive points are joined by chords (a regular hexagon). Find the hexagon's perimeter.",
+        "answer": 30,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 31.42,
+            "feedback": "31.42 ≈ 2π(5) is the CIRCUMFERENCE — the hexagon's straight chords come up short of the curve: 6 × 5 = 30."
+          },
+          {
+            "value": 25,
+            "feedback": "25 = 5² squares the radius — each 60° chord EQUALS the radius, and there are six: 30."
+          },
+          {
+            "value": 60,
+            "feedback": "60 is each arc's degree measure — the perimeter wants lengths: 6 chords × 5 = 30."
+          }
+        ],
+        "fallbackFeedback": "Each 60° chord = r = 5; perimeter = 30 — just under the 31.4 circumference, as straight cuts must be."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-chord-arc__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chords and arcs, locked.",
+      "takeaways": [
+        "Congruent chords ↔ congruent central angles ↔ congruent arcs (SSS/SAS on the radii).",
+        "The 60° chord equals the radius — equilateral triangle, hexagon shortcut.",
+        "The diameter is the longest chord, cutting the 180° semicircle."
+      ],
+      "teaser": "Next: drop a perpendicular from the center and watch it split a chord perfectly."
+    }
+  ]
+}

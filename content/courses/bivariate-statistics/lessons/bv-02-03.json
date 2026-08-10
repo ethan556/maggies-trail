@@ -1,0 +1,422 @@
+{
+  "id": "bv-02-03",
+  "slug": "reading-a-lines-equation",
+  "title": "Reading a Line's Equation",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch2-fitting-a-line",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Once you have a good line, describe it with an equation **y = mx + b** — the same form from functions. The **slope m** is the line's steepness, and the **intercept b** is where it crosses the up-axis (its value when x = 0).",
+      "figure": "line-intercepts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the intercept.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A line of best fit is y = 2x + 3. What is its y-intercept (its value when x = 0)?",
+        "task": "readIntercept",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": 2,
+            "b": 3,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x + 3",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "fit",
+        "rateGoal": "greater",
+        "requiredExplorations": 1,
+        "requiredStageKeys": [
+          "line:fit:intercept"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "That's the slope — the intercept is the constant added on: 3."
+          },
+          {
+            "value": 5,
+            "feedback": "The intercept is b in y = mx + b, which is 3 (the value when x = 0)."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "In y = 2x + 3, the y-intercept is the constant term: 3.",
+        "answerMode": "numeric",
+        "successFeedback": "In y = 2x + 3, the y-intercept is the constant term: 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The slope tells you how much y changes for each step of x. In y = 2x + 3, every increase of 1 in x raises y by 2. The intercept, 3, is the starting height where the line meets the up-axis.",
+      "figure": "bv-line-equation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the slope.",
+      "conceptTag": "bv-which-line",
+      "explanationVariants": [
+        "In y = 4x + 5, the slope is the number multiplying x: 4.",
+        "The coefficient of x is the slope: 4."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A line of best fit is y = 4x + 5. What is its slope?",
+        "task": "readSlope",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": 4,
+            "b": 5,
+            "sourceKind": "equation",
+            "sourceText": "y = 4x + 5",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "fit",
+        "rateGoal": "greater",
+        "requiredExplorations": 1,
+        "requiredStageKeys": [
+          "line:fit:slope"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the intercept — the slope is the number multiplying x: 4."
+          },
+          {
+            "value": 9,
+            "feedback": "The slope is just the coefficient of x: 4, not the sum."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "In y = 4x + 5, the slope is the coefficient of x: 4.",
+        "answerMode": "numeric",
+        "successFeedback": "In y = 4x + 5, the slope is the coefficient of x: 4."
+      },
+      "variant": {
+        "gen": "line-of-fit"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the pieces.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Break down the line of best fit y = 3x + 1.",
+        "task": "exploreParameters",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": 3,
+            "b": 1,
+            "sourceKind": "equation",
+            "sourceText": "y = 3x + 1",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "line:fit:slope",
+          "line:fit:intercept"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [
+          {
+            "title": "Slope",
+            "body": "The 3 in front of x is the slope: y rises 3 for every 1 that x increases."
+          },
+          {
+            "title": "Intercept",
+            "body": "The +1 is the y-intercept: when x = 0, y = 1."
+          },
+          {
+            "title": "Together",
+            "body": "So y = 3x + 1 rises steeply (slope 3) starting from a height of 1 on the up-axis."
+          }
+        ],
+        "explorationFeedback": "Reveal the next step.",
+        "fallbackFeedback": "Reveal the next step.",
+        "answerMode": "explore",
+        "successFeedback": "Exactly — the coefficient of x is the slope; the constant is the intercept."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A negative slope.",
+      "conceptTag": "bv-which-line",
+      "explanationVariants": [
+        "In y = −2x + 20, the slope is −2 — the line falls, matching a negative association.",
+        "The coefficient of x is −2, a negative (falling) slope."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A line of best fit is y = −2x + 20. What is its slope?",
+        "task": "readSlope",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": -2,
+            "b": 20,
+            "sourceKind": "equation",
+            "sourceText": "y = −2x + 20",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "fit",
+        "rateGoal": "greater",
+        "requiredExplorations": 1,
+        "requiredStageKeys": [
+          "line:fit:slope"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "The slope carries its sign — it's −2 (the line falls), not +2."
+          },
+          {
+            "value": 20,
+            "feedback": "That's the intercept — the slope is the coefficient of x: −2."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "In y = −2x + 20, the slope is the coefficient of x: −2.",
+        "answerMode": "numeric",
+        "successFeedback": "In y = −2x + 20, the slope is the coefficient of x: −2."
+      },
+      "variant": {
+        "gen": "line-of-fit"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Slope sign and association.",
+      "conceptTag": "bv-which-line",
+      "explanationVariants": [
+        "A negative slope means the line falls, which matches a negative association.",
+        "Negative slope ↔ negative association (the line and trend both fall)."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A line of best fit has a negative slope. What association does the data show?",
+        "task": "slopeAssociation",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": -1,
+            "b": 0,
+            "sourceKind": "context",
+            "sourceText": "negative slope",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "fit",
+        "rateGoal": "greater",
+        "requiredExplorations": 1,
+        "requiredStageKeys": [
+          "line:fit:slope"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "Negative — y falls as x rises",
+            "claim": "association:negative",
+            "feedback": "Right — a falling line matches a negative association."
+          },
+          {
+            "id": "b",
+            "label": "Positive",
+            "claim": "misconception:b",
+            "feedback": "A negative slope FALLS, which is a NEGATIVE association, not positive."
+          },
+          {
+            "id": "c",
+            "label": "No association",
+            "claim": "misconception:c",
+            "feedback": "A clear negative slope means a negative association, not none."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell",
+            "claim": "misconception:d",
+            "feedback": "The negative slope tells you directly: a negative association."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — a falling line matches a negative association."
+      },
+      "variant": {
+        "gen": "line-of-fit",
+        "form": "slopeAssociation"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read both pieces at once.",
+      "conceptTag": "bv-which-line",
+      "explanationVariants": [
+        "In y = 5x, the slope is 5 and the intercept is 0 (the line passes through the origin).",
+        "y = 5x has slope 5 and intercept 0."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A line of best fit is y = 5x. What is its y-intercept?",
+        "task": "readIntercept",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": 5,
+            "b": 0,
+            "sourceKind": "equation",
+            "sourceText": "y = 5x",
+            "tablePoints": []
+          }
+        ],
+        "targetLineId": "fit",
+        "rateGoal": "greater",
+        "requiredExplorations": 1,
+        "requiredStageKeys": [
+          "line:fit:intercept"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the slope — with no constant added, the intercept is 0."
+          },
+          {
+            "value": 1,
+            "feedback": "There's no constant term, so the line passes through the origin: intercept 0."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "y = 5x is y = 5x + 0, so the y-intercept is 0 — the line passes through the origin.",
+        "answerMode": "numeric",
+        "successFeedback": "y = 5x is y = 5x + 0, so the y-intercept is 0 — the line passes through the origin."
+      },
+      "hints": [
+        "Write y = 5x in the form y = mx + b.",
+        "There's no constant added, so b = 0.",
+        "The y-intercept is 0 — the line passes through the origin."
+      ],
+      "variant": {
+        "gen": "line-of-fit",
+        "form": "interceptZero"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A fitted line's equation y = mx + b gives its slope m and intercept b.",
+      "takeaways": [
+        "The coefficient of x is the slope (steepness and direction).",
+        "The constant term is the y-intercept (value when x = 0).",
+        "A negative slope matches a negative association."
+      ],
+      "teaser": "Next chapter: using the line to make predictions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-which-line",
+      "concept": {
+        "id": "rem-bv0203-c",
+        "kind": "concept",
+        "body": "A fitted line's equation is y = mx + b. The coefficient of x is the slope m (steepness and direction); the constant is the y-intercept b (the value when x = 0)."
+      },
+      "check": {
+        "id": "rem-bv0203-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-which-line",
+        "explanationVariants": [
+          "In y = 3x + 7, the slope is the coefficient of x: 3.",
+          "The number multiplying x is the slope: 3."
+        ],
+        "widget": {
+          "type": "affineRelationshipLab",
+          "prompt": "A line of best fit is y = 3x + 7. What is its slope?",
+          "task": "readSlope",
+          "lines": [
+            {
+              "id": "fit",
+              "label": "Line of best fit",
+              "m": 3,
+              "b": 7,
+              "sourceKind": "equation",
+              "sourceText": "y = 3x + 7",
+              "tablePoints": []
+            }
+          ],
+          "targetLineId": "fit",
+          "rateGoal": "greater",
+          "requiredExplorations": 1,
+          "requiredStageKeys": [
+            "line:fit:slope"
+          ],
+          "tolerance": 0,
+          "choices": [],
+          "numericErrors": [
+            {
+              "value": 7,
+              "feedback": "That's the intercept — the slope is the coefficient of x: 3."
+            },
+            {
+              "value": 10,
+              "feedback": "The slope is just the coefficient of x: 3, not the sum."
+            }
+          ],
+          "pointErrors": [],
+          "authoredStages": [],
+          "explorationFeedback": "Inspect every designated affine state before checking.",
+          "fallbackFeedback": "In y = 3x + 7, the slope is the coefficient of x: 3.",
+          "answerMode": "numeric",
+          "successFeedback": "In y = 3x + 7, the slope is the coefficient of x: 3."
+        }
+      }
+    }
+  ]
+}

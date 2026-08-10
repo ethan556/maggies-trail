@@ -1,0 +1,294 @@
+{
+  "id": "in-04-03",
+  "slug": "the-antiderivative-library",
+  "title": "The Antiderivative Library",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch4-antiderivatives",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every derivative from C1 is now an antiderivative, read backwards:\n\n∫ eˣ dx = eˣ + C\n∫ (1/x) dx = ln|x| + C\n∫ cos x dx = sin x + C\n∫ sin x dx = **−**cos x + C\n\nThe minus on the last one is where nearly every error lives. Check by differentiating: (−cos x)′ = +sin x ✓.",
+      "figure": "dr-e-self-derivative"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The minus sign.",
+      "conceptTag": "in-library",
+      "explanationVariants": [
+        "(cos x)′ = −sin x, so to get +sin x back you must antidifferentiate to −cos x. The minus is forced.",
+        "Differentiate your candidate answer. If it gives −sin x rather than +sin x, you have the sign backwards."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is ∫ sin x dx?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−cos x + C",
+            "correct": true,
+            "feedback": "Right — and the check confirms it: (−cos x)′ = −(−sin x) = sin x ✓."
+          },
+          {
+            "id": "o2",
+            "label": "cos x + C",
+            "correct": false,
+            "feedback": "Differentiate it: (cos x)′ = −sin x, which is the NEGATIVE of what you wanted. The minus must go on the answer."
+          },
+          {
+            "id": "o3",
+            "label": "−sin x + C",
+            "correct": false,
+            "feedback": "That is the derivative of cos, not an antiderivative of sin. Antidifferentiating moves you from sin to cos, not within sin."
+          },
+          {
+            "id": "o4",
+            "label": "sin x + C",
+            "correct": false,
+            "feedback": "Differentiating gives cos x, not sin x. Only −cos x differentiates back to sin x."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-library__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The n = −1 exception.",
+      "conceptTag": "in-library",
+      "explanationVariants": [
+        "The power rule ∫xⁿ = xⁿ⁺¹/(n+1) divides by n + 1 — which is ZERO when n = −1. The formula breaks, and ln|x| steps in to fill the hole.",
+        "It is not an arbitrary exception: it is the one exponent where the rule literally divides by zero."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does ∫ x⁻¹ dx not follow the power rule?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The rule divides by n + 1, which is 0 when n = −1 — the formula breaks down.",
+            "correct": true,
+            "feedback": "Right, and ln|x| is the function that fills the gap: (ln|x|)′ = 1/x exactly."
+          },
+          {
+            "id": "o2",
+            "label": "Because negative powers cannot be integrated.",
+            "correct": false,
+            "feedback": "They can: ∫x⁻² dx = −x⁻¹ + C, perfectly well. Only n = −1 fails, and it fails for an arithmetic reason."
+          },
+          {
+            "id": "o3",
+            "label": "It is an arbitrary convention.",
+            "correct": false,
+            "feedback": "Nothing arbitrary about it — the rule divides by zero. ln|x| is not a patch, it is the honest answer."
+          },
+          {
+            "id": "o4",
+            "label": "Because 1/x has no antiderivative.",
+            "correct": false,
+            "feedback": "It has one: ln|x|, and the absolute value is there so it works on the negative side too."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-library__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The area under a cosine wave.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 90°. The HEIGHT you are tracing is the sine — and it is the accumulated area under the cosine.",
+        "successFeedback": "At 90° the height is 1 — and ∫₀^(π/2) cos x dx = sin(π/2) − sin(0) = 1. The sine IS the accumulation of the cosine, which is just another way of saying that sine differentiates to cosine. The circle has been telling you the Fundamental Theorem all along.",
+        "lowFeedback": "Keep rotating — the height (and so the accumulated area) is still climbing.",
+        "highFeedback": "Past 90°: cosine has gone negative, so the accumulation has started to FALL."
+      },
+      "predict": {
+        "prompt": "You'll rotate from 0° to 90°. What does the point's HEIGHT do along the way?",
+        "options": [
+          {
+            "id": "climb",
+            "label": "Climbs the whole way"
+          },
+          {
+            "id": "updown",
+            "label": "Climbs, then falls back"
+          },
+          {
+            "id": "fall",
+            "label": "Falls the whole way"
+          }
+        ],
+        "outcomeId": "climb",
+        "reveal": "From 0° to 90° the height — the sine — only rises; the fall doesn't begin until past 90° (or past 270° coming out of the trough)."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move the angle and coordinate the circle point, triangle ratios, and trigonometric values.",
+        "invariants": [
+          "radius-remains-one",
+          "coordinates-are-cosine-and-sine"
+        ],
+        "misconceptions": [
+          "sine-is-horizontal",
+          "angle-size-is-arc-height"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-unitCircleExplore",
+        "delayed": false
+      },
+      "conceptTag": "in-library"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With the chain rule running backwards, each library entry gains a partner:\n\n∫ e^(kx) dx = e^(kx)/k + C\n∫ cos(kx) dx = sin(kx)/k + C\n\nThe **division by k** is the price of the inner derivative. Differentiating would have MULTIPLIED by k, so antidifferentiating must divide by it.\n\nThat single observation is the whole of the next chapter, in embryo.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate one from the library.",
+      "conceptTag": "in-library",
+      "explanationVariants": [
+        "An antiderivative of 1/x is ln|x|, so ∫₁^e (1/x) dx = ln e − ln 1 = 1 − 0 = 1.",
+        "That is a rather beautiful fact: the area under 1/x from 1 to e is exactly 1. It is what e is FOR, seen from the other side."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₁^e (1/x) dx, where e ≈ 2.718.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2.718,
+            "feedback": "That is e itself. The integral is ln e − ln 1 = 1 − 0 = 1."
+          },
+          {
+            "value": 0.368,
+            "feedback": "That is 1/e. The antiderivative is ln|x|, not 1/x again."
+          },
+          {
+            "value": 1.718,
+            "feedback": "That is e − 1, which would be ∫₀¹ eˣ dx. Here the integrand is 1/x, whose antiderivative is ln|x|."
+          }
+        ],
+        "fallbackFeedback": "ln e − ln 1 = 1 − 0 = 1 — the area under 1/x from 1 to e is exactly 1."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-library__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The whole library at once.",
+      "conceptTag": "in-library",
+      "hints": [
+        "Antidifferentiate term by term: eˣ stays eˣ, and sin x becomes −cos x.",
+        "F(x) = eˣ − cos x. Evaluate from 0 to π.",
+        "F(π) = e^π − cos π = e^π + 1, and F(0) = 1 − 1 = 0."
+      ],
+      "explanationVariants": [
+        "F(x) = eˣ − cos x, so ∫₀^π = (e^π + 1) − (1 − 1) = e^π + 1 ≈ 24.14.",
+        "The two halves check separately: ∫₀^π eˣ = e^π − 1 ≈ 22.14, and ∫₀^π sin = 2. Their sum is 24.14 ✓."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₀^π (eˣ + sin x) dx, as a decimal to two places. (e^π ≈ 23.14)",
+        "answer": 24.14,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 22.14,
+            "feedback": "That is ∫₀^π eˣ dx = e^π − 1 alone. The sine contributes another 2."
+          },
+          {
+            "value": 2,
+            "feedback": "That is ∫₀^π sin x dx = 2 alone. The exponential contributes e^π − 1 ≈ 22.14 as well."
+          },
+          {
+            "value": 20.14,
+            "feedback": "Sign slip on the sine: ∫ sin = −cos, and −cos π − (−cos 0) = 1 + 1 = +2, so it ADDS."
+          }
+        ],
+        "fallbackFeedback": "F = eˣ − cos x → (e^π + 1) − 0 = e^π + 1 ≈ 24.14."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-library__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every derivative rule, read backwards.",
+      "takeaways": [
+        "∫eˣ = eˣ, ∫(1/x) = ln|x|, ∫cos = sin, ∫sin = −cos. The minus on the last is where the errors live.",
+        "n = −1 is not an arbitrary exception: the power rule literally divides by zero there, and ln|x| fills the hole.",
+        "Always differentiate your answer back. It is the cheapest check in mathematics."
+      ],
+      "teaser": "Last chapter: the chain rule, run in reverse."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-library",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "You are not learning new facts — you are reading old ones backwards. Take each derivative rule from C1, swap the sides, and add a + C. The only one that bites is sin, because its antiderivative carries a minus.",
+        "figure": "dr-e-self-derivative"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Backwards from cosine.",
+        "conceptTag": "in-library",
+        "explanationVariants": [
+          "(sin x)′ = cos x, so ∫ cos x dx = sin x + C. No minus on this one.",
+          "Differentiate your answer to check: (sin x)′ = cos x ✓."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is ∫ cos x dx?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "sin x + C",
+              "correct": true,
+              "feedback": "Right, and no minus sign — that belongs to the OTHER one."
+            },
+            {
+              "id": "o2",
+              "label": "−sin x + C",
+              "correct": false,
+              "feedback": "Differentiate it: (−sin x)′ = −cos x, which is the negative of what you wanted."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

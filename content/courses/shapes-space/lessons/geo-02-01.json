@@ -1,0 +1,367 @@
+{
+  "id": "geo-02-01",
+  "slug": "sorting-by-rules",
+  "title": "Sorting by Rules",
+  "courseId": "shapes-space",
+  "chapterId": "ch2-draw-sort",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A sorting rule is a yes/no question you ask every shape. 'Does it have a right angle?' splits a pile into two: the yeses and the nos. The rule doesn't care about the shape's name — only whether it passes the test.",
+      "figure": "geo3-sort-yesno"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort by one rule.",
+      "conceptTag": "sorting-rules",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Rule: 'Has at least one right (square) angle.' Sort each shape yes or no.",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Yes — has a right angle",
+            "icon": "✅"
+          },
+          {
+            "id": "no",
+            "label": "No right angle",
+            "icon": "❌"
+          }
+        ],
+        "items": [
+          {
+            "id": "sq",
+            "label": "Square",
+            "bucketId": "yes",
+            "feedback": "A square has four right angles — easily passes the one-right-angle test."
+          },
+          {
+            "id": "rect",
+            "label": "Rectangle",
+            "bucketId": "yes",
+            "feedback": "Four square corners — a clear yes."
+          },
+          {
+            "id": "tri",
+            "label": "Triangle with no square corner",
+            "bucketId": "no",
+            "feedback": "This triangle's corners are all tilted — no right angle, so it fails the test."
+          },
+          {
+            "id": "rhom",
+            "label": "Rhombus (tilted corners)",
+            "bucketId": "no",
+            "feedback": "A rhombus has equal sides but its corners are tilted, not square — no right angle."
+          }
+        ],
+        "missFeedback": "Ask ONLY the rule's question: does the shape have a square corner? Ignore everything else.",
+        "successFeedback": "Square and rectangle pass; the tilted-corner triangle and rhombus fail. One rule, two piles."
+      },
+      "predict": {
+        "prompt": "Can a shape have a right angle without BEING a rectangle?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — one square corner isn't the whole club"
+          },
+          {
+            "id": "no",
+            "label": "No — right angles mean rectangle"
+          },
+          {
+            "id": "tri",
+            "label": "Only triangles are allowed to"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "A right triangle carries a square corner and isn't remotely a rectangle — one feature satisfies one rule, not a whole definition. Sorting by a rule means checking THAT rule alone."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which pile?",
+      "conceptTag": "sorting-rules",
+      "explanationVariants": [
+        "The rule asks only about equal sides — a rhombus has four equal sides, so it lands in the YES pile even without square corners.",
+        "Sorting ignores the name: the rhombus passes the equal-sides test, so it's a yes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rule: 'All sides equal.' Where does a rhombus go?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes pile — a rhombus has four equal sides",
+            "correct": true,
+            "feedback": "The rule asks only about equal sides, and the rhombus has them. It passes."
+          },
+          {
+            "id": "b",
+            "label": "No pile — it doesn't have square corners",
+            "feedback": "Square corners aren't the rule here — this rule is 'all sides equal,' which the rhombus passes."
+          },
+          {
+            "id": "c",
+            "label": "Neither — a rhombus isn't a real shape",
+            "feedback": "A rhombus is a real quadrilateral with four equal sides — so it clears this equal-sides rule."
+          },
+          {
+            "id": "d",
+            "label": "Both piles at once",
+            "feedback": "A yes/no rule gives ONE answer per shape. The rhombus has equal sides, so it's a yes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "sorting-rules"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A shape can pass **more than one rule** at once. A square passes 'has a right angle' AND 'all sides equal.' When two rules overlap, the shapes that pass BOTH sit in the shared middle — like two hoops on the floor with an overlap where the double-winners stand.",
+      "figure": "geo3-multi-rule"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The double-winner.",
+      "conceptTag": "sorting-rules",
+      "explanationVariants": [
+        "A square has four right angles AND four equal sides, so it passes both rules and belongs in the overlap.",
+        "Both tests come back yes for a square — it stands in the shared middle of the two hoops."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two rules: 'has a right angle' and 'all sides equal.' Which shape passes BOTH?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A square",
+            "correct": true,
+            "feedback": "Four right angles and four equal sides — a square passes both rules and sits in the overlap."
+          },
+          {
+            "id": "b",
+            "label": "A long rectangle",
+            "feedback": "A rectangle passes 'has a right angle' but its sides aren't all equal — so it fails the second rule and misses the overlap."
+          },
+          {
+            "id": "c",
+            "label": "A tilted rhombus",
+            "feedback": "A rhombus passes 'all sides equal' but has no right angle — it fails the first rule, so not the overlap."
+          },
+          {
+            "id": "d",
+            "label": "No shape can pass two rules",
+            "feedback": "Shapes often pass several rules. A square passes both of these at once — that's exactly the overlap."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "sorting-rules",
+        "form": "bothRules"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort into the overlap.",
+      "conceptTag": "sorting-rules",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Two rules: A = 'has 4 sides', B = 'has a right angle'. Sort each shape by which rules it passes.",
+        "buckets": [
+          {
+            "id": "both",
+            "label": "Passes BOTH A and B",
+            "icon": "🔵🔴"
+          },
+          {
+            "id": "aonly",
+            "label": "Only A (4 sides, no right angle)",
+            "icon": "🔵"
+          },
+          {
+            "id": "neither",
+            "label": "Passes neither",
+            "icon": "⚪"
+          }
+        ],
+        "items": [
+          {
+            "id": "rect",
+            "label": "Rectangle",
+            "bucketId": "both",
+            "feedback": "Four sides (A) and right angles (B) — the overlap."
+          },
+          {
+            "id": "rhom",
+            "label": "Rhombus (tilted)",
+            "bucketId": "aonly",
+            "feedback": "Four sides (A ✓) but tilted corners (B ✗) — only A."
+          },
+          {
+            "id": "tri",
+            "label": "Triangle, no square corner",
+            "bucketId": "neither",
+            "feedback": "Three sides (A ✗) and no right angle (B ✗) — neither pile."
+          },
+          {
+            "id": "sq",
+            "label": "Square",
+            "bucketId": "both",
+            "feedback": "Four sides and right angles — squarely in the overlap."
+          }
+        ],
+        "missFeedback": "Check each rule separately, then place the shape by the combination of yes/no answers.",
+        "successFeedback": "Rectangle and square pass both; the rhombus is A-only; the tilted triangle passes neither."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the overlap.",
+      "conceptTag": "sorting-rules",
+      "explanationVariants": [
+        "The overlap holds shapes passing BOTH rules — a rhombus passes 'equal sides' but not 'right angle,' so it stays out of the overlap.",
+        "To reach the shared middle a shape must clear both tests; the rhombus clears only one."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rules: 'all sides equal' and 'has a right angle.' Which shape does NOT belong in the overlap?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A rhombus — it has equal sides but no right angle",
+            "correct": true,
+            "feedback": "It clears only one rule, so it stays in the equal-sides hoop but outside the shared middle."
+          },
+          {
+            "id": "b",
+            "label": "A square — it belongs in the overlap",
+            "feedback": "A square passes BOTH rules, so it DOES belong in the overlap. The question asks which one doesn't."
+          },
+          {
+            "id": "c",
+            "label": "Every shape belongs in the overlap",
+            "feedback": "Only shapes passing both rules do. A rhombus passes just one, so it's outside — it's the answer."
+          },
+          {
+            "id": "d",
+            "label": "No shape can be in the overlap",
+            "feedback": "A square sits right in it, passing both rules. The rhombus is the one that misses."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "sorting-rules",
+        "form": "outsideOverlap"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The two-rule gate.",
+      "conceptTag": "sorting-rules",
+      "hints": [
+        "Test each rule on its own first.",
+        "Rule 1 'four sides': does a square pass? Rule 2 'all sides equal': does it pass?",
+        "To get through the gate, a shape must pass BOTH."
+      ],
+      "explanationVariants": [
+        "The gate needs 'four sides' AND 'all sides equal.' A square passes both (yes and yes); a rectangle passes the first but fails the second (unequal sides). So only the square gets through.",
+        "Both tests must be yes: square = yes/yes ✓, rectangle = yes/no ✗. The square alone clears the gate."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A gate opens only for shapes with FOUR SIDES and ALL SIDES EQUAL. Which gets through: a square or a 6-by-3 rectangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Only the square — it passes both rules",
+            "correct": true,
+            "feedback": "Square: four sides ✓, all equal ✓. Rectangle: four sides ✓ but sides unequal ✗. The square alone passes."
+          },
+          {
+            "id": "b",
+            "label": "Both — they each have four sides",
+            "feedback": "Four sides is only rule one. Rule two ('all sides equal') stops the 6-by-3 rectangle — its sides differ."
+          },
+          {
+            "id": "c",
+            "label": "Only the rectangle",
+            "feedback": "The rectangle fails 'all sides equal' (6 ≠ 3). The square passes both rules and gets through."
+          },
+          {
+            "id": "d",
+            "label": "Neither passes both",
+            "feedback": "The square passes both: four equal sides with the count of four. It clears the gate."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "sorting-rules",
+        "form": "equalSideGate"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rules make the piles.",
+      "takeaways": [
+        "A sorting rule is a yes/no question asked of every shape.",
+        "A shape can pass several rules; shapes passing two overlapping rules sit in the shared middle.",
+        "For a compound rule, a shape must pass EVERY part."
+      ],
+      "teaser": "next: the shapes that ALMOST fit — and what the near-misses teach."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sorting-rules",
+      "concept": {
+        "id": "rem-sr-c",
+        "kind": "concept",
+        "body": "Quick rewind. A sorting rule is just a **yes/no question**. Ask it about a shape, get one answer, drop the shape in the matching pile. 'Has a right angle?' — square says yes, tilted rhombus says no. The rule ignores the shape's name entirely."
+      },
+      "check": {
+        "id": "rem-sr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sorting-rules",
+        "explanationVariants": [
+          "A rectangle has square corners, so it answers YES to 'has a right angle.'",
+          "The right-angle test comes back yes for a rectangle — into the yes pile."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Rule: 'has a right angle.' Where does a rectangle go?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Yes pile",
+              "correct": true,
+              "feedback": "Four square corners — a clear yes."
+            },
+            {
+              "id": "b",
+              "label": "No pile",
+              "feedback": "A rectangle's corners are all square — it passes the right-angle test, so it's a yes."
+            },
+            {
+              "id": "c",
+              "label": "It can't be sorted",
+              "feedback": "Every shape gets a yes or no. A rectangle has right angles — yes."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

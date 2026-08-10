@@ -1,0 +1,539 @@
+{
+  "id": "tse-04-01",
+  "slug": "solving-two-step-inequalities",
+  "title": "Solving Two-Step Inequalities",
+  "courseId": "two-step-equations",
+  "chapterId": "ch4-two-step-inequalities",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "inequality-flip",
+      "body": "Solving a two-step inequality uses the same undo-moves as an equation — with a POSITIVE coefficient, the direction never changes. 3x + 2 > 14: subtract 2, divide by 3: x > 4."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve a two-step inequality.",
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 3x + 2 > 14. The beam is tilted because the sentence is TRUE — keep it that way while you clear and split.",
+        "a": 3,
+        "b": 2,
+        "c": 14,
+        "relation": "gt",
+        "successFeedback": "x > 4. Two units came off both pans, then both sides split into 3 — and the beam never changed which way it leaned, so the > never had to move.",
+        "unbalancedFeedback": "The tilt reversed, which means the sentence stopped being true. Something happened to one pan only. Undo and pair every move.",
+        "notIsolatedFeedback": "The sentence is still true — every move so far was legal. But x is not alone yet: clear the units from both pans, then split into equal groups.",
+        "missFeedback": "Keep the x-tiles on the pan — they are what you are solving for. Clear the units from both sides, then split.",
+        "notFlippedFeedback": "The comparator and the beam are pointing opposite ways. Nothing here needed a flip — adding, subtracting and splitting into groups all leave the tilt alone."
+      },
+      "predict": {
+        "prompt": "Solving an inequality — are the steps the SAME as an equation's?",
+        "options": [
+          {
+            "id": "until",
+            "label": "Same — until a negative multiplies or divides"
+          },
+          {
+            "id": "diff",
+            "label": "Totally different rules"
+          },
+          {
+            "id": "guess",
+            "label": "No steps — just test numbers"
+          }
+        ],
+        "outcomeId": "until",
+        "reveal": "Add, subtract, and positive scaling all work unchanged — the one landmine is multiplying or dividing by a negative. Everything else is equation muscle memory."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Watch the set while you divide — this time the number is positive.",
+      "widget": {
+        "type": "numberLineRay",
+        "prompt": "3x > 12 is where the last step left you, and the line already shows which numbers make it true. Get x standing on its own — and when you are done, the line must still show those same numbers.",
+        "variable": "x",
+        "start": {
+          "coeff": {
+            "n": 3,
+            "d": 1
+          },
+          "constant": {
+            "n": 12,
+            "d": 1
+          },
+          "relation": "gt",
+          "inclusive": false
+        },
+        "window": {
+          "min": {
+            "n": -2,
+            "d": 1
+          },
+          "max": {
+            "n": 10,
+            "d": 1
+          },
+          "tickStep": {
+            "n": 1,
+            "d": 1
+          }
+        },
+        "step": {
+          "n": 1,
+          "d": 1
+        },
+        "outOfRange": "clamp",
+        "offLattice": "snap",
+        "transforms": [
+          {
+            "id": "div",
+            "factor": {
+              "n": 1,
+              "d": 3
+            },
+            "label": "÷ 3 on both sides"
+          },
+          {
+            "id": "mul",
+            "factor": {
+              "n": 3,
+              "d": 1
+            },
+            "label": "× 3 on both sides"
+          }
+        ],
+        "target": {
+          "coeff": {
+            "n": 1,
+            "d": 1
+          },
+          "constant": {
+            "n": 4,
+            "d": 1
+          },
+          "relation": "gt",
+          "inclusive": false
+        },
+        "requireSolvedForm": true,
+        "successFeedback": "x > 4, and the line finished exactly where it started. Dividing by a POSITIVE 3 keeps every number where it was — the direction only ever changes when the number you divide by is negative. Hold on to this picture: it is the half of the rule the next lesson breaks.",
+        "fallbackFeedback": "Test a number on each side of the endpoint in the original 3x > 12 and see which side really works."
+      },
+      "predict": {
+        "prompt": "You are about to divide both sides of 3x > 12 by 3. What happens to the number line?",
+        "options": [
+          {
+            "id": "still",
+            "label": "Nothing moves — the set is already right, only the writing changes"
+          },
+          {
+            "id": "reflect",
+            "label": "The ray swings to the other side of 4"
+          },
+          {
+            "id": "slide",
+            "label": "The endpoint slides toward 0 because both sides got smaller"
+          }
+        ],
+        "outcomeId": "still",
+        "reveal": "Nothing moves. 3x > 12 and x > 4 are two ways of writing the SAME set, and dividing both sides by a positive number cannot change which numbers work. The ray only ever swings when the divider is negative — that is the whole difference, and it is the next lesson's story."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another positive-coefficient inequality.",
+      "conceptTag": "tse-inequality-positive",
+      "explanationVariants": [
+        "Subtract 1: 4x<15... recompute: 4x - 1 < 15 means 4x < 16, so x < 4.",
+        "Positive coefficient means no flip."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: 4x - 1 < 15",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "<"
+          },
+          {
+            "id": "t2",
+            "label": "4"
+          },
+          {
+            "id": "t3",
+            "label": ">"
+          },
+          {
+            "id": "t4",
+            "label": "16"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a POSITIVE 4 never flips the direction: x<4, not x>4."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (4x<16). Finish by dividing by 4: x<4."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant first, then divide — the inequality sign stays put when dividing by a positive.",
+        "successFeedback": "Yes — add 1 (4x<16), divide by 4 (positive, no flip): x<4."
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqPosA"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Check a solved inequality by testing a number from the solution set — plug it into the ORIGINAL inequality and confirm it holds true.",
+      "figure": "tse-test-solution"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another positive-coefficient inequality.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve: 2x + 4 >= 10",
+        "options": [
+          {
+            "id": "a",
+            "label": "x >= 3",
+            "correct": true,
+            "feedback": "Yes — subtract 4 (2x>=6), divide by 2 (positive, no flip): x>=3."
+          },
+          {
+            "id": "b",
+            "label": "x <= 3",
+            "feedback": "Dividing by a POSITIVE 2 never flips the direction: x>=3, not x<=3."
+          },
+          {
+            "id": "c",
+            "label": "x >= 6",
+            "feedback": "That's only the first step (2x>=6). Finish by dividing by 2: x>=3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The comparator (>, <, ≥, ≤) stays exactly the same throughout, as long as you never multiply or divide by a negative number.",
+      "figure": "inequality-flip"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "One more positive-coefficient inequality.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solve: 5x - 3 <= 12",
+        "options": [
+          {
+            "id": "a",
+            "label": "x <= 3",
+            "correct": true,
+            "feedback": "Yes — add 3 (5x<=15), divide by 5 (positive, no flip): x<=3."
+          },
+          {
+            "id": "b",
+            "label": "x >= 3",
+            "feedback": "Dividing by a POSITIVE 5 never flips the direction: x<=3, not x>=3."
+          },
+          {
+            "id": "c",
+            "label": "x <= 15",
+            "feedback": "That's only the first step (5x<=15). Finish by dividing by 5: x<=3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another check-in.",
+      "conceptTag": "tse-inequality-positive",
+      "explanationVariants": [
+        "Subtract 4 (6x>=12), divide by 6 (positive, no flip): x>=2.",
+        "Positive coefficient means no flip."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: 6x + 4 >= 16",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">="
+          },
+          {
+            "id": "t2",
+            "label": "2"
+          },
+          {
+            "id": "t3",
+            "label": "<="
+          },
+          {
+            "id": "t4",
+            "label": "12"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a POSITIVE 6 never flips the direction: x>=2, not x<=2."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (6x>=12). Finish by dividing by 6: x>=2."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant first, then divide — the inequality sign stays put when dividing by a positive.",
+        "successFeedback": "Yes — subtract 4 (6x>=12), divide by 6 (positive, no flip): x>=2."
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqPosB"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more check-in.",
+      "conceptTag": "tse-inequality-positive",
+      "explanationVariants": [
+        "Add 5 (2x<10), divide by 2 (positive, no flip): x<5.",
+        "Positive coefficient means no flip."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: 2x - 5 < 5",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "<"
+          },
+          {
+            "id": "t2",
+            "label": "5"
+          },
+          {
+            "id": "t3",
+            "label": ">"
+          },
+          {
+            "id": "t4",
+            "label": "10"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a POSITIVE 2 never flips the direction: x<5, not x>5."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (2x<10). Finish by dividing by 2: x<5."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant first, then divide — the inequality sign stays put when dividing by a positive.",
+        "successFeedback": "Yes — add 5 (2x<10), divide by 2 (positive, no flip): x<5."
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqPosC"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier positive-coefficient inequality.",
+      "conceptTag": "tse-inequality-positive",
+      "explanationVariants": [
+        "Subtract 7 (7x>21), divide by 7 (positive, no flip): x>3.",
+        "Positive coefficient means no flip."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Solve: 7x + 7 > 28",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">"
+          },
+          {
+            "id": "t2",
+            "label": "3"
+          },
+          {
+            "id": "t3",
+            "label": "<"
+          },
+          {
+            "id": "t4",
+            "label": "21"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2"
+            ],
+            "feedback": "Dividing by a POSITIVE 7 never flips the direction: x>3, not x<3."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's only the first step (7x>21). Finish by dividing by 7: x>3."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Undo the constant first, then divide — the inequality sign stays put when dividing by a positive.",
+        "successFeedback": "Yes — subtract 7 (7x>21), divide by 7 (positive, no flip): x>3."
+      },
+      "hints": [
+        "Subtract 7 from both sides: 7x > 21.",
+        "Divide both sides by 7 (positive, no flip).",
+        "The result is x > 3."
+      ],
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "tseIneqPosD"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "With a positive coefficient, solving a two-step inequality works exactly like an equation — the direction never changes.",
+      "takeaways": [
+        "Undo addition/subtraction first, then divide.",
+        "Dividing by a POSITIVE number never flips the direction.",
+        "Check by testing a number from the solution set."
+      ],
+      "teaser": "next: what happens when you divide by a negative."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tse-inequality-positive",
+      "concept": {
+        "id": "rem-tip-c",
+        "kind": "concept",
+        "body": "With a positive coefficient, solve a two-step inequality the same way as an equation — the direction never flips. 3x+2>14: subtract 2, divide by 3: x>4."
+      },
+      "check": {
+        "id": "rem-tip-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tse-inequality-positive",
+        "explanationVariants": [
+          "Subtract 2 (3x>12), divide by 3: x>4.",
+          "Positive coefficient means no flip."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Solve: 3x + 2 > 14",
+          "options": [
+            {
+              "id": "a",
+              "label": "x > 4",
+              "correct": true,
+              "feedback": "Yes — x > 4."
+            },
+            {
+              "id": "b",
+              "label": "x < 4",
+              "feedback": "Positive coefficient never flips: x>4."
+            },
+            {
+              "id": "c",
+              "label": "x > 12",
+              "feedback": "You stopped after subtracting 2. Divide by 3 to finish: x > 4."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

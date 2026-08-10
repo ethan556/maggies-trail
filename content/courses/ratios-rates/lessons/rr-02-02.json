@@ -1,0 +1,388 @@
+{
+  "id": "rr-02-02",
+  "slug": "double-number-lines",
+  "title": "Double Number Lines",
+  "courseId": "ratios-rates",
+  "chapterId": "ch2-ratio-tables",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "double-number-line",
+      "body": "A **double number line** is two rulers locked together. Maya runs **4 laps every 6 minutes**: laps go on the top line, minutes on the bottom, and both start at 0. Marks that line up vertically are **equivalent pairs** — 8 laps sits directly above 12 minutes, because both are the 4 : 6 relationship doubled."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Scrub one quantity and watch context, table, graph, equation, and unit rate move together.",
+      "widget": {
+        "type": "covariationScrubber",
+        "prompt": "3 apples cost $2. Move the apple count to 6 and watch every representation preserve the same rate.",
+        "a": 0.6666666666666666,
+        "b": 0,
+        "inputMin": 0,
+        "inputMax": 12,
+        "inputStart": 3,
+        "targetInput": 6,
+        "inputLabel": "apples",
+        "outputLabel": "dollars",
+        "contextTemplate": "{x} apples cost ${y}.",
+        "successFeedback": "At 6 apples the cost is $4. Every representation preserves 2/3 dollar per apple.",
+        "lowFeedback": "Increase the apple count; the cost must scale with it at the same unit rate.",
+        "highFeedback": "Decrease the apple count while keeping the ratio fixed."
+      },
+      "predict": {
+        "prompt": "6 apples is DOUBLE 3 apples. The price becomes…",
+        "options": [
+          {
+            "id": "four",
+            "label": "$4 — it doubles too"
+          },
+          {
+            "id": "five",
+            "label": "$5 — up by 3"
+          },
+          {
+            "id": "two",
+            "label": "$2 — the price is the price"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Double the apples, double the dollars: $2 → $4. The two lines stretch together in lockstep — adding 3 to the price confuses the apple count with the cost."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Coordinate a ratio across context, table, graph, and equation.",
+        "invariants": [
+          "constant-ratio",
+          "paired-scaling"
+        ],
+        "misconceptions": [
+          "additive-not-multiplicative",
+          "representation-disconnect"
+        ],
+        "representations": [
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "proportional-covariation",
+        "delayed": true,
+        "translationFrom": "table",
+        "translationTo": "graph",
+        "counterfactualPrompt": "Change the input by one unit. Predict every other representation before moving the scrubber.",
+        "explanation": {
+          "prompt": "Why do the table, graph, equation, and story always agree?",
+          "options": [
+            {
+              "id": "same",
+              "label": "They encode the same input-output rule.",
+              "correct": true,
+              "feedback": "Yes — each view is a translation of the same relationship."
+            },
+            {
+              "id": "separate",
+              "label": "Each view uses a different rule.",
+              "correct": false,
+              "feedback": "Different views must preserve the same pairs and rate."
+            }
+          ]
+        }
+      },
+      "conceptTag": "double-number-line"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read straight down.",
+      "conceptTag": "double-number-line",
+      "widget": {
+        "type": "numeric",
+        "prompt": "On Maya's double number line (4 laps every 6 minutes), what number sits below 12 laps?",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 keeps the 2-gap between 12 and 14 — but the lines lock by MULTIPLYING. 12 laps is 3 copies of 4, so 3 × 6 = 18 minutes."
+          },
+          {
+            "value": 12,
+            "feedback": "12 copies the laps number straight down. The bottom line runs on its own scale: 12 laps = 3 × 4, so minutes = 3 × 6 = 18."
+          }
+        ],
+        "fallbackFeedback": "12 laps = 3 copies of 4 laps, so 3 × 6 = 18 minutes."
+      },
+      "hints": [
+        "How many copies of 4 laps is 12?",
+        "3 copies.",
+        "Each copy is 6 minutes."
+      ],
+      "explanationVariants": [
+        "12 laps is the ×3 mark, so the minutes mark is 6 × 3 = 18.",
+        "Both lines stretch by the same ×3."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Lines shrink too.",
+      "conceptTag": "double-number-line",
+      "explanationVariants": [
+        "Halve both: 4 laps ÷ 2 = 2 laps sits above 6 ÷ 2 = 3 minutes.",
+        "The half-way marks line up: 2 over 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same runner, same lines. How many minutes line up under 2 laps?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 subtracts 2 from 6, keeping a gap. The lines HALVE together: 4 ÷ 2 = 2 laps over 6 ÷ 2 = 3 minutes."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the minutes under 4 laps. For 2 laps — half as many — the minutes halve too: 3."
+          }
+        ],
+        "fallbackFeedback": "2 laps is half of 4, so the minutes halve: 6 ÷ 2 = 3."
+      },
+      "hints": [
+        "2 laps is what fraction of 4?",
+        "Half.",
+        "Half of 6 minutes."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrDoubleLineSmall"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why both **start at 0**: zero laps takes zero minutes — the relationship has no head start. That shared zero is what makes vertical alignment mean something: every pair of stacked marks is the SAME multiplier applied to both lines. Slide right, and the two numbers grow in lockstep.",
+      "figure": "double-number-line"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Catch the broken line.",
+      "conceptTag": "double-number-line",
+      "explanationVariants": [
+        "Starting the bottom line at 2 gives every pair a head start — pairs would differ by addition, not multiplication.",
+        "With a shared 0, stacked marks share a multiplier; without it, they don't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student draws Maya's lines but starts the minutes line at 2 instead of 0. What goes wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Stacked marks no longer share a multiplier — the pairs stop being equivalent ratios",
+            "correct": true,
+            "feedback": "Right — a head start turns the lock-step into addition. Both lines must anchor at 0."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — the gap stays the same",
+            "feedback": "A constant GAP is exactly the additive trap. Ratios need a shared 0 so pairs share a multiplier."
+          },
+          {
+            "id": "c",
+            "label": "The top line must also start at 2 to fix it",
+            "feedback": "Shifting both lines still breaks it — 2 laps would stack over 4 minutes, and 2 : 4 isn't 4 : 6."
+          }
+        ]
+      },
+      "hints": [
+        "What does 0 laps cost in minutes?",
+        "Zero — no head start.",
+        "Alignment means same multiplier, which needs shared 0."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrZeroAnchor"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which pairs stack?",
+      "conceptTag": "double-number-line",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Maya's lines: 4 laps every 6 minutes. Sort each pair.",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Stacks (equivalent)"
+          },
+          {
+            "id": "no",
+            "label": "Doesn't stack"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "8 laps over 12 minutes",
+            "bucketId": "yes",
+            "feedback": "Both parts ×2 — the marks stack exactly."
+          },
+          {
+            "id": "p2",
+            "label": "2 laps over 3 minutes",
+            "bucketId": "yes",
+            "feedback": "Both parts ÷2 — shrinking stacks too."
+          },
+          {
+            "id": "p3",
+            "label": "6 laps over 8 minutes",
+            "bucketId": "no",
+            "feedback": "6 : 8 shrinks to 3 : 4, not 2 : 3 — this pair added 2 to each part of 4 : 6 and drifted off alignment."
+          },
+          {
+            "id": "p4",
+            "label": "12 laps over 18 minutes",
+            "bucketId": "yes",
+            "feedback": "Both parts ×3 — stacked."
+          }
+        ],
+        "missFeedback": "Shrink each pair to simplest form: pairs that return to 2 : 3 (the simplest form of 4 : 6) stack; anything built by adding drifts off the line.",
+        "successFeedback": "Sorted — alignment is multiplication made visible."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Between the marks.",
+      "conceptTag": "double-number-line",
+      "explanationVariants": [
+        "6 laps is 1.5 copies of 4, so minutes are 6 × 1.5 = 9 — halfway between the 6 and 12 marks.",
+        "Split the 4 : 6 step in half (2 : 3) and add it to the first mark: 4 + 2 laps over 6 + 3 minutes."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Maya's lines again. What number lines up under 6 laps?",
+        "answer": 9,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 keeps the 2-gap (6 + 2). 6 laps is one-and-a-half copies of 4, so minutes are 6 × 1.5 = 9."
+          },
+          {
+            "value": 12,
+            "feedback": "12 sits under 8 laps. 6 laps is between the marks: 1.5 × 6 = 9 minutes."
+          }
+        ],
+        "fallbackFeedback": "6 laps = 1.5 × 4 laps, so 1.5 × 6 = 9 minutes."
+      },
+      "hints": [
+        "6 laps is how many copies of 4?",
+        "One and a half.",
+        "1.5 × 6 minutes."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrDoubleLineLarge"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the line backwards.",
+      "conceptTag": "double-number-line",
+      "hints": [
+        "This time you know the MINUTES.",
+        "15 minutes is how many copies of 6?",
+        "2.5 copies — apply to laps."
+      ],
+      "explanationVariants": [
+        "15 = 2.5 × 6, so laps = 2.5 × 4 = 10 — the lines read in both directions.",
+        "Going bottom-to-top uses the same multiplier: ×2.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Maya keeps her 4-laps-per-6-minutes pace. How many laps line up above 15 minutes?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "laps",
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 keeps the 2-gap (15 − 2). Find the multiplier instead: 15 ÷ 6 = 2.5, and 2.5 × 4 = 10 laps."
+          },
+          {
+            "value": 9,
+            "feedback": "9 rounds 15 ÷ 6 down to 1.5 copies... but 15 ÷ 6 = 2.5. Laps: 2.5 × 4 = 10."
+          }
+        ],
+        "fallbackFeedback": "15 ÷ 6 = 2.5 copies, so laps = 2.5 × 4 = 10."
+      },
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrDoubleLineReverse"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two rulers, one lockstep.",
+      "takeaways": [
+        "Both lines share 0 — no head starts.",
+        "Stacked marks share one multiplier, up or down the line.",
+        "The line reads both ways: laps from minutes, minutes from laps."
+      ],
+      "teaser": "last lesson of the chapter: pick the right tool for each problem."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "double-number-line",
+      "concept": {
+        "id": "rem-dnl-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Count the copies.** On a 4-laps-per-6-minutes line, ask how many copies of 4 laps you have; the minutes take the SAME number of copies of 6. Three copies of 4 laps stacks over three copies of 6 minutes."
+      },
+      "check": {
+        "id": "rem-dnl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "double-number-line",
+        "explanationVariants": [
+          "8 laps is 2 copies of 4, so 2 copies of 6 minutes: 12.",
+          "The ×2 mark on top stacks over the ×2 mark below."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "4 laps every 6 minutes. What stacks under 8 laps?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "minutes",
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "10 keeps a gap of 2. Count copies instead: 8 laps = 2 × 4, so minutes = 2 × 6 = 12."
+            },
+            {
+              "value": 8,
+              "feedback": "8 copies the top number down. The bottom line has its own scale: 2 × 6 = 12."
+            }
+          ],
+          "fallbackFeedback": "8 = 2 × 4 laps, so 2 × 6 = 12 minutes."
+        }
+      }
+    }
+  ]
+}

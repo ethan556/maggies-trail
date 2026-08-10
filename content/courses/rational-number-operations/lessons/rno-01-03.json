@@ -1,0 +1,306 @@
+{
+  "id": "rno-01-03",
+  "slug": "adding-any-two-integers",
+  "title": "Adding Any Two Integers",
+  "courseId": "rational-number-operations",
+  "chapterId": "ch1-adding-integers",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "integer-jump",
+      "body": "One rule set handles any two integers: check the signs first. Same sign? Add and keep. Different signs? Subtract and keep the bigger one's sign."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build it with chips — cancellation only happens between OPPOSITE signs.",
+      "widget": {
+        "type": "integerChips",
+        "prompt": "Model −8 + (−5): place the chips and read the total.",
+        "target": -13,
+        "maxPos": 6,
+        "maxNeg": 15,
+        "successFeedback": "Thirteen negative chips, zero cancellations: −8 + (−5) = −13. Same sign means the magnitudes add and the sign stays.",
+        "lowFeedback": "Your pile is MORE negative than −13 — that is more chips than 8 + 5 supplies. Same-sign addition adds the magnitudes exactly: 13 negatives, no more.",
+        "highFeedback": "Too positive — either positive chips snuck in and cancelled, or negatives are missing. −8 + (−5) has no positives at all: 13 negative chips with nothing to cancel them."
+      },
+      "predict": {
+        "prompt": "You'll model −8 + (−5) with chips: 8 negatives, then 5 more negatives. How many zero pairs will cancel?",
+        "options": [
+          {
+            "id": "none",
+            "label": "None — every chip is negative, total −13"
+          },
+          {
+            "id": "five",
+            "label": "Five pairs — leaving −3"
+          },
+          {
+            "id": "flip",
+            "label": "They all cancel to +13"
+          }
+        ],
+        "outcomeId": "none",
+        "reveal": "A zero pair needs one positive AND one negative — thirteen negatives have nothing to cancel against, so the pile is simply −13. Getting −3 comes from subtracting the magnitudes, but same-sign addition ADDS them."
+      },
+      "conceptTag": "rno-add-mixed",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents add mixed.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add mixed must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add mixed."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rational-number-operations:rno-add-mixed",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now different signs.",
+      "conceptTag": "rno-add-mixed",
+      "explanationVariants": [
+        "Different signs: 11−6=5, keep the sign of 11 (positive): 5.",
+        "Subtract magnitudes, keep the bigger sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-6 + 11 = ?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "Different signs means SUBTRACT the magnitudes: 11−6=5, not add."
+          },
+          {
+            "value": -5,
+            "feedback": "11 has the bigger magnitude and it's positive, so the answer is 5."
+          }
+        ],
+        "fallbackFeedback": "11−6=5, and 11 is bigger and positive: 5."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "mixedPos"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A quick habit: glance at both numbers' signs before doing anything else — that one glance tells you whether to add or subtract the magnitudes.",
+      "figure": "rno-same-sign"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Same sign again.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 + 14 = ?",
+        "answer": 23,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -23,
+            "feedback": "Both positive, so the sum is positive: 9+14=23."
+          },
+          {
+            "value": 5,
+            "feedback": "Same sign means ADD: 9+14=23, not subtract."
+          }
+        ],
+        "fallbackFeedback": "9+14=23."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Watch for opposites — they're a special case of different signs where the magnitudes match exactly, always giving 0.",
+      "figure": "rno-opposites-cancel"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Spot the opposites.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-9 + 9 = ?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "These are opposites — they cancel to 0, not 18."
+          },
+          {
+            "value": -18,
+            "feedback": "These are opposites — they cancel to 0, not -18."
+          }
+        ],
+        "fallbackFeedback": "-9 and 9 are opposites; they cancel to 0."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Mixed practice.",
+      "conceptTag": "rno-add-mixed",
+      "explanationVariants": [
+        "Both negative: add 10+7=17, keep negative: -17.",
+        "Same sign means add and keep."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-10 + (-7) = ?",
+        "answer": -17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "Both negative, so the sum stays negative: -17."
+          },
+          {
+            "value": -3,
+            "feedback": "Same sign means ADD: 10+7=17, so -17."
+          }
+        ],
+        "fallbackFeedback": "-10 + (-7) = -17."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "mixedSameNeg"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Different signs, negative wins.",
+      "conceptTag": "rno-add-mixed",
+      "explanationVariants": [
+        "16−10=6, and 16 (negative) has the bigger magnitude, so the answer is -6.",
+        "Subtract magnitudes, keep the bigger sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-16 + 10 = ?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "-16 has the bigger magnitude, so the answer stays negative: -6."
+          },
+          {
+            "value": -26,
+            "feedback": "Different signs means SUBTRACT the magnitudes: 16−10=6, not add."
+          }
+        ],
+        "fallbackFeedback": "16−10=6, and -16 has the bigger magnitude: -6."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "mixedNeg"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full mixed challenge.",
+      "conceptTag": "rno-add-mixed",
+      "explanationVariants": [
+        "Different signs: 25−19=6, keep the sign of 25 (positive): 6.",
+        "Subtract magnitudes, keep the bigger sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-19 + 25 = ?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 44,
+            "feedback": "Different signs means SUBTRACT the magnitudes: 25−19=6, not add."
+          },
+          {
+            "value": -6,
+            "feedback": "25 has the bigger magnitude and it's positive, so the answer is 6."
+          }
+        ],
+        "fallbackFeedback": "25−19=6, and 25 is bigger and positive: 6."
+      },
+      "hints": [
+        "Check the signs: -19 and 25 are different.",
+        "Subtract the magnitudes: 25−19=6.",
+        "25 has the bigger magnitude and it's positive, so the answer is 6."
+      ],
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "mixedChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Check the signs first — same means add and keep, different means subtract and keep the bigger one's sign.",
+      "takeaways": [
+        "Same sign: add magnitudes, keep the sign.",
+        "Different signs: subtract magnitudes, keep the bigger one's sign.",
+        "Opposites always sum to 0."
+      ],
+      "teaser": "next chapter: subtracting integers using the same ideas."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rno-add-mixed",
+      "concept": {
+        "id": "rem-ram-c",
+        "kind": "concept",
+        "body": "Check the signs first: same sign means add magnitudes and keep the sign; different signs means subtract magnitudes and keep the bigger one's sign."
+      },
+      "check": {
+        "id": "rem-ram-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-add-mixed",
+        "explanationVariants": [
+          "Both negative: add 8+5=13, keep negative: -13.",
+          "Same sign means add and keep."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "-8 + (-5) = ?",
+          "answer": -13,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 13,
+              "feedback": "Both negative; sum stays negative: -13."
+            },
+            {
+              "value": -3,
+              "feedback": "Same sign means add: 8+5=13, so -13."
+            }
+          ],
+          "fallbackFeedback": "-8 + (-5) = -13."
+        }
+      }
+    }
+  ]
+}

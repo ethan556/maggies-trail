@@ -1,0 +1,271 @@
+{
+  "id": "cx-04-01",
+  "slug": "perimeter-on-plane",
+  "title": "Perimeter on the Plane",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch4-perimeter-area",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-perimeter",
+      "concept": {
+        "id": "rem-cx-perimeter-c",
+        "kind": "concept",
+        "body": "Perimeter on the plane: walk the vertices IN ORDER, computing each side with the distance formula (axis-aligned sides read directly as coordinate differences), and sum — including the final side back to the start. Keep radicals exact until the last step: √20 + √20 = 2√20 = 4√5, never premature decimals."
+      },
+      "check": {
+        "id": "rem-cx-perimeter-k",
+        "kind": "check",
+        "body": "One lap.",
+        "conceptTag": "cx-perimeter",
+        "explanationVariants": [
+          "Sides: 3, 4, and √(9 + 16) = 5.",
+          "3 + 4 + 5 = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Triangle (0, 0), (3, 0), (3, 4). Perimeter = ?",
+          "answer": 12,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 = 3 + 4 forgets the trip home — the hypotenuse is 5: total 12."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is only the hypotenuse — the lap is 3 + 4 + 5 = 12."
+            }
+          ],
+          "fallbackFeedback": "3 + 4 + 5 = 12."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Perimeter is the distance formula on a lap: sum every side, walking the vertices IN ORDER. Two disciplines carry the chapter — keep radicals EXACT until the final step (√20 + √20 = 2√20, never 4.47 + 4.47), and never skip a side: n vertices, n sides, back to the start.",
+      "figure": "cx-perimeter-lap"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The 3-4-5 lap.",
+      "conceptTag": "cx-perimeter",
+      "explanationVariants": [
+        "Sides: (0,0)→(6,0) is 6; (6,0)→(6,8) is 8; the hypotenuse home is √(36 + 64) = 10.",
+        "6 + 8 + 10 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle (0, 0), (6, 0), (6, 8). Perimeter = ?",
+        "answer": 24,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 stops before the trip home — the hypotenuse √(6² + 8²) = 10 completes the lap: 24."
+          },
+          {
+            "value": 48,
+            "feedback": "48 doubles — or computes 6 × 8 area-style. The lap is 6 + 8 + 10 = 24."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is just the hypotenuse — add the two axis-aligned legs: 24."
+          }
+        ],
+        "fallbackFeedback": "6 + 8 + √100 = 24."
+      },
+      "variant": {
+        "gen": "coord-perimeter"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The radical lap.",
+      "conceptTag": "cx-perimeter",
+      "explanationVariants": [
+        "All four sides of the rhombus square to 25 — chapter 3's own figure.",
+        "Four sides of 5: perimeter 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The rhombus (0, 0), (5, 0), (8, 4), (3, 4) from last chapter. Perimeter = ?",
+        "answer": 20,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is one SQUARED side — root first (5), then lap: 4 × 5 = 20."
+          },
+          {
+            "value": 10,
+            "feedback": "10 counts two sides — a rhombus laps all four: 20."
+          },
+          {
+            "value": 100,
+            "feedback": "100 sums the four squared sides — root before summing: 4√25 = 20."
+          }
+        ],
+        "fallbackFeedback": "4 × √25 = 20."
+      },
+      "variant": {
+        "gen": "coord-perimeter",
+        "form": "rhombus"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Mixed laps demand exact bookkeeping. The trapezoid (0,0), (8,0), (6,4), (2,4): bases 8 and 4 are free reads; each leg is √(2² + 4²) = √20 = 2√5. Perimeter: 12 + 4√5 exactly — decimalize (≈ 20.94) only at the very end, if at all.",
+      "figure": "cx-trapezoid-lap"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Exact, then decimal.",
+      "conceptTag": "cx-perimeter",
+      "explanationVariants": [
+        "Bases 8 + 4 = 12; legs 2√20 = 4√5 ≈ 8.94.",
+        "12 + 4√5 ≈ 20.94."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Trapezoid (0, 0), (8, 0), (6, 4), (2, 4). Perimeter (2 decimals) = ?",
+        "answer": 20.94,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 16.47,
+            "feedback": "16.47 counts one leg — the trapezoid has TWO congruent legs of √20: 12 + 2√20 ≈ 20.94."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is this trapezoid's AREA ((8+4)/2 × 4) — the perimeter walks the boundary: ≈ 20.94."
+          },
+          {
+            "value": 20,
+            "feedback": "20 = 8 + 4 + 4 + 4 reads the legs as height 4 — they slant: √(2² + 4²) each. ≈ 20.94."
+          }
+        ],
+        "fallbackFeedback": "8 + 4 + 2√20 = 12 + 4√5 ≈ 20.94."
+      },
+      "variant": {
+        "gen": "coord-perimeter",
+        "form": "trapezoidDecimal"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Radical hygiene.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A square's four sides each measure √18. Best form for the perimeter?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4√18 = 12√2 — simplified exact radical, decimalized only if the task demands it",
+            "correct": true,
+            "feedback": "√18 = 3√2, so 4(3√2) = 12√2 ≈ 16.97 — exact form survives further algebra; early decimals compound rounding."
+          },
+          {
+            "id": "o2",
+            "label": "4 × 4.24 = 16.96",
+            "correct": false,
+            "feedback": "Rounding √18 to 4.24 first LOSES precision (true value ≈ 16.9706) — keep 12√2 until the end."
+          },
+          {
+            "id": "o3",
+            "label": "√72, by adding under the root",
+            "correct": false,
+            "feedback": "√18 + √18 ≠ √36 — radicals don't add under the root. 4√18 = 12√2."
+          },
+          {
+            "id": "o4",
+            "label": "18, dropping the root",
+            "correct": false,
+            "feedback": "√18 ≈ 4.24, not 18 — the perimeter is 12√2 ≈ 16.97."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Isosceles receipts.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle (−3, 0), (3, 0), (0, 4) — the symmetric placement from last chapter. Perimeter = ?",
+        "answer": 16,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 sums the two slants (5 + 5) — the 6-unit base completes the lap: 16."
+          },
+          {
+            "value": 11,
+            "feedback": "11 = 6 + 5 walks one slant — symmetry gives TWO: 6 + 5 + 5 = 16."
+          }
+        ],
+        "fallbackFeedback": "Slants √(9 + 16) = 5 each (symmetry!), base 6: perimeter 16."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The fence bid.",
+      "conceptTag": "cx-perimeter",
+      "hints": [
+        "Walk the five vertices in order — five sides, including the return to the start.",
+        "Axis-aligned reads: (0,0)→(9,0) = 9 and (9,0)→(9,5) = 5. Diagonals: (9,5)→(5,8), (5,8)→(0,8), (0,8)→(0,0).",
+        "√(4² + 3²) is a familiar number."
+      ],
+      "explanationVariants": [
+        "Sides: 9, 5, √(16 + 9) = 5, 5, 8 — total 32.",
+        "9 + 5 + 5 + 5 + 8 = 32 meters of fence."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A pentagon-shaped yard has corners (0,0), (9,0), (9,5), (5,8), (0,8). Fence the whole boundary: total length = ?",
+        "answer": 32,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27 misses the (9,5)→(5,8) diagonal — it's a 3-4-5 in disguise: √(16+9) = 5. Total 32."
+          },
+          {
+            "value": 24,
+            "feedback": "24 = 9 + 5 + 5 + 5 stops before the last side home — the (0,8)→(0,0) side adds 8: total 32."
+          },
+          {
+            "value": 33.4,
+            "feedback": "33.4 misprices the diagonal as √(4² + 5²) ≈ 6.4 — the drop is 8 − 5 = 3: √25 = 5, total 32."
+          }
+        ],
+        "fallbackFeedback": "9 + 5 + 5 + 5 + 8 = 32."
+      },
+      "variant": {
+        "gen": "coord-perimeter",
+        "form": "pentagon"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Laps with receipts.",
+      "takeaways": [
+        "Perimeter = ordered sum of side distances — n vertices, n sides, home again.",
+        "Keep radicals exact (√20 = 2√5); decimalize once, at the end.",
+        "Axis-aligned sides are free reads; diagonals go through the distance formula."
+      ],
+      "teaser": "Next: the area inside — boxed, decomposed, and (soon) shoelaced."
+    }
+  ]
+}

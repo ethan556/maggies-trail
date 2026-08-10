@@ -1,0 +1,294 @@
+{
+  "id": "ns-01-03",
+  "slug": "dividing-fractions-in-context",
+  "title": "Dividing Fractions in Context",
+  "courseId": "number-system",
+  "chapterId": "ch1-dividing-fractions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Mixed numbers need one extra step before flip-and-multiply: **convert to an improper fraction first.** 1 1/2 becomes 3/2 (2 halves plus 1 more half = 3 halves). Then divide as usual: 1 1/2 ÷ 1/4 = 3/2 ÷ 1/4 = 3/2 × 4 = 12/2 = **6**.",
+      "figure": "fm-divide-unit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Convert first.",
+      "conceptTag": "fraction-division-context",
+      "widget": {
+        "type": "fractionBar",
+        "prompt": "Build 2 1/3 as ONE improper fraction: set the denominator to thirds, then add thirds until the bar reaches two wholes and one more third.",
+        "targetNum": 7,
+        "targetDen": 3,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 1,
+        "commonFractions": [
+          {
+            "num": 3,
+            "den": 7,
+            "feedback": "3/7 is the numerator and denominator swapped. The denominator names the SIZE of each piece (thirds), and the numerator counts how many you have."
+          },
+          {
+            "num": 2,
+            "den": 3,
+            "feedback": "2/3 is only the fractional part of 2 1/3 — the two whole bars have gone missing. Each whole is 3 thirds, so they are worth 6 thirds on their own."
+          },
+          {
+            "num": 6,
+            "den": 3,
+            "feedback": "6/3 is exactly the two wholes and nothing else. The extra 1/3 still has to be counted in."
+          }
+        ],
+        "lowFeedback": "The bar is still short of 2 1/3. Keep the pieces as thirds and add more of them.",
+        "highFeedback": "The bar has gone past 2 1/3. Take thirds away — you need two wholes' worth plus exactly one more.",
+        "successFeedback": "7/3. Two wholes are 6 thirds, plus the extra 1/3 makes 7 — which is why the rule multiplies the whole by the denominator and adds the numerator. The bar is the same length either way; only the notation changed."
+      },
+      "hints": [
+        "How many thirds in 2 wholes?",
+        "6 thirds, plus 1 more.",
+        "7/3."
+      ],
+      "explanationVariants": [
+        "2 wholes = 6 thirds, plus 1 more third = 7/3.",
+        "Multiply the whole by the denominator, then add the numerator: 2×3+1=7."
+      ],
+      "predict": {
+        "prompt": "You'll rewrite 2 1/3 in thirds. The 2 wholes alone are worth…",
+        "options": [
+          {
+            "id": "six",
+            "label": "6 thirds — each whole splits into 3"
+          },
+          {
+            "id": "two",
+            "label": "2 thirds — the digit carries straight over"
+          },
+          {
+            "id": "five",
+            "label": "5 thirds — one less than double"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "Each whole is 3 thirds, so 2 wholes are 2 × 3 = 6 thirds; add the extra third and 2 1/3 = 7/3. Writing 2/3 keeps the digits but throws away both WHOLES — the single most common slip in this conversion."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Full mixed-number division.",
+      "conceptTag": "fraction-division-context",
+      "explanationVariants": [
+        "1 1/2 = 3/2; then 3/2 ÷ 1/4 = 3/2 × 4 = 12/2 = 6.",
+        "Convert first, then flip-and-multiply as usual."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 1 1/2 ÷ 1/4.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 comes from dropping the whole number and dividing only 1/2 ÷ 1/4. Convert the WHOLE mixed number first: 1 1/2 = 3/2, then 3/2 ÷ 1/4 = 6."
+          },
+          {
+            "value": 12,
+            "feedback": "12 stops after multiplying (3/2 × 4 = 12/2) without finishing the division. 12/2 simplifies to 6."
+          }
+        ],
+        "fallbackFeedback": "1 1/2 = 3/2; 3/2 × 4/1 = 12/2 = 6."
+      },
+      "variant": {
+        "gen": "unit-frac-divide",
+        "form": "mixedDivide"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Word problems hide a division underneath. \"How many 1/4-cup scoops fit in 3 1/2 cups?\" is exactly **3 1/2 ÷ 1/4**. Find the two quantities — the total, and the piece size — and the operation is always total ÷ piece size, whatever the story is about.",
+      "figure": "fm-divide-unit"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Scoops from a bag.",
+      "conceptTag": "fraction-division-context",
+      "explanationVariants": [
+        "3 1/2 = 7/2; 7/2 ÷ 1/2 = 7/2 × 2 = 7.",
+        "Convert to 7/2, flip 1/2 to 2, multiply: 7 scoops."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A recipe needs 3 1/2 cups of flour, scooped 1/2 cup at a time. How many scoops?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "scoops",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 rounds 3 1/2 up to a whole number of scoops without doing the division. 3 1/2 ÷ 1/2 = 7/2 × 2 = 7 scoops."
+          },
+          {
+            "value": 2,
+            "feedback": "2 divides only the whole-number part (3 ÷ ...) and ignores the 1/2. Convert fully first: 3 1/2 = 7/2, then ÷ 1/2 = 7."
+          }
+        ],
+        "fallbackFeedback": "3 1/2 = 7/2; 7/2 ÷ 1/2 = 7/2 × 2 = 7 scoops."
+      },
+      "variant": {
+        "gen": "unit-frac-divide",
+        "form": "mixedScoops"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Cutting a board.",
+      "conceptTag": "fraction-division-context",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 6-foot board is cut into shelves that are each 3/4 of a foot long. How many shelves?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "shelves",
+        "commonErrors": [
+          {
+            "value": 4.5,
+            "feedback": "4.5 multiplies 6 × 3/4 instead of dividing. The question asks how many 3/4-foot PIECES fit in 6 feet: 6 ÷ 3/4 = 6 × 4/3 = 8."
+          },
+          {
+            "value": 2,
+            "feedback": "2 treats the board length and piece size backwards (3/4 ÷ 6 style). Total ÷ piece size is 6 ÷ 3/4 = 8."
+          }
+        ],
+        "fallbackFeedback": "6 ÷ 3/4 = 6 × 4/3 = 24/3 = 8 shelves."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Ribbon, again — with mixed practice.",
+      "conceptTag": "fraction-division-context",
+      "explanationVariants": [
+        "4 ÷ 2/3 = 4 × 3/2 = 12/2 = 6 pieces.",
+        "Flip 2/3 to 3/2, multiply by 4: 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 4-foot ribbon is cut into pieces 2/3 of a foot long. How many pieces?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "pieces",
+        "commonErrors": [
+          {
+            "value": 2.6666667,
+            "feedback": "That's 4 × 2/3, multiplying instead of dividing. The question asks how many 2/3-foot pieces fit in 4 feet: 4 ÷ 2/3 = 4 × 3/2 = 6."
+          },
+          {
+            "value": 8,
+            "feedback": "8 flips the wrong number (treating 4 as the fraction to flip). Keep 4 as-is, flip 2/3 to 3/2: 4 × 3/2 = 6."
+          }
+        ],
+        "fallbackFeedback": "4 ÷ 2/3 = 4 × 3/2 = 12/2 = 6 pieces."
+      },
+      "variant": {
+        "gen": "unit-frac-divide",
+        "form": "properPieces"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two mixed numbers, one division.",
+      "conceptTag": "fraction-division-context",
+      "hints": [
+        "Convert BOTH mixed numbers to improper fractions.",
+        "2 1/3 = 7/3; the divisor is 1/6.",
+        "7/3 ÷ 1/6 = 7/3 × 6."
+      ],
+      "explanationVariants": [
+        "2 1/3 = 7/3; then 7/3 ÷ 1/6 = 7/3 × 6/1 = 42/3 = 14.",
+        "Convert first, flip the divisor, multiply: 14 sixths fit in 2 1/3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many 1/6-cup servings fit in 2 1/3 cups?",
+        "answer": 14,
+        "tolerance": 0,
+        "unit": "servings",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 divides only the whole-number part and ignores the 1/3. Convert fully first: 2 1/3 = 7/3, then ÷ 1/6 = 14."
+          },
+          {
+            "value": 42,
+            "feedback": "42 stops after multiplying (7/3 × 6 = 42/3) without finishing the division. 42/3 simplifies to 14."
+          }
+        ],
+        "fallbackFeedback": "2 1/3 = 7/3; 7/3 × 6/1 = 42/3 = 14 servings."
+      },
+      "variant": {
+        "gen": "unit-frac-divide",
+        "form": "mixedScoops"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Convert, then divide as usual.",
+      "takeaways": [
+        "Convert every mixed number to an improper fraction FIRST.",
+        "Word problems are total ÷ piece size — find those two quantities.",
+        "Flip-and-multiply works exactly the same once fractions are improper."
+      ],
+      "teaser": "next chapter: multi-digit division and decimal operations — fluent by hand."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fraction-division-context",
+      "concept": {
+        "id": "rem-fdc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Convert the mixed number before anything else.** 1 1/4 becomes 5/4 (4 quarters plus 1 more). Then flip-and-multiply as always: 5/4 ÷ 1/2 = 5/4 × 2 = 10/4 = 5/2."
+      },
+      "check": {
+        "id": "rem-fdc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fraction-division-context",
+        "explanationVariants": [
+          "1 1/4 = 5/4; 5/4 ÷ 1/2 = 5/4 × 2 = 10/4 = 5/2.",
+          "Convert to 5/4 first, then flip 1/2 to 2 and multiply."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute 1 1/4 ÷ 1/2. Give the answer as a fraction with denominator 2 — enter just the numerator.",
+          "answer": 5,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 divides only the whole-number part, ignoring the 1/4. Convert fully first: 1 1/4 = 5/4, then ÷ 1/2 gives numerator 5 over denominator 2."
+            },
+            {
+              "value": 10,
+              "feedback": "10/4 is correct before simplifying, but it must be reduced: 10/4 = 5/2. The numerator over denominator 2 is 5, not 10."
+            }
+          ],
+          "fallbackFeedback": "1 1/4 = 5/4; 5/4 × 2/1 = 10/4 = 5/2 — numerator 5."
+        }
+      }
+    }
+  ]
+}

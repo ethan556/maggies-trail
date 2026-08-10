@@ -1,0 +1,282 @@
+{
+  "id": "ns-02-02",
+  "slug": "adding-and-subtracting-decimals",
+  "title": "Adding and Subtracting Decimals",
+  "courseId": "number-system",
+  "chapterId": "ch2-fluent-operations",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Adding or subtracting decimals works exactly like whole numbers — **line up the decimal points** first, so ones sit under ones, tenths under tenths. 12.5 + 3.47: stack them, pad 12.5 with a zero (12.50), then add straight down: **15.97**.",
+      "figure": "dop-line-up"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Line them up.",
+      "conceptTag": "decimal-add-sub",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To add 12.5 + 3.47, what should the 12.5 become so both numbers line up?",
+        "options": [
+          {
+            "id": "a",
+            "label": "12.50",
+            "correct": true,
+            "feedback": "Right — padding with a trailing zero doesn't change the value, and now both numbers have 2 decimal places."
+          },
+          {
+            "id": "b",
+            "label": "1.25",
+            "feedback": "That changes the VALUE, not just its appearance. Padding with a zero (12.50) keeps 12.5 the same size while matching decimal places."
+          },
+          {
+            "id": "c",
+            "label": "125.0",
+            "feedback": "That's 12.5 shifted by a factor of 10 — a different number entirely. Just add a trailing zero: 12.50."
+          }
+        ]
+      },
+      "hints": [
+        "Don't change the value — just add a trailing zero.",
+        "12.5 = 12.50.",
+        "Now both have 2 decimal places."
+      ],
+      "explanationVariants": [
+        "12.5 = 12.50 — same value, matched decimal places.",
+        "A trailing zero never changes a decimal's value."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add them.",
+      "conceptTag": "decimal-add-sub",
+      "explanationVariants": [
+        "12.50 + 3.47 = 15.97, adding column by column from the right.",
+        "Line up the decimal points, then add like whole numbers."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 12.5 + 3.47.",
+        "answer": 15.97,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4.72,
+            "feedback": "That comes from adding the digits without lining up the decimal points (125 + 347, then misplacing the point). Line up ones-with-ones, tenths-with-tenths: 12.50 + 3.47 = 15.97."
+          },
+          {
+            "value": 12.99,
+            "feedback": "That adds only the decimal parts (0.5 + 0.47 ≈ 0.97) onto the wrong whole number. The full sum is 12.5 + 3.47 = 15.97."
+          }
+        ],
+        "fallbackFeedback": "12.50 + 3.47 = 15.97."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "bareAdd"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtraction lines up the same way — and sometimes needs **borrowing across the decimal point**. 20 − 4.35: write 20 as 20.00, then subtract: borrow from the ones and tens as needed. The decimal point itself never moves; only the digits around it do.",
+      "figure": "dop-pad-borrow"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtract with borrowing.",
+      "conceptTag": "decimal-add-sub",
+      "explanationVariants": [
+        "20.00 − 4.35 = 15.65, borrowing across the decimal point as needed.",
+        "Pad 20 to 20.00, then subtract column by column."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 20 − 4.35.",
+        "answer": 15.65,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 16.35,
+            "feedback": "That borrows incorrectly, leaving the tenths and hundredths untouched. Pad 20 as 20.00, then subtract fully: 20.00 − 4.35 = 15.65."
+          },
+          {
+            "value": 15.75,
+            "feedback": "Close, but a borrowing step slipped. Check column by column: 20.00 − 4.35 = 15.65."
+          }
+        ],
+        "fallbackFeedback": "20.00 − 4.35 = 15.65."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "padSub"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another add.",
+      "conceptTag": "decimal-add-sub",
+      "widget": {
+        "type": "columnCalc",
+        "op": "add",
+        "a": 860,
+        "b": 75,
+        "decimals": 2,
+        "prompt": "Add 8.60 + 0.75 column by column. Work right to left, and carry when a column passes 9.",
+        "commonResults": [
+          {
+            "value": 835,
+            "feedback": "8.35 — the tenths column is right, but the carry never moved. 6 tenths + 7 tenths is 13 tenths, which is one WHOLE and 3 tenths: the 3 stays, the whole belongs in the ones column."
+          }
+        ],
+        "fallbackFeedback": "Not there yet. Start at the hundredths (the rightmost column) and work left, carrying whenever a column total passes 9.",
+        "successFeedback": "9.35. Notice that nothing about the arithmetic was special — the columns carried exactly as whole numbers do. The only decimal-specific move was lining the points up, which is the same thing as lining the PLACES up: hundredths under hundredths, tenths under tenths."
+      },
+      "predict": {
+        "prompt": "The classic slip in 8.6 + 0.75 is lining up the RIGHT ends (6 under the 5). Doing that treats 8.6 as…",
+        "options": [
+          {
+            "id": "small",
+            "label": "0.86 — the 8 gets demoted to tenths"
+          },
+          {
+            "id": "same",
+            "label": "8.60 — alignment can't change a number"
+          },
+          {
+            "id": "big",
+            "label": "86 — the digits shift up instead"
+          }
+        ],
+        "outcomeId": "small",
+        "reveal": "Right-aligning puts the 6 under the 5 — the hundredths column — dragging the 8 into the tenths: the work silently computes 0.86 + 0.75 = 1.61. Stacking the decimal POINTS keeps the 8 worth eight wholes: 8.60 + 0.75 = 9.35."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another subtract.",
+      "conceptTag": "decimal-add-sub",
+      "explanationVariants": [
+        "15.00 − 6.25 = 8.75.",
+        "Pad 15 as 15.00, subtract column by column with borrowing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 15 − 6.25.",
+        "answer": 8.75,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9.75,
+            "feedback": "A borrowing step slipped in the ones place. Pad 15 as 15.00 and subtract carefully: 15.00 − 6.25 = 8.75."
+          },
+          {
+            "value": 8.65,
+            "feedback": "Close, but the hundredths column didn't borrow correctly. Recheck: 15.00 − 6.25 = 8.75."
+          }
+        ],
+        "fallbackFeedback": "15.00 − 6.25 = 8.75."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "padSub"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Add three decimals at once.",
+      "conceptTag": "decimal-add-sub",
+      "hints": [
+        "Line up all three by their decimal points.",
+        "Pad each to the same number of places.",
+        "Add column by column, right to left."
+      ],
+      "explanationVariants": [
+        "3.25 + 0.6 + 10 = 3.25 + 0.60 + 10.00 = 13.85.",
+        "Pad every number to 2 decimal places, then add."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 3.25 + 0.6 + 10.",
+        "answer": 13.85,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3.91,
+            "feedback": "That drops the 10 entirely. All three numbers must line up and add: 3.25 + 0.60 + 10.00 = 13.85."
+          },
+          {
+            "value": 13.31,
+            "feedback": "That treats 0.6 as 0.06 instead of 0.60. Pad it correctly: 3.25 + 0.60 + 10.00 = 13.85."
+          }
+        ],
+        "fallbackFeedback": "3.25 + 0.60 + 10.00 = 13.85."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "threeAdd"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Line up the point, then compute.",
+      "takeaways": [
+        "Pad decimals with trailing zeros so every number has the same number of places.",
+        "Add or subtract column by column, exactly like whole numbers.",
+        "The decimal point never moves — only the digits around it change."
+      ],
+      "teaser": "next: multiplying and dividing decimals."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decimal-add-sub",
+      "concept": {
+        "id": "rem-das-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Pad, then line up the points.** 5.2 + 1.35: pad 5.2 to 5.20, stack the decimal points, add column by column: 5.20 + 1.35 = 6.55."
+      },
+      "check": {
+        "id": "rem-das-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decimal-add-sub",
+        "explanationVariants": [
+          "5.20 + 1.35 = 6.55.",
+          "Pad 5.2 to 5.20, then add column by column."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute 5.2 + 1.35.",
+          "answer": 6.55,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 1.87,
+              "feedback": "That adds digits without lining up decimal places. Pad 5.2 as 5.20: 5.20 + 1.35 = 6.55."
+            },
+            {
+              "value": 6.37,
+              "feedback": "That drops part of the tenths. Line up fully: 5.20 + 1.35 = 6.55."
+            }
+          ],
+          "fallbackFeedback": "5.20 + 1.35 = 6.55."
+        }
+      }
+    }
+  ]
+}

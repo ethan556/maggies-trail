@@ -1,0 +1,1200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-paper text-ink antialiased dark:bg-night dark:text-paper;
+}
+
+/* The learning stage — the shared canvas every figure and widget sits on.
+   It is a LIGHT surface in both themes by design: all 1,670 figures and 75
+   widgets are authored against white (inks, tints, and SVG palettes assume
+   it), so the stage pins its own text color to ink rather than inheriting the
+   theme. Without this, dark mode flipped body text to near-white and every
+   white answer button, numeric input, and explanation card rendered
+   white-on-white. One class, one contract: on the stage, the palette is the
+   authored one. */
+.stage {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
+  color: theme(colors.ink);
+}
+
+:focus-visible {
+  outline: 3px solid theme(colors.sky);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.step-in { animation: stepIn 0.18s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .step-in { animation: none; }
+}
+
+@keyframes dotIn {
+  from { opacity: 0; transform: scale(0.2); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.dot-in { animation: dotIn 0.24s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .dot-in { animation: none; }
+}
+
+/* Feedback banner entrance — the diagnosis "arrives" rather than blinking in.
+   Reduced motion shows it in place with no animation. */
+@keyframes bannerIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.banner-in { animation: bannerIn 0.22s cubic-bezier(.22,1,.36,1); }
+@media (prefers-reduced-motion: reduce) {
+  .banner-in { animation: none; }
+}
+
+/* Concept-figure entrance — the visualization "arrives" on its stage as each
+   step opens: a soft fade + rise + whisper of scale using the shared "arrive"
+   easing, cueing the learner's eye to the figure at the moment it becomes
+   relevant. Reduced motion shows the figure already at rest, so SSR and the
+   jsdom render sweep see the final resting state (base render == final state). */
+@keyframes figureReveal {
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.figure-reveal { animation: figureReveal 0.42s cubic-bezier(.22,1,.36,1); }
+@media (prefers-reduced-motion: reduce) {
+  .figure-reveal { animation: none; }
+}
+
+/* ── THE TRAIL GHOST — the product's signature moment ─────────────────────
+   On reveal, every engine shows the correct state dashed over the learner's
+   own untouched work (91 sites across 90 engines; see the revealGhost test
+   files). This one rule is that state's arrival: the ghost rises out of the
+   work like a path appearing on a map — a soft fade-up, then the dashes take
+   one slow step along the route and settle. Attribute-suffix selection means
+   a new engine's ghost inherits the moment by following the testid grammar,
+   with nothing extra to wire.
+   Reduced motion (OS or in-app toggle): no animation is emitted at all —
+   the base render already IS the final state, per the motion invariant. */
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-reduce-motion="true"]) [data-testid$="-ghost"] {
+    animation: ghostArrive var(--dur-4) var(--ease-out) backwards;
+  }
+  :root:not([data-reduce-motion="true"]) g[data-testid$="-ghost"] line,
+  :root:not([data-reduce-motion="true"]) g[data-testid$="-ghost"] path,
+  :root:not([data-reduce-motion="true"]) g[data-testid$="-ghost"] circle,
+  :root:not([data-reduce-motion="true"]) g[data-testid$="-ghost"] ellipse,
+  :root:not([data-reduce-motion="true"]) text[data-testid$="-ghost"] {
+    animation: ghostMarch calc(var(--dur-4) * 2) var(--ease-out) backwards;
+  }
+}
+@keyframes ghostArrive {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* The dashes advance exactly one dash period (dasharray sums are 9–18px
+   across the grammar; 14px reads as "one step" everywhere) and stop. */
+@keyframes ghostMarch {
+  from { stroke-dashoffset: 14; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* In-app "reduce animations" toggle — forces motion off globally regardless of the OS setting.
+   Keyed on a root attribute set from the saved preference (see layout.tsx + MotionPref). */
+/* Parity with the OS media block below: the 0.001ms fallback alone leaves a completed
+   `both`-fill animation holding its keyframe transform (computed as an identity matrix), which
+   keeps a stray containing block alive and diverges from the `animation: none` the OS path
+   gets. Name the same selectors the media query names. */
+[data-reduce-motion="true"] .trail-xp-chip,
+[data-reduce-motion="true"] .trail-step-enter,
+[data-reduce-motion="true"] .trail-segment[data-trail-state="current"],
+[data-reduce-motion="true"] .trail-segment[data-trail-state="walked"]::after,
+[data-reduce-motion="true"] .summit-route__path,
+[data-reduce-motion="true"] .summit-route__peak,
+[data-reduce-motion="true"] .spark-p,
+[data-reduce-motion="true"] .summit-xp-pop,
+[data-reduce-motion="true"] .goal-met .ring-fill,
+[data-reduce-motion="true"] .flame-pop {
+  animation: none;
+}
+[data-reduce-motion="true"] .trail-clearing-shell:hover > .lesson-stage,
+[data-reduce-motion="true"] .trail-primary-action::after,
+[data-reduce-motion="true"] .summit-next::after {
+  transform: none;
+  transition: none;
+}
+
+[data-reduce-motion="true"] *,
+[data-reduce-motion="true"] *::before,
+[data-reduce-motion="true"] *::after {
+  animation-duration: 0.001ms !important;
+  /* Delays must go too: a delayed animation with a `both` fill holds its 0%
+     frame (often opacity 0) for the whole delay, hiding content from the very
+     users who asked for less motion. */
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ============================================================================
+   MAGGIE'S TRAIL 2.0 — SEMANTIC DESIGN TOKENS
+   A tonal system layered ON TOP of the six brand hexes (which stay authoritative
+   in figures, widgets, and existing utilities). New surfaces read these vars so a
+   single swap in `.dark` re-themes chrome without touching the authored stage.
+   Channels are stored as "R G B" so Tailwind can apply `/<alpha-value>`.
+   ========================================================================== */
+:root {
+  /* brand channels (mirror the six hexes; do not diverge) */
+  --ink: 34 49 79;          /* #22314F */
+  --paper: 250 251 245;     /* #FAFBF5 */
+  --sky: 46 124 214;        /* #2E7CD6 */
+  --tangerine: 255 138 61;  /* #FF8A3D */
+  --leaf: 47 163 107;       /* #2FA36B */
+  --berry: 214 69 93;       /* #D6455D */
+
+  /* surfaces — warm notebook whites, stepped for elevation */
+  --bg: 250 251 245;        /* page */
+  --bg-2: 244 246 238;      /* recessed / secondary background */
+  --surface: 255 255 255;   /* primary card */
+  --surface-2: 248 250 245; /* subtle inset surface */
+  --surface-raised: 255 255 255;
+
+  /* borders — hairlines by default, strong only when structural */
+  --hair: 34 49 79;         /* used at low alpha for hairline rules */
+  --border: 34 49 79;       /* used ~0.14 for standard borders */
+
+  /* text roles */
+  --text: 34 49 79;         /* primary */
+  --text-2: 60 76 108;      /* secondary */
+  --text-muted: 91 106 134; /* metadata / helper — #5B6A86, 5.24:1 on paper (AA; was 4.16) */
+
+  /* accessible accent INK channels — the brand hues stay for fills, strokes
+     and large graphics (≥3:1 as graphical objects); these are their AA text
+     counterparts, and they FLIP in dark mode so `text-sky-ink` etc. is safe
+     on every surface. Ratios verified in REGRESSION notes (S107). */
+  --sky-ink: 32 105 191;      /* #2069BF — 4.85 even on sky/10 tint; 5.48 under white */
+
+  /* solid CTA fills — deliberately IDENTICAL in both modes (a filled button
+     is its own surface; the flipping -ink channels are for text on the page).
+     White labels: 5.48 / 7.26 / 5.21. */
+  --cta: 32 105 191;
+  --cta-good: 23 99 63;
+  --cta-danger: 201 50 72;
+  --tangerine-ink: 186 74 0;  /* #BA4A00 — 4.75 even on tangerine/10 tint */
+  --berry-ink: 201 50 72;     /* #C93248 — 4.56 even on berry/10 tint */
+  --leaf-ink: 23 99 63;       /* #17633F — 6.98 on paper */
+
+  /* semantic state channels (reuse brand where meaning aligns) */
+  --primary: 46 124 214;
+  --primary-hover: 38 106 186;
+  --primary-press: 30 88 156;
+  --success: 47 163 107;
+  --warning: 255 138 61;
+  --error: 214 69 93;
+  --info: 46 124 214;
+  --focus: 46 124 214;
+
+  /* elevation — one restrained shadow family, warm-tinted */
+  --shadow-e1: 0 1px 2px rgb(34 49 79 / 0.06), 0 1px 3px rgb(34 49 79 / 0.05);
+  --shadow-e2: 0 2px 6px rgb(34 49 79 / 0.07), 0 6px 16px rgb(34 49 79 / 0.06);
+  --shadow-e3: 0 8px 24px rgb(34 49 79 / 0.10), 0 2px 6px rgb(34 49 79 / 0.06);
+
+  /* motion — named durations + easings, one source of truth */
+  --dur-1: 100ms;  /* control response */
+  --dur-2: 160ms;  /* hover / selection */
+  --dur-3: 220ms;  /* content transitions */
+  --dur-4: 380ms;  /* completion moments */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+}
+
+.dark {
+  --bg: 22 29 49;           /* night */
+  --bg-2: 18 24 41;
+  --surface: 29 39 64;      /* dusk */
+  --surface-2: 34 45 72;
+  --surface-raised: 34 45 72;
+  --hair: 250 251 245;
+  --border: 250 251 245;
+  --text: 250 251 245;
+  --text-2: 209 216 230;
+  --text-muted: 150 162 186;
+  --sky-ink: 112 165 227;    /* #70A5E3 — ≥4.5 on every dark surface incl. /15 tints
+                                 (tool-measured basis, S108: 5.33 on surface-2,
+                                 4.51 on sky/15 tint, 5.43 on the measured card blend) */
+  --cta: 32 105 191;
+  --cta-good: 23 99 63;
+  --cta-danger: 201 50 72;
+  --tangerine-ink: 255 138 61;/* brand tangerine — 7.14 on night */
+  --berry-ink: 231 127 141;   /* #E77F8D — ≥4.5 incl. /15 tints (S108 basis) */
+  --leaf-ink: 54 187 123;     /* #36BB7B — ≥4.5 incl. /15 tints (S108 basis) */
+  --primary: 90 160 236;
+  --primary-hover: 120 180 244;
+  --primary-press: 150 198 248;
+  --shadow-e1: 0 1px 2px rgb(0 0 0 / 0.30);
+  --shadow-e2: 0 2px 8px rgb(0 0 0 / 0.34);
+  --shadow-e3: 0 10px 28px rgb(0 0 0 / 0.42);
+}
+
+/* Pressable — a tactile press for buttons/tiles. Reduced-motion drops the scale. */
+/* ── TRAIL LOADING (S111) — route-transition states shaped like the product,
+   not a spinner-on-white. A dashed route walks once (the ghost-march
+   vocabulary at loading tempo) while skeleton blocks hold the final layout,
+   so arrival causes zero shift. Reduced motion: the route sits static. */
+.trail-loading-route { stroke-dasharray: 4 8; }
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-reduce-motion="true"]) .trail-loading-route {
+    animation: trailWalk 1.1s linear infinite;
+  }
+}
+@keyframes trailWalk { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+.trail-skeleton {
+  border-radius: 1rem;
+  background: rgb(var(--ink) / 0.06);
+}
+.dark .trail-skeleton { background: rgb(var(--paper) / 0.08); }
+
+/* ── READING PREFERENCES (S111) ─────────────────────────────────────
+   data-text-scale: scales the root rem, so every rem-based size and space
+   scales together and nothing overlaps — the brief's "adjustable text size
+   that does not break layout". Pixel floors (44px targets) are untouched.
+   data-reading-space="open": wider letter/word/line spacing on prose only —
+   never on equations, tabular numerals, or stage SVG text, where added
+   tracking distorts mathematical reading. Both boot pre-paint. */
+[data-text-scale="lg"] { font-size: 107.5%; }
+[data-text-scale="xl"] { font-size: 115%; }
+[data-reading-space="open"] :is(p, li, dd, figcaption):not(.stage *) {
+  letter-spacing: 0.012em;
+  word-spacing: 0.08em;
+  line-height: 1.72;
+}
+
+.pressable { transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out); }
+.pressable:active { transform: translateY(1px) scale(0.985); }
+@media (prefers-reduced-motion: reduce) { .pressable, .pressable:active { transform: none; transition: none; } }
+
+/* Lift — a hover elevation for cards that are whole-surface links. */
+.lift { transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out); }
+@media (hover: hover) { .lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-e2); } }
+@media (prefers-reduced-motion: reduce) { .lift, .lift:hover { transform: none; } }
+
+/* Progress fill — the shared easing for any width/height progress animation. */
+.progress-fill { transition: width var(--dur-4) var(--ease-out); }
+@media (prefers-reduced-motion: reduce) { .progress-fill { transition: none; } }
+
+/* Status roundel pop — the check/target icon "lands" with the banner. */
+@keyframes statusPop {
+  from { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.12); }
+  to   { transform: scale(1); opacity: 1; }
+}
+.status-pop { animation: statusPop 0.32s var(--ease-out) backwards; }
+@media (prefers-reduced-motion: reduce) { .status-pop { animation: none; } }
+
+/* Completion summit — the mark + title arrive together, once, restrained. */
+@keyframes summitIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+.summit-in { animation: summitIn 0.5s var(--ease-out); }
+@media (prefers-reduced-motion: reduce) { .summit-in { animation: none; } }
+
+/* Goal ring fill — sweeps once on the completion screen; static when reduced. */
+.ring-fill { transition: stroke-dashoffset var(--dur-4) var(--ease-out); }
+@media (prefers-reduced-motion: reduce) { .ring-fill { transition: none; } }
+
+/* ============================================================================
+   SHARED RANGE-SLIDER STYLING
+   The range input is the single most-touched control in the product (~40
+   manipulatives drive their mathematics with one). The OS default renders a
+   thin gray track with a small thumb — functional, not premium. This styles
+   every range in one place while PRESERVING the existing per-widget color
+   contract: widgets already declare `accent-sky|tangerine|leaf|berry`, and
+   those same classes now also feed `--mt-range` below, so no widget changes.
+   The thumb stays ≥28px visual on a 44px input (touch target unchanged), the
+   track is a soft ink wash, and focus-visible keeps the global 3px sky ring.
+   ========================================================================== */
+input[type="range"].accent-sky       { --mt-range: #2E7CD6; }
+input[type="range"].accent-tangerine { --mt-range: #FF8A3D; }
+input[type="range"].accent-leaf      { --mt-range: #2FA36B; }
+input[type="range"].accent-berry     { --mt-range: #D6455D; }
+
+input[type="range"][class*="accent-"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type="range"][class*="accent-"]::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 9999px;
+  /* WebKit has no ::-moz-range-progress equivalent, so the pre-thumb fill Firefox
+     paints is not available here without per-element JS. To keep the track from
+     reading as a flat gray bar, give it a faint inset channel + a hair-line of the
+     control's own colour so the accent still registers on Safari/Chrome. The true
+     filled-track parity is deferred to the owed real-device pass. */
+  background: rgb(34 49 79 / 0.12);
+  box-shadow: inset 0 1px 2px rgb(34 49 79 / 0.14);
+  border: 1px solid color-mix(in srgb, var(--mt-range, #2E7CD6) 22%, transparent);
+}
+input[type="range"][class*="accent-"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -10px; /* centers a 28px thumb on the 8px track */
+  height: 28px;
+  width: 28px;
+  border-radius: 9999px;
+  background: var(--mt-range, #2E7CD6);
+  border: 3px solid #ffffff;
+  box-shadow: 0 1px 4px rgb(34 49 79 / 0.28);
+  transition: transform var(--dur-1) var(--ease-out);
+}
+input[type="range"][class*="accent-"]:enabled:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+input[type="range"][class*="accent-"]::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: rgb(34 49 79 / 0.12);
+}
+input[type="range"][class*="accent-"]::-moz-range-progress {
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--mt-range, #2E7CD6);
+}
+input[type="range"][class*="accent-"]::-moz-range-thumb {
+  height: 28px;
+  width: 28px;
+  border-radius: 9999px;
+  background: var(--mt-range, #2E7CD6);
+  border: 3px solid #ffffff;
+  box-shadow: 0 1px 4px rgb(34 49 79 / 0.28);
+}
+input[type="range"][class*="accent-"]:disabled::-webkit-slider-thumb { opacity: 0.55; }
+input[type="range"][class*="accent-"]:disabled::-moz-range-thumb { opacity: 0.55; }
+@media (prefers-reduced-motion: reduce) {
+  input[type="range"][class*="accent-"]::-webkit-slider-thumb { transition: none; }
+}
+
+/* Drag handles on SVG manipulatives: fat invisible hit ring + visible grip. */
+.mt-drag-hit { fill: transparent; }
+.mt-drag-hit:hover + .mt-drag-grip,
+.mt-drag-hit:active + .mt-drag-grip { stroke-width: 3; }
+
+/* Trail waymark label — the fading rail line after a section label. One
+   definition, used by every small section heading, so the trail motif reads
+   consistently without per-instance markup. */
+.waymark-label { display: flex; align-items: center; gap: 0.75rem; }
+.waymark-label::after {
+  content: "";
+  flex: 1 1 1rem;
+  height: 1px;
+  background: linear-gradient(to right, rgb(var(--hair) / 0.15), transparent);
+}
+
+/* ── s44: high-contrast + contrast-preference support ─────────────────────────
+   FORCED COLORS (Windows High Contrast / forced-colors: active): the browser
+   replaces author colors, so anything that leaned on background tint alone
+   would vanish. State here is already double-encoded (aria-pressed/checked +
+   text + shape), so the job of this block is to keep STRUCTURE visible:
+   real borders on controls, system Highlight on focus, GrayText on disabled,
+   and CanvasText strokes for the mathematical line-work inside the stage.
+   Verified by inspection + jsdom class contracts; on-device HCM verification
+   is listed in ACCESSIBILITY_CERTIFICATION.md as part of the owed device pass. */
+@media (forced-colors: active) {
+  .pressable,
+  button,
+  input,
+  select {
+    border: 2px solid ButtonText;
+  }
+  button:disabled,
+  input:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+  :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+  /* The stage's mathematical line-work must survive color stripping. */
+  .stage svg line,
+  .stage svg path[stroke],
+  .stage svg rect[stroke],
+  .stage svg circle[stroke],
+  .stage svg ellipse[stroke],
+  .stage svg polygon[stroke],
+  .stage svg polyline {
+    stroke: CanvasText;
+  }
+  .stage svg text {
+    fill: CanvasText;
+  }
+}
+
+/* PREFERS-CONTRAST: users asking for more contrast get heavier structure
+   without a theme change — thicker control borders, darker hairlines. */
+@media (prefers-contrast: more) {
+  .pressable,
+  button,
+  input,
+  select {
+    border-width: 2.5px;
+  }
+  .stage {
+    --hairline-alpha: 0.35; /* consumed by stage hairlines where defined */
+  }
+}
+
+/* Session 90 — lesson-player focus and semantic math colour grammar.
+   Colour is never the only carrier of meaning; labels and shape/stroke changes remain present. */
+.lesson-stage {
+  background:
+    radial-gradient(circle at 18% 0%, rgb(46 124 214 / 0.055), transparent 32%),
+    radial-gradient(circle at 88% 100%, rgb(47 163 107 / 0.05), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgb(34 49 79 / 0.10);
+  box-shadow: 0 1px 2px rgb(34 49 79 / 0.04), 0 8px 28px rgb(34 49 79 / 0.055);
+}
+
+.dark .lesson-stage {
+  background:
+    radial-gradient(circle at 18% 0%, rgb(78 154 255 / 0.08), transparent 32%),
+    radial-gradient(circle at 88% 100%, rgb(78 207 139 / 0.07), transparent 34%),
+    linear-gradient(180deg, rgb(19 29 48) 0%, rgb(14 22 37) 100%);
+  border-color: rgb(255 255 255 / 0.10);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.16), 0 12px 32px rgb(0 0 0 / 0.18);
+}
+
+.lesson-stage[data-tone="error"] {
+  border-color: rgb(214 69 93 / 0.36);
+  box-shadow: 0 0 0 3px rgb(214 69 93 / 0.07), 0 8px 28px rgb(34 49 79 / 0.055);
+}
+.lesson-stage[data-tone="success"] {
+  border-color: rgb(47 163 107 / 0.34);
+  box-shadow: 0 0 0 3px rgb(47 163 107 / 0.065), 0 8px 28px rgb(34 49 79 / 0.055);
+}
+.lesson-stage[data-tone="info"] {
+  border-color: rgb(255 138 61 / 0.34);
+  box-shadow: 0 0 0 3px rgb(255 138 61 / 0.065), 0 8px 28px rgb(34 49 79 / 0.055);
+}
+
+.cml-lens {
+  transition: border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+}
+.cml-lens:focus-within {
+  border-color: rgb(46 124 214 / 0.35);
+  box-shadow: 0 0 0 3px rgb(46 124 214 / 0.06), var(--shadow-e1);
+}
+
+.math-color-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.85rem;
+  color: rgb(var(--text-2));
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.math-color-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+.math-color-key i {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 1px rgb(34 49 79 / 0.10);
+}
+
+.lesson-intent-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2rem;
+  color: rgb(var(--text-muted));
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+.lesson-intent-bar::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgb(var(--border) / 0.09);
+}
+
+@media (max-width: 640px) {
+  .lesson-stage {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0.85rem;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+}
+
+/* ============================================================================
+   SESSION 99 — THE TRAIL IS THE LESSON PLAYER
+
+   Brilliant's strongest interaction pattern is a quiet, single-focus step with
+   immediate feedback. DreamBox's strongest student pattern is persistent route
+   context, visible progress, and manipulatives that adapt to the task. This
+   layer keeps Maggie's mathematical stage dominant while making the product's
+   own metaphor unmistakable in every frame: terrain, route, waypoint, clearing,
+   pack/dock, and summit. Decorative terrain is pointer-free and aria-hidden;
+   motion is fully suppressed by the existing reduced-motion contract.
+   ========================================================================== */
+
+.lesson-trail-shell {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 8% 8%, rgb(46 124 214 / 0.08), transparent 26rem),
+    radial-gradient(circle at 92% 22%, rgb(47 163 107 / 0.075), transparent 28rem),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg-2)) 100%);
+}
+
+.lesson-trail-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image:
+    repeating-radial-gradient(
+      ellipse at 16% 34%,
+      transparent 0 18px,
+      rgb(34 49 79 / 0.035) 19px 20px,
+      transparent 21px 34px
+    ),
+    repeating-radial-gradient(
+      ellipse at 86% 62%,
+      transparent 0 26px,
+      rgb(47 163 107 / 0.03) 27px 28px,
+      transparent 29px 46px
+    );
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.dark .lesson-trail-shell::before {
+  opacity: 0.2;
+  background-image:
+    repeating-radial-gradient(
+      ellipse at 16% 34%,
+      transparent 0 18px,
+      rgb(250 251 245 / 0.055) 19px 20px,
+      transparent 21px 34px
+    ),
+    repeating-radial-gradient(
+      ellipse at 86% 62%,
+      transparent 0 26px,
+      rgb(90 160 236 / 0.05) 27px 28px,
+      transparent 29px 46px
+    );
+}
+
+.trail-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.trail-atmosphere__ridge {
+  position: absolute;
+  right: -8vw;
+  bottom: -5rem;
+  width: min(58vw, 58rem);
+  height: 22rem;
+  border-radius: 55% 0 0 0;
+  transform: rotate(-4deg);
+  transform-origin: bottom right;
+}
+
+.trail-atmosphere__ridge--far {
+  bottom: -7rem;
+  right: -12vw;
+  background: linear-gradient(150deg, rgb(46 124 214 / 0.07), rgb(46 124 214 / 0.01));
+  clip-path: polygon(0 72%, 15% 55%, 31% 63%, 48% 34%, 63% 48%, 80% 18%, 100% 35%, 100% 100%, 0 100%);
+}
+
+.trail-atmosphere__ridge--near {
+  background: linear-gradient(150deg, rgb(47 163 107 / 0.085), rgb(47 163 107 / 0.015));
+  clip-path: polygon(0 78%, 14% 64%, 28% 70%, 44% 48%, 61% 58%, 76% 35%, 100% 46%, 100% 100%, 0 100%);
+}
+
+.trail-atmosphere__route {
+  position: absolute;
+  left: max(0.8rem, calc(50% - 36rem));
+  top: 6.4rem;
+  bottom: 2rem;
+  width: 3.5rem;
+  opacity: 0.36;
+  background:
+    radial-gradient(circle at 50% 0.7rem, rgb(255 138 61) 0 4px, white 4.5px 6px, transparent 6.5px),
+    radial-gradient(circle at 50% 28%, rgb(47 163 107) 0 3px, white 3.5px 5px, transparent 5.5px),
+    radial-gradient(circle at 50% 59%, rgb(46 124 214) 0 3px, white 3.5px 5px, transparent 5.5px),
+    radial-gradient(circle at 50% 88%, rgb(47 163 107) 0 3px, white 3.5px 5px, transparent 5.5px),
+    linear-gradient(90deg, transparent 47%, rgb(34 49 79 / 0.13) 48% 52%, transparent 53%);
+  mask-image: linear-gradient(to bottom, transparent, black 8%, black 90%, transparent);
+}
+
+.dark .trail-atmosphere__route {
+  opacity: 0.26;
+  background:
+    radial-gradient(circle at 50% 0.7rem, rgb(255 138 61) 0 4px, rgb(22 29 49) 4.5px 6px, transparent 6.5px),
+    radial-gradient(circle at 50% 28%, rgb(47 163 107) 0 3px, rgb(22 29 49) 3.5px 5px, transparent 5.5px),
+    radial-gradient(circle at 50% 59%, rgb(90 160 236) 0 3px, rgb(22 29 49) 3.5px 5px, transparent 5.5px),
+    radial-gradient(circle at 50% 88%, rgb(47 163 107) 0 3px, rgb(22 29 49) 3.5px 5px, transparent 5.5px),
+    linear-gradient(90deg, transparent 47%, rgb(250 251 245 / 0.16) 48% 52%, transparent 53%);
+}
+
+.trail-player-header {
+  box-shadow: 0 1px 0 rgb(34 49 79 / 0.04), 0 8px 26px rgb(34 49 79 / 0.045);
+}
+
+.trail-player-header::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgb(255 138 61 / 0.45), rgb(47 163 107 / 0.38), transparent);
+  opacity: 0.65;
+}
+
+.trail-exit,
+.trail-xp-chip {
+  transition:
+    transform var(--dur-1) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    background-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
+}
+
+.trail-xp-chip {
+  animation: trailChipArrive 0.34s var(--ease-out) both;
+}
+
+@keyframes trailChipArrive {
+  from { opacity: 0; transform: translateX(5px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.trail-segment {
+  position: relative;
+}
+.trail-segment:nth-child(even) { transform: translateY(1px); }
+
+.trail-segment[data-trail-state="current"] {
+  animation: trailCurrent 1.8s ease-in-out infinite;
+}
+
+.trail-segment[data-trail-state="walked"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.32), transparent);
+  transform: translateX(100%);
+  animation: trailWalkedShine 0.55s var(--ease-out) both;
+}
+
+@keyframes trailCurrent {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.22); }
+}
+
+@keyframes trailWalkedShine {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+.trail-step-enter {
+  animation: trailStepEnter 0.28s var(--ease-out) both;
+}
+
+@keyframes trailStepEnter {
+  from { opacity: 0; transform: translate3d(12px, 7px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.trail-waypoint {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 3.65rem;
+  margin: 0 auto 1rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgb(var(--border) / 0.09);
+  border-radius: 1rem;
+  background: rgb(var(--surface) / 0.72);
+  box-shadow: var(--shadow-e1);
+  backdrop-filter: blur(12px);
+}
+
+.trail-waypoint::before,
+.trail-waypoint::after {
+  content: "";
+  position: absolute;
+  left: 1.55rem;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgb(34 49 79 / 0.18));
+}
+
+.trail-waypoint::before { top: -0.78rem; height: 0.78rem; }
+.trail-waypoint::after { bottom: -1.05rem; height: 1.05rem; transform: rotate(9deg); transform-origin: top; }
+
+.dark .trail-waypoint::before,
+.dark .trail-waypoint::after {
+  background: linear-gradient(to bottom, transparent, rgb(250 251 245 / 0.2));
+}
+
+.trail-waypoint__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 2px solid currentColor;
+  border-radius: 9999px;
+  background: rgb(var(--surface));
+  box-shadow: 0 0 0 5px rgb(var(--surface) / 0.8), var(--shadow-e1);
+}
+
+.trail-clearing-shell {
+  position: relative;
+  padding-top: 0.72rem;
+}
+
+.trail-clearing-label {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.45rem;
+  padding: 0.18rem 0.62rem;
+  border: 1px solid rgb(47 163 107 / 0.28);
+  border-radius: 9999px;
+  background: rgb(var(--surface));
+  color: rgb(23 99 63);
+  box-shadow: var(--shadow-e1);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.dark .trail-clearing-label {
+  color: rgb(110 225 164);
+  border-color: rgb(47 163 107 / 0.42);
+}
+
+.trail-clearing-label__dot {
+  width: 0.22rem;
+  height: 0.22rem;
+  border-radius: 9999px;
+  background: rgb(255 138 61);
+}
+
+.trail-concept-stage,
+.trail-clearing-shell > .lesson-stage {
+  overflow: hidden;
+}
+
+.trail-concept-stage {
+  position: relative;
+  background:
+    radial-gradient(circle at 86% 10%, rgb(255 138 61 / 0.05), transparent 28%),
+    radial-gradient(circle at 12% 92%, rgb(47 163 107 / 0.055), transparent 30%),
+    linear-gradient(180deg, #fff 0%, #f8faf6 100%);
+}
+
+.lesson-stage {
+  position: relative;
+  border-radius: 1.12rem;
+  transition:
+    border-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-3) var(--ease-out),
+    transform var(--dur-2) var(--ease-out);
+}
+
+.lesson-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgb(47 163 107 / 0.035), transparent 24%),
+    repeating-radial-gradient(ellipse at 100% 0%, transparent 0 20px, rgb(34 49 79 / 0.026) 21px 22px, transparent 23px 36px);
+  mask-image: linear-gradient(135deg, black, transparent 65%);
+}
+
+.lesson-stage > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .trail-clearing-shell:hover > .lesson-stage {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgb(34 49 79 / 0.07), 0 16px 36px rgb(34 49 79 / 0.08);
+  }
+}
+
+.trail-prediction-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 100% 0%, rgb(255 138 61 / 0.16), transparent 35%),
+    rgb(255 138 61 / 0.055);
+}
+
+.trail-prediction-card::after {
+  content: "";
+  position: absolute;
+  right: -1.8rem;
+  bottom: -2rem;
+  width: 8rem;
+  height: 5rem;
+  border: 2px dashed rgb(255 138 61 / 0.18);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+  pointer-events: none;
+}
+
+.trail-action-dock {
+  position: sticky;
+}
+
+/* Programmatic scrolls (scrollIntoView, focus reveal under an on-screen keyboard) must land
+   content clear of the sticky dock below and the lesson header above — without this, a
+   scrolled-to answer input can sit occluded under the dock at short viewports. */
+html {
+  scroll-padding-top: 4.25rem;
+  scroll-padding-bottom: calc(6.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Short viewports (landscape phones, split screens): the dock's total height — feedback plus
+   hint and action rows — must never bury the learner's work. The feedback region keeps its
+   content by scrolling internally at a tighter cap. */
+@media (max-height: 480px) {
+  [data-testid="feedback-scroll"] {
+    max-height: 22dvh;
+  }
+  /* scrollIntoView-if-needed judges visibility by the element rect alone, so a target sitting
+     3px under the stuck dock counts as "visible" and never scrolls. scroll-margin inflates
+     that rect (Chromium applies it in both the needs-scroll check and the final position), so
+     focused or revealed work always lands clear of the dock: 22dvh feedback + chrome. */
+  main input,
+  main .lesson-stage {
+    scroll-margin-bottom: calc(22dvh + 6.5rem);
+    scroll-margin-top: 4.5rem;
+  }
+}
+
+.trail-action-dock::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 2%, rgb(47 163 107 / 0.5) 32%, rgb(255 138 61 / 0.58) 64%, transparent 98%);
+  opacity: 0.75;
+}
+
+.trail-action-row {
+  min-height: 3rem;
+}
+
+.trail-primary-action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  overflow: hidden;
+}
+
+.trail-primary-action::after,
+.summit-next::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 25%, rgb(255 255 255 / 0.24) 45%, transparent 65%);
+  transform: translateX(-130%);
+  transition: transform 0.55s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .trail-primary-action:hover::after,
+  .summit-next:hover::after { transform: translateX(130%); }
+}
+
+.trail-summit-screen {
+  background:
+    radial-gradient(circle at 50% 10%, rgb(255 138 61 / 0.14), transparent 25rem),
+    radial-gradient(circle at 18% 60%, rgb(46 124 214 / 0.08), transparent 28rem),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg-2)) 100%);
+}
+
+.summit-route {
+  width: min(100%, 32rem);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 14px 24px rgb(34 49 79 / 0.08));
+}
+
+.summit-route__ridge--far { fill: rgb(46 124 214 / 0.12); }
+.summit-route__ridge--near { fill: rgb(47 163 107 / 0.16); }
+.summit-route__path {
+  fill: none;
+  stroke: rgb(34 49 79 / 0.34);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 8 10;
+  animation: summitPathDraw 1s var(--ease-out) both;
+}
+.summit-route__start { fill: rgb(46 124 214); stroke: white; stroke-width: 4; }
+.summit-route__peak { fill: rgb(255 138 61); stroke: white; stroke-width: 5; animation: summitPeak 0.55s 0.45s var(--ease-out) both; }
+.summit-route__text { fill: rgb(var(--text-muted)); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+
+@keyframes summitPathDraw {
+  from { stroke-dashoffset: 120; opacity: 0; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes summitPeak {
+  from { opacity: 0; transform: scale(0.2); transform-origin: 486px 25px; }
+  70% { opacity: 1; transform: scale(1.18); transform-origin: 486px 25px; }
+  to { opacity: 1; transform: scale(1); transform-origin: 486px 25px; }
+}
+
+.summit-xp {
+  box-shadow: 0 8px 26px rgb(255 138 61 / 0.14);
+}
+
+/* ── Celebration layer (Session 113 wow pass) ─────────────────────────────
+   Deterministic spark bursts, the summit XP pop, the goal-met ring, and the
+   one-shot flame pop. Every rule lives inside the no-preference media gate so
+   reduced-motion users see the final state with no motion at all; the in-app
+   toggle additionally kills these via the global [data-reduce-motion]
+   override. Outside the gate, .spark-p never becomes visible (opacity 0 and
+   no animation), so the burst is invisible rather than frozen mid-flight. */
+.spark-burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+.spark-p {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 2.5px;
+  background: var(--sc);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .spark-p {
+    animation: sparkFly 0.75s var(--ease-out) both;
+    animation-delay: var(--sd);
+  }
+  .summit-xp-pop {
+    animation: summitXpPop 0.55s 0.4s var(--ease-out) both;
+  }
+  .goal-met .ring-fill {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ringMet 0.7s 0.25s var(--ease-out) both;
+  }
+  .flame-pop {
+    transform-origin: 50% 88%;
+    animation: flamePop 0.6s 0.55s var(--ease-out) both;
+  }
+}
+@keyframes sparkFly {
+  0% {
+    transform: translate(-50%, -50%) scale(0.35) rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1) rotate(200deg);
+    opacity: 0;
+  }
+}
+@keyframes summitXpPop {
+  0% {
+    transform: scale(0.55);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.07);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes ringMet {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes flamePop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    transform: scale(1.35) rotate(-7deg);
+  }
+  70% {
+    transform: scale(0.95) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.summit-next {
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .trail-atmosphere__route { display: none; }
+  .trail-atmosphere__ridge { opacity: 0.72; width: 95vw; }
+  .trail-waypoint { margin-bottom: 0.8rem; }
+  .trail-waypoint::before,
+  .trail-waypoint::after { display: none; }
+  .trail-clearing-label { left: 0.7rem; }
+  .trail-action-row > button:not(.mr-auto) { flex: 1 1 auto; }
+  .trail-primary-action { min-width: 8.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trail-xp-chip,
+  .trail-step-enter,
+  .trail-segment[data-trail-state="current"],
+  .trail-segment[data-trail-state="walked"]::after,
+  .summit-route__path,
+  .summit-route__peak,
+  .spark-p,
+  .summit-xp-pop,
+  .goal-met .ring-fill,
+  .flame-pop {
+    animation: none;
+  }
+  .trail-clearing-shell:hover > .lesson-stage,
+  .trail-primary-action::after,
+  .summit-next::after {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .spark-burst,
+  .trail-atmosphere,
+  .lesson-trail-shell::before,
+  .lesson-stage::before,
+  .trail-prediction-card::after,
+  .trail-player-header::after,
+  .trail-action-dock::before {
+    display: none;
+  }
+  .trail-waypoint,
+  .trail-clearing-label,
+  .lesson-stage,
+  .trail-action-dock {
+    border: 2px solid CanvasText;
+  }
+}
+
+/* ── DENSITY BY BAND (S110) ────────────────────────────────────────────────
+   The original brief: "a six-year-old and a seventeen-year-old should not
+   get identical layouts... deliberately, through tokens, not one-off
+   overrides." The lesson player sets data-band on its root (early: K-2,
+   middle: 3-8, upper: 9+, derived server-side from the course grade level).
+   Three tokens shift; everything inside the stage inherits them. The 44px
+   floor is a FLOOR - early goes larger, upper never goes below it. */
+:root, [data-band] {
+  --band-control-min: 2.75rem;  /* 44px - the app-wide floor */
+  --band-stage-pad: 0.75rem;
+}
+[data-band="early"] {
+  --band-control-min: 3.25rem;  /* 52px - small fingers, big targets */
+  --band-stage-pad: 1rem;       /* more air around the manipulative */
+}
+[data-band="upper"] {
+  --band-stage-pad: 0.625rem;   /* denser laboratory; controls stay >= 44px */
+}
+[data-band] .stage button,
+[data-band] .stage input,
+[data-band] .stage select,
+[data-band] .stage [role="slider"] {
+  min-height: var(--band-control-min);
+}
+[data-band] .stage {
+  padding: var(--band-stage-pad);
+}
+/* Prose size is deliberately NOT tokenized here: it is already banded at the
+   content level via lesson.readingProfile (see Rich in playerChrome), which is
+   an authored, per-lesson signal - stronger than a course-level derivation.
+   The token layer owns the LAYOUT dimension only. */
+
+/* ---- §21 math surfaces (Phase B) --------------------------------------------------
+   KaTeX ships no color of its own, so math inherits `color` from its container. That is
+   exactly what the `.stage` contract needs: inside a stage the container is ink-on-light in
+   BOTH themes, so math is legible in dark chrome without a theme-specific rule. `color:
+   inherit` is stated explicitly anyway — it makes the dependency deliberate, so a future
+   global `.katex { color: ... }` cannot silently break the dark-theme stage.
+   Display math gets the §4 "extra space around display math" rhythm; the reserved height
+   lives on the element (see MathText) so the swap from fallback to rendered math cannot
+   shift layout. */
+.math-inline,
+.math-display,
+.math-inline .katex,
+.math-display .katex {
+  color: inherit;
+}
+.math-display {
+  margin-block: 1.25rem;
+  text-align: center;
+  overflow-x: auto;   /* long derivations scroll THEMSELVES, never the page (360px viewports) */
+  overflow-y: hidden;
+}
+.math-fallback {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95em;
+}

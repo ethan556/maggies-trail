@@ -1,0 +1,294 @@
+{
+  "id": "asv-04-02",
+  "slug": "surface-area-with-triangular-faces",
+  "title": "Surface Area with Triangular Faces",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch4-surface-area-prisms",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **triangular prism** (like a tent or a Toblerone box) has 5 faces: **2 triangle bases** at the ends, plus **3 rectangles** wrapping around. Each face keeps its OWN formula from Chapter 1 — triangles halve, rectangles don't. Compute all five, then add.",
+      "figure": "asv-tri-prism"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The two triangle ends.",
+      "conceptTag": "triangular-prism-sa",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A prism's triangle base has legs 3 and 4 (right angle between them). What is the area of BOTH triangle ends together?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is ONE triangle end (1/2 × 3 × 4). The prism has two ends: 2 × 6 = 12."
+          },
+          {
+            "value": 24,
+            "feedback": "24 skips the triangle's ×1/2 (3×4 twice). Each end is 1/2 × 3 × 4 = 6, so both ends total 12."
+          }
+        ],
+        "fallbackFeedback": "Each end: 1/2 × 3 × 4 = 6; both ends: 12."
+      },
+      "predict": {
+        "prompt": "A prism has TWO identical triangle ends. Once you've found one end's area, what about the other?",
+        "options": [
+          {
+            "id": "double",
+            "label": "It's the same — just double"
+          },
+          {
+            "id": "recompute",
+            "label": "It must be computed fresh"
+          },
+          {
+            "id": "half",
+            "label": "It's half the first one"
+          }
+        ],
+        "outcomeId": "double",
+        "reveal": "The two ends are copies — congruent faces carry equal area, so one calculation serves both. Surface area loves symmetry."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The three wrap-around rectangles.",
+      "conceptTag": "triangular-prism-sa",
+      "explanationVariants": [
+        "Each rectangle is (one triangle side) × (prism length 6): 3×6=18, 4×6=24, 5×6=30; total 72.",
+        "The three sides of the triangle (3, 4, 5) each stretch into a rectangle of length 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The same prism is 6 long, and its triangle's three sides are 3, 4, and 5. What is the total area of the three rectangular faces?",
+        "answer": 72,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "42 misses one rectangle — 18+24 skips the 5×6=30 face. All THREE sides wrap: 18+24+30 = 72."
+          },
+          {
+            "value": 36,
+            "feedback": "36 halves the rectangles like triangles. Rectangles don't halve: 3×6 + 4×6 + 5×6 = 72."
+          }
+        ],
+        "fallbackFeedback": "3×6 + 4×6 + 5×6 = 18 + 24 + 30 = 72."
+      },
+      "variant": {
+        "gen": "prism-surface-area"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Total surface area = 2 triangle ends + 3 rectangles. For the (3,4,5)×6 prism: 12 + 72 = **84**. Verify by listing all five faces individually — 6, 6, 18, 24, 30 — which also sums to 84. Two routes, same answer, exactly like the L-shapes in Chapter 2.",
+      "figure": "asv-tri-prism"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Combine everything.",
+      "conceptTag": "triangular-prism-sa",
+      "explanationVariants": [
+        "Ends 12 + laterals 72 = 84, matching the face-by-face sum 6+6+18+24+30 = 84.",
+        "Both grouping routes land on 84."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Total surface area of the (3,4,5)-triangle prism, 6 long: add the ends (12) and rectangles (72).",
+        "answer": 84,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 78,
+            "feedback": "78 counts only ONE triangle end (6 + 72). The prism has two ends: 12 + 72 = 84."
+          },
+          {
+            "value": 60,
+            "feedback": "60 doesn't match any correct grouping — recompute: both ends 12, three rectangles 72, total 84."
+          }
+        ],
+        "fallbackFeedback": "12 + 72 = 84 square units."
+      },
+      "variant": {
+        "gen": "prism-surface-area",
+        "form": "totalSA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort the faces by their formula.",
+      "conceptTag": "triangular-prism-sa",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "For a triangular prism, sort each face by which area rule it uses.",
+        "buckets": [
+          {
+            "id": "tri",
+            "label": "Triangle rule (½ × b × h)"
+          },
+          {
+            "id": "rect",
+            "label": "Rectangle rule (l × w)"
+          }
+        ],
+        "items": [
+          {
+            "id": "f1",
+            "label": "The end face at the front",
+            "bucketId": "tri",
+            "feedback": "The ends are the triangle bases — they use ½ × b × h."
+          },
+          {
+            "id": "f2",
+            "label": "The bottom face the prism rests on",
+            "bucketId": "rect",
+            "feedback": "The bottom is one of the wrap-around rectangles: side × length."
+          },
+          {
+            "id": "f3",
+            "label": "The end face at the back",
+            "bucketId": "tri",
+            "feedback": "Both ends are triangles — same formula as the front."
+          },
+          {
+            "id": "f4",
+            "label": "A slanted roof face",
+            "bucketId": "rect",
+            "feedback": "Slanted or not, the wrap-around faces are rectangles: (slant side) × length."
+          }
+        ],
+        "missFeedback": "The 2 END faces are triangles; the 3 WRAP-AROUND faces (bottom and two slants) are rectangles, even when tilted.",
+        "successFeedback": "Sorted — 2 triangle ends, 3 rectangular wraps, each with its own rule."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger tent.",
+      "conceptTag": "triangular-prism-sa",
+      "explanationVariants": [
+        "Ends: 2 × (1/2 × 6 × 8) = 48. Laterals: (6+8+10) × 5 = 120. Total 168.",
+        "Face-by-face: 24+24+30+40+50 = 168 — same answer."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A prism has a right-triangle base with legs 6 and 8 (hypotenuse 10) and is 5 long. What is its total surface area?",
+        "answer": 168,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 144,
+            "feedback": "144 counts only ONE triangle end (24 + 120). Both ends: 48 + 120 = 168."
+          },
+          {
+            "value": 216,
+            "feedback": "216 skips the triangles' ×1/2 (48 becomes 96... check: 2(6×8)=96, plus 120 = 216). Each end is 1/2 × 6 × 8 = 24: total 168."
+          }
+        ],
+        "fallbackFeedback": "Ends 48 (2 × 24), laterals 120 (30+40+50): total 168."
+      },
+      "variant": {
+        "gen": "prism-surface-area",
+        "form": "totalSA"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Spot the missing face.",
+      "conceptTag": "triangular-prism-sa",
+      "hints": [
+        "A triangular prism has exactly 5 faces: 2 triangles + 3 rectangles.",
+        "The student's sum 6+6+18+24 = 54 has only 4 faces.",
+        "The missing face is the 5×6 = 30 rectangle."
+      ],
+      "explanationVariants": [
+        "The student summed 4 faces (6+6+18+24=54), missing the third rectangle (5×6=30); correct total: 84.",
+        "Counting faces (2 triangles + 3 rectangles = 5) catches the omission — the hypotenuse-side rectangle was skipped."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A student computes the (3,4,5)×6 prism's surface area as 6+6+18+24 = 54. One face is missing. What is the CORRECT total?",
+        "answer": 84,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "54 is the student's incomplete sum — it has only 4 faces. The 5×6 = 30 rectangle (along the hypotenuse) is missing: 54 + 30 = 84."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is the MISSING FACE's area, not the corrected total. Add it to the incomplete 54: 84."
+          }
+        ],
+        "fallbackFeedback": "The missing face is 5×6 = 30; correct total = 54 + 30 = 84."
+      },
+      "variant": {
+        "gen": "prism-surface-area",
+        "form": "missingFace"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Five faces, two formulas.",
+      "takeaways": [
+        "A triangular prism has 2 triangle ends + 3 rectangular wrap-around faces.",
+        "Each face keeps its own formula — triangles halve, rectangles don't.",
+        "Count your faces (should be 5) before trusting a total."
+      ],
+      "teaser": "chapter finale: surface area out in the real world."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "triangular-prism-sa",
+      "concept": {
+        "id": "rem-tps-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Count all 5 faces: 2 triangles + 3 rectangles.** For legs 3,4 (hyp 5), length 2: ends 2×(1/2×3×4)=12; rectangles (3+4+5)×2=24. Total 36."
+      },
+      "check": {
+        "id": "rem-tps-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "triangular-prism-sa",
+        "explanationVariants": [
+          "Ends 12, rectangles 24: total 36.",
+          "Face-by-face: 6+6+6+8+10 = 36."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A prism has a right-triangle base with legs 3 and 4 (hypotenuse 5) and is 2 long. What is its total surface area?",
+          "answer": 36,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 30,
+              "feedback": "30 misses one triangle end (6 + 24). Both ends count: 12 + 24 = 36."
+            },
+            {
+              "value": 24,
+              "feedback": "24 is only the three rectangles, missing both triangle ends: 24 + 12 = 36."
+            }
+          ],
+          "fallbackFeedback": "Ends 12 (2 × 6), rectangles 24 (6+8+10): total 36."
+        }
+      }
+    }
+  ]
+}

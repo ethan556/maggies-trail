@@ -1,0 +1,82 @@
+{
+  "tag": "S205D",
+  "label": "Campaign batch 1 off the new prefilter (scripts/measure/insertion-candidates.mjs): two insertions from the top-ranked Tier-C + steppedReveal cluster, two refusals with cites. Both insertions reuse engines already proven at Tier A in the SAME course — zero new registration work, per Protocol v2.",
+  "conversions": [],
+  "insertions": [
+    {
+      "course": "curve-analysis",
+      "lesson": "ca-05-01",
+      "after": "i1",
+      "step": {
+        "id": "i1b",
+        "kind": "interactive",
+        "body": "The reveal said the domain decides. Build V′'s sign chart yourself and watch the chart claim a third region the box cannot enter.",
+        "predict": {
+          "prompt": "V = x(12 − 2x)², so V′ = 12(x − 2)(x − 6). The chart will show V′ turning positive again past x = 6. Does the box start growing again there?",
+          "options": [
+            { "id": "grows-again", "label": "Yes — positive V′ means growing volume" },
+            { "id": "fiction", "label": "No — past 6 the base is gone; that region is fiction" },
+            { "id": "chart-wrong", "label": "No — the chart must be wrong about the sign" }
+          ],
+          "outcomeId": "fiction",
+          "reveal": "The algebra is right AND the region is fiction — both at once. At x = 6 the base 12 − 2x is zero: no box exists there or beyond. The chart reports the formula faithfully; the DOMAIN 0 < x < 6 says which columns describe a real box. That is why you state it before differentiating."
+        },
+        "widget": {
+          "type": "signChart",
+          "prompt": "Assign V′ its sign on each interval. Roots at x = 2 and x = 6, leading coefficient positive.",
+          "roots": [ { "x": 2, "mult": 1 }, { "x": 6, "mult": 1 } ],
+          "leadingPositive": true,
+          "successFeedback": "+ − + : the volume rises to x = 2, falls after — so x = 2 is the maximum, V(2) = 2·8² = 128. And the final + column? The formula is happy there, but 12 − 2x < 0 means no base: the domain 0 < x < 6 has already thrown that region out. The chart shows exactly why the domain is part of the answer.",
+          "crossFeedback": "Check the signs by testing a point in each interval: V′(1) = 12(−1)(−5) > 0, V′(4) = 12(2)(−2) < 0, V′(7) = 12(5)(1) > 0. Both roots are single, so the sign flips at each crossing.",
+          "bounceFeedback": "Both roots here have multiplicity 1 — odd — so the sign CROSSES at each. A bounce (sign kept) only happens at an even-multiplicity root, and there are none in V′."
+        }
+      }
+    },
+    {
+      "course": "derivatives-in-context",
+      "lesson": "dc-02-01",
+      "after": "i1",
+      "step": {
+        "id": "i1b",
+        "kind": "interactive",
+        "body": "The reveal's rule — differentiate first, substitute at the end — is not a convention. Slide the ladder and watch why: the rate is different at every instant.",
+        "predict": {
+          "prompt": "A 10-ft ladder slides: the foot moves out at a steady 1 ft/s. Is the top's downward speed steady too?",
+          "options": [
+            { "id": "steady", "label": "Yes — steady in, steady down" },
+            { "id": "speeds-up", "label": "No — the top falls faster as the foot moves out" },
+            { "id": "slows-down", "label": "No — the top slows down as the foot moves out" }
+          ],
+          "outcomeId": "speeds-up",
+          "reveal": "Slide and watch dy/dt: at x = 3 the top drops at about 0.31 ft/s, at x = 6 it is 0.75, at x = 8 it is 4/3. Same dx/dt the whole time — the RELATION 2x·dx/dt + 2y·dy/dt = 0 makes dy/dt depend on where you are. Substitute the instant's numbers first and you freeze x and y before they can carry that dependence: differentiate first, substitute at the end."
+        },
+        "widget": {
+          "type": "relatedRatesLab",
+          "prompt": "Slide the foot out to x = 8 ft, stopping along the way to read dy/dt. The foot's speed never changes; watch what the top's speed does.",
+          "ladderLength": 10,
+          "horizontalRate": 1,
+          "startX": 3,
+          "targetX": 8,
+          "requiredMoves": 4,
+          "successFeedback": "At x = 8: y = 6, and 2(8)(1) + 2(6)·dy/dt = 0 gives dy/dt = −4/3 ft/s — more than four times the drop rate you saw at x = 3, from the same 1 ft/s push. The rate depends on the instant's geometry, which is exactly why the numbers go in at the END: differentiate the general relation first, then substitute.",
+          "explorationFeedback": "Stop at a few more positions first and read dy/dt at each — the point is to SEE the rate change while dx/dt stays fixed.",
+          "positionFeedback": "Read the panel where you are, then bring the foot to x = 8 ft — the instant the problem asks about."
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "ca-03-03",
+      "title": "What the MVT Buys (curve-analysis)",
+      "why": "The reveal's subject is LOGICAL DEPENDENCE, not a phenomenon: that 'f′ > 0 means rising' and 'f′ = 0 everywhere means constant' are theorems REQUIRING the MVT, load-bearing under sign charts and the +C. A derivativeTrace drag can re-demonstrate the phenomenon (drag through f′ > 0, watch f climb) but demonstrating the fact again teaches nothing about WHY it needs proof — no engine in the registry represents a dependency between theorems (registration contract, 126 types). Represents gate fails: a lab that shows the fact would actively undercut the reveal's point that the fact is not free.",
+      "gate": "represents"
+    },
+    {
+      "lesson": "dc-01-03",
+      "title": "Distance Travelled vs Displacement (derivatives-in-context)",
+      "why": "The reveal narrates a specific journey — s(0)=0, s(1)=4, s(3)=0, s(4)=4; distance 12, displacement 4. No rich engine can draw it: derivativeTrace's fn is a fixed four-item enum (schema.ts:3136: square|cubic|abs|cubicMix), none matching this s(t), so the models gate fails for the authored journey; and even on a substitute curve derivativeTrace has no accumulated-distance readout — only f and f′ panes (widgets.tsx DerivativeTraceW) — so the distance-vs-displacement distinction, which IS the lesson, has no representation. Needs a motion engine with position playback and a running odometer; recorded as an engine gap.",
+      "gate": "models"
+    }
+  ]
+}

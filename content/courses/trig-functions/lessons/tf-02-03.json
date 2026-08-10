@@ -1,0 +1,234 @@
+{
+  "id": "tf-02-03",
+  "slug": "arc-length",
+  "title": "Arc Length",
+  "courseId": "trig-functions",
+  "chapterId": "ch2-radians-arc-length",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here's what radians buy you. Since 1 radian of angle spans 1 radius of arc, **θ radians span θ radii**: arc length **s = rθ**. One multiplication, no circumference fractions, no 360s — provided θ is in radians.",
+      "figure": "tf-radian-arc"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One multiply.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 10. What arc does a central angle of 1.5 radians cut off?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6.67,
+            "feedback": "6.67 is 10 ÷ 1.5 — divided. Each radian spans a full radius of arc, so MULTIPLY: 10 · 1.5 = 15."
+          },
+          {
+            "value": 11.5,
+            "feedback": "11.5 is 10 + 1.5 — added. The formula scales the radius BY the angle: s = rθ = 15."
+          }
+        ],
+        "fallbackFeedback": "s = rθ = 10 · 1.5 = 15."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A π-fraction arc.",
+      "conceptTag": "tf-arc-length",
+      "explanationVariants": [
+        "s = rθ = 6 · π/3 = 2π ≈ 6.28.",
+        "A π/3 angle (60°) on radius 6 spans about six-and-a-quarter units of rim."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 6, central angle π/3. Find the arc length. (Round to hundredths.)",
+        "answer": 6.28,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1.05,
+            "feedback": "1.05 is the angle π/3 itself — the radius multiply is missing: 6 · π/3 = 2π ≈ 6.28."
+          },
+          {
+            "value": 12.57,
+            "feedback": "12.57 is 4π — the DIAMETER 12 slipped in where the radius belongs: s = 6 · π/3 ≈ 6.28."
+          }
+        ],
+        "fallbackFeedback": "6 · π/3 = 2π ≈ 6.28."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-arc-length__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The classic wreck: feeding DEGREES into s = rθ. Radius 4, angle 90° — plugging 90 straight in claims a 360-unit arc on a circle whose whole rim is only about 25. Convert first: 90° = π/2, then s = 4 · π/2 = 2π ≈ 6.28.",
+      "figure": "tf-arc-length-wreck"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Convert, then multiply.",
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "arcSector",
+        "radius": 4,
+        "targetAngle": 90,
+        "start": 20,
+        "prompt": "Radius 4. Open the central angle to 90° and read the arc length off the circle.",
+        "successFeedback": "90° is a quarter of the full turn, so the arc is a quarter of the circumference: (1/4)(8π) = 2π ≈ 6.28. That is the whole idea behind s = rθ — the arc is just the fraction of a lap the angle sweeps, and radians make that fraction the angle itself.",
+        "lowFeedback": "Not far enough round — the arc is still shorter than a quarter of the circle.",
+        "highFeedback": "Too far round — you have opened the angle past 90°."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Solve it backwards.",
+      "conceptTag": "tf-arc-length",
+      "explanationVariants": [
+        "θ = s/r = 12/4 = 3 radians.",
+        "An arc of 12 on radius 4 wraps three radius-lengths of rim — three radians by definition."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An arc of length 12 sits on a circle of radius 4. Find the central angle in radians.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "48 is 12 × 4 — multiplied. Recovering the angle DIVIDES: θ = s/r = 3."
+          },
+          {
+            "value": 0.33,
+            "feedback": "0.33 is 4/12 — the division flipped. Arc over radius: 12/4 = 3 radians."
+          }
+        ],
+        "fallbackFeedback": "θ = s/r = 12/4 = 3."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-arc-length__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "s = rθ is also the **rolling** law. A wheel of radius r that turns through θ radians rolls exactly s = rθ along the ground — the rim unspools onto the road. Every odometer is quietly computing rθ.",
+      "figure": "tf-rolling"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Unspool the wheel.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A bike wheel of radius 0.35 m turns through 20 radians. How far does the bike roll, in meters?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 57.14,
+            "feedback": "57.14 is 20 ÷ 0.35 — divided. The rim unspools r PER radian: 0.35 · 20 = 7 m."
+          },
+          {
+            "value": 0.02,
+            "feedback": "0.02 is 0.35 ÷ 20 — flipped the other way. Distance = rθ = 7 m."
+          }
+        ],
+        "fallbackFeedback": "s = 0.35 · 20 = 7 m."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The swing's arc.",
+      "conceptTag": "tf-arc-length",
+      "explanationVariants": [
+        "Convert: 40° = 40π/180 ≈ 0.698 rad; then s = 2.5 · 0.698 ≈ 1.75 m.",
+        "Degrees arrive, radians work: conversion is step one, always."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 2.5 m swing rope sweeps through 40°. What arc does the seat trace, in meters? (Round to hundredths.)",
+        "answer": 1.75,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 is 2.5 × 40 — raw degrees in rθ. Convert first: 40° ≈ 0.698 rad, so s ≈ 1.75 m."
+          },
+          {
+            "value": 0.7,
+            "feedback": "0.70 is the converted ANGLE alone — the rope length still multiplies: 2.5 · 0.698 ≈ 1.75 m."
+          }
+        ],
+        "fallbackFeedback": "s = 2.5 · (40π/180) ≈ 1.75 m."
+      },
+      "hints": [
+        "The formula needs radians — convert 40° with π/180 first.",
+        "40π/180 ≈ 0.698 rad.",
+        "s = rθ = 2.5 · 0.698 — round to hundredths."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-arc-length__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Radians earn their keep.",
+      "takeaways": [
+        "s = rθ — arc equals radius times angle, radians only.",
+        "Degrees in the problem? Convert BEFORE the formula, every time.",
+        "Rolling wheels obey the same law: distance = rθ."
+      ],
+      "teaser": "Next: shrinking the circle to radius 1 — where sine and cosine become coordinates."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-arc-length",
+      "concept": {
+        "id": "rem-tf0203-c",
+        "kind": "concept",
+        "body": "The formula in miniature: radius 2, angle 3 radians. Three radians means three radius-lengths of arc, and each radius is 2 — so s = 2 · 3 = 6. Multiply the radius by the radian count; that's the whole law."
+      },
+      "check": {
+        "id": "rem-tf0203-k",
+        "kind": "check",
+        "body": "Three radii of rim.",
+        "conceptTag": "tf-arc-length",
+        "explanationVariants": [
+          "s = rθ = 2 · 3 = 6.",
+          "Each of the 3 radians contributes one radius (2 units) of arc."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Radius 2, central angle 3 radians. Arc length?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.67,
+              "feedback": "0.67 is 2/3 — divided. Each radian spans one radius of arc: 2 · 3 = 6."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is 2 + 3 — added. The angle SCALES the radius: s = rθ = 6."
+            }
+          ],
+          "fallbackFeedback": "2 · 3 = 6."
+        }
+      }
+    }
+  ]
+}

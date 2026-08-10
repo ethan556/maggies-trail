@@ -1,0 +1,291 @@
+{
+ "id": "rt-05-01",
+ "slug": "how-the-ratios-relate",
+ "title": "How the Ratios Relate",
+ "courseId": "right-triangles-trig",
+ "chapterId": "ch5-relationships-and-laws",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "rt-ratio-identities",
+   "concept": {
+    "id": "rem-rt-ratio-identities-c",
+    "kind": "concept",
+    "body": "Three links bind the ratios. Quotient: tan θ = sin θ ÷ cos θ. Pythagorean: sin²θ + cos²θ = 1 (from a² + b² = c² divided by c²) — subtract the SQUARE, then take the root. Cofunction: sin θ = cos(90° − θ). Given any one ratio of an acute angle, the identities produce the rest."
+   },
+   "check": {
+    "id": "rem-rt-ratio-identities-k",
+    "kind": "check",
+    "body": "Use the Pythagorean link.",
+    "conceptTag": "rt-ratio-identities",
+    "explanationVariants": [
+     "sin²θ = 1 − 0.8² = 0.36, so sin θ = 0.6 — the 3-4-5 family.",
+     "1 − 0.64 = 0.36; its square root is 0.6."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "cos θ = 0.8 (acute θ). sin θ = ?",
+     "answer": 0.6,
+     "tolerance": 0.001,
+     "commonErrors": [
+      {
+       "value": 0.2,
+       "feedback": "0.2 = 1 − 0.8 subtracts the ratio itself — the identity subtracts its SQUARE: 1 − 0.64 = 0.36, then √0.36 = 0.6."
+      },
+      {
+       "value": 0.36,
+       "feedback": "0.36 is sin²θ — one step short. Take the square root: 0.6."
+      }
+     ],
+     "fallbackFeedback": "sin θ = √(1 − 0.64) = 0.6."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The three ratios aren't three strangers — they're one family. Divide sine by cosine: (opp/hyp) ÷ (adj/hyp) — the hypotenuses cancel — leaving opp/adj. That's tangent: **tan θ = sin θ / cos θ**, at every angle. Check it on 3-4-5: (3/5) ÷ (4/5) = 3/4. ✓",
+   "figure": "rt-tan-quotient"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Cancel the hypotenuse.",
+   "conceptTag": "rt-ratio-identities",
+   "explanationVariants": [
+    "tan θ = sin θ / cos θ = 0.6 ÷ 0.8 = 0.75 — matching 3/4 read straight off the legs.",
+    "(3/5) ÷ (4/5): the fifths cancel, leaving 3/4 = 0.75."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "sin θ = 0.6 and cos θ = 0.8. Use the quotient identity to find tan θ.",
+    "answer": 0.75,
+    "tolerance": 0.001,
+    "commonErrors": [
+     {
+      "value": 0.48,
+      "feedback": "0.48 = 0.6 × 0.8 multiplies the ratios — the identity DIVIDES: sin/cos = 0.6/0.8 = 0.75."
+     },
+     {
+      "value": 1.33,
+      "feedback": "1.33 ≈ 0.8/0.6 divides the wrong way — that's cos/sin, the tangent of the OTHER angle. sin/cos = 0.75."
+     },
+     {
+      "value": 0.2,
+      "feedback": "0.2 = 0.8 − 0.6 subtracts. Tangent is a QUOTIENT of the two: 0.6 ÷ 0.8 = 0.75."
+     }
+    ],
+    "fallbackFeedback": "tan θ = sin θ/cos θ = 0.6/0.8 = 0.75."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-ratio-identities__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A deeper link comes from Pythagoras. Divide a² + b² = c² through by c²: (a/c)² + (b/c)² = 1. But a/c and b/c ARE the sine and cosine — so **sin²θ + cos²θ = 1** for every angle. On 3-4-5: 0.36 + 0.64 = 1. ✓ Know one ratio and the identity surrenders the other.",
+   "figure": "pythagorean-proof"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "One ratio buys the other.",
+   "conceptTag": "rt-ratio-identities",
+   "explanationVariants": [
+    "cos²θ = 1 − sin²θ = 1 − (5/13)² = 144/169, so cos θ = 12/13 ≈ 0.9231 — the 5-12-13 triple in disguise.",
+    "sin θ = 5/13 puts us in a 5-12-13 triangle: adjacent 12, so cos θ = 12/13 ≈ 0.9231."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "An acute angle has sin θ = 5/13. Use sin²θ + cos²θ = 1 to find cos θ (4 decimals).",
+    "answer": 0.9231,
+    "tolerance": 0.0005,
+    "commonErrors": [
+     {
+      "value": 0.6154,
+      "feedback": "0.6154 = 1 − 5/13 subtracts the RATIOS — the identity subtracts their SQUARES: 1 − 25/169 = 144/169, then take the root: ≈ 0.9231."
+     },
+     {
+      "value": 0.4167,
+      "feedback": "0.4167 = 5/12 is tan θ, the leg-to-leg ratio. Cosine is adjacent over hypotenuse: 12/13 ≈ 0.9231."
+     },
+     {
+      "value": 0.8521,
+      "feedback": "0.8521 = 144/169 stops at cos²θ. Take the square root: √(144/169) = 12/13 ≈ 0.9231."
+     }
+    ],
+    "fallbackFeedback": "cos θ = √(1 − 25/169) = 12/13 ≈ 0.9231."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-ratio-identities__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "And the cofunction pattern from Chapter 2, now in full: the two acute angles are complements, and each one's opposite is the other's adjacent. So **sin θ = cos(90° − θ)** and cos θ = sin(90° − θ). That's why the names pair up: cosine literally means “sine of the complement.”",
+   "figure": "rt-cofunction"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Name the partner.",
+   "widget": {
+    "type": "triangleSolve",
+    "prompt": "At the starting 20°, note what the opp/hyp card reads. Now drag until the adj/hyp card shows that same number — and see which angle you had to travel to.",
+    "mode": "ratios",
+    "a": 6,
+    "b": 6,
+    "target": 70,
+    "start": 20,
+    "ratio": "adj/hyp",
+    "requiredScaleMoves": 2,
+    "scaleFeedback": "Resize the triangle before checking. The claim is that sin 20° and cos 70° are the same NUMBER, so it matters that neither one moved when the lengths did.",
+    "successFeedback": "70°. adj/hyp here reads 0.342, which is exactly what opp/hyp read back at 20° — so cos 70° = sin 20°, with no calculator anywhere. The two angles add to 90°: in one right triangle the two acute corners disagree about which leg is 'opposite', so sine at one seat is cosine at the other.",
+    "lowFeedback": "adj/hyp has dropped below 0.342. Cosine SHRINKS as the angle opens, so you have gone past 70° — bring the angle back down.",
+    "highFeedback": "adj/hyp is still above 0.342. Cosine falls as the angle grows, so keep opening the angle toward the partner of 20°."
+   },
+   "predict": {
+    "prompt": "Somewhere between 10° and 80° there is an angle whose adj/hyp equals sin 20°. Where?",
+    "options": [
+     {
+      "id": "seventy",
+      "label": "At 70° — the angle that completes 20° to a right angle"
+     },
+     {
+      "id": "twenty",
+      "label": "At 20° — the same angle"
+     },
+     {
+      "id": "never",
+      "label": "Nowhere; sine and cosine never agree"
+     }
+    ],
+    "outcomeId": "seventy",
+    "reveal": "At 70°. The two acute angles of a right triangle sum to 90°, and they share the same three sides — the leg that is 'opposite' from one corner is 'adjacent' from the other. That swap is the whole content of the cofunction rule."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Stress-test the identity.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A classmate claims sin θ = 0.9 and cos θ = 0.5 for the same acute angle. Quickest disproof?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "0.9² + 0.5² = 1.06 ≠ 1, violating sin²θ + cos²θ = 1",
+      "correct": true,
+      "feedback": "The Pythagorean identity is a hard constraint — 1.06 overshoots 1, so no angle carries this pair."
+     },
+     {
+      "id": "o2",
+      "label": "Both values would need to be under 0.5",
+      "correct": false,
+      "feedback": "There's no half-cap on the ratios — sin 60° ≈ 0.87 is fine. The real test is the squares summing to 1: here they hit 1.06."
+     },
+     {
+      "id": "o3",
+      "label": "Sine can never exceed cosine",
+      "correct": false,
+      "feedback": "Past 45°, sine exceeds cosine legitimately. The disproof is the identity: 0.81 + 0.25 = 1.06 ≠ 1."
+     },
+     {
+      "id": "o4",
+      "label": "You can't disprove it without knowing θ",
+      "correct": false,
+      "feedback": "That's the identity's power — it binds EVERY θ. Since 0.81 + 0.25 ≠ 1, no angle exists, no lookup needed."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Cofunction in reverse.",
+   "conceptTag": "rt-ratio-identities",
+   "explanationVariants": [
+    "cos 34° = sin(90° − 34°) = sin 56°, so the blank is 56.",
+    "The complement of 34° is 56°; cosine of one equals sine of the other."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Fill in the blank: cos 34° = sin(____°).",
+    "answer": 56,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 34,
+      "feedback": "sin 34° ≠ cos 34° (they only meet at 45°). The swap crosses to the COMPLEMENT: 90 − 34 = 56."
+     },
+     {
+      "value": 146,
+      "feedback": "146 = 180 − 34 uses the supplement — cofunctions run on complements: 90 − 34 = 56."
+     }
+    ],
+    "fallbackFeedback": "cos 34° = sin 56° — complements, 34 + 56 = 90."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-ratio-identities__numeric"
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Chain the identities.",
+   "conceptTag": "rt-ratio-identities",
+   "hints": [
+    "First recover cos θ from the Pythagorean identity: cos²θ = 1 − 0.28².",
+    "cos θ = √(1 − 0.0784) = √0.9216 = 0.96.",
+    "Then the quotient identity: tan θ = sin θ ÷ cos θ = 0.28 ÷ 0.96."
+   ],
+   "explanationVariants": [
+    "cos θ = √(1 − 0.28²) = 0.96, then tan θ = 0.28/0.96 ≈ 0.2917 — the 7-24-25 triple: 7/24.",
+    "Two identities in a row: Pythagorean for cosine (0.96), quotient for tangent (≈ 0.2917)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "sin θ = 0.28 (acute θ). Find tan θ to 4 decimals — no inverse-trig keys allowed.",
+    "answer": 0.2917,
+    "tolerance": 0.0005,
+    "commonErrors": [
+     {
+      "value": 0.72,
+      "feedback": "0.72 = 1 − 0.28 subtracts ratios instead of SQUARES. cos θ = √(1 − 0.0784) = 0.96, then 0.28/0.96 ≈ 0.2917."
+     },
+     {
+      "value": 0.2688,
+      "feedback": "0.2688 = 0.28 × 0.96 multiplies at the last step — tangent DIVIDES sine by cosine: ≈ 0.2917."
+     },
+     {
+      "value": 3.4286,
+      "feedback": "3.4286 ≈ 0.96/0.28 divides upside-down — that's the other angle's tangent. sin/cos = 0.28/0.96 ≈ 0.2917."
+     }
+    ],
+    "fallbackFeedback": "cos θ = 0.96; tan θ = 0.28/0.96 = 7/24 ≈ 0.2917."
+   },
+   "variant": {
+    "gen": "g10-right-triangles",
+    "form": "rt-ratio-identities__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One family, three faces.",
+   "takeaways": [
+    "Quotient: tan θ = sin θ / cos θ — the hypotenuses cancel.",
+    "Pythagorean: sin²θ + cos²θ = 1 — one ratio determines the other.",
+    "Cofunction: sin θ = cos(90° − θ) — complements trade sine for cosine."
+   ],
+   "teaser": "Next: what happens when the right angle walks away — the Law of Sines."
+  }
+ ]
+}

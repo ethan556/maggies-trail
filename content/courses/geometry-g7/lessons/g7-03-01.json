@@ -1,0 +1,315 @@
+{
+  "id": "g7-03-01",
+  "slug": "complementary-and-supplementary",
+  "title": "Complementary and Supplementary",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3-angle-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two angles that fit together into a **square corner** are **complementary**: they add to **90°**. Two angles that fit along a **straight line** are **supplementary**: they add to **180°**.",
+      "figure": "angle-pairs"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Complementary angles complete the corner.",
+      "widget": {
+        "type": "angleMeasure",
+        "targetAngle": 55,
+        "angleStart": 0,
+        "angleStep": 5,
+        "prompt": "One angle is 35°. Open the other until the two complete a right angle.",
+        "successFeedback": "55°, because 35 + 55 = 90. Complementary means 'completes the square corner' — and once you see the corner, you never need to recall which word means 90 and which means 180.",
+        "lowFeedback": "The two angles do not reach a right angle yet.",
+        "highFeedback": "The two angles have opened past a right angle."
+      },
+      "predict": {
+        "prompt": "One angle is 35°. Its COMPLEMENT — together they square off a right angle — measures…",
+        "options": [
+          {
+            "id": "fiftyfive",
+            "label": "55°"
+          },
+          {
+            "id": "supp",
+            "label": "145°"
+          },
+          {
+            "id": "same",
+            "label": "35°"
+          }
+        ],
+        "outcomeId": "fiftyfive",
+        "reveal": "Complements complete 90°: the partner is 90 − 35 = 55°. Answering 145° completes a straight LINE instead — that's the supplement, the other half of the C/S trap."
+      },
+      "conceptTag": "g7-complementary",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents complementary.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for complementary must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines complementary."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-g7:g7-complementary",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A memory hook: **C**omplementary makes a **C**orner (90°); **S**upplementary makes a **S**traight line (180°). To find a missing partner, subtract the known angle from the pair's total.",
+      "figure": "g7-comp-supp"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find a supplement.",
+      "conceptTag": "g7-complementary",
+      "explanationVariants": [
+        "Supplementary angles add to 180°: 180 − 110 = 70.",
+        "Subtract from the straight-line total: 180 − 110 = 70°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two angles are supplementary. One is 110°. What is the other, in degrees?",
+        "answer": 70,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "You may have subtracted from 130 — supplementary uses 180°: 180 − 110 = 70."
+          },
+          {
+            "value": 110,
+            "feedback": "The pair shares 180° — subtract: 180 − 110 = 70."
+          }
+        ],
+        "fallbackFeedback": "Supplementary angles add to 180°: 180 − 110 = 70°."
+      },
+      "variant": {
+        "gen": "g7-complementary"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another complement.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two angles are complementary. One is 62°. What is the other, in degrees?",
+        "answer": 28,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 118,
+            "feedback": "That used 180° (supplementary) — complementary uses 90°: 90 − 62 = 28."
+          },
+          {
+            "value": 62,
+            "feedback": "Subtract from 90: 90 − 62 = 28."
+          }
+        ],
+        "fallbackFeedback": "90 − 62 = 28°."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which pair is which?",
+      "conceptTag": "g7-complementary",
+      "explanationVariants": [
+        "40° + 50° = 90° (complementary); 100° + 80° = 180° (supplementary).",
+        "Check each sum against 90° and 180°."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each angle pair by its type.",
+        "buckets": [
+          {
+            "id": "comp",
+            "label": "Complementary (adds to 90°)"
+          },
+          {
+            "id": "supp",
+            "label": "Supplementary (adds to 180°)"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "40° and 50°",
+            "bucketId": "comp",
+            "feedback": "40 + 50 = 90 — they fit a square corner, so complementary."
+          },
+          {
+            "id": "d2",
+            "label": "100° and 80°",
+            "bucketId": "supp",
+            "feedback": "100 + 80 = 180 — they fill a straight line, so supplementary."
+          },
+          {
+            "id": "d3",
+            "label": "30° and 60°",
+            "bucketId": "comp",
+            "feedback": "30 + 60 = 90 — a corner pair, complementary."
+          },
+          {
+            "id": "d4",
+            "label": "135° and 45°",
+            "bucketId": "supp",
+            "feedback": "135 + 45 = 180 — a straight-line pair, supplementary."
+          }
+        ],
+        "missFeedback": "Not quite — add each pair: 90° means complementary, 180° means supplementary.",
+        "successFeedback": "All sorted — corners hold 90°, straight lines hold 180°."
+      },
+      "variant": {
+        "gen": "g7-complementary",
+        "form": "angleSort"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the impossible pair.",
+      "conceptTag": "g7-complementary",
+      "explanationVariants": [
+        "Two complementary angles share only 90°, so neither can be 90° or more.",
+        "Each complementary angle must be under 90°, since the pair totals 90°."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why can't an angle of 95° have a complement?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Complementary pairs total 90°, and 95° is already past it",
+            "correct": true,
+            "feedback": "Right — there's nothing left: 90 − 95 would be negative."
+          },
+          {
+            "id": "b",
+            "label": "95° angles aren't real",
+            "correct": false,
+            "feedback": "95° is a fine angle — it just exceeds the 90° that a complementary PAIR must share."
+          },
+          {
+            "id": "c",
+            "label": "It can — the complement is 85°",
+            "correct": false,
+            "feedback": "95 + 85 = 180 makes them SUPPLEMENTARY — complements must total 90°, which 95° already passes."
+          },
+          {
+            "id": "d",
+            "label": "Only even angles have complements",
+            "correct": false,
+            "feedback": "Parity doesn't matter — the issue is 95° exceeds the 90° pair total."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-complementary",
+        "form": "noAngleComplement"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-part corner.",
+      "conceptTag": "g7-complementary",
+      "explanationVariants": [
+        "The three angles fill 90°: 90 − 25 − 40 = 25°.",
+        "Subtract both known angles from 90: 25°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Three angles fit together into a square corner. Two of them are 25° and 40°. What is the third, in degrees?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 115,
+            "feedback": "That used 180° — a square CORNER holds 90°: 90 − 25 − 40 = 25."
+          },
+          {
+            "value": 65,
+            "feedback": "That's just the two known angles combined — subtract from 90: 25."
+          }
+        ],
+        "fallbackFeedback": "90 − 25 − 40 = 25°."
+      },
+      "hints": [
+        "A square corner holds 90° in total.",
+        "Subtract both known angles from 90.",
+        "90 − 25 − 40 = 25°."
+      ],
+      "variant": {
+        "gen": "g7-complementary",
+        "form": "cornerThree"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Complementary pairs total 90° (a corner); supplementary pairs total 180° (a straight line).",
+      "takeaways": [
+        "Complementary: adds to 90°. Supplementary: adds to 180°.",
+        "Find a missing partner by subtracting from the pair's total.",
+        "C makes a Corner; S makes a Straight line."
+      ],
+      "teaser": "Next: the equal angles made by crossing lines."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-complementary",
+      "concept": {
+        "id": "rem-g70301-c",
+        "kind": "concept",
+        "body": "Complementary angles fit a square corner and add to 90°; supplementary angles fit a straight line and add to 180°. Subtract the known angle from the pair's total."
+      },
+      "check": {
+        "id": "rem-g70301-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-complementary",
+        "explanationVariants": [
+          "Complementary: 90 − 30 = 60°.",
+          "Subtract from 90: 60°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Two angles are complementary. One is 30°. What is the other?",
+          "answer": 60,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 150,
+              "feedback": "That used 180° — complementary uses 90°: 90 − 30 = 60."
+            },
+            {
+              "value": 30,
+              "feedback": "Subtract from 90: 90 − 30 = 60."
+            }
+          ],
+          "fallbackFeedback": "90 − 30 = 60°."
+        }
+      }
+    }
+  ]
+}

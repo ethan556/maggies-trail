@@ -1,0 +1,294 @@
+{
+  "id": "de-03-01",
+  "slug": "exponential-growth",
+  "title": "Why Growth Is Exponential",
+  "courseId": "differential-equations",
+  "chapterId": "ch3-growth-and-decay",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In Algebra 1 you were HANDED exponential growth as a fact: some things grow like bˣ, and that is that.\n\nHere is where it comes from.\n\n**dy/dt = ky** — *the rate of growth is proportional to how much you already have.*\n\nSeparate and integrate: (1/y)dy = k dt → ln|y| = kt + C → **y = y₀e^(kt)**.\n\nExponential growth is not a species of function. It is what dy/dt = ky *forces*.",
+      "figure": "dr-e-self-derivative"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The sentence, and the equation.",
+      "conceptTag": "de-exponential",
+      "explanationVariants": [
+        "\"The more there is, the faster it grows\" is exactly dy/dt = ky: the rate is proportional to the amount.",
+        "Bacteria divide, so twice as many bacteria produce twice as many new ones. That single sentence IS the differential equation."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A bacterial colony grows at a rate proportional to its size. Which equation says that?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "dP/dt = kP",
+            "correct": true,
+            "feedback": "Right — and everything else follows. Twice as many bacteria means twice as many divisions per second, which is precisely proportionality."
+          },
+          {
+            "id": "o2",
+            "label": "dP/dt = k",
+            "correct": false,
+            "feedback": "That says it grows at a CONSTANT rate, however big it is — which would give a straight line, not exponential growth."
+          },
+          {
+            "id": "o3",
+            "label": "dP/dt = kt",
+            "correct": false,
+            "feedback": "That says the growth rate depends on the CLOCK, not on the population. A colony does not check the time before dividing."
+          },
+          {
+            "id": "o4",
+            "label": "P = ekt",
+            "correct": false,
+            "feedback": "That is (nearly) the SOLUTION. The question asks for the differential equation — the sentence about rates that produces it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-exponential__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The field of proportional growth.",
+      "widget": {
+        "type": "slopeField",
+        "equation": "exponential",
+        "targetY0": 2,
+        "startY0": 6,
+        "prompt": "dy/dt = 0.5y. Drag the starting value to 2, and look at what the field does as you move UP the page.",
+        "successFeedback": "The segments get steeper the higher you go — that IS 'the more there is, the faster it grows', drawn. And every curve is a scaled copy of every other: doubling the starting value doubles the whole curve, because y₀ is a MULTIPLIER in y = y₀e^(kt), not an addition.",
+        "lowFeedback": "Below 2 — a smaller starting amount, and (look) a flatter curve, because there is less to breed from.",
+        "highFeedback": "Above 2 — a bigger starting amount, and a steeper curve from the very first instant."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change an initial condition and trace a solution that remains tangent to the local direction field.",
+        "invariants": [
+          "field-slope-depends-on-position",
+          "solution-follows-local-slopes"
+        ],
+        "misconceptions": [
+          "all-solutions-share-one-curve",
+          "field-arrows-are-motion-vectors"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "differential-equations-slopeField",
+        "delayed": false
+      },
+      "conceptTag": "de-exponential",
+      "predict": {
+        "prompt": "dy/dt = 0.5y. Move straight up the page — same t, larger y. The slope marks there will be…",
+        "options": [
+          {
+            "id": "steeper",
+            "label": "Steeper"
+          },
+          {
+            "id": "same",
+            "label": "The same — t has not changed"
+          },
+          {
+            "id": "shallower",
+            "label": "Shallower"
+          }
+        ],
+        "outcomeId": "steeper",
+        "reveal": "Steeper, and by exactly the same factor the height grew. \"Rate proportional to amount\" is not a description of exponential growth — it is the instruction that produces it, and the field shows the instruction being obeyed at every height."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Solve one.",
+      "conceptTag": "de-exponential",
+      "explanationVariants": [
+        "P = P₀e^(kt) = 200e^(0.1t). At t = 10 that is 200e¹ = 200e ≈ 543.66.",
+        "Note the exponent is kt = 1 at t = 10, which is why the answer is exactly 200e."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A colony has dP/dt = 0.1P and P(0) = 200. Find P(10), to one decimal.",
+        "answer": 543.7,
+        "tolerance": 0.5,
+        "commonErrors": [
+          {
+            "value": 200,
+            "feedback": "That is the starting population. In 10 hours it has grown by a factor of e^(0.1×10) = e ≈ 2.718."
+          },
+          {
+            "value": 2000,
+            "feedback": "That would be 200 × 10 — LINEAR growth. Exponential growth multiplies by e^(kt), not by t."
+          },
+          {
+            "value": 220,
+            "feedback": "That looks like 10% growth once. Exponential growth compounds continuously: 200e ≈ 543.7."
+          }
+        ],
+        "fallbackFeedback": "P = 200e^(0.1t) → P(10) = 200e ≈ 543.7."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-exponential__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Make k **negative** and the same equation becomes decay:\n\n**dy/dt = −ky** → y = y₀e^(−kt)\n\nRadioactive atoms, cooling coffee, drugs leaving the bloodstream — all obey *the rate of loss is proportional to what is left*. And the **half-life** is the time to fall by half:\n\ny₀/2 = y₀e^(−kT) → **T = ln2 / k**\n\nOne equation, two behaviours, and the sign of k decides which.",
+      "figure": "dr-e-self-derivative"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Half-life.",
+      "conceptTag": "de-exponential",
+      "explanationVariants": [
+        "T = ln2/k, so k = ln2/T = ln2/5 ≈ 0.1386.",
+        "The half-life does not depend on how much you started with — which is the strange and useful fact about exponential decay."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A substance has a half-life of 5 days. Find its decay constant k, to four decimals.",
+        "answer": 0.1386,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is the HALF-LIFE itself. The constant is k = ln2/5 ≈ 0.1386."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is 1/5. The relationship carries a logarithm: k = ln2/T ≈ 0.6931/5."
+          },
+          {
+            "value": 0.6931,
+            "feedback": "That is ln 2. You must still divide by the half-life, 5."
+          }
+        ],
+        "fallbackFeedback": "T = ln2/k → k = ln2/5 ≈ 0.1386 per day."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-exponential__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Independent of where you start.",
+      "conceptTag": "de-exponential",
+      "hints": [
+        "Write the decay: y = y₀e^(−kt), and ask when y = y₀/2.",
+        "y₀/2 = y₀e^(−kT) — the y₀ CANCELS from both sides.",
+        "So T = ln2/k, and it does not mention y₀ at all."
+      ],
+      "explanationVariants": [
+        "The y₀ cancels, so the half-life is the same whether you start with a kilogram or a microgram: T = ln2/k.",
+        "That is why 'half-life' is a property of the SUBSTANCE and not of the sample — a fact that would be hard to believe if you had not just watched it fall out of the algebra."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two samples of the same substance start with 1 kg and 1 microgram. Which halves faster?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Neither — the half-life is the same. The y₀ cancels: T = ln2/k.",
+            "correct": true,
+            "feedback": "Right, and it is why half-life is a property of the SUBSTANCE, not of the sample. The kilogram loses vastly more mass per second, but it takes the same time to lose half of itself."
+          },
+          {
+            "id": "o2",
+            "label": "The kilogram — it decays faster.",
+            "correct": false,
+            "feedback": "It loses more MASS per second, certainly. But it also has more to lose, and the two effects cancel exactly: the fraction lost per second is the same."
+          },
+          {
+            "id": "o3",
+            "label": "The microgram — less to get through.",
+            "correct": false,
+            "feedback": "It also decays proportionally more slowly in absolute terms. The PROPORTION lost per second is identical, which is what a half-life measures."
+          },
+          {
+            "id": "o4",
+            "label": "It depends on k.",
+            "correct": false,
+            "feedback": "k is a property of the substance and is the SAME for both samples. What the question asks is whether the starting amount matters — and it does not."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-exponential__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The equation that explains the function.",
+      "takeaways": [
+        "dy/dt = ky — the rate is proportional to the amount — FORCES y = y₀e^(kt). Exponential growth is not a species of curve; it is what that sentence implies.",
+        "Negative k gives decay, and the half-life T = ln2/k does not depend on how much you started with.",
+        "Algebra 1 handed you bˣ as a fact. This is where it comes from."
+      ],
+      "teaser": "Next: what happens when the growth rate stops being constant."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "de-exponential",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Read the sentence, then write the equation. *'Grows in proportion to how much there is'* is dy/dt = ky. Separate it, integrate it, and out comes y = y₀e^(kt) — every time.",
+        "figure": "dr-e-self-derivative"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Sentence to equation.",
+        "conceptTag": "de-exponential",
+        "explanationVariants": [
+          "'The rate of loss is proportional to what remains' is dy/dt = −ky, with the minus sign carrying the word 'loss'.",
+          "Proportional to the amount means the amount appears on the right-hand side."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "'A drug leaves the blood at a rate proportional to the amount present.' Which equation?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "dA/dt = −kA",
+              "correct": true,
+              "feedback": "Right — proportional to the amount, and negative because it is LEAVING."
+            },
+            {
+              "id": "o2",
+              "label": "dA/dt = −k",
+              "correct": false,
+              "feedback": "That is a constant rate of loss, regardless of how much is there — which is not what 'proportional' means."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

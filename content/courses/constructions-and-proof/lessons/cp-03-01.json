@@ -1,0 +1,275 @@
+{
+  "id": "cp-03-01",
+  "slug": "inscribing-a-hexagon",
+  "title": "Inscribing a Hexagon",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch3-inscribed-polygons",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-hexagon",
+      "concept": {
+        "id": "rem-cp-hexagon-c",
+        "kind": "concept",
+        "body": "Central angle vs interior angle: the CENTRAL angle sits at the circle's MIDDLE (360 ÷ n), while the INTERIOR angle sits at a VERTEX of the polygon (180(n−2)/n). For a hexagon they're 60° and 120° — never mix them up."
+      },
+      "check": {
+        "id": "rem-cp-hexagon-k",
+        "kind": "check",
+        "body": "Central or interior?",
+        "conceptTag": "cp-hexagon",
+        "explanationVariants": [
+          "The central angle of a regular hexagon is 360 ÷ 6 = 60°.",
+          "\"At the center\" means divide the full turn: 360 ÷ 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the CENTRAL angle (at the circle's center) for a regular hexagon, in degrees?",
+          "answer": 60,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 120,
+              "feedback": "120° is the INTERIOR angle at a vertex. The CENTRAL angle divides the full turn: 360 ÷ 6 = 60°."
+            },
+            {
+              "value": 30,
+              "feedback": "30° would be 360 ÷ 12 — too many slices. A hexagon has 6 vertices: 360 ÷ 6 = 60°."
+            }
+          ],
+          "fallbackFeedback": "Central angle = 360 ÷ 6 = 60°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The compass hides a gift: **the radius of a circle steps around it exactly six times**. Keep the compass set to the circle's radius, walk it point-to-point around the circle, and the six marks are the vertices of a perfect regular hexagon. No measuring — the radius IS the side.",
+      "figure": "equilateral-construction"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why the hexagon falls out of the circle.",
+      "predict": {
+        "prompt": "You will step the compass around a circle of radius 6. What compass opening lands you exactly back at the start after six steps?",
+        "options": [
+          {
+            "id": "radius",
+            "label": "6 — the radius itself"
+          },
+          {
+            "id": "half",
+            "label": "3 — half the radius, since six steps is a lot"
+          },
+          {
+            "id": "circumference",
+            "label": "About 6.3 — a sixth of the circumference"
+          }
+        ],
+        "outcomeId": "radius",
+        "reveal": "The radius itself. A chord equal to the radius makes an equilateral triangle with the two radii to its ends, so it subtends exactly 60° — and six 60° steps is one full lap. Set the compass to 6 and walk it round."
+      },
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "hexagon",
+        "span": 6,
+        "target": 6,
+        "start": 2,
+        "prompt": "The circle has radius 6. Set the compass so that stepping it round the circle lands exactly back at the start after six steps.",
+        "successFeedback": "Compass = 6, the radius itself. A chord equal to the radius makes an equilateral triangle with the two radii to its ends, so it subtends exactly 60° — and six 60° steps is one full lap. The hexagon is not a construction you memorise; it is the only shape a compass set to its own circle's radius can make.",
+        "lowFeedback": "Your steps are too small, so more than six of them are needed to get round.",
+        "highFeedback": "Your steps are too big, so fewer than six get you round — and they overshoot the start."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change the compass radius and observe the exact equal-distance guarantees created by intersecting arcs.",
+        "invariants": [
+          "equal-radius",
+          "construction-locus"
+        ],
+        "misconceptions": [
+          "construction-by-appearance",
+          "measurement-is-proof"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "constructions-and-proof",
+        "delayed": false
+      },
+      "conceptTag": "cp-hexagon"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why exactly six?",
+      "conceptTag": "cp-hexagon",
+      "explanationVariants": [
+        "Each hexagon vertex spans a 60° central angle, and a chord across 60° in a radius-r circle has length exactly r. Six 60° arcs fill 360°, so the radius fits six times.",
+        "The triangle from the center to two adjacent vertices has two radius sides and a 60° apex — an equilateral triangle, so its third side (the chord) also equals r."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the radius step around a circle exactly six times?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Each step spans a 60° central angle, and a 60° chord equals the radius",
+            "correct": true,
+            "feedback": "Center-to-two-adjacent-vertices makes an equilateral triangle (two radii, 60° apex), so the chord equals r — and six 60° arcs complete 360°."
+          },
+          {
+            "id": "o2",
+            "label": "The compass naturally makes six equal parts",
+            "correct": false,
+            "feedback": "The compass just holds ONE length. Six steps is a consequence of the 60°-chord-equals-radius fact, not a property of the tool."
+          },
+          {
+            "id": "o3",
+            "label": "A circle has six sides",
+            "correct": false,
+            "feedback": "A circle has no sides at all. The six comes from equilateral triangles fitting around the center."
+          },
+          {
+            "id": "o4",
+            "label": "Because 360 ÷ 60 happens to be six, by coincidence",
+            "correct": false,
+            "feedback": "It's no coincidence — the 60° itself comes from the equilateral triangle formed by two radii and the chord."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-hexagon__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That center triangle is the key: two radii plus the chord, with a 60° angle between the radii. Two equal sides and a 60° angle between them force an **equilateral** triangle — so all three sides, chord included, equal the radius. Six such triangles tile the hexagon like pizza slices.",
+      "figure": "cnp-hexagon-radius"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The central angle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A regular hexagon's six vertices divide the full 360° around the center equally. What is the central angle for each vertex, in degrees?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "120° is the hexagon's INTERIOR angle (at a vertex), not the CENTRAL angle. Divide the full turn by 6: 360 ÷ 6 = 60°."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the number of vertices, not an angle. The central angle is the full turn split among them: 360 ÷ 6 = 60°."
+          }
+        ],
+        "fallbackFeedback": "360 ÷ 6 = 60° per central slice."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Interior versus central.",
+      "conceptTag": "cp-hexagon",
+      "explanationVariants": [
+        "A regular hexagon's interior angle is 180(6−2)/6 = 720/6 = 120°.",
+        "Six triangles each contribute two 60° base angles at a vertex: 60 + 60 = 120° interior."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the measure of each INTERIOR angle of a regular hexagon, in degrees?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60° is the CENTRAL angle (at the middle). The interior angle at a vertex is larger: 180(6−2)/6 = 120°."
+          },
+          {
+            "value": 720,
+            "feedback": "720° is the SUM of all six interior angles. Each one is 720 ÷ 6 = 120°."
+          }
+        ],
+        "fallbackFeedback": "180(6 − 2)/6 = 720/6 = 120°."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-hexagon__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Hexagon into triangle.",
+      "conceptTag": "cp-hexagon",
+      "hints": [
+        "The six center-to-vertex triangles are all equilateral — what's each one's apex angle?",
+        "Each apex is 60°. Connecting every OTHER vertex skips one each time.",
+        "Skipping one vertex doubles the central angle to 120°, giving 3 vertices."
+      ],
+      "explanationVariants": [
+        "Joining every other hexagon vertex uses 3 of the 6 marks, each spanning 120° (two 60° steps) — a regular triangle, the inscribed equilateral.",
+        "Alternate vertices sit 120° apart; three of them at 120° each fill 360° — an equilateral triangle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Starting from an inscribed hexagon, you connect every OTHER vertex. What shape appears?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "an equilateral triangle",
+            "correct": true,
+            "feedback": "Three of the six marks, each 120° apart — a regular (equilateral) triangle inscribed in the same circle."
+          },
+          {
+            "id": "o2",
+            "label": "a smaller hexagon",
+            "correct": false,
+            "feedback": "Skipping vertices REDUCES the count from 6 to 3 — you get a triangle, not another hexagon."
+          },
+          {
+            "id": "o3",
+            "label": "a square",
+            "correct": false,
+            "feedback": "A square needs 4 vertices 90° apart. Every-other of 6 gives 3 vertices 120° apart — a triangle."
+          },
+          {
+            "id": "o4",
+            "label": "a regular pentagon",
+            "correct": false,
+            "feedback": "A pentagon needs 5 vertices; the hexagon's marks are spaced for multiples of 60°, which never give 72° pentagon spacing."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-hexagon__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The radius that walks.",
+      "takeaways": [
+        "The circle's radius steps around it exactly six times — the hexagon needs no measuring.",
+        "It works because each center triangle (two radii + 60°) is equilateral, so the chord equals r.",
+        "Central angle 60°, interior angle 120°; joining alternate vertices gives the inscribed equilateral triangle."
+      ],
+      "teaser": "Next: two perpendicular diameters, and a square drops into the circle."
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+ "id": "cr-04-01",
+ "slug": "angles-inside-outside",
+ "title": "Angles Inside & Outside",
+ "courseId": "circle-theorems",
+ "chapterId": "ch4-secants-power",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cr-secant-angles",
+   "concept": {
+    "id": "rem-cr-secant-angles-c",
+    "kind": "concept",
+    "body": "Vertex position picks the formula. INSIDE the circle (two crossing chords): angle = half the SUM of the two facing arcs. OUTSIDE (two secants, two tangents, or one of each): angle = half the DIFFERENCE (far arc − near arc). On the circle: half the single arc; at the center: the full arc."
+   },
+   "check": {
+    "id": "rem-cr-secant-angles-k",
+    "kind": "check",
+    "body": "Pick and compute.",
+    "conceptTag": "cr-secant-angles",
+    "explanationVariants": [
+     "Inside vertex: average the arcs — (90 + 30)/2 = 60°.",
+     "Half the sum: 60°."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Two chords cross INSIDE a circle, facing arcs 90° and 30°. Angle = ?",
+     "answer": 60,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 30,
+       "feedback": "30 = (90 − 30)/2 is the OUTSIDE rule — inside vertices average: 60°."
+      },
+      {
+       "value": 120,
+       "feedback": "120 = 90 + 30 forgets the half: 60°."
+      }
+     ],
+     "fallbackFeedback": "(90 + 30)/2 = 60°."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Chapter 1 priced angles ON the circle (half their arc). Move the vertex and the price changes. Two chords crossing **INSIDE** the circle make an angle equal to **half the SUM of the two arcs** they and their vertical partner intercept — the average of the two arcs. Arcs 100° and 40°: angle = 70°.",
+   "figure": "cr-angle-on-circle"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The inside average.",
+   "conceptTag": "cr-secant-angles",
+   "explanationVariants": [
+    "Half the sum of the intercepted arcs: (100 + 40)/2 = 70°.",
+    "The average of 100 and 40: 70°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two chords cross inside a circle, intercepting arcs of 100° and 40° (the arc pair facing the angle and its vertical twin). The angle at the crossing = ?",
+    "answer": 70,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 140,
+      "feedback": "140 = 100 + 40 forgets the halving — the inside angle is half the sum: 70°."
+     },
+     {
+      "value": 30,
+      "feedback": "30 = (100 − 40)/2 takes the half-DIFFERENCE — that formula belongs to OUTSIDE vertices. Inside averages: 70°."
+     },
+     {
+      "value": 50,
+      "feedback": "50 = 100/2 halves only one arc — the inside vertex hears BOTH arcs: (100 + 40)/2 = 70°."
+     }
+    ],
+    "fallbackFeedback": "(100 + 40)/2 = 70°."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-secant-angles__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Push the vertex **OUTSIDE** and the formula flips its sign: two secants (or tangents) from an external point make an angle equal to **half the DIFFERENCE of the far and near arcs**. Arcs 130° and 30°: angle = 50°. Inside averages; outside takes half the spread. The vertex's location picks the sign.",
+   "figure": "cr-external-vertex"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The outside spread.",
+   "conceptTag": "cr-secant-angles",
+   "explanationVariants": [
+    "Half the difference: (130 − 30)/2 = 50°.",
+    "Far arc minus near arc, halved: 50°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two secants from an external point intercept a far arc of 130° and a near arc of 30°. The angle at the external point = ?",
+    "answer": 50,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 80,
+      "feedback": "80 = (130 + 30)/2 AVERAGES — that's the INSIDE-vertex rule. Outside subtracts first: (130 − 30)/2 = 50°."
+     },
+     {
+      "value": 100,
+      "feedback": "100 = 130 − 30 subtracts but never halves: 50°."
+     },
+     {
+      "value": 65,
+      "feedback": "65 = 130/2 halves only the far arc — the near arc pushes back: (130 − 30)/2 = 50°."
+     }
+    ],
+    "fallbackFeedback": "(130 − 30)/2 = 50°."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-secant-angles__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "One family of formulas.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Vertex at the center: angle = arc. On the circle: half the arc. Inside: half the sum. Outside: half the difference. What single story unifies them?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "As the vertex moves outward, the angle seeing a fixed arc shrinks — center (full), rim (half), and beyond the rim the near arc subtracts",
+      "correct": true,
+      "feedback": "One arc, sliding vertex: the view narrows with distance, and past the rim the second arc starts working against it. The four formulas are one journey."
+     },
+     {
+      "id": "o2",
+      "label": "The formulas are unrelated coincidences",
+      "correct": false,
+      "feedback": "They interpolate perfectly — slide the vertex and each formula morphs into the next (inside sum → rim's half → outside difference)."
+     },
+     {
+      "id": "o3",
+      "label": "All four give the same number for the same arcs",
+      "correct": false,
+      "feedback": "They deliberately DIFFER — a 100° arc is seen at 100° from the center but only 50° from the rim. Position is the price."
+     },
+     {
+      "id": "o4",
+      "label": "Only the rim formula is ever needed",
+      "correct": false,
+      "feedback": "Crossing chords and external secants appear constantly — each vertex position demands its own rate."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Choose the formula.",
+   "conceptTag": "cr-secant-angles",
+   "explanationVariants": [
+    "The photographer stands OUTSIDE the circular fountain — half the difference of arcs.",
+    "External vertex ⇒ (far − near)/2."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A photographer outside a circular fountain sights along two tangent lines to its rim. Which formula gives the angle between the sight lines?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Half the difference of the two intercepted arcs",
+      "correct": true,
+      "feedback": "External vertex — tangents, secants, or one of each — always prices at half the far-minus-near spread."
+     },
+     {
+      "id": "o2",
+      "label": "Half the sum of the two arcs",
+      "correct": false,
+      "feedback": "Half the sum serves vertices INSIDE the circle — out here the near arc subtracts: half the difference."
+     },
+     {
+      "id": "o3",
+      "label": "The full far arc",
+      "correct": false,
+      "feedback": "Full-arc pricing is the CENTER's privilege — external eyes get half the difference."
+     },
+     {
+      "id": "o4",
+      "label": "Half the near arc",
+      "correct": false,
+      "feedback": "The near arc alone can't price it — both arcs enter, subtractively: (far − near)/2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-secant-angles__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Consistency check.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two tangents from an external point intercept arcs of 220° (far) and 140° (near). Compute the angle — then notice it matches last chapter's kite supplement (180 − central 140).",
+    "answer": 40,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 180,
+      "feedback": "180 = (220 + 140)/2 averages — outside vertices take half the DIFFERENCE: (220 − 140)/2 = 40°."
+     },
+     {
+      "value": 80,
+      "feedback": "80 = 220 − 140 skips the halving: 40°."
+     }
+    ],
+    "fallbackFeedback": "(220 − 140)/2 = 40° — and the two-tangent kite agrees: 180 − 140 = 40°. Two theorems, one answer."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The crossing brace.",
+   "conceptTag": "cr-secant-angles",
+   "hints": [
+    "The 65° crossing angle averages its two facing arcs: 65 = (x + 38)/2.",
+    "Double first: x + 38 = 130.",
+    "Solve for x."
+   ],
+   "explanationVariants": [
+    "x = 130 − 38 = 92° — the unknown arc must outweigh 38° to pull the average up to 65.",
+    "2(65) − 38 = 92°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two chords cross inside a circle at 65°. One of the two facing arcs measures 38°. Find the other facing arc.",
+    "answer": 92,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 27,
+      "feedback": "27 = 65 − 38 subtracts without doubling — the 65 is an AVERAGE, so double first: 130 − 38 = 92°."
+     },
+     {
+      "value": 168,
+      "feedback": "168 = 130 + 38 adds after doubling — solve x + 38 = 130 by SUBTRACTING: 92°."
+     },
+     {
+      "value": 51.5,
+      "feedback": "51.5 = (65 + 38)/2 averages the angle with the arc — the average runs between the two ARCS: x = 2(65) − 38 = 92°."
+     }
+    ],
+    "fallbackFeedback": "x = 2(65) − 38 = 92°."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-secant-angles__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Position picks the sign.",
+   "takeaways": [
+    "Inside crossing: angle = half the SUM of the facing arcs (the average).",
+    "Outside vertex (secants/tangents): angle = half the DIFFERENCE, far minus near.",
+    "One story: center = full arc, rim = half, inside = half-sum, outside = half-difference."
+   ],
+   "teaser": "Next: the tangent-chord angle — the rim formula's last disguise."
+  }
+ ]
+}

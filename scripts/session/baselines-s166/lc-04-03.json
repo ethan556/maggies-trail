@@ -1,0 +1,236 @@
+{
+ "id": "lc-04-03",
+ "slug": "intermediate-value-theorem",
+ "title": "The Intermediate Value Theorem",
+ "courseId": "limits-continuity",
+ "chapterId": "ch4-continuity-ivt",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The **Intermediate Value Theorem (IVT)**: if f is continuous on [a, b] and N is any value between f(a) and f(b), then f hits N somewhere in between — there's a c in (a, b) with f(c) = N. Continuity means the graph can't skip a value; it must pass through everything on the way.",
+   "figure": "lc-ivt"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "A guaranteed crossing.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "f is continuous with f(1) = −1 and f(2) = 2. The IVT guarantees f(c) = 0 for some c in (1, 2) because:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "0 lies between −1 and 2",
+      "correct": true,
+      "feedback": "Right — 0 is an intermediate value, so a continuous f must attain it."
+     },
+     {
+      "id": "o2",
+      "label": "f is increasing",
+      "feedback": "IVT doesn't need monotonicity — only continuity and that 0 is between f(1) and f(2)."
+     },
+     {
+      "id": "o3",
+      "label": "f(1) and f(2) are integers",
+      "feedback": "Integer values are irrelevant. What matters: 0 is between −1 and 2, and f is continuous."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The most common use is **root-finding**: if a continuous f changes sign on [a, b] — that is, f(a) and f(b) have opposite signs — then f must cross zero, so a root lives in (a, b). A sign change is a guarantee of a solution, even without solving.",
+   "figure": "lc-ivt-root"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Detect a root.",
+   "conceptTag": "lc-ivt",
+   "explanationVariants": [
+    "f(x) = x² − 2: f(1) = −1 < 0 and f(2) = 2 > 0, a sign change, so a root lies in (1, 2) — indeed √2 ≈ 1.414.",
+    "Opposite signs at the endpoints force a zero crossing between them."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For f(x) = x² − 2, we compute f(1) = −1 and f(2) = 2. What does the IVT guarantee?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "a root (f = 0) somewhere in (1, 2)",
+      "correct": true,
+      "feedback": "Right — the sign change forces a zero crossing; it's √2 ≈ 1.414."
+     },
+     {
+      "id": "o2",
+      "label": "exactly one root everywhere",
+      "feedback": "IVT guarantees AT LEAST one root in (1, 2); it doesn't count them globally."
+     },
+     {
+      "id": "o3",
+      "label": "no root at all",
+      "feedback": "The sign change (− to +) guarantees at least one root in (1, 2)."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-ivt__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Evaluate an endpoint.",
+   "conceptTag": "lc-ivt",
+   "explanationVariants": [
+    "f(x) = x³ − x − 1: f(1) = 1 − 1 − 1 = −1 (negative), pairing with f(2) = 5 to bracket a root.",
+    "f(1) = −1 < 0, so with f(2) > 0 a root sits in (1, 2)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = x³ − x − 1, compute f(1).",
+    "answer": -1,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "f(1) = 1 − 1 − 1 = −1 (subtract both the x and the 1)."
+     },
+     {
+      "value": -3,
+      "feedback": "1³ − 1 − 1 = 1 − 1 − 1 = −1, not −3."
+     }
+    ],
+    "fallbackFeedback": "f(1) = 1 − 1 − 1 = −1."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-ivt__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Why continuity matters.",
+   "conceptTag": "lc-ivt",
+   "explanationVariants": [
+    "A jump (step) function can leap OVER a value without attaining it, so the IVT needs continuity — that's the whole point of the hypothesis.",
+    "Without continuity, the graph can skip N; the theorem requires an unbroken curve on [a, b]."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why does the IVT require f to be continuous on [a, b]?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A discontinuous function could jump over the value without hitting it",
+      "correct": true,
+      "feedback": "Right — a jump can skip N entirely, so continuity is essential."
+     },
+     {
+      "id": "o2",
+      "label": "Because only continuous functions have roots",
+      "feedback": "Discontinuous functions can have roots too; the issue is a jump could SKIP the target value."
+     },
+     {
+      "id": "o3",
+      "label": "Continuity makes f increasing",
+      "feedback": "Continuity doesn't imply increasing. It prevents the graph from skipping over a value."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-ivt__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Bracket a root.",
+   "conceptTag": "lc-ivt",
+   "explanationVariants": [
+    "f(x) = x³ − x − 1 has f(2) = 8 − 2 − 1 = 5 > 0. With f(1) = −1 < 0, the sign change brackets a root in (1, 2).",
+    "f(2) = 5, positive; paired with the negative f(1), IVT guarantees a root between."
+   ],
+   "hints": [
+    "Compute f(2) = 2³ − 2 − 1.",
+    "8 − 2 − 1.",
+    "= 5 (positive, opposite sign to f(1))."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = x³ − x − 1, compute f(2) (to confirm the sign change from f(1) = −1).",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "2³ − 2 − 1 = 8 − 3 = 5, not 4."
+     },
+     {
+      "value": 6,
+      "feedback": "Check the subtraction: 2³ = 8, then 8 − 2 − 1 = 5, not 6."
+     }
+    ],
+    "fallbackFeedback": "f(2) = 8 − 2 − 1 = 5 > 0, so a root lies in (1, 2)."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-ivt__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "No skipping allowed.",
+   "takeaways": [
+    "IVT: a continuous f on [a, b] hits every value between f(a) and f(b).",
+    "Sign change on [a, b] ⇒ a root in (a, b) — existence without solving.",
+    "Continuity is required; a jump can skip over values."
+   ],
+   "teaser": "Final chapter: rates of change and the derivative as a limit."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lc-ivt",
+   "concept": {
+    "id": "rem-lc0403-c",
+    "kind": "concept",
+    "body": "IVT: continuous f on [a,b] attains every value between f(a) and f(b). A sign change (opposite signs at endpoints) guarantees a root in between. Continuity is required."
+   },
+   "check": {
+    "id": "rem-lc0403-k",
+    "kind": "check",
+    "body": "One sign check.",
+    "conceptTag": "lc-ivt",
+    "explanationVariants": [
+     "f(x) = x² − 5: f(2) = −1 < 0 and f(3) = 4 > 0, a sign change → root in (2, 3) (it's √5).",
+     "Opposite signs bracket a root between 2 and 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For f(x) = x² − 5, compute f(2).",
+     "answer": -1,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 1,
+       "feedback": "f(2) = 4 − 5 = −1, not 1."
+      },
+      {
+       "value": -3,
+       "feedback": "You subtracted before squaring. Square first: 2² − 5 = 4 − 5 = −1."
+      }
+     ],
+     "fallbackFeedback": "f(2) = 4 − 5 = −1 (negative; a root lies in (2, 3))."
+    }
+   }
+  }
+ ]
+}

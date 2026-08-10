@@ -1,0 +1,304 @@
+{
+  "id": "dc-03-03",
+  "slug": "when-linearisation-fails",
+  "title": "When Linearisation Fails",
+  "courseId": "derivatives-in-context",
+  "chapterId": "ch3-linearisation",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The tangent is a good stand-in **near a**, and a bad one far from it. Two things ruin the approximation:\n\n**Distance.** The error grows roughly like (x − a)².\n**Curvature.** The bigger |f″|, the faster the curve peels away from its tangent.\n\nSo the error is governed by f″ — the same function that told you which SIDE the error was on.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The error grows fast.",
+      "conceptTag": "dc-linearisation-limits",
+      "explanationVariants": [
+        "The error behaves like (x − a)², so DOUBLING the distance quadruples it — a linear approximation degrades quadratically.",
+        "That is why the tangent is superb at 9.1 and worthless at 25."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The error in a linear approximation grows like (x − a)². If you double the distance from a, roughly what happens to the error?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It quadruples.",
+            "correct": true,
+            "feedback": "Right — squaring the distance squares the error. Move twice as far and pay four times the price."
+          },
+          {
+            "id": "o2",
+            "label": "It doubles.",
+            "correct": false,
+            "feedback": "That would be a LINEAR error growth. The (x − a)² says the error is quadratic in the distance."
+          },
+          {
+            "id": "o3",
+            "label": "It stays the same.",
+            "correct": false,
+            "feedback": "The tangent and the curve diverge steadily. Distance is precisely what ruins the approximation."
+          },
+          {
+            "id": "o4",
+            "label": "It halves.",
+            "correct": false,
+            "feedback": "Errors do not shrink as you move AWAY from the point of tangency."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation-limits__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Where the tangent stops helping.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "limit",
+        "a": 3,
+        "targetH": 0.1,
+        "startH": 1.5,
+        "prompt": "On y = x², squeeze the gap and watch the secant merge with the tangent — then think about what happens when the gap is LARGE.",
+        "successFeedback": "Close in, the secant and the tangent are indistinguishable — which is exactly why linearisation works near a. But look back at the wide gaps: there the secant and the tangent were far apart, and a tangent-based estimate over that range would have been badly wrong. Local means LOCAL.",
+        "lowFeedback": "At a gap of exactly 0 the quotient is 0/0. Come back a hair — the tangent lives arbitrarily close to a, never at nothing.",
+        "highFeedback": "The gap is still wide, so the secant cuts across the curve rather than grazing it — which is the picture of a linearisation used too far from home."
+      },
+      "predict": {
+        "prompt": "You'll squeeze the gap h toward 0, dragging B into A at x = 3. What does the secant's slope do?",
+        "options": [
+          {
+            "id": "settles",
+            "label": "Settles toward one number (6)"
+          },
+          {
+            "id": "blows",
+            "label": "Grows without bound"
+          },
+          {
+            "id": "bounces",
+            "label": "Keeps changing — no single value"
+          }
+        ],
+        "outcomeId": "settles",
+        "reveal": "The secant slopes home in on 6 — the tangent slope at x = 3. A derivative is not a new kind of slope; it is the number the secant slopes were already approaching."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivatives-in-context-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "dc-linearisation-limits"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A curve that bends hard.",
+      "conceptTag": "dc-linearisation-limits",
+      "explanationVariants": [
+        "Near a sharp bend, |f″| is large, so the curve leaves its tangent almost immediately. The linearisation is only trustworthy over a very small range.",
+        "A nearly-straight curve (small |f″|) can be linearised over a wide range; a violently curved one cannot."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two curves are linearised at the same point. One has |f″| = 0.01, the other |f″| = 100. Which linearisation is trustworthy over a wider range?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The one with |f″| = 0.01 — it is nearly straight already.",
+            "correct": true,
+            "feedback": "Right. Curvature is exactly what makes a curve leave its tangent, and a curve that barely bends barely leaves."
+          },
+          {
+            "id": "o2",
+            "label": "The one with |f″| = 100.",
+            "correct": false,
+            "feedback": "That curve bends violently, so it peels away from the tangent almost immediately. Its linearisation is trustworthy only very close in."
+          },
+          {
+            "id": "o3",
+            "label": "They are equally trustworthy.",
+            "correct": false,
+            "feedback": "The error is proportional to |f″|. A hundred-fold difference in curvature is a hundred-fold difference in error."
+          },
+          {
+            "id": "o4",
+            "label": "Neither works at all.",
+            "correct": false,
+            "feedback": "Both work — near enough to a. The question is only how NEAR is near enough, and f″ answers it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation-limits__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "There is one more way for it to fail, and it is fatal:\n\n**If f is not differentiable at a, there is no tangent to use.**\n\nNo tangent, no linearisation. |x| at 0 has no linear approximation at all — you cannot approximate a corner with a line and expect it to work on both sides.",
+      "figure": "dr-corner-no-tangent"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The fatal case.",
+      "conceptTag": "dc-linearisation-limits",
+      "explanationVariants": [
+        "|x| has no derivative at 0 — the left slope is −1 and the right is +1 — so there is no tangent line, and nothing to linearise WITH.",
+        "Every linearisation begins with f′(a). If that number does not exist, the method never starts."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why can f(x) = |x| not be linearised at x = 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f′(0) does not exist — there is no tangent line, so there is nothing to build L(x) from.",
+            "correct": true,
+            "feedback": "Right. L(x) = f(a) + f′(a)(x − a) needs f′(a), and at a corner that number does not exist."
+          },
+          {
+            "id": "o2",
+            "label": "Because |x| is not continuous there.",
+            "correct": false,
+            "feedback": "It is perfectly continuous. The failure is in the SLOPE, not the value — which is exactly the distinction C1 drew."
+          },
+          {
+            "id": "o3",
+            "label": "Because f(0) = 0.",
+            "correct": false,
+            "feedback": "A zero value causes no trouble at all. Plenty of functions are linearised at points where they vanish."
+          },
+          {
+            "id": "o4",
+            "label": "It can be — just use slope 0.",
+            "correct": false,
+            "feedback": "Averaging the two one-sided slopes is not something the definition permits, and the resulting line fits neither side of the corner."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation-limits__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "How far can you trust it?",
+      "conceptTag": "dc-linearisation-limits",
+      "hints": [
+        "The estimate of √9.1 was out by about 0.00005 — the distance from a was 0.1.",
+        "The error grows like (x − a)². Going from 0.1 to 1.0 multiplies the distance by 10.",
+        "So the error is multiplied by 10² = 100."
+      ],
+      "explanationVariants": [
+        "Ten times the distance means about a hundred times the error: roughly 0.005 instead of 0.00005.",
+        "And that is still surprisingly good — √10 ≈ 3.1623, and the tangent gives 3 + 1/6 ≈ 3.1667, out by 0.0044. The quadratic rule predicted it almost exactly."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The linear estimate of √9.1 was out by about 0.00005. Roughly how many times bigger is the error for √10 (ten times further from a = 9)?",
+        "answer": 100,
+        "tolerance": 5,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "The error grows like the SQUARE of the distance. Ten times the distance means 10² = 100 times the error."
+          },
+          {
+            "value": 2,
+            "feedback": "Doubling would be a linear error law. The (x − a)² makes it quadratic."
+          },
+          {
+            "value": 1000,
+            "feedback": "That would be a cubic law. The error goes like the square: 10² = 100."
+          }
+        ],
+        "fallbackFeedback": "Error ~ (x − a)², so 10× the distance gives 100× the error — about 0.005, and the true error is 0.0044."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-linearisation-limits__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Local means local.",
+      "takeaways": [
+        "The error grows like (x − a)²: double the distance and you quadruple the error.",
+        "It is proportional to |f″| — the curvature is what pulls the curve away from its tangent.",
+        "No derivative, no tangent, no linearisation. A corner cannot be approximated by a line."
+      ],
+      "teaser": "Last chapter: the 0/0 form from precalculus, finally explained."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dc-linearisation-limits",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two questions before you trust a linearisation. **How far from a am I?** (the error grows like the square of that distance) and **how hard does the curve bend?** (the error is proportional to |f″|). Close in and gently curved: excellent. Far out and sharply curved: useless.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Near or far?",
+        "conceptTag": "dc-linearisation-limits",
+        "explanationVariants": [
+          "9.1 is very close to 9, so the tangent is excellent there. 16 is far away, and the estimate would be poor.",
+          "The whole method is local."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Using the tangent to √x at x = 9, which estimate is more trustworthy?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "√9.1",
+              "correct": true,
+              "feedback": "Right — it is only 0.1 from the base point, so the error is tiny."
+            },
+            {
+              "id": "o2",
+              "label": "√16",
+              "correct": false,
+              "feedback": "That is 7 units from a = 9. The error grows like the square of the distance, so it is far less reliable."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

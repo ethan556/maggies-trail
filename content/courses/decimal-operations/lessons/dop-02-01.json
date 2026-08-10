@@ -1,0 +1,299 @@
+{
+  "id": "dop-02-01",
+  "slug": "partial-products-recap",
+  "title": "Partial Products Recap",
+  "courseId": "decimal-operations",
+  "chapterId": "ch2-standard-multiplication",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To multiply 23 × 4, split 23 into its places: 20 and 3. Multiply each by 4, then add. That's **20 × 4 = 80** and **3 × 4 = 12**, so 80 + 12 = 92. These are **partial products** — one piece per place, added back together.",
+      "figure": "dop-partial-products"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Partial products are just rectangles.",
+      "widget": {
+        "type": "areaModel",
+        "targetArea": 168,
+        "wMax": 20,
+        "hMax": 20,
+        "wStart": 10,
+        "hStart": 10,
+        "prompt": "Build a rectangle with an area of 168 squares — and make one side 12.",
+        "successFeedback": "12 × 14 = 168. Split the 14 into 10 + 4 and the rectangle splits into 120 + 48 — the partial products ARE the pieces of the rectangle. The algorithm is a bookkeeping system for this picture.",
+        "lowFeedback": "The rectangle is smaller than 168 squares. Stretch a side.",
+        "highFeedback": "The rectangle is bigger than 168 squares. Shrink a side."
+      },
+      "predict": {
+        "prompt": "A rectangle must keep area 168. If one side DOUBLES, the other must…",
+        "options": [
+          {
+            "id": "halve",
+            "label": "Halve"
+          },
+          {
+            "id": "double",
+            "label": "Double too"
+          },
+          {
+            "id": "stay",
+            "label": "Stay the same"
+          }
+        ],
+        "outcomeId": "halve",
+        "reveal": "Area locks the product: 168 = 12 × 14 = 6 × 28 — double one side and the other halves to compensate. That trade is why partial products get to CHOOSE friendly side-lengths."
+      },
+      "conceptTag": "partial-products",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents partial products.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for partial products must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines partial products."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:partial-products",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the pieces.",
+      "conceptTag": "partial-products",
+      "explanationVariants": [
+        "80 + 12 = 92 — the two partial products added.",
+        "The tens piece (80) plus the ones piece (12) is 92."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The partial products for 23 × 4 are 80 and 12. What is their total?",
+        "answer": 92,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "80 is only the tens piece — the ones piece (12) still adds on: 80 + 12 = 92."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is only the ones piece — the tens piece (80) adds on: 80 + 12 = 92."
+          }
+        ],
+        "fallbackFeedback": "Add both partial products: 80 + 12 = 92."
+      },
+      "variant": {
+        "gen": "partial-products"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This is the G4 area model, written as arithmetic. Splitting a number into tens and ones and multiplying each piece is exactly what the standard algorithm does underneath — it just hides the pieces. Seeing the partial products first makes the shortcut make sense.",
+      "figure": "dop-partial-products"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Both pieces of a new one.",
+      "conceptTag": "partial-products",
+      "explanationVariants": [
+        "40 × 3 = 120 and 6 × 3 = 18, so 120 + 18 = 138.",
+        "The tens piece (120) plus the ones piece (18) is 138."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use partial products for 46 × 3: (40 × 3) + (6 × 3). What is the total?",
+        "answer": 138,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "120 is only the tens piece (40 × 3) — the ones piece (18) still adds on: 138."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is only the ones piece (6 × 3) — the tens piece (120) adds on: 138."
+          }
+        ],
+        "fallbackFeedback": "40 × 3 = 120, 6 × 3 = 18, then 120 + 18 = 138."
+      },
+      "variant": {
+        "gen": "partial-products",
+        "form": "shown"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which split is right?",
+      "conceptTag": "partial-products",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To find 52 × 7 with partial products, which split do you use?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(50 × 7) + (2 × 7)",
+            "correct": true,
+            "feedback": "52 splits into 50 and 2 by place, so (50 × 7) + (2 × 7) = 350 + 14 = 364."
+          },
+          {
+            "id": "b",
+            "label": "(5 × 7) + (2 × 7)",
+            "feedback": "The 5 stands for 50, not 5. The split is (50 × 7) + (2 × 7) = 364."
+          },
+          {
+            "id": "c",
+            "label": "(52 × 5) + (52 × 2)",
+            "feedback": "That splits the 7, but 7 is a single digit — split the 52 by place: (50 × 7) + (2 × 7)."
+          }
+        ]
+      },
+      "hints": [
+        "Split 52 by place value.",
+        "That's 50 and 2.",
+        "Multiply each by 7."
+      ],
+      "explanationVariants": [
+        "52 = 50 + 2, so (50 × 7) + (2 × 7) = 364.",
+        "Split the two-digit number into tens and ones."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Finish it.",
+      "conceptTag": "partial-products",
+      "explanationVariants": [
+        "350 + 14 = 364 — the two partial products of 52 × 7.",
+        "The tens piece (350) plus the ones piece (14) is 364."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "52 × 7 splits into 350 and 14. What is the total?",
+        "answer": 364,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 350,
+            "feedback": "350 is only the tens piece (50 × 7) — the ones piece (14) still adds on: 364."
+          },
+          {
+            "value": 14,
+            "feedback": "14 is only the ones piece (2 × 7) — the tens piece (350) adds on: 364."
+          }
+        ],
+        "fallbackFeedback": "Add the partial products: 350 + 14 = 364."
+      },
+      "variant": {
+        "gen": "partial-products",
+        "form": "split"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Split, multiply, add.",
+      "conceptTag": "partial-products",
+      "hints": [
+        "Split 35 into 30 and 5.",
+        "30 × 6 = 180 and 5 × 6 = 30.",
+        "Add the two pieces."
+      ],
+      "explanationVariants": [
+        "35 × 6 = (30 × 6) + (5 × 6) = 180 + 30 = 210.",
+        "The tens piece (180) plus the ones piece (30) is 210."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use partial products to find 35 × 6.",
+        "answer": 210,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180 is only the tens piece (30 × 6) — the ones piece (5 × 6 = 30) still adds on: 210."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is only the ones piece (5 × 6) — the tens piece (180) adds on: 210."
+          }
+        ],
+        "fallbackFeedback": "30 × 6 = 180, 5 × 6 = 30, then 180 + 30 = 210."
+      },
+      "variant": {
+        "gen": "partial-products",
+        "form": "bareChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Split by place, multiply, add back.",
+      "takeaways": [
+        "Partial products split a number into its places, multiply each, and add the pieces.",
+        "23 × 4 = (20 × 4) + (3 × 4) = 80 + 12 = 92.",
+        "This is the area model as arithmetic — and the foundation the standard algorithm hides."
+      ],
+      "teaser": "next: the standard algorithm — the same pieces, written compactly."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "partial-products",
+      "concept": {
+        "id": "rem-pp-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Split the two-digit number into tens and ones, multiply each, then add.** For 14 × 5: (10 × 5) + (4 × 5) = 50 + 20 = 70. Each place becomes its own partial product."
+      },
+      "check": {
+        "id": "rem-pp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "partial-products",
+        "explanationVariants": [
+          "50 + 20 = 70 — the two partial products of 14 × 5.",
+          "The tens piece (50) plus the ones piece (20) is 70."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "14 × 5 = (10 × 5) + (4 × 5) = 50 + 20 = ?",
+          "answer": 70,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 50,
+              "feedback": "50 is only the tens piece — the ones piece (20) still adds on: 70."
+            },
+            {
+              "value": 20,
+              "feedback": "20 is only the ones piece — the tens piece (50) adds on: 70."
+            }
+          ],
+          "fallbackFeedback": "Add the partial products: 50 + 20 = 70."
+        }
+      }
+    }
+  ]
+}

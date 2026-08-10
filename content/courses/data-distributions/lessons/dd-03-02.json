@@ -1,0 +1,318 @@
+{
+  "id": "dd-03-02",
+  "slug": "the-median-as-middle",
+  "title": "The Median as Middle",
+  "courseId": "data-distributions",
+  "chapterId": "ch3-mean-median",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "median-sort",
+      "body": "The **median** is the middle value — but only of the **sorted** list. Take 7, 2, 9, 4, 6. Sort it first: 2, 4, 6, 7, 9. Five values is an **odd** count, so one value stands exactly in the middle: **6**, with two values below it and two above. Skip the sort and you'd grab the 9 sitting mid-list — not a middle at all."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort before anything else.",
+      "conceptTag": "median",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Arrange the data 9, 2, 7, 4 from SMALLEST to LARGEST — the required first move for any median.",
+        "items": [
+          {
+            "id": "v9",
+            "label": "9"
+          },
+          {
+            "id": "v2",
+            "label": "2"
+          },
+          {
+            "id": "v7",
+            "label": "7"
+          },
+          {
+            "id": "v4",
+            "label": "4"
+          }
+        ],
+        "correctOrder": [
+          "v2",
+          "v4",
+          "v7",
+          "v9"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "v9",
+            "second": "v2",
+            "feedback": "9 is the largest value — smallest-to-largest puts it last, not before the 2."
+          },
+          {
+            "first": "v7",
+            "second": "v4",
+            "feedback": "4 is smaller than 7, so it lines up earlier in the sorted list."
+          }
+        ],
+        "missFeedback": "Smallest first, largest last: scan for the least value, place it, repeat.",
+        "successFeedback": "Sorted: 2, 4, 7, 9. Now — and only now — the middle means something."
+      },
+      "predict": {
+        "prompt": "Can you spot the MEDIAN of a list without sorting it first?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — middle means middle of the ORDERED list"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — take the middle as written"
+          },
+          {
+            "id": "biggest",
+            "label": "Just pick the biggest"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "The median is the middle by SIZE, not by position on the page — sorting first is the non-negotiable move."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Odd count: one middle.",
+      "conceptTag": "median",
+      "explanationVariants": [
+        "Sorted, the data reads 2, 4, 6, 7, 9. With 5 values (odd), the single middle is the 3rd one: 6, leaving two values on each side.",
+        "Cross off ends in pairs — 2 with 9, then 4 with 7 — and the survivor, 6, is the median."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the MEDIAN of 7, 2, 9, 4, 6. (Careful — it isn't sorted yet.)",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the middle of the UNSORTED list 7, 2, 9, 4, 6 — the classic trap. Sort first (2, 4, 6, 7, 9); the true middle is 6."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is one position past the middle — with 5 sorted values, the middle is the 3rd (6), with exactly two values on each side."
+          }
+        ],
+        "fallbackFeedback": "Sort: 2, 4, 6, 7, 9. Five values → the 3rd one, 6, is the median."
+      },
+      "hints": [
+        "What must happen before you look for the middle?",
+        "Sorted: 2, 4, 6, 7, 9.",
+        "Five values — the 3rd from either end."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMedianOddUnsorted"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Even** counts have no single middle — two values share the center, and the median is the **mean of those two**. Sorted data 3, 5, 8, 12, 14, 16 has 6 values; the middle pair is 8 and 12, so the median is (8 + 12) ÷ 2 = **10**. Like the mean, a median can be a number that never appears in the data.",
+      "figure": "dd-median-even"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which pair sits in the center?",
+      "conceptTag": "median",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For the sorted data 3, 5, 8, 12, 14, 16 — which TWO values are the middle pair?",
+        "options": [
+          {
+            "id": "a",
+            "label": "8 and 12",
+            "correct": true,
+            "feedback": "Yes — two values sit below them (3, 5) and two above (14, 16); the center pair is 8 and 12."
+          },
+          {
+            "id": "b",
+            "label": "3 and 16",
+            "feedback": "Those are the ENDS of the list, not its center. Cross off ends in pairs and 8 with 12 are the last two standing."
+          },
+          {
+            "id": "c",
+            "label": "12 and 14",
+            "feedback": "That pair sits off-center — it leaves three values below and only one above. Balance demands 8 and 12."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Even count: average the pair.",
+      "conceptTag": "median",
+      "explanationVariants": [
+        "Six values is an even count, so no single value is central. The middle pair is 8 and 12; their mean, (8 + 12) ÷ 2 = 10, is the median.",
+        "Cross off in pairs from both ends: 3–16, then 5–14, leaving 8 and 12. Split the difference: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the MEDIAN of the sorted data 3, 5, 8, 12, 14, 16?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is only ONE of the two middle values. With an even count, average the pair: (8 + 12) ÷ 2 = 10."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is only ONE of the two middle values. With an even count, average the pair: (8 + 12) ÷ 2 = 10."
+          }
+        ],
+        "fallbackFeedback": "Even count → mean of the middle pair: (8 + 12) ÷ 2 = 10."
+      },
+      "hints": [
+        "Six values — is there a single middle?",
+        "The center pair is 8 and 12.",
+        "The median is the mean of that pair."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMedianEven"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the broken step.",
+      "conceptTag": "median",
+      "explanationVariants": [
+        "Jae skipped the sort — the middle of an unsorted list is meaningless. Sorted (2, 4, 7, 9), the middle pair is 4 and 7, giving median (4 + 7) ÷ 2 = 5.5.",
+        "Order first, middle second: without the sort, position in the list says nothing about size."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Jae finds the median of 9, 2, 7, 4 by averaging 2 and 7 — 'the two middle numbers.' The right answer is 5.5. What went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Jae never sorted — the middle pair of the SORTED list 2, 4, 7, 9 is 4 and 7",
+            "correct": true,
+            "feedback": "Exactly — sorted, the center pair is 4 and 7, and (4 + 7) ÷ 2 = 5.5. The sort is not optional."
+          },
+          {
+            "id": "b",
+            "label": "Jae should have used three middle numbers, not two",
+            "feedback": "An even count always centers on exactly two values — the miss was averaging the unsorted list's mid-positions instead of sorting first."
+          },
+          {
+            "id": "c",
+            "label": "Nothing — 4.5 and 5.5 are both acceptable medians",
+            "feedback": "A data set has exactly one median. 4.5 came from an unsorted list; only the sorted middle pair (4 and 7) gives the true median, 5.5."
+          }
+        ]
+      },
+      "hints": [
+        "What's the required first move for any median?",
+        "Sort 9, 2, 7, 4 first.",
+        "Then average the true middle pair, 4 and 7."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMedianSortError"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full procedure, no scaffolding.",
+      "conceptTag": "median",
+      "explanationVariants": [
+        "Sort: 2, 4, 7, 9. Four values (even) → middle pair 4 and 7 → median (4 + 7) ÷ 2 = 5.5.",
+        "Pair off the ends (2 with 9), leaving 4 and 7 at the center; halfway between them is 5.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Four plants measure 9, 2, 7, and 4 inches tall. What is the MEDIAN height? (Decimals allowed.)",
+        "answer": 5.5,
+        "tolerance": 0,
+        "unit": "inches",
+        "commonErrors": [
+          {
+            "value": 4.5,
+            "feedback": "4.5 averages 2 and 7 — the mid-POSITIONS of the unsorted list. Sort first: 2, 4, 7, 9; the true middle pair is 4 and 7, median 5.5."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is one of the two central values, not the median itself. Even count → average the pair: (4 + 7) ÷ 2 = 5.5."
+          }
+        ],
+        "fallbackFeedback": "Sort to 2, 4, 7, 9; even count, so average the middle pair: (4 + 7) ÷ 2 = 5.5 inches."
+      },
+      "hints": [
+        "Sort the four heights first.",
+        "Sorted: 2, 4, 7, 9 — an even count.",
+        "Average the middle pair, 4 and 7."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMedianContext"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The middle of the lined-up data.",
+      "takeaways": [
+        "Sort first, always — the median is the middle of the ORDERED list.",
+        "Odd count: the single central value. Even count: the mean of the middle pair.",
+        "The median only cares about position, not size — a fact that becomes its superpower next."
+      ],
+      "teaser": "next: mean vs median in a head-to-head — and what one wild value does to each."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "median",
+      "concept": {
+        "id": "rem-md-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Sort, then take the middle.** Data 5, 1, 3 sorts to 1, 3, 5 — three values, so the single middle, 3, is the median."
+      },
+      "check": {
+        "id": "rem-md-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "median",
+        "explanationVariants": [
+          "Sorted: 1, 3, 5. The middle of three values is the 2nd: 3.",
+          "Cross off the ends (1 and 5); the survivor, 3, is the median."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the median of 5, 1, 3?",
+          "answer": 3,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is the middle of the UNSORTED list 5, 1, 3. Sort first — 1, 3, 5 — and the middle is 3."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is the largest value, not the middle. Sorted (1, 3, 5), the central value is 3."
+            }
+          ],
+          "fallbackFeedback": "Sort to 1, 3, 5; the middle of three values is 3."
+        }
+      }
+    }
+  ]
+}

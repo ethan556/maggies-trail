@@ -1,0 +1,327 @@
+{
+  "id": "sg-05-01",
+  "slug": "k-squared-cubed",
+  "title": "k, k-Squared, k-Cubed",
+  "courseId": "solid-geometry",
+  "chapterId": "ch5-scale-modeling",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-scale-effects",
+      "concept": {
+        "id": "rem-sg-scale-effects-c",
+        "kind": "concept",
+        "body": "Scaling every length by k multiplies lengths by k, areas and surfaces by k² (the similarity course's law), and volumes, capacities, and masses by k³ — one factor of k per dimension, as the unit-cell count of a scaled cube shows. Sort each quantity into its law before multiplying, and use roots to run the laws backwards."
+      },
+      "check": {
+        "id": "rem-sg-scale-effects-k",
+        "kind": "check",
+        "body": "One sort.",
+        "conceptTag": "sg-scale-effects",
+        "explanationVariants": [
+          "Capacity is volume: k³.",
+          "2³ = 8×."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A pot is scaled up by k = 2. Its capacity multiplies by ?",
+          "answer": 8,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "2 is the length factor — capacity is volume: 8."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is the surface factor — the fill takes k³ = 8."
+            }
+          ],
+          "fallbackFeedback": "2³ = 8."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The similarity course showed a 1:50 model's AREAS shrink by 50². Volume completes the trilogy: scale every length by k and **lengths go ×k, areas ×k², volumes ×k³** — the figure's k = 2 cube holds 2×2×2 = 8 unit cells because scaling stretched all THREE directions at once.",
+      "figure": "scale-cubes"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the cells.",
+      "conceptTag": "sg-scale-effects",
+      "explanationVariants": [
+        "k = 3 stretches three directions: 3 × 3 × 3.",
+        "27 cells."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Scale a unit cube by k = 3. How many unit cells does the scaled cube hold?",
+        "answer": 27,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 = 3² is the FACE count (area's law) — volume stretches three ways: 3³ = 27."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the edge (length's law) — the cube fills 3³ = 27."
+          },
+          {
+            "value": 18,
+            "feedback": "18 = 2(9) doubles a face — the stack runs 3 layers of 9: 27."
+          }
+        ],
+        "fallbackFeedback": "3³ = 27 — one factor of k per dimension."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-scale-effects__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The model tank.",
+      "conceptTag": "sg-scale-effects",
+      "explanationVariants": [
+        "Real lengths are 20× the model's — volumes scale by 20³ = 8000.",
+        "5 × 8000 = 40,000 L."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 1:20 scale model of a fuel tank holds 5 liters. The real tank holds ? (liters)",
+        "answer": 40000,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 = 5 × 20 scales like a LENGTH — capacity is volume: 5 × 20³ = 40,000."
+          },
+          {
+            "value": 2000,
+            "feedback": "2000 = 5 × 20² scales like an AREA — volume takes the cube: 40,000."
+          },
+          {
+            "value": 8000,
+            "feedback": "8000 is the RATIO 20³ itself — apply it to the 5 L: 40,000."
+          }
+        ],
+        "fallbackFeedback": "5 × 20³ = 40,000 L — the third power is merciless."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-scale-effects__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Round solids obey too.",
+      "conceptTag": "sg-scale-effects",
+      "explanationVariants": [
+        "V = (4/3)πr³ has r cubed built in — doubling r multiplies V by 2³.",
+        "×8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Double a sphere's radius. Its volume multiplies by ?",
+        "answer": 8,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the LENGTH factor — r³ in the formula makes volume jump 2³ = 8×."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = 2² is the SURFACE factor (4πr²) — volume takes 2³ = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "6 doubles three times additively — the factors MULTIPLY: 2·2·2 = 8."
+          }
+        ],
+        "fallbackFeedback": "2³ = 8 — the formula's r³ is the k³ law wearing algebra."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-scale-effects__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort the quantities.",
+      "predict": {
+        "prompt": "A statue is scaled up by k = 5. Its height, its bronze surface, and its weight scale by:",
+        "options": [
+          {
+            "id": "kkk",
+            "label": "5, then 25, then 125 — one exponent per dimension involved"
+          },
+          {
+            "id": "all5",
+            "label": "5 for all three — scaling is scaling"
+          },
+          {
+            "id": "k2k3",
+            "label": "5, 125, 25 — weight before surface"
+          }
+        ],
+        "outcomeId": "kkk",
+        "reveal": "5, 25, 125. Length has one dimension, surface two, volume three, and each picks up one factor of k. Drag k and watch the three readouts pull apart at three different speeds — that separation IS the reason a scaled statue costs so much more bronze than it does height."
+      },
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "Drag the scale factor and watch the three readouts. They start together at k = 1 and separate immediately — set k = 2 and read all three.",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 8,
+        "showRatios": [
+          "length",
+          "area",
+          "volume"
+        ],
+        "successFeedback": "At k = 2: lengths ×2, area ×4, volume ×8. Three readouts, three exponents, one drag. Scaled to k = 5 the same pattern gives 5, 25 and 125 — the sort the entry above asks for.",
+        "lowFeedback": "Below 2 — and notice the readouts are already separating. Keep dragging up and watch the gap between them widen.",
+        "highFeedback": "Past 2 — ease back. The pattern is easiest to read at k = 2, where the three readouts are exactly 2, 4 and 8."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Backwards from volume.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar bottles: the larger holds 27 times the smaller. The larger is how many times as TALL?",
+        "answer": 3,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27 is the volume ratio — height is a length: cube-root it, 3."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the SURFACE ratio (k² = 3²) — the height ratio is the cube root: ∛27 = 3."
+          }
+        ],
+        "fallbackFeedback": "∛27 = 3 — read lengths from volumes by the cube root."
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Two DIFFERENT scale factors, combined into one ratio — before the chocolate figure.",
+      "conceptTag": "sg-scale-effects",
+      "explanationVariants": [
+        "Volume scales by k³=3³=27. Price scales by 9. Value per dollar changes by 27÷9=3.",
+        "The bigger figure holds 27× the material but costs only 9× as much — 27÷9=3 times more material per dollar."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A statue is scaled up by k = 3 in every direction and priced at 9× the original. How many times more material per dollar does the bigger statue give you?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27 is just the volume scale factor (k³=3³), before comparing it to price. Divide by the price scale too: 27÷9=3."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is just the price scale factor. The volume scaled MORE (k³=27) — compare them: 27÷9=3."
+          },
+          {
+            "value": 243,
+            "feedback": "243 multiplies 27×9 instead of dividing. Material-per-dollar compares volume TO price: 27÷9=3."
+          }
+        ],
+        "fallbackFeedback": "Find the volume scale factor (k³), find the price scale factor, then divide volume-scale by price-scale."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-scale-effects__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The chocolate scam.",
+      "conceptTag": "sg-scale-effects",
+      "hints": [
+        "'Twice the height!' — but the price is 5×. Compare honestly: volume grows by k³.",
+        "k = 2: chocolate ×8.",
+        "8× the chocolate at 5× the price — who wins?"
+      ],
+      "explanationVariants": [
+        "The big bar has 8× the chocolate for 5× the money — chocolate per dollar is 8/5 = 1.6× better. The 'scam' favors the buyer.",
+        "8× volume, 5× price: ratio 1.6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A chocolate figure is scaled up by k = 2 in every direction and priced at 5× the original. How many times more chocolate per dollar does the big one deliver? (1 decimal)",
+        "answer": 1.6,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0.4,
+            "feedback": "0.4 = 2/5 scales chocolate like LENGTH — it's volume: 2³/5 = 8/5 = 1.6."
+          },
+          {
+            "value": 0.8,
+            "feedback": "0.8 = 4/5 scales like SURFACE — the fill is k³: 8/5 = 1.6."
+          },
+          {
+            "value": 1.25,
+            "feedback": "1.25 = 5/4 inverts a wrong ratio — chocolate÷price = 8/5 = 1.6."
+          }
+        ],
+        "fallbackFeedback": "2³/5 = 1.6 — the k³ law can hide a bargain as easily as a ripoff."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-scale-effects__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three laws, one k.",
+      "takeaways": [
+        "Lengths ×k, areas/surfaces ×k², volumes/capacities/masses ×k³ — sort the quantity before scaling.",
+        "Formulas encode it: r³ in the sphere is the k³ law in algebra.",
+        "Run it backwards with roots: volume ratio 27 ⇒ length ratio ∛27 = 3."
+      ],
+      "teaser": "Next: densities — when volume meets mass."
+    }
+  ]
+}

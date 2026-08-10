@@ -1,0 +1,345 @@
+{
+  "id": "gf-03-02",
+  "slug": "reflections-as-functions",
+  "title": "Reflections as Functions",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch3-transformation-functions",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-reflection-rule",
+      "concept": {
+        "id": "rem-gf-reflection-rule-c",
+        "kind": "concept",
+        "body": "Which coordinate flips? The one that measures your distance from the mirror. The x-axis is horizontal, and your distance from it is your y — so over the x-axis, y flips: (x, y) → (x, −y). The other coordinate rides along unchanged."
+      },
+      "check": {
+        "id": "rem-gf-reflection-rule-k",
+        "kind": "check",
+        "body": "Flip the distance coordinate.",
+        "conceptTag": "gf-reflection-rule",
+        "explanationVariants": [
+          "Distance from the x-axis is y = 3, so y flips: (5, 3) → (5, −3).",
+          "The x-axis mirror leaves x alone; only the sign of y changes."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Reflect (5, 3) over the x-axis. Where is the image?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(5, −3)",
+              "correct": true,
+              "feedback": "y measures the distance to the x-axis, so it flips: (5, 3) → (5, −3)."
+            },
+            {
+              "id": "o2",
+              "label": "(−5, 3)",
+              "correct": false,
+              "feedback": "Flipping x belongs to the Y-AXIS mirror. Over the x-axis, the y-coordinate flips instead."
+            },
+            {
+              "id": "o3",
+              "label": "(3, 5)",
+              "correct": false,
+              "feedback": "Swapping is the y = x mirror's rule. Axis reflections flip a SIGN, not the order."
+            },
+            {
+              "id": "o4",
+              "label": "(5, 3)",
+              "correct": false,
+              "feedback": "Unchanged would mean the point sits ON the mirror — but (5, 3) floats 3 above the x-axis, so its image lands 3 below."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Reflections are functions too — with sign flips instead of shifts. Over the **x-axis**: (x, y) → (x, −y) (the y flips). Over the **y-axis**: (x, y) → (−x, y) (the x flips). Memory hook: reflecting over an axis flips the OTHER coordinate — the one measuring your distance from that axis.",
+      "figure": "gf-reflections-signs"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Flip over the x-axis.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the image of (3, 7) reflected over the x-axis?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(3, −7)",
+            "correct": true,
+            "feedback": "Distance from the x-axis is the y-value, so y flips: (3, 7) → (3, −7)."
+          },
+          {
+            "id": "o2",
+            "label": "(−3, 7)",
+            "correct": false,
+            "feedback": "Flipping x is the Y-AXIS reflection. Over the x-axis, the y-coordinate is what flips."
+          },
+          {
+            "id": "o3",
+            "label": "(−3, −7)",
+            "correct": false,
+            "feedback": "Both signs flipping is a 180° ROTATION, not a single reflection."
+          },
+          {
+            "id": "o4",
+            "label": "(7, 3)",
+            "correct": false,
+            "feedback": "Swapping coordinates is the y = x reflection — a different mirror line entirely."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Flip over the y-axis.",
+      "conceptTag": "gf-reflection-rule",
+      "explanationVariants": [
+        "Over the y-axis the x flips: (−4, 6) → (4, 6), so the image's x-coordinate is 4.",
+        "The point sits 4 to the LEFT of the y-axis; its mirror sits 4 to the RIGHT: x = +4, y untouched."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Reflect (−4, 6) over the y-axis. What is the image's x-coordinate?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "−4 is the preimage's x, unflipped — that would happen under an X-AXIS reflection. Over the y-axis, x changes sign: +4."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the y-coordinate, which the y-axis reflection leaves alone. The question asks for the flipped x: 4."
+          }
+        ],
+        "fallbackFeedback": "x flips sign: −(−4) = 4."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-reflection-rule__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "What makes a mirror line a mirror? **The line of reflection is the perpendicular bisector of every segment joining a point to its image.** Perpendicular: PP′ crosses the line at 90°. Bisector: P and P′ sit at EQUAL distances from it. That single property pins down where every image lands.",
+      "figure": "reflection-mirror-bisector"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The mirror's secret.",
+      "conceptTag": "gf-reflection-rule",
+      "explanationVariants": [
+        "The defining property: the mirror line is the perpendicular bisector of PP′ — right-angle crossing plus equal halves.",
+        "Two conditions in one: cross at 90° (perpendicular) and cut in half (bisector). Drop either and the \"mirror\" stops mirroring."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "P′ is the reflection of P over line m (and P is not on m). What is the exact relationship between m and segment PP′?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "m is the perpendicular bisector of PP′",
+            "correct": true,
+            "feedback": "The full mirror property: PP′ meets m at a right angle, and m cuts PP′ into congruent halves."
+          },
+          {
+            "id": "o2",
+            "label": "m is parallel to PP′",
+            "correct": false,
+            "feedback": "Parallel would mean PP′ never crosses the mirror — but a point and its image sit on OPPOSITE sides, so the segment must cross it."
+          },
+          {
+            "id": "o3",
+            "label": "m bisects PP′ but at any convenient angle",
+            "correct": false,
+            "feedback": "Equal halves alone isn't enough — a slanted crossing would smear the reflection. The crossing must be at 90°."
+          },
+          {
+            "id": "o4",
+            "label": "m passes through P′ only",
+            "correct": false,
+            "feedback": "P′ sits OFF the mirror, exactly as far from it as P — the line passes through the segment's MIDPOINT instead."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-reflection-rule__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One more mirror earns a rule: the diagonal line **y = x**. Reflecting over it **swaps the coordinates**: (x, y) → (y, x). No signs change — first and second coordinates simply trade places.",
+      "figure": "gf-reflect-yx"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Swap across the diagonal.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "P is at (2, 5). Reflect it over the line y = x and plot the image P′.",
+        "cols": 8,
+        "rows": 8,
+        "targets": [
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 5,
+            "feedback": "That's P itself — over y = x the coordinates SWAP: (2, 5) → (5, 2)."
+          }
+        ],
+        "missFeedback": "Trade the coordinates' places: (2, 5) becomes (5, 2).",
+        "successFeedback": "P′ = (5, 2) — the swap in action."
+      },
+      "predict": {
+        "prompt": "Reflecting over the line y = x, the coordinates of (2, 5)…",
+        "options": [
+          {
+            "id": "swap",
+            "label": "Swap: (5, 2)"
+          },
+          {
+            "id": "signs",
+            "label": "Flip signs: (−2, −5)"
+          },
+          {
+            "id": "stay",
+            "label": "Stay put — it's a line, not a mirror"
+          }
+        ],
+        "outcomeId": "swap",
+        "reveal": "Over y = x, the coordinates trade jobs: (2, 5) → (5, 2). Sign flips belong to the AXES — the y = x mirror is the swap, which is exactly the mirror inverse functions use."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Coordinate horizontal and vertical movement to construct an ordered pair on the plane.",
+        "invariants": [
+          "ordered-pair-axis-meaning"
+        ],
+        "misconceptions": [
+          "xy-reversal"
+        ],
+        "representations": [
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "geometry-foundations",
+        "delayed": false
+      },
+      "conceptTag": "gf-reflection-rule"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Swap, don't flip.",
+      "conceptTag": "gf-reflection-rule",
+      "explanationVariants": [
+        "Over y = x, swap: (7, 3) → (3, 7). The image's x-coordinate is 3.",
+        "No sign changes for this mirror — the 7 and 3 just trade slots."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Reflect (7, 3) over the line y = x. What is the image's x-coordinate?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 stayed in the x-slot — but this mirror SWAPS the slots: the new x is the old y, 3."
+          },
+          {
+            "value": -7,
+            "feedback": "Sign flips belong to the AXIS mirrors — the y = x mirror never negates. Here the coordinates just trade places: new x = 3."
+          }
+        ],
+        "fallbackFeedback": "New x = old y = 3."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-reflection-rule__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "A point on the mirror.",
+      "conceptTag": "gf-reflection-rule",
+      "hints": [
+        "Try the rule: what does the swap do to (4, 4)?",
+        "Swapping 4 and 4 gives… the same pair. What does that mean geometrically?",
+        "Its distance to the mirror is zero — check the perpendicular-bisector property for a zero-length segment."
+      ],
+      "explanationVariants": [
+        "(4, 4) swaps to (4, 4): a point ON the mirror line is its own image — a fixed point. Zero distance in, zero distance out.",
+        "The mirror property forces P and P′ to be equally far from m; on the line that distance is 0, so P′ must be P itself."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The point (4, 4) lies ON the line y = x. Where does the reflection over y = x send it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Nowhere new — it is its own image (a fixed point)",
+            "correct": true,
+            "feedback": "The swap returns (4, 4) unchanged. Every point of the mirror line stays put — that's what makes it the mirror."
+          },
+          {
+            "id": "o2",
+            "label": "To (−4, −4), the opposite side of the origin",
+            "correct": false,
+            "feedback": "Both signs flipping is the 180° rotation's signature. Reflection over y = x only SWAPS — and swapping equal coordinates changes nothing."
+          },
+          {
+            "id": "o3",
+            "label": "Reflection is undefined for points on the line",
+            "correct": false,
+            "feedback": "The rule handles it fine: (4, 4) → (4, 4). Being on the mirror just means the point maps to itself."
+          },
+          {
+            "id": "o4",
+            "label": "It slides along the line to (5, 5)",
+            "correct": false,
+            "feedback": "Sliding along a line is a TRANSLATION. Reflections move points straight ACROSS the mirror — and zero distance across is no move at all."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-reflection-rule__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three mirrors, three rules.",
+      "takeaways": [
+        "x-axis: (x, −y); y-axis: (−x, y) — flip the coordinate that measures distance to the axis.",
+        "y = x: swap the coordinates, no sign changes.",
+        "The mirror line is the perpendicular bisector of every PP′ — and its own points are fixed."
+      ],
+      "teaser": "Next: rotations — quarter and half turns about the origin, each with its own coordinate rule."
+    }
+  ]
+}

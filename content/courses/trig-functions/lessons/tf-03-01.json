@@ -1,0 +1,348 @@
+{
+  "id": "tf-03-01",
+  "slug": "coordinates-on-the-unit-circle",
+  "title": "Coordinates on the Unit Circle",
+  "courseId": "trig-functions",
+  "chapterId": "ch3-unit-circle",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Right triangles cap θ below 90° — the unit circle removes the cap. Draw a circle of radius 1 and rotate a point θ from the positive x-axis: **cos θ is the point's x-coordinate, sin θ is its y-coordinate.** For acute θ this reproduces the old ratios (hypotenuse 1) — but now EVERY angle, any size, any sign, has a sine and cosine.",
+      "figure": "unit-circle-reference"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Spin the angle and watch the point trace the circle. The two colored legs are exactly cos θ and sin θ — swing past 90° and watch cos slip negative.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Drag the angle to 120° and read the coordinates.",
+        "targetAngle": 120,
+        "angleStart": 0,
+        "angleStep": 15,
+        "successFeedback": "At 120° the point is (cos 120°, sin 120°) ≈ (−0.5, 0.866): cos is negative in Quadrant II, sin still positive.",
+        "lowFeedback": "Not far enough — keep rotating counterclockwise toward 120°, up and over the top of the circle.",
+        "highFeedback": "Past 120° now — rotate back clockwise. Watch how crossing an axis flips a coordinate's sign."
+      },
+      "predict": {
+        "prompt": "You'll rotate from 0° to 120°. What does the point's HEIGHT do along the way?",
+        "options": [
+          {
+            "id": "updown",
+            "label": "Climbs, then falls back"
+          },
+          {
+            "id": "climb",
+            "label": "Climbs the whole way"
+          },
+          {
+            "id": "fall",
+            "label": "Falls the whole way"
+          }
+        ],
+        "outcomeId": "updown",
+        "reveal": "The height rises until the top of the circle at 90°, then falls — the sine's peak is exactly where the point is highest."
+      },
+      "conceptTag": "tf-unit-circle",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents tf unit circle.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tf unit circle must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tf unit circle."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "trig-functions:tf-unit-circle",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the top of the circle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "At 90° the rotating point sits at the circle's very top, (0, 1). What is sin 90°?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 is the X-coordinate — that's cos 90°. Sine reads the y-coordinate: 1."
+          },
+          {
+            "value": 90,
+            "feedback": "90 is the angle, not its sine. The sine is the point's HEIGHT on the unit circle: 1."
+          }
+        ],
+        "fallbackFeedback": "sin 90° = y-coordinate of (0, 1) = 1."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the far left.",
+      "conceptTag": "tf-unit-circle",
+      "explanationVariants": [
+        "At 180° the point sits at (−1, 0), so cos 180° = x = −1.",
+        "Half a turn points straight LEFT — the x-coordinate is as negative as it gets."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "At 180° the point sits at (−1, 0). What is cos 180°?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The point is on the LEFT half of the circle — its x-coordinate is negative: cos 180° = −1."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the y-coordinate — that's sin 180°. Cosine reads x: −1."
+          }
+        ],
+        "fallbackFeedback": "cos 180° = −1."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-unit-circle__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Signs now come free from the QUADRANT. Q1: x and y both positive — everything positive. Q2: x < 0 — only sine positive. Q3: both negative — only tangent (y/x) positive. Q4: y < 0 — only cosine positive. The classic mnemonic, counterclockwise from Q1: **A-S-T-C** — All, Sine, Tangent, Cosine.",
+      "figure": "tf-quadrant-signs"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sign by quadrant.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each value by its sign — no calculator, just the quadrant.",
+        "buckets": [
+          {
+            "id": "pos",
+            "label": "positive"
+          },
+          {
+            "id": "neg",
+            "label": "negative"
+          }
+        ],
+        "items": [
+          {
+            "id": "v1",
+            "label": "sin 200°",
+            "bucketId": "neg",
+            "feedback": "200° lands in Q3, below the x-axis — y is negative, so sine is negative."
+          },
+          {
+            "id": "v2",
+            "label": "cos 100°",
+            "bucketId": "neg",
+            "feedback": "100° is Q2, left of the y-axis — x is negative, so cosine is negative."
+          },
+          {
+            "id": "v3",
+            "label": "sin 100°",
+            "bucketId": "pos",
+            "feedback": "Q2 sits ABOVE the x-axis — y stays positive, and Q2 is exactly the S of A-S-T-C."
+          },
+          {
+            "id": "v4",
+            "label": "cos 320°",
+            "bucketId": "pos",
+            "feedback": "320° is Q4, right of the y-axis — x is positive, the C quadrant of A-S-T-C."
+          }
+        ],
+        "missFeedback": "Place the angle in its quadrant, then read the sign of the coordinate the function uses.",
+        "successFeedback": "A-S-T-C sorted — quadrant first, sign for free."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Both below zero.",
+      "conceptTag": "tf-unit-circle",
+      "explanationVariants": [
+        "Q3 sits left of the y-axis AND below the x-axis — x < 0 and y < 0, so sine and cosine are both negative.",
+        "That's why Q3 is the T of A-S-T-C: only y/x, two negatives, comes out positive."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In which quadrant are sin θ AND cos θ both negative?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Quadrant III",
+            "correct": true,
+            "feedback": "Right — both coordinates go negative only in the lower left, which is what makes tan = y/x positive there."
+          },
+          {
+            "id": "o2",
+            "label": "Quadrant II",
+            "correct": false,
+            "feedback": "Q2 has x < 0 but the point is still ABOVE the axis — sine stays positive (the S quadrant)."
+          },
+          {
+            "id": "o3",
+            "label": "Quadrant IV",
+            "correct": false,
+            "feedback": "Q4 has y < 0 but x > 0 — cosine stays positive (the C quadrant)."
+          },
+          {
+            "id": "o4",
+            "label": "Quadrant I",
+            "correct": false,
+            "feedback": "Q1 is the A quadrant — everything is positive there."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-unit-circle__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Tangent rides along: **tan θ = sin θ / cos θ = y/x** — the SLOPE of the radius line. Its sign follows the quadrant rules, and it has a failure mode the others don't: wherever x = 0 (straight up at 90°, straight down at 270°), the division breaks.",
+      "figure": "tf-tangent-yx"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Where tangent breaks.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is tan 90°?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Undefined — the point is (0, 1), and y/x divides by zero",
+            "correct": true,
+            "feedback": "Exactly — a vertical radius has no slope. Tangent breaks at 90° and 270°, wherever x = 0."
+          },
+          {
+            "id": "o2",
+            "label": "1",
+            "correct": false,
+            "feedback": "1 is tan 45°, where x and y balance. At 90° the x-coordinate is ZERO and the division breaks."
+          },
+          {
+            "id": "o3",
+            "label": "0",
+            "correct": false,
+            "feedback": "Tangent is 0 where the Y-coordinate is 0 (at 0° and 180°). At 90° it's the x that vanishes — undefined."
+          },
+          {
+            "id": "o4",
+            "label": "90",
+            "correct": false,
+            "feedback": "That feeds the angle back as the answer — tan 90° asks for y/x at (0, 1), which has no value."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The bottom of the circle.",
+      "conceptTag": "tf-unit-circle",
+      "explanationVariants": [
+        "At 270° the point is (0, −1): sin 270° = y = −1.",
+        "Three-quarters of a turn points straight DOWN — height as negative as possible."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is sin 270°?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "270° points straight DOWN, to (0, −1) — the height is −1, not +1 (that's 90°, the top)."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the x-coordinate — cos 270°. Sine reads the height: −1."
+          }
+        ],
+        "fallbackFeedback": "sin 270° = −1."
+      },
+      "hints": [
+        "Walk the quarter-turn landmarks: 0° → (1,0), 90° → (0,1), 180° → (−1,0)…",
+        "270° is three quarter-turns — the point at the circle's bottom.",
+        "Sine is the y-coordinate of (0, −1)."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-unit-circle__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Trig grows up.",
+      "takeaways": [
+        "Unit circle: cos θ = x, sin θ = y — every angle now has values.",
+        "A-S-T-C gives each quadrant's positive function; coordinates explain why.",
+        "tan = y/x, the radius's slope — undefined where x = 0 (90°, 270°)."
+      ],
+      "teaser": "Next: reference angles — how the whole circle recycles Quadrant I's values."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-unit-circle",
+      "concept": {
+        "id": "rem-tf0301-c",
+        "kind": "concept",
+        "body": "Start at the start. At 0° the point hasn't rotated at all — it sits at (1, 0) on the positive x-axis. So cos 0° = x = 1 and sin 0° = y = 0. Every unit-circle read is just this: find the point, read the coordinate."
+      },
+      "check": {
+        "id": "rem-tf0301-k",
+        "kind": "check",
+        "body": "Read the start.",
+        "conceptTag": "tf-unit-circle",
+        "explanationVariants": [
+          "cos 0° = x-coordinate of (1, 0) = 1.",
+          "Full width right, zero height — cosine 1, sine 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "At 0° the point sits at (1, 0). What is cos 0°?",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "0 is the y-coordinate — sin 0°. Cosine reads x: 1."
+            },
+            {
+              "value": -1,
+              "feedback": "−1 is the point at 180°, on the far LEFT. At 0° the x-coordinate is +1."
+            }
+          ],
+          "fallbackFeedback": "cos 0° = 1."
+        }
+      }
+    }
+  ]
+}

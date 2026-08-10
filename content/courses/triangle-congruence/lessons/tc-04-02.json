@@ -1,0 +1,305 @@
+{
+ "id": "tc-04-02",
+ "slug": "centroid-and-orthocenter",
+ "title": "Centroid & Orthocenter",
+ "courseId": "triangle-congruence",
+ "chapterId": "ch4-triangle-centers",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "tc-centroid",
+   "concept": {
+    "id": "rem-tc-centroid-c",
+    "kind": "concept",
+    "body": "Centroid = MEDIANS (vertex to opposite MIDPOINT). It's the balance point, splits each median 2:1 from the vertex, and its coordinates are the AVERAGE of the vertices. Don't confuse the median (to the midpoint) with the altitude (perpendicular to the side, giving the orthocenter)."
+   },
+   "check": {
+    "id": "rem-tc-centroid-k",
+    "kind": "check",
+    "body": "Centroid's lines.",
+    "conceptTag": "tc-centroid",
+    "explanationVariants": [
+     "The centroid is where the three MEDIANS meet.",
+     "Medians (to midpoints) are concurrent at the centroid."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "The centroid is the intersection of the three…",
+     "options": [
+      {
+       "id": "o1",
+       "label": "medians",
+       "correct": true,
+       "feedback": "Medians (vertex to opposite midpoint) meet at the centroid, the balance point."
+      },
+      {
+       "id": "o2",
+       "label": "altitudes",
+       "correct": false,
+       "feedback": "Altitudes give the ORTHOCENTER. The centroid comes from medians."
+      },
+      {
+       "id": "o3",
+       "label": "angle bisectors",
+       "correct": false,
+       "feedback": "Angle bisectors give the INCENTER. The centroid comes from medians."
+      },
+      {
+       "id": "o4",
+       "label": "perpendicular bisectors",
+       "correct": false,
+       "feedback": "Perpendicular bisectors give the CIRCUMCENTER. The centroid comes from medians."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The **centroid** is where the three **medians** meet — a median joins a vertex to the midpoint of the opposite side. It's the triangle's balance point (center of mass), and it always lands inside. Its coordinates are just the **average** of the three vertices' coordinates.",
+   "figure": "centroid"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The centroid's split.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "The centroid divides each median into two parts. What is the ratio, measured from the vertex?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "2 : 1 (the vertex piece is twice the midpoint piece)",
+      "correct": true,
+      "feedback": "The centroid sits two-thirds of the way from each vertex to the opposite midpoint — a 2:1 split."
+     },
+     {
+      "id": "o2",
+      "label": "1 : 1 (it's the midpoint of the median)",
+      "correct": false,
+      "feedback": "The centroid is NOT the median's midpoint — it's two-thirds along, giving a 2:1 ratio from the vertex."
+     },
+     {
+      "id": "o3",
+      "label": "3 : 1",
+      "correct": false,
+      "feedback": "The split is 2:1, not 3:1 — the vertex piece is twice (not thrice) the far piece."
+     },
+     {
+      "id": "o4",
+      "label": "1 : 2 (the vertex piece is smaller)",
+      "correct": false,
+      "feedback": "It's the other way: the vertex piece is LARGER — 2:1 from the vertex, not 1:2."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Centroid coordinates.",
+   "conceptTag": "tc-centroid",
+   "explanationVariants": [
+    "The centroid's coordinates are the averages: x = (x₁+x₂+x₃)/3, y = (y₁+y₂+y₃)/3.",
+    "Average the three vertices component-wise to get the centroid."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A triangle has vertices with x-coordinates 0, 6, and 3. What is the x-coordinate of the centroid?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is the SUM of the x-coordinates. The centroid AVERAGES them: (0 + 6 + 3) ÷ 3 = 3."
+     },
+     {
+      "value": 6,
+      "feedback": "6 is one vertex's x-coordinate. The centroid is the average of all three: (0 + 6 + 3) ÷ 3 = 3."
+     }
+    ],
+    "fallbackFeedback": "(0 + 6 + 3) ÷ 3 = 3."
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-centroid__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The **orthocenter** is where the three **altitudes** meet — an altitude drops from a vertex perpendicular to the opposite side. Unlike the balance-point centroid, the orthocenter has no averaging or equidistance property; it's purely the altitudes' intersection, and it can land outside an obtuse triangle.",
+   "figure": "orthocenter"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Altitudes make which center?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "The three altitudes of a triangle meet at which center?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the orthocenter",
+      "correct": true,
+      "feedback": "Altitudes (perpendiculars from each vertex to the opposite side) are concurrent at the orthocenter."
+     },
+     {
+      "id": "o2",
+      "label": "the centroid",
+      "correct": false,
+      "feedback": "The centroid comes from MEDIANS (to midpoints), not altitudes. Altitudes meet at the orthocenter."
+     },
+     {
+      "id": "o3",
+      "label": "the circumcenter",
+      "correct": false,
+      "feedback": "The circumcenter comes from perpendicular BISECTORS of the sides. Altitudes (from vertices) meet at the orthocenter."
+     },
+     {
+      "id": "o4",
+      "label": "the incenter",
+      "correct": false,
+      "feedback": "The incenter comes from angle bisectors. Altitudes give the orthocenter."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Median vs altitude.",
+   "conceptTag": "tc-centroid",
+   "explanationVariants": [
+    "A median goes to the opposite side's MIDPOINT; an altitude drops PERPENDICULAR to the opposite side. Different lines, different centers.",
+    "Median → midpoint (centroid); altitude → perpendicular (orthocenter)."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the difference between a median and an altitude from a vertex?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "A median goes to the opposite midpoint; an altitude is perpendicular to the opposite side",
+      "correct": true,
+      "feedback": "Median targets the midpoint (centroid); altitude meets the opposite side at a right angle (orthocenter)."
+     },
+     {
+      "id": "o2",
+      "label": "They are the same line",
+      "correct": false,
+      "feedback": "Only in special triangles (like isosceles from the apex) do they coincide — in general they differ."
+     },
+     {
+      "id": "o3",
+      "label": "A median is perpendicular; an altitude goes to the midpoint",
+      "correct": false,
+      "feedback": "It's reversed: the ALTITUDE is perpendicular, and the MEDIAN goes to the midpoint."
+     },
+     {
+      "id": "o4",
+      "label": "Both go to the midpoint",
+      "correct": false,
+      "feedback": "Only the median targets the midpoint; the altitude targets the foot of the perpendicular."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-centroid__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "A beautiful bonus: for ANY triangle the **circumcenter, centroid, and orthocenter are collinear** — they lie on one line, the **Euler line**, with the centroid always between, twice as close to the circumcenter as to the orthocenter. (The incenter generally sits off this line.)",
+   "figure": "tc-euler-line"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "On the Euler line?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which three centers always lie on a single line (the Euler line)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "circumcenter, centroid, and orthocenter",
+      "correct": true,
+      "feedback": "These three are always collinear on the Euler line, with the centroid between the other two."
+     },
+     {
+      "id": "o2",
+      "label": "incenter, centroid, and orthocenter",
+      "correct": false,
+      "feedback": "The INCENTER is generally OFF the Euler line. The trio is circumcenter, centroid, orthocenter."
+     },
+     {
+      "id": "o3",
+      "label": "circumcenter, incenter, and centroid",
+      "correct": false,
+      "feedback": "The incenter isn't on the Euler line in general. Swap it for the ORTHOCENTER."
+     },
+     {
+      "id": "o4",
+      "label": "all four centers",
+      "correct": false,
+      "feedback": "Only three — the incenter usually misses the Euler line. Circumcenter, centroid, orthocenter are the collinear trio."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Centroid coordinate.",
+   "conceptTag": "tc-centroid",
+   "hints": [
+    "The centroid is the average of the three vertices' coordinates.",
+    "Average the y-coordinates: (2 + 8 + 5) ÷ 3.",
+    "(2 + 8 + 5) ÷ 3 = 15 ÷ 3."
+   ],
+   "explanationVariants": [
+    "The centroid's y-coordinate is the average: (2 + 8 + 5) ÷ 3 = 15 ÷ 3 = 5.",
+    "Average the three y-values: 15 ÷ 3 = 5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A triangle has vertices with y-coordinates 2, 8, and 5. Find the y-coordinate of the centroid.",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 15,
+      "feedback": "15 is the SUM. The centroid AVERAGES: (2 + 8 + 5) ÷ 3 = 5."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is one vertex's y-coordinate. Average all three: (2 + 8 + 5) ÷ 3 = 5."
+     }
+    ],
+    "fallbackFeedback": "(2 + 8 + 5) ÷ 3 = 5."
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-centroid__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Balance point and altitudes.",
+   "takeaways": [
+    "Centroid: medians meet; balance point; 2:1 split; coordinates = vertex average.",
+    "Orthocenter: altitudes meet; no equidistance property; can fall outside.",
+    "Circumcenter, centroid, orthocenter are collinear on the Euler line."
+   ],
+   "teaser": "Next: put the four centers side by side and choose the right one for any job."
+  }
+ ]
+}

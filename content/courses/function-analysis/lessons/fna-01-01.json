@@ -1,0 +1,257 @@
+{
+  "id": "fna-01-01",
+  "slug": "average-rate-of-change",
+  "title": "Average Rate of Change",
+  "courseId": "function-analysis",
+  "chapterId": "ch1-rates-of-change",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "How fast does a function change **on average** between two inputs? The **average rate of change** on [a, b] is\n\n**(f(b) − f(a)) / (b − a)**\n\n— total change in output, divided by total change in input. It is one number summarizing the whole interval.",
+      "figure": "fna-average-rate"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the interval and read its rate.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "average",
+        "a": 1,
+        "targetH": 2,
+        "startH": 0.5,
+        "prompt": "On y = x², slide B until the gap from A is exactly 2 — the interval from x = 1 to x = 3. Read the average rate off the line.",
+        "successFeedback": "Rise 8 over run 2 = 4. The average rate of change IS the slope of the secant line: it is what a straight road from A to B would have felt like, whatever the curve did in between.",
+        "lowFeedback": "The gap is under 2, so B has not reached x = 3 yet. Push it out.",
+        "highFeedback": "The gap has passed 2, so B is beyond x = 3. Pull it back."
+      },
+      "predict": {
+        "prompt": "You'll build the secant from A at x = 1 out to B at x = 3 on y = x². Compared with the tangent slope AT A (2), the secant's slope will be…",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger (more positive)"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller"
+          },
+          {
+            "id": "equal",
+            "label": "Exactly equal"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "The secant's slope is (f(3) − f(1))/2 = 4, against 2 for the tangent at A. On a curve whose slope keeps growing, the stretch out to B crosses steeper ground than A itself — so the average beats the value at the start."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "function-analysis-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "fna-aroc"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now divide by the input change.",
+      "conceptTag": "fna-aroc",
+      "explanationVariants": [
+        "(f(3) − f(1))/(3 − 1) = (9 − 1)/2 = 8/2 = 4.",
+        "Outputs climb 8 while inputs climb 2, so on average the function rises 4 per unit of x."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the average rate of change of f(x) = x² on [1, 3]?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is only the top of the fraction — the output change. Divide by the input change 3 − 1 = 2 to get the RATE."
+          },
+          {
+            "value": 3,
+            "feedback": "Don't divide by b = 3; divide by the input CHANGE b − a = 2. 8/2 = 4."
+          }
+        ],
+        "fallbackFeedback": "(9 − 1)/(3 − 1) = 8/2 = 4."
+      },
+      "variant": {
+        "gen": "avg-rate-change"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The denominator is **b − a**, the input change — not b itself. And a **linear** function is the special case where the answer never depends on the interval: its average rate of change is always its slope.",
+      "figure": "fna-denominator-input"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Test the linear special case.",
+      "conceptTag": "fna-aroc",
+      "explanationVariants": [
+        "f(10) = 31, f(0) = 1, so (31 − 1)/(10 − 0) = 30/10 = 3 — exactly the slope of 3x + 1.",
+        "A line changes at the same rate everywhere, so any interval returns its slope: 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the average rate of change of f(x) = 3x + 1 on [0, 10]?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 is the output change f(10) − f(0). Divide by the input change 10 to get 3."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is the y-intercept, which sets where the line STARTS — the rate of change is the slope, 3."
+          }
+        ],
+        "fallbackFeedback": "(31 − 1)/(10 − 0) = 3, the line's slope."
+      },
+      "variant": {
+        "gen": "avg-rate-change",
+        "form": "linear"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger curved interval.",
+      "conceptTag": "fna-aroc",
+      "explanationVariants": [
+        "f(5) = 25, f(2) = 4, so (25 − 4)/(5 − 2) = 21/3 = 7.",
+        "Outputs rise 21 across an input rise of 3; 21 ÷ 3 = 7 per unit."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the average rate of change of f(x) = x² on [2, 5]?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 is just f(5) − f(2). The rate divides that by the input change 5 − 2 = 3: 21/3 = 7."
+          },
+          {
+            "value": 4.2,
+            "feedback": "You divided by b = 5. The denominator is the input CHANGE, b − a = 3, giving 7."
+          }
+        ],
+        "fallbackFeedback": "(25 − 4)/(5 − 2) = 21/3 = 7."
+      },
+      "variant": {
+        "gen": "avg-rate-change"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Careful with a negative output.",
+      "conceptTag": "fna-aroc",
+      "explanationVariants": [
+        "f(4) = 16 − 8 = 8 and f(1) = 1 − 2 = −1, so (8 − (−1))/(4 − 1) = 9/3 = 3.",
+        "From −1 up to 8 is a climb of 9 over 3 units of input: rate 3."
+      ],
+      "hints": [
+        "Evaluate f at both endpoints first — one of the outputs is negative.",
+        "f(4) = 4² − 2·4 and f(1) = 1² − 2·1. Then apply (f(4) − f(1))/(4 − 1).",
+        "f(4) = 8, f(1) = −1. Subtracting a negative: 8 − (−1) = 9. Divide by 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the average rate of change of f(x) = x² − 2x on [1, 4]?",
+        "answer": 3,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 2.3333333333333335,
+            "feedback": "You used 8 − 1 = 7 on top, but f(1) = −1, not 1. Subtracting the negative gives 8 − (−1) = 9, so 9/3 = 3."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the output change. Divide by the input change 4 − 1 = 3 to finish: 3."
+          }
+        ],
+        "fallbackFeedback": "f(4) = 8, f(1) = −1; (8 − (−1))/3 = 9/3 = 3."
+      },
+      "variant": {
+        "gen": "avg-rate-change",
+        "form": "quadShift"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One number for a whole interval.",
+      "takeaways": [
+        "Average rate of change = (f(b) − f(a))/(b − a).",
+        "Divide by the input CHANGE b − a, never by b.",
+        "A line's average rate of change is its slope on every interval."
+      ],
+      "teaser": "Next: this exact number is the slope of a line you can SEE — the secant."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-aroc",
+      "concept": {
+        "id": "rem-fna0101-c",
+        "kind": "concept",
+        "body": "Two steps, always: (1) evaluate f at both endpoints; (2) divide output change by input change, (f(b) − f(a))/(b − a)."
+      },
+      "check": {
+        "id": "rem-fna0101-k",
+        "kind": "check",
+        "body": "One clean interval.",
+        "conceptTag": "fna-aroc",
+        "explanationVariants": [
+          "f(2) = 4 and f(0) = 0, so (4 − 0)/(2 − 0) = 2.",
+          "Output climbs 4 over an input climb of 2 — the rate is 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the average rate of change of f(x) = x² on [0, 2]?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 is the output change f(2) − f(0). Divide by the input change 2 − 0 to get the rate: 2."
+            },
+            {
+              "value": 1,
+              "feedback": "You may have divided 2/2 using the input change on top. Outputs go on top: (4 − 0)/2 = 2."
+            }
+          ],
+          "fallbackFeedback": "(4 − 0)/(2 − 0) = 2."
+        }
+      }
+    }
+  ]
+}

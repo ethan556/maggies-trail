@@ -1,0 +1,250 @@
+{
+  "id": "tg-03-03",
+  "slug": "transforming-tangent",
+  "title": "Transforming Tangent",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch3-tangent-graph",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Tangent takes the same dials with two twists. **Period:** y = tan(Bx) has period **π/B** (the base period is π, not 2π). **No amplitude:** a branch already spans −∞ to +∞, so A in y = A tan x only steepens the climb — there is no max to scale.",
+      "figure": "tg-tangent-dials"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "New period.",
+      "predict": {
+        "prompt": "tan x repeats every 180°. How often does tan(2x) repeat?",
+        "options": [
+          {
+            "id": "d90",
+            "label": "Every 90° — double speed, half the spacing"
+          },
+          {
+            "id": "d180",
+            "label": "Still every 180° — the walls don't move"
+          },
+          {
+            "id": "d360",
+            "label": "Every 360° — like sine and cosine"
+          }
+        ],
+        "outcomeId": "d90",
+        "reveal": "Every 90°. The 2 doubles how fast the pointer sweeps, so walls and zeros arrive in half the distance — and tangent started with a 180° period, not 360°. Drag one full copy of the pattern and read its length off the axis."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = tan(2x) through exactly ONE copy of its pattern — wall to matching wall — and stop where it first repeats.",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "tan",
+        "angularScale": 2,
+        "targetFeature": {
+          "kind": "period",
+          "x": 90,
+          "tol": 5
+        },
+        "successFeedback": "One period in 90° — that's π/2, the n = 2 the entry wants. Tangent's own period is 180° (each branch already contains the whole story), and the 2 inside halves it: period = 180°/|b|, never 360°/|b|.",
+        "lowFeedback": "Still inside the first copy — the pattern hasn't restarted. Keep dragging until the branch you're on looks exactly like the one you left.",
+        "highFeedback": "Past one copy — the pattern already restarted behind the tip. Back up to the first angle where the branch repeats."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Walls move with the period.",
+      "conceptTag": "tg-tan-transform",
+      "explanationVariants": [
+        "Walls where 2x = π/2 + kπ: x = π/4 + kπ/2 — the first positive wall is π/4.",
+        "Compressing by 2 halves every landmark: the wall at π/2 moves to π/4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where is the first positive vertical asymptote of y = tan(2x)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = π/4",
+            "correct": true,
+            "feedback": "Right — solve 2x = π/2: the wall arrives twice as fast."
+          },
+          {
+            "id": "o2",
+            "label": "x = π/2",
+            "feedback": "That's plain tangent's wall. With B = 2 the inside reaches π/2 when x = π/4."
+          },
+          {
+            "id": "o3",
+            "label": "x = π/8",
+            "feedback": "π/8 would need B = 4. Solve 2x = π/2: x = π/4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-transform__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Steeper, not taller.",
+      "conceptTag": "tg-tan-transform",
+      "explanationVariants": [
+        "3 tan x has NO maximum — every branch still runs to +∞; the 3 only makes it get there faster (3·tan(π/4) = 3 instead of 1 at the same x).",
+        "'Amplitude' needs a peak to measure; tangent has none, so A is a steepness dial only."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does the 3 do in y = 3 tan x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Steepens each branch — the graph still has no maximum",
+            "correct": true,
+            "feedback": "Right — e.g. at x = π/4 the height triples to 3, but the branch still climbs without bound."
+          },
+          {
+            "id": "o2",
+            "label": "Sets the maximum value to 3",
+            "feedback": "Tangent has no maximum to set: each branch reaches every height. The 3 just triples each value."
+          },
+          {
+            "id": "o3",
+            "label": "Changes the period to π/3",
+            "feedback": "Period lives INSIDE the function (B). The outside 3 scales heights: 3·tan x."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-transform__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Slides work unchanged: y = tan(x − C) moves every zero and every wall right by C, spacing intact. To find any wall of a transformed tangent, set the whole **inside equal to π/2 + kπ** and solve — one equation covers stretch and slide at once.",
+      "figure": "tg-tangent-slide"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate a transformed point.",
+      "conceptTag": "tg-tan-transform",
+      "explanationVariants": [
+        "y = 3 tan(2x) at x = π/8: inside 2·π/8 = π/4, tan(π/4) = 1, times 3 = 3.",
+        "The compressed wave hits its 'tan = 1' point at π/8 (half of π/4); tripled: 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 3 tan(2x). What is y at x = π/8?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "tan(π/4) = 1 is the inside value — the outside 3 still scales it: y = 3."
+          },
+          {
+            "value": 0.41,
+            "feedback": "Don't take tan(π/8) ≈ 0.41: the 2 multiplies FIRST, making the argument π/4, and 3·tan(π/4) = 3."
+          }
+        ],
+        "fallbackFeedback": "3 · tan(2·π/8) = 3 · tan(π/4) = 3."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-transform__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Walls of a slid tangent.",
+      "conceptTag": "tg-tan-transform",
+      "explanationVariants": [
+        "y = tan(x − π/6): everything slides right π/6, so walls sit at π/2 + π/6 = 2π/3 (+kπ). n = 3 in 2π/3.",
+        "Solve x − π/6 = π/2: x = π/2 + π/6 = 3π/6 + π/6 = 4π/6 = 2π/3."
+      ],
+      "hints": [
+        "The wall condition is (inside) = π/2.",
+        "x − π/6 = π/2 — solve for x.",
+        "π/2 + π/6 = 2π/3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The first positive wall of y = tan(x − π/6) is at x = 2π/n. What is n?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "π/2 is the UNSLID wall. Add the shift: π/2 + π/6 = 2π/3, so n = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "π/6 is the slide itself, not the wall. The wall lands at 2π/3: n = 3."
+          }
+        ],
+        "fallbackFeedback": "x = π/2 + π/6 = 2π/3: n = 3."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-transform__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same ladder, new spacing.",
+      "takeaways": [
+        "Period of tan(Bx) is π/B; walls solve (inside) = π/2 + kπ.",
+        "A steepens branches — tangent has no amplitude.",
+        "Slides move zeros and walls together, unchanged in spacing."
+      ],
+      "teaser": "Next chapter: running trig backwards — the inverse functions and their restricted homes."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-tan-transform",
+      "concept": {
+        "id": "rem-tg0303-c",
+        "kind": "concept",
+        "body": "For y = A tan(B(x − C)): period π/B; walls where B(x − C) = π/2 + kπ; A is steepness (no max exists)."
+      },
+      "check": {
+        "id": "rem-tg0303-k",
+        "kind": "check",
+        "body": "One period.",
+        "conceptTag": "tg-tan-transform",
+        "explanationVariants": [
+          "π/B with B = 3: period π/3.",
+          "Three copies of the ladder now fit where one did."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the period of y = tan(3x)? (As π/n: give n.)",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "Divide the base π by B: π/3, n = 3."
+            },
+            {
+              "value": 6,
+              "feedback": "2π/6 = π/3 is right as a VALUE, but n asks for π/n: n = 3. (Tangent's base period is π, not 2π.)"
+            }
+          ],
+          "fallbackFeedback": "Period π/3: n = 3."
+        }
+      }
+    }
+  ]
+}

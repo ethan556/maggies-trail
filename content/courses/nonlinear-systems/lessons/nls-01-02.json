@@ -1,0 +1,239 @@
+{
+  "id": "nls-01-02",
+  "slug": "substitution-does-it",
+  "title": "Substitution Does It",
+  "courseId": "nonlinear-systems",
+  "chapterId": "ch1-line-meets-parabola",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The recipe, named: SUBSTITUTE the line's expression for y into the curve's equation, solve the resulting quadratic, then back-substitute each x to recover its y. Three moves. Watch it run on y = x² + 1 with y = 2x + 1.",
+      "figure": "nls-substitute-recipe"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Move one: substitute.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "Replacing y in x² + 1 with the line's 2x + 1 gives x² + 1 = 2x + 1.",
+        "Both sides describe the same y at a crossing, so the two expressions equate."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Substituting the line into the curve gives…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x² + 1 = 2x + 1",
+            "correct": true,
+            "feedback": "One equation, one unknown — the y is spent and only x remains."
+          },
+          {
+            "id": "o2",
+            "label": "x² + 1 = 0",
+            "correct": false,
+            "feedback": "That sets the curve to zero — the line's expression must replace y, not 0."
+          },
+          {
+            "id": "o3",
+            "label": "2x + 1 = 0",
+            "correct": false,
+            "feedback": "That finds where the LINE crosses the x-axis, not where it meets the curve."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Move two: solve.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "x² + 1 = 2x + 1 simplifies to x² − 2x = 0, i.e. x(x − 2) = 0: x = 0 or x = 2.",
+        "Subtracting 2x + 1 leaves x² − 2x = 0, whose factors give roots 0 and 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x² − 2x = 0 has two solutions. What is the LARGER one?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 is the smaller root; factoring x(x − 2) = 0 also frees x = 2."
+          },
+          {
+            "value": 1,
+            "feedback": "1 halves the coefficient — but the factors are x and x − 2, so the roots are 0 and 2."
+          },
+          {
+            "value": -2,
+            "feedback": "Sign slip: x − 2 = 0 gives +2."
+          }
+        ],
+        "fallbackFeedback": "Factor: x(x − 2) = 0 gives x = 0 or x = 2. The larger is 2."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Move three: back-substitute and plot.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Recover y for each x (use the line y = 2x + 1) and plot BOTH intersection points.",
+        "cols": 5,
+        "rows": 7,
+        "xLabels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 6
+          }
+        ],
+        "connectTargets": false,
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 5,
+            "feedback": "That's (2, 4) — the parabola's 2² but you must ADD 1: y = x² + 1 = 5. (The line agrees: 2·2 + 1 = 5.)"
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "feedback": "That's (0, 0): at x = 0 the line gives y = 2·0 + 1 = 1, not 0."
+          }
+        ],
+        "missFeedback": "Feed x = 0 and x = 2 into y = 2x + 1: the points are (0, 1) and (2, 5).",
+        "successFeedback": "(0, 1) and (2, 5) — and the parabola confirms both: 0² + 1 = 1, 2² + 1 = 5. Back-substitution closes the loop."
+      },
+      "predict": {
+        "prompt": "For recovering y, does it matter whether you substitute x into the line or the curve?",
+        "options": [
+          {
+            "id": "same",
+            "label": "No — both give the same y at a true crossing"
+          },
+          {
+            "id": "line",
+            "label": "Yes — only the line is valid"
+          },
+          {
+            "id": "curve",
+            "label": "Yes — only the curve is valid"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "At an intersection they MUST agree — that's what intersecting means. Using the line is just less arithmetic. If the two ever disagree on a y, the x wasn't a real solution: a built-in error detector."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Discipline note: substitution can breed phantom solutions ONLY if you square or root along the way — here we never do, so every root is genuine. Still, checking each point in BOTH equations is a two-second audit that catches arithmetic slips cold.",
+      "figure": "nls-no-phantom-here"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Audit a point.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "(1, 3) fails the curve: 1² + 1 = 2 ≠ 3, even though the line gives 2·1 + 1 = 3 — line-only, not an intersection.",
+        "The point sits on the line but misses the parabola by 1, so it can't be a crossing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student claims (1, 3) is an intersection of y = x² + 1 and y = 2x + 1. The audit says…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "On the line, off the curve — rejected",
+            "correct": true,
+            "feedback": "2·1 + 1 = 3 ✓ but 1² + 1 = 2 ✗: intersections must pass BOTH checks."
+          },
+          {
+            "id": "o2",
+            "label": "On both — accepted",
+            "correct": false,
+            "feedback": "The parabola check fails: 1² + 1 = 2, not 3."
+          },
+          {
+            "id": "o3",
+            "label": "Off both — rejected",
+            "correct": false,
+            "feedback": "It does sit on the line; the curve alone rejects it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Run the whole recipe alone.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "x² = 3x gives x² − 3x = 0, roots 0 and 3; the line y = 3x yields points (0, 0) and (3, 9), whose y's sum to 9.",
+        "Substitute, factor x(x − 3), back-substitute: (0, 0) and (3, 9); 0 + 9 = 9."
+      ],
+      "hints": [
+        "Substitute: the curve y = x² meets the line y = 3x where x² = 3x.",
+        "Solve x² − 3x = 0 by factoring out x.",
+        "Back-substitute x = 0 and x = 3 into y = 3x; add the two y's."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = x², y = 3x. What is the sum of the two intersection points' y-coordinates?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is a root's x, not a y-sum: the y's are 0 and 9."
+          },
+          {
+            "value": 12,
+            "feedback": "That adds the x's in as well; only y = 0 and y = 9 are asked, summing 9."
+          },
+          {
+            "value": 6,
+            "feedback": "y at x = 3 is 3·3 = 9, not 6 — then add y = 0."
+          }
+        ],
+        "fallbackFeedback": "x² = 3x gives x = 0 or x = 3, so the points are (0, 0) and (3, 9). The y-coordinates sum to 9."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three moves, every time.",
+      "takeaways": [
+        "Substitute the line into the curve.",
+        "Solve the quadratic that results.",
+        "Back-substitute for y — and audit in both equations."
+      ],
+      "teaser": "next: systems that meet once, or never — and the number that predicts it."
+    }
+  ]
+}

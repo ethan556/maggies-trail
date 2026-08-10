@@ -1,0 +1,293 @@
+{
+  "id": "dop-02-03",
+  "slug": "multi-digit-times-multi-digit",
+  "title": "Multi-Digit × Multi-Digit",
+  "courseId": "decimal-operations",
+  "chapterId": "ch2-standard-multiplication",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To multiply 23 × 45, multiply 23 by each part of 45. First by the 5 ones: 23 × 5 = 115. Then by the 4 tens: 23 × 40 = 920. Add the two rows: 115 + 920 = 1035. Two partial products, one for each digit of the second number.",
+      "figure": "dop-two-by-two"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The first row.",
+      "conceptTag": "multidigit-multiply",
+      "widget": {
+        "type": "columnCalc",
+        "op": "multiply",
+        "a": 23,
+        "b": 5,
+        "prompt": "The first row of 23 × 45 is 23 × 5. Work it column by column, right to left, and carry when a column passes 9.",
+        "commonResults": [
+          {
+            "value": 15,
+            "feedback": "15 is 3 × 5 with the carry left stranded and the tens column never done. The 15 means one TEN and five ones: the 5 stays in the ones column and the 1 has to travel left to join 2 × 5."
+          },
+          {
+            "value": 105,
+            "feedback": "105 has both columns multiplied but the carry never added in. 2 × 5 = 10, and the 1 carried from the ones column makes it 11 — so the row is 115, not 105."
+          }
+        ],
+        "fallbackFeedback": "Start at the ones: 3 × 5 = 15, so 5 stays and 1 carries. Then 2 × 5 = 10, plus the carried 1.",
+        "successFeedback": "115. That is one row of the two — and the carry is why it is not simply 10 and 15 written side by side. The second row will be 23 × 40, not 23 × 4, which is where the placeholder zero comes from."
+      },
+      "hints": [
+        "Multiply 23 by the ones digit, 5.",
+        "3×5=15 (write 5, carry 1); 2×5=10, plus 1 = 11.",
+        "So 115."
+      ],
+      "explanationVariants": [
+        "23 × 5 = 115 — the ones-digit row.",
+        "The first row is always the top number times the ones digit."
+      ],
+      "predict": {
+        "prompt": "23 × 45 splits into two rows. Those rows will be…",
+        "options": [
+          {
+            "id": "forty",
+            "label": "23 × 5 and 23 × 40 — the 4 means forty"
+          },
+          {
+            "id": "four",
+            "label": "23 × 5 and 23 × 4 — one digit each"
+          },
+          {
+            "id": "one",
+            "label": "Just 23 × 45 in a single row"
+          }
+        ],
+        "outcomeId": "forty",
+        "reveal": "The 4 sits in the tens place, so the second row is 23 × 40 = 920, not 23 × 4 = 92 — that's why the algorithm shifts the second row one place left. Forgetting that shift is the classic multi-digit error. First row first: 23 × 5."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The second row multiplies by the 4, but that 4 means **40** — so the row is 23 × 40 = 920, not 23 × 4 = 92. In the written form you show this by putting a **0** in the ones place of the second row first, then multiplying by the 4. That placeholder zero is the whole trick.",
+      "figure": "dop-two-by-two"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The second row.",
+      "conceptTag": "multidigit-multiply",
+      "explanationVariants": [
+        "The 4 in 45 means 40, so the second row is 23 × 40 = 920.",
+        "Place a 0, then 23 × 4 = 92 → 920 in the tens-shifted row."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 23 × 45, the second row is 23 × 40 (the tens digit is 4, meaning 40). What is 23 × 40?",
+        "answer": 920,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 92,
+            "feedback": "92 is 23 × 4, but the 4 means 40 — so the row is 23 × 40 = 920. The placeholder zero is what's missing."
+          },
+          {
+            "value": 460,
+            "feedback": "460 is 23 × 20. The tens digit here is 4, so it's 23 × 40 = 920."
+          }
+        ],
+        "fallbackFeedback": "The 4 means 40, so 23 × 40 = 920 (place a 0, then 23 × 4 = 92)."
+      },
+      "variant": {
+        "gen": "two-row-multiply"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Add the two rows.",
+      "conceptTag": "multidigit-multiply",
+      "explanationVariants": [
+        "115 + 920 = 1035 — the two rows added.",
+        "The ones row (115) plus the tens row (920) is 1035."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The two rows for 23 × 45 are 115 and 920. What is their total?",
+        "answer": 1035,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 207,
+            "feedback": "207 adds 115 + 92 — the second row lost its placeholder zero. It's 115 + 920 = 1035."
+          },
+          {
+            "value": 935,
+            "feedback": "935 mis-adds. Line up places: 115 + 920 = 1035."
+          }
+        ],
+        "fallbackFeedback": "Add the rows: 115 + 920 = 1035."
+      },
+      "variant": {
+        "gen": "two-row-multiply",
+        "form": "addRows"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot the placeholder.",
+      "conceptTag": "multidigit-multiply",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the second row of a 2-digit × 2-digit product start with a 0 in the ones place?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Because that row multiplies by the tens digit, which stands for a multiple of ten",
+            "correct": true,
+            "feedback": "Exactly — the second digit means tens, so its row is ten times bigger; the 0 holds the ones place."
+          },
+          {
+            "id": "b",
+            "label": "Because you always put a 0 there for decoration",
+            "feedback": "It's not decoration — the 0 marks that this row multiplies by tens, so it belongs in the tens place."
+          },
+          {
+            "id": "c",
+            "label": "Because the first row was too small",
+            "feedback": "The size of the first row doesn't matter. The 0 is there because the second row multiplies by a tens digit."
+          }
+        ]
+      },
+      "hints": [
+        "The second digit of the bottom number is a tens digit.",
+        "Tens are ten times bigger than ones.",
+        "The 0 shifts the row into the tens place."
+      ],
+      "explanationVariants": [
+        "The tens digit's row is 10× bigger, so the 0 holds the ones place.",
+        "The placeholder zero records the tens place value."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A full product.",
+      "conceptTag": "multidigit-multiply",
+      "explanationVariants": [
+        "52 × 1 = 52 and 52 × 30 = 1560, so 52 + 1560 = 1612.",
+        "Ones row 52, tens row 1560 (with its placeholder zero), total 1612."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 52 × 31 with the two-row method: 52 × 1 = 52, then 52 × 30 = 1560. What is the total?",
+        "answer": 1612,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 208,
+            "feedback": "208 adds 52 + 156 — the second row lost its placeholder zero (52×3 instead of 52×30). It's 52 + 1560 = 1612."
+          },
+          {
+            "value": 1560,
+            "feedback": "1560 is only the tens row — the ones row (52) still adds on: 1612."
+          }
+        ],
+        "fallbackFeedback": "Add the rows: 52 + 1560 = 1612."
+      },
+      "variant": {
+        "gen": "two-row-multiply",
+        "form": "scaffoldTotal"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Run the whole thing.",
+      "conceptTag": "multidigit-multiply",
+      "hints": [
+        "First row: 34 × 6 (the ones digit).",
+        "Second row: 34 × 20 (the tens digit is 2, meaning 20) — remember the placeholder zero.",
+        "Add 204 and 680."
+      ],
+      "explanationVariants": [
+        "34 × 26: 34×6 = 204, 34×20 = 680, and 204 + 680 = 884.",
+        "Ones row 204, tens row 680 (placeholder zero), total 884."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the two-row method to find 34 × 26.",
+        "answer": 884,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 272,
+            "feedback": "272 adds 204 + 68 — the second row lost its placeholder zero (34×2 instead of 34×20). It's 204 + 680 = 884."
+          },
+          {
+            "value": 204,
+            "feedback": "204 is only the first row (34 × 6) — the second row (34 × 20 = 680) still adds on: 884."
+          }
+        ],
+        "fallbackFeedback": "34×6 = 204, 34×20 = 680, then 204 + 680 = 884."
+      },
+      "variant": {
+        "gen": "two-row-multiply",
+        "form": "bareTwoRow"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One row per digit, shifted by place.",
+      "takeaways": [
+        "Multiply the top number by each digit of the bottom number — one row each.",
+        "The tens-digit row is ten times bigger, so it starts with a placeholder 0 in the ones place.",
+        "Add the rows to get the product: 23 × 45 = 115 + 920 = 1035."
+      ],
+      "teaser": "that completes the multiplication algorithm — next chapter: dividing by two-digit numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "multidigit-multiply",
+      "concept": {
+        "id": "rem-mm-c",
+        "kind": "concept",
+        "body": "Quick rewind. **The second row multiplies by a tens digit, so it's ten times bigger — start it with a 0 in the ones place.** For 12 × 34: first row 12 × 4 = 48, second row 12 × 30 = 360, total 48 + 360 = 408. The 0 keeps the tens row in the tens place."
+      },
+      "check": {
+        "id": "rem-mm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "multidigit-multiply",
+        "explanationVariants": [
+          "12 × 4 = 48 and 12 × 30 = 360, so 48 + 360 = 408.",
+          "Ones row 48, tens row 360 (placeholder zero), total 408."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "12 × 34: first row 12 × 4 = 48, second row 12 × 30 = 360. What is the total?",
+          "answer": 408,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 84,
+              "feedback": "84 adds 48 + 36 — the second row lost its placeholder zero (12×3 instead of 12×30). It's 48 + 360 = 408."
+            },
+            {
+              "value": 360,
+              "feedback": "360 is only the tens row — the ones row (48) still adds on: 408."
+            }
+          ],
+          "fallbackFeedback": "Add the rows: 48 + 360 = 408."
+        }
+      }
+    }
+  ]
+}

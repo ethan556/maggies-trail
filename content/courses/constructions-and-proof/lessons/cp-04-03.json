@@ -1,0 +1,287 @@
+{
+  "id": "cp-04-03",
+  "slug": "proving-vertical-angles",
+  "title": "Proving Vertical Angles Equal",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch4-intro-to-proof",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cp-vertical-angles",
+      "concept": {
+        "id": "rem-cp-vertical-angles-c",
+        "kind": "concept",
+        "body": "Two pair types when lines cross: a LINEAR pair sits on a straight line and SUMS to 180° (supplementary); a VERTICAL pair sits opposite the crossing and is EQUAL. Adjacent → add to 180; opposite → equal. Match the picture before you compute."
+      },
+      "check": {
+        "id": "rem-cp-vertical-angles-k",
+        "kind": "check",
+        "body": "Adjacent or opposite?",
+        "conceptTag": "cp-vertical-angles",
+        "explanationVariants": [
+          "Vertical (opposite) angles are equal, so the partner of a 68° angle is 68°.",
+          "Opposite the crossing means equal — 68° maps to 68°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Two lines cross. One angle is 68°. What is its VERTICAL (opposite) angle, in degrees?",
+          "answer": 68,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 112,
+              "feedback": "112° = 180 − 68 is the LINEAR-pair neighbor (adjacent, on the straight line). The VERTICAL angle is EQUAL: 68°."
+            },
+            {
+              "value": 22,
+              "feedback": "22° = 90 − 68 is the complement — not a crossing-lines relationship. Vertical angles are equal: 68°."
+            }
+          ],
+          "fallbackFeedback": "Vertical angles are equal: 68°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Your first real theorem — one you already believe: **vertical angles are equal.** When two lines cross, the opposite angles match. You've used this since Grade 7; now you'll see WHY it can't fail. The engine is the **linear pair**: two angles on a straight line always sum to 180°.",
+      "figure": "vertical-angles-proof"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The linear pair.",
+      "widget": {
+        "type": "angleMeasure",
+        "targetAngle": 130,
+        "angleStart": 180,
+        "angleStep": 5,
+        "prompt": "One angle of a linear pair is fixed at 50°. Drag the other angle until the pair completes a straight line.",
+        "successFeedback": "130°, since 50 + 130 = 180. A linear pair always fills a straight angle — that is what the name means — so knowing one angle hands you the other by subtraction, every time.",
+        "lowFeedback": "Not there yet — the two angles do not yet total 180°.",
+        "highFeedback": "Past 130° — the pair now totals more than a straight line."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why the sum is 180.",
+      "conceptTag": "cp-vertical-angles",
+      "explanationVariants": [
+        "A linear pair's two angles together form a STRAIGHT angle, which measures 180° by definition — so they're supplementary.",
+        "The outer rays of a linear pair point in opposite directions along one line: a straight angle, 180°."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does a linear pair of angles always sum to 180°?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Together they form a straight angle, which is 180°",
+            "correct": true,
+            "feedback": "The two angles fill a straight line exactly — a straight angle — so their measures total 180°."
+          },
+          {
+            "id": "o2",
+            "label": "Because all angles sum to 180°",
+            "correct": false,
+            "feedback": "Only pairs forming a straight line sum to 180° — not every angle pair does. A linear pair is exactly the straight-line case."
+          },
+          {
+            "id": "o3",
+            "label": "Because the two angles are always equal",
+            "correct": false,
+            "feedback": "A linear pair is equal only when both are 90°. In general they're unequal but still SUM to 180°."
+          },
+          {
+            "id": "o4",
+            "label": "Because vertical angles are equal",
+            "correct": false,
+            "feedback": "That's the theorem we're trying to PROVE — a linear pair's 180° comes from the straight angle, and is what we'll USE to prove it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-vertical-angles__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's the whole argument in one breath. Two lines cross, making angle **1** next to angle **2**, and angle **2** next to angle **3**. Then ∠1 + ∠2 = 180° and ∠2 + ∠3 = 180° (two linear pairs). Both equal 180°, so ∠1 + ∠2 = ∠2 + ∠3 — subtract ∠2 and **∠1 = ∠3**. The vertical angles are equal.",
+      "figure": "vertical-angles-proof"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the vertical-angle proof.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Two lines cross, forming ∠1 and ∠3 vertical, with ∠2 adjacent to each. Order the proof that ∠1 = ∠3.",
+        "items": [
+          {
+            "id": "t3",
+            "label": "So ∠1 + ∠2 = ∠2 + ∠3 (both equal 180°)"
+          },
+          {
+            "id": "t1",
+            "label": "∠1 + ∠2 = 180° (∠1 and ∠2 are a linear pair)"
+          },
+          {
+            "id": "t4",
+            "label": "Therefore ∠1 = ∠3 (subtract ∠2 from both sides)"
+          },
+          {
+            "id": "t2",
+            "label": "∠2 + ∠3 = 180° (∠2 and ∠3 are a linear pair)"
+          }
+        ],
+        "correctOrder": [
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "t3",
+            "second": "t1",
+            "feedback": "You can't set the two sums equal before you've WRITTEN both linear-pair equations — establish each 180° first."
+          },
+          {
+            "first": "t4",
+            "second": "t3",
+            "feedback": "Subtracting ∠2 only works once ∠1 + ∠2 = ∠2 + ∠3 is on the page — that equation comes first."
+          }
+        ],
+        "missFeedback": "Two linear pairs (each 180°), set the sums equal, subtract the shared ∠2 — then conclude.",
+        "successFeedback": "Two linear pairs → equal sums → subtract ∠2 → ∠1 = ∠3. That's the proof."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which step does the real work?",
+      "conceptTag": "cp-vertical-angles",
+      "explanationVariants": [
+        "Subtracting the shared ∠2 from both equal sums is the key move — it isolates ∠1 = ∠3.",
+        "Both linear pairs equal 180°, so their sums are equal; cancelling the common ∠2 leaves the vertical angles equal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the vertical-angles proof, what single move turns the two linear-pair equations into ∠1 = ∠3?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Subtracting the shared angle ∠2 from both equal sums",
+            "correct": true,
+            "feedback": "Both sums equal 180° (hence each other); removing the common ∠2 leaves ∠1 = ∠3."
+          },
+          {
+            "id": "o2",
+            "label": "Measuring ∠1 and ∠3 with a protractor",
+            "correct": false,
+            "feedback": "Measuring gives one example, not a proof. The algebra of subtracting ∠2 settles all cases at once."
+          },
+          {
+            "id": "o3",
+            "label": "Assuming ∠1 = ∠3 to begin with",
+            "correct": false,
+            "feedback": "Assuming the conclusion is circular. The proof DERIVES it by cancelling ∠2, never assumes it."
+          },
+          {
+            "id": "o4",
+            "label": "Adding the two equations together",
+            "correct": false,
+            "feedback": "Adding gives ∠1 + 2∠2 + ∠3 = 360 — a tangle. SUBTRACTING the shared ∠2 is the clean move."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-vertical-angles__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use it with algebra.",
+      "conceptTag": "cp-vertical-angles",
+      "explanationVariants": [
+        "Vertical angles are equal, so 3x + 10 = 5x − 30 → 40 = 2x → x = 20.",
+        "Set the two vertical-angle expressions equal and solve: x = 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two lines cross. One angle measures (3x + 10)°; its VERTICAL angle measures (5x − 30)°. Solve for x.",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "x = 25 comes from treating them as a LINEAR pair: (3x+10)+(5x−30)=180. But VERTICAL angles are EQUAL, so set 3x+10 = 5x−30 → x = 20."
+          },
+          {
+            "value": 10,
+            "feedback": "x = 10 solves 3x + 10 = 5x − 30 only if you slip a sign — recheck: 10 + 30 = 5x − 3x gives 40 = 2x, so x = 20."
+          }
+        ],
+        "fallbackFeedback": "Vertical angles equal: 3x + 10 = 5x − 30 → x = 20."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-vertical-angles__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Vertical and linear together.",
+      "conceptTag": "cp-vertical-angles",
+      "hints": [
+        "The (4x)° angle and the (2x + 30)° angle sit on a straight line — what's their sum?",
+        "They're a LINEAR pair: 4x + (2x + 30) = 180.",
+        "Solve 6x + 30 = 180 for x, then the vertical angle of the 4x angle equals 4x."
+      ],
+      "explanationVariants": [
+        "The two given angles are a linear pair: 4x + (2x + 30) = 180 → 6x = 150 → x = 25. The 4x angle is 100°, and its VERTICAL angle equals it: 100°.",
+        "Solve the linear pair for x = 25, so 4x = 100°; vertical angles are equal, so the opposite angle is also 100°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two lines cross. One angle is (4x)° and the angle NEXT to it (a linear pair) is (2x + 30)°. Find the measure of the angle VERTICAL to the (4x)° angle, in degrees.",
+        "answer": 100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "80° is the (2x + 30) angle at x = 25 — the LINEAR-pair neighbor. The angle VERTICAL to 4x equals 4x itself: 4(25) = 100°."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is the value of x, not an angle. Substitute: the 4x angle is 100°, and its vertical angle equals it: 100°."
+          }
+        ],
+        "fallbackFeedback": "Linear pair: 6x + 30 = 180 → x = 25; the 4x angle is 100°, and its vertical angle equals it: 100°."
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-vertical-angles__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Certain, not just believed.",
+      "takeaways": [
+        "Linear pair: two angles on a straight line sum to 180°.",
+        "Two linear pairs share an angle; cancelling it proves the vertical angles equal.",
+        "Now you can USE ∠1 = ∠3 with confidence — and with algebra."
+      ],
+      "teaser": "Next chapter: aim the same machinery at parallel lines — proving the transversal angle relationships and their converses."
+    }
+  ]
+}

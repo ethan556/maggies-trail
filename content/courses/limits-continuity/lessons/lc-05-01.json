@@ -1,0 +1,264 @@
+{
+  "id": "lc-05-01",
+  "slug": "average-rate-of-change",
+  "title": "Average Rate of Change",
+  "courseId": "limits-continuity",
+  "chapterId": "ch5-derivative",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **average rate of change** of f over [a, b] is the slope of the **secant line** joining (a, f(a)) and (b, f(b)):\n\n(f(b) − f(a)) / (b − a).\n\nIt's the familiar rise-over-run (recall slope), now measuring how fast f changes on average across an interval — like average speed over a trip.",
+      "figure": "lc-secant-tangent"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Average rate on a cubic.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "cubic",
+        "mode": "average",
+        "a": 1,
+        "targetH": 1,
+        "startH": 2,
+        "prompt": "On y = x³, set the gap to 1 — the interval from x = 1 to x = 2 — and read the average rate.",
+        "successFeedback": "Rise 7 over run 1 = 7. It is a single number standing in for everything the curve did between 1 and 2, and the curve did a great deal.",
+        "lowFeedback": "The gap is under 1 — B has not reached x = 2.",
+        "highFeedback": "The gap is over 1 — B has gone past x = 2."
+      },
+      "predict": {
+        "prompt": "You'll build the secant from A at x = 1 out to B at x = 2 on y = x³. Compared with the tangent slope AT A (3), the secant's slope will be…",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger (more positive)"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller"
+          },
+          {
+            "id": "equal",
+            "label": "Exactly equal"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "The secant's slope is (f(2) − f(1))/1 = 7, against 3 for the tangent at A. On a curve whose slope keeps growing, the stretch out to B crosses steeper ground than A itself — so the average beats the value at the start."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "limits-continuity-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "lc-avg-rate"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another interval.",
+      "conceptTag": "lc-avg-rate",
+      "explanationVariants": [
+        "On [2, 5]: (f(5) − f(2))/(5 − 2) = (25 − 4)/3 = 21/3 = 7.",
+        "Rise 21 over run 3 gives an average rate of 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x², find the average rate of change on [2, 5].",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 = 25 − 4 is the rise alone. Divide by the run 3: 21/3 = 7."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the run. Average rate = rise/run = 21/3 = 7."
+          }
+        ],
+        "fallbackFeedback": "(25 − 4)/(5 − 2) = 21/3 = 7."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-avg-rate__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice the average rate DEPENDS on the interval: x² averaged 4 on [1, 3] but 7 on [2, 5] — steeper further right. A secant only reports the overall change between two points; it can't tell you the rate at a single instant. That gap is what the next lesson closes.",
+      "figure": "lc-average-interval"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The difference quotient.",
+      "conceptTag": "lc-avg-rate",
+      "explanationVariants": [
+        "Writing b = a + h, the average rate becomes (f(a + h) − f(a))/h — the difference quotient, the same secant slope with step size h.",
+        "The difference quotient is just rise/run with run named h."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The average rate of change (f(a + h) − f(a))/h is also called the:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "difference quotient",
+            "correct": true,
+            "feedback": "Right — it's the secant slope written with step size h."
+          },
+          {
+            "id": "o2",
+            "label": "product rule",
+            "feedback": "That's a later derivative rule. This secant-slope expression is the difference quotient."
+          },
+          {
+            "id": "o3",
+            "label": "limit law",
+            "feedback": "Limit laws combine limits. This rise-over-run expression is the difference quotient."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-avg-rate__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute a difference quotient.",
+      "conceptTag": "lc-avg-rate",
+      "explanationVariants": [
+        "For f(x) = x² at a = 2 with h = 1: (f(3) − f(2))/1 = (9 − 4)/1 = 5.",
+        "(f(2+1) − f(2))/1 = 9 − 4 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x², compute the difference quotient at a = 2 with h = 1: (f(2 + 1) − f(2))/1.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "f(3) − f(2) = 9 − 4 = 5 (don't forget to subtract f(2))."
+          },
+          {
+            "value": 9,
+            "feedback": "That's f(3) alone. Subtract f(2): 9 − 4 = 5."
+          }
+        ],
+        "fallbackFeedback": "(9 − 4)/1 = 5."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-avg-rate__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Shrink the step.",
+      "conceptTag": "lc-avg-rate",
+      "explanationVariants": [
+        "At a = 2 with h = 0.5: (f(2.5) − f(2))/0.5 = (6.25 − 4)/0.5 = 2.25/0.5 = 4.5 — closer to the instantaneous value than h = 1 gave.",
+        "Smaller h (0.5) yields 4.5, nearing the true instantaneous rate at x = 2."
+      ],
+      "hints": [
+        "f(2.5) = 2.5² = 6.25.",
+        "(6.25 − 4)/0.5.",
+        "= 2.25/0.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x² at a = 2 with h = 0.5, compute (f(2.5) − f(2))/0.5.",
+        "answer": 4.5,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 2.25,
+            "feedback": "2.25 = 6.25 − 4 is the rise. Divide by h = 0.5: 2.25/0.5 = 4.5."
+          },
+          {
+            "value": 5,
+            "feedback": "5 was the h = 1 answer. With h = 0.5: (6.25 − 4)/0.5 = 4.5."
+          }
+        ],
+        "fallbackFeedback": "(6.25 − 4)/0.5 = 4.5."
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-avg-rate__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Slope between two points.",
+      "takeaways": [
+        "Average rate of change = secant slope (f(b) − f(a))/(b − a).",
+        "With b = a + h it's the difference quotient (f(a + h) − f(a))/h.",
+        "Shrinking h nudges the secant toward a single-point rate."
+      ],
+      "teaser": "Next: take h → 0 and get the instantaneous rate — the derivative."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lc-avg-rate",
+      "concept": {
+        "id": "rem-lc0501-c",
+        "kind": "concept",
+        "body": "Average rate of change over [a,b] = (f(b)−f(a))/(b−a), the secant slope. With b=a+h it is the difference quotient (f(a+h)−f(a))/h."
+      },
+      "check": {
+        "id": "rem-lc0501-k",
+        "kind": "check",
+        "body": "One secant slope.",
+        "conceptTag": "lc-avg-rate",
+        "explanationVariants": [
+          "f(x)=x² on [1,2]: (4−1)/(2−1) = 3/1 = 3.",
+          "Rise 3 over run 1 gives 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = x², find the average rate of change on [1, 2].",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is the run. Rate = (4 − 1)/(2 − 1) = 3."
+            },
+            {
+              "value": 4,
+              "feedback": "4 = f(2) alone. Subtract f(1) and divide: (4 − 1)/1 = 3."
+            }
+          ],
+          "fallbackFeedback": "(4 − 1)/1 = 3."
+        }
+      }
+    }
+  ]
+}

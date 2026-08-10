@@ -1,0 +1,412 @@
+{
+  "id": "rns-01-02",
+  "slug": "predicting-terminating-vs-repeating",
+  "title": "Predicting Terminating vs. Repeating Decimals",
+  "courseId": "the-real-number-system",
+  "chapterId": "ch1-rational-decimals",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You can predict the pattern before dividing: a fraction in lowest terms terminates exactly when its denominator's only prime factors are 2 and/or 5 (since our number system is base ten = 2×5). 1/4 terminates because 4 = 2². 1/3 repeats because 3 is neither a 2 nor a 5.",
+      "figure": "rns-predict-decimal"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Predict from the denominator.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "1/16 — will it terminate or repeat? (16 = 2⁴)",
+        "options": [
+          {
+            "id": "a",
+            "label": "Terminate — 16's only prime factor is 2",
+            "correct": true,
+            "feedback": "Right — 16 = 2⁴, only 2s, so 1/16 terminates."
+          },
+          {
+            "id": "b",
+            "label": "Repeat — 16 is too big to terminate",
+            "correct": false,
+            "feedback": "Size doesn't matter — only the PRIME FACTORS of the denominator matter, and 16 = 2⁴ is all 2s."
+          },
+          {
+            "id": "c",
+            "label": "Repeat — only 1/2 and 1/4 terminate",
+            "correct": false,
+            "feedback": "Any power of 2 (or 5) in the denominator terminates — 1/8, 1/16, 1/32 all terminate too."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without dividing",
+            "correct": false,
+            "feedback": "You can tell in advance — check whether the denominator's prime factors are only 2s and 5s."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "A fraction whose denominator is built ONLY from 2s and 5s — will its decimal STOP or REPEAT?",
+        "options": [
+          {
+            "id": "stop",
+            "label": "Stop — it fits the tenths' factors"
+          },
+          {
+            "id": "repeat",
+            "label": "Repeat forever"
+          },
+          {
+            "id": "divide",
+            "label": "Can't know without long division"
+          }
+        ],
+        "outcomeId": "stop",
+        "reveal": "Tens factor into 2s and 5s — a denominator made only of those slots perfectly into some power of ten, and the decimal terminates. Any other prime forces a repeat."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Always simplify first! 3/6 looks like it has a factor of 3 in the denominator, but 3/6 = 1/2 — after simplifying, the 3 cancels away and only a 2 remains, so it terminates.",
+      "figure": "rns-predict-decimal"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Predict for 1/12 (12 = 2² × 3).",
+      "conceptTag": "rns-predict-terminate",
+      "explanationVariants": [
+        "12 has a prime factor of 3, which isn't 2 or 5, so 1/12 repeats.",
+        "Even though 12 has 2s in it, the leftover factor of 3 forces a repeating decimal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "1/12 will:",
+        "options": [
+          {
+            "id": "a",
+            "label": "Repeat — 12 has a leftover factor of 3",
+            "correct": true,
+            "feedback": "Right — that factor of 3 is neither 2 nor 5, so it repeats."
+          },
+          {
+            "id": "b",
+            "label": "Terminate — 12 is even",
+            "correct": false,
+            "feedback": "Being even isn't enough — 12 = 2² × 3, and that 3 forces a repeat."
+          },
+          {
+            "id": "c",
+            "label": "Terminate — 12 is a multiple of 4",
+            "correct": false,
+            "feedback": "It has a 4 in it, but also an extra factor of 3, which forces a repeat."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell",
+            "correct": false,
+            "feedback": "You can tell — factor 12 = 2² × 3 and check for anything besides 2s and 5s."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsPredictRepeatA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another prediction.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "7/25 — will it terminate or repeat? (25 = 5²)",
+        "options": [
+          {
+            "id": "a",
+            "label": "Terminate — 25's only prime factor is 5",
+            "correct": true,
+            "feedback": "Right — 25 = 5², only 5s, so 7/25 terminates."
+          },
+          {
+            "id": "b",
+            "label": "Repeat — 25 isn't a power of 2",
+            "correct": false,
+            "feedback": "It doesn't need to be a power of 2 — powers of 5 terminate too, and 25 = 5²."
+          },
+          {
+            "id": "c",
+            "label": "Repeat — 7 is prime",
+            "correct": false,
+            "feedback": "The NUMERATOR's factors don't matter here — only the denominator's."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without dividing",
+            "correct": false,
+            "feedback": "25 = 5² — only 5s, so it terminates. No division needed to know that."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Predict for 5/6 (6 = 2 × 3).",
+      "conceptTag": "rns-predict-terminate",
+      "explanationVariants": [
+        "6 has a leftover factor of 3 after removing the 2, so 5/6 repeats.",
+        "2×3 isn't all 2s and 5s — that stray 3 guarantees a repeating decimal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "5/6 will:",
+        "options": [
+          {
+            "id": "a",
+            "label": "Repeat — 6 = 2 × 3, and that 3 isn't allowed",
+            "correct": true,
+            "feedback": "Right — the leftover 3 forces a repeat."
+          },
+          {
+            "id": "b",
+            "label": "Terminate — 6 is even",
+            "correct": false,
+            "feedback": "Being even only removes the 2 — the leftover 3 still forces a repeat."
+          },
+          {
+            "id": "c",
+            "label": "Terminate — 5 and 6 share no factors",
+            "correct": false,
+            "feedback": "That's true (5/6 is already in lowest terms), but it's the denominator's PRIME factors that decide this, not whether it's simplified."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell",
+            "correct": false,
+            "feedback": "6 = 2 × 3 — the 3 is neither 2 nor 5, so it repeats."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsPredictRepeatB"
+      }
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Simplify first — the trap!",
+      "widget": {
+        "type": "mcq",
+        "prompt": "3/6 — will it terminate or repeat? (Careful: simplify first!)",
+        "options": [
+          {
+            "id": "a",
+            "label": "Terminate — 3/6 = 1/2 once simplified",
+            "correct": true,
+            "feedback": "Right — after simplifying, only a 2 remains in the denominator."
+          },
+          {
+            "id": "b",
+            "label": "Repeat — 6 = 2 × 3, and 3 isn't allowed",
+            "correct": false,
+            "feedback": "That reasoning applies to 5/6, but 3/6 simplifies to 1/2 FIRST — the 3 cancels away entirely."
+          },
+          {
+            "id": "c",
+            "label": "Repeat — any fraction with a 3 somewhere repeats",
+            "correct": false,
+            "feedback": "It's the SIMPLIFIED denominator's prime factors that matter — 3/6 reduces to 1/2, no 3 left."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without dividing",
+            "correct": false,
+            "feedback": "Simplify first: 3/6 = 1/2, and 2 is allowed — it terminates."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sort by denominator pattern.",
+      "conceptTag": "rns-predict-terminate",
+      "explanationVariants": [
+        "Terminating fractions simplify to denominators built only from 2s and 5s; the rest repeat.",
+        "Check each denominator's prime factors after simplifying — only 2s and 5s means it stops."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each fraction: does it terminate or repeat?",
+        "buckets": [
+          {
+            "id": "term",
+            "label": "Terminates"
+          },
+          {
+            "id": "rep",
+            "label": "Repeats"
+          }
+        ],
+        "items": [
+          {
+            "id": "f1",
+            "label": "1/2",
+            "bucketId": "term",
+            "feedback": "1/2 — denominator 2, only 2s, terminates."
+          },
+          {
+            "id": "f2",
+            "label": "1/3",
+            "bucketId": "rep",
+            "feedback": "1/3 — denominator 3, not a 2 or 5, repeats."
+          },
+          {
+            "id": "f3",
+            "label": "3/20",
+            "bucketId": "term",
+            "feedback": "3/20 — 20 = 2²×5, only 2s and 5s, terminates."
+          },
+          {
+            "id": "f4",
+            "label": "2/9",
+            "bucketId": "rep",
+            "feedback": "2/9 — denominator 9 = 3², repeats."
+          },
+          {
+            "id": "f5",
+            "label": "7/8",
+            "bucketId": "term",
+            "feedback": "7/8 — 8 = 2³, only 2s, terminates."
+          },
+          {
+            "id": "f6",
+            "label": "5/6",
+            "bucketId": "rep",
+            "feedback": "5/6 — 6 = 2×3, that leftover 3 repeats."
+          }
+        ],
+        "missFeedback": "Not quite — check the sorted pile against the denominator's prime factors.",
+        "successFeedback": "All sorted correctly — 2s and 5s terminate, anything else repeats."
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsSortFractions"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The simplify-first trap, one more time.",
+      "conceptTag": "rns-predict-terminate",
+      "explanationVariants": [
+        "6/15 simplifies to 2/5 first — only a 5 remains, so it terminates.",
+        "Don't judge 15 directly; reduce 6/15 by 3 first, leaving denominator 5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "6/15 — terminate or repeat? (Simplify first!)",
+        "options": [
+          {
+            "id": "a",
+            "label": "Terminate — 6/15 = 2/5 once simplified",
+            "correct": true,
+            "feedback": "Right — simplified, only a 5 remains in the denominator."
+          },
+          {
+            "id": "b",
+            "label": "Repeat — 15 = 3 × 5, and 3 isn't allowed",
+            "correct": false,
+            "feedback": "That's true of 15 itself, but 6/15 simplifies to 2/5 FIRST, and the 3 cancels away."
+          },
+          {
+            "id": "c",
+            "label": "Repeat — the original denominator has a 3",
+            "correct": false,
+            "feedback": "Simplify before judging — 6 and 15 share a factor of 3, and it cancels out entirely."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without dividing",
+            "correct": false,
+            "feedback": "Simplify first: 6/15 = 2/5, and 5 is allowed — it terminates."
+          }
+        ]
+      },
+      "hints": [
+        "Before checking the denominator's prime factors, is 6/15 already in lowest terms?",
+        "6 and 15 share a common factor — divide both by it.",
+        "6/15 = 2/5 once simplified by 3 — denominator 5, only a 5, so it terminates."
+      ],
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsSimplifyPredict"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The denominator's prime factors — after simplifying — predict the pattern.",
+      "takeaways": [
+        "Only 2s and 5s in the simplified denominator means the decimal terminates.",
+        "Any other prime factor (3, 7, 11, …) forces a repeating decimal.",
+        "Always simplify the fraction BEFORE checking its denominator."
+      ],
+      "teaser": "Next: turning a repeating decimal back into a fraction."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rns-predict-terminate",
+      "concept": {
+        "id": "rem-rns0102-c",
+        "kind": "concept",
+        "body": "A fraction (in lowest terms) terminates only when its denominator's prime factors are all 2s and/or 5s. Any other prime factor forces a repeat."
+      },
+      "check": {
+        "id": "rem-rns0102-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rns-predict-terminate",
+        "explanationVariants": [
+          "10 = 2×5, only 2s and 5s, so 3/10 terminates.",
+          "Both prime factors of 10 are allowed, so the division stops cleanly."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "3/10 — terminate or repeat? (10 = 2 × 5)",
+          "options": [
+            {
+              "id": "a",
+              "label": "Terminate",
+              "correct": true,
+              "feedback": "Right — 10's only prime factors are 2 and 5."
+            },
+            {
+              "id": "b",
+              "label": "Repeat",
+              "correct": false,
+              "feedback": "10 = 2 × 5 — both are allowed, so it terminates, not repeats."
+            },
+            {
+              "id": "c",
+              "label": "Depends on the numerator",
+              "correct": false,
+              "feedback": "Only the denominator's prime factors decide this."
+            },
+            {
+              "id": "d",
+              "label": "Can't tell",
+              "correct": false,
+              "feedback": "10 = 2 × 5, only allowed primes — it terminates."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

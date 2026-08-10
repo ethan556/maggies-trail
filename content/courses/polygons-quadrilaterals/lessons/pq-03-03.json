@@ -1,0 +1,349 @@
+{
+  "id": "pq-03-03",
+  "slug": "squares",
+  "title": "Squares",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch3-special-parallelograms",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-square",
+      "concept": {
+        "id": "rem-pq-square-c",
+        "kind": "concept",
+        "body": "A square is simultaneously a rectangle (four right angles) and a rhombus (four congruent sides), so it inherits BOTH property sets with nothing extra to memorize: congruent diagonals (rectangle), perpendicular angle-bisecting diagonals (rhombus), mutual bisection (parallelogram). Each corner's 90° splits into 45° halves, making the diagonal s√2."
+      },
+      "check": {
+        "id": "rem-pq-square-k",
+        "kind": "check",
+        "body": "Route the inheritance.",
+        "conceptTag": "pq-square",
+        "explanationVariants": [
+          "Perpendicular diagonals reach the square through its RHOMBUS parentage — equal sides are what force the 90° crossing.",
+          "The rectangle parent contributes congruent diagonals; perpendicularity rides in with the rhombus genes."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A square's diagonals are perpendicular. Which parent supplies that property?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The rhombus side of the family (all sides congruent)",
+              "correct": true,
+              "feedback": "Perpendicular, angle-bisecting diagonals are the rhombus signature — the square inherits them via its equal sides."
+            },
+            {
+              "id": "o2",
+              "label": "The rectangle side of the family (all right angles)",
+              "correct": false,
+              "feedback": "Rectangles contribute CONGRUENT diagonals; a non-square rectangle's diagonals cross at a slant."
+            },
+            {
+              "id": "o3",
+              "label": "It's a square-only property with no parent",
+              "correct": false,
+              "feedback": "Every rhombus — square or leaning — has perpendicular diagonals; the square just inherits it."
+            },
+            {
+              "id": "o4",
+              "label": "The trapezoid branch",
+              "correct": false,
+              "feedback": "Trapezoids sit on a different branch entirely (one parallel pair) and promise nothing about diagonal angles."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **square** is where the two upgrade paths meet: a parallelogram that is BOTH a rectangle (all right angles) AND a rhombus (all sides congruent). It doesn't need its own property list — it inherits both, in full: congruent diagonals from the rectangle side, perpendicular angle-bisecting diagonals from the rhombus side.",
+      "figure": "quad-family-tree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A square is a rhombus you cannot escape.",
+      "predict": {
+        "prompt": "Three corners are pinned at (0,0), (5,0) and (5,5). How many places can the fourth corner go and still make a square?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Exactly one — the other three corners have already decided it"
+          },
+          {
+            "id": "two",
+            "label": "Two — one on each side of the diagonal"
+          },
+          {
+            "id": "four",
+            "label": "Four — one for each rotation of the square"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Exactly one. Three corners of a square leave no freedom at all for the fourth — every other position breaks either a side length or a right angle. Place it and watch the name snap to \"a square\" at one spot and nowhere else."
+      },
+      "widget": {
+        "type": "quadDrag",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        "targetX": 0,
+        "targetY": 5,
+        "startX": 2,
+        "startY": 7,
+        "gridMax": 8,
+        "targetName": "a square",
+        "prompt": "Pinned at (0,0), (5,0) and (5,5). Place the fourth corner to make a square.",
+        "successFeedback": "(0, 5) — and look at what the readout says: all four sides 5, both diagonals 7.07. It satisfies the rhombus test (all sides equal) AND the rectangle test (diagonals equal), which is precisely why a square IS both. You did not have to memorise that; the shape refused to be anything less.",
+        "sideFeedback": "Not in A's column, so the sides cannot all come out equal. A square needs four sides of 5.",
+        "angleFeedback": "Right column, wrong height — the four sides are not all 5 yet, so it is not even a rhombus."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move one vertex while side, diagonal, angle, and family evidence update together.",
+        "invariants": [
+          "attributes-determine-family",
+          "quadrilateral-hierarchy"
+        ],
+        "misconceptions": [
+          "prototype-only",
+          "single-attribute-only"
+        ],
+        "representations": [
+          "graph",
+          "diagram",
+          "table",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "polygons-quadrilaterals",
+        "delayed": false
+      },
+      "conceptTag": "pq-square"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The angle-bisecting power gets specific in a square: each 90° corner splits into two **45°** halves, so a diagonal turns the square into two 45-45-90 triangles — the special right triangle from the trig course. Side s gives diagonal s√2, and diagonal d gives side d/√2. Direction decides multiply or divide.",
+      "figure": "pq-square-diagonals"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Side to diagonal.",
+      "conceptTag": "pq-square",
+      "explanationVariants": [
+        "diagonal = 5√2 ≈ 7.07 — the 45-45-90 hypotenuse rule with legs 5.",
+        "Multiply the side by √2 going toward the hypotenuse: 5 × 1.414 ≈ 7.07."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square has side 5. Its diagonal (2 decimals)?",
+        "answer": 7.07,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 = 5 + 5 adds two sides walking around the corner — the diagonal cuts straight across: 5√2 ≈ 7.07."
+          },
+          {
+            "value": 3.54,
+            "feedback": "3.54 ≈ 5 ÷ √2 divides — the wrong direction. Side to diagonal MULTIPLIES by √2: ≈ 7.07."
+          },
+          {
+            "value": 25,
+            "feedback": "25 = 5² is the square's AREA. The diagonal is a length: 5√2 ≈ 7.07."
+          }
+        ],
+        "fallbackFeedback": "5√2 ≈ 7.07."
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-square__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Diagonal to side.",
+      "conceptTag": "pq-square",
+      "explanationVariants": [
+        "side = 10 ÷ √2 ≈ 7.07 — shrinking from hypotenuse back to leg divides.",
+        "d = s√2 solved for s: 10/√2 = 5√2 ≈ 7.07."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square's DIAGONAL is 10. Its side (2 decimals)?",
+        "answer": 7.07,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14.14,
+            "feedback": "14.14 = 10√2 multiplies — producing a side LONGER than the diagonal, impossible (the diagonal is the hypotenuse). Divide: ≈ 7.07."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = 10 ÷ 2 halves — but √2 ≈ 1.414 is the true ratio, not 2. 10/√2 ≈ 7.07."
+          },
+          {
+            "value": 100,
+            "feedback": "100 = 10² squares the diagonal — that's twice the AREA, not the side. 10/√2 ≈ 7.07."
+          }
+        ],
+        "fallbackFeedback": "10 ÷ √2 ≈ 7.07."
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-square__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Watch the hierarchy's one-way arrows. **Every square is a rectangle** (it has the right angles) and **every square is a rhombus** (it has the equal sides) — but neither claim reverses. A rectangle needn't have equal sides; a rhombus needn't have right angles. “Is-a” flows UP the family tree, never down.",
+      "figure": "pq-hierarchy"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One-way arrows.",
+      "conceptTag": "pq-square",
+      "explanationVariants": [
+        "Squares satisfy the rhombus definition (four congruent sides), so every square IS a rhombus; a leaning rhombus fails the square's right-angle test.",
+        "Up the tree: always. Down the tree: only sometimes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which statement is TRUE?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Every square is a rhombus, but not every rhombus is a square",
+            "correct": true,
+            "feedback": "A square's four equal sides meet the rhombus definition; a rhombus leaning at 70° flunks squarehood."
+          },
+          {
+            "id": "o2",
+            "label": "Every rhombus is a square, but not every square is a rhombus",
+            "correct": false,
+            "feedback": "Reversed: the rhombus is the BROADER class. Squares are the rhombi that also manage right angles."
+          },
+          {
+            "id": "o3",
+            "label": "Squares and rhombi are disjoint categories",
+            "correct": false,
+            "feedback": "Far from disjoint — every square lives inside the rhombus family. The families nest; they don't split."
+          },
+          {
+            "id": "o4",
+            "label": "The two terms are synonyms",
+            "correct": false,
+            "feedback": "Rhombi outnumber squares: any slanted equal-sided parallelogram is a rhombus that is no square."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-square__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The 45s.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A square's diagonal meets its sides at what angle, in degrees?",
+        "answer": 45,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "90° is where the two DIAGONALS meet each other. Each diagonal meets a SIDE at half a corner: 45°."
+          },
+          {
+            "value": 60,
+            "feedback": "60° belongs to equilateral-triangle country — a square's corner is 90°, and the diagonal halves it: 45°."
+          }
+        ],
+        "fallbackFeedback": "Half of the 90° corner: 45°."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Certify a square.",
+      "conceptTag": "pq-square",
+      "hints": [
+        "A rectangle already guarantees right angles — what's still missing for squarehood?",
+        "The rhombus half of the package: all four sides congruent (consecutive sides equal suffices).",
+        "Alternatively, in diagonal language: a rectangle whose diagonals are ALSO perpendicular."
+      ],
+      "explanationVariants": [
+        "A rectangle needs the side condition (consecutive sides congruent) — or, equivalently, perpendicular diagonals — to be certified a square.",
+        "Right angles are in hand; equal sides (or the perpendicular-diagonal signature) closes the deal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A quadrilateral is known to be a rectangle. Which ONE additional fact certifies it's a square?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Two consecutive sides are congruent",
+            "correct": true,
+            "feedback": "Opposite sides already match (parallelogram), so one equal consecutive pair spreads to all four — rectangle + rhombus = square."
+          },
+          {
+            "id": "o2",
+            "label": "Its diagonals are congruent",
+            "correct": false,
+            "feedback": "Congruent diagonals come FREE with every rectangle — no new information. Add equal consecutive sides (or perpendicular diagonals)."
+          },
+          {
+            "id": "o3",
+            "label": "Its opposite sides are parallel",
+            "correct": false,
+            "feedback": "Already guaranteed — every rectangle is a parallelogram. The missing ingredient is the equal-sides condition."
+          },
+          {
+            "id": "o4",
+            "label": "It has four right angles",
+            "correct": false,
+            "feedback": "That's the rectangle's own definition, already in the bank. The upgrade needs congruent consecutive sides."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-square__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Both crowns at once.",
+      "takeaways": [
+        "Square = rectangle ∩ rhombus: all right angles AND all congruent sides.",
+        "Diagonals inherit everything: congruent, perpendicular, mutually bisecting, corner-splitting into 45°s.",
+        "s√2 converts side to diagonal; divide by √2 to go back."
+      ],
+      "teaser": "Next chapter: quadrilaterals that AREN'T parallelograms — trapezoids and kites."
+    }
+  ]
+}

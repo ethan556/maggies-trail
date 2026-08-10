@@ -1,0 +1,326 @@
+{
+  "id": "tm-04-03",
+  "slug": "the-converse-and-distance",
+  "title": "The Converse and Distance",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch4-pythagorean",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The theorem runs backward too — the **converse**: if a triangle's sides satisfy a² + b² = c² (with c the longest), then it's a RIGHT triangle. Test any triangle by checking whether the two smaller squares add to the biggest.",
+      "figure": "right-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test a triangle.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is a triangle with sides 3, 4, 5 a right triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — 3² + 4² = 9 + 16 = 25 = 5²",
+            "correct": true,
+            "feedback": "Right — the leg-squares add to the hypotenuse-square, so it's a right triangle."
+          },
+          {
+            "id": "b",
+            "label": "No — the sides are too small",
+            "correct": false,
+            "feedback": "Size doesn't matter — since 9 + 16 = 25, the converse says it IS a right triangle."
+          },
+          {
+            "id": "c",
+            "label": "No — only 6, 8, 10 works",
+            "correct": false,
+            "feedback": "3, 4, 5 works too: 9 + 16 = 25 = 5², so it's a right triangle."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without the angles",
+            "correct": false,
+            "feedback": "The converse lets you decide from the SIDES alone: 9 + 16 = 25, so yes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "If the two smaller squares DON'T add to the biggest, the triangle is NOT right. For 5, 6, 7: 25 + 36 = 61, but 7² = 49. Since 61 ≠ 49, it fails the test — not a right triangle.",
+      "figure": "tm-converse"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Apply the converse.",
+      "conceptTag": "tm-pythagorean-converse",
+      "explanationVariants": [
+        "8² + 15² = 64 + 225 = 289 = 17², so 8, 15, 17 IS a right triangle.",
+        "The squares check: 64 + 225 = 289 = 17², so it's right."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is a triangle with sides 8, 15, 17 a right triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — 8² + 15² = 289 = 17²",
+            "correct": true,
+            "feedback": "Right — the leg-squares add to the hypotenuse-square, so it's right."
+          },
+          {
+            "id": "b",
+            "label": "No — 17 is too long",
+            "correct": false,
+            "feedback": "Check the squares: 64 + 225 = 289 = 17², so it IS a right triangle."
+          },
+          {
+            "id": "c",
+            "label": "No — the numbers are random",
+            "correct": false,
+            "feedback": "They satisfy the theorem: 64 + 225 = 289 = 17², so it's right."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell from sides",
+            "correct": false,
+            "feedback": "The converse decides from the sides: 64 + 225 = 289 = 17², so yes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-pythagorean-converse",
+        "form": "tmConverseRight"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A triangle that fails.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is a triangle with sides 4, 5, 6 a right triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — 4² + 5² = 41, but 6² = 36",
+            "correct": true,
+            "feedback": "Right — 16 + 25 = 41 ≠ 36, so it fails the test: not a right triangle."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it has three sides",
+            "correct": false,
+            "feedback": "Having three sides doesn't make it right — 16 + 25 = 41 ≠ 36, so it's not."
+          },
+          {
+            "id": "c",
+            "label": "Yes — the numbers are consecutive",
+            "correct": false,
+            "feedback": "Consecutive sides don't guarantee a right angle — 41 ≠ 36, so not right."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell",
+            "correct": false,
+            "feedback": "The converse decides: 16 + 25 = 41, but 6² = 36, and 41 ≠ 36 — not right."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Whole-number distance.",
+      "conceptTag": "tm-pythagorean-converse",
+      "explanationVariants": [
+        "Distance from (0,0) to (3,4): legs 3 and 4, so d = √(9 + 16) = √25 = 5.",
+        "The distance is the hypotenuse: √(3² + 4²) = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On a grid, what is the distance from (0, 0) to (3, 4)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That added the coordinates — use the Pythagorean distance: √(3² + 4²) = √25 = 5."
+          },
+          {
+            "value": 25,
+            "feedback": "That's the distance squared — take the root: √25 = 5."
+          }
+        ],
+        "fallbackFeedback": "The distance is the hypotenuse of a 3-4 right triangle: √(9 + 16) = √25 = 5."
+      },
+      "variant": {
+        "gen": "g8-tm-pythagorean-converse",
+        "form": "tmDistanceOrigin"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Distance between two points.",
+      "conceptTag": "tm-pythagorean-converse",
+      "explanationVariants": [
+        "From (1,2) to (4,6): legs are 4−1=3 and 6−2=4, so d = √(9 + 16) = √25 = 5.",
+        "Subtract coordinates for legs 3 and 4, then d = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the distance from (1, 2) to (4, 6)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That added the differences — the distance is √(3² + 4²) = √25 = 5."
+          },
+          {
+            "value": 9,
+            "feedback": "The legs are 4−1=3 and 6−2=4, so d = √(9+16) = √25 = 5."
+          }
+        ],
+        "fallbackFeedback": "The legs are 4 − 1 = 3 and 6 − 2 = 4, so d = √(9 + 16) = √25 = 5."
+      },
+      "variant": {
+        "gen": "g8-tm-pythagorean-converse",
+        "form": "tmDistanceOffset"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sort triangles: right or not?",
+      "conceptTag": "tm-pythagorean-converse",
+      "explanationVariants": [
+        "Right if the two smaller squares add to the biggest: 3,4,5 (9+16=25 ✓); 6,8,10 (36+64=100 ✓); 9,12,15 (81+144=225 ✓). Not: 5,6,7 (61≠49); 2,3,4 (13≠16).",
+        "Test each with a² + b² = c² on the longest side."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each triangle: right triangle or not?",
+        "buckets": [
+          {
+            "id": "right",
+            "label": "Right triangle"
+          },
+          {
+            "id": "not",
+            "label": "Not a right triangle"
+          }
+        ],
+        "items": [
+          {
+            "id": "t1",
+            "label": "sides 3, 4, 5",
+            "bucketId": "right",
+            "feedback": "9 + 16 = 25 = 5² — right triangle."
+          },
+          {
+            "id": "t2",
+            "label": "sides 6, 8, 10",
+            "bucketId": "right",
+            "feedback": "36 + 64 = 100 = 10² — right triangle."
+          },
+          {
+            "id": "t3",
+            "label": "sides 5, 6, 7",
+            "bucketId": "not",
+            "feedback": "25 + 36 = 61, but 7² = 49 — not right."
+          },
+          {
+            "id": "t4",
+            "label": "sides 9, 12, 15",
+            "bucketId": "right",
+            "feedback": "81 + 144 = 225 = 15² — right triangle."
+          },
+          {
+            "id": "t5",
+            "label": "sides 2, 3, 4",
+            "bucketId": "not",
+            "feedback": "4 + 9 = 13, but 4² = 16 — not right."
+          }
+        ],
+        "missFeedback": "Not quite — check whether the two smaller squares add to the biggest square.",
+        "successFeedback": "All sorted — a triangle is right exactly when a² + b² = c² for its longest side."
+      },
+      "hints": [
+        "For each triangle, square all three sides.",
+        "Add the two SMALLER squares and compare to the biggest square.",
+        "Equal → right triangle (3,4,5 / 6,8,10 / 9,12,15). Not equal → not right (5,6,7 / 2,3,4)."
+      ],
+      "variant": {
+        "gen": "g8-tm-pythagorean-converse",
+        "form": "tmConverseSort"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The converse tests for right triangles, and the theorem measures grid distances.",
+      "takeaways": [
+        "Converse: if a² + b² = c² (c longest), the triangle is right.",
+        "If the two smaller squares don't add to the biggest, it's not right.",
+        "Grid distance is the hypotenuse: d = √((Δx)² + (Δy)²)."
+      ],
+      "teaser": "Next chapter: the volume of cylinders, cones, and spheres."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-pythagorean-converse",
+      "concept": {
+        "id": "rem-tm0403-c",
+        "kind": "concept",
+        "body": "The converse: if a triangle's sides satisfy a² + b² = c² (c the longest), it's a right triangle. Grid distance uses the same idea: d = √((Δx)² + (Δy)²)."
+      },
+      "check": {
+        "id": "rem-tm0403-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-pythagorean-converse",
+        "explanationVariants": [
+          "6² + 8² = 36 + 64 = 100 = 10², so 6, 8, 10 is a right triangle.",
+          "The squares check: 36 + 64 = 100 = 10², so it's right."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Is a triangle with sides 6, 8, 10 a right triangle?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Yes — 6² + 8² = 100 = 10²",
+              "correct": true,
+              "feedback": "Right — the leg-squares add to the hypotenuse-square."
+            },
+            {
+              "id": "b",
+              "label": "No — 10 is too long",
+              "correct": false,
+              "feedback": "Check: 36 + 64 = 100 = 10², so it IS a right triangle."
+            },
+            {
+              "id": "c",
+              "label": "No — only 3, 4, 5 works",
+              "correct": false,
+              "feedback": "6, 8, 10 works too: 36 + 64 = 100 = 10²."
+            },
+            {
+              "id": "d",
+              "label": "Can't tell from sides",
+              "correct": false,
+              "feedback": "The converse decides from the sides: 36 + 64 = 100 = 10², so yes."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

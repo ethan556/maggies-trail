@@ -1,0 +1,303 @@
+{
+  "id": "alg1-03-02",
+  "slug": "rearranging-with-fractions",
+  "title": "Rearranging with Fractions",
+  "courseId": "solving-equations",
+  "chapterId": "ch3-literal",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The triangle area **A = bh/2** hides h inside a division. Clear it first: multiply both sides by 2 (2A = bh), then divide by b. So **h = 2A/b** — clear the fraction, then isolate.",
+      "narration": "The triangle area A equals b h over two hides h inside a division. Clear it first: multiply both sides by two, giving two A equals b h, then divide by b. So h equals two A over b — clear the fraction, then isolate.",
+      "figure": "alg1-area-solve-h"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the rearrangement.",
+      "conceptTag": "literal-frac",
+      "widget": {
+        "type": "solveBalance",
+        "a": 3,
+        "b": 0,
+        "c": 24,
+        "relation": "eq",
+        "prompt": "A = bh/2 with A = 12 and b = 6 becomes 3h = 24 once both sides are doubled. Split into equal groups.",
+        "successFeedback": "h = 8. Doubling first cleared the fraction, and what was left was an ordinary one-step equation. Fractions in a formula are an obstacle to remove, not a different kind of problem.",
+        "unbalancedFeedback": "The pans disagree — the same operation must hit both sides.",
+        "notIsolatedFeedback": "h is not alone yet.",
+        "missFeedback": "Not the solution. 3h = 24 splits into 3 equal groups.",
+        "unexpandedFeedback": "Split the pan into equal groups."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the rearranged formula.",
+      "conceptTag": "literal-frac",
+      "explanationVariants": [
+        "h = 2A/b. With A = 24 and b = 6: (2·24)/6 = 48/6 = 8.",
+        "Double the area, divide by the base: 48/6 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has A = 24 and b = 6. Find h.",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That forgot to double: 24/6 = 4 solves A = bh, not A = bh/2. Multiply by 2 first: 48/6 = 8."
+          },
+          {
+            "value": 48,
+            "feedback": "48 is 2A — one more step: divide by b = 6, giving h = 8."
+          }
+        ],
+        "fallbackFeedback": "h = 2A/b = 48/6 = 8."
+      },
+      "hints": [
+        "h = 2A/b.",
+        "2·24 = 48.",
+        "48 ÷ 6 = 8."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-frac__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The line **y = mx + b** solved for x needs two undos: subtract b (y − b = mx), then divide by m. So **x = (y − b)/m** — subtract, then divide.",
+      "narration": "The line y equals m x plus b solved for x needs two undos: subtract b, giving y minus b equals m x, then divide by m. So x equals y minus b over m — subtract, then divide.",
+      "figure": "alg1-solve-for-x"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each formula to its solved form.",
+      "conceptTag": "literal-frac",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each formula to the correct rearrangement.",
+        "left": [
+          {
+            "id": "p1",
+            "label": "y = mx + b, solve for x"
+          },
+          {
+            "id": "p2",
+            "label": "A = bh/2, solve for b"
+          },
+          {
+            "id": "p3",
+            "label": "V = LWH, solve for H"
+          }
+        ],
+        "right": [
+          {
+            "id": "q1",
+            "label": "x = (y − b)/m"
+          },
+          {
+            "id": "q2",
+            "label": "b = 2A/h"
+          },
+          {
+            "id": "q3",
+            "label": "H = V/(LW)"
+          }
+        ],
+        "pairs": {
+          "p1": "q1",
+          "p2": "q2",
+          "p3": "q3"
+        },
+        "pairErrors": [
+          {
+            "left": "p1",
+            "right": "q2",
+            "feedback": "y = mx + b → subtract b, divide by m → x = (y − b)/m. (b = 2A/h solves the triangle area for b.)"
+          },
+          {
+            "left": "p2",
+            "right": "q1",
+            "feedback": "A = bh/2 → ×2 then ÷h → b = 2A/h. (x = (y − b)/m solves the line for x.)"
+          }
+        ],
+        "missFeedback": "Undo added terms first, then divide by whatever multiplies your letter.",
+        "successFeedback": "Every letter freed — subtract then divide!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Watch the order.",
+      "conceptTag": "literal-frac",
+      "explanationVariants": [
+        "y = mx + b, solve for x: subtract b, THEN divide by m → x = (y − b)/m.",
+        "The b is added last, so undo it first; then the m divides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "y = mx + b. Which correctly solves for x?",
+        "options": [
+          {
+            "id": "a",
+            "label": "x = (y − b)/m",
+            "correct": true,
+            "feedback": "Yes — subtract b first, then divide the whole thing by m."
+          },
+          {
+            "id": "b",
+            "label": "x = y/m − b",
+            "feedback": "That divided only the y by m, not the b. Subtract b FIRST: x = (y − b)/m."
+          },
+          {
+            "id": "c",
+            "label": "x = y − b/m",
+            "feedback": "Missing parentheses — only the b got divided. The whole (y − b) divides by m: x = (y − b)/m."
+          }
+        ]
+      },
+      "hints": [
+        "Undo the + b first.",
+        "y − b = mx.",
+        "Divide it ALL by m."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-frac__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Plug into your formula.",
+      "conceptTag": "literal-frac",
+      "explanationVariants": [
+        "x = (y − b)/m. With y = 9, m = 2, b = 1: (9 − 1)/2 = 8/2 = 4.",
+        "Subtract the intercept, divide by the slope: 8/2 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using x = (y − b)/m, find x when y = 9, m = 2, b = 1.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3.5,
+            "feedback": "That divided only y by m then subtracted: 9/2 − 1. Subtract b FIRST: (9 − 1)/2 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is y − b — one more step: divide by m = 2, giving x = 4."
+          }
+        ],
+        "fallbackFeedback": "x = (9 − 1)/2 = 8/2 = 4."
+      },
+      "hints": [
+        "x = (y − b)/m.",
+        "9 − 1 = 8.",
+        "8 ÷ 2 = 4."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-frac__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Clear, then isolate!",
+      "conceptTag": "literal-frac",
+      "explanationVariants": [
+        "b = 2A/h. With A = 30 and h = 5: (2·30)/5 = 60/5 = 12.",
+        "Double the area, divide by the height: 60/5 = 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A = bh/2. Find b when A = 30 and h = 5.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That forgot to double: 30/5 = 6 ignores the /2. Multiply by 2 first: 60/5 = 12."
+          },
+          {
+            "value": 60,
+            "feedback": "60 is 2A — one more step: divide by h = 5, giving b = 12."
+          }
+        ],
+        "fallbackFeedback": "b = 2A/h = 60/5 = 12."
+      },
+      "hints": [
+        "b = 2A/h.",
+        "2·30 = 60.",
+        "60 ÷ 5 = 12."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "literal-frac__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Fractions and formulas — handled!",
+      "takeaways": [
+        "Clear a fraction first, then isolate your letter.",
+        "Subtract added terms before dividing.",
+        "Keep the whole numerator together over the divisor."
+      ],
+      "teaser": "next: multi-step literal equations, start to finish."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "literal-frac",
+      "concept": {
+        "id": "rem-lf-c",
+        "kind": "concept",
+        "body": "Slow it down with x/k = c, solve for x. The k divides x, so multiply both sides by k: x = ck. Check with c=3, k=4: x = 12, and 12/4 = 3. ✓",
+        "narration": "Slow it down with x over k equals c, solve for x. The k divides x, so multiply both sides by k: x equals c k. Check with c three, k four: x is twelve, and twelve over four is three."
+      },
+      "check": {
+        "id": "rem-lf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "literal-frac",
+        "explanationVariants": [
+          "x/k = c, solve for x: multiply by k → x = ck.",
+          "Undo the ÷k by ×k: x = ck."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "x/k = c. Solve for x.",
+          "options": [
+            {
+              "id": "a",
+              "label": "x = ck",
+              "correct": true,
+              "feedback": "Yes — multiply both sides by k to free x."
+            },
+            {
+              "id": "b",
+              "label": "x = c/k",
+              "feedback": "That divides again. x is ALREADY over k — multiply by k: x = ck."
+            },
+            {
+              "id": "c",
+              "label": "x = c − k",
+              "feedback": "k divides x, it isn't subtracted — multiply by k: x = ck."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

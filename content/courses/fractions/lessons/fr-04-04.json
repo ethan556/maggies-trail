@@ -1,0 +1,364 @@
+{
+  "id": "fr-04-04",
+  "slug": "only-if-the-wholes-match",
+  "title": "Only If the Wholes Match",
+  "courseId": "fractions",
+  "chapterId": "ch4-comparing",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One rule has worked quietly under every comparison so far: **both fractions described the same whole** (or same-size wholes). Break it and comparisons collapse — 1/2 of a blueberry is far less berry than 1/4 of a watermelon. Before comparing, always ask: *of WHAT?*",
+      "figure": "frac-compare-wholes"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Referee duty: which matchups are legal?",
+      "conceptTag": "same-whole",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each matchup: fair comparison, or meaningless?",
+        "buckets": [
+          {
+            "id": "fair",
+            "label": "Fair — wholes match",
+            "icon": "✅"
+          },
+          {
+            "id": "meaningless",
+            "label": "Meaningless — wholes differ",
+            "icon": "🚫"
+          }
+        ],
+        "items": [
+          {
+            "id": "m1",
+            "label": "3/8 vs 5/8 of the same cake",
+            "bucketId": "fair",
+            "feedback": "One cake, one whole — a legal fight (5/8 wins it, same pieces, more of them)."
+          },
+          {
+            "id": "m2",
+            "label": "1/2 of a small cup vs 1/3 of a big jug",
+            "bucketId": "meaningless",
+            "feedback": "Cup and jug are different wholes — the jug's third could drown the cup's half. No verdict possible."
+          },
+          {
+            "id": "m3",
+            "label": "2/6 vs 2/3 of two same-size ribbons",
+            "bucketId": "fair",
+            "feedback": "Same-size ribbons count as matching wholes — legal (and 2/3 wins: same tops, bigger pieces)."
+          },
+          {
+            "id": "m4",
+            "label": "3/4 of my sticker vs 3/4 of your poster",
+            "bucketId": "meaningless",
+            "feedback": "Same NAME, different amounts — three-quarters of a poster dwarfs three-quarters of a sticker. Matching fractions still need matching wholes."
+          }
+        ],
+        "missFeedback": "Check the WHOLES first: same object or same-size objects → fair; different sizes → no verdict.",
+        "successFeedback": "The cake and the twin ribbons are legal fights; the cup-vs-jug and sticker-vs-poster matchups are meaningless — mismatched wholes."
+      },
+      "predict": {
+        "prompt": "Half of a small cookie versus half of a big cake — the same amount?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — halves inherit their wholes"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — a half is a half"
+          },
+          {
+            "id": "cookie",
+            "label": "The cookie half is more"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "A fraction is a share OF something — big whole, big half. Comparing fractions only means anything when the wholes match."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Marta's claim, revisited.",
+      "conceptTag": "same-whole",
+      "explanationVariants": [
+        "A fraction is a share OF something — a fourth of a poster and a fourth of a sticky note are the same NAME on very different amounts.",
+        "1/4 of an hour and 1/4 of a year are both fourths, and nowhere near the same length."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Marta says: '1/4 of my sticky note equals 1/4 of your poster — a fourth is a fourth!' Is she right?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Not necessarily — a fourth's amount depends on the whole it comes from",
+            "correct": true,
+            "feedback": "Same fraction, different wholes, different amounts. The name matches; the stuff doesn't."
+          },
+          {
+            "id": "b",
+            "label": "Yes — 1/4 always equals 1/4",
+            "feedback": "The FRACTIONS match, but fractions measure shares OF a whole — and these wholes are wildly different sizes."
+          },
+          {
+            "id": "c",
+            "label": "Her sticky note's fourth is the bigger one",
+            "feedback": "The note is the SMALL whole — its fourth is the smaller piece. Bigger whole, bigger fourth."
+          },
+          {
+            "id": "d",
+            "label": "Fractions don't have sizes at all",
+            "feedback": "They do the moment you name the whole: 1/4 of THAT poster is a real, measurable amount."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "same-whole"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So when CAN you compare? **Same object, same-size objects, or the same 0→1 trip on one number line.** That's the line's superpower — it forces every fraction onto one shared whole. The pre-comparison ritual is two words: *of what?*",
+      "figure": "frac-compare-wholes"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The pizza argument.",
+      "conceptTag": "same-whole",
+      "explanationVariants": [
+        "1/2 > 1/4 is only true of ONE whole — a family-size fourth can out-feed a mini half. With mismatched pizzas, nobody gets a verdict.",
+        "Fractions compare shares, not food, unless the wholes match — and these don't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Leo ate 1/2 of a MINI pizza; Ana ate 1/4 of a FAMILY-SIZE one. Leo says: 'I ate more — 1/2 beats 1/4!' What's wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The pizzas aren't the same size — a family-size fourth could easily be more food than a mini half",
+            "correct": true,
+            "feedback": "1/2 > 1/4 compares shares of ONE whole. Different pizzas, no verdict — Leo's rule fired outside its territory."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — Leo wins",
+            "feedback": "His rule needs matching wholes to fire. A mini pizza's half can be a couple of bites; a family fourth can be dinner."
+          },
+          {
+            "id": "c",
+            "label": "Ana definitely ate more",
+            "feedback": "Careful — that claim breaks the same rule! Without knowing the sizes, NEITHER side gets a verdict."
+          },
+          {
+            "id": "d",
+            "label": "Fractions can't describe pizza",
+            "feedback": "They describe pizza beautifully — one pizza at a time. It's the cross-pizza comparison that needs matching wholes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "same-whole",
+        "form": "pizzaClaim"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The full toolkit, one last drill.",
+      "conceptTag": "same-whole",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each matchup to its correct verdict — all three chapter rules are in play.",
+        "left": [
+          {
+            "id": "d1",
+            "label": "5/6 vs 2/6, same pan"
+          },
+          {
+            "id": "d2",
+            "label": "1/3 vs 1/8, same bar"
+          },
+          {
+            "id": "d3",
+            "label": "1/2 of a cup vs 1/2 of a pool"
+          }
+        ],
+        "right": [
+          {
+            "id": "v2",
+            "label": "1/3 wins — fewer cuts, bigger pieces"
+          },
+          {
+            "id": "v3",
+            "label": "No verdict — the wholes don't match"
+          },
+          {
+            "id": "v1",
+            "label": "5/6 wins — same pieces, more of them"
+          }
+        ],
+        "pairs": {
+          "d1": "v1",
+          "d2": "v2",
+          "d3": "v3"
+        },
+        "pairErrors": [
+          {
+            "left": "d3",
+            "right": "v1",
+            "feedback": "The tops match, but a cup and a pool are different wholes — that matchup gets NO verdict, however tempting the counting."
+          }
+        ],
+        "missFeedback": "Ritual first — 'of what?' Then: same bottoms count tops; same tops favor the smaller bottom.",
+        "successFeedback": "Same-pan counting, same-bar piece sizes, and one illegal matchup thrown out — the full referee's toolkit."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The rule, stated once and forever.",
+      "conceptTag": "same-whole",
+      "explanationVariants": [
+        "Comparisons need one shared measuring stick — the same whole, or wholes of equal size.",
+        "That's why the number line settles fights: it forces both fractions onto a single 0→1 whole."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two fractions can be fairly compared only when…",
+        "options": [
+          {
+            "id": "a",
+            "label": "They describe the same whole, or same-size wholes",
+            "correct": true,
+            "feedback": "One shared whole is the measuring stick every comparison stands on."
+          },
+          {
+            "id": "b",
+            "label": "Their top numbers match",
+            "feedback": "Matching tops is one handy CASE (piece size decides) — but even it silently requires matching wholes first."
+          },
+          {
+            "id": "c",
+            "label": "Their bottom numbers match",
+            "feedback": "Also just one case (count decides) — and it too leans on the wholes matching underneath."
+          },
+          {
+            "id": "d",
+            "label": "Both are smaller than 1",
+            "feedback": "Size doesn't matter — 5/4 and 7/4 compare fine (same whole, same pieces). Mismatched WHOLES are the only dealbreaker."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "same-whole",
+        "form": "comparisonCondition"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The trail mix showdown — the whole course in one puzzle.",
+      "conceptTag": "same-whole",
+      "hints": [
+        "Referee first: whose bags are the same size?",
+        "Kim vs Raj is legal — same-size bags, same tops (2 each).",
+        "Nia's jumbo bag is a different whole — what does that do to her matchups?"
+      ],
+      "explanationVariants": [
+        "Kim vs Raj is the only legal fight (identical bags): same tops, and thirds beat fifths — Kim ate more. Nia's jumbo bag is a different whole, so both of her matchups get no verdict.",
+        "Ritual, then rules: 'of what?' throws Nia's comparisons out; the surviving duel falls to the same-top rule, 2/3 > 2/5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Kim ate 2/3 of her small bag of trail mix; Raj ate 2/5 of his — their bags are identical. Nia ate 3/4 of a JUMBO bag. Which comparisons have real verdicts?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Only Kim vs Raj — and Kim ate more (2/3 > 2/5); Nia's jumbo bag breaks her matchups",
+            "correct": true,
+            "feedback": "Matching bags make Kim–Raj legal: same tops, thirds beat fifths. The jumbo bag is a different whole — no verdict touches Nia."
+          },
+          {
+            "id": "b",
+            "label": "All three — just compare the fractions",
+            "feedback": "Fractions only compare on a shared whole. Kim–Raj share one (twin bags); Nia's jumbo doesn't — her matchups are thrown out."
+          },
+          {
+            "id": "c",
+            "label": "None — the fractions all differ",
+            "feedback": "Differing fractions are exactly what comparisons are FOR. Kim vs Raj is legal (matching bags) and has a clean winner: 2/3 > 2/5."
+          },
+          {
+            "id": "d",
+            "label": "Nia ate the most for sure — 3/4 is the biggest fraction",
+            "feedback": "Biggest FRACTION, unknown amount — of a different whole. 3/4 of a jumbo bag can't be ranked against the small bags without sizes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "same-whole",
+        "form": "whichPair"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The fractions trail, fully walked.",
+      "takeaways": [
+        "Ask 'of what?' first — no verdict without matching wholes.",
+        "Same bottoms: count the tops. Same tops: the smaller bottom wins.",
+        "Fair cuts, honest names, one shared whole — that's the entire fraction game."
+      ],
+      "teaser": "that's every step from fair cuts to fair comparisons — and the Review trail will keep each piece fresh."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "same-whole",
+      "concept": {
+        "id": "rem-sw-c",
+        "kind": "concept",
+        "body": "Quick rewind. Before ANY comparison, ask two words: **\"of WHAT?\"** Half a raisin loses to a fourth of a melon — the fraction names a share, and the whole sets the share's size. Matching wholes, or no match at all."
+      },
+      "check": {
+        "id": "rem-sw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "same-whole",
+        "explanationVariants": [
+          "A juice box and a barrel are different wholes — their fractions can't be ranked against each other.",
+          "The barrel's third could fill dozens of juice boxes — 'of what?' throws this matchup out."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Can you fairly compare 1/2 of a juice box with 1/3 of a barrel?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Not fairly — the wholes are different sizes",
+              "correct": true,
+              "feedback": "Mismatched wholes, no verdict — the referee's whistle blows."
+            },
+            {
+              "id": "b",
+              "label": "Yes — 1/2 beats 1/3",
+              "feedback": "That rule works on ONE whole. A barrel's third holds far more juice than a box's half."
+            },
+            {
+              "id": "c",
+              "label": "Yes — the barrel's 1/3 wins",
+              "feedback": "Probably true about the juice — but it isn't a FRACTION comparison anymore; it needs the actual sizes. As fractions, no verdict."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

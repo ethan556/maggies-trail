@@ -1,0 +1,355 @@
+{
+  "id": "fr-01-02",
+  "slug": "unit-fractions-one-piece",
+  "title": "Unit Fractions: One Piece",
+  "courseId": "fractions",
+  "chapterId": "ch1-whats-a-fraction",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Fair-cut a bar into b pieces and pick up exactly ONE. That piece is the **unit fraction 1/b** — one piece of a b-cut. Unit fractions are the building blocks of the whole fraction world: everything bigger gets built by stacking them.",
+      "figure": "frac-unit-fourth"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch one piece shrink as the cut gets finer.",
+      "conceptTag": "unit-fraction",
+      "widget": {
+        "type": "slider",
+        "prompt": "The bar gets fair-cut into more and more pieces. Slide the cut count until one piece is as SMALL as it can get here.",
+        "min": 2,
+        "max": 8,
+        "step": 1,
+        "start": 2,
+        "target": 8,
+        "visual": "bar",
+        "unitLabel": "pieces",
+        "lowFeedback": "One piece is still pretty big — keep cutting finer and watch it shrink.",
+        "highFeedback": "You've hit the edge of the slider — the finest cut here is 8.",
+        "successFeedback": "8 pieces: each is 1/8, the smallest piece on this slider. More pieces from the same bar = smaller pieces. Remember that feeling."
+      },
+      "predict": {
+        "prompt": "You'll raise the cut count from 2 pieces up to 8. What happens to the size of ONE piece as the cuts go up?",
+        "options": [
+          {
+            "id": "smaller",
+            "label": "Each piece gets smaller"
+          },
+          {
+            "id": "bigger",
+            "label": "Each piece gets bigger"
+          },
+          {
+            "id": "same",
+            "label": "Piece size stays the same"
+          }
+        ],
+        "outcomeId": "smaller",
+        "reveal": "More cuts share the SAME bar among more pieces — so every single piece shrinks. Bigger bottom number, smaller piece."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents unit fraction.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for unit fraction must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines unit fraction."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions:unit-fraction",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the single piece.",
+      "conceptTag": "unit-fraction",
+      "explanationVariants": [
+        "One piece of a fair 5-cut is 1/5 — the bottom records the cut, the 1 says you hold one piece.",
+        "Say it as sharing: five people share a pie fairly, and this is one person's share."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "A pie is fair-cut into 5 pieces. ONE piece is…",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 5,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 5,
+            "den": 1,
+            "feedback": "5/1 is five WHOLE pies! The cut count (5) belongs on the bottom; the single piece rides on top."
+          },
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 4,
+            "feedback": "The cuts-vs-pieces trap — knife strokes and pieces are different counts. Whatever the knife did, the PIECES number the fraction, and there are five: 1/5."
+          },
+          {
+            "whole": 0,
+            "num": 5,
+            "den": 5,
+            "feedback": "5/5 is all five pieces — the whole pie. One piece is 1/5."
+          }
+        ],
+        "fallbackFeedback": "The cut count goes on the bottom; your one piece goes on top.",
+        "successFeedback": "One of five equal pieces: 1/5. Cut count downstairs, your one piece on top."
+      },
+      "variant": {
+        "gen": "fraction-meaning"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Writing it down: the bottom number records the cut (b pieces), and the 1 on top says you hold one of them. Meet the unit family: **1/2, 1/3, 1/4, 1/6, 1/8** — same top, different cuts, very different sizes.",
+      "figure": "frac-unit-third"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the unit.",
+      "conceptTag": "unit-fraction",
+      "explanationVariants": [
+        "A unit fraction holds exactly ONE piece — the top must be 1. Only 1/6 qualifies.",
+        "Units are the single building blocks; 2/3 is already a stack of two of them."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these is a UNIT fraction?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/6",
+            "correct": true,
+            "feedback": "One piece of a six-cut — a true unit, top of 1."
+          },
+          {
+            "id": "b",
+            "label": "2/3",
+            "feedback": "That's TWO pieces — a stack of two 1/3 units. A unit fraction holds exactly one."
+          },
+          {
+            "id": "c",
+            "label": "6/6",
+            "feedback": "Six pieces — the whole thing! Units hold a single piece: top number 1."
+          },
+          {
+            "id": "d",
+            "label": "0/4",
+            "feedback": "Zero pieces is an empty hand. A unit fraction holds exactly one piece, no more, no less."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "unit-fraction"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each cut to its single piece.",
+      "conceptTag": "unit-fraction",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each fair cut to the name of ONE of its pieces.",
+        "left": [
+          {
+            "id": "l3",
+            "label": "Cut into 3"
+          },
+          {
+            "id": "l8",
+            "label": "Cut into 8"
+          },
+          {
+            "id": "l2",
+            "label": "Cut into 2"
+          }
+        ],
+        "right": [
+          {
+            "id": "r8",
+            "label": "Each piece is 1/8"
+          },
+          {
+            "id": "r2",
+            "label": "Each piece is 1/2"
+          },
+          {
+            "id": "r3",
+            "label": "Each piece is 1/3"
+          }
+        ],
+        "pairs": {
+          "l3": "r3",
+          "l8": "r8",
+          "l2": "r2"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r8",
+            "feedback": "A 2-cut makes big pieces — halves. 1/8 comes from the much finer 8-cut."
+          }
+        ],
+        "missFeedback": "The bottom number IS the cut count — match each cut to the fraction wearing it downstairs.",
+        "successFeedback": "Cut of 2 → 1/2, cut of 3 → 1/3, cut of 8 → 1/8. The bottom number reports the cut, every time."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Units are shares.",
+      "conceptTag": "unit-fraction",
+      "explanationVariants": [
+        "Two people, two equal shares — each holds one of the two: 1/2.",
+        "Sharing among b people always hands each person the unit fraction 1/b."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "Two kids fair-share one granola bar. Each kid's share is…",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 2,
+        "allowWhole": false,
+        "form": "any",
+        "unit": "",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 3,
+            "feedback": "Only TWO people share — the bottom counts the shares, and there are 2."
+          },
+          {
+            "whole": 0,
+            "num": 2,
+            "den": 1,
+            "feedback": "2/1 is two whole bars each! The share count (2) lives downstairs; each kid's single share rides on top."
+          },
+          {
+            "whole": 0,
+            "num": 1,
+            "den": 1,
+            "feedback": "1/1 is the entire bar for one kid — the other goes hungry. Fair sharing splits it into halves."
+          }
+        ],
+        "fallbackFeedback": "Two kids share, so the bottom says 2 — each holds one of those shares.",
+        "successFeedback": "Two equal shares, one each — a half apiece."
+      },
+      "variant": {
+        "gen": "fraction-meaning"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The rained-out picnic.",
+      "conceptTag": "unit-fraction",
+      "hints": [
+        "The sub was cut so every hiker held exactly one piece — one eighth each.",
+        "Three hikers head home and return their pieces to the box.",
+        "Count the returned pieces — each is one eighth."
+      ],
+      "explanationVariants": [
+        "Each of the 3 returning hikers gives back one 1/8 piece — so 3 eighths sit in the box (and 5 stay with the hikers who remain).",
+        "Box + hikers must total all 8 pieces: 3 in the box, 5 out — 3/8 boxed."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sub is fair-cut into 8 pieces for 8 hikers — one piece each. Rain sends 3 hikers home before eating, and their pieces go back in the box. How many EIGHTHS are in the box?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "eighths",
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 counts the pieces still OUT with the hikers who stayed. The box holds what the 3 leavers returned."
+          },
+          {
+            "value": 8,
+            "feedback": "8 would be the whole sub back in the box — but 5 hikers are still out there holding their pieces."
+          }
+        ],
+        "fallbackFeedback": "One piece per returning hiker: count the hikers who went home."
+      },
+      "variant": {
+        "gen": "unit-fraction",
+        "form": "returnedPieces"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You've met the building block.",
+      "takeaways": [
+        "1/b is one piece of a fair b-cut — the unit fraction.",
+        "The bottom number records the cut; the 1 says you hold one piece.",
+        "Finer cuts make smaller units — 1/8 is tiny next to 1/2."
+      ],
+      "teaser": "next: stacking units — how 3/4 is really 1/4 + 1/4 + 1/4."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "unit-fraction",
+      "concept": {
+        "id": "rem-uf-c",
+        "kind": "concept",
+        "body": "Quick rewind. Say the fraction as **sharing**: 1/b is one person's share when b people split something fairly. 1/4? Four people shared; this is one share. The bottom counts the sharers; the top says the piece is yours."
+      },
+      "check": {
+        "id": "rem-uf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "unit-fraction",
+        "explanationVariants": [
+          "One of four equal pieces is 1/4 — four shares, you hold one.",
+          "Cut count downstairs (4), your single piece on top (1)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "One piece of a fair 4-cut is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "1/4",
+              "correct": true,
+              "feedback": "Four shares, one in your hand: 1/4."
+            },
+            {
+              "id": "b",
+              "label": "4/1",
+              "feedback": "4/1 is four wholes — the cut count belongs on the bottom."
+            },
+            {
+              "id": "c",
+              "label": "1/3",
+              "feedback": "That's a piece of a THREE-cut. This bar was cut into four — the bottom says so."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

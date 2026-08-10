@@ -1,0 +1,288 @@
+{
+  "id": "pc-03-01",
+  "slug": "vector-valued-motion",
+  "title": "Motion as a Vector",
+  "courseId": "parametric-polar-calculus",
+  "chapterId": "ch3-vector-motion",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A parametric curve is really a **position vector** that changes with time:\n\n**r(t) = ⟨x(t), y(t)⟩**\n\nDifferentiate each component and you get the **velocity vector** v = ⟨x′, y′⟩. Differentiate again for the **acceleration** a = ⟨x″, y″⟩.\n\nAnd the **speed** is not a vector at all — it is the length of v: **|v| = √(x′² + y′²)**, the arc-length integrand from the last chapter.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Speed is a length.",
+      "conceptTag": "pc-vector-motion",
+      "explanationVariants": [
+        "v = ⟨3, 4⟩, so the speed is |v| = √(9 + 16) = 5. Velocity has a direction; speed does not.",
+        "Speed is what the arc-length integrand was all along — the magnitude of the velocity vector."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "r(t) = ⟨3t, 4t⟩. Find the speed.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That is 3 + 4 — adding the components rather than taking their magnitude. Speed is √(3² + 4²) = 5."
+          },
+          {
+            "value": 12,
+            "feedback": "That is 3 × 4. The magnitude of a vector is Pythagorean: √(9 + 16) = 5."
+          },
+          {
+            "value": 0,
+            "feedback": "The point is certainly moving — at 3 across and 4 up per unit of t, which is a speed of 5."
+          }
+        ],
+        "fallbackFeedback": "|v| = √(3² + 4²) = 5."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-vector-motion__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Velocity has a direction; speed does not.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "dot",
+        "ux": 3,
+        "uy": 4,
+        "targetDot": 0,
+        "vxStart": 3,
+        "vyStart": 0,
+        "gridMax": 6,
+        "prompt": "A particle's velocity is u = ⟨3, 4⟩ (speed 5). Steer a second vector v until the dot product reads 0 — a direction perpendicular to the motion.",
+        "successFeedback": "Perpendicular to the velocity. Remember that direction: an acceleration pointing THAT way changes the particle's course without changing its speed at all. That is the whole secret of circular motion, and it is the next thing you will meet.",
+        "lowFeedback": "The dot product is negative, so v is leaning against the motion — a component of it would SLOW the particle. Swing v back.",
+        "highFeedback": "The dot product is positive, so v still leans along the motion — a component of it would SPEED the particle up. Swing v further round."
+      },
+      "predict": {
+        "prompt": "Look at the two arrows before you move anything. The dot product u · v of the STARTING pair is…",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — they lean the same way"
+          },
+          {
+            "id": "neg",
+            "label": "Negative — they lean apart"
+          },
+          {
+            "id": "zero",
+            "label": "Zero — they're perpendicular"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "u · v = 3·3 + 4·0 = 9. One number tells the geometry: positive means the angle is under 90°, zero means exactly 90°, negative means past it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "parametric-polar-calculus-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "pc-vector-motion"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The trap this chapter exists for.",
+      "conceptTag": "pc-vector-motion",
+      "explanationVariants": [
+        "For r = ⟨cos t, sin t⟩, v = ⟨−sin t, cos t⟩ and |v| = 1 — a CONSTANT speed. But a = ⟨−cos t, −sin t⟩ has |a| = 1, never zero. The particle accelerates without ever speeding up.",
+        "Acceleration is not the derivative of SPEED. It is the derivative of VELOCITY, and velocity includes a direction that can change on its own."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A particle moves on the unit circle: r = ⟨cos t, sin t⟩. Its speed is 1 at every instant. Is it accelerating?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — a = ⟨−cos t, −sin t⟩ has magnitude 1. The DIRECTION of the velocity keeps changing, even though its length does not.",
+            "correct": true,
+            "feedback": "Right, and this is the point of the whole chapter: acceleration is the derivative of VELOCITY, not of speed. A constant speed does not mean no acceleration."
+          },
+          {
+            "id": "o2",
+            "label": "No — the speed never changes, so there is no acceleration.",
+            "correct": false,
+            "feedback": "That confuses speed with velocity. The velocity vector is swinging round the whole time, and changing a vector's DIRECTION is a change — one that requires acceleration."
+          },
+          {
+            "id": "o3",
+            "label": "Only at the top and bottom of the circle.",
+            "correct": false,
+            "feedback": "|a| = 1 at every single instant. There is nowhere on the circle where the particle is coasting."
+          },
+          {
+            "id": "o4",
+            "label": "Yes, and its speed must therefore be increasing.",
+            "correct": false,
+            "feedback": "The speed is fixed at 1 forever. The acceleration is entirely PERPENDICULAR to the motion, so it turns the particle without hurrying it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-vector-motion__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "And that perpendicularity is not a coincidence.\n\nSplit the acceleration into two parts: the bit **along** the velocity, which changes the **speed**, and the bit **across** it, which changes the **direction**.\n\nOn a circle at constant speed, the along-part is exactly zero — so **a · v = 0**, and the acceleration is purely turning. It is the dot product from `vectors-matrices`, doing real work at last.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a projectile.",
+      "conceptTag": "pc-vector-motion",
+      "explanationVariants": [
+        "v(t) = ⟨2, 4 − 2t⟩, so at t = 2 it is ⟨2, 0⟩ and the speed is 2 — not zero. Only the VERTICAL component stops at the apex; the horizontal motion carries on.",
+        "This is why a thrown ball is never motionless at the top of its flight, however much it looks that way."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A projectile has r(t) = ⟨2t, 4t − t²⟩. Find its SPEED at the apex, t = 2.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is the VERTICAL component of the velocity, which does vanish at the apex. But the horizontal component is still 2 — the ball is never motionless at the top of its flight."
+          },
+          {
+            "value": 4.472,
+            "feedback": "That is the LAUNCH speed, |⟨2, 4⟩| = √20. At the apex the vertical part has fallen to zero, leaving a speed of 2."
+          },
+          {
+            "value": 2.828,
+            "feedback": "Check the components at t = 2: v = ⟨2, 4 − 4⟩ = ⟨2, 0⟩, whose magnitude is 2."
+          }
+        ],
+        "fallbackFeedback": "v(2) = ⟨2, 0⟩, so the speed is 2 — the horizontal motion never stopped."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-vector-motion__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Total distance, one dimension up.",
+      "conceptTag": "pc-vector-motion",
+      "hints": [
+        "The total distance travelled is ∫|v| dt — the integral of the SPEED.",
+        "Here v = ⟨6, 8⟩ at every instant, so |v| = √(36 + 64) = 10, a constant.",
+        "A constant speed of 10 for 3 units of t."
+      ],
+      "explanationVariants": [
+        "|v| = 10 for the whole journey, so the distance is 10 × 3 = 30.",
+        "And that is exactly the arc length from the last lesson — because arc length, total distance and ∫|v| dt were never three different things."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "r(t) = ⟨6t, 8t⟩, for t from 0 to 3. Find the total distance travelled.",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That is the SPEED. Multiply by the elapsed t, which runs from 0 to 3."
+          },
+          {
+            "value": 14,
+            "feedback": "That is 6 + 8 — adding the components. The speed is their Pythagorean magnitude, √(36 + 64) = 10."
+          },
+          {
+            "value": 3,
+            "feedback": "That is the elapsed time. Multiply by the speed, 10."
+          }
+        ],
+        "fallbackFeedback": "|v| = √(36 + 64) = 10, for 3 units of t: distance 30. (Which is the arc length — they were never different things.)"
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-vector-motion__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Velocity is a vector. Speed is its length.",
+      "takeaways": [
+        "r = ⟨x, y⟩; v = ⟨x′, y′⟩; a = ⟨x″, y″⟩. Differentiate component by component.",
+        "Speed is |v| — the arc-length integrand. And ∫|v| dt is the total distance, exactly as in C5.",
+        "ACCELERATION IS NOT THE DERIVATIVE OF SPEED. A particle on a circle has constant speed and constant nonzero acceleration: the acceleration is perpendicular to the motion, so it turns without hurrying."
+      ],
+      "teaser": "That is the calculus band, from the first derivative to the last polar wedge."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pc-vector-motion",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two different questions. **Which way, and how fast?** — that is the velocity VECTOR. **How fast, full stop?** — that is the speed, which is the vector's LENGTH. Changing direction is a change of velocity even when the speed stands still.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Length, not sum.",
+        "conceptTag": "pc-vector-motion",
+        "explanationVariants": [
+          "|⟨5, 12⟩| = √(25 + 144) = 13 — the 5-12-13 triangle.",
+          "Square the components, add, take the root."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A particle's velocity is ⟨5, 12⟩. Find its speed.",
+          "answer": 13,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 17,
+              "feedback": "That is 5 + 12 — adding the components. Speed is their Pythagorean magnitude: √(25 + 144) = 13."
+            },
+            {
+              "value": 60,
+              "feedback": "That is 5 × 12. The magnitude of a vector is √(x² + y²) = 13."
+            }
+          ],
+          "fallbackFeedback": "√(25 + 144) = 13."
+        }
+      }
+    }
+  ]
+}

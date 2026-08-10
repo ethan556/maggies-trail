@@ -1,0 +1,398 @@
+{
+  "id": "bv-02-02",
+  "slug": "judging-a-good-fit",
+  "title": "Judging a Good Fit",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch2-fitting-a-line",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To compare two candidate lines, look at the **gaps** between the dots and each line. The better fit has smaller gaps overall — the dots huddle closer to it. Bigger gaps mean a worse summary of the trend.",
+      "figure": "scatter-best-fit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Judge a fit by the residuals, not by the eye.",
+      "widget": {
+        "type": "scatterFit",
+        "points": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            9
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 5,
+        "yMin": 0,
+        "yMax": 12,
+        "mMin": -3,
+        "mMax": 3,
+        "mStep": 0.5,
+        "bMin": -5,
+        "bMax": 15,
+        "bStep": 1,
+        "mStart": 0,
+        "bStart": 0,
+        "tolerance": 0.5,
+        "prompt": "Fit a line to these four points. Aim to leave as little gap as possible above and below.",
+        "successFeedback": "y = 2x + 1 passes through every point exactly. A good fit is not the line that looks nice — it is the one that leaves the smallest gaps, and here the gaps close to nothing.",
+        "slopeFeedback": "The steepness is off: the points climb 2 for every 1 across.",
+        "offsetFeedback": "The steepness is right but the line sits too high or too low. At x = 0 the pattern is heading for y = 1."
+      },
+      "predict": {
+        "prompt": "These points climb as x grows. Will the best-fit line slope UPWARD, DOWNWARD, or lie flat?",
+        "options": [
+          {
+            "id": "up",
+            "label": "Upward"
+          },
+          {
+            "id": "down",
+            "label": "Downward"
+          },
+          {
+            "id": "flat",
+            "label": "Flat"
+          }
+        ],
+        "outcomeId": "up",
+        "reveal": "Rising points mean a positive association — the line that hugs them must climb too. Direction comes before any exact slope."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move a fitted line and coordinate association, residual balance, prediction, and model limitations.",
+        "invariants": [
+          "residual-is-observed-minus-predicted",
+          "line-of-fit-balances-vertical-errors"
+        ],
+        "misconceptions": [
+          "correlation-implies-causation",
+          "line-must-pass-through-every-point"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-scatterFit-new-context",
+        "delayed": false
+      },
+      "conceptTag": "bv-judge-fit"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A tightly clustered cloud can be summarized by a line with very small gaps — a strong fit. A widely spread cloud leaves bigger gaps no matter how you draw the line, so even the best line is a looser summary.",
+      "figure": "bv-fit-strength"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Tight vs. loose clouds.",
+      "conceptTag": "bv-judge-fit",
+      "variant": {
+        "gen": "g8-bv-judge-fit",
+        "form": "bvJudgeTight"
+      },
+      "explanationVariants": [
+        "A tightly clustered cloud lets a line fit with small gaps — a stronger fit than a spread-out cloud allows.",
+        "Tighter clouds allow closer-fitting lines; spread-out clouds don't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Cloud X's dots hug a straight path tightly; Cloud Y's dots are widely spread. Whose best-fit line will have smaller gaps?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Cloud X — its dots are tightly clustered",
+            "correct": true,
+            "feedback": "Right — a tight cloud lets the line fit with small gaps."
+          },
+          {
+            "id": "b",
+            "label": "Cloud Y — it has more dots to average",
+            "correct": false,
+            "feedback": "Spread-out dots leave BIGGER gaps — the tight cloud (X) fits more closely."
+          },
+          {
+            "id": "c",
+            "label": "They will be equal",
+            "correct": false,
+            "feedback": "The tight cloud (X) allows smaller gaps than the spread one (Y)."
+          },
+          {
+            "id": "d",
+            "label": "Neither has gaps",
+            "correct": false,
+            "feedback": "Real clouds have gaps; the tight one (X) has smaller ones."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Rank three fits.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each described line by how well it fits its cloud.",
+        "buckets": [
+          {
+            "id": "good",
+            "label": "Good fit"
+          },
+          {
+            "id": "poor",
+            "label": "Poor fit"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "dots huddle tightly along the line",
+            "bucketId": "good",
+            "feedback": "The dots sit close to the line, so the gaps are small — that closeness is what makes a good fit."
+          },
+          {
+            "id": "d2",
+            "label": "line runs the wrong direction from the cloud",
+            "bucketId": "poor",
+            "feedback": "A line sloping opposite to the cloud's trend pulls away from the dots as you follow it, so the gaps grow — that makes it a poor fit."
+          },
+          {
+            "id": "d3",
+            "label": "roughly equal dots above and below, all close",
+            "bucketId": "good",
+            "feedback": "Balanced above and below with small gaps means the line runs through the middle — a good fit."
+          },
+          {
+            "id": "d4",
+            "label": "most dots sit far to one side of the line",
+            "bucketId": "poor",
+            "feedback": "When nearly all dots fall on one side, the line isn't centered in the cloud, and those large one-sided gaps make it a poor fit."
+          }
+        ],
+        "missFeedback": "Not quite — good fits are close AND balanced; poor fits have big gaps or the wrong direction.",
+        "successFeedback": "All sorted — closeness and balance make a good fit."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The role of gaps.",
+      "conceptTag": "bv-judge-fit",
+      "variant": {
+        "gen": "g8-bv-judge-fit",
+        "form": "bvJudgeDistance"
+      },
+      "explanationVariants": [
+        "Adding up how far the dots sit from the line measures the fit: smaller total distance is better.",
+        "The total distance from dots to the line is the quality measure — smaller is better."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What single idea best measures how good a line of best fit is?",
+        "options": [
+          {
+            "id": "a",
+            "label": "How far the dots sit from the line overall",
+            "correct": true,
+            "feedback": "Right — smaller total distance from the dots means a better fit."
+          },
+          {
+            "id": "b",
+            "label": "How many dots the line touches",
+            "correct": false,
+            "feedback": "Touching dots isn't the measure — it's the overall CLOSENESS of all dots to the line."
+          },
+          {
+            "id": "c",
+            "label": "How steep the line is",
+            "correct": false,
+            "feedback": "Steepness is the slope, not the fit quality — closeness of the dots is."
+          },
+          {
+            "id": "d",
+            "label": "How long the line is",
+            "correct": false,
+            "feedback": "Length doesn't measure fit — the total distance from dots to the line does."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Judge by balance too.",
+      "conceptTag": "bv-judge-fit",
+      "variant": {
+        "gen": "g8-bv-judge-fit",
+        "form": "bvJudgeShift"
+      },
+      "explanationVariants": [
+        "Even with small gaps, a line with all dots on one side isn't centered — balance is part of a good fit.",
+        "A good fit is both close AND balanced above/below."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A line stays close to the dots but has every dot slightly above it. How could it improve?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Shift it up so dots are balanced above and below",
+            "correct": true,
+            "feedback": "Right — nudging it into the middle balances the cloud."
+          },
+          {
+            "id": "b",
+            "label": "Make it steeper",
+            "correct": false,
+            "feedback": "Steepness isn't the issue — it needs to move UP to balance the dots around it."
+          },
+          {
+            "id": "c",
+            "label": "Make it longer",
+            "correct": false,
+            "feedback": "Length doesn't fix balance — shifting it up to center the dots does."
+          },
+          {
+            "id": "d",
+            "label": "Leave it — closeness is all that matters",
+            "correct": false,
+            "feedback": "Balance matters too — all dots on one side means it should shift up."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Pick the better of two lines.",
+      "conceptTag": "bv-judge-fit",
+      "variant": {
+        "gen": "g8-bv-judge-fit",
+        "form": "bvJudgeCompare"
+      },
+      "explanationVariants": [
+        "The line with dots split evenly above/below and small gaps beats one that's close but leaves all dots below it.",
+        "Balanced + close wins over close-but-unbalanced."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Line P: dots split evenly above and below, all fairly close. Line Q: also close, but every dot sits above it. Which fits better?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Line P — close AND balanced",
+            "correct": true,
+            "feedback": "Right — P is both close and balanced, the mark of a good fit."
+          },
+          {
+            "id": "b",
+            "label": "Line Q — it's under all the dots",
+            "correct": false,
+            "feedback": "Being under every dot means Q isn't balanced — P (balanced and close) fits better."
+          },
+          {
+            "id": "c",
+            "label": "They fit equally well",
+            "correct": false,
+            "feedback": "P is balanced above and below; Q is not — so P is the better fit."
+          },
+          {
+            "id": "d",
+            "label": "Neither fits",
+            "correct": false,
+            "feedback": "P fits well — close and balanced; Q is close but unbalanced."
+          }
+        ]
+      },
+      "hints": [
+        "Both lines are close, so use the second test: balance.",
+        "P has dots evenly split above and below; Q has all dots above it.",
+        "Balanced beats unbalanced, so Line P is the better fit."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Judge a fit by closeness and balance: small gaps, dots split evenly above and below.",
+      "takeaways": [
+        "Smaller total distance from dots to line means a better fit.",
+        "A good line is also balanced — dots split above and below.",
+        "Tight clouds allow closer fits than spread-out clouds."
+      ],
+      "teaser": "Next: choosing the best line's equation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-judge-fit",
+      "concept": {
+        "id": "rem-bv0202-c",
+        "kind": "concept",
+        "body": "Judge a line of best fit by closeness (small gaps between dots and line) and balance (dots split evenly above and below). Smaller total distance means a better fit."
+      },
+      "check": {
+        "id": "rem-bv0202-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-judge-fit",
+        "explanationVariants": [
+          "The line whose dots hug it more tightly (smaller gaps) is the better fit.",
+          "Smaller gaps between dots and line means a better fit."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Line A's dots hug it closely; Line B's dots are far from it. Which fits better?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Line A",
+              "correct": true,
+              "feedback": "Right — closer dots (smaller gaps) means a better fit."
+            },
+            {
+              "id": "b",
+              "label": "Line B",
+              "correct": false,
+              "feedback": "Farther dots is worse — Line A, with smaller gaps, fits better."
+            },
+            {
+              "id": "c",
+              "label": "Equal",
+              "correct": false,
+              "feedback": "Line A's dots are closer, so it fits better."
+            },
+            {
+              "id": "d",
+              "label": "Neither",
+              "correct": false,
+              "feedback": "Line A fits better — its dots are closer."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

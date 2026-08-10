@@ -1,0 +1,334 @@
+{
+ "id": "la-04-02",
+ "slug": "finding-every-line-of-symmetry",
+ "title": "Finding Every Line of Symmetry",
+ "courseId": "lines-angles",
+ "chapterId": "ch4-lines-of-symmetry",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **regular shape** (every side and angle equal) has exactly as many symmetry lines as it has sides. An equilateral triangle: 3 sides, 3 symmetry lines. A square: 4 sides, 4 symmetry lines. A regular pentagon: 5 sides, 5 symmetry lines.",
+   "figure": "la-symmetry-regular"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the shape to its symmetry count.",
+   "conceptTag": "symmetry-finding",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each regular shape to its number of symmetry lines.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "Equilateral triangle"
+     },
+     {
+      "id": "s2",
+      "label": "Square"
+     },
+     {
+      "id": "s3",
+      "label": "Regular pentagon"
+     }
+    ],
+    "right": [
+     {
+      "id": "n1",
+      "label": "3"
+     },
+     {
+      "id": "n2",
+      "label": "4"
+     },
+     {
+      "id": "n3",
+      "label": "5"
+     }
+    ],
+    "pairs": {
+     "s1": "n1",
+     "s2": "n2",
+     "s3": "n3"
+    },
+    "pairErrors": [
+     {
+      "left": "s2",
+      "right": "n3",
+      "feedback": "5 belongs to the regular pentagon. A square has 4 sides, so it has 4 symmetry lines."
+     }
+    ],
+    "missFeedback": "Count the sides of each regular shape — that's also its symmetry-line count.",
+    "successFeedback": "3, 4, and 5 — the symmetry count always matches the side count for a regular shape."
+   },
+   "predict": {
+    "prompt": "For a REGULAR shape, how does its number of symmetry lines compare to its number of sides?",
+    "options": [
+     {
+      "id": "equal",
+      "label": "They're equal"
+     },
+     {
+      "id": "fewer",
+      "label": "Always fewer lines than sides"
+     },
+     {
+      "id": "more",
+      "label": "Always more lines than sides"
+     }
+    ],
+    "outcomeId": "equal",
+    "reveal": "Perfect regularity buys one mirror line per side — a regular pentagon carries five, a regular hexagon six. The count of sides IS the count of mirrors."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Apply the pattern.",
+   "conceptTag": "symmetry-finding",
+   "explanationVariants": [
+    "A regular hexagon has 6 sides, so it has 6 lines of symmetry.",
+    "The side count and symmetry count always match for regular shapes."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A regular hexagon has 6 equal sides. How many lines of symmetry does it have?",
+    "answer": 6,
+    "tolerance": 0,
+    "unit": "lines",
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 would be half the sides. For a REGULAR shape, the symmetry count matches the full side count: 6."
+     },
+     {
+      "value": 12,
+      "feedback": "12 doubles the side count. For a regular shape, symmetry lines equal the side count exactly: 6."
+     }
+    ],
+    "fallbackFeedback": "For a regular shape, count the sides — that's also the symmetry-line count."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laSymmetryFindingNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Shapes that AREN'T regular can have fewer symmetry lines. A rectangle (unequal sides) has only **2** — the horizontal and vertical center lines. Its diagonals do NOT produce a match, since folding along one would need the two different side lengths to line up, which they can't.",
+   "figure": "la-symmetry-regular"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A non-regular shape's count.",
+   "conceptTag": "symmetry-finding",
+   "explanationVariants": [
+    "A rectangle (not a square) has exactly 2 lines of symmetry — its diagonals don't work.",
+    "Only the horizontal and vertical center lines produce a match."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangle is 8 units long and 3 units wide (not a square). How many lines of symmetry does it have?",
+    "answer": 2,
+    "tolerance": 0,
+    "unit": "lines",
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 would be right for a SQUARE, where all sides are equal. This rectangle's unequal sides mean its diagonals don't work — only 2 lines."
+     },
+     {
+      "value": 0,
+      "feedback": "0 undercounts — the horizontal and vertical center lines both still produce a match. That's 2."
+     }
+    ],
+    "fallbackFeedback": "Only the horizontal and vertical center lines work for a non-square rectangle."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laSymmetryFindingNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Sort shapes by symmetry count.",
+   "conceptTag": "symmetry-finding",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each shape by how many lines of symmetry it has.",
+    "buckets": [
+     {
+      "id": "z0",
+      "label": "0 lines",
+      "icon": "▱"
+     },
+     {
+      "id": "z2",
+      "label": "2 lines",
+      "icon": "▭"
+     },
+     {
+      "id": "zmany",
+      "label": "3 or more lines",
+      "icon": "⬠"
+     }
+    ],
+    "items": [
+     {
+      "id": "x1",
+      "label": "A scalene triangle (no equal sides)",
+      "bucketId": "z0",
+      "feedback": "Zero matching sides means zero fold lines can produce a match."
+     },
+     {
+      "id": "x2",
+      "label": "A rectangle (unequal sides)",
+      "bucketId": "z2",
+      "feedback": "Only the horizontal and vertical center lines work — 2 lines."
+     },
+     {
+      "id": "x3",
+      "label": "An equilateral triangle",
+      "bucketId": "zmany",
+      "feedback": "3 equal sides give 3 symmetry lines."
+     },
+     {
+      "id": "x4",
+      "label": "A square",
+      "bucketId": "zmany",
+      "feedback": "4 equal sides give 4 symmetry lines."
+     }
+    ],
+    "missFeedback": "Check whether the shape is regular (all sides equal, matching the side count) or has some other structure.",
+    "successFeedback": "Scalene triangles have none; rectangles have 2; equilateral triangles and squares have 3 or more."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "An isosceles triangle.",
+   "conceptTag": "symmetry-finding",
+   "explanationVariants": [
+    "An isosceles triangle (exactly two equal sides) has exactly 1 line of symmetry, through the top point and the middle of the unequal side.",
+    "Only one fold works here, unlike the 3 lines of a fully equal-sided triangle."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A triangle has exactly two equal sides (and one different side). How many lines of symmetry does it have?",
+    "answer": 1,
+    "tolerance": 0,
+    "unit": "lines",
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 would be right for an EQUILATERAL triangle, where all three sides are equal. With only two sides equal, there's just 1 line of symmetry."
+     },
+     {
+      "value": 0,
+      "feedback": "0 undercounts — the two equal sides still allow one fold, through the top point and the base's middle: 1 line."
+     }
+    ],
+    "fallbackFeedback": "With exactly two equal sides, only one fold line (through the top point) produces a match."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laSymmetryFindingNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The stained-glass window.",
+   "conceptTag": "symmetry-finding",
+   "hints": [
+    "A regular octagon has 8 equal sides.",
+    "The symmetry-line pattern for a regular shape matches its side count.",
+    "8 sides means 8 symmetry lines."
+   ],
+   "explanationVariants": [
+    "A regular octagon's 8 equal sides give it exactly 8 lines of symmetry.",
+    "The regular-shape pattern (sides = symmetry lines) applies here too."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A stained-glass window is shaped like a regular octagon (8 equal sides). How many lines of symmetry does it have?",
+    "answer": 8,
+    "tolerance": 0,
+    "unit": "lines",
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 would be half the sides. For a REGULAR shape, the symmetry count matches the full side count: 8."
+     },
+     {
+      "value": 16,
+      "feedback": "16 doubles the side count. For a regular shape, symmetry lines equal the side count exactly: 8."
+     }
+    ],
+    "fallbackFeedback": "Count the octagon's sides — that's also its symmetry-line count."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laSymmetryFindingNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Counting the folds that work.",
+   "takeaways": [
+    "A regular shape has as many symmetry lines as it has sides.",
+    "Non-regular shapes can have fewer — a rectangle has only 2, an isosceles triangle only 1.",
+    "A shape with no matching sides anywhere has zero lines of symmetry."
+   ],
+   "teaser": "next: spotting symmetry in letters and everyday objects."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "symmetry-finding",
+   "concept": {
+    "id": "rem-sf-c",
+    "kind": "concept",
+    "body": "Quick rewind. **A regular shape's symmetry count matches its side count.** A regular pentagon has 5 equal sides, so it has 5 lines of symmetry — one through each corner and the midpoint of the opposite side."
+   },
+   "check": {
+    "id": "rem-sf-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "symmetry-finding",
+    "explanationVariants": [
+     "5 equal sides give 5 lines of symmetry.",
+     "The side count and symmetry count match for regular shapes."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A regular pentagon has 5 equal sides. How many lines of symmetry does it have?",
+     "options": [
+      {
+       "id": "a",
+       "label": "5",
+       "correct": true,
+       "feedback": "5 sides means 5 symmetry lines."
+      },
+      {
+       "id": "b",
+       "label": "2",
+       "feedback": "2 is too few for a regular shape with 5 equal sides. It has 5 symmetry lines."
+      },
+      {
+       "id": "c",
+       "label": "10",
+       "feedback": "10 doubles the side count. For a regular shape, symmetry lines equal the sides: 5."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

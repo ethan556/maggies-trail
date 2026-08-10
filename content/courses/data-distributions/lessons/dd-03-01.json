@@ -1,0 +1,337 @@
+{
+  "id": "dd-03-01",
+  "slug": "the-mean-as-fair-share",
+  "title": "The Mean as Fair Share",
+  "courseId": "data-distributions",
+  "chapterId": "ch3-mean-median",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "mean-level-off",
+      "body": "Three trail-mix bags hold 2, 4, and 6 raisins. Pool every raisin — 2 + 4 + 6 = 12 — then share them equally: each of the 3 bags gets 12 ÷ 3 = **4**. That level-out value is the **mean**: **mean = sum ÷ count**. In the picture, moving the extra blocks from the tallest tower to the shortest levels all three towers at exactly 4."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The mean is the level after sharing out.",
+      "widget": {
+        "type": "barBuilder",
+        "categories": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "target": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "maxVal": 10,
+        "step": 1,
+        "histogram": false,
+        "axisLabel": "cookies",
+        "prompt": "Four friends have 3, 4, 6 and 7 cookies. Level the bars so everyone has the same — that level IS the mean.",
+        "successFeedback": "Five each. The mean is the height everything settles at when the total is shared out evenly: (3 + 4 + 6 + 7) ÷ 4 = 5. It is a fair-share level, not a mysterious formula.",
+        "partialFeedback": "The bars are not level yet — and they must still hold 20 cookies in total."
+      },
+      "predict": {
+        "prompt": "You'll level 3, 4, 6 and 7 cookies into equal bars. Will the shared height land BETWEEN the shortest and tallest?",
+        "options": [
+          {
+            "id": "between",
+            "label": "Between 3 and 7"
+          },
+          {
+            "id": "tallest",
+            "label": "At the tallest, 7"
+          },
+          {
+            "id": "shortest",
+            "label": "At the shortest, 3"
+          }
+        ],
+        "outcomeId": "between",
+        "reveal": "Leveling moves cookies from the tall bars to the short ones — the fair share settles in the middle of the pile. That balancing point is the mean."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Build bars from a shared scale and coordinate category counts with visual height.",
+        "invariants": [
+          "bar-height-proportional-to-count",
+          "common-scale-across-categories"
+        ],
+        "misconceptions": [
+          "ticks-count-as-ones",
+          "each-bar-uses-own-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-barBuilder-new-context",
+        "delayed": false
+      },
+      "conceptTag": "mean"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute a mean.",
+      "conceptTag": "mean",
+      "explanationVariants": [
+        "Sum the values: 3 + 5 + 7 + 9 = 24. There are 4 readers, so the mean is 24 ÷ 4 = 6 books.",
+        "Fair-share it: pool all 24 books, deal them back equally to the 4 readers — 6 books each."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Four friends read 3, 5, 7, and 9 books over the summer. What is the MEAN number of books read?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "books",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the SUM — the mean still needs the sharing step. Divide by the 4 friends: 24 ÷ 4 = 6."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is 24 ÷ 3 — you divided by the wrong count. FOUR friends read, so divide by 4: 24 ÷ 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "Mean = sum ÷ count = (3 + 5 + 7 + 9) ÷ 4 = 24 ÷ 4 = 6 books."
+      },
+      "hints": [
+        "Add all four values first.",
+        "3 + 5 + 7 + 9 = 24.",
+        "Divide 24 by the number of friends: 4."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMeanBasic"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The mean doesn't have to be a value anyone actually had — 3, 5, 7, 9 has mean 6, and nobody read exactly 6 books. The formula also runs **backwards**: since **mean × count = sum**, a mean of 7 across 4 quizzes means the scores total 7 × 4 = 28. Knowing the total lets you hunt down a missing value.",
+      "figure": "mean-level-off"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Put the recipe in order.",
+      "conceptTag": "mean",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Arrange the fair-share moves in the only order that works, top to bottom.",
+        "items": [
+          {
+            "id": "s3",
+            "label": "Label the level-out result with its units"
+          },
+          {
+            "id": "s1",
+            "label": "Pool every value into one total (the sum)"
+          },
+          {
+            "id": "s2",
+            "label": "Share the total equally: divide by however many values there are"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "s2",
+            "second": "s1",
+            "feedback": "You can't share a total you haven't pooled yet — summing comes before dividing."
+          },
+          {
+            "first": "s3",
+            "second": "s2",
+            "feedback": "There's no result to label until the division produces one — labeling is the last move."
+          }
+        ],
+        "missFeedback": "Think of the fair-share story: pool everything first, then deal it out, then say what the number measures.",
+        "successFeedback": "Pool, share, label — every mean follows that chain, and no step can jump the queue."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Run the formula backwards.",
+      "conceptTag": "mean",
+      "explanationVariants": [
+        "Mean 7 across 4 quizzes means the total is 7 × 4 = 28. The three known scores give 5 + 8 + 9 = 22, so the missing score is 28 − 22 = 6.",
+        "Work from the total: four scores averaging 7 must add to 28; subtract the 22 you can see, and 6 is left."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Four quiz scores have a mean of 7. Three of them are 5, 8, and 9. What is the fourth score?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "points",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The missing score doesn't have to EQUAL the mean — the mean balances all four. Total needed: 7 × 4 = 28; known: 22; missing: 6."
+          },
+          {
+            "value": 22,
+            "feedback": "22 is the sum of the three KNOWN scores. Compare it to the full total the mean demands (7 × 4 = 28): the gap, 6, is the missing score."
+          }
+        ],
+        "fallbackFeedback": "Mean × count gives the total: 7 × 4 = 28. Subtract the known 5 + 8 + 9 = 22 to get 6."
+      },
+      "hints": [
+        "What must all four scores add up to?",
+        "Mean × count: 7 × 4 = 28.",
+        "28 minus the known 22 leaves the missing score."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMeanMissing"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What the mean means.",
+      "conceptTag": "mean",
+      "explanationVariants": [
+        "The mean is the level-out value: if the 24 books were shared equally, each friend would hold 6 — even though nobody actually read 6.",
+        "Think of the towers: 6 is the height every tower reaches after the extras are moved around, not necessarily a height any tower started at."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The books data 3, 5, 7, 9 has mean 6 — but NOBODY read 6 books. What does the 6 tell you?",
+        "options": [
+          {
+            "id": "a",
+            "label": "It's the fair-share value — everyone's count if the total were split equally",
+            "correct": true,
+            "feedback": "Right — the mean levels the data out; it summarizes the group without needing to match any one member."
+          },
+          {
+            "id": "b",
+            "label": "It's the most common number of books read",
+            "feedback": "That's a different summary (the mode) — and no value even repeats here. The mean is the equal-share level, 24 ÷ 4 = 6."
+          },
+          {
+            "id": "c",
+            "label": "Nothing — a mean that isn't in the data is a mistake",
+            "feedback": "A mean can land between data values and still be exactly right — it's the balance point of the whole set, not a member of it."
+          }
+        ]
+      },
+      "hints": [
+        "Picture the level-off line in the towers.",
+        "Does the line have to touch a tower's original height?",
+        "It's the equal-share height: 24 ÷ 4."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMeanMeaning"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Your turn, start to finish.",
+      "conceptTag": "mean",
+      "explanationVariants": [
+        "Sum: 6 + 2 + 9 + 3 = 20. Count: 4 walks. Mean: 20 ÷ 4 = 5 minutes.",
+        "Pool the 20 minutes and share them across the 4 walks — 5 minutes each is the level-out time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Maggie's last four walks to the trailhead took 6, 2, 9, and 3 minutes. What was her MEAN walk time?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the total of all four walks — the mean still needs the share-out: 20 ÷ 4 = 5 minutes."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is 20 ÷ 5 — the count slipped into the wrong slot. There are 4 walks, so divide the 20-minute total by 4: mean 5."
+          }
+        ],
+        "fallbackFeedback": "Add the four times (6 + 2 + 9 + 3 = 20), then divide by the 4 walks: 20 ÷ 4 = 5 minutes."
+      },
+      "hints": [
+        "Same recipe as always: sum, count, divide.",
+        "The four times add to 20 minutes.",
+        "Divide 20 by the 4 walks."
+      ],
+      "variant": {
+        "gen": "g6-center-spread",
+        "form": "ddMeanContext"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One number that levels the data.",
+      "takeaways": [
+        "Mean = sum ÷ count — pool everything, share it out equally.",
+        "The mean can be a value nobody actually had; it's the balance point, not a member.",
+        "Backwards works too: mean × count = total, which uncovers missing values."
+      ],
+      "teaser": "next: a different kind of middle — line the data up and take the value standing in the center."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mean",
+      "concept": {
+        "id": "rem-mn-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Mean = sum ÷ count.** Data 1, 2, 3: pool it (1 + 2 + 3 = 6), then share among the 3 values: 6 ÷ 3 = 2. The mean is the level-out share."
+      },
+      "check": {
+        "id": "rem-mn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mean",
+        "explanationVariants": [
+          "Sum 1 + 2 + 3 = 6; three values; 6 ÷ 3 = 2.",
+          "Share the pooled 6 equally among 3 — each share is 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the mean of 1, 2, and 3?",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is the sum — divide it by the 3 values to level it out: 6 ÷ 3 = 2."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is 6 ÷ 2, dividing by the wrong count. There are THREE values: 6 ÷ 3 = 2."
+            }
+          ],
+          "fallbackFeedback": "Sum ÷ count: (1 + 2 + 3) ÷ 3 = 6 ÷ 3 = 2."
+        }
+      }
+    }
+  ]
+}

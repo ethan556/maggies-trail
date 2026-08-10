@@ -1,0 +1,407 @@
+{
+ "id": "pra-02-03",
+ "slug": "building-from-mixed-zeros",
+ "title": "Building Polynomials from Mixed Zeros",
+ "courseId": "polynomial-rational-analysis",
+ "chapterId": "ch2-fta-conjugates",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "To build the **minimal-degree real polynomial** with given zeros: pair every non-real zero with its conjugate, turn each pair into a **real quadratic** using sum and product (recall: x² − (sum)x + product), attach one linear factor per real zero, and multiply.",
+   "figure": "pra-minimal-degree"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Pair first: the quadratic's coefficients.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For the zeros 1 + i and 1 − i, the real quadratic is x² − Sx + P with S = sum. What is S?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "The imaginary parts cancel but the REAL parts add: (1 + i) + (1 − i) = 2."
+     },
+     {
+      "value": -2,
+      "feedback": "The sum enters as −Sx with S = +2: the quadratic is x² − 2x + P."
+     }
+    ],
+    "fallbackFeedback": "(1 + i) + (1 − i) = 2."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "And the product.",
+   "conceptTag": "pra-build-mixed",
+   "explanationVariants": [
+    "(1 + i)(1 − i) = 1 − i² = 1 + 1 = 2 — the pair's quadratic is x² − 2x + 2.",
+    "Conjugates multiply to a² + b² = 1² + 1² = 2."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "For the same pair, what is the product P = (1 + i)(1 − i)?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "the real part",
+      "value": 1
+     },
+     {
+      "id": "b",
+      "label": "the imaginary part",
+      "value": 1
+     }
+    ],
+    "approxFormula": {
+     "op": "add",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "a"
+      },
+      "right": {
+       "op": "const",
+       "id": "a"
+      }
+     },
+     "right": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "b"
+      },
+      "right": {
+       "op": "const",
+       "id": "b"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 0,
+      "feedback": "The cross terms cancel but 1 − i² = 1 + 1 = 2 remains — a conjugate product is a² + b², never 0 unless the zero is 0."
+     },
+     {
+      "value": 1,
+      "feedback": "1 is only a² = 1². Add b² = 1: the product is 2."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "1 − i² = 2, so the quadratic is x² − 2x + 2.",
+    "successFeedback": "1 − i² = 2, so the quadratic is x² − 2x + 2."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-build-mixed__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Now multiply in the real zeros. With the pair's quadratic x² − 2x + 2 and the real zero 3:\n\n(x² − 2x + 2)(x − 3) = **x³ − 5x² + 8x − 6**\n\n— degree 3 is minimal: two slots for the forced pair, one for the real zero.",
+   "figure": "pra-multiply-real"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Verify one coefficient of the product.",
+   "conceptTag": "pra-build-mixed",
+   "explanationVariants": [
+    "x² terms: x²·(−3) + (−2x)·x = −3x² − 2x² = −5x².",
+    "The x² coefficient collects −3 (from the constant of x − 3) and −2 (carried by x): −5."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Expanding (x² − 2x + 2)(x − 3), what is the coefficient of x²?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "x-coefficient contributed by the linear factor",
+      "value": -3
+     },
+     {
+      "id": "b",
+      "label": "the quadratic's x-coefficient",
+      "value": -2
+     }
+    ],
+    "approxFormula": {
+     "op": "add",
+     "left": {
+      "op": "const",
+      "id": "a"
+     },
+     "right": {
+      "op": "const",
+      "id": "b"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": -3,
+      "feedback": "−3x² is only the x²·(−3) piece; −2x·x adds −2x² more: total −5."
+     },
+     {
+      "value": 5,
+      "feedback": "Both contributions are negative: −3 − 2 = −5."
+     },
+     {
+      "value": -6,
+      "feedback": "−6 is the CONSTANT term (2·(−3)). The x² coefficient is −3 − 2 = −5."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "−3x² − 2x² = −5x².",
+    "successFeedback": "−3x² − 2x² = −5x²."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-build-mixed__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Minimal degree, counted.",
+   "conceptTag": "pra-build-mixed",
+   "explanationVariants": [
+    "Zeros 4i (forcing −4i) and the real 2 and −7: 2 + 2 = 4 slots — degree 4 is minimal.",
+    "One conjugate pair (2 zeros) + two real zeros = 4."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "What is the MINIMAL degree of a real polynomial with zeros 4i, 2, and −7?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "pairs",
+      "label": "non-real zeros given",
+      "value": 1
+     },
+     {
+      "id": "reals",
+      "label": "real zeros given",
+      "value": 2
+     }
+    ],
+    "approxFormula": {
+     "op": "add",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "lit",
+       "value": 2
+      },
+      "right": {
+       "op": "const",
+       "id": "pairs"
+      }
+     },
+     "right": {
+      "op": "const",
+      "id": "reals"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 3,
+      "feedback": "Three zeros are listed, but 4i drags in −4i — four zeros total, so degree 4."
+     },
+     {
+      "value": 6,
+      "feedback": "Only the non-real zero doubles (its conjugate); the real zeros 2 and −7 don't: 2 + 1 + 1 = 4."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "4i forces −4i: 4 zeros, degree 4.",
+    "successFeedback": "4i forces −4i: 4 zeros, degree 4."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-build-mixed__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Build and read off.",
+   "conceptTag": "pra-build-mixed",
+   "explanationVariants": [
+    "Pair 2 ± i: sum 4, product (2 + i)(2 − i) = 4 + 1 = 5 → quadratic x² − 4x + 5. Multiplying by (x − 1), the constant term is 5·(−1) = −5.",
+    "The constant of the full cubic is the product of all constants: 5 from the quadratic and −1 from (x − 1): −5."
+   ],
+   "hints": [
+    "First build the pair's quadratic: sum and product of 2 ± i.",
+    "Sum = 4, product = 2² + 1² = 5 → x² − 4x + 5. Now multiply by (x − 1).",
+    "Only the constant is asked: (constant of quadratic) × (constant of linear) = 5 × (−1)."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "The minimal real cubic (leading coefficient 1) with zeros 2 + i, 2 − i, and 1 has what CONSTANT term?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "real part of the conjugate pair",
+      "value": 2
+     },
+     {
+      "id": "b",
+      "label": "imaginary part of the conjugate pair",
+      "value": 1
+     },
+     {
+      "id": "r",
+      "label": "the additional real root",
+      "value": 1
+     }
+    ],
+    "approxFormula": {
+     "op": "negate",
+     "arg": {
+      "op": "multiply",
+      "left": {
+       "op": "add",
+       "left": {
+        "op": "multiply",
+        "left": {
+         "op": "const",
+         "id": "a"
+        },
+        "right": {
+         "op": "const",
+         "id": "a"
+        }
+       },
+       "right": {
+        "op": "multiply",
+        "left": {
+         "op": "const",
+         "id": "b"
+        },
+        "right": {
+         "op": "const",
+         "id": "b"
+        }
+       }
+      },
+      "right": {
+       "op": "const",
+       "id": "r"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 5,
+      "feedback": "The linear factor is (x − 1), contributing −1: the constant is 5 × (−1) = −5."
+     },
+     {
+      "value": -4,
+      "feedback": "−4 would come from a product of 4; but (2 + i)(2 − i) = 4 + 1 = 5, so the constant is −5."
+     },
+     {
+      "value": -10,
+      "feedback": "Don't double the 5: constant = 5 · (−1) = −5."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "Quadratic x² − 4x + 5; times (x − 1) gives constant −5.",
+    "successFeedback": "Quadratic x² − 4x + 5; times (x − 1) gives constant −5."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-build-mixed__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Zeros in, polynomial out.",
+   "takeaways": [
+    "Pair non-real zeros; each pair becomes x² − (sum)x + product.",
+    "Real zeros each add one linear factor.",
+    "Minimal degree = real zeros + 2 × (number of pairs)."
+   ],
+   "teaser": "Next chapter: rational functions that outgrow their horizontal asymptotes — the slant."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pra-build-mixed",
+   "concept": {
+    "id": "rem-pra0203-c",
+    "kind": "concept",
+    "body": "Conjugate pair a ± bi → quadratic x² − 2ax + (a² + b²). Multiply by (x − r) for each real zero r."
+   },
+   "check": {
+    "id": "rem-pra0203-k",
+    "kind": "check",
+    "body": "One pair's quadratic.",
+    "conceptTag": "pra-build-mixed",
+    "explanationVariants": [
+     "a = 3, b = 1: x² − 6x + (9 + 1) = x² − 6x + 10 — constant 10.",
+     "Product of 3 ± i is 3² + 1² = 10."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "The real quadratic with zeros 3 ± i is x² − 6x + c. What is c?",
+     "answer": 10,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 9,
+       "feedback": "9 is only a² = 3². The conjugate product is a² + b² = 9 + 1 = 10."
+      },
+      {
+       "value": 8,
+       "feedback": "c = (3 + i)(3 − i) = 9 − i² = 9 + 1 = 10."
+      }
+     ],
+     "fallbackFeedback": "(3 + i)(3 − i) = 9 + 1 = 10."
+    }
+   }
+  }
+ ]
+}

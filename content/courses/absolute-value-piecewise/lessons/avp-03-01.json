@@ -1,0 +1,244 @@
+{
+  "id": "avp-03-01",
+  "slug": "a-function-defined-in-pieces",
+  "title": "A Function Defined in Pieces",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch3-functions-in-pieces",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Some rules change formula partway along. A phone plan charges one rate up to 5 GB and another beyond it; that is one function with two formulas, each labelled with the inputs it governs. The labels are what keep it a function: every input is handed to exactly one formula.",
+      "figure": "avp-two-formulas-one-rule"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Run one branch of the rule.",
+      "widget": {
+        "type": "functionMachine",
+        "prompt": "This branch applies when x ≥ 0 and its rule is y = 2x + 1. Set the input that produces 9.",
+        "a": 2,
+        "b": 1,
+        "inputMin": 0,
+        "inputMax": 8,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 9,
+        "successFeedback": "x = 4 gives 2(4) + 1 = 9. One input in, one output out — the branch behaves like any other function.",
+        "lowFeedback": "Output still under 9 — raise the input and watch the doubling do most of the work.",
+        "highFeedback": "Output past 9 — come back down; 2x + 1 climbs two for every step you take."
+      },
+      "predict": {
+        "prompt": "A piecewise rule has two formulas. How many outputs does ONE input receive?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Exactly one"
+          },
+          {
+            "id": "two",
+            "label": "Two — one per formula"
+          },
+          {
+            "id": "depends",
+            "label": "Two, unless the formulas happen to agree"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "The conditions partition the inputs: each x satisfies exactly one of them, so exactly one formula ever applies. If both could fire at the same x, the rule would not be a function at all — which is why the conditions must never overlap."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Pick the governing branch.",
+      "conceptTag": "avp-piecewise-define",
+      "explanationVariants": [
+        "x = −3 satisfies x < 0, so the first branch applies and f(−3) = −3 + 5 = 2.",
+        "Check the conditions before the formulas: −3 is negative, so the x < 0 rule governs."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x + 5 for x < 0, and f(x) = 2x + 1 for x ≥ 0. What is f(−3)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2",
+            "correct": true,
+            "feedback": "Yes — −3 is negative, so the first branch applies: −3 + 5 = 2."
+          },
+          {
+            "id": "o2",
+            "label": "−5",
+            "correct": false,
+            "feedback": "That uses the second branch: 2(−3) + 1 = −5. But −3 does not satisfy x ≥ 0."
+          },
+          {
+            "id": "o3",
+            "label": "Both 2 and −5",
+            "correct": false,
+            "feedback": "A function returns one output. The conditions decide which formula fires, and only one can."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So evaluating happens in two moves, and the order matters: first find which condition the input satisfies, THEN apply that branch's formula. Reaching for the nearest formula and checking the condition afterwards is what produces most piecewise errors.",
+      "figure": "avp-pick-branch-then-apply"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate on the other branch.",
+      "conceptTag": "avp-piecewise-define",
+      "explanationVariants": [
+        "x = 4 satisfies x ≥ 0, so f(4) = 2(4) + 1 = 9.",
+        "Positive input, second branch, double-and-add-one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "With f(x) = x + 5 for x < 0 and f(x) = 2x + 1 for x ≥ 0, what is f(4)?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9.5,
+            "feedback": "Only whole steps here — recompute 2(4) + 1 exactly."
+          },
+          {
+            "value": 4,
+            "feedback": "That used the first branch's shape but 4 is not negative, so the x ≥ 0 rule governs: 2(4) + 1."
+          }
+        ],
+        "fallbackFeedback": "4 satisfies x ≥ 0, so use 2x + 1: 2(4) + 1 = 9.",
+        "successFeedback": "9 — condition first, then formula."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why the conditions cannot overlap.",
+      "conceptTag": "avp-piecewise-define",
+      "explanationVariants": [
+        "Overlapping conditions would give one input two outputs, which no function may do.",
+        "The conditions must partition the inputs so each x meets exactly one."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why must the conditions of a piecewise rule never overlap?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Because an input in both would receive two outputs, and functions give one",
+            "correct": true,
+            "feedback": "Exactly — non-overlap is what preserves function-hood."
+          },
+          {
+            "id": "o2",
+            "label": "Because overlapping conditions are hard to write",
+            "correct": false,
+            "feedback": "Writing them is easy; the problem is that the result stops being a function."
+          },
+          {
+            "id": "o3",
+            "label": "Because the formulas would have to be identical",
+            "correct": false,
+            "feedback": "They may be anything at all — provided no input satisfies two conditions at once."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the gap.",
+      "conceptTag": "avp-piecewise-define",
+      "explanationVariants": [
+        "x < 2 and x > 2 leave out x = 2, so exactly one input has no branch.",
+        "The conditions miss the single value 2, which makes the rule undefined there."
+      ],
+      "hints": [
+        "List the inputs each condition covers and look for one that neither claims.",
+        "x < 2 stops just short of 2; x > 2 starts just past it.",
+        "The value 2 itself is claimed by neither condition."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "g(x) = 1 for x < 2 and g(x) = 5 for x > 2. How many inputs get NO output at all?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "Look at x = 2 itself: it is neither less than 2 nor greater than 2, so no branch claims it."
+          },
+          {
+            "value": 2,
+            "feedback": "Only one value falls through the gap — the boundary x = 2 — not two."
+          }
+        ],
+        "fallbackFeedback": "The conditions skip x = 2 exactly, so precisely one input is left undefined.",
+        "successFeedback": "1 — the boundary itself. Real definitions close that gap with a ≤ or ≥ on one side."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rule, several formulas.",
+      "takeaways": [
+        "A piecewise function pairs each formula with the inputs it governs.",
+        "Evaluate by checking the condition first, then applying that branch.",
+        "Conditions must not overlap, or one input would get two outputs."
+      ],
+      "teaser": "Next: draw one — and settle who owns the boundary point."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-piecewise-define",
+      "concept": {
+        "id": "rem-avp-piecewise-define-c",
+        "kind": "concept",
+        "body": "So evaluating happens in two moves, and the order matters: first find which condition the input satisfies, THEN apply that branch's formula. Reaching for the nearest formula and checking the condition afterwards is what produces most piecewise errors."
+      },
+      "check": {
+        "id": "rem-avp-piecewise-define-k",
+        "kind": "check",
+        "body": "Pick the governing branch.",
+        "conceptTag": "avp-piecewise-define",
+        "explanationVariants": [
+          "x = −3 satisfies x < 0, so the first branch applies and f(−3) = −3 + 5 = 2.",
+          "Check the conditions before the formulas: −3 is negative, so the x < 0 rule governs."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f(x) = x + 5 for x < 0, and f(x) = 2x + 1 for x ≥ 0. What is f(−3)?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "2",
+              "correct": true,
+              "feedback": "Yes — −3 is negative, so the first branch applies: −3 + 5 = 2."
+            },
+            {
+              "id": "o2",
+              "label": "−5",
+              "correct": false,
+              "feedback": "That uses the second branch: 2(−3) + 1 = −5. But −3 does not satisfy x ≥ 0."
+            },
+            {
+              "id": "o3",
+              "label": "Both 2 and −5",
+              "correct": false,
+              "feedback": "A function returns one output. The conditions decide which formula fires, and only one can."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

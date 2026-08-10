@@ -1,0 +1,378 @@
+{
+ "id": "cp-04-02",
+ "slug": "the-two-column-proof",
+ "title": "The Two-Column Proof",
+ "courseId": "constructions-and-proof",
+ "chapterId": "ch4-intro-to-proof",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cp-two-column",
+   "concept": {
+    "id": "rem-cp-two-column-c",
+    "kind": "concept",
+    "body": "Every statement needs a reason from the toolbox: Given (in the setup), a Definition, a Postulate, an already-proven Theorem, or a Property of equality (Reflexive a=a, Symmetric a=b⇒b=a, Transitive a=b & b=c ⇒ a=c). If a line has no toolbox reason, it doesn't belong."
+   },
+   "check": {
+    "id": "rem-cp-two-column-k",
+    "kind": "check",
+    "body": "Pick a valid reason.",
+    "conceptTag": "cp-two-column",
+    "explanationVariants": [
+     "\"a = a\" — a quantity equal to itself — is the Reflexive Property.",
+     "Reflexive is self-equality; a shared side or repeated value uses it."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Which is a valid reason for the statement \"PQ = PQ\"?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Reflexive Property",
+       "correct": true,
+       "feedback": "A quantity equals itself — the Reflexive Property."
+      },
+      {
+       "id": "o2",
+       "label": "Transitive Property",
+       "correct": false,
+       "feedback": "Transitive chains TWO equalities through a middle term; PQ = PQ is a single self-equality — Reflexive."
+      },
+      {
+       "id": "o3",
+       "label": "Given",
+       "correct": false,
+       "feedback": "PQ = PQ is self-evidently true, not something the setup needs to state — Reflexive covers it."
+      },
+      {
+       "id": "o4",
+       "label": "Guess",
+       "correct": false,
+       "feedback": "A guess is never a valid reason. PQ = PQ is justified by the Reflexive Property."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **two-column proof** puts every claim on the left (**Statements**) beside its justification on the right (**Reasons**). Rules: start from the GIVEN, end at what you're PROVING, and every statement's reason must be a definition, postulate, given, or an already-proven line. No reason may point forward.",
+   "figure": "proof-structure"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match statement to reason.",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each statement with the reason that justifies it.",
+    "left": [
+     {
+      "id": "g",
+      "label": "AB = CD (from the setup)"
+     },
+     {
+      "id": "d",
+      "label": "M is the midpoint, so AM = MB"
+     },
+     {
+      "id": "a",
+      "label": "AM + MB = AB"
+     },
+     {
+      "id": "s",
+      "label": "3x = 3x"
+     }
+    ],
+    "right": [
+     {
+      "id": "rg",
+      "label": "Given"
+     },
+     {
+      "id": "rd",
+      "label": "Definition of midpoint"
+     },
+     {
+      "id": "ra",
+      "label": "Segment Addition Postulate"
+     },
+     {
+      "id": "rs",
+      "label": "Reflexive Property"
+     }
+    ],
+    "pairs": {
+     "g": "rg",
+     "d": "rd",
+     "a": "ra",
+     "s": "rs"
+    },
+    "pairErrors": [
+     {
+      "left": "d",
+      "right": "rg",
+      "feedback": "\"Given\" is only for facts stated in the setup. \"AM = MB\" is EARNED from the midpoint definition, not handed to you."
+     },
+     {
+      "left": "a",
+      "right": "rd",
+      "feedback": "Adding the two pieces to the whole is the Segment Addition Postulate — the midpoint definition is about the pieces being EQUAL."
+     },
+     {
+      "left": "s",
+      "right": "ra",
+      "feedback": "A thing equals itself by the REFLEXIVE property; the Segment Addition Postulate is about pieces summing to a whole."
+     }
+    ],
+    "missFeedback": "Read each statement and ask which single rule LICENSES it: setup, a definition, a postulate, or a self-evident property.",
+    "successFeedback": "Every statement earns its place through exactly one reason."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "What starts a proof?",
+   "conceptTag": "cp-two-column",
+   "explanationVariants": [
+    "A two-column proof's first statement is the GIVEN — the facts handed to you in the problem.",
+    "You may only build from what's given or already established; the very first line is therefore the given."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What must the FIRST statement of a two-column proof be based on?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the given information",
+      "correct": true,
+      "feedback": "You start from what the problem hands you — the given — and reason forward from there."
+     },
+     {
+      "id": "o2",
+      "label": "the thing you are trying to prove",
+      "correct": false,
+      "feedback": "Starting from the conclusion assumes what you must earn — that's circular. Begin with the given instead."
+     },
+     {
+      "id": "o3",
+      "label": "any true fact you happen to know",
+      "correct": false,
+      "feedback": "Only facts RELEVANT and licensed by this problem belong — you launch from the given, not from trivia."
+     },
+     {
+      "id": "o4",
+      "label": "a guess to be checked later",
+      "correct": false,
+      "feedback": "Proofs never rest on guesses. The first line is solid: the given information."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-two-column__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Reasons come from a fixed toolbox: **givens, definitions, postulates, and theorems already proved.** Three properties of equality earn constant use — **Reflexive** (a = a), **Symmetric** (a = b ⇒ b = a), and **Transitive** (a = b and b = c ⇒ a = c). A shared side is reflexive; that's the workhorse of construction proofs.",
+   "figure": "cnp-proof-toolbox"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Name the property.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A proof writes: \"∠A = ∠B and ∠B = ∠C, therefore ∠A = ∠C.\" Which property is this?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Transitive Property",
+      "correct": true,
+      "feedback": "Two equalities chaining through a common middle term (∠B) to link the ends — that's transitivity."
+     },
+     {
+      "id": "o2",
+      "label": "Reflexive Property",
+      "correct": false,
+      "feedback": "Reflexive is a thing equal to ITSELF (∠A = ∠A). Here two different equalities chain together — transitive."
+     },
+     {
+      "id": "o3",
+      "label": "Symmetric Property",
+      "correct": false,
+      "feedback": "Symmetric just flips one equality (∠A = ∠B ⇒ ∠B = ∠A). Chaining THROUGH ∠B to reach ∠A = ∠C is transitive."
+     },
+     {
+      "id": "o4",
+      "label": "Segment Addition Postulate",
+      "correct": false,
+      "feedback": "That postulate adds segment pieces; this is about chaining equal ANGLES through a middle term — transitivity."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The shared-side reason.",
+   "conceptTag": "cp-two-column",
+   "explanationVariants": [
+    "A side shared by both triangles equals itself — that's the Reflexive Property, the standard reason for a common side.",
+    "\"XY = XY\" is a statement of self-equality: Reflexive."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In a proof, two triangles share side XY, and the proof writes \"XY = XY.\" What is the reason?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Reflexive Property",
+      "correct": true,
+      "feedback": "Anything equals itself; a shared side is justified by the Reflexive Property."
+     },
+     {
+      "id": "o2",
+      "label": "Given",
+      "correct": false,
+      "feedback": "The shared side usually isn't stated in the setup — it's SEEN in the figure and justified as self-equal: Reflexive."
+     },
+     {
+      "id": "o3",
+      "label": "Symmetric Property",
+      "correct": false,
+      "feedback": "Symmetric flips an equality between two DIFFERENT things. XY = XY is one thing equal to itself — Reflexive."
+     },
+     {
+      "id": "o4",
+      "label": "Definition of congruence",
+      "correct": false,
+      "feedback": "That definition links congruent figures to equal parts. A side equal to ITSELF is simply Reflexive."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-two-column__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "The golden rule of ordering: **no line may use a fact not yet established.** Each reason points only backward — to the given, a definition, a postulate, or a line already written above. A proof read top to bottom should never make you ask \"but how do we know that yet?\"",
+   "figure": "cnp-ordering-rule"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Order a short proof.",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Given M is the midpoint of AB, order the proof that AM = ½AB.",
+    "items": [
+     {
+      "id": "t3",
+      "label": "AM = MB, so AB = AM + AM = 2·AM"
+     },
+     {
+      "id": "t1",
+      "label": "M is the midpoint of AB (Given)"
+     },
+     {
+      "id": "t4",
+      "label": "Therefore AM = ½AB"
+     },
+     {
+      "id": "t2",
+      "label": "AM = MB (definition of midpoint)"
+     }
+    ],
+    "correctOrder": [
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "t2",
+      "second": "t1",
+      "feedback": "You can't invoke the midpoint definition before STATING that M is the midpoint — the given comes first."
+     },
+     {
+      "first": "t4",
+      "second": "t3",
+      "feedback": "The conclusion AM = ½AB follows from AB = 2·AM — that equation must appear before you divide."
+     }
+    ],
+    "missFeedback": "Start from the given, apply the definition, combine, then conclude — each line resting on the ones above.",
+    "successFeedback": "Given → definition → combine → conclude: a backward-only chain."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Spot the illegal reason.",
+   "conceptTag": "cp-two-column",
+   "hints": [
+    "Scan each line's reason: does it point only BACKWARD?",
+    "One line justifies itself using a statement that appears LATER in the proof.",
+    "A reason that cites a not-yet-written line breaks the no-forward-reference rule."
+   ],
+   "explanationVariants": [
+    "The flaw is a reason citing a line that comes LATER — every reason must point backward to the given, a definition, a postulate, or an already-written statement. Circular or forward references are illegal.",
+    "A proof line justified by a conclusion drawn afterward is circular; valid reasons only look up the page."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which of these makes a two-column-proof line INVALID?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Its reason cites a statement that appears later in the proof",
+      "correct": true,
+      "feedback": "Reasons must point backward only — using a not-yet-established line is circular and illegal."
+     },
+     {
+      "id": "o2",
+      "label": "Its reason is 'Given'",
+      "correct": false,
+      "feedback": "\"Given\" is a perfectly valid reason — it cites the problem's setup, the legitimate starting point."
+     },
+     {
+      "id": "o3",
+      "label": "Its reason is a definition",
+      "correct": false,
+      "feedback": "Definitions are core, legal reasons — they license statements throughout a proof."
+     },
+     {
+      "id": "o4",
+      "label": "Its statement repeats a value equal to itself",
+      "correct": false,
+      "feedback": "A self-equal statement (Reflexive) is legal and often useful — not a flaw at all."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-two-column__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Statements meet reasons.",
+   "takeaways": [
+    "Two columns: every Statement sits beside the Reason that licenses it.",
+    "Reasons are givens, definitions, postulates, or already-proven lines — never guesses.",
+    "Order backward-only: no line may lean on a fact not yet established."
+   ],
+   "teaser": "Next: your first real proof — why vertical angles are always equal."
+  }
+ ]
+}

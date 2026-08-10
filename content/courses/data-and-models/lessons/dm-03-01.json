@@ -1,0 +1,308 @@
+{
+  "id": "dm-03-01",
+  "slug": "precision-in-reporting",
+  "title": "Precise Enough — But Not More",
+  "courseId": "data-and-models",
+  "chapterId": "ch3-precision-in-modeling",
+  "minutes": 10,
+  "standards": [
+    "N-Q.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every measurement has a limit to how finely it was taken. Combine two measurements — add them, subtract them, divide one by the other — and the result can be no MORE precise than the least precise input. A slope computed from whole-centimetre data cannot honestly claim five decimal places, however many the calculator displays.",
+      "figure": "dm-least-precise-wins"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plant height (nearest cm) over 5 days. Fit the growth rate.",
+      "predict": {
+        "prompt": "A plant's height was measured to the nearest whole centimetre on five different days, then a growth rate was fitted. Should the reported slope have more decimal places than the height data, the same, or fewer?",
+        "options": [
+          {
+            "id": "same",
+            "label": "About the same — matching the data's own precision"
+          },
+          {
+            "id": "more",
+            "label": "More — decimals make it look more scientific"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "About the same. A calculated slope inherits its honest precision from the data that produced it — reporting more decimals than the input supports is precision the data never actually promised."
+      },
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit a line to day (x) versus height in cm (y), each measured to the nearest whole cm.",
+        "points": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            10
+          ],
+          [
+            5,
+            13
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 6,
+        "yMin": 0,
+        "yMax": 16,
+        "tolerance": 0.6,
+        "mMin": -1,
+        "mMax": 4,
+        "mStep": 0.5,
+        "mStart": 0,
+        "bMin": -3,
+        "bMax": 3,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "About 2.5 cm/day. That single extra decimal place is reasonable — one more digit than the whole-centimetre readings, not five.",
+        "slopeFeedback": "Adjust the tilt to follow this rising trend.",
+        "offsetFeedback": "The tilt is close; slide toward the cloud's centre."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Judge whether a reported precision is appropriate.",
+      "conceptTag": "dm-precision",
+      "explanationVariants": [
+        "The height data only supports whole centimetres, so a rate stretched to five decimals claims certainty the measurements never had.",
+        "More decimal places is not automatically more correct — it can just be false precision."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The fitted rate comes out to 2.5 cm/day. A report writes it as '2.50000 cm/day'. Is that appropriate?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — the data was only measured to the nearest cm, so five decimals is false precision",
+            "correct": true,
+            "feedback": "The height readings themselves were whole numbers. A rate built from them can be trusted to about one extra decimal, not five — the calculator's extra digits are noise, not information."
+          },
+          {
+            "id": "b",
+            "label": "Yes — more decimal places always means a more accurate answer",
+            "correct": false,
+            "feedback": "The digits have to be EARNED by the data's own precision. A calculator will happily print digits the measurements never supported."
+          },
+          {
+            "id": "c",
+            "label": "No — it should be rounded to the nearest whole number instead",
+            "correct": false,
+            "feedback": "Whole-cm inputs support roughly one extra decimal in a computed rate, which is more than zero decimals but far short of five."
+          },
+          {
+            "id": "d",
+            "label": "It doesn't matter as long as the number is correct",
+            "correct": false,
+            "feedback": "A number can be arithmetically correct and still overstate its own precision — that overstatement is the actual problem here."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply the rule to a concrete sum.",
+      "conceptTag": "dm-precision",
+      "explanationVariants": [
+        "6 cm + 3.4 cm = 9.4 cm, but the whole-cm measurement caps the honest precision at the nearest whole cm: 9.",
+        "Add normally, then round to the LESS precise measurement's precision, not the more precise one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle's sides are 6 cm (nearest cm) and 3.4 cm (nearest mm). Add them, then round to the LESS precise measurement's precision. What's the sum?",
+        "answer": 9,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9.4,
+            "feedback": "9.4 keeps the millimetre measurement's extra digit, which the whole-cm side can't back up. Round to the nearest whole cm: 9."
+          },
+          {
+            "value": 3,
+            "feedback": "3 only uses one of the two measurements. Add both, then round: 6 + 3.4 = 9.4, rounds to 9."
+          }
+        ],
+        "fallbackFeedback": "6 + 3.4 = 9.4, rounded to the coarser whole-cm precision: 9."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule in one line: **a result is only as precise as its least precise input.** Add, subtract, multiply, or divide measurements together, and whichever one was measured most coarsely sets the ceiling for how many meaningful digits the answer can honestly claim — no arithmetic operation manufactures precision that wasn't in the data to begin with.",
+      "figure": "dm-false-precision"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A 240 mg sample (measured to the nearest 10 mg) loses mass over 5 measured intervals. Build the decay trend.",
+      "widget": {
+        "type": "distributionCompareLab",
+        "mode": "measure",
+        "tolerance": 0,
+        "prompt": "Two reported masses, 240 mg and 90 mg, both rounded to the nearest 10 mg. Their gap is 150 mg. Report the gap to a sensible precision: how many mg, to the nearest 10?",
+        "meanA": 240,
+        "meanB": 90,
+        "variability": 10,
+        "answer": 15,
+        "measureChoices": [
+          {
+            "value": 150,
+            "feedback": "150 mg is the raw gap, correct as a value but stated to single-mg precision the 10 mg-rounded inputs don't support. In units of the 10 mg precision, that's 15."
+          },
+          {
+            "value": 15,
+            "feedback": "150 mg of gap, measured in units of the shared 10 mg precision, is 15 of those units — matching what both inputs can honestly support."
+          },
+          {
+            "value": 240,
+            "feedback": "240 is one of the original masses, not the gap between them."
+          }
+        ],
+        "successFeedback": "15 units of 10 mg each — 150 mg, reported no finer than the measurements that produced it. The gap can't be more precise than the numbers that made it.",
+        "fallbackFeedback": "150 mg ÷ 10 mg-per-unit = 15."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Apply the least-precise-wins rule to a new pair.",
+      "conceptTag": "dm-precision",
+      "explanationVariants": [
+        "18 cm (nearest cm) and 7.2 cm (nearest mm): the difference can only be trusted to the nearest cm, since that is the coarser input.",
+        "Find the coarsest input's precision, then hold the answer to that."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A wall is 18 cm long (nearest cm) and a shelf is 7.2 cm (nearest mm). Report their difference to the LESS precise measurement's precision — the nearest whole cm.",
+        "answer": 11,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10.8,
+            "feedback": "10.8 keeps the shelf's finer millimetre precision, which the whole-cm wall measurement can't back up. Round to the nearest cm: 11."
+          },
+          {
+            "value": 25.2,
+            "feedback": "25.2 adds the lengths instead of subtracting them."
+          }
+        ],
+        "fallbackFeedback": "18 − 7.2 = 10.8, rounded to the coarser cm precision: 11."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Spot false precision in the wild.",
+      "conceptTag": "dm-precision",
+      "explanationVariants": [
+        "A odometer reading to the nearest tenth of a mile cannot support a claimed 8-decimal average speed — the input's coarseness caps the output's.",
+        "However many digits a calculator shows, the input measurement's precision is still the ceiling."
+      ],
+      "hints": [
+        "Look at how precisely the DISTANCE was actually measured.",
+        "Tenths of a mile is roughly one extra decimal of trustworthy precision in a computed rate, not eight.",
+        "The display showing more digits doesn't mean those digits are meaningful."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A car's trip odometer reads distance to the nearest 0.1 mile. A phone app computes average speed as '47.28193651 mph'. What's wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The distance was only measured to one decimal place, so the speed shouldn't claim eight",
+            "correct": true,
+            "feedback": "The 0.1-mile odometer is the precision ceiling. A computed rate can reasonably carry one extra digit of confidence, not eight — the phone is just displaying every digit its calculator produced, meaningful or not."
+          },
+          {
+            "id": "b",
+            "label": "Nothing is wrong — more decimals means a more exact answer",
+            "correct": false,
+            "feedback": "The extra decimals are computational noise, not real information, once the input's own coarseness is accounted for."
+          },
+          {
+            "id": "c",
+            "label": "The speed should be a whole number with no decimals at all",
+            "correct": false,
+            "feedback": "Some extra precision beyond the input is reasonable in a computed rate — the problem is EIGHT decimals, not any decimals."
+          },
+          {
+            "id": "d",
+            "label": "The odometer must be broken if the app shows that many digits",
+            "correct": false,
+            "feedback": "The odometer is fine — the app is simply reporting more digits than the input can honestly support."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A result can't be more precise than its least precise ingredient.",
+      "takeaways": [
+        "Combining measurements — adding, subtracting, computing a rate — never manufactures precision beyond the coarsest input.",
+        "A calculator's extra displayed digits are not automatically meaningful; they can be pure noise past what the data supports.",
+        "Match a reported result's precision to the LEAST precise measurement that built it, not the most precise."
+      ],
+      "teaser": "That closes this course: describing data, fitting and grading a model, and reporting it honestly."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dm-precision",
+      "concept": {
+        "id": "rem-dp-c",
+        "kind": "concept",
+        "body": "Rewind. If one measurement is precise to the nearest whole unit and another to the nearest tenth, a result built from BOTH can only be trusted to the COARSER of the two — the whole unit, not the tenth."
+      },
+      "check": {
+        "id": "rem-dp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "dm-precision",
+        "explanationVariants": [
+          "The coarser measurement (nearest whole cm) sets the limit, so 5 cm is the honest precision.",
+          "Match the LEAST precise input, always."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "One length is measured to the nearest cm (5 cm); another to the nearest mm (3.2 cm). Their sum should be reported to the nearest:",
+          "options": [
+            {
+              "id": "a",
+              "label": "Whole cm — matching the coarser measurement",
+              "correct": true,
+              "feedback": "The 5 cm reading is the weaker link; the sum can't be trusted beyond what THAT measurement supports."
+            },
+            {
+              "id": "b",
+              "label": "Millimetre — matching the finer measurement",
+              "correct": false,
+              "feedback": "The finer measurement doesn't rescue the coarser one; the coarser one still caps the result."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

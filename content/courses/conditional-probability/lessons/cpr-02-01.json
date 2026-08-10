@@ -1,0 +1,338 @@
+{
+  "id": "cpr-02-01",
+  "slug": "the-addition-rule",
+  "title": "The Addition Rule",
+  "courseId": "conditional-probability",
+  "chapterId": "ch2-addition-rule-and-tables",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Counting outcomes and finding probabilities are the same move, divided by the total. If every card is equally likely, P(A) is just |A|/52. So the overlap correction you learned for **counts** carries straight over to **probabilities**:\n\nP(A ∪ B) = P(A) + P(B) − P(A ∩ B).",
+      "figure": "cpr-addition-venn"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The deck laid out as a 4 × 13 grid — one cell per card.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade P(heart **or** face card). The 3 face-card hearts get shaded once, not twice.",
+        "rows": 4,
+        "cols": 13,
+        "targetNum": 11,
+        "targetDen": 26,
+        "start": 0,
+        "successFeedback": "22 of 52 cells: 10 plain hearts + 3 face-card hearts + 9 face cards in other suits. That is 13 + 12 − 3.",
+        "lowFeedback": "Smaller than the whole shaded region. Every heart counts, and so does every J, Q or K in any suit.",
+        "highFeedback": "Larger than 22 cells — a common cause is shading the 3 face-card hearts twice, once for each event."
+      },
+      "predict": {
+        "prompt": "You'll shade 11/26 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 13/26 here — and 11 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-addition-rule"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the rule, not just the number.",
+      "conceptTag": "cpr-addition-rule",
+      "explanationVariants": [
+        "P(heart) = 13/52 and P(face) = 12/52, but the 3 face-card hearts sit in both, so subtract 3/52 once: 22/52.",
+        "Count the grid: 22 shaded cells out of 52. The straight sum 13 + 12 = 25 is 3 too many — exactly the size of the overlap."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which expression gives P(heart or face card)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "13/52 + 12/52 − 3/52",
+            "correct": true,
+            "feedback": "That is the addition rule: add both events, then remove the double-counted overlap once."
+          },
+          {
+            "id": "o2",
+            "label": "13/52 + 12/52",
+            "feedback": "That sum counts the 3 face-card hearts in both terms, so it reports 25 cards where the grid shows only 22."
+          },
+          {
+            "id": "o3",
+            "label": "13/52 + 12/52 − 3/52 − 3/52",
+            "feedback": "The overlap gets added twice, so it must come off exactly once. Subtracting it twice erases those 3 cards from the union entirely."
+          },
+          {
+            "id": "o4",
+            "label": "13/52 × 12/52",
+            "feedback": "Multiplying answers a different question — \"heart AND face\" — and even then this product is not how you would find it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "addition-rule"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same rule, new sample space.",
+      "conceptTag": "cpr-addition-rule",
+      "explanationVariants": [
+        "Multiples of 3: 3, 6, 9, 12, 15, 18 → 6. Multiples of 5: 5, 10, 15, 20 → 4. Ticket 15 is on both lists, so 6 + 4 − 1 = 9.",
+        "List the winners in order: 3, 5, 6, 9, 10, 12, 15, 18, 20. Nine distinct tickets — 15 appears once, because a ticket is one ticket."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Tickets 1–20. You win if your number is a multiple of 3 **or** a multiple of 5. How many of the 20 tickets win?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That is 6 + 4. Ticket 15 is a multiple of both, so a plain sum counts it twice — subtract it once."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the multiples of 3 alone. The multiples of 5 win too: 5, 10, 20 add three more (15 is already counted)."
+          },
+          {
+            "value": 1,
+            "feedback": "That is the overlap — ticket 15 only. The overlap is what you subtract, not the answer."
+          }
+        ],
+        "fallbackFeedback": "Six multiples of 3, four multiples of 5, and 15 is on both lists: 6 + 4 − 1 = 9."
+      },
+      "variant": {
+        "gen": "addition-rule",
+        "form": "countOr"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When the overlap is empty, P(A ∩ B) = 0 and the subtraction does nothing:\n\nP(A ∪ B) = P(A) + P(B).\n\nThat is the *special* case, not the default. Adding without checking the overlap is the single most common error in this chapter — so before you add, always ask: **can both happen at once?**",
+      "figure": "cpr-disjoint-vs-overlap"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One roll of a fair die.",
+      "conceptTag": "cpr-mutually-exclusive",
+      "explanationVariants": [
+        "Sort by whether a single roll can satisfy both events. \"Even\" and \"shows 5\" cannot — 5 is odd. \"Even\" and \"more than 4\" both hold for 6, so they overlap.",
+        "Write the sets. Even = {2, 4, 6}. The set {5} misses all of them, so no overlap. The set {5, 6} shares the 6. Primes on a die are {2, 3, 5}, and 2 is even — so primes overlap the evens too."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Roll one die. For each pair of events, can they both happen on the SAME roll?",
+        "buckets": [
+          {
+            "id": "add",
+            "label": "No overlap — just add",
+            "icon": "➕"
+          },
+          {
+            "id": "sub",
+            "label": "They overlap — subtract",
+            "icon": "➖"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "even · shows a 5",
+            "bucketId": "add",
+            "feedback": "5 is odd, so no roll is both. The events are mutually exclusive and the probabilities add straight: 3/6 + 1/6."
+          },
+          {
+            "id": "s2",
+            "label": "even · greater than 4",
+            "bucketId": "sub",
+            "feedback": "A 6 is even AND greater than 4, so the events share an outcome. Subtract that one."
+          },
+          {
+            "id": "s3",
+            "label": "less than 3 · greater than 3",
+            "bucketId": "add",
+            "feedback": "A single roll lands below 3 or above 3, never both, so these events share no outcome. Add straight."
+          },
+          {
+            "id": "s4",
+            "label": "even · prime",
+            "bucketId": "sub",
+            "feedback": "2 is even and prime, so the events share the outcome 2."
+          }
+        ],
+        "missFeedback": "For each pair, hunt for a single face that satisfies both. If one exists, the events overlap.",
+        "successFeedback": "Sorted. Only the pairs that share a face — even/greater-than-4 (the 6) and even/prime (the 2) — need the subtraction."
+      },
+      "variant": {
+        "gen": "event-sort"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Now do the subtraction yourself.",
+      "conceptTag": "cpr-addition-rule",
+      "explanationVariants": [
+        "Even = {2, 4, 6}; greater than 4 = {5, 6}. The 6 is in both, so 3 + 2 − 1 = 4 faces: 2, 4, 5, 6.",
+        "Just list the union: 2, 4, 5, 6. Four faces out of six — the 6 belongs to the union once, however many events it satisfies."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Roll one die. How many faces are **even or greater than 4**?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is 3 + 2. The face 6 is even AND greater than 4, so it was counted twice — remove it once."
+          },
+          {
+            "value": 2,
+            "feedback": "That is \"greater than 4\" alone ({5, 6}). The evens 2 and 4 also belong to the union."
+          },
+          {
+            "value": 1,
+            "feedback": "That is the overlap ({6}), the quantity you subtract — not the size of the union."
+          }
+        ],
+        "fallbackFeedback": "The union is {2, 4, 5, 6}: 3 + 2 − 1 = 4."
+      },
+      "variant": {
+        "gen": "addition-rule",
+        "form": "countOr"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One card, one rule, three ways to go wrong.",
+      "conceptTag": "cpr-addition-rule",
+      "hints": [
+        "Two events: RED and ACE. Get each count first, then ask what sits in both.",
+        "There are 26 red cards and 4 aces — but the ace of hearts and the ace of diamonds are on both lists.",
+        "So the union is 26 + 4 − 2 = 28 cards. Now divide by 52 and round to three decimals."
+      ],
+      "explanationVariants": [
+        "P(red) = 26/52, P(ace) = 4/52, P(red ace) = 2/52. So P(red or ace) = (26 + 4 − 2)/52 = 28/52 ≈ 0.538.",
+        "Count the black aces instead: only 2 aces are new information, since the red ones are already inside the 26 red cards. 26 + 2 = 28 → 28/52 ≈ 0.538."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Draw one card from 52. Find **P(red or ace)** as a decimal, rounded to three places.",
+        "answer": 0.538,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.577,
+            "feedback": "That is 30/52 — the straight sum 26 + 4. The two red aces belong to both events, so they were counted twice."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(red) alone, 26/52. The two black aces are also in the union and were never counted."
+          },
+          {
+            "value": 0.038,
+            "feedback": "That is 2/52, the overlap of red and ace. The overlap is subtracted inside the rule; it is not the answer."
+          }
+        ],
+        "fallbackFeedback": "26 red + 4 aces − 2 red aces = 28 cards. 28/52 ≈ 0.538."
+      },
+      "variant": {
+        "gen": "addition-rule",
+        "form": "probOr"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rule, one habit.",
+      "takeaways": [
+        "P(A ∪ B) = P(A) + P(B) − P(A ∩ B) — add, then take the overlap back once.",
+        "Mutually exclusive events are the special case where the overlap is 0 and plain addition is safe.",
+        "Before adding any two probabilities, ask: can both happen at the same time?"
+      ],
+      "teaser": "Next: a table that shows every joint and marginal probability at once."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-addition-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Adding P(A) and P(B) counts everything in the middle **twice** — once from each event. The rule fixes that by subtracting the middle once. If the events cannot co-occur, the middle is empty and there is nothing to subtract.",
+        "figure": "cpr-double-count"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Just the correction.",
+        "conceptTag": "cpr-addition-rule",
+        "explanationVariants": [
+          "8 + 6 = 14 counts the 2 both-players twice, so the union is 14 − 2 = 12.",
+          "Only-soccer is 8 − 2 = 6 and only-tennis is 6 − 2 = 4, so 6 + 4 + 2 = 12 play at least one."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In a club, 8 play soccer, 6 play tennis, and 2 play both. How many play **at least one**?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 14,
+              "feedback": "That is 8 + 6 with no correction — the 2 who play both appear in each total, so they are counted twice."
+            },
+            {
+              "value": 10,
+              "feedback": "That subtracts the 2 twice. They do play, so they belong in the union exactly once: 8 + 6 − 2."
+            }
+          ],
+          "fallbackFeedback": "8 + 6 − 2 = 12."
+        }
+      }
+    }
+  ]
+}

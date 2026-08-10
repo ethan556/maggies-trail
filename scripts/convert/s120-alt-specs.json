@@ -1,0 +1,107 @@
+{
+  "note": "S120d — the altitude stage, built this session, handed to the three lessons §3.4 named for it. The playbook asked for this figure in `segments` mode; segments is a parallel cutter and could never draw it, which is why sy-04-* stayed C through every earlier pass.",
+  "conversions": [
+    {
+      "dir": "similarity",
+      "lesson": "sy-04-01",
+      "step": "i1",
+      "oldType": "numeric",
+      "capability": "dilationExplore altitude stage (new, S120)",
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "Drop the altitude from the right angle and slide its foot along the hypotenuse. Count the triangles you can see, and watch whether any of them stops being the same shape as the others.",
+        "shape": [[0, 0], [20, 0], [4, 8]],
+        "center": [0, 0],
+        "targetK": 0.2,
+        "kMin": 0.05,
+        "kMax": 0.95,
+        "kStep": 0.05,
+        "kStart": 0.5,
+        "gridMin": 0,
+        "gridMax": 21,
+        "showRatios": ["altitude"],
+        "successFeedback": "p = 4, q = 16, h = 8 — and 8² = 64 = 4 × 16. There are three triangles on screen, not two: the small one on the left, the one on the right, and the whole. All three share the right angle, and each shares one acute angle with the whole, so AA makes all three similar — at this position and at every other one you tried.",
+        "lowFeedback": "The foot is left of the target, so p is under 4. Slide right — and notice that the three triangles stay similar the whole way; only their sizes are changing.",
+        "highFeedback": "The foot has gone past, so p is over 4. Ease back left. However far you push it, the apex angle stays right, because the apex is riding the semicircle drawn over the hypotenuse."
+      },
+      "predict": {
+        "prompt": "Drop the altitude from the right angle to the hypotenuse. How many triangles similar to each other are now in the figure?",
+        "options": [
+          { "id": "three", "label": "Three — the two small ones and the original" },
+          { "id": "two", "label": "Two — just the two new small ones" },
+          { "id": "none", "label": "None; cutting a triangle destroys the similarity" }
+        ],
+        "outcomeId": "three",
+        "reveal": "Three. It is easy to count only the two new pieces and forget that the original is still there and still similar to both. That third one is what makes the geometric-mean relationships work, because it is the triangle whose hypotenuse the segments belong to."
+      }
+    },
+    {
+      "dir": "similarity",
+      "lesson": "sy-04-02",
+      "step": "i2",
+      "oldType": "numeric",
+      "capability": "dilationExplore altitude stage (new, S120)",
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "The hypotenuse is 25. Slide the foot until it splits into 9 and 16, and read the altitude — then keep sliding and check whether h² = p·q was a fact about those two numbers or about every position.",
+        "shape": [[0, 0], [25, 0], [9, 12]],
+        "center": [0, 0],
+        "targetK": 0.36,
+        "kMin": 0.04,
+        "kMax": 0.96,
+        "kStep": 0.04,
+        "kStart": 0.6,
+        "gridMin": 0,
+        "gridMax": 26,
+        "showRatios": ["altitude"],
+        "successFeedback": "9 and 16, and the altitude reads 12 — because 12² = 144 = 9 × 16. That is what \"geometric mean\" names: h is the number whose square is the product of the two segments. Every other position you passed through obeyed it too, which is why it is a theorem and not a coincidence about 9 and 16.",
+        "lowFeedback": "p is still under 9, so the left segment is too short and the altitude is shorter than 12. Slide right — h grows while p is the smaller segment, then shrinks again once p overtakes q.",
+        "highFeedback": "p has gone past 9. Ease back left. Watch the altitude as you do: it peaks at the midpoint, where p and q are equal, and falls away toward both ends."
+      },
+      "predict": {
+        "prompt": "The altitude to a hypotenuse splits it into 9 and 16. The altitude's length will be…",
+        "options": [
+          { "id": "twelve", "label": "12 — the square root of 9 × 16" },
+          { "id": "half", "label": "12.5 — half the hypotenuse" },
+          { "id": "seven", "label": "12.5 — the average of 9 and 16 is close enough" }
+        ],
+        "outcomeId": "twelve",
+        "reveal": "12, and the route is the product rather than the sum: √(9 × 16) = √144. Half the hypotenuse is 12.5, which is close enough to 12 to hide the mistake here and to fail badly on any less balanced split — at 4 and 21 the mean is 12.5 and the altitude is only about 9.2."
+      }
+    },
+    {
+      "dir": "similarity",
+      "lesson": "sy-04-03",
+      "step": "i1",
+      "oldType": "numeric",
+      "capability": "dilationExplore altitude stage (new, S120)",
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "This hypotenuse is 15. Slide the foot until the two segments read 3 and 12, and take the altitude from the readout rather than from a formula.",
+        "shape": [[0, 0], [15, 0], [3, 6]],
+        "center": [0, 0],
+        "targetK": 0.2,
+        "kMin": 0.05,
+        "kMax": 0.95,
+        "kStep": 0.05,
+        "kStart": 0.55,
+        "gridMin": 0,
+        "gridMax": 16,
+        "showRatios": ["altitude"],
+        "successFeedback": "3 and 12, altitude 6 — since 6² = 36 = 3 × 12. The status line is also reporting the other two means: each leg squared equals the whole hypotenuse times that leg's own segment, 15 × 3 = 45 and 15 × 12 = 180. One figure, three geometric means, all holding at once.",
+        "lowFeedback": "p is under 3 — the foot is too far left and the altitude is still short. Slide right.",
+        "highFeedback": "p is over 3 now. Ease back left. Every position on the way obeys h² = p·q, so there is no risk of losing the relationship while you hunt for the right one."
+      },
+      "predict": {
+        "prompt": "The two hypotenuse segments are 3 and 12. Before computing: the altitude will be…",
+        "options": [
+          { "id": "six", "label": "6 — the square root of the product" },
+          { "id": "fivehalf", "label": "7.5 — halfway between 3 and 12" },
+          { "id": "nine", "label": "9 — the difference between them" }
+        ],
+        "outcomeId": "six",
+        "reveal": "6. The altitude is the geometric mean, √(3 × 12) = √36, not the arithmetic mean 7.5. The two means agree only when the segments are equal, which is the one position where the foot sits at the midpoint."
+      }
+    }
+  ]
+}

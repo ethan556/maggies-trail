@@ -1,0 +1,465 @@
+{
+  "id": "bv-04-01",
+  "slug": "reading-two-way-tables",
+  "title": "Reading Two-Way Tables",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch4-two-way-tables",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Some data is **categorical** — not numbers, but groups like dog/cat or child/adult. A **two-way table** sorts each person into a row-and-column box, counting how many fall into each combination.",
+      "figure": "two-way-table"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read a cell.",
+      "widget": {
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "In the survey table, the 'child' row and 'dog' column meet at one cell. How many children preferred dogs?",
+        "rowLabels": [
+          "child",
+          "adult"
+        ],
+        "colLabels": [
+          "dog",
+          "cat"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row0",
+        "targetCell": "r0c0",
+        "startCondition": "col0",
+        "requiredSwitches": 1,
+        "readMetric": "cell",
+        "answerChoices": [
+          {
+            "id": "c0",
+            "label": "20",
+            "value": 20,
+            "feedback": "The child row and dog column meet at the cell holding 20."
+          },
+          {
+            "id": "c1",
+            "label": "30",
+            "value": 30,
+            "feedback": "That's the row TOTAL for children — the child-and-dog CELL is 20."
+          },
+          {
+            "id": "c2",
+            "label": "25",
+            "value": 25,
+            "feedback": "That's the column total for dogs — the child-and-dog cell is 20."
+          }
+        ],
+        "successFeedback": "The child row and dog column meet at the cell holding 20.",
+        "explorationFeedback": "Select one exact claim from the drawn table.",
+        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The margins hold the **totals**. The child row totals 30 (20 dogs + 10 cats); the dog column totals 25 (20 children + 5 adults). The bottom-right corner, 50, is the **grand total** — everyone surveyed.",
+      "figure": "bv-two-way-margins"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read a row total.",
+      "conceptTag": "bv-read-table",
+      "explanationVariants": [
+        "The adult row is 5 dogs + 15 cats = 20 adults total.",
+        "Add across the adult row: 5 + 15 = 20."
+      ],
+      "widget": {
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "In the table, adults chose 5 dogs and 15 cats. How many adults were surveyed in total?",
+        "rowLabels": [
+          "child",
+          "adult"
+        ],
+        "colLabels": [
+          "dog",
+          "cat"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row1",
+        "targetCell": "r1c0",
+        "startCondition": "col0",
+        "requiredSwitches": 1,
+        "readMetric": "rowTotal",
+        "answerChoices": [
+          {
+            "id": "c0",
+            "label": "20",
+            "value": 20,
+            "feedback": "The adult row total is 5 + 15 = 20."
+          },
+          {
+            "id": "c1",
+            "label": "50",
+            "value": 50,
+            "feedback": "That's everyone — just the ADULTS are 5 + 15 = 20."
+          },
+          {
+            "id": "c2",
+            "label": "15",
+            "value": 15,
+            "feedback": "Add both adult cells: 5 + 15 = 20, not just the cats."
+          }
+        ],
+        "successFeedback": "The adult row total is 5 + 15 = 20.",
+        "explorationFeedback": "Select one exact claim from the drawn table.",
+        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+      },
+      "variant": {
+        "gen": "two-way-table"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read a column total.",
+      "widget": {
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "In the table, dogs were chosen by 20 children and 5 adults. How many people chose dogs in total?",
+        "rowLabels": [
+          "child",
+          "adult"
+        ],
+        "colLabels": [
+          "dog",
+          "cat"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row0",
+        "targetCell": "r0c0",
+        "startCondition": "col0",
+        "requiredSwitches": 1,
+        "readMetric": "colTotal",
+        "answerChoices": [
+          {
+            "id": "c0",
+            "label": "25",
+            "value": 25,
+            "feedback": "The dog column total is 20 + 5 = 25."
+          },
+          {
+            "id": "c1",
+            "label": "20",
+            "value": 20,
+            "feedback": "That's just the children — add the adults too: 20 + 5 = 25."
+          },
+          {
+            "id": "c2",
+            "label": "50",
+            "value": 50,
+            "feedback": "That's everyone — the DOG column is 20 + 5 = 25."
+          }
+        ],
+        "successFeedback": "The dog column total is 20 + 5 = 25.",
+        "explorationFeedback": "Select one exact claim from the drawn table.",
+        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the grand total.",
+      "conceptTag": "bv-read-table",
+      "explanationVariants": [
+        "The grand total is everyone: 20 + 10 + 5 + 15 = 50 (or 30 + 20, or 25 + 25).",
+        "Add all four cells: 20 + 10 + 5 + 15 = 50."
+      ],
+      "widget": {
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "The four cells are 20, 10, 5, and 15. What is the grand total surveyed?",
+        "rowLabels": [
+          "child",
+          "adult"
+        ],
+        "colLabels": [
+          "dog",
+          "cat"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row0",
+        "targetCell": "r0c0",
+        "startCondition": "col0",
+        "requiredSwitches": 1,
+        "readMetric": "grandTotal",
+        "answerChoices": [
+          {
+            "id": "c0",
+            "label": "50",
+            "value": 50,
+            "feedback": "The grand total is 20 + 10 + 5 + 15 = 50."
+          },
+          {
+            "id": "c1",
+            "label": "45",
+            "value": 45,
+            "feedback": "Add all four: 20 + 10 + 5 + 15 = 50 (you may have missed one)."
+          },
+          {
+            "id": "c2",
+            "label": "30",
+            "value": 30,
+            "feedback": "That's just the child row — the grand total adds everyone: 50."
+          }
+        ],
+        "successFeedback": "The grand total is 20 + 10 + 5 + 15 = 50.",
+        "explorationFeedback": "Select one exact claim from the drawn table.",
+        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+      },
+      "variant": {
+        "gen": "two-way-table",
+        "form": "grandTotal"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What a cell means.",
+      "conceptTag": "bv-read-table",
+      "explanationVariants": [
+        "A cell counts people in BOTH categories at once: the 15 are adults who prefer cats.",
+        "Each cell is one row-and-column combination: adult AND cat."
+      ],
+      "widget": {
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "In the table, the 'adult' row meets the 'cat' column at 15. What does that 15 mean?",
+        "rowLabels": [
+          "child",
+          "adult"
+        ],
+        "colLabels": [
+          "dog",
+          "cat"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row1",
+        "targetCell": "r1c1",
+        "startCondition": "col0",
+        "requiredSwitches": 1,
+        "readMetric": "cell",
+        "answerChoices": [
+          {
+            "id": "c0",
+            "label": "15 people are adults who prefer cats",
+            "value": 15,
+            "feedback": "Right — a cell counts both categories: adults who prefer cats."
+          },
+          {
+            "id": "c1",
+            "label": "15 adults were surveyed",
+            "value": 20,
+            "feedback": "The adult TOTAL is 20 — the 15 is specifically adults who prefer CATS."
+          },
+          {
+            "id": "c2",
+            "label": "15 people prefer cats",
+            "value": 25,
+            "feedback": "The cat column total is 25 — the 15 is only the ADULTS who prefer cats."
+          },
+          {
+            "id": "c3",
+            "label": "15 is the grand total",
+            "value": 50,
+            "feedback": "The grand total is 50 — 15 is just the adult-and-cat cell."
+          }
+        ],
+        "successFeedback": "Right — a cell counts both categories: adults who prefer cats.",
+        "explorationFeedback": "Select one exact claim from the drawn table.",
+        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+      },
+      "variant": {
+        "gen": "two-way-table",
+        "form": "cellMeaning"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Fill a missing total.",
+      "conceptTag": "bv-read-table",
+      "explanationVariants": [
+        "The cat column is 10 children + 15 adults = 25.",
+        "Add the two cat cells: 10 + 15 = 25."
+      ],
+      "widget": {
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "Cats were chosen by 10 children and 15 adults. What is the cat column total?",
+        "rowLabels": [
+          "child",
+          "adult"
+        ],
+        "colLabels": [
+          "dog",
+          "cat"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row0",
+        "targetCell": "r0c1",
+        "startCondition": "col0",
+        "requiredSwitches": 1,
+        "readMetric": "colTotal",
+        "answerChoices": [
+          {
+            "id": "c0",
+            "label": "25",
+            "value": 25,
+            "feedback": "The cat column total is 10 + 15 = 25."
+          },
+          {
+            "id": "c1",
+            "label": "15",
+            "value": 15,
+            "feedback": "Add BOTH cat cells: 10 + 15 = 25, not just the adults."
+          },
+          {
+            "id": "c2",
+            "label": "50",
+            "value": 50,
+            "feedback": "That's everyone — the CAT column is 10 + 15 = 25."
+          }
+        ],
+        "successFeedback": "The cat column total is 10 + 15 = 25.",
+        "explorationFeedback": "Select one exact claim from the drawn table.",
+        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+      },
+      "hints": [
+        "Find the two cells in the cat column: children and adults.",
+        "They are 10 (children) and 15 (adults).",
+        "Add them: 10 + 15 = 25."
+      ],
+      "variant": {
+        "gen": "two-way-table",
+        "form": "columnTotal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A two-way table sorts categorical data into row-and-column cells, with totals in the margins.",
+      "takeaways": [
+        "Each cell counts people in two categories at once (e.g. adult AND cat).",
+        "Row and column margins hold the totals; the corner is the grand total.",
+        "Add across a row or down a column to get its total."
+      ],
+      "teaser": "Next: turning counts into relative frequencies."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-read-table",
+      "concept": {
+        "id": "rem-bv0401-c",
+        "kind": "concept",
+        "body": "A two-way table sorts categorical data into cells by row and column. Each cell counts people in both categories at once; the margins hold row totals, column totals, and the grand total in the corner."
+      },
+      "check": {
+        "id": "rem-bv0401-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-read-table",
+        "explanationVariants": [
+          "The child row is 20 dogs + 10 cats = 30.",
+          "Add across the child row: 20 + 10 = 30."
+        ],
+        "widget": {
+          "type": "conditionalTableLab",
+          "mode": "read",
+          "prompt": "Children chose 20 dogs and 10 cats. How many children were surveyed?",
+          "rowLabels": [
+            "child",
+            "adult"
+          ],
+          "colLabels": [
+            "dog",
+            "cat"
+          ],
+          "counts": [
+            20,
+            10,
+            5,
+            15
+          ],
+          "targetCondition": "row0",
+          "targetCell": "r0c0",
+          "startCondition": "col0",
+          "requiredSwitches": 1,
+          "readMetric": "rowTotal",
+          "answerChoices": [
+            {
+              "id": "c0",
+              "label": "30",
+              "value": 30,
+              "feedback": "The child row total is 20 + 10 = 30."
+            },
+            {
+              "id": "c1",
+              "label": "20",
+              "value": 20,
+              "feedback": "Add both child cells: 20 + 10 = 30, not just the dogs."
+            },
+            {
+              "id": "c2",
+              "label": "50",
+              "value": 50,
+              "feedback": "That's everyone — the CHILD row is 20 + 10 = 30."
+            }
+          ],
+          "successFeedback": "The child row total is 20 + 10 = 30.",
+          "explorationFeedback": "Select one exact claim from the drawn table.",
+          "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
+          "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+        }
+      }
+    }
+  ]
+}

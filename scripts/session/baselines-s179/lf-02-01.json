@@ -1,0 +1,375 @@
+{
+  "id": "lf-02-01",
+  "slug": "meet-slope-intercept-form",
+  "title": "Meet y = mx + b",
+  "courseId": "linear-functions",
+  "chapterId": "ch2-slope-intercept",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "slope-triangle",
+      "body": "Most lines can be written in one tidy form: **y = mx + b**. The **m** is the **slope** — the number multiplied by x. The **b** is the **y-intercept** — the number added on, where the line crosses the y-axis. Read a line's equation and you already know how steep it is and where it starts."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Build it yourself. Drag the two sliders and watch the line, the rise-over-run triangle, and the equation all change together.",
+      "widget": {
+        "type": "lineExplore",
+        "prompt": "Drag the sliders to build the line y = 2x + 1.",
+        "targetSlope": 2,
+        "targetIntercept": 1,
+        "slopeMin": -4,
+        "slopeMax": 4,
+        "interceptMin": -5,
+        "interceptMax": 5,
+        "slopeStart": 0,
+        "interceptStart": 0,
+        "gridMax": 6,
+        "successFeedback": "That's the line — slope 2 (the triangle reads rise 2 over run 1) crossing the y-axis at 1.",
+        "slopeFeedback": "Look at the rise-over-run triangle: you want it to climb 2 for each 1 step across. Adjust the slope slider.",
+        "interceptFeedback": "The steepness is right. Now slide b so the blue dot on the y-axis sits at the target height."
+      },
+      "predict": {
+        "prompt": "In y = mx + b, what does raising b do to the line?",
+        "options": [
+          {
+            "id": "tilt",
+            "label": "Tilts it steeper"
+          },
+          {
+            "id": "up",
+            "label": "Slides it straight up, same tilt"
+          },
+          {
+            "id": "right",
+            "label": "Shifts it to the right"
+          }
+        ],
+        "outcomeId": "up",
+        "reveal": "b adds the same amount to every point's height, so the whole line rides up without tilting — the steepness lives entirely in m."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Change slope and intercept independently while coordinating graph, rise-run triangle, table, and equation.",
+        "invariants": [
+          "slope-is-constant-rate",
+          "intercept-is-value-at-zero"
+        ],
+        "misconceptions": [
+          "slope-intercept-swap",
+          "rise-run-reversal"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "linear-equation-from-graph-and-context",
+        "delayed": true,
+        "counterfactualPrompt": "Hold slope fixed and increase the intercept by 2. Predict how every point and table output changes.",
+        "explanation": {
+          "prompt": "Why does changing b move the line without changing its tilt?",
+          "options": [
+            {
+              "id": "same-add",
+              "label": "It adds the same vertical amount to every output, so all rises over equal runs stay unchanged.",
+              "correct": true,
+              "feedback": "Exactly — b shifts every output equally while m preserves the rate."
+            },
+            {
+              "id": "slope",
+              "label": "It changes the rise for each one-unit run.",
+              "correct": false,
+              "feedback": "That describes changing m, not changing b."
+            }
+          ]
+        }
+      },
+      "conceptTag": "slope-intercept-read"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Spot the slope.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In y = 3x + 2, what is the slope m?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3",
+            "correct": true,
+            "feedback": "Yes — m is the number multiplied by x, and that's 3."
+          },
+          {
+            "id": "b",
+            "label": "2",
+            "feedback": "That's b, the number added on (the y-intercept). The slope m is the number times x: 3."
+          },
+          {
+            "id": "c",
+            "label": "5",
+            "feedback": "That adds 3 and 2. Don't combine them — m and b are separate: m = 3, b = 2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the other number.",
+      "conceptTag": "slope-intercept-read",
+      "explanationVariants": [
+        "In y = 3x + 2, the number added on is 2, so the y-intercept b = 2.",
+        "b is the constant with no x attached. Here that's 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In y = 3x + 2, what is the y-intercept b?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2",
+            "correct": true,
+            "feedback": "Right — b is the number added on, with no x attached: 2."
+          },
+          {
+            "id": "b",
+            "label": "3",
+            "feedback": "That's m, the slope (the number times x). The y-intercept b is the added number: 2."
+          },
+          {
+            "id": "c",
+            "label": "3x",
+            "feedback": "That's the slope term. The y-intercept is just the constant added on: 2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-read__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why is b the y-intercept? Set **x = 0**. Then y = m·0 + b = b. Every line hits the y-axis at x = 0, so the y-value there is always b. That's why b tells you where the line starts on the y-axis.",
+      "figure": "lf-b-intercept"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Put a number in for x.",
+      "conceptTag": "slope-intercept-read",
+      "explanationVariants": [
+        "y = 2x + 1 at x = 3: multiply first, 2·3 = 6, then add 1 to get 7.",
+        "Substitute x = 3: y = 2(3) + 1 = 6 + 1 = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 2x + 1, find y when x = 3.",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "You found 2·3 = 6 but forgot to add b. Add the 1: 6 + 1 = 7."
+          },
+          {
+            "value": 8,
+            "feedback": "It looks like you added 1 to x first: 2·(3+1). Multiply before adding: 2·3 = 6, then + 1 = 7."
+          }
+        ],
+        "fallbackFeedback": "Multiply, then add: y = 2·3 + 1 = 6 + 1 = 7."
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-read__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A slippery slope.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the slope m of y = -x + 4?",
+        "options": [
+          {
+            "id": "a",
+            "label": "-1",
+            "correct": true,
+            "feedback": "Yes — a bare -x means -1 times x, so m = -1."
+          },
+          {
+            "id": "b",
+            "label": "4",
+            "feedback": "That's b, the y-intercept. The slope is the coefficient of x, and -x means -1."
+          },
+          {
+            "id": "c",
+            "label": "1",
+            "feedback": "Close, but the sign matters: -x is -1 times x, so m = -1, not 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Both m and b can be **negative** or **fractional**. In y = (1/2)x - 3, the slope is the fraction 1/2 and the y-intercept is -3. Read the coefficient of x for m, and the constant (with its sign) for b.",
+      "figure": "lf-neg-fractional"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a fractional slope.",
+      "conceptTag": "slope-intercept-read",
+      "explanationVariants": [
+        "The number multiplied by x in y = (1/2)x - 3 is 1/2, so m = 1/2.",
+        "Coefficient of x is 1/2; the -3 is b, not m."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the slope m of y = (1/2)x - 3?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/2",
+            "correct": true,
+            "feedback": "Right — m is the coefficient of x, which is 1/2."
+          },
+          {
+            "id": "b",
+            "label": "-3",
+            "feedback": "That's b, the y-intercept. The slope is the coefficient of x: 1/2."
+          },
+          {
+            "id": "c",
+            "label": "2",
+            "feedback": "That flips the fraction. The coefficient of x is 1/2, not 2/1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-read__mcq"
+      }
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Evaluate quickly.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 5x + 3, find y when x = 1.",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's just 5·1. Don't forget to add b: 5 + 3 = 8."
+          },
+          {
+            "value": 15,
+            "feedback": "That multiplies 5·3. Use x = 1: y = 5·1 + 3 = 8."
+          }
+        ],
+        "fallbackFeedback": "y = 5·1 + 3 = 5 + 3 = 8."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Order of operations counts.",
+      "conceptTag": "slope-intercept-read",
+      "explanationVariants": [
+        "y = 4x - 5 at x = 3: multiply first, 4·3 = 12, then subtract 5 to get 7.",
+        "Substitute x = 3: y = 4(3) - 5 = 12 - 5 = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = 4x - 5, find y when x = 3.",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "You found 4·3 = 12 but stopped. Subtract b: 12 - 5 = 7."
+          },
+          {
+            "value": -8,
+            "feedback": "It looks like you did 4·(3 - 5). Multiply before subtracting: 4·3 = 12, then - 5 = 7."
+          }
+        ],
+        "fallbackFeedback": "Multiply, then subtract: y = 4·3 - 5 = 12 - 5 = 7."
+      },
+      "hints": [
+        "Substitute x = 3 into 4x - 5.",
+        "Multiply first: 4·3 = 12.",
+        "Then subtract 5: 12 - 5 = 7."
+      ],
+      "variant": {
+        "gen": "a1-linear-functions",
+        "form": "slope-intercept-read__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "y = mx + b packs a line into two numbers.",
+      "takeaways": [
+        "m is the slope (coefficient of x); b is the y-intercept (the constant).",
+        "b is the y-value when x = 0 — where the line meets the y-axis.",
+        "To evaluate, multiply m·x first, then add b."
+      ],
+      "teaser": "next: use m and b to graph a line without a table."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "slope-intercept-read",
+      "concept": {
+        "id": "rem-sir-c",
+        "kind": "concept",
+        "body": "Two jobs, two numbers. In y = 6x + 2, the number touching x is the slope: m = 6. The number by itself is the y-intercept: b = 2. Slope multiplies x; intercept just adds on."
+      },
+      "check": {
+        "id": "rem-sir-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "slope-intercept-read",
+        "explanationVariants": [
+          "The coefficient of x in y = 6x + 2 is 6, so the slope m = 6.",
+          "6 multiplies x; 2 is added on. So m = 6."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In y = 6x + 2, what is the slope m?",
+          "options": [
+            {
+              "id": "a",
+              "label": "6",
+              "correct": true,
+              "feedback": "Yes — 6 is the coefficient of x, so it's the slope."
+            },
+            {
+              "id": "b",
+              "label": "2",
+              "feedback": "That's b, the y-intercept. The slope is the number times x: 6."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

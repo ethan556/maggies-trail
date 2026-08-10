@@ -1,0 +1,319 @@
+{
+  "id": "gf-05-01",
+  "slug": "congruence-defined",
+  "title": "Congruence, Defined",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch5-congruence",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-congruence-def",
+      "concept": {
+        "id": "rem-gf-congruence-def-c",
+        "kind": "concept",
+        "body": "The congruence test is a moving job: can some slide, turn, flip — or a chain of them — land figure 1 EXACTLY on figure 2? If yes, congruent. If any distance would have to stretch or shrink to make it fit, no motion exists and the figures are not congruent."
+      },
+      "check": {
+        "id": "rem-gf-congruence-def-k",
+        "kind": "check",
+        "body": "Apply the test.",
+        "conceptTag": "gf-congruence-def",
+        "explanationVariants": [
+          "Segments of lengths 4 and 4 match under a motion (slide one onto the other); lengths 4 and 5 never can — rigid motions can't stretch.",
+          "Equal lengths is exactly what lets a rigid motion do its job on segments."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Segment GH has length 4. Which segment is guaranteed congruent to it?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "a segment of length 4 anywhere in the plane",
+              "correct": true,
+              "feedback": "Slide (and turn, if needed) carries one length-4 segment onto any other — the motion exists, so they're congruent."
+            },
+            {
+              "id": "o2",
+              "label": "a segment of length 5 close by",
+              "correct": false,
+              "feedback": "Nearness doesn't help: a rigid motion would have to stretch 4 into 5, and rigid motions never stretch."
+            },
+            {
+              "id": "o3",
+              "label": "half of a segment of length 10",
+              "correct": false,
+              "feedback": "Half of 10 is 5, not 4 — one unit of stretch is still a stretch. Only length 4 matches length 4."
+            },
+            {
+              "id": "o4",
+              "label": "any segment on the same line as GH",
+              "correct": false,
+              "feedback": "Sharing a line says nothing about LENGTH — a length-9 segment on that line can never rigidly match a length-4 one."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here is the payoff of four chapters: **two figures are congruent exactly when some rigid motion (or chain of them) maps one precisely onto the other**. Not \"they look alike\" — a checkable claim: name a translation, rotation, reflection, or composition that carries every point of one onto the other.",
+      "figure": "congruence-motion-bridge"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Who's in the club?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these is NOT a rigid motion?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a dilation with scale factor 2",
+            "correct": true,
+            "feedback": "Doubling distances is exactly what rigid motions forbid — dilations change size, so they're out of the club."
+          },
+          {
+            "id": "o2",
+            "label": "a translation",
+            "correct": false,
+            "feedback": "A slide moves every point the same amount — gaps between points never change, so it's rigid."
+          },
+          {
+            "id": "o3",
+            "label": "a rotation",
+            "correct": false,
+            "feedback": "Turning a figure carries it around like a solid plate — every distance rides along unchanged: rigid."
+          },
+          {
+            "id": "o4",
+            "label": "a reflection",
+            "correct": false,
+            "feedback": "A mirror flips orientation but the image is the same size, point for point — reflections are rigid."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "A dilation with scale factor 2 is about to face the rigid-motion test. Will lengths survive it?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — every length doubles"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — the shape stays similar, so it passes"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Rigid means every distance is preserved EXACTLY. A factor-2 dilation doubles every length: angles survive, so the image stays similar — but similar is not congruent, and 'keeps the shape' is not the test. It fails."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The definition itself.",
+      "conceptTag": "gf-congruence-def",
+      "explanationVariants": [
+        "ΔABC ≅ ΔDEF means precisely: some rigid motion maps ΔABC onto ΔDEF. Everything else (equal sides, equal angles) FOLLOWS from that.",
+        "The definition is existential — it promises a motion exists. To prove congruence, you exhibit the motion; to use congruence, you use what motions preserve."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "By definition, ΔABC ≅ ΔDEF means…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "some rigid motion maps ΔABC exactly onto ΔDEF",
+            "correct": true,
+            "feedback": "That's the definition — congruence is the existence of a distance-preserving motion between the figures."
+          },
+          {
+            "id": "o2",
+            "label": "the two triangles have the same area",
+            "correct": false,
+            "feedback": "Same area is far too weak — a 1×36 rectangle and a 6×6 square share area 36 and match nowhere. Congruence demands a point-for-point rigid match."
+          },
+          {
+            "id": "o3",
+            "label": "all three angles of one equal all three angles of the other",
+            "correct": false,
+            "feedback": "Equal angles alone is SIMILARITY — a triangle and its double have identical angles. Congruence also locks the size."
+          },
+          {
+            "id": "o4",
+            "label": "the triangles look identical when drawn carefully",
+            "correct": false,
+            "feedback": "\"Looks identical\" isn't checkable. The definition replaces the eyeball with an exhibit: name the motion that maps one onto the other."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-congruence-def__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why THIS definition works: rigid motions **preserve distance and angle measure**. So the instant a motion maps figure 1 onto figure 2, every side and every angle automatically matches — congruence of all the parts comes free, no measuring required.",
+      "figure": "gf-rigid-preserve"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Distance rides along.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "AB = 7. A rotation followed by a translation carries A to A′ and B to B′. What is A′B′?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "Doubling is DILATION behavior. Rotations and translations are rigid — the gap between the two points rides along unchanged: 7."
+          },
+          {
+            "value": 3.5,
+            "feedback": "Halving would shrink the figure — but rigid motions carry figures like solid plates. A′B′ = AB = 7."
+          }
+        ],
+        "fallbackFeedback": "Rigid motions preserve distance: A′B′ = AB = 7."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Angles ride along too.",
+      "conceptTag": "gf-congruence-def",
+      "explanationVariants": [
+        "Rigid motions preserve angle measure, so the image angle still measures 52°.",
+        "Reflections flip orientation — clockwise becomes counterclockwise — but the SIZE of the opening never changes: 52°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "m∠P = 52°. A reflection maps ∠P to ∠P′. What is m∠P′ in degrees?",
+        "answer": 52,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 128,
+            "feedback": "128 is the SUPPLEMENT (180 − 52) — supplements come from straight-line pairs, not from motions. The mirror copies the opening exactly: 52°."
+          },
+          {
+            "value": 26,
+            "feedback": "Halving the angle would distort the figure — reflections are rigid, so the measure is untouched: 52°."
+          }
+        ],
+        "fallbackFeedback": "Reflections preserve angle measure: 52°."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-congruence-def__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The club rules exclude dilations for a reason: a dilation with scale factor k multiplies EVERY distance by k. The image keeps the shape but not the size — that's **similarity**, a different (weaker) relationship. One stretched distance is enough to sink a congruence claim.",
+      "figure": "gf-dilation-excluded"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "What every member preserves.",
+      "widget": {
+        "type": "transformExplore",
+        "shape": [
+          [
+            1,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "target": [
+          [
+            1,
+            -2
+          ],
+          [
+            4,
+            -2
+          ],
+          [
+            1,
+            -5
+          ]
+        ],
+        "gridMin": -6,
+        "gridMax": 6,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -6,
+        "dyMax": 6,
+        "allowReflect": true,
+        "prompt": "Land the shape exactly on its target using a rigid motion — translate, and reflect if you need to. Watch the side lengths and the corner angles the whole way.",
+        "successFeedback": "It lands exactly, and nothing about the shape itself ever changed: every side kept its length and every corner kept its angle. That is what 'rigid' means — BOTH distances and angle measures survive, which is why congruent figures match part-for-part for free.",
+        "offsetFeedback": "Not on the target yet. Translation slides the shape without altering a single length or angle — keep moving it.",
+        "reflectFeedback": "A reflection flips the shape across the axis. Like translation it is rigid: the mirror image has identical side lengths and identical angles, just a reversed orientation."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "One stretched distance.",
+      "conceptTag": "gf-congruence-def",
+      "hints": [
+        "Apply the rule to each point: what are P′ and Q′?",
+        "P′ = (2, 4) and Q′ = (8, 4). How far apart are they?",
+        "Compare P′Q′ with PQ = 3 — what does a changed distance say about the motion?"
+      ],
+      "explanationVariants": [
+        "P(1,2) → (2,4), Q(4,2) → (8,4): P′Q′ = 8 − 2 = 6, double the original 3. Distance changed ⇒ the rule is not rigid ⇒ image and preimage are NOT congruent (they're similar).",
+        "The rule (2x, 2y) is a dilation, scale 2 — every distance doubles, so 3 becomes 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(1, 2) and Q(4, 2), so PQ = 3. Apply (x, y) → (2x, 2y) to both points. What is P′Q′?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 would mean the rule preserved distance — but (2x, 2y) is a dilation: P′ = (2, 4), Q′ = (8, 4), and the gap doubled to 6."
+          },
+          {
+            "value": 12,
+            "feedback": "12 quadruples the distance — that would need scale factor 4. Doubling each coordinate doubles distances once: 2 × 3 = 6."
+          }
+        ],
+        "fallbackFeedback": "P′ = (2, 4), Q′ = (8, 4): P′Q′ = 6 — doubled, so not a rigid motion."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-congruence-def__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The real definition.",
+      "takeaways": [
+        "Congruent = some rigid motion maps one figure exactly onto the other.",
+        "Rigid motions preserve distance AND angle — so all parts match for free.",
+        "Dilations change distances: same shape, different size — similarity, not congruence."
+      ],
+      "teaser": "Next: play detective — given the coordinates of both figures, NAME the motion that connects them."
+    }
+  ]
+}

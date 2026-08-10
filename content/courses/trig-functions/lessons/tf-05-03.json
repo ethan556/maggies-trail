@@ -1,0 +1,248 @@
+{
+  "id": "tf-05-03",
+  "slug": "the-pythagorean-identity",
+  "title": "The Pythagorean Identity",
+  "courseId": "trig-functions",
+  "chapterId": "ch5-modeling-identity",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One last gift from the unit circle. Every point on it satisfies x² + y² = 1 — that's the Pythagorean theorem on a radius-1 triangle. But x = cos θ and y = sin θ, so for EVERY angle: **sin²θ + cos²θ = 1**. Not an equation to solve — an identity, true always.",
+      "figure": "tf-pythagorean-identity"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test it.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "trace": "sin",
+        "targetAngle": 30,
+        "angleStart": 0,
+        "angleStep": 15,
+        "showGhostCoords": true,
+        "prompt": "Drag the point around the unit circle to 30° and read both coordinates, then square them and add.",
+        "successFeedback": "The coordinates are (cos θ, sin θ), and the point sits on a circle of radius 1 — so cos²θ + sin²θ = 1 at EVERY angle, not just this one. The Pythagorean identity is the circle's equation wearing trigonometric clothes.",
+        "lowFeedback": "Not at 30° yet — keep dragging round.",
+        "highFeedback": "Past 30° — come back a little."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Recover the cosine.",
+      "conceptTag": "tf-identity",
+      "explanationVariants": [
+        "cos²θ = 1 − 0.36 = 0.64, so cos θ = 0.8 (positive in Q1).",
+        "Subtract the SQUARE, then take the root."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "sin θ = 0.6 and θ is in Quadrant I. Find cos θ.",
+        "answer": 0.8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.4,
+            "feedback": "0.4 is 1 − 0.6 — subtracted without squaring. The identity works in squares: √(1 − 0.36) = 0.8."
+          },
+          {
+            "value": 0.64,
+            "feedback": "0.64 is cos²θ — one step remains: the square ROOT, 0.8."
+          }
+        ],
+        "fallbackFeedback": "√(1 − 0.36) = 0.8."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-identity__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The procedure has one subtlety. **cos²θ = 1 − sin²θ** hands you a square, and the root offers TWO candidates: ±. The identity can't tell them apart — the QUADRANT does. Chapter 3's sign rules return: locate θ, then pick.",
+      "figure": "tf-cos-from-sin"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Same sine, other side.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "sin θ = 0.6 but now θ is in Quadrant II. Find cos θ.",
+        "answer": -0.8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "The magnitude is right — but Q2 sits LEFT of the y-axis, where x < 0: cos θ = −0.8."
+          },
+          {
+            "value": -0.6,
+            "feedback": "−0.6 negates the SINE — sin θ stays 0.6 (Q2 keeps sine positive). It's cosine that flips: −0.8."
+          }
+        ],
+        "fallbackFeedback": "√0.64 = 0.8, Q2 sign: −0.8."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why the ±?",
+      "conceptTag": "tf-identity",
+      "explanationVariants": [
+        "Squaring erases signs — both 0.8 and −0.8 square to 0.64, so the identity alone can't distinguish them.",
+        "The quadrant carries the erased information: it restores the sign."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Solving cos²θ = 0.64 gives two candidates, ±0.8. Why?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Squaring erases sign — both ±0.8 square to 0.64, and the quadrant restores it",
+            "correct": true,
+            "feedback": "Exactly — the square is sign-blind, so the geometric location supplies what the algebra lost."
+          },
+          {
+            "id": "o2",
+            "label": "It's rounding error in the identity",
+            "correct": false,
+            "feedback": "Nothing is rounded — 0.36 + 0.64 = 1 exactly. The ± is structural: squares forget signs."
+          },
+          {
+            "id": "o3",
+            "label": "The identity only works in Quadrant I",
+            "correct": false,
+            "feedback": "sin² + cos² = 1 holds for EVERY angle — only the root's SIGN needs quadrant care."
+          },
+          {
+            "id": "o4",
+            "label": "Sine has two possible values",
+            "correct": false,
+            "feedback": "The sine is given and fixed — it's the recovered COSINE whose sign the square left open."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-identity__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Fractions run the same machine — and old friends surface. cos θ = 5/13 gives sin²θ = 1 − 25/169 = 144/169, so sin θ = ±12/13: the 5-12-13 triple, living inside the identity. Every Pythagorean triple is a (cos, sin) pair in disguise.",
+      "figure": "tf-fractions-identity"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A triple returns.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "cos θ = 5/13 and θ is in Quadrant IV. Find sin θ. (Round to hundredths.)",
+        "answer": -0.92,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.92,
+            "feedback": "The size is right — but Q4 sits BELOW the x-axis, where y < 0: sin θ = −12/13 ≈ −0.92."
+          },
+          {
+            "value": -0.62,
+            "feedback": "−0.62 is 8/13, from 13 − 5 — lengths subtracted. The identity subtracts SQUARES: √(144/169) = 12/13."
+          }
+        ],
+        "fallbackFeedback": "√(1 − 25/169) = 12/13; Q4 sign: ≈ −0.92."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both negative.",
+      "conceptTag": "tf-identity",
+      "explanationVariants": [
+        "cos²θ = 1 − 0.64 = 0.36, magnitude 0.6 — and Q3 makes cosine negative: −0.6.",
+        "Q3 is where BOTH coordinates go negative — the given sine's sign already hinted at it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "sin θ = −0.8 and θ is in Quadrant III. Find cos θ. (Round to hundredths.)",
+        "answer": -0.6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.6,
+            "feedback": "Magnitude right — but Q3 sits left of the y-axis: x < 0, so cos θ = −0.6."
+          },
+          {
+            "value": -0.2,
+            "feedback": "−0.2 comes from 1 − 0.8 — unsquared. Work in squares: 1 − 0.64 = 0.36, root 0.6, Q3 sign: −0.6."
+          }
+        ],
+        "fallbackFeedback": "√(1 − 0.64) = 0.6; Q3 sign: −0.6."
+      },
+      "hints": [
+        "Square the given sine first: (−0.8)² = 0.64 — the minus vanishes in the square.",
+        "cos²θ = 1 − 0.64 — root it.",
+        "Q3: both sine and cosine negative — apply the sign."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-identity__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The trail, complete.",
+      "takeaways": [
+        "sin²θ + cos²θ = 1 — the unit circle's equation wearing trig names.",
+        "Recover the missing function in squares; let the quadrant pick the root's sign.",
+        "From triangle ratios to radians, the circle, the wave, and the world — one idea, unrolled."
+      ],
+      "teaser": "That closes Trigonometric Functions — and with it, the Algebra 2 trail. Precalculus waits beyond."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-identity",
+      "concept": {
+        "id": "rem-tf0503-c",
+        "kind": "concept",
+        "body": "The identity at its cleanest: at 90° the unit-circle point is (0, 1) — sin θ = 1, so sin²θ already fills the whole 1. Nothing is left: cos²θ = 1 − 1 = 0, and cos θ = 0. When one function maxes out, the other must vanish — they share a single unit between their squares."
+      },
+      "check": {
+        "id": "rem-tf0503-k",
+        "kind": "check",
+        "body": "One takes it all.",
+        "conceptTag": "tf-identity",
+        "explanationVariants": [
+          "cos²θ = 1 − 1² = 0, so cos θ = 0.",
+          "At (0, 1) the x-coordinate is literally 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "sin θ = 1. What is cos θ?",
+          "answer": 0,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "Both can't be 1 — the squares would total 2, breaking the identity. sin² = 1 leaves cos² = 0."
+            },
+            {
+              "value": -1,
+              "feedback": "−1 squares to 1, overfilling the identity just the same — the leftover for cos² is 0."
+            }
+          ],
+          "fallbackFeedback": "1 − 1 = 0, so cos θ = 0."
+        }
+      }
+    }
+  ]
+}

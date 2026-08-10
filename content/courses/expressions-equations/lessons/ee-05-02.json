@@ -1,0 +1,426 @@
+{
+  "id": "ee-05-02",
+  "slug": "graphing-inequalities",
+  "title": "Graphing Inequalities",
+  "courseId": "expressions-equations",
+  "chapterId": "ch5-inequalities",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "solution-ray",
+      "body": "A number line can show ALL of an inequality's solutions at once: draw a **ray** — an arrow stretching in one direction — starting from the boundary. For x > 5: an **open circle** at 5 (not included) with the arrow pointing RIGHT, since bigger numbers satisfy it."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "An inequality is a whole stretch of the line.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "tickStep": 1,
+        "target": 4,
+        "start": 0,
+        "prompt": "For x > 4, place the BOUNDARY — the number where the solutions begin.",
+        "successFeedback": "4 is the boundary, and it is NOT a solution: x > 4 starts just after it, which is why the circle at 4 is drawn open. An equation has an answer; an inequality has a region, and the boundary is the fence rather than the field.",
+        "lowFeedback": "Below the boundary.",
+        "highFeedback": "Above the boundary."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 4 closer to 0 or to 10?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 0"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 10"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "4 sits 4 from 0 and 6 from 10 — the 0 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "graph-inequality",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents graph inequality.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for graph inequality must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines graph inequality."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:graph-inequality",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Closed for inclusive.",
+      "conceptTag": "graph-inequality",
+      "explanationVariants": [
+        "x ≤ 3 includes 3, so the circle at 3 is CLOSED (filled in), with the arrow pointing left.",
+        "≤ is inclusive — the boundary counts, shown with a solid dot."
+      ],
+      "widget": {
+        "type": "numberLineRay",
+        "prompt": "Draw x ≤ 3. Set the circle at the right number, make it the right KIND of circle, and point the ray the right way.",
+        "variable": "x",
+        "start": {
+          "coeff": {
+            "n": 1,
+            "d": 1
+          },
+          "constant": {
+            "n": 0,
+            "d": 1
+          },
+          "relation": "gt",
+          "inclusive": false
+        },
+        "window": {
+          "min": {
+            "n": -4,
+            "d": 1
+          },
+          "max": {
+            "n": 8,
+            "d": 1
+          },
+          "tickStep": {
+            "n": 1,
+            "d": 1
+          }
+        },
+        "step": {
+          "n": 1,
+          "d": 1
+        },
+        "outOfRange": "clamp",
+        "offLattice": "snap",
+        "transforms": [],
+        "target": {
+          "coeff": {
+            "n": 1,
+            "d": 1
+          },
+          "constant": {
+            "n": 3,
+            "d": 1
+          },
+          "relation": "lt",
+          "inclusive": true
+        },
+        "successFeedback": "Closed circle at 3, ray running left — ≤ includes 3 (that is what the filled circle says), and every smaller number works (that is what the leftward ray says).",
+        "fallbackFeedback": "Test a number: does 3 itself satisfy x ≤ 3? Does 5? Let the answers place the circle and the arrow."
+      },
+      "hints": [
+        "Does ≤ include the boundary?",
+        "Yes — closed circle.",
+        "≤ means smaller numbers — arrow points left."
+      ],
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "graphBuild"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The arrow direction matches the inequality's meaning: **>** or **≥** point RIGHT (toward bigger numbers); **<** or **≤** point LEFT (toward smaller numbers). Reading a graph works backwards too: an open circle at 2 with an arrow going left describes x < 2.",
+      "figure": "solution-ray"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a graph.",
+      "conceptTag": "graph-inequality",
+      "explanationVariants": [
+        "A closed circle at 4 with an arrow going right describes x ≥ 4 — 4 is included, and bigger numbers work.",
+        "Closed (includes boundary) + rightward (bigger numbers) = ≥."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A number line shows a CLOSED circle at 4 with the arrow pointing RIGHT. Which inequality does this graph?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "≥"
+          },
+          {
+            "id": "t2",
+            "label": ">"
+          },
+          {
+            "id": "t3",
+            "label": "≤"
+          },
+          {
+            "id": "t4",
+            "label": "4"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t2",
+              "t4"
+            ],
+            "feedback": "A closed circle means the boundary IS included — that's ≥, not the strict >."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t4"
+            ],
+            "feedback": "≤ points LEFT (smaller numbers). This graph points right, matching ≥ instead."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Closed circle = boundary included (≥ or ≤); rightward arrow = larger numbers (≥).",
+        "successFeedback": "Right — closed circle means 4 is included, and rightward means bigger numbers: x ≥ 4."
+      },
+      "hints": [
+        "Closed circle means the boundary is included.",
+        "Right arrow means bigger numbers.",
+        "That combination is ≥."
+      ],
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "graphToInequality"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match graph description to inequality.",
+      "conceptTag": "graph-inequality",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each graph description to its inequality.",
+        "left": [
+          {
+            "id": "g1",
+            "label": "Open circle at 2, arrow right"
+          },
+          {
+            "id": "g2",
+            "label": "Closed circle at 6, arrow left"
+          },
+          {
+            "id": "g3",
+            "label": "Open circle at 0, arrow left"
+          },
+          {
+            "id": "g4",
+            "label": "Closed circle at 1, arrow right"
+          }
+        ],
+        "right": [
+          {
+            "id": "e1",
+            "label": "x > 2"
+          },
+          {
+            "id": "e2",
+            "label": "x ≤ 6"
+          },
+          {
+            "id": "e3",
+            "label": "x < 0"
+          },
+          {
+            "id": "e4",
+            "label": "x ≥ 1"
+          }
+        ],
+        "pairs": {
+          "g1": "e1",
+          "g2": "e2",
+          "g3": "e3",
+          "g4": "e4"
+        },
+        "pairErrors": [
+          {
+            "left": "g1",
+            "right": "e4",
+            "feedback": "x ≥ 1 needs a CLOSED circle. Open circle at 2 pointing right is the strict x > 2."
+          },
+          {
+            "left": "g2",
+            "right": "e1",
+            "feedback": "x > 2 needs an OPEN circle. Closed circle at 6 pointing left is x ≤ 6."
+          }
+        ],
+        "missFeedback": "Open = strict (>/<); closed = inclusive (≥/≤). Right = bigger numbers; left = smaller numbers.",
+        "successFeedback": "All matched — circle style shows strict vs. inclusive; arrow direction shows bigger vs. smaller."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Test a point against a graph.",
+      "conceptTag": "graph-inequality",
+      "explanationVariants": [
+        "The graph for x < 0 has an open circle at 0 pointing left — only NEGATIVE numbers qualify, so -3 works.",
+        "-3 is left of 0 on the number line, matching the arrow's direction."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The graph shows x < 0 (open circle at 0, arrow left). Does x = -3 satisfy it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — -3 is less than 0",
+            "correct": true,
+            "feedback": "Right — -3 sits left of 0 on the line, matching the arrow's direction, and -3 < 0 is true."
+          },
+          {
+            "id": "b",
+            "label": "No — negative numbers aren't on this graph",
+            "feedback": "Negative numbers ARE exactly what's included — the arrow points left, into the negatives. -3 < 0 is true."
+          },
+          {
+            "id": "c",
+            "label": "Only positive numbers satisfy x < 0",
+            "feedback": "That's backwards — x < 0 means numbers LESS than zero, which are the negatives. -3 qualifies."
+          }
+        ]
+      },
+      "hints": [
+        "Which way does the arrow point?",
+        "Left — toward negative numbers.",
+        "-3 is negative, so it's included."
+      ],
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "testPoint"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build the whole picture.",
+      "conceptTag": "graph-inequality",
+      "hints": [
+        "\"At most 8\" is inclusive — closed circle.",
+        "That's ≤, so the arrow points left (smaller numbers).",
+        "Test whether 8 itself qualifies."
+      ],
+      "explanationVariants": [
+        "\"At most 8\" is w ≤ 8: closed circle at 8, arrow left — and 8 itself DOES satisfy it (8 ≤ 8 is true).",
+        "\"At most\" is inclusive, matching ≤, so the boundary counts."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A cooler holds \"at most 8\" drinks: w ≤ 8. On the graph (closed circle at 8, arrow left), does w = 8 itself satisfy the inequality?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — 8 ≤ 8 is true, and the circle is closed",
+            "correct": true,
+            "feedback": "Right — \"at most 8\" includes exactly 8, matching the closed circle."
+          },
+          {
+            "id": "b",
+            "label": "No — you need strictly fewer than 8",
+            "feedback": "\"At most\" is inclusive (≤), not strict. The closed circle at 8 means 8 itself qualifies."
+          },
+          {
+            "id": "c",
+            "label": "Only whole numbers below 8 count",
+            "feedback": "≤ includes 8 itself, shown by the closed circle. 8 satisfies w ≤ 8."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-tse-inequality-build",
+        "form": "atMostBoundary"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Circle style and arrow direction.",
+      "takeaways": [
+        "Open circle = strict (excludes boundary); closed circle = inclusive (includes it).",
+        "Arrow points right for bigger numbers (>, ≥), left for smaller (<, ≤).",
+        "A graph and its inequality carry the exact same information, two different ways."
+      ],
+      "teaser": "chapter and course finale: variables that depend on each other."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "graph-inequality",
+      "concept": {
+        "id": "rem-gi-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Open excludes, closed includes; right means bigger, left means smaller.** x ≥ 2: closed circle (2 counts) with the arrow pointing right (bigger numbers)."
+      },
+      "check": {
+        "id": "rem-gi-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "graph-inequality",
+        "explanationVariants": [
+          "x ≥ 2 needs a closed circle (2 is included) with the arrow pointing right.",
+          "≥ is inclusive and points toward bigger numbers."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Graphing x ≥ 2, what circle and arrow direction do you use?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Closed circle, arrow right",
+              "correct": true,
+              "feedback": "Right — ≥ includes 2 (closed) and points toward bigger numbers (right)."
+            },
+            {
+              "id": "b",
+              "label": "Open circle, arrow right",
+              "feedback": "≥ INCLUDES the boundary, so the circle should be closed, not open."
+            },
+            {
+              "id": "c",
+              "label": "Closed circle, arrow left",
+              "feedback": "The circle is right (closed), but ≥ wants BIGGER numbers — arrow should point right, not left."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,332 @@
+{
+  "id": "ep-02-02",
+  "slug": "adding-polynomials",
+  "title": "Adding Polynomials",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch2-polynomial-basics",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "like-terms-group",
+      "body": "To **add** polynomials, combine like terms: add the coefficients of matching terms and keep everything else. Line up x² with x², x with x, constants with constants — then add each column, signs included."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Adding polynomials is collecting like tiles.",
+      "widget": {
+        "type": "algebraTiles",
+        "targetX": 3,
+        "targetConst": 2,
+        "maxTiles": 8,
+        "xStart": 0,
+        "constStart": 0,
+        "prompt": "Build (2x + 3) + (x − 1) with tiles, then read the simplified expression.",
+        "successFeedback": "3x + 2. The x-tiles pile with the x-tiles and the units with the units — and the −1 cancels one of the +3 as a zero pair. Like terms are not a rule; they are the only tiles that stack.",
+        "xFeedback": "The number of x-tiles is wrong: 2x and x make 3x.",
+        "constFeedback": "The x-tiles are right but the units are off: 3 and −1 leave 2."
+      },
+      "predict": {
+        "prompt": "In (2x + 3) + (x − 1), can the 3 combine with an x?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — x-tiles and unit-tiles are different shapes"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — 3 + x makes 3x"
+          },
+          {
+            "id": "pos",
+            "label": "Only when x is positive"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "3x means three x-TILES; 3 means three unit tiles — different shapes that never merge. Like combines with like: 2x + x = 3x and 3 − 1 = 2, so the tiles will land on 3x + 2."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Combine polynomial tiles while preserving value and respecting unlike units.",
+        "invariants": [
+          "expression-value-preserved",
+          "only-like-units-combine"
+        ],
+        "misconceptions": [
+          "combine-unlike-terms",
+          "missed-zero-pair"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "polynomial-addition-with-negative-terms",
+        "delayed": true,
+        "counterfactualPrompt": "Add one x-tile and one unit tile. Predict exactly which coefficients change before rebuilding.",
+        "explanation": {
+          "prompt": "Why can x-tiles combine with x-tiles but not with unit tiles?",
+          "options": [
+            {
+              "id": "units",
+              "label": "They represent the same algebraic unit, while a unit tile represents a different quantity.",
+              "correct": true,
+              "feedback": "Correct — like terms share the same variable part and can be counted together."
+            },
+            {
+              "id": "color",
+              "label": "They combine only because the tiles have matching colors.",
+              "correct": false,
+              "feedback": "Color is only a cue; the algebraic unit is what determines whether terms are like."
+            }
+          ]
+        }
+      },
+      "conceptTag": "poly-add"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the constants.",
+      "conceptTag": "poly-add",
+      "explanationVariants": [
+        "The constants are 2 and −6, so 2 + (−6) = −4.",
+        "Add the constant terms with signs: 2 + (−6) = −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add (5x^2 - 3x + 2) and (2x^2 + 7x - 6). What is the constant term of the sum?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "Keep the sign: 2 + (−6) = −4."
+          },
+          {
+            "value": 8,
+            "feedback": "That added the sizes: 2 + 6. With signs it's 2 + (−6) = −4."
+          }
+        ],
+        "fallbackFeedback": "Add the constants: 2 + (−6) = −4."
+      },
+      "variant": {
+        "gen": "poly-addsub"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: (3x² + 2x − 5) + (x² − 4x + 1). x²: 3 + 1 = **4**; x: 2 + (−4) = **−2**; constant: −5 + 1 = **−4**. Sum: **4x² − 2x − 4**. Each column is just a signed addition.",
+      "figure": "ep-add-poly"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the full sum.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the sum of (x^3 + 4x - 1) and (2x^3 - x + 6)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3x^3 + 3x + 5",
+            "correct": true,
+            "feedback": "Yes — x^3: 1 + 2 = 3; x: 4 + (−1) = 3; constant: −1 + 6 = 5."
+          },
+          {
+            "id": "b",
+            "label": "3x^3 + 5x + 5",
+            "feedback": "The x-terms are 4 and −1: 4 + (−1) = 3, not 5. So 3x^3 + 3x + 5."
+          },
+          {
+            "id": "c",
+            "label": "2x^3 + 3x + 5",
+            "feedback": "The x^3 terms are 1 and 2: 1 + 2 = 3, not 2. So 3x^3 + 3x + 5."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Line up like terms first. If one polynomial has no x² term, its x² coefficient is 0 — the other's carries through unchanged. Keep every sign as you add each column.",
+      "figure": "ep-line-up"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Add the cubic terms.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add (x^3 + 4x - 1) and (2x^3 - x + 6). What is the coefficient of x^3 in the sum?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's only the second polynomial's x^3 term. Add both: 1 + 2 = 3."
+          },
+          {
+            "value": 1,
+            "feedback": "That's only the first polynomial's x^3 term. Add both: 1 + 2 = 3."
+          }
+        ],
+        "fallbackFeedback": "Add the x^3 coefficients: 1 + 2 = 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The x-column.",
+      "conceptTag": "poly-add",
+      "explanationVariants": [
+        "The x-terms are −3 and 7, so −3 + 7 = 4.",
+        "Add the x-coefficients with signs: −3 + 7 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add (5x^2 - 3x + 2) and (2x^2 + 7x - 6). What is the coefficient of x in the sum?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Keep the signs: −3 + 7 = 4, not 3 + 7."
+          },
+          {
+            "value": -4,
+            "feedback": "Watch the signs: −3 + 7 = +4."
+          }
+        ],
+        "fallbackFeedback": "Add with signs: −3 + 7 = 4."
+      },
+      "variant": {
+        "gen": "poly-addsub",
+        "form": "addX"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The constant column.",
+      "conceptTag": "poly-add",
+      "explanationVariants": [
+        "The constants are −1 and 6, so −1 + 6 = 5.",
+        "Add the constants with signs: −1 + 6 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add (x^3 + 4x - 1) and (2x^3 - x + 6). What is the constant term of the sum?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "Keep the signs: −1 + 6 = 5, not 1 + 6."
+          },
+          {
+            "value": -5,
+            "feedback": "Watch the signs: −1 + 6 = +5."
+          }
+        ],
+        "fallbackFeedback": "Add the constants: −1 + 6 = 5."
+      },
+      "variant": {
+        "gen": "poly-addsub"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A negative leading term.",
+      "conceptTag": "poly-add",
+      "explanationVariants": [
+        "The x^2 terms are 4 and −1, so 4 + (−1) = 3.",
+        "Add the x^2 coefficients with signs: 4 + (−1) = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add (4x^2 + x - 3) and (-x^2 + 5x + 2). What is the coefficient of x^2 in the sum?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That looks like 4 + 1 from the wrong column. The x^2 terms are 4 and −1: 4 + (−1) = 3."
+          },
+          {
+            "value": 4,
+            "feedback": "The second polynomial has −x^2, which counts: 4 + (−1) = 3."
+          }
+        ],
+        "fallbackFeedback": "Add the x^2 coefficients: 4 + (−1) = 3."
+      },
+      "hints": [
+        "Find both x^2 terms: 4x^2 and −x^2.",
+        "Their coefficients are 4 and −1.",
+        "4 + (−1) = 3."
+      ],
+      "variant": {
+        "gen": "poly-addsub",
+        "form": "addSquare"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Adding polynomials is column-by-column signed addition.",
+      "takeaways": [
+        "Combine like terms: add coefficients of matching terms.",
+        "A missing term contributes a coefficient of 0.",
+        "Carry every sign through each column."
+      ],
+      "teaser": "next: subtracting — where the signs get trickier."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "poly-add",
+      "concept": {
+        "id": "rem-pa-c",
+        "kind": "concept",
+        "body": "Add polynomials by combining like terms, signs included. For (3x^2 + 2x − 5) + (x^2 − 4x + 1): x^2 gives 3 + 1 = 4, x gives 2 + (−4) = −2, constant gives −5 + 1 = −4."
+      },
+      "check": {
+        "id": "rem-pa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "poly-add",
+        "explanationVariants": [
+          "The x-terms are 2 and −4: 2 + (−4) = −2.",
+          "Add with signs: 2 + (−4) = −2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Add (3x^2 + 2x - 5) and (x^2 - 4x + 1). What is the coefficient of x in the sum?",
+          "answer": -2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "Keep the signs: 2 + (−4) = −2."
+            },
+            {
+              "value": 2,
+              "feedback": "Add both x-terms: 2 + (−4) = −2."
+            }
+          ],
+          "fallbackFeedback": "Add with signs: 2 + (−4) = −2."
+        }
+      }
+    }
+  ]
+}

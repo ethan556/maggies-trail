@@ -1,0 +1,429 @@
+{
+  "id": "dop-01-02",
+  "slug": "grouping-symbols-first",
+  "title": "Grouping Symbols First",
+  "courseId": "decimal-operations",
+  "chapterId": "ch1-order-of-operations",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sometimes you *want* the addition to happen first. **Parentheses** let you say so: whatever sits inside them gets done before anything else. So 2 + 3 × 4 is 14, but (2 + 3) × 4 is 20 — the parentheses force the 2 + 3, then multiply. Grouping symbols outrank the ×÷-first rule.",
+      "figure": "dop-grouping"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Group first.",
+      "conceptTag": "grouping-symbols",
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is (2 + 3) × 4?",
+        "task": "groupedEvaluate",
+        "values": [],
+        "group": {
+          "a": 2,
+          "b": 3,
+          "c": 4,
+          "innerOp": "add",
+          "outerOp": "multiply",
+          "groupSide": "left"
+        },
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "group:inner",
+          "group:outer"
+        ],
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "14 ignores the parentheses and multiplies first. The parentheses force 2 + 3 = 5 first, then 5 × 4 = 20."
+          },
+          {
+            "value": 24,
+            "feedback": "24 doesn't match. Inside the parentheses first: 2 + 3 = 5, then 5 × 4 = 20."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every required exact-number state before checking.",
+        "fallbackFeedback": "Do the parentheses first: 2 + 3 = 5, then 5 × 4 = 20.",
+        "answerMode": "numeric",
+        "successFeedback": "Do the parentheses first: 2 + 3 = 5, then 5 × 4 = 20."
+      },
+      "hints": [
+        "Do what's inside the parentheses first.",
+        "2 + 3 = 5.",
+        "Then 5 × 4 = 20."
+      ],
+      "explanationVariants": [
+        "Parentheses first: 2 + 3 = 5, then 5 × 4 = 20.",
+        "The grouping overrides the multiply-first rule."
+      ],
+      "predict": {
+        "prompt": "Parentheses drop into 2 + 3 × 4, making (2 + 3) × 4. The value will…",
+        "options": [
+          {
+            "id": "rise",
+            "label": "Rise to 20 — the whole sum gets multiplied"
+          },
+          {
+            "id": "same",
+            "label": "Stay 14 — parentheses just clarify"
+          },
+          {
+            "id": "fall",
+            "label": "Drop below 14"
+          }
+        ],
+        "outcomeId": "rise",
+        "reveal": "Without parentheses only the 3 meets the × 4: 2 + 12 = 14. Grouping first sends the whole 5 through: 5 × 4 = 20. Parentheses aren't decoration — they reroute which numbers an operation touches."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compare with and without.",
+      "conceptTag": "grouping-symbols",
+      "explanationVariants": [
+        "Inside first: 10 − 2 = 8, then 8 × 3 = 24.",
+        "The parentheses make the subtraction happen before the multiply: 24."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is (10 − 2) × 3?",
+        "task": "groupedEvaluate",
+        "values": [],
+        "group": {
+          "a": 10,
+          "b": 2,
+          "c": 3,
+          "innerOp": "subtract",
+          "outerOp": "multiply",
+          "groupSide": "left"
+        },
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "group:inner",
+          "group:outer"
+        ],
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 4,
+            "feedback": "4 ignores the parentheses (that's 10 − 2×3). Grouping first: 10 − 2 = 8, then 8 × 3 = 24."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is just what's inside the parentheses — the × 3 still happens: 8 × 3 = 24."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every required exact-number state before checking.",
+        "fallbackFeedback": "Do the parentheses first: 10 − 2 = 8, then 8 × 3 = 24.",
+        "answerMode": "numeric",
+        "successFeedback": "Do the parentheses first: 10 − 2 = 8, then 8 × 3 = 24."
+      },
+      "variant": {
+        "gen": "grouping-first"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "After the grouping is done, finish with the usual order: ×÷ before +−. In 3 × (4 + 2), do 4 + 2 = 6 inside, then 3 × 6 = 18. Grouping just changes *which* step goes first — the rest of the rule still applies to what's left.",
+      "figure": "dop-precedence"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Group, then multiply.",
+      "conceptTag": "grouping-symbols",
+      "explanationVariants": [
+        "Inside first: 4 + 2 = 6, then 3 × 6 = 18.",
+        "Parentheses, then multiply: 3 × 6 = 18."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is 3 × (4 + 2)?",
+        "task": "groupedEvaluate",
+        "values": [],
+        "group": {
+          "a": 4,
+          "b": 2,
+          "c": 3,
+          "innerOp": "add",
+          "outerOp": "multiply",
+          "groupSide": "right"
+        },
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "group:inner",
+          "group:outer"
+        ],
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "14 multiplies before grouping (3×4, then +2). The parentheses go first: 4 + 2 = 6, then 3 × 6 = 18."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is just what's inside — the 3 × still happens: 3 × 6 = 18."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every required exact-number state before checking.",
+        "fallbackFeedback": "Do the parentheses first: 4 + 2 = 6, then 3 × 6 = 18.",
+        "answerMode": "numeric",
+        "successFeedback": "Do the parentheses first: 4 + 2 = 6, then 3 × 6 = 18."
+      },
+      "variant": {
+        "gen": "grouping-first",
+        "form": "mulGroup"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which happens first?",
+      "conceptTag": "grouping-symbols",
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "In 20 − (3 + 5), what is the very first step?",
+        "task": "groupedFirst",
+        "values": [],
+        "group": {
+          "a": 3,
+          "b": 5,
+          "c": 1,
+          "innerOp": "add",
+          "outerOp": "multiply",
+          "groupSide": "left"
+        },
+        "requiredExplorations": 1,
+        "requiredStageKeys": [
+          "group:inner"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "Add 3 + 5 inside the parentheses",
+            "feedback": "Grouping symbols always go first: 3 + 5 = 8, then 20 − 8 = 12.",
+            "claim": "first:group"
+          },
+          {
+            "id": "b",
+            "label": "Subtract 20 − 3",
+            "feedback": "The parentheses keep the 3 + 5 together — you can't pull the 3 out. Do 3 + 5 = 8 first, then 20 − 8.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "It doesn't matter",
+            "feedback": "Order always matters here. The parentheses come first: 3 + 5 = 8, then 20 − 8 = 12.",
+            "claim": "misconception:c"
+          }
+        ],
+        "numericErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every required exact-number state before checking.",
+        "fallbackFeedback": "Use the exact-number states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Grouping symbols always go first: 3 + 5 = 8, then 20 − 8 = 12."
+      },
+      "hints": [
+        "Parentheses always come first.",
+        "The first step is inside them.",
+        "3 + 5 = 8."
+      ],
+      "explanationVariants": [
+        "Inside first: 3 + 5 = 8, then 20 − 8 = 12.",
+        "The grouping must be resolved before the subtraction."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Group, then divide.",
+      "conceptTag": "grouping-symbols",
+      "explanationVariants": [
+        "Inside first: 9 − 3 = 6, then 6 ÷ 2 = 3.",
+        "Parentheses, then divide: 6 ÷ 2 = 3."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is (9 − 3) ÷ 2?",
+        "task": "groupedEvaluate",
+        "values": [],
+        "group": {
+          "a": 9,
+          "b": 3,
+          "c": 2,
+          "innerOp": "subtract",
+          "outerOp": "divide",
+          "groupSide": "left"
+        },
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "group:inner",
+          "group:outer"
+        ],
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 8,
+            "feedback": "8 ignores the parentheses (that's 9 − 3÷2 = 9 − 1.5... no). Group first: 9 − 3 = 6, then 6 ÷ 2 = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is just what's inside — the ÷ 2 still happens: 6 ÷ 2 = 3."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every required exact-number state before checking.",
+        "fallbackFeedback": "Do the parentheses first: 9 − 3 = 6, then 6 ÷ 2 = 3.",
+        "answerMode": "numeric",
+        "successFeedback": "Do the parentheses first: 9 − 3 = 6, then 6 ÷ 2 = 3."
+      },
+      "variant": {
+        "gen": "grouping-first",
+        "form": "groupDiv"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Grouping beats the default.",
+      "conceptTag": "grouping-symbols",
+      "hints": [
+        "The parentheses come first, even though there's a × outside.",
+        "7 + 2 = 9.",
+        "Then 9 × 3."
+      ],
+      "explanationVariants": [
+        "Parentheses first: 7 + 2 = 9, then 9 × 3 = 27.",
+        "The grouping overrides multiply-first: (7+2)×3 = 27, not 7 + 2×3 = 13."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is (7 + 2) × 3?",
+        "task": "groupedEvaluate",
+        "values": [],
+        "group": {
+          "a": 7,
+          "b": 2,
+          "c": 3,
+          "innerOp": "add",
+          "outerOp": "multiply",
+          "groupSide": "left"
+        },
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "group:inner",
+          "group:outer"
+        ],
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 13,
+            "feedback": "13 ignores the parentheses and multiplies first (7 + 2×3). Grouping wins: 7 + 2 = 9, then 9 × 3 = 27."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is just what's inside the parentheses — the × 3 still happens: 9 × 3 = 27."
+          }
+        ],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every required exact-number state before checking.",
+        "fallbackFeedback": "Do the parentheses first: 7 + 2 = 9, then 9 × 3 = 27.",
+        "answerMode": "numeric",
+        "successFeedback": "Do the parentheses first: 7 + 2 = 9, then 9 × 3 = 27."
+      },
+      "variant": {
+        "gen": "grouping-first",
+        "form": "groupAddMul"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Parentheses go first — then the usual order.",
+      "takeaways": [
+        "Grouping symbols (parentheses) are done before anything else.",
+        "They let you force an addition or subtraction ahead of a multiply or divide.",
+        "After the grouping, finish with the normal rule: ×÷ before +−."
+      ],
+      "teaser": "next: writing and reading expressions, in symbols and in words."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "grouping-symbols",
+      "concept": {
+        "id": "rem-gs-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Whatever is inside parentheses is done first — before ×, ÷, +, or −.** In (3 + 1) × 5, do 3 + 1 = 4 first, then 4 × 5 = 20. The parentheses jump the line."
+      },
+      "check": {
+        "id": "rem-gs-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "grouping-symbols",
+        "explanationVariants": [
+          "Inside first: 3 + 1 = 4, then 4 × 5 = 20.",
+          "Parentheses, then multiply: 4 × 5 = 20."
+        ],
+        "widget": {
+          "type": "exactNumberLab",
+          "prompt": "What is (3 + 1) × 5?",
+          "task": "groupedEvaluate",
+          "values": [],
+          "group": {
+            "a": 3,
+            "b": 1,
+            "c": 5,
+            "innerOp": "add",
+            "outerOp": "multiply",
+            "groupSide": "left"
+          },
+          "requiredExplorations": 2,
+          "requiredStageKeys": [
+            "group:inner",
+            "group:outer"
+          ],
+          "answerUnit": "",
+          "tolerance": 0,
+          "choices": [],
+          "numericErrors": [
+            {
+              "value": 8,
+              "feedback": "8 multiplies before grouping (3 + 1×5). Parentheses first: 3 + 1 = 4, then 4 × 5 = 20."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is just what's inside — the × 5 still happens: 4 × 5 = 20."
+            }
+          ],
+          "authoredStages": [],
+          "explorationFeedback": "Inspect every required exact-number state before checking.",
+          "fallbackFeedback": "Do the parentheses first: 3 + 1 = 4, then 4 × 5 = 20.",
+          "answerMode": "numeric",
+          "successFeedback": "Do the parentheses first: 3 + 1 = 4, then 4 × 5 = 20."
+        }
+      }
+    }
+  ]
+}

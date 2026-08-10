@@ -1,0 +1,284 @@
+{
+  "id": "de-04-01",
+  "slug": "eulers-method",
+  "title": "Euler's Method: Walking the Field",
+  "courseId": "differential-equations",
+  "chapterId": "ch4-eulers-method",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Most differential equations cannot be solved with symbols. At all. Ever.\n\nBut the **field** always exists — so **walk it**.\n\nStand at the starting point. Read the instruction (the slope). Take one small step in that direction. Read the new instruction. Step again.\n\n**yₙ₊₁ = yₙ + h·f(xₙ, yₙ)**\n\nThat is Euler's method, and it is nothing but the tangent-line approximation from C2, used over and over.",
+      "figure": "dr-tangent-line"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Take one step.",
+      "conceptTag": "de-euler",
+      "explanationVariants": [
+        "At (0, 1) with dy/dx = y, the slope is 1. A step of h = 0.5 gives y ≈ 1 + 0.5(1) = 1.5.",
+        "New value = old value + step × slope. That is the whole formula."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dy/dx = y with y(0) = 1. Take ONE Euler step of size h = 0.5. What is the new y?",
+        "answer": 1.5,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That is where you started. The step adds h × slope = 0.5 × 1 = 0.5."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is the step SIZE, not the new value. Add it to the old y: 1 + 0.5 = 1.5."
+          },
+          {
+            "value": 2,
+            "feedback": "That would be a step of h = 1. With h = 0.5 the increment is only 0.5."
+          }
+        ],
+        "fallbackFeedback": "y₁ = 1 + 0.5(1) = 1.5."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-euler__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The field is what you are walking on.",
+      "widget": {
+        "type": "slopeField",
+        "equation": "exponential",
+        "targetY0": 1,
+        "startY0": 5,
+        "prompt": "dy/dx = 0.5y. Drag the starting value to y = 1 — the curve Euler's method would try to trace, step by step.",
+        "successFeedback": "That smooth curve is what Euler is aiming at. His method never draws it — it draws a chain of straight segments that follow the field, cutting each corner slightly. And the corners are always cut on the INSIDE of the bend, which is why Euler undershoots a curve that bends upward.",
+        "lowFeedback": "Below y = 1 — a lower curve, and a flatter field to walk through.",
+        "highFeedback": "Above y = 1 — a higher curve, with steeper instructions everywhere along it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change an initial condition and trace a solution that remains tangent to the local direction field.",
+        "invariants": [
+          "field-slope-depends-on-position",
+          "solution-follows-local-slopes"
+        ],
+        "misconceptions": [
+          "all-solutions-share-one-curve",
+          "field-arrows-are-motion-vectors"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "differential-equations-slopeField",
+        "delayed": false
+      },
+      "conceptTag": "de-euler",
+      "predict": {
+        "prompt": "Euler's method walks in straight tangent steps. On dy/dx = 0.5y, whose curves bend upward, its answer will land…",
+        "options": [
+          {
+            "id": "low",
+            "label": "Below the true curve"
+          },
+          {
+            "id": "high",
+            "label": "Above the true curve"
+          },
+          {
+            "id": "exact",
+            "label": "On it — the field is exact at every point"
+          }
+        ],
+        "outcomeId": "low",
+        "reveal": "Below. A curve that bends upward pulls away above its own tangent, so every straight step lands under it, and the next step starts from that deficit. The error is not random noise — it is one-directional and it compounds, which is why halving the step size is worth doing."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two steps.",
+      "conceptTag": "de-euler",
+      "explanationVariants": [
+        "Step 1: y = 1 + 0.5(1) = 1.5. Step 2: the slope is now 1.5, so y = 1.5 + 0.5(1.5) = 2.25.",
+        "The slope is re-read at every step — that is what makes it follow the field rather than a single tangent line."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Continue: dy/dx = y, y(0) = 1, h = 0.5. After TWO steps (at x = 1), what is y?",
+        "answer": 2.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That is 1 + 0.5 + 0.5 — using the same slope of 1 twice. The slope must be RE-READ at the new point, where it is 1.5."
+          },
+          {
+            "value": 1.5,
+            "feedback": "That is after one step. Take a second: 1.5 + 0.5(1.5) = 2.25."
+          },
+          {
+            "value": 2.718,
+            "feedback": "That is the TRUE value, e. Euler with h = 0.5 gives 2.25 — a noticeable undershoot."
+          }
+        ],
+        "fallbackFeedback": "y₁ = 1.5, then y₂ = 1.5 + 0.5(1.5) = 2.25."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-euler__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Euler's answer is **wrong**, and it is wrong in a predictable direction.\n\nEach step follows the tangent, and a tangent to a **concave-up** curve lies BELOW it — so Euler **undershoots**. For a concave-down curve, it overshoots.\n\nThat is the same f″ argument from C2's linearisation lesson, applied once per step. And halving h roughly halves the total error.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which way is it wrong?",
+      "conceptTag": "de-euler",
+      "explanationVariants": [
+        "y = eˣ is concave up, so every tangent lies below the curve, and Euler undershoots: 2.25 against the true 2.718.",
+        "Predicting the DIRECTION of the error before computing it is exactly the f″ reasoning from C2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Euler gives 2.25 where the true answer is e ≈ 2.718. Why the undershoot?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = eˣ is concave UP, so every tangent step lies below the curve.",
+            "correct": true,
+            "feedback": "Right — and it is the same f″ argument as C2's linearisation, applied once per step. The direction of the error was predictable before any arithmetic."
+          },
+          {
+            "id": "o2",
+            "label": "Because h is too big.",
+            "correct": false,
+            "feedback": "A big h makes the error LARGER, but it does not decide its SIGN. Even with a tiny h, Euler would still undershoot this curve — just by less."
+          },
+          {
+            "id": "o3",
+            "label": "Because e is irrational.",
+            "correct": false,
+            "feedback": "Irrationality has nothing to do with it. The undershoot comes from the geometry: tangents to a concave-up curve lie underneath it."
+          },
+          {
+            "id": "o4",
+            "label": "An arithmetic slip.",
+            "correct": false,
+            "feedback": "The arithmetic is right: 2.25 is exactly what two Euler steps of 0.5 produce. The gap is the method's error, not a mistake."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-euler__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Halve the step.",
+      "conceptTag": "de-euler",
+      "hints": [
+        "With h = 0.25 you need FOUR steps to reach x = 1. Each one multiplies y by (1 + 0.25).",
+        "So y₄ = (1.25)⁴.",
+        "Compute it and compare with the h = 0.5 answer of 2.25 and the true e ≈ 2.718."
+      ],
+      "explanationVariants": [
+        "y = (1.25)⁴ ≈ 2.4414 — closer to e ≈ 2.718 than 2.25 was, and still an undershoot, exactly as concave-up predicts.",
+        "Halving h roughly halved the error: it was 0.47, now it is 0.28. Euler is a first-order method, which is why it is honest but slow."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dy/dx = y, y(0) = 1, but now h = 0.25 (four steps to x = 1). Find y, to four decimals.",
+        "answer": 2.4414,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 2.25,
+            "feedback": "That is the h = 0.5 answer. With four smaller steps you get (1.25)⁴ ≈ 2.4414 — closer to the truth."
+          },
+          {
+            "value": 2.718,
+            "feedback": "That is the TRUE value. Euler still undershoots it, but by less than before: 2.4414."
+          },
+          {
+            "value": 1.25,
+            "feedback": "That is after ONE step. Four steps give (1.25)⁴ ≈ 2.4414."
+          }
+        ],
+        "fallbackFeedback": "Each step multiplies by 1.25, so y = (1.25)⁴ ≈ 2.4414 — still short of e, but closer."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-euler__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "When you cannot solve it, walk it.",
+      "takeaways": [
+        "yₙ₊₁ = yₙ + h·f(xₙ, yₙ): read the slope, take a step, re-read the slope. Repeat.",
+        "It is C2's tangent-line approximation, used once per step — so it undershoots a concave-up curve and overshoots a concave-down one.",
+        "Halving h roughly halves the error. Most differential equations in the world are solved this way, or by its smarter descendants."
+      ],
+      "teaser": "That is AP Calculus AB, complete: limits, derivatives, integrals, and now differential equations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "de-euler",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "**New y = old y + (step size) × (slope right now).** Then move along by the step size, read the NEW slope at the NEW point, and do it again. You are walking through the field one short straight line at a time.",
+        "figure": "dr-tangent-line"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "One step.",
+        "conceptTag": "de-euler",
+        "explanationVariants": [
+          "At (0, 2) with dy/dx = y the slope is 2, so a step of 0.1 gives y = 2 + 0.1(2) = 2.2.",
+          "Old value plus step times slope."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "dy/dx = y, y(0) = 2, h = 0.1. Find y after one step.",
+          "answer": 2.2,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "That is the starting value. Add h × slope = 0.1 × 2 = 0.2."
+            },
+            {
+              "value": 0.2,
+              "feedback": "That is the INCREMENT. Add it to the old y: 2 + 0.2 = 2.2."
+            }
+          ],
+          "fallbackFeedback": "y = 2 + 0.1(2) = 2.2."
+        }
+      }
+    }
+  ]
+}

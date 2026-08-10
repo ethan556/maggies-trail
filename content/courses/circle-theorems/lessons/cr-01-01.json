@@ -1,0 +1,303 @@
+{
+  "id": "cr-01-01",
+  "slug": "central-angles-arcs",
+  "title": "Central Angles & Arcs",
+  "courseId": "circle-theorems",
+  "chapterId": "ch1-central-inscribed",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-central-arcs",
+      "concept": {
+        "id": "rem-cr-central-arcs-c",
+        "kind": "concept",
+        "body": "Arc measure is DEFINED as the central angle standing on it — a pure count of turning, independent of the circle's size. The whole circle is 360°, so arcs on the same circle add up: the major arc is 360° minus the minor. Minor arcs (<180°) take two-letter names; major arcs (>180°) take three."
+      },
+      "check": {
+        "id": "rem-cr-central-arcs-k",
+        "kind": "check",
+        "body": "One subtraction.",
+        "conceptTag": "cr-central-arcs",
+        "explanationVariants": [
+          "360 − 100 = 260° — over 180, so it's the major arc.",
+          "Everything the minor arc didn't take: 260°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A minor arc measures 100°. The major arc between the same endpoints measures ?",
+          "answer": 260,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 80,
+              "feedback": "80 = 180 − 100 supplements on a straight line — circles supplement to 360: 260°."
+            },
+            {
+              "value": 100,
+              "feedback": "100° repeats the minor arc — the major arc is the REST of the circle: 260°."
+            }
+          ],
+          "fallbackFeedback": "360 − 100 = 260°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Circles measure turning, and the ruler is the **central angle** — vertex at the center, sides on two radii. The piece of circle it cuts off is an **arc**, and we simply DEFINE the arc's measure to equal its central angle. A 140° central angle stands on a 140° arc; the whole circle is 360°.",
+      "figure": "circle-parts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The central angle IS the arc.",
+      "widget": {
+        "type": "circleAngleExplore",
+        "mode": "central",
+        "targetAngle": 140,
+        "startArc": 80,
+        "prompt": "Open the arc until the central angle reads 140°. Notice that the arc and the angle at the centre are the same number.",
+        "successFeedback": "140° of arc, 140° at the centre. A central angle does not measure something *about* its arc — it IS its arc, in degrees.",
+        "lowFeedback": "The central angle is still under 140°. It always equals the arc, so widen the arc.",
+        "highFeedback": "Past 140°. The central angle equals the arc exactly, so pull the arc back."
+      },
+      "predict": {
+        "prompt": "The arc starts at 80°. The CENTRAL angle that cuts it off measures…",
+        "options": [
+          {
+            "id": "same",
+            "label": "The same 80°"
+          },
+          {
+            "id": "half",
+            "label": "Half of it (40°)"
+          },
+          {
+            "id": "double",
+            "label": "Double it (160°)"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "A central angle and its arc share one measure — the arc is simply the slice of circle the angle's arms cut off. Pin this baseline: the surprises start next lesson, when the vertex leaves the center and the angle drops to HALF."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move points on a circle while arc, central-angle, and inscribed-angle measures update together.",
+        "invariants": [
+          "central-angle-equals-intercepted-arc",
+          "inscribed-angle-half-intercepted-arc"
+        ],
+        "misconceptions": [
+          "inscribed-angle-equals-arc",
+          "vertex-location-irrelevant"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-central-arcs"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The leftover arc.",
+      "conceptTag": "cr-central-arcs",
+      "explanationVariants": [
+        "The circle totals 360°: the major arc is 360 − 140 = 220°.",
+        "Minor + major = full turn: 220°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A central angle of 140° marks off a minor arc of 140°. What is the measure of the MAJOR arc (the rest of the circle)?",
+        "answer": 220,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 140,
+            "feedback": "140° is the MINOR arc again — the major arc is everything else: 360 − 140 = 220°."
+          },
+          {
+            "value": 40,
+            "feedback": "40 = 180 − 140 supplements as if arcs lived on a line — they live on a 360° circle: 220°."
+          },
+          {
+            "value": 110,
+            "feedback": "110 = (360 − 140)/2 halves the leftover — the major arc takes ALL of it: 220°."
+          }
+        ],
+        "fallbackFeedback": "360° − 140° = 220°."
+      },
+      "variant": {
+        "gen": "arc-measure"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Naming keeps the two arcs straight: **minor arcs** (under 180°) use two letters — arc AB — while **major arcs** (over 180°) borrow a third point to force the long way around — arc ACB. A 180° arc is a **semicircle**, cut off by a diameter. Adjacent arcs simply add, like segment lengths on a bent ruler.",
+      "figure": "cr-arc-naming"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Arc addition.",
+      "conceptTag": "cr-central-arcs",
+      "explanationVariants": [
+        "The three arcs tile the whole circle: 110 + 95 + x = 360, so x = 155°.",
+        "Subtract the known arcs from the full turn: 360 − 205 = 155°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Three points split a circle into arcs of 110°, 95°, and x. Find x.",
+        "answer": 155,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 205,
+            "feedback": "205 = 110 + 95 is the two KNOWN arcs combined — x is what remains: 360 − 205 = 155°."
+          },
+          {
+            "value": 77.5,
+            "feedback": "77.5 halves the answer — x is one whole arc, not a split share: 155°."
+          },
+          {
+            "value": 25,
+            "feedback": "25 treats the total as 230-ish — the full circle is 360°: 360 − 110 − 95 = 155°."
+          }
+        ],
+        "fallbackFeedback": "x = 360 − 110 − 95 = 155°."
+      },
+      "variant": {
+        "gen": "arc-measure",
+        "form": "threeArcs"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Name that arc.",
+      "conceptTag": "cr-central-arcs",
+      "explanationVariants": [
+        "230° exceeds 180° — a major arc, which takes the three-letter name to force the long route.",
+        "Over half the circle: major, three letters."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An arc measures 230°. How is it classified and named?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Major arc — three letters, like arc ACB",
+            "correct": true,
+            "feedback": "Past 180° the short two-letter name would point the wrong way; the middle letter pins the long route."
+          },
+          {
+            "id": "o2",
+            "label": "Minor arc — two letters",
+            "correct": false,
+            "feedback": "Minor arcs stay UNDER 180°. At 230° this is major, and needs the third letter."
+          },
+          {
+            "id": "o3",
+            "label": "Semicircle — either naming works",
+            "correct": false,
+            "feedback": "A semicircle is exactly 180°, the knife-edge case. 230° is past it: major arc."
+          },
+          {
+            "id": "o4",
+            "label": "It can't exist — arcs cap at 180°",
+            "correct": false,
+            "feedback": "Arcs run all the way to 360° — anything over 180° is simply major."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "arc-measure",
+        "form": "classify"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The clock check.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A clock's minute hand sweeps from 12 to 7. Each hour-mark is one twelfth of the circle. What arc measure did it sweep?",
+        "answer": 210,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180° stops at 6 (half the circle). Seven of the twelve steps: 7 × 30 = 210°."
+          },
+          {
+            "value": 35,
+            "feedback": "35 = 7 × 5 counts MINUTES-style — each hour step is 360/12 = 30 degrees: 210°."
+          }
+        ],
+        "fallbackFeedback": "7 twelfths of 360° = 7 × 30° = 210° — a major arc."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Slice by ratio.",
+      "conceptTag": "cr-central-arcs",
+      "hints": [
+        "The arcs share 360° in the ratio 2 : 3 : 4 — nine equal parts in all.",
+        "One part = 360/9 = 40°.",
+        "The largest arc takes 4 parts."
+      ],
+      "explanationVariants": [
+        "One part is 40°, so the arcs run 80°, 120°, 160° — and the largest is 160°.",
+        "4 × (360/9) = 160°; audit: 80 + 120 + 160 = 360 ✓."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Three points cut a circle into arcs in the ratio 2 : 3 : 4. Find the LARGEST arc's measure.",
+        "answer": 160,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40° is ONE ratio part (360/9) — the largest arc claims four parts: 160°."
+          },
+          {
+            "value": 80,
+            "feedback": "80° is the SMALLEST arc (2 parts). The largest takes 4: 160°."
+          },
+          {
+            "value": 180,
+            "feedback": "180 = 4/8 of 360 misplaces the total parts — 2 + 3 + 4 = 9 parts, so 4 × 40 = 160°."
+          }
+        ],
+        "fallbackFeedback": "360/(2+3+4) = 40° per part; largest = 4 × 40 = 160°."
+      },
+      "variant": {
+        "gen": "arc-measure",
+        "form": "ratio"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The circle's ruler.",
+      "takeaways": [
+        "Central angle = arc measure, by definition; the full circle is 360°.",
+        "Minor (<180°, two letters), major (>180°, three letters), semicircle (exactly 180°).",
+        "Adjacent arcs add; ratios split 360° into equal parts."
+      ],
+      "teaser": "Next: move the vertex from the center to the circle itself — and watch the angle halve."
+    }
+  ]
+}

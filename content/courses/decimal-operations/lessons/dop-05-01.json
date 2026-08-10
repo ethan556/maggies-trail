@@ -1,0 +1,284 @@
+{
+  "id": "dop-05-01",
+  "slug": "counting-decimal-places",
+  "title": "Counting Decimal Places",
+  "courseId": "decimal-operations",
+  "chapterId": "ch5-decimal-multiply-divide",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To multiply decimals, ignore the points at first: multiply as whole numbers. Then count the total decimal places in **both** factors, and put that many places in the answer. For 0.3 × 0.4: 3 × 4 = 12, and there are two decimal places total, so the answer is 0.12.",
+      "figure": "dop-decimal-grid"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiply, then place the point.",
+      "conceptTag": "count-places",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "The whole square is 1, cut into 100 small squares. Shade a block 3 tenths wide and 4 tenths tall, then count what you covered.",
+        "rows": 10,
+        "cols": 10,
+        "targetNum": 12,
+        "targetDen": 100,
+        "start": 0,
+        "successFeedback": "12 small squares — 12 hundredths, or 0.12. Each small square is a tenth OF a tenth, which is a hundredth, and that is exactly why the answer needs two decimal places: one from each factor. The 12 comes from 3 × 4; the two places come from the grid.",
+        "lowFeedback": "Not enough shaded yet. The block is 3 columns across and 4 rows down — if you are near 7, you have ADDED the tenths instead of covering the rectangle they make.",
+        "highFeedback": "Too much shaded. Keep the block to 3 columns across and 4 rows down; anything wider or taller is a different product."
+      },
+      "hints": [
+        "Multiply 3 × 4 = 12.",
+        "Count places: one + one = two.",
+        "Two places on 12 → 0.12."
+      ],
+      "explanationVariants": [
+        "3 × 4 = 12, two places → 0.12.",
+        "Two total decimal places puts the point two from the right of 12."
+      ],
+      "predict": {
+        "prompt": "0.3 × 0.4 — both factors are less than 1. The product will be…",
+        "options": [
+          {
+            "id": "smaller",
+            "label": "Smaller than either factor"
+          },
+          {
+            "id": "between",
+            "label": "Between the two factors"
+          },
+          {
+            "id": "bigger",
+            "label": "Bigger — multiplying always grows"
+          }
+        ],
+        "outcomeId": "smaller",
+        "reveal": "0.3 × 0.4 takes three-tenths OF four-tenths — a piece of a piece — so the product 0.12 is smaller than either factor. 'Multiplication makes bigger' only holds when a factor exceeds 1; below 1, multiplying shrinks."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same rule, new numbers.",
+      "conceptTag": "count-places",
+      "explanationVariants": [
+        "8 × 9 = 72, two decimal places → 0.72.",
+        "Two total places puts the point two from the right: 0.72."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "0.8 × 0.9 (8 × 9 = 72, two decimal places). What is the product? (enter as a decimal)",
+        "answer": 0.72,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7.2,
+            "feedback": "7.2 uses one place. Two factors, one place each — two total — so 72 becomes 0.72."
+          },
+          {
+            "value": 0.072,
+            "feedback": "0.072 uses three places. There are two total, so 72 becomes 0.72."
+          }
+        ],
+        "fallbackFeedback": "8 × 9 = 72, two places → 0.72."
+      },
+      "variant": {
+        "gen": "decimal-mul-places"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the places.",
+      "conceptTag": "count-places",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the product 1.2 × 0.5, how many decimal places should the answer have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Two",
+            "correct": true,
+            "feedback": "Right — 1.2 has one place and 0.5 has one place: one + one = two total."
+          },
+          {
+            "id": "b",
+            "label": "One",
+            "feedback": "That counts only one factor. Add both: 1.2 (one) + 0.5 (one) = two places."
+          },
+          {
+            "id": "c",
+            "label": "Zero",
+            "feedback": "Both factors have decimals, so the answer needs places too: one + one = two."
+          }
+        ]
+      },
+      "hints": [
+        "Count decimal places in each factor.",
+        "1.2 has one, 0.5 has one.",
+        "Add them: two."
+      ],
+      "explanationVariants": [
+        "1.2 (one) + 0.5 (one) = two places.",
+        "Total the decimal places across both factors."
+      ]
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Count the places first, then tidy up. 1.2 × 0.5: 12 × 5 = 60, two places gives 0.60 — and 0.60 is just 0.6, so a trailing zero can drop away. Always place by the count *before* removing any trailing zeros, or the point lands wrong.",
+      "figure": "dop-count-places"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Place, then simplify.",
+      "conceptTag": "count-places",
+      "explanationVariants": [
+        "12 × 5 = 60, two places → 0.60 = 0.6.",
+        "Place two decimals (0.60), then drop the trailing zero: 0.6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "1.2 × 0.5 (12 × 5 = 60, two decimal places → 0.60). Give the product. (enter as a decimal)",
+        "answer": 0.6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6.0 places no decimals. Two total places make 60 into 0.60 = 0.6, not 6."
+          },
+          {
+            "value": 0.06,
+            "feedback": "0.06 uses three places. Two places make 60 into 0.60 = 0.6."
+          }
+        ],
+        "fallbackFeedback": "12 × 5 = 60, two places → 0.60 = 0.6."
+      },
+      "variant": {
+        "gen": "decimal-mul-places"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more with a tidy-up.",
+      "conceptTag": "count-places",
+      "explanationVariants": [
+        "15 × 2 = 30, two places → 0.30 = 0.3.",
+        "Place two decimals (0.30), then drop the trailing zero: 0.3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "1.5 × 0.2 (15 × 2 = 30, two decimal places → 0.30). Give the product. (enter as a decimal)",
+        "answer": 0.3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3.0 places no decimals. Two total places make 30 into 0.30 = 0.3, not 3."
+          },
+          {
+            "value": 0.03,
+            "feedback": "0.03 uses three places. Two places make 30 into 0.30 = 0.3."
+          }
+        ],
+        "fallbackFeedback": "15 × 2 = 30, two places → 0.30 = 0.3."
+      },
+      "variant": {
+        "gen": "decimal-mul-places"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count and place.",
+      "conceptTag": "count-places",
+      "hints": [
+        "Multiply as wholes: 6 × 7 = 42.",
+        "Count places: 0.6 (one) + 0.7 (one) = two.",
+        "Put two places on 42."
+      ],
+      "explanationVariants": [
+        "6 × 7 = 42, two decimal places → 0.42.",
+        "Two total places puts the point two from the right of 42: 0.42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "0.6 × 0.7. What is the product? (enter as a decimal)",
+        "answer": 0.42,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4.2,
+            "feedback": "4.2 uses one place. Both factors have one place — two total — so 42 becomes 0.42."
+          },
+          {
+            "value": 0.042,
+            "feedback": "0.042 uses three places. There are two total, so 42 becomes 0.42."
+          }
+        ],
+        "fallbackFeedback": "6 × 7 = 42, two places → 0.42."
+      },
+      "variant": {
+        "gen": "decimal-mul-places",
+        "form": "bareMul"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiply whole, then count places.",
+      "takeaways": [
+        "Multiply the factors as whole numbers, ignoring the points at first.",
+        "Count the total decimal places in both factors; the answer gets that many.",
+        "Place the point by the count before dropping any trailing zeros."
+      ],
+      "teaser": "next: multiplying larger decimals, with estimation to check the point."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "count-places",
+      "concept": {
+        "id": "rem-cp-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply as whole numbers, then place as many decimal places as both factors have together.** For 0.2 × 0.3: 2 × 3 = 6, and two places total, so 6 becomes 0.06. The point goes two spots from the right."
+      },
+      "check": {
+        "id": "rem-cp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "count-places",
+        "explanationVariants": [
+          "2 × 3 = 6, two decimal places → 0.06.",
+          "Two total places put the point two from the right: 0.06."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "0.2 × 0.3 (2 × 3 = 6, two decimal places). What is the product? (enter as a decimal)",
+          "answer": 0.06,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 0.6,
+              "feedback": "0.6 uses one place. Both factors have one place — two total — so 6 becomes 0.06."
+            },
+            {
+              "value": 0.006,
+              "feedback": "0.006 uses three places. There are two total, so 6 becomes 0.06."
+            }
+          ],
+          "fallbackFeedback": "2 × 3 = 6, two places → 0.06."
+        }
+      }
+    }
+  ]
+}

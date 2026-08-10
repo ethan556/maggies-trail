@@ -1,0 +1,296 @@
+{
+  "id": "in-02-03",
+  "slug": "net-change",
+  "title": "The Integral of a Rate Is a Total",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch2-accumulation",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "If f is a **rate**, then the area under it is a **total**.\n\nVelocity (miles per hour) × time (hours) = miles. That is exactly what a strip computes: height × width. Add the strips and you have the total distance.\n\n**∫ₐᵇ (rate) dt = the total change over [a, b].** This is the single most useful sentence in the course.",
+      "figure": "in-ftc-slope-is-height"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Units tell you what an integral means.",
+      "conceptTag": "in-net-change",
+      "explanationVariants": [
+        "The height is miles per hour and the width is hours, so each strip is miles. The integral of a velocity is a distance.",
+        "Whenever you are unsure what an integral means, multiply the units of the height by the units of dx."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "v(t) is measured in miles per hour and t in hours. What does ∫₀³ v(t) dt measure?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Miles — a distance.",
+            "correct": true,
+            "feedback": "Right: (miles/hour) × (hours) = miles. The units of a strip tell you what the integral is."
+          },
+          {
+            "id": "o2",
+            "label": "Miles per hour — a speed.",
+            "correct": false,
+            "feedback": "That is the height of a single strip. Multiplying by the width (hours) cancels the 'per hour' and leaves miles."
+          },
+          {
+            "id": "o3",
+            "label": "Hours.",
+            "correct": false,
+            "feedback": "Hours is the width. The height carries the miles."
+          },
+          {
+            "id": "o4",
+            "label": "Miles per hour squared — an acceleration.",
+            "correct": false,
+            "feedback": "That is what you get by DIFFERENTIATING a velocity. Integrating goes the other way, toward distance."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-net-change__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A steady rate accumulates in a straight line.",
+      "widget": {
+        "type": "accumulateArea",
+        "fn": "const",
+        "mode": "area",
+        "targetArea": 6,
+        "targetX": 0,
+        "start": 0,
+        "prompt": "A tap runs at a steady 3 litres per minute. Drag t until 6 litres have been collected.",
+        "successFeedback": "t = 2 minutes, 6 litres. The rate is flat, so the accumulation is a straight line of slope 3 — and 3 is exactly the height of the rate. Even here, in the simplest case in the world, the slope of the total is the height of the rate.",
+        "lowFeedback": "Not enough water yet. Keep going — the total climbs at a steady 3 litres per minute.",
+        "highFeedback": "Past 6 litres. Come back — the tank filled sooner than that."
+      },
+      "predict": {
+        "prompt": "You'll sweep out area under a FLAT function. As x moves right, the accumulated area grows…",
+        "options": [
+          {
+            "id": "steady",
+            "label": "At a steady rate"
+          },
+          {
+            "id": "faster",
+            "label": "Faster and faster"
+          },
+          {
+            "id": "slower",
+            "label": "Slower and slower"
+          }
+        ],
+        "outcomeId": "steady",
+        "reveal": "Area pours in at exactly the current height of f — and a flat function's height never changes, so the accumulation climbs in a straight line. The rate area grows IS the function's height."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move an upper bound and coordinate accumulated area with the integrand's current value.",
+        "invariants": [
+          "accumulation-changes-at-integrand-rate",
+          "signed-area-can-decrease"
+        ],
+        "misconceptions": [
+          "integral-is-always-positive-area",
+          "accumulation-graph-copies-integrand"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-accumulateArea",
+        "delayed": false
+      },
+      "conceptTag": "in-net-change"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Net change, not total distance.",
+      "conceptTag": "in-net-change",
+      "explanationVariants": [
+        "The integral of velocity is DISPLACEMENT — forwards counts positive and backwards counts negative. For total distance travelled you must integrate |v|.",
+        "Walk 5 miles east then 3 miles west: the displacement is 2 miles, but you have walked 8."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A runner goes forward, then back. ∫ v dt = 2 while ∫ |v| dt = 8. What do the two numbers mean?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "She ended 2 miles from where she started, having run 8 miles in total.",
+            "correct": true,
+            "feedback": "Right. The plain integral gives DISPLACEMENT (net change); the integral of |v| gives distance travelled."
+          },
+          {
+            "id": "o2",
+            "label": "She ran 2 miles in total.",
+            "correct": false,
+            "feedback": "She ran 8. The 2 is only how far she ENDED UP from the start — the backward stretch cancelled part of the forward one."
+          },
+          {
+            "id": "o3",
+            "label": "She ended 8 miles away.",
+            "correct": false,
+            "feedback": "The signed integral is 2, so she finished 2 miles from home. The 8 counts every mile she covered, in both directions."
+          },
+          {
+            "id": "o4",
+            "label": "The two numbers contradict each other.",
+            "correct": false,
+            "feedback": "They answer different questions. Signed area gives net change; unsigned area gives total distance."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-net-change__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The pattern is everywhere, and it is always the same shape:\n\nIntegrate a **flow rate** → get a **volume**.\nIntegrate a **birth rate** → get a **population change**.\nIntegrate a **current** → get a **charge**.\nIntegrate **marginal cost** → get a **total cost**.\n\nEach one is height × width, summed. Nothing new is happening.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a total off a rate.",
+      "conceptTag": "in-net-change",
+      "explanationVariants": [
+        "Water flows in at 2t litres per minute for 3 minutes. The area under 2t from 0 to 3 is a triangle: (1/2)(3)(6) = 9 litres.",
+        "The rate is rising, so the tank fills ever faster — and the triangle shape captures exactly that."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Water flows into a tank at r(t) = 2t litres per minute. How many litres arrive in the first 3 minutes?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That is r(3) = 6, the RATE at the final instant — litres per minute, not litres. Integrate it to get the total."
+          },
+          {
+            "value": 18,
+            "feedback": "That is 3 × 6, treating the rate as constant at its final value. But the rate STARTED at 0 — the region is a triangle, of area 9."
+          },
+          {
+            "value": 3,
+            "feedback": "That is the time. Multiply by the average rate (which is 3, not 6) to get 9."
+          }
+        ],
+        "fallbackFeedback": "The area under 2t from 0 to 3 is a triangle: (1/2)(3)(6) = 9 litres."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-net-change__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A rate that goes negative.",
+      "conceptTag": "in-net-change",
+      "hints": [
+        "The tank gains water while r > 0 and LOSES it while r < 0. Find where r changes sign.",
+        "r(t) = 4 − 2t is zero at t = 2: it fills for the first 2 minutes and drains thereafter.",
+        "Gain = triangle (1/2)(2)(4) = 4. Loss over [2, 4] = triangle (1/2)(2)(4) = 4. Net = 4 − 4."
+      ],
+      "explanationVariants": [
+        "Over [0, 4] the gain of 4 litres is exactly cancelled by a loss of 4, so the net change is 0. The tank ends where it started — having been fuller in between.",
+        "The signed integral answers 'how much did it CHANGE', not 'how much moved'. Both questions are legitimate; they just are not the same question."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Water flows at r(t) = 4 − 2t litres/min (negative means draining). What is the NET change over the first 4 minutes?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That counts only the filling. After t = 2 the rate goes negative and the tank drains — losing back exactly the 4 litres it gained."
+          },
+          {
+            "value": 4,
+            "feedback": "That is the amount gained by t = 2. Over the full 4 minutes it is all drained away again, so the net change is 0."
+          },
+          {
+            "value": -8,
+            "feedback": "The tank does not end 8 litres down. It gains 4, then loses 4: net zero."
+          }
+        ],
+        "fallbackFeedback": "Gain 4 litres, then lose 4: the signed integral over [0, 4] is 0."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-net-change__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Integrate a rate, get a total.",
+      "takeaways": [
+        "∫ (rate) dt = the total change. Multiply the units of the height by the units of dx and the meaning appears.",
+        "The plain integral gives NET change (displacement); ∫|f| gives the total amount that moved (distance).",
+        "Flow → volume, current → charge, marginal cost → total cost. It is always height × width, summed."
+      ],
+      "teaser": "Next chapter: the theorem that lets you compute all of these without a single rectangle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-net-change",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Multiply the units. The height of a strip is a RATE — something per something. The width is that something. Multiply and the 'per' cancels, leaving a TOTAL. That cancellation is the entire meaning of the integral.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "What do the units say?",
+        "conceptTag": "in-net-change",
+        "explanationVariants": [
+          "Litres per minute times minutes gives litres.",
+          "The 'per minute' is cancelled by the dt."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "r(t) is in litres per minute and t in minutes. What are the units of ∫ r dt?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Litres",
+              "correct": true,
+              "feedback": "Right — the 'per minute' cancels against the minutes in dt."
+            },
+            {
+              "id": "o2",
+              "label": "Litres per minute",
+              "correct": false,
+              "feedback": "That is the height alone. Multiplying by the width (minutes) removes the 'per minute'."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

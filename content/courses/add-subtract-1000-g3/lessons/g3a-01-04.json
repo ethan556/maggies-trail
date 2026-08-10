@@ -1,0 +1,425 @@
+{
+  "id": "g3a-01-04",
+  "slug": "regrouping-twice-to-subtract",
+  "title": "Regrouping Twice to Subtract",
+  "courseId": "add-subtract-1000-g3",
+  "chapterId": "ch1-the-standard-algorithms",
+  "minutes": 7,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "When a top digit cannot pay, do not flip the subtraction — trade. One ten from the left becomes ten ones, and the column can finally pay.",
+      "narration": "When a top digit cannot pay, do not flip the subtraction — trade. One ten from the left becomes ten ones, and the column can finally pay."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g3a-sub-two",
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "452 − 178 = ? Tap a top digit to break a ten when a column comes up short.",
+        "op": "subtract",
+        "a": 452,
+        "b": 178,
+        "commonResults": [
+          {
+            "value": 326,
+            "feedback": "326 flipped the short columns: it computed 8 − 2 and 7 − 5 because the top looked too small. Trade instead of flipping."
+          },
+          {
+            "value": 286,
+            "feedback": "A trade was taken but never paid for — the column you borrowed from has to drop by one."
+          }
+        ],
+        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
+        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+      },
+      "predict": {
+        "prompt": "In 452 − 178, the ones are 2 − 8. What is the legal move?",
+        "options": [
+          {
+            "id": "trade",
+            "label": "Trade a ten, making it 12 − 8"
+          },
+          {
+            "id": "flip",
+            "label": "Compute 8 − 2 instead"
+          }
+        ],
+        "outcomeId": "trade",
+        "reveal": "Flipping answers a different question. Breaking one ten turns 2 into 12, and 12 − 8 = 4 is the real ones digit."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a sub two.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a sub two."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-sub-two",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3a-sub-two",
+      "explanationVariants": [
+        "Short column? Break a ten.",
+        "Never flip the order."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "883 − 165 = ?",
+        "answer": 718,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 722,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 728,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 718."
+      },
+      "hints": [
+        "Ones first.",
+        "Short column? Trade.",
+        "Never flip the digits."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a sub two.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a sub two."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-sub-two",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Flipping to take the small digit from the large one is the most common subtraction bug there is. It gives an answer that no trading could ever produce.",
+      "narration": "Flipping to take the small digit from the large one is the most common subtraction bug there is. It gives an answer that no trading could ever produce."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g3a-sub-two",
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "452 − 178 = ? Tap a top digit to break a ten when a column comes up short.",
+        "op": "subtract",
+        "a": 452,
+        "b": 178,
+        "commonResults": [
+          {
+            "value": 326,
+            "feedback": "326 flipped the short columns: it computed 8 − 2 and 7 − 5 because the top looked too small. Trade instead of flipping."
+          },
+          {
+            "value": 286,
+            "feedback": "A trade was taken but never paid for — the column you borrowed from has to drop by one."
+          }
+        ],
+        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
+        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a sub two.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a sub two."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-sub-two",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3a-sub-two",
+      "explanationVariants": [
+        "The lender drops by one.",
+        "Trades are paid for."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "651 − 402 = ?",
+        "answer": 249,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 251,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 259,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 249."
+      },
+      "hints": [
+        "Ones first.",
+        "Short column? Trade.",
+        "Never flip the digits."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a sub two.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a sub two."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-sub-two",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3a-sub-two",
+      "explanationVariants": [
+        "Two columns can trade.",
+        "Work right to left."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "533 − 105 = ?",
+        "answer": 428,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 432,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 438,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 428."
+      },
+      "hints": [
+        "Ones first.",
+        "Short column? Trade.",
+        "Never flip the digits."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a sub two.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a sub two."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-sub-two",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g3a-sub-two",
+      "explanationVariants": [
+        "Bigger trades, same rule.",
+        "Ten ones for one ten."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "882 − 315 = ?",
+        "answer": 567,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 573,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 577,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 567."
+      },
+      "hints": [
+        "Ones first.",
+        "Short column? Trade.",
+        "Never flip the digits."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a sub two.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a sub two."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-sub-two",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "Short column? Trade, never flip.",
+        "Ten ones for one ten.",
+        "The lending column drops by one."
+      ],
+      "teaser": "next: trading when there is nothing to lend."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g3a-sub-two",
+      "concept": {
+        "id": "rem-g3a-sub-two-c",
+        "kind": "concept",
+        "body": "Flipping to take the small digit from the large one is the most common subtraction bug there is. It gives an answer that no trading could ever produce.",
+        "narration": "Flipping to take the small digit from the large one is the most common subtraction bug there is. It gives an answer that no trading could ever produce."
+      },
+      "check": {
+        "id": "rem-g3a-sub-two-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g3a-sub-two",
+        "explanationVariants": [
+          "Short column? Break a ten.",
+          "Never flip the order."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "883 − 165 = ?",
+          "answer": 718,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 722,
+              "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+            },
+            {
+              "value": 728,
+              "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+            }
+          ],
+          "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+          "successFeedback": "Correct — 718."
+        }
+      }
+    }
+  ]
+}

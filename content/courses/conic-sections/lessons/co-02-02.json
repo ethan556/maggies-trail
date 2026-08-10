@@ -1,0 +1,217 @@
+{
+  "id": "co-02-02",
+  "slug": "foci-and-abc",
+  "title": "Foci, Axes & the a-b-c Relationship",
+  "courseId": "conic-sections",
+  "chapterId": "ch2-ellipses",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Where are the foci? For an ellipse, a right triangle links the three lengths:\n\n**c² = a² − b²**,\n\nwhere c is the focus distance from the center. The foci sit ON the major axis, c units from center. For a = 5, b = 3: c² = 25 − 9 = 16, so c = 4 — foci at (±4, 0).",
+      "figure": "co-ellipse-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find c.",
+      "widget": {
+        "type": "conicLocusLab",
+        "targetEccentricityTenths": 8,
+        "startEccentricityTenths": 4,
+        "prompt": "Slide the eccentricity to 0.8 and watch the two foci separate from the centre.",
+        "successFeedback": "e = c/a = 0.8, so with a = 5 the focal distance c is 4 — and 4² = 5² − 3² confirms b = 3. The a-b-c relation is not a formula to memorise: it is the right triangle joining centre, focus and co-vertex.",
+        "explorationFeedback": "Move the slider a few more times. The relationship between the foci and the shape only shows up across a range, not at one setting.",
+        "lowFeedback": "Eccentricity still below 0.8 — the ellipse is rounder than the target.",
+        "highFeedback": "Eccentricity above 0.8 — the ellipse is flatter than the target."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Locate the foci.",
+      "conceptTag": "co-abc",
+      "explanationVariants": [
+        "With c = 4 and a horizontal major axis, the foci are at (±4, 0) — on the long axis, 4 from center.",
+        "Foci lie along the major axis at (±c, 0) = (±4, 0)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For x²/25 + y²/9 = 1 (a = 5, b = 3, c = 4), the foci are at:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(±4, 0)",
+            "correct": true,
+            "feedback": "Right — c = 4 along the horizontal major axis."
+          },
+          {
+            "id": "o2",
+            "label": "(±5, 0)",
+            "feedback": "(±5, 0) are the VERTICES (a = 5). The foci are at (±c, 0) = (±4, 0)."
+          },
+          {
+            "id": "o3",
+            "label": "(0, ±4)",
+            "feedback": "The major axis is horizontal, so the foci are on the x-axis: (±4, 0)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-abc__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice the ellipse relationship **subtracts** (c² = a² − b²), which forces c < a: the foci always sit INSIDE the ellipse. This is the opposite of the hyperbola's rule (coming next), and it's why a bigger gap between a and b pushes the foci further out toward the vertices.",
+      "figure": "co-ellipse-subtracts"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A 13-12-5 ellipse.",
+      "conceptTag": "co-abc",
+      "explanationVariants": [
+        "a = 13, b = 12: c² = 169 − 144 = 25, so c = 5 — foci at (±5, 0).",
+        "The 5-12-13 triangle appears: c = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/169 + y²/144 = 1 (a = 13, b = 12), find c.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 = a² − b² is c². Take the root: c = 5."
+          },
+          {
+            "value": 1,
+            "feedback": "1 = 13 − 12 subtracts a and b directly. Use c² = a² − b² = 25 → c = 5."
+          }
+        ],
+        "fallbackFeedback": "c² = 169 − 144 = 25 → c = 5."
+      },
+      "variant": {
+        "gen": "ellipse-abc"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Back out b.",
+      "conceptTag": "co-abc",
+      "explanationVariants": [
+        "Given a = 5, c = 3: b² = a² − c² = 25 − 9 = 16, so b = 4.",
+        "Rearrange c² = a² − b² to b² = a² − c² = 16, giving b = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An ellipse has a = 5 and c = 3. What is b?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "b² = a² − c² = 25 − 9 = 16, so b = 4 (not √4)."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is b². Take the root: b = 4."
+          }
+        ],
+        "fallbackFeedback": "b² = 25 − 9 = 16 → b = 4."
+      },
+      "variant": {
+        "gen": "ellipse-abc",
+        "form": "findB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Foci of a vertical ellipse.",
+      "conceptTag": "co-abc",
+      "explanationVariants": [
+        "x²/9 + y²/25 = 1: a = 5 (under y², vertical), b = 3, c = 4 → foci at (0, ±4) on the vertical major axis.",
+        "Major axis vertical, so foci are (0, ±c) = (0, ±4)."
+      ],
+      "hints": [
+        "Larger denominator (25) under y² → vertical major axis.",
+        "c² = a² − b² = 25 − 9 = 16.",
+        "Foci on the y-axis: (0, ±c)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/9 + y²/25 = 1, the foci are at (0, ±c). Find c.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "c² = 16, so c = 4 (8 would be double)."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = a (the vertices at (0, ±5)). The foci use c = 4."
+          }
+        ],
+        "fallbackFeedback": "c² = 25 − 9 = 16 → c = 4; foci (0, ±4)."
+      },
+      "variant": {
+        "gen": "ellipse-abc"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A right triangle inside.",
+      "takeaways": [
+        "Ellipse: c² = a² − b², so foci are c from center, always inside.",
+        "Foci lie ON the major axis: (±c, 0) or (0, ±c).",
+        "Rearrange to find any of a, b, c from the other two."
+      ],
+      "teaser": "Next: shifting the ellipse and measuring how 'squished' it is."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-abc",
+      "concept": {
+        "id": "rem-co0202-c",
+        "kind": "concept",
+        "body": "Ellipse focus distance: c² = a² − b² (so c < a; foci inside, on the major axis). Rearrange to find any missing length."
+      },
+      "check": {
+        "id": "rem-co0202-k",
+        "kind": "check",
+        "body": "One c.",
+        "conceptTag": "co-abc",
+        "explanationVariants": [
+          "a = 10, b = 6: c² = 100 − 36 = 64, c = 8.",
+          "√64 = 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An ellipse has a = 10, b = 6. Find c.",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 64,
+              "feedback": "64 is c². Take the root: c = 8."
+            },
+            {
+              "value": 4,
+              "feedback": "c² = 100 − 36 = 64, so c = 8, not 10 − 6."
+            }
+          ],
+          "fallbackFeedback": "c² = 100 − 36 = 64 → c = 8."
+        }
+      }
+    }
+  ]
+}

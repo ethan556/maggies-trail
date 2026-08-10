@@ -1,0 +1,319 @@
+{
+  "id": "cpr-03-04",
+  "slug": "trees-without-replacement",
+  "title": "Trees and Drawing Without Replacement",
+  "courseId": "conditional-probability",
+  "chapterId": "ch3-conditioning",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A tree turns the multiplication rule into a picture. Each branch carries a conditional probability, so you **multiply along a path** to reach a leaf.\n\nThe second-draw branches use denominators of 7, because one marble is already gone. Removing it also changes *which* marble is likelier next — the branches differ depending on the path you took.",
+      "figure": "cpr-tree-no-replacement"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "All 56 ordered ways to draw two of the 8 marbles.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the draws where **both marbles are red**.",
+        "rows": 7,
+        "cols": 8,
+        "targetNum": 5,
+        "targetDen": 14,
+        "start": 0,
+        "successFeedback": "20 of the 56 ordered draws are red-then-red: 5 choices first × 4 left second. That is 5/8 × 4/7 = 5/14 ≈ 0.357.",
+        "lowFeedback": "Fewer than 20 draws. There are 5 ways to pick a red first and 4 reds still in the bag for the second pick.",
+        "highFeedback": "More than 20 draws — 5/8 × 5/7 would be right only if the first marble went back in the bag."
+      },
+      "predict": {
+        "prompt": "You'll shade 5/14 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 7/14 here — and 5 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-tree-chain"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Walk one branch.",
+      "conceptTag": "cpr-tree-chain",
+      "explanationVariants": [
+        "After a red leaves, 7 marbles remain and 4 are red: P(red | first was red) = 4/7 ≈ 0.571.",
+        "Both the count of reds and the total drop by one — 5/8 becomes 4/7, not 4/8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The first marble drawn was red. Find P(the second is also red), to three places.",
+        "answer": 0.571,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.625,
+            "feedback": "That is 5/8 — the first-draw probability, reused. The red that left is no longer in the bag, so the numerator drops to 4 and the total to 7."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is 4/8. The numerator correctly dropped to 4, but the bag also shrank: only 7 marbles remain."
+          }
+        ],
+        "fallbackFeedback": "4 reds among the 7 remaining marbles: 4/7 ≈ 0.571."
+      },
+      "variant": {
+        "gen": "tree-chain"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Multiply along the path.",
+      "conceptTag": "cpr-tree-chain",
+      "explanationVariants": [
+        "P(both red) = 5/8 × 4/7 = 20/56 = 5/14 ≈ 0.357.",
+        "Of the 56 ordered draws, 20 are red-then-red — exactly the shaded region you built."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find P(both marbles are red), to three places.",
+        "answer": 0.357,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.391,
+            "feedback": "That is (5/8)² = 25/64, the answer if the first marble went back. Without replacement the second factor is 4/7, not 5/8."
+          },
+          {
+            "value": 0.313,
+            "feedback": "That is 5/8 × 4/8. The numerator shrank but the denominator did not — one marble left the bag, so 8 becomes 7."
+          },
+          {
+            "value": 0.312,
+            "feedback": "That is 5/16 = 0.3125, from multiplying 5/8 by 4/8. The bag lost a marble as well as a red one, so the second denominator is 7: 5/8 × 4/7."
+          },
+          {
+            "value": 0.625,
+            "feedback": "That is 5/8 — only the first draw. The path has two branches and both must be multiplied."
+          }
+        ],
+        "fallbackFeedback": "5/8 × 4/7 = 5/14 ≈ 0.357."
+      },
+      "variant": {
+        "gen": "tree-chain",
+        "form": "bothRed"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Multiply **along** a path; add **across** paths.\n\n\"One of each colour\" happens two ways — red-then-blue and blue-then-red — and those two leaves are mutually exclusive, so their probabilities add. Every leaf of the tree is exclusive of every other, which is why the four leaves sum to 1.",
+      "figure": "cpr-tree-no-replacement"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Add across two leaves.",
+      "conceptTag": "cpr-tree-chain",
+      "explanationVariants": [
+        "RB = 5/8 × 3/7 = 15/56 and BR = 3/8 × 5/7 = 15/56, so together 30/56 = 15/28 ≈ 0.536.",
+        "Or subtract the same-colour leaves from 1: 1 − 5/14 − 3/28 = 15/28 ≈ 0.536."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find P(one red and one blue, in either order), to three places.",
+        "answer": 0.536,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.268,
+            "feedback": "That is 15/56 — the red-then-blue leaf alone. Blue-then-red also gives one of each, and it is equally likely, so add it in."
+          },
+          {
+            "value": 0.107,
+            "feedback": "That is P(both blue) = 3/8 × 2/7. The question asks for mixed colours, not matching ones."
+          },
+          {
+            "value": 0.464,
+            "feedback": "That is 1 − 0.536, the chance the two marbles **match**. It is the complement of what was asked."
+          }
+        ],
+        "fallbackFeedback": "15/56 + 15/56 = 30/56 ≈ 0.536."
+      },
+      "variant": {
+        "gen": "tree-chain",
+        "form": "mixedOrder"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Why does the second denominator change?",
+      "conceptTag": "cpr-tree-chain",
+      "explanationVariants": [
+        "Without replacement, the first marble is gone, so the second draw chooses among 7 marbles — and the tree's second-stage branches must reflect that.",
+        "The second-stage branches are conditional probabilities. Conditioning on the first draw is exactly what shrinks the bag."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On the tree, why do the second-stage branches use 7 instead of 8?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The first marble was not put back, so only 7 remain to choose from.",
+            "correct": true,
+            "feedback": "Right — and that is what makes the branch a conditional probability rather than a repeat of the first draw."
+          },
+          {
+            "id": "o2",
+            "label": "Because 7 is one less than 8, and probabilities always shrink.",
+            "correct": false,
+            "feedback": "Probabilities do not shrink by habit. Here the bag physically has one fewer marble; with replacement, the denominator would stay 8."
+          },
+          {
+            "id": "o3",
+            "label": "Because there are 7 red marbles to consider.",
+            "correct": false,
+            "feedback": "There were only 5 reds to begin with. The 7 is the total number of marbles left in the bag, of any colour."
+          },
+          {
+            "id": "o4",
+            "label": "Because the two draws are independent.",
+            "correct": false,
+            "feedback": "They are the opposite of independent — the first draw changes the second's odds. That dependence is precisely why the denominator moved."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "tree-chain",
+        "form": "whyMinusOne"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Use the complement to skip two leaves.",
+      "conceptTag": "cpr-tree-chain",
+      "hints": [
+        "\"At least one blue\" fails in exactly one way: both marbles come out red.",
+        "You already know P(both red) = 5/14 ≈ 0.357.",
+        "So P(at least one blue) = 1 − 5/14. Round to three places."
+      ],
+      "explanationVariants": [
+        "P(at least one blue) = 1 − P(both red) = 1 − 5/14 = 9/14 ≈ 0.643.",
+        "Add the three leaves that contain a blue: 15/56 + 15/56 + 6/56 = 36/56 = 9/14 ≈ 0.643. The complement route is one step instead of three."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find P(at least one blue marble), to three places.",
+        "answer": 0.643,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.357,
+            "feedback": "That is P(both red) — the one way to get **no** blue. Subtract it from 1 to get the answer."
+          },
+          {
+            "value": 0.107,
+            "feedback": "That is P(both blue). \"At least one\" also counts the two mixed draws, where exactly one marble is blue."
+          },
+          {
+            "value": 0.536,
+            "feedback": "That is P(one of each). The both-blue draws also contain a blue, so they belong in the total too."
+          }
+        ],
+        "fallbackFeedback": "1 − 5/14 = 9/14 ≈ 0.643."
+      },
+      "variant": {
+        "gen": "tree-chain",
+        "form": "atLeastOneBlue"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Trees make the chain visible.",
+      "takeaways": [
+        "Multiply along a path (each branch is conditional on the ones before it); add across paths.",
+        "Without replacement, the second-stage denominators shrink — that shrinkage *is* the conditioning.",
+        "The leaves are mutually exclusive and always sum to 1, which gives you a free check and a complement shortcut."
+      ],
+      "teaser": "Next chapter: what if the first draw told you nothing at all?"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-tree-chain",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Take the draws one at a time. Write the bag's contents before each draw, and read the probability off *that* bag. Without replacement the bag changes between draws, so the second fraction is never a copy of the first.",
+        "figure": "cpr-tree-no-replacement"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "What is left in the bag?",
+        "conceptTag": "cpr-tree-chain",
+        "explanationVariants": [
+          "Start with 5 red and 3 blue. Remove one blue and 7 marbles remain: 5 red and 2 blue.",
+          "Only the blue count and the total drop; the reds are untouched, so P(red next) = 5/7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A blue marble is drawn from 5 red and 3 blue and NOT replaced. How many marbles are left in the bag?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "That is the bag before the draw. The marble was not replaced, so one is gone."
+            },
+            {
+              "value": 6,
+              "feedback": "That removes two marbles. Only one draw has happened so far."
+            }
+          ],
+          "fallbackFeedback": "8 − 1 = 7 marbles remain: 5 red and 2 blue."
+        }
+      }
+    }
+  ]
+}

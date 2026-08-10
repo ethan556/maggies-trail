@@ -1,0 +1,353 @@
+{
+  "id": "gf-05-02",
+  "slug": "find-the-motion",
+  "title": "Find the Motion",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch5-congruence",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-find-motion",
+      "concept": {
+        "id": "rem-gf-find-motion-c",
+        "kind": "concept",
+        "body": "Fingerprint chart, one pair at a time: x-only flipped → y-axis mirror. y-only flipped → x-axis mirror. Both flipped → 180° turn. Swapped → y = x mirror. Same nonzero amounts ADDED to all points → translation. Match the pattern, then re-check it on a second point."
+      },
+      "check": {
+        "id": "rem-gf-find-motion-k",
+        "kind": "check",
+        "body": "Read one fingerprint.",
+        "conceptTag": "gf-find-motion",
+        "explanationVariants": [
+          "(6, 2) → (6, −2): x kept, y negated — the x-axis mirror.",
+          "Only the coordinate measuring height flipped, so the mirror is the horizontal axis."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Two points move: (6, 2) → (6, −2) and (1, 5) → (1, −5). Which motion fits?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "reflection over the x-axis",
+              "correct": true,
+              "feedback": "Both points: y flipped, x untouched — the x-axis mirror's fingerprint, confirmed twice."
+            },
+            {
+              "id": "o2",
+              "label": "reflection over the y-axis",
+              "correct": false,
+              "feedback": "That mirror flips the X: (6, 2) would go to (−6, 2). Here both x's survived."
+            },
+            {
+              "id": "o3",
+              "label": "a 180° rotation",
+              "correct": false,
+              "feedback": "The half turn flips BOTH: (6, 2) would land at (−6, −2), but the x stayed positive."
+            },
+            {
+              "id": "o4",
+              "label": "a translation",
+              "correct": false,
+              "feedback": "A slide moves every point by the SAME vector — but the first point dropped 4 while the second dropped 10. Unequal shifts rule out any translation."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Detective work: given both figures' coordinates, identify the motion. **Compare a preimage point with its image and read the pattern**: both coordinates shifted by constants → translation. Signs flipped or coordinates swapped → reflection or rotation. Then CONFIRM the candidate on every remaining point — one point can lie, three can't.",
+      "figure": "gf-identify-motion"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Detective work with a live suspect: recover the motion from the coordinates.",
+      "widget": {
+        "type": "transformExplore",
+        "prompt": "ΔABC has A(1, 1), B(4, 1), C(1, 3); the dashed image is ΔDEF. Recover the motion that maps one onto the other.",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "target": [
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "gridMin": -2,
+        "gridMax": 8,
+        "allowReflect": true,
+        "successFeedback": "(x, y) → (x + 2, y + 4): the shift read off A → D moved B and C onto E and F too — one rule, every point.",
+        "offsetFeedback": "The shape matches but the shift is off. Read it from a single pair: A(1, 1) → D(3, 5) means dx = 3 − 1 = 2 and dy = 5 − 1 = 4.",
+        "reflectFeedback": "A flip reverses the triangle's orientation — but ΔDEF winds the same way as ΔABC, so no reflection is involved. Turn it off and slide only."
+      },
+      "predict": {
+        "prompt": "A(1, 1) maps to D(3, 5). To land B and C on their images too, each must move by…",
+        "options": [
+          {
+            "id": "same",
+            "label": "The same (dx, dy) — one rule moves every point"
+          },
+          {
+            "id": "own",
+            "label": "Its own amount — corners can travel differently"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "A translation is one rule for the whole plane: every point slides by the same (dx, dy). Reading A → D gives (+2, +4) — and B and C must obey the identical shift, or the motion was never a translation at all."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Transform a figure and observe which coordinates and geometric properties change or remain invariant.",
+        "invariants": [
+          "distance-preserved",
+          "angle-preserved"
+        ],
+        "misconceptions": [
+          "rigid-motion-changes-size",
+          "coordinate-rule-disconnect"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "geometry-foundations",
+        "delayed": false
+      },
+      "conceptTag": "gf-find-motion"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Confirm on a fourth point.",
+      "conceptTag": "gf-find-motion",
+      "explanationVariants": [
+        "The identified motion applies to EVERY point of the figure: (2, 2) → (2 + 2, 2 + 4) = (4, 6), so the x-coordinate is 4.",
+        "Once the motion is named, any new point rides the same rule — add 2 to x."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using the translation (x, y) → (x + 2, y + 4) from the last problem: point (2, 2) lies inside ΔABC. What is the x-coordinate of its image?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is 2 + 4 — the y-shift applied to x. Keep each shift in its own slot: x gets +2, so 2 + 2 = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is unmoved — but the motion carries EVERY point of the figure, interior included: 2 + 2 = 4."
+          }
+        ],
+        "fallbackFeedback": "x-slot: 2 + 2 = 4."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-find-motion__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Sign patterns are fingerprints.** Only x flips: reflection over the y-axis. Only y flips: reflection over the x-axis. BOTH flip: 180° rotation. Coordinates swap: the y = x mirror. Read the pattern off one pair, then verify it on the rest.",
+      "figure": "gf-sign-fingerprints"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Only the x flipped.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A(2, 3) and B(5, 1) map to A′(−2, 3) and B′(−5, 1). Which motion is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "reflection over the y-axis",
+            "correct": true,
+            "feedback": "Both points: x negated, y untouched — the y-axis mirror's exact fingerprint, confirmed twice."
+          },
+          {
+            "id": "o2",
+            "label": "reflection over the x-axis",
+            "correct": false,
+            "feedback": "The x-axis mirror flips the Y: A would go to (2, −3). Here the y's survived and the x's flipped — other mirror."
+          },
+          {
+            "id": "o3",
+            "label": "a 180° rotation about the origin",
+            "correct": false,
+            "feedback": "The half turn flips BOTH signs: A would land at (−2, −3), but A′ keeps y = 3."
+          },
+          {
+            "id": "o4",
+            "label": "a translation",
+            "correct": false,
+            "feedback": "A slide shifts both points by the SAME amounts — but A moved 4 left while B moved 10 left. Unequal shifts rule out any translation."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Both signs flipped.",
+      "conceptTag": "gf-find-motion",
+      "explanationVariants": [
+        "A(1,4) → (−1,−4) and B(3,1) → (−3,−1): both coordinates negated on both points — the 180° rotation's fingerprint.",
+        "Test the alternative mirrors: the y-axis would keep y = 4; the x-axis would keep x = 1. Only the half turn flips everything."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A(1, 4) and B(3, 1) map to A′(−1, −4) and B′(−3, −1). Which motion is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a 180° rotation about the origin",
+            "correct": true,
+            "feedback": "Both signs of both points flipped, order intact — exactly (x, y) → (−x, −y)."
+          },
+          {
+            "id": "o2",
+            "label": "reflection over the y-axis",
+            "correct": false,
+            "feedback": "That mirror flips only x: A would land at (−1, 4), but A′ has y = −4 too."
+          },
+          {
+            "id": "o3",
+            "label": "reflection over the x-axis",
+            "correct": false,
+            "feedback": "That mirror flips only y: A would land at (1, −4), but A′'s x also flipped to −1."
+          },
+          {
+            "id": "o4",
+            "label": "reflection over the line y = x",
+            "correct": false,
+            "feedback": "The swap sends A(1,4) to (4,1) — no sign changes at all. These images are fully negated instead."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-find-motion__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Sometimes the detective's answer is **no motion exists**. Rigid motions preserve distance, so if ANY pair of matched points sits at a different distance than its partners, no slide, turn, flip, or chain can ever connect the figures. Measure first; it can end the case immediately.",
+      "figure": "gf-no-motion"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Measure the target.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "C is at (2, 1) and D is at (2, 7). What is the length CD?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 7 + 1 — coordinates added. Length along a vertical segment is the DIFFERENCE of the y's: 7 − 1 = 6."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is 2 + 7 — an x mixed with a y. Both points share x = 2; only the y's differ: 7 − 1 = 6."
+          }
+        ],
+        "fallbackFeedback": "Same x, so CD = 7 − 1 = 6."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Case closed?",
+      "conceptTag": "gf-find-motion",
+      "hints": [
+        "Compare the two lengths before hunting for a motion.",
+        "AB = 5 and CD = 6 (just measured). What must a rigid motion do to lengths?",
+        "A motion mapping AB onto CD would have to stretch 5 into 6 — can any rigid motion do that?"
+      ],
+      "explanationVariants": [
+        "AB = 5 but CD = 6. Rigid motions preserve distance, so mapping AB onto CD would require a stretch — impossible. No rigid motion exists; the segments are not congruent.",
+        "Congruence fails the moment one measurement disagrees: 5 ≠ 6 closes the case before any motion is tried."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A(0, 0), B(5, 0) — so AB = 5. C(2, 1), D(2, 7) — so CD = 6. Is there a rigid motion mapping segment AB onto segment CD?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — the lengths differ (5 vs 6), and rigid motions preserve length",
+            "correct": true,
+            "feedback": "One mismatched distance is a complete proof of impossibility: rigid motions never stretch."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — translate A to C, then rotate B around to D",
+            "correct": false,
+            "feedback": "The rotation swings B on a radius-5 circle around C — and D sits 6 away, off that circle. The endpoint can never land."
+          },
+          {
+            "id": "o3",
+            "label": "Yes — a 90° rotation turns horizontal segments into vertical ones",
+            "correct": false,
+            "feedback": "It fixes the DIRECTION mismatch but not the length: the rotated segment is still 5 long, one unit short of CD."
+          },
+          {
+            "id": "o4",
+            "label": "It cannot be decided from coordinates alone",
+            "correct": false,
+            "feedback": "Coordinates decide it completely — they give exact lengths (5 and 6), and unequal lengths forbid any rigid motion."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-find-motion__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Name the motion — or refute it.",
+      "takeaways": [
+        "Read the pattern: constant shifts = translation; sign flips/swaps = mirrors and turns.",
+        "Confirm the candidate on EVERY point — one point can lie.",
+        "Unequal distances end the case: no rigid motion, no congruence."
+      ],
+      "teaser": "Next: the last piece — what the ORDER of letters in ΔABC ≅ ΔDEF secretly tells you."
+    }
+  ]
+}

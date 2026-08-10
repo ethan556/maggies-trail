@@ -1,0 +1,231 @@
+{
+ "id": "pp-05-03",
+ "slug": "the-parabolic-path",
+ "title": "The Parabolic Path: Eliminating Time",
+ "courseId": "polar-parametric",
+ "chapterId": "ch5-applied-parametrics",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "What SHAPE does the ball trace? Eliminate t (recall Ch4). From x = vₓ·t, solve t = x/vₓ; substitute into y = v_y·t − ½g t². The result is a **quadratic in x** — a downward parabola. Time drove the motion; erasing it reveals the arc as pure geometry.",
+   "figure": "pp-projectile"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Solve for t.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "For x = 15t, solving for t gives:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "t = x/15",
+      "correct": true,
+      "feedback": "Right — divide both sides by 15: t = x/15, ready to substitute."
+     },
+     {
+      "id": "o2",
+      "label": "t = 15x",
+      "feedback": "That multiplies. To isolate t, DIVIDE: t = x/15."
+     },
+     {
+      "id": "o3",
+      "label": "t = x − 15",
+      "feedback": "x = 15t is a product, so t = x/15, not a subtraction."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Recognize the shape.",
+   "conceptTag": "pp-parabolic-path",
+   "explanationVariants": [
+    "Substituting t = x/15 into y = 20t − 5t² gives y = (4/3)x − x²/45 — a quadratic in x with a negative leading coefficient, so the path is a DOWNWARD parabola.",
+    "The same parabola family from the quadratics work, now traced by a projectile."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "After eliminating t, the trajectory y in terms of x is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "a downward parabola (negative x² coefficient)",
+      "correct": true,
+      "feedback": "Right — the −½g/vₓ² factor on x² is negative, so the arc opens downward."
+     },
+     {
+      "id": "o2",
+      "label": "a straight line",
+      "feedback": "The ½g t² term becomes an x² term — quadratic, not linear. It's a parabola."
+     },
+     {
+      "id": "o3",
+      "label": "an upward parabola",
+      "feedback": "Gravity gives a NEGATIVE x² coefficient: the parabola opens downward."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parabolic-path__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "This closes a loop: the projectile's path is a **parabola** (from quadratics), its motion is **parametric** (this chapter), and its height-versus-time is also a parabola. The SAME curve, three lenses — the reason parametric form matters is it separates the *timing* from the *shape*.",
+   "figure": "pp-path-parabola"
+  },
+  {
+   "id": "k1b",
+   "kind": "check",
+   "body": "Landing point from the path.",
+   "conceptTag": "pp-parabolic-path",
+   "explanationVariants": [
+    "The ball lands when y = 0 again. From y = (4/3)x − x²/45 = 0: x((4/3) − x/45) = 0 → x = 0 or x = 60 m — matching the range from flight time.",
+    "Factoring the trajectory gives the launch (x = 0) and landing (x = 60) points directly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "From the path y = (4/3)x − x²/45, the ball lands (y = 0) at what x > 0? (In meters.)",
+    "answer": 60,
+    "tolerance": 0.5,
+    "commonErrors": [
+     {
+      "value": 45,
+      "feedback": "45 comes from a mis-factoring. Setting (4/3) − x/45 = 0 gives x = 45·(4/3) = 60 m."
+     },
+     {
+      "value": 0,
+      "feedback": "x = 0 is the LAUNCH point. The other root is the landing at x = 60 m."
+     }
+    ],
+    "fallbackFeedback": "(4/3) = x/45 → x = 60 m — same as vₓ·flight time."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parabolic-path__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Peak from the path.",
+   "conceptTag": "pp-parabolic-path",
+   "explanationVariants": [
+    "The parabola's peak sits at the midpoint of its roots, x = (0 + 60)/2 = 30 m (recall the vertex is halfway between the x-intercepts).",
+    "Symmetry puts the highest point at x = 30 m, the horizontal middle of the flight."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The trajectory's highest point is horizontally midway between launch (x = 0) and landing (x = 60). At what x? (In meters.)",
+    "answer": 30,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 60,
+      "feedback": "60 is the LANDING point. The peak is halfway: (0 + 60)/2 = 30 m."
+     },
+     {
+      "value": 15,
+      "feedback": "The midpoint of 0 and 60 is 30, not 15."
+     }
+    ],
+    "fallbackFeedback": "Vertex at the midpoint: (0 + 60)/2 = 30 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parabolic-path__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full trajectory synthesis.",
+   "conceptTag": "pp-parabolic-path",
+   "explanationVariants": [
+    "Launch vₓ = 10, v_y = 25, g = 10: t_peak = 2.5 s, flight = 5 s, range = 10·5 = 50 m. The peak is at x = 25 m; max height = v_y²/(2g) = 625/20 = 31.25 m.",
+    "Everything from the landmarks: range 50 m, and the peak height 31.25 m at the horizontal midpoint x = 25 m."
+   ],
+   "hints": [
+    "t_peak = v_y/g = 25/10 = 2.5 s.",
+    "Max height = v_y²/(2g) = 625/20.",
+    "625/20 = 31.25 m."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A ball launches with vₓ = 10, v_y = 25, g = 10. What is its maximum height? (In meters.)",
+    "answer": 31.25,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 62.5,
+      "feedback": "62.5 = v_y²/g forgets the factor 2: v_y²/(2g) = 625/20 = 31.25 m."
+     },
+     {
+      "value": 25,
+      "feedback": "25 = v_y, the initial vertical speed. Max height = v_y²/(2g) = 31.25 m."
+     }
+    ],
+    "fallbackFeedback": "v_y²/(2g) = 625/20 = 31.25 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parabolic-path__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One arc, told three ways.",
+   "takeaways": [
+    "Eliminate t (t = x/vₓ) to get y as a downward parabola in x.",
+    "The path's roots give launch and landing; the vertex sits at their midpoint.",
+    "Parametric form separates WHEN (timing) from WHERE (shape) — the course's throughline."
+   ],
+   "teaser": "Course complete — the polar and parametric toolkit is yours."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-parabolic-path",
+   "concept": {
+    "id": "rem-pp0503-c",
+    "kind": "concept",
+    "body": "Eliminate t via t = x/vₓ, substitute into y(t): the trajectory is a downward parabola. Its x-intercepts are launch and landing; its vertex (peak) is at their midpoint."
+   },
+   "check": {
+    "id": "rem-pp0503-k",
+    "kind": "check",
+    "body": "One vertex.",
+    "conceptTag": "pp-parabolic-path",
+    "explanationVariants": [
+     "Roots at x = 0 and x = 40 → vertex at x = 20.",
+     "Halfway between 0 and 40 is 20."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A trajectory lands at x = 40 m (launch at x = 0). Where is its peak horizontally? (In meters.)",
+     "answer": 20,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 40,
+       "feedback": "40 is the landing point. The peak is the MIDPOINT: 20 m."
+      },
+      {
+       "value": 10,
+       "feedback": "Midpoint of 0 and 40 is 20, not 10."
+      }
+     ],
+     "fallbackFeedback": "(0 + 40)/2 = 20 m."
+    }
+   }
+  }
+ ]
+}

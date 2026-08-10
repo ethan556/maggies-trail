@@ -1,0 +1,275 @@
+{
+  "id": "tf-03-03",
+  "slug": "exact-values",
+  "title": "Exact Values",
+  "courseId": "trig-functions",
+  "chapterId": "ch3-unit-circle",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two special triangles hand you exact values forever. The half-equilateral (30-60-90) and half-square (45-45-90) give: **sin 30° = 1/2, sin 45° = √2/2, sin 60° = √3/2** — and cosines run the same list BACKWARD. Memory device: √1/2, √2/2, √3/2 — sine climbs the roots as the angle grows.",
+      "figure": "tf-special-triangles"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Exact values, read off the circle.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 240,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 240°. Read the coordinates, and notice which 60° angle it leans on.",
+        "successFeedback": "240° lands in the third quadrant, leaning on a 60° reference angle — so cos 240° = −1/2 and sin 240° = −√3/2. Both negative, because the third quadrant is where both coordinates are. The exact values are not memorised; they are the 30-60-90 triangle, placed and signed.",
+        "lowFeedback": "Not far enough — 240° is past 180° but short of 270°.",
+        "highFeedback": "Too far round; you have passed 240°."
+      },
+      "predict": {
+        "prompt": "You'll rotate from 0° to 240°. What does the point's HEIGHT do along the way?",
+        "options": [
+          {
+            "id": "updown",
+            "label": "Climbs, then falls back"
+          },
+          {
+            "id": "climb",
+            "label": "Climbs the whole way"
+          },
+          {
+            "id": "fall",
+            "label": "Falls the whole way"
+          }
+        ],
+        "outcomeId": "updown",
+        "reveal": "The height rises until the top of the circle at 90°, then falls — the sine's peak is exactly where the point is highest."
+      },
+      "conceptTag": "tf-exact-values",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents tf exact values.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tf exact values must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tf exact values."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "trig-functions:tf-exact-values",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The balance point.",
+      "conceptTag": "tf-exact-values",
+      "explanationVariants": [
+        "cos 45° = √2/2 ≈ 0.71 — at 45° the half-square's legs are equal, so sine and cosine MATCH.",
+        "45° is the crossover: below it cosine is larger, above it sine takes over."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is cos 45°? (Round to hundredths.)",
+        "answer": 0.71,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "0.5 is cos 60° — cosine runs the ladder DOWNWARD. At the 45° balance point it equals √2/2 ≈ 0.71."
+          },
+          {
+            "value": 0.87,
+            "feedback": "0.87 is cos 30° — one rung early. At 45° both functions meet at √2/2 ≈ 0.71."
+          }
+        ],
+        "fallbackFeedback": "cos 45° = √2/2 ≈ 0.71."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-exact-values__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Combine the table with reference angles and the WHOLE circle is exact. cos 300°: quadrant IV (the C quadrant — cosine positive), reference 360 − 300 = 60°, magnitude cos 60° = 1/2. So cos 300° = **+0.5**. Reference for size, A-S-T-C for sign, table for the number.",
+      "figure": "tf-combine-table"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Whole-circle exact.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute cos 300°. (Exact: give the decimal.)",
+        "answer": 0.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -0.5,
+            "feedback": "Quadrant IV is the C quadrant — x > 0 there, so cosine stays POSITIVE: +0.5."
+          },
+          {
+            "value": 0.87,
+            "feedback": "0.87 borrows cos 30° — but 300°'s reference is 60°, and cos 60° = 1/2."
+          }
+        ],
+        "fallbackFeedback": "Q4, reference 60°: cos 300° = +1/2."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Just short of a lap.",
+      "conceptTag": "tf-exact-values",
+      "explanationVariants": [
+        "330° is Q4 with reference 30°: magnitude sin 30° = 1/2, and Q4's y < 0 flips it: −0.5.",
+        "Only cosine survives positive in Q4 — sine dips below."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute sin 330°. (Exact: give the decimal.)",
+        "answer": -0.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "The size is right, but 330° sits BELOW the x-axis (Q4) — sine is negative: −0.5."
+          },
+          {
+            "value": -0.87,
+            "feedback": "−0.87 is √3/2's magnitude — that belongs to COS of a 30° reference. Sine of 30° is 1/2: answer −0.5."
+          }
+        ],
+        "fallbackFeedback": "reference 30°, Q4 sign: −0.5."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-exact-values__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Radians change nothing but the labels: **sin(π/6) = 1/2, sin(π/4) = √2/2, sin(π/3) = √3/2.** The denominator names the family — 6 for the 30s, 4 for the 45s, 3 for the 60s — and reference-angle rules run in π-form exactly as before.",
+      "figure": "tf-radians-labels"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Read the denominator.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is sin(π/3)? (Round to hundredths.)",
+        "answer": 0.87,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "π/3 is the 60° family — 1/2 belongs to π/6 (the 30s). sin(π/3) = √3/2 ≈ 0.87."
+          },
+          {
+            "value": 1.05,
+            "feedback": "1.05 is π/3 itself converted to a decimal — the SINE of it is wanted: √3/2 ≈ 0.87."
+          }
+        ],
+        "fallbackFeedback": "sin(π/3) = sin 60° = √3/2 ≈ 0.87."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Exact, in radians, past π.",
+      "conceptTag": "tf-exact-values",
+      "explanationVariants": [
+        "7π/6 = 210°: Q3, reference π/6 (30°), magnitude cos 30° = √3/2 ≈ 0.87 — and Q3 turns cosine negative: −0.87.",
+        "Q3 is the T quadrant — both sine and cosine go negative there."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute cos(7π/6). (Round to hundredths.)",
+        "answer": -0.87,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.87,
+            "feedback": "Magnitude right — but 7π/6 (210°) is Quadrant III, where x < 0: cosine is NEGATIVE, −0.87."
+          },
+          {
+            "value": -0.5,
+            "feedback": "−0.5 grabs sin 30°'s magnitude — cosine of a 30° reference is √3/2 ≈ 0.87. Answer −0.87."
+          }
+        ],
+        "fallbackFeedback": "Q3, reference π/6: −√3/2 ≈ −0.87."
+      },
+      "hints": [
+        "Place it: 7π/6 is one π/6-step past π — Quadrant III.",
+        "Reference: 7π/6 − π = π/6; magnitude cos(π/6) = √3/2.",
+        "Q3 sign for cosine is negative — finish."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-exact-values__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The exact toolkit.",
+      "takeaways": [
+        "Sines climb √1/2, √2/2, √3/2 across 30-45-60; cosines run it backward.",
+        "Any angle: reference for magnitude, A-S-T-C for sign, table for the value.",
+        "π-fraction denominators name the family: 6 → 30s, 4 → 45s, 3 → 60s."
+      ],
+      "teaser": "Next: set the circle spinning and watch the y-coordinate draw a WAVE."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-exact-values",
+      "concept": {
+        "id": "rem-tf0303-c",
+        "kind": "concept",
+        "body": "The anchor value of the whole table: sin 30° = 1/2, exactly. It comes from folding an equilateral triangle in half — the side opposite 30° is half the hypotenuse, always. From this one value the ladder climbs: √2/2 at 45°, √3/2 at 60°."
+      },
+      "check": {
+        "id": "rem-tf0303-k",
+        "kind": "check",
+        "body": "The anchor.",
+        "conceptTag": "tf-exact-values",
+        "explanationVariants": [
+          "sin 30° = 1/2 = 0.5, exact.",
+          "Half-equilateral: the 30° corner faces a side half the hypotenuse's length."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is sin 30°? (Exact: give the decimal.)",
+          "answer": 0.5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.87,
+              "feedback": "0.87 is √3/2 — that's sin 60° (or cos 30°). The 30° sine is the ladder's bottom: 1/2."
+            },
+            {
+              "value": 30,
+              "feedback": "30 is the angle — its sine is the ratio 1/2."
+            }
+          ],
+          "fallbackFeedback": "sin 30° = 1/2."
+        }
+      }
+    }
+  ]
+}

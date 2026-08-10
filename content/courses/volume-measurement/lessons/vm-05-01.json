@@ -1,0 +1,292 @@
+{
+  "id": "vm-05-01",
+  "slug": "adding-volumes",
+  "title": "Adding Volumes",
+  "courseId": "volume-measurement",
+  "chapterId": "ch5-composite-volume",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Not every solid is a single box — but many are **boxes glued together**. Volume is **additive**: if a solid is made of two boxes that don't overlap, its volume is the first volume **plus** the second. Box A at 4 × 2 × 3 = 24 joined to box B at 2 × 2 × 3 = 12 makes a solid of 24 + 12 = 36 cubic units.",
+      "figure": "vm-add-volumes"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "First box on its own.",
+      "conceptTag": "additive-volume",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "Box A is 4 long and 2 wide — that base is locked. Raise it to 3 tall and read the volume you will need for the sum that follows.",
+        "targetVolume": 24,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 4,
+        "wStart": 2,
+        "hStart": 1,
+        "lockL": true,
+        "lockW": true,
+        "commonBuilds": [
+          {
+            "volume": 8,
+            "feedback": "8 is the base layer alone. The box is 3 tall, so there are two more layers of 8 still to stack."
+          },
+          {
+            "volume": 16,
+            "feedback": "16 is two layers of the three. One more layer of 8 completes Box A."
+          }
+        ],
+        "successFeedback": "24 cubic units. Worth holding on to: the next step joins this box to another one, and the reason the two volumes can simply be ADDED is that neither box has any cube the other one also contains.",
+        "lowFeedback": "Still short of Box A. Each layer you add is another 8 cubes.",
+        "highFeedback": "Past it — Box A is only 3 layers tall. Ease the height back down."
+      },
+      "predict": {
+        "prompt": "Box A measures 4 long, 2 wide and 3 tall. Its volume in cubic units is…",
+        "options": [
+          {
+            "id": "nine",
+            "label": "9 — the three edge lengths added"
+          },
+          {
+            "id": "twentyfour",
+            "label": "24"
+          },
+          {
+            "id": "twelve",
+            "label": "12"
+          }
+        ],
+        "outcomeId": "twentyfour",
+        "reveal": "24. Adding the edges gives 9, but that is a total LENGTH, measured in units — it cannot be a count of cubes, which are measured in cubic units. Whenever the units of an answer do not match the units of the question, the operation is wrong."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now glue on box B.",
+      "conceptTag": "additive-volume",
+      "explanationVariants": [
+        "Box B is 2 × 2 × 3 = 12; the whole solid is 24 + 12 = 36.",
+        "Count each box's cubes, then combine: 24 cubes plus 12 cubes is 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Box A (volume 24) is joined to box B, which is 2 × 2 × 3. What is the volume of the whole solid, in cubic units?",
+        "answer": 36,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is box A alone. The solid includes box B too: 24 + 12 = 36."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is box B alone. Add box A's 24: 24 + 12 = 36."
+          }
+        ],
+        "fallbackFeedback": "Box B = 2 × 2 × 3 = 12; total = 24 + 12 = 36 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "composite"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The one rule: the pieces must **not overlap**, so every unit cube is counted exactly once. Then combining is always **addition** — never multiplication. And order doesn't matter: A + B equals B + A, just like any sum.",
+      "figure": "vm-no-overlap"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Add, don't multiply.",
+      "conceptTag": "additive-volume",
+      "explanationVariants": [
+        "15 + 9 = 24 cubic units.",
+        "The pieces' cube counts add to 24."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A solid is made of a box with volume 15 and a box with volume 9. What is its total volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "24 cubic units",
+            "correct": true,
+            "feedback": "Right — volumes of joined pieces add: 15 + 9 = 24."
+          },
+          {
+            "id": "b",
+            "label": "135 cubic units",
+            "feedback": "135 multiplies 15 × 9. Gluing boxes together combines their cubes by adding: 15 + 9 = 24."
+          },
+          {
+            "id": "c",
+            "label": "15 cubic units",
+            "feedback": "15 is the bigger box alone. Include the other piece: 15 + 9 = 24."
+          }
+        ]
+      },
+      "hints": [
+        "Each box already has its cube count.",
+        "Combining pieces means adding counts.",
+        "15 + 9 = 24."
+      ],
+      "variant": {
+        "gen": "box-volume",
+        "form": "compositeMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Compute both, then add.",
+      "conceptTag": "additive-volume",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A solid is a 3 × 2 × 2 box joined to a 5 × 1 × 2 box. What is its total volume in cubic units?",
+        "answer": 22,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the first box only (3 × 2 × 2). Add the second: 12 + 10 = 22."
+          },
+          {
+            "value": 15,
+            "feedback": "15 adds the six edge lengths. Multiply within each box, then add the volumes: 12 + 10 = 22."
+          }
+        ],
+        "fallbackFeedback": "3 × 2 × 2 = 12 and 5 × 1 × 2 = 10; total 12 + 10 = 22."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Once more, from scratch.",
+      "conceptTag": "additive-volume",
+      "explanationVariants": [
+        "2 × 3 × 4 = 24 and 2 × 2 × 2 = 8; total 24 + 8 = 32.",
+        "Each piece is a box: 24 cubes plus 8 cubes is 32."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A solid is a 2 × 3 × 4 box joined to a 2 × 2 × 2 box. What is its total volume in cubic units?",
+        "answer": 32,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the 2 × 3 × 4 box alone. Add the cube: 24 + 8 = 32."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the 2 × 2 × 2 box alone. Add the bigger box: 24 + 8 = 32."
+          }
+        ],
+        "fallbackFeedback": "24 + 8 = 32 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "composite"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A real shelf, from words.",
+      "conceptTag": "additive-volume",
+      "hints": [
+        "Find each box's volume separately.",
+        "Bottom: 5 × 2 × 2 = 20. Top: 3 × 2 × 1 = 6.",
+        "20 + 6 = 26."
+      ],
+      "explanationVariants": [
+        "Bottom 5 × 2 × 2 = 20, top 3 × 2 × 1 = 6; total 20 + 6 = 26.",
+        "Twenty cubes below and six above make 26 cubic units."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shelf unit is two boxes: a bottom box 5 × 2 × 2 and a top box 3 × 2 × 1. What is its total volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "26 cubic units",
+            "correct": true,
+            "feedback": "Right — 20 + 6 = 26 cubic units."
+          },
+          {
+            "id": "b",
+            "label": "20 cubic units",
+            "feedback": "20 is the bottom box only. Add the top box's 6: 20 + 6 = 26."
+          },
+          {
+            "id": "c",
+            "label": "120 cubic units",
+            "feedback": "120 multiplies 20 × 6. Joined pieces add their volumes: 20 + 6 = 26."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "compositeMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Pieces add up.",
+      "takeaways": [
+        "Volume is additive: non-overlapping pieces' volumes add.",
+        "Find each box with l × w × h, then add — never multiply the volumes.",
+        "Every unit cube gets counted exactly once."
+      ],
+      "teaser": "next: one weird L-shaped solid — you choose where to cut it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "additive-volume",
+      "concept": {
+        "id": "rem-av-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Joined boxes add their volumes.** A box of 6 cubic units glued to a box of 4 cubic units makes a solid of 6 + 4 = 10 cubic units. Each piece keeps its own cubes; together you just add the counts."
+      },
+      "check": {
+        "id": "rem-av-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "additive-volume",
+        "explanationVariants": [
+          "6 + 4 = 10 cubic units.",
+          "Six cubes and four more cubes make ten."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A solid is made of a box with volume 6 and a box with volume 4. What is its total volume in cubic units?",
+          "answer": 10,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is one box alone. Include the other: 6 + 4 = 10."
+            },
+            {
+              "value": 24,
+              "feedback": "24 multiplies 6 × 4. Joined volumes add: 6 + 4 = 10."
+            }
+          ],
+          "fallbackFeedback": "6 + 4 = 10 cubic units."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+{
+  "id": "tc-01-03",
+  "slug": "criteria-and-cpctc",
+  "title": "Criteria & CPCTC",
+  "courseId": "triangle-congruence",
+  "chapterId": "ch1-congruence-criteria",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "tc-cpctc",
+      "concept": {
+        "id": "rem-tc-cpctc-c",
+        "kind": "concept",
+        "body": "CPCTC = Corresponding Parts of Congruent Triangles are Congruent. It runs in ONE direction: congruent triangles ⇒ every pair of corresponding parts is equal. It is the LAST move in a proof — you must prove the triangles congruent (by a criterion) BEFORE you may extract parts with it."
+      },
+      "check": {
+        "id": "rem-tc-cpctc-k",
+        "kind": "check",
+        "body": "CPCTC's order.",
+        "conceptTag": "tc-cpctc",
+        "explanationVariants": [
+          "CPCTC comes AFTER a congruence is proven — it reads parts out of it.",
+          "Prove congruence first (criterion), then CPCTC."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In a proof, CPCTC is used…",
+          "options": [
+            {
+              "id": "o1",
+              "label": "after proving the triangles congruent",
+              "correct": true,
+              "feedback": "CPCTC extracts equal parts from an established congruence, so it comes last."
+            },
+            {
+              "id": "o2",
+              "label": "before choosing a criterion",
+              "correct": false,
+              "feedback": "There's no congruence to draw from yet — prove it with a criterion first, then CPCTC."
+            },
+            {
+              "id": "o3",
+              "label": "instead of a criterion",
+              "correct": false,
+              "feedback": "CPCTC doesn't PROVE congruence; it uses one. You still need a criterion first."
+            },
+            {
+              "id": "o4",
+              "label": "only in similarity proofs",
+              "correct": false,
+              "feedback": "CPCTC is about CONGRUENT triangles and equal parts — not similarity."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now put criteria to work. A congruence proof has two acts: FIRST prove the triangles congruent by a criterion (SSS/SAS/ASA/AAS); THEN, because congruent triangles match in every part, read off whatever equal side or angle you need. That second act has a name: **CPCTC** — Corresponding Parts of Congruent Triangles are Congruent.",
+      "figure": "sas-criterion"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the proof.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "AB = CB, so the legs are locked equal at 6. Drag the apex angle to 50° and watch the two base angles the whole way — can you ever make ∠A and ∠C disagree?",
+        "targetCriterion": "SSS",
+        "startCriterion": "SSA",
+        "sideA": 6,
+        "sideB": 6,
+        "targetAngle": 50,
+        "angleStart": 90,
+        "angleStep": 5,
+        "requiredMoves": 4,
+        "constraint": "isoscelesLegs",
+        "constraintFeedback": "You released the lock, so the legs are no longer equal — the base angles are now reading a different triangle than the one the proof is about. Re-lock them.",
+        "successFeedback": "They never disagree. With AB = CB and D the midpoint of AC, the two halves share three pairs of equal sides — SSS — so △ABD ≅ △CBD, and ∠A = ∠C follows by CPCTC. The lab shows the conclusion is forced at every apex angle, not just this one.",
+        "criterionFeedback": "SSA does not lock a triangle. The proof uses three pairs of equal SIDES: AB = CB, the shared BD, and AD = DC from the midpoint.",
+        "angleFeedback": "Right criterion — now bring the apex angle to 50°.",
+        "evidenceFeedback": "Drag through several apex angles before checking. The claim is that ∠A = ∠C ALWAYS, which one position cannot show."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "When can you use CPCTC?",
+      "conceptTag": "tc-cpctc",
+      "explanationVariants": [
+        "CPCTC is valid only AFTER the triangles are proven congruent — it reads parts OUT of an established congruence.",
+        "First earn the congruence (by a criterion); only then does CPCTC hand you the equal parts."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "At what point in a proof may you use CPCTC?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "only after the triangles have been proven congruent",
+            "correct": true,
+            "feedback": "CPCTC extracts equal parts FROM a congruence — so the congruence must be established first."
+          },
+          {
+            "id": "o2",
+            "label": "as the very first step, to get started",
+            "correct": false,
+            "feedback": "CPCTC needs a congruence to draw from — it can't come before one exists. Prove congruence first."
+          },
+          {
+            "id": "o3",
+            "label": "any time two triangles share a side",
+            "correct": false,
+            "feedback": "A shared side alone isn't congruence. You must first prove the triangles congruent by a criterion."
+          },
+          {
+            "id": "o4",
+            "label": "only when using SSS",
+            "correct": false,
+            "feedback": "CPCTC follows ANY criterion (SSS, SAS, ASA, AAS) — not just SSS. It just needs an established congruence."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-cpctc__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Choosing the criterion is a matching game: inventory what you're GIVEN (and what's free — shared sides are reflexive, vertical angles are equal), then pick the criterion whose pattern you can complete. Given two sides and the angle between? SAS. Two angles and a side? ASA or AAS. Three sides? SSS.",
+      "figure": "tc-matching-game"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the criterion.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two triangles share a side. You're also given a pair of equal angles at each end of that shared side. Which criterion fits?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "ASA (the shared side is included between the two angle pairs)",
+            "correct": true,
+            "feedback": "Two angles with the side BETWEEN them — and the shared side is reflexively equal. That's ASA."
+          },
+          {
+            "id": "o2",
+            "label": "SSS",
+            "correct": false,
+            "feedback": "You're given angles, not three sides. Only one side (the shared one) is known equal — SSS needs three."
+          },
+          {
+            "id": "o3",
+            "label": "SAS",
+            "correct": false,
+            "feedback": "SAS needs two SIDES with the included angle. Here you have two ANGLES with the included side — that's ASA."
+          },
+          {
+            "id": "o4",
+            "label": "SSA",
+            "correct": false,
+            "feedback": "SSA isn't a valid criterion at all — and you have angles at both ends of the side, which is the ASA pattern."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Congruent parts, equal measures.",
+      "conceptTag": "tc-cpctc",
+      "explanationVariants": [
+        "By CPCTC corresponding sides are equal, so the partner of a length-15 side is also 15.",
+        "Once congruent, matching parts share measures — the corresponding side is 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "△ABC ≅ △DEF has been proven. If AB = 15, what is DE?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 doubles it — but congruent triangles are the SAME size. Corresponding sides are EQUAL: DE = AB = 15."
+          },
+          {
+            "value": 7.5,
+            "feedback": "7.5 halves it — congruence preserves size exactly. DE corresponds to AB, so DE = 15."
+          }
+        ],
+        "fallbackFeedback": "CPCTC: DE = AB = 15."
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-cpctc__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One caution graders love: **letter order encodes correspondence.** In △ABC ≅ △DEF, A↔D, B↔E, C↔F. So AB corresponds to DE — not to EF. When you apply CPCTC, match parts by POSITION in the statement, never by how the triangle happens to look.",
+      "figure": "tc-letter-order"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Match by position.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "△PQR ≅ △STU. Which side corresponds to QR?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "TU",
+            "correct": true,
+            "feedback": "Q↔T and R↔U (positions 2 and 3), so QR corresponds to TU."
+          },
+          {
+            "id": "o2",
+            "label": "ST",
+            "correct": false,
+            "feedback": "ST is positions 1–2, corresponding to PQ. QR is positions 2–3: TU."
+          },
+          {
+            "id": "o3",
+            "label": "SU",
+            "correct": false,
+            "feedback": "SU is positions 1–3, corresponding to PR. QR (positions 2–3) matches TU."
+          },
+          {
+            "id": "o4",
+            "label": "PR",
+            "correct": false,
+            "feedback": "PR is a side of the SAME triangle as QR — correspondence pairs across the two triangles."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Full proof choice.",
+      "conceptTag": "tc-cpctc",
+      "hints": [
+        "Inventory: two given equal sides, plus what's free at the shared vertex?",
+        "Vertical angles at the crossing are equal — that's the included angle between the two given sides.",
+        "Two sides + the included (vertical) angle = SAS; then CPCTC finishes."
+      ],
+      "explanationVariants": [
+        "The two given sides meet at the crossing, where vertical angles are equal — that included angle gives SAS congruence, and CPCTC then yields the required equal parts.",
+        "Vertical angles supply the included angle between the two equal sides: SAS, then CPCTC."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Segments AC and BD cross at P, with AP = CP and BP = DP. To prove △APB ≅ △CPD, which criterion applies?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "SAS, using the equal vertical angles at P as the included angle",
+            "correct": true,
+            "feedback": "AP = CP and BP = DP are the two sides; ∠APB = ∠CPD are vertical (equal) — the included angle. That's SAS."
+          },
+          {
+            "id": "o2",
+            "label": "SSS, using three pairs of equal sides",
+            "correct": false,
+            "feedback": "Only two side pairs are given (AP=CP, BP=DP); the third sides aren't known equal. Use the vertical angle instead: SAS."
+          },
+          {
+            "id": "o3",
+            "label": "ASA, using two pairs of equal angles",
+            "correct": false,
+            "feedback": "Only ONE angle pair is known (the vertical angles). ASA needs two — here you pair it with two sides: SAS."
+          },
+          {
+            "id": "o4",
+            "label": "AAS, using the vertical angles and a side",
+            "correct": false,
+            "feedback": "AAS needs TWO angle pairs; you have one angle pair and two sides. The included vertical angle makes it SAS."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-cpctc__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Prove, then extract.",
+      "takeaways": [
+        "A congruence proof: first a criterion (SSS/SAS/ASA/AAS), then CPCTC for the parts.",
+        "CPCTC is valid only AFTER congruence is established.",
+        "Match corresponding parts by letter POSITION, not by the picture."
+      ],
+      "teaser": "Next chapter: right-triangle congruence with HL, and more CPCTC proof practice."
+    }
+  ]
+}

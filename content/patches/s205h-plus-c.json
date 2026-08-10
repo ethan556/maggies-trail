@@ -1,0 +1,53 @@
+{
+  "tag": "S205H",
+  "label": "The vertical-offset (+C) control's first payoff: in-04-02 'Pinning Down the Constant'. The authored reveal argues that sliding a curve up cannot tilt it, so f′ carries no information about vertical position — and until now no engine could let a learner DO that. derivativeTrace gained an offsetMax control (local state, never graded, because a grader that could see C would contradict the claim), and this insertion puts it where the argument is made.",
+  "conversions": [],
+  "insertions": [
+    {
+      "course": "integration-accumulation",
+      "lesson": "in-04-02",
+      "after": "i1",
+      "step": {
+        "id": "i1b",
+        "kind": "interactive",
+        "body": "The reveal made a claim about the whole family at once. Now hold the family in your hands: slide the curve and watch the derivative refuse to react.",
+        "predict": {
+          "prompt": "The top pane shows f(x) = x², the bottom traces f′. If you slide the WHOLE curve upward, what happens in the f′ pane?",
+          "options": [
+            { "id": "f-prime-rises", "label": "f′ rises too — the curve went up" },
+            { "id": "f-prime-still", "label": "Nothing at all — f′ does not move" },
+            { "id": "f-prime-tilts", "label": "f′ tilts, because the curve is steeper up there" }
+          ],
+          "outcomeId": "f-prime-still",
+          "reveal": "Nothing moves. Sliding a curve up does not tilt it anywhere, so every member of the family x² + C has the identical derivative 2x. That is why the derivative alone can never tell you which member you have — and why an initial condition is not extra calculus, it is the missing information put back."
+        },
+        "widget": {
+          "type": "derivativeTrace",
+          "prompt": "Slide C until the curve passes through the point (1, 5), then bring x to 1. Watch the f′ pane the whole time.",
+          "fn": "square",
+          "mode": "point",
+          "targetX": 1,
+          "start": -2,
+          "offsetMax": 6,
+          "successFeedback": "At x = 1 the tangent's slope is 2 — and it was 2 for every single value of C you slid through, because a vertical shift tilts nothing. The point (1, 5) is what picked C = 4 out of the infinite stack: 1 + C = 5. The derivative gave you the shape; one point gave you the position.",
+          "lowFeedback": "You are left of x = 1. Keep going — and notice that whatever you do with the C slider on the way, the f′ trace underneath is unchanged.",
+          "highFeedback": "You have gone past x = 1. Come back — and watch the f′ pane as you slide C: it does not care where the curve sits vertically, which is the whole reason C survives differentiation unseen."
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "dr-04-02",
+      "title": "Chains Within Chains (derivative-rules)",
+      "why": "Represents gate. The reveal's subject is RULE ORDER — outermost operation first, inner rules afterwards, never two rules in one line — on x²·(3x+1)⁴. derivativeRuleLab's mode enum is product|chain (schema.ts DerivativeRuleLabSpec): it can demonstrate either rule alone, but the lesson's claim is about how they NEST, and a lab that runs one rule shows the ingredient while the lesson asks about the assembly order. Same failure shape as the dr-03-02 refusal in S205E. Needs a nested-rule engine that exposes the decomposition tree; recorded as an engine gap.",
+      "gate": "represents"
+    },
+    {
+      "lesson": "in-05-02",
+      "title": "Changing the Limits (integration-accumulation)",
+      "why": "Represents gate. The reveal contrasts two correct u-substitution routes and names the error of mixing them (integrate in u, evaluate at x-limits). riemannSum and accumulateArea both draw a single integrand over a single interval (schema.ts: fn enums line|square and const|line|square|shifted); neither represents a CHANGE OF VARIABLE, so the two worlds the lesson keeps apart cannot both appear, and the named error has nowhere to happen on screen. A lab showing one interval's area would demonstrate that limits matter — true, but not the lesson's claim. Needs a substitution engine showing x-world and u-world side by side; recorded as an engine gap.",
+      "gate": "represents"
+    }
+  ]
+}

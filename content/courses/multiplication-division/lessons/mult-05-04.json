@@ -1,0 +1,419 @@
+{
+  "id": "mult-05-04",
+  "slug": "multiples-hundred-chart",
+  "title": "Multiples on the Hundred Chart",
+  "courseId": "multiplication-division",
+  "chapterId": "ch5-number-patterns",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **multiple** of a number is any answer in its times table — and the table never stops: 4, 8, 12, … forever. Shade a number's multiples on a chart and they paint **shapes**: the 10s make a column, the 5s make stripes, the 2s a checkerboard, the 9s a staircase.",
+      "figure": "mult3-hundred-chart"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Paint the 5s and watch a stripe appear.",
+      "conceptTag": "multiples",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "This chart counts 1–20 in rows of 5, starting at the bottom left. Tap every multiple of 5.",
+        "cols": 5,
+        "rows": 4,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "yLabels": [
+          "1–5",
+          "6–10",
+          "11–15",
+          "16–20"
+        ],
+        "targets": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 2,
+            "feedback": "That cell holds 9 — the 5s count (5, 10, 15, 20) skips it. Count by 5s and tap only where you land."
+          }
+        ],
+        "missFeedback": "Count by 5s — 5, 10, 15, 20 — and tap each landing spot. In rows of 5, they stack up somewhere special.",
+        "successFeedback": "5, 10, 15, 20 stack into one clean stripe — in rows of 5, every 5s-landing hits the row's END. Chart shape = number structure."
+      },
+      "predict": {
+        "prompt": "Counting 1–20 in rows of five, where do the multiples of 5 land?",
+        "options": [
+          {
+            "id": "col",
+            "label": "Stacked in the last column"
+          },
+          {
+            "id": "diag",
+            "label": "Along a diagonal"
+          },
+          {
+            "id": "random",
+            "label": "Scattered randomly"
+          }
+        ],
+        "outcomeId": "col",
+        "reveal": "Every fifth number finishes a row, so 5, 10, 15, 20 stack in one straight column. Multiples make stripes whenever the chart's width matches the skip — change the width and the stripe tilts."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents multiples.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for multiples must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines multiples."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:multiples",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why a COLUMN and not a scatter?",
+      "conceptTag": "multiples",
+      "explanationVariants": [
+        "Each new multiple of 10 is exactly one full row (10) further along — same column, one row down. Repeat forever: a column.",
+        "From 10 to 20 to 30: add a whole row each time, so the landing spot never slides sideways."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On a chart with rows of 10, the multiples of 10 form one straight column. What MAKES them line up?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Each new multiple is exactly one full row further — same spot, next row",
+            "correct": true,
+            "feedback": "Adding 10 moves exactly one row with zero sideways slide — stack that forever and you've drawn a column."
+          },
+          {
+            "id": "b",
+            "label": "Because they all end in 0",
+            "feedback": "True — but that's the observation, not the reason. They end in 0 BECAUSE adding a full row of 10 never changes the ones digit."
+          },
+          {
+            "id": "c",
+            "label": "Because 10 is the biggest one-digit jump",
+            "feedback": "10 isn't special for being big — it's special for matching the ROW LENGTH exactly. On rows of 5, the 5s line up instead."
+          },
+          {
+            "id": "d",
+            "label": "They actually form a diagonal",
+            "feedback": "Diagonals come from jumps that DON'T match the row length — like the 9s (one row down, one step left). The 10s match it perfectly: straight down."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "multiple-find",
+        "form": "chartColumn"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One number can be a multiple of **many things at once**: 12 is a multiple of 2, 3, 4, and 6 — four different counts all land on it. The multiples of 2 are exactly the evens (the checkerboard). And no list of multiples ever ends; only the chart runs out.",
+      "figure": "mult3-hundred-chart"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which counts land on 18?",
+      "conceptTag": "multiples",
+      "explanationVariants": [
+        "18 = 2 × 9 = 3 × 6 — so the 2s, 3s, 6s, and 9s counts all land on it.",
+        "Test each count: 2s hit 18 ✓, 3s hit 18 ✓, 5s go 15 → 20 (skip!), 6s hit ✓, 9s hit ✓."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which LIST shows numbers that 18 is a multiple of?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2, 3, 6, and 9",
+            "correct": true,
+            "feedback": "All four counts land on 18: 2 × 9, 3 × 6, 6 × 3, 9 × 2. One number, four families."
+          },
+          {
+            "id": "b",
+            "label": "Only 9",
+            "feedback": "9 × 2 = 18 works — but so do 2 × 9, 3 × 6, and 6 × 3. A number can belong to many counts at once."
+          },
+          {
+            "id": "c",
+            "label": "2, 3, 5, and 6",
+            "feedback": "The 5s count skips 18: it goes 15, then 20. No ×5 fact lands on 18 — swap the 5 for a 9."
+          },
+          {
+            "id": "d",
+            "label": "Every number smaller than 18",
+            "feedback": "Try 7: its count goes 14, then 21 — right over 18. Only counts that land EXACTLY on 18 get to claim it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "multiple-find",
+        "form": "factorList"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The 9s don't make a column — they make **stairs**. Catch every step.",
+      "conceptTag": "multiples",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "On a rows-of-10 chart, the 9s step down the page. Tap only the true multiples of 9.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 6,
+          "h": 4
+        },
+        "hotspots": [
+          {
+            "id": "h9",
+            "x": 85,
+            "y": 12,
+            "label": "Number 9",
+            "icon": "9",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h18",
+            "x": 68,
+            "y": 37,
+            "label": "Number 18",
+            "icon": "18",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h19",
+            "x": 85,
+            "y": 37,
+            "label": "Number 19",
+            "icon": "19",
+            "count": 1,
+            "feedback": "One too far! Each 9s step is one row down and one column LEFT — add 10, take 1 back. After 9 comes 18, not 19."
+          },
+          {
+            "id": "h27",
+            "x": 51,
+            "y": 62,
+            "label": "Number 27",
+            "icon": "27",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h28",
+            "x": 68,
+            "y": 62,
+            "label": "Number 28",
+            "icon": "28",
+            "count": 1,
+            "feedback": "28's digits add to 10, not 9 — the nines badge from Chapter 3 rejects it. The staircase lands on 27 in this row."
+          },
+          {
+            "id": "h36",
+            "x": 34,
+            "y": 87,
+            "label": "Number 36",
+            "icon": "36",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Walk the stairs: +10 down a row, −1 to the left. 9 → 18 → 27 → 36. (Digit-sum check: each lands on 9.)",
+        "successFeedback": "9, 18, 27, 36 — down one, left one, forever. The staircase happens because 9 is one LESS than the row length."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents multiples.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for multiples must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines multiples."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:multiples",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Multiples answer \"which landing?\" questions.",
+      "conceptTag": "multiples",
+      "explanationVariants": [
+        "The 8th multiple of 6 is 8 × 6 = 48 — the 8th landing of the 6s count.",
+        "Skip count 6s with fingers up: 6, 12, 18, 24, 30, 36, 42, 48 — eight hops."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the 8th multiple of 6?",
+        "answer": 48,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 adds 8 + 6. The 8th multiple means the 6s count's EIGHTH landing: that's 8 × 6."
+          },
+          {
+            "value": 42,
+            "feedback": "42 is the 7th landing — one hop short. One more 6 reaches the 8th."
+          },
+          {
+            "value": 54,
+            "feedback": "54 is the 9th landing — one hop past. Count exactly eight 6s: 6, 12, … 48."
+          }
+        ],
+        "fallbackFeedback": "The Nth multiple of 6 is just N × 6. Put in 8."
+      },
+      "variant": {
+        "gen": "multiple-find"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two counts, one meeting point.",
+      "conceptTag": "multiples",
+      "hints": [
+        "List each count separately: lights at 4, 8, 12, 16, … camera at 6, 12, 18, …",
+        "Hunt for the FIRST number sitting in BOTH lists.",
+        "12 = 4 × 3 and 12 = 6 × 2 — check any earlier number fails one list."
+      ],
+      "explanationVariants": [
+        "4s: 4, 8, 12… and 6s: 6, 12… — the lists first agree at 12 (4 × 3 and 6 × 2).",
+        "Check candidates: 6 isn't a multiple of 4; 8 isn't a multiple of 6; 12 is a multiple of both — and nothing smaller is."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Party lights blink at every multiple of 4 (4, 8, 12, …). A camera snaps at every multiple of 6 (6, 12, 18, …). At what number do they FIRST fire together?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 IS in both lists (4 × 6 and 6 × 4) — but it isn't the FIRST meeting. Both counts already agreed once before 24. Scan earlier."
+          },
+          {
+            "value": 10,
+            "feedback": "10 adds 4 + 6 — but the lights skip 10 (8, then 12) and so does the camera (6, then 12). Neither count lands there."
+          },
+          {
+            "value": 2,
+            "feedback": "2 subtracts the counts (6 − 4). Multiples only grow FROM each number — the first possible meeting comes after both counts start."
+          }
+        ],
+        "fallbackFeedback": "Write both counts side by side and circle the first number that appears in each: 4, 8, 12, 16 vs 6, 12, 18."
+      },
+      "variant": {
+        "gen": "multiple-find",
+        "form": "blinkLcm"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Course complete — you own multiplication and division.",
+      "takeaways": [
+        "A multiple is a times-table landing, and the list never ends.",
+        "Chart shapes reveal structure: row-length multiples make columns; one-less makes staircases.",
+        "Two counts can share landings — the first shared one solves real scheduling puzzles."
+      ],
+      "teaser": "next course: Place Value & Big Numbers — how three little digits hold a whole hundred."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "multiples",
+      "concept": {
+        "id": "rem-mu-c",
+        "kind": "concept",
+        "body": "Quick rewind. The multiples of 3 are just the **count-by-3 chant**: 3, 6, 9, 12, 15… To test a number, count toward it. Is 14 a multiple of 3? The chant goes 12, then 15 — it hops right over 14, so no. Land exactly on it, or it's not a multiple."
+      },
+      "check": {
+        "id": "rem-mu-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "multiples",
+        "explanationVariants": [
+          "The 4s chant: 4, 8, 12 — it lands exactly on 12, so 12 is a multiple of 4.",
+          "12 = 3 × 4, a times-table answer for 4 — that's what multiple means."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which number is a multiple of 4?",
+          "options": [
+            {
+              "id": "a",
+              "label": "12",
+              "correct": true,
+              "feedback": "The 4s count lands right on it: 4, 8, 12."
+            },
+            {
+              "id": "b",
+              "label": "14",
+              "feedback": "The 4s count goes 12, then 16 — hopping over 14. No landing, not a multiple."
+            },
+            {
+              "id": "c",
+              "label": "18",
+              "feedback": "The 4s count goes 16, then 20 — 18 gets skipped. (18 belongs to the 2s, 3s, 6s, and 9s instead.)"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

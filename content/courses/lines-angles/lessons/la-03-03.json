@@ -1,0 +1,377 @@
+{
+ "id": "la-03-03",
+ "slug": "classifying-quadrilaterals",
+ "title": "Classifying Quadrilaterals",
+ "courseId": "lines-angles",
+ "chapterId": "ch3-classifying-shapes-by-angles",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Remember shapes as members-only clubs with entry rules? A **rectangle's** entry rule is angle-based: **all four angles must be exactly 90°.** A quadrilateral missing that rule — even by one angle — doesn't get into the rectangle club, though it's still a quadrilateral.",
+   "figure": "geo3-quad-family"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build a rectangle from angle and parallel-side attributes.",
+   "conceptTag": "quadrilateral-classification",
+   "widget": {
+    "type": "shapeFamilyBuilder",
+    "prompt": "Build a rectangle: four sides, four right angles, and two pairs of parallel sides. Equal sides are not required for the rectangle rule.",
+    "targetName": "rectangle",
+    "targetSides": 4,
+    "targetRightAngles": 4,
+    "targetEqualSides": 0,
+    "targetParallelPairs": 2,
+    "startSides": 4,
+    "successFeedback": "The rectangle rule is satisfied: four right angles force two pairs of parallel opposite sides.",
+    "sidesFeedback": "A rectangle is a quadrilateral, so it must have four sides.",
+    "attributesFeedback": "Focus on four right angles and two parallel pairs. Equal sides would make a special rectangle—a square."
+   },
+   "predict": {
+    "prompt": "Can a quadrilateral have exactly THREE right angles — with a fourth that isn't?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — the fourth gets forced to 90° too"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — easily"
+     },
+     {
+      "id": "rect",
+      "label": "Only rectangles try that"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "Four angles must total 360° — three right angles spend 270°, leaving exactly 90° for the last. Three rights smuggle in a fourth."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": true,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Construct a rectangle from defining attributes and distinguish required from optional properties.",
+    "invariants": [
+     "rectangle-right-angles",
+     "opposite-sides-parallel"
+    ],
+    "misconceptions": [
+     "all-sides-equal-required",
+     "appearance-only"
+    ],
+    "representations": [
+     "diagram",
+     "table",
+     "symbolic",
+     "language"
+    ],
+    "fadeLevel": 1,
+    "transferFamily": "shape-families",
+    "delayed": true,
+    "translationFrom": "table",
+    "translationTo": "diagram",
+    "counterfactualPrompt": "Change one non-defining attribute while preserving family membership. Which changes are legal?",
+    "explanation": {
+     "prompt": "Why can two shapes look different but belong to the same family?",
+     "options": [
+      {
+       "id": "attributes",
+       "label": "They satisfy the same defining rules.",
+       "correct": true,
+       "feedback": "Yes — orientation and size are irrelevant to membership."
+      },
+      {
+       "id": "picture",
+       "label": "They must match one prototype picture.",
+       "correct": false,
+       "feedback": "A family includes every shape satisfying its rules."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Apply the entry rule.",
+   "conceptTag": "quadrilateral-classification",
+   "explanationVariants": [
+    "A shape needs ALL FOUR angles at exactly 90° to join the rectangle club — three isn't enough.",
+    "The entry rule has no partial credit."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A quadrilateral has three angles of exactly 90° and one angle of 85°. Does it belong to the rectangle club?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No club membership — one angle fails the entry rule",
+      "correct": true,
+      "feedback": "The rectangle's rule requires ALL FOUR angles at 90° — even one exception fails entry."
+     },
+     {
+      "id": "b",
+      "label": "Yes — three out of four is close enough",
+      "feedback": "The entry rule doesn't allow exceptions. Even one angle short of 90° means it's not a rectangle."
+     },
+     {
+      "id": "c",
+      "label": "Yes — 85° rounds to 90°",
+      "feedback": "Angles don't round for club membership — the rule is exactly 90°, and 85° falls short."
+     },
+     {
+      "id": "d",
+      "label": "It depends on the shape's size",
+      "feedback": "Size never matters for entry rules — only the actual angle measures do, and one angle here misses 90°."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laQuadrilateralClassificationMcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A quadrilateral can have **any number** of right angles — zero, one, two, or four (never exactly three, since the fourth would then be forced to also equal 90° by the shape's angle total). Fewer than four just means a different family, not a failed shape.",
+   "figure": "geo3-quad-family"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "How many right angles?",
+   "conceptTag": "quadrilateral-classification",
+   "explanationVariants": [
+    "A general quadrilateral with no special structure can easily have zero right angles.",
+    "Not joining the rectangle club doesn't disqualify it from being a quadrilateral at all."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A four-sided shape has no angles that measure exactly 90°. Is it still a valid quadrilateral?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Yes — quadrilateral only requires 4 sides, not any right angles",
+      "correct": true,
+      "feedback": "Being a quadrilateral just means having 4 sides. Right angles are the SEPARATE rectangle entry rule."
+     },
+     {
+      "id": "b",
+      "label": "No — every quadrilateral needs at least one right angle",
+      "feedback": "There's no such requirement. A quadrilateral just needs 4 sides — right angles are only the rectangle club's rule."
+     },
+     {
+      "id": "c",
+      "label": "No — it must be some other kind of shape entirely",
+      "feedback": "A 4-sided shape is a quadrilateral regardless of its angles. It's just not in the rectangle family specifically."
+     },
+     {
+      "id": "d",
+      "label": "Only if all four sides are equal length",
+      "feedback": "Side length isn't part of the basic quadrilateral rule either — 4 sides is enough. This shape qualifies."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laQuadrilateralClassificationMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match the shape to its right-angle count.",
+   "conceptTag": "quadrilateral-classification",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each quadrilateral to how many right angles it has.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "A square"
+     },
+     {
+      "id": "s2",
+      "label": "A right trapezoid (one side straight up)"
+     },
+     {
+      "id": "s3",
+      "label": "A rhombus that isn't a square"
+     }
+    ],
+    "right": [
+     {
+      "id": "n1",
+      "label": "4 right angles"
+     },
+     {
+      "id": "n2",
+      "label": "2 right angles"
+     },
+     {
+      "id": "n3",
+      "label": "0 right angles"
+     }
+    ],
+    "pairs": {
+     "s1": "n1",
+     "s2": "n2",
+     "s3": "n3"
+    },
+    "pairErrors": [
+     {
+      "left": "s3",
+      "right": "n2",
+      "feedback": "2 right angles belongs to the right trapezoid. A non-square rhombus, with its slanted corners, has 0 right angles."
+     }
+    ],
+    "missFeedback": "Picture each shape's corners and count how many form a perfect 90° angle.",
+    "successFeedback": "A square has 4, a right trapezoid has 2, and a non-square rhombus has 0."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Three right angles?",
+   "conceptTag": "quadrilateral-classification",
+   "explanationVariants": [
+    "If three angles are each 90°, they already total 270°; the fourth must be 360−270=90° too — forcing all four.",
+    "A quadrilateral's angles always total 360°, which makes exactly three right angles impossible."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Could a quadrilateral have EXACTLY three right angles (and a fourth angle that isn't 90°)?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — the fourth angle would be forced to be 90° too",
+      "correct": true,
+      "feedback": "Three 90° angles total 270°; since all four must total 360°, the fourth is forced to be exactly 90° as well."
+     },
+     {
+      "id": "b",
+      "label": "Yes — the fourth angle could be anything",
+      "feedback": "It can't be just anything — the four angles must total 360°. Three 90° angles leave exactly 90° for the fourth, forcing it too."
+     },
+     {
+      "id": "c",
+      "label": "Yes, if the quadrilateral is large enough",
+      "feedback": "Size doesn't change the angle total — every quadrilateral's angles sum to 360°, forcing the fourth angle to be 90° here."
+     },
+     {
+      "id": "d",
+      "label": "Only for certain irregular shapes",
+      "feedback": "The 360° total applies to every quadrilateral without exception, forcing the fourth angle to be 90° whenever the other three are."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laQuadrilateralClassificationMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The picture frame.",
+   "conceptTag": "quadrilateral-classification",
+   "hints": [
+    "Check each of the frame's four corners.",
+    "The entry rule needs ALL FOUR to be exactly 90°.",
+    "Even one exception changes the answer."
+   ],
+   "explanationVariants": [
+    "Three corners at 90° and one at 88° fails the all-four rule — this frame is not a true rectangle.",
+    "The rectangle club allows zero exceptions."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A picture frame has corners measuring 90°, 90°, 90°, and 88°. Is it a true rectangle?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — the 88° corner fails the all-four-90° entry rule",
+      "correct": true,
+      "feedback": "Even one corner short of exactly 90° means this frame doesn't meet the rectangle's entry rule."
+     },
+     {
+      "id": "b",
+      "label": "Yes — three out of four right angles is close enough",
+      "feedback": "The rectangle rule allows no exceptions. One corner at 88° means this isn't a true rectangle."
+     },
+     {
+      "id": "c",
+      "label": "Yes — 88° is basically 90°",
+      "feedback": "The entry rule is exact, not approximate. 88° falls short of the required 90°, so this frame fails entry."
+     },
+     {
+      "id": "d",
+      "label": "It depends on the frame's overall size",
+      "feedback": "Size is irrelevant here — the exact angle measures decide it, and 88° isn't 90°."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laQuadrilateralClassificationMcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Every family, one entry rule.",
+   "takeaways": [
+    "A rectangle's entry rule requires all four angles to be exactly 90°.",
+    "A quadrilateral can have 0, 1, 2, or 4 right angles — never exactly 3, since the fourth is then forced.",
+    "Failing one club's entry rule never disqualifies a shape from being a quadrilateral at all."
+   ],
+   "teaser": "next chapter: shapes that fold perfectly onto themselves."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "quadrilateral-classification",
+   "concept": {
+    "id": "rem-qc-c",
+    "kind": "concept",
+    "body": "Quick rewind. **A rectangle needs all four angles at exactly 90°, no exceptions.** A shape with even one different angle — say three 90°s and one 80° — doesn't meet the rule, even though it's still a quadrilateral."
+   },
+   "check": {
+    "id": "rem-qc-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "quadrilateral-classification",
+    "explanationVariants": [
+     "One angle short of 90° fails the all-four rule.",
+     "The rectangle entry rule allows zero exceptions."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A quadrilateral has angles 90°, 90°, 90°, and 80°. Is it a rectangle?",
+     "options": [
+      {
+       "id": "a",
+       "label": "No",
+       "correct": true,
+       "feedback": "One angle (80°) fails the all-four-90° rule."
+      },
+      {
+       "id": "b",
+       "label": "Yes",
+       "feedback": "The rule needs ALL FOUR at 90° — 80° fails entry, even with three correct angles."
+      },
+      {
+       "id": "c",
+       "label": "Only if it's also a square",
+       "feedback": "Square status isn't the question here — the rectangle rule alone already fails due to the 80° angle."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

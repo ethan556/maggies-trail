@@ -1,0 +1,252 @@
+{
+  "id": "ti-03-01",
+  "slug": "sum-and-difference-sine-cosine",
+  "title": "Sum & Difference: New Angles from Old",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch3-sum-difference",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You know exact values at 30°, 45°, 60°. The **sum and difference formulas** unlock their combinations — 75° = 45° + 30°, 15° = 45° − 30°:\n\nsin(A ± B) = sin A cos B ± cos A sin B\ncos(A ± B) = cos A cos B ∓ sin A sin B\n\nNote cosine's sign **flips**: plus-angle uses minus in the formula.",
+      "figure": "ti-sumdiff-decompose"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Set up sin 75°.",
+      "predict": {
+        "prompt": "Is sin(A + B) the same as sin A + sin B?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — the “add the sines” point will drift OFF the circle entirely"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — sine distributes over addition"
+          },
+          {
+            "id": "small",
+            "label": "Only for small angles"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "No — and the failure is visible: coordinates built by simple addition can exceed 1, so that point sails off the circle, where no angle's sine and cosine can live. The true expansion keeps the point exactly on the direct one. Watch both."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "The direct point sits at θ + 30°. Pick the formula that computes it from θ and 30° without ever letting go, then land θ on 45° — sin 75°'s home.",
+        "targetAngle": 45,
+        "angleStart": 15,
+        "angleStep": 5,
+        "ghost": "sum",
+        "ghostAngle": 30,
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "sin θ cos 30° + cos θ sin 30° (with its cosine partner)"
+          },
+          {
+            "id": "linearity",
+            "label": "sin θ + sin 30° (and cos θ + cos 30°)",
+            "feedback": "Watch the readout: this point's coordinates run past 1 and it leaves the circle — nothing on the circle has a sine of 1.2. Sine does not distribute over +; the cross-terms in the true expansion are what keep the point on the rim."
+          }
+        ],
+        "successFeedback": "Glued at every θ — at 45° that reads sin 75° = sin 45° cos 30° + cos 45° sin 30°, the expansion the entry names. The formula isn't a rule to recall: it's the only recipe that keeps the computed point living on the circle.",
+        "lowFeedback": "Formula's right — continue to 45°, where the expansion becomes sin 75°.",
+        "highFeedback": "Past 45° — ease back to the angle whose sum with 30° is 75°."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute it.",
+      "conceptTag": "ti-sum-diff",
+      "explanationVariants": [
+        "(√2/2)(√3/2) + (√2/2)(1/2) = √6/4 + √2/4 = (√6 + √2)/4 ≈ 0.9659.",
+        "Plug the exact values and combine over 4: (√6 + √2)/4 ≈ 0.97."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate sin 75° to four decimals.",
+        "answer": 0.9659,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.7071,
+            "feedback": "0.7071 = sin 45° alone — you stopped after one term. Add both products: ≈ 0.9659."
+          },
+          {
+            "value": 1.2247,
+            "feedback": "That sums √2/2 + √3/2 without the cross-multiplication. Each term is a PRODUCT: (√6 + √2)/4 ≈ 0.9659."
+          }
+        ],
+        "fallbackFeedback": "(√6 + √2)/4 ≈ 0.9659."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-sum-diff__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Cosine's sign flip is the classic trap: cos(A + B) = cos A cos B **−** sin A sin B. The plus-angle takes a minus. So cos 75° = cos45°cos30° − sin45°sin30° = (√6 − √2)/4 ≈ 0.2588 — a small positive, as a 75° cosine should be.",
+      "figure": "ti-cos-sign-flip"
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Mind the flip.",
+      "conceptTag": "ti-sum-diff",
+      "explanationVariants": [
+        "cos(A + B) uses MINUS between the products: cos45°cos30° − sin45°sin30° = (√6 − √2)/4 ≈ 0.2588.",
+        "The subtraction shrinks the result to ≈ 0.26 — correct for a near-vertical angle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate cos 75° to four decimals.",
+        "answer": 0.2588,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.9659,
+            "feedback": "0.9659 is sin 75° (or cos 15°). cos 75° uses the MINUS sign: (√6 − √2)/4 ≈ 0.2588."
+          },
+          {
+            "value": 0.9856,
+            "feedback": "That ADDS the products — cosine's formula SUBTRACTS them: (√6 − √2)/4 ≈ 0.2588."
+          }
+        ],
+        "fallbackFeedback": "cos45°cos30° − sin45°sin30° = (√6 − √2)/4 ≈ 0.2588."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-sum-diff__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A difference angle.",
+      "conceptTag": "ti-sum-diff",
+      "explanationVariants": [
+        "cos 15° = cos(45° − 30°) = cos45°cos30° + sin45°sin30° = (√6 + √2)/4 ≈ 0.9659 — the MINUS-angle flips to a plus inside.",
+        "Difference angle → plus sign in cosine's formula → the larger value 0.9659."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate cos 15° to four decimals.",
+        "answer": 0.9659,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.2588,
+            "feedback": "0.2588 is cos 75°. For cos 15° the difference flips cosine's sign to PLUS: (√6 + √2)/4 ≈ 0.9659."
+          },
+          {
+            "value": 0.5,
+            "feedback": "cos 15° is close to cos 0° = 1, not 0.5. The formula gives ≈ 0.9659."
+          }
+        ],
+        "fallbackFeedback": "cos(45° − 30°) = (√6 + √2)/4 ≈ 0.9659."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-sum-diff__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Evaluate from given ratios.",
+      "conceptTag": "ti-sum-diff",
+      "explanationVariants": [
+        "A acute with sin A = 3/5 → cos A = 4/5; B acute with cos B = 5/13 → sin B = 12/13. sin(A + B) = 3/5·5/13 + 4/5·12/13 = 15/65 + 48/65 = 63/65 ≈ 0.9692.",
+        "Build both triangles (3-4-5 and 5-12-13), then apply sin(A + B) = sinA cosB + cosA sinB."
+      ],
+      "hints": [
+        "Find the missing ratio in each angle: cos A and sin B (both acute → positive).",
+        "cos A = 4/5, sin B = 12/13.",
+        "sin(A + B) = (3/5)(5/13) + (4/5)(12/13)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A, B acute with sin A = 3/5 and cos B = 5/13. Find sin(A + B) to four decimals.",
+        "answer": 0.9692,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.5077,
+            "feedback": "0.5077 = 33/65 mixes the terms (e.g. sinA·sinB + ...). The right products give 15/65 + 48/65 = 63/65 ≈ 0.9692."
+          },
+          {
+            "value": 0.2308,
+            "feedback": "0.2308 = 15/65 is just the FIRST product. Add cosA·sinB = 48/65: total 63/65 ≈ 0.9692."
+          }
+        ],
+        "fallbackFeedback": "3/5·5/13 + 4/5·12/13 = 63/65 ≈ 0.9692."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-sum-diff__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Old angles, new exact values.",
+      "takeaways": [
+        "sin(A ± B) = sinA cosB ± cosA sinB.",
+        "cos(A ± B) = cosA cosB ∓ sinA sinB — the sign FLIPS.",
+        "Split any special-combo angle (75°, 15°) into 45° ± 30°."
+      ],
+      "teaser": "Next: tangent's own formula, plus the cofunction shortcut."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-sum-diff",
+      "concept": {
+        "id": "rem-ti0301-c",
+        "kind": "concept",
+        "body": "sin(A±B) = sinA cosB ± cosA sinB (sign matches). cos(A±B) = cosA cosB ∓ sinA sinB (sign FLIPS). Split the target angle into two special angles."
+      },
+      "check": {
+        "id": "rem-ti0301-k",
+        "kind": "check",
+        "body": "One setup.",
+        "conceptTag": "ti-sum-diff",
+        "explanationVariants": [
+          "sin(60° − 45°) = sin60°cos45° − cos60°sin45°: the difference keeps a minus in sine.",
+          "Sine's sign matches the angle's: minus angle → minus in the formula."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "sin 15° = sin(60° − 45°) expands to:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "sin60°cos45° − cos60°sin45°",
+              "correct": true,
+              "feedback": "Right — sine's sign matches: difference → minus."
+            },
+            {
+              "id": "o2",
+              "label": "sin60°cos45° + cos60°sin45°",
+              "feedback": "That's sin(60° + 45°) = sin 105°. For the DIFFERENCE, use minus."
+            },
+            {
+              "id": "o3",
+              "label": "cos60°cos45° − sin60°sin45°",
+              "feedback": "That's the COSINE formula. Sine alternates sin·cos + cos·sin."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "id": "sr-02-02",
+  "slug": "evaluating-sigma-sums",
+  "title": "Evaluating Sigma Sums",
+  "courseId": "sequences-series",
+  "chapterId": "ch2-sigma-notation",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The evaluation routine never changes: run the counter from the bottom bound to the top bound, feed each value through the rule, add. For Σ from k = 1 to 4 of (3k − 1): the terms are 2, 5, 8, 11, and the total is 26. Larger rules just mean more careful substitution.",
+      "figure": "sr-eval-routine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Run the routine.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "Evaluate Σ from k = 1 to 4 of (3k − 1).",
+        "mode": "arithmetic",
+        "task": "sigmaEvaluate",
+        "answerMode": "numeric",
+        "first": 2,
+        "targetD": 1,
+        "atPosition": 10,
+        "targetTerm": 26,
+        "targetRTenths": 5,
+        "targetSum": 26,
+        "rMax": 9,
+        "start": 1,
+        "lowerIndex": 1,
+        "upperIndex": 4,
+        "coefficient": 3,
+        "constant": -1,
+        "power": 1,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is only the k = 4 term. The counter visits 1, 2, 3, 4 — all four terms join: 2 + 5 + 8 + 11 = 26."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is Σ 3k with the −1 dropped — but it fires once per term, four times: 30 − 4 = 26."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "fallbackFeedback": "Unroll: 2 + 5 + 8 + 11 = 26.",
+        "explorationFeedback": "Open at least two exact sequence states before checking.",
+        "successFeedback": "Unroll: 2 + 5 + 8 + 11 = 26.",
+        "lowFeedback": "Unroll: 2 + 5 + 8 + 11 = 26.",
+        "highFeedback": "Unroll: 2 + 5 + 8 + 11 = 26."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The counter needn't start at 1.",
+      "conceptTag": "sr-sigma-eval",
+      "explanationVariants": [
+        "k runs 3, 4, 5, 6 — sum 18. The bottom bound is where the counter begins, wherever that is.",
+        "Only four values are visited: 3 + 4 + 5 + 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate Σ from k = 3 to 6 of k.",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 is 1 + 2 + ⋯ + 6 — the counter never visits 1 or 2 here. It starts at the bottom bound, 3: 3 + 4 + 5 + 6 = 18."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is 4 + 5 + 6 — the bottom bound is INCLUDED. k = 3 contributes too: 3 + 15 = 18."
+          }
+        ],
+        "fallbackFeedback": "k = 3, 4, 5, 6: 3 + 4 + 5 + 6 = 18."
+      },
+      "variant": {
+        "gen": "sigma-eval"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "How many terms does Σ from k = 3 to 11 have? Not 11 − 3 = 8 — it's **upper − lower + 1 = 9**, because BOTH ends count. It's the fencepost fact: the counter values 3, 4, …, 11 are nine numbers. This little +1 is one of the most common sigma slips there is.",
+      "figure": "sr-count-terms"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the terms.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many terms does Σ from k = 3 to 11 of (anything) have?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "11 − 3 = 8 misses the fencepost: both ends count, so it's 11 − 3 + 1 = 9 terms."
+          },
+          {
+            "value": 11,
+            "feedback": "The top bound alone isn't the count — the counter starts at 3, not 1. Values 3 through 11 are 9 numbers."
+          }
+        ],
+        "fallbackFeedback": "upper − lower + 1 = 11 − 3 + 1 = 9."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A counter that starts at zero.",
+      "conceptTag": "sr-sigma-eval",
+      "explanationVariants": [
+        "2⁰ + 2¹ + 2² + 2³ = 1 + 2 + 4 + 8 = 15.",
+        "The k = 0 term is 2⁰ = 1 — a real term, and dropping it is the classic slip."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate Σ from k = 0 to 3 of 2ᵏ.",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is 2 + 4 + 8 — the k = 0 term went missing. 2⁰ = 1 is a full member of the sum: 1 + 14 = 15."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is only the last term, 2³. The counter visits 0, 1, 2, 3: 1 + 2 + 4 + 8 = 15."
+          }
+        ],
+        "fallbackFeedback": "1 + 2 + 4 + 8 = 15 — four terms, starting from 2⁰ = 1."
+      },
+      "variant": {
+        "gen": "sigma-eval",
+        "form": "sigmaPow"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One legal shortcut speeds everything up: **a constant multiplier slides out**. Σ 4k = 4 · Σ k, because every term carries the same factor of 4 — factoring it out of each term factors it out of the total. So if you already know Σ k, the scaled sum is one multiplication away.",
+      "figure": "sr-constant-multiplier"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Use the shortcut.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Given Σ from k = 1 to 6 of k = 21, evaluate Σ from k = 1 to 6 of 4k.",
+        "answer": 84,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is 21 + 4 — adding the 4 once. The factor multiplies EVERY term, so it multiplies the total: 4 · 21 = 84."
+          },
+          {
+            "value": 21,
+            "feedback": "21 is the plain sum with the 4 ignored — each term is four times bigger now, so the total is too: 4 · 21 = 84."
+          }
+        ],
+        "fallbackFeedback": "4 · Σ k = 4 · 21 = 84."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Bounds off the beaten path.",
+      "conceptTag": "sr-sigma-eval",
+      "explanationVariants": [
+        "k² at k = 2, 3, 4, 5 gives 4, 9, 16, 25 — total 54.",
+        "Four terms (5 − 2 + 1), each a square, none of them 1²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate Σ from k = 2 to 5 of k².",
+        "answer": 54,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 55,
+            "feedback": "55 includes 1² — but the counter starts at 2, so 1 never plays: 4 + 9 + 16 + 25 = 54."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is only the last term, 5². All four counter values contribute: 4 + 9 + 16 + 25 = 54."
+          }
+        ],
+        "fallbackFeedback": "4 + 9 + 16 + 25 = 54."
+      },
+      "hints": [
+        "The counter runs k = 2, 3, 4, 5 — four terms, and k = 1 never plays.",
+        "Square each counter value: 4, 9, 16, 25.",
+        "4 + 9 + 16 + 25 — add them."
+      ],
+      "variant": {
+        "gen": "sigma-eval",
+        "form": "sigmaSq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Bounds rule the sum.",
+      "takeaways": [
+        "Run the counter bottom-to-top; both ends are included.",
+        "Term count = upper − lower + 1 — the fencepost fact.",
+        "A constant factor slides out: Σ 4k = 4·Σ k."
+      ],
+      "teaser": "Next: writing your own sigmas — turning a long sum back into one tidy symbol."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-sigma-eval",
+      "concept": {
+        "id": "rem-sr0202-c",
+        "kind": "concept",
+        "body": "The fencepost fact: the whole numbers from a to b are b − a + 1 numbers, because both ends count. From 5 to 9 that's 5, 6, 7, 8, 9 — five numbers, not four. Sigma term counts work exactly this way."
+      },
+      "check": {
+        "id": "rem-sr0202-k",
+        "kind": "check",
+        "body": "Count with both ends.",
+        "conceptTag": "sr-sigma-eval",
+        "explanationVariants": [
+          "9 − 5 + 1 = 5 — the values 5, 6, 7, 8, 9.",
+          "Subtracting alone gives 4; the +1 restores the included starting end."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many terms does Σ from k = 5 to 9 have?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "9 − 5 = 4 forgets that BOTH ends count: the values are 5, 6, 7, 8, 9 — five of them."
+            },
+            {
+              "value": 9,
+              "feedback": "The top bound isn't the count — the counter starts at 5. It's 9 − 5 + 1 = 5 terms."
+            }
+          ],
+          "fallbackFeedback": "9 − 5 + 1 = 5 terms."
+        }
+      }
+    }
+  ]
+}

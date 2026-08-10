@@ -1,0 +1,276 @@
+{
+ "id": "exp-03-01",
+ "slug": "solving-by-matching-bases",
+ "title": "Solving by Matching Bases",
+ "courseId": "exponential-functions",
+ "chapterId": "ch3-exponential-equations",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "exp-curve-growth",
+   "body": "To solve bˣ = k, rewrite k as a power of the **same base** b. Then the exponents must be equal. For 2ˣ = 8: since 8 = 2³, we have 2ˣ = 2³, so x = 3."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the base.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 2^x = 8.",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "This isn't 2·x = 8. Ask how many 2's multiply to 8: 2·2·2 = 8, so x = 3."
+     },
+     {
+      "value": 64,
+      "feedback": "That's 2⁶. You want 2ˣ = 8 = 2³, so x = 3."
+     }
+    ],
+    "fallbackFeedback": "8 = 2³, so x = 3."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A base of 3.",
+   "conceptTag": "exp-match-base",
+   "explanationVariants": [
+    "81 = 3⁴ (3·3·3·3), so x = 4.",
+    "Count the 3's: 3 → 9 → 27 → 81 is four steps, so x = 4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 3^x = 81.",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 27,
+      "feedback": "27 = 3³, one power short. 81 = 3⁴, so x = 4."
+     },
+     {
+      "value": 3,
+      "feedback": "3 is the base, not the exponent. 81 = 3⁴, so x = 4."
+     }
+    ],
+    "fallbackFeedback": "81 = 3⁴, so x = 4."
+   },
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-match-base__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The base can be anything. For 5ˣ = 25: since 25 = 5², x = 2. A good question to ask: “how many times do I multiply b by itself to reach k?” That count is the exponent.",
+   "figure": "exp-match-25"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Count the fives.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 5^x = 25.",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "This isn't 5·x = 25. 25 = 5², so x = 2."
+     },
+     {
+      "value": 3,
+      "feedback": "5³ = 125, too big. 25 = 5², so x = 2."
+     }
+    ],
+    "fallbackFeedback": "25 = 5², so x = 2."
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Sometimes the target hides a clean power: 4ˣ = 64 → 64 = 4³, so x = 3. Keep rewriting the target as a power of the base until the exponent is obvious.",
+   "figure": "exp-match-64"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Powers of ten.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 10^x = 1000.",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 100,
+      "feedback": "100 = 10², not the answer. 1000 = 10³, so x = 3."
+     },
+     {
+      "value": 2,
+      "feedback": "10² = 100. To reach 1000 you need 10³, so x = 3."
+     }
+    ],
+    "fallbackFeedback": "1000 = 10³, so x = 3."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Higher power of two.",
+   "conceptTag": "exp-match-base",
+   "explanationVariants": [
+    "32 = 2⁵ (2·2·2·2·2), so x = 5.",
+    "Double from 1: 2, 4, 8, 16, 32 is five steps, so x = 5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 2^x = 32.",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 16,
+      "feedback": "16 = 2⁴, one short. 32 = 2⁵, so x = 5."
+     },
+     {
+      "value": 30,
+      "feedback": "This isn't 2·x = 32. 32 = 2⁵, so x = 5."
+     }
+    ],
+    "fallbackFeedback": "32 = 2⁵, so x = 5."
+   },
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-match-base__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "When the exponent isn't whole.",
+   "conceptTag": "exp-match-base",
+   "explanationVariants": [
+    "Rewrite both sides base 2: 4ˣ = 2^(2x) and 8 = 2³, so 2x = 3 and x = 3/2.",
+    "4^(3/2) = (√4)³ = 2³ = 8, so x = 3/2."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Solve 4^x = 8.",
+    "options": [
+     {
+      "id": "a",
+      "label": "3/2",
+      "correct": true,
+      "feedback": "Yes — base 2: 2^(2x) = 2³ gives 2x = 3, so x = 3/2."
+     },
+     {
+      "id": "b",
+      "label": "2",
+      "feedback": "4² = 16, too big. Rewriting base 2 gives x = 3/2."
+     },
+     {
+      "id": "c",
+      "label": "1/2",
+      "feedback": "4^(1/2) = 2, too small. The answer is x = 3/2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-match-base__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A bigger target.",
+   "conceptTag": "exp-match-base",
+   "explanationVariants": [
+    "243 = 3⁵ (3·3·3·3·3), so x = 5.",
+    "3 → 9 → 27 → 81 → 243 is five steps, so x = 5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 3^x = 243.",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 81,
+      "feedback": "81 = 3⁴, one short. 243 = 3⁵, so x = 5."
+     },
+     {
+      "value": 4,
+      "feedback": "3⁴ = 81. To reach 243 you need 3⁵, so x = 5."
+     }
+    ],
+    "fallbackFeedback": "243 = 3⁵, so x = 5."
+   },
+   "hints": [
+    "Write 243 as a power of 3.",
+    "3, 9, 27, 81, 243 — count the steps.",
+    "243 = 3⁵, so x = 5."
+   ],
+   "variant": {
+    "gen": "a1-exponential",
+    "form": "exp-match-base__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Rewrite both sides with the same base, then match exponents.",
+   "takeaways": [
+    "bˣ = k: write k as a power of b, then x is that exponent.",
+    "Ask how many times b multiplies to reach k.",
+    "If bases match, the exponents must be equal."
+   ],
+   "teaser": "next: equations with a coefficient in front."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "exp-match-base",
+   "concept": {
+    "id": "rem-emb-c",
+    "kind": "concept",
+    "body": "To solve bˣ = k, rewrite k as a power of b, then the exponents match. For 2ˣ = 8: 8 = 2³, so x = 3. This is not 2·x = 8."
+   },
+   "check": {
+    "id": "rem-emb-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "exp-match-base",
+    "explanationVariants": [
+     "8 = 2³, so x = 3.",
+     "2·2·2 = 8 is three 2's, so x = 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve 2^x = 8.",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "Not 2·x = 8; 8 = 2³, so x = 3."
+      },
+      {
+       "value": 64,
+       "feedback": "64 = 2⁶; you want 8 = 2³, so x = 3."
+      }
+     ],
+     "fallbackFeedback": "8 = 2³, so x = 3."
+    }
+   }
+  }
+ ]
+}

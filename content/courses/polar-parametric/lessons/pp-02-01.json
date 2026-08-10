@@ -1,0 +1,240 @@
+{
+  "id": "pp-02-01",
+  "slug": "circles-and-lines",
+  "title": "The Simplest Polar Graphs",
+  "courseId": "polar-parametric",
+  "chapterId": "ch2-polar-graphs",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A polar EQUATION relates r and θ; its graph is every point satisfying it. The simplest: **r = a** fixes the distance at a for all angles — a **circle** of radius a centered at the pole. And **θ = c** fixes the angle — a **line** through the pole.",
+      "figure": "pp-circle-ra"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Identify r = 3.",
+      "widget": {
+        "type": "polarTrace",
+        "mode": "rose",
+        "targetPetals": 4,
+        "targetA": 3,
+        "prompt": "Trace r = 3 cos(2θ) and count the petals that appear.",
+        "successFeedback": "Four petals from a coefficient of 2 — an even coefficient doubles into 2n petals, an odd one gives exactly n. Watching the trace makes the rule obvious: the curve retraces itself on the second lap only when n is odd.",
+        "lowFeedback": "Fewer petals than the target — raise the coefficient.",
+        "highFeedback": "More petals than the target — lower the coefficient.",
+        "start": 1
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Circle through the origin.",
+      "conceptTag": "pp-circles",
+      "explanationVariants": [
+        "r = 2 cos θ is a circle of radius 1 centered at (1, 0) — it passes through the pole (r = 0 at θ = π/2). Converting: r² = 2r cos θ → x² + y² = 2x → (x−1)² + y² = 1.",
+        "Multiplying by r turns it into the rectangular circle (x−1)² + y² = 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The polar equation r = 2 cos θ graphs:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A circle of radius 1 centered at (1, 0)",
+            "correct": true,
+            "feedback": "Right — multiply by r: x² + y² = 2x → (x−1)² + y² = 1, a circle through the origin."
+          },
+          {
+            "id": "o2",
+            "label": "A circle of radius 2 centered at the origin",
+            "feedback": "That would be r = 2. The cos θ factor SHIFTS the circle to center (1, 0), radius 1."
+          },
+          {
+            "id": "o3",
+            "label": "A line through the origin",
+            "feedback": "Lines through the pole are θ = c. r = 2 cos θ is a shifted circle: (x−1)² + y² = 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-circles__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The pattern: **r = 2a cos θ** is a circle of radius |a| centered at (a, 0) — along the x-axis; **r = 2a sin θ** centers at (0, a) — along the y-axis. Both pass through the pole. The coefficient's function (cos vs sin) picks the axis; half the coefficient gives the center distance.",
+      "figure": "pp-circle-cos"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a sine circle.",
+      "conceptTag": "pp-circles",
+      "explanationVariants": [
+        "r = 4 sin θ: 2a = 4 → a = 2, centered at (0, 2), radius 2. Check: x² + (y−2)² = 4.",
+        "Sine → y-axis; center (0, 2), radius 2."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Where is the center of the circle r = 4 sin θ?",
+        "answer": [
+          0,
+          2
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              2,
+              0
+            ],
+            "feedback": "That's a COSINE circle's center. Sine puts the center on the y-axis: (0, 2)."
+          },
+          {
+            "values": [
+              0,
+              4
+            ],
+            "feedback": "The center distance is HALF the coefficient: 4/2 = 2, giving (0, 2)."
+          }
+        ],
+        "fallbackFeedback": "A sine circle centers on the y-axis at HALF the coefficient: 4/2 = 2.",
+        "successFeedback": "Right — sine centers on the y-axis; half of 4 is 2, so center (0, 2), radius 2."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-circles__pointEntry"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find where it touches the pole.",
+      "conceptTag": "pp-circles",
+      "explanationVariants": [
+        "r = 2 cos θ = 0 when cos θ = 0, i.e. θ = π/2: the circle passes through the origin there.",
+        "The pole is reached where r = 0, at θ = π/2 for a cosine circle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "At what angle does r = 2 cos θ pass through the pole (r = 0)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "θ = π/2",
+            "correct": true,
+            "feedback": "Right — cos(π/2) = 0 makes r = 0, so the curve touches the origin at θ = π/2."
+          },
+          {
+            "id": "o2",
+            "label": "θ = 0",
+            "feedback": "At θ = 0, r = 2 (the far edge). The pole (r = 0) is reached at θ = π/2."
+          },
+          {
+            "id": "o3",
+            "label": "θ = π",
+            "feedback": "cos π = −1 gives r = −2, which plots back at (2, 0). r = 0 happens at θ = π/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-circles__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Convert and classify.",
+      "conceptTag": "pp-circles",
+      "explanationVariants": [
+        "r = 6 sin θ: 2a = 6 → a = 3, center (0, 3), radius 3. The radius is 3.",
+        "Sine circle with center (0, 3); its radius equals |a| = 3."
+      ],
+      "hints": [
+        "Match to r = 2a sin θ.",
+        "2a = 6 → a = 3.",
+        "Radius = |a|."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the radius of the circle r = 6 sin θ?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the coefficient (2a). The radius is |a| = 6/2 = 3."
+          },
+          {
+            "value": 1.5,
+            "feedback": "1.5 halves it once too many. 2a = 6 → a = 3, and radius = |a| = 3."
+          }
+        ],
+        "fallbackFeedback": "2a = 6 → a = 3; radius 3."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-circles__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Constants and first curves.",
+      "takeaways": [
+        "r = a: circle of radius a at the pole. θ = c: line through the pole.",
+        "r = 2a cos θ: circle center (a, 0); r = 2a sin θ: circle center (0, a).",
+        "Both shifted circles pass through the origin."
+      ],
+      "teaser": "Next: crank up the frequency and petals bloom."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pp-circles",
+      "concept": {
+        "id": "rem-pp0201-c",
+        "kind": "concept",
+        "body": "r = a is an origin-centered circle. r = 2a cos θ centers at (a, 0); r = 2a sin θ centers at (0, a); both have radius |a| and pass through the pole."
+      },
+      "check": {
+        "id": "rem-pp0201-k",
+        "kind": "check",
+        "body": "One classification.",
+        "conceptTag": "pp-circles",
+        "explanationVariants": [
+          "r = 5 is a circle of radius 5 at the origin.",
+          "Constant r → origin circle, radius 5."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "r = 5 graphs:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A circle of radius 5 at the origin",
+              "correct": true,
+              "feedback": "Right — constant distance in all directions."
+            },
+            {
+              "id": "o2",
+              "label": "A line",
+              "feedback": "Lines are θ = c. r = 5 is a circle."
+            },
+            {
+              "id": "o3",
+              "label": "A circle centered at (5, 0)",
+              "feedback": "That needs a cos θ factor. Plain r = 5 centers at the ORIGIN."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

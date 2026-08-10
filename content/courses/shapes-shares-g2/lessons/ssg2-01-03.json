@@ -1,0 +1,488 @@
+{
+  "id": "ssg2-01-03",
+  "slug": "naming-any-shape",
+  "title": "Naming Any Shape",
+  "courseId": "shapes-shares-g2",
+  "chapterId": "ch1-recognize-and-draw-shapes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "extended-shapes",
+      "body": "Now you know shapes from 3 sides all the way to 8: triangle, pentagon, hexagon, heptagon, octagon. Given any side count, you can name the shape."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build a pentagon from its defining side count.",
+      "widget": {
+        "type": "shapeFamilyBuilder",
+        "prompt": "Build a pentagon. Use the side control first; other attributes can vary without changing the family name.",
+        "targetName": "pentagon",
+        "targetSides": 5,
+        "targetRightAngles": 0,
+        "targetEqualSides": 0,
+        "targetParallelPairs": 0,
+        "startSides": 3,
+        "successFeedback": "Five straight sides make a pentagon; size, tilt, and equal-side patterns are optional.",
+        "sidesFeedback": "A pentagon belongs to the five-sided family.",
+        "attributesFeedback": "For this family, side count is the defining rule. Return optional attributes to zero."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Construct a polygon from the defining attribute of side count.",
+        "invariants": [
+          "polygon-side-count"
+        ],
+        "misconceptions": [
+          "name-by-appearance",
+          "irrelevant-feature"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "shape-families",
+        "delayed": true,
+        "translationFrom": "table",
+        "translationTo": "diagram",
+        "counterfactualPrompt": "Change one non-defining attribute while preserving family membership. Which changes are legal?",
+        "explanation": {
+          "prompt": "Why can two shapes look different but belong to the same family?",
+          "options": [
+            {
+              "id": "attributes",
+              "label": "They satisfy the same defining rules.",
+              "correct": true,
+              "feedback": "Yes — orientation and size are irrelevant to membership."
+            },
+            {
+              "id": "picture",
+              "label": "They must match one prototype picture.",
+              "correct": false,
+              "feedback": "A family includes every shape satisfying its rules."
+            }
+          ]
+        }
+      },
+      "predict": {
+        "prompt": "What decides a shape family?",
+        "options": [
+          {
+            "id": "rules",
+            "label": "Its defining attributes."
+          },
+          {
+            "id": "tilt",
+            "label": "How it is tilted."
+          },
+          {
+            "id": "size",
+            "label": "How large it is."
+          }
+        ],
+        "outcomeId": "rules",
+        "reveal": "Shape names come from invariant attributes such as side count, right angles, equality, and parallelism."
+      },
+      "conceptTag": "ssg2-name-any"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name a 3-sided shape.",
+      "conceptTag": "ssg2-name-any",
+      "explanationVariants": [
+        "3 sides is always a triangle.",
+        "The smallest closed shape with straight sides is the triangle."
+      ],
+      "widget": {
+        "type": "tapDiagram",
+        "mode": "selectOne",
+        "prompt": "A shape has 3 sides. What is it called? Tap it.",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "triangle",
+            "x": 17,
+            "y": 50,
+            "label": "triangle",
+            "icon": "🔺",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "pentagon",
+            "x": 50,
+            "y": 50,
+            "label": "pentagon",
+            "icon": "⬟",
+            "count": 1,
+            "correct": false,
+            "feedback": "A pentagon has 5 sides, not 3. The 3-sided shape is a triangle."
+          },
+          {
+            "id": "hexagon",
+            "x": 83,
+            "y": 50,
+            "label": "hexagon",
+            "icon": "⬢",
+            "count": 1,
+            "correct": false,
+            "feedback": "A hexagon has 6 sides, not 3. The 3-sided shape is a triangle."
+          }
+        ],
+        "missFeedback": "Count the sides of each shape — the one with exactly 3 sides is the answer.",
+        "successFeedback": "Yes — 3 sides is a triangle."
+      },
+      "variant": {
+        "gen": "g2-shapes-shares",
+        "form": "Ssg2NameAnyTapDiagram"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents ssg2 name any.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for ssg2 name any must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines ssg2 name any."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-shares-g2:ssg2-name-any",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Watch for near neighbors — heptagon (7) and octagon (8) are easy to mix up since they're next to each other in the count.",
+      "figure": "ssg2-near-neighbors"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Tell heptagon and octagon apart.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shape has 8 sides. What is it called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "octagon",
+            "correct": true,
+            "feedback": "Yes — 8 sides is an octagon."
+          },
+          {
+            "id": "b",
+            "label": "heptagon",
+            "feedback": "A heptagon has 7 sides, not 8. The 8-sided shape is an octagon."
+          },
+          {
+            "id": "c",
+            "label": "hexagon",
+            "feedback": "A hexagon has 6 sides, not 8. The 8-sided shape is an octagon."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The full family, smallest to biggest: triangle (3), square/rectangle (4), pentagon (5), hexagon (6), heptagon (7), octagon (8).",
+      "figure": "ssg2-shape-family"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Name a 6-sided shape.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shape has 6 sides. What is it called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "hexagon",
+            "correct": true,
+            "feedback": "Yes — 6 sides is a hexagon."
+          },
+          {
+            "id": "b",
+            "label": "heptagon",
+            "feedback": "A heptagon has 7 sides, not 6. The 6-sided shape is a hexagon."
+          },
+          {
+            "id": "c",
+            "label": "pentagon",
+            "feedback": "A pentagon has 5 sides, not 6. The 6-sided shape is a hexagon."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name a 7-sided shape.",
+      "conceptTag": "ssg2-name-any",
+      "explanationVariants": [
+        "7 sides is a heptagon.",
+        "Hept- means seven."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shape has 7 sides. What is it called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "heptagon",
+            "correct": true,
+            "feedback": "Yes — 7 sides is a heptagon."
+          },
+          {
+            "id": "b",
+            "label": "octagon",
+            "feedback": "An octagon has 8 sides, not 7. The 7-sided shape is a heptagon."
+          },
+          {
+            "id": "c",
+            "label": "hexagon",
+            "feedback": "A hexagon has 6 sides, not 7. The 7-sided shape is a heptagon."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g2-shapes-shares",
+        "form": "Ssg2NameAnyMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pyramid or prism?",
+      "conceptTag": "ssg2-pyramid",
+      "explanationVariants": [
+        "A pyramid comes to a point; a rectangular prism has a flat top.",
+        "Only the pyramid's triangle faces meet at one point."
+      ],
+      "widget": {
+        "type": "tapDiagram",
+        "mode": "selectOne",
+        "prompt": "Which solid has faces that meet at a single point on top? Tap it.",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "pyramid",
+            "x": 17,
+            "y": 50,
+            "label": "square pyramid",
+            "icon": "🔺",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "prism",
+            "x": 50,
+            "y": 50,
+            "label": "rectangular prism",
+            "icon": "📦",
+            "count": 1,
+            "correct": false,
+            "feedback": "A rectangular prism has a flat top, not a point."
+          },
+          {
+            "id": "cube",
+            "x": 83,
+            "y": 50,
+            "label": "cube",
+            "icon": "🧊",
+            "count": 1,
+            "correct": false,
+            "feedback": "A cube has a flat top, not a point."
+          }
+        ],
+        "missFeedback": "Look at each solid's top — tap the one whose faces climb to a single point.",
+        "successFeedback": "Yes — a pyramid comes to a point."
+      },
+      "variant": {
+        "gen": "g2-shapes-shares",
+        "form": "Ssg2PyramidTapDiagram"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents ssg2 pyramid.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for ssg2 pyramid must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines ssg2 pyramid."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-shares-g2:ssg2-pyramid",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The trickiest pair.",
+      "conceptTag": "ssg2-name-any",
+      "explanationVariants": [
+        "7 sides is a heptagon, not an octagon (8).",
+        "Match the exact count: 7 means heptagon."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shape has 7 sides. What is it called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "heptagon",
+            "correct": true,
+            "feedback": "Yes — 7 sides is a heptagon, not an octagon."
+          },
+          {
+            "id": "b",
+            "label": "octagon",
+            "feedback": "An octagon has 8 sides. The 7-sided shape is a heptagon."
+          },
+          {
+            "id": "c",
+            "label": "pentagon",
+            "feedback": "A pentagon has 5 sides. The 7-sided shape is a heptagon."
+          }
+        ]
+      },
+      "hints": [
+        "Count the sides given: 7.",
+        "Heptagon and octagon are neighbors (7 and 8) — check carefully.",
+        "7 sides is a heptagon."
+      ],
+      "variant": {
+        "gen": "g2-shapes-shares",
+        "form": "Ssg2NameAnyMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can name any shape from 3 to 8 sides, and tell the near-neighbor pairs apart.",
+      "takeaways": [
+        "Triangle (3) through octagon (8) — the full family.",
+        "Heptagon and octagon are easy to mix up — check the exact count.",
+        "A square pyramid comes to a point; prisms have flat tops."
+      ],
+      "teaser": "next chapter: partitioning rectangles into a grid of squares."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ssg2-name-any",
+      "concept": {
+        "id": "rem-sna-c",
+        "kind": "concept",
+        "body": "Name a shape from its side count: triangle (3), square/rectangle (4), pentagon (5), hexagon (6), heptagon (7), octagon (8). Check the exact number carefully, especially for close neighbors like 7 and 8."
+      },
+      "check": {
+        "id": "rem-sna-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "ssg2-name-any",
+        "explanationVariants": [
+          "5 sides is a pentagon.",
+          "Match the count: 5 means pentagon."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A shape has 5 sides. What is it called?",
+          "options": [
+            {
+              "id": "a",
+              "label": "pentagon",
+              "correct": true,
+              "feedback": "Yes — 5 sides is a pentagon."
+            },
+            {
+              "id": "b",
+              "label": "hexagon",
+              "feedback": "Hexagon is 6 sides; pentagon is 5."
+            },
+            {
+              "id": "c",
+              "label": "heptagon",
+              "feedback": "Heptagon is 7 sides; pentagon is 5."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conceptTag": "ssg2-pyramid",
+      "concept": {
+        "id": "rem-sna-pyr-c",
+        "kind": "concept",
+        "body": "A square pyramid comes to a single point where its 4 triangle faces meet. A rectangular prism or cube, by contrast, has a flat top — no solid with a flat top is a pyramid."
+      },
+      "check": {
+        "id": "rem-sna-pyr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "ssg2-pyramid",
+        "explanationVariants": [
+          "A pyramid comes to a point; a cube has a flat top.",
+          "Only the pyramid's faces meet at one point."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which solid has faces that meet at a single point on top?",
+          "options": [
+            {
+              "id": "a",
+              "label": "square pyramid",
+              "correct": true,
+              "feedback": "Yes — a pyramid comes to a point."
+            },
+            {
+              "id": "b",
+              "label": "cube",
+              "feedback": "A cube has a flat top, not a point."
+            },
+            {
+              "id": "c",
+              "label": "rectangular prism",
+              "feedback": "A rectangular prism has a flat top, not a point."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

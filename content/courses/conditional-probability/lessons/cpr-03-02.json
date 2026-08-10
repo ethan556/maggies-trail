@@ -1,0 +1,393 @@
+{
+  "id": "cpr-03-02",
+  "slug": "which-way-round",
+  "title": "Which Way Round? P(A|B) vs P(B|A)",
+  "courseId": "conditional-probability",
+  "chapterId": "ch3-conditioning",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The same 40 students sit in the crossing cell. But *what you are told* decides what you divide by.\n\nTold they take the bus → divide by the bus row: 40/100.\nTold they play a sport → divide by the sport column: 40/110.\n\nSame numerator, different denominator, different answer. P(A | B) and P(B | A) are **not** the same number.",
+      "figure": "cpr-row-vs-column"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "You are told the student takes the bus. Change the condition to see why “given” selects a row or column as the new denominator.",
+      "widget": {
+        "type": "conditionalTableLab",
+        "prompt": "Compare both directions. Choose the condition named by “given,” then choose the joint cell that becomes the numerator.",
+        "rowLabels": [
+          "Takes the bus",
+          "Walks"
+        ],
+        "colLabels": [
+          "Plays a sport",
+          "No sport"
+        ],
+        "counts": [
+          40,
+          60,
+          70,
+          30
+        ],
+        "targetCondition": "row0",
+        "targetCell": "r0c0",
+        "startCondition": "col0",
+        "requiredSwitches": 2,
+        "successFeedback": "Given bus makes the 100-person bus row the denominator; the 40-person bus-and-sport intersection is the numerator, so 40/100 = 0.400.",
+        "explorationFeedback": "Switch between at least two candidate conditions so you can compare how the same joint cell produces different denominators.",
+        "conditionFeedback": "The phrase “given they take the bus” restricts the world to the bus row, not the sport column or the whole table.",
+        "cellFeedback": "Inside the bus row, select the intersection that also satisfies “plays a sport”: the 40-person cell."
+      },
+      "predict": {
+        "prompt": "The same 40 students are in both P(sport | bus) and P(bus | sport). What changes when the condition reverses?",
+        "options": [
+          {
+            "id": "denominator",
+            "label": "The denominator changes"
+          },
+          {
+            "id": "numerator",
+            "label": "The numerator changes"
+          },
+          {
+            "id": "same",
+            "label": "Both probabilities must stay the same"
+          }
+        ],
+        "outcomeId": "denominator",
+        "reveal": "The intersection can remain the same 40 students, but “given bus” uses the 100 bus riders while “given sport” uses the 110 sport players. Reversing a conditional changes the reference group."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Change the conditioned row or column and coordinate its total with the joint-cell numerator.",
+        "predictionId": "conditional-denominator-reversal-prediction",
+        "invariants": [
+          "condition-defines-denominator",
+          "same-joint-cell-supports-reversed-conditionals"
+        ],
+        "misconceptions": [
+          "reverse-conditional",
+          "always-divide-by-grand-total"
+        ],
+        "representations": [
+          "table",
+          "diagram",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "table",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "conditional-probability-new-two-way-table",
+        "delayed": true,
+        "counterfactualPrompt": "Keep the joint count 40 fixed but double the sport-only count among walkers. Which reversed conditional changes, and why?",
+        "explanation": {
+          "prompt": "Why does the word “given” determine the denominator?",
+          "options": [
+            {
+              "id": "condition",
+              "label": "It restricts the sample space to the group named after “given,” so that group total becomes the denominator.",
+              "correct": true,
+              "feedback": "Exactly. Conditional probability measures a part inside the restricted reference group."
+            },
+            {
+              "id": "total",
+              "label": "Every probability from a two-way table must divide by the grand total.",
+              "correct": false,
+              "feedback": "The grand total is used only before conditioning. “Given” replaces it with the selected row or column total."
+            }
+          ]
+        }
+      },
+      "conceptTag": "cpr-conditional-table"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Condition on the row.",
+      "conceptTag": "cpr-conditional-table",
+      "explanationVariants": [
+        "The bus row holds 100 students and 40 of them play a sport: 40/100 = 0.40.",
+        "P(sport | bus) = P(sport and bus)/P(bus) = 0.20/0.50 = 0.40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(plays a sport | takes the bus). Give a decimal.",
+        "answer": 0.4,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.2,
+            "feedback": "That is the joint probability 40/200 — dividing by everyone. The condition already cut the world down to the 100 bus riders."
+          },
+          {
+            "value": 0.364,
+            "feedback": "That is 40/110, which conditions on **sport** instead. You were told the travel method, so the sport column is not the surviving world."
+          },
+          {
+            "value": 0.55,
+            "feedback": "That is P(sport) for the whole school. The point of conditioning is that the bus riders need not match the school average."
+          }
+        ],
+        "fallbackFeedback": "Of the 100 bus riders, 40 play a sport: 0.40."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-conditional-table__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now flip what you are told.",
+      "conceptTag": "cpr-reversal-error",
+      "explanationVariants": [
+        "The sport column holds 110 students and 40 of them take the bus: 40/110 ≈ 0.364.",
+        "P(bus | sport) = 0.20/0.55 ≈ 0.364. Same 0.20 on top as before — only the denominator changed."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(takes the bus | plays a sport). Give a decimal, to three places.",
+        "answer": 0.364,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.4,
+            "feedback": "That is 40/100 = P(sport | bus) — the reverse conditional. Here you are told the sport, so you divide by the 110 who play, not the 100 who ride."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is the joint 40/200. A conditional divides by its condition, and the condition here contains 110 students."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(bus) across the whole school. Being told the student plays a sport should move that number — it lands at 40/110 ≈ 0.364."
+          }
+        ],
+        "fallbackFeedback": "Of the 110 who play a sport, 40 take the bus: 40/110 ≈ 0.364."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-reversal-error__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Swapping the two sides is the most expensive mistake in probability.\n\n*Almost every flu patient has a cough* does **not** mean *almost every cougher has flu*. The first divides by the flu patients; the second divides by the far larger crowd of coughers.\n\nWhen a claim conditions on something, ask: **which group is underneath?**",
+      "figure": "cpr-conditional-venn"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the sentence carefully.",
+      "conceptTag": "cpr-reversal-error",
+      "explanationVariants": [
+        "\"Of the students who walk, 70% play a sport\" divides by the walkers — that is P(sport | walks) = 70/100.",
+        "The group named after \"of the\" is the condition. Everything else is the event being measured inside it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "\"Of the students who walk, 70% play a sport.\" Which probability is that?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "P(plays a sport | walks) = 70/100",
+            "correct": true,
+            "feedback": "Right — the walkers are the group being divided by, so they sit under the line."
+          },
+          {
+            "id": "o2",
+            "label": "P(walks | plays a sport) = 70/110",
+            "correct": false,
+            "feedback": "That reverses the sentence. It would read \"of the students who play a sport, 64% walk\" — a true statement, but a different one."
+          },
+          {
+            "id": "o3",
+            "label": "P(walks and plays a sport) = 70/200",
+            "correct": false,
+            "feedback": "That is the joint probability, 0.35 — the share of the *whole school*. The sentence restricts attention to walkers first."
+          },
+          {
+            "id": "o4",
+            "label": "P(walks) = 100/200",
+            "correct": false,
+            "feedback": "That is the condition on its own. The 70% describes what happens *inside* that group."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-reversal-error__mcq"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Match each phrasing to its fraction.",
+      "conceptTag": "cpr-conditional-table",
+      "explanationVariants": [
+        "The condition sets the denominator: bus → 100, sport → 110, everyone → 200.",
+        "All three fractions share the numerator 40. Only the group underneath changes."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Each statement uses the same 40 students. Match it to its fraction.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Given they take the bus, they play a sport"
+          },
+          {
+            "id": "w2",
+            "label": "Given they play a sport, they take the bus"
+          },
+          {
+            "id": "w3",
+            "label": "They take the bus and play a sport"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "40/100"
+          },
+          {
+            "id": "y2",
+            "label": "40/110"
+          },
+          {
+            "id": "y3",
+            "label": "40/200"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "Being told they ride the bus makes the 100 bus riders the world, so the denominator is 100, not 110."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "An \"and\" statement conditions on nothing — its denominator is everybody: 200."
+          }
+        ],
+        "missFeedback": "Find the word \"given\". Whatever follows it is the denominator; with no \"given\", the denominator is all 200.",
+        "successFeedback": "Three statements, one numerator, three denominators — that is the whole idea of conditioning."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-conditional-table__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The reversal, one last time.",
+      "conceptTag": "cpr-reversal-error",
+      "hints": [
+        "The condition is \"plays no sport\". Find how many students that is, and use it as the denominator.",
+        "The no-sport column holds 60 + 30 = 90 students. Now count the walkers inside that column.",
+        "30 of those 90 walk. Divide, and round to three places."
+      ],
+      "explanationVariants": [
+        "The no-sport column has 90 students, and 30 of them walk: 30/90 ≈ 0.333.",
+        "P(walks | no sport) = P(walks and no sport)/P(no sport) = 0.15/0.45 ≈ 0.333."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(walks | plays no sport). Give a decimal, to three places.",
+        "answer": 0.333,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.3,
+            "feedback": "That is 30/100 = P(no sport | walks) — the reversed conditional. You were told about sport, so the 90 non-players are the denominator, not the 100 walkers."
+          },
+          {
+            "value": 0.15,
+            "feedback": "That is the joint 30/200. Conditioning on \"no sport\" shrinks the world to 90 students, so the denominator cannot still be 200."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is P(no sport) = 90/200, the condition itself. The question asks what fraction of that group walks."
+          }
+        ],
+        "fallbackFeedback": "The no-sport column holds 90 students, 30 of whom walk: 30/90 ≈ 0.333."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-reversal-error__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Always ask what sits underneath.",
+      "takeaways": [
+        "P(A | B) and P(B | A) share a numerator but divide by different groups — they are almost never equal.",
+        "The condition is the denominator. Find it before you compute anything.",
+        "\"Of the X, some fraction are Y\" means P(Y | X). Reversing it reverses the meaning."
+      ],
+      "teaser": "Next: rearrange the conditional formula and you get a rule for AND."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-reversal-error",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "The bar in P(A | B) is not symmetric. Whatever stands to the **right** of the bar is the group you are standing inside; whatever stands to the left is what you are counting there. Swap them and you have changed the question.",
+        "figure": "cpr-row-vs-column"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which group is underneath?",
+        "conceptTag": "cpr-reversal-error",
+        "explanationVariants": [
+          "In P(sport | bus), the bus riders are the world: 100 of them.",
+          "The condition follows the bar, and the condition always becomes the denominator."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In P(plays a sport | takes the bus), which number goes on the bottom?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "100 — the bus riders",
+              "correct": true,
+              "feedback": "Right — the condition is on the right of the bar, and the condition is what you divide by."
+            },
+            {
+              "id": "o2",
+              "label": "110 — the sport players",
+              "correct": false,
+              "feedback": "That would be the denominator for P(bus | sport). Here the bus is the condition, so its 100 goes underneath."
+            },
+            {
+              "id": "o3",
+              "label": "200 — everyone",
+              "correct": false,
+              "feedback": "That denominator belongs to joint probabilities, which condition on nothing. The bar means the world has already shrunk."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

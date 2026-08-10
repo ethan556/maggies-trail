@@ -1,0 +1,278 @@
+{
+  "id": "fn-03-02",
+  "slug": "the-nth-term-of-a-geometric-sequence",
+  "title": "The nth Term of a Geometric Sequence",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch3-geometric-sequences",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "geometric-steps",
+      "body": "The nth term of a geometric sequence is a_n = a_1 · r^(n−1): the start times (n − 1) factors of r. For 2, 6, 18, … (a_1 = 2, r = 3), the 4th term is 2 · 3³ = 2 · 27 = 54."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Use the formula.",
+      "predict": {
+        "prompt": "aₙ = a₁·rⁿ⁻¹ — why n − 1 in the exponent, not n?",
+        "options": [
+          {
+            "id": "zero",
+            "label": "The first term uses ZERO multiplications"
+          },
+          {
+            "id": "tradition",
+            "label": "Off-by-one tradition"
+          },
+          {
+            "id": "size",
+            "label": "Because r is bigger than a₁"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "a₁ = 2 stands at zero multiplications; every later term adds one ×3. The 4th term has taken 3 jumps: 2·3³ = 54. The exponent counts the JUMPS between terms, not the terms themselves."
+      },
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 2,
+        "atPosition": 4,
+        "targetTerm": 54,
+        "rMax": 9,
+        "start": 2,
+        "prompt": "a₁ = 2, r = 3. Drag the ratio to 3 and confirm term 4.",
+        "successFeedback": "54 = 2×3³. Three multiplications from term 1 to term 4 — the exponent is n−1, not n.",
+        "lowFeedback": "Term 4 is still under 54.",
+        "highFeedback": "Term 4 has passed 54."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "New start and ratio.",
+      "conceptTag": "fn-geo-nth",
+      "explanationVariants": [
+        "a_5 = 3 · 2⁴ = 3 · 16 = 48.",
+        "Four factors of 2 from 3: 3 · 16 = 48."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 3, r = 2, what is the 5th term?",
+        "answer": 48,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 96,
+            "feedback": "Use r^(5 − 1) = 2⁴, not 2⁵: 3 · 16 = 48, not 3 · 32."
+          },
+          {
+            "value": 24,
+            "feedback": "That's the 4th term (3 · 2³). The 5th is 3 · 2⁴ = 48."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 3 · 2⁴ = 48."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-nth__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The exponent is (n − 1): the 4th term uses r³, because the first term has zero factors of r. For a_1 = 1, r = 4, the 3rd term is 1 · 4² = 16 — two factors of 4, not three.",
+      "figure": "fn-geom-exponent"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the factors.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 1,
+        "atPosition": 3,
+        "targetTerm": 16,
+        "rMax": 9,
+        "start": 2,
+        "prompt": "a₁ = 1, r = 4. Drag the ratio to 4 and confirm term 3.",
+        "successFeedback": "16 = 1×4².",
+        "lowFeedback": "Term 3 is still under 16.",
+        "highFeedback": "Term 3 has passed 16."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Geometric growth pulls ahead fast. For a_1 = 5, r = 2, the 5th term is 5 · 2⁴ = 5 · 16 = 80. Four doublings turn 5 into 80 — the formula gets there without listing every step.",
+      "figure": "fn-geom-fast"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Four doublings.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 5,
+        "atPosition": 5,
+        "targetTerm": 80,
+        "rMax": 9,
+        "start": 5,
+        "prompt": "a₁ = 5, r = 2. Drag the ratio to 2 and confirm term 5.",
+        "successFeedback": "80 = 5×2⁴.",
+        "lowFeedback": "Term 5 is still under 80.",
+        "highFeedback": "Term 5 has passed 80."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A sixth term.",
+      "conceptTag": "fn-geo-nth",
+      "explanationVariants": [
+        "a_6 = 2 · 2⁵ = 2 · 32 = 64.",
+        "Five factors of 2 from 2: 2 · 32 = 64."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 2, r = 2, what is the 6th term?",
+        "answer": 64,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 128,
+            "feedback": "Use r^(6 − 1) = 2⁵, not 2⁶: 2 · 32 = 64, not 2 · 64."
+          },
+          {
+            "value": 32,
+            "feedback": "That's the 5th term (2 · 2⁴). The 6th is 2 · 2⁵ = 64."
+          }
+        ],
+        "fallbackFeedback": "a_6 = 2 · 2⁵ = 64."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-nth__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A fourth term.",
+      "conceptTag": "fn-geo-nth",
+      "explanationVariants": [
+        "a_4 = 1 · 3³ = 27.",
+        "Three factors of 3 from 1: 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 1, r = 3, what is the 4th term?",
+        "answer": 27,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 81,
+            "feedback": "Use r^(4 − 1) = 3³, not 3⁴: 1 · 27 = 27, not 1 · 81."
+          },
+          {
+            "value": 9,
+            "feedback": "That's the 3rd term. The 4th is 1 · 3³ = 27."
+          }
+        ],
+        "fallbackFeedback": "a_4 = 1 · 3³ = 27."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-nth__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Start and ratio both 3.",
+      "conceptTag": "fn-geo-nth",
+      "explanationVariants": [
+        "a_4 = 3 · 3³ = 3 · 27 = 81.",
+        "Three factors of 3 from 3: 3 · 27 = 81."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a_1 = 3, r = 3, what is the 4th term?",
+        "answer": 81,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 243,
+            "feedback": "Use r^(4 − 1) = 3³, not 3⁴: 3 · 27 = 81, not 3 · 81."
+          },
+          {
+            "value": 27,
+            "feedback": "That's the 3rd term (3 · 3²). The 4th is 3 · 3³ = 81."
+          }
+        ],
+        "fallbackFeedback": "a_4 = 3 · 3³ = 81."
+      },
+      "hints": [
+        "Use a_n = a_1·r^(n − 1) with n = 4.",
+        "r^(4 − 1) = 3³ = 27.",
+        "3 · 27 = 81."
+      ],
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-nth__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The nth term is the start times (n − 1) factors of r.",
+      "takeaways": [
+        "a_n = a_1 · r^(n − 1).",
+        "Use exponent (n − 1) — the first term has zero factors of r.",
+        "The formula reaches any position directly."
+      ],
+      "teaser": "next: reading the rule straight from a geometric sequence."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-geo-nth",
+      "concept": {
+        "id": "rem-fgn-c",
+        "kind": "concept",
+        "body": "The nth term is a_n = a_1 · r^(n − 1) — the start times (n − 1) factors of r. For a_1 = 2, r = 3: the 4th term is 2 · 3³ = 54. Use exponent (n − 1), not n."
+      },
+      "check": {
+        "id": "rem-fgn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-geo-nth",
+        "explanationVariants": [
+          "a_4 = 2 · 3³ = 54.",
+          "Three factors of 3 from 2: 54."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For a_1 = 2, r = 3, what is the 4th term?",
+          "answer": 54,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 162,
+              "feedback": "Use r^(4 − 1) = 3³: 2 · 27 = 54."
+            },
+            {
+              "value": 18,
+              "feedback": "That's the 3rd term; the 4th is 54."
+            }
+          ],
+          "fallbackFeedback": "a_4 = 2 · 27 = 54."
+        }
+      }
+    }
+  ]
+}

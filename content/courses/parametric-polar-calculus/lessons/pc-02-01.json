@@ -1,0 +1,311 @@
+{
+  "id": "pc-02-01",
+  "slug": "polar-area",
+  "title": "Polar Area: the Slices Are Triangles",
+  "courseId": "parametric-polar-calculus",
+  "chapterId": "ch2-polar-calculus",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every integral in C5 sliced a region into **rectangles**. A polar region cannot be sliced that way — it is swept out from the origin, so its natural slice is a thin **wedge**.\n\nAnd a thin wedge is a **triangle**, not a rectangle. Its area is ½ · base · height ≈ **½ r² dθ**.\n\n**A = ∫ ½ r² dθ.** That ½ is the whole difference, and it comes from the triangle.",
+      "figure": "pc-polar-wedge"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Slice it into wedges and count.",
+      "widget": {
+        "type": "sliceSum",
+        "mode": "sector",
+        "tolerance": 0.02,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "The polar curve r = 2cos θ, from θ = 0 to π/2. Inspect a wedge, then raise the count until the sum lands within 0.02 of the exact area, π/2 ≈ 1.5708.",
+        "successFeedback": "Look at what one slice IS: a triangle, with two straight sides running back to the origin. Its area is ½r²·dθ — and that ½ is the only thing that separates this from every other integral in the course. Slice, measure ONE slice, add them up: the sentence has not changed at all. Only the shape of the slice has. (And the answer, π/2, is exactly the half-disc of radius 1 that r = 2cos θ actually draws.)",
+        "lowFeedback": "The sum is under π/2. The RIGHT rule undershoots here, because r is SHRINKING across the sweep — each wedge is measured at its narrow end. Raise the count, or switch rule.",
+        "highFeedback": "The sum is over π/2. The LEFT rule overshoots for the same reason in reverse — each wedge is measured at its fat end. Raise the count and it will settle."
+      },
+      "predict": {
+        "prompt": "What changes when the number of volume slices increases?",
+        "options": [
+          {
+            "id": "thinner",
+            "label": "Slices become thinner and the estimate usually improves"
+          },
+          {
+            "id": "larger",
+            "label": "Every slice becomes larger"
+          },
+          {
+            "id": "formula",
+            "label": "The cross-section formula is no longer needed"
+          }
+        ],
+        "outcomeId": "thinner",
+        "reveal": "Refinement reduces slice thickness while preserving the same cross-section rule, bringing the sum closer to the limiting volume."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "quantity-composition",
+        "actionGoal": "Refine cross-sectional slices and connect their accumulated volume estimate to a limiting integral.",
+        "invariants": [
+          "volume-is-sum-of-thin-slices",
+          "cross-section-rule-controls-each-slice"
+        ],
+        "misconceptions": [
+          "volume-is-base-area-only",
+          "slice-thickness-does-not-matter"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "parametric-polar-calculus-sliceSum",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this sliceSum away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why does a slice sum become a volume integral?",
+          "options": [
+            {
+              "id": "limit",
+              "label": "Each cross-sectional area is multiplied by thickness, and refinement takes the sum to a limit.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "base",
+              "label": "Only the base area is needed.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "count",
+              "label": "The number of slices itself is the volume.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "pc-polar-area"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Where the ½ comes from.",
+      "conceptTag": "pc-polar-area",
+      "explanationVariants": [
+        "A thin wedge of angle dθ and radius r is very nearly a triangle with base r·dθ and height r. Its area is ½·(r dθ)·r = ½r² dθ.",
+        "The rectangle-slicing of C5 gave height × width. A wedge gives ½ × base × height, and the ½ never goes away."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does the polar area formula carry a ½?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A thin wedge is a TRIANGLE, and a triangle's area is ½ · base · height.",
+            "correct": true,
+            "feedback": "Right. Base r·dθ, height r, so the area is ½r²dθ. The ½ is not a convention — it is the triangle."
+          },
+          {
+            "id": "o2",
+            "label": "Because you sweep only half the circle.",
+            "correct": false,
+            "feedback": "The ½ appears whatever the sweep. Integrate all the way round and it is still there."
+          },
+          {
+            "id": "o3",
+            "label": "To avoid double-counting the region.",
+            "correct": false,
+            "feedback": "Nothing is counted twice. Each wedge covers its own slice of angle, and the ½ comes from the wedge's SHAPE."
+          },
+          {
+            "id": "o4",
+            "label": "Because r is squared.",
+            "correct": false,
+            "feedback": "The r² is the two lengths of the triangle. The ½ is separate — it is what makes a triangle half of a rectangle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-polar-area__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Sanity-check it against geometry.",
+      "conceptTag": "pc-polar-area",
+      "explanationVariants": [
+        "A full circle of radius 2 is r = 2, so A = ∫₀^{2π} ½(4) dθ = 2(2π) = 4π. And πr² = π(4) = 4π. They agree, as they must.",
+        "If the formula did not reproduce the area of a circle, it would be wrong — and the ½ is exactly what makes it come out right."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use A = ∫½r²dθ on the circle r = 2, from 0 to 2π. Find the area, as a multiple of π (give just the number).",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "You may have dropped the ½: ∫₀^{2π} ½(4)dθ = 2 × 2π = 4π, not 8π. And πr² = 4π confirms it."
+          },
+          {
+            "value": 2,
+            "feedback": "Check the arithmetic: ½(2²) = 2, and integrating the constant 2 over a sweep of 2π gives 4π."
+          },
+          {
+            "value": 12.57,
+            "feedback": "That is 4π as a decimal. The question asks for the multiplier: 4."
+          }
+        ],
+        "fallbackFeedback": "∫₀^{2π} ½(2²)dθ = 2(2π) = 4π — which is exactly πr². The formula reproduces the circle."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-polar-area__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the sentence from C5 survives intact:\n\n**Slice the region. Measure ONE slice. Add them up.**\n\nArea between curves measured a **height**. A disc measured **πr²**. A washer measured **π(R² − r²)**. A polar wedge measures **½r²**.\n\nThe slicing never changed. The summing never changed. Only ever the measurement — and this time the slice is a triangle.",
+      "figure": "pc-polar-wedge"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Set up a cardioid.",
+      "conceptTag": "pc-polar-area",
+      "explanationVariants": [
+        "A = ∫₀^{2π} ½(1 + cos θ)² dθ = 3π/2 ≈ 4.712. Expanding the square and integrating term by term is the only work.",
+        "The cos θ term integrates to zero over a full sweep, and the cos²θ term averages to ½ — which is where the 3/2 comes from."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The cardioid r = 1 + cos θ, swept from 0 to 2π, encloses an area of 3π/2. Give that as a decimal to three places.",
+        "answer": 4.712,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 9.425,
+            "feedback": "That is 3π — the ½ has gone missing. The area is ½∫(1 + cos θ)²dθ = 3π/2 ≈ 4.712."
+          },
+          {
+            "value": 3.142,
+            "feedback": "That is π. The cardioid encloses 3π/2, which is half as much again."
+          },
+          {
+            "value": 1.5,
+            "feedback": "That is the multiplier 3/2. Multiply by π: 4.712."
+          }
+        ],
+        "fallbackFeedback": "3π/2 ≈ 4.712."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-polar-area__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A quarter of a circle, the polar way.",
+      "conceptTag": "pc-polar-area",
+      "hints": [
+        "The circle r = 3 swept from θ = 0 to π/2 is a quarter-disc.",
+        "A = ∫₀^{π/2} ½(9) dθ = (9/2)(π/2).",
+        "Check it against geometry: a quarter of π(3²) = 9π is 9π/4."
+      ],
+      "explanationVariants": [
+        "A = (9/2)(π/2) = 9π/4 ≈ 7.069 — and a quarter of the circle's 9π is exactly 9π/4. The formula and the geometry agree.",
+        "Whenever a polar answer can be checked against ordinary geometry, check it. It is the cheapest way to catch a missing ½."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the area swept by r = 3 from θ = 0 to π/2, to three decimals.",
+        "answer": 7.069,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 14.137,
+            "feedback": "The ½ has gone missing: that is 9π/2. With the ½ it is 9π/4 ≈ 7.069 — and a quarter of the circle's 9π confirms it."
+          },
+          {
+            "value": 28.274,
+            "feedback": "That is the WHOLE circle, 9π. You swept only a quarter of it."
+          },
+          {
+            "value": 4.712,
+            "feedback": "That is 3π/2, the cardioid's area from the previous question. Here r = 3, giving 9π/4."
+          }
+        ],
+        "fallbackFeedback": "∫₀^{π/2} ½(9)dθ = (9/2)(π/2) = 9π/4 ≈ 7.069 — a quarter of the circle's 9π, as it must be."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-polar-area__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The slice is a triangle.",
+      "takeaways": [
+        "A polar region is swept from the origin, so its natural slice is a thin WEDGE — a triangle, not a rectangle.",
+        "A = ∫½r²dθ, and the ½ is the triangle. Losing it is the classic error, and a circle will catch you every time.",
+        "Slice, measure one slice, add them up. The sentence never changed; only the measurement did."
+      ],
+      "teaser": "That is the calculus band: derivatives, integrals, the theorem that joins them, series, and curves that refuse to be functions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pc-polar-area",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Picture one thin wedge, running from the origin out to the curve. It is a triangle. Its two straight sides are both r, and its base is the little arc r·dθ. So its area is ½·r·(r dθ) = ½r²dθ — and you add those up.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "One wedge's area.",
+        "conceptTag": "pc-polar-area",
+        "explanationVariants": [
+          "½r² with r = 4 is ½(16) = 8.",
+          "Square the radius, halve it. The dθ rides along."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A polar wedge has r = 4. What is its ½r² measurement?",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That is r² — you forgot the ½. A wedge is a TRIANGLE, so its area carries a half."
+            },
+            {
+              "value": 2,
+              "feedback": "That is r/2. Square first: ½(4²) = 8."
+            }
+          ],
+          "fallbackFeedback": "½(4²) = 8."
+        }
+      }
+    }
+  ]
+}

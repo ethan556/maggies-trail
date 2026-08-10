@@ -1,0 +1,234 @@
+{
+  "id": "bt-01-02",
+  "slug": "pascals-triangle",
+  "title": "Pascal's Triangle",
+  "courseId": "binomial-theorem",
+  "chapterId": "ch1-pascals-pattern",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Stack the coefficient rows and a triangle appears. Row 0 is a lone 1; row 1 is 1 1; row 2 is 1 2 1; row 3 is 1 3 3 1. Every interior entry is the sum of the two directly above it, and every row begins and ends with 1. The rows are numbered from ZERO, which is the single most common place to slip.",
+      "figure": "bt-pascal-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rebuild row 2 as area, then read the row off the regions.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "requiredMoves": 3,
+        "startA": 0,
+        "startB": 1,
+        "prompt": "Build (x + 4)(x + 4) and read the constant term — the corner region.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 4,
+        "targetB": 4,
+        "asks": "constant",
+        "successFeedback": "x² + 8x + 16: one block, two strips, one corner — the regions count 1, 2, 1, which is row 2 of the triangle whatever the partition happens to be.",
+        "productMiddleFeedback": "The corner is 4×4 = 16, one region. The 8x is a different pair of regions — the two strips, which ADD.",
+        "partialFeedback": "Both sides of a square must reach 4 before the corner is right.",
+        "signFeedback": "A negative partition draws area removed; (x + 4) adds its 4."
+      },
+      "predict": {
+        "prompt": "Pascal's triangle starts with row 0. Which row holds the coefficients of (a + b)⁴?",
+        "options": [
+          {
+            "id": "r3",
+            "label": "Row 3"
+          },
+          {
+            "id": "r4",
+            "label": "Row 4"
+          },
+          {
+            "id": "r5",
+            "label": "Row 5"
+          }
+        ],
+        "outcomeId": "r4",
+        "reveal": "Row n serves (a + b)ⁿ, because the numbering starts at row 0 for (a + b)⁰ = 1. Row 4 reads 1 4 6 4 1. Counting the top row as ‘row 1’ shifts every coefficient by one place and is the classic source of wrong answers here."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Build the next row.",
+      "conceptTag": "bt-pascals-triangle",
+      "explanationVariants": [
+        "Row 4 is 1, 4, 6, 4, 1, each interior entry the sum of the two above.",
+        "From 1 3 3 1: 1, 1+3 = 4, 3+3 = 6, 3+1 = 4, 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Row 3 is 1, 3, 3, 1. What is the MIDDLE entry of row 4?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the second entry of row 4, from 1 + 3. The middle comes from 3 + 3."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is a row-3 entry. Row 4's middle is built by adding the two 3s above it."
+          }
+        ],
+        "fallbackFeedback": "The middle of row 4 is 3 + 3 = 6, giving the row 1, 4, 6, 4, 1.",
+        "successFeedback": "6 — row 4 reads 1, 4, 6, 4, 1, exactly the coefficients of (a + b)⁴."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two facts make the triangle worth trusting. Every row is symmetric, so reading it backwards changes nothing. And the entries of row n add to 2ⁿ — row 3 sums to 8, row 4 to 16 — which is a fast way to check a row you have just built.",
+      "figure": "bt-symmetry-and-sum"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Check a row by its sum.",
+      "conceptTag": "bt-pascals-triangle",
+      "explanationVariants": [
+        "Row 4 sums to 16 = 2⁴.",
+        "1 + 4 + 6 + 4 + 1 = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What do the entries of row 4 (1, 4, 6, 4, 1) add up to?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is 2³, the sum of ROW 3. Row 4 doubles it."
+          },
+          {
+            "value": 15,
+            "feedback": "Recount — 1 + 4 + 6 + 4 + 1 includes both end 1s."
+          }
+        ],
+        "fallbackFeedback": "1 + 4 + 6 + 4 + 1 = 16, which is 2⁴.",
+        "successFeedback": "16 = 2⁴ — and that is not a coincidence, as lesson 3 will show."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use the symmetry.",
+      "conceptTag": "bt-pascals-triangle",
+      "explanationVariants": [
+        "Row 6 is symmetric, so the second entry equals the second-from-last: both 6.",
+        "Reading a Pascal row backwards gives the same row."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Row 6 begins 1, 6, 15, 20, … What are its LAST two entries?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "6, 1",
+            "correct": true,
+            "feedback": "Yes — every row is symmetric, so it ends the way it began, reversed."
+          },
+          {
+            "id": "o2",
+            "label": "15, 1",
+            "correct": false,
+            "feedback": "That skips the 6. Reversed, the row ends … 15, 6, 1."
+          },
+          {
+            "id": "o3",
+            "label": "20, 1",
+            "correct": false,
+            "feedback": "20 is the middle entry, not the second-from-last."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Reach further down.",
+      "conceptTag": "bt-pascals-triangle",
+      "explanationVariants": [
+        "Row 5 is 1, 5, 10, 10, 5, 1, so its largest entry is 10.",
+        "From 1 4 6 4 1: 1, 5, 10, 10, 5, 1."
+      ],
+      "hints": [
+        "Build row 5 from row 4 = 1, 4, 6, 4, 1 by adding neighbouring pairs.",
+        "1, then 1+4, then 4+6, then 6+4, then 4+1, then 1.",
+        "Row 5 is 1, 5, 10, 10, 5, 1 — now pick out its largest entry."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the LARGEST entry in row 5 of Pascal's triangle?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the second entry. The middle entries are larger — they collect more paths."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is row 4's middle. Row 5's middle entries come from 4 + 6."
+          }
+        ],
+        "fallbackFeedback": "Row 5 is 1, 5, 10, 10, 5, 1, so the largest entry is 10.",
+        "successFeedback": "10 — middles are always the biggest, because the most product paths land there."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The rows that generate themselves.",
+      "takeaways": [
+        "Rows are numbered from 0; row n gives the coefficients of (a + b)ⁿ.",
+        "Each interior entry is the sum of the two above it, and each row is symmetric.",
+        "Row n's entries sum to 2ⁿ, which checks a freshly built row."
+      ],
+      "teaser": "Next: why these particular numbers — and why they are the same combinations you counted in probability."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bt-pascals-triangle",
+      "concept": {
+        "id": "rem-bt-pascals-triangle-c",
+        "kind": "concept",
+        "body": "Two facts make the triangle worth trusting. Every row is symmetric, so reading it backwards changes nothing. And the entries of row n add to 2ⁿ — row 3 sums to 8, row 4 to 16 — which is a fast way to check a row you have just built."
+      },
+      "check": {
+        "id": "rem-bt-pascals-triangle-k",
+        "kind": "check",
+        "body": "Build the next row.",
+        "conceptTag": "bt-pascals-triangle",
+        "explanationVariants": [
+          "Row 4 is 1, 4, 6, 4, 1, each interior entry the sum of the two above.",
+          "From 1 3 3 1: 1, 1+3 = 4, 3+3 = 6, 3+1 = 4, 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Row 3 is 1, 3, 3, 1. What is the MIDDLE entry of row 4?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 is the second entry of row 4, from 1 + 3. The middle comes from 3 + 3."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is a row-3 entry. Row 4's middle is built by adding the two 3s above it."
+            }
+          ],
+          "fallbackFeedback": "The middle of row 4 is 3 + 3 = 6, giving the row 1, 4, 6, 4, 1.",
+          "successFeedback": "6 — row 4 reads 1, 4, 6, 4, 1, exactly the coefficients of (a + b)⁴."
+        }
+      }
+    }
+  ]
+}

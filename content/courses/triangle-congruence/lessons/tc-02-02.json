@@ -1,0 +1,306 @@
+{
+  "id": "tc-02-02",
+  "slug": "proof-practice-cpctc",
+  "title": "Proof Practice with CPCTC",
+  "courseId": "triangle-congruence",
+  "chapterId": "ch2-hl-and-cpctc",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "tc-cpctc-practice",
+      "concept": {
+        "id": "rem-tc-cpctc-practice-c",
+        "kind": "concept",
+        "body": "The free parts that complete a criterion: a SHARED side equals itself (Reflexive); VERTICAL angles at a crossing are equal; any two RIGHT angles are equal. Scan the figure for these before deciding a criterion can't be completed — they're the parts you're not explicitly given."
+      },
+      "check": {
+        "id": "rem-tc-cpctc-practice-k",
+        "kind": "check",
+        "body": "Shared side reason.",
+        "conceptTag": "tc-cpctc-practice",
+        "explanationVariants": [
+          "A side shared by both triangles equals itself by the Reflexive Property.",
+          "Reflexive covers the common-side equality."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Two triangles share side XY. What justifies XY = XY in a proof?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Reflexive Property",
+              "correct": true,
+              "feedback": "A shared side equals itself — the reflexive free part."
+            },
+            {
+              "id": "o2",
+              "label": "Given",
+              "correct": false,
+              "feedback": "It's usually not stated; the shared side is justified as reflexive, not given."
+            },
+            {
+              "id": "o3",
+              "label": "Vertical angles",
+              "correct": false,
+              "feedback": "That's for crossing angles, not a shared SIDE. Use the Reflexive Property."
+            },
+            {
+              "id": "o4",
+              "label": "CPCTC",
+              "correct": false,
+              "feedback": "CPCTC is the final step for parts; a shared side uses the Reflexive Property."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "CPCTC is the workhorse for proving parts equal that you can't measure directly. The strategy never changes: find two triangles containing the target parts, prove those triangles congruent by a criterion, then release the part you want with CPCTC. The art is spotting WHICH two triangles hold your target.",
+      "figure": "sss-criterion"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order a CPCTC proof.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "AB = CB locks the legs equal at 7, and BD bisects the apex angle. Drag the apex to 60° and watch what happens to AD and CD.",
+        "targetCriterion": "SAS",
+        "startCriterion": "SSA",
+        "sideA": 7,
+        "sideB": 7,
+        "targetAngle": 60,
+        "angleStart": 100,
+        "angleStep": 5,
+        "requiredMoves": 4,
+        "constraint": "isoscelesLegs",
+        "constraintFeedback": "The legs are no longer locked equal, so AB = CB has stopped being true and the proof no longer applies. Re-lock them.",
+        "successFeedback": "AD = CD at every apex angle. The bisector splits the apex into two equal angles, the legs are equal, and BD is shared — two sides and the included angle, SAS — so △ABD ≅ △CBD and AD = CD by CPCTC.",
+        "criterionFeedback": "SSA is the ambiguous case. Here the equal angle sits BETWEEN the two equal sides, which is SAS.",
+        "angleFeedback": "Right criterion — now bring the apex angle to 60°.",
+        "evidenceFeedback": "Try several apex angles before checking; the theorem claims AD = CD for all of them."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What's the free part?",
+      "conceptTag": "tc-cpctc-practice",
+      "explanationVariants": [
+        "The shared side BD equals itself by the Reflexive Property — the 'free' third part that completes SAS.",
+        "A side common to both triangles is reflexively equal, supplying a part without it being given."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In that proof, the equality BD = BD comes from which reason?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Reflexive Property (a shared side equals itself)",
+            "correct": true,
+            "feedback": "BD belongs to both triangles, so it equals itself — the reflexive 'free' part that completes the criterion."
+          },
+          {
+            "id": "o2",
+            "label": "Given",
+            "correct": false,
+            "feedback": "BD = BD isn't stated in the setup — it's SEEN as a shared side and justified as reflexive."
+          },
+          {
+            "id": "o3",
+            "label": "Definition of angle bisector",
+            "correct": false,
+            "feedback": "That definition gives the equal ANGLES (∠ABD = ∠CBD), not the equal side. BD = BD is reflexive."
+          },
+          {
+            "id": "o4",
+            "label": "CPCTC",
+            "correct": false,
+            "feedback": "CPCTC comes at the END, after congruence. BD = BD is an input to the criterion, justified by reflexivity."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-cpctc-practice__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Watch for the hidden free parts, they turn a two-given problem into a full criterion. **Shared sides** are reflexively equal. **Vertical angles** at a crossing are equal. **Right angles** are all equal to each other. Each is a part you didn't have to be handed — spot them before declaring a criterion incomplete.",
+      "figure": "sas-criterion"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot the free part.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two triangles meet at a shared vertex where two segments cross. Which 'free' equal part does that crossing provide?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a pair of equal vertical angles",
+            "correct": true,
+            "feedback": "Crossing segments create vertical angles, which are always equal — a free angle pair for your criterion."
+          },
+          {
+            "id": "o2",
+            "label": "a pair of equal hypotenuses",
+            "correct": false,
+            "feedback": "A crossing gives equal vertical ANGLES, not equal sides. Hypotenuses would have to be given or derived."
+          },
+          {
+            "id": "o3",
+            "label": "three equal sides",
+            "correct": false,
+            "feedback": "A crossing point supplies an equal ANGLE (vertical), not sides. You'd still need side information."
+          },
+          {
+            "id": "o4",
+            "label": "a right angle",
+            "correct": false,
+            "feedback": "Crossing segments needn't be perpendicular — the guaranteed free part is the equal vertical angles."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Finish with CPCTC.",
+      "conceptTag": "tc-cpctc-practice",
+      "explanationVariants": [
+        "After proving △ABC ≅ △DEF, CPCTC gives BC = EF, so a length-9 BC forces EF = 9.",
+        "Corresponding sides of congruent triangles are equal: EF matches BC at 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "△ABC ≅ △DEF is proven, and BC = 9. By CPCTC, what is EF?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 doubles it — congruence keeps sizes equal. BC corresponds to EF, so EF = 9."
+          },
+          {
+            "value": 4.5,
+            "feedback": "4.5 halves it — CPCTC gives EQUAL corresponding parts. EF = BC = 9."
+          }
+        ],
+        "fallbackFeedback": "CPCTC: EF = BC = 9."
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-cpctc-practice__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A subtle rule: you may use CPCTC only for parts NOT already used to prove the congruence. You prove the triangles congruent with SOME parts, then CPCTC unlocks the REMAINING ones. It never re-proves a part you already assumed — that would be circular.",
+      "figure": "tc-cpctc"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Legal CPCTC use?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "You proved △ABC ≅ △DEF using AB = DE, BC = EF, and ∠B = ∠E (SAS). Which part can CPCTC now give you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "∠A = ∠D (a part not used in the SAS proof)",
+            "correct": true,
+            "feedback": "CPCTC unlocks the REMAINING parts — ∠A, ∠C, and AC — that weren't inputs to the SAS congruence."
+          },
+          {
+            "id": "o2",
+            "label": "AB = DE (re-stating a given)",
+            "correct": false,
+            "feedback": "AB = DE was an INPUT to the proof — CPCTC gives new parts, not the ones already used."
+          },
+          {
+            "id": "o3",
+            "label": "BC = EF (already used)",
+            "correct": false,
+            "feedback": "BC = EF was part of the SAS argument. CPCTC releases parts you didn't already assume."
+          },
+          {
+            "id": "o4",
+            "label": "∠B = ∠E (already used)",
+            "correct": false,
+            "feedback": "∠B = ∠E was the included angle in the proof. CPCTC provides the leftover parts instead."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Two-triangle strategy.",
+      "conceptTag": "tc-cpctc-practice",
+      "hints": [
+        "To prove two segments equal, find two triangles that CONTAIN them as corresponding sides.",
+        "Look for a shared side or vertical angle to complete a criterion.",
+        "Prove the triangles congruent, then the target segments are equal by CPCTC."
+      ],
+      "explanationVariants": [
+        "The reliable plan: locate two triangles holding the target segments as corresponding parts, prove them congruent by a criterion (using shared/vertical free parts), then CPCTC delivers the equal segments.",
+        "Congruent triangles first, then CPCTC — that's how you prove equal parts you can't measure."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To prove two segments in a figure are equal, what is the standard CPCTC strategy?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Find two triangles containing them as corresponding sides, prove those congruent, then apply CPCTC",
+            "correct": true,
+            "feedback": "Embed the target segments in two triangles, prove congruence by a criterion, and CPCTC releases the equality."
+          },
+          {
+            "id": "o2",
+            "label": "Measure both segments with a ruler",
+            "correct": false,
+            "feedback": "Measuring proves one case, not a general truth. Use congruent triangles and CPCTC instead."
+          },
+          {
+            "id": "o3",
+            "label": "Assume they're equal and check later",
+            "correct": false,
+            "feedback": "Assuming the conclusion is circular. Prove the containing triangles congruent, then CPCTC."
+          },
+          {
+            "id": "o4",
+            "label": "Show the segments are parallel",
+            "correct": false,
+            "feedback": "Parallel isn't equal in length. The route to equal SEGMENTS is congruent triangles + CPCTC."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-cpctc-practice__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "CPCTC in practice.",
+      "takeaways": [
+        "Embed target parts in two triangles, prove congruence, then release with CPCTC.",
+        "Free parts: shared sides (reflexive), vertical angles, right angles.",
+        "CPCTC unlocks only parts NOT already used in the congruence proof."
+      ],
+      "teaser": "Next chapter: the isosceles triangle — equal legs force equal base angles, and back again."
+    }
+  ]
+}

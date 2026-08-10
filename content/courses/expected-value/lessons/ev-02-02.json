@@ -1,0 +1,228 @@
+{
+  "id": "ev-02-02",
+  "slug": "is-the-game-fair",
+  "title": "Is the Game Fair?",
+  "courseId": "expected-value",
+  "chapterId": "ch2-deciding-with-expectation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A game is FAIR when its expected net is exactly 0 — neither side gains in the long run. Fairness is a statement about expectation, not about how often you win. A game you win only one time in ten can be perfectly fair, provided the payout is large enough to balance the nine losses.",
+      "figure": "ev-fair-game-zero"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the winning share that fairness requires.",
+      "widget": {
+        "type": "spinnerSim",
+        "favourableStart": 3,
+        "prompt": "A wheel has 10 equal sectors. Shade it so the chance of winning is 1/10.",
+        "sectors": 10,
+        "targetFavourable": 1,
+        "successFeedback": "1 of 10. Nine losses to every win — and if a win pays nine times the stake, this game is exactly fair.",
+        "lowFeedback": "Nothing shaded yet — a 1/10 chance needs one sector.",
+        "highFeedback": "Too much shaded — only one sector in ten wins."
+      },
+      "predict": {
+        "prompt": "A game is FAIR. Does that mean you win half the time?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — fair means a 50-50 chance"
+          },
+          {
+            "id": "no",
+            "label": "No — it means the expected net is 0"
+          },
+          {
+            "id": "both",
+            "label": "Both are required"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Fairness balances probability against payout, not wins against losses. Winning one time in ten is fair if the win pays nine times the stake: (+9)(0.1) + (−1)(0.9) = 0. Reading ‘fair’ as ‘even odds’ misprices every lopsided game there is."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Verify a lopsided fair game.",
+      "conceptTag": "ev-fair-games",
+      "explanationVariants": [
+        "9(0.1) + (−1)(0.9) = 0.9 − 0.9 = 0.",
+        "The rare big win exactly balances the frequent small loss."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Win $9 net with probability 0.1, lose $1 with probability 0.9. What is the expected net?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That subtracts the payoffs without weighting them by probability."
+          },
+          {
+            "value": 0.9,
+            "feedback": "0.9 is the win's contribution alone. The loss contributes −0.9, cancelling it exactly."
+          }
+        ],
+        "fallbackFeedback": "9(0.1) + (−1)(0.9) = 0.9 − 0.9 = 0.",
+        "successFeedback": "0 — perfectly fair, and you lose nine times out of ten. Fairness never promised frequent wins."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Turned around, fairness sets the price. If you know how often a game wins, the fair payout is whatever makes the expectation zero — which is how insurance premiums and betting odds are set. Every departure from that number is somebody's margin.",
+      "figure": "ev-fairness-sets-price"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Solve for the fair payout.",
+      "conceptTag": "ev-fair-games",
+      "explanationVariants": [
+        "Fairness needs W(0.25) − 1(0.75) = 0, so W = 3.",
+        "One win must cover three losses, so the win nets 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A $1 stake wins with probability 0.25. What NET win makes the game fair?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "A net of 1 would give 1(0.25) − 1(0.75) = −0.5, still a losing game."
+          },
+          {
+            "value": 4,
+            "feedback": "4 would make the expectation +0.25, favouring the player. Fair is exactly zero."
+          }
+        ],
+        "fallbackFeedback": "Set W(0.25) − 1(0.75) = 0, giving W = 3.",
+        "successFeedback": "3 — one win covers three losses, which is exactly what a 1-in-4 chance demands."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Judge three games.",
+      "conceptTag": "ev-fair-games",
+      "explanationVariants": [
+        "Only an expected net of 0 is fair; positive favours the player and negative the house.",
+        "The sign of the expectation is the whole verdict."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which game is FAIR?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Expected net $0.00",
+            "correct": true,
+            "feedback": "Yes — fairness is exactly zero expectation, no matter what the win rate is."
+          },
+          {
+            "id": "o2",
+            "label": "You win 50% of the time, expected net −$0.25",
+            "correct": false,
+            "feedback": "Even odds, but the payouts are lopsided — the house still profits. Win rate is not fairness."
+          },
+          {
+            "id": "o3",
+            "label": "Expected net +$0.10",
+            "correct": false,
+            "feedback": "That one favours the PLAYER. Favourable, but not fair."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Price the house edge.",
+      "conceptTag": "ev-fair-games",
+      "explanationVariants": [
+        "5(1/6) + (−2)(5/6) = 5/6 − 10/6 = -0.8333…, about −0.83.",
+        "The single winning face cannot carry five losing ones at this payout."
+      ],
+      "hints": [
+        "Identify the two nets and their probabilities before averaging.",
+        "A win nets +5 with probability 1/6; a loss nets −2 with probability 5/6.",
+        "5(1/6) − 2(5/6) = 0.833… − 1.666…"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Roll a die: a 6 nets you $5, anything else costs $2. What is the expected net, to two decimals?",
+        "answer": -0.83,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That subtracts 2 from 5 without weighting. The loss happens five times as often as the win."
+          },
+          {
+            "value": 0.83,
+            "feedback": "The sign is wrong: the loss contributes −1.67, which outweighs the win's +0.83."
+          }
+        ],
+        "fallbackFeedback": "5(1/6) + (−2)(5/6) = 0.833… − 1.667… = −0.833…, about −$0.83.",
+        "successFeedback": "About −$0.83 per roll — to make it fair the win would have to pay $10."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Fair means zero, not even.",
+      "takeaways": [
+        "A fair game has expected net exactly 0.",
+        "Win frequency is irrelevant — a 1-in-10 game is fair if it pays 9 to 1.",
+        "Setting expectation to zero solves for the fair payout or price."
+      ],
+      "teaser": "Next: what expectation does and does not tell you when the decision is yours."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ev-fair-games",
+      "concept": {
+        "id": "rem-ev-fair-games-c",
+        "kind": "concept",
+        "body": "Turned around, fairness sets the price. If you know how often a game wins, the fair payout is whatever makes the expectation zero — which is how insurance premiums and betting odds are set. Every departure from that number is somebody's margin."
+      },
+      "check": {
+        "id": "rem-ev-fair-games-k",
+        "kind": "check",
+        "body": "Verify a lopsided fair game.",
+        "conceptTag": "ev-fair-games",
+        "explanationVariants": [
+          "9(0.1) + (−1)(0.9) = 0.9 − 0.9 = 0.",
+          "The rare big win exactly balances the frequent small loss."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Win $9 net with probability 0.1, lose $1 with probability 0.9. What is the expected net?",
+          "answer": 0,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "That subtracts the payoffs without weighting them by probability."
+            },
+            {
+              "value": 0.9,
+              "feedback": "0.9 is the win's contribution alone. The loss contributes −0.9, cancelling it exactly."
+            }
+          ],
+          "fallbackFeedback": "9(0.1) + (−1)(0.9) = 0.9 − 0.9 = 0.",
+          "successFeedback": "0 — perfectly fair, and you lose nine times out of ten. Fairness never promised frequent wins."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,368 @@
+{
+  "id": "md-01-03",
+  "slug": "elapsed-time-on-a-number-line",
+  "title": "Elapsed Time on a Number Line",
+  "courseId": "measurement-data",
+  "chapterId": "ch1-time-to-the-minute",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "How long is it from 8:40 to 9:20? Lay time on a number line and **JUMP**: a friendly hop to 9:00 (20 minutes), then a hop to 9:20 (20 more). Two hops, 40 minutes. The hour border is your stepping stone — always land on it first.",
+      "figure": "md3-elapsed"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build a jump plan.",
+      "conceptTag": "elapsed-time",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build the jump plan for the gap from 2:45 to 3:25.",
+        "tokens": [
+          {
+            "id": "t15",
+            "label": "15 min (to 3:00)"
+          },
+          {
+            "id": "tp",
+            "label": "+"
+          },
+          {
+            "id": "t25",
+            "label": "25 min (to 3:25)"
+          },
+          {
+            "id": "teq",
+            "label": "="
+          },
+          {
+            "id": "t40",
+            "label": "40 min"
+          },
+          {
+            "id": "t70",
+            "label": "70 min"
+          }
+        ],
+        "correct": [
+          "t15",
+          "tp",
+          "t25",
+          "teq",
+          "t40"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t15",
+              "tp",
+              "t25",
+              "teq",
+              "t70"
+            ],
+            "feedback": "The hops say 15 + 25 = 40. A 70 could only come from adding the clock labels (45 + 25) — but jumps measure the GAP between times, not the labels on them."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Hop to the hour first (2:45 → 3:00 costs 15), then hop to the target (25 more) — the gap is the two hops added.",
+        "successFeedback": "15 + 25 = 40 minutes — the hour border crossed in two friendly hops."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Measure the recess.",
+      "conceptTag": "elapsed-time",
+      "explanationVariants": [
+        "Hop to the hour: 9:45 → 10:00 is 15; then 10:00 → 10:20 is 20 more. Total 35 minutes.",
+        "Count up by fives past the border: 9:50, 9:55, 10:00 (15)… then 20 straight to 10:20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Recess runs from 9:45 to 10:20. How many minutes is that?",
+        "answer": 35,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65 added the minute labels (45 + 20). Labels aren't lengths — jump the border instead: 15 to the hour, 20 past it."
+          },
+          {
+            "value": 25,
+            "feedback": "25 subtracted 20 from 45 — backwards across the hour! Time only runs forward: 9:45 → 10:00 → 10:20."
+          }
+        ],
+        "fallbackFeedback": "Two hops: 9:45 to 10:00, then 10:00 to 10:20 — add them."
+      },
+      "variant": {
+        "gen": "elapsed-time"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why not just subtract the minute labels? Because **the hour rolls over at 60** — there is no 9:75 hiding after 9:59. Crossing an hour, label arithmetic breaks; the two-hop jump never does. That's the whole trick.",
+      "figure": "md3-elapsed"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "When does the movie end?",
+      "conceptTag": "elapsed-time",
+      "explanationVariants": [
+        "Split the 35 at the border: 20 minutes reach 6:00, and the other 15 land at 6:15.",
+        "5:40 plus 35 can't be 5:75 — sixty minutes fills the hour and the count restarts at 6:00."
+      ],
+      "widget": {
+        "type": "clockSet",
+        "prompt": "A movie starts at 5:40 and runs 35 minutes. Set the clock to show when it ends.",
+        "targetHour": 6,
+        "targetMinute": 15,
+        "minuteStep": 5,
+        "successFeedback": "20 minutes to reach 6:00, then 15 more — the border split makes it easy.",
+        "minuteFeedback": "That added a whole extra chunk — 5:40 + 35 splits as 20-to-the-hour + 15 past it: 6:15.",
+        "hourFeedback": "5:15 is BEFORE the movie starts. Adding time moves forward: past 6:00 to 6:15."
+      },
+      "variant": {
+        "gen": "elapsed-time",
+        "form": "endAfter"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Coordinate hour and minute positions while composing elapsed time on a 60-minute cycle.",
+        "invariants": [
+          "minute-cycle-is-sixty",
+          "hour-and-minute-hands-coordinate"
+        ],
+        "misconceptions": [
+          "hour-hand-stays-fixed",
+          "minutes-treated-as-base-ten"
+        ],
+        "representations": [
+          "diagram",
+          "number-line",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-clockSet-new-context",
+        "delayed": false
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Jump the timeline yourself.",
+      "conceptTag": "elapsed-time",
+      "widget": {
+        "type": "slider",
+        "prompt": "The timeline starts at 1:50. Slide to the total minutes that reach 2:30.",
+        "min": 0,
+        "max": 60,
+        "step": 10,
+        "start": 0,
+        "target": 40,
+        "visual": "numberline",
+        "unitLabel": "minutes",
+        "lowFeedback": "Not far enough — you haven't reached 2:30 yet. (Hint: 10 minutes only reaches 2:00.)",
+        "highFeedback": "Too far — you've jumped past 2:30. Ease back.",
+        "successFeedback": "40 minutes: 10 to land on 2:00, then 30 more to 2:30. The border hop plus the leftover."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents elapsed time.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for elapsed time must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines elapsed time."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:elapsed-time",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "From 1:50 to 2:30 — how many minutes?",
+        "options": [
+          {
+            "id": "forty",
+            "label": "40 minutes"
+          },
+          {
+            "id": "twenty",
+            "label": "20 minutes"
+          },
+          {
+            "id": "eighty",
+            "label": "80 minutes"
+          }
+        ],
+        "outcomeId": "forty",
+        "reveal": "40 minutes: 10 to reach 2:00, then 30 more. Subtracting the minute labels gives 30 − 50 = −20, which is nonsense — the hour rolls over at 60, not at 100. Hopping to the whole hour first keeps you clear of that trap entirely."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick the pro strategy.",
+      "conceptTag": "elapsed-time",
+      "explanationVariants": [
+        "Land on 7:00 first (25 minutes), then hop the remaining 10 — totals 35 with zero rollover risk.",
+        "The hour border is the friendly number of time arithmetic — jumps through it never break."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What's the fastest RELIABLE way to count the minutes from 6:35 to 7:10?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Hop to 7:00 (that's 25 minutes), then 10 more — total 35",
+            "correct": true,
+            "feedback": "Two friendly hops through the border — quick, and immune to rollover mistakes."
+          },
+          {
+            "id": "b",
+            "label": "Compute 35 − 10 = 25",
+            "feedback": "That subtracts minute labels across an hour border — it misses the hour's structure entirely. The real gap is 35."
+          },
+          {
+            "id": "c",
+            "label": "Count every single minute, one by one",
+            "feedback": "It works — thirty-five careful counts — but the border hop gets the same 35 in two moves. Save the counting for checking."
+          },
+          {
+            "id": "d",
+            "label": "Compute 70 − 35",
+            "feedback": "Where would a 70 come from? Clock minutes never pass 59 — cross the hour by hopping, not by inventing minutes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "elapsed-time",
+        "form": "bridgeMethod"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Maya's homework marathon.",
+      "conceptTag": "elapsed-time",
+      "hints": [
+        "One task at a time — where does the clock stand after reading?",
+        "4:35 + 20 = 4:55. Now add math's 25 from there.",
+        "From 4:55: hop 5 minutes to 5:00, then the rest."
+      ],
+      "explanationVariants": [
+        "Reading: 4:35 + 20 = 4:55. Math: 4:55 + 25 splits at the border — 5 to reach 5:00, 20 more — landing at 5:20.",
+        "Total work is 45 minutes from 4:35: 25 to reach 5:00, then 20 past it. Same 5:20 either way."
+      ],
+      "widget": {
+        "type": "clockSet",
+        "prompt": "Maya starts homework at 4:35. Reading takes 20 minutes, then math takes 25 more. Set the clock to show when she is done.",
+        "targetHour": 5,
+        "targetMinute": 20,
+        "minuteStep": 5,
+        "successFeedback": "4:35 → 4:55 after reading; then 5 minutes to the border and 20 past it — 5:20.",
+        "minuteFeedback": "5:00 is mid-math — reading ended at 4:55 and only 5 of math's 25 minutes fit before the border. Twenty more follow: 5:20.",
+        "hourFeedback": "4:55 is when READING ends — the math session hasn't happened yet. Add its 25 minutes across the border."
+      },
+      "variant": {
+        "gen": "elapsed-time",
+        "form": "twoPartEnd"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Coordinate hour and minute positions while composing elapsed time on a 60-minute cycle.",
+        "invariants": [
+          "minute-cycle-is-sixty",
+          "hour-and-minute-hands-coordinate"
+        ],
+        "misconceptions": [
+          "hour-hand-stays-fixed",
+          "minutes-treated-as-base-ten"
+        ],
+        "representations": [
+          "diagram",
+          "number-line",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-clockSet-new-context",
+        "delayed": false
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can measure any gap now.",
+      "takeaways": [
+        "Elapsed time = jumps on a timeline; land on the hour border first.",
+        "Never add or subtract minute labels across an hour — there is no :75.",
+        "Multi-task stories chain the hops: finish one task's clock before starting the next."
+      ],
+      "teaser": "next chapter: leaving the clock for the scale — grams, kilograms, and what 'heavy' really means."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "elapsed-time",
+      "concept": {
+        "id": "rem-et-c",
+        "kind": "concept",
+        "body": "Quick rewind. The hour border is a **stepping stone in the stream** — always land on :00 first. From 2:50, don't leap straight for 3:10: step to 3:00 (10 minutes), then step to 3:10 (10 more). Two small dry steps beat one wet leap."
+      },
+      "check": {
+        "id": "rem-et-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "elapsed-time",
+        "explanationVariants": [
+          "Step to 3:00 (10 minutes), then to 3:10 (10 more): 20 in all.",
+          "Two ten-minute steps across the border."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "How many minutes from 2:50 to 3:10?",
+          "options": [
+            {
+              "id": "a",
+              "label": "20",
+              "correct": true,
+              "feedback": "Ten to the border, ten past it."
+            },
+            {
+              "id": "b",
+              "label": "60",
+              "feedback": "60 added the labels (50 + 10). The stepping-stone route counts the real gap: 10 + 10 = 20."
+            },
+            {
+              "id": "c",
+              "label": "40",
+              "feedback": "40 subtracted the labels (50 − 10) — backwards across the border. Step forward instead: 10 + 10."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

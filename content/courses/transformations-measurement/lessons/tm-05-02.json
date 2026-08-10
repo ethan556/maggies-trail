@@ -1,0 +1,261 @@
+{
+  "id": "tm-05-02",
+  "slug": "volume-of-a-cone",
+  "title": "Volume of a Cone",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch5-volume-round-solids",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **cone** with the same base and height as a cylinder holds exactly **one-third** as much. So its volume is **V = ⅓πr²h** — the cylinder formula times a third. Three cones fill one matching cylinder.",
+      "figure": "round-solids"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute a cone volume.",
+      "predict": {
+        "prompt": "A cone and a cylinder share the same radius 3 and height 4. How does the cone's volume compare?",
+        "options": [
+          {
+            "id": "third",
+            "label": "Exactly one third of the cylinder's"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half of it"
+          },
+          {
+            "id": "same",
+            "label": "The same — same radius, same height"
+          }
+        ],
+        "outcomeId": "third",
+        "reveal": "A cone tapers to a point, so it holds far less than the cylinder around it — and the amount is not roughly a third but EXACTLY a third. Three cones empty into their cylinder and fill it precisely."
+      },
+      "widget": {
+        "type": "volumeBuilder",
+        "solid": "cone",
+        "targetVolume": 12,
+        "rMax": 6,
+        "rStart": 1,
+        "hMax": 6,
+        "hStart": 1,
+        "prompt": "Set the radius and height until the cone's volume reads 12π. Compare it with the cylinder that shares those measurements.",
+        "successFeedback": "12π — and a cylinder with the same radius 3 and height 4 holds 36π. The cone is exactly a third of it. That is what the ÷ 3 in the formula is: three cones fill their cylinder.",
+        "lowFeedback": "Still under 12π. Try widening the radius before raising the height.",
+        "highFeedback": "Over 12π. Ease the radius back — it counts twice over."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The reliable method: find the matching cylinder's volume (πr²h) first, then divide by 3. For r = 6, h = 5: cylinder is 36 × 5 = 180, and the cone is 180 ÷ 3 = 60, so V = 60π.",
+      "figure": "tm-cone-volume"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another cone.",
+      "conceptTag": "tm-cone-volume",
+      "explanationVariants": [
+        "Cylinder = π × 6² × 5 = 180π; cone = 180 ÷ 3 = 60π.",
+        "Find 180π, then divide by 3: 60π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cone has radius 6 and height 5. What is its volume as a number times π?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "That's the CYLINDER volume — the cone is a third: 180 ÷ 3 = 60."
+          },
+          {
+            "value": 30,
+            "feedback": "Cylinder is 36 × 5 = 180, then ÷ 3 = 60, not 30."
+          }
+        ],
+        "fallbackFeedback": "Cylinder = π × 36 × 5 = 180π; cone = 180 ÷ 3 = 60π."
+      },
+      "variant": {
+        "gen": "g8-tm-cone-volume",
+        "form": "tmConeA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Cone vs cylinder.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why is a cone's volume one-third of the cylinder's?",
+        "panels": [
+          {
+            "title": "Same base, same height",
+            "body": "Picture a cone and a cylinder with the exact same circular base and the same height."
+          },
+          {
+            "title": "Pour test",
+            "body": "If you fill the cone with water and pour it into the cylinder, it takes exactly THREE cone-fills to fill the cylinder."
+          },
+          {
+            "title": "Conclusion",
+            "body": "So the cone holds one-third of the cylinder: V = ⅓πr²h."
+          }
+        ],
+        "continueFeedback": "Reveal the next step.",
+        "successFeedback": "Exactly — three cones fill the matching cylinder, so a cone is one-third."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A cone from its cylinder.",
+      "conceptTag": "tm-cone-volume",
+      "explanationVariants": [
+        "The matching cylinder is 90π, so the cone is 90 ÷ 3 = 30π.",
+        "Divide the cylinder volume by 3: 90 ÷ 3 = 30π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cone matches a cylinder of volume 90π. What is the cone's volume as a number times π?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "That's the cylinder — the cone is a third: 90 ÷ 3 = 30."
+          },
+          {
+            "value": 270,
+            "feedback": "The cone is SMALLER (one-third), so divide: 90 ÷ 3 = 30, not multiply."
+          }
+        ],
+        "fallbackFeedback": "A cone is one-third of its matching cylinder: 90 ÷ 3 = 30π."
+      },
+      "variant": {
+        "gen": "g8-tm-cone-volume",
+        "form": "tmConeFromCylinder"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A cone with radius 2.",
+      "conceptTag": "tm-cone-volume",
+      "explanationVariants": [
+        "Cylinder = π × 2² × 9 = 36π; cone = 36 ÷ 3 = 12π.",
+        "Find 36π, divide by 3: 12π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cone has radius 2 and height 9. What is its volume as a number times π?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "That's the cylinder — the cone is a third: 36 ÷ 3 = 12."
+          },
+          {
+            "value": 18,
+            "feedback": "Cylinder is 4 × 9 = 36, then ÷ 3 = 12, not 18."
+          }
+        ],
+        "fallbackFeedback": "Cylinder = π × 4 × 9 = 36π; cone = 36 ÷ 3 = 12π."
+      },
+      "variant": {
+        "gen": "g8-tm-cone-volume",
+        "form": "tmConeB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A real-world cone.",
+      "conceptTag": "tm-cone-volume",
+      "explanationVariants": [
+        "An ice-cream cone with radius 3 and height 6: cylinder = π × 9 × 6 = 54π, cone = 54 ÷ 3 = 18π.",
+        "Find 54π, divide by 3: 18π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An ice-cream cone has radius 3 and height 6. What is its volume as a number times π?",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "That's the matching cylinder — the cone is a third: 54 ÷ 3 = 18."
+          },
+          {
+            "value": 9,
+            "feedback": "Cylinder is 9 × 6 = 54, then ÷ 3 = 18, not 9."
+          }
+        ],
+        "fallbackFeedback": "Cylinder = π × 3² × 6 = 54π; cone = 54 ÷ 3 = 18π."
+      },
+      "hints": [
+        "First find the matching cylinder: πr²h = π × 3² × 6.",
+        "That's π × 9 × 6 = 54π. The cone is one-third of it.",
+        "54 ÷ 3 = 18, so V = 18π."
+      ],
+      "variant": {
+        "gen": "g8-tm-cone-volume",
+        "form": "tmConeContext"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A cone holds one-third of its matching cylinder: V = ⅓πr²h.",
+      "takeaways": [
+        "V = ⅓πr²h — find πr²h, then divide by 3.",
+        "Three cones exactly fill a cylinder with the same base and height.",
+        "The cone is always smaller — divide, don't multiply."
+      ],
+      "teaser": "Next: the volume of a sphere."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-cone-volume",
+      "concept": {
+        "id": "rem-tm0502-c",
+        "kind": "concept",
+        "body": "A cone holds one-third of its matching cylinder: V = ⅓πr²h. Find the cylinder volume πr²h first, then divide by 3."
+      },
+      "check": {
+        "id": "rem-tm0502-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-cone-volume",
+        "explanationVariants": [
+          "Cylinder = π × 3² × 4 = 36π; cone = 36 ÷ 3 = 12π.",
+          "Find 36π, divide by 3: 12π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A cone has radius 3 and height 4. What is its volume as a number times π?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 36,
+              "feedback": "That's the cylinder — the cone is a third: 36 ÷ 3 = 12."
+            },
+            {
+              "value": 9,
+              "feedback": "Cylinder is 9 × 4 = 36, then ÷ 3 = 12, not 9."
+            }
+          ],
+          "fallbackFeedback": "Cylinder = π × 9 × 4 = 36π; cone = 36 ÷ 3 = 12π."
+        }
+      }
+    }
+  ]
+}

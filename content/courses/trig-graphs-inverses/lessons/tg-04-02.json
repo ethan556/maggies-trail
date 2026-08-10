@@ -1,0 +1,252 @@
+{
+  "id": "tg-04-02",
+  "slug": "arccos-and-branches",
+  "title": "Arccosine: a Different Branch Entirely",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch4-inverse-trig",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Cosine can't use sine's branch: on [−π/2, π/2] cosine rises then falls — it repeats outputs (cos(−π/3) = cos(π/3)), failing the line test. Cosine's clean one-to-one run is **[0, π]**, a pure descent from 1 to −1. So **arccos has range [0, π]** — never negative.",
+      "figure": "tg-arccos-branch"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Evaluate on the descent.",
+      "predict": {
+        "prompt": "Arcsine lives on [−90°, 90°]. Can arccosine use the same branch?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — cosine repeats inside that branch; arccos needs [0°, 180°]"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — one branch fits all the inverses"
+          },
+          {
+            "id": "any",
+            "label": "Any 180° window works for any inverse"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "No: on [−90°, 90°], cosine hits every value TWICE (cos(−60°) = cos 60°), so that window can't serve as arccos. On [0°, 180°] cosine descends from 1 to −1 without repeating — a different function needs a different branch. Feel this one's walls, then find the angle whose cosine is 1/2."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "This time the open arc is [0°, 180°] — arccosine's branch, the descent. Find the one angle here whose cosine is 1/2.",
+        "targetAngle": 60,
+        "angleStart": 90,
+        "angleStep": 5,
+        "branch": [
+          0,
+          180
+        ],
+        "successFeedback": "60° — π/3. Along this descent, cosine falls steadily from 1 to −1, hitting each value once: arccos(1/2) = 60° with no rival. Same idea as arcsine's branch, different arc — chosen for where THIS function refuses to repeat.",
+        "lowFeedback": "cos here is above 1/2 — you're too close to 0°, where cosine is largest. Drag up the descent.",
+        "highFeedback": "cos here is below 1/2 — too far along the descent. Ease back toward 0° and watch the cos readout climb to 0.5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why sine's branch fails cosine.",
+      "conceptTag": "tg-arccos",
+      "explanationVariants": [
+        "On [−π/2, π/2], cos(−π/3) = cos(π/3) = 1/2 — two inputs, one output: not one-to-one there (recall: intervals straddling a turning point keep collisions; cosine turns at 0).",
+        "Cosine peaks at x = 0, the CENTER of sine's branch — any interval around a peak repeats outputs."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why can't arccos use the branch [−π/2, π/2]?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Cosine peaks at 0, so that interval straddles a turning point and repeats outputs (e.g. cos(±π/3) = 1/2)",
+            "correct": true,
+            "feedback": "Right — the same straddle-failure from the parabola lesson. Cosine needs an interval on ONE side of its peak: [0, π]."
+          },
+          {
+            "id": "o2",
+            "label": "Cosine is undefined for negative angles",
+            "feedback": "cos(−π/3) = 1/2 exists just fine. The problem is it EQUALS cos(+π/3): a collision."
+          },
+          {
+            "id": "o3",
+            "label": "That branch only contains positive cosine values",
+            "feedback": "Sign isn't the issue — repetition is: cos(−π/3) and cos(π/3) collide at 1/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arccos__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Negative inputs, positive outputs.",
+      "conceptTag": "tg-arccos",
+      "explanationVariants": [
+        "arccos(−1/2) = 2π/3: on the descent, cosine goes negative PAST π/2, and cos(2π/3) = −1/2.",
+        "Unlike arcsin, arccos never returns a negative angle — negative cosines map into (π/2, π]."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is arccos(−1/2)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2π/3",
+            "correct": true,
+            "feedback": "Right — cos(2π/3) = −1/2, and 2π/3 sits on the [0, π] descent."
+          },
+          {
+            "id": "o2",
+            "label": "−π/3",
+            "feedback": "arccos's range is [0, π]: it NEVER outputs negatives. The branch angle with cosine −1/2 is 2π/3."
+          },
+          {
+            "id": "o3",
+            "label": "π/3",
+            "feedback": "cos(π/3) = +1/2 — wrong sign. Negative cosines live past π/2: arccos(−1/2) = 2π/3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arccos__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Tangent's turn: one full climbing branch, **(−π/2, π/2)** — OPEN, because the walls are excluded values. **arctan** inverts it: domain ALL reals (each branch spans −∞ to +∞), range (−π/2, π/2), and the walls become **horizontal asymptotes** of arctan: y → ±π/2 as x → ±∞. (Recall: inverses swap domain and range — so vertical walls swap into horizontal ones.)",
+      "figure": "tg-arctan-branch"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Tangent's inverse at a landmark.",
+      "conceptTag": "tg-arccos",
+      "explanationVariants": [
+        "tan(π/4) = 1, and π/4 is inside (−π/2, π/2): arctan(1) = π/4, so n = 4.",
+        "The branch's 'ratio = 1' angle is π/4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "arctan(1) = π/n. What is n?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "π/2 is the WALL — excluded, and tan is undefined there. tan(π/4) = 1: n = 4."
+          },
+          {
+            "value": 1,
+            "feedback": "tan π = 0. The angle with tangent 1 is π/4: n = 4."
+          }
+        ],
+        "fallbackFeedback": "arctan(1) = π/4: n = 4."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arccos__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The asymptote payoff.",
+      "conceptTag": "tg-arccos",
+      "explanationVariants": [
+        "As x → ∞, arctan(x) climbs toward — but never reaches — π/2: tangent's wall became arctan's ceiling. arctan(1000) ≈ 1.5698, just under π/2 ≈ 1.5708.",
+        "Swapping domain and range turns the vertical asymptote x = π/2 into the horizontal asymptote y = π/2."
+      ],
+      "hints": [
+        "arctan asks: which branch angle has THIS tangent?",
+        "Huge tangents happen pressed against the wall at π/2.",
+        "The output approaches the wall's height but can't touch it — which line is that?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What happens to arctan(x) as x grows without bound?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It approaches π/2 but never reaches it — a horizontal asymptote",
+            "correct": true,
+            "feedback": "Right — tangent's vertical wall, reflected through the inverse, becomes arctan's horizontal ceiling y = π/2."
+          },
+          {
+            "id": "o2",
+            "label": "It grows without bound too",
+            "feedback": "Outputs are trapped in (−π/2, π/2) — arctan(1000) ≈ 1.5698 < π/2. It levels off."
+          },
+          {
+            "id": "o3",
+            "label": "It reaches π/2 at x = 1000",
+            "feedback": "Close (≈ 1.5698) but never equal: tan(π/2) doesn't exist, so no input maps to π/2 exactly."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arccos__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three branches, three inverses.",
+      "takeaways": [
+        "arcsin: range [−π/2, π/2]. arccos: range [0, π] — never negative. arctan: range (−π/2, π/2).",
+        "Branches are chosen to avoid each function's turning points or walls.",
+        "Tangent's walls become arctan's horizontal asymptotes y = ±π/2."
+      ],
+      "teaser": "Next: stacking trig on inverse trig — where the compositions behave, and where they bite."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-arccos",
+      "concept": {
+        "id": "rem-tg0402-c",
+        "kind": "concept",
+        "body": "Each inverse returns angles from ITS branch only: arcsin → [−π/2, π/2]; arccos → [0, π]; arctan → (−π/2, π/2). Check both value and branch."
+      },
+      "check": {
+        "id": "rem-tg0402-k",
+        "kind": "check",
+        "body": "Branch discipline.",
+        "conceptTag": "tg-arccos",
+        "explanationVariants": [
+          "cos π = −1 and π ∈ [0, π]: arccos(−1) = π.",
+          "The descent bottoms out at its right endpoint: angle π, cosine −1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is arccos(−1), as a decimal to hundredths?",
+          "answer": 3.14,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": -3.14,
+              "feedback": "arccos never outputs negatives (range [0, π]): the answer is +π ≈ 3.14."
+            },
+            {
+              "value": 1.57,
+              "feedback": "1.57 ≈ π/2 has cosine 0. Cosine reaches −1 at π ≈ 3.14."
+            }
+          ],
+          "fallbackFeedback": "arccos(−1) = π ≈ 3.14."
+        }
+      }
+    }
+  ]
+}

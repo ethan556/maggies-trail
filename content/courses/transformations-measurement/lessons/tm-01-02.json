@@ -1,0 +1,419 @@
+{
+  "id": "tm-01-02",
+  "slug": "flipping-with-reflections",
+  "title": "Flipping with Reflections",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch1-rigid-transformations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **reflection** flips a shape across a line, like a mirror. Reflecting across the **x-axis** keeps x and flips the sign of y: (x, y) → (x, −y). Reflecting across the **y-axis** flips x: (x, y) → (−x, y).",
+      "figure": "rigid-transformations"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Reflect the red triangle across the x-axis so it lands on the dashed target. A reflection flips every point to the opposite side of the mirror line — no sliding needed here.",
+      "widget": {
+        "type": "transformExplore",
+        "prompt": "Flip the triangle across the x-axis onto the target.",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "target": [
+          [
+            1,
+            -1
+          ],
+          [
+            3,
+            -1
+          ],
+          [
+            2,
+            -3
+          ]
+        ],
+        "gridMin": -6,
+        "gridMax": 6,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -6,
+        "dyMax": 6,
+        "allowReflect": true,
+        "successFeedback": "Reflected across the x-axis — every point's height flips to the opposite side, landing on the mirror image.",
+        "offsetFeedback": "The flip is right, but this one needs no sliding. Set dx and dy back to 0.",
+        "reflectFeedback": "Not a match yet — the target is the mirror image across the x-axis. Choose that reflection."
+      },
+      "predict": {
+        "prompt": "The target is the triangle's mirror image below the x-axis. Can sliding alone — no flip — ever land it?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a slide can't turn a shape over"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — slide down far enough"
+          },
+          {
+            "id": "size",
+            "label": "Only if the triangle were a square"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Slide the triangle down and its peak still points UP — the mirror image's peak points down. Translations keep orientation; reflections reverse it. No amount of sliding substitutes for the flip."
+      },
+      "conceptTag": "tm-reflection",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents tm reflection.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tm reflection must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tm reflection."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "transformations-measurement:tm-reflection",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reflect across the x-axis.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Reflect the point (3, 5) across the x-axis. What is the image?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(3, −5)",
+            "correct": true,
+            "feedback": "Right — across the x-axis, x stays and y flips sign: (3, −5)."
+          },
+          {
+            "id": "b",
+            "label": "(−3, 5)",
+            "correct": false,
+            "feedback": "That's a reflection across the Y-axis — across the X-axis, the Y flips: (3, −5)."
+          },
+          {
+            "id": "c",
+            "label": "(−3, −5)",
+            "correct": false,
+            "feedback": "Only the y flips across the x-axis; x stays 3: (3, −5)."
+          },
+          {
+            "id": "d",
+            "label": "(5, 3)",
+            "correct": false,
+            "feedback": "Reflection doesn't swap coordinates — across the x-axis, y flips sign: (3, −5)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The mirror line is what you flip ACROSS. Points keep their distance from the line but land on the opposite side. Across the x-axis, a point 5 above lands 5 below. The shape's size never changes.",
+      "figure": "rigid-transformations"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Reflect across the y-axis.",
+      "conceptTag": "tm-reflection",
+      "explanationVariants": [
+        "Across the y-axis, y stays and x flips sign: (2, 7) → (−2, 7).",
+        "The y-axis flips the x-coordinate: (2, 7) → (−2, 7)."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Reflect (2, 7) across the y-axis. What is the image?",
+        "answer": [
+          -2,
+          7
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              2,
+              -7
+            ],
+            "feedback": "That's a reflection across the X-axis — across the Y-axis, the X flips: (−2, 7)."
+          },
+          {
+            "values": [
+              -2,
+              -7
+            ],
+            "feedback": "Only x flips across the y-axis; y stays 7: (−2, 7)."
+          },
+          {
+            "values": [
+              7,
+              2
+            ],
+            "feedback": "Reflection doesn't swap coordinates — across the y-axis, x flips sign: (−2, 7)."
+          }
+        ],
+        "fallbackFeedback": "Across the y-axis, y stays and only x flips sign.",
+        "successFeedback": "Right — across the y-axis, y stays and x flips sign: (−2, 7)."
+      },
+      "variant": {
+        "gen": "point-transform"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which axis was used?",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "The point (4, 1) became (4, −1). Which reflection was it?",
+        "panels": [
+          {
+            "title": "Compare x",
+            "body": "The x-coordinate stayed the same: 4 → 4."
+          },
+          {
+            "title": "Compare y",
+            "body": "The y-coordinate flipped sign: 1 → −1."
+          },
+          {
+            "title": "Conclusion",
+            "body": "Only y flipped, so it was a reflection across the x-axis (the horizontal mirror line)."
+          }
+        ],
+        "continueFeedback": "Reveal the next step.",
+        "successFeedback": "Exactly — when only y flips sign, the mirror line is the x-axis."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Identify the mirror line.",
+      "conceptTag": "tm-reflection",
+      "explanationVariants": [
+        "(5, 2) → (−5, 2): only x flipped sign, so it was a reflection across the y-axis.",
+        "x flipped, y stayed — that's the y-axis mirror."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A reflection sends (5, 2) to (−5, 2). Which line is the mirror?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The y-axis",
+            "correct": true,
+            "feedback": "Right — only x flipped sign, which the y-axis does."
+          },
+          {
+            "id": "b",
+            "label": "The x-axis",
+            "correct": false,
+            "feedback": "The x-axis flips the Y-coordinate — here the X flipped, so it's the y-axis."
+          },
+          {
+            "id": "c",
+            "label": "The line y = x",
+            "correct": false,
+            "feedback": "That line would swap the coordinates — here x just flipped sign, so it's the y-axis."
+          },
+          {
+            "id": "d",
+            "label": "No line — it's a translation",
+            "correct": false,
+            "feedback": "The sign flip on x is a reflection, not a slide — the mirror is the y-axis."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmReflectAxis"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What stays the same?",
+      "conceptTag": "tm-reflection",
+      "explanationVariants": [
+        "A reflection keeps size and shape identical — it only reverses the shape like a mirror image.",
+        "Reflections preserve size and shape; they just flip orientation."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "After a reflection, what is preserved?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The size and shape — it's a mirror image",
+            "correct": true,
+            "feedback": "Right — a reflection keeps the shape congruent, just flipped."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — the shape changes completely",
+            "correct": false,
+            "feedback": "A reflection keeps size and shape identical; only the orientation flips."
+          },
+          {
+            "id": "c",
+            "label": "The size grows",
+            "correct": false,
+            "feedback": "Reflections never resize — the mirror image is exactly the same size."
+          },
+          {
+            "id": "d",
+            "label": "The position but not the shape",
+            "correct": false,
+            "feedback": "It's the other way — the shape stays the same; it's the orientation that flips."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmReflectProperty"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Reflect across the x-axis, then read the result.",
+      "conceptTag": "tm-reflection",
+      "explanationVariants": [
+        "Reflecting (−4, 6) across the x-axis keeps x and flips y: (−4, −6).",
+        "Across the x-axis: x stays −4, y flips to −6."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Reflect (−4, 6) across the x-axis. What is the image?",
+        "answer": [
+          -4,
+          -6
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              4,
+              6
+            ],
+            "feedback": "Across the x-axis, the X stays the same (−4) and the Y flips: (−4, −6)."
+          },
+          {
+            "values": [
+              4,
+              -6
+            ],
+            "feedback": "Only y flips across the x-axis; x stays −4: (−4, −6)."
+          },
+          {
+            "values": [
+              -6,
+              -4
+            ],
+            "feedback": "Reflection doesn't swap coordinates — across the x-axis, only y flips: (−4, −6)."
+          }
+        ],
+        "fallbackFeedback": "Across the x-axis, x stays and only y flips sign.",
+        "successFeedback": "Right — x stays −4, y flips sign to −6."
+      },
+      "hints": [
+        "Across the x-axis, the x-coordinate stays and the y-coordinate flips sign.",
+        "So −4 stays −4. Now flip the y: 6 becomes −6.",
+        "The image is (−4, −6)."
+      ],
+      "variant": {
+        "gen": "point-transform"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A reflection flips a shape across a mirror line, keeping size and shape.",
+      "takeaways": [
+        "Across the x-axis: (x, y) → (x, −y).",
+        "Across the y-axis: (x, y) → (−x, y).",
+        "The mirror image is congruent — same size and shape, flipped orientation."
+      ],
+      "teaser": "Next: turning shapes with rotations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-reflection",
+      "concept": {
+        "id": "rem-tm0102-c",
+        "kind": "concept",
+        "body": "A reflection flips a shape across a mirror line. Across the x-axis: (x,y)→(x,−y). Across the y-axis: (x,y)→(−x,y). Size and shape stay the same."
+      },
+      "check": {
+        "id": "rem-tm0102-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-reflection",
+        "explanationVariants": [
+          "Reflect (6, 3) across the x-axis: x stays, y flips, giving (6, −3).",
+          "Across the x-axis, only y flips sign: (6, −3)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Reflect (6, 3) across the x-axis. What is the image?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(6, −3)",
+              "correct": true,
+              "feedback": "Right — x stays 6, y flips to −3."
+            },
+            {
+              "id": "b",
+              "label": "(−6, 3)",
+              "correct": false,
+              "feedback": "That's the Y-axis reflection — across the X-axis, the Y flips: (6, −3)."
+            },
+            {
+              "id": "c",
+              "label": "(−6, −3)",
+              "correct": false,
+              "feedback": "Only y flips across the x-axis; x stays 6: (6, −3)."
+            },
+            {
+              "id": "d",
+              "label": "(3, 6)",
+              "correct": false,
+              "feedback": "Reflection doesn't swap coordinates — across the x-axis, y flips: (6, −3)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

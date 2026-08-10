@@ -1,0 +1,299 @@
+{
+ "id": "si-05-01",
+ "slug": "reading-a-studys-design",
+ "title": "Reading a Study's Design",
+ "courseId": "statistical-inference",
+ "chapterId": "ch5-judging-claims",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every claim has a design underneath it, and the design is a ceiling.\n\nA voluntary online poll supports almost nothing. An observational study supports association. A random sample supports a population estimate. A randomised experiment supports cause.\n\nA claim can travel **down** this ladder. It can never climb it.",
+   "figure": "si-claim-ladder"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find the ceiling.",
+   "conceptTag": "si-claim-design",
+   "explanationVariants": [
+    "Random assignment was used, so a causal claim is licensed — but only for the kind of people who were in the study.",
+    "Ask what was randomised. Nothing → association. The sample → an estimate. The treatment → a cause."
+   ],
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each design to the highest claim it can carry.",
+    "left": [
+     {
+      "id": "w1",
+      "label": "Volunteers randomly assigned to drug or placebo"
+     },
+     {
+      "id": "w2",
+      "label": "1,000 randomly dialled adults surveyed"
+     },
+     {
+      "id": "w3",
+      "label": "A website's readers vote in a poll"
+     }
+    ],
+    "right": [
+     {
+      "id": "y1",
+      "label": "the drug caused the change"
+     },
+     {
+      "id": "y2",
+      "label": "about 47% of adults think X, ± 3"
+     },
+     {
+      "id": "y3",
+      "label": "some readers who chose to click think X"
+     }
+    ],
+    "pairs": {
+     "w1": "y1",
+     "w2": "y2",
+     "w3": "y3"
+    },
+    "pairErrors": [
+     {
+      "left": "w3",
+      "right": "y2",
+      "feedback": "A self-selected vote cannot estimate a population — the people who clicked are not a random slice of anyone."
+     },
+     {
+      "left": "w2",
+      "right": "y1",
+      "feedback": "A survey measures; it does not intervene. Without random assignment there is no causal claim to be had."
+     }
+    ],
+    "missFeedback": "What was randomised — nothing, the sample, or the treatment? That single question sets the ceiling.",
+    "successFeedback": "Three designs, three ceilings. The strongest sentence you may write is fixed before the data are even collected."
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-design__matchPairs"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The same finding, four designs.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Watch a claim shrink as the design weakens.",
+    "panels": [
+     {
+      "title": "Randomised experiment",
+      "body": "Volunteers are assigned by coin to the sleep app or a placebo app. The app arm sleeps 25 minutes longer. Claim available: the app CAUSED longer sleep, in people like these volunteers."
+     },
+     {
+      "title": "Observational study",
+      "body": "Researchers instead watch who already uses sleep apps. Users sleep 25 minutes longer. Claim available: app use is ASSOCIATED with longer sleep. Perhaps careful sleepers download sleep apps."
+     },
+     {
+      "title": "Voluntary online poll",
+      "body": "The app's own users are invited to report their sleep. They report 25 more minutes. Claim available: users who chose to answer say they sleep more. That is a sentence about respondents, not about sleep."
+     }
+    ],
+    "continueFeedback": "Keep going — the number never changed. Only what it is allowed to mean.",
+    "successFeedback": "Identical numbers, three different ceilings. The design, not the result, decides how strong the sentence may be."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which sentence is legal?",
+   "conceptTag": "si-claim-design",
+   "explanationVariants": [
+    "Nothing was randomly assigned, so the strongest legal sentence is about association.",
+    "\"Helps you sleep\" is a causal verb, and observational data cannot carry it."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Observational study: app users sleep 25 minutes longer. Which sentence is defensible?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "\"App users sleep longer on average — we cannot say the app is the reason.\"",
+      "correct": true,
+      "feedback": "Right — the association is real, and the cause is unclaimed. That is exactly the design's ceiling."
+     },
+     {
+      "id": "o2",
+      "label": "\"The app helps you sleep 25 minutes longer.\"",
+      "correct": false,
+      "feedback": "\"Helps\" is a causal verb. People who download sleep apps may already care about sleep — that difference, not the app, could be doing the work."
+     },
+     {
+      "id": "o3",
+      "label": "\"Sleeping longer makes people download apps.\"",
+      "correct": false,
+      "feedback": "That is the reverse causal claim, and it is just as unsupported. Observational data cannot tell you which end of the arrow to hold."
+     },
+     {
+      "id": "o4",
+      "label": "\"There is no relationship between apps and sleep.\"",
+      "correct": false,
+      "feedback": "There is a relationship — a 25-minute association. What is missing is the licence to call it causal."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-design__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Two more questions the design answers, and the headline usually hides:\n\n**Who was in it?** A drug tested only on men aged 20–35 is a drug tested only on men aged 20–35.\n**Compared with what?** \"Improves memory\" — compared with a placebo? With nothing? With a rival product?\n\nA claim with no comparison group is not a weak claim. It is not a claim at all.",
+   "figure": "si-study-types"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Missing comparison.",
+   "conceptTag": "si-claim-design",
+   "explanationVariants": [
+    "\"92% improved\" has nothing to be better than. Most such conditions improve on their own, and without a control arm you cannot separate the two.",
+    "Ask \"compared with what?\" and the sentence collapses."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "\"92% of users reported improvement after 8 weeks.\" What is the fatal gap?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No comparison group — you cannot tell improvement from the product apart from improvement over time.",
+      "correct": true,
+      "feedback": "Right. Without a control arm, 92% has nothing to be better than, and eight weeks of ordinary recovery would look exactly the same."
+     },
+     {
+      "id": "o2",
+      "label": "The sample size is not given.",
+      "correct": false,
+      "feedback": "Worth asking, but even n = 1,000,000 would not save it. A number with no comparison group is uninterpretable at any size."
+     },
+     {
+      "id": "o3",
+      "label": "8 weeks is too short.",
+      "correct": false,
+      "feedback": "The window might be fine. The missing piece is what happened to people who did NOT use the product over the same eight weeks."
+     },
+     {
+      "id": "o4",
+      "label": "\"Reported\" improvement is subjective.",
+      "correct": false,
+      "feedback": "A fair worry, and blinding would address it — but the primary break is that there is nothing to compare 92% against."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-design__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Assign the ceiling.",
+   "conceptTag": "si-claim-design",
+   "hints": [
+    "Two randomisations to look for: was the SAMPLE random, and was the TREATMENT randomly assigned?",
+    "Here the treatment was assigned by coin, so cause is available. But the subjects were volunteers from one university.",
+    "So the causal claim holds — for people like those volunteers. Generalising the size of the effect to everyone is a separate, unearned step."
+   ],
+   "explanationVariants": [
+    "Random assignment licenses the causal claim within the study. The volunteers were not a random sample of anyone, so the reach of the claim is limited to people like them.",
+    "Cause: yes. Generalisation: not automatic. Two coins, and only one of them was flipped."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "200 undergraduate volunteers at one university are randomly assigned to a study technique or to their usual method. The technique arm scores 9 points higher. What is the ceiling?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The technique caused the gain in these students — extending it to all learners is a further, unearned step.",
+      "correct": true,
+      "feedback": "Right. The assignment coin buys cause; the sampling coin, never flipped, would have bought reach."
+     },
+     {
+      "id": "o2",
+      "label": "The technique raises scores by 9 points for everyone.",
+      "correct": false,
+      "feedback": "The volunteers were undergraduates at one university. Nothing in the design licences carrying the effect size to other populations."
+     },
+     {
+      "id": "o3",
+      "label": "Only that the technique is associated with higher scores.",
+      "correct": false,
+      "feedback": "That undersells it. The coin balanced the arms, so lurking variables were dealt with — this IS a causal finding, within its population."
+     },
+     {
+      "id": "o4",
+      "label": "Nothing, because volunteers are self-selected.",
+      "correct": false,
+      "feedback": "Self-selection into the study limits generalisation; it does not break the internal comparison, which the coin protected."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-design__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The design was decided before the data existed.",
+   "takeaways": [
+    "What was randomised — nothing, the sample, or the treatment? That fixes the ceiling on every claim.",
+    "A claim can travel down the ladder of designs, never up.",
+    "Always ask who was in the study and what the comparison group was. A result with no comparison is not a result."
+   ],
+   "teaser": "Next: the arithmetic is flawless and the sentence is still false."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "si-claim-design",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Run two checks on any headline. Was the treatment assigned by a coin? If not, delete every causal verb from the sentence. Was the sample drawn at random from the population being talked about? If not, shrink the sentence to the people who were actually studied.",
+    "figure": "si-claim-ladder"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Delete the illegal verb.",
+    "conceptTag": "si-claim-design",
+    "explanationVariants": [
+     "Nothing was assigned, so \"reduces\" must go and \"is associated with\" takes its place.",
+     "The causal verb is the tell. Look for it first."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Observational study: people who volunteer have lower stress. Which verb is legal?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Volunteering is ASSOCIATED WITH lower stress.",
+       "correct": true,
+       "feedback": "Right — the honest verb for a design with no random assignment."
+      },
+      {
+       "id": "o2",
+       "label": "Volunteering REDUCES stress.",
+       "correct": false,
+       "feedback": "That is a causal verb. Calm people may simply have more capacity to volunteer, and watching cannot separate the two."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

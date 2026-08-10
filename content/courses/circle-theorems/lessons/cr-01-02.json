@@ -1,0 +1,309 @@
+{
+  "id": "cr-01-02",
+  "slug": "inscribed-angles",
+  "title": "Inscribed Angles",
+  "courseId": "circle-theorems",
+  "chapterId": "ch1-central-inscribed",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-inscribed",
+      "concept": {
+        "id": "rem-cr-inscribed-c",
+        "kind": "concept",
+        "body": "An inscribed angle has its vertex ON the circle and chord sides. Theorem: inscribed angle = HALF the arc it opens onto (the central angle equals the arc; the rim sees it at half rate). Corollary: every inscribed angle on the same arc has the same measure. Arc from angle: double. Angle from arc: halve."
+      },
+      "check": {
+        "id": "rem-cr-inscribed-k",
+        "kind": "check",
+        "body": "One halving.",
+        "conceptTag": "cr-inscribed",
+        "explanationVariants": [
+          "The 90° arc is seen from the rim at half: 45°.",
+          "Inscribed = arc/2 = 45°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Arc = 90°. An inscribed angle on it measures ?",
+          "answer": 45,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 90,
+              "feedback": "90° is the arc (and the central angle) — inscribed takes half: 45°."
+            },
+            {
+              "value": 180,
+              "feedback": "180 doubles — the rule halves: 45°."
+            }
+          ],
+          "fallbackFeedback": "90 ÷ 2 = 45°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Slide the vertex from the center out to the circle itself: that's an **inscribed angle** — vertex ON the circle, sides two chords. The **Inscribed Angle Theorem**: an inscribed angle measures **half** the arc it opens onto (half the central angle on that arc). An 80° arc is seen at 40° from the circle.",
+      "figure": "inscribed-angle-halves"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Halve the arc.",
+      "conceptTag": "cr-inscribed",
+      "explanationVariants": [
+        "Inscribed = half its arc: 80/2 = 40° — exactly the figure's pair.",
+        "The circle sees the arc at half the center's rate: 40°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An inscribed angle opens onto an arc of 80°. The inscribed angle measures ?",
+        "answer": 40,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "80° copies the arc — that's the CENTRAL angle's privilege. Inscribed angles take half: 40°."
+          },
+          {
+            "value": 160,
+            "feedback": "160 = 2 × 80 doubles — the halving runs the other way: inscribed = arc/2 = 40°."
+          },
+          {
+            "value": 100,
+            "feedback": "100 = 180 − 80 supplements — no supplement in this theorem, just half: 40°."
+          }
+        ],
+        "fallbackFeedback": "80° ÷ 2 = 40°."
+      },
+      "variant": {
+        "gen": "inscribed-angle"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why half? Draw the radius to the inscribed vertex: it splits the picture into isosceles triangles (two sides are radii), and each base angle gets doubled by the exterior angle at the center. The doubling at the center IS the halving at the rim. One proof, endless mileage.",
+      "figure": "cr-inscribed-half"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Reverse gear.",
+      "conceptTag": "cr-inscribed",
+      "explanationVariants": [
+        "Arc = twice the inscribed angle: 2 × 35 = 70°.",
+        "Inscribed 35° means the arc doubles it: 70°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An inscribed angle measures 35°. The arc it opens onto measures ?",
+        "answer": 70,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 17.5,
+            "feedback": "17.5 halves AGAIN — from inscribed back to arc you DOUBLE: 70°."
+          },
+          {
+            "value": 35,
+            "feedback": "35° copies the angle — arcs run at twice the inscribed rate: 70°."
+          },
+          {
+            "value": 145,
+            "feedback": "145 = 180 − 35 supplements — the theorem is a doubling, not a supplement: 70°."
+          }
+        ],
+        "fallbackFeedback": "2 × 35° = 70°."
+      },
+      "variant": {
+        "gen": "inscribed-angle",
+        "form": "arcFromAngle"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The animated figure's punchline is a theorem of its own: **every inscribed angle on the same arc is congruent** — slide the vertex anywhere along the major arc and the angle refuses to change, because it always halves the SAME arc. Photographers call it the viewing-angle circle; geometers call it free congruence.",
+      "figure": "cr-inscribed-theorem"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Same arc, same view.",
+      "conceptTag": "cr-inscribed",
+      "explanationVariants": [
+        "Both inscribed angles halve the same 80° arc — both are 40°, wherever the vertices sit.",
+        "Same arc ⇒ same inscribed measure: 40°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two inscribed angles open onto the same 80° arc from different points of the circle. The SECOND one measures ?",
+        "answer": 40,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 halves twice — the second vertex halves the same arc ONCE, exactly like the first: 40°."
+          },
+          {
+            "value": 80,
+            "feedback": "80° promotes it to a central angle — any vertex ON the circle takes half: 40°."
+          }
+        ],
+        "fallbackFeedback": "Same 80° arc, same half: 40°."
+      },
+      "variant": {
+        "gen": "inscribed-angle",
+        "form": "sameArc"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Set the angle at P — then move P and watch it refuse to change.",
+      "widget": {
+        "type": "circleAngleExplore",
+        "mode": "inscribed",
+        "targetAngle": 35,
+        "startArc": 110,
+        "prompt": "Make the angle at P read 35°. Then slide P right around the circle and watch what happens to it.",
+        "successFeedback": "An arc of 70° gives 35° at P — half. Now slide P: the angle does not move. Every point on that far arc sees AB at the same angle, and that invariance is the whole theorem.",
+        "lowFeedback": "The angle at P is still under 35°. It is half the arc, so the arc needs to open wider.",
+        "highFeedback": "The angle at P has overshot 35°. It is half the arc, so an arc past 70° is too much."
+      },
+      "predict": {
+        "prompt": "The arc starts at 110°. The inscribed angle that watches it measures…",
+        "options": [
+          {
+            "id": "half",
+            "label": "Half the arc (55°)"
+          },
+          {
+            "id": "same",
+            "label": "The same as the arc (110°)"
+          },
+          {
+            "id": "double",
+            "label": "Double the arc (220°)"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "It reads 55° — half. Only the CENTRAL angle matches its arc; every angle whose vertex sits on the circle gets exactly half, and dragging the arc will hold that ratio pinned."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move points on a circle while arc, central-angle, and inscribed-angle measures update together.",
+        "invariants": [
+          "central-angle-equals-intercepted-arc",
+          "inscribed-angle-half-intercepted-arc"
+        ],
+        "misconceptions": [
+          "inscribed-angle-equals-arc",
+          "vertex-location-irrelevant"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-inscribed"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot the inscribed angle.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which vertex placement makes an INSCRIBED angle (not central, not other)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Vertex on the circle, both sides chords of the circle",
+            "correct": true,
+            "feedback": "That's the definition — on the rim, opening onto an arc. (Distinct from cp's inscribed POLYGONS, whose every vertex sits on the circle.)"
+          },
+          {
+            "id": "o2",
+            "label": "Vertex at the center, sides two radii",
+            "correct": false,
+            "feedback": "Center vertex makes a CENTRAL angle — the one that equals its arc rather than halving it."
+          },
+          {
+            "id": "o3",
+            "label": "Vertex outside the circle, sides two secants",
+            "correct": false,
+            "feedback": "External vertices make a different species (later chapter) with its own arc formula — not inscribed."
+          },
+          {
+            "id": "o4",
+            "label": "Any angle drawn inside the circle's interior",
+            "correct": false,
+            "feedback": "Interior position isn't enough — the vertex must sit exactly ON the circle with chord sides."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Chase around the circle.",
+      "conceptTag": "cr-inscribed",
+      "hints": [
+        "Angle P halves arc QR — recover the arc first: 2 × 24.",
+        "The three arcs QR, RP, PQ fill 360°; arc RP is given as 142°.",
+        "Angle Q opens onto the arc it FACES: arc RP, the one not containing Q — given as 142°."
+      ],
+      "explanationVariants": [
+        "Angle Q halves the arc it faces: arc RP = 142° gives 71°. (Audit: arc QR = 48°, arc PQ = 170°, and 48 + 142 + 170 = 360 ✓.)",
+        "Angle Q = 142/2 = 71° — the arc between P and R, seen from Q."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle PQR is inscribed in a circle. Angle P = 24° and arc RP (not containing Q) = 142°. Find angle Q.",
+        "answer": 71,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24° copies angle P — angle Q halves its OWN arc, RP = 142°: 71°."
+          },
+          {
+            "value": 142,
+            "feedback": "142° is the ARC — the inscribed angle at Q takes half: 71°."
+          },
+          {
+            "value": 85,
+            "feedback": "85 = (360 − 48 − 142)/2 halves arc PQ — that's angle R's arc. Q faces arc RP: 71°."
+          }
+        ],
+        "fallbackFeedback": "Angle Q = arc RP ÷ 2 = 142/2 = 71°."
+      },
+      "variant": {
+        "gen": "inscribed-angle",
+        "form": "triangleArc"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Half, from anywhere.",
+      "takeaways": [
+        "Inscribed angle = half its arc = half the central angle on that arc.",
+        "Proof engine: radii make isosceles triangles; the exterior angle doubles at the center.",
+        "All inscribed angles on the same arc are congruent — the vertex may roam."
+      ],
+      "teaser": "Next: the most famous special case — what a DIAMETER looks like from the circle."
+    }
+  ]
+}

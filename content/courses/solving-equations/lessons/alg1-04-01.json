@@ -1,0 +1,338 @@
+{
+  "id": "alg1-04-01",
+  "slug": "solving-inequalities",
+  "title": "Solving Inequalities",
+  "courseId": "solving-equations",
+  "chapterId": "ch4-inequalities",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An inequality like **2x + 3 < 11** solves just like an equation: subtract 3 (2x < 8), divide by 2 (x < 4). The difference is the answer — not a single number but a whole **range**: every x below 4.",
+      "narration": "An inequality like two x plus three is less than eleven solves just like an equation: subtract three, giving two x less than eight, divide by two, giving x less than four. The difference is the answer — not a single number but a whole range: every x below four.",
+      "figure": "alg1-inequality-like-eq"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the solve.",
+      "conceptTag": "solve-inequality",
+      "widget": {
+        "type": "equationOutcomeLab",
+        "mode": "transform",
+        "answerMode": "sequence",
+        "prompt": "Solve 2x + 3 < 11. Drag the steps into order.",
+        "leftDisplay": "2x + 3",
+        "rightDisplay": "11",
+        "leftCoeff": 2,
+        "leftConstant": 3,
+        "rightCoeff": 0,
+        "rightConstant": 11,
+        "relation": "lt",
+        "variable": "x",
+        "choices": [],
+        "operations": [
+          {
+            "id": "s-sub",
+            "label": "subtract 3 → 2x < 8",
+            "kind": "addConstant",
+            "value": -3,
+            "feedback": "Same moves as an equation: subtract 3, divide by 2 — the < carries along."
+          },
+          {
+            "id": "s-div",
+            "label": "divide by 2 → x < 4",
+            "kind": "scale",
+            "value": 0.5,
+            "feedback": "Dividing first splits the 3 too. Undo the +3 first, exactly as with an equation: 2x < 8, then divide."
+          },
+          {
+            "id": "s-read",
+            "label": "read the range: all x below 4",
+            "kind": "normalize",
+            "feedback": "Same moves as an equation: subtract 3, divide by 2 — the < carries along."
+          }
+        ],
+        "correctOrder": [
+          "s-sub",
+          "s-div",
+          "s-read"
+        ],
+        "requiredMoves": 3,
+        "numericErrors": [],
+        "tolerance": 0,
+        "explorationFeedback": "Apply the same legal operation to both sides and inspect how the variable and constants move.",
+        "fallbackFeedback": "Same moves as an equation: subtract 3, divide by 2 — the < carries along.",
+        "successFeedback": "Subtract, divide, read the range — x < 4."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the boundary.",
+      "conceptTag": "solve-inequality",
+      "explanationVariants": [
+        "2x + 3 < 11 → 2x < 8 → x < 4. The boundary value is 4.",
+        "Solve like an equation to find where it tips: x = 4 is the edge, and the solution is everything below it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "2x + 3 < 11 becomes x < ?. What's the boundary number?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That divided before subtracting: 11 ÷ 2 then... undo the +3 FIRST: 2x < 8, so x < 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is 2x's bound, not x's — divide by 2: x < 4."
+          }
+        ],
+        "fallbackFeedback": "2x < 8, so x < 4 — the boundary is 4."
+      },
+      "hints": [
+        "Solve it like an equation.",
+        "2x < 8.",
+        "x < 4 — boundary 4."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "solve-inequality__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "solution-ray",
+      "body": "The range draws as a **ray** on a number line. For x > 5, an **open circle** sits at 5 (5 itself isn't included) and the arrow runs right through every larger number. A `<` or `>` uses an open circle; `≤` or `≥` fills it in.",
+      "narration": "The range draws as a ray on a number line. For x greater than five, an open circle sits at five — five itself isn't included — and the arrow runs right through every larger number. A less-than or greater-than uses an open circle; less-or-equal or greater-or-equal fills it in."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each inequality to its graph.",
+      "conceptTag": "solve-inequality",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each solution to how it's drawn.",
+        "left": [
+          {
+            "id": "g1",
+            "label": "x > 5"
+          },
+          {
+            "id": "g2",
+            "label": "x ≤ 5"
+          },
+          {
+            "id": "g3",
+            "label": "x < 5"
+          }
+        ],
+        "right": [
+          {
+            "id": "d1",
+            "label": "open circle at 5, arrow right"
+          },
+          {
+            "id": "d2",
+            "label": "filled circle at 5, arrow left"
+          },
+          {
+            "id": "d3",
+            "label": "open circle at 5, arrow left"
+          }
+        ],
+        "pairs": {
+          "g1": "d1",
+          "g2": "d2",
+          "g3": "d3"
+        },
+        "pairErrors": [
+          {
+            "left": "g2",
+            "right": "d3",
+            "feedback": "x ≤ 5 INCLUDES 5, so the circle is filled — and 'less than' points left. Open-left is x < 5."
+          },
+          {
+            "left": "g1",
+            "right": "d3",
+            "feedback": "x > 5 points RIGHT (bigger numbers). Open-left is x < 5."
+          }
+        ],
+        "missFeedback": "Open circle for < or >, filled for ≤ or ≥; arrow points toward the allowed numbers.",
+        "successFeedback": "Three ranges, three correct rays!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Open or filled?",
+      "conceptTag": "solve-inequality",
+      "explanationVariants": [
+        "x ≥ 3 includes 3 itself, so its circle is filled (solid).",
+        "The 'or equal to' part means 3 is allowed — fill the circle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How is the endpoint of x ≥ 3 drawn?",
+        "options": [
+          {
+            "id": "a",
+            "label": "filled circle at 3",
+            "correct": true,
+            "feedback": "Yes — ≥ includes 3, so the circle is solid."
+          },
+          {
+            "id": "b",
+            "label": "open circle at 3",
+            "feedback": "Open circles are for strict < or >. Since ≥ includes 3, fill it in."
+          },
+          {
+            "id": "c",
+            "label": "no circle, just an arrow",
+            "feedback": "The endpoint always gets a circle — filled here, because 3 is included."
+          }
+        ]
+      },
+      "hints": [
+        "Does ≥ include the number itself?",
+        "Yes — 3 is allowed.",
+        "Filled circle."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "solve-inequality__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which way does it point?",
+      "conceptTag": "solve-inequality",
+      "explanationVariants": [
+        "x < 4 means every number below 4, so the ray points left from an open circle at 4.",
+        "'Less than' → smaller numbers → arrow left."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The graph of x < 4 has its arrow pointing which way?",
+        "options": [
+          {
+            "id": "a",
+            "label": "left, from an open circle at 4",
+            "correct": true,
+            "feedback": "Yes — smaller-than-4 values lie to the left, and 4 is excluded (open)."
+          },
+          {
+            "id": "b",
+            "label": "right, from an open circle at 4",
+            "feedback": "Right means bigger than 4 — that's x > 4. 'Less than' points left."
+          },
+          {
+            "id": "c",
+            "label": "left, from a filled circle at 4",
+            "feedback": "x < 4 is strict — 4 isn't included, so the circle is open, not filled."
+          }
+        ]
+      },
+      "hints": [
+        "Less than = smaller numbers.",
+        "Smaller is to the left.",
+        "Open circle, arrow left."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "solve-inequality__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve and describe the ray!",
+      "conceptTag": "solve-inequality",
+      "explanationVariants": [
+        "4x + 1 ≤ 13 → 4x ≤ 12 → x ≤ 3. Boundary 3, filled circle, arrow left.",
+        "Solve like an equation: x ≤ 3 — everything up to and including 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "4x + 1 ≤ 13 becomes x ≤ ?. What's the boundary number?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is 4x's bound — divide by 4: x ≤ 3."
+          },
+          {
+            "value": 4,
+            "feedback": "That divided 13 by 4 without subtracting 1 first. Undo +1: 4x ≤ 12, so x ≤ 3."
+          }
+        ],
+        "fallbackFeedback": "4x ≤ 12, so x ≤ 3 — the boundary is 3."
+      },
+      "hints": [
+        "Subtract 1 first.",
+        "4x ≤ 12.",
+        "x ≤ 3 — boundary 3."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "solve-inequality__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Inequalities solve like equations!",
+      "takeaways": [
+        "Use the same moves; the < or > carries along.",
+        "The answer is a range, drawn as a ray.",
+        "Open circle for < >, filled for ≤ ≥."
+      ],
+      "teaser": "next: the one move that FLIPS the sign."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "solve-inequality",
+      "concept": {
+        "id": "rem-si-c",
+        "kind": "concept",
+        "body": "Slow it down with x + 2 < 5. Subtract 2 from both sides: x < 3. Just like an equation — the < stays put. Every number below 3 works: try 0 (0 + 2 = 2 < 5 ✓).",
+        "narration": "Slow it down with x plus two less than five. Subtract two from both sides: x less than three. Just like an equation — the less-than stays put. Every number below three works: try zero, zero plus two is two, less than five."
+      },
+      "check": {
+        "id": "rem-si-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "solve-inequality",
+        "explanationVariants": [
+          "x + 2 < 5 → subtract 2 → x < 3. Boundary 3.",
+          "Undo the +2: x < 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "x + 2 < 5 becomes x < ?. What's the boundary?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "That added 2 instead of subtracting: 5 + 2. Undo the +2 by subtracting: x < 3."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is the right side before subtracting. Take away 2: x < 3."
+            }
+          ],
+          "fallbackFeedback": "Subtract 2: x < 3."
+        }
+      }
+    }
+  ]
+}

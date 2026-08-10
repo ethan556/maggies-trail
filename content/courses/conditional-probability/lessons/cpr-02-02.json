@@ -1,0 +1,347 @@
+{
+  "id": "cpr-02-02",
+  "slug": "two-way-tables-joint-marginal",
+  "title": "Two-Way Tables: Joint and Marginal",
+  "courseId": "conditional-probability",
+  "chapterId": "ch2-addition-rule-and-tables",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A two-way table sorts one group by **two questions at once**. Each of the 200 students lands in exactly one inner cell, so the four inner cells add to 200. The edge totals are just those cells summed along a row or a column.\n\nYou met these tables in Grade 8. Now every count in one becomes a probability: divide by the grand total.",
+      "figure": "cpr-two-way-table"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read one inner cell.",
+      "conceptTag": "cpr-joint-prob",
+      "explanationVariants": [
+        "The bus-and-sport cell holds 40 students, and the grand total is 200, so P = 40/200 = 0.20.",
+        "20% of the whole class is in that one cell — one cell out of four, but the cells are not equal in size, so you must use its actual count."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(takes the bus **and** plays a sport). Give a decimal.",
+        "answer": 0.2,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.4,
+            "feedback": "That is 40/100 — you divided by the bus row instead of the whole group. A joint probability always divides by the grand total, 200."
+          },
+          {
+            "value": 0.364,
+            "feedback": "That is 40/110 — dividing by the sport column. For a joint probability the denominator is everyone: 200."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(bus), the whole row. The question asks for students who are in the bus row AND the sport column: the single cell where they cross."
+          }
+        ],
+        "fallbackFeedback": "One cell, divided by everyone: 40/200 = 0.20."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-joint-prob__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two names for two shapes:\n\n**Joint** probability — one inner cell over the total. P(bus and sport) = 40/200.\n\n**Marginal** probability — a whole edge total over the total. P(sport) = 110/200.\n\nSame denominator, different shaded region. Marginals ignore the second question entirely.",
+      "figure": "cpr-joint-vs-marginal"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now read an edge.",
+      "conceptTag": "cpr-marginal-prob",
+      "explanationVariants": [
+        "The sport column totals 40 + 70 = 110, so P(sport) = 110/200 = 0.55.",
+        "Ignore the travel question completely. Of 200 students, 110 play a sport — that is 55%."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(plays a sport). Give a decimal.",
+        "answer": 0.55,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.2,
+            "feedback": "That is the joint cell 40/200 — bus riders who play a sport. The marginal also counts the 70 walkers who play."
+          },
+          {
+            "value": 0.35,
+            "feedback": "That is 70/200, the walkers who play. Add the 40 bus riders who play as well: 110 of 200."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is 90/200 — the *no sport* column. The two columns are complements, so a slip here flips the event."
+          }
+        ],
+        "fallbackFeedback": "Sum the whole sport column: 40 + 70 = 110, so 110/200 = 0.55."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-marginal-prob__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One square per student — 200 of them.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the students who take the bus **and** play a sport.",
+        "rows": 10,
+        "cols": 20,
+        "targetNum": 1,
+        "targetDen": 5,
+        "start": 0,
+        "successFeedback": "40 of 200 squares — one fifth. That single inner cell is the joint probability P(bus and sport) = 0.20.",
+        "lowFeedback": "Fewer than 40 squares. The bus-and-sport cell holds 40 of the 200 students.",
+        "highFeedback": "More than 40 squares — that is drifting toward a whole row (100) or column (110), which would be a marginal, not a joint."
+      },
+      "predict": {
+        "prompt": "You'll shade 1/5 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 2.5/5 here — and 1 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-marginal-prob"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Name the shape.",
+      "conceptTag": "cpr-marginal-prob",
+      "explanationVariants": [
+        "A marginal probability collapses one question away and uses an edge total: P(walks) = 100/200.",
+        "Joint statements contain an \"and\" joining both questions. Marginal statements mention only one of the two questions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these is a **marginal** probability?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "P(walks) = 100/200",
+            "correct": true,
+            "feedback": "Right — it uses a whole edge total and says nothing about sport, so one question has been collapsed away."
+          },
+          {
+            "id": "o2",
+            "label": "P(walks and no sport) = 30/200",
+            "feedback": "Both questions are pinned down, so this is one inner cell: a joint probability."
+          },
+          {
+            "id": "o3",
+            "label": "P(bus and sport) = 40/200",
+            "feedback": "The \"and\" is the giveaway — two questions answered at once means one inner cell, which is joint."
+          },
+          {
+            "id": "o4",
+            "label": "P(sport, among bus riders) = 40/100",
+            "feedback": "That divides by 100, not 200 — it is a conditional probability, restricted to the bus row. That is the next chapter."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-marginal-prob__mcq"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Match each statement to its fraction.",
+      "conceptTag": "cpr-joint-prob",
+      "explanationVariants": [
+        "Joint statements pick one inner cell; marginal statements pick a whole edge. Every fraction here is over the grand total, 200.",
+        "Bus is a row total (100). No-sport is a column total (90). Walks-and-sport is the single cell where that row meets that column (70)."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each probability to the count above 200.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "P(takes the bus)"
+          },
+          {
+            "id": "w2",
+            "label": "P(no sport)"
+          },
+          {
+            "id": "w3",
+            "label": "P(walks and plays a sport)"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "100/200"
+          },
+          {
+            "id": "y2",
+            "label": "90/200"
+          },
+          {
+            "id": "y3",
+            "label": "70/200"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y3",
+            "feedback": "70 is the walkers who play — one inner cell. P(bus) is the whole bus row: 40 + 60 = 100."
+          },
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "100 is a row total (bus). The no-sport column totals 60 + 30 = 90."
+          }
+        ],
+        "missFeedback": "Rows total 100 and 100; columns total 110 and 90; inner cells are 40, 60, 70, 30.",
+        "successFeedback": "Two edges and one cell — you can now read any joint or marginal probability straight off the table."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-joint-prob__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rebuild a missing cell.",
+      "conceptTag": "cpr-joint-prob",
+      "hints": [
+        "You are told a column total and one of the two cells inside it. The column has only two cells.",
+        "The no-sport column totals 90, and 30 of those students walk. Everyone else in that column takes the bus.",
+        "So the bus-and-no-sport cell holds 90 − 30 = 60. Now divide by the grand total, 200."
+      ],
+      "explanationVariants": [
+        "The no-sport column is 90, of which 30 walk, so 60 take the bus. P(bus and no sport) = 60/200 = 0.30.",
+        "Work along the bus row instead: it totals 100, and 40 of those play a sport, so 60 do not — the same cell, 60/200 = 0.30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You are told only this: 200 students, 90 play no sport, 30 of those 90 walk, and 100 take the bus. Find **P(takes the bus and plays no sport)**.",
+        "answer": 0.3,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.667,
+            "feedback": "That is 60/90 — dividing by the no-sport column. That is a conditional probability; a joint one divides by all 200."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is 90/200, the marginal P(no sport). The question asks for the bus riders inside that column, which is 90 − 30 = 60."
+          },
+          {
+            "value": 0.15,
+            "feedback": "That is 30/200 — the walkers with no sport. The bus riders in that column are the other 60."
+          }
+        ],
+        "fallbackFeedback": "90 − 30 = 60 bus riders play no sport, so 60/200 = 0.30."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-joint-prob__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One table, two kinds of probability.",
+      "takeaways": [
+        "Joint = one inner cell ÷ grand total. It answers both questions at once.",
+        "Marginal = one edge total ÷ grand total. It ignores the other question.",
+        "Every cell and every edge shares the same denominator, so the four inner cells sum to 1."
+      ],
+      "teaser": "Next: what changes when the denominator stops being everybody."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-joint-prob",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "A joint probability answers **both** questions at once, so it lives in a single inner cell — never a row, never a column. Its denominator is always the grand total, because the student could have landed anywhere in the table.",
+        "figure": "cpr-two-way-table"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Point at the cell.",
+        "conceptTag": "cpr-joint-prob",
+        "explanationVariants": [
+          "Walks and no sport is the bottom-right inner cell: 30 students out of 200, so 0.15.",
+          "The walk row is 100 and 70 of them play, leaving 30 who do not — 30/200 = 0.15."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "From the same table: P(walks **and** plays no sport). Give a decimal.",
+          "answer": 0.15,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.3,
+              "feedback": "That is 30/100 — dividing by the walk row. A joint probability divides by everyone: 200."
+            },
+            {
+              "value": 0.45,
+              "feedback": "That is the whole no-sport column, 90/200. Only the walkers inside it count here: 30."
+            }
+          ],
+          "fallbackFeedback": "The bottom-right cell holds 30 students: 30/200 = 0.15."
+        }
+      }
+    }
+  ]
+}

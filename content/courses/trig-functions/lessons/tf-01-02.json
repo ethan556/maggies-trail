@@ -1,0 +1,239 @@
+{
+  "id": "tf-01-02",
+  "slug": "solving-for-sides",
+  "title": "Solving for Sides",
+  "courseId": "trig-functions",
+  "chapterId": "ch1-right-triangle-trig",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Know an angle and one side? A ratio hands you the others. Pick the ratio that links the side you KNOW to the side you WANT. Hypotenuse 20, θ = 30°, want the opposite: sine links them — sin 30° = opp/20, so opp = 20 · sin 30° = 20 · 0.5 = 10. Known hypotenuse ⇒ multiply.",
+      "figure": "tf-find-others"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiply out.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "ratios",
+        "ratio": "opp/hyp",
+        "a": 6,
+        "b": 6,
+        "target": 30,
+        "start": 55,
+        "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "Hypotenuse 20, θ = 30°. Drag to 30° and read opp/hyp, then use it to find the opposite side.",
+        "successFeedback": "opp/hyp = 0.5 at 30°, so the opposite side is 0.5 × 20 = 10. Solving for a side is always this: the ratio is fixed by the angle, and the hypotenuse scales it.",
+        "lowFeedback": "Under 30° — opp/hyp reads below 0.5.",
+        "highFeedback": "Over 30° — opp/hyp reads above 0.5.",
+        "scaleFeedback": "Resize the triangle a couple of times first; the ratio must hold at every size for the method to work."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The ramp's rise.",
+      "conceptTag": "tf-solve-sides",
+      "explanationVariants": [
+        "The 8 m ramp is the hypotenuse and the rise is opposite the 30° angle: rise = 8 · sin 30° = 4 m.",
+        "SOH links the known hypotenuse to the wanted opposite."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An 8 m ramp meets the ground at 30°. How high does it rise, in meters? (sin 30° = 0.5)",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is 8 ÷ 0.5 — divided, and a rise taller than the ramp itself is impossible. Multiply: 8 · 0.5 = 4."
+          },
+          {
+            "value": 6.93,
+            "feedback": "6.93 is 8 · cos 30° — the horizontal RUN along the ground. The rise is the opposite side: 8 · sin 30° = 4."
+          }
+        ],
+        "fallbackFeedback": "rise = 8 · sin 30° = 4 m."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-solve-sides__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Flip the knowns and the operation flips. If the OPPOSITE is known and the hypotenuse is wanted, sin θ = opp/hyp rearranges to **hyp = opp / sin θ** — divide. Sanity check every answer: the hypotenuse is the longest side, so it must come out BIGGER than the known leg.",
+      "figure": "tf-flip-operation"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Divide out.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The side opposite a 30° angle is 9. Find the hypotenuse. (Round to hundredths if needed.)",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4.5,
+            "feedback": "4.5 is 9 · 0.5 — multiplied, and it FAILS the sanity check: the hypotenuse can't be shorter than a leg. Divide: 9/0.5 = 18."
+          },
+          {
+            "value": 10.39,
+            "feedback": "10.39 is 9 ÷ cos 30° — cosine pairs the ADJACENT with the hypotenuse. The known side is opposite, so sine: 9/0.5 = 18."
+          }
+        ],
+        "fallbackFeedback": "hyp = opp/sin θ = 9/0.5 = 18 — longer than 9, as it must be."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Kite altitude.",
+      "conceptTag": "tf-solve-sides",
+      "explanationVariants": [
+        "The 50 ft string is the hypotenuse; height = 50 · sin 60° ≈ 43.3 ft.",
+        "Known hypotenuse, wanted opposite — multiply by sine."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A kite flies on a 50 ft string at a 60° angle of elevation. How high is the kite, in feet? (Round to tenths.)",
+        "answer": 43.3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is 50 · cos 60° — the horizontal distance DOWNRANGE, not the height. Height is opposite the angle: 50 · sin 60° ≈ 43.3."
+          },
+          {
+            "value": 57.74,
+            "feedback": "57.74 is 50 ÷ sin 60° — divided, making the kite higher than the string is long. With the hypotenuse known, multiply: ≈ 43.3."
+          }
+        ],
+        "fallbackFeedback": "50 · sin 60° ≈ 43.3 ft."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-solve-sides__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Choosing the ratio is a matching game: **which two sides are in play?** Opposite-and-hypotenuse → sine. Adjacent-and-hypotenuse → cosine. Opposite-and-adjacent → tangent — the go-to whenever the hypotenuse isn't part of the story at all.",
+      "figure": "tf-choose-ratio"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "No hypotenuse in sight.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tree casts a 15 m shadow when the sun's elevation is 45°. How tall is the tree, in meters? (tan 45° = 1)",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21.21,
+            "feedback": "21.21 is 15 ÷ cos 45° — that computes the slanted sun-ray distance, a hypotenuse the question never asked about. Height = shadow · tan 45° = 15."
+          },
+          {
+            "value": 7.5,
+            "feedback": "7.5 halves the shadow — but tan 45° = 1, not 0.5. Height = 15 · 1 = 15: a 45° sun makes height equal shadow."
+          }
+        ],
+        "fallbackFeedback": "height = 15 · tan 45° = 15 m."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Measuring a building.",
+      "conceptTag": "tf-solve-sides",
+      "explanationVariants": [
+        "Height = 24 · tan 30° ≈ 24 · 0.5774 ≈ 13.86 m — opposite = adjacent × tan.",
+        "The known 24 m is the ADJACENT (along the ground); the wanted height is OPPOSITE — tangent's exact pair."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From a point 24 m away from a building's base, the angle of elevation to the top is 30°. How tall is the building, in meters? (Round to hundredths.)",
+        "answer": 13.86,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 41.57,
+            "feedback": "41.57 is 24 ÷ tan 30° — divided. The height is the OPPOSITE side and the 24 is adjacent: height = 24 · tan 30° ≈ 13.86."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is 24 · 0.5 — sin 30°'s value borrowed for tangent. tan 30° ≈ 0.5774, so height ≈ 13.86."
+          }
+        ],
+        "fallbackFeedback": "24 · tan 30° ≈ 13.86 m."
+      },
+      "hints": [
+        "The hypotenuse never appears — the ground distance and the height are the two legs.",
+        "tan 30° = height/24 — solve for the height.",
+        "Multiply: 24 · 0.5774 — round to hundredths."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-solve-sides__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Link known to wanted.",
+      "takeaways": [
+        "Pick the ratio whose two sides are the known one and the wanted one.",
+        "Known hypotenuse ⇒ multiply; wanted hypotenuse ⇒ divide — and sanity-check its length.",
+        "No hypotenuse in the story ⇒ tangent."
+      ],
+      "teaser": "Next: the reverse problem — the sides are known and the ANGLE is missing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-solve-sides",
+      "concept": {
+        "id": "rem-tf0102-c",
+        "kind": "concept",
+        "body": "The simplest solve, start to finish. Hypotenuse 10, angle 30°, want the opposite. Sine links them: sin 30° = opp/10, so opp = 10 · 0.5 = 5. Known hypotenuse means multiply — and 5 is properly shorter than 10."
+      },
+      "check": {
+        "id": "rem-tf0102-k",
+        "kind": "check",
+        "body": "One clean multiply.",
+        "conceptTag": "tf-solve-sides",
+        "explanationVariants": [
+          "opp = 10 · sin 30° = 5.",
+          "Legs are always shorter than the hypotenuse — 5 < 10 checks out."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Hypotenuse 10, θ = 30°. Find the opposite side. (sin 30° = 0.5)",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 20,
+              "feedback": "20 is 10 ÷ 0.5 — divided, making a leg LONGER than the hypotenuse. Multiply: 10 · 0.5 = 5."
+            },
+            {
+              "value": 8.66,
+              "feedback": "8.66 is 10 · cos 30° — the adjacent side. The opposite uses sine: 10 · 0.5 = 5."
+            }
+          ],
+          "fallbackFeedback": "10 · 0.5 = 5."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "id": "g7-02-01",
+  "slug": "radius-diameter-and-pi",
+  "title": "Radius, Diameter, and π",
+  "courseId": "geometry-g7",
+  "chapterId": "ch2-circles",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A circle has two key lengths. The **radius** r runs from the center to the edge; the **diameter** d crosses the whole circle through the center. The diameter is always **twice** the radius: d = 2r.",
+      "figure": "circle-parts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Radius to diameter.",
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "radiusScale",
+        "radius": 5,
+        "targetRadius": 5,
+        "radiusMax": 10,
+        "askQuantity": "diameter",
+        "prompt": "Drag the radius until the DIAMETER reads 10. Watch what the other two measures do on the way.",
+        "successFeedback": "Radius 5, diameter 10 — the diameter is always exactly twice the radius, which is why C = πd and C = 2πr are the same formula wearing different clothes.",
+        "lowFeedback": "The diameter is still under 10 — pull the radius outward.",
+        "highFeedback": "The diameter has passed 10 — ease the radius back in."
+      },
+      "predict": {
+        "prompt": "The diameter of a circle, compared with its radius, is…?",
+        "options": [
+          {
+            "id": "double",
+            "label": "Double it"
+          },
+          {
+            "id": "half",
+            "label": "Half of it"
+          },
+          {
+            "id": "pi",
+            "label": "π times it"
+          }
+        ],
+        "outcomeId": "double",
+        "reveal": "The diameter walks the whole way across through the center — a radius out and a radius back. Two radii, every time."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The number **π** (about 3.14) is the circle's built-in ratio: every circle's distance around is π times its diameter. Big or small, that ratio never changes — that's what makes π special.",
+      "figure": "g7-pi-ratio"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Diameter to radius.",
+      "conceptTag": "g7-circle-parts",
+      "explanationVariants": [
+        "The radius is half the diameter: 8 ÷ 2 = 4.",
+        "r = d ÷ 2 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has diameter 8. What is its radius?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That doubled it — the radius is HALF the diameter: 8 ÷ 2 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "That's the diameter — the radius is half: 4."
+          }
+        ],
+        "fallbackFeedback": "r = d ÷ 2 = 8 ÷ 2 = 4."
+      },
+      "variant": {
+        "gen": "g7-circle-parts"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "What π means.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does the number π tell you about every circle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The distance around is π times the diameter",
+            "correct": true,
+            "feedback": "Right — π is the around-to-across ratio, the same for every circle."
+          },
+          {
+            "id": "b",
+            "label": "Every circle has radius π",
+            "correct": false,
+            "feedback": "Circles come in all sizes — π is the RATIO of circumference to diameter, not a radius."
+          },
+          {
+            "id": "c",
+            "label": "π only works for big circles",
+            "correct": false,
+            "feedback": "π is the same for EVERY circle, big or small — that's what makes it special."
+          },
+          {
+            "id": "d",
+            "label": "π is exactly 3",
+            "correct": false,
+            "feedback": "π is about 3.14 (and its digits go on forever) — a bit more than 3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the parts.",
+      "conceptTag": "g7-circle-parts",
+      "explanationVariants": [
+        "Center-to-edge is the radius; edge-to-edge through the center is the diameter; the distance around is the circumference.",
+        "Radius: center to edge. Diameter: across through the center. Circumference: around."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each circle part to its description.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "radius"
+          },
+          {
+            "id": "l2",
+            "label": "diameter"
+          },
+          {
+            "id": "l3",
+            "label": "circumference"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "center to edge"
+          },
+          {
+            "id": "r2",
+            "label": "across, through the center"
+          },
+          {
+            "id": "r3",
+            "label": "distance around"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r2",
+          "l3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "l1",
+            "right": "r2",
+            "feedback": "Across through the center is the DIAMETER — the radius stops at the center."
+          }
+        ],
+        "missFeedback": "Not quite — radius reaches the center, diameter crosses through it, circumference wraps around.",
+        "successFeedback": "All matched — radius to the center, diameter across, circumference around."
+      },
+      "variant": {
+        "gen": "g7-circle-parts",
+        "form": "matchCircleParts"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Twice as far.",
+      "conceptTag": "g7-circle-parts",
+      "explanationVariants": [
+        "A radius of 7 gives a diameter of 2 × 7 = 14.",
+        "d = 2r = 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 7. What is its diameter?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That's the radius — double it for the diameter: 14."
+          },
+          {
+            "value": 49,
+            "feedback": "That squared it — just double: 2 × 7 = 14."
+          }
+        ],
+        "fallbackFeedback": "d = 2r = 2 × 7 = 14."
+      },
+      "variant": {
+        "gen": "g7-circle-parts",
+        "form": "radiusToDiameter"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "From diameter to radius, twice.",
+      "conceptTag": "g7-circle-parts",
+      "explanationVariants": [
+        "The big circle's radius is 20 ÷ 2 = 10; the small one's is 6 ÷ 2 = 3; difference 10 − 3 = 7.",
+        "Halve each diameter (10 and 3), then subtract: 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A big circle has diameter 20 and a small circle has diameter 6. How much longer is the big circle's radius?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That's the diameter difference — halve each FIRST: 10 − 3 = 7."
+          },
+          {
+            "value": 10,
+            "feedback": "That's just the big radius — subtract the small one: 10 − 3 = 7."
+          }
+        ],
+        "fallbackFeedback": "Radii: 20 ÷ 2 = 10 and 6 ÷ 2 = 3. Difference: 7."
+      },
+      "hints": [
+        "Find each radius by halving each diameter.",
+        "Radii: 10 and 3.",
+        "Subtract: 10 − 3 = 7."
+      ],
+      "variant": {
+        "gen": "g7-circle-parts",
+        "form": "radiusDifference"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The diameter doubles the radius, and π is every circle's around-to-across ratio.",
+      "takeaways": [
+        "d = 2r and r = d ÷ 2.",
+        "π ≈ 3.14 is the same ratio for every circle.",
+        "Radius: center to edge. Diameter: across. Circumference: around."
+      ],
+      "teaser": "Next: computing the circumference."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g7-circle-parts",
+      "concept": {
+        "id": "rem-g70201-c",
+        "kind": "concept",
+        "body": "The radius runs center-to-edge; the diameter crosses the whole circle through the center, so d = 2r and r = d ÷ 2. π ≈ 3.14 is every circle's around-to-across ratio."
+      },
+      "check": {
+        "id": "rem-g70201-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g7-circle-parts",
+        "explanationVariants": [
+          "The radius is half of 12: 6.",
+          "r = d ÷ 2 = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A circle has diameter 12. What is its radius?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 24,
+              "feedback": "That doubled it — the radius is HALF: 12 ÷ 2 = 6."
+            },
+            {
+              "value": 12,
+              "feedback": "That's the diameter — halve it: 6."
+            }
+          ],
+          "fallbackFeedback": "r = 12 ÷ 2 = 6."
+        }
+      }
+    }
+  ]
+}

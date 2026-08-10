@@ -1,0 +1,330 @@
+{
+  "id": "rno-01-02",
+  "slug": "adding-different-sign-integers",
+  "title": "Adding Different-Sign Integers",
+  "courseId": "rational-number-operations",
+  "chapterId": "ch1-adding-integers",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "integer-jump",
+      "body": "Adding numbers with **different signs**: subtract the smaller magnitude from the larger, and keep the sign of the number with the bigger magnitude. -4 + 9: 9−4=5, and 9 is bigger (positive), so the answer is 5."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "One positive chip and one negative chip make a zero pair — together they're worth nothing. Whatever chips survive the cancelling is the sum.",
+      "widget": {
+        "type": "integerChips",
+        "prompt": "Build a sum of −3 with chips.",
+        "target": -3,
+        "maxPos": 10,
+        "maxNeg": 10,
+        "posStart": 0,
+        "negStart": 0,
+        "successFeedback": "That's −3 — each + and − pair cancels to zero, and the leftover negatives are the answer.",
+        "lowFeedback": "Your total is below −3. Add positives to cancel some negatives, or remove negatives.",
+        "highFeedback": "Your total is above −3. Add negatives, or remove some positives."
+      },
+      "predict": {
+        "prompt": "You'll mix + and − chips to build −3. One (+) chip and one (−) chip together are worth…",
+        "options": [
+          {
+            "id": "zero",
+            "label": "0 — they cancel"
+          },
+          {
+            "id": "negtwo",
+            "label": "−2"
+          },
+          {
+            "id": "two",
+            "label": "+2"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "An opposite pair annihilates: +1 and −1 make 0. That's the engine of different-sign addition — in 5 + (−8), five pairs vanish and three − chips are left standing: −3."
+      },
+      "conceptTag": "rno-add-diff-sign",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents add diff sign.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add diff sign must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add diff sign."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rational-number-operations:rno-add-diff-sign",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Add a negative and a bigger positive.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-4 + 9 = ?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "That adds the magnitudes instead of subtracting. Different signs: 9−4=5, keep the sign of the bigger one (positive): 5."
+          },
+          {
+            "value": -5,
+            "feedback": "9 has the bigger magnitude and it's positive, so the answer is positive: 5."
+          }
+        ],
+        "fallbackFeedback": "9−4=5, and 9 (positive) has the bigger magnitude, so the answer is 5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The negative wins this time.",
+      "conceptTag": "rno-add-diff-sign",
+      "explanationVariants": [
+        "7−3=4, and 7 (negative) has the bigger magnitude, so the answer is -4.",
+        "Subtract magnitudes, keep the sign of the bigger one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-7 + 3 = ?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "-7 has the bigger magnitude, so the answer stays negative: -4."
+          },
+          {
+            "value": -10,
+            "feedback": "That adds the magnitudes instead of subtracting. Different signs: 7−3=4, keep the sign of the bigger one: -4."
+          }
+        ],
+        "fallbackFeedback": "7−3=4, and -7 has the bigger magnitude, so the answer is -4."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "diffNeg"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "On the number line, different-sign addition means jumping in OPPOSITE directions — the bigger jump determines which direction you end up on.",
+      "figure": "integer-jump"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A bigger different-sign sum.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-12 + 20 = ?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 32,
+            "feedback": "That adds the magnitudes instead of subtracting. Different signs: 20−12=8, keep the sign of the bigger one (positive): 8."
+          },
+          {
+            "value": -8,
+            "feedback": "20 has the bigger magnitude and it's positive, so the answer is positive: 8."
+          }
+        ],
+        "fallbackFeedback": "20−12=8, and 20 (positive) has the bigger magnitude, so the answer is 8."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "When the magnitudes are equal, the two jumps cancel out completely — the answer is always 0.",
+      "figure": "rno-opposites-cancel"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Equal and opposite.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-6 + 6 = ?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "These are opposites — they cancel out completely: -6+6=0, not 12."
+          },
+          {
+            "value": -12,
+            "feedback": "These are opposites — they cancel out completely: -6+6=0."
+          }
+        ],
+        "fallbackFeedback": "-6 and 6 are opposites; they cancel to 0."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another different-sign sum.",
+      "conceptTag": "rno-add-diff-sign",
+      "explanationVariants": [
+        "15−9=6, and 15 (negative) has the bigger magnitude, so the answer is -6.",
+        "Subtract magnitudes, keep the sign of the bigger one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-15 + 9 = ?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "-15 has the bigger magnitude, so the answer stays negative: -6."
+          },
+          {
+            "value": -24,
+            "feedback": "That adds the magnitudes instead of subtracting. Different signs: 15−9=6, keep the sign of the bigger one: -6."
+          }
+        ],
+        "fallbackFeedback": "15−9=6, and -15 has the bigger magnitude, so the answer is -6."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "diffNegLarge"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Positive wins this time.",
+      "conceptTag": "rno-add-diff-sign",
+      "explanationVariants": [
+        "14−5=9, and 14 (positive) has the bigger magnitude, so the answer is 9.",
+        "Subtract magnitudes, keep the sign of the bigger one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-5 + 14 = ?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 19,
+            "feedback": "That adds the magnitudes instead of subtracting. Different signs: 14−5=9, keep the sign of the bigger one (positive): 9."
+          },
+          {
+            "value": -9,
+            "feedback": "14 has the bigger magnitude and it's positive, so the answer is positive: 9."
+          }
+        ],
+        "fallbackFeedback": "14−5=9, and 14 (positive) has the bigger magnitude, so the answer is 9."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "diffPos"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier different-sign sum.",
+      "conceptTag": "rno-add-diff-sign",
+      "explanationVariants": [
+        "23−17=6, and 23 (negative) has the bigger magnitude, so the answer is -6.",
+        "Subtract magnitudes, keep the sign of the bigger one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-23 + 17 = ?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "-23 has the bigger magnitude, so the answer stays negative: -6."
+          },
+          {
+            "value": -40,
+            "feedback": "That adds the magnitudes instead of subtracting. Different signs: 23−17=6, keep the sign of the bigger one: -6."
+          }
+        ],
+        "fallbackFeedback": "23−17=6, and -23 has the bigger magnitude, so the answer is -6."
+      },
+      "hints": [
+        "The signs are different, so subtract the magnitudes: 23−17.",
+        "23−17 = 6.",
+        "-23 has the bigger magnitude, so the answer is -6."
+      ],
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "diffChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Different-sign addition: subtract the magnitudes, keep the sign of the bigger one.",
+      "takeaways": [
+        "Subtract the smaller magnitude from the larger.",
+        "Keep the sign of whichever number has the bigger magnitude.",
+        "Opposites (same magnitude, different sign) always sum to 0."
+      ],
+      "teaser": "next chapter: subtracting integers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rno-add-diff-sign",
+      "concept": {
+        "id": "rem-rads-c",
+        "kind": "concept",
+        "body": "When adding numbers with different signs, subtract the smaller magnitude from the larger, and keep the sign of the bigger-magnitude number. -4 + 9: 9−4=5, keep positive: 5."
+      },
+      "check": {
+        "id": "rem-rads-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-add-diff-sign",
+        "explanationVariants": [
+          "9−4=5, keep the sign of 9 (positive): 5.",
+          "Subtract magnitudes, keep the bigger sign."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "-4 + 9 = ?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 13,
+              "feedback": "Subtract, don't add: 9−4=5."
+            },
+            {
+              "value": -5,
+              "feedback": "9 is bigger and positive, so the answer is 5."
+            }
+          ],
+          "fallbackFeedback": "-4 + 9 = 5."
+        }
+      }
+    }
+  ]
+}

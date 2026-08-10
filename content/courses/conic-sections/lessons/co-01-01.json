@@ -1,0 +1,265 @@
+{
+  "id": "co-01-01",
+  "slug": "parabola-focus-directrix",
+  "title": "The Parabola: Focus and Directrix",
+  "courseId": "conic-sections",
+  "chapterId": "ch1-parabolas",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **parabola** is the set of all points equidistant from a fixed point (the **focus**) and a fixed line (the **directrix**). Every point on the curve is balanced exactly between them. This single rule — equal distances — carves out the familiar U-shape, no equation required yet.",
+      "figure": "co-parabola-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reshape a parabola by its focal length. Slide until the focus reaches height 3.",
+      "widget": {
+        "type": "slider",
+        "prompt": "The focal length p is the vertex-to-focus distance. Slide p until the focus sits at (0, 3).",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "start": 1,
+        "target": 3,
+        "visual": "conic",
+        "conicKind": "parabola",
+        "unitLabel": "focal length p",
+        "lowFeedback": "The focus is still low — a larger p lifts the focus and pushes the directrix down by the same amount.",
+        "highFeedback": "Past 3 now — a smaller p brings the focus back toward the vertex.",
+        "successFeedback": "p = 3 puts the focus at (0, 3) and the directrix at y = −3. Notice the traced point stays equidistant from both — that's the parabola's defining rule."
+      },
+      "conceptTag": "co-parabola-def",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents parabola def.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for parabola def must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines parabola def."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "conic-sections:co-parabola-def",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "p is the distance from the vertex to the focus. Sliding p LARGER makes the parabola…",
+        "options": [
+          {
+            "id": "wider",
+            "label": "Wider"
+          },
+          {
+            "id": "narrower",
+            "label": "Narrower"
+          },
+          {
+            "id": "moved",
+            "label": "The same shape, just moved up"
+          }
+        ],
+        "outcomeId": "wider",
+        "reveal": "Wider. The curve is x² = 4py, so a larger p divides x² by more and flattens it. The focus rising and the parabola opening out are one event, not two: the directrix drops by the same p, and every point on the curve stays equidistant from both."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The defining balance.",
+      "conceptTag": "co-parabola-def",
+      "explanationVariants": [
+        "For y = x²/4 (focus (0,1), directrix y = −1), the point (2, 1): distance to focus = √(4 + 0) = 2, distance to directrix = 1 − (−1) = 2 — equal, so it's on the parabola.",
+        "Both distances equal 2, confirming (2, 1) obeys the focus-directrix rule."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A parabola has focus (0, 1) and directrix y = −1. For the point (2, 1), what is its distance to the directrix?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "The directrix is y = −1; the point is at y = 1, so the vertical gap is 1 − (−1) = 2, not 0."
+          },
+          {
+            "value": 1,
+            "feedback": "Distance to y = −1 from y = 1 is 1 − (−1) = 2 (span both units)."
+          }
+        ],
+        "fallbackFeedback": "1 − (−1) = 2 (equal to its distance to the focus)."
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-parabola-def__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Place the vertex at the origin, focus at (0, p), directrix y = −p. The equal-distance rule becomes the equation\n\nx² = 4py,  or  y = x²/(4p).\n\nThe number **p** is the **focal length** — the vertex-to-focus distance. Larger p means a wider, gentler parabola; smaller p, a tighter one.",
+      "figure": "co-parabola-standard"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read the focal length.",
+      "conceptTag": "co-parabola-eqn",
+      "explanationVariants": [
+        "x² = 12y matches x² = 4py with 4p = 12, so p = 3 — the focus is at (0, 3).",
+        "Compare to x² = 4py: 4p = 12 gives p = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the parabola x² = 12y, what is the focal length p?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 = 4p, not p. Divide by 4: p = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "p = 12/4 = 3 (halving gives 6, but the divisor is 4)."
+          }
+        ],
+        "fallbackFeedback": "4p = 12 → p = 3."
+      },
+      "variant": {
+        "gen": "parabola-focal"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Locate the focus.",
+      "conceptTag": "co-parabola-eqn",
+      "explanationVariants": [
+        "y = x²/8 means 4p = 8, p = 2, so the focus is at (0, 2) and the directrix is y = −2.",
+        "x²/8 → 4p = 8 → p = 2 → focus (0, 2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where is the focus of y = x²/8?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(0, 2)",
+            "correct": true,
+            "feedback": "Right — 4p = 8 gives p = 2, so the focus is (0, 2)."
+          },
+          {
+            "id": "o2",
+            "label": "(0, 8)",
+            "feedback": "8 = 4p, not p. Solve 4p = 8 → p = 2 → focus (0, 2)."
+          },
+          {
+            "id": "o3",
+            "label": "(0, 4)",
+            "feedback": "p = 8/4 = 2, so the focus is (0, 2), not (0, 4)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-parabola-eqn__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Verify the rule at a far point.",
+      "conceptTag": "co-parabola-def",
+      "explanationVariants": [
+        "On x² = 4y (p = 1, focus (0,1), directrix y = −1), the point (4, 4): distance to focus = √(16 + 9) = 5, distance to directrix = 4 + 1 = 5 — equal.",
+        "Both distances are 5, so (4, 4) lies on the parabola."
+      ],
+      "hints": [
+        "Focus is (0, 1); use the distance formula.",
+        "√((4−0)² + (4−1)²) = √(16 + 9).",
+        "Distance to y = −1 is 4 − (−1) = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On x² = 4y (focus (0, 1)), the point (4, 4) has what distance to the focus?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is only the vertical gap. Use both legs: √(16 + 9) = 5."
+          },
+          {
+            "value": 4,
+            "feedback": "Distance to the focus (0,1) is √((4)² + (3)²) = 5, not 4."
+          }
+        ],
+        "fallbackFeedback": "√(4² + 3²) = √25 = 5 (equal to its directrix distance)."
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-parabola-def__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Balanced between point and line.",
+      "takeaways": [
+        "A parabola = points equidistant from a focus and a directrix.",
+        "Vertex at origin: x² = 4py, focus (0, p), directrix y = −p.",
+        "p is the focal length; larger p widens the curve."
+      ],
+      "teaser": "Next: parabolas shifted away from the origin."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-parabola-eqn",
+      "concept": {
+        "id": "rem-co0101-c",
+        "kind": "concept",
+        "body": "Vertex-at-origin parabola: x² = 4py, with focus (0, p) and directrix y = −p. Match a given equation to x² = 4py to read p."
+      },
+      "check": {
+        "id": "rem-co0101-k",
+        "kind": "check",
+        "body": "One focal length.",
+        "conceptTag": "co-parabola-eqn",
+        "explanationVariants": [
+          "x² = 8y → 4p = 8 → p = 2.",
+          "Divide 8 by 4 to get p = 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For x² = 8y, find p.",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 = 4p; divide by 4: p = 2."
+            },
+            {
+              "value": 4,
+              "feedback": "You divided by 2. The form is x² = 4py, so 8 = 4p and p = 2."
+            }
+          ],
+          "fallbackFeedback": "4p = 8 → p = 2."
+        }
+      }
+    }
+  ]
+}

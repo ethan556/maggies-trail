@@ -1,0 +1,345 @@
+{
+  "id": "dop-04-03",
+  "slug": "decimal-sums-in-context",
+  "title": "Decimal Sums in Context",
+  "courseId": "decimal-operations",
+  "chapterId": "ch4-decimal-add-subtract",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Word problems just wrap the same skill. Words like *total*, *altogether*, or *combined* mean add; *change*, *difference*, or *how much more* mean subtract. Either way, line up the points and pad. Making change from $10.00 for a $6.75 item is 10.00 − 6.75 = $3.25.",
+      "figure": "dop-line-up"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Make change.",
+      "conceptTag": "decimal-addsub-word",
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "change",
+        "prompt": "You pay $10.00 for an item costing $6.75. Build the change from the tray.",
+        "priceCents": 675,
+        "paidCents": 1000,
+        "showDollars": true,
+        "tray": [
+          {
+            "cents": 100,
+            "label": "$1",
+            "max": 5
+          },
+          {
+            "cents": 25,
+            "label": "quarter",
+            "max": 8
+          },
+          {
+            "cents": 10,
+            "label": "dime",
+            "max": 9
+          },
+          {
+            "cents": 5,
+            "label": "nickel",
+            "max": 9
+          },
+          {
+            "cents": 1,
+            "label": "penny",
+            "max": 9
+          }
+        ],
+        "commonTotals": [
+          {
+            "cents": 425,
+            "feedback": "4.25 borrows short in the ones — 10 − 6 isn't 4 once the cents borrow. $10.00 − $6.75 = $3.25."
+          },
+          {
+            "cents": 335,
+            "feedback": "3.35 slips a borrow in the cents. Lining up and borrowing carefully: $10.00 − $6.75 = $3.25."
+          }
+        ],
+        "lowFeedback": "That pile is short of the change. $10.00 − $6.75 leaves $3.25.",
+        "highFeedback": "That pile is more than the change owed. $10.00 − $6.75 leaves $3.25.",
+        "successFeedback": "$10.00 − $6.75 = $3.25 (line up the points and borrow) — three dollars and a quarter."
+      },
+      "hints": [
+        "Change means subtract: 10.00 − 6.75.",
+        "Pad and borrow across the zeros.",
+        "$3.25."
+      ],
+      "explanationVariants": [
+        "$10.00 − $6.75 = $3.25.",
+        "The word 'change' signals subtraction."
+      ],
+      "predict": {
+        "prompt": "You'll subtract 6.75 from 10. To line up the work, the 10 gets written as…",
+        "options": [
+          {
+            "id": "padded",
+            "label": "10.00 — decimal points stacked, zeros as placeholders"
+          },
+          {
+            "id": "bare",
+            "label": "Just 10 — only the smaller number needs decimals"
+          },
+          {
+            "id": "moved",
+            "label": "0.10 — slide the point to match two places"
+          }
+        ],
+        "outcomeId": "padded",
+        "reveal": "Subtraction lines up PLACE VALUES, so the decimal points must stack: 10.00 − 6.75. The two zeros are placeholders that give the hundredths and tenths something to borrow from — skip them and the regrouping has nowhere to start. Change: $3.25."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents decimal addsub word.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for decimal addsub word must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines decimal addsub word."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:decimal-addsub-word",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Total a bill.",
+      "conceptTag": "decimal-addsub-word",
+      "explanationVariants": [
+        "Add all three: 4.50 + 3.25 + 1.99 = $9.74.",
+        "'Total' means add every item: $9.74."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A meal costs $4.50 + $3.25 + $1.99. What is the total? (enter as a decimal)",
+        "answer": 9.74,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 9.64,
+            "feedback": "9.64 is a cent short — check the hundredths: 0 + 5 + 9 = 14, write 4 carry 1. The total is $9.74."
+          },
+          {
+            "value": 8.74,
+            "feedback": "8.74 misses a carry into the ones. Adding all three: $4.50 + $3.25 + $1.99 = $9.74."
+          }
+        ],
+        "fallbackFeedback": "$4.50 + $3.25 + $1.99 = $9.74."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "mealAdd"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add or subtract?",
+      "conceptTag": "decimal-addsub-word",
+      "widget": {
+        "type": "mcq",
+        "prompt": "\"A trail is 5.0 km. You've walked 2.35 km. How much is LEFT?\" What operation finds the answer?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Subtract: 5.0 − 2.35",
+            "correct": true,
+            "feedback": "Right — 'how much is left' is a difference: 5.0 − 2.35 = 2.65 km remaining."
+          },
+          {
+            "id": "b",
+            "label": "Add: 5.0 + 2.35",
+            "feedback": "Adding would make the trail longer. 'How much is left' means subtract: 5.0 − 2.35."
+          },
+          {
+            "id": "c",
+            "label": "Neither — it's already 2.35",
+            "feedback": "2.35 is how far you've come, not what's left. Subtract to find the rest: 5.0 − 2.35."
+          }
+        ]
+      },
+      "hints": [
+        "'How much is left' is a remaining amount.",
+        "That's a difference.",
+        "Subtract: 5.0 − 2.35."
+      ],
+      "explanationVariants": [
+        "'Left' signals subtraction: 5.0 − 2.35.",
+        "The remaining distance is a difference."
+      ]
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Combine measurements.",
+      "conceptTag": "decimal-addsub-word",
+      "explanationVariants": [
+        "1.5 m + 0.75 m: pad to 1.50, add → 2.25 m.",
+        "'Combined length' means add: 2.25 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two ribbons are 1.5 m and 0.75 m. What is their combined length? (enter as a decimal)",
+        "answer": 2.25,
+        "tolerance": 0,
+        "unit": "m",
+        "commonErrors": [
+          {
+            "value": 2.2,
+            "feedback": "2.20 drops the 5 hundredths. Pad 1.5 to 1.50: 0 + 5 = 5 hundredths, so 2.25 m."
+          },
+          {
+            "value": 0.9,
+            "feedback": "0.90 slides 1.5 into the hundredths (adding 0.15). It's 1.50 m: 1.50 + 0.75 = 2.25 m."
+          }
+        ],
+        "fallbackFeedback": "1.50 m + 0.75 m = 2.25 m."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "ribbons"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Some problems take two steps. To find change from $20 for several items, first **add** the items into a total, then **subtract** that total from $20. Do the steps in order — the total feeds the subtraction. Read carefully so you answer the question actually asked.",
+      "figure": "dop-line-up"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The distance left.",
+      "conceptTag": "decimal-addsub-word",
+      "explanationVariants": [
+        "5.0 − 2.35: pad to 5.00, borrow across → 2.65 km.",
+        "The remaining distance is 5.00 − 2.35 = 2.65 km."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 5.0 km trail, 2.35 km walked. How many km are left? (enter as a decimal)",
+        "answer": 2.65,
+        "tolerance": 0,
+        "unit": "km",
+        "commonErrors": [
+          {
+            "value": 3.65,
+            "feedback": "3.65 borrows short in the ones — 5 − 2 isn't 3 once the cents borrow. 5.00 − 2.35 = 2.65 km."
+          },
+          {
+            "value": 2.75,
+            "feedback": "2.75 slips a borrow. Padding to 5.00 and borrowing across: 5.00 − 2.35 = 2.65 km."
+          }
+        ],
+        "fallbackFeedback": "5.00 − 2.35 = 2.65 km."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "trailLeft"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two steps: total, then change.",
+      "conceptTag": "decimal-addsub-word",
+      "hints": [
+        "First add the three items into a total.",
+        "$4.50 + $3.25 + $1.99 = $9.74.",
+        "Then subtract from $20.00 to find the change."
+      ],
+      "explanationVariants": [
+        "Total $9.74, then $20.00 − $9.74 = $10.26 change.",
+        "Add first ($9.74), then subtract from $20: $10.26."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You buy items costing $4.50, $3.25, and $1.99, and pay with $20.00. How much change do you get? (enter as a decimal)",
+        "answer": 10.26,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 9.74,
+            "feedback": "9.74 is the bill total, not the change. Subtract it from $20.00: $20.00 − $9.74 = $10.26."
+          },
+          {
+            "value": 10.36,
+            "feedback": "10.36 slips a borrow in the subtraction. $20.00 − $9.74 = $10.26."
+          }
+        ],
+        "fallbackFeedback": "Total $9.74, then $20.00 − $9.74 = $10.26."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "changeBack"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read the words, then use the skill.",
+      "takeaways": [
+        "Total / combined / altogether means add; change / difference / how much left means subtract.",
+        "Line up points and pad, exactly as in bare calculations.",
+        "Two-step problems total first, then subtract — answer the question actually asked."
+      ],
+      "teaser": "that completes adding and subtracting decimals — next: multiplying and dividing them."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decimal-addsub-word",
+      "concept": {
+        "id": "rem-dw-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Decide add or subtract from the words, then line up the points.** 'How much change from $5.00 for a $2.25 toy?' — change means subtract: $5.00 − $2.25 = $2.75. Pad and borrow just like any subtraction."
+      },
+      "check": {
+        "id": "rem-dw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decimal-addsub-word",
+        "explanationVariants": [
+          "$5.00 − $2.25 = $2.75 (change means subtract).",
+          "Borrow across the zeros: $5.00 − $2.25 = $2.75."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How much change from $5.00 for a $2.25 toy? (enter as a decimal)",
+          "answer": 2.75,
+          "tolerance": 0,
+          "unit": "dollars",
+          "commonErrors": [
+            {
+              "value": 3.75,
+              "feedback": "3.75 borrows short in the ones — 5 − 2 isn't 3 once the cents borrow. $5.00 − $2.25 = $2.75."
+            },
+            {
+              "value": 2.85,
+              "feedback": "2.85 slips a borrow in the cents. $5.00 − $2.25 = $2.75."
+            }
+          ],
+          "fallbackFeedback": "$5.00 − $2.25 = $2.75."
+        }
+      }
+    }
+  ]
+}

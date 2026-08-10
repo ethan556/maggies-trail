@@ -1,0 +1,293 @@
+{
+  "id": "ca-03-02",
+  "slug": "the-mean-value-theorem",
+  "title": "The Mean Value Theorem",
+  "courseId": "curve-analysis",
+  "chapterId": "ch3-the-mean-value-theorem",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now tilt the picture. The ends need not match — but the conclusion survives, tilted with it.\n\n**MVT:** somewhere inside, the **tangent is parallel to the secant**:\n\nf′(c) = [f(b) − f(a)] / (b − a)\n\nAt some instant, your instantaneous speed equalled your average speed. Rolle is just the flat case of this.",
+      "figure": "ca-mvt-parallel"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The secant, and the tangent that must match it.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "average",
+        "a": 1,
+        "targetH": 2,
+        "startH": 0.5,
+        "prompt": "On y = x², build the secant from x = 1 to x = 3 (a gap of 2). Read its slope — then look for the tangent that matches it.",
+        "successFeedback": "Rise 8 over run 2 = 4: the average rate. And the MVT promises some c inside where the TANGENT also has slope 4 — here f′(x) = 2x = 4 gives c = 2, exactly halfway. The dashed tangent in the picture is parallel to your secant. That parallelism IS the theorem.",
+        "lowFeedback": "The gap is under 2 — B has not reached x = 3.",
+        "highFeedback": "The gap is over 2 — B has passed x = 3."
+      },
+      "predict": {
+        "prompt": "Your secant from x = 1 to x = 3 will have slope 4. Between those points, the TANGENT slope will…",
+        "options": [
+          {
+            "id": "hits",
+            "label": "Hit exactly 4 somewhere"
+          },
+          {
+            "id": "below",
+            "label": "Stay below 4 the whole way"
+          },
+          {
+            "id": "above",
+            "label": "Stay above 4 the whole way"
+          }
+        ],
+        "outcomeId": "hits",
+        "reveal": "The tangent slope 2x runs continuously from 2 up to 6 across the interval, so it must pass through 4 on the way — at c = 2. A continuous climb can't skip a value: that IS the Mean Value Theorem."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "ca-mvt"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the c.",
+      "conceptTag": "ca-mvt",
+      "explanationVariants": [
+        "Average rate = (9 − 1)/(3 − 1) = 4. Set f′(c) = 2c = 4 to get c = 2.",
+        "Two steps, always: compute the secant slope, then solve f′(c) = that."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x² on [1, 3]. Find the c the MVT guarantees.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is the SLOPE, not the c. Solve f′(c) = 2c = 4 to find c = 2."
+          },
+          {
+            "value": 1,
+            "feedback": "That is an endpoint. The MVT promises a c strictly inside (1, 3)."
+          },
+          {
+            "value": 3,
+            "feedback": "Also an endpoint. Solve 2c = 4."
+          }
+        ],
+        "fallbackFeedback": "Average rate = 4, and f′(c) = 2c = 4 gives c = 2."
+      },
+      "variant": {
+        "gen": "mvt-c"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The speeding ticket.",
+      "conceptTag": "ca-mvt",
+      "explanationVariants": [
+        "You covered 120 miles in 2 hours, an average of 60 mph. The MVT says that at some instant your speedometer read exactly 60 — so if the limit is 55, you were speeding.",
+        "The theorem converts a fact about the whole journey into a fact about one instant, which is why the ticket sticks."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two cameras 120 miles apart photograph you 2 hours apart. The limit is 55 mph. What does the MVT prove?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "At some instant your actual speed was exactly 60 mph — so you were speeding.",
+            "correct": true,
+            "feedback": "Right, and it is a genuine legal argument. The MVT turns an average into a guaranteed instant."
+          },
+          {
+            "id": "o2",
+            "label": "Only that you averaged 60 — perhaps you never actually did 60.",
+            "correct": false,
+            "feedback": "The MVT rules that out. A continuous, differentiable position function MUST hit its average rate at some instant."
+          },
+          {
+            "id": "o3",
+            "label": "That you were speeding for the whole two hours.",
+            "correct": false,
+            "feedback": "Far too strong: you might have crawled and then raced. The theorem guarantees ONE instant, not all of them."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — average speed is not instantaneous speed.",
+            "correct": false,
+            "feedback": "They are different quantities, and the MVT is precisely the bridge between them. That bridge is why the theorem matters."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mvt-c",
+        "form": "speedTrap"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Note what the MVT does NOT promise:\n\nIt does not say **where** c is. It does not say there is only **one**. And it does not give any way to **find** it beyond solving f′(c) = the secant slope.\n\nIt is an **existence** theorem. Its power is that it lets you argue about a function you cannot see.",
+      "figure": "ca-mvt-parallel"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Reason without a formula.",
+      "conceptTag": "ca-mvt",
+      "explanationVariants": [
+        "The average rate over [0, 4] is (f(4) − f(0))/4 = (10 − 2)/4 = 2. So some c has f′(c) = 2 — and therefore f′ cannot be less than 2 everywhere.",
+        "You know nothing about f except two values, and the MVT still forces a conclusion about its derivative."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(0) = 2 and f(4) = 10, and f is differentiable. Which must be TRUE?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f′(c) = 2 for some c in (0, 4).",
+            "correct": true,
+            "feedback": "Right — the average rate is (10 − 2)/4 = 2, and the MVT guarantees some tangent matches it. You know nothing else about f and it does not matter."
+          },
+          {
+            "id": "o2",
+            "label": "f′(x) = 2 for every x.",
+            "correct": false,
+            "feedback": "Far too strong. f could sprint and then dawdle; only ONE instant is guaranteed."
+          },
+          {
+            "id": "o3",
+            "label": "f is increasing everywhere.",
+            "correct": false,
+            "feedback": "Not necessarily — f could dip below 2 and climb back, ending at 10 all the same."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing can be concluded without a formula.",
+            "correct": false,
+            "feedback": "That is exactly what the MVT refutes. Two values and differentiability are enough to force f′(c) = 2 somewhere."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mvt-c",
+        "form": "twoValueMVT"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find c on a cubic.",
+      "conceptTag": "ca-mvt",
+      "hints": [
+        "Compute the secant slope first: [f(2) − f(0)] / (2 − 0), with f(x) = x³.",
+        "f(2) = 8 and f(0) = 0, so the average rate is 4.",
+        "Now solve f′(c) = 3c² = 4, and keep the root that lies inside (0, 2)."
+      ],
+      "explanationVariants": [
+        "The average rate is 4, and 3c² = 4 gives c = √(4/3) ≈ 1.155 (the positive root, which is the one inside (0, 2)).",
+        "The negative root −1.155 solves the equation but lies outside the interval, so the MVT does not offer it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ on [0, 2]. Find the c the MVT guarantees, as a decimal to three places.",
+        "answer": 1.155,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is the secant SLOPE. You must still solve f′(c) = 3c² = 4 for c."
+          },
+          {
+            "value": 1,
+            "feedback": "f′(1) = 3, not 4. Solve 3c² = 4 to get c = √(4/3) ≈ 1.155."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the endpoint, and f′(2) = 12, far above the average rate of 4."
+          }
+        ],
+        "fallbackFeedback": "Average rate 4; 3c² = 4 → c = √(4/3) ≈ 1.155."
+      },
+      "variant": {
+        "gen": "mvt-c",
+        "form": "cubicDecimal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Somewhere, the tangent is parallel to the secant.",
+      "takeaways": [
+        "f′(c) = [f(b) − f(a)]/(b − a) for some c inside. Rolle is the special case where the secant is flat.",
+        "At some instant, your instantaneous rate equalled your average rate — which is why the speeding ticket sticks.",
+        "It is an EXISTENCE theorem: it says c is there, not where it is."
+      ],
+      "teaser": "Next: what the MVT buys — the facts every earlier lesson has been assuming."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-mvt",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two steps. **One:** compute the secant slope, [f(b) − f(a)]/(b − a). **Two:** solve f′(c) = that slope. The theorem guarantees a solution inside the interval; your only job is to find it.",
+        "figure": "dr-tangent-line"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Secant, then solve.",
+        "conceptTag": "ca-mvt",
+        "explanationVariants": [
+          "Average rate = (16 − 4)/(4 − 2) = 6, and f′(c) = 2c = 6 gives c = 3.",
+          "Compute the slope first; solve second."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x² on [2, 4]. Find c.",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That is the secant slope. Now solve 2c = 6 to get c = 3."
+            },
+            {
+              "value": 2,
+              "feedback": "An endpoint. The guaranteed c lies strictly inside (2, 4)."
+            }
+          ],
+          "fallbackFeedback": "Average rate 6; 2c = 6 → c = 3."
+        }
+      }
+    }
+  ]
+}

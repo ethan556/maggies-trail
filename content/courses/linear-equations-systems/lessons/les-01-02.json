@@ -1,0 +1,290 @@
+{
+  "id": "les-01-02",
+  "slug": "variables-on-both-sides",
+  "title": "Variables on Both Sides",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch1-solving-linear-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When x sits on BOTH sides, like 5x + 2 = 3x + 10, first collect the x-terms on one side. Take 3x off both sides — the balance stays level — leaving 2x + 2 = 10. Then solve as usual.",
+      "figure": "both-sides-scale"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Order the steps.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Solve 5x + 2 = 3x + 10. Drag the steps into order.",
+        "items": [
+          {
+            "id": "s2",
+            "label": "Subtract 2 from both sides: 2x = 8"
+          },
+          {
+            "id": "s3",
+            "label": "Divide both sides by 2: x = 4"
+          },
+          {
+            "id": "s1",
+            "label": "Subtract 3x from both sides: 2x + 2 = 10"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "s2",
+            "second": "s1",
+            "feedback": "Collect the x-terms FIRST — subtract 3x before touching the constants."
+          }
+        ],
+        "missFeedback": "Collect x-terms first, then the constants, then divide.",
+        "successFeedback": "Right — 3x off both sides, then solve 2x + 2 = 10 to get x = 4."
+      },
+      "predict": {
+        "prompt": "Solving 5x + 2 = 3x + 10 — what's the first USEFUL move?",
+        "options": [
+          {
+            "id": "gather",
+            "label": "Gather the x-terms on one side"
+          },
+          {
+            "id": "divide",
+            "label": "Divide everything right away"
+          },
+          {
+            "id": "answer",
+            "label": "Guess x and check"
+          }
+        ],
+        "outcomeId": "gather",
+        "reveal": "With x's living on both sides, nothing simplifies until they're collected — subtract 3x and the equation finally has one unknown territory."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtract the SMALLER x-term to keep the coefficient positive. For 7x + 3 = 4x + 15, take 4x from both sides, giving 3x + 3 = 15 — easier than ending up with a negative x-term.",
+      "figure": "les-both-sides-step"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve with variables on both sides.",
+      "conceptTag": "les-isolate-variable",
+      "explanationVariants": [
+        "Subtract 3x: 2x+2=10. Subtract 2: 2x=8. Divide by 2: x=4.",
+        "Collect x on the left (2x), then solve down to x=4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 5x + 2 = 3x + 10",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That subtracted 2 from 10 first instead of collecting x-terms — take 3x off both sides first: 2x+2=10, then x=4."
+          },
+          {
+            "value": 1.5,
+            "feedback": "Check the steps — after 3x off both sides you get 2x+2=10, then 2x=8, so x=4."
+          }
+        ],
+        "fallbackFeedback": "Subtract 3x: 2x + 2 = 10. Subtract 2: 2x = 8. Divide by 2: x = 4."
+      },
+      "variant": {
+        "gen": "g8-les-isolate-variable",
+        "form": "lesIsolateA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Take the smaller x-term.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 7x + 3 = 4x + 15",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That subtracted 3 from 15 first — collect x-terms first: take 4x off both sides to get 3x+3=15, then x=4."
+          },
+          {
+            "value": 2,
+            "feedback": "Check the steps — 4x off both sides gives 3x+3=15, then 3x=12, so x=4."
+          }
+        ],
+        "fallbackFeedback": "Subtract 4x: 3x + 3 = 15. Subtract 3: 3x = 12. Divide by 3: x = 4."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why subtract from both sides?",
+      "conceptTag": "les-isolate-variable",
+      "explanationVariants": [
+        "Removing 3x from only one side would break the balance — both sides must change equally to stay equal.",
+        "The equation stays true only if the same amount leaves both sides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why must 3x be subtracted from BOTH sides of 5x + 2 = 3x + 10?",
+        "options": [
+          {
+            "id": "a",
+            "label": "To keep both sides equal — the balance must stay level",
+            "correct": true,
+            "feedback": "Right — changing only one side would break the equality."
+          },
+          {
+            "id": "b",
+            "label": "Because 3x is always removed first",
+            "correct": false,
+            "feedback": "There's no fixed rule to remove 3x specifically — you subtract from both sides to KEEP the balance."
+          },
+          {
+            "id": "c",
+            "label": "To make the numbers bigger",
+            "correct": false,
+            "feedback": "It makes the x-terms simpler, not bigger — and the point is keeping both sides equal."
+          },
+          {
+            "id": "d",
+            "label": "Because x must be positive",
+            "correct": false,
+            "feedback": "The reason is preserving equality, not the sign of x — subtracting from both sides keeps the balance."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-isolate-variable",
+        "form": "lesIsolateWhy"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger case.",
+      "conceptTag": "les-isolate-variable",
+      "explanationVariants": [
+        "Subtract 5x: 4x+4=24. Subtract 4: 4x=20. Divide by 4: x=5.",
+        "Collect x on the left (4x), then solve down to x=5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 9x + 4 = 5x + 24",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That subtracted 4 from 24 first — collect x-terms first: 5x off both sides gives 4x+4=24, then x=5."
+          },
+          {
+            "value": 3.11,
+            "feedback": "Check the steps — 5x off both sides gives 4x+4=24, then 4x=20, so x=5."
+          }
+        ],
+        "fallbackFeedback": "Subtract 5x: 4x + 4 = 24. Subtract 4: 4x = 20. Divide by 4: x = 5."
+      },
+      "variant": {
+        "gen": "g8-les-isolate-variable",
+        "form": "lesIsolateB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve with a subtraction on one side.",
+      "conceptTag": "les-isolate-variable",
+      "explanationVariants": [
+        "Subtract 2x: 4x−1=11. Add 1: 4x=12. Divide by 4: x=3.",
+        "Collect x on the left (4x), handle the −1, then divide: x=3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 6x − 1 = 2x + 11",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Check the steps — 2x off both sides gives 4x−1=11, then add 1 to get 4x=12, so x=3."
+          },
+          {
+            "value": 12,
+            "feedback": "That's 4x, not x — after 4x=12, divide both sides by 4 to get x=3."
+          }
+        ],
+        "fallbackFeedback": "Subtract 2x: 4x − 1 = 11. Add 1: 4x = 12. Divide by 4: x = 3."
+      },
+      "hints": [
+        "Collect the x-terms first: subtract the smaller one, 2x, from both sides.",
+        "That gives 4x − 1 = 11. Now undo the −1 by adding 1: 4x = 12.",
+        "Divide both sides by 4: x = 3."
+      ],
+      "variant": {
+        "gen": "g8-les-isolate-variable",
+        "form": "lesIsolateC"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Collect the variable on one side first, then solve the two-step equation that remains.",
+      "takeaways": [
+        "Subtract the smaller x-term from both sides to collect x.",
+        "Then solve the leftover two-step equation as usual.",
+        "Every move happens on both sides to keep the balance."
+      ],
+      "teaser": "Next: clearing parentheses before you solve."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-isolate-variable",
+      "concept": {
+        "id": "rem-les0102-c",
+        "kind": "concept",
+        "body": "With variables on both sides, collect the x-terms on one side first (subtract the smaller x-term from both sides), then solve the two-step equation that remains."
+      },
+      "check": {
+        "id": "rem-les0102-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-isolate-variable",
+        "explanationVariants": [
+          "Subtract 2x: 2x+1=9. Subtract 1: 2x=8. Divide by 2: x=4.",
+          "Collect x on the left (2x), then solve down to x=4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve for x: 4x + 1 = 2x + 9",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "That subtracted 1 from 9 first — collect x-terms first: 2x off both sides gives 2x+1=9, then x=4."
+            },
+            {
+              "value": 2.5,
+              "feedback": "Check the steps — 2x off both sides gives 2x+1=9, then 2x=8, so x=4."
+            }
+          ],
+          "fallbackFeedback": "Subtract 2x: 2x + 1 = 9. Subtract 1: 2x = 8. Divide by 2: x = 4."
+        }
+      }
+    }
+  ]
+}

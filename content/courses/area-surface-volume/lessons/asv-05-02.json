@@ -1,0 +1,259 @@
+{
+  "id": "asv-05-02",
+  "slug": "volume-with-fractional-edges",
+  "title": "Volume with Fractional Edges",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch5-fractional-volume",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The formula V = l × w × h keeps working when an edge is a **fraction** — you just pack with SMALLER cubes. A box 3 × 2 × 3/2 fits half-unit cubes: 6 × 4 × 3 = 72 of them, each with volume 1/8, totaling 72/8 = **9** — exactly what 3 × 2 × 3/2 gives directly. Fractions don't break the formula; they refine the cubes.",
+      "figure": "asv-frac-volume"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Fraction in one slot.",
+      "conceptTag": "fractional-volume",
+      "widget": {
+        "type": "volumeBuilder",
+        "denomL": 2,
+        "targetVolume": 3,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "prompt": "Set the length in half-units, then the width and height, until the box holds 3 cubes.",
+        "successFeedback": "3! The length is 1/2 — half of one unit — and 1/2 × 2 × 3 = 3. A fractional edge shrinks the box, but the volume is still exact.",
+        "lowFeedback": "Not enough yet — raise one of the dimensions and watch how the volume responds.",
+        "highFeedback": "Past 3 now — ease a dimension back, starting with whichever moves the volume fastest.",
+        "wholeUnitFeedback": "That reads as if the length tick were a WHOLE unit instead of a half. Check the length label — it should read a fraction, not a whole number."
+      },
+      "predict": {
+        "prompt": "One edge is ½. Will the volume ½ × 2 × 3 come out whole anyway?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — the ½ and the 2 pair into 1"
+          },
+          {
+            "id": "no",
+            "label": "No — fractions in, fractions out"
+          },
+          {
+            "id": "cant",
+            "label": "Volume can't use fractional edges"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "½ × 2 × 3 = 3: the half and the 2 rescue each other. Fractional edges run through the same l·w·h formula as whole ones — and factors can cancel, so the output's form isn't decided by the inputs' looks."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Verify by packing.",
+      "conceptTag": "fractional-volume",
+      "explanationVariants": [
+        "In half-units the box is 6×4×3 = 72 half-cubes; each is 1/8, so 72/8 = 9 — matching 3 × 2 × 3/2 = 9 directly.",
+        "Packing count and direct formula agree at 9 — the fraction changed the cube size, not the rule."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 3 × 2 × 3/2 box packs exactly 72 half-unit cubes (each 1/8 cubic unit). What is the box's volume?",
+        "answer": 9,
+        "tolerance": 0,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "72 is the COUNT of half-cubes, not the volume. Each is only 1/8 cubic unit: 72 × 1/8 = 9."
+          },
+          {
+            "value": 18,
+            "feedback": "18 treats each half-cube as 1/4 instead of 1/8. A half-unit cube is (1/2)³ = 1/8, so 72/8 = 9."
+          }
+        ],
+        "fallbackFeedback": "72 × 1/8 = 9, matching 3 × 2 × 3/2 = 9."
+      },
+      "variant": {
+        "gen": "fraction-volume",
+        "form": "halfCubes"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "For a **mixed number** edge like 3½, convert to an improper fraction first: 3½ = 7/2. Then V = 7/2 × 2 × 4 = **28**. The most common slip is quietly dropping the fraction and computing 3 × 2 × 4 = 24 — always convert the mixed number before multiplying.",
+      "figure": "asv-frac-volume"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Mixed number edge.",
+      "conceptTag": "fractional-volume",
+      "explanationVariants": [
+        "3½ = 7/2, so V = 7/2 × 2 × 4 = 28.",
+        "Convert first: 7/2 × 8 = 28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the volume of a box 3½ × 2 × 4.",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 drops the ½, computing 3×2×4. Convert first: 3½ = 7/2, so 7/2 × 2 × 4 = 28."
+          },
+          {
+            "value": 26,
+            "feedback": "26 adds the ½ at the end (24 + 2) instead of multiplying it through. 7/2 × 8 = 28."
+          }
+        ],
+        "fallbackFeedback": "3½ = 7/2; V = 7/2 × 2 × 4 = 28."
+      },
+      "variant": {
+        "gen": "fraction-volume"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Another mixed edge.",
+      "conceptTag": "fractional-volume",
+      "widget": {
+        "type": "volumeBuilder",
+        "denomL": 2,
+        "targetVolume": 12,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "prompt": "Build a box 1½ × 4 × 2. Set the length in half-units first.",
+        "successFeedback": "12! 1½ is three half-units, and 1.5 × 4 × 2 = 12. The half-unit steps let you land exactly on 1½ without ever leaving the fraction.",
+        "lowFeedback": "Under 12 — the length needs three half-unit ticks (1½) before the width and height finish the job.",
+        "highFeedback": "Over 12 — ease a dimension back.",
+        "wholeUnitFeedback": "That reads as if each length tick were a WHOLE unit rather than a half. Three whole units would be 3, not 1½ — check the length label."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A proper-fraction edge.",
+      "conceptTag": "fractional-volume",
+      "explanationVariants": [
+        "3/4 × 4 × 2 = 3/4 × 8 = 6.",
+        "The 4 cancels the denominator: 3 × 2 = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the volume of a box 3/4 × 4 × 2.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 ignores the 3/4, computing 1×4×2. Multiply it through: 3/4 × 8 = 6."
+          },
+          {
+            "value": 24,
+            "feedback": "24 uses 3 instead of 3/4 (3×4×2). The edge is three-QUARTERS: 3/4 × 8 = 6."
+          }
+        ],
+        "fallbackFeedback": "3/4 × 4 × 2 = 6."
+      },
+      "variant": {
+        "gen": "fraction-volume",
+        "form": "properFraction"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two fractional edges.",
+      "conceptTag": "fractional-volume",
+      "hints": [
+        "Convert 2½ to 5/2 first.",
+        "V = 5/2 × 3 × 2.",
+        "The 2 cancels the denominator: 5 × 3."
+      ],
+      "explanationVariants": [
+        "2½ = 5/2; V = 5/2 × 3 × 2 = 15 — the whole-number 2 cancels the denominator neatly.",
+        "5/2 × 6 = 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the volume of a box 2½ × 3 × 2.",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "cubic units",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 drops the ½ (2×3×2). Convert first: 2½ = 5/2, so 5/2 × 6 = 15."
+          },
+          {
+            "value": 7.5,
+            "feedback": "7.5 is 5/2 × 3, missing the final ×2. Multiply ALL three dimensions: 5/2 × 3 × 2 = 15."
+          }
+        ],
+        "fallbackFeedback": "2½ = 5/2; V = 5/2 × 3 × 2 = 15."
+      },
+      "variant": {
+        "gen": "fraction-volume"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same formula, finer cubes.",
+      "takeaways": [
+        "V = l × w × h works unchanged with fractional edges — smaller cubes pack the fractional parts.",
+        "Convert mixed numbers to improper fractions BEFORE multiplying.",
+        "Dropping the fraction (3½ → 3) is the classic slip — the packing argument shows why it's wrong."
+      ],
+      "teaser": "course finale: volume out in the real world."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fractional-volume",
+      "concept": {
+        "id": "rem-fv-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Convert, then multiply all three.** 1½ × 2 × 2: convert 1½ = 3/2, then 3/2 × 2 × 2 = 6. Dropping the ½ (1×2×2 = 4) is the slip to avoid."
+      },
+      "check": {
+        "id": "rem-fv-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fractional-volume",
+        "explanationVariants": [
+          "1½ = 3/2; V = 3/2 × 2 × 2 = 6.",
+          "3/2 × 4 = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find the volume of a box 1½ × 2 × 2.",
+          "answer": 6,
+          "tolerance": 0,
+          "unit": "cubic units",
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 drops the ½ (1×2×2). Convert first: 1½ = 3/2, so 3/2 × 4 = 6."
+            },
+            {
+              "value": 5.5,
+              "feedback": "5.5 adds the dimensions (1.5+2+2). Volume MULTIPLIES: 3/2 × 4 = 6."
+            }
+          ],
+          "fallbackFeedback": "1½ = 3/2; V = 3/2 × 2 × 2 = 6."
+        }
+      }
+    }
+  ]
+}

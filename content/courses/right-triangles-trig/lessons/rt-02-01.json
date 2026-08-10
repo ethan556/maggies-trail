@@ -1,0 +1,330 @@
+{
+  "id": "rt-02-01",
+  "slug": "sine-cosine-tangent",
+  "title": "Sine, Cosine & Tangent",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch2-the-trig-ratios",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "rt-sohcahtoa",
+      "concept": {
+        "id": "rem-rt-sohcahtoa-c",
+        "kind": "concept",
+        "body": "SOH-CAH-TOA names three ratios measured from the chosen angle θ: Sin = Opposite/Hypotenuse, Cos = Adjacent/Hypotenuse, Tan = Opposite/Adjacent. Opposite = the leg across from θ; adjacent = the leg touching θ (not the hypotenuse). Identify the sides FIRST, then pick the ratio."
+      },
+      "check": {
+        "id": "rem-rt-sohcahtoa-k",
+        "kind": "check",
+        "body": "Name the sides, then the ratio.",
+        "conceptTag": "rt-sohcahtoa",
+        "explanationVariants": [
+          "Opposite 6, hypotenuse 10: sin θ = 6/10 = 0.6.",
+          "SOH: the side across from θ (6) over the hypotenuse (10) is 0.6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Right triangle with legs 6 and 8, hypotenuse 10; θ has opposite side 6. sin θ = ?",
+          "answer": 0.6,
+          "tolerance": 0.001,
+          "commonErrors": [
+            {
+              "value": 0.8,
+              "feedback": "0.8 = 8/10 uses the ADJACENT leg — that's cosine. Sine wants the opposite: 6/10 = 0.6."
+            },
+            {
+              "value": 0.75,
+              "feedback": "0.75 = 6/8 is tangent (leg over leg). Sine divides by the hypotenuse: 6/10 = 0.6."
+            }
+          ],
+          "fallbackFeedback": "sin θ = 6/10 = 0.6."
+        }
+      }
+    },
+    {
+      "conceptTag": "rt-trig-constant",
+      "concept": {
+        "id": "rem-rt-trig-constant-c",
+        "kind": "concept",
+        "body": "A trig ratio is a property of the ANGLE, not of any one triangle. All right triangles sharing an acute angle are similar (AA), so opposite/hypotenuse, adjacent/hypotenuse, and opposite/adjacent each come out identical at every size. Doubling a triangle doubles both sides in a ratio — the quotient doesn't move."
+      },
+      "check": {
+        "id": "rem-rt-trig-constant-k",
+        "kind": "check",
+        "body": "Size can't move the ratio.",
+        "conceptTag": "rt-trig-constant",
+        "explanationVariants": [
+          "Both sides scale by the same factor, so the quotient is unchanged: still 0.6.",
+          "The doubled triangle is similar to the original; sin θ stays 0.6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A right triangle has sin θ = 0.6. Every side is then doubled. Now sin θ = ?",
+          "answer": 0.6,
+          "tolerance": 0.001,
+          "commonErrors": [
+            {
+              "value": 1.2,
+              "feedback": "1.2 doubles the RATIO — but both sides doubled, so the quotient is untouched: 0.6."
+            },
+            {
+              "value": 0.3,
+              "feedback": "0.3 halves it — same mistake mirrored. Scaling a triangle never changes its angles' ratios: 0.6."
+            }
+          ],
+          "fallbackFeedback": "Similar triangles: sin θ is still 0.6."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here's the payoff of similarity. Every right triangle with a 35° angle is similar to every other (AA: right angle + 35°). Similar triangles have proportional sides — so the ratio **opposite ÷ hypotenuse** comes out the SAME in all of them: about 0.574. The angle alone fixes the ratio. That guaranteed constant is called **sin 35°**.",
+      "figure": "ratio-constant-sweep"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why is the ratio constant?",
+      "widget": {
+        "type": "triangleSolve",
+        "prompt": "Three right triangles share a 35° angle but have different sizes. Resize this one and watch whether opp/hyp actually changes.",
+        "mode": "ratios",
+        "a": 6,
+        "b": 6,
+        "target": 35,
+        "start": 60,
+        "ratio": "opp/hyp",
+        "requiredScaleMoves": 2,
+        "scaleFeedback": "Resize the triangle first — drag the scale dial a couple of times before checking. Until you have, you haven't actually tested whether the ratio depends on size.",
+        "successFeedback": "35°, and every resize left opp/hyp exactly where it was. The three triangles in the prompt — hypotenuses 70, 110, 150 — are this same fact at three different scales: the angle fixes the ratio, and size never enters.",
+        "lowFeedback": "opp/hyp is still under the target — open the angle further.",
+        "highFeedback": "opp/hyp has gone past the target — close the angle a little."
+      },
+      "predict": {
+        "prompt": "Three right triangles all hold a 35° angle, with hypotenuses 70, 110, and 150. Across the three, opposite ÷ hypotenuse will…",
+        "options": [
+          {
+            "id": "same",
+            "label": "Match exactly — same angle, same shape"
+          },
+          {
+            "id": "shrink",
+            "label": "Shrink as the triangle grows"
+          },
+          {
+            "id": "grow",
+            "label": "Grow with the triangle"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "The 35° (plus the right angle) fixes the SHAPE — all three are similar by AA. Scaling multiplies opposite and hypotenuse by the same factor, which cancels in the ratio. That constancy is precisely what lets 'sin 35°' name a single number."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three side-pairs, three named ratios, all measured FROM the chosen acute angle θ: **sin θ = opposite/hypotenuse. cos θ = adjacent/hypotenuse. tan θ = opposite/adjacent.** The mnemonic **SOH-CAH-TOA** packs all three. “Opposite” is the leg across from θ; “adjacent” is the leg touching θ; the hypotenuse never changes roles.",
+      "figure": "sohcahtoa-triangle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the ratios.",
+      "conceptTag": "rt-sohcahtoa",
+      "explanationVariants": [
+        "Opposite θ is 3, hypotenuse is 5: sin θ = 3/5 = 0.6.",
+        "SOH: Sine = Opposite (3) over Hypotenuse (5) = 0.6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a 3-4-5 right triangle, θ is the angle whose opposite side is 3. What is sin θ (as a decimal)?",
+        "answer": 0.6,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "0.8 = 4/5 is cos θ (adjacent over hypotenuse). Sine takes the OPPOSITE side: 3/5 = 0.6."
+          },
+          {
+            "value": 0.75,
+            "feedback": "0.75 = 3/4 is tan θ (opposite over adjacent). Sine divides by the HYPOTENUSE: 3/5 = 0.6."
+          },
+          {
+            "value": 1.67,
+            "feedback": "1.67 ≈ 5/3 flips the fraction. Sine puts the hypotenuse on the BOTTOM: 3/5 = 0.6."
+          }
+        ],
+        "fallbackFeedback": "sin θ = opposite/hypotenuse = 3/5 = 0.6."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-sohcahtoa__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The other two.",
+      "conceptTag": "rt-sohcahtoa",
+      "explanationVariants": [
+        "Adjacent to θ is 4, hypotenuse 5: cos θ = 4/5 = 0.8 — and tan θ = 3/4 = 0.75.",
+        "CAH: Cosine = Adjacent (4) over Hypotenuse (5) = 0.8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same triangle (opposite 3, adjacent 4, hypotenuse 5): what is cos θ?",
+        "answer": 0.8,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 0.6,
+            "feedback": "0.6 = 3/5 is sin θ. Cosine takes the ADJACENT side over the hypotenuse: 4/5 = 0.8."
+          },
+          {
+            "value": 1.33,
+            "feedback": "1.33 ≈ 4/3 is adjacent over opposite — an inverted tangent, not a named ratio here. cos θ = 4/5 = 0.8."
+          },
+          {
+            "value": 0.75,
+            "feedback": "0.75 = 3/4 is tan θ. Cosine divides adjacent by the HYPOTENUSE: 4/5 = 0.8."
+          }
+        ],
+        "fallbackFeedback": "cos θ = adjacent/hypotenuse = 4/5 = 0.8."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-sohcahtoa__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "“Opposite” and “adjacent” are relative to WHICH angle you pick — switch to the other acute angle and the two legs swap roles. So sin of one acute angle equals cos of the other. Special angles you already own: tan 45° = 1 (equal legs), sin 30° = 1/2 (short leg over hypotenuse: 1/2).",
+      "figure": "rt-opp-adj"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Swap the angle.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the 3-4-5 triangle, φ is the OTHER acute angle (its opposite side is 4). What is sin φ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4/5 — the roles swap, so sin φ = cos θ",
+            "correct": true,
+            "feedback": "From φ's seat, the 4 is opposite: sin φ = 4/5 = 0.8, exactly the cos of the first angle."
+          },
+          {
+            "id": "o2",
+            "label": "3/5 — sine is always the smaller leg over 5",
+            "correct": false,
+            "feedback": "Sine isn't pinned to the smaller leg — it's pinned to the leg OPPOSITE your angle. For φ that's 4, so 4/5."
+          },
+          {
+            "id": "o3",
+            "label": "5/4 — the hypotenuse goes on top for the second angle",
+            "correct": false,
+            "feedback": "The hypotenuse stays on the bottom for sine no matter which angle: sin φ = 4/5."
+          },
+          {
+            "id": "o4",
+            "label": "It can't be computed without a calculator",
+            "correct": false,
+            "feedback": "A calculator is never needed here: read the sides. Opposite φ is 4, hypotenuse 5 → sin φ = 4/5."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Ratios pin ratios.",
+      "conceptTag": "rt-trig-constant",
+      "explanationVariants": [
+        "tan 45° compares the two equal legs of a 45-45-90 triangle: 1/1 = 1.",
+        "In 45-45-90 the opposite and adjacent legs match, so their ratio — the tangent — is exactly 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using the 45-45-90 ratio (legs 1, 1, hypotenuse √2): what is tan 45° exactly?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.71,
+            "feedback": "0.71 ≈ 1/√2 is sin 45° (leg over hypotenuse). Tangent is leg over LEG: 1/1 = 1."
+          },
+          {
+            "value": 1.41,
+            "feedback": "1.41 ≈ √2 is the hypotenuse-to-leg ratio. tan = opposite/adjacent = 1/1 = 1."
+          },
+          {
+            "value": 2,
+            "feedback": "2 doubles a leg — a 30-60-90 reflex. Here the legs are equal, so tan 45° = 1."
+          }
+        ],
+        "fallbackFeedback": "tan 45° = 1/1 = 1."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-trig-constant__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "A fresh triangle, all three ratios.",
+      "conceptTag": "rt-sohcahtoa",
+      "hints": [
+        "Identify the sides from θ: opposite = 5, adjacent = 12, hypotenuse = 13.",
+        "TOA: tangent = opposite over adjacent.",
+        "tan θ = 5/12 — evaluate to 4 decimal places."
+      ],
+      "explanationVariants": [
+        "tan θ = opposite/adjacent = 5/12 ≈ 0.4167.",
+        "TOA with opposite 5 and adjacent 12: 5/12 ≈ 0.4167."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a 5-12-13 right triangle, θ has opposite side 5. What is tan θ (4 decimals)?",
+        "answer": 0.4167,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.3846,
+            "feedback": "0.3846 ≈ 5/13 is sin θ (over the hypotenuse). Tangent stays among the LEGS: 5/12 ≈ 0.4167."
+          },
+          {
+            "value": 0.9231,
+            "feedback": "0.9231 ≈ 12/13 is cos θ. TOA: opposite/adjacent = 5/12 ≈ 0.4167."
+          },
+          {
+            "value": 2.4,
+            "feedback": "2.4 = 12/5 flips the fraction: that's tan of the OTHER acute angle. For θ: 5/12 ≈ 0.4167."
+          }
+        ],
+        "fallbackFeedback": "tan θ = 5/12 ≈ 0.4167."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-sohcahtoa__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The angle fixes the ratio.",
+      "takeaways": [
+        "Similar right triangles (AA) make each side ratio depend on the ANGLE alone.",
+        "SOH-CAH-TOA: sin = opp/hyp, cos = adj/hyp, tan = opp/adj — all measured from θ.",
+        "Swap acute angles and opposite/adjacent swap: sin of one = cos of the other."
+      ],
+      "teaser": "Next: use these ratios to SOLVE right triangles — unknown sides first, then unknown angles."
+    }
+  ]
+}

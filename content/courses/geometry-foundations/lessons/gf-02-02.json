@@ -1,0 +1,264 @@
+{
+  "id": "gf-02-02",
+  "slug": "angle-addition-and-bisectors",
+  "title": "Angle Addition & Bisectors",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch2-measure",
+  "minutes": 8,
+  "remedials": [
+    {
+      "conceptTag": "gf-angle-addition",
+      "concept": {
+        "id": "rem-gf-angle-addition-c",
+        "kind": "concept",
+        "body": "Same tiling idea as segments, bent around a corner: an interior ray cuts the big angle into two pieces that share only the ray. Pieces ADD to the whole; a missing piece is the whole MINUS the known one."
+      },
+      "check": {
+        "id": "rem-gf-angle-addition-k",
+        "kind": "check",
+        "body": "Piece from the whole.",
+        "conceptTag": "gf-angle-addition",
+        "explanationVariants": [
+          "The whole is 120 and one piece is 45: the other is 120 − 45 = 75.",
+          "45 + m∠2 = 120 — subtract 45 from both sides."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Ray OB is interior to ∠AOC. m∠AOC = 120° and m∠AOB = 45°. Find m∠BOC.",
+          "answer": 75,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 165,
+              "feedback": "165 is 120 + 45 — but 120 is already the WHOLE angle. Take the known piece away instead: 75."
+            },
+            {
+              "value": 60,
+              "feedback": "60 is half of 120 — that would need OB to be a BISECTOR, and 45 ≠ 60 shows it isn't. Subtract: 120 − 45 = 75."
+            }
+          ],
+          "fallbackFeedback": "Whole minus piece: 120 − 45 = 75."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Angles copy the ruler's trick. The **Protractor Postulate** assigns each ray from a vertex a number 0–180, and an angle's measure is the positive difference of its rays' numbers. The **Angle Addition Postulate** follows: if R is in the interior of ∠PQS, then **m∠PQR + m∠RQS = m∠PQS**.",
+      "figure": "addition-postulates"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the protractor.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two rays from the same vertex read 30° and 75° on a protractor. What is the measure of the angle between them, in degrees?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 105,
+            "feedback": "105 is 30 + 75 — but the protractor numbers are POSITIONS, not pieces. The angle is their difference: 75 − 30 = 45."
+          },
+          {
+            "value": 52.5,
+            "feedback": "52.5 is the average of the two readings — that locates the ray in the MIDDLE, not the size of the opening."
+          }
+        ],
+        "fallbackFeedback": "Positive difference of the readings: 75 − 30 = 45."
+      },
+      "predict": {
+        "prompt": "The rays read 30° and 75° on the protractor. To get the angle between them you'll…",
+        "options": [
+          {
+            "id": "sub",
+            "label": "Subtract the readings"
+          },
+          {
+            "id": "add",
+            "label": "Add the readings"
+          },
+          {
+            "id": "avg",
+            "label": "Average the readings"
+          }
+        ],
+        "outcomeId": "sub",
+        "reveal": "Protractor numbers are POSITIONS, not sizes. The angle between two rays is the gap between their readings: 75° − 30° = 45°. Adding gives 105° — that would only be right if the rays opened from opposite sides of zero."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Interior ray, two pieces.",
+      "conceptTag": "gf-angle-addition",
+      "explanationVariants": [
+        "R is interior, so the pieces add: m∠PQS = 34 + 51 = 85.",
+        "Sweep from QP to QR (34°), then continue to QS (51° more): 85° total."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Ray QR lies in the interior of ∠PQS. m∠PQR = 34° and m∠RQS = 51°. Find m∠PQS.",
+        "answer": 85,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "17 is 51 − 34. Subtraction finds a missing PIECE — here you're asked for the WHOLE, and interior means the pieces add."
+          },
+          {
+            "value": 42.5,
+            "feedback": "42.5 averages the two pieces. The full opening is one piece after the other: 34 + 51 = 85."
+          }
+        ],
+        "fallbackFeedback": "Interior ray ⇒ pieces add: 34 + 51 = 85."
+      },
+      "variant": {
+        "gen": "gf-angle-add"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "An **angle bisector** is a ray that splits an angle into two **congruent** pieces. \"QR bisects ∠PQS\" packs an equation: m∠PQR = m∠RQS, each exactly half the whole. Like midpoints, it runs both ways — halve the whole, or double a half.",
+      "figure": "gf-angle-bisector"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot the bisector.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Ray BD lies inside ∠ABC. Measurements: m∠ABD = 26° and m∠DBC = 26°. What does this tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "BD bisects ∠ABC, which measures 52°",
+            "correct": true,
+            "feedback": "Equal pieces (26 = 26) is exactly the bisector condition, and the whole is their sum: 52°."
+          },
+          {
+            "id": "o2",
+            "label": "BD bisects ∠ABC, which measures 26°",
+            "correct": false,
+            "feedback": "26° is the size of EACH HALF. The whole angle is both halves together: 26 + 26 = 52°."
+          },
+          {
+            "id": "o3",
+            "label": "BD is perpendicular to BA",
+            "correct": false,
+            "feedback": "Perpendicular means a 90° meeting — nothing here measures 90°. Equal halves make a BISECTOR, not a right angle."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — two angles can't share ray BD",
+            "correct": false,
+            "feedback": "Sharing a ray is exactly how adjacent angles work; BD is one side of each piece."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Halving the whole.",
+      "conceptTag": "gf-angle-addition",
+      "explanationVariants": [
+        "A bisector makes two equal halves: 84 ÷ 2 = 42.",
+        "m∠PQR = m∠RQS and they sum to 84, so each is 42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Ray QR bisects ∠PQS, and m∠PQS = 84°. Find m∠PQR.",
+        "answer": 42,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 168,
+            "feedback": "168 is 84 × 2 — doubling goes from a HALF to the whole. Here 84 is already the whole, so halve it: 42."
+          },
+          {
+            "value": 84,
+            "feedback": "84 is the whole angle ∠PQS. The bisector's piece ∠PQR is half of that: 42."
+          }
+        ],
+        "fallbackFeedback": "Half of the whole: 84 ÷ 2 = 42."
+      },
+      "variant": {
+        "gen": "gf-angle-add",
+        "form": "bisect"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Angle addition solves for missing pieces too. Inside a known whole — say a right angle, 90° — one known piece pins down the other: **missing piece = whole − known piece**. The only trap is using the wrong whole.",
+      "figure": "gf-angle-addition"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A bigger whole.",
+      "widget": {
+        "type": "angleMeasure",
+        "targetAngle": 64,
+        "angleStart": 0,
+        "angleStep": 4,
+        "prompt": "∠AOC is a straight angle. Ray OB sits inside it with ∠AOB fixed at 116°. Drag ∠BOC until the two pieces complete the straight angle.",
+        "successFeedback": "64°, since 116 + 64 = 180. An interior ray splits a straight angle into two pieces that always add back to 180 — the same linear-pair fact, just with a ray drawn instead of two full angles.",
+        "lowFeedback": "The two pieces do not yet total 180°.",
+        "highFeedback": "The two pieces now total more than 180°."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The missing piece of a right angle.",
+      "conceptTag": "gf-angle-addition",
+      "hints": [
+        "What is the WHOLE here — what does ∠ABC measure?",
+        "∠ABC is a right angle: the two pieces must total 90°.",
+        "m∠DBC = 90 − m∠ABD."
+      ],
+      "explanationVariants": [
+        "The whole is the right angle: m∠DBC = 90 − 37 = 53.",
+        "Angle addition inside ∠ABC: 37 + m∠DBC = 90, so m∠DBC = 53."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∠ABC is a right angle, and ray BD lies in its interior with m∠ABD = 37°. Find m∠DBC in degrees.",
+        "answer": 53,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 143,
+            "feedback": "143 is 180 − 37 — that whole is a STRAIGHT angle. ∠ABC is a RIGHT angle, so the pieces total 90: 90 − 37 = 53."
+          },
+          {
+            "value": 37,
+            "feedback": "37 is the given piece ∠ABD. Nothing says the pieces are equal — only a bisector promises that. Subtract from 90 instead: 53."
+          }
+        ],
+        "fallbackFeedback": "Whole minus known piece: 90 − 37 = 53."
+      },
+      "variant": {
+        "gen": "gf-angle-add",
+        "form": "rightAnglePiece"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Angles do arithmetic too.",
+      "takeaways": [
+        "Interior ray ⇒ m∠PQR + m∠RQS = m∠PQS — piece + piece = whole.",
+        "A bisector's pieces are CONGRUENT: halve the whole, double a half.",
+        "For a missing piece, first name the whole — right angle 90°, straight angle 180°."
+      ],
+      "teaser": "Next: the pieces become algebra — 2x + 3 here, 3x − 7 there, and one equation finds them all."
+    }
+  ]
+}

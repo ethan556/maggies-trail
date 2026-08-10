@@ -1,0 +1,373 @@
+{
+  "id": "fa-04-02",
+  "slug": "mixed-to-improper",
+  "title": "Mixed to Improper",
+  "courseId": "fractions-add",
+  "chapterId": "ch4-mixed-numbers",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To go the other way, count every piece. Take 2 3/5 — that's **2 whole pizzas plus 3 more fifths.** Each whole pizza is 5 fifths, so 2 wholes = 2×5=10 fifths. Add the extra 3 fifths: 10+3=13 fifths. So 2 3/5 = **13/5.**",
+      "figure": "fa-mixed-improper"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match mixed to improper.",
+      "conceptTag": "mixed-to-improper",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each mixed number to its improper fraction.",
+        "left": [
+          {
+            "id": "e1",
+            "label": "3 1/4"
+          },
+          {
+            "id": "e2",
+            "label": "1 5/6"
+          },
+          {
+            "id": "e3",
+            "label": "4 2/3"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "13/4"
+          },
+          {
+            "id": "r2",
+            "label": "11/6"
+          },
+          {
+            "id": "r3",
+            "label": "14/3"
+          }
+        ],
+        "pairs": {
+          "e1": "r1",
+          "e2": "r2",
+          "e3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "e2",
+            "right": "r3",
+            "feedback": "14/3 belongs to 4 2/3. For 1 5/6: 1 whole is 6 sixths, plus 5 more is 11 sixths: 11/6."
+          }
+        ],
+        "missFeedback": "Multiply the whole number by the denominator (counting the whole pieces), then add the extra numerator.",
+        "successFeedback": "3×4+1=13, 1×6+5=11, 4×3+2=14 — every whole gets counted in pieces, then the extra joins in."
+      },
+      "predict": {
+        "prompt": "In 2¾, how many FOURTHS are hiding inside just the 2 wholes?",
+        "options": [
+          {
+            "id": "eight",
+            "label": "8 fourths"
+          },
+          {
+            "id": "two",
+            "label": "2 fourths"
+          },
+          {
+            "id": "six",
+            "label": "6 fourths"
+          }
+        ],
+        "outcomeId": "eight",
+        "reveal": "Every whole shatters into four fourths — two wholes carry eight of them before the ¾ even joins. That unpacking is the mixed-to-improper move."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the pieces.",
+      "conceptTag": "mixed-to-improper",
+      "explanationVariants": [
+        "2 wholes of eighths is 2×8=16 eighths; plus the extra 7 gives 16+7=23 eighths.",
+        "2×8=16, then 16+7=23."
+      ],
+      "widget": {
+        "type": "mixedRegroup",
+        "prompt": "Convert 2 7/8 to an improper fraction. Break every whole into eighths.",
+        "mode": "convert",
+        "den": 8,
+        "aWhole": 2,
+        "aNum": 7,
+        "targetForm": "improper",
+        "commonResults": [
+          {
+            "whole": 2,
+            "num": 7,
+            "feedback": "Nothing has been broken yet — this is still 2 wholes and 7 eighths. Each whole trades for 8 eighths, so both wholes must come apart."
+          },
+          {
+            "whole": 1,
+            "num": 15,
+            "feedback": "One whole is still whole. 15/8 counts the eighths from only ONE trade — break the second whole too, and 8 more eighths join: 23/8."
+          }
+        ],
+        "fallbackFeedback": "Multiply the whole number (2) by the denominator (8), then add the extra numerator (7).",
+        "successFeedback": "2 7/8 = 23/8 — each whole traded for 8 eighths, so 8 + 8 + 7 = 23 eighths in all."
+      },
+      "variant": {
+        "gen": "mixed-convert",
+        "form": "toImproper"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mixed to improper.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mixed to improper must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mixed to improper."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:mixed-to-improper",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That's the rule, named: **whole × denominator + numerator**, all over the same denominator. It isn't a trick to memorize — it's just counting every piece: the whole pizzas' worth, plus the leftover slice.",
+      "figure": "fa-mixed-improper"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply the rule.",
+      "conceptTag": "mixed-to-improper",
+      "explanationVariants": [
+        "5 wholes of halves is 5×2=10 halves; plus the extra 1 gives 11 halves.",
+        "5×2=10, then 10+1=11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 5 1/2 to an improper fraction. What is the new numerator (over 2)?",
+        "answer": 11,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is only the whole pieces (5×2) — the extra 1 still needs adding: 10+1=11."
+          },
+          {
+            "value": 6,
+            "feedback": "6 adds 5+1 instead of multiplying first. It's 5×2=10, then 10+1=11."
+          }
+        ],
+        "fallbackFeedback": "Multiply 5 by 2, then add 1."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedToImproperNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build the conversion.",
+      "conceptTag": "mixed-to-improper",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build the expression that converts 4 2/3 to an improper fraction: whole × denominator + numerator.",
+        "tokens": [
+          {
+            "id": "t4",
+            "label": "4"
+          },
+          {
+            "id": "tx",
+            "label": "×"
+          },
+          {
+            "id": "t3",
+            "label": "3"
+          },
+          {
+            "id": "tp",
+            "label": "+"
+          },
+          {
+            "id": "t2",
+            "label": "2"
+          },
+          {
+            "id": "t2wrong",
+            "label": "3"
+          }
+        ],
+        "correct": [
+          "t4",
+          "tx",
+          "t3",
+          "tp",
+          "t2"
+        ],
+        "acceptAlso": [
+          [
+            "t2",
+            "tp",
+            "t4",
+            "tx",
+            "t3"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t4",
+              "tx",
+              "t2",
+              "tp",
+              "t3"
+            ],
+            "feedback": "The multiplication should be whole × denominator (4×3), and the addition should bring in the numerator (2) — not swap their places."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Multiply the whole number by the denominator, then add the numerator.",
+        "successFeedback": "4×3+2=14 — every whole counted in thirds, plus the extra two thirds."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger whole number.",
+      "conceptTag": "mixed-to-improper",
+      "explanationVariants": [
+        "3 wholes of fourths is 3×4=12 fourths; plus the extra 1 gives 13 fourths.",
+        "3×4=12, then 12+1=13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Convert 3 1/4 to an improper fraction. What is the new numerator (over 4)?",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is only the whole pieces (3×4) — the extra 1 still needs adding: 12+1=13."
+          },
+          {
+            "value": 7,
+            "feedback": "7 adds 3+4 instead of multiplying the whole by the denominator. It's 3×4=12, then 12+1=13."
+          }
+        ],
+        "fallbackFeedback": "Multiply 3 by 4, then add 1."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedToImproperNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The board length.",
+      "conceptTag": "mixed-to-improper",
+      "hints": [
+        "Multiply the whole number (3) by the denominator (5).",
+        "That gives 15.",
+        "Add the extra numerator (2)."
+      ],
+      "explanationVariants": [
+        "3 wholes of fifths is 3×5=15 fifths; plus the extra 2 gives 17 fifths.",
+        "3×5=15, then 15+2=17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A board is 3 2/5 meters long. As an improper fraction (over 5), what is the numerator?",
+        "answer": 17,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is only the whole pieces (3×5) — the extra 2 still needs adding: 15+2=17."
+          },
+          {
+            "value": 8,
+            "feedback": "8 adds 3+5 instead of multiplying first. It's 3×5=15, then 15+2=17."
+          }
+        ],
+        "fallbackFeedback": "Multiply 3 by 5, then add 2."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedToImproperNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every piece, counted.",
+      "takeaways": [
+        "Multiply the whole number by the denominator to count the whole pieces.",
+        "Add the numerator for the extra pieces.",
+        "Keep the same denominator throughout — it's the only piece size in play."
+      ],
+      "teaser": "next: adding and subtracting mixed numbers, including when the pieces need regrouping."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mixed-to-improper",
+      "concept": {
+        "id": "rem-mi-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply the whole number by the denominator, then add the numerator.** For 2 1/3: 2×3=6 (the whole pieces), plus 1 more gives 7. So 2 1/3 = 7/3."
+      },
+      "check": {
+        "id": "rem-mi-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mixed-to-improper",
+        "explanationVariants": [
+          "2×3=6, then 6+1=7.",
+          "2 wholes of thirds is 6 thirds, plus 1 more is 7 thirds."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Convert 2 1/3 to an improper fraction.",
+          "options": [
+            {
+              "id": "a",
+              "label": "7/3",
+              "correct": true,
+              "feedback": "2×3=6, then 6+1=7."
+            },
+            {
+              "id": "b",
+              "label": "6/3",
+              "feedback": "6 is only the whole pieces (2×3) — the extra 1 still needs adding: 7/3."
+            },
+            {
+              "id": "c",
+              "label": "3/3",
+              "feedback": "That drops the whole number entirely. 2×3=6, plus 1 more is 7: 7/3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

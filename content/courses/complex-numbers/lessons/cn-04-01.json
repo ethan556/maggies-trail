@@ -1,0 +1,485 @@
+{
+ "id": "cn-04-01",
+ "slug": "roots-of-negatives-in-equations",
+ "title": "Square Roots of Negatives in Equations",
+ "courseId": "complex-numbers",
+ "chapterId": "ch4-complex-roots",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "In Algebra 1, x² = −16 was a dead end: 'no real solutions.' Now you can finish it: x = ±√(−16) = **±4i**. Every equation of the form x² = −k has two purely imaginary solutions, ±i√k — the square-root method never stalls again.",
+   "figure": "cn-square-neg"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Finish an old dead end.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What are the solutions of x² = −36?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = ±6i",
+      "correct": true,
+      "feedback": "Right — (±6i)² = 36i² = −36."
+     },
+     {
+      "id": "o2",
+      "label": "x = ±6",
+      "correct": false,
+      "feedback": "(±6)² = +36 — that solves x² = 36. The minus needs the i: ±6i."
+     },
+     {
+      "id": "o3",
+      "label": "x = 6i only",
+      "correct": false,
+      "feedback": "(−6i)² = −36 as well — squaring kills the sign, so both ±6i count."
+     },
+     {
+      "id": "o4",
+      "label": "x = ±18i",
+      "correct": false,
+      "feedback": "18 is 36 ÷ 2 — take the square ROOT of 36: 6, so ±6i."
+     }
+    ]
+   },
+   "predict": {
+    "prompt": "x² = −36. How many REAL numbers solve it?",
+    "options": [
+     {
+      "id": "none",
+      "label": "None — no real square is negative"
+     },
+     {
+      "id": "two",
+      "label": "Two — plus and minus 6"
+     },
+     {
+      "id": "one",
+      "label": "One — just −6"
+     }
+    ],
+    "outcomeId": "none",
+    "reveal": "Squaring a real number never lands below zero — positives square positive, negatives square positive, zero squares to zero. The real line offers nothing, so the solutions step off it: x = ±6i, since (6i)² = 36i² = −36."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Shifted squares work the same way: (x − 2)² = −9 gives x − 2 = ±3i, so **x = 2 ± 3i** — a real shift plus an imaginary spread. The answers come as a matched pair, one +3i and one −3i around the center 2.",
+   "figure": "cn-shifted-square"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Undo a shift.",
+   "conceptTag": "cn-neg-eq",
+   "explanationVariants": [
+    "x − 2 = ±3i, so x = 2 ± 3i — center 2, imaginary spread ±3.",
+    "Root the right side (±3i), then add 2 to undo the shift."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What are the solutions of (x − 2)² = −9?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "2"
+     },
+     {
+      "id": "t2",
+      "label": "−2"
+     },
+     {
+      "id": "t3",
+      "label": "3"
+     },
+     {
+      "id": "t4",
+      "label": "±"
+     },
+     {
+      "id": "t5",
+      "label": "i"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t4",
+     "t3",
+     "t5"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4",
+       "t3",
+       "t5"
+      ],
+      "feedback": "The (x − 2) undoes with +2, not −2 — the center is +2."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t4",
+       "t3"
+      ],
+      "feedback": "√(−9) is imaginary: ±3i, not ±3 — the right side is NEGATIVE nine."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t3",
+       "t4",
+       "t1",
+       "t5"
+      ],
+      "feedback": "The 2 is the shift (real center) and the 3 comes from the root (imaginary spread) — they don't swap."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Root both sides: x − 2 = ±√(−9) = ±3i, then move the 2 across.",
+    "successFeedback": "Right — root to ±3i, then shift back by +2."
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-neg-eq__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Shifted the other way.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What are the solutions of (x + 1)² = −25?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = −1 ± 5i",
+      "correct": true,
+      "feedback": "Right — x + 1 = ±5i, so x = −1 ± 5i."
+     },
+     {
+      "id": "o2",
+      "label": "x = 1 ± 5i",
+      "correct": false,
+      "feedback": "The +1 inside undoes with −1 outside: the center is −1."
+     },
+     {
+      "id": "o3",
+      "label": "x = −1 ± 5",
+      "correct": false,
+      "feedback": "The right side is −25, so the root is ±5i — imaginary, not ±5."
+     },
+     {
+      "id": "o4",
+      "label": "x = ±5i",
+      "correct": false,
+      "feedback": "That drops the shift — the (x + 1) moves the center to −1: x = −1 ± 5i."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Isolate first.",
+   "conceptTag": "cn-neg-eq",
+   "explanationVariants": [
+    "x² + 49 = 0 means x² = −49, so x = ±7i.",
+    "Move the 49 across, then root the negative: ±i√49 = ±7i."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "What are the solutions of x² + 49 = 0?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "±"
+     },
+     {
+      "id": "t2",
+      "label": "7"
+     },
+     {
+      "id": "t3",
+      "label": "49"
+     },
+     {
+      "id": "t4",
+      "label": "i"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2",
+     "t4"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t2"
+      ],
+      "feedback": "(±7)² = +49, so x² + 49 would be 98, not 0 — the minus demands i: ±7i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4"
+      ],
+      "feedback": "(−7i)² = −49 too — a quadratic hands you BOTH: ±7i."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t3",
+       "t4"
+      ],
+      "feedback": "Root the 49 first: √49 = 7, so ±7i."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "x² = −49 roots to BOTH values: ±√49 · i = ±7i.",
+    "successFeedback": "Right — x² = −49 gives ±7i."
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-neg-eq__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Verify by substitution.",
+   "conceptTag": "cn-neg-eq",
+   "explanationVariants": [
+    "(3i)² = 9i² = −9, and −9 + 9 = 0 — the substitution closes exactly.",
+    "Checking a complex root works like any check: square it, watch i² flip the sign, add."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Is x = 3i a solution of x² + 9 = 0?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "yes — (3i)² = −9, and −9 + 9 = 0",
+      "correct": true,
+      "feedback": "Right — complex roots check by substitution just like real ones."
+     },
+     {
+      "id": "o2",
+      "label": "no — (3i)² = 9, and 9 + 9 = 18",
+      "correct": false,
+      "feedback": "(3i)² = 9i² = −9, not +9 — the i² flips the sign, and the check closes at 0."
+     },
+     {
+      "id": "o3",
+      "label": "no — you can't substitute imaginary numbers",
+      "correct": false,
+      "feedback": "Substitution works for ANY number — complex arithmetic handles the rest: (3i)² + 9 = 0. ✓"
+     },
+     {
+      "id": "o4",
+      "label": "yes — because 3² = 9",
+      "correct": false,
+      "feedback": "The reason matters: it's (3i)² = −9 (note the MINUS) that cancels the +9."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-neg-eq__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Isolate, root, shift.",
+   "conceptTag": "cn-neg-eq",
+   "explanationVariants": [
+    "(x − 5)² = −4, so x − 5 = ±2i and x = 5 ± 2i.",
+    "Move the 4 across first — the square equals NEGATIVE four, so the spread is imaginary."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Solve (x − 5)² + 4 = 0.",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x ="
+     },
+     {
+      "id": "t1",
+      "label": "5"
+     },
+     {
+      "id": "t2",
+      "label": "−5"
+     },
+     {
+      "id": "t3",
+      "label": "±"
+     },
+     {
+      "id": "t4",
+      "label": "2"
+     },
+     {
+      "id": "t5",
+      "label": "4"
+     },
+     {
+      "id": "t6",
+      "label": "i"
+     },
+     {
+      "id": "t7",
+      "label": "x = 3"
+     },
+     {
+      "id": "t8",
+      "label": "or"
+     },
+     {
+      "id": "t9",
+      "label": "x = 7"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t3",
+     "t4",
+     "t6"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t3",
+       "t4",
+       "t6"
+      ],
+      "feedback": "(x − 5) undoes with +5 — the center is +5."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t3",
+       "t5",
+       "t6"
+      ],
+      "feedback": "Root the 4: √4 = 2, so the spread is ±2i, not ±4i."
+     },
+     {
+      "sequence": [
+       "t7",
+       "t8",
+       "t9"
+      ],
+      "feedback": "That solves (x − 5)² = +4 — here the square equals −4, so the spread is imaginary: 5 ± 2i."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Isolate the square: (x − 5)² = −4, root to ±2i, then shift by 5.",
+    "successFeedback": "Right — (x − 5)² = −4 roots to ±2i; shift back by +5."
+   },
+   "hints": [
+    "Isolate the square: (x − 5)² = −4.",
+    "Root a negative: x − 5 = ±2i.",
+    "Undo the shift: x = 5 ± 2i."
+   ],
+   "variant": {
+    "gen": "a2-complex",
+    "form": "cn-neg-eq__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "x² = −k finally has answers: ±i√k, shifted by the square's center.",
+   "takeaways": [
+    "x² = −k gives x = ±i√k — two purely imaginary roots.",
+    "(x − h)² = −k gives x = h ± i√k — real center h, imaginary spread.",
+    "Complex roots verify by substitution, with i² = −1 doing the work."
+   ],
+   "teaser": "Next: the quadratic formula meets a negative discriminant — and keeps going."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "cn-neg-eq",
+   "concept": {
+    "id": "rem-cn0401-c",
+    "kind": "concept",
+    "body": "x² = −k roots to ±i√k. For x² = −4: √4 = 2, so the solutions are ±2i."
+   },
+   "check": {
+    "id": "rem-cn0401-k",
+    "kind": "check",
+    "body": "One clean root.",
+    "conceptTag": "cn-neg-eq",
+    "explanationVariants": [
+     "x = ±2i, since (±2i)² = 4i² = −4.",
+     "Root the 4 to get 2; the minus supplies the i."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What are the solutions of x² = −4?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x = ±2i",
+       "correct": true,
+       "feedback": "Right — (±2i)² = −4."
+      },
+      {
+       "id": "o2",
+       "label": "x = ±2",
+       "correct": false,
+       "feedback": "(±2)² = +4 — the negative right side needs i: ±2i."
+      },
+      {
+       "id": "o3",
+       "label": "x = ±4i",
+       "correct": false,
+       "feedback": "Take the ROOT of 4 first: √4 = 2, so ±2i."
+      },
+      {
+       "id": "o4",
+       "label": "x = 2i only",
+       "correct": false,
+       "feedback": "(−2i)² = −4 too — both signs solve it."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,298 @@
+{
+  "id": "tg-03-01",
+  "slug": "tangents-shape",
+  "title": "Tangent: the Wave That Isn't",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch3-tangent-graph",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Tangent is a QUOTIENT: tan x = sin x / cos x. Wherever **cos x = 0**, the quotient blows up — a **vertical asymptote** (recall the portrait rule: bottom's zeros build walls). Between walls, tangent sweeps from −∞ up through 0 to +∞: a climbing branch, repeated forever.",
+      "figure": "tg-tangent-branches"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Where tangent breaks.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 90° and watch the x-coordinate as you go.",
+        "successFeedback": "At 90° the x-coordinate hits 0 — and tan θ = y/x has just divided by zero. That is the wall in the tangent graph: not a quirk of the curve, but the moment the cosine underneath it vanishes. Tangent's asymptotes sit exactly where cosine has its zeros.",
+        "lowFeedback": "Keep rotating — x is still shrinking toward 0.",
+        "highFeedback": "Past 90°, and x has gone negative — tangent has already jumped the wall."
+      },
+      "predict": {
+        "prompt": "When the point moves to 90°, which coordinate becomes 1?",
+        "options": [
+          {
+            "id": "x",
+            "label": "The horizontal coordinate, cosine"
+          },
+          {
+            "id": "y",
+            "label": "The vertical coordinate, sine"
+          },
+          {
+            "id": "both",
+            "label": "Both coordinates"
+          }
+        ],
+        "outcomeId": "y",
+        "reveal": "At 90°, the unit-circle point is (0,1), so sine is 1 and cosine is 0."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move the angle and coordinate the circle point, triangle ratios, and trigonometric values.",
+        "invariants": [
+          "radius-remains-one",
+          "coordinates-are-cosine-and-sine"
+        ],
+        "misconceptions": [
+          "sine-is-horizontal",
+          "angle-size-is-arc-height"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "trig-graphs-inverses-unitCircleExplore",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this unitCircleExplore away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why are cosine and sine the point's coordinates?",
+          "options": [
+            {
+              "id": "projection",
+              "label": "They are the horizontal and vertical projections of a radius of length one.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "labels",
+              "label": "They are arbitrary labels attached to the axes.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "arc",
+              "label": "They both equal the arc length.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "tg-tan-shape"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "An anchor between the walls.",
+      "conceptTag": "tg-tan-shape",
+      "explanationVariants": [
+        "tan(π/4) = sin(π/4)/cos(π/4) = 1 — the two exact values are equal, so their ratio is 1.",
+        "At π/4 the unit-circle point has equal coordinates (√2/2, √2/2): tangent, their ratio, is 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is tan(π/4)?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.71,
+            "feedback": "0.71 ≈ √2/2 is sin(π/4) alone. Tangent DIVIDES: (√2/2)/(√2/2) = 1."
+          },
+          {
+            "value": 0.5,
+            "feedback": "0.5 is sin(π/6). At π/4, sine and cosine are equal, so the ratio is exactly 1."
+          }
+        ],
+        "fallbackFeedback": "tan(π/4) = (√2/2)/(√2/2) = 1."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-shape__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Tangent's period is **π**, not 2π: after half a turn, BOTH sin and cos flip sign (recall sin(x + π) = −sin x, cos(x + π) = −cos x), and the two minuses cancel in the quotient. So walls stand at π/2 + kπ, and each branch is one π-wide copy.",
+      "figure": "tg-tangent-period"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use the shorter period.",
+      "conceptTag": "tg-tan-shape",
+      "explanationVariants": [
+        "tan(5π/4) = tan(π/4 + π) = tan(π/4) = 1 — one full tangent-period later.",
+        "At 5π/4 both coordinates are −√2/2; the ratio of two equal negatives is +1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is tan(5π/4)?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "Both sin and cos are negative at 5π/4 — their RATIO is positive: (−√2/2)/(−√2/2) = +1."
+          },
+          {
+            "value": 0,
+            "feedback": "5π/4 is not a zero of sine. It's π/4 plus one period: tan = 1."
+          }
+        ],
+        "fallbackFeedback": "tan(5π/4) = tan(π/4) = 1 (period π)."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-shape__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Zeros of tangent.",
+      "conceptTag": "tg-tan-shape",
+      "explanationVariants": [
+        "tan = 0 where the TOP sin x = 0: at 0, π, 2π, … — the multiples of π.",
+        "A quotient is zero only when its numerator is: sin's zeros, x = kπ."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where does tan x equal 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "At the multiples of π (0, π, 2π, …)",
+            "correct": true,
+            "feedback": "Right — the numerator sin x is zero there while cos x = ±1 keeps the quotient defined."
+          },
+          {
+            "id": "o2",
+            "label": "At π/2, 3π/2, …",
+            "feedback": "Those are the WALLS (cos = 0), where tangent is undefined — the opposite of zero."
+          },
+          {
+            "id": "o3",
+            "label": "Nowhere — tangent never touches 0",
+            "feedback": "tan 0 = 0/1 = 0: each climbing branch crosses zero at its center."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-shape__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count the walls.",
+      "conceptTag": "tg-tan-shape",
+      "explanationVariants": [
+        "Walls at π/2 + kπ: in (0, 3π) they are π/2, 3π/2, 5π/2 — three walls.",
+        "3π spans three periods of tangent; one wall per period: 3."
+      ],
+      "hints": [
+        "Walls sit at π/2, then every π after.",
+        "List them: π/2, 3π/2, 5π/2, 7π/2, … Which are below 3π ≈ 9.42?",
+        "7π/2 ≈ 11.0 is too big. Count the survivors."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many vertical asymptotes does tan x have strictly between 0 and 3π?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 would be walls every π/2 — but they're spaced a FULL π apart: π/2, 3π/2, 5π/2 → three."
+          },
+          {
+            "value": 2,
+            "feedback": "Don't stop early: 5π/2 = 2.5π is still below 3π. Three walls."
+          },
+          {
+            "value": 4,
+            "feedback": "7π/2 = 3.5π exceeds 3π. Only π/2, 3π/2, 5π/2 qualify: three."
+          }
+        ],
+        "fallbackFeedback": "π/2, 3π/2, 5π/2: three walls."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-shape__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A ladder of branches.",
+      "takeaways": [
+        "tan = sin/cos: walls where cos = 0, zeros where sin = 0.",
+        "Period π — the double sign-flip cancels in the quotient.",
+        "Each branch climbs from −∞ through 0 to +∞."
+      ],
+      "teaser": "Next: exact values and what happens pressed up against a wall."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-tan-shape",
+      "concept": {
+        "id": "rem-tg0301-c",
+        "kind": "concept",
+        "body": "Tangent's map: zeros at kπ (top's zeros), walls at π/2 + kπ (bottom's zeros), one climbing branch per π."
+      },
+      "check": {
+        "id": "rem-tg0301-k",
+        "kind": "check",
+        "body": "Zero or wall?",
+        "conceptTag": "tg-tan-shape",
+        "explanationVariants": [
+          "x = π is a multiple of π: sin π = 0, cos π = −1 — tangent is 0 there, not undefined.",
+          "π is a branch CENTER (zero), halfway between the walls π/2 and 3π/2."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "At x = π, tangent is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "zero",
+              "correct": true,
+              "feedback": "Right — tan π = 0/(−1) = 0."
+            },
+            {
+              "id": "o2",
+              "label": "undefined (a wall)",
+              "feedback": "Walls need cos = 0; cos π = −1. The wall positions are π/2 + kπ."
+            },
+            {
+              "id": "o3",
+              "label": "equal to 1",
+              "feedback": "tan = 1 happens at π/4 + kπ. At π itself, sin π = 0 makes the quotient 0."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

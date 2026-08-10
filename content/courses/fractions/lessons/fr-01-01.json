@@ -1,0 +1,380 @@
+{
+  "id": "fr-01-01",
+  "slug": "cutting-into-equal-parts",
+  "title": "Cutting into Equal Parts",
+  "courseId": "fractions",
+  "chapterId": "ch1-whats-a-fraction",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A fraction starts with a **fair cut**. Cut a bar into pieces that all match, and each piece earns a name: half, third, fourth. Cut it into four random chunks? Those are just… chunks. Fairness is what makes the names mean something.",
+      "figure": "frac-equal-vs-unequal"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Be the fairness inspector.",
+      "conceptTag": "equal-parts",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every bar that shows a FAIR cut into fourths.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "barA",
+            "x": 25,
+            "y": 25,
+            "label": "Bar A: four matching pieces",
+            "icon": "▂|▂|▂|▂",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "barB",
+            "x": 75,
+            "y": 25,
+            "label": "Bar B: four pieces, one much bigger",
+            "icon": "▁|▅|▂|▁",
+            "count": 1,
+            "feedback": "Four pieces, yes — but they don't match. The big chunk isn't 'a fourth'; unfair cuts earn no names."
+          },
+          {
+            "id": "barC",
+            "x": 25,
+            "y": 75,
+            "label": "Bar C: three matching pieces",
+            "icon": "▂|▂|▂",
+            "count": 1,
+            "feedback": "Beautifully fair — but that's a cut into THIRDS. Fourths need exactly four matching pieces."
+          },
+          {
+            "id": "barD",
+            "x": 75,
+            "y": 75,
+            "label": "Bar D: four matching pieces",
+            "icon": "▂|▂|▂|▂",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Fourths needs BOTH things: exactly four pieces AND all of them matching.",
+        "successFeedback": "Bars A and D pass: four pieces, all equal. B fails the fairness test; C fails the count."
+      },
+      "predict": {
+        "prompt": "What makes a cut into fourths FAIR — having four pieces, or having four EQUAL pieces?",
+        "options": [
+          {
+            "id": "equal",
+            "label": "Four equal pieces"
+          },
+          {
+            "id": "four",
+            "label": "Any four pieces"
+          },
+          {
+            "id": "big",
+            "label": "Four pieces with one big one"
+          }
+        ],
+        "outcomeId": "equal",
+        "reveal": "Fourths only count when every piece matches — four pieces of different sizes is a cut, but it isn't fourths."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents equal parts.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for equal parts must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines equal parts."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions:equal-parts",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The fairness rule, straight up.",
+      "conceptTag": "equal-parts",
+      "explanationVariants": [
+        "Thirds means three EQUAL shares — a giant piece and two slivers are three pieces, but none of them is 'a third.'",
+        "The name is a promise about size: every third of the same sandwich must be the same amount."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A sandwich is cut into 3 pieces. When is each piece a THIRD?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Only when the 3 pieces are equal",
+            "correct": true,
+            "feedback": "Fair shares or no name — three matching pieces make thirds."
+          },
+          {
+            "id": "b",
+            "label": "Always — three pieces means thirds",
+            "feedback": "Cut one giant piece and two slivers: still three pieces, but calling a sliver 'a third' would break the name's promise. Equal is the rule."
+          },
+          {
+            "id": "c",
+            "label": "Only if the sandwich is square",
+            "feedback": "Shape doesn't matter — round pizzas, long subs, square pans all cut into thirds. EQUAL matters."
+          },
+          {
+            "id": "d",
+            "label": "Never — sandwiches can't be thirds",
+            "feedback": "Anything you can cut fairly can be fractioned. Three equal shares of a sandwich are thirds, deliciously."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equal-parts"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **names come from the count**: 2 fair pieces make halves, 3 make thirds, 4 make fourths, 6 make sixths, 8 make eighths. Notice something sneaky: more pieces from the same bar means each piece gets SMALLER. Hold that thought — a whole chapter is coming for it.",
+      "figure": "frac-fourths-blank"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the pieces.",
+      "conceptTag": "equal-parts",
+      "explanationVariants": [
+        "Six equal pieces → each is a sixth. The name simply reads the piece count.",
+        "Careful with cuts vs pieces: 5 snips across a ribbon make 6 pieces — the name follows the PIECES."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A ribbon is fair-cut into 6 pieces. What is each piece called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A sixth",
+            "correct": true,
+            "feedback": "Six equal pieces, each one a sixth — the count names the piece."
+          },
+          {
+            "id": "b",
+            "label": "A fifth",
+            "feedback": "The cuts-vs-pieces trap! It took 5 snips to make them — but there are SIX pieces, and pieces get the name."
+          },
+          {
+            "id": "c",
+            "label": "A sixer",
+            "feedback": "Close in spirit! The math name is 'sixth' — the same family as third and fourth."
+          },
+          {
+            "id": "d",
+            "label": "A half",
+            "feedback": "Halves come from a 2-piece cut. Six pieces are far finer — each is a sixth."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equal-parts",
+        "form": "nameThePiece"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Inspector round two: sort the cuts.",
+      "conceptTag": "equal-parts",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Fair cut (pieces earn names) or unfair cut (just chunks)?",
+        "buckets": [
+          {
+            "id": "fair",
+            "label": "Fair — pieces earn names",
+            "icon": "⚖️"
+          },
+          {
+            "id": "unfair",
+            "label": "Unfair — just chunks",
+            "icon": "🔪"
+          }
+        ],
+        "items": [
+          {
+            "id": "c1x",
+            "label": "A bar in 3 same-size pieces",
+            "bucketId": "fair",
+            "feedback": "Three matching pieces — honest thirds."
+          },
+          {
+            "id": "c2x",
+            "label": "A bar in 3 pieces, one huge",
+            "bucketId": "unfair",
+            "feedback": "The huge one breaks the match — three chunks, no names."
+          },
+          {
+            "id": "c3x",
+            "label": "A circle in 4 matching wedges",
+            "bucketId": "fair",
+            "feedback": "Four equal wedges — fourths, round edition."
+          },
+          {
+            "id": "c4x",
+            "label": "A square in 2 pieces, big and small",
+            "bucketId": "unfair",
+            "feedback": "Two pieces that don't match aren't halves — a half must be exactly half."
+          }
+        ],
+        "missFeedback": "One test: do ALL the pieces match? Yes → names. No → chunks.",
+        "successFeedback": "Equal pieces earn names; unequal pieces are just chunks, whatever their count."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "But WHY the fuss about equal?",
+      "conceptTag": "equal-parts",
+      "explanationVariants": [
+        "A name like 'a fourth' is a promise: the same amount every time, for that whole. Unequal pieces would make the promise meaningless.",
+        "Fractions let us talk about amounts without measuring — that only works if the pieces are guaranteed to match."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do fractions DEMAND equal pieces?",
+        "options": [
+          {
+            "id": "a",
+            "label": "So a piece's name tells its true size — 'a fourth' must always mean the same amount of that whole",
+            "correct": true,
+            "feedback": "The name is a size guarantee. Equal pieces are what make the guarantee real."
+          },
+          {
+            "id": "b",
+            "label": "To make the picture look tidy",
+            "feedback": "Tidiness is a side effect. The real reason is the promise: anyone hearing 'a fourth' must know exactly how much that is."
+          },
+          {
+            "id": "c",
+            "label": "They don't — close enough counts",
+            "feedback": "Close-enough breaks everything downstream: comparing, adding, sharing. The equal rule is what makes fraction math trustworthy."
+          },
+          {
+            "id": "d",
+            "label": "Because unequal pieces are impossible to cut",
+            "feedback": "Unequal pieces are easy to cut — kitchens prove it daily! They're just not allowed to wear fraction names."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equal-parts",
+        "form": "whyEqualEvidence"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The brownie pan puzzle.",
+      "conceptTag": "equal-parts",
+      "hints": [
+        "Cuts and pieces are different counts.",
+        "Picture it: 1 cut makes 2 strips. 2 cuts make 3.",
+        "Each new cut adds exactly one more strip."
+      ],
+      "explanationVariants": [
+        "Three cuts make FOUR strips (cuts + 1), all equal — so each strip is a fourth.",
+        "Walk it up: 1 cut → 2 strips, 2 cuts → 3 strips, 3 cuts → 4 strips. Pieces always beat cuts by one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Maya makes 3 straight cuts across a brownie pan, spacing them so all the strips match. How many equal strips does she get?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "strips",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 counts the CUTS. Watch one cut make two pieces — every cut after that adds one more. Three cuts leave four strips."
+          },
+          {
+            "value": 6,
+            "feedback": "6 doubled the cuts — but only the FIRST cut makes two pieces; each later cut adds just one. Count up: 2, 3, 4."
+          }
+        ],
+        "fallbackFeedback": "Start at one whole pan and add a strip per cut: 3 cuts → 4 strips."
+      },
+      "variant": {
+        "gen": "equal-parts",
+        "form": "cutsToPieces"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You're a certified fairness inspector.",
+      "takeaways": [
+        "Fair cuts earn names; unequal pieces are just chunks.",
+        "The piece COUNT gives the name: 4 equal pieces → fourths.",
+        "Count pieces, not cuts — pieces always beat straight cuts by one."
+      ],
+      "teaser": "one piece is about to get famous: the unit fraction, the building block of everything."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "equal-parts",
+      "concept": {
+        "id": "rem-ep-c",
+        "kind": "concept",
+        "body": "Quick rewind. The fairness test: **imagine stacking the pieces**. If every piece lines up exactly with every other, the cut is fair and the pieces earn a name. One piece pokes out? Chunks — no name."
+      },
+      "check": {
+        "id": "rem-ep-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "equal-parts",
+        "explanationVariants": [
+          "One bigger piece fails the stack test — the four pieces don't match, so none is 'a fourth.'",
+          "Fourths is a size promise; a mismatched piece breaks it for the whole set."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A pie is cut into 4 pieces, but one is bigger than the rest. Are the pieces fourths?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Not fourths — the pieces don't match",
+              "correct": true,
+              "feedback": "The stack test fails, so the name is off the table. Four chunks, no fourths."
+            },
+            {
+              "id": "b",
+              "label": "Yes — four pieces are always fourths",
+              "feedback": "Count alone isn't enough. Stack them: the big one pokes out, and the name's size-promise breaks."
+            },
+            {
+              "id": "c",
+              "label": "Only the big one is a fourth",
+              "feedback": "Funny idea — but if pieces differ, NONE gets the name. Fourths describes a matching set."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

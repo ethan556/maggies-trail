@@ -1,0 +1,407 @@
+{
+ "id": "md-05-02",
+ "slug": "the-missing-side",
+ "title": "The Missing Side",
+ "courseId": "measurement-data",
+ "chapterId": "ch5-perimeter",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Sometimes you know the fence but not every side. Work backwards: **take the known sides off the perimeter, and whatever's left belongs to the missing ones.** If the fence is 20 and three sides add to 14, the last side is 20 − 14 = 6.",
+   "figure": "md3-missing-side"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Peel off the known sides.",
+   "conceptTag": "missing-side",
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "perimeterMissing",
+    "perimeter": {
+     "shape": "triangle",
+     "perimeter": 20,
+     "knownSides": [
+      7,
+      6
+     ],
+     "unknownMultiplicity": 1
+    },
+    "prompt": "A triangle's perimeter is 20 cm. Two sides are 7 cm and 6 cm. Find the third.",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [],
+    "authoredStages": [
+     {
+      "title": "Start with the whole fence",
+      "body": "The perimeter is 20 cm — that's every side added together. The third side is hiding inside that 20."
+     },
+     {
+      "title": "Take off what you know",
+      "body": "Peel off the two known sides: 20 − 7 − 6. That removes their share of the fence."
+     },
+     {
+      "title": "What's left is the answer",
+      "body": "20 − 7 − 6 = 7 cm. The missing side is 7 cm — check it: 7 + 6 + 7 = 20. ✓"
+     }
+    ],
+    "requiredStageKeys": [
+     "perimeter:total",
+     "perimeter:known",
+     "perimeter:remaining"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Peel the known sides off the perimeter; what remains is the missing side.",
+    "explorationFeedback": "Keep stepping — the missing side appears in the last panel.",
+    "fallbackFeedback": "Keep stepping — the missing side appears in the last panel.",
+    "answerMode": "explore"
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find the third side.",
+   "conceptTag": "missing-side",
+   "explanationVariants": [
+    "Peel the knowns off the fence: 15 − 5 − 4 = 6 cm for the third side.",
+    "Check it: 5 + 4 + 6 = 15 ✓ — the three sides rebuild the perimeter."
+   ],
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "perimeterMissing",
+    "perimeter": {
+     "shape": "triangle",
+     "perimeter": 15,
+     "knownSides": [
+      5,
+      4
+     ],
+     "unknownMultiplicity": 1
+    },
+    "prompt": "A triangle's perimeter is 15 cm. Two sides measure 5 cm and 4 cm. How long is the third side?",
+    "answerUnit": "cm",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 9,
+      "feedback": "9 added the two known sides (5 + 4). To find the MISSING one, take them OFF the perimeter: 15 − 5 − 4."
+     },
+     {
+      "value": 11,
+      "feedback": "11 removed just one side (15 − 4). Both known sides come off: 15 − 5 − 4 = 6."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "perimeter:total",
+     "perimeter:known",
+     "perimeter:remaining"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Perimeter minus the known sides: 15 − 5 − 4.",
+    "explorationFeedback": "Inspect every required geometric constraint before checking.",
+    "fallbackFeedback": "Perimeter minus the known sides: 15 − 5 − 4.",
+    "answerMode": "numeric"
+   },
+   "variant": {
+    "gen": "missing-side"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Rectangles hide a shortcut. Their sides come in **matching pairs**, so once you peel off BOTH known-length sides, split what's left between the two equal missing sides. And a square is simplest of all: **side = perimeter ÷ 4.**",
+   "figure": "md3-missing-side"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "One square side.",
+   "conceptTag": "missing-side",
+   "explanationVariants": [
+    "A square's four sides share the fence equally: 36 ÷ 4 = 9 cm each.",
+    "Check: 9 + 9 + 9 + 9 = 36 ✓ — the fence splits four ways."
+   ],
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "perimeterMissing",
+    "perimeter": {
+     "shape": "square",
+     "perimeter": 36,
+     "knownSides": [],
+     "unknownMultiplicity": 4
+    },
+    "prompt": "A square has a perimeter of 36 cm. How long is ONE side?",
+    "answerUnit": "cm",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 32,
+      "feedback": "32 subtracted 4 from 36 — but the fence isn't 4 longer than a side, it's 4 sides LONG. Split it: 36 ÷ 4."
+     },
+     {
+      "value": 18,
+      "feedback": "18 halved the fence — that's TWO sides' worth. A square's fence splits FOUR ways: 36 ÷ 4 = 9."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "perimeter:total",
+     "perimeter:known",
+     "perimeter:remaining",
+     "perimeter:split"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "Four equal sides share the fence: 36 ÷ 4.",
+    "explorationFeedback": "Inspect every required geometric constraint before checking.",
+    "fallbackFeedback": "Four equal sides share the fence: 36 ÷ 4.",
+    "answerMode": "numeric"
+   },
+   "variant": {
+    "gen": "missing-side",
+    "form": "squareSide"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The rectangle's missing width.",
+   "conceptTag": "missing-side",
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "perimeterMissing",
+    "perimeter": {
+     "shape": "rectangle",
+     "perimeter": 20,
+     "knownSides": [
+      6,
+      6
+     ],
+     "unknownMultiplicity": 2
+    },
+    "prompt": "A rectangle's perimeter is 20 cm, and one side (a length) is 6 cm. Find the width.",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [],
+    "authoredStages": [
+     {
+      "title": "Two of the sides are known",
+      "body": "A rectangle has TWO lengths. If one length is 6, the opposite one is 6 too — that's 6 + 6 = 12 cm of fence used."
+     },
+     {
+      "title": "What's left is BOTH widths",
+      "body": "Take the lengths off: 20 − 12 = 8 cm. But that 8 covers TWO widths, not one."
+     },
+     {
+      "title": "Split it between the two widths",
+      "body": "8 shared by 2 widths: 8 ÷ 2 = 4 cm each. Check: 6 + 4 + 6 + 4 = 20. ✓"
+     }
+    ],
+    "requiredStageKeys": [
+     "perimeter:total",
+     "perimeter:known",
+     "perimeter:remaining",
+     "perimeter:split"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "Peel off BOTH lengths, then split the rest between the TWO equal widths.",
+    "explorationFeedback": "Keep stepping — the last panel splits the leftover.",
+    "fallbackFeedback": "Keep stepping — the last panel splits the leftover.",
+    "answerMode": "explore"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Find the width.",
+   "conceptTag": "missing-side",
+   "explanationVariants": [
+    "Both lengths are 5, using 10 of the fence; 18 − 10 = 8 left for two widths, so each is 8 ÷ 2 = 4 cm.",
+    "Peel both lengths (5 + 5 = 10), split the remaining 8 between two widths: 4 cm each."
+   ],
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "perimeterMissing",
+    "perimeter": {
+     "shape": "rectangle",
+     "perimeter": 18,
+     "knownSides": [
+      5,
+      5
+     ],
+     "unknownMultiplicity": 2
+    },
+    "prompt": "A rectangle's perimeter is 18 cm and its length is 5 cm. What is its width?",
+    "answerUnit": "cm",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 13,
+      "feedback": "13 took one length off (18 − 5). But a rectangle has TWO lengths (5 + 5 = 10) — and what's left covers TWO widths."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is what's left after both lengths (18 − 10) — but that covers BOTH widths. Each width is half of it: 8 ÷ 2 = 4."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "perimeter:total",
+     "perimeter:known",
+     "perimeter:remaining",
+     "perimeter:split"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "Take off both lengths (5 + 5), then split the rest between two widths.",
+    "explorationFeedback": "Inspect every required geometric constraint before checking.",
+    "fallbackFeedback": "Take off both lengths (5 + 5), then split the rest between two widths.",
+    "answerMode": "numeric"
+   },
+   "variant": {
+    "gen": "missing-side",
+    "form": "rectangleWidth"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The pen with a known post.",
+   "conceptTag": "missing-side",
+   "hints": [
+    "A rectangle: two long sides, two short sides.",
+    "Both long sides are 10, using 20 m of the 26 m fence.",
+    "What's left covers TWO short sides — split it."
+   ],
+   "explanationVariants": [
+    "Both lengths (10 + 10 = 20) come off the 26 m fence, leaving 6 m for two widths: 6 ÷ 2 = 3 m each.",
+    "26 − 20 = 6 for two short sides, so each short side is 3 m. Check: 10 + 3 + 10 + 3 = 26. ✓"
+   ],
+   "widget": {
+    "type": "geometricConstraintLab",
+    "task": "perimeterMissing",
+    "perimeter": {
+     "shape": "rectangle",
+     "perimeter": 26,
+     "knownSides": [
+      10,
+      10
+     ],
+     "unknownMultiplicity": 2
+    },
+    "prompt": "A rectangular pen uses 26 m of fencing. Its two long sides are each 10 m. How long is each SHORT side?",
+    "answerUnit": "m",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 6,
+      "feedback": "6 is what's left after both long sides (26 − 20) — but that covers TWO short sides. Each is half: 6 ÷ 2 = 3."
+     },
+     {
+      "value": 16,
+      "feedback": "16 took just one long side off (26 − 10). Both long sides come off (10 + 10 = 20), then split the rest."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "perimeter:total",
+     "perimeter:known",
+     "perimeter:remaining",
+     "perimeter:split"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "Peel both long sides (10 + 10), then split the remaining fence between two short sides.",
+    "explorationFeedback": "Inspect every required geometric constraint before checking.",
+    "fallbackFeedback": "Peel both long sides (10 + 10), then split the remaining fence between two short sides.",
+    "answerMode": "numeric"
+   },
+   "variant": {
+    "gen": "missing-side",
+    "form": "penWidth"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "You can find any missing side.",
+   "takeaways": [
+    "Missing side = perimeter minus the sides you know.",
+    "Rectangle: peel both known sides, then split the rest between the equal pair.",
+    "Square: side = perimeter ÷ 4."
+   ],
+   "teaser": "final lesson: the twist — same fence can hold different amounts of space."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "missing-side",
+   "concept": {
+    "id": "rem-mn-c",
+    "kind": "concept",
+    "body": "Quick rewind. Finding a missing side is like **change from a purchase** — the perimeter is what you paid, the known sides are what you spent, and the missing side is the change left over. Take the knowns off the total; what remains is the answer."
+   },
+   "check": {
+    "id": "rem-mn-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "missing-side",
+    "explanationVariants": [
+     "Peel the known sides off: 12 − 3 − 4 = 5 cm.",
+     "Check: 3 + 4 + 5 = 12 ✓ — the sides rebuild the fence."
+    ],
+    "widget": {
+     "type": "geometricConstraintLab",
+     "task": "perimeterMissing",
+     "perimeter": {
+      "shape": "triangle",
+      "perimeter": 12,
+      "knownSides": [
+       3,
+       4
+      ],
+      "unknownMultiplicity": 1
+     },
+     "prompt": "A triangle's perimeter is 12 cm; two sides are 3 cm and 4 cm. The third side is…",
+     "tolerance": 0,
+     "choices": [
+      {
+       "id": "a",
+       "label": "5 cm",
+       "feedback": "12 − 3 − 4 = 5.",
+       "numberValue": 5
+      },
+      {
+       "id": "b",
+       "label": "7 cm",
+       "feedback": "7 added the known sides (3 + 4). To find the missing one, take them OFF: 12 − 3 − 4 = 5.",
+       "claim": "misconception:b"
+      },
+      {
+       "id": "c",
+       "label": "9 cm",
+       "feedback": "9 removed just one side (12 − 3). Both known sides come off: 12 − 3 − 4 = 5.",
+       "claim": "misconception:c"
+      }
+     ],
+     "numericErrors": [],
+     "authoredStages": [],
+     "requiredStageKeys": [
+      "perimeter:total",
+      "perimeter:known",
+      "perimeter:remaining"
+     ],
+     "requiredExplorations": 3,
+     "successFeedback": "12 − 3 − 4 = 5.",
+     "explorationFeedback": "Inspect every required geometric constraint before checking.",
+     "fallbackFeedback": "Choose the conclusion proved by the geometric constraints.",
+     "answerMode": "choice"
+    }
+   }
+  }
+ ]
+}

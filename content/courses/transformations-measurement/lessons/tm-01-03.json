@@ -1,0 +1,366 @@
+{
+  "id": "tm-01-03",
+  "slug": "turning-with-rotations",
+  "title": "Turning with Rotations",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch1-rigid-transformations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **rotation** turns a shape around a center point by an angle. Around the origin, a **180° turn** flips both signs: (x, y) → (−x, −y). A point and its 180° image sit on opposite sides of the center.",
+      "figure": "rigid-transformations"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rotate 180°.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rotate (2, 3) by 180° around the origin. What is the image?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(−2, −3)",
+            "correct": true,
+            "feedback": "Right — a 180° turn flips both signs: (−2, −3)."
+          },
+          {
+            "id": "b",
+            "label": "(2, −3)",
+            "correct": false,
+            "feedback": "That flips only y (a reflection) — a 180° rotation flips BOTH: (−2, −3)."
+          },
+          {
+            "id": "c",
+            "label": "(−2, 3)",
+            "correct": false,
+            "feedback": "That flips only x — a 180° rotation flips BOTH signs: (−2, −3)."
+          },
+          {
+            "id": "d",
+            "label": "(3, 2)",
+            "correct": false,
+            "feedback": "A 180° rotation flips both signs, not swaps coordinates: (−2, −3)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **90° turn counterclockwise** around the origin sends (x, y) → (−y, x): swap the coordinates, then flip the sign of the new first one. For (2, 3): swap to (3, 2), flip the first to get (−3, 2).",
+      "figure": "tm-rotation-90"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Rotate 90° counterclockwise.",
+      "conceptTag": "tm-rotation",
+      "explanationVariants": [
+        "90° CCW sends (x, y) → (−y, x): (4, 1) → (−1, 4).",
+        "Swap to (1, 4), flip the new first coordinate: (−1, 4)."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Rotate (4, 1) by 90° counterclockwise around the origin. What is the image?",
+        "answer": [
+          -1,
+          4
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              1,
+              4
+            ],
+            "feedback": "The rule flips the sign of the new first coordinate: (−1, 4), not (1, 4)."
+          },
+          {
+            "values": [
+              1,
+              -4
+            ],
+            "feedback": "That's a 90° CLOCKWISE turn — counterclockwise gives (−y, x) = (−1, 4)."
+          },
+          {
+            "values": [
+              4,
+              -1
+            ],
+            "feedback": "A 90° CCW turn gives (−y, x) = (−1, 4), not (4, −1)."
+          }
+        ],
+        "fallbackFeedback": "A 90° counterclockwise turn sends (x, y) → (−y, x).",
+        "successFeedback": "Right — (x, y) → (−y, x): (4, 1) → (−1, 4)."
+      },
+      "variant": {
+        "gen": "point-transform",
+        "form": "rotate"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Rotate 180° again.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rotate (−5, 2) by 180° around the origin. What is the image?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(5, −2)",
+            "correct": true,
+            "feedback": "Right — 180° flips both signs: (−5, 2) → (5, −2)."
+          },
+          {
+            "id": "b",
+            "label": "(−5, −2)",
+            "correct": false,
+            "feedback": "180° flips BOTH signs — x goes from −5 to 5 as well: (5, −2)."
+          },
+          {
+            "id": "c",
+            "label": "(5, 2)",
+            "correct": false,
+            "feedback": "The y also flips: 2 → −2, giving (5, −2)."
+          },
+          {
+            "id": "d",
+            "label": "(2, −5)",
+            "correct": false,
+            "feedback": "180° flips both signs, not swaps coordinates: (5, −2)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which turn was it?",
+      "conceptTag": "tm-rotation",
+      "explanationVariants": [
+        "(3, 4) → (−3, −4) flips both signs, which is a 180° rotation.",
+        "Both signs flipped means a half-turn: 180°."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A rotation around the origin sends (3, 4) to (−3, −4). What turn was it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "180°",
+            "correct": true,
+            "feedback": "Right — both signs flipped, the signature of a 180° turn."
+          },
+          {
+            "id": "b",
+            "label": "90° counterclockwise",
+            "correct": false,
+            "feedback": "90° CCW would give (−4, 3) — both signs flipping is 180°."
+          },
+          {
+            "id": "c",
+            "label": "90° clockwise",
+            "correct": false,
+            "feedback": "90° CW would give (4, −3) — flipping both signs is 180°."
+          },
+          {
+            "id": "d",
+            "label": "360°",
+            "correct": false,
+            "feedback": "A 360° turn returns the point to (3, 4) unchanged — flipping both signs is 180°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmRotatePoint"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What a rotation preserves.",
+      "conceptTag": "tm-rotation",
+      "explanationVariants": [
+        "A rotation keeps size and shape identical — it only turns the shape's orientation.",
+        "Rotations preserve size and shape; they change only the facing direction."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "After a rotation, what is preserved?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The size and shape — only the orientation turns",
+            "correct": true,
+            "feedback": "Right — a rotation keeps the shape congruent, just turned."
+          },
+          {
+            "id": "b",
+            "label": "The size changes",
+            "correct": false,
+            "feedback": "Rotations never resize — the turned shape is exactly the same size."
+          },
+          {
+            "id": "c",
+            "label": "The shape gets flipped like a mirror",
+            "correct": false,
+            "feedback": "Flipping is a REFLECTION — a rotation turns without mirroring."
+          },
+          {
+            "id": "d",
+            "label": "Nothing is preserved",
+            "correct": false,
+            "feedback": "Size and shape are fully preserved; only the orientation changes."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmRotateProperty"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sort transformations by what they do.",
+      "conceptTag": "tm-rotation",
+      "explanationVariants": [
+        "Slide = translation; flip across a line = reflection; turn around a point = rotation. All three keep size and shape.",
+        "Match each action to its transformation name."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each description by the transformation it names.",
+        "buckets": [
+          {
+            "id": "t",
+            "label": "Translation"
+          },
+          {
+            "id": "rf",
+            "label": "Reflection"
+          },
+          {
+            "id": "rt",
+            "label": "Rotation"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "slide 5 units right",
+            "bucketId": "t",
+            "feedback": "Sliding is a translation."
+          },
+          {
+            "id": "d2",
+            "label": "flip across the y-axis",
+            "bucketId": "rf",
+            "feedback": "Flipping across a line is a reflection."
+          },
+          {
+            "id": "d3",
+            "label": "turn 90° around the origin",
+            "bucketId": "rt",
+            "feedback": "Turning around a point is a rotation."
+          },
+          {
+            "id": "d4",
+            "label": "(x, y) → (x − 3, y)",
+            "bucketId": "t",
+            "feedback": "Adding to coordinates is a slide — a translation."
+          },
+          {
+            "id": "d5",
+            "label": "(x, y) → (x, −y)",
+            "bucketId": "rf",
+            "feedback": "Flipping the sign of y across the x-axis is a reflection."
+          },
+          {
+            "id": "d6",
+            "label": "(x, y) → (−x, −y)",
+            "bucketId": "rt",
+            "feedback": "Flipping both signs is a 180° rotation."
+          }
+        ],
+        "missFeedback": "Not quite — slide is translation, flip-across-a-line is reflection, turn-around-a-point is rotation.",
+        "successFeedback": "All sorted — and all three keep the shape the same size and shape."
+      },
+      "hints": [
+        "A slide (adding to coordinates) is a translation.",
+        "A flip across a line (one sign flips) is a reflection.",
+        "A turn around a point (like both signs flipping) is a rotation."
+      ],
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmTransformSort"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A rotation turns a shape around a center, keeping size and shape.",
+      "takeaways": [
+        "180° around the origin: (x, y) → (−x, −y).",
+        "90° counterclockwise: (x, y) → (−y, x).",
+        "Translations, reflections, and rotations all preserve size and shape."
+      ],
+      "teaser": "next chapter: writing each of these motions as a rule on the coordinates themselves."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-rotation",
+      "concept": {
+        "id": "rem-tm0103-c",
+        "kind": "concept",
+        "body": "A rotation turns a shape around a center point. Around the origin: 180° sends (x,y)→(−x,−y); 90° counterclockwise sends (x,y)→(−y,x). Size and shape stay the same."
+      },
+      "check": {
+        "id": "rem-tm0103-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-rotation",
+        "explanationVariants": [
+          "Rotate (1, 6) by 180°: both signs flip, giving (−1, −6).",
+          "A 180° turn flips both signs: (−1, −6)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Rotate (1, 6) by 180° around the origin. What is the image?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(−1, −6)",
+              "correct": true,
+              "feedback": "Right — 180° flips both signs: (−1, −6)."
+            },
+            {
+              "id": "b",
+              "label": "(1, −6)",
+              "correct": false,
+              "feedback": "180° flips BOTH signs — x flips too: (−1, −6)."
+            },
+            {
+              "id": "c",
+              "label": "(−1, 6)",
+              "correct": false,
+              "feedback": "180° flips BOTH signs — y flips too: (−1, −6)."
+            },
+            {
+              "id": "d",
+              "label": "(6, 1)",
+              "correct": false,
+              "feedback": "180° flips both signs, not swaps coordinates: (−1, −6)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

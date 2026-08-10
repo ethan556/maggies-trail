@@ -1,0 +1,287 @@
+{
+  "id": "g7-03b-01",
+  "slug": "three-sides-one-triangle",
+  "title": "Three Sides, One Triangle",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3b-drawing-triangles-from-conditions",
+  "minutes": 12,
+  "standards": [
+    "7.G.A.2"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Hand three people the same three side lengths — 4, 5 and 6 — and tell them to build a triangle. They will all build the **same** triangle.\n\nIt may be flipped or turned, but no one can produce a different shape. Three sides leave nothing to choose, which is what mathematicians mean when they say the conditions **determine a unique triangle**.",
+      "figure": "g7-sss-locks"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test whether the givens leave any freedom at all.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "Start from SSA and switch to SSS — the criterion where all three sides are given. Then try to reveal a second, different triangle.",
+        "targetCriterion": "SSS",
+        "startCriterion": "SSA",
+        "sideA": 4,
+        "sideB": 6,
+        "targetAngle": 60,
+        "angleStart": 35,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "successFeedback": "No second triangle appears. With all three sides fixed there is no unresolved choice left — the shape is locked up to sliding, turning and flipping.",
+        "criterionFeedback": "SSA leaves a choice: the third side can swing to meet the base in two places. Choose the criterion that fixes every side.",
+        "angleFeedback": "The criterion is right. Now settle the angle so the construction matches the target.",
+        "evidenceFeedback": "Move the pieces a few more times before checking — the claim is that NO arrangement gives a second triangle."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Not every trio of lengths works at all.",
+      "conceptTag": "triangle-conditions-unique",
+      "explanationVariants": [
+        "2 + 3 = 5, which is less than 6, so the two short sides cannot reach across — no triangle exists.",
+        "The two shorter sides must together exceed the longest one; 5 is not more than 6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many triangles can be built with sides 2, 3 and 6?",
+        "options": [
+          {
+            "id": "a",
+            "label": "None",
+            "correct": true,
+            "feedback": "2 + 3 = 5 is less than 6. The short sides fall flat against the long one and never meet."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "correct": false,
+            "feedback": "Check whether the sides can reach: 2 + 3 = 5, which does not span 6."
+          },
+          {
+            "id": "c",
+            "label": "Two",
+            "correct": false,
+            "feedback": "Two triangles arise from ambiguous ANGLE conditions, never from three fixed sides."
+          },
+          {
+            "id": "d",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "Fixed lengths never give infinitely many. Here they give none — the sides cannot meet."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two sides and the angle between them.",
+      "conceptTag": "triangle-conditions-unique",
+      "explanationVariants": [
+        "SAS fixes both sides and the angle they enclose, so the third vertex has nowhere else to go — exactly one triangle.",
+        "The included angle removes the swing that makes SSA ambiguous."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Sides of 5 and 8 with a 60° angle BETWEEN them. How many triangles?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Exactly one",
+            "correct": true,
+            "feedback": "Two sides and their included angle pin the third vertex completely — no choice remains."
+          },
+          {
+            "id": "b",
+            "label": "None",
+            "correct": false,
+            "feedback": "These conditions are perfectly buildable; the two sides meet at 60° and the third side closes the gap."
+          },
+          {
+            "id": "c",
+            "label": "Two",
+            "correct": false,
+            "feedback": "Two arise when the angle is NOT between the given sides. Here it is included, so the triangle is locked."
+          },
+          {
+            "id": "d",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "Fixing two side lengths rules out infinitely many — the size is already set."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The failure case has a rule of its own. Two sides can only meet if together they are **longer** than the third.\n\n2 and 3 cannot bridge a gap of 6: laid end to end they reach 5 and stop short. That is the triangle inequality, and it is why some lists of three lengths describe no triangle at all.",
+      "figure": "g7-triangle-inequality"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Now lock a triangle with an angle between two sides.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "Switch to SAS and set the included angle to 60°, then try to reveal a second valid triangle.",
+        "targetCriterion": "SAS",
+        "startCriterion": "SSA",
+        "sideA": 5,
+        "sideB": 8,
+        "targetAngle": 60,
+        "angleStart": 35,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "successFeedback": "SAS at 60° leaves nothing unresolved: two sides and the angle between them determine one triangle, and the second candidate collapses onto the first.",
+        "criterionFeedback": "SSA can branch into two different triangles. Pick the criterion whose givens remove every degree of freedom.",
+        "angleFeedback": "Right criterion — now set the included angle to 60° so it matches the target construction.",
+        "evidenceFeedback": "Try a few more arrangements before checking, so the 'only one' claim is actually tested."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which trio can be built?",
+      "conceptTag": "triangle-conditions-unique",
+      "explanationVariants": [
+        "For 5, 7, 11: 5 + 7 = 12 > 11, so the sides reach and one triangle exists.",
+        "Check the two shorter sides against the longest: their sum must exceed it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which set of side lengths CAN form a triangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "5, 7, 11",
+            "correct": true,
+            "feedback": "5 + 7 = 12, which is more than 11 — the short sides reach across and meet."
+          },
+          {
+            "id": "b",
+            "label": "3, 4, 9",
+            "correct": false,
+            "feedback": "3 + 4 = 7, less than 9. The sides fall short."
+          },
+          {
+            "id": "c",
+            "label": "2, 2, 5",
+            "correct": false,
+            "feedback": "2 + 2 = 4, less than 5 — no meeting point."
+          },
+          {
+            "id": "d",
+            "label": "1, 6, 8",
+            "correct": false,
+            "feedback": "1 + 6 = 7, less than 8. The shortest side is far too small to help."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The boundary case is the interesting one.",
+      "conceptTag": "triangle-conditions-unique",
+      "explanationVariants": [
+        "4 + 6 = 10, exactly the third side, so the sides lie flat along it and enclose no area — no triangle.",
+        "Equality is the failure boundary: the sides just touch in a straight line rather than meeting above it."
+      ],
+      "hints": [
+        "Add the two shorter sides and compare with the longest.",
+        "4 + 6 = 10, which is exactly 10 — not more than it.",
+        "When the sum EQUALS the third side, the sides lie flat in a straight line, so no triangle is formed."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many triangles have sides 4, 6 and 10?",
+        "options": [
+          {
+            "id": "a",
+            "label": "None",
+            "correct": true,
+            "feedback": "4 + 6 = 10 exactly. The two sides lie flat along the third in a straight line, enclosing no area at all."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "correct": false,
+            "feedback": "The sides must be strictly longer than the third to meet above it. Here they only just reach, lying flat."
+          },
+          {
+            "id": "c",
+            "label": "Two",
+            "correct": false,
+            "feedback": "Fixed side lengths never give two triangles — that comes from ambiguous angle conditions."
+          },
+          {
+            "id": "d",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "The lengths are fixed, so the size is fixed. Here they cannot form a triangle at all."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three lengths, and the question of whether they leave a choice.",
+      "takeaways": [
+        "Three fixed sides (SSS) determine exactly one triangle, up to flips and turns.",
+        "Two sides with the angle BETWEEN them (SAS) also determine exactly one.",
+        "The two shorter sides must together exceed the longest, or no triangle exists at all."
+      ],
+      "teaser": "Next: the conditions that leave a choice — two triangles, or infinitely many."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "triangle-conditions-unique",
+      "concept": {
+        "id": "rem-tcu-c",
+        "kind": "concept",
+        "body": "Rewind. Three side lengths build a triangle only when the two shorter ones together **exceed** the longest. 3 and 4 total 7, which is more than 5, so 3-4-5 works."
+      },
+      "check": {
+        "id": "rem-tcu-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "triangle-conditions-unique",
+        "explanationVariants": [
+          "2 + 4 = 6, which is less than 9, so the sides cannot reach.",
+          "The two shorter sides fall short of the longest, so no triangle forms."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Can sides 2, 4 and 9 form a triangle?",
+          "options": [
+            {
+              "id": "a",
+              "label": "No",
+              "correct": true,
+              "feedback": "2 + 4 = 6, which is less than 9 — the short sides never meet."
+            },
+            {
+              "id": "b",
+              "label": "Yes, exactly one",
+              "correct": false,
+              "feedback": "Compare 2 + 4 with 9: six cannot span nine."
+            },
+            {
+              "id": "c",
+              "label": "Yes, two of them",
+              "correct": false,
+              "feedback": "Three fixed sides never give two triangles, and these cannot even make one."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

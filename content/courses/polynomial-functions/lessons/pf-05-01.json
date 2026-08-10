@@ -1,0 +1,474 @@
+{
+  "id": "pf-05-01",
+  "slug": "sketching-from-factored-form",
+  "title": "Sketching from Factored Form",
+  "courseId": "polynomial-functions",
+  "chapterId": "ch5-graphs-and-models",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Everything converges: to sketch f(x) = (x + 2)(x − 1)², collect three clues. **Ends:** degree 1 + 2 = 3, positive lead → down-left, up-right. **Zeros:** crosses at −2 (odd), bounces at 1 (even). **Anchor:** the y-intercept f(0) = (2)(1)² = 2. Three clues, one curve.",
+      "figure": "multiplicity-bounce-cross"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sketching is signs plus ends.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": -1,
+            "mult": 1
+          },
+          {
+            "x": 2,
+            "mult": 2
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "p(x) = (x + 1)(x − 2)², leading coefficient positive. Set the signs.",
+        "successFeedback": "− + +. The curve crosses at −1 and only TOUCHES at 2, so it is negative on the far left and positive everywhere after. That is a complete sketch from the factored form alone: where it is zero, where each root crosses or bounces, and which way the ends go.",
+        "crossFeedback": "The root at −1 is single, so the sign must flip there — the curve passes through zero and out the other side.",
+        "bounceFeedback": "You flipped across x = 2, but that root is SQUARED. The curve reaches zero, turns, and leaves on the side it came from — so the sign is the same either side of it."
+      },
+      "predict": {
+        "prompt": "For LARGE positive x, p(x) = (x + 1)(x − 2)² is…",
+        "options": [
+          {
+            "id": "pos",
+            "label": "Positive — every factor is positive out there"
+          },
+          {
+            "id": "neg",
+            "label": "Negative"
+          },
+          {
+            "id": "zero",
+            "label": "Zero"
+          }
+        ],
+        "outcomeId": "pos",
+        "reveal": "Past the last root, every factor is positive, so the rightmost interval reads +. Then work LEFTWARD: flip the sign crossing the odd root at −1, bounce without flipping at the double root 2."
+      },
+      "conceptTag": "pf-sketch",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents pf sketch.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for pf sketch must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines pf sketch."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "polynomial-functions:pf-sketch",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Now walk the curve left to right: it climbs from −∞, **crosses** at −2, rises to a hilltop, comes back down to **bounce** at 1 (touching without crossing — f stays ≥ 0 nearby), then climbs to +∞. Between and around the zeros, the sign of f never changes without a crossing.",
+      "figure": "pf-walk-crosses"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read behavior at each zero.",
+      "conceptTag": "pf-sketch",
+      "explanationVariants": [
+        "(x + 2)¹ crosses; (x − 1)² bounces — odd through, even touch.",
+        "One factor has multiplicity 1, the other 2: cross then bounce."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "For f(x) = (x + 2)(x − 1)², what does the graph do at its zeros?",
+        "tokens": [
+          {
+            "id": "c2",
+            "label": "crosses at −2"
+          },
+          {
+            "id": "b2",
+            "label": "bounces at −2"
+          },
+          {
+            "id": "c1",
+            "label": "crosses at 1"
+          },
+          {
+            "id": "b1",
+            "label": "bounces at 1"
+          },
+          {
+            "id": "cm",
+            "label": ","
+          },
+          {
+            "id": "cb",
+            "label": "crosses at both"
+          },
+          {
+            "id": "bb",
+            "label": "bounces at both"
+          }
+        ],
+        "correct": [
+          "c2",
+          "cm",
+          "b1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "b2",
+              "cm",
+              "c1"
+            ],
+            "feedback": "The SQUARE sits on (x − 1) — the bounce is at 1, the crossing at −2."
+          },
+          {
+            "sequence": [
+              "cb"
+            ],
+            "feedback": "(x − 1)² can't change f's sign — the graph only touches at 1."
+          },
+          {
+            "sequence": [
+              "bb"
+            ],
+            "feedback": "(x + 2) has odd multiplicity 1 — the graph passes straight through at −2."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Odd multiplicity crosses, even multiplicity bounces — the square sits on (x − 1).",
+        "successFeedback": "Right — multiplicity 1 (odd) at −2, multiplicity 2 (even) at 1."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-sketch__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sign between the zeros.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Test x = 0, between the zeros of f(x) = (x + 2)(x − 1)². What does f(0) = 2 tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the graph sits ABOVE the axis between −2 and 1",
+            "correct": true,
+            "feedback": "Right — one sample point sets the sign for the whole gap (no zero interrupts it)."
+          },
+          {
+            "id": "o2",
+            "label": "the graph sits below the axis there",
+            "correct": false,
+            "feedback": "f(0) = +2 is positive — above the axis."
+          },
+          {
+            "id": "o3",
+            "label": "nothing — one point can't speak for an interval",
+            "correct": false,
+            "feedback": "It can here: f can only switch sign AT a zero, and none lies between −2 and 1 besides the endpoints."
+          },
+          {
+            "id": "o4",
+            "label": "the graph has a zero at 2",
+            "correct": false,
+            "feedback": "2 is the HEIGHT f(0), not a zero — f(2) = 4 · 1 = 4 ≠ 0."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "End behavior of the product.",
+      "conceptTag": "pf-sketch",
+      "explanationVariants": [
+        "Degree = 1 + 2 = 3 (odd), lead positive: down-left, up-right.",
+        "Multiply the leading terms of the factors: x · x² = x³."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is the end behavior of f(x) = (x + 2)(x − 1)²?",
+        "tokens": [
+          {
+            "id": "rl",
+            "label": "rises on the left"
+          },
+          {
+            "id": "fl",
+            "label": "falls on the left"
+          },
+          {
+            "id": "rr",
+            "label": "rises on the right"
+          },
+          {
+            "id": "fr",
+            "label": "falls on the right"
+          }
+        ],
+        "correct": [
+          "fl",
+          "rr"
+        ],
+        "acceptAlso": [
+          [
+            "rr",
+            "fl"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "rl",
+              "rr"
+            ],
+            "feedback": "Degree 3 is ODD — the ends must oppose, not match."
+          },
+          {
+            "sequence": [
+              "rr",
+              "rl"
+            ],
+            "feedback": "Degree 3 is ODD — the ends must oppose, not match."
+          },
+          {
+            "sequence": [
+              "fl",
+              "fr"
+            ],
+            "feedback": "Matching ends need even degree, and falling needs a negative lead — this has neither."
+          },
+          {
+            "sequence": [
+              "fr",
+              "fl"
+            ],
+            "feedback": "Matching ends need even degree, and falling needs a negative lead — this has neither."
+          },
+          {
+            "sequence": [
+              "rl",
+              "fr"
+            ],
+            "feedback": "The lead is +1 (from x · x²) — positive, so the RIGHT end rises."
+          },
+          {
+            "sequence": [
+              "fr",
+              "rl"
+            ],
+            "feedback": "The lead is +1 (from x · x²) — positive, so the RIGHT end rises."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Degree 3 with a positive lead: down on the left, up on the right.",
+        "successFeedback": "Right — an odd-degree (3) positive-lead polynomial."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-sketch__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sketch a different shape.",
+      "conceptTag": "pf-sketch",
+      "explanationVariants": [
+        "Degree 4, positive lead: up on both ends; crosses at ±3 (both odd); f(0) = −9... times: (3)(−3) = −9, below the axis in the middle.",
+        "Two odd crossings with even degree: down through −3, dip below, back up through 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For g(x) = (x − 3)(x + 3) · x², what does the graph do at x = 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "bounces on the axis at the origin",
+            "correct": true,
+            "feedback": "Right — x² gives multiplicity 2 at 0: touch and turn (from below, since the outer factors are negative there)."
+          },
+          {
+            "id": "o2",
+            "label": "crosses at the origin",
+            "correct": false,
+            "feedback": "x² is an EVEN multiplicity — no sign change, no crossing."
+          },
+          {
+            "id": "o3",
+            "label": "skips 0 — it isn't a zero",
+            "correct": false,
+            "feedback": "The x² factor is zero at 0 — a genuine (bouncing) zero."
+          },
+          {
+            "id": "o4",
+            "label": "has its y-intercept at −9",
+            "correct": false,
+            "feedback": "g(0) = (−3)(3)(0) = 0 — the origin is ON the graph, as a bounce."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-sketch__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full profile.",
+      "conceptTag": "pf-sketch",
+      "explanationVariants": [
+        "Degree 2 + 1 = 3, lead NEGATIVE (−1 · x³): up-left, down-right; bounce at −1, cross at 2; f(0) = −(1)(−2) = 2.",
+        "The minus out front flips the cubic's ends; multiplicities read as usual."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Profile f(x) = −(x + 1)²(x − 2): ends and zeros?",
+        "tokens": [
+          {
+            "id": "e1",
+            "label": "rises left, falls right"
+          },
+          {
+            "id": "e2",
+            "label": "falls left, rises right"
+          },
+          {
+            "id": "e3",
+            "label": "falls on both ends"
+          },
+          {
+            "id": "sm",
+            "label": ";"
+          },
+          {
+            "id": "z1",
+            "label": "bounces at −1, crosses at 2"
+          },
+          {
+            "id": "z2",
+            "label": "crosses at −1, bounces at 2"
+          },
+          {
+            "id": "z3",
+            "label": "crosses at both zeros"
+          }
+        ],
+        "correct": [
+          "e1",
+          "sm",
+          "z1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "e2",
+              "sm",
+              "z1"
+            ],
+            "feedback": "The leading minus flips the ends: UP on the left, DOWN on the right."
+          },
+          {
+            "sequence": [
+              "e1",
+              "sm",
+              "z2"
+            ],
+            "feedback": "The square is on (x + 1): the bounce belongs to −1."
+          },
+          {
+            "sequence": [
+              "e3",
+              "sm",
+              "z3"
+            ],
+            "feedback": "Degree 3 is odd (ends oppose), and the squared factor can't cross."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Odd degree + negative lead sets the ends; the squared (x + 1) makes −1 the bounce.",
+        "successFeedback": "Right — odd degree with negative lead, even multiplicity at −1."
+      },
+      "hints": [
+        "Degree: 2 + 1 = 3; the lead is −1 · x³.",
+        "Odd degree + negative lead: up-left, down-right.",
+        "(x + 1)² bounces; (x − 2) crosses."
+      ],
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-sketch__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Ends + zeros-with-multiplicity + y-intercept = a complete sketch.",
+      "takeaways": [
+        "Degree and lead come from multiplying the factors' leading terms.",
+        "Sign can only change at an odd-multiplicity zero.",
+        "One sample point pins the sign of a whole zero-free interval."
+      ],
+      "teaser": "Next: what the wiggle count says about the degree — and vice versa."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pf-sketch",
+      "concept": {
+        "id": "rem-pf0501-c",
+        "kind": "concept",
+        "body": "The y-intercept is just f(0): substitute 0 into every factor. For f(x) = (x − 1)(x + 3): f(0) = (−1)(3)."
+      },
+      "check": {
+        "id": "rem-pf0501-k",
+        "kind": "check",
+        "body": "Multiply it out.",
+        "conceptTag": "pf-sketch",
+        "explanationVariants": [
+          "f(0) = −3 — the curve starts below the axis.",
+          "(0 − 1)(0 + 3) = (−1)(3) = −3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the y-intercept of f(x) = (x − 1)(x + 3)?",
+          "answer": -3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "(0 − 1) = −1 keeps its minus: (−1)(3) = −3."
+            },
+            {
+              "value": 2,
+              "feedback": "That ADDS the factors (−1 + 3 = 2) — the intercept MULTIPLIES them: (−1)(3) = −3."
+            }
+          ],
+          "fallbackFeedback": "(−1)(3) = −3."
+        }
+      }
+    }
+  ]
+}

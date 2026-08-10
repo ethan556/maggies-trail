@@ -1,0 +1,276 @@
+{
+ "id": "ns-02-01",
+ "slug": "multi-digit-division",
+ "title": "Multi-Digit Division",
+ "courseId": "number-system",
+ "chapterId": "ch2-fluent-operations",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Long division with a **multi-digit divisor** works the same way as with a one-digit one — estimate, multiply, subtract, bring down — just with a bigger number to estimate against. 936 ÷ 24: how many 24s fit in 93? About 3 (3 × 24 = 72), leaving 21; bring down the 6 to get 216; 24 fits 9 times exactly. Answer: **39**.",
+   "figure": "dop-long-division"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Check the multiplication.",
+   "conceptTag": "multi-digit-division",
+   "widget": {
+    "type": "numeric",
+    "prompt": "To verify 936 ÷ 24 = 39, multiply 24 × 39. What do you get?",
+    "answer": 936,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 936.5,
+      "feedback": "Multiplication of two whole numbers can't land on a half. Multiply carefully: 24 × 39 = 24 × 40 − 24 = 960 − 24 = 936."
+     },
+     {
+      "value": 216,
+      "feedback": "216 is just 24 × 9, one partial product. The full multiplication is 24 × 39 = 24 × 30 + 24 × 9 = 720 + 216 = 936."
+     }
+    ],
+    "fallbackFeedback": "24 × 39 = 24 × 40 − 24 = 960 − 24 = 936."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Run a full division.",
+   "conceptTag": "multi-digit-division",
+   "explanationVariants": [
+    "672 ÷ 16: 16 goes into 67 four times (64), remainder 3; bring down 2 → 32; 16 goes in exactly twice. 42.",
+    "Check by multiplying back: 16 × 42 = 672."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute 672 ÷ 16.",
+    "answer": 42,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 4.2,
+      "feedback": "A decimal point slipped in. Whole-number division here has no remainder: 672 ÷ 16 = 42 exactly."
+     },
+     {
+      "value": 46,
+      "feedback": "46 has its digits swapped from the correct quotient. Check by multiplying back: 16 × 42 = 672, but 16 × 46 = 736 — too big."
+     }
+    ],
+    "fallbackFeedback": "672 ÷ 16 = 42 (check: 16 × 42 = 672)."
+   },
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "fullDivide"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Not every division comes out even — some leave a **remainder**. 100 ÷ 7: 7 goes into 100 fourteen times (7 × 14 = 98), leaving **2** left over. Write it as 14 remainder 2, or check: 14 × 7 + 2 = 100. The remainder must always be SMALLER than the divisor — if it isn't, the division isn't finished.",
+   "figure": "dop-remainder"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find quotient and remainder.",
+   "conceptTag": "multi-digit-division",
+   "explanationVariants": [
+    "9 goes into 50 five times (45), remainder 5 — but 5 equals the divisor's... check again: 9×5=45, 50−45=5, and 5<9, so it's finished at 5 r5.",
+    "Check: 9 × 5 + 5 = 50."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "In 50 ÷ 9, what is the QUOTIENT (the whole-number part)?",
+    "answer": 5,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is the DIVISOR, not the quotient. How many times does 9 fit into 50? 9 × 5 = 45, 9 × 6 = 54 (too big) — so the quotient is 5."
+     },
+     {
+      "value": 45,
+      "feedback": "45 is a partial PRODUCT (9 × 5), not the quotient itself. The quotient — how many times 9 fits — is 5."
+     }
+    ],
+    "fallbackFeedback": "9 × 5 = 45, and 50 − 45 = 5 (a valid remainder since 5 < 9). Quotient: 5."
+   },
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "quotRemainder"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Now the remainder.",
+   "conceptTag": "multi-digit-division",
+   "widget": {
+    "type": "numeric",
+    "prompt": "In 50 ÷ 9, what is the REMAINDER?",
+    "answer": 5,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is the divisor. The remainder is what's LEFT after 9 × 5 = 45 is subtracted from 50: 50 − 45 = 5."
+     },
+     {
+      "value": 0,
+      "feedback": "0 would mean the division came out even, but 9 × 5 = 45 ≠ 50. The leftover is 50 − 45 = 5."
+     }
+    ],
+    "fallbackFeedback": "50 − (9 × 5) = 50 − 45 = 5."
+   },
+   "predict": {
+    "prompt": "50 ÷ 9: nine fits into 50 five times (45). Could the remainder ever be 9 or more?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — a leftover of 9 would still fit another group"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — any leftover count is possible"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "The remainder is what's left AFTER every full group of 9 is pulled out — 50 − 45 = 5. If 9 or more remained, another group of 9 would still fit and the quotient wasn't finished. Remainders always sit strictly below the divisor."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Spot the impossible remainder.",
+   "conceptTag": "multi-digit-division",
+   "explanationVariants": [
+    "A remainder must be SMALLER than the divisor — 8 is bigger than the divisor 6, so one more 6 fits.",
+    "If the leftover is at least as big as the divisor, the division isn't finished."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student says 50 ÷ 6 = 7 remainder 8. What's wrong?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The remainder (8) is bigger than the divisor (6) — one more 6 still fits",
+      "correct": true,
+      "feedback": "Right — 8 ≥ 6 means the division isn't finished. Correct answer: 50 ÷ 6 = 8 remainder 2 (6 × 8 = 48, 50 − 48 = 2)."
+     },
+     {
+      "id": "b",
+      "label": "Nothing — remainders can be any size",
+      "feedback": "A remainder must always be SMALLER than the divisor. Here 8 > 6, so at least one more 6 fits inside it."
+     },
+     {
+      "id": "c",
+      "label": "The quotient should be 8, not 7, with no remainder at all",
+      "feedback": "Close on the quotient, but there IS a remainder: 6 × 8 = 48, and 50 − 48 = 2. So it's 8 remainder 2."
+     }
+    ]
+   },
+   "hints": [
+    "Compare the remainder to the divisor.",
+    "8 vs 6 — which is bigger?",
+    "The remainder must be smaller than the divisor."
+   ],
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "invalidRemainder"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A four-digit dividend.",
+   "conceptTag": "multi-digit-division",
+   "hints": [
+    "How many times does 24 fit into 124?",
+    "5 times (120), remainder 4.",
+    "Bring down the 8 and keep going."
+   ],
+   "explanationVariants": [
+    "24 into 124 is 5 (120, remainder 4); bring down 8 → 48; 24 fits exactly 2 times. Quotient: 52.",
+    "Check by multiplying back: 24 × 52 = 1248."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute 1248 ÷ 24.",
+    "answer": 52,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 25,
+      "feedback": "25 has the digits swapped from the correct quotient. Check by multiplying back: 24 × 52 = 1248, but 24 × 25 = 600 — far too small."
+     },
+     {
+      "value": 5.2,
+      "feedback": "A decimal point slipped in. This division has no remainder: 1248 ÷ 24 = 52 exactly (check: 24 × 52 = 1248)."
+     }
+    ],
+    "fallbackFeedback": "24 × 52 = 1248, so 1248 ÷ 24 = 52."
+   },
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "fullDivide"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Estimate, multiply, subtract, repeat.",
+   "takeaways": [
+    "Multi-digit division uses the same steps as single-digit — just bigger estimates.",
+    "A remainder must always be smaller than the divisor.",
+    "Check any division by multiplying the quotient by the divisor (plus the remainder)."
+   ],
+   "teaser": "next: the same fluency, applied to decimals."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "multi-digit-division",
+   "concept": {
+    "id": "rem-mdd-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Check any division by multiplying back.** If you think 84 ÷ 12 = 7, verify: 12 × 7 = 84. It matches, so 7 is correct. This check catches almost every division mistake."
+   },
+   "check": {
+    "id": "rem-mdd-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "multi-digit-division",
+    "explanationVariants": [
+     "12 × 7 = 84 — the check confirms the quotient.",
+     "Multiply the quotient by the divisor to verify."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Compute 84 ÷ 12.",
+     "answer": 7,
+     "tolerance": 0,
+     "unit": "",
+     "commonErrors": [
+      {
+       "value": 12,
+       "feedback": "12 is the divisor, not the quotient. How many 12s fit in 84? 12 × 7 = 84."
+      },
+      {
+       "value": 96,
+       "feedback": "96 is 12 × 8, too big — 12 × 8 = 96 ≠ 84. The correct quotient is 7: 12 × 7 = 84."
+      }
+     ],
+     "fallbackFeedback": "12 × 7 = 84, so the quotient is 7."
+    }
+   }
+  }
+ ]
+}

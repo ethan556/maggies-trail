@@ -1,0 +1,259 @@
+{
+ "id": "dc-04-02",
+ "slug": "other-indeterminate-forms",
+ "title": "The Other Indeterminate Forms",
+ "courseId": "derivatives-in-context",
+ "chapterId": "ch4-lhopital",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "L'Hôpital speaks only two languages: **0/0** and **∞/∞**.\n\nBut other forms are indeterminate too — 0·∞, ∞ − ∞, 1^∞ — and every one of them can be **rewritten as a quotient**, and then handed over.\n\nThe skill is not the rule. It is the rewriting.",
+   "figure": "dc-lhopital-tangents"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "∞/∞ needs no adjustment.",
+   "conceptTag": "dc-other-forms",
+   "explanationVariants": [
+    "As x → ∞, x/eˣ is ∞/∞. Differentiate top and bottom: 1/eˣ → 0. The exponential wins outright.",
+    "The rule applies to ∞/∞ verbatim — no modification at all."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "lim(x→∞) x/eˣ. Apply L'Hôpital and give the value.",
+    "answer": 0,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "That is the ratio of the leading coefficients, which is not how limits at infinity work here. After differentiating you have 1/eˣ, and eˣ runs away — so the limit is 0."
+     },
+     {
+      "value": 2,
+      "feedback": "The limit is a specific number: 1/eˣ → 0 as x grows without bound."
+     }
+    ],
+    "fallbackFeedback": "∞/∞ → 1/eˣ → 0. The exponential outgrows the polynomial."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-other-forms__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Turn 0·∞ into a quotient.",
+   "conceptTag": "dc-other-forms",
+   "explanationVariants": [
+    "x·ln x as x → 0⁺ is 0·(−∞). Rewrite as (ln x)/(1/x), which is −∞/∞ — and now the rule applies.",
+    "Any factor can be pushed into the denominator as its reciprocal. That is the whole trick."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "lim(x→0⁺) x·ln x is the indeterminate form 0·(−∞). How do you make L'Hôpital applicable?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Rewrite as (ln x)/(1/x) — now it is −∞/∞, which the rule handles.",
+      "correct": true,
+      "feedback": "Right. Pushing one factor downstairs as its reciprocal turns a product into a quotient, and quotients are the rule's native language."
+     },
+     {
+      "id": "o2",
+      "label": "Apply L'Hôpital directly to the product.",
+      "correct": false,
+      "feedback": "The rule is stated for QUOTIENTS. There is no bottom to differentiate, so the move is not even defined."
+     },
+     {
+      "id": "o3",
+      "label": "The limit is 0, since one factor goes to 0.",
+      "correct": false,
+      "feedback": "That is precisely what 'indeterminate' rules out: zero times something unbounded can come out as anything. It must be resolved, not assumed."
+     },
+     {
+      "id": "o4",
+      "label": "The limit is −∞, since ln x → −∞.",
+      "correct": false,
+      "feedback": "The other factor is racing to zero at the same time, and which one wins is the entire question. (It is the x — the limit is 0.)"
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-other-forms__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Who wins at infinity.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "A hierarchy of growth, settled by L'Hôpital.",
+    "panels": [
+     {
+      "title": "Exponentials beat polynomials",
+      "body": "x/eˣ → 0. So does x¹⁰⁰/eˣ: apply the rule a hundred times and the polynomial is ground down to a constant while eˣ sits there unchanged. NO power of x can outrun an exponential."
+     },
+     {
+      "title": "Polynomials beat logarithms",
+      "body": "(ln x)/x → 0. The logarithm rises forever, but so slowly that even x beats it — and so does √x, and so does x^0.001."
+     },
+     {
+      "title": "The hierarchy",
+      "body": "ln x ≪ any power of x ≪ eˣ. That one line explains why an algorithm running in log time is fast, why one running in exponential time is hopeless, and why the two are not remotely close."
+     }
+    ],
+    "continueFeedback": "Keep going — the third panel is the sentence worth keeping.",
+    "successFeedback": "ln x ≪ xⁿ ≪ eˣ. L'Hôpital does not merely compute limits; it RANKS the functions."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "For **∞ − ∞**, put it over a common denominator. For **1^∞**, take logarithms — the log turns an exponent into a product, and the product into a quotient.\n\nIn every case the move is the same: **manufacture a quotient**, check the form, then differentiate.\n\nA narrow tool with a wide reach — and the reach is entirely in the rewriting.",
+   "figure": "dc-lhopital-tangents"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Rank the growth.",
+   "conceptTag": "dc-other-forms",
+   "explanationVariants": [
+    "Exponentials beat every power of x, which beats every logarithm: ln x ≪ x³ ≪ eˣ.",
+    "L'Hôpital proves each comparison — differentiate until one side is ground away."
+   ],
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Order these from SLOWEST-growing to FASTEST, as x → ∞.",
+    "items": [
+     {
+      "id": "b",
+      "label": "x³"
+     },
+     {
+      "id": "c",
+      "label": "eˣ"
+     },
+     {
+      "id": "a",
+      "label": "ln x"
+     }
+    ],
+    "correctOrder": [
+     "a",
+     "b",
+     "c"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "c",
+      "second": "b",
+      "feedback": "eˣ is the fastest of the three. Apply L'Hôpital to x³/eˣ and watch the polynomial get ground down to nothing while eˣ survives untouched."
+     },
+     {
+      "first": "b",
+      "second": "a",
+      "feedback": "ln x is the slowest — it is beaten even by √x, let alone by x³."
+     }
+    ],
+    "missFeedback": "ln x ≪ any power of x ≪ eˣ.",
+    "successFeedback": "Logarithms crawl, powers walk, exponentials sprint — and L'Hôpital is what proves it."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-other-forms__dragOrder"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Rewrite, then apply.",
+   "conceptTag": "dc-other-forms",
+   "hints": [
+    "The form is 0·(−∞), so manufacture a quotient: (ln x)/(1/x).",
+    "That is −∞/∞. Differentiate top and bottom: (1/x)/(−1/x²).",
+    "Simplify the compound fraction: (1/x)·(−x²) = −x. Now let x → 0⁺."
+   ],
+   "explanationVariants": [
+    "(ln x)/(1/x) → (1/x)/(−1/x²) = −x → 0. So x·ln x → 0 as x → 0⁺.",
+    "The x wins: it reaches zero faster than ln x reaches −∞. Nothing but the rule could have told you which."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "lim(x→0⁺) x·ln x. Give the value.",
+    "answer": 0,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "Rewrite as (ln x)/(1/x) and apply the rule: it simplifies to −x, which goes to 0."
+     },
+     {
+      "value": -1,
+      "feedback": "It does not run away to a negative value — the x crushes the logarithm, and the limit is exactly 0."
+     }
+    ],
+    "fallbackFeedback": "(ln x)/(1/x) → (1/x)/(−1/x²) = −x → 0."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-other-forms__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Manufacture a quotient.",
+   "takeaways": [
+    "The rule speaks only 0/0 and ∞/∞. Every other indeterminate form must be REWRITTEN into one of them.",
+    "0·∞ becomes a quotient by pushing one factor downstairs; 1^∞ yields to logarithms.",
+    "ln x ≪ any power of x ≪ eˣ — and L'Hôpital is what proves the hierarchy."
+   ],
+   "teaser": "That is what derivatives are FOR. Next course: what integrals are for — areas, volumes, and average values."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "dc-other-forms",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "L'Hôpital needs a fraction. If you have a product, push one factor downstairs as its reciprocal. If you have a difference, put it over a common denominator. Manufacture the quotient FIRST, then check the form.",
+    "figure": "dr-chain-gears"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Make a quotient.",
+    "conceptTag": "dc-other-forms",
+    "explanationVariants": [
+     "x·ln x becomes (ln x)/(1/x) — the x has moved downstairs as 1/x.",
+     "Any factor can go to the denominator by taking its reciprocal."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Rewrite x·ln x as a quotient.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "(ln x)/(1/x)",
+       "correct": true,
+       "feedback": "Right — the x moves downstairs as its reciprocal, and the product becomes a quotient."
+      },
+      {
+       "id": "o2",
+       "label": "(1/x)/(ln x)",
+       "correct": false,
+       "feedback": "That inverts the whole expression and changes the limit entirely. Keep ln x on top and move the x down."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,385 @@
+{
+  "id": "fna-04-01",
+  "slug": "composition-order-matters",
+  "title": "Composition: Order Matters",
+  "courseId": "function-analysis",
+  "chapterId": "ch4-composition-depth",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**f(g(x))** means g runs **first**, and its output becomes f's input. Order is everything: f(g(x)) and g(f(x)) are usually **different functions**. Read compositions inside-out, like nested parentheses.",
+      "figure": "fna-compose-order"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Inside first.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "point",
+        "targetX": 3,
+        "start": 0,
+        "prompt": "f(g(3)) works from the inside out. Trace g(x) = x² to x = 3 and read the height — that height becomes f's input next.",
+        "successFeedback": "g(3) = 9. Now feed that INTO f: f(9) = 2(9) − 1 = 17. Composition order matters because the output of the inner function becomes the input of the outer one — g first, then f on whatever g handed back.",
+        "lowFeedback": "Still short of x = 3.",
+        "highFeedback": "Past x = 3 now."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the other order.",
+      "conceptTag": "fna-compose-order",
+      "explanationVariants": [
+        "f(3) = 5 first, then g(5) = 25.",
+        "Running f then g squares the 5: (2·3 − 1)² = 25 — different from f(g(3)) = 17."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Same f and g. What is g(f(3))?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x",
+            "label": "the input to f",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "const",
+                "id": "x"
+              }
+            },
+            "right": {
+              "op": "lit",
+              "value": 1
+            }
+          },
+          "right": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "const",
+                "id": "x"
+              }
+            },
+            "right": {
+              "op": "lit",
+              "value": 1
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 17,
+            "feedback": "17 is f(g(3)) — the OTHER order. Here f runs first: f(3) = 5, then g(5) = 25."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is only f(3), the inside step. Feed it to g: g(5) = 5² = 25."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "f(3) = 5, then g(5) = 25.",
+        "successFeedback": "f(3) = 5, then g(5) = 25."
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-compose-order__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Since the two orders gave 17 and 25, composition is **not commutative**. When you build a composite's **rule**, substitute the whole inner formula: f(g(x)) = 2(x²) − 1 = 2x² − 1, while g(f(x)) = (2x − 1)².",
+      "figure": "fna-not-commutative"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Build the rule, then evaluate.",
+      "conceptTag": "fna-compose-order",
+      "explanationVariants": [
+        "f(g(x)) = 2x² − 1, so at x = 4: 2·16 − 1 = 31.",
+        "Inside-out at 4: g(4) = 16, then f(16) = 31 — the rule 2x² − 1 gives the same."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Using f(x) = 2x − 1 and g(x) = x², evaluate f(g(4)).",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x",
+            "label": "the input to g",
+            "value": 4
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "lit",
+              "value": 2
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "x"
+              },
+              "right": {
+                "op": "const",
+                "id": "x"
+              }
+            }
+          },
+          "right": {
+            "op": "lit",
+            "value": 1
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 49,
+            "feedback": "49 = (2·4 − 1)² is g(f(4)). For f(g(4)), square FIRST: g(4) = 16, then 2·16 − 1 = 31."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is g(4), the inner value. Finish with f: 2(16) − 1 = 31."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "g(4) = 16; f(16) = 31.",
+        "successFeedback": "g(4) = 16; f(16) = 31."
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-compose-order__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the correct composite rule.",
+      "conceptTag": "fna-compose-order",
+      "explanationVariants": [
+        "Substitute the WHOLE inner formula into f: f(g(x)) = 2(x²) − 1 = 2x² − 1.",
+        "g's output x² becomes f's input, so double it and subtract 1: 2x² − 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "With f(x) = 2x − 1 and g(x) = x², which is the rule for f(g(x))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2x² − 1",
+            "correct": true,
+            "feedback": "Right — g's entire output x² takes the place of f's x: 2(x²) − 1."
+          },
+          {
+            "id": "o2",
+            "label": "(2x − 1)²",
+            "feedback": "That squares f's output — it's g(f(x)), the reverse order."
+          },
+          {
+            "id": "o3",
+            "label": "2x² − x",
+            "feedback": "The −1 in f is a constant; it doesn't pick up an x. Substituting x² into 2x − 1 gives 2x² − 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-compose-order__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three in a chain.",
+      "conceptTag": "fna-compose-order",
+      "explanationVariants": [
+        "Innermost first: g(2) = 4, then f(4) = 7, then g(7) = 49.",
+        "Work outward: g doubles nothing — it squares. 2 → 4 → f gives 7 → squared is 49."
+      ],
+      "hints": [
+        "Evaluate the innermost function first and pass each result outward.",
+        "g(2) = 4. Now compute f(4), then square THAT result.",
+        "f(4) = 2·4 − 1 = 7; finish with g(7)."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "With f(x) = 2x − 1 and g(x) = x², what is g(f(g(2)))?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "x",
+            "label": "the innermost input",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "x"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "x"
+                }
+              }
+            },
+            "right": {
+              "op": "lit",
+              "value": 1
+            }
+          },
+          "right": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "x"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "x"
+                }
+              }
+            },
+            "right": {
+              "op": "lit",
+              "value": 1
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "9 = g(f(2)) skips the innermost g. Start inside: g(2) = 4, then f(4) = 7, then g(7) = 49."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is f(g(2)) — one layer short. The outer g still has to square it: 7² = 49."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "g(2) = 4 → f(4) = 7 → g(7) = 49.",
+        "successFeedback": "g(2) = 4 → f(4) = 7 → g(7) = 49."
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-compose-order__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Inside-out, always.",
+      "takeaways": [
+        "f(g(x)): g runs first; its output feeds f.",
+        "f(g(x)) ≠ g(f(x)) in general — order changes the function.",
+        "To build the rule, substitute the whole inner formula."
+      ],
+      "teaser": "Next: when a chain BREAKS — the domain of a composition."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-compose-order",
+      "concept": {
+        "id": "rem-fna0401-c",
+        "kind": "concept",
+        "body": "f(g(x)) is read inside-out: compute g's value first, then apply f to that value. Swap the order and you usually get a different answer."
+      },
+      "check": {
+        "id": "rem-fna0401-k",
+        "kind": "check",
+        "body": "One clean chain.",
+        "conceptTag": "fna-compose-order",
+        "explanationVariants": [
+          "g(5) = 25, then f(25) = 49.",
+          "Inside first: 5 squares to 25; f doubles-minus-one to 49."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "With f(x) = 2x − 1 and g(x) = x², what is f(g(5))?",
+          "answer": 49,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 81,
+              "feedback": "81 = (2·5 − 1)² = g(f(5)) — wrong order. g first: g(5) = 25, then f(25) = 49."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is g(5). One more step: f(25) = 2·25 − 1 = 49."
+            }
+          ],
+          "fallbackFeedback": "g(5) = 25; f(25) = 49."
+        }
+      }
+    }
+  ]
+}

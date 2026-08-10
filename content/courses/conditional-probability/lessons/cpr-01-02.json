@@ -1,0 +1,285 @@
+{
+  "id": "cpr-01-02",
+  "slug": "complements-at-least-one",
+  "title": "Complements and \"At Least One\"",
+  "courseId": "conditional-probability",
+  "chapterId": "ch1-events-and-sample-spaces",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every outcome either is in A or is not. So P(A) + P(not A) = 1, giving the **complement rule**: P(not A) = 1 − P(A). This is the workhorse for \"at least one\", because the opposite of *at least one* is the much smaller, much easier event: **none**.",
+      "figure": "cpr-complement-bar"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Flip three coins. Eight equally likely outcomes.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "The 8 cells are the 8 outcomes of flipping three coins (HHH, HHT, … TTT). Shade the cells with at least one head, so the shaded fraction equals 7/8.",
+        "rows": 2,
+        "cols": 4,
+        "targetNum": 7,
+        "targetDen": 8,
+        "start": 0,
+        "successFeedback": "Seven of eight. Only TTT has no head, so \"at least one head\" is everything else: 1 − 1/8 = 7/8.",
+        "lowFeedback": "Still short. Count backwards instead: exactly one outcome (TTT) has no head at all, so seven do.",
+        "highFeedback": "You cannot shade more than seven — TTT genuinely has no heads, so it must stay unshaded."
+      },
+      "predict": {
+        "prompt": "You'll shade 7/8 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "Half means the numerator is half the denominator — 4/8 here — and 7 is more. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-complement"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the opposite exactly.",
+      "conceptTag": "cpr-complement",
+      "explanationVariants": [
+        "\"At least one head\" fails only when **every** coin is a tail. So its complement is \"no heads at all\" = TTT.",
+        "Complement means *everything else*. Everything else than \"one or more heads\" is \"zero heads\"."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Three coins are flipped. What is the complement of \"at least one head\"?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No heads at all (TTT)",
+            "correct": true,
+            "feedback": "Right — the only way to miss \"one or more heads\" is to get zero of them."
+          },
+          {
+            "id": "o2",
+            "label": "At least one tail",
+            "correct": false,
+            "feedback": "That is not an opposite: HHT has at least one head *and* at least one tail, so both events happen together. Complements can never overlap."
+          },
+          {
+            "id": "o3",
+            "label": "Exactly one head",
+            "correct": false,
+            "feedback": "Exactly one head is *inside* \"at least one head\", not opposite to it. The complement must contain none of A's outcomes."
+          },
+          {
+            "id": "o4",
+            "label": "All heads (HHH)",
+            "correct": false,
+            "feedback": "HHH is the most extreme case of \"at least one head\", so it belongs to the event itself, not to its complement."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-complement__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two dice, 36 equally likely outcomes.",
+      "conceptTag": "cpr-at-least-one",
+      "explanationVariants": [
+        "Count the misses: 5 × 5 = 25 outcomes show no 6. So 36 − 25 = 11 show at least one 6.",
+        "Direct count: six outcomes where the first die is 6, six where the second is 6, minus (6,6) counted twice → 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Roll two dice. How many of the 36 outcomes show **at least one 6**?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is 6 + 6. The outcome (6, 6) appears in both lists, so a plain sum counts it twice — subtract it once."
+          },
+          {
+            "value": 1,
+            "feedback": "That is only (6, 6). \"At least one\" also includes rolls like (6, 2) and (3, 6) where a single die shows the 6."
+          },
+          {
+            "value": 25,
+            "feedback": "That is the count of rolls with **no** 6. It is the complement — the answer is 36 − 25."
+          }
+        ],
+        "fallbackFeedback": "Count what fails: 5 × 5 = 25 rolls have no 6, so 36 − 25 = 11 rolls have at least one."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-at-least-one__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice the pattern. Counting \"at least one\" directly means adding overlapping cases and repairing double-counts. Counting **none** is one clean multiplication — every trial must miss. That is why the complement route is almost always the short road.",
+      "figure": "cpr-at-least-one-grid"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Four coins now.",
+      "conceptTag": "cpr-at-least-one",
+      "explanationVariants": [
+        "Four coins give 2⁴ = 16 outcomes. Exactly one of them (TTTT) has no head, so 16 − 1 = 15 have at least one.",
+        "P(at least one head) = 1 − P(no heads) = 1 − 1/16 = 15/16, i.e. 15 of the 16 outcomes."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Flip four coins. How many of the 16 outcomes show **at least one head**?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That counts only the outcomes with **exactly** one head. \"At least one\" also allows two, three or four heads."
+          },
+          {
+            "value": 16,
+            "feedback": "That is every outcome, but TTTT has no head at all, so it must be excluded — 16 − 1 = 15."
+          },
+          {
+            "value": 8,
+            "feedback": "That is half of 16, the count for a single fixed coin landing heads. The event allows *any* of the four coins to be the head."
+          }
+        ],
+        "fallbackFeedback": "Only TTTT fails, so 16 − 1 = 15 outcomes contain at least one head."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-at-least-one__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three dice — the direct count would be miserable.",
+      "conceptTag": "cpr-at-least-one",
+      "hints": [
+        "Do not count sixes. Count the rolls with **no** six.",
+        "Each die has 5 non-six faces, so 5 × 5 × 5 = 125 rolls miss entirely — out of 6³ = 216.",
+        "At least one six = 216 − 125."
+      ],
+      "explanationVariants": [
+        "P(at least one 6) = 1 − (5/6)³ = 1 − 125/216 = 91/216, so 91 of the 216 rolls qualify.",
+        "216 total rolls, 125 with no six at all; every other roll shows a six somewhere: 216 − 125 = 91."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Roll three dice (216 equally likely outcomes). How many show **at least one 6**?",
+        "answer": 91,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 125,
+            "feedback": "That is the count of rolls with **no** 6 — the complement. Subtract it from 216 to get the rolls that do contain a six."
+          },
+          {
+            "value": 108,
+            "feedback": "That is 216 × 1/2, which is what you get by adding 1/6 three times. Probabilities of overlapping events cannot simply be added."
+          },
+          {
+            "value": 36,
+            "feedback": "That is 6 × 6, the count for one fixed die showing a 6. The other two dice still have to be accounted for."
+          }
+        ],
+        "fallbackFeedback": "Count the misses: 5³ = 125 rolls have no six, so 216 − 125 = 91 rolls have at least one."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-at-least-one__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "When the event is sprawling, count its opposite.",
+      "takeaways": [
+        "P(not A) = 1 − P(A) — the complement rule.",
+        "The complement of \"at least one\" is \"none\", which is a single clean multiplication.",
+        "\"At least one tail\" is **not** the opposite of \"at least one head\" — complements can never overlap."
+      ],
+      "teaser": "Next: two events that cannot happen together — and why that is a special case, not the normal one."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-at-least-one",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "\"At least one\" means **one or more** — one, two, all of them. It fails in exactly one way: **zero**. So always ask \"how many outcomes have zero?\" and subtract that from the total.",
+        "figure": "cpr-complement-bar"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Spot the shortcut.",
+        "conceptTag": "cpr-at-least-one",
+        "explanationVariants": [
+          "Two coins have 4 outcomes; only TT has zero heads, so 4 − 1 = 3 have at least one head.",
+          "P(at least one head) = 1 − P(TT) = 1 − 1/4 = 3/4, and 3/4 of 4 outcomes is 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Flip two coins. How many of the 4 outcomes show at least one head?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "That is HH only. HT and TH each contain a head too, so they also count as \"at least one\"."
+            },
+            {
+              "value": 2,
+              "feedback": "That is \"exactly one head\" (HT and TH). HH has two heads, which is still at least one."
+            }
+          ],
+          "fallbackFeedback": "Only TT has zero heads, so the other three outcomes — HH, HT, TH — all qualify."
+        }
+      }
+    }
+  ]
+}

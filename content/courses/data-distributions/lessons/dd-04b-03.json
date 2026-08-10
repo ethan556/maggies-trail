@@ -1,0 +1,256 @@
+{
+  "id": "dd-04b-03",
+  "slug": "typical-distance-the-mad",
+  "title": "Typical Distance: the MAD",
+  "courseId": "data-distributions",
+  "chapterId": "ch4b-box-plots-and-mad",
+  "minutes": 11,
+  "standards": [
+    "6.SP.B.5c"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "dd-mad-distances",
+      "body": "The IQR uses quartiles. Here is a second measure, built on the **mean**. For each value, find how far it sits from the mean — always a positive distance. Average those distances. That average is the **mean absolute deviation**, or **MAD**: the typical distance from centre. For 2, 4, 6, 9, 9 the mean is 6 and the distances 4, 2, 0, 3, 3 average to **2.4**."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Start with a single distance.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A data set has mean 10. One of its values is 4. How far is that value from the mean?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "Distance is never negative — 4 − 10 = −6, but a value 6 below the mean is still 6 away. Use the size of the gap: 6."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds the value and the mean (4 + 10). Distance is a difference: the gap from 4 up to 10 is 6."
+          }
+        ],
+        "fallbackFeedback": "The gap between 4 and 10 is 6, and distances are counted as positive, so the distance is 6."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now all the distances at once.",
+      "conceptTag": "mad",
+      "explanationVariants": [
+        "The mean is (3 + 7 + 8 + 10 + 12) ÷ 5 = 8. The distances are 5, 1, 0, 2, 4, adding to 12, so MAD = 12 ÷ 5 = 2.4.",
+        "Line each value up against 8: 3 is 5 away, 7 is 1 away, 8 is on it, 10 is 2 away, 12 is 4 away. Average those five distances to get 2.4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the MAD of 3, 7, 8, 10, 12. (The mean is 8.)",
+        "answer": 2.4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the TOTAL of the distances (5 + 1 + 0 + 2 + 4). The MAD averages them, so divide by 5: 12 ÷ 5 = 2.4."
+          },
+          {
+            "value": 3,
+            "feedback": "3 divides the total by 4 instead of 5. Every value counts, including the 8 that sits exactly on the mean with distance 0: 12 ÷ 5 = 2.4."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the range (12 − 3), which uses only the endpoints. The MAD uses every value's distance from the mean: 2.4."
+          }
+        ],
+        "fallbackFeedback": "Distances from 8 are 5, 1, 0, 2, 4. They total 12, and 12 ÷ 5 = 2.4."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What does a small MAD mean?",
+      "conceptTag": "mad",
+      "explanationVariants": [
+        "The MAD is the typical distance from the mean, so a small MAD says values sit close to the mean — a tightly clustered set.",
+        "Small typical distance means the data huddles near its centre; a large MAD would mean values scattered far from it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two data sets have the same mean, but one has a MAD of 0.8 and the other a MAD of 7.5. What does the MAD of 0.8 tell you?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Its values sit close to the mean — a tightly clustered set",
+            "correct": true,
+            "feedback": "Right — a typical value is only 0.8 away from centre, so that data huddles together."
+          },
+          {
+            "id": "b",
+            "label": "Its values are further from the mean than the other set's",
+            "feedback": "That is backwards. A SMALLER typical distance means closer to the mean; 7.5 is the scattered set."
+          },
+          {
+            "id": "c",
+            "label": "Its mean is smaller than the other set's",
+            "feedback": "The two sets have the same mean — that was given. The MAD measures spread around the centre, not where the centre is."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "dd-mad-vs-iqr",
+      "body": "Two spread measures, two partners. The **IQR** is built from quartiles, so it pairs with the **median** and, like the median, shrugs off wild values. The **MAD** is built from distances to the mean, so it pairs with the **mean** and, like the mean, an extreme value pulls it upward. Report median with IQR, or mean with MAD — matching the centre to the spread that was built from it."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Watch one wild value do its work.",
+      "widget": {
+        "type": "dotPlot",
+        "prompt": "Build the set 5, 5, 5, 25: three dots above 5, and one lone dot above 25.",
+        "values": [
+          5,
+          10,
+          15,
+          20,
+          25
+        ],
+        "target": [
+          3,
+          0,
+          0,
+          0,
+          1
+        ],
+        "maxPerValue": 4,
+        "successFeedback": "One value sits far from the rest. It drags the mean from 5 up to 10, and the MAD from 0 up to 7.5 — the typical distance stops describing any actual value.",
+        "partialFeedback": "Not yet. Three of the four values are the same number, and the fourth is far away — put 3 dots above 5 and 1 above 25."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Match the centre to its spread.",
+      "conceptTag": "mad",
+      "explanationVariants": [
+        "One enormous value drags the mean upward, and the MAD is measured from the mean, so it is dragged too. The median and IQR are built from position, so both hold steady.",
+        "Outlier-resistant pair: median with IQR. Outlier-sensitive pair: mean with MAD. A house price of ten million pushes the mean and MAD, not the median and IQR."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "House prices on one street include a single enormous mansion. Which summary pair describes that street more fairly?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Median with IQR — both resist the one extreme value",
+            "correct": true,
+            "feedback": "Right — the mansion changes position hardly at all, so median and IQR keep describing the typical house."
+          },
+          {
+            "id": "b",
+            "label": "Mean with MAD — both use every value, so both are fairer",
+            "feedback": "Using every value is exactly the problem here: the mansion drags the mean up, and the MAD measures distance from that dragged mean. Both get distorted."
+          },
+          {
+            "id": "c",
+            "label": "Mean with IQR — one of each keeps it balanced",
+            "feedback": "Mixing them describes a centre and a spread that were built from different ideas. Pair median with IQR, or mean with MAD — here the resistant pair fits."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full pipeline: mean first, then distances.",
+      "conceptTag": "mad",
+      "explanationVariants": [
+        "Mean = (12 + 15 + 15 + 18 + 20) ÷ 5 = 80 ÷ 5 = 16. Distances: 4, 1, 1, 2, 4, totalling 12, so MAD = 12 ÷ 5 = 2.4.",
+        "Find centre before spread: the five values total 80 so the mean is 16, and the average gap to 16 works out at 2.4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the MAD of 12, 15, 15, 18, 20. (Find the mean first.)",
+        "answer": 2.4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is the MEAN, which is only step one. Now average each value's distance from 16: (4 + 1 + 1 + 2 + 4) ÷ 5 = 2.4."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the total of the distances. The MAD averages them across all five values: 12 ÷ 5 = 2.4."
+          },
+          {
+            "value": 3,
+            "feedback": "3 uses the median 15 as the centre instead of the mean. The MAD measures from the MEAN, which is 16, giving 2.4."
+          }
+        ],
+        "fallbackFeedback": "Mean = 80 ÷ 5 = 16. Distances from 16 are 4, 1, 1, 2, 4, totalling 12, so MAD = 12 ÷ 5 = 2.4."
+      },
+      "hints": [
+        "The MAD is measured from the mean, so find the mean before anything else.",
+        "The five values total 80, so the mean is 16. Now list each distance from 16.",
+        "The distances are 4, 1, 1, 2, 4 — average them."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The typical distance from centre.",
+      "takeaways": [
+        "MAD = average of every value's distance from the mean; distances are always positive.",
+        "A small MAD means tightly clustered data; a large MAD means scattered data.",
+        "Pair mean with MAD and median with IQR — an extreme value moves the first pair, not the second."
+      ],
+      "teaser": "final chapter: put shape, center, and spread together into one honest paragraph about any data set."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mad",
+      "concept": {
+        "id": "rem-mad-c",
+        "kind": "concept",
+        "body": "Quick rewind. **MAD** = average distance from the mean. Two steps: find the mean, then average how far each value sits from it. For 1, 3, 5 the mean is 3, the distances are 2, 0, 2, and MAD = 4 ÷ 3."
+      },
+      "check": {
+        "id": "rem-mad-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mad",
+        "explanationVariants": [
+          "Distances from the mean 20 are 5 and 5, so the MAD is (5 + 5) ÷ 2 = 5.",
+          "Both values sit exactly 5 from centre, so the typical distance is 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The set 15, 25 has mean 20. What is its MAD?",
+          "answer": 5,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "10 is the total of the two distances (5 + 5), or the range. The MAD averages them: 10 ÷ 2 = 5."
+            },
+            {
+              "value": 20,
+              "feedback": "20 is the mean itself, not the spread. Average the distances from it: (5 + 5) ÷ 2 = 5."
+            }
+          ],
+          "fallbackFeedback": "Each value is 5 from the mean, so the average distance is 5."
+        }
+      }
+    }
+  ]
+}

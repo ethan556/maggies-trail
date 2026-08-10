@@ -1,0 +1,65 @@
+# Session 149 Failure-First Audit
+
+- Checks: **59/59**
+- Failed: **0**
+- Result: **PASS**
+
+- ✓ ConditionalTableLabSpec is a plain ZodObject
+- ✓ GraphStoryLabSpec is a plain ZodObject
+- ✓ ProportionalReasoningLabSpec is a plain ZodObject
+- ✓ PlaceValueTransformLabSpec is a plain ZodObject
+- ✓ QuotientReasoningLabSpec is a plain ZodObject
+- ✓ AffineRelationshipLabSpec is a plain ZodObject
+- ✓ ExactNumberLabSpec is a plain ZodObject
+- ✓ GeometricConstraintLabSpec is a plain ZodObject
+- ✓ conditional-table validation relocated
+- ✓ graph-story validation relocated
+- ✓ percent-change variant repair retained
+- ✓ S140 collision-free form retained
+- ✓ signed-fraction unreduced repair retained
+- ✓ shape hierarchy narration bounded
+- ✓ triangle aria collision remains repaired
+- ✓ composite add/subtract language retained
+- ✓ conditional-table gate retained
+- ✓ equation-outcome option class exists
+- ✓ geometric schema plain and registered
+- ✓ geometric all eight surfaces
+- ✓ capability registry has only authoritative root
+- ✓ geometric capability is manipulative
+- ✓ scale factor is squared
+- ✓ coordinate subtraction is signed
+- ✓ AA compares complete angle sets
+- ✓ Pythagorean areas sum
+- ✓ Pythagorean exact length takes square root
+- ✓ fabricated geometric exploration filtered
+- ✓ geometric renderer uses pure truth
+- ✓ geometric reveal does not overwrite learner state
+- ✓ geometric stage controls keyboard native
+- ✓ CML catalog integration
+- ✓ CML mesh integration
+- ✓ CML kernel integration
+- ✓ mastery direct classification
+- ✓ valid widget sample
+- ✓ source transpilation passed
+- ✓ content JSON passed
+- ✓ authored content passed
+- ✓ seeded sweep passed
+- ✓ mutations passed
+- ✓ backlog progressed from four through authorized later sessions
+- ✓ registration retains all 123 historical types plus later additions
+- ✓ player contract passed
+- ✓ no authored variant drift
+- ✓ exact six lesson boundary
+- ✓ exact 42 widget boundary
+- ✓ 1123 non-target lessons byte-identical
+- ✓ all lesson hashes present
+- ✓ historical signed sweep refreshed
+- ✓ historical shape sweep refreshed
+- ✓ historical conditional sweep refreshed
+- ✓ historical graph sweep refreshed
+- ✓ historical proportional sweep refreshed
+- ✓ historical place-value sweep refreshed
+- ✓ historical quotient sweep refreshed
+- ✓ historical affine sweep refreshed
+- ✓ historical exact sweep refreshed
+- ✓ current source hash matches sweep

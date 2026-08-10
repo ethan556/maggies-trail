@@ -1,0 +1,315 @@
+{
+  "id": "sr-02-01",
+  "slug": "meet-the-sigma",
+  "title": "Meet the Sigma",
+  "courseId": "sequences-series",
+  "chapterId": "ch2-sigma-notation",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Writing 3 + 5 + 7 + 9 + 11 gets old fast. **Sigma notation** compresses a whole sum into one expression: Σ with **k = 1 below** (start the counter at 1), **5 above** (stop when k reaches 5), and **(2k + 1) beside it** (the rule each k is fed through). Read it as: run k from 1 to 5, apply the rule, add everything up.",
+      "figure": "sigma-anatomy"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the top number.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In Σ from k = 1 to 5 of (2k + 1), what does the 5 tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "stop the counter when k reaches 5",
+            "correct": true,
+            "feedback": "Right — the top number is the counter's finish line."
+          },
+          {
+            "id": "o2",
+            "label": "add 5 to every term",
+            "correct": false,
+            "feedback": "The 5 rides ABOVE the sigma as a stopping line — what gets added each round is the rule (2k + 1), untouched by it."
+          },
+          {
+            "id": "o3",
+            "label": "multiply the whole sum by 5",
+            "correct": false,
+            "feedback": "Only a factor written OUTSIDE the sigma would scale the total — the top number just says when the counter quits."
+          },
+          {
+            "id": "o4",
+            "label": "start the counter at 5",
+            "correct": false,
+            "feedback": "The start lives BELOW the sigma (k = 1); the top number is where the counter finishes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Match each sigma to its unrolled sum.",
+      "conceptTag": "sr-sigma-read",
+      "explanationVariants": [
+        "Substitute k = 1, 2, 3 into each rule: 2k gives 2, 4, 6; k + 1 gives 2, 3, 4; k² gives 1, 4, 9.",
+        "Each rule transforms the same counter values differently — doubling, nudging, squaring."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Each sigma runs k from 1 to 3. Match it to its expansion.",
+        "left": [
+          {
+            "id": "s1",
+            "label": "Σ 2k"
+          },
+          {
+            "id": "s2",
+            "label": "Σ (k + 1)"
+          },
+          {
+            "id": "s3",
+            "label": "Σ k²"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "2 + 4 + 6"
+          },
+          {
+            "id": "r2",
+            "label": "2 + 3 + 4"
+          },
+          {
+            "id": "r3",
+            "label": "1 + 4 + 9"
+          }
+        ],
+        "pairs": {
+          "s1": "r1",
+          "s2": "r2",
+          "s3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "s1",
+            "right": "r2",
+            "feedback": "2k DOUBLES the counter — 2, 4, 6 — while 2 + 3 + 4 only nudges each k up by one."
+          },
+          {
+            "left": "s3",
+            "right": "r1",
+            "feedback": "k² squares the counter: 1, 4, 9. The even run 2, 4, 6 comes from doubling, not squaring."
+          },
+          {
+            "left": "s2",
+            "right": "r3",
+            "feedback": "k + 1 gives 2, 3, 4 — steps of one. The jumps 1, 4, 9 need squaring."
+          }
+        ],
+        "missFeedback": "Feed k = 1, 2, 3 through each rule and see which three numbers come out.",
+        "successFeedback": "Three rules, one counter — the rule decides what the counter becomes."
+      },
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-sigma-read__matchPairs"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To evaluate a sigma, **unroll it**: substitute each counter value into the rule, write out the terms, then add. For Σ from k = 1 to 5 of (2k + 1): k = 1 gives 3, k = 2 gives 5, then 7, 9, 11 — total 35. Nothing mysterious: substitute, list, add.",
+      "figure": "sr-unroll-sigma"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Unroll and add.",
+      "widget": {
+        "type": "sequenceBuild",
+        "prompt": "Evaluate Σ from k = 1 to 5 of (2k + 1).",
+        "mode": "arithmetic",
+        "task": "sigmaEvaluate",
+        "answerMode": "numeric",
+        "first": 3,
+        "targetD": 1,
+        "atPosition": 10,
+        "targetTerm": 35,
+        "targetRTenths": 5,
+        "targetSum": 35,
+        "rMax": 9,
+        "start": 1,
+        "lowerIndex": 1,
+        "upperIndex": 5,
+        "coefficient": 2,
+        "constant": 1,
+        "power": 1,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is only the LAST term (k = 5). The sigma adds all five: 3 + 5 + 7 + 9 + 11 = 35."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is Σ 2k with the +1 dropped — but the +1 fires once per term, five times in all: 30 + 5 = 35."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "fallbackFeedback": "Unroll: 3 + 5 + 7 + 9 + 11 = 35.",
+        "explorationFeedback": "Open at least two exact sequence states before checking.",
+        "successFeedback": "Unroll: 3 + 5 + 7 + 9 + 11 = 35.",
+        "lowFeedback": "Unroll: 3 + 5 + 7 + 9 + 11 = 35.",
+        "highFeedback": "Unroll: 3 + 5 + 7 + 9 + 11 = 35."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Squares, not the square of the sum.",
+      "conceptTag": "sr-sigma-read",
+      "explanationVariants": [
+        "k² at k = 1, 2, 3 gives 1, 4, 9 — summing to 14.",
+        "Square FIRST, then add: 1 + 4 + 9. Adding first and squaring after is a different (bigger) number."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate Σ from k = 1 to 3 of k².",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "36 is (1 + 2 + 3)² — the sum squared. The rule squares EACH k before the adding: 1 + 4 + 9 = 14."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is just the last term, 3². All three squares join the sum: 1 + 4 + 9 = 14."
+          }
+        ],
+        "fallbackFeedback": "1² + 2² + 3² = 1 + 4 + 9 = 14."
+      },
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-sigma-read__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Two quirks worth knowing. The index letter is a **dummy**: Σ 2k and Σ 2j (same bounds) are the same sum — the letter is scaffolding. And a **constant rule still runs the counter**: Σ from k = 1 to 4 of 3 means “add a 3 once per k value”: 3 + 3 + 3 + 3 = 12.",
+      "figure": "sr-dummy-index"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A constant inside.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate Σ from k = 1 to 4 of 3.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "The rule ignores k, but the sigma still runs it once per counter value — four rounds, four 3s: 12."
+          },
+          {
+            "value": 7,
+            "feedback": "7 looks like 3 + 4, but the bounds only run the counter — they never join the sum. Four copies of 3 make 12."
+          }
+        ],
+        "fallbackFeedback": "One 3 per counter value: 3 + 3 + 3 + 3 = 12."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-part rule.",
+      "conceptTag": "sr-sigma-read",
+      "explanationVariants": [
+        "Unroll k² − k at k = 1, 2, 3, 4: 0, 2, 6, 12 — total 20.",
+        "Each term squares the counter, then removes one copy of it: 1−1, 4−2, 9−3, 16−4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate Σ from k = 1 to 4 of (k² − k).",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is only the final term (16 − 4). All four join the sum: 0 + 2 + 6 + 12 = 20."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is Σ k² alone — the −k part fires every round too: 30 − (1+2+3+4) = 20."
+          }
+        ],
+        "fallbackFeedback": "Unroll: 0 + 2 + 6 + 12 = 20."
+      },
+      "hints": [
+        "Substitute each k from 1 to 4 into k² − k, one at a time.",
+        "The four terms are 1−1, 4−2, 9−3, 16−4.",
+        "0 + 2 + 6 + 12 — add them."
+      ],
+      "variant": {
+        "gen": "a2-series",
+        "form": "sr-sigma-read__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One symbol, a whole sum.",
+      "takeaways": [
+        "Below the sigma: where the counter starts. Above: where it stops. Beside: the rule each k feeds.",
+        "Evaluate by unrolling — substitute, list, add.",
+        "The index letter is a dummy, and even a constant rule runs once per counter value."
+      ],
+      "teaser": "Next: evaluating trickier sigmas — including the sneaky term-count trap."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-sigma-read",
+      "concept": {
+        "id": "rem-sr0201-c",
+        "kind": "concept",
+        "body": "Unrolling is just substitution. Σ from k = 1 to 3 of (k + 2): feed in k = 1, 2, 3 to get 3, 4, 5, then add — 12. Every sigma works exactly this way: substitute, list, add."
+      },
+      "check": {
+        "id": "rem-sr0201-k",
+        "kind": "check",
+        "body": "Unroll a small one.",
+        "conceptTag": "sr-sigma-read",
+        "explanationVariants": [
+          "k + 2 at k = 1, 2, 3 gives 3, 4, 5 — total 12.",
+          "Three counter values, three terms, one addition."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Evaluate Σ from k = 1 to 3 of (k + 2).",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 is only the last term (3 + 2). The sigma adds all three: 3 + 4 + 5 = 12."
+            },
+            {
+              "value": 6,
+              "feedback": "6 is 1 + 2 + 3 — the bare counter values. Each one gets +2 before joining the sum: 3 + 4 + 5 = 12."
+            }
+          ],
+          "fallbackFeedback": "3 + 4 + 5 = 12."
+        }
+      }
+    }
+  ]
+}

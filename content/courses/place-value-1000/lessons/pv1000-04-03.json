@@ -1,0 +1,321 @@
+{
+  "id": "pv1000-04-03",
+  "slug": "adding-and-subtracting-in-real-situations",
+  "title": "Adding and Subtracting in Real Situations",
+  "courseId": "place-value-1000",
+  "chapterId": "ch4-adding-and-subtracting-to-1000",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "decompose-combine",
+      "body": "Real problems need the same spot-by-spot strategy. A school has 324 books, then receives 251 more: 324 + 251 = 575 books in total."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve a real addition problem.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "The school has 324 books and receives 251 more. How many books now? Build the total with blocks.",
+        "target": 575,
+        "requireStandard": true,
+        "maxHundreds": 9,
+        "maxTens": 9,
+        "maxOnes": 20,
+        "commonBuilds": [
+          {
+            "hundreds": 5,
+            "tens": 5,
+            "ones": 5,
+            "feedback": "Check each spot: hundreds 300+200=500, tens 20+50=70, ones 4+1=5. Combine: 575."
+          },
+          {
+            "hundreds": 0,
+            "tens": 6,
+            "ones": 5,
+            "feedback": "That drops the hundreds. Combine all three spots: 500+70+5=575."
+          }
+        ],
+        "missFeedback": "Build each place from the story: 300+200 hundreds, 20+50 tens, 4+1 ones.",
+        "successFeedback": "500 + 70 + 5 = 575 — five flats, seven rods, five units."
+      },
+      "predict": {
+        "prompt": "The school library grows in this story. Before computing: the answer must be…",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than 324"
+          },
+          {
+            "id": "less",
+            "label": "Less than 324"
+          },
+          {
+            "id": "cant",
+            "label": "Impossible to tell without computing"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "Receiving books only grows the pile — the answer must top 324 (it's 575). Reading a story's DIRECTION first is the cheapest error-catcher there is: an answer like 65 that shrinks the pile fails the smell test before any checking."
+      },
+      "conceptTag": "pv1000-realworld",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents realworld.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for realworld must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines realworld."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-realworld",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve a real subtraction problem.",
+      "conceptTag": "pv1000-realworld",
+      "explanationVariants": [
+        "486-253: 200+30+3=233.",
+        "Subtract each spot, then combine."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "486 - 253 = ?",
+        "answer": 233,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 239,
+            "feedback": "Check each spot: hundreds 400-200=200, tens 80-50=30, ones 6-3=3. Combine: 233."
+          },
+          {
+            "value": 739,
+            "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 200+30+3=233."
+          }
+        ],
+        "fallbackFeedback": "200 + 30 + 3 = 233."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000RealworldNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Some stories need a trade — a stadium starting with 247 seats filled, then 186 more people arrive: 247 + 186 = 433, trading through the ones spot.",
+      "figure": "pv1000-stadium"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Solve with a trade needed.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "247 + 186 = ?",
+        "answer": 433,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3213,
+            "feedback": "The ones add to 13 — trade 10 ones for 1 extra ten, then combine: 400+30+3=433."
+          },
+          {
+            "value": 423,
+            "feedback": "Don't forget the traded ten from the ones! Combine: 433."
+          }
+        ],
+        "fallbackFeedback": "247 + 186 = 433."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Whether adding or subtracting, whatever the story — decompose into hundreds, tens, ones, work each spot, trade when needed, then combine.",
+      "figure": "pv1000-decompose"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Solve a subtraction with trading.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "342 - 127 = ?",
+        "answer": 215,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 225,
+            "feedback": "The ones (2) aren't enough for 7 — trade 1 ten for 10 ones first: 12-7=5. Combine: 215."
+          },
+          {
+            "value": 469,
+            "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 200+10+5=215."
+          }
+        ],
+        "fallbackFeedback": "342 - 127 = 215."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another real-world addition.",
+      "conceptTag": "pv1000-realworld",
+      "explanationVariants": [
+        "213+142: 300+50+5=355.",
+        "Combine each spot separately."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "213 + 142 = ?",
+        "answer": 355,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 335,
+            "feedback": "Check each spot: hundreds 200+100=300, tens 10+40=50, ones 3+2=5. Combine: 355."
+          },
+          {
+            "value": 45,
+            "feedback": "That drops the hundreds. Combine all three spots: 300+50+5=355."
+          }
+        ],
+        "fallbackFeedback": "300 + 50 + 5 = 355."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000RealworldNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another real-world subtraction.",
+      "conceptTag": "pv1000-realworld",
+      "explanationVariants": [
+        "579-245: 300+30+4=334.",
+        "Subtract each spot, then combine."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "579 - 245 = ?",
+        "answer": 334,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 344,
+            "feedback": "Check each spot: hundreds 500-200=300, tens 70-40=30, ones 9-5=4. Combine: 334."
+          },
+          {
+            "value": 824,
+            "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 300+30+4=334."
+          }
+        ],
+        "fallbackFeedback": "300 + 30 + 4 = 334."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000RealworldNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full real-world challenge with a cascading trade.",
+      "conceptTag": "pv1000-realworld",
+      "explanationVariants": [
+        "Ones: 8+7=15, trade 1 ten. Tens: 50+60+10=120, trade 1 hundred. Hundreds: 300+200+100=600. Combine: 625.",
+        "Work through each trade one at a time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A parking lot had 358 cars. 267 more cars arrived. How many cars are there now? Compute 358 + 267 = ?",
+        "answer": 625,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 515,
+            "feedback": "The ones add to 15 (trade 1 ten), then tens add to 12 (trade 1 hundred). Combine carefully: 625."
+          },
+          {
+            "value": 5115,
+            "feedback": "Work through each trade one at a time. The final combined answer is 625."
+          }
+        ],
+        "fallbackFeedback": "358 + 267 = 625."
+      },
+      "hints": [
+        "Ones: 8+7=15. Trade 10 ones for 1 ten, keep 5 ones.",
+        "Tens: 5+6+1(traded)=12 tens. Trade 10 tens for 1 hundred, keep 2 tens.",
+        "Hundreds: 3+2+1(traded)=6. Combine: 600+20+5=625."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000RealworldNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every real-world add/subtract story uses the same spot-by-spot strategy: decompose, combine or subtract each spot, trade when needed.",
+      "takeaways": [
+        "Translate the story into an addition or subtraction problem first.",
+        "Decompose into hundreds, tens, ones, and work each spot.",
+        "Trade whenever a spot overflows (adding) or comes up short (subtracting)."
+      ],
+      "teaser": "you've completed place value to 1000 — structure, counting, comparing, and adding/subtracting with concrete strategies!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-realworld",
+      "concept": {
+        "id": "rem-prw2-c",
+        "kind": "concept",
+        "body": "Any real-world add/subtract story uses the spot-by-spot strategy: decompose into hundreds, tens, ones, combine or subtract each spot, trading when needed."
+      },
+      "check": {
+        "id": "rem-prw2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-realworld",
+        "explanationVariants": [
+          "486-253: 200+30+3=233.",
+          "Subtract each spot, then combine."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "486 - 253 = ?",
+          "answer": 233,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 239,
+              "feedback": "The ones are off: 6 − 3 = 3, not 9. That makes 233."
+            },
+            {
+              "value": 739,
+              "feedback": "Subtract, don't add: 233."
+            }
+          ],
+          "fallbackFeedback": "233."
+        }
+      }
+    }
+  ]
+}

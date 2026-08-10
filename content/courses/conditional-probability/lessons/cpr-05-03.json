@@ -1,0 +1,319 @@
+{
+  "id": "cpr-05-03",
+  "slug": "probability-by-counting",
+  "title": "Probability by Counting",
+  "courseId": "conditional-probability",
+  "chapterId": "ch5-counting",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When every group is equally likely, probability is just a ratio of two counts:\n\nP = (favourable groups) / (all groups).\n\nGrab 3 marbles from a bag of 5 red and 3 blue. There are C(8,3) = 56 possible groups, and C(5,3) = 10 of them are all red. So P(all red) = 10/56 ≈ 0.179.",
+      "figure": "cpr-count-prob-bars"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "All 56 equally likely three-marble groups.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the all-red groups: 10 of the 56.",
+        "rows": 7,
+        "cols": 8,
+        "targetNum": 5,
+        "targetDen": 28,
+        "start": 0,
+        "successFeedback": "10 of 56 ≈ 0.179. Both numbers are combinations: C(5,3) favourable over C(8,3) possible.",
+        "lowFeedback": "There are C(5,3) = 10 ways to choose 3 reds from the 5 available. Shade all ten.",
+        "highFeedback": "More than 10 groups — but only 5 marbles are red, so at most C(5,3) = 10 groups can be all red."
+      },
+      "predict": {
+        "prompt": "You'll shade 5/28 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 14/28 here — and 5 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-count-prob"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the denominator.",
+      "conceptTag": "cpr-count-prob",
+      "explanationVariants": [
+        "C(8,3) = (8 × 7 × 6)/3! = 336/6 = 56 possible groups.",
+        "The marbles are grabbed together, so order is irrelevant — that makes it a combination, not 8 × 7 × 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many different groups of 3 marbles can be taken from 8?",
+        "answer": 56,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 336,
+            "feedback": "That is 8P3, the ordered count. Grabbing three marbles at once has no first or second, so divide by 3! = 6."
+          },
+          {
+            "value": 24,
+            "feedback": "That is 8 × 3. The count is (8 × 7 × 6)/3! — three shrinking factors, then the orderings divided out."
+          },
+          {
+            "value": 112,
+            "feedback": "That is 336 ÷ 3. Three chosen marbles have 3! = 6 orderings, so the divisor is 6."
+          }
+        ],
+        "fallbackFeedback": "C(8,3) = 336/6 = 56."
+      },
+      "variant": {
+        "gen": "count-prob"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why must both counts use the same style?",
+      "conceptTag": "cpr-count-prob",
+      "explanationVariants": [
+        "If the numerator counts unordered groups and the denominator counts ordered picks, the ratio is meaningless — the two are measured in different units.",
+        "Ordered over ordered gives the same answer as unordered over unordered: 60/336 = 10/56. Mixing them does not."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "P(all red) = 10/56 uses combinations top and bottom. What happens if you use C(5,3) = 10 over 8P3 = 336?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It is wrong — the top counts groups while the bottom counts ordered picks.",
+            "correct": true,
+            "feedback": "Right. Fix it either way: 10/56 with combinations, or 60/336 with permutations. Both give 0.179."
+          },
+          {
+            "id": "o2",
+            "label": "It is fine — the orderings cancel out anyway.",
+            "correct": false,
+            "feedback": "They cancel only when *both* counts include them. Here only the denominator does, so the answer comes out six times too small."
+          },
+          {
+            "id": "o3",
+            "label": "It is fine, since probabilities are always ratios.",
+            "correct": false,
+            "feedback": "A ratio is only meaningful when both counts measure the same kind of thing. Mixing groups with ordered picks does not."
+          },
+          {
+            "id": "o4",
+            "label": "It is wrong, but only because 336 is bigger than 56.",
+            "correct": false,
+            "feedback": "Size is not the issue — 60/336 is also a bigger-denominator fraction, and it is correct. Consistency is the issue."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "count-prob",
+        "form": "ratioMismatch"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two habits make these problems easy.\n\n**Split the favourable count** into independent choices and multiply: pick the girls, then the boys.\n**Use the complement** when the event says \"at least one\": count the single way to fail, and subtract from 1.",
+      "figure": "cpr-count-prob-bars"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Split the numerator.",
+      "conceptTag": "cpr-count-prob",
+      "explanationVariants": [
+        "Favourable = C(4,2) × C(5,1) = 30, and all groups = C(9,3) = 84, so P = 30/84 ≈ 0.357.",
+        "Choose the 2 girls (6 ways) and the 1 boy (5 ways) to get 30 of the 84 equally likely committees."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A club of 4 girls and 5 boys picks a 3-person committee at random. Find P(exactly 2 girls), to three places.",
+        "answer": 0.357,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.214,
+            "feedback": "That looks like 18/84 or a similar slip in the numerator. Count it as C(4,2) × C(5,1) = 6 × 5 = 30."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is a guess from 'two of the three are girls'. The girls are a minority of the club, so the probability lands below one half: 30/84 ≈ 0.357."
+          },
+          {
+            "value": 0.071,
+            "feedback": "That is 6/84 — the girl-pairs alone, forgetting that each pair must still be joined by one of the 5 boys."
+          }
+        ],
+        "fallbackFeedback": "C(4,2) × C(5,1) / C(9,3) = 30/84 ≈ 0.357."
+      },
+      "variant": {
+        "gen": "count-prob",
+        "form": "exactlyTwo"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Same bag, opposite question.",
+      "conceptTag": "cpr-count-prob",
+      "explanationVariants": [
+        "\"At least one blue\" fails only when all three are red, and that happens in 10 of the 56 groups. So 1 − 10/56 = 46/56 ≈ 0.821.",
+        "Counting directly would need three cases (one blue, two blue, three blue). The complement needs one."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 5 red and 3 blue marbles, 3 are taken at random. Find P(at least one blue), to three places.",
+        "answer": 0.821,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.179,
+            "feedback": "That is P(all red) — the one way to get **no** blue. Subtract it from 1."
+          },
+          {
+            "value": 0.375,
+            "feedback": "That is 3/8, the chance a single marble is blue. Three marbles are drawn, which makes at least one blue far likelier."
+          },
+          {
+            "value": 0.643,
+            "feedback": "That is a two-marble answer (1 − 5/14 from the earlier tree). Here three marbles are grabbed, out of C(8,3) = 56 groups."
+          }
+        ],
+        "fallbackFeedback": "1 − 10/56 = 46/56 ≈ 0.821."
+      },
+      "variant": {
+        "gen": "count-prob",
+        "form": "atLeastOne"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Everything at once.",
+      "conceptTag": "cpr-count-prob",
+      "hints": [
+        "The denominator is every 3-marble group: C(8,3).",
+        "For the numerator, split it: choose 2 of the 5 reds and 1 of the 3 blues.",
+        "C(5,2) × C(3,1) = 10 × 3 = 30. Now divide by 56."
+      ],
+      "explanationVariants": [
+        "C(5,2) × C(3,1) / C(8,3) = (10 × 3)/56 = 30/56 ≈ 0.536.",
+        "Of the 56 groups, 30 hold exactly two reds and one blue — comfortably the most likely single outcome."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 5 red and 3 blue marbles, 3 are taken. Find P(exactly 2 red and 1 blue), to three places.",
+        "answer": 0.536,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.179,
+            "feedback": "That is P(all red) = 10/56. This question wants exactly two reds, with a blue alongside them."
+          },
+          {
+            "value": 0.232,
+            "feedback": "That is 13/56 — an additive slip. The two choices combine by multiplying: C(5,2) × C(3,1) = 30."
+          },
+          {
+            "value": 0.821,
+            "feedback": "That is P(at least one blue), which also counts groups with two or three blues. Here exactly one blue is required."
+          }
+        ],
+        "fallbackFeedback": "C(5,2) × C(3,1)/C(8,3) = 30/56 ≈ 0.536."
+      },
+      "variant": {
+        "gen": "count-prob",
+        "form": "exactlyTwo"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Counting is probability, once the outcomes are equally likely.",
+      "takeaways": [
+        "P = favourable count / total count — and both counts must be done in the same style, ordered or unordered.",
+        "Split a favourable count into independent choices and multiply them.",
+        "For \"at least one\", count the single failing case and subtract from 1."
+      ],
+      "teaser": "You now have the addition rule, conditioning, independence, and counting — the full toolkit for chance."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-count-prob",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Write down two counts before touching a calculator. **Total:** how many equally likely groups exist? **Favourable:** how many of them satisfy the event? Then divide. Use the same counting style for both.",
+        "figure": "cpr-count-prob-bars"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Two counts, one ratio.",
+        "conceptTag": "cpr-count-prob",
+        "explanationVariants": [
+          "Total = C(6,2) = 15 pairs. Favourable = C(4,2) = 6 all-red pairs. P = 6/15 = 0.4.",
+          "Of the 15 equally likely pairs, 6 are red-red."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A bag holds 4 red and 2 blue marbles. Two are taken at random. Find P(both red).",
+          "answer": 0.4,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.667,
+              "feedback": "That is 4/6 — the chance the *first* marble is red. The second marble must be red as well, which brings the probability down."
+            },
+            {
+              "value": 0.444,
+              "feedback": "That is (4/6)², the with-replacement answer. Grabbing two at once means the second pick sees a smaller bag."
+            }
+          ],
+          "fallbackFeedback": "C(4,2)/C(6,2) = 6/15 = 0.4."
+        }
+      }
+    }
+  ]
+}

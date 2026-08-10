@@ -1,0 +1,381 @@
+{
+  "id": "cn-02-03",
+  "slug": "complex-numbers-and-the-plane",
+  "title": "Complex Numbers & the Plane",
+  "courseId": "complex-numbers",
+  "chapterId": "ch2-imaginary-unit",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **complex number** mixes both kinds: **a + bi**, with real part a and imaginary part b. Since it takes two numbers to describe, it lives on a **plane**: real part along the horizontal axis, imaginary part up the vertical. 3 + 2i is the point 3 right, 2 up.",
+      "figure": "complex-plane"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Name the parts.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the REAL part of 4 − 7i?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4",
+            "correct": true,
+            "feedback": "Right — the standalone number is the real part; −7 rides with the i."
+          },
+          {
+            "id": "o2",
+            "label": "−7",
+            "correct": false,
+            "feedback": "−7 is the IMAGINARY part (the coefficient of i) — the real part is 4."
+          },
+          {
+            "id": "o3",
+            "label": "7",
+            "correct": false,
+            "feedback": "The imaginary coefficient is −7, and either way it belongs to i — the real part is 4."
+          },
+          {
+            "id": "o4",
+            "label": "−7i",
+            "correct": false,
+            "feedback": "−7i is the whole imaginary TERM; the real part is the plain 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Special positions: a purely **real** number like 5 sits ON the horizontal axis (its b is 0); a purely **imaginary** one like 5i sits ON the vertical axis (its a is 0). Every other complex number floats off both axes.",
+      "figure": "cn-complex-plane"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Plot one.",
+      "conceptTag": "cn-complex-plane",
+      "explanationVariants": [
+        "3 + 2i means real part 3 (right) and imaginary part 2 (up): the point (3, 2i).",
+        "Real part sets the horizontal position, imaginary part the vertical."
+      ],
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the complex number 3 + 2i on the plane (real axis across, imaginary axis up).",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1i",
+          "2i",
+          "3i",
+          "4i",
+          "5i",
+          "6i"
+        ],
+        "targets": [
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 3,
+            "feedback": "That's 2 + 3i — the REAL part 3 goes across, and the imaginary 2 goes up: (3, 2i)."
+          }
+        ],
+        "missFeedback": "Move 3 along the real axis, then 2 up the imaginary axis.",
+        "successFeedback": "Right — 3 + 2i lives at 3 across, 2 up, exactly like the figure.",
+        "connectTargets": false
+      },
+      "variant": {
+        "gen": "a2-complex",
+        "form": "cn-complex-plane__plotPoint"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents complex plane.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for complex plane must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines complex plane."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-complex-plane",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Who lives on the vertical axis?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which number sits ON the imaginary (vertical) axis?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5i",
+            "correct": true,
+            "feedback": "Right — its real part is 0, so it has no horizontal offset."
+          },
+          {
+            "id": "o2",
+            "label": "5",
+            "correct": false,
+            "feedback": "5 is purely real — it sits on the HORIZONTAL axis, imaginary part 0."
+          },
+          {
+            "id": "o3",
+            "label": "3 + i",
+            "correct": false,
+            "feedback": "With real part 3, it floats 3 units off the vertical axis."
+          },
+          {
+            "id": "o4",
+            "label": "−2",
+            "correct": false,
+            "feedback": "−2 is purely real — on the horizontal axis, just left of center."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Part vs term.",
+      "conceptTag": "cn-complex-plane",
+      "explanationVariants": [
+        "The imaginary part is the bare coefficient b — for 6 + 5i, that's 5.",
+        "Convention: 'imaginary part' means the real number multiplying i."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the IMAGINARY part of 6 + 5i?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5",
+            "correct": true,
+            "feedback": "Right — the imaginary part is the coefficient of i, a plain real number."
+          },
+          {
+            "id": "o2",
+            "label": "5i",
+            "correct": false,
+            "feedback": "5i is the imaginary TERM — the imaginary PART is just its coefficient, 5."
+          },
+          {
+            "id": "o3",
+            "label": "6",
+            "correct": false,
+            "feedback": "6 is the real part; the imaginary part rides with the i: 5."
+          },
+          {
+            "id": "o4",
+            "label": "11",
+            "correct": false,
+            "feedback": "6 + 5 merges the two parts — they stay separate: real 6, imaginary 5."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-complex",
+        "form": "cn-complex-plane__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Plot another.",
+      "conceptTag": "cn-complex-plane",
+      "explanationVariants": [
+        "1 + 4i: real part 1 across, imaginary part 4 up.",
+        "The small real part keeps it near the vertical axis, high up."
+      ],
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot the complex number 1 + 4i.",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1i",
+          "2i",
+          "3i",
+          "4i",
+          "5i",
+          "6i"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 1,
+            "feedback": "That's 4 + i — swapped parts. The real 1 goes ACROSS and the 4 goes UP: (1, 4i)."
+          }
+        ],
+        "missFeedback": "Real part 1 across, imaginary part 4 up.",
+        "successFeedback": "Right — 1 + 4i sits close to the imaginary axis, four units up.",
+        "connectTargets": false
+      },
+      "variant": {
+        "gen": "a2-complex",
+        "form": "cn-complex-plane__plotPoint"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents complex plane.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for complex plane must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines complex plane."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-complex-plane",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a point back.",
+      "conceptTag": "cn-complex-plane",
+      "explanationVariants": [
+        "2 right means real part 2; 5 up means imaginary part 5: the number is 2 + 5i.",
+        "Horizontal position names a, vertical names b, and the number is a + bi."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A point sits 2 units right and 5 units up. Which complex number is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2 + 5i",
+            "correct": true,
+            "feedback": "Right — real 2, imaginary 5."
+          },
+          {
+            "id": "o2",
+            "label": "5 + 2i",
+            "correct": false,
+            "feedback": "That swaps the axes — 5 + 2i sits 5 RIGHT and 2 up. Across is real: 2 + 5i."
+          },
+          {
+            "id": "o3",
+            "label": "2 − 5i",
+            "correct": false,
+            "feedback": "−5i would point 5 units DOWN — this point is above the real axis: 2 + 5i."
+          },
+          {
+            "id": "o4",
+            "label": "−2 + 5i",
+            "correct": false,
+            "feedback": "Real part −2 sits 2 units LEFT — this point is to the right: 2 + 5i."
+          }
+        ]
+      },
+      "hints": [
+        "The horizontal position is the real part.",
+        "The vertical position is the imaginary part's size.",
+        "2 right, 5 up → 2 + 5i."
+      ],
+      "variant": {
+        "gen": "a2-complex",
+        "form": "cn-complex-plane__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "a + bi is a point: real part across, imaginary part up.",
+      "takeaways": [
+        "Real part a and imaginary part b are both plain real numbers.",
+        "Purely real numbers live on the horizontal axis; purely imaginary on the vertical.",
+        "The imaginary PART of a + bi is b, not bi."
+      ],
+      "teaser": "Next chapter: arithmetic — adding, multiplying, and dividing these new numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-complex-plane",
+      "concept": {
+        "id": "rem-cn0203-c",
+        "kind": "concept",
+        "body": "In a + bi, the real part is the standalone a. For 9 + 3i, the real part is 9."
+      },
+      "check": {
+        "id": "rem-cn0203-k",
+        "kind": "check",
+        "body": "Split one more.",
+        "conceptTag": "cn-complex-plane",
+        "explanationVariants": [
+          "The real part of 9 + 3i is 9.",
+          "3 belongs to the i; the free-standing 9 is the real part."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the REAL part of 9 + 3i?",
+          "answer": 9,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is the IMAGINARY part (the coefficient of i) — the real part is 9."
+            },
+            {
+              "value": 12,
+              "feedback": "9 + 3 merges the parts — they never combine: the real part is 9."
+            }
+          ],
+          "fallbackFeedback": "The standalone number is the real part: 9."
+        }
+      }
+    }
+  ]
+}

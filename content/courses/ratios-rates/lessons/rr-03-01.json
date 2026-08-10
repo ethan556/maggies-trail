@@ -1,0 +1,375 @@
+{
+ "id": "rr-03-01",
+ "slug": "the-per-one-row",
+ "title": "The Per-One Row",
+ "courseId": "ratios-rates",
+ "chapterId": "ch3-unit-rates",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "unit-rate",
+   "body": "Every ratio table has one especially useful row: the one with a **1** in it. Apples cost **$6 for 3 pounds**; divide both by 3 and the row reads **$2 for 1 pound**. That per-one number is the **unit rate** — the price of a single pound, the heart of every price tag and speedometer."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The per-one row is the rate.",
+   "widget": {
+    "type": "doubleNumberLine",
+    "topLabel": "miles",
+    "bottomLabel": "hours",
+    "topPerStep": 15,
+    "bottomPerStep": 1,
+    "steps": 5,
+    "askAtStep": 4,
+    "targetTop": 60,
+    "topMax": 90,
+    "topStep": 5,
+    "prompt": "A cyclist rides 15 miles every hour. Set the top line to show the distance after 4 hours.",
+    "successFeedback": "60 miles. Both lines march in step, and the per-one row (15 miles per 1 hour) is the rate — every other pair is just that row scaled.",
+    "lowFeedback": "Too short a distance for 4 hours at 15 miles an hour.",
+    "highFeedback": "Too far for 4 hours at 15 miles an hour."
+   },
+   "predict": {
+    "prompt": "Riding 15 miles every hour — after 4 hours, will the top line read more or less than 50?",
+    "options": [
+     {
+      "id": "more",
+      "label": "More than 50"
+     },
+     {
+      "id": "less",
+      "label": "Less than 50"
+     },
+     {
+      "id": "fifty",
+      "label": "Exactly 50"
+     }
+    ],
+    "outcomeId": "more",
+    "reveal": "Four hops of 15 stack past the fifty mark — three hours alone reach 45, and a whole hour more remains."
+   },
+   "conceptTag": "unit-rate",
+   "cml": {
+    "stage": "construct",
+    "flagship": false,
+    "kernel": "quantity-composition",
+    "actionGoal": "Manipulate the model and track how it represents unit rate.",
+    "invariants": [
+     "The manipulated model and the mathematical relationship for unit rate must stay consistent."
+    ],
+    "misconceptions": [
+     "Changing a visible feature without preserving the relationship that defines unit rate."
+    ],
+    "representations": [
+     "table",
+     "symbolic"
+    ],
+    "translationFrom": "table",
+    "translationTo": "symbolic",
+    "fadeLevel": 0,
+    "transferFamily": "ratios-rates:unit-rate",
+    "delayed": true,
+    "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Divide the right way.",
+   "conceptTag": "unit-rate",
+   "explanationVariants": [
+    "Per POUND means dollars ÷ pounds: 6 ÷ 3 = $2.",
+    "The quantity you want ONE of goes in the divisor — pounds."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Apples: $6 for 3 pounds. Which division gives the price PER POUND?",
+    "options": [
+     {
+      "id": "a",
+      "label": "6 ÷ 3 — dollars shared across pounds",
+      "correct": true,
+      "feedback": "Right — $6 spread over 3 pounds is $2 for each pound."
+     },
+     {
+      "id": "b",
+      "label": "3 ÷ 6 — pounds shared across dollars",
+      "feedback": "3 ÷ 6 gives HALF A POUND PER DOLLAR — a real rate, but the other direction. Per pound divides dollars BY pounds."
+     },
+     {
+      "id": "c",
+      "label": "6 × 3 — combine them",
+      "feedback": "Multiplying prices 3 pounds three times over. A unit rate divides down to one: 6 ÷ 3."
+     }
+    ]
+   },
+   "hints": [
+    "\"Per pound\" — which quantity becomes 1?",
+    "Pounds.",
+    "Divide dollars by pounds."
+   ],
+   "variant": {
+    "gen": "pr-unit-rate-g7",
+    "form": "rrDivisionChoice"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Direction matters. From $6 for 3 pounds you can make **two** unit rates: **$2 per pound** (6 ÷ 3) or **half a pound per dollar** (3 ÷ 6). Both are true; the question picks which one you need. \"How much does a pound cost?\" wants dollars-per-pound. \"How much fruit per dollar?\" wants the flip.",
+   "figure": "unit-rate"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Once you have per-one, everything scales.",
+   "conceptTag": "unit-rate",
+   "explanationVariants": [
+    "$2 per pound × 7 pounds = $14 — the unit rate multiplies out to any amount.",
+    "The per-one row is the master key: 7 copies of the 1 : 2 row."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Apples cost $2 per pound. How much do 7 pounds cost, in dollars?",
+    "answer": 14,
+    "tolerance": 0,
+    "unit": "dollars",
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 ADDS 7 to the 2. Seven pounds is seven copies of the per-one row: 2 × 7 = $14."
+     },
+     {
+      "value": 3,
+      "feedback": "3 divides the 7 pounds somewhere. From a unit rate you MULTIPLY out: 2 × 7 = $14."
+     }
+    ],
+    "fallbackFeedback": "$2 per pound × 7 pounds = $14."
+   },
+   "hints": [
+    "Each pound costs $2.",
+    "Seven pounds = seven copies.",
+    "2 × 7."
+   ],
+   "variant": {
+    "gen": "pr-unit-rate-g7",
+    "form": "rrCostFromRate"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Rate or just a ratio?",
+   "conceptTag": "unit-rate",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "A UNIT rate has a 1 in it. Sort each statement.",
+    "buckets": [
+     {
+      "id": "unit",
+      "label": "Unit rate (per one)"
+     },
+     {
+      "id": "plain",
+      "label": "Ratio, not per-one yet"
+     }
+    ],
+    "items": [
+     {
+      "id": "u1",
+      "label": "$3 per pound",
+      "bucketId": "unit",
+      "feedback": "\"Per pound\" means per ONE pound — the 1 is hiding in the words."
+     },
+     {
+      "id": "u2",
+      "label": "$10 for 4 pounds",
+      "bucketId": "plain",
+      "feedback": "A true ratio, but the pounds haven't been divided down to 1 yet — shrink ÷4 to get $2.50 per pound."
+     },
+     {
+      "id": "u3",
+      "label": "60 miles each hour",
+      "bucketId": "unit",
+      "feedback": "\"Each hour\" is per ONE hour — a unit rate wearing travel clothes."
+     },
+     {
+      "id": "u4",
+      "label": "9 laps in 6 minutes",
+      "bucketId": "plain",
+      "feedback": "Still a pair (9 : 6) — divide both by 6 to reach the per-minute rate of 1.5 laps."
+     }
+    ],
+    "missFeedback": "Hunt for the hidden 1: \"per\", \"each\", and \"every one\" mark unit rates; a pair of plain numbers hasn't been divided down yet.",
+    "successFeedback": "Sorted — \"per\" and \"each\" are the unit rate's fingerprints."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Speed is a unit rate.",
+   "conceptTag": "unit-rate",
+   "explanationVariants": [
+    "150 miles shared across 3 hours: 150 ÷ 3 = 50 miles per hour.",
+    "Speed is the per-one-hour row of the distance table."
+   ],
+   "widget": {
+    "type": "proportionalReasoningLab",
+    "task": "unitRate",
+    "answerMode": "numeric",
+    "prompt": "A train covers 150 miles in 3 hours at a steady pace. What is its speed in miles per hour?",
+    "xLabel": "hours",
+    "yLabel": "miles",
+    "series": [
+     {
+      "id": "train",
+      "label": "train",
+      "pairs": [
+       [
+        3,
+        150
+       ]
+      ]
+     }
+    ],
+    "requiredExplorations": 1,
+    "successFeedback": "150 ÷ 3 = 50 miles per hour.",
+    "explorationFeedback": "Inspect at least 1 proportional relationship before checking.",
+    "fallbackFeedback": "150 ÷ 3 = 50 miles per hour.",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 147,
+      "feedback": "147 subtracts the 3 — but hours aren't taken away, they SHARE the miles: 150 ÷ 3 = 50 mph."
+     },
+     {
+      "value": 450,
+      "feedback": "450 multiplies 150 × 3, covering nine hours of track. Per hour divides: 150 ÷ 3 = 50."
+     }
+    ],
+    "targetSeriesId": "train",
+    "answerUnit": "mph"
+   },
+   "hints": [
+    "Miles per HOUR — which becomes 1?",
+    "Hours.",
+    "150 ÷ 3."
+   ],
+   "variant": {
+    "gen": "pr-unit-rate-g7",
+    "form": "rrSpeed"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Unit rate, then out again.",
+   "conceptTag": "unit-rate",
+   "hints": [
+    "First find the per-hour rate.",
+    "150 ÷ 3 = 50 mph.",
+    "Then 5 hours of it."
+   ],
+   "explanationVariants": [
+    "Per-one first (150 ÷ 3 = 50 mph), then scale out: 50 × 5 = 250 miles.",
+    "The unit rate is the bridge: shrink to 1 hour, stretch to 5."
+   ],
+   "widget": {
+    "type": "proportionalReasoningLab",
+    "task": "predictOutput",
+    "answerMode": "numeric",
+    "prompt": "The same train (150 miles in 3 hours) keeps its pace. How far does it travel in 5 hours?",
+    "xLabel": "hours",
+    "yLabel": "miles",
+    "series": [
+     {
+      "id": "train",
+      "label": "train",
+      "pairs": [
+       [
+        1,
+        50
+       ]
+      ]
+     }
+    ],
+    "requiredExplorations": 2,
+    "successFeedback": "150 ÷ 3 = 50 mph, then 50 × 5 = 250 miles.",
+    "explorationFeedback": "Inspect at least 2 proportional relationships before checking.",
+    "fallbackFeedback": "150 ÷ 3 = 50 mph, then 50 × 5 = 250 miles.",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 152,
+      "feedback": "152 adds the extra 2 hours as if hours were miles. Bridge through the unit rate: 50 mph × 5 h = 250 miles."
+     },
+     {
+      "value": 750,
+      "feedback": "750 multiplies 150 × 5, ignoring that 150 already covers THREE hours. Per hour it's 50 miles; 50 × 5 = 250."
+     }
+    ],
+    "targetSeriesId": "train",
+    "targetInput": 5,
+    "answerUnit": "miles"
+   },
+   "variant": {
+    "gen": "pr-unit-rate-g7",
+    "form": "rrDistanceFromRate"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Shrink to one, stretch to anything.",
+   "takeaways": [
+    "A unit rate is the per-one row: divide both quantities by the count you want ONE of.",
+    "Every ratio hides two unit rates — the question picks the direction.",
+    "Per-one is the bridge: shrink to 1, then multiply out to any amount."
+   ],
+   "teaser": "next: unit rates settle arguments — which deal is actually better?"
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "unit-rate",
+   "concept": {
+    "id": "rem-ur-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Divide down to one.** $10 for 5 pounds → 10 ÷ 5 = $2 per pound. The quantity after the word \"per\" is the one you divide BY — it's the one becoming 1."
+   },
+   "check": {
+    "id": "rem-ur-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "unit-rate",
+    "explanationVariants": [
+     "10 ÷ 5 = $2 for each pound.",
+     "Divide the dollars by the pounds to reach per-one."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "$10 buys 5 pounds of rice. What is the price per pound, in dollars?",
+     "answer": 2,
+     "tolerance": 0,
+     "unit": "dollars",
+     "commonErrors": [
+      {
+       "value": 5,
+       "feedback": "5 is the pound count. The per-pound price divides the money: 10 ÷ 5 = $2."
+      },
+      {
+       "value": 50,
+       "feedback": "50 multiplies — that buys 25 pounds. Per pound divides down: 10 ÷ 5 = $2."
+      }
+     ],
+     "fallbackFeedback": "10 ÷ 5 = $2 per pound."
+    }
+   }
+  }
+ ]
+}

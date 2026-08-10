@@ -1,0 +1,334 @@
+{
+  "id": "md-02-02",
+  "slug": "how-much-liters",
+  "title": "How Much? Liters",
+  "courseId": "measurement-data",
+  "chapterId": "ch2-grams-liters",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Grams measure how HEAVY. **Liters (L) measure how MUCH liquid** — the space it fills, called capacity. Anchors: a juice carton holds about 1 liter; a big water bottle holds about 1 liter too. A bathtub? Many, many liters.",
+      "figure": "md3-liter"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Estimate the bucket — order of magnitude.",
+      "conceptTag": "volume",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "A mop bucket, filled — about how many LITERS? Slide to your best estimate.",
+        "min": 0.1,
+        "max": 1000,
+        "start": 0.5,
+        "target": 10,
+        "acceptFactor": 2,
+        "unitLabel": "L",
+        "ticks": [
+          0.1,
+          1,
+          10,
+          100,
+          1000
+        ],
+        "lowFeedback": "Too little — that's barely a cupful. A mop bucket holds far more; slide up.",
+        "highFeedback": "Too much — that's a bathtub or more! A bucket is around ten liters.",
+        "successFeedback": "About 10 liters — ten of those one-liter cartons. A bucket sits well above a bottle, well below a bathtub."
+      },
+      "predict": {
+        "prompt": "A mop bucket, filled — MORE than 1 liter or LESS?",
+        "options": [
+          {
+            "id": "more",
+            "label": "Much more than 1 L"
+          },
+          {
+            "id": "about",
+            "label": "About 1 L"
+          },
+          {
+            "id": "less",
+            "label": "Less than 1 L"
+          }
+        ],
+        "outcomeId": "more",
+        "reveal": "One liter is a big drink bottle — a bucket swallows many bottles' worth, landing around ten liters on the line."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents volume.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for volume must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines volume."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:volume",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which needs liters?",
+      "conceptTag": "volume",
+      "explanationVariants": [
+        "Water in a fish tank is a liquid AMOUNT — that's capacity, measured in liters.",
+        "Ask what's being measured: liquid you pour → liters; heaviness → grams."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which measurement is given in LITERS?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The water a fish tank holds",
+            "correct": true,
+            "feedback": "Capacity of a liquid — liters, exactly."
+          },
+          {
+            "id": "b",
+            "label": "How heavy a brick is",
+            "feedback": "Heaviness is mass — grams or kilograms. Liters measure liquid amount, not weight."
+          },
+          {
+            "id": "c",
+            "label": "How tall a door is",
+            "feedback": "Height is a length — centimeters or meters. Liters are for liquid you pour."
+          },
+          {
+            "id": "d",
+            "label": "How long a movie runs",
+            "feedback": "Time runs in minutes. Liters measure how much liquid fits in something."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "volume"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Careful — pourable is not the same as light. **Flour pours, but recipes WEIGH it in grams; water pours and we measure it in liters.** The question isn't 'does it pour?' — it's 'am I measuring the AMOUNT (liters) or the HEAVINESS (grams)?'",
+      "figure": "md3-liter"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spring the flour trap.",
+      "conceptTag": "volume",
+      "explanationVariants": [
+        "Recipes ask for flour by WEIGHT — grams — even though it pours like a liquid. Pourable doesn't mean liters.",
+        "Liters measure liquid VOLUME; flour is measured by mass. The pouring is a red herring."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A recipe needs flour. Even though flour pours, what unit does the recipe most likely use?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Grams — flour is weighed, not measured as a liquid",
+            "correct": true,
+            "feedback": "Pourable, but weighed. Liters are for actual liquids; flour goes on the scale."
+          },
+          {
+            "id": "b",
+            "label": "Liters — anything that pours uses liters",
+            "feedback": "The pouring trap! Flour pours but isn't a liquid — recipes weigh it in grams."
+          },
+          {
+            "id": "c",
+            "label": "Kilograms — flour is very heavy",
+            "feedback": "Right family (mass!), wrong size — a recipe's flour is a few hundred grams, not whole kilograms. Grams keep the number friendly."
+          },
+          {
+            "id": "d",
+            "label": "Centimeters — you measure the pile's height",
+            "feedback": "Nobody bakes by pile-height! Flour is weighed in grams; centimeters measure length."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "volume",
+        "form": "dryIngredient"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The tank with traffic.",
+      "conceptTag": "volume",
+      "widget": {
+        "type": "slider",
+        "prompt": "A tank holds 8 liters. Slide to show how many liters remain after 3 liters drain out.",
+        "min": 0,
+        "max": 8,
+        "step": 1,
+        "start": 8,
+        "target": 5,
+        "visual": "numberline",
+        "unitLabel": "liters left",
+        "lowFeedback": "That drained too much — only 3 liters left. Slide back up.",
+        "highFeedback": "That's more than the tank started with — draining removes liquid. Slide down.",
+        "successFeedback": "8 − 3 = 5 liters remain. Draining takes liquid away, so the amount drops."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents volume.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for volume must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines volume."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:volume",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Fill and drain.",
+      "conceptTag": "volume",
+      "explanationVariants": [
+        "Two moves in order: 6 + 4 = 10 liters in, then 10 − 3 = 7 liters left.",
+        "Track the tank step by step — pour in first, then the leak: 6, up to 10, down to 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tank has 6 liters. You add 4 liters, then 3 liters leak out. How many liters remain?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "liters",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the tank after filling — the 3-liter leak hasn't been subtracted yet."
+          },
+          {
+            "value": 13,
+            "feedback": "13 ADDED the leak instead of removing it. Leaking takes liquid away: 10 − 3."
+          }
+        ],
+        "fallbackFeedback": "In order: 6 + 4 = 10, then 10 − 3."
+      },
+      "variant": {
+        "gen": "volume",
+        "form": "addThenLeak"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Filling by jugfuls.",
+      "conceptTag": "volume",
+      "hints": [
+        "The tank splits into jug-sized portions.",
+        "How many 2-liter jugs fit inside 12 liters?",
+        "Count by 2s up to 12."
+      ],
+      "explanationVariants": [
+        "12 liters split into 2-liter jugs: 12 ÷ 2 = 6 jugfuls fill it exactly.",
+        "Skip-count the pours: 2, 4, 6, 8, 10, 12 — six jugs."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 12-liter tank is filled using a 2-liter jug. How many jugfuls fill it exactly?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "jugfuls",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 subtracted one jug (12 − 2). The question counts how many 2-liter jugs FIT inside 12: that's division."
+          },
+          {
+            "value": 24,
+            "feedback": "24 multiplied 12 × 2. Filling SHARES the tank into jug-sized parts: 12 ÷ 2."
+          }
+        ],
+        "fallbackFeedback": "How many 2s fit in 12?"
+      },
+      "variant": {
+        "gen": "volume",
+        "form": "jugCount"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can measure liquid now.",
+      "takeaways": [
+        "Liters measure how MUCH liquid — capacity, the space it fills.",
+        "Pourable isn't liters: flour pours but is weighed in grams.",
+        "Fill adds, drain/leak subtracts — track the tank in order."
+      ],
+      "teaser": "next: putting grams and liters to work in two-step story problems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "volume",
+      "concept": {
+        "id": "rem-vo-c",
+        "kind": "concept",
+        "body": "Quick rewind. Liters answer **\"how much fits?\"** — think of filling a bottle. Grams answer \"how heavy?\" — think of a scale. If you're pouring liquid to fill a space, that's liters."
+      },
+      "check": {
+        "id": "rem-vo-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "volume",
+        "explanationVariants": [
+          "The juice a bottle holds is a liquid amount — liters.",
+          "Filling a space with liquid means capacity: liters."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is measured in liters?",
+          "options": [
+            {
+              "id": "a",
+              "label": "The juice a bottle holds",
+              "correct": true,
+              "feedback": "Liquid amount — liters."
+            },
+            {
+              "id": "b",
+              "label": "The weight of a rock",
+              "feedback": "Weight is grams or kilograms. Liters measure liquid amount."
+            },
+            {
+              "id": "c",
+              "label": "The length of a rope",
+              "feedback": "Length is centimeters or meters. Liters are for liquid you pour."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

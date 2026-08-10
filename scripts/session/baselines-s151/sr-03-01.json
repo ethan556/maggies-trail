@@ -1,0 +1,246 @@
+{
+  "id": "sr-03-01",
+  "slug": "gausss-shortcut",
+  "title": "Gauss's Shortcut",
+  "courseId": "sequences-series",
+  "chapterId": "ch3-arithmetic-series",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Legend says young Gauss was told to add 1 through 100 as busywork — and answered in seconds. His move: **pair the ends inward**. 1 + 100, 2 + 99, 3 + 98, … every pair adds to the same 101, and 100 numbers make 50 pairs: 50 × 101 = 5050. A staircase of terms, folded flat.",
+      "figure": "gauss-pairing"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The matching pairs.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Pairing 1 + 2 + ⋯ + 100 from the ends inward, what does EACH pair add to?",
+        "answer": 101,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "Pairing means first WITH last: 1 + 100 = 101 — and 2 + 99, 3 + 98 all match it. The 100 alone is just one end."
+          },
+          {
+            "value": 50,
+            "feedback": "50 is the NUMBER of pairs (100 terms folded in half), not what each pair adds to — that's 1 + 100 = 101."
+          }
+        ],
+        "fallbackFeedback": "Ends inward: 1 + 100 = 2 + 99 = ⋯ = 101."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish Gauss's sum.",
+      "conceptTag": "sr-arith-sum",
+      "explanationVariants": [
+        "50 pairs, each worth 101: 50 · 101 = 5050.",
+        "One hundred terms fold into fifty equal pairs of 101."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "So what is 1 + 2 + 3 + ⋯ + 100?",
+        "answer": 5050,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5000,
+            "feedback": "5000 is 50 · 100 — but each pair adds to 101, not 100: the 1 riding along with the 100 counts. 50 · 101 = 5050."
+          },
+          {
+            "value": 101,
+            "feedback": "101 is a SINGLE pair. There are fifty of them: 50 · 101 = 5050."
+          }
+        ],
+        "fallbackFeedback": "50 pairs × 101 each = 5050."
+      },
+      "variant": {
+        "gen": "arith-series"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The trick generalizes to any arithmetic series. n terms fold into pairs each worth (a₁ + aₙ), and there are n/2 of them: **Sₙ = n(a₁ + aₙ)/2**. Read it as an average, too: (a₁ + aₙ)/2 is the typical term, and there are n of them — which is why odd n works just as well.",
+      "figure": "sr-arith-fold"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Fold a smaller staircase.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the formula on 2 + 4 + 6 + ⋯ + 20 (ten terms).",
+        "answer": 110,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 220,
+            "feedback": "220 is 10 · 22 without the halving — but ten terms make only FIVE pairs of 22: 10 · 22 / 2 = 110."
+          },
+          {
+            "value": 200,
+            "feedback": "200 is 10 · 20 — the last term standing in for the pair. Each pair adds FIRST and last: 2 + 20 = 22, then 10 · 22 / 2."
+          }
+        ],
+        "fallbackFeedback": "S = 10 · (2 + 20) / 2 = 110."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another fold.",
+      "conceptTag": "sr-arith-sum",
+      "explanationVariants": [
+        "S = 10 · (5 + 50) / 2 = 5 · 55 = 275.",
+        "Ten terms, pair value 55, five pairs."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find 5 + 10 + 15 + ⋯ + 50 (ten terms).",
+        "answer": 275,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 550,
+            "feedback": "550 skipped the ÷ 2 — ten terms fold into just five pairs of 55: 550 / 2 = 275."
+          },
+          {
+            "value": 250,
+            "feedback": "250 is 5 · 50, the two ENDS multiplied. The formula needs n times their SUM, halved: 10 · 55 / 2 = 275."
+          }
+        ],
+        "fallbackFeedback": "10 · (5 + 50) / 2 = 275."
+      },
+      "variant": {
+        "gen": "arith-series",
+        "form": "multiples"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Why exactly ÷ 2? Here's the airtight version of the fold — write the sum twice, once reversed, and add the copies column by column. Every column becomes (a₁ + aₙ), there are n columns, so **2S = n(a₁ + aₙ)**. One halving later, the formula appears. Walk it through below.",
+      "figure": "sr-fold-proof"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "The write-it-twice proof.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Prove S = n(a₁ + aₙ)/2 for 3 + 5 + 7 + 9.",
+        "panels": [
+          {
+            "title": "Write it twice",
+            "body": "S = 3 + 5 + 7 + 9, and underneath, the same sum reversed: S = 9 + 7 + 5 + 3."
+          },
+          {
+            "title": "Add the columns",
+            "body": "3+9, 5+7, 7+5, 9+3 — every column is 12, the first-plus-last value. The reversal makes each column balance."
+          },
+          {
+            "title": "Count the columns",
+            "body": "Four columns of 12: adding the two copies gives 2S = 4 · 12 = 48."
+          },
+          {
+            "title": "Halve",
+            "body": "S = 48 / 2 = 24. And directly: 3 + 5 + 7 + 9 = 24. ✓ The ÷ 2 undoes the doubling from writing the sum twice."
+          }
+        ],
+        "continueFeedback": "Each panel is one move of the proof — keep going.",
+        "successFeedback": "That's the whole proof: double, balance, count, halve."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count first, then fold.",
+      "conceptTag": "sr-arith-sum",
+      "explanationVariants": [
+        "39 = 3 + (n − 1)·4 gives n = 10; then S = 10 · (3 + 39) / 2 = 210.",
+        "Ten terms with pair value 42 fold into five pairs: 5 · 42 = 210."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find 3 + 7 + 11 + ⋯ + 39.",
+        "answer": 210,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 420,
+            "feedback": "420 is 10 · 42 without the halving — ten terms are five pairs of 42, so 420 / 2 = 210."
+          },
+          {
+            "value": 189,
+            "feedback": "189 comes from n = 9 — the count slipped. Solve 39 = 3 + (n − 1)·4: n − 1 = 9, so n = 10 terms."
+          }
+        ],
+        "fallbackFeedback": "n = 10 (from 39 = 3 + (n−1)·4), then 10 · 42 / 2 = 210."
+      },
+      "hints": [
+        "The formula needs n — find how many terms there are before folding.",
+        "Solve 39 = 3 + (n − 1)·4 for n, then apply S = n(a₁ + aₙ)/2.",
+        "n = 10, pair value 3 + 39 = 42 — finish: 10 · 42 / 2."
+      ],
+      "variant": {
+        "gen": "arith-series",
+        "form": "findN"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Fold the staircase.",
+      "takeaways": [
+        "Ends pair to the same value — (a₁ + aₙ) every time.",
+        "Sₙ = n(a₁ + aₙ)/2: n terms, half as many pairs.",
+        "The write-it-twice proof shows exactly where the ÷ 2 comes from."
+      ],
+      "teaser": "Next: a second form of the formula for when the last term isn't handed to you."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-arith-sum",
+      "concept": {
+        "id": "rem-sr0301-c",
+        "kind": "concept",
+        "body": "The fold in miniature: 1 + 2 + ⋯ + 10. Ends pair to 11 (1+10, 2+9, …), and ten terms make five pairs: 5 · 11 = 55. The formula S = n(a₁ + aₙ)/2 says the same thing: 10 · 11 / 2."
+      },
+      "check": {
+        "id": "rem-sr0301-k",
+        "kind": "check",
+        "body": "Fold ten terms.",
+        "conceptTag": "sr-arith-sum",
+        "explanationVariants": [
+          "Five pairs of 11: 55.",
+          "S = 10 · (1 + 10) / 2 = 55."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is 1 + 2 + 3 + ⋯ + 10?",
+          "answer": 55,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 110,
+              "feedback": "110 is 10 · 11 unhalved — ten terms fold into only FIVE pairs of 11: 55."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is just the last term. The whole staircase folds to 5 pairs of 11 = 55."
+            }
+          ],
+          "fallbackFeedback": "10 · 11 / 2 = 55."
+        }
+      }
+    }
+  ]
+}

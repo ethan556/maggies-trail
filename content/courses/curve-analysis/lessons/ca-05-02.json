@@ -1,0 +1,299 @@
+{
+  "id": "ca-05-02",
+  "slug": "the-open-box",
+  "title": "The Open-Top Box",
+  "courseId": "curve-analysis",
+  "chapterId": "ch5-optimisation",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The classic. From a 12-inch square sheet, cut a square of side x from each corner and fold up the sides.\n\n**Volume** = base × height = (12 − 2x)² · x.\n**Domain** = 0 < x < 6 (the cut must be positive; the base must survive).\n\nOne variable, one interval. Now the calculus is three lines.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Differentiate the volume.",
+      "conceptTag": "ca-optimisation-box",
+      "explanationVariants": [
+        "V = x(12 − 2x)² = 4x³ − 48x² + 144x, so V′ = 12x² − 96x + 144 = 12(x − 2)(x − 6).",
+        "Expanding first is easier than the product rule here — and it factors beautifully."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "V = 4x³ − 48x² + 144x. Which is V′, factored?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "12(x − 2)(x − 6)",
+            "correct": true,
+            "feedback": "Right: V′ = 12x² − 96x + 144 = 12(x² − 8x + 12) = 12(x − 2)(x − 6). Two critical points, and only one is inside the domain."
+          },
+          {
+            "id": "o2",
+            "label": "12(x − 2)(x + 6)",
+            "correct": false,
+            "feedback": "Check the constant: (x − 2)(x + 6) expands to x² + 4x − 12, not x² − 8x + 12. Both roots must be positive."
+          },
+          {
+            "id": "o3",
+            "label": "12x(x − 8)",
+            "correct": false,
+            "feedback": "That drops the +144 entirely. The quadratic is x² − 8x + 12, whose roots are 2 and 6."
+          },
+          {
+            "id": "o4",
+            "label": "4(x − 2)(x − 6)",
+            "correct": false,
+            "feedback": "The coefficient is 12, not 4 — differentiating 4x³ gives 12x²."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "opt-box"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The sign chart of V′ settles it.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 2,
+            "mult": 1
+          },
+          {
+            "x": 6,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "V′(x) = 12(x − 2)(x − 6). Set the signs — and remember the domain is only 0 < x < 6.",
+        "successFeedback": "+ − +. Inside the domain (0, 6) the volume RISES up to x = 2 and then FALLS — so x = 2 is a maximum. The other critical point, x = 6, sits exactly at the edge of the domain, where the base has shrunk to nothing and the volume is zero. The sign chart you have used all course just solved an engineering problem.",
+        "crossFeedback": "Both roots of V′ are single, so the sign flips at each. Two flips, three intervals.",
+        "bounceFeedback": "Neither root is repeated — V′ crosses zero at both 2 and 6."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "ca-optimisation-box",
+      "predict": {
+        "prompt": "V′(x) = 12(x − 2)(x − 6) is zero at x = 2 and at x = 6. How many of those are real candidates for the largest box?",
+        "options": [
+          {
+            "id": "one",
+            "label": "One — the other is not a box you could build"
+          },
+          {
+            "id": "two",
+            "label": "Two — both are critical points"
+          },
+          {
+            "id": "none",
+            "label": "None — you need the second derivative first"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "One. Cutting x = 6 from each corner of a 12-inch sheet removes the whole sheet — there is nothing left to fold, and the domain 0 < x < 6 excludes it. The algebra hands back two roots because algebra does not know what a box is. Checking the domain is not bookkeeping here; it deletes a root."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute the maximum.",
+      "conceptTag": "ca-optimisation-box",
+      "explanationVariants": [
+        "V(2) = 2 × (12 − 4)² = 2 × 64 = 128 cubic inches.",
+        "Compare with the ends: V(0) = 0 and V(6) = 0. Both degenerate — no cut, or no base."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the maximum volume of the box, in cubic inches.",
+        "answer": 128,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "That is the base area (12 − 4)² = 64. Multiply by the height x = 2 to get the volume: 128."
+          },
+          {
+            "value": 108,
+            "feedback": "That is V(3) = 3 × 36 — a legal box, but not the best one. V(2) = 2 × 64 = 128 beats it."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the cut size x. Its VOLUME is V(2) = 128."
+          }
+        ],
+        "fallbackFeedback": "V(2) = 2 × 8² = 2 × 64 = 128 cubic inches."
+      },
+      "variant": {
+        "gen": "opt-box",
+        "form": "maxVolume"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice what the endpoints did.\n\nV(0) = 0 — no cut, so no sides, so no box.\nV(6) = 0 — the whole sheet cut away, so no base.\n\nBoth ends are **degenerate**, and the maximum is safely inside. But you had to CHECK. In another problem the answer sits at an endpoint, and skipping the check would have lost it.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why the other critical point is worthless.",
+      "conceptTag": "ca-optimisation-box",
+      "explanationVariants": [
+        "x = 6 makes the base 12 − 12 = 0. There is no box at all, and V(6) = 0 — a minimum, and a physically empty one.",
+        "The algebra offered two critical points and the physics threw one away. Both steps were needed."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "V′ = 12(x − 2)(x − 6) has a critical point at x = 6. Why is it useless?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "At x = 6 the base is 12 − 12 = 0 — there is no box, and V = 0. It is the degenerate edge of the domain.",
+            "correct": true,
+            "feedback": "Right. The algebra offers it; the physics rejects it. Stating the domain first is what lets you reject it with confidence."
+          },
+          {
+            "id": "o2",
+            "label": "Because it is a maximum too, and you can only have one.",
+            "correct": false,
+            "feedback": "It is a MINIMUM (V = 0), and in any case a function can have several maxima. The reason it is useless is that it is an empty box."
+          },
+          {
+            "id": "o3",
+            "label": "Because 6 is not a critical point.",
+            "correct": false,
+            "feedback": "It genuinely is: V′(6) = 0. It is simply a worthless one."
+          },
+          {
+            "id": "o4",
+            "label": "Because the derivative is wrong.",
+            "correct": false,
+            "feedback": "The derivative is right. It is the physical meaning of x = 6 that disqualifies it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "opt-box",
+        "form": "uselessRoot"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Prove it is the best.",
+      "conceptTag": "ca-optimisation-box",
+      "hints": [
+        "You have V(2) = 128. To be sure it is the maximum, compare it with the only other candidates.",
+        "The candidates are the critical point inside the domain (x = 2) and the two endpoints (x = 0 and x = 6).",
+        "V(0) = 0 and V(6) = 0. So how much bigger is the best box than the best endpoint?"
+      ],
+      "explanationVariants": [
+        "V(2) = 128 while both endpoints give 0, so the maximum beats them by 128.",
+        "That is the closed-interval method in full: three candidates, three values, one winner — and the comparison is what turns a critical point into a PROOF."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "V(2) = 128, V(0) = 0, V(6) = 0. By how much does the best box beat the best endpoint?",
+        "answer": 128,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "Both endpoints give a volume of 0, and the best box gives 128 — so it beats them by the whole 128."
+          },
+          {
+            "value": 64,
+            "feedback": "The base area is 64, but the volume at x = 2 is 128 and the endpoints are both 0."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the cut size. The comparison is between volumes: 128 versus 0."
+          }
+        ],
+        "fallbackFeedback": "128 − 0 = 128. The critical point wins outright, and the comparison is what PROVES it."
+      },
+      "variant": {
+        "gen": "opt-box",
+        "form": "beatEndpoint"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One sign chart, one engineering answer.",
+      "takeaways": [
+        "V = x(12 − 2x)² on 0 < x < 6, and V′ = 12(x − 2)(x − 6) settles it: a maximum of 128 at x = 2.",
+        "The other critical point, x = 6, is an empty box — the algebra offers it and the domain rejects it.",
+        "Always compare with the endpoints. Here they are degenerate; in the next problem they may not be."
+      ],
+      "teaser": "Last lesson: the fence, and a maximum you can almost guess."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-optimisation-box",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Write the volume with one variable. State the domain. Differentiate, factor, find the critical points, throw away any outside the domain, and compare what survives with the two endpoints. The biggest number wins.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which candidate wins?",
+        "conceptTag": "ca-optimisation-box",
+        "explanationVariants": [
+          "The candidates give 0, 128 and 0, so the maximum is 128.",
+          "Compare all three; never stop at the critical point."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Candidates give V(0) = 0, V(2) = 128 and V(6) = 0. What is the maximum volume?",
+          "answer": 128,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "That is the value at BOTH endpoints. The critical point gives 128, which is far better."
+            },
+            {
+              "value": 2,
+              "feedback": "That is where the maximum occurs. Its VALUE is 128."
+            }
+          ],
+          "fallbackFeedback": "The largest of 0, 128 and 0 is 128."
+        }
+      }
+    }
+  ]
+}

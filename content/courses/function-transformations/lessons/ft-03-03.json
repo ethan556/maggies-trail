@@ -1,0 +1,296 @@
+{
+  "id": "ft-03-03",
+  "slug": "reading-the-full-rule",
+  "title": "Reading the Full Rule",
+  "courseId": "function-transformations",
+  "chapterId": "ch3-reflections-stretches",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The full transformation rule: **y = a(x − h)² + k**. Three dials: **a** stretches or flips, **h** slides sideways, **k** slides up or down. Any parent works the same way — read all three and you know the graph before drawing a single point.",
+      "figure": "transformation-shifts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Which dial is which?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In y = −2(x − 1)² + 8, which number controls the FLIP?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the −2 in front",
+            "correct": true,
+            "feedback": "Right — a = −2: negative flips the parabola downward, and the 2 steepens it."
+          },
+          {
+            "id": "o2",
+            "label": "the 1 inside",
+            "correct": false,
+            "feedback": "The inside number is h — it slides the graph sideways (right 1 here). Flips come from the sign of the front multiplier."
+          },
+          {
+            "id": "o3",
+            "label": "the 8 outside",
+            "correct": false,
+            "feedback": "The outside number is k — it lifts the graph (up 8 here). The flip lives in the front multiplier's sign."
+          },
+          {
+            "id": "o4",
+            "label": "the exponent 2",
+            "correct": false,
+            "feedback": "The exponent is part of the parent shape (a parabola). The flip is the MINUS on the front multiplier."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The vertex is still **(h, k)** — the a doesn't move it. For y = −2(x − 1)² + 8, the vertex is (1, 8); the negative a flips the parabola to open **downward**, turning that vertex into a **maximum**.",
+      "figure": "ft-vertex"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Locate the vertex.",
+      "conceptTag": "ft-full-rule",
+      "explanationVariants": [
+        "The inside x − 1 is 0 at x = 1 — the a out front can't move the vertex sideways.",
+        "Vertex of a(x − h)² + k is (h, k): here h = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the x-coordinate of the vertex of y = −2(x − 1)² + 8?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "Inside flips: x − 1 = 0 at x = +1."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is k — the vertex's HEIGHT. Its x-coordinate comes from the inside: x = 1."
+          }
+        ],
+        "fallbackFeedback": "Set the inside to 0: x − 1 = 0 → x = 1."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-full-rule__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A maximum, thanks to the flip.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": -2,
+        "targetH": 1,
+        "targetK": 8,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -10,
+        "kMax": 10,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 10,
+        "prompt": "Build y = −2(x − 1)² + 8 with the three dials, then read its maximum.",
+        "successFeedback": "Maximum 8, at the vertex (1, 8). The negative a is what makes it a maximum rather than a minimum — flip a positive and the vertex changes from the lowest point to the highest without moving at all.",
+        "shapeFeedback": "The opening is wrong. A negative a opens downward; its size controls how narrow the curve is.",
+        "vertexFeedback": "The vertex is not at (1, 8) yet — h shifts it sideways, k shifts it up."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate the full rule.",
+      "conceptTag": "ft-full-rule",
+      "explanationVariants": [
+        "Inside: 3 − 1 = 2. Square: 4. Multiply: −2 × 4 = −8. Add: −8 + 8 = 0.",
+        "At x = 3 the rule runs 2² = 4, then −2 × 4 + 8 = 0 — the graph crosses the x-axis there."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = −2(x − 1)² + 8, what is y when x = 3?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "The −2 flips the squared part negative: −2 × 4 = −8, then −8 + 8 = 0."
+          },
+          {
+            "value": -8,
+            "feedback": "One more step — add k: −8 + 8 = 0."
+          }
+        ],
+        "fallbackFeedback": "3 − 1 = 2, 2² = 4, −2 × 4 = −8, −8 + 8 = 0."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-full-rule__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Put the pipeline in order.",
+      "conceptTag": "ft-full-rule",
+      "explanationVariants": [
+        "The rule reads inside-out: subtract h, square, multiply by a, add k.",
+        "a acts on the squared result, and k is the very last, outside step."
+      ],
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "For y = a(x − h)² + k, drag the four operations into the order they apply to an input x.",
+        "items": [
+          {
+            "id": "sq",
+            "label": "square it"
+          },
+          {
+            "id": "mula",
+            "label": "multiply by a"
+          },
+          {
+            "id": "subh",
+            "label": "subtract h"
+          },
+          {
+            "id": "addk",
+            "label": "add k"
+          }
+        ],
+        "correctOrder": [
+          "subh",
+          "sq",
+          "mula",
+          "addk"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "mula",
+            "second": "sq",
+            "feedback": "The stretch a acts on the SQUARED output — square first, then multiply."
+          },
+          {
+            "first": "addk",
+            "second": "mula",
+            "feedback": "k is the final outside step — the stretch happens before the shift up."
+          },
+          {
+            "first": "sq",
+            "second": "subh",
+            "feedback": "The inside runs first: subtract h before squaring."
+          }
+        ],
+        "missFeedback": "Read the rule inside-out: innermost operation first, the outside +k last.",
+        "successFeedback": "Exactly — subtract h, square, multiply by a, add k."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-full-rule__dragOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full evaluation, positive a.",
+      "conceptTag": "ft-full-rule",
+      "explanationVariants": [
+        "Inside: 0 + 2 = 2. Square: 4. Multiply: 3 × 4 = 12. Subtract: 12 − 5 = 7.",
+        "At x = 0 the rule runs (2)² = 4, then 3 × 4 − 5 = 7 — that's the y-intercept."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = 3(x + 2)² − 5, what is y when x = 0?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "Last step missing — subtract 5: 12 − 5 = 7."
+          },
+          {
+            "value": 1,
+            "feedback": "That's 3 × 2 − 5 — the square comes before the multiply: 2² = 4, then 3 × 4 − 5 = 7."
+          }
+        ],
+        "fallbackFeedback": "0 + 2 = 2, 2² = 4, 3 × 4 = 12, 12 − 5 = 7."
+      },
+      "hints": [
+        "Run the pipeline inside-out, starting with the inside: 0 + 2.",
+        "Square that: 2² = 4, then apply the stretch: 3 × 4 = 12.",
+        "Finish with the outside shift: 12 − 5 = 7."
+      ],
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-full-rule__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "a flips/stretches, h slides sideways, k slides vertically — vertex (h, k).",
+      "takeaways": [
+        "y = a(x − h)² + k: three dials, one graph.",
+        "The vertex is (h, k); negative a makes it a maximum.",
+        "Evaluate inside-out: subtract h, square, multiply by a, add k."
+      ],
+      "teaser": "Next chapter: combining whole functions — adding them, and feeding one into another."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-full-rule",
+      "concept": {
+        "id": "rem-ft0303-c",
+        "kind": "concept",
+        "body": "In y = a(x − h)² + k the vertex is (h, k): flip the inside sign for h, keep the outside sign for k. The a only shapes the curve."
+      },
+      "check": {
+        "id": "rem-ft0303-k",
+        "kind": "check",
+        "body": "One more full-rule read.",
+        "conceptTag": "ft-full-rule",
+        "explanationVariants": [
+          "Inside x + 4 gives h = −4; outside +3 gives k = 3: vertex (−4, 3).",
+          "The inside is 0 at x = −4, and k = 3 sets the height — the 2 in front can't move the vertex."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the vertex of y = 2(x + 4)² + 3?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(−4, 3)",
+              "correct": true,
+              "feedback": "Right — flip the inside (x = −4), keep the outside (y = 3); the 2 only steepens."
+            },
+            {
+              "id": "o2",
+              "label": "(4, 3)",
+              "correct": false,
+              "feedback": "The inside flips: x + 4 = 0 at x = −4."
+            },
+            {
+              "id": "o3",
+              "label": "(−4, 6)",
+              "correct": false,
+              "feedback": "The 2 multiplies the squared part, not k — the height is the plain +3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

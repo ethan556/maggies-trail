@@ -1,0 +1,297 @@
+{
+  "id": "in-04-01",
+  "slug": "reversing-the-power-rule",
+  "title": "Reversing the Power Rule",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch4-antiderivatives",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Differentiation drops the exponent in front and lowers the power. So **run it backwards**: raise the power, then divide by the new power.\n\n∫ xⁿ dx = xⁿ⁺¹/(n + 1) + C, for n ≠ −1.\n\nAnd check by differentiating. It takes ten seconds and catches nearly every error.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Raise, then divide.",
+      "conceptTag": "in-antiderivative",
+      "explanationVariants": [
+        "An antiderivative of x³ is x⁴/4. Differentiate it back: (x⁴/4)′ = 4x³/4 = x³ ✓.",
+        "Raise 3 to 4, then divide by the new power, 4. The division is what undoes the coefficient the power rule would have produced."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is ∫ x³ dx?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x⁴/4 + C",
+            "correct": true,
+            "feedback": "Right — and differentiating it back gives 4x³/4 = x³, which is the only check you ever need."
+          },
+          {
+            "id": "o2",
+            "label": "3x² + C",
+            "correct": false,
+            "feedback": "That is the DERIVATIVE of x³. Integration runs the other way: raise the power, do not lower it."
+          },
+          {
+            "id": "o3",
+            "label": "x⁴ + C",
+            "correct": false,
+            "feedback": "Differentiate it back: (x⁴)′ = 4x³, which is four times too big. You must divide by the new power."
+          },
+          {
+            "id": "o4",
+            "label": "x⁴/3 + C",
+            "correct": false,
+            "feedback": "You divided by the OLD power. Divide by the new one: 4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-antiderivative__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The same area, computed the fast way.",
+      "widget": {
+        "type": "riemannSum",
+        "fn": "square",
+        "a": 0,
+        "b": 2,
+        "tolerance": 0.03,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Squeeze the rectangles toward the area under x² on [0, 2]. The antiderivative says it is exactly 8/3.",
+        "successFeedback": "The rectangles are converging on 2.667, and F(x) = x³/3 gave that in one line: 8/3 − 0. Every Riemann sum in this course was grinding toward a number that a single antiderivative hands you instantly. That is the trade the Fundamental Theorem makes.",
+        "lowFeedback": "Still short of 8/3 ≈ 2.667. Raise n, or switch rule.",
+        "highFeedback": "Still above 8/3. Raise n, or come down from the right rule."
+      },
+      "predict": {
+        "prompt": "y = x² rises across [0, 2]. Using the LEFT rule, your first estimate will land…",
+        "options": [
+          {
+            "id": "under",
+            "label": "Under the true area"
+          },
+          {
+            "id": "over",
+            "label": "Over the true area"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly on it"
+          }
+        ],
+        "outcomeId": "under",
+        "reveal": "On a rising curve every left-hand strip is only as tall as its shortest edge, so left sums always undershoot — and raising n squeezes the gap toward zero."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Partition an interval and compare how sample rules accumulate approximate signed area.",
+        "invariants": [
+          "sum-is-height-times-width",
+          "refinement-controls-error"
+        ],
+        "misconceptions": [
+          "more-rectangles-always-overestimate",
+          "area-ignores-sign"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-riemannSum",
+        "delayed": false
+      },
+      "conceptTag": "in-antiderivative"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Term by term.",
+      "conceptTag": "in-antiderivative",
+      "explanationVariants": [
+        "Antidifferentiate each term: 3x² → x³, and 2x → x². So F(x) = x³ + x², and ∫₁² = (8 + 4) − (1 + 1) = 10.",
+        "Sums split for antiderivatives exactly as they do for derivatives — the linearity runs both ways."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₁² (3x² + 2x) dx.",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is F(2) = 8 + 4 = 12 — you forgot to subtract F(1) = 2."
+          },
+          {
+            "value": 14,
+            "feedback": "Check F: an antiderivative of 3x² is x³ (not 3x³/3 × 3), and of 2x is x². F(2) − F(1) = 12 − 2 = 10."
+          },
+          {
+            "value": 2,
+            "feedback": "That is F(1). The answer is F(2) − F(1) = 12 − 2 = 10."
+          }
+        ],
+        "fallbackFeedback": "F(x) = x³ + x² → F(2) − F(1) = 12 − 2 = 10."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-antiderivative__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why the **+ C**?\n\nBecause a constant has zero slope, x⁴/4 and x⁴/4 + 7 have the *same* derivative. Antidifferentiating cannot recover information the derivative destroyed.\n\nSo an indefinite integral is a whole **family** of parallel curves. For a definite integral, C cancels in the subtraction and you may ignore it.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When does C matter?",
+      "conceptTag": "in-constant-of-integration",
+      "explanationVariants": [
+        "For ∫ₐᵇ f the constant cancels: [F(b) + C] − [F(a) + C] = F(b) − F(a). For an indefinite integral it does not, because there is nothing to subtract it against.",
+        "The derivative threw away the constant; only extra information — like a starting value — can put it back."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When does the + C actually matter?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "For indefinite integrals — a definite integral subtracts it away.",
+            "correct": true,
+            "feedback": "Right. The subtraction F(b) − F(a) annihilates C, which is why nobody writes it when evaluating a definite integral."
+          },
+          {
+            "id": "o2",
+            "label": "Never — it is a formality.",
+            "correct": false,
+            "feedback": "It is not. ∫ 2x dx is the whole family x² + C, and the curves through (1, 5) and (1, 0) are genuinely different functions."
+          },
+          {
+            "id": "o3",
+            "label": "Always, including for definite integrals.",
+            "correct": false,
+            "feedback": "In a definite integral C appears in both F(b) and F(a) and cancels exactly. Carrying it is harmless but pointless."
+          },
+          {
+            "id": "o4",
+            "label": "Only when the constant is large.",
+            "correct": false,
+            "feedback": "Size is irrelevant. What matters is whether there is a subtraction to cancel it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-constant-of-integration__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rewrite before you integrate.",
+      "conceptTag": "in-antiderivative",
+      "hints": [
+        "There is no quotient rule for integrals, and you do not need one. Simplify first.",
+        "(x³ + x)/x = x² + 1, provided x ≠ 0.",
+        "Now antidifferentiate term by term: x³/3 + x. Evaluate from 1 to 3."
+      ],
+      "explanationVariants": [
+        "Simplify to x² + 1, whose antiderivative is x³/3 + x. Then F(3) − F(1) = (9 + 3) − (1/3 + 1) = 12 − 4/3 = 32/3 ≈ 10.667.",
+        "Integration has far fewer rules than differentiation, which is why rewriting first is not a convenience — it is often the only way through."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₁³ (x³ + x)/x dx (for x ≠ 0). Give a decimal to three places.",
+        "answer": 10.667,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is F(3) = 9 + 3 = 12 — you forgot to subtract F(1) = 4/3 ≈ 1.333."
+          },
+          {
+            "value": 20,
+            "feedback": "Check the simplification: (x³ + x)/x = x² + 1, not x³ + 1. The x cancels one power."
+          },
+          {
+            "value": 1.333,
+            "feedback": "That is F(1). The answer is F(3) − F(1) = 12 − 1.333 = 10.667."
+          }
+        ],
+        "fallbackFeedback": "Simplify to x² + 1 → F = x³/3 + x → 12 − 4/3 = 32/3 ≈ 10.667."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-antiderivative__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Raise the power, divide by the new one.",
+      "takeaways": [
+        "∫ xⁿ dx = xⁿ⁺¹/(n + 1) + C, for n ≠ −1. Always check by differentiating back.",
+        "The + C is a whole family of parallel curves — the derivative destroyed that information and antidifferentiation cannot invent it.",
+        "In a definite integral C cancels, so ignore it. In an indefinite one it is part of the answer."
+      ],
+      "teaser": "Next: one extra fact pins C down — and turns a family into a single curve."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-antiderivative",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two moves, and then a check. **Raise** the exponent by one. **Divide** by the new exponent. Then **differentiate your answer** — if it does not give back what you started with, you have made an error and you will know instantly.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Check by differentiating.",
+        "conceptTag": "in-antiderivative",
+        "explanationVariants": [
+          "An antiderivative of x⁴ is x⁵/5, since (x⁵/5)′ = 5x⁴/5 = x⁴.",
+          "Raise 4 to 5, divide by 5."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is ∫ x⁴ dx?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x⁵/5 + C",
+              "correct": true,
+              "feedback": "Right — differentiate it back and the 5s cancel, leaving x⁴."
+            },
+            {
+              "id": "o2",
+              "label": "4x³ + C",
+              "correct": false,
+              "feedback": "That is the derivative. Integration raises the power rather than lowering it."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

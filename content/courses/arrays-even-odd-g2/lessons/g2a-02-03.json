@@ -1,0 +1,636 @@
+{
+  "id": "g2a-02-03",
+  "slug": "counting-an-array-by-columns",
+  "title": "Counting an Array by Columns",
+  "courseId": "arrays-even-odd-g2",
+  "chapterId": "ch2-rows-and-columns",
+  "minutes": 6,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "The SAME array counts by columns too: 3 rows of 4 is also 4 columns of 3 — the totals must agree because the counters never moved.",
+      "narration": "The SAME array counts by columns too: 3 rows of 4 is also 4 columns of 3 — the totals must agree because the counters never moved."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g2a-count-columns",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every counter in the LEFT column.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 3
+        },
+        "hotspots": [
+          {
+            "id": "r1c1",
+            "x": 13,
+            "y": 17,
+            "label": "row 1, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r1c2",
+            "x": 38,
+            "y": 17,
+            "label": "row 1, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 2 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r1c3",
+            "x": 63,
+            "y": 17,
+            "label": "row 1, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 3 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r1c4",
+            "x": 88,
+            "y": 17,
+            "label": "row 1, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 4 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r2c1",
+            "x": 13,
+            "y": 50,
+            "label": "row 2, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r2c2",
+            "x": 38,
+            "y": 50,
+            "label": "row 2, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 2 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r2c3",
+            "x": 63,
+            "y": 50,
+            "label": "row 2, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 3 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r2c4",
+            "x": 88,
+            "y": 50,
+            "label": "row 2, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 4 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r3c1",
+            "x": 13,
+            "y": 83,
+            "label": "row 3, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c2",
+            "x": 38,
+            "y": 83,
+            "label": "row 3, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 3, column 2 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r3c3",
+            "x": 63,
+            "y": 83,
+            "label": "row 3, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 3, column 3 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r3c4",
+            "x": 88,
+            "y": 83,
+            "label": "row 3, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 3, column 4 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          }
+        ],
+        "missFeedback": "Rows run across and columns run up and down — find the crossing the prompt names.",
+        "successFeedback": "Exactly right — that is the spot where the named row and column meet."
+      },
+      "predict": {
+        "prompt": "Rows say 12. What must the columns say?",
+        "options": [
+          {
+            "id": "same",
+            "label": "12 — the same total"
+          },
+          {
+            "id": "diff",
+            "label": "Something different"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "No counter moved, so both counting paths must land on 12."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a count columns.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a count columns."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-count-columns",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g2a-count-columns",
+      "explanationVariants": [
+        "A column's size is its row count.",
+        "Add column by column."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Counting by columns: 3 columns made 9. Add the last column: 9 + 3 = ?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "That added the NUMBER of columns instead of the column's 3 dots."
+          },
+          {
+            "value": 9,
+            "feedback": "The last column never joined — every column must be counted."
+          }
+        ],
+        "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
+        "successFeedback": "Correct — 12."
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a count columns.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a count columns."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-count-columns",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      },
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Two counting paths, one answer. When they disagree, a counting mistake happened, not a mathematical one.",
+      "narration": "Two counting paths, one answer. When they disagree, a counting mistake happened, not a mathematical one."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g2a-count-columns",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every counter in the LEFT column.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 3
+        },
+        "hotspots": [
+          {
+            "id": "r1c1",
+            "x": 13,
+            "y": 17,
+            "label": "row 1, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r1c2",
+            "x": 38,
+            "y": 17,
+            "label": "row 1, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 2 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r1c3",
+            "x": 63,
+            "y": 17,
+            "label": "row 1, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 3 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r1c4",
+            "x": 88,
+            "y": 17,
+            "label": "row 1, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 1, column 4 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r2c1",
+            "x": 13,
+            "y": 50,
+            "label": "row 2, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r2c2",
+            "x": 38,
+            "y": 50,
+            "label": "row 2, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 2 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r2c3",
+            "x": 63,
+            "y": 50,
+            "label": "row 2, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 3 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r2c4",
+            "x": 88,
+            "y": 50,
+            "label": "row 2, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 2, column 4 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r3c1",
+            "x": 13,
+            "y": 83,
+            "label": "row 3, column 1",
+            "icon": "●",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "r3c2",
+            "x": 38,
+            "y": 83,
+            "label": "row 3, column 2",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 3, column 2 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r3c3",
+            "x": 63,
+            "y": 83,
+            "label": "row 3, column 3",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 3, column 3 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          },
+          {
+            "id": "r3c4",
+            "x": 88,
+            "y": 83,
+            "label": "row 3, column 4",
+            "icon": "●",
+            "count": 1,
+            "feedback": "Row 3, column 4 is to the right of the edge — the left column is column 1, and this row’s leftmost counter is the target."
+          }
+        ],
+        "missFeedback": "Rows run across and columns run up and down — find the crossing the prompt names.",
+        "successFeedback": "Exactly right — that is the spot where the named row and column meet."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a count columns.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a count columns."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-count-columns",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g2a-count-columns",
+      "explanationVariants": [
+        "The running total steps by the column size.",
+        "Finish every column."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Counting by columns: 3 columns made 12. Add the last column: 12 + 4 = ?",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "The last column never joined — every column must be counted."
+          },
+          {
+            "value": 20,
+            "feedback": "That count does not match the array — recount one row at a time and add again."
+          }
+        ],
+        "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
+        "successFeedback": "Correct — 16."
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a count columns.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a count columns."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-count-columns",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      },
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g2a-count-columns",
+      "explanationVariants": [
+        "Two slicings, one count.",
+        "Agreement is the check."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A 2-by-8 array and a 4-by-4 array both use 16 dots. What does that show?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "The same total can make differently shaped arrays",
+            "correct": true,
+            "feedback": "Correct — 16 rearranges into 2 rows of 8 or 4 rows of 4; shape changes, count does not."
+          },
+          {
+            "id": "o1",
+            "label": "The 4-by-4 array holds more dots",
+            "correct": false,
+            "feedback": "Both arrays hold exactly 16 — taller is not bigger when the dots are recounted."
+          },
+          {
+            "id": "o2",
+            "label": "One of the arrays must be wrong",
+            "correct": false,
+            "feedback": "Both are honest pictures of 16; a number owns many array shapes at once."
+          },
+          {
+            "id": "o3",
+            "label": "Arrays only work for even totals",
+            "correct": false,
+            "feedback": "Odd totals make arrays too (like 3 rows of 3) — this pair just happens to be even."
+          }
+        ]
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a count columns.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a count columns."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-count-columns",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g2a-count-columns",
+      "explanationVariants": [
+        "Pick either path with confidence.",
+        "The array guarantees the match."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Counting by columns: 3 columns made 9. Add the last column: 9 + 3 = ?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "That added the NUMBER of columns instead of the column's 3 dots."
+          },
+          {
+            "value": 9,
+            "feedback": "The last column never joined — every column must be counted."
+          }
+        ],
+        "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
+        "successFeedback": "Correct — 12."
+      },
+      "hints": [
+        "Count one row's dots first.",
+        "Add that same number per row.",
+        "Rows and columns tell one total."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents g2a count columns.",
+        "invariants": [
+          "Rearranging counters into pairs, rows, or columns changes the VIEW of a quantity, never its count — the model and the total must agree for g2a count columns."
+        ],
+        "misconceptions": [
+          "Believing a taller or wider arrangement holds more, or that a leftover counter can be ignored when judging parity."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "arrays-even-odd-g2:g2a-count-columns",
+        "delayed": true,
+        "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
+      },
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Add2DigitNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "Columns count the array too.",
+        "Both paths must agree.",
+        "Disagreement means a miscount."
+      ],
+      "teaser": "next: writing the repeated sum."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g2a-count-columns",
+      "concept": {
+        "id": "rem-g2a-count-columns-c",
+        "kind": "concept",
+        "body": "Two counting paths, one answer. When they disagree, a counting mistake happened, not a mathematical one.",
+        "narration": "Two counting paths, one answer. When they disagree, a counting mistake happened, not a mathematical one."
+      },
+      "check": {
+        "id": "rem-g2a-count-columns-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g2a-count-columns",
+        "explanationVariants": [
+          "A column's size is its row count.",
+          "Add column by column."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Counting by columns: 3 columns made 9. Add the last column: 9 + 3 = ?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 13,
+              "feedback": "That added the NUMBER of columns instead of the column's 3 dots."
+            },
+            {
+              "value": 9,
+              "feedback": "The last column never joined — every column must be counted."
+            }
+          ],
+          "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
+          "successFeedback": "Correct — 12."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "id": "dm-01-01",
+  "slug": "shape-outliers-and-comparing-groups",
+  "title": "One Dataset's Shape, Two Datasets Compared",
+  "courseId": "data-and-models",
+  "chapterId": "ch1-describing-data",
+  "minutes": 12,
+  "standards": [
+    "S-ID.A.1",
+    "S-ID.A.2",
+    "S-ID.A.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A dot plot puts every value where it belongs on a number line, one dot per data point, stacked when values repeat. Nothing is summarized away yet — the whole dataset is right there, which is exactly why its **shape** is visible: where it peaks, whether it leans, and whether one value sits far from the rest.",
+      "figure": "dm-shape-outlier"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the plot: 1 student scored 2, 1 scored 6, 2 scored 7, 3 scored 8, 3 scored 9.",
+      "predict": {
+        "prompt": "Ten quiz scores are mostly 7-9, but one student scored just 2. Will the dot plot look roughly symmetric, or will it lean?",
+        "options": [
+          {
+            "id": "symmetric",
+            "label": "Roughly symmetric — one low score won't shift the overall shape much"
+          },
+          {
+            "id": "lean",
+            "label": "It will lean — a stretched tail toward the low outlier"
+          }
+        ],
+        "outcomeId": "lean",
+        "reveal": "It leans. A cluster of high scores plus one far-off low score pulls a long tail toward 2 — watch that tail appear as you build it."
+      },
+      "widget": {
+        "type": "dotPlot",
+        "prompt": "Build the dot plot for the ten quiz scores.",
+        "values": [
+          2,
+          6,
+          7,
+          8,
+          9
+        ],
+        "target": [
+          1,
+          1,
+          2,
+          3,
+          3
+        ],
+        "maxPerValue": 6,
+        "successFeedback": "Ten dots, peaked at 8-9 with a long low tail reaching to 2. That tail is the outlier's fingerprint — nothing about the peak changed, but the shape is no longer symmetric.",
+        "partialFeedback": "Some stacks don't match yet. Recount from the data: 1 at 2, 1 at 6, 2 at 7, 3 at 8, 3 at 9."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read a count straight off the plot.",
+      "conceptTag": "dm-shape-spread",
+      "explanationVariants": [
+        "The stack above 8 has 3 dots — 3 students scored an 8.",
+        "Count the dots directly above the value asked for."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On this plot, how many students scored an 8?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the total of the three tallest stacks combined (2+3+3+1... not quite — read only the ONE stack above 8, not several)."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is the height of the stack above 6, not 8."
+          }
+        ],
+        "fallbackFeedback": "The stack above 8 has 3 dots."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "See what the outlier does to the range.",
+      "conceptTag": "dm-shape-spread",
+      "explanationVariants": [
+        "9 (highest) minus 2 (the outlier) is 7 — a big range driven by one point.",
+        "Range only needs the two extreme values, however many points sit between them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the range of all ten scores, INCLUDING the outlier at 2?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is 9 − 6, skipping the outlier entirely. The outlier IS one of the ten scores — include it."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the outlier's value itself, not the range. Range is highest minus lowest: 9 − 2."
+          }
+        ],
+        "fallbackFeedback": "9 − 2 = 7."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Shape and range describe ONE dataset. Comparing TWO datasets needs the same two questions asked side by side: which is centred higher (or lower), and which is more spread out. A class that averages higher AND stays more consistent is doing better on both counts — a class that averages higher but swings wildly might not be, once you look past the average.",
+      "figure": "dm-compare-spread"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build Class A's five-number summary: min 78, Q1 82, median 85, Q3 88, max 92.",
+      "widget": {
+        "type": "boxPlot",
+        "prompt": "Set Class A's summary: min 78, Q1 82, median 85, Q3 88, max 92.",
+        "axisMin": 60,
+        "axisMax": 100,
+        "targetMin": 78,
+        "targetQ1": 82,
+        "targetMed": 85,
+        "targetQ3": 88,
+        "targetMax": 92,
+        "startMin": 60,
+        "startQ1": 70,
+        "startMed": 80,
+        "startQ3": 90,
+        "startMax": 100,
+        "successFeedback": "That box is narrow — Q1 to Q3 spans only 6 points, all packed close to the median. A tight box IS the picture of consistency.",
+        "orderFeedback": "Keep the five handles in order: min ≤ Q1 ≤ median ≤ Q3 ≤ max.",
+        "valueFeedback": "In order, but not yet 78, 82, 85, 88, 92."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute the spread the box just showed.",
+      "conceptTag": "dm-shape-spread",
+      "explanationVariants": [
+        "Q3 minus Q1 is 88 − 82 = 6 — the width of the box, the middle half of the class.",
+        "The IQR is exactly the box's width: Q3 − Q1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is Class A's interquartile range (Q3 − Q1)?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is max − min (92 − 78), the FULL range, not the box's width."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is half of 6. The IQR is the box's full width, Q3 minus Q1 directly."
+          }
+        ],
+        "fallbackFeedback": "88 − 82 = 6."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Put both descriptions together.",
+      "conceptTag": "dm-shape-spread",
+      "explanationVariants": [
+        "Class B's box would be much wider than Class A's — same median, but scores land anywhere from 70 to 100 instead of clustering near 85.",
+        "A wide range with the same average means less consistency, not more opportunity."
+      ],
+      "hints": [
+        "Both classes average 85 — the medians would be about the same.",
+        "Class B's scores span 70 to 100. What does that say about its box's WIDTH compared to Class A's?",
+        "A wider box means MORE spread, which means LESS consistency."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Class B has the same median as Class A but scores ranging from 70 to 100. What would Class B's box plot look like next to Class A's?",
+        "options": [
+          {
+            "id": "a",
+            "label": "About the same centre, but a much wider box — less consistent",
+            "correct": true,
+            "feedback": "Same median, but a wide range of raw scores means a wide IQR too: Class B is far less consistent than Class A's tight cluster."
+          },
+          {
+            "id": "b",
+            "label": "A much higher centre, similar width",
+            "correct": false,
+            "feedback": "The medians are given as roughly equal — the centres would match, not differ."
+          },
+          {
+            "id": "c",
+            "label": "About the same centre and a narrower box",
+            "correct": false,
+            "feedback": "A WIDER range of raw scores (70-100 vs Class A's tighter cluster) means a WIDER box, not narrower."
+          },
+          {
+            "id": "d",
+            "label": "There is no way to compare them without more data",
+            "correct": false,
+            "feedback": "The median and range given are exactly what a box plot needs — that IS enough to compare."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One dataset's shape, and two datasets compared.",
+      "takeaways": [
+        "A dot plot shows shape directly: peaks, symmetry, and how far an outlier's tail stretches.",
+        "Comparing groups needs both centre (median) and spread (IQR) — a higher average alone doesn't mean more consistent.",
+        "A narrow box is a tight cluster; a wide box is real variation, whatever the median says."
+      ],
+      "teaser": "next chapter: two-variable data — fitting a line, and reading what it says."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dm-shape-spread",
+      "concept": {
+        "id": "rem-dss-c",
+        "kind": "concept",
+        "body": "Rewind. Range is the distance from the SMALLEST value to the LARGEST — highest minus lowest, nothing more. IQR is the same idea but for just the middle half: Q3 minus Q1."
+      },
+      "check": {
+        "id": "rem-dss-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "dm-shape-spread",
+        "explanationVariants": [
+          "Highest minus lowest: 20 − 5 = 15.",
+          "Range only needs the two extreme values."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A dataset's smallest value is 5 and largest is 20. What is the range?",
+          "answer": 15,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 25,
+              "feedback": "25 adds them. Range SUBTRACTS: highest minus lowest."
+            },
+            {
+              "value": 4,
+              "feedback": "4 divides them. Range is highest minus lowest: 20 − 5 = 15."
+            }
+          ],
+          "fallbackFeedback": "20 − 5 = 15."
+        }
+      }
+    }
+  ]
+}

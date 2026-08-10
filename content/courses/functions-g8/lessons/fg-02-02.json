@@ -1,0 +1,287 @@
+{
+ "id": "fg-02-02",
+ "slug": "why-slope-is-constant",
+ "title": "Why a Line's Slope Is Constant",
+ "courseId": "functions-g8",
+ "chapterId": "ch2-rate-of-change",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "For a straight line, the rate of change — its **slope** — is the SAME no matter which two points you pick. Pick a small step or a big step along the line: the rise-to-run ratio always comes out equal. That's what makes it a straight line.",
+   "figure": "similar-triangles-slope"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "See the constant ratio.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Why does a straight line have one constant slope?",
+    "panels": [
+     {
+      "title": "Step 1",
+      "body": "Draw a small right triangle under the line: run 1, rise 2. The ratio is 2/1 = 2."
+     },
+     {
+      "title": "Step 2",
+      "body": "Draw a bigger triangle further along: run 3, rise 6. The ratio is 6/3 = 2 — the same!"
+     },
+     {
+      "title": "Step 3",
+      "body": "The two triangles are the same shape (similar), just different sizes — so their rise/run ratios must be equal. That shared ratio IS the slope."
+     }
+    ],
+    "continueFeedback": "Reveal the next step.",
+    "successFeedback": "Exactly — similar triangles guarantee the ratio, and so the slope, stays constant."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "This is why you can compute a line's slope from ANY two points on it and always get the same answer. On the line through (0,0) and (4,8), a small step gives 2, a big step gives 2 — the slope is 2 everywhere.",
+   "figure": "similar-triangles-slope"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Confirm the ratio matches.",
+   "conceptTag": "fg-constant-slope",
+   "explanationVariants": [
+    "Small triangle 3/1 = 3; big triangle 9/3 = 3 — equal, so the slope is 3.",
+    "Both triangles on the same line give the same ratio, 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "On a line, a small triangle has rise 3, run 1. A bigger triangle on the same line has run 3. What is its rise?",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "The bigger triangle must keep the SAME ratio (3): with run 3, the rise is 3×3=9, not 3."
+     },
+     {
+      "value": 6,
+      "feedback": "Check the ratio — the small triangle gives 3/1=3, so run 3 needs rise 3×3=9 to match."
+     }
+    ],
+    "fallbackFeedback": "The slope is 3/1=3, so a run of 3 must have rise 3×3=9 to keep the same ratio."
+   },
+   "variant": {
+    "gen": "g8-fn-constant-slope",
+    "form": "fgSlopeSimilarTriangles"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Slope from two points on a line.",
+   "widget": {
+    "type": "slopeTriangle",
+    "prompt": "Build the slope triangle from A so the line also passes through B (1, 1) → (4, 7).",
+    "ax": 1,
+    "ay": 1,
+    "bx": 4,
+    "by": 7,
+    "runStart": 1,
+    "riseStart": 0,
+    "gridMax": 10,
+    "legMax": 9,
+    "commonPairs": [
+     {
+      "run": 3,
+      "rise": 3,
+      "feedback": "A run of 3 and a rise of 3 is slope 1 — that reads the run twice. From A to B the rise is 7 − 1 = 6, not 3."
+     },
+     {
+      "run": 6,
+      "rise": 3,
+      "feedback": "Run 6 and rise 3 is slope 1/2 — the legs are swapped. Slope is the VERTICAL change over the horizontal one: 6 ÷ 3."
+     }
+    ],
+    "fallbackFeedback": "From A to B the line travels 3 across and 6 up, so rise ÷ run = 6 ÷ 3 = 2.",
+    "successFeedback": "Slope 2 — and 1 and 2, 2 and 4, or 3 and 6 all land the line on B. Every triangle on this one line shares its ratio, which is exactly why a line has a single slope."
+   },
+   "predict": {
+    "prompt": "The line through (1, 1) and (4, 7) climbs 6 while running across 3. Before you compute — what is its slope?",
+    "options": [
+     {
+      "id": "ratio",
+      "label": "2 — the climb per single step across"
+     },
+     {
+      "id": "rise",
+      "label": "6 — the climb is what slope measures"
+     },
+     {
+      "id": "sum",
+      "label": "9 — the climb and the run together"
+     }
+    ],
+    "outcomeId": "ratio",
+    "reveal": "Slope is the climb for ONE step across, not the whole climb: 6 spread over 3 steps is 2 per step. That is why the triangle's two legs are divided, never added."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Same line, different points, same slope.",
+   "conceptTag": "fg-constant-slope",
+   "explanationVariants": [
+    "Through (2,3) and (5,12): rise 9, run 3, slope 9÷3 = 3.",
+    "Any two points on this line give slope 3 — that's the constant-slope property."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Find the slope of the line through (2, 3) and (5, 12).",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "That's just the rise (12−3=9) — divide by the run (5−2=3): 9÷3=3."
+     },
+     {
+      "value": 3.5,
+      "feedback": "Recompute — rise is 12−3=9, run is 5−2=3, so slope is 9÷3=3."
+     }
+    ],
+    "fallbackFeedback": "Rise = 12−3 = 9, run = 5−2 = 3, so slope = 9÷3 = 3."
+   },
+   "variant": {
+    "gen": "g8-fn-constant-slope",
+    "form": "fgSlopePoints"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A fractional slope.",
+   "conceptTag": "fg-constant-slope",
+   "explanationVariants": [
+    "Through (0,0) and (3,2): rise 2, run 3, slope 2/3 — a valid slope, just shallow.",
+    "Slopes can be fractions; 2÷3 = 2/3 here."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the slope of the line through (0, 0) and (3, 2)?",
+    "options": [
+     {
+      "id": "a",
+      "label": "2/3",
+      "correct": true,
+      "feedback": "Right — rise 2 over run 3 gives the slope 2/3."
+     },
+     {
+      "id": "b",
+      "label": "3/2",
+      "correct": false,
+      "feedback": "That flips rise and run — slope is rise÷run = 2÷3 = 2/3, not 3/2."
+     },
+     {
+      "id": "c",
+      "label": "1",
+      "correct": false,
+      "feedback": "That would need rise to equal run, but rise is 2 and run is 3 — the slope is 2/3."
+     },
+     {
+      "id": "d",
+      "label": "5",
+      "correct": false,
+      "feedback": "That adds rise and run instead of dividing — slope is 2÷3 = 2/3."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g8-fn-constant-slope",
+    "form": "fgSlopeFractionMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A slope with a negative coordinate.",
+   "conceptTag": "fg-constant-slope",
+   "explanationVariants": [
+    "Through (−1,2) and (3,14): rise 14−2=12, run 3−(−1)=4, slope 12÷4 = 3.",
+    "Watch the run: 3−(−1)=4, so slope = 12÷4 = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Find the slope of the line through (−1, 2) and (3, 14).",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "That's just the rise (14−2=12) — divide by the run (3−(−1)=4): 12÷4=3."
+     },
+     {
+      "value": 4,
+      "feedback": "That's just the run — the slope is rise÷run = 12÷4 = 3."
+     }
+    ],
+    "fallbackFeedback": "Rise = 14−2 = 12, run = 3−(−1) = 4, so slope = 12÷4 = 3."
+   },
+   "hints": [
+    "Find the rise (change in y) and the run (change in x) carefully.",
+    "Rise = 14−2 = 12; run = 3−(−1) = 3+1 = 4 (subtracting a negative adds).",
+    "Slope = 12 ÷ 4 = 3."
+   ],
+   "variant": {
+    "gen": "g8-fn-constant-slope",
+    "form": "fgSlopeSigned"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "A straight line's slope is constant because similar triangles keep the ratio equal.",
+   "takeaways": [
+    "Any two points on a line give the same slope.",
+    "Similar triangles on the line share the same rise/run ratio.",
+    "That shared ratio IS the line's slope."
+   ],
+   "teaser": "Next: the initial value — where a line starts."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fg-constant-slope",
+   "concept": {
+    "id": "rem-fg0202-c",
+    "kind": "concept",
+    "body": "A straight line has ONE constant slope: similar triangles anywhere along it share the same rise÷run ratio. So any two points give the same slope = rise ÷ run."
+   },
+   "check": {
+    "id": "rem-fg0202-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "fg-constant-slope",
+    "explanationVariants": [
+     "Through (1,2) and (4,8): rise 6, run 3, slope 6÷3 = 2.",
+     "Rise 8−2=6 over run 4−1=3 gives slope 2."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Find the slope of the line through (1, 2) and (4, 8).",
+     "answer": 2,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 6,
+       "feedback": "That's just the rise (8−2=6) — divide by the run (4−1=3): 6÷3=2."
+      },
+      {
+       "value": 3,
+       "feedback": "That's just the run — slope is rise÷run = 6÷3 = 2."
+      }
+     ],
+     "fallbackFeedback": "Rise = 8−2 = 6, run = 4−1 = 3, so slope = 6÷3 = 2."
+    }
+   }
+  }
+ ]
+}

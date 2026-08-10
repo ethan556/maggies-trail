@@ -1,0 +1,389 @@
+{
+  "id": "fm-03-01",
+  "slug": "the-area-model",
+  "title": "The Area Model",
+  "courseId": "fractions-multiply",
+  "chapterId": "ch3-fraction-times-fraction",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To multiply two fractions, picture a square. For 1/2 × 1/3, slice it into 2 columns and shade 1 (that's 1/2), then into 3 rows and shade 1 (that's 1/3). The grid now has 2 × 3 = 6 small cells, and the overlap — where both shadings meet — is 1 cell. So 1/2 × 1/3 = 1/6.",
+      "figure": "fraction-area-model"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two thirds OF three quarters.",
+      "widget": {
+        "type": "fractionBar",
+        "targetNum": 6,
+        "targetDen": 12,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 3,
+        "prompt": "2/3 × 3/4. Build the product on the bar.",
+        "successFeedback": "6/12, which is 1/2. The area picture says it all: cutting a bar into 4 columns and 3 rows makes 12 little pieces, and 2 rows of 3 columns shades 6 of them. Multiplying the tops counts the shaded pieces; multiplying the bottoms counts the total pieces.",
+        "lowFeedback": "Less than the product. Two thirds of three quarters is a bit under a half of the bar — but not much under.",
+        "highFeedback": "More than the product. Taking 2/3 OF something must leave you with less than that something, and 3/4 is what you started from."
+      },
+      "predict": {
+        "prompt": "The bar starts at 1/3. Before you touch it: is 1/3 more or less of the bar than 6/12?",
+        "options": [
+          {
+            "id": "more",
+            "label": "1/3 is more"
+          },
+          {
+            "id": "less",
+            "label": "1/3 is less"
+          },
+          {
+            "id": "same",
+            "label": "They're the same amount"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "With the same whole, the bar settles it: 1/3 covers less than 6/12. Count of pieces and size of pieces work together — neither alone decides the amount."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Treat multiplication by a fraction as scaling and compare the product with both factors.",
+        "predictionId": "g5-fraction-scaling-prediction",
+        "invariants": [
+          "whole-defined",
+          "scaling-factor-controls-size"
+        ],
+        "misconceptions": [
+          "multiply-numerators-only",
+          "product-always-larger"
+        ],
+        "representations": [
+          "diagram",
+          "number-line",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "scaling-area-to-number-line",
+        "delayed": true,
+        "counterfactualPrompt": "Hold one factor fixed and move the other below, at, and above one. How must the product respond?",
+        "explanation": {
+          "prompt": "Why can multiplying make a number smaller?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "A factor between zero and one scales the other quantity down.",
+              "correct": true,
+              "feedback": "Exactly. Product size depends on the scaling factor, not the operation name alone."
+            },
+            {
+              "id": "surface",
+              "label": "Multiplication always produces a larger answer.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Product size depends on the scaling factor, not the operation name alone."
+            }
+          ]
+        }
+      },
+      "conceptTag": "fraction-area-model"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the product off the grid.",
+      "conceptTag": "fraction-area-model",
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "unitGrid"
+      },
+      "explanationVariants": [
+        "1/2 × 1/3 = 1/6.",
+        "One overlap cell in six is 1/6."
+      ],
+      "widget": {
+        "type": "fractionGrid",
+        "prompt": "1/2 × 1/3 = ? (6 cells total, 1 in the overlap)",
+        "num1": 1,
+        "den1": 2,
+        "num2": 1,
+        "den2": 3,
+        "rowFeedback": "Rows carry the first factor: 2 rows with 1 shaded makes the 1/2.",
+        "colFeedback": "Rows are set — columns carry the 1/3: 3 columns with 1 shaded.",
+        "successFeedback": "Right — 1 shaded cell out of 6 is 1/6. Numerators multiply and denominators multiply."
+      },
+      "hints": [
+        "The overlap is 1 cell.",
+        "Out of 6 total cells.",
+        "1/6."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents fraction area model.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for fraction area model must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines fraction area model."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-multiply:fraction-area-model",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's the surprise: multiplying two fractions makes something **smaller** than either one. 1/2 × 1/3 = 1/6, which is less than both 1/2 and 1/3. That makes sense — you're taking a part *of* a part. Half of a third is a small sliver, and the grid shows exactly how small.",
+      "figure": "fm-area-grid"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A square times itself.",
+      "conceptTag": "fraction-area-model",
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "unitGrid"
+      },
+      "explanationVariants": [
+        "1/2 × 1/2 = 1/4.",
+        "Half of a half is a quarter."
+      ],
+      "widget": {
+        "type": "fractionGrid",
+        "prompt": "1/2 × 1/2 = ? (2 columns, 2 rows)",
+        "num1": 1,
+        "den1": 2,
+        "num2": 1,
+        "den2": 2,
+        "rowFeedback": "Rows carry the first 1/2: partition into 2 rows and shade 1.",
+        "colFeedback": "Rows are set — the second 1/2 is columns: 2 columns, 1 shaded.",
+        "successFeedback": "Right — 2 × 2 = 4 cells, 1 in the overlap: 1/4. Half of a half is a quarter."
+      },
+      "hints": [
+        "2 columns, 2 rows → 4 cells.",
+        "Overlap is 1 cell.",
+        "1/4."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents fraction area model.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for fraction area model must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines fraction area model."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-multiply:fraction-area-model",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the overlap.",
+      "conceptTag": "fraction-area-model",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 2/5 × 1/2: the grid is 5 × 2 = 10 cells. The overlap is 2 columns by 1 row. How many cells are in the overlap? (2 × 1)",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 adds the numerators (2 + 1). The overlap multiplies them: 2 × 1 = 2 cells, giving 2/10."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the whole grid, not the overlap. The overlap is 2 × 1 = 2 cells, so 2/10."
+          }
+        ],
+        "fallbackFeedback": "The overlap is 2 × 1 = 2 cells, so 2/5 × 1/2 = 2/10 = 1/5."
+      },
+      "hints": [
+        "Overlap = 2 columns by 1 row.",
+        "Multiply: 2 × 1.",
+        "2 cells (out of 10)."
+      ],
+      "explanationVariants": [
+        "Overlap is 2 × 1 = 2 cells: 2/10 = 1/5.",
+        "2 shaded cells of 10 is 2/10 = 1/5."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Predict without a grid.",
+      "conceptTag": "fraction-area-model",
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "areaCompare"
+      },
+      "explanationVariants": [
+        "A part of a part is smaller than both factors.",
+        "1/3 × 1/4 = 1/12, under both."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Without computing exactly: 1/3 × 1/4 is —",
+        "options": [
+          {
+            "id": "a",
+            "label": "smaller than both 1/3 and 1/4",
+            "correct": true,
+            "feedback": "Right — a part of a part shrinks. (It's 1/12, smaller than both.)"
+          },
+          {
+            "id": "b",
+            "label": "bigger than both",
+            "feedback": "Multiplying fractions under 1 shrinks, not grows. 1/3 × 1/4 = 1/12, smaller than both."
+          },
+          {
+            "id": "c",
+            "label": "exactly 1/4",
+            "feedback": "Taking 1/3 OF 1/4 makes it smaller than 1/4. The product is 1/12."
+          }
+        ]
+      },
+      "hints": [
+        "You're taking a part of a part.",
+        "That makes it smaller.",
+        "Smaller than both."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a bigger grid.",
+      "conceptTag": "fraction-area-model",
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "areaGrid"
+      },
+      "hints": [
+        "Grid: 3 columns × 4 rows = 12 cells.",
+        "Overlap: 2 columns by 3 rows = 6 cells.",
+        "6 out of 12."
+      ],
+      "explanationVariants": [
+        "2/3 × 3/4: 12 cells, 6 in the overlap → 6/12 = 1/2.",
+        "The overlap is 6 of 12 cells, which simplifies to 1/2."
+      ],
+      "widget": {
+        "type": "fractionGrid",
+        "prompt": "2/3 × 3/4 = ? (grid 3 × 4 = 12 cells, overlap 2 × 3 = 6 cells)",
+        "num1": 2,
+        "den1": 3,
+        "num2": 3,
+        "den2": 4,
+        "rowFeedback": "Rows carry the 2/3: partition into 3 rows and shade 2.",
+        "colFeedback": "Rows are set — columns carry the 3/4: 4 columns with 3 shaded.",
+        "successFeedback": "Right — 6 shaded of 12 is 6/12, which simplifies to 1/2."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents fraction area model.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for fraction area model must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines fraction area model."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-multiply:fraction-area-model",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiply across, shrink down.",
+      "takeaways": [
+        "A fraction times a fraction is the overlap in a grid: cells = denominators multiplied, shaded = numerators multiplied.",
+        "The product is smaller than both factors — a part of a part.",
+        "Numerators multiply, denominators multiply — never add across."
+      ],
+      "teaser": "next: the multiply-across shortcut, without drawing the grid."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fraction-area-model",
+      "concept": {
+        "id": "rem-am-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Fraction × fraction is the overlap in a grid: multiply the denominators for total cells, the numerators for shaded cells.** For 1/2 × 1/4: grid is 2 × 4 = 8 cells, overlap is 1 × 1 = 1 cell, so 1/8 — smaller than both."
+      },
+      "check": {
+        "id": "rem-am-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fraction-area-model",
+        "explanationVariants": [
+          "8 cells, 1 in the overlap → 1/8.",
+          "1/2 of 1/4 is 1 of 8 cells: 1/8."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "1/2 × 1/4 = ? (grid 2 × 4 = 8 cells, overlap 1 cell)",
+          "options": [
+            {
+              "id": "a",
+              "label": "1/8",
+              "correct": true,
+              "feedback": "Right — 1 shaded cell of 8 is 1/8. Denominators multiply (2 × 4), numerators multiply (1 × 1)."
+            },
+            {
+              "id": "b",
+              "label": "2/6",
+              "feedback": "2/6 adds across (1+1 over 2+4). Use the grid: 1/2 × 1/4 = 1/8."
+            },
+            {
+              "id": "c",
+              "label": "3/4",
+              "feedback": "3/4 is what 1/2 + 1/4 would be. This is multiplication: 1/8."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

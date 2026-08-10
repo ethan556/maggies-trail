@@ -1,0 +1,302 @@
+{
+  "id": "pf-01-03",
+  "slug": "leading-term-domination",
+  "title": "Leading-Term Domination",
+  "courseId": "polynomial-functions",
+  "chapterId": "ch1-shape-and-end-behavior",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Why does only the leading term set the ends? Because powers grow at wildly different speeds. Compare x³ and 100x at x = 100: x³ = 1,000,000 while 100x = 10,000 — the cube is already **100 times** bigger, and the gap keeps widening forever.",
+      "figure": "pf-leading-ends"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Feel the gap.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x³ + 100x, the leading term at x = 100 is 100³ = 1,000,000. What is the OTHER term, 100x, at x = 100?",
+        "answer": 10000,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1000000,
+            "feedback": "That's the leading term x³ — the trailing term is 100 · 100 = 10,000, a hundred times smaller."
+          },
+          {
+            "value": 100,
+            "feedback": "100x means 100 TIMES x: 100 · 100 = 10,000."
+          }
+        ],
+        "fallbackFeedback": "100 · 100 = 10,000 — just 1% of the leading term's 1,000,000."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So for large |x|, f(x) = x³ + 100x behaves like plain x³ — the tag-along terms become rounding error. That's the license behind end behavior: **ignore everything but the leading term** when you look far left or far right.",
+      "figure": "pf-dominant-term"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which term wins?",
+      "conceptTag": "pf-leading-term",
+      "explanationVariants": [
+        "For huge |x|, the highest power dwarfs the rest — here that's −3x⁴.",
+        "Degree beats coefficient size in the long run: x⁴ outgrows 100x³ eventually."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For very large x, which term of f(x) = −3x⁴ + 100x³ − 500 controls the value?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−3x⁴",
+            "correct": true,
+            "feedback": "Right — the highest power always wins the long game, whatever the coefficients."
+          },
+          {
+            "id": "o2",
+            "label": "100x³",
+            "correct": false,
+            "feedback": "Its coefficient is bigger, but x⁴ outgrows x³: by x = 100 the quartic term is 3× larger and pulling away."
+          },
+          {
+            "id": "o3",
+            "label": "−500",
+            "correct": false,
+            "feedback": "Constants never grow at all — they vanish next to any power for large x."
+          },
+          {
+            "id": "o4",
+            "label": "they balance out",
+            "correct": false,
+            "feedback": "Powers of different degrees never balance for long — the higher one runs away."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-leading-term__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the takeover point.",
+      "predict": {
+        "prompt": "x^2 against 50x. For small positive x the 50x is far bigger. Does x^2 ever catch up permanently, or does it keep trading the lead?",
+        "options": [
+          {
+            "id": "permanent",
+            "label": "It catches up once and never falls behind again"
+          },
+          {
+            "id": "trade",
+            "label": "They keep trading the lead as x grows"
+          },
+          {
+            "id": "never",
+            "label": "50x stays ahead forever — a multiplier of 50 is a lot to beat"
+          }
+        ],
+        "outcomeId": "permanent",
+        "reveal": "Once, and permanently. x^2 - 50x factors as x(x - 50), so it is negative only between 0 and 50 and positive everywhere after. A higher power always wins in the end, no matter how large the coefficient it is chasing."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for x² − 50x, which factors as x(x − 50). Where it is POSITIVE is where x² has overtaken 50x.",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 1
+          },
+          {
+            "x": 50,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "Positive, negative, positive. x² trails 50x across the whole stretch from 0 to 50 — and then overtakes it at 50 and never trails again. The first whole number where x² is genuinely ahead is 51: 51² − 50·51 = 51. A coefficient of 50 buys a long head start, not a permanent one.",
+        "crossFeedback": "Both roots are simple, so the sign changes at each. The product x(x − 50) is negative only when exactly ONE of the two factors is negative — which happens between them, not outside.",
+        "bounceFeedback": "Keeping the sign across a root belongs to an even multiplicity. Each factor here appears once, so the sign genuinely changes at 0 and again at 50."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "End behavior via domination.",
+      "conceptTag": "pf-leading-term",
+      "explanationVariants": [
+        "Only the −2x⁵ matters at the ends: odd degree, negative lead — up-left, down-right.",
+        "Cover up everything after the leading term, then read the pattern."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the end behavior of f(x) = −2x⁵ + 90x⁴ + 7x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "rises to the left, falls to the right",
+            "correct": true,
+            "feedback": "Right — the ends belong to −2x⁵: odd degree, negative lead."
+          },
+          {
+            "id": "o2",
+            "label": "falls to the left, rises to the right",
+            "correct": false,
+            "feedback": "That's the positive-lead odd pattern — the lead here is −2."
+          },
+          {
+            "id": "o3",
+            "label": "rises on both ends",
+            "correct": false,
+            "feedback": "The 90x⁴ tempts you, but it's not the leading term — degree 5 rules, and odd ends oppose."
+          },
+          {
+            "id": "o4",
+            "label": "falls on both ends",
+            "correct": false,
+            "feedback": "Matching ends need an even LEADING degree — this one's 5."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-leading-term__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "How big is the error?",
+      "conceptTag": "pf-leading-term",
+      "explanationVariants": [
+        "f(10) = 1000 + 50 = 1050, and the leading term alone gives 1000 — off by only 50.",
+        "The trailing 5x contributes 50 out of 1050 — under 5% and shrinking as x grows."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x³ + 5x, what is f(10)?",
+        "answer": 1050,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1000,
+            "feedback": "1000 is the leading term ALONE — f also carries 5·10 = 50: total 1050."
+          },
+          {
+            "value": 1500,
+            "feedback": "5x at x = 10 is 50, not 500: f(10) = 1000 + 50 = 1050."
+          }
+        ],
+        "fallbackFeedback": "10³ + 5·10 = 1000 + 50 = 1050 — already 95% leading term."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-leading-term__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Domination in reverse.",
+      "conceptTag": "pf-leading-term",
+      "explanationVariants": [
+        "f(x) behaves like 4x² for large |x|, and 4x² at x = −100 is 4 · 10,000 = 40,000 — the sign vanished in the square.",
+        "Even-power domination: (−100)² = +10,000, times 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 4x² − 7x + 1 behaves like its leading term for large |x|. What is that leading term's value at x = −100?",
+        "answer": 40000,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -40000,
+            "feedback": "The even power erases the minus: (−100)² = +10,000, so 4x² = +40,000."
+          },
+          {
+            "value": 400,
+            "feedback": "4x² squares FIRST: 4 · (−100)² = 4 · 10,000 = 40,000."
+          }
+        ],
+        "fallbackFeedback": "4 · (−100)² = 4 · 10,000 = 40,000."
+      },
+      "hints": [
+        "Only the 4x² matters — drop the rest.",
+        "Square first: (−100)² = 10,000.",
+        "Multiply by 4: 40,000."
+      ],
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-leading-term__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The highest power outgrows everything — that's why it owns the ends.",
+      "takeaways": [
+        "Higher degree beats bigger coefficient in the long run.",
+        "Trailing terms become rounding error as |x| grows.",
+        "To read end behavior, cover everything after the leading term."
+      ],
+      "teaser": "Next chapter: where the graph MEETS the x-axis — zeros, straight from factored form."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pf-leading-term",
+      "concept": {
+        "id": "rem-pf0103-c",
+        "kind": "concept",
+        "body": "Compare term sizes by plugging in a big x. For x² vs 10x at x = 100: the square gives 10,000; the 10x gives 1,000."
+      },
+      "check": {
+        "id": "rem-pf0103-k",
+        "kind": "check",
+        "body": "Which grew bigger?",
+        "conceptTag": "pf-leading-term",
+        "explanationVariants": [
+          "x² = 10,000 beats 10x = 1,000 — ten times bigger already.",
+          "The higher power pulls ahead and never looks back."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "At x = 100, which term of f(x) = x² + 10x is larger?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x², at 10,000",
+              "correct": true,
+              "feedback": "Right — ten times the 10x term, and the ratio keeps growing."
+            },
+            {
+              "id": "o2",
+              "label": "10x, at 1,000",
+              "correct": false,
+              "feedback": "10 · 100 = 1,000 — but 100² = 10,000 is ten times bigger."
+            },
+            {
+              "id": "o3",
+              "label": "they're equal",
+              "correct": false,
+              "feedback": "They tie only at x = 10 — by 100 the square is far ahead."
+            },
+            {
+              "id": "o4",
+              "label": "10x, at 10,000",
+              "correct": false,
+              "feedback": "10x at x = 100 is 1,000; it's the SQUARE that reaches 10,000."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

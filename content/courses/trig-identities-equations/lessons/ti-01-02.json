@@ -1,0 +1,254 @@
+{
+  "id": "ti-01-02",
+  "slug": "tangents-dense-ladder",
+  "title": "Tangent's Ladder & Merging Families",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch1-general-solutions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Tangent's period is **π** (recall), so its general solution needs only **one family with a π step**: tan x = 1 gives x = π/4 + **πk** — no twin required, because the twin (5π/4) is just the k = 1 rung. A denser ladder from a shorter period.",
+      "figure": "ti-tangent-general"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Climb the ladder.",
+      "predict": {
+        "prompt": "Sine's solution ladder needs TWO families (+360°k each). How many does tangent need?",
+        "options": [
+          {
+            "id": "one",
+            "label": "One — tangent repeats every 180°, so a single ladder catches everything"
+          },
+          {
+            "id": "two",
+            "label": "Two, like sine — all trig functions pair up"
+          },
+          {
+            "id": "half",
+            "label": "None — tangent equations have single answers"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "One ladder with a 180° step. Tangent's whole pattern lives in one branch and repeats every half-turn — drag one full copy and read its length — so θ + 180°k sweeps up every solution. That's why sine's two families MERGE for tangent."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = tan x through exactly one copy of its pattern and stop where it first repeats — the ladder's rung spacing.",
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "tan",
+        "targetFeature": {
+          "kind": "period",
+          "x": 180,
+          "tol": 5
+        },
+        "successFeedback": "One copy per 180° — the π in x = π/4 + πk. Climbing the ladder with k = 2 lands at π/4 + 2π ≈ 7.07, the entry above: every rung is one half-turn because that is how often tangent hands back the same value.",
+        "lowFeedback": "Still inside the first branch — the pattern hasn't restarted. Drag on until the new branch mimics the old one exactly.",
+        "highFeedback": "You've overshot into the second copy — back up to the first angle where the pattern restarts."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count in a window.",
+      "conceptTag": "ti-tan-ladder",
+      "explanationVariants": [
+        "One solution per π; [0, 4π) spans 4 π-lengths: 4 solutions (π/4, 5π/4, 9π/4, 13π/4).",
+        "The πk ladder places rungs every half-turn: four rungs fit in two full turns."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does tan x = 1 have on [0, 4π)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 per 2π is sine/cosine counting. Tangent solves once per π: 4 in [0, 4π)."
+          },
+          {
+            "value": 8,
+            "feedback": "8 would need period π/2. Tangent's rungs are π apart: 4."
+          }
+        ],
+        "fallbackFeedback": "One per π-length: 4."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-ladder__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sine and cosine families can ALSO merge when the twins are exactly π apart. cos x = 0 has base solutions π/2 and 3π/2 — a π gap — so the two 2πk families collapse into the single dense family **x = π/2 + πk**. Always check the twin gap before writing two ladders.",
+      "figure": "ti-families-merge"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot a merge.",
+      "conceptTag": "ti-tan-ladder",
+      "explanationVariants": [
+        "sin x = 0: twins 0 and π are π apart → one family x = πk (equivalently 0 + πk).",
+        "0, π, 2π, 3π, … march by π: a single merged ladder."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The general solution of sin x = 0 is best written as:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = πk (one merged family)",
+            "correct": true,
+            "feedback": "Right — the base solutions 0 and π sit exactly π apart, so their ladders interleave into one."
+          },
+          {
+            "id": "o2",
+            "label": "x = 2πk only",
+            "feedback": "That misses π, 3π, 5π, … (sin π = 0 too). The merged step is π, not 2π."
+          },
+          {
+            "id": "o3",
+            "label": "x = π/2 + πk",
+            "feedback": "Those are the solutions of COS x = 0 (where sine is ±1). Sine's zeros sit at the multiples of π."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-ladder__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "And a non-merge.",
+      "conceptTag": "ti-tan-ladder",
+      "explanationVariants": [
+        "sin x = 1/2: twins π/6 and 5π/6 differ by 2π/3 ≠ π — the families stay separate; a πk step from π/6 would hit 7π/6 where sin = −1/2.",
+        "Merging is legal only for an exact π gap; 2π/3 isn't it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Can the two families of sin x = 1/2 (π/6 + 2πk and 5π/6 + 2πk) merge into π/6 + πk?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No — π/6 + π = 7π/6 has sine −1/2, not 1/2",
+            "correct": true,
+            "feedback": "Right — the twin gap is 2π/3, not π, so a π step leaves the solution set."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — all trig families can use πk",
+            "feedback": "Test one rung: sin(π/6 + π) = −1/2 ✗. Only exact-π twin gaps merge (like cos x = 0)."
+          },
+          {
+            "id": "o3",
+            "label": "Yes, but only for negative k",
+            "feedback": "The sign of k doesn't matter — π/6 − π = −5π/6 also has sine −1/2 ✗."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-ladder__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Choose the right ladder.",
+      "conceptTag": "ti-tan-ladder",
+      "explanationVariants": [
+        "tan x = −1: base solution arctan(−1) = −π/4, family −π/4 + πk. In [0, 2π): k = 1 → 3π/4 and k = 2 → 7π/4. Sum: 3π/4 + 7π/4 = 10π/4 = 5π/2 ≈ 7.85.",
+        "Tangent is −1 in Quadrants II and IV: 3π/4 and 7π/4, one π apart as the ladder demands."
+      ],
+      "hints": [
+        "arctan(−1) = −π/4 seeds the family −π/4 + πk.",
+        "Which k values push −π/4 into [0, 2π)?",
+        "k = 1 and k = 2: the rungs 3π/4 and 7π/4. Sum them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sum the solutions of tan x = −1 on [0, 2π), to hundredths.",
+        "answer": 7.85,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 3.93,
+            "feedback": "3.93 ≈ 5π/4 has tan = +1. The −1 rungs are 3π/4 and 7π/4; their sum ≈ 7.85."
+          },
+          {
+            "value": 2.36,
+            "feedback": "2.36 ≈ 3π/4 is one rung only. Add 7π/4 ≈ 5.50: total 5π/2 ≈ 7.85."
+          }
+        ],
+        "fallbackFeedback": "3π/4 + 7π/4 = 5π/2 ≈ 7.85."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-tan-ladder__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Match the step to the period.",
+      "takeaways": [
+        "Tangent: one family, step π.",
+        "Sine/cosine twins merge into a π-step family only when exactly π apart (e.g. cos x = 0, sin x = 0).",
+        "Test a rung before trusting any merge."
+      ],
+      "teaser": "Next: transformed equations — the inside gets its own ladder first."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-tan-ladder",
+      "concept": {
+        "id": "rem-ti0102-c",
+        "kind": "concept",
+        "body": "Ladder steps: sin/cos use 2πk per twin (merge to πk only when twins sit exactly π apart); tan always uses πk on one seed."
+      },
+      "check": {
+        "id": "rem-ti0102-k",
+        "kind": "check",
+        "body": "One step choice.",
+        "conceptTag": "ti-tan-ladder",
+        "explanationVariants": [
+          "tan x = 0 at x = 0 (and every π): the family is πk.",
+          "Tangent's zeros are sine's zeros: the multiples of π."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The general solution of tan x = 0 is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x = πk",
+              "correct": true,
+              "feedback": "Right — one seed (0), tangent's π step."
+            },
+            {
+              "id": "o2",
+              "label": "x = 2πk",
+              "feedback": "tan π = 0 too — the step is π, catching every multiple."
+            },
+            {
+              "id": "o3",
+              "label": "x = π/2 + πk",
+              "feedback": "Those are tangent's WALLS (undefined), not zeros."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

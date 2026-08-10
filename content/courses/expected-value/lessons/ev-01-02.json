@@ -1,0 +1,234 @@
+{
+  "id": "ev-01-02",
+  "slug": "the-probability-distribution",
+  "title": "The Probability Distribution",
+  "courseId": "expected-value",
+  "chapterId": "ch1-random-variables",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A probability distribution is the complete inventory: every value the random variable can take, each paired with its probability. Two rules police it — no probability may be negative, and they must total exactly 1, because the variable is certain to take SOME value.",
+      "figure": "ev-distribution-inventory"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Set one entry of a distribution on the wheel.",
+      "widget": {
+        "type": "spinnerSim",
+        "favourableStart": 0,
+        "prompt": "A prize wheel has 8 equal sectors. Shade it so the chance of landing on a prize is 5/8.",
+        "sectors": 8,
+        "targetFavourable": 5,
+        "successFeedback": "5 of 8 shaded. The shaded share IS the probability, and the unshaded 3/8 is the only other entry — together they make 8/8 = 1.",
+        "lowFeedback": "Too little shaded for a 5/8 chance.",
+        "highFeedback": "Too much shaded — that is a bigger chance than 5/8."
+      },
+      "predict": {
+        "prompt": "A distribution lists probabilities 0.2, 0.5 and 0.4 for its only three values. Can it be valid?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes"
+          },
+          {
+            "id": "no",
+            "label": "No"
+          },
+          {
+            "id": "depends",
+            "label": "Only if the values are positive"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "They sum to 1.1, and a distribution's probabilities must total exactly 1. That single check catches most malformed tables instantly, before any expectation is computed — and computing an expectation from a table that fails it produces a number with no meaning at all."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Complete the table.",
+      "conceptTag": "ev-distribution",
+      "explanationVariants": [
+        "The listed probabilities total 0.7, so the missing one is 0.3.",
+        "1 − (0.4 + 0.3) = 0.3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A variable takes values 1, 2, 3 with probabilities 0.4, 0.3 and ?. What is the missing probability?",
+        "answer": 0.3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.7,
+            "feedback": "0.7 is what the first two ALREADY total. The missing entry brings that up to 1."
+          },
+          {
+            "value": 1,
+            "feedback": "A single probability of 1 would leave no room for the other two."
+          }
+        ],
+        "fallbackFeedback": "1 − 0.4 − 0.3 = 0.3.",
+        "successFeedback": "0.3 — and now the table totals exactly 1, as every distribution must."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Reading a distribution is reading shape. Where the probability piles up is where the variable usually lands, and the tails show what is possible but rare. A distribution can be symmetric, lopsided, or flat — and the expectation you are about to compute is its balance point.",
+      "figure": "ev-reading-shape"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the invalid table.",
+      "conceptTag": "ev-distribution",
+      "explanationVariants": [
+        "A negative probability is impossible, whatever the other entries do.",
+        "Probabilities live between 0 and 1 inclusive."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which table CANNOT be a probability distribution?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "0.6, −0.1, 0.5",
+            "correct": true,
+            "feedback": "Right — these do total 1, but a negative probability is meaningless. Both rules have to hold."
+          },
+          {
+            "id": "o2",
+            "label": "0.25, 0.25, 0.5",
+            "correct": false,
+            "feedback": "All non-negative and totalling 1 — perfectly valid."
+          },
+          {
+            "id": "o3",
+            "label": "1, 0, 0",
+            "correct": false,
+            "feedback": "Valid, if a little extreme: the variable is certain to take the first value."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a probability off the wheel.",
+      "conceptTag": "ev-distribution",
+      "explanationVariants": [
+        "3 unshaded sectors out of 8 gives 3/8, which is 0.375.",
+        "The complement of 5/8 is 3/8."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On that 8-sector wheel with 5 prize sectors, what is the chance of NOT winning?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "3/8",
+            "correct": true,
+            "feedback": "Yes — the two entries 5/8 and 3/8 are the whole distribution, and they total 1."
+          },
+          {
+            "id": "o2",
+            "label": "5/8",
+            "correct": false,
+            "feedback": "That is the chance of winning. Not-winning is the complement."
+          },
+          {
+            "id": "o3",
+            "label": "1/8",
+            "correct": false,
+            "feedback": "1/8 is a single sector. Three sectors are unshaded."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Combine two values.",
+      "conceptTag": "ev-distribution",
+      "explanationVariants": [
+        "P(2 or 3) = 0.3 + 0.3 = 0.6 for that table.",
+        "Disjoint values add."
+      ],
+      "hints": [
+        "The values 2 and 3 cannot both happen, so their chances simply add.",
+        "Look up each probability in the table: 0.3 and 0.3.",
+        "0.3 + 0.3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the table 1: 0.4, 2: 0.3, 3: 0.3 — what is P(X is 2 or 3)?",
+        "answer": 0.6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.09,
+            "feedback": "That multiplies the probabilities, which is for events happening TOGETHER. X cannot be both 2 and 3, so they add."
+          },
+          {
+            "value": 0.4,
+            "feedback": "0.4 is P(X = 1) — the complement of what was asked. It happens to be 1 − 0.6, which checks the answer."
+          }
+        ],
+        "fallbackFeedback": "0.3 + 0.3 = 0.6.",
+        "successFeedback": "0.6 — and 1 − 0.4 gives the same thing, which is the fastest check available."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The complete inventory.",
+      "takeaways": [
+        "A distribution pairs every possible value with its probability.",
+        "Probabilities are never negative and must total exactly 1.",
+        "Disjoint values add, so a missing entry is recoverable from the rest."
+      ],
+      "teaser": "Next: the distribution's balance point — and why it need not be a value the variable can take."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ev-distribution",
+      "concept": {
+        "id": "rem-ev-distribution-c",
+        "kind": "concept",
+        "body": "Reading a distribution is reading shape. Where the probability piles up is where the variable usually lands, and the tails show what is possible but rare. A distribution can be symmetric, lopsided, or flat — and the expectation you are about to compute is its balance point."
+      },
+      "check": {
+        "id": "rem-ev-distribution-k",
+        "kind": "check",
+        "body": "Complete the table.",
+        "conceptTag": "ev-distribution",
+        "explanationVariants": [
+          "The listed probabilities total 0.7, so the missing one is 0.3.",
+          "1 − (0.4 + 0.3) = 0.3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A variable takes values 1, 2, 3 with probabilities 0.4, 0.3 and ?. What is the missing probability?",
+          "answer": 0.3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.7,
+              "feedback": "0.7 is what the first two ALREADY total. The missing entry brings that up to 1."
+            },
+            {
+              "value": 1,
+              "feedback": "A single probability of 1 would leave no room for the other two."
+            }
+          ],
+          "fallbackFeedback": "1 − 0.4 − 0.3 = 0.3.",
+          "successFeedback": "0.3 — and now the table totals exactly 1, as every distribution must."
+        }
+      }
+    }
+  ]
+}

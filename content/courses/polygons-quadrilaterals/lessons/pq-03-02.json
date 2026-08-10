@@ -1,0 +1,256 @@
+{
+  "id": "pq-03-02",
+  "slug": "rhombi",
+  "title": "Rhombi",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch3-special-parallelograms",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-rhombus",
+      "concept": {
+        "id": "rem-pq-rhombus-c",
+        "kind": "concept",
+        "body": "A rhombus is a parallelogram with all four sides congruent. It inherits every parallelogram property and adds two diagonal powers: the diagonals are perpendicular, and each bisects its vertex angles. The diagonals cut the rhombus into four congruent right triangles whose legs are the HALF-diagonals and whose hypotenuse is the side."
+      },
+      "check": {
+        "id": "rem-pq-rhombus-k",
+        "kind": "check",
+        "body": "Halve before Pythagoras.",
+        "conceptTag": "pq-rhombus",
+        "explanationVariants": [
+          "Half-diagonals 3 and 4 are the legs: side = √(9 + 16) = 5.",
+          "Diagonals 6 and 8 halve to 3 and 4 — the classic 3-4-5 gives side 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A rhombus has diagonals 6 and 8. Its side = ?",
+          "answer": 5,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "10 = √(6² + 8²) skipped the halving — the right triangles use HALF of each diagonal: √(3² + 4²) = 5."
+            },
+            {
+              "value": 7,
+              "feedback": "7 = 3 + 4 adds the legs — they meet at 90°, so Pythagoras: √(9 + 16) = 5."
+            }
+          ],
+          "fallbackFeedback": "side = √(3² + 4²) = 5."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **rhombus** takes the other upgrade path: a parallelogram with **all four sides congruent** (one pair of congruent consecutive sides is enough to trigger it — opposite sides copy them). Angles stay free to lean; it's the SIDES that lock. Every rhombus keeps the full parallelogram toolkit.",
+      "figure": "special-parallelogram-diagonals"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The perimeter freebie.",
+      "conceptTag": "pq-rhombus",
+      "explanationVariants": [
+        "All four sides match, so the perimeter is 4 × 9 = 36.",
+        "One side of a rhombus prices them all: 4 × 9 = 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One side of a rhombus measures 9. Its perimeter = ?",
+        "answer": 36,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 = 2 × 9 doubles as if only OPPOSITE sides matched (a generic parallelogram needs two lengths). A rhombus has all four equal: 36."
+          },
+          {
+            "value": 81,
+            "feedback": "81 = 9² computes an area-flavored square — perimeter ADDS the sides: 4 × 9 = 36."
+          }
+        ],
+        "fallbackFeedback": "4 × 9 = 36."
+      },
+      "variant": {
+        "gen": "pq-rhombus"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rhombus's diagonals carry TWO new powers. They are **perpendicular**, and each one **bisects the vertex angles** it joins. (They still bisect each other — inherited.) The proof is the equal sides at work: each diagonal splits the rhombus into congruent isosceles triangles, SSS everywhere.",
+      "figure": "pq-rhombus-diagonals"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Angle, bisected.",
+      "conceptTag": "pq-rhombus",
+      "explanationVariants": [
+        "The diagonal from a 70° vertex bisects it: 70 ÷ 2 = 35°.",
+        "Vertex-angle bisection is the rhombus diagonal's power: half of 70° is 35°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rhombus has a 70° vertex angle. What angle does the diagonal from that vertex make with each of its two sides?",
+        "answer": 35,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70° keeps the whole vertex angle — the diagonal BISECTS it: 35° on each flank."
+          },
+          {
+            "value": 55,
+            "feedback": "55 = (180 − 70)/2 halves the SUPPLEMENT — that's the neighboring vertex's half. This vertex splits 70: 35°."
+          },
+          {
+            "value": 20,
+            "feedback": "20 = 90 − 70 subtracts from a right angle — no right angle sits at the vertex. Halve instead: 35°."
+          }
+        ],
+        "fallbackFeedback": "70° ÷ 2 = 35°."
+      },
+      "variant": {
+        "gen": "pq-rhombus",
+        "form": "diagonalBisect"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Perpendicular + mutually bisecting diagonals slice a rhombus into **four congruent right triangles**, each with legs equal to HALF of each diagonal. Diagonals 12 and 16: legs 6 and 8, so each side — the hypotenuse — is √(36 + 64) = 10. Diagonals in, side out, via Pythagoras.",
+      "figure": "pq-rhombus-four"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Side from diagonals.",
+      "conceptTag": "pq-rhombus",
+      "explanationVariants": [
+        "Half-diagonals 6 and 8 are the legs: side = √(6² + 8²) = 10 — the 6-8-10 triple.",
+        "Halve both diagonals first, then Pythagoras: √(36 + 64) = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rhombus has diagonals 12 and 16. Find its side length.",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 = √(12² + 16²) forgot to HALVE the diagonals — the right triangles use half of each: √(6² + 8²) = 10."
+          },
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 adds the half-diagonals — they're perpendicular LEGS, so Pythagoras: √(36 + 64) = 10."
+          },
+          {
+            "value": 28,
+            "feedback": "28 = 12 + 16 adds the full diagonals — neither halved nor squared. √(6² + 8²) = 10."
+          }
+        ],
+        "fallbackFeedback": "side = √(6² + 8²) = 10."
+      },
+      "variant": {
+        "gen": "pq-rhombus",
+        "form": "sideFromDiagonals"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Whose upgrade is whose?",
+      "widget": {
+        "type": "shapeFamilyBuilder",
+        "prompt": "Build a rhombus: four sides, two parallel pairs, and all four sides equal.",
+        "targetName": "rhombus",
+        "targetSides": 4,
+        "targetRightAngles": 0,
+        "targetEqualSides": 4,
+        "targetParallelPairs": 2,
+        "startSides": 3,
+        "successFeedback": "A rhombus is a parallelogram with all four sides equal — no right angles required. Add four right angles as well and it becomes a square, which is why the square sits inside both families.",
+        "sidesFeedback": "Start inside the quadrilateral family with four sides.",
+        "attributesFeedback": "A rhombus needs all four sides equal, and it keeps the parallelogram's two parallel pairs."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the crossing.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rhombus's diagonals intersect. How many degrees in each angle at the crossing point?",
+        "answer": 90,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "45° halves the right angle — the diagonals themselves CROSS at 90°; the 45s appear only in a square's corner halves."
+          },
+          {
+            "value": 60,
+            "feedback": "60° would suit an equilateral-triangle fan — rhombus diagonals are perpendicular by theorem: 90°."
+          }
+        ],
+        "fallbackFeedback": "Perpendicular diagonals: all four crossing angles are 90°."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Backwards from the side.",
+      "conceptTag": "pq-rhombus",
+      "hints": [
+        "The four congruent right triangles have hypotenuse 13 (the side) and one leg 5 (half the 10-diagonal).",
+        "The other leg is half the unknown diagonal: √(13² − 5²).",
+        "√(169 − 25) = √144 = 12 is the HALF — the question asks the full diagonal."
+      ],
+      "explanationVariants": [
+        "Half-diagonal = √(13² − 5²) = 12, so the full diagonal is 24 — the 5-12-13 triple at work.",
+        "Hypotenuse 13, leg 5 → other leg 12 → double for the whole diagonal: 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rhombus has side 13 and one diagonal of length 10. Find the OTHER diagonal.",
+        "answer": 24,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the HALF-diagonal (√(169 − 25)). Diagonals bisect each other — double it: 24."
+          },
+          {
+            "value": 26,
+            "feedback": "26 = 2 × 13 doubles the SIDE — but the side is the hypotenuse of the half-diagonal triangle, not a half-diagonal itself. √(13² − 5²) = 12 per half → 24."
+          },
+          {
+            "value": 13.93,
+            "feedback": "13.93 ≈ √(169 + 25) ADDS squares — but 13 is the hypotenuse, so its square is the total: √(169 − 25) = 12, doubled = 24."
+          }
+        ],
+        "fallbackFeedback": "√(13² − 5²) = 12 per half; full diagonal = 24."
+      },
+      "variant": {
+        "gen": "pq-rhombus",
+        "form": "otherDiagonal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Equal sides, perpendicular heart.",
+      "takeaways": [
+        "Rhombus = parallelogram + all sides congruent; perimeter = 4 × side.",
+        "Diagonals: perpendicular AND vertex-angle-bisecting (bisection of each other is inherited).",
+        "Half-diagonals + side form right triangles — Pythagoras converts between them."
+      ],
+      "teaser": "Next: what happens when BOTH upgrade paths fire at once — the square."
+    }
+  ]
+}

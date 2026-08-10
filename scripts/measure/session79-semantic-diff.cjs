@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+const fs=require('fs'),path=require('path'),assert=require('assert');
+const currentRoot=path.resolve(__dirname,'../..');
+const baselineRoot='/mnt/data/session79_work/area-surface-volume-baseline';
+const lessonDir='content/courses/area-surface-volume/lessons';
+const files=fs.readdirSync(path.join(currentRoot,lessonDir)).filter(n=>n.endsWith('.json')).sort();
+const clone=(v)=>JSON.parse(JSON.stringify(v));
+function collectVariants(value,location='$',out=[]){if(Array.isArray(value)){value.forEach((e,i)=>collectVariants(e,`${location}[${i}]`,out));return out;}if(!value||typeof value!=='object')return out;if(Object.prototype.hasOwnProperty.call(value,'variant'))out.push({location,variant:clone(value.variant)});for(const [k,e] of Object.entries(value))if(k!=='variant')collectVariants(e,`${location}.${k}`,out);return out;}
+function stripVariants(value){if(Array.isArray(value))return value.map(stripVariants);if(!value||typeof value!=='object')return value;const out={};for(const [k,e] of Object.entries(value))if(k!=='variant')out[k]=stripVariants(e);return out;}
+let additions=0;const changedFiles=[];
+for(const name of files){const rel=path.join('lessons',name);const before=JSON.parse(fs.readFileSync(path.join(baselineRoot,rel),'utf8'));const after=JSON.parse(fs.readFileSync(path.join(currentRoot,lessonDir,name),'utf8'));assert.deepStrictEqual(stripVariants(after),stripVariants(before),`${name}: non-variant content changed`);const beforeMap=new Map(collectVariants(before).map(e=>[e.location,e.variant]));const afterMap=new Map(collectVariants(after).map(e=>[e.location,e.variant]));for(const [loc,oldV] of beforeMap){assert(afterMap.has(loc),`${name}: variant removed at ${loc}`);assert.deepStrictEqual(afterMap.get(loc),oldV,`${name}: existing variant changed at ${loc}`);}const fileAdds=[...afterMap.keys()].filter(loc=>!beforeMap.has(loc)).length;if(fileAdds)changedFiles.push({name,additions:fileAdds});additions+=fileAdds;}
+assert.strictEqual(additions,23,`expected 23 variant additions, found ${additions}`);assert.strictEqual(changedFiles.length,8,`expected 8 changed lesson files, found ${changedFiles.length}`);
+console.log(JSON.stringify({lessonFiles:files.length,changedFiles:changedFiles.length,variantAdditions:additions,authoredContentChanges:0,files:changedFiles,status:'PASS'}));

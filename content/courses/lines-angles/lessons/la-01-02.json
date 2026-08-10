@@ -1,0 +1,407 @@
+{
+  "id": "la-01-02",
+  "slug": "two-rays-make-an-angle",
+  "title": "Two Rays Make an Angle",
+  "courseId": "lines-angles",
+  "chapterId": "ch1-points-lines-rays",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You already measured angles in degrees. Now name their parts: an angle forms where two rays share a starting point, called the **vertex.** The two rays themselves are the angle's **sides.** Every angle you measured was really two rays meeting at a vertex.",
+      "figure": "la-angle-rays"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Open the two rays and read the angle on the protractor. The wider the opening, the larger the degree measure — the rays' length never matters.",
+      "widget": {
+        "type": "angleMeasure",
+        "prompt": "Open the rays to measure exactly 60°.",
+        "targetAngle": 60,
+        "angleStart": 0,
+        "angleStep": 5,
+        "successFeedback": "60° — an acute angle, two-thirds of a right angle.",
+        "lowFeedback": "Still narrower than 60°. Swing the ray up to open it wider.",
+        "highFeedback": "Opened past 60° now. Bring the ray back down to narrow it."
+      },
+      "predict": {
+        "prompt": "An angle's size comes from…",
+        "options": [
+          {
+            "id": "turn",
+            "label": "How far apart the rays have turned"
+          },
+          {
+            "id": "length",
+            "label": "How long the rays are"
+          },
+          {
+            "id": "thick",
+            "label": "How thick they're drawn"
+          }
+        ],
+        "outcomeId": "turn",
+        "reveal": "Angles measure TURN: 60° of opening is 60° whether the rays are stubby or a mile long. Stretching a ray changes the picture, not the angle — the protractor only watches the spread."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Rotate the ray to create the turn and reason about angle size independently of ray length.",
+        "predictionId": "g4-angle-invariants-prediction",
+        "invariants": [
+          "angle-independent-of-ray-length",
+          "vertex-fixed"
+        ],
+        "misconceptions": [
+          "wrong-scale",
+          "measurement-dependence"
+        ],
+        "representations": [
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "rotated-angle-no-horizontal-baseline",
+        "delayed": true,
+        "counterfactualPrompt": "If both rays are drawn twice as long, what happens to the angle measure?",
+        "explanation": {
+          "prompt": "What determines an angle’s measure?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "The amount of turn between the rays, not their lengths.",
+              "correct": true,
+              "feedback": "Exactly. Angle measure is invariant under changing ray length."
+            },
+            {
+              "id": "surface",
+              "label": "Longer rays make a larger angle.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Angle measure is invariant under changing ray length."
+            }
+          ]
+        }
+      },
+      "conceptTag": "angle-formation"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Identify the vertex.",
+      "conceptTag": "angle-formation",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two rays share a starting point at point B, then spread apart toward points A and C. What is point B called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The vertex",
+            "correct": true,
+            "feedback": "The shared starting point of the two rays is always the vertex."
+          },
+          {
+            "id": "b",
+            "label": "A side",
+            "feedback": "The SIDES are the two rays themselves (toward A and toward C). B, where they meet, is the vertex."
+          },
+          {
+            "id": "c",
+            "label": "A line segment",
+            "feedback": "B is a single point, not a segment with two endpoints. It's the vertex where the two rays meet."
+          },
+          {
+            "id": "d",
+            "label": "The degree measure",
+            "feedback": "The degree measure describes the angle's SIZE, not a point. B, where the rays meet, is the vertex."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the sides.",
+      "conceptTag": "angle-formation",
+      "explanationVariants": [
+        "The two rays forming the angle are its sides.",
+        "Everything except the shared vertex point belongs to the sides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An angle is formed by two rays meeting at a vertex. What are the two rays called?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The sides of the angle",
+            "correct": true,
+            "feedback": "The two rays are the angle's sides."
+          },
+          {
+            "id": "b",
+            "label": "Vertices",
+            "feedback": "There's only ONE vertex per angle — the shared point. The rays themselves are called the sides."
+          },
+          {
+            "id": "c",
+            "label": "Line segments",
+            "feedback": "Rays have only one endpoint each and extend forever — they aren't segments. They're the angle's sides."
+          },
+          {
+            "id": "d",
+            "label": "Degrees",
+            "feedback": "Degrees measure the angle's size, not its rays. The rays themselves are the sides."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-lines-angles",
+        "form": "laAngleFormationMcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Angles get precise names using three points: one on each ray, with the **vertex always in the middle.** Angle ABC means a ray toward A, the vertex at B, and a ray toward C. Swap the outer letters and it's still the same angle — but the vertex letter never moves from the middle.",
+      "figure": "la-angle-rays"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the vertex letter.",
+      "conceptTag": "angle-formation",
+      "explanationVariants": [
+        "In angle XYZ, the middle letter Y is always the vertex.",
+        "The vertex is whichever letter sits in the middle of the three."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An angle is named XYZ. Which point is the vertex?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Y — the middle letter",
+            "correct": true,
+            "feedback": "The vertex is always the middle letter in a three-letter angle name."
+          },
+          {
+            "id": "b",
+            "label": "X — the first letter",
+            "feedback": "The first letter names a point on one ray, not the vertex. The vertex is the MIDDLE letter: Y."
+          },
+          {
+            "id": "c",
+            "label": "Z — the last letter",
+            "feedback": "The last letter names a point on the other ray. The vertex is the MIDDLE letter: Y."
+          },
+          {
+            "id": "d",
+            "label": "All three are vertices",
+            "feedback": "An angle has only ONE vertex. In XYZ, that's the middle letter: Y."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-lines-angles",
+        "form": "laAngleFormationMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the angle name to its vertex.",
+      "conceptTag": "angle-formation",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each angle name to its vertex point.",
+        "left": [
+          {
+            "id": "n1",
+            "label": "Angle PQR"
+          },
+          {
+            "id": "n2",
+            "label": "Angle MNO"
+          },
+          {
+            "id": "n3",
+            "label": "Angle DEF"
+          }
+        ],
+        "right": [
+          {
+            "id": "v1",
+            "label": "Q"
+          },
+          {
+            "id": "v2",
+            "label": "N"
+          },
+          {
+            "id": "v3",
+            "label": "E"
+          }
+        ],
+        "pairs": {
+          "n1": "v1",
+          "n2": "v2",
+          "n3": "v3"
+        },
+        "pairErrors": [
+          {
+            "left": "n2",
+            "right": "v3",
+            "feedback": "E is the vertex of angle DEF. For angle MNO, the middle letter — and the vertex — is N."
+          }
+        ],
+        "missFeedback": "The vertex is always the middle letter of the three.",
+        "successFeedback": "PQR's vertex is Q, MNO's is N, DEF's is E — always the middle letter."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Same angle, different order.",
+      "conceptTag": "angle-formation",
+      "explanationVariants": [
+        "Angle ABC and angle CBA name the same angle — the outer letters can swap, but B stays the vertex in the middle both times.",
+        "Only the middle letter's position matters, and it hasn't moved."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Do angle ABC and angle CBA name the same angle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — B is the vertex in both, just the outer letters swapped",
+            "correct": true,
+            "feedback": "The vertex (B) stays in the middle both times — swapping the outer letters doesn't change which angle it is."
+          },
+          {
+            "id": "b",
+            "label": "No — different letter orders always mean different angles",
+            "feedback": "The vertex is what matters, and B is in the middle of both names. They name the same angle."
+          },
+          {
+            "id": "c",
+            "label": "No — CBA would have C as the vertex",
+            "feedback": "The MIDDLE letter is the vertex in both names — that's B, not C, in CBA. Same angle."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without seeing the rays",
+            "feedback": "The naming rule alone settles it: B is the middle letter in both ABC and CBA, so it's the same angle either way."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-lines-angles",
+        "form": "laAngleFormationMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The garden gate.",
+      "conceptTag": "angle-formation",
+      "hints": [
+        "The gate's hinge is where the two rays (the gate and the fence) meet.",
+        "That shared point is the vertex.",
+        "Name the angle using the vertex as the middle letter."
+      ],
+      "explanationVariants": [
+        "The hinge is the vertex, so the angle's name must have the hinge's letter in the middle, like GHF where H is the hinge.",
+        "Any name works as long as the hinge letter sits in the middle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A gate's hinge is at point H. The gate swings between point G (fence) and point F (open gate). Which correctly names this angle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Angle GHF — H (the hinge) is in the middle",
+            "correct": true,
+            "feedback": "The hinge H is the vertex, so it must sit in the middle of the angle's name."
+          },
+          {
+            "id": "b",
+            "label": "Angle HGF — G is in the middle",
+            "feedback": "That makes G the vertex — but the HINGE (H) is where the rays actually meet. H must be in the middle."
+          },
+          {
+            "id": "c",
+            "label": "Angle GFH — F is in the middle",
+            "feedback": "That makes F the vertex — but F is just where the gate swings to, not the hinge. H must be in the middle."
+          },
+          {
+            "id": "d",
+            "label": "Any order works equally well",
+            "feedback": "The vertex must be in the middle specifically. Since H is the hinge, it has to be the middle letter: GHF."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-lines-angles",
+        "form": "laAngleFormationMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every angle, precisely named.",
+      "takeaways": [
+        "Two rays sharing a starting point form an angle; that shared point is the vertex.",
+        "The rays themselves are the angle's sides.",
+        "A three-letter angle name always puts the vertex in the middle."
+      ],
+      "teaser": "next: reading a whole figure full of points, lines, and angles at once."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "angle-formation",
+      "concept": {
+        "id": "rem-af-c",
+        "kind": "concept",
+        "body": "Quick rewind. **The vertex is where two rays meet, and it's always the MIDDLE letter in the angle's name.** For angle RST, the vertex is S — the letter sitting between R and T."
+      },
+      "check": {
+        "id": "rem-af-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "angle-formation",
+        "explanationVariants": [
+          "In angle RST, S is the middle letter — the vertex.",
+          "The vertex is whichever letter sits in between the other two."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "An angle is named RST. Which point is the vertex?",
+          "options": [
+            {
+              "id": "a",
+              "label": "S",
+              "correct": true,
+              "feedback": "S is the middle letter — the vertex."
+            },
+            {
+              "id": "b",
+              "label": "R",
+              "feedback": "R is the first letter, a point on one ray. The vertex is the middle letter: S."
+            },
+            {
+              "id": "c",
+              "label": "T",
+              "feedback": "T is the last letter, a point on the other ray. The vertex is the middle letter: S."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

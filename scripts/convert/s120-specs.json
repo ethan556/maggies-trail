@@ -1,0 +1,252 @@
+{
+  "note": "S120 — hand the three starved capabilities to the lessons they were built for. Each entry names the course dir, lesson, step, and the widget type that MUST be found there before anything is written. Bodies are never touched; the converter re-checks byte-equality after the edit.",
+  "conversions": [
+    {
+      "dir": "right-triangles-trig",
+      "lesson": "rt-01-04",
+      "step": "i1",
+      "oldType": "mcq",
+      "capability": "(c) triangleSolve mode:ratios",
+      "widget": {
+        "type": "triangleSolve",
+        "prompt": "Drag the acute angle to 30° and read the opp/hyp card. Then resize the whole triangle and watch whether that reading depends on how big the triangle is.",
+        "mode": "ratios",
+        "a": 6,
+        "b": 6,
+        "target": 30,
+        "start": 55,
+        "ratio": "opp/hyp",
+        "requiredScaleMoves": 2,
+        "scaleFeedback": "Resize the triangle a couple of times before checking. Reading 0.500 at one size proves nothing about EVERY 30-60-90 triangle — the claim is that size cannot touch it, and that has to be tested.",
+        "successFeedback": "30°, and opp/hyp reads exactly 0.500 — the side opposite 30° is precisely half the hypotenuse. That is the 1 against the 2 in 1 : √3 : 2. Every resize left it at 0.500, so the short leg is half the hypotenuse in every 30-60-90 triangle, not just this one.",
+        "lowFeedback": "opp/hyp is reading below 0.500, so the side opposite your angle is less than half the hypotenuse — the angle has closed past 30°. Open it back up.",
+        "highFeedback": "opp/hyp is above 0.500, so the opposite side is taking more than half the hypotenuse. That is the 60° seat, not the 30° one — close the angle toward it."
+      },
+      "predict": {
+        "prompt": "In a 30-60-90 triangle, the side opposite the 30° angle, compared with the hypotenuse, is…",
+        "options": [
+          { "id": "half", "label": "Exactly half of it, always" },
+          { "id": "less", "label": "A little less than half" },
+          { "id": "depends", "label": "It depends on how big the triangle is" }
+        ],
+        "outcomeId": "half",
+        "reveal": "Exactly half — and the resize dial is what proves the third option wrong. Halving is a statement about the RATIO, and the 30° angle fixes the ratio no matter what the lengths are."
+      }
+    },
+    {
+      "dir": "right-triangles-trig",
+      "lesson": "rt-03-01",
+      "step": "i1",
+      "oldType": "mcq",
+      "capability": "(c) triangleSolve mode:ratios",
+      "keepPredict": true,
+      "widget": {
+        "type": "triangleSolve",
+        "prompt": "This lesson's first exercise has hypotenuse 20 and the side opposite θ measuring 11.18 — that is opp/hyp = 0.559. Drag the angle until the opp/hyp card reads it, then resize and see whether 0.559 needed the hypotenuse to be 20.",
+        "mode": "ratios",
+        "a": 6,
+        "b": 6,
+        "target": 34,
+        "start": 65,
+        "ratio": "opp/hyp",
+        "requiredScaleMoves": 2,
+        "scaleFeedback": "Resize the triangle before checking. Until you have, you have found an angle that fits ONE triangle — not the reason a single number can be called sin 34°.",
+        "successFeedback": "θ = 34°, where opp/hyp reads 0.559 — exactly 11.18 ÷ 20. Only one of the three cards is built from your two sides: sine pairs opposite with hypotenuse, and no amount of algebra makes cosine or tangent do it. The resizes left 0.559 alone, so sin 34° names one number rather than one triangle.",
+        "lowFeedback": "opp/hyp is under 0.559 — the opposite side is too small a share of the hypotenuse, so the angle is still below 34°. Open it.",
+        "highFeedback": "opp/hyp has passed 0.559 — the opposite side now takes too big a share of the hypotenuse. Close the angle back toward 34°."
+      }
+    },
+    {
+      "dir": "right-triangles-trig",
+      "lesson": "rt-03-02",
+      "step": "i1",
+      "oldType": "mcq",
+      "capability": "(c) triangleSolve mode:ratios",
+      "widget": {
+        "type": "triangleSolve",
+        "prompt": "tan⁻¹(1) asks exactly one question: which angle has a tangent of 1? Hunt it — drag until the opp/adj card reads 1.000. The angle you land on IS what the inverse hands back.",
+        "mode": "ratios",
+        "a": 6,
+        "b": 6,
+        "target": 45,
+        "start": 20,
+        "ratio": "opp/adj",
+        "requiredScaleMoves": 2,
+        "scaleFeedback": "Resize the triangle before checking. An inverse takes a ratio and returns an angle; whether the triangle's size is part of that question is worth settling by hand.",
+        "successFeedback": "45°, so tan⁻¹(1) = 45° — and you found it the way the inverse does, by hunting the angle whose ratio matches. Watch what the resizes did to the answer: nothing. The inverse is fed a ratio, never a length, which is why it can return an angle at all.",
+        "lowFeedback": "opp/adj is still under 1.000 — the opposite side is shorter than the adjacent one, which puts the angle below 45°. Open it.",
+        "highFeedback": "opp/adj has gone past 1.000 — opposite is now longer than adjacent, so the angle is above 45°. Close it back."
+      },
+      "predict": {
+        "prompt": "tan⁻¹(0.75) hands back…",
+        "options": [
+          { "id": "angle", "label": "An angle" },
+          { "id": "ratio", "label": "A ratio" },
+          { "id": "side", "label": "A side length" }
+        ],
+        "outcomeId": "angle",
+        "reveal": "An angle. Forward tangent runs angle → ratio; the inverse runs ratio → angle. Notice what is missing from both directions: any length. That is why resizing the triangle in a moment will change nothing."
+      }
+    },
+    {
+      "dir": "right-triangles-trig",
+      "lesson": "rt-04-02",
+      "step": "i2",
+      "oldType": "mcq",
+      "capability": "(c) triangleSolve mode:ratios",
+      "widget": {
+        "type": "triangleSolve",
+        "prompt": "Both kites fly on 90 m of string. Read opp/hyp at the starting 30°, then drag to 60°. If doubling the angle doubled the height, opp/hyp would have to double too.",
+        "mode": "ratios",
+        "a": 6,
+        "b": 6,
+        "target": 60,
+        "start": 30,
+        "ratio": "opp/hyp",
+        "requiredScaleMoves": 2,
+        "scaleFeedback": "Resize the triangle a couple of times first. Both kites are on the SAME 90 m string, so before comparing angles it is worth seeing that the string length is not what the ratio is tracking.",
+        "successFeedback": "60°, and opp/hyp reads 0.866 — not 1.000. Doubling the angle did not double the height: on 90 m of string, 45 m became 77.9 m, a factor of 1.73. Height follows the sine of the angle, and sine does not grow in step with the angle it is handed.",
+        "lowFeedback": "opp/hyp is under 0.866, so this kite is flying lower than the 60° one you are after. Open the angle.",
+        "highFeedback": "opp/hyp is above 0.866 — past 60°, steeper than the second kite's string. Close the angle back toward it."
+      },
+      "predict": {
+        "prompt": "Two kites, both on 90 m of string, one at 30° and one at 60°. The 60° kite's height will be…",
+        "options": [
+          { "id": "less", "label": "More than the 30° kite's, but less than double it" },
+          { "id": "double", "label": "Exactly double the 30° kite's" },
+          { "id": "more", "label": "More than double the 30° kite's" }
+        ],
+        "outcomeId": "less",
+        "reveal": "Higher, but not double: 45 m becomes 77.9 m, a factor of about 1.73. Doubling the ANGLE is not doubling the height, because the height is 90·sin θ and sine bends — it climbs fastest near 0° and flattens as it approaches 90°."
+      }
+    },
+    {
+      "dir": "right-triangles-trig",
+      "lesson": "rt-05-01",
+      "step": "i1",
+      "oldType": "mcq",
+      "capability": "(c) triangleSolve mode:ratios",
+      "widget": {
+        "type": "triangleSolve",
+        "prompt": "At the starting 20°, note what the opp/hyp card reads. Now drag until the adj/hyp card shows that same number — and see which angle you had to travel to.",
+        "mode": "ratios",
+        "a": 6,
+        "b": 6,
+        "target": 70,
+        "start": 20,
+        "ratio": "adj/hyp",
+        "requiredScaleMoves": 2,
+        "scaleFeedback": "Resize the triangle before checking. The claim is that sin 20° and cos 70° are the same NUMBER, so it matters that neither one moved when the lengths did.",
+        "successFeedback": "70°. adj/hyp here reads 0.342, which is exactly what opp/hyp read back at 20° — so cos 70° = sin 20°, with no calculator anywhere. The two angles add to 90°: in one right triangle the two acute corners disagree about which leg is 'opposite', so sine at one seat is cosine at the other.",
+        "lowFeedback": "adj/hyp has dropped below 0.342. Cosine SHRINKS as the angle opens, so you have gone past 70° — bring the angle back down.",
+        "highFeedback": "adj/hyp is still above 0.342. Cosine falls as the angle grows, so keep opening the angle toward the partner of 20°."
+      },
+      "predict": {
+        "prompt": "Somewhere between 10° and 80° there is an angle whose adj/hyp equals sin 20°. Where?",
+        "options": [
+          { "id": "seventy", "label": "At 70° — the angle that completes 20° to a right angle" },
+          { "id": "twenty", "label": "At 20° — the same angle" },
+          { "id": "never", "label": "Nowhere; sine and cosine never agree" }
+        ],
+        "outcomeId": "seventy",
+        "reveal": "At 70°. The two acute angles of a right triangle sum to 90°, and they share the same three sides — the leg that is 'opposite' from one corner is 'adjacent' from the other. That swap is the whole content of the cofunction rule."
+      }
+    },
+    {
+      "dir": "polygons-quadrilaterals",
+      "lesson": "pq-04-02",
+      "step": "i2",
+      "oldType": "numeric",
+      "capability": "(e) quadDrag.showMidsegment",
+      "widget": {
+        "type": "quadDrag",
+        "prompt": "The corner starts where the shape has no parallel pair at all, and the midsegment readout says so. Move it to (2, 4) to close the trapezoid — then watch where the readout settles between the two bases.",
+        "fixed": [[0, 0], [8, 0], [6, 4]],
+        "targetX": 2,
+        "targetY": 4,
+        "startX": 5,
+        "startY": 2,
+        "gridMax": 8,
+        "targetName": "a trapezoid",
+        "showMidsegment": true,
+        "successFeedback": "A trapezoid with bases 8 and 4, and the midsegment reads exactly 6 — the average, sitting strictly between them. It cannot leave that gap: an average of two numbers is always between them, so a midsegment shorter than both bases or longer than both is not a near miss, it is impossible.",
+        "sideFeedback": "The across value is still wrong, so the top side is not parallel to the bottom one — and with no parallel pair the readout has gone berry and has nothing to average. Slide the corner across until the two sides line up.",
+        "angleFeedback": "Across is right, so the top side is now parallel to the base — but the up value has it at the wrong height, which changes the legs rather than the bases. Take it to 4."
+      },
+      "predict": {
+        "prompt": "A trapezoid has bases 8 and 4. Its midsegment will measure…",
+        "options": [
+          { "id": "between", "label": "6 — between the two bases" },
+          { "id": "twelve", "label": "12 — the two bases added" },
+          { "id": "four", "label": "4 — the same as the shorter base" }
+        ],
+        "outcomeId": "between",
+        "reveal": "6, the average. The midsegment is a compromise between the two bases, so it always lands strictly between them — never outside, and never equal to either unless the bases already match."
+      }
+    },
+    {
+      "dir": "polygons-quadrilaterals",
+      "lesson": "pq-02-03",
+      "step": "i1",
+      "oldType": "mcq",
+      "capability": "coordinateProofLab",
+      "widget": {
+        "type": "coordinateProofLab",
+        "prompt": "Turn on 'Inspect midpoints' and watch the two diagonal midpoints. Move D until ABCD is a parallelogram, and see what the two dots do when it becomes one.",
+        "fixed": [[1, 1], [7, 1], [9, 5]],
+        "target": [3, 5],
+        "start": [6, 4],
+        "targetClaim": "parallelogram",
+        "gridMin": 0,
+        "gridMax": 10,
+        "requiredEvidence": ["midpoints"],
+        "requiredMoves": 3,
+        "successFeedback": "The two dots have landed on each other at (5, 3). That single point is what 'the diagonals bisect each other' buys you: the midpoint of AC and the midpoint of BD are not merely close, they are the same point, so each diagonal cuts the other into two equal halves.",
+        "positionFeedback": "D is not at (3, 5) yet, and the two midpoint dots are still apart. Two separate dots means each diagonal is cutting the other somewhere off-centre — which is exactly what bisection rules out.",
+        "evidenceFeedback": "Turn on 'Inspect midpoints' and move D a few times before checking. One position is not evidence: the claim is that the dots merge for a parallelogram and separate for everything else, and you have to see both halves of that."
+      },
+      "predict": {
+        "prompt": "In a parallelogram, the midpoint of diagonal AC and the midpoint of diagonal BD are…",
+        "options": [
+          { "id": "same", "label": "The same point" },
+          { "id": "near", "label": "Close together, but generally different points" },
+          { "id": "ends", "label": "At opposite ends of the shape" }
+        ],
+        "outcomeId": "same",
+        "reveal": "The same point. That is what makes 'bisect each other' a single fact rather than two: one crossing point that is simultaneously the middle of both diagonals, giving AO = OC and BO = OD in one stroke."
+      }
+    },
+    {
+      "dir": "polygons-quadrilaterals",
+      "lesson": "pq-05-01",
+      "step": "i2",
+      "oldType": "mcq",
+      "capability": "coordinateProofLab",
+      "widget": {
+        "type": "coordinateProofLab",
+        "prompt": "The jig's two rods are the diagonals: equal in length, crossing at their midpoints. Inspect midpoints and distances, and move D until both conditions hold at once.",
+        "fixed": [[1, 1], [7, 1], [7, 5]],
+        "target": [1, 5],
+        "start": [5, 3],
+        "targetClaim": "rectangle",
+        "gridMin": 0,
+        "gridMax": 10,
+        "requiredEvidence": ["midpoints", "distances"],
+        "requiredMoves": 3,
+        "successFeedback": "A rectangle — and no coordinates were needed to predict it. Mutual bisection alone forces a parallelogram; adding equal diagonals is the extra condition that squares the corners. The jig holds those two facts in hardware, so the elastic has no other shape available to it.",
+        "positionFeedback": "D is not at (1, 5) yet. Check which condition is failing: if the midpoint dots are apart the rods are not crossing at their centres, and if the side lengths disagree the elastic is not even closing a parallelogram.",
+        "evidenceFeedback": "Inspect both midpoints AND distances, and move D a few times first. Either fact alone is too weak — bisection without equal diagonals gives a slanted parallelogram, and this claim needs both."
+      },
+      "predict": {
+        "prompt": "Two rods of EQUAL length are pinned so they cross at each other's exact midpoints. Elastic joins the four ends. The shape is always…",
+        "options": [
+          { "id": "rect", "label": "A rectangle" },
+          { "id": "rhombus", "label": "A rhombus" },
+          { "id": "any", "label": "Any parallelogram — it depends on the crossing angle" }
+        ],
+        "outcomeId": "rect",
+        "reveal": "Always a rectangle. Crossing at the midpoints makes it a parallelogram; the rods being equal makes the diagonals congruent, and a parallelogram with congruent diagonals is a rectangle. The crossing angle changes how long and thin it is, never whether the corners are square."
+      }
+    }
+  ]
+}

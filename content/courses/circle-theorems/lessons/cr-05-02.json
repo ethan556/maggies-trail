@@ -1,0 +1,296 @@
+{
+  "id": "cr-05-02",
+  "slug": "sector-area",
+  "title": "Sector Area",
+  "courseId": "circle-theorems",
+  "chapterId": "ch5-arcs-sectors-cyclic",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-sector-area",
+      "concept": {
+        "id": "rem-cr-sector-area-c",
+        "kind": "concept",
+        "body": "A sector (pie slice between two radii) claims the fraction θ/360 of the circle's whole area πr²: sector = (θ/360)πr². In radians the same formula reads ½r²θ = ½ · radius · arc. Note the contrast with arc length: area is quadratic in r, length is linear."
+      },
+      "check": {
+        "id": "rem-cr-sector-area-k",
+        "kind": "check",
+        "body": "One slice.",
+        "conceptTag": "cr-sector-area",
+        "explanationVariants": [
+          "A 120° sector is a third: (1/3)π(3²) = 3π ≈ 9.42.",
+          "One third of 9π: ≈ 9.42."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Radius 3, angle 120°. Sector area (2 decimals) = ?",
+          "answer": 9.42,
+          "tolerance": 0.05,
+          "commonErrors": [
+            {
+              "value": 28.27,
+              "feedback": "28.27 ≈ 9π is the whole circle — 120° buys a third: ≈ 9.42."
+            },
+            {
+              "value": 6.28,
+              "feedback": "6.28 ≈ 2π is the 120° ARC length — the area is (1/3)(9π) ≈ 9.42."
+            }
+          ],
+          "fallbackFeedback": "(120/360)(9π) = 3π ≈ 9.42."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The same fraction that priced the arc prices the **sector** — the pie slice between two radii. A θ-degree sector claims θ/360 of the circle's area πr² (Grade 7 again): **sector area = (θ/360) · πr²**. One fraction, two purchases: rim distance and interior area.",
+      "figure": "sector-arc"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A quarter slice.",
+      "conceptTag": "cr-sector-area",
+      "explanationVariants": [
+        "90/360 = 1/4 of π(6)² = 36π: sector = 9π ≈ 28.27.",
+        "(90/360)(36π) = 9π ≈ 28.27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 6, central angle 90°. Sector area (2 decimals) = ?",
+        "answer": 28.27,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 113.1,
+            "feedback": "113.1 ≈ 36π is the WHOLE circle's area — the sector claims a quarter: 9π ≈ 28.27."
+          },
+          {
+            "value": 9.42,
+            "feedback": "9.42 ≈ 3π is an ARC LENGTH answer — area uses πr²: (1/4)(36π) ≈ 28.27."
+          },
+          {
+            "value": 14.14,
+            "feedback": "14.14 ≈ 4.5π halves the slice — 90/360 is a quarter of 36π: ≈ 28.27."
+          }
+        ],
+        "fallbackFeedback": "(90/360)π(6²) = 9π ≈ 28.27."
+      },
+      "variant": {
+        "gen": "circle-sector",
+        "form": "sectorArea"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A fifth of the pie.",
+      "conceptTag": "cr-sector-area",
+      "explanationVariants": [
+        "72/360 = 1/5 of π(10)² = 100π: sector = 20π ≈ 62.83.",
+        "(72/360)(100π) = 20π ≈ 62.83."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 10, central angle 72°. Sector area (2 decimals) = ?",
+        "answer": 62.83,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 314.16,
+            "feedback": "314.16 ≈ 100π is the full circle — 72° buys one fifth: 20π ≈ 62.83."
+          },
+          {
+            "value": 12.57,
+            "feedback": "12.57 ≈ 4π is the 72° ARC LENGTH — the area formula squares the radius: 20π ≈ 62.83."
+          },
+          {
+            "value": 125.66,
+            "feedback": "125.66 ≈ 40π doubles the share — 72/360 = 1/5: ≈ 62.83."
+          }
+        ],
+        "fallbackFeedback": "(72/360)(100π) = 20π ≈ 62.83."
+      },
+      "variant": {
+        "gen": "circle-sector",
+        "form": "sectorArea"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Radian bookkeeping compresses this one too: with θ in radians, sector area = **½r²θ**. Check it on the quarter-circle: ½(36)(π/2) = 9π — the same 28.27. And notice the pleasing echo: arc s = rθ, sector = ½r·(rθ) = ½ · radius · arc, just like a triangle's ½ · base · height.",
+      "figure": "cr-sector-area"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The radian check.",
+      "conceptTag": "cr-sector-area",
+      "explanationVariants": [
+        "With r = 4 and 60° = π/3: ½r²θ = ½(16)(π/3) = 8π/3 ≈ 8.38. Fraction route: (60/360)(16π) = 8π/3 ✓.",
+        "Both routes: 8π/3 ≈ 8.38."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 4, angle 60° (= π/3 rad). Sector area by either formula (2 decimals) = ?",
+        "answer": 8.38,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 4.19,
+            "feedback": "4.19 ≈ 4π/3 is the ARC length s = 4(π/3) — the sector is ½ · r · s = 8π/3 ≈ 8.38."
+          },
+          {
+            "value": 16.76,
+            "feedback": "16.76 doubles — the ½ in ½r²θ is not optional: 8π/3 ≈ 8.38."
+          },
+          {
+            "value": 50.27,
+            "feedback": "50.27 ≈ 16π is the whole circle — the 60° share is a sixth: ≈ 8.38."
+          }
+        ],
+        "fallbackFeedback": "(60/360)(16π) = ½(16)(π/3) = 8π/3 ≈ 8.38."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-sector-area__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A sector is that same fraction of the area.",
+      "predict": {
+        "prompt": "A 90° sector takes a quarter of the circle's ARC. Does it also take a quarter of the AREA?",
+        "options": [
+          {
+            "id": "same",
+            "label": "Yes — the same fraction of both"
+          },
+          {
+            "id": "squared",
+            "label": "No — area scales by the square, so it takes a sixteenth"
+          },
+          {
+            "id": "less",
+            "label": "No — area is a smaller share, since the sector narrows toward the centre"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "The same fraction of both. The k² rule governs SIMILAR figures scaled up; a sector is a SLICE of one fixed circle, so its angle takes the same share of everything — (1/4)(36π) = 9π. Open the angle and watch arc and area move in step."
+      },
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "arcSector",
+        "radius": 6,
+        "targetAngle": 90,
+        "start": 15,
+        "prompt": "Radius 6. Open the angle to 90° and read the sector area.",
+        "successFeedback": "90° is a quarter of the turn, so the sector is a quarter of the area: (1/4)(36π) = 9π ≈ 28.27 — and the arc is a quarter of the circumference, 3π. The SAME fraction governs both. One idea, two formulas, and neither needs remembering.",
+        "lowFeedback": "Not far enough — the sector is still under a quarter of the circle.",
+        "highFeedback": "Too far — you have opened past 90°."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate circle measurements while tangent, chord, radius, and power relationships update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "circle-measures-remain-linked"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "diagram-not-to-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-sector-area"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sprinkler sweep.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sprinkler sprays water 8 m and sweeps through 135°. What lawn area does it water (2 decimals)?",
+        "answer": 75.4,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 201.06,
+            "feedback": "201.06 ≈ 64π is the full circle — the sweep claims 135/360 = 3/8: 24π ≈ 75.4 m²."
+          },
+          {
+            "value": 18.85,
+            "feedback": "18.85 ≈ 6π is the ARC the spray's edge traces — the watered AREA is (3/8)(64π) ≈ 75.4 m²."
+          }
+        ],
+        "fallbackFeedback": "(135/360)π(8²) = 24π ≈ 75.4 m²."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Backward to the angle.",
+      "conceptTag": "cr-sector-area",
+      "hints": [
+        "The fraction formula reversed: 15π = (θ/360)(π · 6²).",
+        "What fraction of 36π is 15π?",
+        "θ = (15/36)(360)."
+      ],
+      "explanationVariants": [
+        "15π/36π = 5/12 of the circle: θ = (5/12)(360) = 150°.",
+        "θ = 360 · 15/36 = 150°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sector of a radius-6 circle has area 15π. Find its central angle.",
+        "answer": 150,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 47.12,
+            "feedback": "47.12 ≈ 15π evaluates the AREA — the angle is its 360-share: (15/36)(360) = 150°."
+          },
+          {
+            "value": 75,
+            "feedback": "75 halves — 15π out of 36π is 5/12, and 5/12 of 360 is 150°."
+          },
+          {
+            "value": 300,
+            "feedback": "300 doubles — the circle's area is 36π (radius squared!), giving 150°."
+          }
+        ],
+        "fallbackFeedback": "(15π/36π)(360) = 150°."
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-sector-area__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The fraction buys area too.",
+      "takeaways": [
+        "Sector area = (θ/360) · πr² — the degree share of the whole pie.",
+        "Radian form ½r²θ agrees, and reads as ½ · radius · arc.",
+        "Linear in θ but QUADRATIC in r — radius doublings quadruple slices."
+      ],
+      "teaser": "Finale: quadrilaterals whose four corners all touch the circle."
+    }
+  ]
+}

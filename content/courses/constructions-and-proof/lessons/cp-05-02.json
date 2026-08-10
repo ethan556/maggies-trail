@@ -1,0 +1,342 @@
+{
+ "id": "cp-05-02",
+ "slug": "proving-transversal-theorems",
+ "title": "Proving the Transversal Theorems",
+ "courseId": "constructions-and-proof",
+ "chapterId": "ch5-proving-angle-theorems",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cp-proving-transversal",
+   "concept": {
+    "id": "rem-cp-proving-transversal-c",
+    "kind": "concept",
+    "body": "Two proof engines: to conclude angles are EQUAL, bring in VERTICAL angles (they preserve equality). To conclude angles are SUPPLEMENTARY (sum 180°), bring in a LINEAR pair (it creates the 180°). Pick the engine that matches your target relationship."
+   },
+   "check": {
+    "id": "rem-cp-proving-transversal-k",
+    "kind": "check",
+    "body": "Match the engine.",
+    "conceptTag": "cp-proving-transversal",
+    "explanationVariants": [
+     "To prove two angles EQUAL, use vertical angles — they carry equality across a crossing.",
+     "Equality target → vertical-angle step."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "To prove two transversal angles are EQUAL, which fact is the natural tool?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "vertical angles are equal",
+       "correct": true,
+       "feedback": "Vertical angles preserve equality — the tool for equal conclusions."
+      },
+      {
+       "id": "o2",
+       "label": "a linear pair sums to 180°",
+       "correct": false,
+       "feedback": "Linear pairs give SUPPLEMENTARY sums, not equality. For equal angles, use vertical angles."
+      },
+      {
+       "id": "o3",
+       "label": "the segment addition postulate",
+       "correct": false,
+       "feedback": "That's about segment lengths, not angle equality. Use vertical angles."
+      },
+      {
+       "id": "o4",
+       "label": "the definition of a circle",
+       "correct": false,
+       "feedback": "Circles aren't involved here. Equal transversal angles come from vertical angles."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Time to prove what the last lesson listed. Take the Corresponding Angles relationship as the starting postulate. From it, the **Alternate Interior Angles Theorem** falls out in two lines: an alternate interior angle is the VERTICAL angle of a corresponding one, and vertical angles are equal — so alternate interior angles are equal.",
+   "figure": "transversal-angles"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Order the alternate-interior proof.",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Lines ℓ ∥ m are cut by transversal t. Prove ∠3 (alt. interior) = ∠1. Order the proof.",
+    "items": [
+     {
+      "id": "t3",
+      "label": "∠2 = ∠3 (vertical angles are equal)"
+     },
+     {
+      "id": "t1",
+      "label": "∠1 = ∠2 (corresponding angles, ℓ ∥ m)"
+     },
+     {
+      "id": "t4",
+      "label": "Therefore ∠1 = ∠3 (transitive property)"
+     },
+     {
+      "id": "t2",
+      "label": "∠2 and ∠3 are vertical angles at the lower crossing"
+     }
+    ],
+    "correctOrder": [
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "t3",
+      "second": "t1",
+      "feedback": "You can't cite ∠2 = ∠3 before naming ∠2 via the corresponding-angles step — the corresponding link comes first."
+     },
+     {
+      "first": "t4",
+      "second": "t3",
+      "feedback": "The transitive conclusion needs BOTH ∠1 = ∠2 and ∠2 = ∠3 already written above it."
+     }
+    ],
+    "missFeedback": "Corresponding angles give ∠1 = ∠2; vertical angles give ∠2 = ∠3; transitivity chains them to ∠1 = ∠3.",
+    "successFeedback": "Corresponding → vertical → transitive. The alternate interior theorem, proved."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Which property finishes it?",
+   "conceptTag": "cp-proving-transversal",
+   "explanationVariants": [
+    "∠1 = ∠2 and ∠2 = ∠3 chain through the shared ∠2 to give ∠1 = ∠3 — the Transitive Property.",
+    "Two equalities sharing a middle term combine by transitivity."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The alternate-interior proof has ∠1 = ∠2 and ∠2 = ∠3. What property gives ∠1 = ∠3?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Transitive Property",
+      "correct": true,
+      "feedback": "Two equalities sharing ∠2 chain to link ∠1 and ∠3 — transitivity."
+     },
+     {
+      "id": "o2",
+      "label": "Reflexive Property",
+      "correct": false,
+      "feedback": "Reflexive is self-equality (∠1 = ∠1). Chaining THROUGH ∠2 to a new equality is transitive."
+     },
+     {
+      "id": "o3",
+      "label": "Corresponding Angles Postulate",
+      "correct": false,
+      "feedback": "That gave the FIRST line (∠1 = ∠2). Combining it with ∠2 = ∠3 is the transitive step."
+     },
+     {
+      "id": "o4",
+      "label": "Linear Pair Postulate",
+      "correct": false,
+      "feedback": "There's no straight-line sum here — just two equalities chaining, which is transitivity."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-proving-transversal__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The **Co-Interior (Same-Side Interior) Theorem** proves supplementary instead of equal. A same-side interior angle and an alternate interior angle form a LINEAR pair (they sit on one line), summing to 180°; since the alternate one equals the far angle, the same-side pair sums to 180°. Equal-family proofs use vertical angles; supplementary-family proofs use linear pairs.",
+   "figure": "cnp-co-interior"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Order the co-interior proof.",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Lines ℓ ∥ m cut by transversal t. Prove co-interior angles ∠3 and ∠4 sum to 180°. Order the proof.",
+    "items": [
+     {
+      "id": "t3",
+      "label": "∠1 + ∠4 = 180° (∠1 and ∠4 are a linear pair)"
+     },
+     {
+      "id": "t1",
+      "label": "∠1 = ∠3 (alternate interior angles, ℓ ∥ m)"
+     },
+     {
+      "id": "t4",
+      "label": "Therefore ∠3 + ∠4 = 180° (substitute ∠3 for ∠1)"
+     },
+     {
+      "id": "t2",
+      "label": "∠1 and ∠4 lie on the same straight line"
+     }
+    ],
+    "correctOrder": [
+     "t1",
+     "t2",
+     "t3",
+     "t4"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "t3",
+      "second": "t2",
+      "feedback": "The linear-pair sum needs ∠1 and ∠4 identified as sharing a line first — state that adjacency before invoking 180°."
+     },
+     {
+      "first": "t4",
+      "second": "t3",
+      "feedback": "Substituting into ∠1 + ∠4 = 180° requires that equation to already be written."
+     }
+    ],
+    "missFeedback": "Alternate interior gives ∠1 = ∠3; a linear pair gives ∠1 + ∠4 = 180°; substitute to get ∠3 + ∠4 = 180°.",
+    "successFeedback": "Alternate interior → linear pair → substitute. Co-interior angles are supplementary."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Equal-family or supplementary-family?",
+   "conceptTag": "cp-proving-transversal",
+   "explanationVariants": [
+    "Proofs concluding angles are EQUAL lean on vertical angles; proofs concluding SUPPLEMENTARY lean on linear pairs.",
+    "Vertical angles preserve equality; linear pairs create the 180° sums."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A transversal proof needs to conclude two angles are SUPPLEMENTARY (sum 180°). Which fact does it most naturally use?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "a linear pair (two angles on a straight line)",
+      "correct": true,
+      "feedback": "Linear pairs are the source of 180° sums — the go-to for supplementary conclusions."
+     },
+     {
+      "id": "o2",
+      "label": "vertical angles are equal",
+      "correct": false,
+      "feedback": "Vertical angles give EQUALITY, not a sum. Supplementary conclusions come from linear pairs."
+     },
+     {
+      "id": "o3",
+      "label": "the reflexive property",
+      "correct": false,
+      "feedback": "Reflexive gives self-equality — useful for shared sides, not for producing a 180° sum."
+     },
+     {
+      "id": "o4",
+      "label": "the definition of midpoint",
+      "correct": false,
+      "feedback": "Midpoints concern segments, not the angle sums a transversal proof needs. Use a linear pair."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-proving-transversal__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Notice the pattern across all these proofs: start from ONE postulate (corresponding angles), then reach every other relationship by adding a single vertical-angle step (to stay equal) or a single linear-pair step (to become supplementary). A big theorem family, grown from one seed.",
+   "figure": "cnp-one-postulate"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Pick the one-step link.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Starting from the Corresponding Angles Postulate, proving ALTERNATE EXTERIOR angles equal needs which single added step?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "a vertical-angle step (an alternate exterior angle is vertical to a corresponding one)",
+      "correct": true,
+      "feedback": "Same recipe as alternate interior: one vertical-angle equality links the corresponding angle to the alternate exterior one."
+     },
+     {
+      "id": "o2",
+      "label": "a linear-pair step",
+      "correct": false,
+      "feedback": "Linear pairs create SUPPLEMENTARY sums — but alternate exterior angles are EQUAL, so the added step is a vertical-angle one."
+     },
+     {
+      "id": "o3",
+      "label": "two vertical-angle steps",
+      "correct": false,
+      "feedback": "One vertical-angle step suffices — the alternate exterior angle is directly vertical to a corresponding angle."
+     },
+     {
+      "id": "o4",
+      "label": "a perpendicularity step",
+      "correct": false,
+      "feedback": "There's no right angle in the general case — equality comes from a single vertical-angle step."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Build with algebra.",
+   "conceptTag": "cp-proving-transversal",
+   "hints": [
+    "The two angles are ALTERNATE INTERIOR — what relationship?",
+    "Alternate interior angles are equal: set 2x + 15 = 4x − 25.",
+    "Solve 2x + 15 = 4x − 25 for x, then substitute to find the angle."
+   ],
+   "explanationVariants": [
+    "Alternate interior ⇒ equal: 2x + 15 = 4x − 25 → 40 = 2x → x = 20, giving 2(20) + 15 = 55°.",
+    "Set the two expressions equal (alternate interior), solve x = 20, substitute: 55°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Across two parallel lines, alternate interior angles measure (2x + 15)° and (4x − 25)°. Find the measure of either angle, in degrees.",
+    "answer": 55,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 is the value of X, not the angle. Substitute back: 2(20) + 15 = 55°."
+     },
+     {
+      "value": 125,
+      "feedback": "125° treats the pair as CO-INTERIOR (supplementary): 180 − 55. But alternate interior angles are EQUAL — set 2x+15 = 4x−25, giving the angle 55°."
+     }
+    ],
+    "fallbackFeedback": "Equal: 2x + 15 = 4x − 25 → x = 20 → angle = 55°."
+   },
+   "variant": {
+    "gen": "g10-constructions-proof",
+    "form": "cp-proving-transversal__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One seed, a whole family.",
+   "takeaways": [
+    "Alternate interior proof: corresponding angles + one vertical-angle step + transitivity.",
+    "Co-interior proof: alternate interior + one linear-pair step + substitution.",
+    "Equal conclusions use vertical angles; supplementary conclusions use linear pairs."
+   ],
+   "teaser": "Next: run the arrows backward — the CONVERSES that let equal angles PROVE lines parallel."
+  }
+ ]
+}

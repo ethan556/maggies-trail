@@ -1,0 +1,459 @@
+{
+  "id": "rf-02-02",
+  "slug": "dividing-rational-expressions",
+  "title": "Dividing Rational Expressions",
+  "courseId": "rational-functions",
+  "chapterId": "ch2-multiplying-and-dividing",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Division is the same fraction rule you've always used: **keep, change, flip**. Keep the first, change ÷ to ·, flip the second. (x/(x+1)) ÷ (x/(x+3)) = (x/(x+1)) · ((x+3)/x) = **(x + 3)/(x + 1)** after the x's cancel.",
+      "figure": "rf-division-kcf"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Flip first.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rewrite (x + 2)/5 ÷ (x − 1)/10 as a multiplication.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(x + 2)/5 · 10/(x − 1)",
+            "correct": true,
+            "feedback": "Right — keep, change, flip the SECOND fraction."
+          },
+          {
+            "id": "o2",
+            "label": "5/(x + 2) · 10/(x − 1)",
+            "correct": false,
+            "feedback": "Only the DIVISOR flips — the first fraction is kept as-is."
+          },
+          {
+            "id": "o3",
+            "label": "(x + 2)/5 · (x − 1)/10",
+            "correct": false,
+            "feedback": "The flip is the whole point: dividing BY (x−1)/10 means multiplying by its reciprocal 10/(x−1)."
+          },
+          {
+            "id": "o4",
+            "label": "(x + 2)/10 · 5/(x − 1)",
+            "correct": false,
+            "feedback": "The 5 stays under the first fraction; the second flips whole: 10 over (x − 1)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Chart what the division left behind.",
+      "conceptTag": "rf-divide",
+      "widget": {
+        "type": "signChart",
+        "prompt": "The quotient reduces to 2(x + 2)/(x − 1). Mark each interval's sign — and notice which x the chart has to exclude.",
+        "roots": [
+          {
+            "x": -2,
+            "mult": 1
+          }
+        ],
+        "poles": [
+          {
+            "x": 1,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "successFeedback": "Positive, negative, positive — with a root at −2 and a wall at 1. Trace where that wall came from: nothing in the original numerator forbids x = 1. It was the DIVISOR, (x − 1)/10, that could not be zero, and flipping it to multiply moved x − 1 underneath the bar. Restrictions come from the operation you performed, not only from the fractions you started with.",
+        "crossFeedback": "Both cuts are single factors — x + 2 above the bar and x − 1 below — and a single factor flips the sign from either side of it. Each cut changes exactly one sign.",
+        "bounceFeedback": "Holding a sign across a cut needs an even power there. Each factor here appears once, so the sign really does flip at −2 and again at 1."
+      },
+      "predict": {
+        "prompt": "Dividing by (x − 1)/10 bans one value of x. Where does that ban show up in the ANSWER, 2(x + 2)/(x − 1)?",
+        "options": [
+          {
+            "id": "pole",
+            "label": "As a wall at x = 1 that the curve never reaches"
+          },
+          {
+            "id": "root",
+            "label": "As a zero at x = 1"
+          },
+          {
+            "id": "gone",
+            "label": "Nowhere — the division is finished, so its condition is spent"
+          }
+        ],
+        "outcomeId": "pole",
+        "reveal": "You may never divide by zero, so x = 1 was excluded the moment the division was written — and after the flip that factor sits in the denominator, where it shows as a vertical wall. The condition does not expire when the operation is carried out; it is recorded in the result."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "After the flip, it's Chapter 2 Lesson 1: factor and cancel. (x² − 4)/(x + 3) ÷ (x − 2)/(x + 3) → flip → ((x−2)(x+2)/(x+3)) · ((x+3)/(x−2)) = **x + 2**. Both (x + 3) and (x − 2) cancel across.",
+      "figure": "rf-after-flip"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Complete a division.",
+      "conceptTag": "rf-divide",
+      "explanationVariants": [
+        "Flip: (x²−4)/(x+3) · (x+3)/(x−2); factor and cancel both pairs — x + 2 remains.",
+        "Keep-change-flip, then two diagonal cancels."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Divide: (x² − 4)/(x + 3) ÷ (x − 2)/(x + 3).",
+        "tokens": [
+          {
+            "id": "xp2",
+            "label": "(x + 2)"
+          },
+          {
+            "id": "xm2",
+            "label": "(x − 2)"
+          },
+          {
+            "id": "sq",
+            "label": "(x + 3)²"
+          },
+          {
+            "id": "big",
+            "label": "(x² − 4)(x − 2)"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          }
+        ],
+        "correct": [
+          "xp2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "xm2"
+            ],
+            "feedback": "(x − 2) is the factor that cancels post-flip — the survivor from x² − 4 is (x + 2)."
+          },
+          {
+            "sequence": [
+              "xp2",
+              "div",
+              "sq"
+            ],
+            "feedback": "The flip puts one (x + 3) on TOP — they cancel, they don't stack."
+          },
+          {
+            "sequence": [
+              "big",
+              "div",
+              "sq"
+            ],
+            "feedback": "That multiplies WITHOUT flipping — division inverts the second fraction first."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Flip the divisor to (x + 3)/(x − 2), factor x² − 4 = (x − 2)(x + 2), then cancel both pairs.",
+        "successFeedback": "Right — after the flip, (x + 3) and (x − 2) both cancel."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-divide__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Numeric confirmation.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Check with x = 3: (x² − 4)/(x + 3) ÷ (x − 2)/(x + 3) should equal 3 + 2. Compute it directly.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.83,
+            "feedback": "5/6 ÷ 1/6 = 5/6 · 6 = 5 — flip the divisor instead of multiplying straight across."
+          },
+          {
+            "value": 30,
+            "feedback": "5/6 · 6/1 = 30/6 = 5 — reduce at the end."
+          }
+        ],
+        "fallbackFeedback": "(5/6) ÷ (1/6) = (5/6)·(6/1) = 5 ✓ matches x + 2 at x = 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Dividing by a bare expression.",
+      "conceptTag": "rf-divide",
+      "explanationVariants": [
+        "(x² + 3x)/4 ÷ x = (x(x + 3)/4) · (1/x) = (x + 3)/4.",
+        "A bare divisor is over 1 — flip it to 1-over."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Divide: (x² + 3x)/4 ÷ x.",
+        "tokens": [
+          {
+            "id": "t1",
+            "label": "(x + 3)"
+          },
+          {
+            "id": "t2",
+            "label": "(x³ + 3x²)"
+          },
+          {
+            "id": "t3",
+            "label": "(x² + 3x)"
+          },
+          {
+            "id": "t4",
+            "label": "(x + 3x)"
+          },
+          {
+            "id": "four",
+            "label": "4"
+          },
+          {
+            "id": "fourx",
+            "label": "4x"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          }
+        ],
+        "correct": [
+          "t1",
+          "div",
+          "four"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t2",
+              "div",
+              "four"
+            ],
+            "feedback": "That MULTIPLIES by x — dividing by x means multiplying by 1/x."
+          },
+          {
+            "sequence": [
+              "t3",
+              "div",
+              "fourx"
+            ],
+            "feedback": "It can — factor the top: x(x + 3)/(4x), and the x's cancel to (x + 3)/4."
+          },
+          {
+            "sequence": [
+              "t4",
+              "div",
+              "four"
+            ],
+            "feedback": "Dividing by x isn't erasing one exponent everywhere — factor x out: x(x + 3), then cancel."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Dividing by x multiplies by 1/x — factor the top as x(x + 3) and cancel the x's.",
+        "successFeedback": "Right — x flips to 1/x, and the factored x(x + 3) loses its x."
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-divide__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "New exclusions from the flip.",
+      "conceptTag": "rf-divide",
+      "explanationVariants": [
+        "The divisor's NUMERATOR becomes a denominator after the flip — its zeros join the banned list: x = 2 here.",
+        "Three bans for (anything) ÷ (x − 2)/(x + 3): x = −3 (original bottoms) and x = 2 (flipped)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When dividing BY (x − 2)/(x + 3), which value becomes newly excluded because of the flip?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = 2",
+            "correct": true,
+            "feedback": "Right — the divisor itself is ZERO at x = 2, and dividing by zero is banned; post-flip, (x − 2) sits underneath."
+          },
+          {
+            "id": "o2",
+            "label": "x = −3",
+            "correct": false,
+            "feedback": "−3 was ALREADY excluded (it's a denominator before the flip) — the NEW ban is the divisor's zero, x = 2."
+          },
+          {
+            "id": "o3",
+            "label": "x = 3",
+            "correct": false,
+            "feedback": "x = 3 makes the divisor 1/6 — perfectly divisible; the danger is where the divisor is 0: x = 2."
+          },
+          {
+            "id": "o4",
+            "label": "nothing new",
+            "correct": false,
+            "feedback": "Dividing by zero includes dividing by a ZERO-VALUED fraction — the divisor dies at x = 2, so 2 is banned."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-divide__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full division.",
+      "conceptTag": "rf-divide",
+      "explanationVariants": [
+        "(x² − 1)/(x + 4) ÷ (x + 1)/(x + 4) → flip → ((x−1)(x+1)(x+4)) / ((x+4)(x+1)) = x − 1.",
+        "Both (x + 4) and (x + 1) cancel after the flip."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Divide: (x² − 1)/(x + 4) ÷ (x + 1)/(x + 4).",
+        "tokens": [
+          {
+            "id": "xm1",
+            "label": "(x − 1)"
+          },
+          {
+            "id": "xp1",
+            "label": "(x + 1)"
+          },
+          {
+            "id": "sq",
+            "label": "(x + 4)²"
+          },
+          {
+            "id": "big",
+            "label": "(x² − 1)(x + 1)"
+          },
+          {
+            "id": "div",
+            "label": "/"
+          }
+        ],
+        "correct": [
+          "xm1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "xp1"
+            ],
+            "feedback": "(x + 1) cancels away after the flip — the survivor from x² − 1 is (x − 1)."
+          },
+          {
+            "sequence": [
+              "xm1",
+              "div",
+              "sq"
+            ],
+            "feedback": "The flip lifts one (x + 4) to the TOP — the pair cancels rather than stacking below."
+          },
+          {
+            "sequence": [
+              "big",
+              "div",
+              "sq"
+            ],
+            "feedback": "That skipped the flip — dividing multiplies by the RECIPROCAL of the second fraction."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Flip the divisor to (x + 4)/(x + 1), factor x² − 1 = (x − 1)(x + 1), then cancel the (x + 4) and (x + 1) pairs.",
+        "successFeedback": "Right — flip, factor x² − 1 = (x − 1)(x + 1), cancel both pairs."
+      },
+      "hints": [
+        "Flip the divisor: · (x + 4)/(x + 1).",
+        "Factor: x² − 1 = (x − 1)(x + 1).",
+        "Cancel (x + 4) and (x + 1): x − 1 remains."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-divide__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Keep, change, flip — then the multiplication pipeline takes over.",
+      "takeaways": [
+        "Only the divisor flips; the first fraction is kept.",
+        "A bare divisor flips to 1-over-it.",
+        "The divisor's numerator zeros become NEW exclusions."
+      ],
+      "teaser": "Next: mixed products and quotients with full restriction bookkeeping."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-divide",
+      "concept": {
+        "id": "rem-rf0202-c",
+        "kind": "concept",
+        "body": "The numeric skeleton: (1/2) ÷ (3/4) = (1/2) · (4/3) = 4/6 = 2/3. Same move with expressions."
+      },
+      "check": {
+        "id": "rem-rf0202-k",
+        "kind": "check",
+        "body": "Apply keep-change-flip.",
+        "conceptTag": "rf-divide",
+        "explanationVariants": [
+          "(x/3) ÷ (x/5) = (x/3) · (5/x) = 5/3.",
+          "The x's cancel after the flip; 5 over 3 remains."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Divide: (x/3) ÷ (x/5).",
+          "options": [
+            {
+              "id": "o1",
+              "label": "5/3",
+              "correct": true,
+              "feedback": "Right — flip to (5/x), and the x's cancel."
+            },
+            {
+              "id": "o2",
+              "label": "3/5",
+              "correct": false,
+              "feedback": "The SECOND fraction flips, sending its 5 to the top: 5/3."
+            },
+            {
+              "id": "o3",
+              "label": "x²/15",
+              "correct": false,
+              "feedback": "That multiplies without flipping — division inverts the divisor first."
+            },
+            {
+              "id": "o4",
+              "label": "5x/3x... unsimplifiable",
+              "correct": false,
+              "feedback": "5x/3x DOES simplify — the x's are factors and cancel: 5/3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

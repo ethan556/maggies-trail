@@ -1,0 +1,343 @@
+{
+  "id": "pv2-04-02",
+  "slug": "subtracting-with-regrouping",
+  "title": "Subtracting with Regrouping",
+  "courseId": "place-value-million",
+  "chapterId": "ch4-add-subtract-big",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You already know the break: when a column's top digit is smaller than the one you're subtracting, break 1 from the next place over into 10 of this place. That break is never repaid — it's spent. The same rule works no matter how big the number gets, even when breaks cascade through several places in a row.",
+      "figure": "pv4-borrow-chain"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the break cascade.",
+      "conceptTag": "subtract-regroup-big",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Walk through 524,613 − 178,945 one column at a time.",
+        "panels": [
+          {
+            "title": "Ones",
+            "body": "3 is smaller than 5. Break 1 ten into 10 ones: the tens digit (1) becomes 0, and ones becomes 13. 13 − 5 = 8."
+          },
+          {
+            "title": "Tens",
+            "body": "The tens digit is now 0, smaller than 4. Break 1 hundred into 10 tens: hundreds (6) becomes 5, tens becomes 10. 10 − 4 = 6."
+          },
+          {
+            "title": "Hundreds",
+            "body": "Hundreds is now 5, smaller than 9. Break 1 thousand: thousands (4) becomes 3, hundreds becomes 15. 15 − 9 = 6."
+          },
+          {
+            "title": "Thousands",
+            "body": "Thousands is now 3, smaller than 8. Break 1 ten-thousand: ten-thousands (2) becomes 1, thousands becomes 13. 13 − 8 = 5."
+          },
+          {
+            "title": "Ten-thousands and up",
+            "body": "Ten-thousands is now 1, smaller than 7. Break 1 hundred-thousand: hundred-thousands (5) becomes 4, ten-thousands becomes 11. 11 − 7 = 4. Finally, 4 − 1 = 3. The answer is 345,668."
+          }
+        ],
+        "continueFeedback": "Keep walking through each column, left to right.",
+        "successFeedback": "524,613 − 178,945 = 345,668 — five breaks in a row, each one spent and never repaid."
+      },
+      "predict": {
+        "prompt": "When a column can't subtract, where does the help come FROM?",
+        "options": [
+          {
+            "id": "left",
+            "label": "The neighbor on the left"
+          },
+          {
+            "id": "right",
+            "label": "The neighbor on the right"
+          },
+          {
+            "id": "answer",
+            "label": "The answer row"
+          }
+        ],
+        "outcomeId": "left",
+        "reveal": "The left neighbor is worth ten of the stuck column — it breaks one of its units into ten smaller ones and lends them over. Help always flows down the place ladder."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One break.",
+      "conceptTag": "subtract-regroup-big",
+      "explanationVariants": [
+        "2 is smaller than 7 in the ones column, so break 1 ten into 10 ones: 12 − 7 = 5. The full answer is 4,565.",
+        "Only the ones column needs a break here."
+      ],
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "What is 6,412 − 1,847? Tap each column to work it out; tap a top digit to break a ten when you need one.",
+        "op": "subtract",
+        "a": 6412,
+        "b": 1847,
+        "commonResults": [
+          {
+            "value": 5435,
+            "feedback": "5,435 subtracted the smaller digit from the larger in each column, ignoring which number is on top. Breaking a ten into the ones column gives 4,565."
+          },
+          {
+            "value": 5565,
+            "feedback": "5,565 is one break short in the thousands column. Re-checking each column's break gives 4,565."
+          }
+        ],
+        "fallbackFeedback": "Work column by column from the ones; break from the next place whenever a digit is too small.",
+        "successFeedback": "6,412 − 1,847 = 4,565 — three borrows, each one broken by hand."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvSubtractColumn"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents subtract regroup big.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for subtract regroup big must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines subtract regroup big."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-million:subtract-regroup-big",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A break can trigger ANOTHER break — the same cascade you saw with adding, run in reverse. Handle one column at a time, right to left, and keep breaking forward whenever the top digit is smaller than the one you're subtracting. The rule never changes; it just repeats.",
+      "figure": "pv4-borrow-chain"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A multi-break cascade.",
+      "conceptTag": "subtract-regroup-big",
+      "explanationVariants": [
+        "83,251 − 46,378 needs breaks in the ones, tens, and hundreds columns, landing on 36,873.",
+        "Each break feeds the next column's shortage until every column balances."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 83,251 − 46,378?",
+        "answer": 36873,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 43127,
+            "feedback": "43,127 subtracted the smaller digit from the larger in every column, ignoring which number is on top. Breaking correctly through the cascade gives 36,873."
+          },
+          {
+            "value": 37873,
+            "feedback": "37,873 is one break short in an early column. Re-checking each column's break gives 36,873."
+          }
+        ],
+        "fallbackFeedback": "Work column by column from the ones, breaking from the next place whenever needed."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvSubtractNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Break needed, or not?",
+      "conceptTag": "subtract-regroup-big",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each column subtraction: does it need a break, or not?",
+        "buckets": [
+          {
+            "id": "brk",
+            "label": "Needs a break",
+            "icon": "🔨"
+          },
+          {
+            "id": "nobrk",
+            "label": "No break needed",
+            "icon": "✅"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "3 − 7 (top digit 3, subtracting 7)",
+            "bucketId": "brk",
+            "feedback": "3 is smaller than 7 — break a ten to make it 13, then subtract."
+          },
+          {
+            "id": "s2",
+            "label": "8 − 5",
+            "bucketId": "nobrk",
+            "feedback": "8 is bigger than 5 — subtract straight across, no break."
+          },
+          {
+            "id": "s3",
+            "label": "2 − 9 (top digit 2, subtracting 9)",
+            "bucketId": "brk",
+            "feedback": "2 is smaller than 9 — a break is needed."
+          },
+          {
+            "id": "s4",
+            "label": "6 − 4",
+            "bucketId": "nobrk",
+            "feedback": "6 is bigger than 4 — no break needed."
+          }
+        ],
+        "missFeedback": "A break happens whenever the top digit is smaller than the one you're subtracting.",
+        "successFeedback": "3−7 and 2−9 both need a break; 8−5 and 6−4 subtract straight across."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The break is spent.",
+      "conceptTag": "subtract-regroup-big",
+      "explanationVariants": [
+        "A broken digit stays broken for the rest of the problem — it's spent, not repaid.",
+        "Once the hundreds digit lends 1 to the tens column, it keeps its lower value."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The hundreds digit breaks 1 into the tens column. Later, does the hundreds digit get that 1 back?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — the break is spent for the rest of the problem",
+            "correct": true,
+            "feedback": "Once broken, a digit keeps its lower value. The break is never repaid."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it's returned once the tens column finishes",
+            "feedback": "The hundreds digit stays permanently lower. Breaking is a one-way trade, never returned."
+          },
+          {
+            "id": "c",
+            "label": "Yes — but only if the final answer needs it",
+            "feedback": "The break isn't conditional — once made, the hundreds digit is permanently reduced by 1."
+          },
+          {
+            "id": "d",
+            "label": "It depends on the numbers being subtracted",
+            "feedback": "It never depends on the numbers — a break always stays spent, no matter what the rest of the problem looks like."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvSubtractMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The warehouse inventory.",
+      "conceptTag": "subtract-regroup-big",
+      "hints": [
+        "Subtract column by column from the ones.",
+        "Several columns in a row will need a break.",
+        "Each break is spent — carry the lower value forward."
+      ],
+      "explanationVariants": [
+        "715,342 − 368,579 cascades through several breaks, landing on 346,763.",
+        "Column by column, breaking wherever needed, gives 346,763."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A warehouse had 715,342 items. It shipped out 368,579 items. How many items are left?",
+        "answer": 346763,
+        "tolerance": 0,
+        "unit": "items",
+        "commonErrors": [
+          {
+            "value": 453237,
+            "feedback": "453,237 subtracted the smaller digit from the larger in every column, ignoring which number is on top. Breaking correctly through the cascade gives 346,763."
+          },
+          {
+            "value": 347763,
+            "feedback": "347,763 is one break short in an early column. Re-checking each column's break gives 346,763."
+          }
+        ],
+        "fallbackFeedback": "Work column by column from the ones, breaking from the next place whenever the top digit is too small."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvSubtractNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Breaks, chained together.",
+      "takeaways": [
+        "When a top digit is smaller than what you're subtracting, break 1 from the next place over into 10 of this place.",
+        "A break is spent — it's never repaid, even later in the same problem.",
+        "Breaks can cascade — one break can trigger another, and another."
+      ],
+      "teaser": "next: the hardest case — borrowing when the number in between is a zero."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "subtract-regroup-big",
+      "concept": {
+        "id": "rem-sr-c",
+        "kind": "concept",
+        "body": "Quick rewind. **When a top digit is too small, break 1 from the next place into 10 of this place — spent, never repaid.** For 52 − 27: ones 2 is smaller than 7, so break the tens (5→4), ones becomes 12. 12 − 7 = 5, then 4 − 2 = 2. Result: 25."
+      },
+      "check": {
+        "id": "rem-sr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "subtract-regroup-big",
+        "explanationVariants": [
+          "Ones (2) is smaller than 7, so break the tens: 5 becomes 4, ones becomes 12. 12−7=5, then 4−2=2: 25.",
+          "One break in the ones column gives 25."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is 52 − 27?",
+          "options": [
+            {
+              "id": "a",
+              "label": "25",
+              "correct": true,
+              "feedback": "Break the tens (5→4), ones becomes 12: 12−7=5, then 4−2=2: 25."
+            },
+            {
+              "id": "b",
+              "label": "35",
+              "feedback": "35 subtracted 2−7 backwards instead of breaking. Breaking the tens correctly gives 25."
+            },
+            {
+              "id": "c",
+              "label": "20",
+              "feedback": "20 lost track of the ones digit. Breaking correctly through the column gives 25."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

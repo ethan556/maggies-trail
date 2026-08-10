@@ -1,0 +1,274 @@
+{
+  "id": "pq-02-02",
+  "slug": "parallelogram-angles",
+  "title": "Opposite & Consecutive Angles",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch2-parallelogram-properties",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "pq-para-angles",
+      "concept": {
+        "id": "rem-pq-para-angles-c",
+        "kind": "concept",
+        "body": "Two angle rules, keyed to position. OPPOSITE angles (no shared side): congruent. CONSECUTIVE angles (sharing a side): supplementary, because the shared side is a transversal across the parallel rails. From one angle you get all four — copy it across, supplement it around — and the four always total 360°."
+      },
+      "check": {
+        "id": "rem-pq-para-angles-k",
+        "kind": "check",
+        "body": "Position first, rule second.",
+        "conceptTag": "pq-para-angles",
+        "explanationVariants": [
+          "∠D shares side AD with ∠A, so it supplements: 180 − 100 = 80°.",
+          "Consecutive pair: 100 + 80 = 180°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In parallelogram ABCD, ∠A = 100°. Find ∠D (consecutive to ∠A).",
+          "answer": 80,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 100,
+              "feedback": "100° would be the OPPOSITE angle ∠C. ∠D shares a side with ∠A: supplement, 80°."
+            },
+            {
+              "value": 260,
+              "feedback": "260 = 360 − 100 leaves the sum of the other THREE. ∠D alone: 180 − 100 = 80°."
+            }
+          ],
+          "fallbackFeedback": "∠D = 180 − 100 = 80°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The diagonal's congruent triangles keep paying: CPCTC also matches the parallelogram's **opposite angles** — they're congruent. ∠A = ∠C and ∠B = ∠D, in every parallelogram, at every size.",
+      "figure": "pq-opposite-angles"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Across the shape.",
+      "conceptTag": "pq-para-angles",
+      "explanationVariants": [
+        "∠C sits opposite ∠A: also 65°.",
+        "Opposite angles congruent (CPCTC through the diagonal): 65°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In parallelogram ABCD, ∠A = 65°. Find ∠C (the opposite angle).",
+        "answer": 65,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 115,
+            "feedback": "115 = 180 − 65 is the CONSECUTIVE angle's fate (∠B and ∠D). Opposite angles simply match: 65°."
+          },
+          {
+            "value": 25,
+            "feedback": "25 = 90 − 65 reaches for a complement — no right angle is promised here. ∠C = ∠A = 65°."
+          }
+        ],
+        "fallbackFeedback": "∠C = ∠A = 65°."
+      },
+      "variant": {
+        "gen": "pq-para-angle"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Angles that share a side — **consecutive** angles — obey a different rule. The shared side is a transversal crossing the two parallel rails, making consecutive angles co-interior: they're **supplementary**, summing to 180°. One angle of a parallelogram therefore determines all four: itself, its opposite twin, and two supplements.",
+      "figure": "pq-consecutive"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Around the corner.",
+      "conceptTag": "pq-para-angles",
+      "explanationVariants": [
+        "∠B is consecutive to ∠A: 180 − 65 = 115°.",
+        "Co-interior angles between the parallel rails: supplementary, so 115°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same parallelogram (∠A = 65°). Find ∠B (consecutive to ∠A).",
+        "answer": 115,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65° copies the OPPOSITE-angle rule — but ∠B shares a side with ∠A. Consecutive means supplementary: 115°."
+          },
+          {
+            "value": 295,
+            "feedback": "295 = 360 − 65 subtracts from the full quadrilateral sum — that spreads over THREE other angles. ∠B alone is 180 − 65 = 115°."
+          }
+        ],
+        "fallbackFeedback": "∠B = 180 − 65 = 115°."
+      },
+      "variant": {
+        "gen": "pq-para-angle",
+        "form": "consecutive"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "All four from one.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "∠A = 65° in parallelogram ABCD. What's the full angle inventory?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "65°, 115°, 65°, 115° — and they total 360°",
+            "correct": true,
+            "feedback": "Opposite twin 65°, two supplements 115° — and 65 + 115 + 65 + 115 = 360 ✓, matching the quadrilateral sum from Chapter 1."
+          },
+          {
+            "id": "o2",
+            "label": "65°, 65°, 65°, 65°",
+            "correct": false,
+            "feedback": "All-equal would force 4 × 65 = 260 ≠ 360. Only rectangles have four equal angles — here the supplements are 115°."
+          },
+          {
+            "id": "o3",
+            "label": "65°, 115°, 115°, 65° in that vertex order",
+            "correct": false,
+            "feedback": "That order puts the equal pair on ADJACENT vertices. Equal angles sit opposite: A and C at 65°, B and D at 115°."
+          },
+          {
+            "id": "o4",
+            "label": "Can't be determined without a second angle",
+            "correct": false,
+            "feedback": "One angle IS enough: its opposite copies it, and both neighbors supplement it — 65, 115, 65, 115."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Supplementary consecutive angles are another equation factory: expressions for two consecutive angles must sum to 180. Angles of (2x)° and (x + 30)° sharing a side give 2x + x + 30 = 180 — so 3x = 150 and x = 50. Always check which relationship the two angles have BEFORE writing the equation.",
+      "figure": "pq-consecutive-supp"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Equation from a shared side.",
+      "conceptTag": "pq-para-angles",
+      "explanationVariants": [
+        "2x + (x + 30) = 180 → 3x = 150 → x = 50.",
+        "Consecutive angles are supplementary: 3x + 30 = 180, x = 50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Consecutive angles of a parallelogram measure (2x)° and (x + 30)°. Find x.",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 comes from 2x = x + 30 — the OPPOSITE-angle rule. These two share a side, so they SUM to 180: x = 50."
+          },
+          {
+            "value": 75,
+            "feedback": "75 = (180 − 30)/2 drops the x inside the second angle. Keep all terms: 3x + 30 = 180 → x = 50."
+          }
+        ],
+        "fallbackFeedback": "3x + 30 = 180 → x = 50."
+      },
+      "variant": {
+        "gen": "pq-para-angle",
+        "form": "solveConsecutive"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot-check a claim.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A quadrilateral has angles 70°, 110°, 70°, 110° in order around the shape. Could it be a parallelogram?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — opposite angles match and consecutive ones supplement, exactly the parallelogram pattern",
+            "correct": true,
+            "feedback": "70/110 alternating is the signature: equal across, supplementary around. (Chapter 3 upgrades this pattern into a full TEST.)"
+          },
+          {
+            "id": "o2",
+            "label": "No — a parallelogram needs four equal angles",
+            "correct": false,
+            "feedback": "Four equal angles describes a RECTANGLE, the special case. General parallelograms alternate a pair of supplements: 70/110 fits."
+          },
+          {
+            "id": "o3",
+            "label": "No — 70 + 110 should equal 360",
+            "correct": false,
+            "feedback": "360 is the sum of all FOUR angles (70 + 110 + 70 + 110 ✓). Each consecutive PAIR sums to 180 — which 70 + 110 does."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to say without side lengths",
+            "correct": false,
+            "feedback": "Sides would settle it definitively, but the angle pattern already fits a parallelogram perfectly — nothing rules it out."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Angles in ratio.",
+      "conceptTag": "pq-para-angles",
+      "hints": [
+        "Consecutive angles in ratio 4 : 5 — write them as 4k and 5k.",
+        "They share a side, so 4k + 5k = 180.",
+        "k = 20; the SMALLER angle is 4k."
+      ],
+      "explanationVariants": [
+        "4k + 5k = 180 gives k = 20; the smaller angle is 4 × 20 = 80°.",
+        "Nine equal parts of 180 make k = 20, and four of them: 80°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two consecutive angles of a parallelogram are in the ratio 4 : 5. Find the SMALLER angle, in degrees.",
+        "answer": 80,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100° = 5k is the LARGER angle — the question asks for the smaller: 4k = 80°."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is k under a 360 total (360/9 = 40) — two slips at once: the consecutive PAIR sums to 180, and the answer is 4k, not k. Correctly: k = 20, smaller = 80°."
+          }
+        ],
+        "fallbackFeedback": "4k + 5k = 180 → k = 20 → smaller = 80°."
+      },
+      "variant": {
+        "gen": "pq-para-angle",
+        "form": "ratioPair"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One angle rules them all.",
+      "takeaways": [
+        "Opposite angles of a parallelogram are congruent (CPCTC again).",
+        "Consecutive angles are supplementary — co-interior between the parallel rails.",
+        "Given one angle: opposite copies it, both neighbors supplement it, and all four total 360°."
+      ],
+      "teaser": "Next: the diagonals — they cut each other exactly in half."
+    }
+  ]
+}

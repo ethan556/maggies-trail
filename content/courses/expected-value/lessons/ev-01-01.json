@@ -1,0 +1,230 @@
+{
+  "id": "ev-01-01",
+  "slug": "a-number-attached-to-chance",
+  "title": "A Number Attached to Chance",
+  "courseId": "expected-value",
+  "chapterId": "ch1-random-variables",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A random variable attaches a NUMBER to each outcome of a chance experiment. Flip three coins and the outcome is a sequence like HTH; the random variable ‘number of heads’ turns that into 2. The experiment supplies the randomness; the variable supplies the arithmetic.",
+      "figure": "ev-random-variable-map"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Shade the chance that the variable takes one particular value.",
+      "widget": {
+        "type": "probabilityArea",
+        "start": 0,
+        "prompt": "Three coin flips give 8 equally likely outcomes. Shade the ones where the number of heads is exactly 2.",
+        "rows": 2,
+        "cols": 4,
+        "targetNum": 3,
+        "targetDen": 8,
+        "successFeedback": "3 of 8: HHT, HTH and THH. The random variable takes the value 2 on exactly three outcomes, so P(X = 2) = 3/8.",
+        "lowFeedback": "Not enough shaded — more than that many outcomes have exactly two heads.",
+        "highFeedback": "Too much shaded — outcomes with three heads or one head do not belong."
+      },
+      "predict": {
+        "prompt": "Three coin flips, X = number of heads. Which values can X take?",
+        "options": [
+          {
+            "id": "01",
+            "label": "Only 0 or 1"
+          },
+          {
+            "id": "0to3",
+            "label": "0, 1, 2 or 3"
+          },
+          {
+            "id": "any",
+            "label": "Any number at all"
+          }
+        ],
+        "outcomeId": "0to3",
+        "reveal": "A random variable's possible values are fixed by the experiment: three flips can produce zero through three heads, and nothing else. Listing those values is always the first step, because the distribution has to assign a probability to each one and to nothing more."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Evaluate the variable.",
+      "conceptTag": "ev-random-variable",
+      "explanationVariants": [
+        "HTH contains two heads, so X = 2 on that outcome.",
+        "Count the H's: two of them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "X counts heads in three flips. What is X for the outcome HTH?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 counts the FLIPS, not the heads. HTH has one tail."
+          },
+          {
+            "value": 1,
+            "feedback": "One tail, but two heads — X counts the heads."
+          }
+        ],
+        "fallbackFeedback": "HTH has heads in positions 1 and 3, so X = 2.",
+        "successFeedback": "2 — the outcome is a sequence, the variable is a number read off it."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Several outcomes can share a value, and that is the whole reason expectation is interesting. HHT, HTH and THH are three different outcomes that all give X = 2, so the value 2 collects three shares of probability while X = 3 collects only one. The values are not equally likely even when the outcomes are.",
+      "figure": "ev-outcomes-share-value"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count outcomes for a value.",
+      "conceptTag": "ev-random-variable",
+      "explanationVariants": [
+        "Only HHH gives three heads, so exactly one outcome has X = 3.",
+        "Three heads requires every flip to cooperate — one way."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many of the 8 outcomes give X = 3 (three heads)?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the VALUE of X, not the number of outcomes producing it. Only HHH does."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is every outcome. Most of them contain at least one tail."
+          }
+        ],
+        "fallbackFeedback": "Only HHH has three heads, so exactly one outcome gives X = 3.",
+        "successFeedback": "1 — which is why X = 3 is far rarer than X = 2, even though both are single values."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Outcome or value?",
+      "conceptTag": "ev-random-variable",
+      "explanationVariants": [
+        "An outcome is what happens; a random variable is the number assigned to it.",
+        "HTH is an outcome; 2 is the value the variable gives it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these is a random VARIABLE, not an outcome?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The number of heads in three flips",
+            "correct": true,
+            "feedback": "Yes — it assigns a number to each outcome, which is exactly what a random variable does."
+          },
+          {
+            "id": "o2",
+            "label": "The sequence HTH",
+            "correct": false,
+            "feedback": "That is one outcome of the experiment. The variable turns it into a number."
+          },
+          {
+            "id": "o3",
+            "label": "The coin itself",
+            "correct": false,
+            "feedback": "The coin is the apparatus, neither outcome nor variable."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Count a different variable.",
+      "conceptTag": "ev-random-variable",
+      "explanationVariants": [
+        "Rolling two dice, a sum of 7 happens 6 ways out of 36.",
+        "The pairs 1-6, 2-5, 3-4, 4-3, 5-2 and 6-1 all sum to 7."
+      ],
+      "hints": [
+        "List the ordered pairs whose two faces add to 7.",
+        "The first die can be 1, 2, 3, 4, 5 or 6, and the second is then forced.",
+        "Every first-die value works exactly once, giving six pairs."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Roll two dice and let S be their sum. How many of the 36 outcomes give S = 7?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the VALUE of S, not the number of ways to reach it."
+          },
+          {
+            "value": 3,
+            "feedback": "That counts unordered pairs like {1,6}, {2,5}, {3,4}. The dice are distinguishable, so 1-6 and 6-1 are two outcomes."
+          }
+        ],
+        "fallbackFeedback": "Six ordered pairs sum to 7, so 6 of the 36 outcomes give S = 7.",
+        "successFeedback": "6 — more than any other sum, which is what makes 7 the centre of that distribution."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Numbers attached to chance.",
+      "takeaways": [
+        "A random variable assigns a number to each outcome of a chance experiment.",
+        "Its possible values are fixed by the experiment and should be listed first.",
+        "Several outcomes may share one value, so values are rarely equally likely."
+      ],
+      "teaser": "Next: collect those probabilities into a table — the distribution itself."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ev-random-variable",
+      "concept": {
+        "id": "rem-ev-random-variable-c",
+        "kind": "concept",
+        "body": "Several outcomes can share a value, and that is the whole reason expectation is interesting. HHT, HTH and THH are three different outcomes that all give X = 2, so the value 2 collects three shares of probability while X = 3 collects only one. The values are not equally likely even when the outcomes are."
+      },
+      "check": {
+        "id": "rem-ev-random-variable-k",
+        "kind": "check",
+        "body": "Evaluate the variable.",
+        "conceptTag": "ev-random-variable",
+        "explanationVariants": [
+          "HTH contains two heads, so X = 2 on that outcome.",
+          "Count the H's: two of them."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "X counts heads in three flips. What is X for the outcome HTH?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 counts the FLIPS, not the heads. HTH has one tail."
+            },
+            {
+              "value": 1,
+              "feedback": "One tail, but two heads — X counts the heads."
+            }
+          ],
+          "fallbackFeedback": "HTH has heads in positions 1 and 3, so X = 2.",
+          "successFeedback": "2 — the outcome is a sequence, the variable is a number read off it."
+        }
+      }
+    }
+  ]
+}

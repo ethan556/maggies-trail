@@ -1,0 +1,394 @@
+{
+  "id": "tm-02-02",
+  "slug": "dilations",
+  "title": "Dilations",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch2-congruence-similarity",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **dilation** resizes a shape by a **scale factor** from a center point. From the origin, multiply each coordinate by the scale factor: factor 2 sends (x, y) → (2x, 2y). The shape keeps its proportions but changes size.",
+      "figure": "dilation"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Slide the scale factor and watch the image grow or shrink away from the center. Every point's distance from the center is multiplied by k — the shape stays the same, only its size changes.",
+      "widget": {
+        "type": "dilationExplore",
+        "prompt": "Dilate the triangle by a scale factor of 2 from the origin.",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 7,
+        "successFeedback": "k = 2 doubles every distance from the center — the image is twice as large, exactly the same shape.",
+        "lowFeedback": "The image is smaller than a doubling. A larger k pushes each point further from the center.",
+        "highFeedback": "The image is larger than a doubling. A smaller k pulls each point back toward the center."
+      },
+      "predict": {
+        "prompt": "You'll scale every length by k = 2. What happens to the shape's AREA?",
+        "options": [
+          {
+            "id": "k",
+            "label": "It grows by ×2"
+          },
+          {
+            "id": "k2",
+            "label": "It grows by ×4"
+          },
+          {
+            "id": "same",
+            "label": "It stays the same"
+          }
+        ],
+        "outcomeId": "k2",
+        "reveal": "Width AND height both scale by 2, so area picks up that factor twice: k² = 4. Lengths scale by k, areas always by k² — watch the two figures to see it."
+      },
+      "conceptTag": "tm-dilation",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents tm dilation.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tm dilation must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tm dilation."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "transformations-measurement:tm-dilation",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Dilate a point.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Dilate (3, 4) by a scale factor of 2 from the origin. What is the image?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(6, 8)",
+            "correct": true,
+            "feedback": "Right — multiply each coordinate by 2: (6, 8)."
+          },
+          {
+            "id": "b",
+            "label": "(5, 6)",
+            "correct": false,
+            "feedback": "Dilation MULTIPLIES, not adds — (3×2, 4×2) = (6, 8), not (3+2, 4+2)."
+          },
+          {
+            "id": "c",
+            "label": "(3, 8)",
+            "correct": false,
+            "feedback": "BOTH coordinates scale by 2: (6, 8), not just the y."
+          },
+          {
+            "id": "d",
+            "label": "(1.5, 2)",
+            "correct": false,
+            "feedback": "That's dividing by 2 — a factor of 2 ENLARGES: (6, 8)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A scale factor bigger than 1 enlarges; a factor between 0 and 1 shrinks. Factor ½ sends (6, 8) → (3, 4), shrinking to half. Whatever the factor, the shape's angles and proportions stay the same.",
+      "figure": "dilation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A shrinking dilation.",
+      "conceptTag": "tm-dilation",
+      "explanationVariants": [
+        "Factor ½ multiplies each coordinate by ½: (6, 8) → (3, 4).",
+        "Halving both coordinates shrinks the point to (3, 4)."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Dilate (6, 8) by a scale factor of ½ from the origin. What is the image?",
+        "answer": [
+          3,
+          4
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              12,
+              16
+            ],
+            "feedback": "Factor ½ SHRINKS by half — that's dividing by 2, giving (3, 4), not doubling."
+          },
+          {
+            "values": [
+              6,
+              4
+            ],
+            "feedback": "BOTH coordinates scale by ½: (3, 4), not just the y."
+          }
+        ],
+        "fallbackFeedback": "Dilation MULTIPLIES each coordinate by the factor ½.",
+        "successFeedback": "Right — multiply each coordinate by ½: (3, 4)."
+      },
+      "variant": {
+        "gen": "point-transform",
+        "form": "dilate"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find the scale factor.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A dilation from the origin sends (2, 1) to (6, 3). What is the scale factor?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "The factor multiplies: 2 × factor = 6 means factor = 3, not 4 (that would give 8)."
+          },
+          {
+            "value": 2,
+            "feedback": "Check: 2 × 2 = 4, not 6 — the factor is 6 ÷ 2 = 3."
+          }
+        ],
+        "fallbackFeedback": "Each coordinate tripled: 2 → 6 and 1 → 3, so the scale factor is 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Dilate with factor 2.",
+      "conceptTag": "tm-dilation",
+      "explanationVariants": [
+        "Factor 2 doubles each coordinate: (1, 5) → (2, 10).",
+        "Multiply both by 2: (2, 10)."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Dilate (1, 5) by a scale factor of 2 from the origin. What is the image?",
+        "answer": [
+          2,
+          10
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              3,
+              7
+            ],
+            "feedback": "Dilation MULTIPLIES, not adds — (1×2, 5×2) = (2, 10)."
+          },
+          {
+            "values": [
+              2,
+              5
+            ],
+            "feedback": "BOTH coordinates double: (2, 10), not just the x."
+          }
+        ],
+        "fallbackFeedback": "Dilation MULTIPLIES each coordinate by the factor 2.",
+        "successFeedback": "Right — double each coordinate: (2, 10)."
+      },
+      "variant": {
+        "gen": "point-transform",
+        "form": "dilate"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Does a dilation keep congruence?",
+      "conceptTag": "tm-dilation",
+      "explanationVariants": [
+        "A dilation (unless factor 1) changes the size, so the image is NOT congruent to the original — it's similar.",
+        "Resizing breaks congruence; the shapes are similar, not congruent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shape is dilated by a factor of 3. Is the image congruent to the original?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — it's three times as big, so only similar",
+            "correct": true,
+            "feedback": "Right — dilation changes size, so the shapes are similar, not congruent."
+          },
+          {
+            "id": "b",
+            "label": "Yes — the shape looks the same",
+            "correct": false,
+            "feedback": "Looking the same isn't congruent — the SIZE tripled, so they're similar, not congruent."
+          },
+          {
+            "id": "c",
+            "label": "Yes — dilation is a rigid motion",
+            "correct": false,
+            "feedback": "Dilation is NOT rigid — it changes size, so the image isn't congruent."
+          },
+          {
+            "id": "d",
+            "label": "Only if the factor is negative",
+            "correct": false,
+            "feedback": "Any factor other than 1 changes the size, breaking congruence — the shapes are similar."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-dilation-similarity",
+        "form": "tmDilationCongruent"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Dilate then read the size change.",
+      "conceptTag": "tm-dilation",
+      "explanationVariants": [
+        "Factor 3 on (2, 1) gives (6, 3); the shape's lengths all triple, but angles stay the same.",
+        "Every length scales by 3 under a factor-3 dilation."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A triangle is dilated by a factor of 3. How do its side lengths change?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Every side becomes 3 times as long",
+            "correct": true,
+            "feedback": "Right — a factor-3 dilation triples every length."
+          },
+          {
+            "id": "b",
+            "label": "Every side gets 3 units longer",
+            "correct": false,
+            "feedback": "Dilation MULTIPLIES lengths, not adds — each side becomes 3 TIMES as long."
+          },
+          {
+            "id": "c",
+            "label": "Only one side changes",
+            "correct": false,
+            "feedback": "A dilation scales EVERY side by the factor, not just one."
+          },
+          {
+            "id": "d",
+            "label": "The sides stay the same",
+            "correct": false,
+            "feedback": "A factor-3 dilation changes every side — each becomes 3 times as long."
+          }
+        ]
+      },
+      "hints": [
+        "A dilation multiplies every length by the scale factor.",
+        "The factor here is 3, so multiply each side length by 3.",
+        "Every side becomes 3 times as long (while the angles stay the same)."
+      ],
+      "variant": {
+        "gen": "g8-tm-dilation-similarity",
+        "form": "tmDilationScale"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A dilation resizes a shape by a scale factor, keeping its proportions and angles.",
+      "takeaways": [
+        "From the origin: multiply each coordinate by the scale factor.",
+        "Factor > 1 enlarges; factor between 0 and 1 shrinks.",
+        "A dilation changes size, so the image is similar, not congruent."
+      ],
+      "teaser": "Next: similarity, built from dilations and rigid motions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-dilation",
+      "concept": {
+        "id": "rem-tm0202-c",
+        "kind": "concept",
+        "body": "A dilation resizes a shape by a scale factor from a center. From the origin, multiply each coordinate by the factor. Factor > 1 enlarges, between 0 and 1 shrinks; angles stay the same."
+      },
+      "check": {
+        "id": "rem-tm0202-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-dilation",
+        "explanationVariants": [
+          "Factor 2 doubles each coordinate: (2, 3) → (4, 6).",
+          "Multiply both by 2: (4, 6)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Dilate (2, 3) by a scale factor of 2 from the origin. What is the image?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(4, 6)",
+              "correct": true,
+              "feedback": "Right — double each coordinate: (4, 6)."
+            },
+            {
+              "id": "b",
+              "label": "(4, 5)",
+              "correct": false,
+              "feedback": "BOTH coordinates double: (4, 6), not just the x."
+            },
+            {
+              "id": "c",
+              "label": "(1, 1.5)",
+              "correct": false,
+              "feedback": "Factor 2 ENLARGES — that's halving; (2×2, 3×2) = (4, 6)."
+            },
+            {
+              "id": "d",
+              "label": "(4, 3)",
+              "correct": false,
+              "feedback": "The y doubles too: 3 × 2 = 6, giving (4, 6)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

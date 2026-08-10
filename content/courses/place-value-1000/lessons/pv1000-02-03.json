@@ -1,0 +1,318 @@
+{
+  "id": "pv1000-02-03",
+  "slug": "counting-forward-from-any-start",
+  "title": "Counting Forward from Any Start",
+  "courseId": "place-value-1000",
+  "chapterId": "ch2-counting-to-1000",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "skip-count-line",
+      "body": "You can count forward from ANY starting number, not just a round one — just repeat the same jump size the right number of times."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop it, then name the total move.",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Count forward from 450 by 10s, 3 times.",
+        "min": 400,
+        "max": 500,
+        "start": 450,
+        "hop": 10,
+        "hops": 3,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 453,
+            "feedback": "You counted by 1s — each hop is a TEN: 450 → 460 → 470 → 480."
+          },
+          {
+            "value": 470,
+            "feedback": "That's 2 hops. Three hops of ten: one more to 480."
+          }
+        ],
+        "missFeedback": "Each hop adds a full ten: 450 → 460 → 470 → 480.",
+        "successFeedback": "480! Three hops, one move: 450 + 30."
+      },
+      "predict": {
+        "prompt": "3 hops of 10 from 450 — how far from 450 will you end up in total?",
+        "options": [
+          {
+            "id": "thirty",
+            "label": "30 away"
+          },
+          {
+            "id": "thirteen",
+            "label": "13 away"
+          },
+          {
+            "id": "three",
+            "label": "3 away"
+          }
+        ],
+        "outcomeId": "thirty",
+        "reveal": "3 hops of 10 cover 3 × 10 = 30, so you land on 480 — counting forward by tens is really adding one 30 in a single thought. 13 mixes up the hop size with the hop count."
+      },
+      "conceptTag": "pv1000-count-forward",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents count forward.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for count forward must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines count forward."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-count-forward",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count forward by hundreds, several jumps.",
+      "conceptTag": "pv1000-count-forward",
+      "explanationVariants": [
+        "230 + 100 + 100 = 430.",
+        "Each jump adds the same skip amount."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count forward from 230 by 100s, 2 times. What number do you land on?",
+        "answer": 430,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 232,
+            "feedback": "Each jump adds 100, not 1. Two jumps of 100 from 230: 230+200=430."
+          },
+          {
+            "value": 250,
+            "feedback": "That's 2 jumps of 10, not 100. Two jumps of 100 from 230 is 430."
+          }
+        ],
+        "fallbackFeedback": "230 + 100 + 100 = 430."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000CountForwardNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Count forward by fives, several jumps — the same repeated-addition idea, just with a smaller step.",
+      "figure": "pv1000-count-by-fives"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count forward by fives, several jumps.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count forward from 615 by 5s, 4 times. What number do you land on?",
+        "answer": 635,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 619,
+            "feedback": "Each jump adds 5, not 1. Four jumps of 5 from 615: 615+20=635."
+          },
+          {
+            "value": 655,
+            "feedback": "That's 4 jumps of 10, not 5. Four jumps of 5 from 615 is 635."
+          }
+        ],
+        "fallbackFeedback": "615 + 5+5+5+5 = 635."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "This is just skip-counting stretched out — instead of finding the very next number, you find the number several jumps later.",
+      "figure": "pv1000-stretched"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Count forward, crossing a rollover.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count forward from 480 by 10s, 3 times. What number do you land on?",
+        "answer": 510,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 483,
+            "feedback": "Each jump adds 10, not 1. Three jumps of 10 from 480: 480+30=510."
+          },
+          {
+            "value": 780,
+            "feedback": "That's 3 jumps of 100, not 10. Three jumps of 10 from 480 is 510."
+          }
+        ],
+        "fallbackFeedback": "480 + 10 + 10 + 10 = 510 (crossing the hundred at 500)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count forward by hundreds, more jumps.",
+      "conceptTag": "pv1000-count-forward",
+      "explanationVariants": [
+        "300 + 100 + 100 + 100 = 600.",
+        "Each jump adds 100."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count forward from 300 by 100s, 3 times. What number do you land on?",
+        "answer": 600,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 303,
+            "feedback": "Each jump adds 100, not 1. Three jumps of 100 from 300: 300+300=600."
+          },
+          {
+            "value": 330,
+            "feedback": "That's 3 jumps of 10, not 100. Three jumps of 100 from 300 is 600."
+          }
+        ],
+        "fallbackFeedback": "300 + 100 + 100 + 100 = 600."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000CountForwardNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count forward by fives, crossing a rollover.",
+      "conceptTag": "pv1000-count-forward",
+      "explanationVariants": [
+        "190 + 5+5+5 = 205.",
+        "Each jump adds 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count forward from 190 by 5s, 3 times. What number do you land on?",
+        "answer": 205,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 193,
+            "feedback": "Each jump adds 5, not 1. Three jumps of 5 from 190: 190+15=205."
+          },
+          {
+            "value": 220,
+            "feedback": "That's 3 jumps of 10, not 5. Three jumps of 5 from 190 is 205."
+          }
+        ],
+        "fallbackFeedback": "190 + 5+5+5 = 205 (crossing the hundred at 200)."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000CountForwardNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full mixed challenge, many jumps.",
+      "conceptTag": "pv1000-count-forward",
+      "explanationVariants": [
+        "760 + 10×5 = 810.",
+        "Five jumps of 10, added one at a time or all at once."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Count forward from 760 by 10s, 5 times. What number do you land on?",
+        "answer": 810,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 765,
+            "feedback": "Each jump adds 10, not 1. Five jumps of 10 from 760: 760+50=810."
+          },
+          {
+            "value": 1260,
+            "feedback": "That's 5 jumps of 100, not 10. Five jumps of 10 from 760 is 810."
+          }
+        ],
+        "fallbackFeedback": "760 + 10+10+10+10+10 = 810."
+      },
+      "hints": [
+        "Each jump adds 10.",
+        "5 jumps of 10 is 50 total.",
+        "760 + 50 = 810."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000CountForwardNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Counting forward several jumps just repeats the same skip amount, starting from anywhere — even across a hundred-rollover.",
+      "takeaways": [
+        "Count forward N times means adding the skip amount N times.",
+        "The starting number can be anything, not just a round number.",
+        "The process crosses hundred-rollovers the same way it works anywhere else."
+      ],
+      "teaser": "you've completed place value structure and counting to 1000 — more of this course is still ahead."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-count-forward",
+      "concept": {
+        "id": "rem-pcf-c",
+        "kind": "concept",
+        "body": "Counting forward several times means repeating the same jump size that many times. From 450, three jumps of 10: 450+10+10+10=480."
+      },
+      "check": {
+        "id": "rem-pcf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-count-forward",
+        "explanationVariants": [
+          "450+10+10+10=480.",
+          "Repeat the jump size 3 times."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Count forward from 450 by 10s, 3 times. What number do you land on?",
+          "answer": 480,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 453,
+              "feedback": "Add 10 each time, not 1: 480."
+            },
+            {
+              "value": 750,
+              "feedback": "You counted by 100s. Three tens from 450: 460, 470, 480."
+            }
+          ],
+          "fallbackFeedback": "480."
+        }
+      }
+    }
+  ]
+}

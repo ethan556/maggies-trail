@@ -1,0 +1,286 @@
+{
+  "id": "rt-04-01",
+  "slug": "elevation-and-depression",
+  "title": "Angles of Elevation & Depression",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch4-elevation-depression",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "rt-elev-depress",
+      "concept": {
+        "id": "rem-rt-elev-depress-c",
+        "kind": "concept",
+        "body": "Both angles are measured from a horizontal line at the observer's eye: elevation opens upward, depression opens downward. Because the observer's horizontal is parallel to the ground, a depression angle at the top equals the elevation angle at the bottom (alternate interior angles) — so you can always relocate it inside the triangle."
+      },
+      "check": {
+        "id": "rem-rt-elev-depress-k",
+        "kind": "check",
+        "body": "Relocate the angle.",
+        "conceptTag": "rt-elev-depress",
+        "explanationVariants": [
+          "Alternate interior angles between parallel horizontals: the elevation at the ground equals the 40° depression.",
+          "Depression from tower to car = elevation from car to tower: 40°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The angle of depression from a tower to a car is 40°. The angle of elevation from the car to the tower top = ? (degrees)",
+          "answer": 40,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 50,
+              "feedback": "50 = 90 − 40 is the complement, the angle at the tower's TOP corner inside the triangle. The relocated angle equals 40°."
+            },
+            {
+              "value": 140,
+              "feedback": "140 = 180 − 40 is a supplement along a straight line — not this setup. Parallels + transversal: equal, 40°."
+            }
+          ],
+          "fallbackFeedback": "Equal by alternate interior angles: 40°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Look UP at a treetop: the angle between the **horizontal** and your line of sight is the **angle of elevation**. Look DOWN from a cliff at a boat: the angle below the horizontal is the **angle of depression**. Both are measured from the horizontal — never from the vertical, and never from the slope itself.",
+      "figure": "elevation-depression"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Where the angle lives.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "An observer on a cliff looks down at a boat. The angle of depression is measured between which two lines?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The horizontal line at the observer's eye, and the line of sight down to the boat",
+            "correct": true,
+            "feedback": "Depression always opens DOWNWARD from the observer's horizontal to the line of sight."
+          },
+          {
+            "id": "o2",
+            "label": "The cliff face and the line of sight",
+            "correct": false,
+            "feedback": "The cliff face is VERTICAL — measuring from it gives the complement, 90° minus the true angle. Start from the horizontal."
+          },
+          {
+            "id": "o3",
+            "label": "The sea surface and the cliff face",
+            "correct": false,
+            "feedback": "Those two lines meet at the cliff's base, away from the observer. Depression lives at the observer's eye, below their horizontal."
+          },
+          {
+            "id": "o4",
+            "label": "The line of sight and the vertical drop to the boat",
+            "correct": false,
+            "feedback": "That's the angle at the BOAT's side of the triangle rearranged — from the observer, measure horizontal down to line of sight."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The elevation-depression triangle almost always has the same three parts: a **height** (vertical leg), a **horizontal distance** (horizontal leg), and the **line of sight** (hypotenuse). Height and horizontal distance are the two legs — so **tangent** does most of the work in these problems.",
+      "figure": "rt-elevation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Elevation to a treetop.",
+      "conceptTag": "rt-elev-depress",
+      "explanationVariants": [
+        "The height is opposite the 32° angle; 50 m is adjacent. tan 32° = h/50 → h = 50·tan 32° ≈ 31.24 m.",
+        "Two legs (height and ground distance) → tangent: 50·tan 32° ≈ 31.24 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 50 m away (on flat ground), the angle of elevation to a treetop is 32°. How high is the treetop above eye level, in meters (2 decimals)?",
+        "answer": 31.24,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 26.5,
+            "feedback": "26.5 = 50·sin 32° treats the 50 m GROUND distance as the line of sight. It's the adjacent leg: 50·tan 32° ≈ 31.24."
+          },
+          {
+            "value": 80.02,
+            "feedback": "80.02 = 50 ÷ tan 32° divides — but the unknown height sits on TOP of tan 32° = h/50. Multiply: ≈ 31.24."
+          },
+          {
+            "value": 42.4,
+            "feedback": "42.4 = 50·cos 32° mixes in cosine — yet no hypotenuse is known or wanted. Leg-to-leg is tangent: ≈ 31.24."
+          }
+        ],
+        "fallbackFeedback": "tan 32° = h/50 → h = 50·tan 32° ≈ 31.24 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-elev-depress__numeric"
+      }
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Again, flatter sun.",
+      "conceptTag": "rt-elev-depress",
+      "explanationVariants": [
+        "tan 25° = h/60 → h = 60·tan 25° ≈ 27.98 m — a shallower angle, so less height per meter of distance.",
+        "Same tangent setup with the new numbers: 60 × 0.4663 ≈ 27.98 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From 60 m away, the angle of elevation to a rooftop is 25°. Height above eye level, in meters (2 decimals)?",
+        "answer": 27.98,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 25.36,
+            "feedback": "25.36 = 60·sin 25° casts the 60 m ground distance as the line of sight — it's the adjacent LEG. 60·tan 25° ≈ 27.98."
+          },
+          {
+            "value": 128.67,
+            "feedback": "128.67 = 60 ÷ tan 25° divides — but the unknown height rides on TOP of tan 25° = h/60. Multiply: ≈ 27.98."
+          },
+          {
+            "value": 54.38,
+            "feedback": "54.38 = 60·cos 25° brings in cosine with no hypotenuse in sight. Leg-to-leg is tangent: ≈ 27.98."
+          }
+        ],
+        "fallbackFeedback": "h = 60·tan 25° ≈ 27.98 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-elev-depress__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Here's the gift: the observer's horizontal and the ground are **parallel lines**, and the line of sight is a transversal. So the angle of depression at the top equals the angle of elevation at the bottom — **alternate interior angles**. You may relocate a depression angle INSIDE the triangle at the far vertex, for free.",
+      "figure": "rt-parallel-ground"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The swap.",
+      "conceptTag": "rt-elev-depress",
+      "explanationVariants": [
+        "The horizontal at the top and the ground are parallel; the line of sight crosses both, so the alternate interior angles are equal: also 15°.",
+        "Depression from A to B always equals elevation from B to A — 15°."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "From a cliff top, the angle of depression to a boat is 15°. What is the angle of ELEVATION from the boat up to the cliff top?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "15° — alternate interior angles between parallels",
+            "correct": true,
+            "feedback": "The two horizontals are parallel; the line of sight is a transversal, so the angles match exactly."
+          },
+          {
+            "id": "o2",
+            "label": "75° — the complement",
+            "correct": false,
+            "feedback": "75° = 90 − 15 is the angle the sight line makes with the VERTICAL cliff, not with the boat's horizontal. Elevation = 15°."
+          },
+          {
+            "id": "o3",
+            "label": "165° — the supplement",
+            "correct": false,
+            "feedback": "165° = 180 − 15 pairs angles along a straight line — the wrong relationship. Parallels + transversal give equal angles: 15°."
+          },
+          {
+            "id": "o4",
+            "label": "It depends on the cliff's height",
+            "correct": false,
+            "feedback": "Height changes the DISTANCES, never this angle equality — parallel horizontals force elevation = depression at any size."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-elev-depress__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Set up, don't solve.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "ratios",
+        "ratio": "opp/adj",
+        "a": 6,
+        "b": 6,
+        "target": 27,
+        "start": 50,
+        "angleStep": 1,
+        "requiredScaleMoves": 2,
+        "prompt": "A drone hovers 120 m up; the angle of depression to the pad is 27°. Drag to 27° and read opp/adj — the ratio that links the height to the ground distance.",
+        "successFeedback": "tan 27° ≈ 0.51, so the ground distance is 120 ÷ 0.51 ≈ 235 m. Depression from the drone equals elevation from the pad — alternate angles across parallel horizontals — which is why one angle serves both viewpoints.",
+        "lowFeedback": "Under 27° — opp/adj is reading too small.",
+        "highFeedback": "Over 27° — opp/adj is reading too large.",
+        "scaleFeedback": "Resize the triangle before checking; the tangent of 27° is fixed by the angle alone."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Cliff to boat.",
+      "conceptTag": "rt-elev-depress",
+      "hints": [
+        "Relocate the 15° depression to the boat as a 15° elevation — alternate interior angles.",
+        "At the boat: opposite = the 80 m cliff, adjacent = the horizontal distance x. tan 15° = 80/x.",
+        "The unknown is on the bottom: x = 80 ÷ tan 15°."
+      ],
+      "explanationVariants": [
+        "tan 15° = 80/x → x = 80 ÷ tan 15° ≈ 298.56 m.",
+        "Moving 15° inside the triangle at the boat: x = 80 ÷ tan 15° ≈ 298.56 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "From the top of an 80 m cliff, the angle of depression to a boat is 15°. How far is the boat from the base of the cliff, in meters (2 decimals)?",
+        "answer": 298.56,
+        "tolerance": 0.5,
+        "commonErrors": [
+          {
+            "value": 21.44,
+            "feedback": "21.44 = 80·tan 15° multiplies — but x sits on the BOTTOM of tan 15° = 80/x. Divide: 80 ÷ tan 15° ≈ 298.56."
+          },
+          {
+            "value": 309.1,
+            "feedback": "309.1 = 80 ÷ sin 15° is the LINE-OF-SIGHT distance (hypotenuse) — real, but the question asks the horizontal leg: ≈ 298.56."
+          },
+          {
+            "value": 20.71,
+            "feedback": "20.71 = 80·sin 15° treats 80 as the hypotenuse — the cliff is the vertical LEG. x = 80 ÷ tan 15° ≈ 298.56."
+          }
+        ],
+        "fallbackFeedback": "x = 80 ÷ tan 15° ≈ 298.56 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-elev-depress__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Measured from the horizontal.",
+      "takeaways": [
+        "Elevation looks up, depression looks down — both from the HORIZONTAL, never the vertical.",
+        "Depression from A to B = elevation from B to A (alternate interior angles).",
+        "Height + horizontal distance are legs, so tangent usually runs the show."
+      ],
+      "teaser": "Next: height problems — measure buildings, kites, and airplanes without leaving the ground."
+    }
+  ]
+}

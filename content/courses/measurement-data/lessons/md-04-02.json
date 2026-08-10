@@ -1,0 +1,412 @@
+{
+  "id": "md-04-02",
+  "slug": "rows-times-columns-area",
+  "title": "Rows × Columns = Area",
+  "courseId": "measurement-data",
+  "chapterId": "ch4-area",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When the squares line up in **equal rows**, you don't have to count one by one. Equal rows are equal groups — so **area = rows × squares-per-row**. A rectangle 4 rows tall and 6 squares wide has 4 × 6 = 24 squares. Area is multiplication you can see.",
+      "figure": "md3-area-rows"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Area is the number of unit squares that cover a rectangle. Set the rows and columns and count the squares — rows × columns gives the area.",
+      "widget": {
+        "type": "areaModel",
+        "prompt": "Make a rectangle with an area of 12 square units.",
+        "targetArea": 12,
+        "wMax": 6,
+        "hMax": 6,
+        "wStart": 1,
+        "hStart": 1,
+        "successFeedback": "12 square units — rows × columns is the area, and this is one of its factor pairs.",
+        "lowFeedback": "Fewer than 12 squares so far. Add a row or a column to cover more.",
+        "highFeedback": "More than 12 squares. Remove a row or a column to cover fewer."
+      },
+      "predict": {
+        "prompt": "Is there more than one rectangle with an area of exactly 12 squares?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — several shapes work"
+          },
+          {
+            "id": "no",
+            "label": "No — only one shape"
+          },
+          {
+            "id": "square",
+            "label": "Only a square works"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "12 splits into different factor pairs, and each pair is its own rectangle — one area, several honest shapes."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Build, rotate, and mentally split the array while preserving its product and area.",
+        "predictionId": "g3-distributive-arrays-prediction",
+        "invariants": [
+          "product-preserved",
+          "area-preserved"
+        ],
+        "misconceptions": [
+          "partial-product-omission",
+          "perimeter-area-confusion"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "partial-products-new-factors",
+        "delayed": true,
+        "counterfactualPrompt": "Split one side into two parts. How must the two partial areas recombine to equal the original product?",
+        "explanation": {
+          "prompt": "What remains true when the array is split or rotated?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "The same unit squares are regrouped, so total area and product stay fixed.",
+              "correct": true,
+              "feedback": "Exactly. Rearrangement preserves the counted unit squares."
+            },
+            {
+              "id": "surface",
+              "label": "The product changes whenever the rectangle changes orientation.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Rearrangement preserves the counted unit squares."
+            }
+          ]
+        }
+      },
+      "conceptTag": "area-multiply"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the area expression.",
+      "conceptTag": "area-multiply",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Build the AREA of a rectangle that is 4 squares tall and 6 squares wide.",
+        "tokens": [
+          {
+            "id": "t4",
+            "label": "4"
+          },
+          {
+            "id": "tx",
+            "label": "×"
+          },
+          {
+            "id": "t6",
+            "label": "6"
+          },
+          {
+            "id": "tp",
+            "label": "+"
+          }
+        ],
+        "correct": [
+          "t4",
+          "tx",
+          "t6"
+        ],
+        "acceptAlso": [
+          [
+            "t6",
+            "tx",
+            "t4"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t4",
+              "tp",
+              "t6"
+            ],
+            "feedback": "4 + 6 is edge-thinking — that's half the fence, not the covering. Area counts ROWS of squares: 4 rows of 6, which multiplies."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Area = rows × squares-per-row: 4 × 6 (or the flip 6 × 4).",
+        "successFeedback": "4 × 6 = 24 square units — equal rows of squares are equal groups."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Multiply the rows.",
+      "conceptTag": "area-multiply",
+      "explanationVariants": [
+        "3 rows of 8 squares is 3 × 8 = 24 square units — equal rows multiply.",
+        "Skip-count the rows: 8, 16, 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangle is covered by 3 rows of 8 unit squares. What is its area?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 added 3 + 8 — the row-count plus the row-length. Equal rows MULTIPLY: 3 × 8."
+          },
+          {
+            "value": 22,
+            "feedback": "22 walked the edge (perimeter of a 3-by-8). Area fills the inside: 3 × 8 = 24."
+          }
+        ],
+        "fallbackFeedback": "Rows × squares-per-row: 3 × 8."
+      },
+      "variant": {
+        "gen": "rect-measure",
+        "form": "area"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **flip** works here too: 4 rows of 6 or 6 rows of 4 cover the exact same carpet — 4 × 6 = 6 × 4 = 24. Turning the rectangle sideways swaps rows and columns but never changes the squares inside.",
+      "figure": "md3-area-rows"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same carpet, flipped.",
+      "conceptTag": "area-multiply",
+      "explanationVariants": [
+        "Flipping rows and columns keeps the same squares — 5 × 2 and 2 × 5 both make 10.",
+        "The flip is just a turned rectangle: same 10 squares either way."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A 5-by-2 rectangle has area 10. What is the area of a 2-by-5 rectangle?",
+        "options": [
+          {
+            "id": "a",
+            "label": "10 — it's the same rectangle, turned",
+            "correct": true,
+            "feedback": "Rows and columns swapped, but the squares inside didn't change: still 10."
+          },
+          {
+            "id": "b",
+            "label": "7 — you add 2 and 5",
+            "feedback": "Adding gives half the fence, not the area. Area multiplies: 2 × 5 = 10, same as 5 × 2."
+          },
+          {
+            "id": "c",
+            "label": "20 — it's doubled",
+            "feedback": "Turning a rectangle doesn't add squares. 2 × 5 = 5 × 2 = 10 — the flip keeps the area."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without measuring",
+            "feedback": "The flip guarantees it: 2 × 5 and 5 × 2 are the same product, so the same 10 squares."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "area-multiply",
+        "form": "turned"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Fence or carpet?",
+      "conceptTag": "area-multiply",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "For a 6-by-4 rectangle, match each question to its value.",
+        "left": [
+          {
+            "id": "qa",
+            "label": "Area (squares inside)"
+          },
+          {
+            "id": "qp",
+            "label": "Perimeter (walk around)"
+          },
+          {
+            "id": "qr",
+            "label": "One row of squares"
+          }
+        ],
+        "right": [
+          {
+            "id": "v20",
+            "label": "20 units"
+          },
+          {
+            "id": "v6",
+            "label": "6 squares"
+          },
+          {
+            "id": "v24",
+            "label": "24 square units"
+          }
+        ],
+        "pairs": {
+          "qa": "v24",
+          "qp": "v20",
+          "qr": "v6"
+        },
+        "pairErrors": [
+          {
+            "left": "qa",
+            "right": "v20",
+            "feedback": "20 is the PERIMETER (the walk: 6+4+6+4). Area fills the inside: 6 × 4 = 24 square units."
+          }
+        ],
+        "missFeedback": "Area multiplies the sides (6 × 4 = 24); perimeter adds all four (6+4+6+4 = 20); a row is just the width.",
+        "successFeedback": "Area 24, perimeter 20, one row 6 — three different questions about the same rectangle."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Area or perimeter?",
+      "conceptTag": "area-multiply",
+      "explanationVariants": [
+        "Covering a floor is AREA — rows of squares, so multiply: 7 × 3 = 21 square units.",
+        "'Cover' signals area; 'fence around' would signal perimeter. This one multiplies."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To find how many square tiles COVER a 7-by-3 floor, you should…",
+        "options": [
+          {
+            "id": "a",
+            "label": "Multiply: 7 × 3 = 21",
+            "correct": true,
+            "feedback": "Covering is area — rows of squares multiply: 21 square tiles."
+          },
+          {
+            "id": "b",
+            "label": "Add all four sides: 7+3+7+3 = 20",
+            "feedback": "That's the perimeter — the fence AROUND. Covering the inside is area: 7 × 3 = 21."
+          },
+          {
+            "id": "c",
+            "label": "Add 7 + 3 = 10",
+            "feedback": "10 is just one length plus one width — half the fence. Covering needs rows × columns: 7 × 3."
+          },
+          {
+            "id": "d",
+            "label": "Subtract 7 − 3 = 4",
+            "feedback": "Subtracting doesn't cover anything. Area tiles the floor: 7 × 3 = 21 square tiles."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "area-multiply",
+        "form": "coverChoice"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The garden plot.",
+      "conceptTag": "area-multiply",
+      "hints": [
+        "Covering the plot with square meters is an area question.",
+        "Area = rows × columns of square meters.",
+        "9 rows and 6 columns."
+      ],
+      "explanationVariants": [
+        "9 rows of 6 square meters each: 9 × 6 = 54 square meters of soil.",
+        "The flip agrees: 6 × 9 is the same 54 squares."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangular garden is 9 meters by 6 meters. How many square meters of soil does it hold?",
+        "answer": 54,
+        "tolerance": 0,
+        "unit": "square meters",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 walked the fence (9+6+9+6) — that's the perimeter in meters. The soil INSIDE is area: 9 × 6 = 54."
+          },
+          {
+            "value": 15,
+            "feedback": "15 added 9 + 6 — one length plus one width. Covering the soil multiplies them: 9 × 6 = 54."
+          }
+        ],
+        "fallbackFeedback": "Area of a rectangle = length × width: 9 × 6."
+      },
+      "variant": {
+        "gen": "rect-measure",
+        "form": "area"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Counting became multiplying.",
+      "takeaways": [
+        "Equal rows of squares → area = rows × columns.",
+        "The flip holds: rows × cols = cols × rows, same carpet.",
+        "Area fills the inside (multiply); perimeter walks the edge (add)."
+      ],
+      "teaser": "next: splitting a big rectangle into two easy ones."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "area-multiply",
+      "concept": {
+        "id": "rem-am-c",
+        "kind": "concept",
+        "body": "Quick rewind. Rows of unit squares are **equal groups**, exactly like the multiplication you already know. 3 rows of 4 squares is 3 groups of 4 — so the area is 3 × 4. Rows times how-many-in-a-row."
+      },
+      "check": {
+        "id": "rem-am-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "area-multiply",
+        "explanationVariants": [
+          "2 rows of 4 squares is 2 × 4 = 8 square units.",
+          "Equal groups multiply: 2 groups of 4 is 8."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A rectangle is 2 rows of 4 unit squares. Its area is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "8 square units",
+              "correct": true,
+              "feedback": "2 × 4 = 8 — equal rows multiply."
+            },
+            {
+              "id": "b",
+              "label": "6 square units",
+              "feedback": "6 added 2 + 4. Equal rows MULTIPLY: 2 × 4 = 8."
+            },
+            {
+              "id": "c",
+              "label": "12 square units",
+              "feedback": "That's the perimeter's neighborhood (2+4+2+4). Area is 2 × 4 = 8."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,470 @@
+{
+  "id": "rad-04-03",
+  "slug": "distance-between-points",
+  "title": "Distance Between Points",
+  "courseId": "radicals-and-exponents",
+  "chapterId": "ch4-applications",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "right-triangle",
+      "body": "The distance between two points is the hypotenuse of a right triangle: d = √((Δx)² + (Δy)²), where Δx and Δy are the horizontal and vertical gaps. From (0, 0) to (3, 4): d = √(9 + 16) = √25 = 5."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The 3-4-5 triangle, on a grid.",
+      "widget": {
+        "type": "distanceGrid",
+        "anchor": [
+          0,
+          0
+        ],
+        "targetPoint": [
+          3,
+          4
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 0,
+        "startY": 0,
+        "prompt": "Place the point that is exactly 5 units from the origin, with a run of 3.",
+        "successFeedback": "(3, 4): 3² + 4² = 25, so the distance is √25 = 5. When the legs are not so friendly the answer stays a radical — but the picture never changes.",
+        "wrongPointFeedback": "Not that one. You need a run of 3 and a rise that makes 3² + rise² = 25."
+      },
+      "predict": {
+        "prompt": "Distance 5 from the origin with a run of 3: the rise must be…",
+        "options": [
+          {
+            "id": "four",
+            "label": "4 — since 3² + 4² = 25"
+          },
+          {
+            "id": "two",
+            "label": "2 — since 3 + 2 = 5"
+          },
+          {
+            "id": "five",
+            "label": "5"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "Distance runs on squares: 5² − 3² = 16, so the rise is 4. The straight-line 5 splits into legs 3 and 4 — making the legs add to 5 (3 + 2) walks the streets, not the diagonal."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Construct horizontal and vertical displacement and connect the right triangle to radical distance.",
+        "invariants": [
+          "distance-nonnegative",
+          "pythagorean-distance",
+          "translation-preserves-distance"
+        ],
+        "misconceptions": [
+          "manhattan-distance",
+          "coordinate-sum"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "distance-between-arbitrary-coordinate-pairs",
+        "delayed": true,
+        "counterfactualPrompt": "Keep the distance 5 but change the horizontal run. Which other integer run-rise pair can preserve the same distance?",
+        "explanation": {
+          "prompt": "Why is the diagonal distance found from squares instead of by adding the run and rise?",
+          "options": [
+            {
+              "id": "hypotenuse",
+              "label": "The run and rise are perpendicular legs, so the diagonal is the hypotenuse governed by the Pythagorean theorem.",
+              "correct": true,
+              "feedback": "Exactly — perpendicular components combine through their squares."
+            },
+            {
+              "id": "path",
+              "label": "The diagonal follows the same path as walking horizontally and then vertically.",
+              "correct": false,
+              "feedback": "That sum measures a two-segment path, not the straight-line distance."
+            }
+          ]
+        }
+      },
+      "conceptTag": "rad-distance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A bigger gap.",
+      "conceptTag": "rad-distance",
+      "explanationVariants": [
+        "d = √(6² + 8²) = √100 = 10.",
+        "36 + 64 = 100, so d = √100 = 10."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "coordinateProof": {
+          "kind": "segmentLength",
+          "points": [
+            {
+              "id": "o",
+              "label": "A",
+              "x": 0,
+              "y": 0
+            },
+            {
+              "id": "p",
+              "label": "B",
+              "x": 6,
+              "y": 8
+            }
+          ],
+          "span": {
+            "a": "o",
+            "b": "p"
+          }
+        },
+        "prompt": "What is the distance from (0,0) to (6,8)?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "Add the squares, not the coordinates: √(36 + 64) = √100 = 10, not 6 + 8."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is d² (36 + 64). Take the root: d = 10."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "proof:span-runs",
+          "proof:span-squares",
+          "proof:span-root"
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "d = √(36 + 64) = √100 = 10.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "d = √(36 + 64) = √100 = 10.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-distance__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When the points aren't at the origin, **subtract the coordinates** to get the legs. From (1, 2) to (4, 6): Δx = 4 − 1 = 3 and Δy = 6 − 2 = 4, so d = √(9 + 16) = 5. The differences are the triangle's legs.",
+      "figure": "rad-distance-subtract"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Subtract first.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the distance from (1,2) to (4,6)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "The gaps are Δx = 3 and Δy = 4; add their squares: √(9 + 16) = 5, not 3 + 4 + something."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is d² (9 + 16). Take the root: d = 5."
+          }
+        ],
+        "fallbackFeedback": "Δx = 3, Δy = 4, so d = √(9 + 16) = 5."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "When the distance isn't a whole number, simplify the radical. From (0, 0) to (2, 2): d = √(4 + 4) = √8 = 2√2. Same steps as before, ending in a simplified radical.",
+      "figure": "rad-simplify-distance"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A radical distance.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the distance from (0,0) to (2,2)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2√2",
+            "correct": true,
+            "feedback": "Yes — d = √(4 + 4) = √8 = 2√2."
+          },
+          {
+            "id": "b",
+            "label": "√8",
+            "feedback": "√8 has the value but isn't simplified: √8 = 2√2."
+          },
+          {
+            "id": "c",
+            "label": "4",
+            "feedback": "That would be 2 + 2. The distance is √(4 + 4) = √8 = 2√2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A vertical gap.",
+      "conceptTag": "rad-distance",
+      "explanationVariants": [
+        "Δx = 0 and Δy = 8, so d = √(0 + 64) = 8.",
+        "The points share an x-value, so the distance is just the vertical gap, 8."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "coordinateProof": {
+          "kind": "segmentLength",
+          "points": [
+            {
+              "id": "o",
+              "label": "A",
+              "x": 2,
+              "y": 1
+            },
+            {
+              "id": "p",
+              "label": "B",
+              "x": 2,
+              "y": 9
+            }
+          ],
+          "span": {
+            "a": "o",
+            "b": "p"
+          }
+        },
+        "prompt": "What is the distance from (2,1) to (2,9)?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 10,
+            "feedback": "Δx = 0 here, so d = √(0 + 64) = 8, not 2 + 8 or similar."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is d² (0 + 64). Take the root: d = 8."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "proof:span-runs",
+          "proof:span-squares",
+          "proof:span-root"
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Δx = 0, Δy = 8, so d = √64 = 8.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Δx = 0, Δy = 8, so d = √64 = 8.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-distance__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Both gaps nonzero.",
+      "conceptTag": "rad-distance",
+      "explanationVariants": [
+        "Δx = 4, Δy = 3, so d = √(16 + 9) = √25 = 5.",
+        "16 + 9 = 25, so d = √25 = 5."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "coordinateProof": {
+          "kind": "segmentLength",
+          "points": [
+            {
+              "id": "o",
+              "label": "A",
+              "x": 1,
+              "y": 1
+            },
+            {
+              "id": "p",
+              "label": "B",
+              "x": 5,
+              "y": 4
+            }
+          ],
+          "span": {
+            "a": "o",
+            "b": "p"
+          }
+        },
+        "prompt": "What is the distance from (1,1) to (5,4)?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 7,
+            "feedback": "The gaps are Δx = 4 and Δy = 3; add their squares: √(16 + 9) = 5, not 4 + 3."
+          },
+          {
+            "value": 25,
+            "feedback": "25 is d² (16 + 9). Take the root: d = 5."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "proof:span-runs",
+          "proof:span-squares",
+          "proof:span-root"
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Δx = 4, Δy = 3, so d = √25 = 5.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Δx = 4, Δy = 3, so d = √25 = 5.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-distance__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A longer distance.",
+      "conceptTag": "rad-distance",
+      "explanationVariants": [
+        "Δx = 8, Δy = 6, so d = √(64 + 36) = √100 = 10.",
+        "64 + 36 = 100, so d = √100 = 10."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "coordinateProof": {
+          "kind": "segmentLength",
+          "points": [
+            {
+              "id": "o",
+              "label": "A",
+              "x": 2,
+              "y": 3
+            },
+            {
+              "id": "p",
+              "label": "B",
+              "x": 10,
+              "y": 9
+            }
+          ],
+          "span": {
+            "a": "o",
+            "b": "p"
+          }
+        },
+        "prompt": "What is the distance from (2,3) to (10,9)?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "The gaps are Δx = 8 and Δy = 6; add their squares: √(64 + 36) = 10, not 8 + 6."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is d² (64 + 36). Take the root: d = 10."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "proof:span-runs",
+          "proof:span-squares",
+          "proof:span-root"
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Δx = 8, Δy = 6, so d = √100 = 10.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Δx = 8, Δy = 6, so d = √100 = 10.",
+        "answerMode": "numeric"
+      },
+      "hints": [
+        "Find the gaps: Δx = 10 − 2 = 8, Δy = 9 − 3 = 6.",
+        "Add the squares: 64 + 36 = 100.",
+        "√100 = 10."
+      ],
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-distance__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance is the Pythagorean theorem on coordinate gaps.",
+      "takeaways": [
+        "d = √((Δx)² + (Δy)²).",
+        "Subtract coordinates to get the legs.",
+        "Simplify the radical if the distance isn't whole."
+      ],
+      "teaser": "you've completed radicals — simplifying, operations, rational exponents, and applications."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rad-distance",
+      "concept": {
+        "id": "rem-rds-c",
+        "kind": "concept",
+        "body": "Distance between two points: d = √((Δx)² + (Δy)²). Subtract the coordinates for the legs. From (1, 2) to (4, 6): Δx = 3, Δy = 4, so d = √(9 + 16) = 5."
+      },
+      "check": {
+        "id": "rem-rdst-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rad-distance",
+        "explanationVariants": [
+          "d = √(9 + 16) = √25 = 5.",
+          "Δx = 3, Δy = 4, so d = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the distance from (0,0) to (3,4)?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "Add the squares, not the coordinates: √25 = 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is d²; take the root: 5."
+            }
+          ],
+          "fallbackFeedback": "d = √25 = 5."
+        }
+      }
+    }
+  ]
+}

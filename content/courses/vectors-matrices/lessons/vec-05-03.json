@@ -1,0 +1,236 @@
+{
+  "id": "vec-05-03",
+  "slug": "composing-transformations",
+  "title": "Composing Transformations",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch5-transformations",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To do one transformation **then** another, **multiply the matrices**. For 'apply B, then A,' the combined matrix is A·B (the second one goes on the LEFT). Matrix product:\n\n[[a, b], [c, d]]·[[e, f], [g, h]] = [[ae+bg, af+bh], [ce+dg, cf+dh]].\n\nEach entry is a row of A dotted with a column of B.",
+      "figure": "vec-compose"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A product entry.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For [[1, 0], [0, −1]]·[[0, 1], [1, 0]], the top-left entry is (row 1 of A)·(column 1 of B). Compute it: 1·0 + 0·1.",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Row 1 ⟨1, 0⟩ dotted with column 1 ⟨0, 1⟩ = 1·0 + 0·1 = 0, not 1."
+          },
+          {
+            "value": 2,
+            "feedback": "It's a dot product: 1·0 + 0·1 = 0."
+          }
+        ],
+        "fallbackFeedback": "1·0 + 0·1 = 0."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two reflections make a rotation.",
+      "conceptTag": "vec-compose",
+      "explanationVariants": [
+        "Reflect over y = x (B = [[0,1],[1,0]]), then over the x-axis (A = [[1,0],[0,−1]]): A·B = [[0, 1], [−1, 0]], which is a −90° rotation. Two mirrors compose to a turn.",
+        "The product [[0,1],[−1,0]] rotates clockwise 90° — a surprising, clean result."
+      ],
+      "widget": {
+        "type": "matrixTransform",
+        "prompt": "Reflect over y = x, then over the x-axis — one transformation right after the other. Build the single matrix that performs both, and watch where î and ĵ land.",
+        "ta": 0,
+        "tb": 1,
+        "tc": -1,
+        "td": 0,
+        "sa": 1,
+        "sb": 0,
+        "sc": 0,
+        "sd": 1,
+        "targetName": "a 90° clockwise rotation",
+        "successFeedback": "î ↦ (0, −1), ĵ ↦ (1, 0): that's [[0, 1], [−1, 0]] — a 90° clockwise rotation. det = 0·0 − 1·(−1) = 1: rotations never change area.",
+        "swappedFeedback": "You've swapped the columns: that builds [[1, 0], [0, −1]], a single reflection over the x-axis, not the composed rotation. Column 1 is where î lands — (0, −1) — and column 2 is where ĵ lands — (1, 0).",
+        "signFeedback": "That gives [[0, −1], [1, 0]], a 90° COUNTER-clockwise rotation — the reverse turn. Clockwise sends î to (0, −1), so the −1 belongs in the bottom-left, not the top-right.",
+        "fallbackFeedback": "Track one basis vector at a time: a quarter-turn clockwise sends î from (1, 0) down to (0, −1) — first column — and ĵ from (0, 1) right to (1, 0) — second column."
+      },
+      "variant": {
+        "gen": "reflect-compose",
+        "form": "composeMatrix"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Order matters**: A·B and B·A usually differ, because doing a reflection then a rotation is not the same as rotation then reflection. This mirrors geometry — the sequence of rigid motions changes the outcome. Matrix multiplication is **not commutative**.",
+      "figure": "vec-order-matters"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Verify by tracking a point.",
+      "conceptTag": "vec-compose",
+      "explanationVariants": [
+        "Through A·B = [[0,1],[−1,0]]: ⟨1, 0⟩ → ⟨0, −1⟩. Check the steps: reflect y=x sends ⟨1,0⟩→⟨0,1⟩, then reflect x-axis sends ⟨0,1⟩→⟨0,−1⟩. Matches.",
+        "Both the combined matrix and the two-step path send ⟨1, 0⟩ to ⟨0, −1⟩."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Using the combined matrix [[0, 1], [−1, 0]], where does ⟨1, 0⟩ land?",
+        "answer": [
+          0,
+          -1
+        ],
+        "delimiter": "angle",
+        "commonEntries": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "feedback": "That's only the FIRST reflection. After BOTH, ⟨1, 0⟩ → ⟨0, −1⟩."
+          },
+          {
+            "values": [
+              1,
+              0
+            ],
+            "feedback": "The composition moves it: ⟨1, 0⟩ → ⟨0, −1⟩."
+          }
+        ],
+        "fallbackFeedback": "Read the first column of the combined matrix for where ⟨1, 0⟩ lands.",
+        "successFeedback": "Right — the first column is ⟨0, −1⟩, matching the two-step reflect-reflect path."
+      },
+      "variant": {
+        "gen": "reflect-compose",
+        "form": "basisColumn"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Order changes the result.",
+      "conceptTag": "vec-compose",
+      "explanationVariants": [
+        "Swapping the order gives B·A = [[0, −1], [1, 0]] (a 90° CCW rotation) — the opposite turn from A·B. Order matters.",
+        "B·A and A·B are different matrices here: one turns clockwise, the other counterclockwise."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A·B gave a 90° CLOCKWISE rotation. What does the reversed order B·A = [[0, −1], [1, 0]] give?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A 90° counterclockwise rotation (the opposite turn)",
+            "correct": true,
+            "feedback": "Right — reversing the order reverses the turn: matrix multiplication isn't commutative."
+          },
+          {
+            "id": "o2",
+            "label": "The exact same clockwise rotation",
+            "feedback": "Order MATTERS: B·A = [[0,−1],[1,0]] turns the other way (counterclockwise)."
+          },
+          {
+            "id": "o3",
+            "label": "The identity (no motion)",
+            "feedback": "B·A is a genuine 90° CCW rotation, not the identity."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "reflect-compose",
+        "form": "reverseOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Compose two scalings... and a full product entry.",
+      "conceptTag": "vec-compose",
+      "explanationVariants": [
+        "[[2, 0], [0, 1]]·[[1, 0], [0, 3]] = [[2, 0], [0, 3]]: stretch x by 2 and y by 3. The bottom-right entry is 0·0 + 1·3 = 3.",
+        "Diagonal scalings compose by multiplying the diagonal: the y-factor becomes 1·3 = 3."
+      ],
+      "hints": [
+        "Bottom-right = (row 2 of A)·(column 2 of B).",
+        "Row 2 ⟨0, 1⟩ · column 2 ⟨0, 3⟩.",
+        "= 0·0 + 1·3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For [[2, 0], [0, 1]]·[[1, 0], [0, 3]], compute the bottom-right entry.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Bottom-right = 0·0 + 1·3 = 3 (you may have used only the first factor)."
+          },
+          {
+            "value": 4,
+            "feedback": "It's a dot product of row 2 and column 2: 0·0 + 1·3 = 3, not 1 + 3."
+          }
+        ],
+        "fallbackFeedback": "0·0 + 1·3 = 3 (combined scaling [[2,0],[0,3]])."
+      },
+      "variant": {
+        "gen": "reflect-compose",
+        "form": "matMul"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chaining the plane's motions.",
+      "takeaways": [
+        "Compose transformations by multiplying matrices: 'B then A' = A·B.",
+        "Each product entry is a row of A dotted with a column of B.",
+        "Order matters (not commutative); two reflections can equal a rotation."
+      ],
+      "teaser": "Course complete — vectors and matrices, from components to transformations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-compose",
+      "concept": {
+        "id": "rem-vec0503-c",
+        "kind": "concept",
+        "body": "Compose transformations by matrix multiplication ('B then A' = A·B). Each entry is a row of A dotted with a column of B. Order matters."
+      },
+      "check": {
+        "id": "rem-vec0503-k",
+        "kind": "check",
+        "body": "One product entry.",
+        "conceptTag": "vec-compose",
+        "explanationVariants": [
+          "Top-left of [[1, 2], [0, 1]]·[[1, 0], [0, 1]] = 1·1 + 2·0 = 1.",
+          "Row 1 ⟨1, 2⟩ · column 1 ⟨1, 0⟩ = 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute the top-left entry of [[1, 2], [0, 1]]·[[1, 0], [0, 1]].",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "Row 1 · column 1 = 1·1 + 2·0 = 1 (the 2 pairs with 0)."
+            },
+            {
+              "value": 2,
+              "feedback": "Top-left = 1·1 + 2·0 = 1."
+            }
+          ],
+          "fallbackFeedback": "1·1 + 2·0 = 1."
+        }
+      }
+    }
+  ]
+}

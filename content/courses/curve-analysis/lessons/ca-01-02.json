@@ -1,0 +1,312 @@
+{
+  "id": "ca-01-02",
+  "slug": "the-first-derivative-test",
+  "title": "The First-Derivative Test",
+  "courseId": "curve-analysis",
+  "chapterId": "ch1-critical-points",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The verdict is decided by what f′ does on **either side** of the critical point.\n\n**f′ goes + → −** : the curve climbs then falls. A **maximum**.\n**f′ goes − → +** : falls then climbs. A **minimum**.\n**f′ does not change sign** : no extremum at all. A flat pause.\n\nThat is a **sign chart** — the exact machinery you built in `polynomial-rational-analysis`, pointed at f′ instead of f.",
+      "figure": "ca-first-derivative-story"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the sign chart of the DERIVATIVE.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": -2,
+            "mult": 1
+          },
+          {
+            "x": 2,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "f(x) = x³ − 12x, so f′(x) = 3(x + 2)(x − 2). Set the sign of f′ on each interval.",
+        "successFeedback": "+ − +. Read it as a story about f: it CLIMBS, then FALLS, then CLIMBS. So x = −2 (where f′ goes + → −) is a maximum, and x = 2 (where f′ goes − → +) is a minimum. The chart is the same one you have drawn a dozen times — only the function it is pointed at has changed.",
+        "crossFeedback": "Both roots of f′ are single, so f′ must change sign at each one. Two flips, three intervals.",
+        "bounceFeedback": "Neither root is repeated here, so there is no bounce — every root of this f′ is a crossing."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "ca-first-derivative-test",
+      "predict": {
+        "prompt": "f(x) = x³ − 12x, so f′(x) = 3(x + 2)(x − 2), which is negative between −2 and 2. On that stretch the graph of f is…",
+        "options": [
+          {
+            "id": "falling",
+            "label": "Falling"
+          },
+          {
+            "id": "below",
+            "label": "Below the x-axis"
+          },
+          {
+            "id": "both",
+            "label": "Both — negative and falling"
+          }
+        ],
+        "outcomeId": "falling",
+        "reveal": "Falling, and that is all it says. f′ < 0 is a statement about DIRECTION, never about height: at x = −1 this curve sits at +11 and is dropping fast. A chart of f′ can tell you the curve is going down; only a chart of f can tell you where it is."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the verdict.",
+      "conceptTag": "ca-first-derivative-test",
+      "explanationVariants": [
+        "f′ goes from + to − at x = −2, so f climbs into it and falls out: a maximum, of value f(−2) = 16.",
+        "The sign chart of f′ tells you the SHAPE of f. It does not tell you the height — for that you must evaluate f."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 12x, with f′ positive, then negative, then positive. Find the local MAXIMUM value of f.",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "That is WHERE the maximum occurs. The question asks for its VALUE: f(−2) = −8 + 24 = 16."
+          },
+          {
+            "value": -16,
+            "feedback": "That is f(2), the local MINIMUM. The maximum is at x = −2, where f = 16."
+          },
+          {
+            "value": 2,
+            "feedback": "That is where the minimum occurs. The maximum is at x = −2, and its value is 16."
+          }
+        ],
+        "fallbackFeedback": "f′ goes + → − at x = −2, so f(−2) = −8 + 24 = 16 is a local maximum."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-first-derivative-test__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The bounce, and what it means now.",
+      "conceptTag": "ca-first-derivative-test",
+      "explanationVariants": [
+        "f′ = 4x²(x − 3) has a DOUBLE root at 0, so f′ touches zero and comes back the same side — no sign change, no extremum. It is a saddle.",
+        "The multiplicity rule you learned for sign charts now has a calculus meaning: an even root of f′ is a critical point that is NOT an extremum."
+      ],
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 2
+          },
+          {
+            "x": 3,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "f(x) = x⁴ − 4x³, so f′(x) = 4x²(x − 3). Set the signs of f′ — and watch the double root.",
+        "successFeedback": "− − +. The double root at 0 does NOT flip the sign, so f′ is negative on both sides of it: f is falling into x = 0 and still falling out. It is a critical point and it is NOT an extremum — a saddle. Only x = 3, where f′ genuinely crosses, is a minimum. The bounce-versus-cross rule has just become a statement about peaks and valleys.",
+        "crossFeedback": "The root at 3 is single, so f′ must change sign there.",
+        "bounceFeedback": "You flipped the sign across x = 0, but that root of f′ is DOUBLE. f′ touches zero and returns to the side it came from — so f keeps falling, and there is no extremum."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-first-derivative-test__signChart"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the whole first-derivative test is one habit:\n\n**Draw the sign chart of f′. Read the story of f off it.**\n\n+ then − is a peak. − then + is a valley. No change is a saddle. You already own this machinery; it has simply been pointed at a new function.",
+      "figure": "ca-first-derivative-story"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Rising or falling, from the chart.",
+      "conceptTag": "ca-first-derivative-test",
+      "explanationVariants": [
+        "f′ < 0 exactly on (−2, 2), so that is where f is falling.",
+        "The sign chart of f′ is a complete map of where f rises and where it falls."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f′ is positive on (−∞, −2), negative on (−2, 2), positive on (2, ∞). Where is f DECREASING?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "On (−2, 2) — the interval where f′ is negative.",
+            "correct": true,
+            "feedback": "Right. Decreasing is a statement about the SIGN of f′, and nothing else."
+          },
+          {
+            "id": "o2",
+            "label": "On (−∞, −2).",
+            "correct": false,
+            "feedback": "f′ is POSITIVE there, so f is climbing, not falling."
+          },
+          {
+            "id": "o3",
+            "label": "At x = −2 and x = 2.",
+            "correct": false,
+            "feedback": "At those points f′ = 0, so f is momentarily flat — neither rising nor falling. Decreasing happens on the interval BETWEEN them."
+          },
+          {
+            "id": "o4",
+            "label": "Nowhere — f′ is a parabola opening upward.",
+            "correct": false,
+            "feedback": "An upward parabola dips BELOW the axis between its roots, and that dip is exactly where f falls."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-first-derivative-test__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Classify all of them.",
+      "conceptTag": "ca-first-derivative-test",
+      "hints": [
+        "Differentiate and factor: f′(x) = 4x³ − 12x² = 4x²(x − 3).",
+        "Critical points at 0 and 3. Test the sign of f′ on (−∞, 0), (0, 3) and (3, ∞).",
+        "f′ is negative, negative, positive. Only one sign CHANGE."
+      ],
+      "explanationVariants": [
+        "f′ = 4x²(x − 3) is − , − , + across the three intervals. Only x = 3 is a sign change, so there is exactly ONE extremum — a minimum at x = 3.",
+        "x = 0 is a critical point with no sign change: a saddle, not an extremum. Counting it would be the classic error."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x⁴ − 4x³. How many local EXTREMA does it have?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "There are two critical points, but only ONE is an extremum. At x = 0 the derivative touches zero without changing sign — a saddle."
+          },
+          {
+            "value": 0,
+            "feedback": "There is one: at x = 3, f′ crosses from negative to positive, so f falls into it and climbs out. A minimum."
+          },
+          {
+            "value": 3,
+            "feedback": "f′ = 4x²(x − 3) has only two distinct roots, and only one of them is a sign change."
+          }
+        ],
+        "fallbackFeedback": "f′ = 4x²(x−3) goes −, −, +: only x = 3 is a sign change, so there is exactly one extremum (a minimum)."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-first-derivative-test__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The sign chart of f′ IS the shape of f.",
+      "takeaways": [
+        "+ → − is a maximum. − → + is a minimum. No sign change is a saddle, not an extremum.",
+        "An EVEN root of f′ is a critical point with no sign change — the bounce rule, now saying something about peaks.",
+        "You built this machinery in precalculus. Calculus just pointed it at f′."
+      ],
+      "teaser": "Next: what happens at the ends of a closed interval."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-first-derivative-test",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Look at f′ just LEFT of the critical point, and just RIGHT of it. Positive then negative: the curve climbed and then fell, so it is a peak. Negative then positive: a valley. Same sign twice: nothing happened.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which verdict?",
+        "conceptTag": "ca-first-derivative-test",
+        "explanationVariants": [
+          "f′ negative then positive means f fell into the point and climbed out: a minimum.",
+          "The order of the signs is the whole verdict."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f′ is negative just left of c, and positive just right of it. What is at c?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A local minimum",
+              "correct": true,
+              "feedback": "Right — the curve fell in and climbed out, so c is the bottom of a valley."
+            },
+            {
+              "id": "o2",
+              "label": "A local maximum",
+              "correct": false,
+              "feedback": "That would need + then −: climbing in and falling out. Here it is the other way round."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

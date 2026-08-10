@@ -1,0 +1,356 @@
+{
+  "id": "pv1000-01-02",
+  "slug": "trading-up-and-down",
+  "title": "Trading Up and Down",
+  "courseId": "place-value-1000",
+  "chapterId": "ch1-hundreds-tens-and-ones",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "hundred-tens-ones",
+      "body": "The spots run a trading post: 10 ones trade for 1 ten, and 10 tens trade for 1 hundred. The value never changes — only how it's packaged."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Run the trading post yourself — flats are hundreds, rods are tens, cubes are ones.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build 230 any way you like — all flats and rods, or trade a flat down for rods.",
+        "target": 230,
+        "requireStandard": false,
+        "maxHundreds": 3,
+        "maxTens": 19,
+        "maxOnes": 20,
+        "commonBuilds": [
+          {
+            "hundreds": 2,
+            "tens": 3,
+            "ones": 3,
+            "feedback": "That builds 233 — the 3 cubes add 3 extra. 230 ends in a zero: no cubes at all."
+          },
+          {
+            "hundreds": 2,
+            "tens": 0,
+            "ones": 3,
+            "feedback": "That builds 203 — the 3 landed in the ones spot. In 230 the 3 counts RODS (tens), and the ones spot holds the zero."
+          }
+        ],
+        "missFeedback": "Count flats by hundreds, rods by tens: the total must land exactly on 230.",
+        "successFeedback": "230! Whether you used 2 flats and 3 rods, or 1 flat and 13 rods — every trade of 1 flat for 10 rods keeps the value the same. The spots change; the amount never does."
+      },
+      "predict": {
+        "prompt": "Maya builds 230 with 2 flats and 3 rods. Leo uses 1 flat and 13 rods. Who has more?",
+        "options": [
+          {
+            "id": "maya",
+            "label": "Maya has more"
+          },
+          {
+            "id": "leo",
+            "label": "Leo has more"
+          },
+          {
+            "id": "same",
+            "label": "They have the same amount"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "A flat IS ten rods stuck together, so trading 1 flat for 10 rods changes the pieces but never the amount — both builds are exactly 230. That trade is the whole trading post."
+      },
+      "conceptTag": "pv1000-trading",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents trading.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for trading must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines trading."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-trading",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Build a number, all spots filled.",
+      "conceptTag": "pv1000-trading",
+      "explanationVariants": [
+        "7 hundreds, 2 tens, 5 ones = 725.",
+        "Combine the counts in order."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 7 hundreds, 2 tens, and 5 ones?",
+        "answer": 725,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That adds the counts together (7+2+5=14) instead of building the number: 725."
+          },
+          {
+            "value": 527,
+            "feedback": "Keep the order: hundreds first, then tens, then ones: 725, not 527."
+          }
+        ],
+        "fallbackFeedback": "7 hundreds, 2 tens, 5 ones = 725."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000TradingNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Ten hundreds would trade up into 1 thousand — but a 3-digit number stops at 9 hundreds, since 10 hundreds needs a new spot entirely.",
+      "figure": "pv1000-ten-hundreds"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The biggest hundreds digit.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 999, what is the left-most 9 worth?",
+        "answer": 900,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "The left-most 9 is in the HUNDREDS spot: 900, not just 9."
+          },
+          {
+            "value": 90,
+            "feedback": "90 would be the tens spot. The left-most 9 is in hundreds: 900."
+          }
+        ],
+        "fallbackFeedback": "The left-most 9 is in the hundreds spot: 900."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Whichever way you count the parts — hundreds, tens, ones — the total value stays exactly the same underneath.",
+      "figure": "pv1000-same-value"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Build a number with a zero hundreds spot skipped over.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 0 hundreds, 8 tens, and 3 ones?",
+        "answer": 83,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 803,
+            "feedback": "With 0 hundreds, the number is just 2 digits: 83, not 803."
+          },
+          {
+            "value": 11,
+            "feedback": "That adds the counts together (0+8+3=11) instead of building the number: 83."
+          }
+        ],
+        "fallbackFeedback": "0 hundreds, 8 tens, 3 ones = 83."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another digit's worth check.",
+      "conceptTag": "pv1000-digit-worth",
+      "explanationVariants": [
+        "The 2 is in the tens spot: worth 20.",
+        "Check the digit's spot to find its worth."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 726, what is the 2 worth?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The 2 is in the tens spot: 20, not just 2."
+          },
+          {
+            "value": 200,
+            "feedback": "200 would be the hundreds spot. The 2 is in tens: 20."
+          }
+        ],
+        "fallbackFeedback": "The 2 is in the tens spot: 20."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000DigitWorthNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Build a number, another combination.",
+      "conceptTag": "pv1000-trading",
+      "explanationVariants": [
+        "5 hundreds, 9 tens, 1 one = 591.",
+        "Combine the counts in order."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 5 hundreds, 9 tens, and 1 one?",
+        "answer": 591,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "That adds the counts together (5+9+1=15) instead of building the number: 591."
+          },
+          {
+            "value": 519,
+            "feedback": "Keep the order: hundreds, tens, ones: 591, not 519."
+          }
+        ],
+        "fallbackFeedback": "5 hundreds, 9 tens, 1 one = 591."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000TradingNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier build, watch the empty spot.",
+      "conceptTag": "pv1000-trading",
+      "explanationVariants": [
+        "8 hundreds, 0 tens, 6 ones = 806.",
+        "Don't skip the empty tens spot — it holds a 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 8 hundreds, 0 tens, and 6 ones?",
+        "answer": 806,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 86,
+            "feedback": "Don't skip the empty tens spot — it still holds a 0: 806, not 86."
+          },
+          {
+            "value": 860,
+            "feedback": "Keep the order: hundreds, tens, ones. 8 hundreds, 0 tens, 6 ones is 806, not 860."
+          }
+        ],
+        "fallbackFeedback": "8 hundreds, 0 tens, 6 ones = 806."
+      },
+      "hints": [
+        "Hundreds spot: 8.",
+        "Tens spot: 0 (empty, but still counts).",
+        "Ones spot: 6. Put them in order: 806."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000TradingNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "10 ones trade for 1 ten, and 10 tens trade for 1 hundred — the value never changes, only the packaging.",
+      "takeaways": [
+        "Trading up: 10 of a spot becomes 1 of the next spot over.",
+        "A 3-digit number's hundreds digit maxes out at 9.",
+        "Building a number combines hundreds, tens, and ones in order."
+      ],
+      "teaser": "next: counting all the way to 1000."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-trading",
+      "concept": {
+        "id": "rem-ptr-c",
+        "kind": "concept",
+        "body": "Build a number by combining hundreds, tens, and ones counts in order, watching for empty spots. 7 hundreds, 2 tens, 5 ones = 725."
+      },
+      "check": {
+        "id": "rem-ptr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-trading",
+        "explanationVariants": [
+          "7 hundreds, 2 tens, 5 ones = 725.",
+          "Combine the counts in order."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What number has 7 hundreds, 2 tens, and 5 ones?",
+          "answer": 725,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 14,
+              "feedback": "Build the number, don't add the counts: 725."
+            },
+            {
+              "value": 527,
+              "feedback": "Keep hundreds first: 725, not 527."
+            }
+          ],
+          "fallbackFeedback": "725."
+        }
+      }
+    },
+    {
+      "conceptTag": "pv1000-digit-worth",
+      "concept": {
+        "id": "rem-ptr-dw-c",
+        "kind": "concept",
+        "body": "A digit's worth depends on its spot: hundreds, tens, or ones. In 350, the 3 sits in the hundreds spot, so it's worth 3 hundreds = 300."
+      },
+      "check": {
+        "id": "rem-ptr-dw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-digit-worth",
+        "explanationVariants": [
+          "The 3 is in the hundreds spot: worth 300.",
+          "Check the digit's spot to find its worth."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the number 350, what is the 3 worth?",
+          "answer": 300,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "The 3 is in the hundreds spot: 300, not just 3."
+            },
+            {
+              "value": 30,
+              "feedback": "30 would be the tens spot. The 3 is in hundreds: 300."
+            }
+          ],
+          "fallbackFeedback": "300."
+        }
+      }
+    }
+  ]
+}

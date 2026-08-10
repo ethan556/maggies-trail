@@ -1,0 +1,621 @@
+{
+  "id": "fg-03-03",
+  "slug": "comparing-rate-and-initial-value",
+  "title": "Comparing Rate and Initial Value",
+  "courseId": "functions-g8",
+  "chapterId": "ch3-comparing-functions",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A full comparison looks at BOTH the rate of change AND the initial value. Two functions can start at different values and grow at different speeds — comparing both tells the complete story of how they relate.",
+      "figure": "fg-compare-rates"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compare initial values.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Function A is y = 2x + 10. Function B is the table (0,3), (1,5), (2,7). Which starts higher?",
+        "task": "compareStart",
+        "lines": [
+          {
+            "id": "a",
+            "label": "Function A",
+            "m": 2,
+            "b": 10,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x + 10",
+            "tablePoints": []
+          },
+          {
+            "id": "b",
+            "label": "Function B",
+            "m": 2,
+            "b": 3,
+            "sourceKind": "table",
+            "sourceText": "(0, 3), (1, 5), (2, 7)",
+            "tablePoints": [
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                7
+              ]
+            ]
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "line:a:intercept",
+          "line:b:intercept",
+          "compare:starts"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "A, because its initial value is 10 vs B's 3",
+            "claim": "start:higher:a",
+            "feedback": "Right — A starts at 10 (the +10), B starts at 3 (its x=0 output)."
+          },
+          {
+            "id": "b",
+            "label": "B, because its table starts at (0,3)",
+            "claim": "misconception:b",
+            "feedback": "(0,3) means B's initial value is 3 — lower than A's initial value of 10."
+          },
+          {
+            "id": "c",
+            "label": "They start at the same value",
+            "claim": "misconception:c",
+            "feedback": "A starts at 10, B starts at 3 — not the same."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without graphing",
+            "claim": "misconception:d",
+            "feedback": "You can read both directly: A's initial value is 10, B's is 3."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — A starts at 10 (the +10), B starts at 3 (its x=0 output)."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Rate and initial value are independent: a function can start LOWER but grow FASTER, eventually overtaking one that started higher. Comparing both is what reveals this.",
+      "figure": "fg-compare-rates"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compare both features.",
+      "conceptTag": "fg-compare-full",
+      "explanationVariants": [
+        "A: y=2x+10 has rate 2, initial value 10. B: (0,3),(1,7),(2,11) has rate 4, initial value 3. B starts lower but grows faster.",
+        "A starts higher (10 vs 3) but B grows faster (rate 4 vs 2)."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A is y = 2x + 10 (rate 2, starts at 10). B is (0,3), (1,7), (2,11) (rate 4, starts at 3). Which statement is TRUE?",
+        "task": "compareRateAndStart",
+        "lines": [
+          {
+            "id": "a",
+            "label": "Function A",
+            "m": 2,
+            "b": 10,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x + 10",
+            "tablePoints": []
+          },
+          {
+            "id": "b",
+            "label": "Function B",
+            "m": 4,
+            "b": 3,
+            "sourceKind": "table",
+            "sourceText": "(0, 3), (1, 7), (2, 11)",
+            "tablePoints": [
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                2,
+                11
+              ]
+            ]
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 6,
+        "requiredStageKeys": [
+          "line:a:slope",
+          "line:a:intercept",
+          "line:b:slope",
+          "line:b:intercept",
+          "compare:rates",
+          "compare:starts"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "A starts higher, but B grows faster",
+            "claim": "compare:rate:b:start:a",
+            "feedback": "Right — A's initial value 10 beats B's 3, but B's rate 4 beats A's 2."
+          },
+          {
+            "id": "b",
+            "label": "A starts higher AND grows faster",
+            "claim": "misconception:b",
+            "feedback": "A starts higher (10 vs 3), but B grows FASTER (rate 4 vs A's 2)."
+          },
+          {
+            "id": "c",
+            "label": "B starts higher AND grows faster",
+            "claim": "misconception:c",
+            "feedback": "B grows faster (rate 4), but A starts higher (10 vs B's 3)."
+          },
+          {
+            "id": "d",
+            "label": "They're identical functions",
+            "claim": "misconception:d",
+            "feedback": "They differ in both rate (2 vs 4) and initial value (10 vs 3)."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — A's initial value 10 beats B's 3, but B's rate 4 beats A's 2."
+      },
+      "variant": {
+        "gen": "g8-fn-compare-full",
+        "form": "fgCompareRateStart"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which is which.",
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Function A 'starts at 8 and gains 1 each step.' Function B is y = 3x + 2. Compare them.",
+        "task": "compareRateAndStart",
+        "lines": [
+          {
+            "id": "a",
+            "label": "Function A",
+            "m": 1,
+            "b": 8,
+            "sourceKind": "context",
+            "sourceText": "starts at 8 and gains 1 each step",
+            "tablePoints": []
+          },
+          {
+            "id": "b",
+            "label": "Function B",
+            "m": 3,
+            "b": 2,
+            "sourceKind": "equation",
+            "sourceText": "y = 3x + 2",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 6,
+        "requiredStageKeys": [
+          "line:a:slope",
+          "line:a:intercept",
+          "line:b:slope",
+          "line:b:intercept",
+          "compare:rates",
+          "compare:starts"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "A starts higher (8 vs 2), but B grows faster (3 vs 1)",
+            "claim": "compare:rate:b:start:a",
+            "feedback": "Right — A's initial value 8 beats B's 2, but B's rate 3 beats A's 1."
+          },
+          {
+            "id": "b",
+            "label": "A starts higher AND grows faster",
+            "claim": "misconception:b",
+            "feedback": "A starts higher, but B grows faster (rate 3 vs A's 1)."
+          },
+          {
+            "id": "c",
+            "label": "They start at the same value",
+            "claim": "misconception:c",
+            "feedback": "A starts at 8, B starts at 2 (its +2) — not the same."
+          },
+          {
+            "id": "d",
+            "label": "B starts higher because its equation is bigger",
+            "claim": "misconception:d",
+            "feedback": "B's initial value is just 2 (the +2), lower than A's 8."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — A's initial value 8 beats B's 2, but B's rate 3 beats A's 1."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same rate, different start.",
+      "conceptTag": "fg-compare-full",
+      "explanationVariants": [
+        "A: y=2x+1 (rate 2, start 1). B: (0,5),(1,7),(2,9) (rate 2, start 5). Same rate, but B starts higher.",
+        "Both climb 2 per step, but B's initial value 5 beats A's 1."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "A is y = 2x + 1. B is (0,5), (1,7), (2,9). Which is TRUE?",
+        "task": "compareRateAndStart",
+        "lines": [
+          {
+            "id": "a",
+            "label": "Function A",
+            "m": 2,
+            "b": 1,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x + 1",
+            "tablePoints": []
+          },
+          {
+            "id": "b",
+            "label": "Function B",
+            "m": 2,
+            "b": 5,
+            "sourceKind": "table",
+            "sourceText": "(0, 5), (1, 7), (2, 9)",
+            "tablePoints": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                2,
+                9
+              ]
+            ]
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 6,
+        "requiredStageKeys": [
+          "line:a:slope",
+          "line:a:intercept",
+          "line:b:slope",
+          "line:b:intercept",
+          "compare:rates",
+          "compare:starts"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "Same rate of change, but B starts higher",
+            "claim": "compare:rate:tie:start:b",
+            "feedback": "Right — both have rate 2, but B's initial value 5 beats A's 1."
+          },
+          {
+            "id": "b",
+            "label": "B grows faster than A",
+            "claim": "misconception:b",
+            "feedback": "Both grow at rate 2 — the same speed; they differ only in starting value."
+          },
+          {
+            "id": "c",
+            "label": "A starts higher than B",
+            "claim": "misconception:c",
+            "feedback": "A starts at 1, B starts at 5 — B starts higher."
+          },
+          {
+            "id": "d",
+            "label": "They are the same function",
+            "claim": "misconception:d",
+            "feedback": "Same rate, but different initial values (1 vs 5), so different functions."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — both have rate 2, but B's initial value 5 beats A's 1."
+      },
+      "variant": {
+        "gen": "g8-fn-compare-full",
+        "form": "fgCompareSameRate"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read both from a story.",
+      "conceptTag": "fg-compare-full",
+      "variant": {
+        "gen": "g8-fn-compare-context",
+        "form": "fgCompareLowerRate"
+      },
+      "explanationVariants": [
+        "Plan A: $20 join fee + $5/month → initial value 20, rate 5. Plan B: $50 join + $2/month → initial value 50, rate 2. A is cheaper to start growing per month but B starts higher.",
+        "A starts lower (20 vs 50) but costs more per month (5 vs 2)."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Gym A: $20 to join, $5 per month. Gym B: $50 to join, $2 per month. Which has the LOWER monthly rate?",
+        "task": "compareRate",
+        "lines": [
+          {
+            "id": "a",
+            "label": "Gym A",
+            "m": 5,
+            "b": 20,
+            "sourceKind": "context",
+            "sourceText": "$20 to join + $5/month",
+            "tablePoints": []
+          },
+          {
+            "id": "b",
+            "label": "Gym B",
+            "m": 2,
+            "b": 50,
+            "sourceKind": "context",
+            "sourceText": "$50 to join + $2/month",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "lower",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "line:a:slope",
+          "line:b:slope",
+          "compare:rates"
+        ],
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "B, at $2 per month vs A's $5",
+            "claim": "rate:lower:b",
+            "feedback": "Right — B's rate is $2/month, lower than A's $5/month (even though B's join fee is higher)."
+          },
+          {
+            "id": "b",
+            "label": "A, at $5 per month",
+            "claim": "misconception:b",
+            "feedback": "A's rate is $5/month, HIGHER than B's $2 — B has the lower monthly rate."
+          },
+          {
+            "id": "c",
+            "label": "They cost the same per month",
+            "claim": "misconception:c",
+            "feedback": "A is $5/month, B is $2/month — not the same."
+          },
+          {
+            "id": "d",
+            "label": "B, because its join fee is higher",
+            "claim": "misconception:d",
+            "feedback": "The join fee is the initial value, not the monthly rate — B's rate is $2, which is what makes it lower."
+          }
+        ],
+        "numericErrors": [],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Use the affine relationship states to support your answer.",
+        "answerMode": "choice",
+        "successFeedback": "Right — B's rate is $2/month, lower than A's $5/month (even though B's join fee is higher)."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Decide which is cheaper long-term.",
+      "conceptTag": "fg-compare-full",
+      "variant": {
+        "gen": "g8-fn-compare-context",
+        "form": "fgCompareBreakEven"
+      },
+      "explanationVariants": [
+        "Plan A: y=5x+20. Plan B: y=2x+50. They're equal when 5x+20=2x+50 → 3x=30 → x=10 months. Before 10 months A is cheaper; after, B is cheaper.",
+        "Set the costs equal: 5x+20=2x+50 gives x=10, the month where they cross."
+      ],
+      "widget": {
+        "type": "affineRelationshipLab",
+        "prompt": "Plan A costs y = 5x + 20 and Plan B costs y = 2x + 50 after x months. After how many months do they cost the SAME?",
+        "task": "intersectionX",
+        "lines": [
+          {
+            "id": "a",
+            "label": "Plan A",
+            "m": 5,
+            "b": 20,
+            "sourceKind": "equation",
+            "sourceText": "y = 5x + 20",
+            "tablePoints": []
+          },
+          {
+            "id": "b",
+            "label": "Plan B",
+            "m": 2,
+            "b": 50,
+            "sourceKind": "equation",
+            "sourceText": "y = 2x + 50",
+            "tablePoints": []
+          }
+        ],
+        "rateGoal": "greater",
+        "requiredExplorations": 3,
+        "requiredStageKeys": [
+          "intersection:equate",
+          "intersection:x",
+          "intersection:verify"
+        ],
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 30,
+            "feedback": "That's the difference in join fees (50−20=30), not the crossing month — set 5x+20=2x+50 and solve: 3x=30, x=10."
+          },
+          {
+            "value": 23.3,
+            "feedback": "Check the setup — 5x+20=2x+50 gives 3x=30, so x=10, not 70/3."
+          }
+        ],
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Set the costs equal: 5x+20 = 2x+50, so 3x = 30, giving x = 10 months.",
+        "answerMode": "numeric",
+        "successFeedback": "Set the costs equal: 5x+20 = 2x+50, so 3x = 30, giving x = 10 months."
+      },
+      "hints": [
+        "Set the two cost expressions equal to each other.",
+        "5x + 20 = 2x + 50 — subtract 2x from both sides: 3x + 20 = 50.",
+        "Subtract 20: 3x = 30, so x = 10 months."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A complete comparison weighs both rate of change and initial value.",
+      "takeaways": [
+        "Rate and initial value are independent features to compare.",
+        "A function can start lower yet grow faster, overtaking later.",
+        "Setting two linear functions equal finds where they meet."
+      ],
+      "teaser": "Next chapter: telling linear functions from nonlinear ones."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-compare-full",
+      "concept": {
+        "id": "rem-fg0303-c",
+        "kind": "concept",
+        "body": "A full comparison of two functions weighs BOTH rate of change and initial value — they're independent. A function can start lower but grow faster, overtaking later."
+      },
+      "check": {
+        "id": "rem-fg0303-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-compare-full",
+        "explanationVariants": [
+          "A: y=x+9 (rate 1, start 9). B: y=4x+1 (rate 4, start 1). A starts higher, B grows faster.",
+          "A's initial value 9 beats B's 1, but B's rate 4 beats A's 1."
+        ],
+        "widget": {
+          "type": "affineRelationshipLab",
+          "prompt": "A is y = x + 9. B is y = 4x + 1. Which is TRUE?",
+          "task": "compareRateAndStart",
+          "lines": [
+            {
+              "id": "a",
+              "label": "Function A",
+              "m": 1,
+              "b": 9,
+              "sourceKind": "equation",
+              "sourceText": "y = x + 9",
+              "tablePoints": []
+            },
+            {
+              "id": "b",
+              "label": "Function B",
+              "m": 4,
+              "b": 1,
+              "sourceKind": "equation",
+              "sourceText": "y = 4x + 1",
+              "tablePoints": []
+            }
+          ],
+          "rateGoal": "greater",
+          "requiredExplorations": 6,
+          "requiredStageKeys": [
+            "line:a:slope",
+            "line:a:intercept",
+            "line:b:slope",
+            "line:b:intercept",
+            "compare:rates",
+            "compare:starts"
+          ],
+          "tolerance": 0,
+          "choices": [
+            {
+              "id": "a",
+              "label": "A starts higher, but B grows faster",
+              "claim": "compare:rate:b:start:a",
+              "feedback": "Right — A's initial value 9 beats B's 1, but B's rate 4 beats A's 1."
+            },
+            {
+              "id": "b",
+              "label": "A starts higher AND grows faster",
+              "claim": "misconception:b",
+              "feedback": "A starts higher, but B grows faster (rate 4 vs A's 1)."
+            },
+            {
+              "id": "c",
+              "label": "B starts higher AND grows faster",
+              "claim": "misconception:c",
+              "feedback": "B grows faster, but A starts higher (9 vs B's 1)."
+            },
+            {
+              "id": "d",
+              "label": "They are the same function",
+              "claim": "misconception:d",
+              "feedback": "They differ in both rate (1 vs 4) and initial value (9 vs 1)."
+            }
+          ],
+          "numericErrors": [],
+          "pointErrors": [],
+          "authoredStages": [],
+          "explorationFeedback": "Inspect every designated affine state before checking.",
+          "fallbackFeedback": "Use the affine relationship states to support your answer.",
+          "answerMode": "choice",
+          "successFeedback": "Right — A's initial value 9 beats B's 1, but B's rate 4 beats A's 1."
+        }
+      }
+    }
+  ]
+}

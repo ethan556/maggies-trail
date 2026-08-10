@@ -1,0 +1,441 @@
+{
+  "id": "g5l-03-02",
+  "slug": "checking-and-interpreting",
+  "title": "Checking and Interpreting",
+  "courseId": "long-division-g5",
+  "chapterId": "ch3-adjusting-and-checking",
+  "minutes": 7,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "The check has two halves: quotient times divisor plus remainder must rebuild the dividend, and the remainder must be smaller than the divisor.",
+      "narration": "The check has two halves: quotient times divisor plus remainder must rebuild the dividend, and the remainder must be smaller than the divisor."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g5ld-check",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "Quotient 23, divisor 24, remainder 8 — slide to the dividend it rebuilds.",
+        "min": 50,
+        "max": 2000,
+        "start": 50,
+        "target": 560,
+        "acceptFactor": 2,
+        "unitLabel": "units",
+        "ticks": [
+          50,
+          1025,
+          2000
+        ],
+        "lowFeedback": "Too low — twenty-three twenty-fours alone already exceed five hundred.",
+        "highFeedback": "Too high — 23 × 24 is 552, and the remainder adds only eight more.",
+        "successFeedback": "560 — because 23 × 24 + 8 = 560, which is exactly the dividend."
+      },
+      "predict": {
+        "prompt": "Quotient 23, divisor 24, remainder 8 — how do you check?",
+        "options": [
+          {
+            "id": "rebuild",
+            "label": "23 × 24 + 8"
+          },
+          {
+            "id": "product",
+            "label": "23 × 24 only"
+          }
+        ],
+        "outcomeId": "rebuild",
+        "reveal": "The remainder is part of the dividend, so it must be added back for the rebuild to work."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld check.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld check always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-check",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g5ld-check",
+      "explanationVariants": [
+        "Rebuild the dividend.",
+        "Remainder under divisor."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A division gives quotient 23 remainder 8, with divisor 24. How do you check it?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "23 × 24 + 8 should rebuild the dividend, and 8 must be under 24",
+            "correct": true,
+            "feedback": "Correct — the check has two halves: the rebuild, and the remainder being too small to form another group."
+          },
+          {
+            "id": "o1",
+            "label": "Just confirm 23 × 24 equals the dividend",
+            "correct": false,
+            "feedback": "That ignores the remainder, which is part of the dividend and must be added back."
+          },
+          {
+            "id": "o2",
+            "label": "Check that 8 is smaller than 23",
+            "correct": false,
+            "feedback": "The remainder is compared with the DIVISOR, not the quotient — otherwise another group would fit."
+          },
+          {
+            "id": "o3",
+            "label": "Divide again and hope for the same answer",
+            "correct": false,
+            "feedback": "Repeating the method repeats any mistake; multiplying back tests it independently."
+          }
+        ]
+      },
+      "hints": [
+        "Multiply back, add the remainder.",
+        "It must rebuild.",
+        "Remainder under the divisor."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld check.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld check always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-check",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "If the remainder reaches the divisor, another whole group fits and the quotient was too small — the second half of the check catches exactly that.",
+      "narration": "If the remainder reaches the divisor, another whole group fits and the quotient was too small — the second half of the check catches exactly that."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g5ld-check",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "Quotient 23, divisor 24, remainder 8 — slide to the dividend it rebuilds.",
+        "min": 50,
+        "max": 2000,
+        "start": 50,
+        "target": 560,
+        "acceptFactor": 2,
+        "unitLabel": "units",
+        "ticks": [
+          50,
+          1025,
+          2000
+        ],
+        "lowFeedback": "Too low — twenty-three twenty-fours alone already exceed five hundred.",
+        "highFeedback": "Too high — 23 × 24 is 552, and the remainder adds only eight more.",
+        "successFeedback": "560 — because 23 × 24 + 8 = 560, which is exactly the dividend."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld check.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld check always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-check",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g5ld-check",
+      "explanationVariants": [
+        "Whole groups first.",
+        "Then what is left."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Divide 438 by 22. The quotient is 19. What is the remainder?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "A remainder never reaches the divisor — 22 more would form one further whole group."
+          },
+          {
+            "value": 19,
+            "feedback": "19 counts the whole groups; the remainder is what is left after them."
+          }
+        ],
+        "fallbackFeedback": "Ask how many whole groups of the divisor the dividend holds, then check what is left over.",
+        "successFeedback": "Correct — 20."
+      },
+      "hints": [
+        "Multiply back, add the remainder.",
+        "It must rebuild.",
+        "Remainder under the divisor."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld check.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld check always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-check",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbRemaindersNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g5ld-check",
+      "explanationVariants": [
+        "Some stories round up.",
+        "Nothing left behind."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 435 ÷ 30 rounded up — the containers needed when nothing may be left behind.",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 full containers leave 15 behind, and nothing may be left."
+          },
+          {
+            "value": 18,
+            "feedback": "That value does not follow from how many whole groups of the divisor the dividend contains."
+          }
+        ],
+        "fallbackFeedback": "Ask how many whole groups of the divisor the dividend holds, then check what is left over.",
+        "successFeedback": "Correct — 15."
+      },
+      "hints": [
+        "Multiply back, add the remainder.",
+        "It must rebuild.",
+        "Remainder under the divisor."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld check.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld check always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-check",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbInterpretRemaindersNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g5ld-check",
+      "explanationVariants": [
+        "Multiply back to confirm.",
+        "Add the remainder."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 29 × 23 — multiplying the quotient back by the divisor to check.",
+        "answer": 667,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 52,
+            "feedback": "Adding does not undo division; multiplying the quotient by the divisor must rebuild the dividend."
+          },
+          {
+            "value": 644,
+            "feedback": "That is one group short — the quotient counts 29 groups, not 28."
+          }
+        ],
+        "fallbackFeedback": "Ask how many whole groups of the divisor the dividend holds, then check what is left over.",
+        "successFeedback": "Correct — 667."
+      },
+      "hints": [
+        "Multiply back, add the remainder.",
+        "It must rebuild.",
+        "Remainder under the divisor."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld check.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld check always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-check",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbMultiplyTensNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "Multiply back and add the remainder.",
+        "It must rebuild the dividend.",
+        "A remainder must stay under the divisor."
+      ],
+      "teaser": "course complete: estimated, batched, formalised, adjusted, and checked."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g5ld-check",
+      "concept": {
+        "id": "rem-g5ld-check-c",
+        "kind": "concept",
+        "body": "If the remainder reaches the divisor, another whole group fits and the quotient was too small — the second half of the check catches exactly that.",
+        "narration": "If the remainder reaches the divisor, another whole group fits and the quotient was too small — the second half of the check catches exactly that."
+      },
+      "check": {
+        "id": "rem-g5ld-check-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g5ld-check",
+        "explanationVariants": [
+          "Rebuild the dividend.",
+          "Remainder under divisor."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A division gives quotient 23 remainder 8, with divisor 24. How do you check it?",
+          "options": [
+            {
+              "id": "o0",
+              "label": "23 × 24 + 8 should rebuild the dividend, and 8 must be under 24",
+              "correct": true,
+              "feedback": "Correct — the check has two halves: the rebuild, and the remainder being too small to form another group."
+            },
+            {
+              "id": "o1",
+              "label": "Just confirm 23 × 24 equals the dividend",
+              "correct": false,
+              "feedback": "That ignores the remainder, which is part of the dividend and must be added back."
+            },
+            {
+              "id": "o2",
+              "label": "Check that 8 is smaller than 23",
+              "correct": false,
+              "feedback": "The remainder is compared with the DIVISOR, not the quotient — otherwise another group would fit."
+            },
+            {
+              "id": "o3",
+              "label": "Divide again and hope for the same answer",
+              "correct": false,
+              "feedback": "Repeating the method repeats any mistake; multiplying back tests it independently."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

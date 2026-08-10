@@ -1,0 +1,269 @@
+{
+ "id": "lg-04-02",
+ "slug": "the-natural-log",
+ "title": "The Natural Log",
+ "courseId": "logarithms",
+ "chapterId": "ch4-the-natural-base-e",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every base gets a log; e's is famous enough to earn its own name: **ln x = log_e x**, the natural log. Same machine as Chapter 1 — ln x asks 'e to what power gives x?' So **ln 1 = 0**, **ln e = 1**, and ln(e⁵) = 5. On calculators, ln sits right beside log.",
+   "figure": "lg-ln"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The instant values.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Evaluate ln(e⁷).",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2.718,
+      "feedback": "ln UNDOES e-to-the: the answer is the exponent itself, 7."
+     },
+     {
+      "value": 0,
+      "feedback": "ln 1 = 0 — but this input is e⁷, so ln returns its exponent: 7."
+     }
+    ],
+    "fallbackFeedback": "ln(e⁷) = 7 — the log extracts the exponent."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "ln and eˣ **undo each other in both directions**: ln(eˣ) = x and e^(ln x) = x (for x > 0). And every property from Chapter 2 carries over unchanged: ln(ab) = ln a + ln b, ln(a/b) = ln a − ln b, ln(aⁿ) = n ln a. Nothing new to memorize — just a new base wearing a short name.",
+   "figure": "lg-ln-undo"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Undo in the other direction.",
+   "conceptTag": "lg-ln",
+   "explanationVariants": [
+    "e^(ln 5) = 5 — exponentiating undoes the log exactly.",
+    "The two functions are inverses: composition returns the input."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Evaluate e^(ln 5).",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1.609,
+      "feedback": "1.609 ≈ ln 5 alone — feeding it back through eˣ returns the ORIGINAL 5."
+     },
+     {
+      "value": 148,
+      "feedback": "148 ≈ e⁵ — the exponent here is ln 5, not 5, so the pair cancels to 5."
+     }
+    ],
+    "fallbackFeedback": "e^(ln 5) = 5 — inverse functions cancel."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-ln__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Properties, natural edition.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Rewrite ln(x³) using the power property.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "3 ln x",
+      "correct": true,
+      "feedback": "Right — the exponent slides down front, exactly as with any log."
+     },
+     {
+      "id": "o2",
+      "label": "(ln x)³",
+      "correct": false,
+      "feedback": "The power moves OUT of the log as a multiplier — it doesn't cube the whole log."
+     },
+     {
+      "id": "o3",
+      "label": "ln 3 + ln x",
+      "correct": false,
+      "feedback": "That expands a PRODUCT 3x — here 3 is an exponent: it becomes a coefficient."
+     },
+     {
+      "id": "o4",
+      "label": "x³/e",
+      "correct": false,
+      "feedback": "ln is a log, not division by e — the power property gives 3 ln x."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Expand with ln.",
+   "conceptTag": "lg-ln",
+   "explanationVariants": [
+    "ln(5x/y) = ln 5 + ln x − ln y: quotient splits, then the product.",
+    "Same expand pipeline as base 10 — outside-in."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Expand fully: ln(5x/y).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "ln 5 + ln x − ln y",
+      "correct": true,
+      "feedback": "Right — quotient first (− ln y), then the product (ln 5 + ln x)."
+     },
+     {
+      "id": "o2",
+      "label": "ln 5 + ln x + ln y",
+      "correct": false,
+      "feedback": "The y sits UNDER the fraction — division subtracts: − ln y."
+     },
+     {
+      "id": "o3",
+      "label": "ln 5 · ln x − ln y",
+      "correct": false,
+      "feedback": "Products inside become SUMS outside — logs never multiply each other here."
+     },
+     {
+      "id": "o4",
+      "label": "5 ln x − ln y",
+      "correct": false,
+      "feedback": "The 5 multiplies x (it isn't an exponent) — it splits off as its own ln 5."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-ln__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Evaluate with the given value.",
+   "conceptTag": "lg-ln",
+   "explanationVariants": [
+    "ln 8 = ln(2³) = 3 ln 2 ≈ 3 · 0.693 = 2.079.",
+    "Rewrite 8 as a power of 2 to reuse the given ln 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Given ln 2 ≈ 0.693, evaluate ln 8 to 3 decimal places.",
+    "answer": 2.079,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0.693,
+      "feedback": "8 = 2³, so ln 8 = 3 ln 2 — triple the given value: 2.079."
+     },
+     {
+      "value": 5.545,
+      "feedback": "That's 8 · 0.693 — the POWER property multiplies by the exponent 3, not by 8."
+     }
+    ],
+    "fallbackFeedback": "ln 8 = 3 ln 2 ≈ 2.079."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-ln__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full natural-log fluency.",
+   "conceptTag": "lg-ln",
+   "explanationVariants": [
+    "One route: the insides multiply to e⁷, so ln gives 7. Another: ln e³ + ln e⁴ = 3 + 4 = 7 — both agree.",
+    "Product property or exponent rules — same 7."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Evaluate ln(e³ · e⁴).",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "The product property ADDS the logs (3 + 4 = 7) — it never multiplies them."
+     },
+     {
+      "value": 1097,
+      "feedback": "That's ≈ e⁷ itself — ln extracts the EXPONENT: 7."
+     }
+    ],
+    "fallbackFeedback": "ln e³ + ln e⁴ = 3 + 4 = 7."
+   },
+   "hints": [
+    "Split with the product property: ln e³ + ln e⁴.",
+    "Each term is its own exponent: 3 and 4.",
+    "3 + 4 = 7."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-ln__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "ln is log base e — same machine, same properties, famous base.",
+   "takeaways": [
+    "ln 1 = 0, ln e = 1, ln(eˣ) = x, e^(ln x) = x.",
+    "All three log properties carry over verbatim.",
+    "Rewrite inputs as powers to reuse given ln values."
+   ],
+   "teaser": "Next: solving equations where e and ln hold the unknown."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-ln",
+   "concept": {
+    "id": "rem-lg0402-c",
+    "kind": "concept",
+    "body": "One question, e's version: ln x asks 'e to what power gives x?' For ln e: e to what power gives e?"
+   },
+   "check": {
+    "id": "rem-lg0402-k",
+    "kind": "check",
+    "body": "Answer it.",
+    "conceptTag": "lg-ln",
+    "explanationVariants": [
+     "ln e = 1 — the first power.",
+     "e¹ = e, so the exponent ln finds is 1."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Evaluate ln e.",
+     "answer": 1,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "ln 1 = 0 — but the input here is e itself, and e¹ = e: the answer is 1."
+      },
+      {
+       "value": 2.718,
+       "feedback": "2.718 is e's VALUE — ln asks for the exponent that produces it: 1."
+      }
+     ],
+     "fallbackFeedback": "e¹ = e → ln e = 1."
+    }
+   }
+  }
+ ]
+}

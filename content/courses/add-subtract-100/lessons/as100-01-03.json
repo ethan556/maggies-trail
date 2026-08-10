@@ -1,0 +1,355 @@
+{
+  "id": "as100-01-03",
+  "slug": "choose-your-strategy",
+  "title": "Choose Your Strategy",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch1-fluency-20",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You own four tools: doubles, near doubles, make ten, count on. Pick the fastest for each fact.",
+      "narration": "You own four tools: doubles, near doubles, make ten, count on. Pick the fastest for each fact.",
+      "figure": "as100-four-tools"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each fact to its fastest tool.",
+      "conceptTag": "fluency-20",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Which strategy fits each fact best?",
+        "left": [
+          {
+            "id": "f66",
+            "label": "6 + 6"
+          },
+          {
+            "id": "f78",
+            "label": "7 + 8"
+          },
+          {
+            "id": "f95",
+            "label": "9 + 5"
+          },
+          {
+            "id": "f92",
+            "label": "9 + 2"
+          }
+        ],
+        "right": [
+          {
+            "id": "sdbl",
+            "label": "double"
+          },
+          {
+            "id": "snear",
+            "label": "near double"
+          },
+          {
+            "id": "sten",
+            "label": "make ten"
+          },
+          {
+            "id": "scnt",
+            "label": "count on"
+          }
+        ],
+        "pairs": {
+          "f66": "sdbl",
+          "f78": "snear",
+          "f95": "sten",
+          "f92": "scnt"
+        },
+        "pairErrors": [
+          {
+            "left": "f78",
+            "right": "sdbl",
+            "feedback": "7 and 8 aren't the same number — they're neighbors. That's a NEAR double."
+          },
+          {
+            "left": "f92",
+            "right": "sten",
+            "feedback": "Make ten works, but adding just 2? Counting on is faster: 10, 11."
+          }
+        ],
+        "missFeedback": "Same numbers → double. Neighbors → near double. Big + medium → make ten. Adding 1–3 → count on.",
+        "successFeedback": "Four facts, four right tools — that's fluency!"
+      },
+      "predict": {
+        "prompt": "For 9 + 2: count on from 9, or make a ten?",
+        "options": [
+          {
+            "id": "count",
+            "label": "Count on — just 2 quick hops"
+          },
+          {
+            "id": "ten",
+            "label": "Make ten — it's always fastest"
+          },
+          {
+            "id": "double",
+            "label": "Use a double"
+          }
+        ],
+        "outcomeId": "count",
+        "reveal": "With only 2 to add, two hops beat rebuilding: 9… 10, 11. Make-ten earns its keep when the second number is big enough to split (like 9 + 5). Strategies fit facts — not the other way round."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Quick one.",
+      "conceptTag": "fluency-20",
+      "explanationVariants": [
+        "6 + 6 is a double: 12.",
+        "Two 6s make 12, instantly."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "6 + 6 = ?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "One over — that's 6 + 7. The double 6 + 6 is 12."
+          },
+          {
+            "value": 11,
+            "feedback": "One short — that's 5 + 6. The double 6 + 6 is 12."
+          }
+        ],
+        "fallbackFeedback": "Double 6 is 12."
+      },
+      "hints": [
+        "Same number twice — a double.",
+        "6 and 6.",
+        "12."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Fluency20Numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Speed comes from choosing, not rushing. See the fact, name the tool, answer.",
+      "narration": "Speed comes from choosing, not rushing. See the fact, name the tool, answer.",
+      "figure": "as100-name-tool"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Make ten, fast.",
+      "conceptTag": "fluency-20",
+      "widget": {
+        "type": "tenFrame",
+        "prompt": "9 + 5: the frame holds 9. Fill it to ten, then picture the 4 left over.",
+        "target": 10,
+        "preFilled": 9,
+        "addColor": "tangerine",
+        "commonCounts": [
+          {
+            "count": 9,
+            "feedback": "The frame still shows 9 — add one to make ten, leaving 4 outside: 14."
+          },
+          {
+            "count": 8,
+            "feedback": "That removed one! Fill UP to ten; the leftover 4 makes 14."
+          }
+        ],
+        "missFeedback": "One dot fills the frame to 10; 4 of the 5 remain: 14.",
+        "successFeedback": "10 and 4 left over — 9 + 5 = 14!"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents fluency 20.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for fluency 20 must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines fluency 20."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:fluency-20",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Finish that fact.",
+      "conceptTag": "fluency-20",
+      "explanationVariants": [
+        "9 + 5: give 1 to make ten, 4 left: 14.",
+        "9 + 1 = 10, and the remaining 4 makes 14."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 + 5 = ?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "One short. 9 takes 1 from the 5 to make ten; 4 remain: 14."
+          },
+          {
+            "value": 15,
+            "feedback": "One over — that's 10 + 5. Here 9 + 5 = 14."
+          }
+        ],
+        "fallbackFeedback": "Make ten: 9 + 1 = 10, plus 4 is 14."
+      },
+      "hints": [
+        "Make ten from 9.",
+        "Give 1 of the 5.",
+        "10 + 4 = 14."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Fluency20Numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Tool check.",
+      "conceptTag": "fluency-20",
+      "explanationVariants": [
+        "9 + 2 adds just 2 — counting on is quickest: 10, 11.",
+        "For tiny adds, count on from the bigger number: 9… 10, 11."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What's the FASTEST way to solve 9 + 2?",
+        "options": [
+          {
+            "id": "a",
+            "label": "count on: 10, 11",
+            "correct": true,
+            "feedback": "Yes — adding just 2, count on from 9: 10, 11."
+          },
+          {
+            "id": "b",
+            "label": "double 9, subtract 7",
+            "feedback": "18 − 7 works but takes three steps. Counting on 2 is instant: 11."
+          },
+          {
+            "id": "c",
+            "label": "count all from 1",
+            "feedback": "Counting 1 to 11 is the slow road. Start at 9 and count on: 10, 11."
+          }
+        ]
+      },
+      "hints": [
+        "Adding only 2.",
+        "Start at the bigger number.",
+        "9… 10, 11."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Fluency20Mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full speed — pick and solve!",
+      "conceptTag": "fluency-20",
+      "explanationVariants": [
+        "8 + 9 is a near double: double 8 is 16, plus one is 17.",
+        "9 is one more than 8, so 8 + 9 is one more than 16: 17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 + 9 = ?",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is double 8 — the 9 brings ONE more: 17."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is double 9 — but the 8 is one LESS: 17."
+          }
+        ],
+        "fallbackFeedback": "Near double: 16 + 1 = 17."
+      },
+      "hints": [
+        "8 and 9 are neighbors.",
+        "Double 8 is 16.",
+        "One more: 17."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Fluency20Numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chapter done — you're fluent!",
+      "takeaways": [
+        "Doubles and near doubles are instant.",
+        "Make ten for big-plus-medium facts.",
+        "Count on for tiny adds."
+      ],
+      "teaser": "next chapter: adding numbers up to 100."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fluency-20",
+      "concept": {
+        "id": "rem-fl-c",
+        "kind": "concept",
+        "body": "Slow it down. Look at the fact first. Same numbers? Double. Neighbors? Near double. Otherwise make ten or count on.",
+        "narration": "Look at the fact first. Same numbers? Double. Neighbors? Near double. Otherwise make ten or count on."
+      },
+      "check": {
+        "id": "rem-fl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fluency-20",
+        "explanationVariants": [
+          "7 + 7 is a double: 14.",
+          "Same number twice — 7 + 7 = 14."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "7 + 7 = ?",
+          "answer": 14,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 15,
+              "feedback": "One over — that's 7 + 8. The double is 14."
+            },
+            {
+              "value": 13,
+              "feedback": "One short — that's 6 + 7. The double is 14."
+            }
+          ],
+          "fallbackFeedback": "Double 7 is 14."
+        }
+      }
+    }
+  ]
+}

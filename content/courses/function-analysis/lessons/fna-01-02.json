@@ -1,0 +1,268 @@
+{
+  "id": "fna-01-02",
+  "slug": "secant-lines",
+  "title": "Secant Lines: Seeing the Rate",
+  "courseId": "function-analysis",
+  "chapterId": "ch1-rates-of-change",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Draw a line through two points on a curve. That line is a **secant**, and its **slope IS the average rate of change** between those inputs — the formula from last lesson made visible. Steep secant, fast average change; downhill secant, negative average change.",
+      "figure": "fna-secant-aroc"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The secant IS the rate, drawn.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "average",
+        "a": 0,
+        "targetH": 3,
+        "startH": 1,
+        "prompt": "Set the gap to 3 — the interval from x = 0 to x = 3 on y = x². Watch the line, not the numbers.",
+        "successFeedback": "Rise 9 over run 3 = 3. The curve is nowhere near a slope of 3 at either end — the average rate belongs to the INTERVAL, not to any point in it. That is why one number cannot describe a curve.",
+        "lowFeedback": "The gap is still under 3 — B has not reached x = 3.",
+        "highFeedback": "The gap is over 3 — B has gone past x = 3."
+      },
+      "predict": {
+        "prompt": "You'll build the secant from A at x = 0 out to B at x = 3 on y = x². Compared with the tangent slope AT A (0), the secant's slope will be…",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger (more positive)"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller"
+          },
+          {
+            "id": "equal",
+            "label": "Exactly equal"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "The secant's slope is (f(3) − f(0))/3 = 3, against 0 for the tangent at A. On a curve whose slope keeps growing, the stretch out to B crosses steeper ground than A itself — so the average beats the value at the start."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "function-analysis-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "fna-secant"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Downhill counts too. If the second point sits **lower** than the first, the rise is negative and so is the slope — the function **decreased on average**, even if it wiggled upward somewhere inside the interval.",
+      "figure": "fna-downhill-negative"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A downhill secant.",
+      "conceptTag": "fna-secant",
+      "explanationVariants": [
+        "Rise = 3 − 7 = −4, run = 5 − 1 = 4, slope = −4/4 = −1.",
+        "From height 7 down to height 3 across 4 units: falling 1 per unit, slope −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A secant passes through (1, 7) and (5, 3). What is its slope?",
+        "answer": -1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "You dropped the sign: the y-values FALL from 7 to 3, so the rise is 3 − 7 = −4 and the slope is −1."
+          },
+          {
+            "value": -4,
+            "feedback": "−4 is the rise alone. Divide by the run 5 − 1 = 4: slope −1."
+          }
+        ],
+        "fallbackFeedback": "(3 − 7)/(5 − 1) = −4/4 = −1."
+      },
+      "variant": {
+        "gen": "secant-slope"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Match the picture to the number.",
+      "conceptTag": "fna-secant",
+      "explanationVariants": [
+        "Slope 0 means rise 0: both endpoints sit at the SAME height, so the secant is horizontal.",
+        "A horizontal secant says the function ended the interval exactly where it started — zero average change."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A secant through two points on a curve is perfectly horizontal. What does that say about the function on that interval?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Its average rate of change there is 0 — it ends at the height it started",
+            "correct": true,
+            "feedback": "Right — equal endpoint heights make the rise 0, so the average rate of change is 0 even if the curve moved in between."
+          },
+          {
+            "id": "o2",
+            "label": "The function is constant on the whole interval",
+            "feedback": "Not necessarily — the curve can rise and fall INSIDE the interval; the secant only compares the two endpoints."
+          },
+          {
+            "id": "o3",
+            "label": "The function has no rate of change at any point inside",
+            "feedback": "The secant is an AVERAGE over the interval. Inside it, the instantaneous behavior can be anything that returns to the same height."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-secant__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "From graph points to the rate.",
+      "conceptTag": "fna-secant",
+      "explanationVariants": [
+        "(11 − 3)/(6 − 2) = 8/4 = 2.",
+        "The curve climbs 8 units of output across 4 of input — 2 per unit on average."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On a graph of g, the points (2, 3) and (6, 11) lie on the curve. What is the average rate of change of g on [2, 6]?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the rise 11 − 3. The rate divides by the run 6 − 2 = 4: 8/4 = 2."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is g(2), the starting height — not a rate. Compute rise/run: (11 − 3)/(6 − 2) = 2."
+          }
+        ],
+        "fallbackFeedback": "Secant slope = (11 − 3)/(6 − 2) = 2."
+      },
+      "variant": {
+        "gen": "secant-slope",
+        "form": "avgRate"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two secants, one comparison.",
+      "conceptTag": "fna-secant",
+      "explanationVariants": [
+        "Left secant: (9 − 1)/(2 − 0) = 4. Right secant: (25 − 9)/(5 − 2) ≈ 5.33. The right interval is steeper, so [2, 5] has the greater average rate.",
+        "On [0, 2] the curve gains 8 in 2 steps (4 per step); on [2, 5] it gains 16 in 3 steps (over 5 per step) — [2, 5] wins."
+      ],
+      "hints": [
+        "Compute each secant slope separately, then compare.",
+        "Left: (f(2) − f(0))/(2 − 0) with heights 1 → 9. Right: (f(5) − f(2))/(5 − 2) with heights 9 → 25.",
+        "Left slope = 8/2 = 4; right slope = 16/3 ≈ 5.3. Which is larger?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A curve passes through (0, 1), (2, 9), and (5, 25). Which interval has the greater average rate of change?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "[2, 5]",
+            "correct": true,
+            "feedback": "Yes: 16/3 ≈ 5.3 beats 8/2 = 4 — the later secant is steeper."
+          },
+          {
+            "id": "o2",
+            "label": "[0, 2]",
+            "feedback": "[0, 2] gives (9 − 1)/2 = 4, but [2, 5] gives (25 − 9)/3 ≈ 5.3. Compare the SLOPES, not just how big the numbers look."
+          },
+          {
+            "id": "o3",
+            "label": "They are equal",
+            "feedback": "Equal rates would need equal secant slopes; 8/2 = 4 while 16/3 ≈ 5.3 — not equal."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "secant-slope",
+        "form": "compareIntervals"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The rate you can draw.",
+      "takeaways": [
+        "A secant's slope equals the average rate of change between its two points.",
+        "Falling endpoint heights mean a negative average rate.",
+        "A horizontal secant means zero average change — not a constant function."
+      ],
+      "teaser": "Next: rates with UNITS attached — miles per hour, gallons per minute, degrees per hour."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-secant",
+      "concept": {
+        "id": "rem-fna0102-c",
+        "kind": "concept",
+        "body": "Secant slope = rise/run = (y₂ − y₁)/(x₂ − x₁). Subtract in the SAME order top and bottom; keep any negative sign."
+      },
+      "check": {
+        "id": "rem-fna0102-k",
+        "kind": "check",
+        "body": "One more secant.",
+        "conceptTag": "fna-secant",
+        "explanationVariants": [
+          "(8 − 2)/(3 − 0) = 6/3 = 2.",
+          "Rising 6 across 3 units is 2 per unit."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A secant passes through (0, 2) and (3, 8). What is its slope?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is the rise 8 − 2. Divide by the run 3 − 0 = 3: slope 2."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is the run. Slope = rise/run = 6/3 = 2."
+            }
+          ],
+          "fallbackFeedback": "(8 − 2)/(3 − 0) = 2."
+        }
+      }
+    }
+  ]
+}

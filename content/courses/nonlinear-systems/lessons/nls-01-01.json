@@ -1,0 +1,236 @@
+{
+  "id": "nls-01-01",
+  "slug": "where-line-meets-parabola",
+  "title": "Where Line Meets Parabola",
+  "courseId": "nonlinear-systems",
+  "chapterId": "ch1-line-meets-parabola",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You've solved systems of two lines. Now let one equation curve: where does the line y = x + 2 meet the parabola y = x²? A meeting point lies on BOTH graphs, so its coordinates satisfy both equations at once — same definition as always, new shapes.",
+      "figure": "nls-line-meets-parabola"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Verify a claimed meeting.",
+      "conceptTag": "nls-check-intersection",
+      "explanationVariants": [
+        "(2, 4): on the parabola since 2² = 4, and on the line since 2 + 2 = 4 — both, so it's an intersection.",
+        "The point satisfies y = x² and y = x + 2 simultaneously; that's what crossing means."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is (2, 4) an intersection of y = x² and y = x + 2?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — it satisfies both equations",
+            "correct": true,
+            "feedback": "2² = 4 ✓ and 2 + 2 = 4 ✓: one point, two graphs, both happy."
+          },
+          {
+            "id": "o2",
+            "label": "No — it's only on the parabola",
+            "correct": false,
+            "feedback": "Check the line too: 2 + 2 = 4 puts it on y = x + 2 as well."
+          },
+          {
+            "id": "o3",
+            "label": "No — it's only on the line",
+            "correct": false,
+            "feedback": "Check the parabola: 2² = 4 — it's on the curve too."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the OTHER crossing.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "The graphs also cross at a negative x. Plot that second intersection of y = x² and y = x + 2.",
+        "cols": 7,
+        "rows": 7,
+        "xLabels": [
+          "-3",
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 5,
+            "feedback": "That's (−2, 4): on the parabola (4 = 4) but the line gives −2 + 2 = 0 ≠ 4."
+          },
+          {
+            "x": 4,
+            "y": 3,
+            "feedback": "That's (0, 2): on the line (0 + 2 = 2) but the parabola gives 0² = 0 ≠ 2."
+          }
+        ],
+        "missFeedback": "Try small negative x: where does x² equal x + 2?",
+        "successFeedback": "(−1, 1): 1 = (−1)² and 1 = −1 + 2 — both equations hold. A line can cut a parabola twice."
+      },
+      "predict": {
+        "prompt": "A line crossed two LINES at most once each. How many times can a line cross a parabola?",
+        "options": [
+          {
+            "id": "two",
+            "label": "Up to two"
+          },
+          {
+            "id": "one",
+            "label": "At most one, like lines"
+          },
+          {
+            "id": "many",
+            "label": "Unlimited"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "Up to two: the curve bends back, so a line can enter and exit — here at (−1, 1) and (2, 4). Tangency gives exactly one touch, and a miss gives zero: the full menu is 0, 1, or 2."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Guess-and-plot won't scale. The algebra: both right-hand sides equal the same y, so set them equal — x² = x + 2. Rearranged: x² − x − 2 = 0. Meeting a curve turned into solving a quadratic, and quadratics you already own.",
+      "figure": "nls-set-them-equal"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Set the sides equal.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "Both expressions equal y, so x² = x + 2, i.e. x² − x − 2 = 0.",
+        "Equating the right sides and moving everything left gives x² − x − 2 = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Combining y = x² and y = x + 2 into one equation gives…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x² − x − 2 = 0",
+            "correct": true,
+            "feedback": "Set x² = x + 2, subtract: the crossings are this quadratic's roots."
+          },
+          {
+            "id": "o2",
+            "label": "x² + x + 2 = 0",
+            "correct": false,
+            "feedback": "Signs flipped in the move — subtracting x + 2 gives −x and −2."
+          },
+          {
+            "id": "o3",
+            "label": "x² = 0",
+            "correct": false,
+            "feedback": "That drops the line entirely; the parabola alone can't locate a meeting."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Factor to the crossings.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "x² − x − 2 = (x − 2)(x + 1), so x = 2 or x = −1 — matching the two plotted points.",
+        "The factor pair (−2, +1) multiplies to −2 and sums to −1: roots 2 and −1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x² − x − 2 = 0 factors as (x − 2)(x + 1) = 0. What is the SUM of its two solutions?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "2 + 1 = 3 adds the factor constants' sizes; the roots are 2 and −1, summing to 1."
+          },
+          {
+            "value": -1,
+            "feedback": "−1 is one root; the sum with the other root 2 is 1."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is one root, not the sum: 2 + (−1) = 1."
+          }
+        ],
+        "fallbackFeedback": "The roots of (x − 2)(x + 1) = 0 are 2 and −1; their sum is 1. Each root is one intersection's x-coordinate."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Recover the full points.",
+      "conceptTag": "nls-substitution",
+      "explanationVariants": [
+        "x-values 2 and −1 feed either equation: y = 4 and y = 1, giving (2, 4) and (−1, 1).",
+        "Substituting each root into y = x + 2 (or x²) restores the y — 4 at x = 2, 1 at x = −1."
+      ],
+      "hints": [
+        "The quadratic hands you x = 2 and x = −1 — but a point needs a y.",
+        "Feed each x into the LINE y = x + 2 (simpler than the parabola).",
+        "The y-values are 4 and 1; their sum is what?"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The two intersection points are (2, y₁) and (−1, y₂). What is y₁ + y₂?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That adds the x's mixed in; the y's are 4 and 1, summing to 5."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is only y₁; add y₂ = 1 to get 5."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is only y₂; add y₁ = 4."
+          }
+        ],
+        "fallbackFeedback": "Feed each x to either equation: y₁ = 2 + 2 = 4 and y₂ = −1 + 2 = 1, so y₁ + y₂ = 5."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Curves cross by algebra.",
+      "takeaways": [
+        "An intersection satisfies both equations at once.",
+        "Set the expressions for y equal — the system becomes one quadratic.",
+        "A line meets a parabola 0, 1, or 2 times."
+      ],
+      "teaser": "next: the substitution recipe, drilled clean."
+    }
+  ]
+}

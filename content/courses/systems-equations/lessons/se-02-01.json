@@ -1,0 +1,261 @@
+{
+  "id": "se-02-01",
+  "slug": "substitution-when-y-is-alone",
+  "title": "Substitution When y Is Alone",
+  "courseId": "systems-equations",
+  "chapterId": "ch2-substitution",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "coordinate-plane",
+      "body": "Graphing is slow and imprecise. **Substitution** is exact. When one equation already says **y = (something)**, replace y in the *other* equation with that something. Now it has only x — solve it, then use y = (something) to find y."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Make the substitution.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For the system y = 2x − 1 and 3x + y = 9, what does the second equation become after replacing y?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3x + (2x − 1) = 9",
+            "correct": true,
+            "feedback": "Yes — y is 2x − 1, so 3x + y becomes 3x + (2x − 1)."
+          },
+          {
+            "id": "b",
+            "label": "3x + y = 2x − 1",
+            "feedback": "Substitute into the equation you're keeping. Replace y with 2x − 1 inside 3x + y = 9: 3x + (2x − 1) = 9."
+          },
+          {
+            "id": "c",
+            "label": "2x − 1 = 9",
+            "feedback": "Don't drop the 3x. The whole left side 3x + y becomes 3x + (2x − 1) = 9."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve for x.",
+      "conceptTag": "substitute-isolated",
+      "explanationVariants": [
+        "Substitute y = x + 1 into x + y = 7: x + (x + 1) = 7, so 2x + 1 = 7 and x = 3.",
+        "x + (x + 1) = 7 gives 2x = 6, so x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = x + 1 and x + y = 7. What is x?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That's y. Solve for x first: x + (x + 1) = 7 gives x = 3 (then y = 4)."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the total, not x. Substitute: 2x + 1 = 7, so x = 3."
+          }
+        ],
+        "fallbackFeedback": "x + (x + 1) = 7 → 2x + 1 = 7 → x = 3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked all the way: **y = 2x − 1** and **3x + y = 9**. Substitute: 3x + (2x − 1) = 9 → 5x − 1 = 9 → 5x = 10 → **x = 2**. Then back-substitute: y = 2·2 − 1 = **3**. Solution **(2, 3)**.",
+      "figure": "se-substitution-21"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Back-substitute for y.",
+      "widget": {
+        "type": "solveBalance",
+        "a": 5,
+        "b": 0,
+        "c": 10,
+        "relation": "eq",
+        "prompt": "Substituting y = 3x into 2x + y = 10 gives 5x = 10. Split into equal groups.",
+        "successFeedback": "x = 2, and then y = 3x = 6. Substitution earns its name here: replacing y turned a two-variable system into this single balance, and the second variable falls out afterwards for free.",
+        "unbalancedFeedback": "The pans disagree — operate on both sides.",
+        "notIsolatedFeedback": "x is not alone yet.",
+        "missFeedback": "Not the solution. 5x = 10 splits into 5 equal groups.",
+        "unexpandedFeedback": "Split the pan into equal groups."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Back-substitute into the **isolated** equation — it's already solved for y, so it's the easy one. Then confirm the point in **both** equations. If either fails, a sign slipped during the substitution.",
+      "figure": "se-back-substitute"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Solve the whole system.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the solution of the system y = x − 2 and 2x + y = 10?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(4, 2)",
+            "correct": true,
+            "feedback": "Yes — 2x + (x − 2) = 10 gives x = 4, then y = 4 − 2 = 2."
+          },
+          {
+            "id": "b",
+            "label": "(2, 4)",
+            "feedback": "Coordinates are swapped. Solving gives x = 4 and y = 2: (4, 2)."
+          },
+          {
+            "id": "c",
+            "label": "(4, 6)",
+            "feedback": "Check y: with x = 4, y = x − 2 = 2, not 6. The solution is (4, 2)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another one.",
+      "conceptTag": "substitute-isolated",
+      "explanationVariants": [
+        "Substitute y = 4x into x + y = 10: x + 4x = 10, so 5x = 10 and x = 2.",
+        "x + 4x = 10 gives 5x = 10, so x = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = 4x and x + y = 10. What is x?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's y (y = 4·2 = 8). Solve for x first: 5x = 10, so x = 2."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the total. Substitute: x + 4x = 10, so x = 2."
+          }
+        ],
+        "fallbackFeedback": "x + 4x = 10 → 5x = 10 → x = 2."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find y this time.",
+      "conceptTag": "substitute-isolated",
+      "explanationVariants": [
+        "Substitute y = 2x into x + y = 9: x + 2x = 9, so x = 3 and y = 2·3 = 6.",
+        "3x = 9 gives x = 3, then y = 2·3 = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = 2x and x + y = 9. What is y?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's x. Back-substitute: y = 2·3 = 6."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is the total, not y. With x = 3, y = 2·3 = 6."
+          }
+        ],
+        "fallbackFeedback": "x + 2x = 9 → x = 3, then y = 2·3 = 6."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve completely.",
+      "conceptTag": "substitute-isolated",
+      "explanationVariants": [
+        "Substitute y = 3x − 5 into x + y = 7: x + (3x − 5) = 7, so 4x = 12, x = 3, y = 4.",
+        "x + 3x − 5 = 7 gives 4x = 12, x = 3, then y = 3·3 − 5 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = 3x − 5 and x + y = 7. What is y?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That's x. Back-substitute: y = 3·3 − 5 = 4."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the total. Solve x = 3 first, then y = 3·3 − 5 = 4."
+          }
+        ],
+        "fallbackFeedback": "x + (3x − 5) = 7 → 4x = 12 → x = 3, then y = 4."
+      },
+      "hints": [
+        "Replace y in x + y = 7 with 3x − 5.",
+        "x + 3x − 5 = 7 → 4x = 12 → x = 3.",
+        "Back-substitute: y = 3·3 − 5 = 4."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "When y stands alone, substitution is quick and exact.",
+      "takeaways": [
+        "Replace y in the other equation with the isolated expression.",
+        "Solve the one-variable equation, then back-substitute for y.",
+        "Check the point in both equations."
+      ],
+      "teaser": "next: what to do when nothing is isolated yet."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "substitute-isolated",
+      "concept": {
+        "id": "rem-si-c",
+        "kind": "concept",
+        "body": "When one equation gives y directly, substitute it into the other. For y = 2x and x + y = 9: x + 2x = 9, so 3x = 9, x = 3, then y = 2·3 = 6. Solution (3, 6)."
+      },
+      "check": {
+        "id": "rem-si-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "substitute-isolated",
+        "explanationVariants": [
+          "Substitute y = 2x into x + y = 9: 3x = 9, so x = 3.",
+          "x + 2x = 9 gives x = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve the system y = 2x and x + y = 9. What is x?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's y. Solve for x first: 3x = 9, so x = 3."
+            },
+            {
+              "value": 9,
+              "feedback": "9 is the total. Substitute: x + 2x = 9, so x = 3."
+            }
+          ],
+          "fallbackFeedback": "x + 2x = 9 → 3x = 9 → x = 3."
+        }
+      }
+    }
+  ]
+}

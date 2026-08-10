@@ -1,0 +1,317 @@
+{
+  "id": "cn-03-02",
+  "slug": "multiplying-complex",
+  "title": "Multiplying Complex Numbers",
+  "courseId": "complex-numbers",
+  "chapterId": "ch3-complex-arithmetic",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Multiply complex numbers like binomials — distribute everything (FOIL) — then apply **i² = −1**. (2 + i)(3 + 2i) = 6 + 4i + 3i + 2i². The 2i² becomes **−2**, a real number, so the product is (6 − 2) + 7i = **4 + 7i**.",
+      "figure": "foil-box"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiplying rotates AND stretches.",
+      "widget": {
+        "type": "argandExplore",
+        "mode": "multiply",
+        "mulRe": 2,
+        "mulIm": 3,
+        "targetRe": -1,
+        "targetIm": 5,
+        "reStart": 0,
+        "imStart": 0,
+        "gridMax": 5,
+        "prompt": "w = 2 + 3i. Find the z whose product z × w lands on −1 + 5i.",
+        "successFeedback": "z = 1 + i. Multiplying by 2 + 3i has turned the arrow AND stretched it — the product's length is the product of the two lengths, and its angle is the sum of the two angles. FOIL gives you the same answer, but the picture tells you why.",
+        "realFeedback": "The product's real part is wrong. Remember the i² term flips sign: (a + bi)(2 + 3i) = (2a − 3b) + (3a + 2b)i.",
+        "imagFeedback": "The real part is right but the imaginary part is not. Check the 3a + 2b term."
+      },
+      "predict": {
+        "prompt": "Multiplying by w = 2 + 3i stretches every length by |w| = √13. To land on −1 + 5i (length √26), z's length must be…",
+        "options": [
+          {
+            "id": "root2",
+            "label": "√2 — because √13 · √2 = √26"
+          },
+          {
+            "id": "root26",
+            "label": "√26"
+          },
+          {
+            "id": "thirteen",
+            "label": "13"
+          }
+        ],
+        "outcomeId": "root2",
+        "reveal": "Lengths multiply: |z| · √13 = √26 forces |z| = √2, and z = 1 + i delivers — (1 + i)(2 + 3i) = 2 + 3i + 2i − 3 = −1 + 5i. Complex multiplication is stretch-and-turn: lengths multiply while angles add."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Construct a complex input whose product reaches a target and connect coordinate multiplication to rotation and dilation.",
+        "invariants": [
+          "moduli-multiply",
+          "arguments-add",
+          "complex-product-coordinate-rule"
+        ],
+        "misconceptions": [
+          "componentwise-multiplication",
+          "rotation-without-scaling"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "complex-products-with-arbitrary-fixed-multipliers",
+        "delayed": true,
+        "counterfactualPrompt": "Keep z fixed and replace the multiplier by i, then by 2i. Which change controls rotation, which controls stretch, and what remains predictable?",
+        "explanation": {
+          "prompt": "Why does multiplying complex numbers change both length and direction?",
+          "options": [
+            {
+              "id": "polar",
+              "label": "The product multiplies the moduli and adds the arguments, which is a dilation followed by a rotation.",
+              "correct": true,
+              "feedback": "Exactly — the coordinate rule and the geometric transformation describe the same product."
+            },
+            {
+              "id": "components",
+              "label": "The real parts multiply independently and the imaginary parts multiply independently.",
+              "correct": false,
+              "feedback": "That misses the cross-products and the i² sign change; complex multiplication couples both coordinates."
+            }
+          ]
+        }
+      },
+      "conceptTag": "cn-multiply"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "And the imaginary part.",
+      "conceptTag": "cn-multiply",
+      "explanationVariants": [
+        "The two middle terms carry the i: 4i + 3i = 7i, so the imaginary part is 7.",
+        "Outer 4i plus Inner 3i gives 7i."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For (2 + i)(3 + 2i), what is the IMAGINARY part of the product?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4i is only the Outer term — the Inner 3i joins it: 4 + 3 = 7."
+          },
+          {
+            "value": 3,
+            "feedback": "3i is only the Inner term — add the Outer 4i: 7."
+          }
+        ],
+        "fallbackFeedback": "4i + 3i = 7i."
+      },
+      "variant": {
+        "gen": "cn-multiply"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The pattern to internalize: the **First** and **Last** FOIL terms build the real part (with the Last flipped by i²), and the **Outer + Inner** build the imaginary part. In symbols: (a + bi)(c + di) = (ac − bd) + (ad + bc)i.",
+      "figure": "cn-foil"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Purely imaginary times purely imaginary.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 3i · 5i (as a real number)?",
+        "answer": -15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "3 · 5 = 15 is right, but i · i = i² = −1 flips it: −15."
+          },
+          {
+            "value": 8,
+            "feedback": "The dot means MULTIPLY: 3 · 5 · i² = −15, not 3 + 5."
+          }
+        ],
+        "fallbackFeedback": "3i · 5i = 15i² = −15 — two imaginaries multiply to a real."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Full product, real part.",
+      "conceptTag": "cn-multiply",
+      "explanationVariants": [
+        "(3 + i)(2 + i) = 6 + 3i + 2i + i² = (6 − 1) + 5i, so the real part is 5.",
+        "ac − bd = 3·2 − 1·1 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the REAL part of (3 + i)(2 + i)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is just 3 · 2 — the i² term contributes −1: 6 − 1 = 5."
+          },
+          {
+            "value": 7,
+            "feedback": "That's 6 + 1 — i² = −1 SUBTRACTS: 6 − 1 = 5."
+          }
+        ],
+        "fallbackFeedback": "6 + i² = 6 − 1 = 5. (Imaginary part: 3 + 2 = 5 as well.)"
+      },
+      "variant": {
+        "gen": "cn-multiply",
+        "form": "realPart"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the type.",
+      "conceptTag": "cn-multiply",
+      "explanationVariants": [
+        "(5i)(2i) = 10i² = −10 — a real number.",
+        "Two pure imaginaries multiply to a real, sign flipped by i²."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is (5i)(2i)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−10",
+            "correct": true,
+            "feedback": "Right — 10i² = −10."
+          },
+          {
+            "id": "o2",
+            "label": "10",
+            "correct": false,
+            "feedback": "i · i = −1 flips the 10 negative: −10."
+          },
+          {
+            "id": "o3",
+            "label": "10i",
+            "correct": false,
+            "feedback": "The i's multiply together into i² = −1 — no i survives: −10."
+          },
+          {
+            "id": "o4",
+            "label": "7i",
+            "correct": false,
+            "feedback": "That's 5i + 2i (addition) — multiplication gives 10i² = −10."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-complex",
+        "form": "cn-multiply__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Square a complex number.",
+      "conceptTag": "cn-multiply",
+      "explanationVariants": [
+        "(4 + i)² = 16 + 8i + i² = (16 − 1) + 8i = 15 + 8i: real part 15.",
+        "ac − bd with a=c=4, b=d=1: 16 − 1 = 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the REAL part of (4 + i)²?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is only 4² — the i² from the last term subtracts 1: 15."
+          },
+          {
+            "value": 17,
+            "feedback": "The i² SUBTRACTS: 16 − 1 = 15, not 16 + 1."
+          }
+        ],
+        "fallbackFeedback": "(4 + i)² = 16 + 8i − 1 = 15 + 8i."
+      },
+      "hints": [
+        "Expand (4 + i)(4 + i) with FOIL.",
+        "16 + 4i + 4i + i².",
+        "i² = −1, so the real part is 16 − 1 = 15."
+      ],
+      "variant": {
+        "gen": "cn-multiply",
+        "form": "squareReal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "FOIL, then let i² = −1 fold the last term into the real part.",
+      "takeaways": [
+        "(a + bi)(c + di) = (ac − bd) + (ad + bc)i.",
+        "Pure imaginary × pure imaginary = real (sign flipped).",
+        "The i² term is the one everyone forgets — it changes the REAL part."
+      ],
+      "teaser": "Next: conjugates — the multiplication that erases i entirely, and how it powers division."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-multiply",
+      "concept": {
+        "id": "rem-cn0302-c",
+        "kind": "concept",
+        "body": "Multiply the numbers, multiply the i's: 2i · 3i = (2·3)(i·i) = 6i² = −6."
+      },
+      "check": {
+        "id": "rem-cn0302-k",
+        "kind": "check",
+        "body": "One small product.",
+        "conceptTag": "cn-multiply",
+        "explanationVariants": [
+          "2 · 3 = 6 and i² = −1, so −6.",
+          "The i's pair up into −1, flipping the 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is 2i · 3i (as a real number)?",
+          "answer": -6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "The 6 is right but i² = −1 flips it: −6."
+            },
+            {
+              "value": 5,
+              "feedback": "The dot multiplies (2 · 3 = 6), it doesn't add — then i² makes it −6."
+            }
+          ],
+          "fallbackFeedback": "2i · 3i = 6i² = −6."
+        }
+      }
+    }
+  ]
+}

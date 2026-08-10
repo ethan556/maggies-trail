@@ -1,0 +1,274 @@
+{
+ "id": "ns-01-02",
+ "slug": "flip-and-multiply",
+ "title": "Flip and Multiply",
+ "courseId": "number-system",
+ "chapterId": "ch1-dividing-fractions",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Counting pieces works, but there's a shortcut for ANY fraction ÷ fraction: **keep the first fraction, flip the second (find its reciprocal), and multiply.** 3/4 ÷ 1/8 becomes 3/4 × 8/1 = 24/4 = **6**. The reciprocal of a fraction swaps its top and bottom — the reciprocal of 1/8 is 8/1, or just 8.",
+   "figure": "ns-flip-multiply"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find the reciprocal.",
+   "conceptTag": "flip-multiply",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the reciprocal of 3/8?",
+    "options": [
+     {
+      "id": "a",
+      "label": "8/3",
+      "correct": true,
+      "feedback": "Right — swap the top and bottom: 3/8 becomes 8/3."
+     },
+     {
+      "id": "b",
+      "label": "3/8",
+      "feedback": "That's the SAME fraction, not flipped. The reciprocal swaps numerator and denominator: 8/3."
+     },
+     {
+      "id": "c",
+      "label": "-3/8",
+      "feedback": "Flipping isn't about the sign — it's swapping top and bottom: 3/8 → 8/3."
+     }
+    ]
+   },
+   "hints": [
+    "Swap the numerator and denominator.",
+    "3 and 8 trade places.",
+    "8/3."
+   ],
+   "explanationVariants": [
+    "The reciprocal of 3/8 is 8/3.",
+    "Flip top and bottom: 3/8 → 8/3."
+   ]
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Run the shortcut.",
+   "conceptTag": "flip-multiply",
+   "explanationVariants": [
+    "Keep 3/4, flip 1/8 to 8/1, multiply: 3/4 × 8 = 24/4 = 6.",
+    "Flip the SECOND fraction only, then multiply straight across."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Use flip-and-multiply: 3/4 ÷ 1/8 = ?",
+    "answer": 6,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "24 stops after multiplying (3/4 × 8 = 24/4) without finishing the division. 24/4 simplifies to 6."
+     },
+     {
+      "value": 0.09375,
+      "feedback": "That's 3/32, which comes from multiplying WITHOUT flipping (3/4 × 1/8). Flip the second fraction first: 3/4 × 8/1 = 6."
+     }
+    ],
+    "fallbackFeedback": "3/4 × 8/1 = 24/4 = 6."
+   },
+   "variant": {
+    "gen": "unit-frac-divide",
+    "form": "divideFractionWhole"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The classic trap: flipping the **wrong** fraction. 3/4 ÷ 1/8 keeps 3/4 and flips 1/8 — NOT the reverse. Flipping the first fraction instead (4/3 × 1/8 = 1/6) gives a completely different, wrong answer. Always ask: which fraction is doing the dividing? Flip THAT one.",
+   "figure": "ns-flip-multiply"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Catch the wrong flip.",
+   "conceptTag": "flip-multiply",
+   "explanationVariants": [
+    "The divisor (2/3) gets flipped to 3/2; the first fraction (5/6) stays put.",
+    "Flip the SECOND number in a ÷ b: keep a, flip b."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "To compute 5/6 ÷ 2/3, which fraction should be flipped?",
+    "options": [
+     {
+      "id": "a",
+      "label": "2/3, the divisor",
+      "correct": true,
+      "feedback": "Right — the number being divided BY is the one that flips."
+     },
+     {
+      "id": "b",
+      "label": "5/6, the first fraction",
+      "feedback": "Flipping the first fraction instead gives the wrong answer. The SECOND fraction (the divisor) is the one that flips."
+     },
+     {
+      "id": "c",
+      "label": "Both fractions",
+      "feedback": "Flipping both would just multiply reciprocals together — only the divisor flips; the dividend stays as-is."
+     }
+    ]
+   },
+   "hints": [
+    "Which fraction is doing the dividing?",
+    "The second one, 2/3.",
+    "That's the one that flips."
+   ],
+   "variant": {
+    "gen": "unit-frac-divide",
+    "form": "flipDivisor"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Full computation, start to finish.",
+   "conceptTag": "flip-multiply",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute 2/3 ÷ 4/9. Give the answer as a fraction with denominator 2 — enter just the numerator.",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 comes from flipping the FIRST fraction instead of the second (3/2 × 4/9 style slip). Flip 4/9 to 9/4: 2/3 × 9/4 = 18/12 = 3/2 — numerator 3."
+     },
+     {
+      "value": 18,
+      "feedback": "18/12 is correct before simplifying, but it must be reduced: 18/12 = 3/2. The numerator over denominator 2 is 3, not 18."
+     }
+    ],
+    "fallbackFeedback": "Flip 4/9 to 9/4: 2/3 × 9/4 = 18/12 = 3/2 — numerator 3."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Simplify after multiplying.",
+   "conceptTag": "flip-multiply",
+   "explanationVariants": [
+    "5/6 × 3/1 = 15/6, which simplifies to 5/2 — numerator 5.",
+    "Multiply straight across, then reduce: 15/6 = 5/2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute 5/6 ÷ 1/3. Give the answer as a fraction with denominator 2 — enter just the numerator.",
+    "answer": 5,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 15,
+      "feedback": "15/6 is correct before simplifying, but it must be reduced: 15/6 = 5/2. The numerator over denominator 2 is 5, not 15."
+     },
+     {
+      "value": 1,
+      "feedback": "1 divides 5/18 down incorrectly. Flip 1/3 to 3/1 first: 5/6 × 3 = 15/6 = 5/2 — numerator 5."
+     }
+    ],
+    "fallbackFeedback": "5/6 × 3/1 = 15/6 = 5/2 — numerator 5."
+   },
+   "variant": {
+    "gen": "unit-frac-divide",
+    "form": "divideFractionNumerator"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Two wrongs to avoid.",
+   "conceptTag": "flip-multiply",
+   "hints": [
+    "Keep the first fraction as-is.",
+    "Flip only the second: 1/6 becomes 6.",
+    "5/6 × 6."
+   ],
+   "explanationVariants": [
+    "Correct: keep 5/6, flip 1/6 to 6/1, multiply: 5/6 × 6 = 30/6 = 5.",
+    "5/6 ÷ 1/6 asks how many sixths fit in five-sixths — 5, matching flip-and-multiply exactly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Compute 5/6 ÷ 1/6.",
+    "answer": 5,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30/6 is correct before simplifying, but the answer must be reduced: 30/6 = 5. Don't stop at the unreduced product."
+     },
+     {
+      "value": 0.2,
+      "feedback": "0.2 (1/5) comes from flipping the FIRST fraction instead of the second (6/5 × 1/6). Keep 5/6 as-is and flip only 1/6 to 6: 5/6 × 6 = 5."
+     }
+    ],
+    "fallbackFeedback": "5/6 × 6/1 = 30/6 = 5."
+   },
+   "variant": {
+    "gen": "unit-frac-divide",
+    "form": "divideFractionWhole"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Keep, flip, multiply.",
+   "takeaways": [
+    "Reciprocal swaps a fraction's top and bottom.",
+    "Keep the first fraction, flip the SECOND (the divisor), then multiply straight across.",
+    "Simplify the result to lowest terms."
+   ],
+   "teaser": "next: mixed numbers and real word problems."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "flip-multiply",
+   "concept": {
+    "id": "rem-fm-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Keep the first, flip the second, multiply.** 1/2 ÷ 1/4: keep 1/2, flip 1/4 to 4/1, multiply: 1/2 × 4 = 4/2 = 2. The fraction after the ÷ sign is always the one that flips."
+   },
+   "check": {
+    "id": "rem-fm-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "flip-multiply",
+    "explanationVariants": [
+     "1/2 × 4/1 = 4/2 = 2.",
+     "Flip the divisor (1/4 → 4), then multiply by 1/2."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Compute 1/2 ÷ 1/4.",
+     "answer": 2,
+     "tolerance": 0,
+     "unit": "",
+     "commonErrors": [
+      {
+       "value": 0.125,
+       "feedback": "That's 1/2 × 1/4 = 1/8 — multiplying WITHOUT flipping. Flip 1/4 to 4/1 first: 1/2 × 4 = 2."
+      },
+      {
+       "value": 0.5,
+       "feedback": "0.5 comes from flipping the FIRST fraction instead of the second (2/1 × 1/4). Keep 1/2 as-is, flip only 1/4 to 4: 1/2 × 4 = 2."
+      }
+     ],
+     "fallbackFeedback": "1/2 × 4/1 = 2."
+    }
+   }
+  }
+ ]
+}

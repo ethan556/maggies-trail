@@ -1,0 +1,323 @@
+{
+  "id": "cp-01-03",
+  "slug": "angle-bisector",
+  "title": "Constructing an Angle Bisector",
+  "courseId": "constructions-and-proof",
+  "chapterId": "ch1-toolkit-basics",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "cp-angle-bisector",
+      "concept": {
+        "id": "rem-cp-angle-bisector-c",
+        "kind": "concept",
+        "body": "Recipe: (1) from vertex V, one arc crosses both sides at D and E, (2) equal arcs from D and E meet at F, (3) draw ray VF. It halves the angle because triangles VDF and VEF share three equal sides (VD = VE, DF = EF, VF common) — SSS congruent, so the two angles at V are equal."
+      },
+      "check": {
+        "id": "rem-cp-angle-bisector-k",
+        "kind": "check",
+        "body": "The congruence behind it.",
+        "conceptTag": "cp-angle-bisector",
+        "explanationVariants": [
+          "VD = VE, DF = EF, and VF is shared — that's SSS, so the triangles are congruent and the angles at V match.",
+          "Three equal sides (SSS) force the two small triangles congruent, giving equal halves."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which congruence makes the two halves of the bisected angle equal?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "SSS — three pairs of equal sides",
+              "correct": true,
+              "feedback": "VD = VE, DF = EF, VF shared: all three sides match, so the triangles are congruent."
+            },
+            {
+              "id": "o2",
+              "label": "SSA — two sides and a non-included angle",
+              "correct": false,
+              "feedback": "SSA isn't even a valid congruence rule — and the construction gives three equal SIDES, which is SSS."
+            },
+            {
+              "id": "o3",
+              "label": "AAA — three pairs of equal angles",
+              "correct": false,
+              "feedback": "AAA gives similarity, not congruence. The construction supplies equal SIDES, so it's SSS."
+            },
+            {
+              "id": "o4",
+              "label": "only the shared side VF",
+              "correct": false,
+              "feedback": "One shared side isn't enough — it's VF plus VD = VE plus DF = EF, all three, that clinches SSS."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To split an angle in half: from the vertex V, swing one arc crossing both sides at D and E. Then swing equal arcs from D and from E; where they meet is F. The ray **VF bisects the angle** — two exactly equal halves, built with no protractor.",
+      "figure": "angle-bisector-construction"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Bisect it, step by step.",
+      "predict": {
+        "prompt": "The construction swings one arc from V, then equal arcs from where it cut the two sides. What makes the final ray an exact bisector — not just a close one?",
+        "options": [
+          {
+            "id": "equidistant",
+            "label": "The meeting point F is the same distance from both arms, so VF must split the angle evenly"
+          },
+          {
+            "id": "middle",
+            "label": "It is drawn through the middle of the arc, which looks halfway"
+          },
+          {
+            "id": "measure",
+            "label": "Nothing guarantees it — you check it afterwards with a protractor"
+          }
+        ],
+        "outcomeId": "equidistant",
+        "reveal": "Equidistance does the work. VD = VE because they are one arc from V; then F is an equal radius from BOTH D and E. Two triangles with three matching sides are congruent, so the two halves of the angle are equal — exactly, and without measuring anything."
+      },
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Bisect the angle at V. Reveal each stage.",
+        "panels": [
+          {
+            "title": "Arc across both sides",
+            "body": "Point on V, swing an arc that crosses one side at D and the other at E. Now VD = VE."
+          },
+          {
+            "title": "Equal arcs from D and E",
+            "body": "Same radius from D, then from E — the two arcs meet at a point F inside the angle."
+          },
+          {
+            "title": "Draw ray VF",
+            "body": "The straightedge ray from V through F splits the angle into two equal parts."
+          }
+        ],
+        "continueFeedback": "Reveal each compass move.",
+        "successFeedback": "Ray VF bisects the angle exactly."
+      },
+      "figure": "angle-bisector-construction"
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Now swing the arcs yourself.",
+      "conceptTag": "cp-angle-bisector",
+      "widget": {
+        "type": "compassConstruct",
+        "mode": "angleBisector",
+        "span": 6,
+        "target": 4,
+        "start": 2,
+        "prompt": "The arms are marked 6 apart. Open the compass until the two arcs actually cross — find the smallest whole radius that does it.",
+        "successFeedback": "Radius 4 — the first whole opening that clears half of 6. Both crossings sit the same distance from EACH ARM, so the ray through them splits the angle exactly in half. Widen it further and watch the crossing slide outward while the ray itself refuses to move.",
+        "lowFeedback": "The arcs cannot reach each other yet. Each reaches only its own radius from its own mark, so together they must span more than the 6 between them — the radius has to clear 3.",
+        "highFeedback": "They do cross, but you were asked for the SMALLEST whole radius that reaches. Come back down until they are just about to come apart."
+      },
+      "predict": {
+        "prompt": "You will swing equal arcs from D and from E, the two points the first arc cut on the arms. If you open the compass WIDER, does the bisecting ray change direction?",
+        "options": [
+          {
+            "id": "same",
+            "label": "No — a wider opening moves the crossing further out, but along the same ray"
+          },
+          {
+            "id": "wider",
+            "label": "Yes — a wider opening tilts the ray toward the wider arm"
+          },
+          {
+            "id": "fails",
+            "label": "Yes — too wide and the ray stops bisecting at all"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "The ray does not move. Every crossing of two EQUAL arcs from D and E is equidistant from both, and all such points lie on the one ray that splits the angle. Widening only slides the crossing further along a ray that was already fixed."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What makes the halves equal?",
+      "conceptTag": "cp-angle-bisector",
+      "explanationVariants": [
+        "By construction VD = VE (one arc), and DF = EF (equal arcs), and VF is shared — so triangles VDF and VEF are congruent (SSS), forcing ∠DVF = ∠EVF.",
+        "Three pairs of equal sides make the two little triangles congruent; corresponding angles at V are then equal, so VF bisects."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does ray VF split the angle into two EQUAL parts?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Triangles VDF and VEF are congruent (SSS), so the angles at V match",
+            "correct": true,
+            "feedback": "VD = VE, DF = EF, and VF is shared — SSS congruence forces ∠DVF = ∠EVF."
+          },
+          {
+            "id": "o2",
+            "label": "Because F is the midpoint of arc DE",
+            "correct": false,
+            "feedback": "The real reason is the congruent triangles, not an arc midpoint — that's what guarantees equal angles at V."
+          },
+          {
+            "id": "o3",
+            "label": "Because VF is perpendicular to DE",
+            "correct": false,
+            "feedback": "VF does turn out perpendicular to DE, but that's a CONSEQUENCE — the equal angles come from the congruent triangles."
+          },
+          {
+            "id": "o4",
+            "label": "Because the angle was measured with the compass",
+            "correct": false,
+            "feedback": "Nothing is measured here — equal radii build congruent triangles, and congruence delivers the equal halves."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-angle-bisector__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Half of a right angle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "You bisect a 90° angle with this construction. What is the measure of each half, in degrees?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180 doubles the angle — bisecting HALVES it: 90 ÷ 2 = 45."
+          },
+          {
+            "value": 90,
+            "feedback": "90 is the whole angle. Each half after bisecting is 90 ÷ 2 = 45."
+          }
+        ],
+        "fallbackFeedback": "Bisecting halves the angle: 90 ÷ 2 = 45°."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The angle bisector and the perpendicular bisector are cousins: both plant **two equidistant points** and connect them. Perpendicular bisector: points equidistant from two ENDPOINTS. Angle bisector: a point equidistant from two SIDES. Equidistance is the engine of both.",
+      "figure": "cnp-bisector-cousins"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same idea, different distance.",
+      "conceptTag": "cp-angle-bisector",
+      "explanationVariants": [
+        "Every point on an angle bisector is equidistant from the two SIDES of the angle — the angle analogue of the perpendicular bisector's equidistance from two points.",
+        "Perpendicular bisector ↔ equidistant from two points; angle bisector ↔ equidistant from two sides (lines)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A point lies on the bisector of an angle. What is it equidistant from?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the two sides of the angle",
+            "correct": true,
+            "feedback": "The angle bisector is exactly the set of interior points equal in distance from both sides."
+          },
+          {
+            "id": "o2",
+            "label": "the two endpoints of a segment",
+            "correct": false,
+            "feedback": "That's the PERPENDICULAR bisector's property — equidistance from two points, not two sides."
+          },
+          {
+            "id": "o3",
+            "label": "the vertex and a fixed side",
+            "correct": false,
+            "feedback": "It's balanced between the two SIDES, not between the vertex and one side."
+          },
+          {
+            "id": "o4",
+            "label": "the arc points D and E only",
+            "correct": false,
+            "feedback": "D and E are just construction scaffolding — the bisector's real property is equal distance to the two sides everywhere along it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-angle-bisector__mcq"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Construct 45° from scratch.",
+      "conceptTag": "cp-angle-bisector",
+      "hints": [
+        "What angle, once bisected, gives 45°?",
+        "45° is half of 90° — so you need a right angle first, then one bisection.",
+        "A perpendicular-bisector construction makes the 90°; bisecting that angle makes 45°."
+      ],
+      "explanationVariants": [
+        "Construct a right angle (via a perpendicular), then bisect it: 90° ÷ 2 = 45°. Two familiar constructions chained.",
+        "Perpendicular first for 90°, then the angle-bisector construction halves it to 45° — no protractor at any point."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Using only compass and straightedge, how do you construct a 45° angle?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Construct a 90° angle, then bisect it",
+            "correct": true,
+            "feedback": "A perpendicular gives 90°; bisecting that angle halves it to exactly 45°."
+          },
+          {
+            "id": "o2",
+            "label": "Bisect a straight (180°) angle once",
+            "correct": false,
+            "feedback": "Bisecting 180° gives 90°, not 45° — you'd need to bisect once more."
+          },
+          {
+            "id": "o3",
+            "label": "Construct an equilateral triangle and bisect a corner",
+            "correct": false,
+            "feedback": "That bisects 60° into 30° — a valid construction, but it yields 30°, not 45°."
+          },
+          {
+            "id": "o4",
+            "label": "Swing a single 45° arc from the vertex",
+            "correct": false,
+            "feedback": "There's no '45° arc' — the compass makes no angles directly. You reach 45° by halving a constructed 90°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-constructions-proof",
+        "form": "cp-angle-bisector__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The angle bisector.",
+      "takeaways": [
+        "Arc across both sides, then equal arcs from those crossings, then draw the ray.",
+        "It works by SSS congruence of the two little triangles.",
+        "Bisector points are equidistant from the two SIDES — the angle cousin of the perpendicular bisector."
+      ],
+      "teaser": "Next chapter: perpendiculars through a point, and a line parallel to a given one."
+    }
+  ]
+}

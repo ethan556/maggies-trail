@@ -1,0 +1,255 @@
+{
+  "id": "dop-04-02",
+  "slug": "padding-and-regrouping",
+  "title": "Padding & Regrouping",
+  "courseId": "decimal-operations",
+  "chapterId": "ch4-decimal-add-subtract",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When the numbers have different lengths, padding does the heavy lifting. For 4.08 + 2.9, pad 2.9 to 2.90 so the hundredths line up. If you skip that, it's easy to slide the 9 into the wrong column and add 2.09 by mistake. Padding keeps every digit honest.",
+      "figure": "dop-pad-borrow"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Pad the shorter one.",
+      "conceptTag": "decimal-regroup",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add 4.08 + 2.9 (pad 2.9 to 2.90). (enter as a decimal)",
+        "answer": 6.98,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6.17,
+            "feedback": "6.17 slides the 9 into the hundredths (adding 2.09). The 9 is tenths — pad to 2.90, giving 6.98."
+          },
+          {
+            "value": 6.08,
+            "feedback": "6.08 adds only the whole 2 and drops the 0.9. Pad to 2.90 and add the tenths: 6.98."
+          }
+        ],
+        "fallbackFeedback": "4.08 + 2.90 = 6.98 (pad, then add each place)."
+      },
+      "hints": [
+        "Pad 2.9 to 2.90.",
+        "Hundredths 8+0=8, tenths 0+9=9, ones 4+2=6.",
+        "So 6.98."
+      ],
+      "explanationVariants": [
+        "4.08 + 2.90 = 6.98.",
+        "Padding puts the 9 in the tenths where it belongs."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Borrow carefully.",
+      "conceptTag": "decimal-regroup",
+      "explanationVariants": [
+        "5.30 − 1.65: borrow twice — hundredths 10−5=5, tenths 12−6=6, ones 4−1=3 → 3.65.",
+        "Each borrow reduces the next place by one; done right, 5.3 − 1.65 = 3.65."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract 5.3 − 1.65 (pad 5.3 to 5.30). (enter as a decimal)",
+        "answer": 3.65,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3.75,
+            "feedback": "3.75 forgets that the first borrow already lowered the tenths. After borrowing for the hundredths, the tenths is 2, not 3: 3.65."
+          },
+          {
+            "value": 4.65,
+            "feedback": "4.65 drops the whole 1 from 1.65. Subtract all of it: 5.30 − 1.65 = 3.65."
+          }
+        ],
+        "fallbackFeedback": "5.30 − 1.65 = 3.65 (borrow across, lowering each next place)."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "regroupSub"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtracting from a whole number means borrowing across zeros. For 10.0 − 3.47, pad to 10.00. There's nothing to borrow from in the tenths or hundredths, so the borrow travels all the way from the ones: 10 becomes 9, then the zeros become 9s and 10, and you subtract cleanly.",
+      "figure": "dop-pad-borrow"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Borrow across zeros.",
+      "conceptTag": "decimal-regroup",
+      "explanationVariants": [
+        "10.00 − 3.47: the borrow chains through the zeros to give 6.53.",
+        "Padding 10.0 to 10.00 lets the borrow travel across: 6.53."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract 10.0 − 3.47 (pad 10.0 to 10.00). (enter as a decimal)",
+        "answer": 6.53,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7.53,
+            "feedback": "7.53 skips the borrow the hundredths need — the ones drop from 10 to 6, not 7. It's 6.53."
+          },
+          {
+            "value": 6.63,
+            "feedback": "6.63 borrows one place short. Chaining the borrow fully across the zeros gives 6.53."
+          }
+        ],
+        "fallbackFeedback": "10.00 − 3.47 = 6.53 (borrow chains across the zeros)."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "zerosSub"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pad and carry.",
+      "conceptTag": "decimal-regroup",
+      "widget": {
+        "type": "columnCalc",
+        "op": "add",
+        "a": 75,
+        "b": 380,
+        "decimals": 2,
+        "prompt": "Add 0.75 + 3.80, column by column. Start at the hundredths and carry when a column passes 9.",
+        "commonResults": [
+          {
+            "value": 355,
+            "feedback": "3.55 leaves the carry behind. 7 tenths + 8 tenths is 15 tenths — one whole and 5 tenths — so the 5 stays in the tenths but the whole has to move into the ones column, making 4 wholes, not 3."
+          }
+        ],
+        "fallbackFeedback": "Hundredths first: 5 + 0. Then the tenths, 7 + 8, which passes 9 and carries. Then the ones.",
+        "successFeedback": "4.55. The carry crossed the decimal point, from tenths into ones, and behaved exactly as a carry from tens into hundreds would. The point does not interrupt the columns — it only names where they stop being whole."
+      },
+      "hints": [
+        "Pad 3.8 to 3.80.",
+        "Tenths 7+8=15 (write 5, carry 1); ones 0+3+1=4.",
+        "So 4.55."
+      ],
+      "explanationVariants": [
+        "0.75 + 3.80 = 4.55.",
+        "The tenths overflow carries into the ones: 4.55."
+      ],
+      "predict": {
+        "prompt": "Adding 0.75 + 3.80, the tenths column gives 7 + 8 = 15 tenths. That carry will travel…",
+        "options": [
+          {
+            "id": "ones",
+            "label": "Across the decimal point, into the ones column"
+          },
+          {
+            "id": "stuck",
+            "label": "Nowhere — a carry cannot cross the decimal point"
+          },
+          {
+            "id": "hundredths",
+            "label": "Right, into the hundredths column"
+          }
+        ],
+        "outcomeId": "ones",
+        "reveal": "Straight across into the ones. Fifteen tenths is one whole and five tenths, and \"one whole\" belongs on the other side of the point. The decimal point is a label on the places, not a wall between them — carries cross it exactly as they cross from tens into hundreds."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Pad, then borrow across.",
+      "conceptTag": "decimal-regroup",
+      "hints": [
+        "Pad 8.2 to 8.20.",
+        "Hundredths: borrow for 0 − 5. Tenths: borrow again for the reduced digit − 6.",
+        "Ones: 7 − 3 after the borrows."
+      ],
+      "explanationVariants": [
+        "8.20 − 3.65: 10−5=5 hundredths, 11−6=5 tenths, 7−3=4 ones → 4.55.",
+        "Padded and borrowed across, 8.2 − 3.65 = 4.55."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract 8.2 − 3.65. (enter as a decimal)",
+        "answer": 4.55,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 5.55,
+            "feedback": "5.55 skips the borrows — the ones drop from 8 to 7 after lending. It's 4.55."
+          },
+          {
+            "value": 4.65,
+            "feedback": "4.65 borrows one place short in the tenths. Borrowing fully across gives 4.55."
+          }
+        ],
+        "fallbackFeedback": "8.20 − 3.65 = 4.55 (pad, then borrow across both places)."
+      },
+      "variant": {
+        "gen": "decimal-align-addsub",
+        "form": "bareSub"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Pad first, then regroup with care.",
+      "takeaways": [
+        "Pad the shorter number with trailing zeros so every place lines up.",
+        "Each borrow lowers the next place by one — track that across multiple borrows.",
+        "Subtracting from a whole number chains the borrow across the zeros."
+      ],
+      "teaser": "next: decimal addition and subtraction inside real word problems."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decimal-regroup",
+      "concept": {
+        "id": "rem-dr-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Pad to equal length, then carry or borrow just like whole numbers.** For 3.4 + 1.85, pad 3.4 to 3.40: hundredths 0+5=5, tenths 4+8=12 (write 2, carry 1), ones 3+1+1=5 → 5.25. The padding zero keeps the hundredths lined up."
+      },
+      "check": {
+        "id": "rem-dr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decimal-regroup",
+        "explanationVariants": [
+          "3.40 + 1.85 = 5.25 (tenths 4+8=12, carry 1).",
+          "Padding 3.4 to 3.40 lines up the hundredths: 5.25."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Add 3.4 + 1.85 (pad 3.4 to 3.40). (enter as a decimal)",
+          "answer": 5.25,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 4.25,
+              "feedback": "4.25 forgets the carry: 4 + 8 tenths = 12, carry 1 to the ones — 3 + 1 + 1 = 5, giving 5.25."
+            },
+            {
+              "value": 5.19,
+              "feedback": "5.19 slides the 5 out of place. Pad to 3.40: hundredths 0 + 5 = 5, so 5.25."
+            }
+          ],
+          "fallbackFeedback": "3.40 + 1.85 = 5.25."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,333 @@
+{
+  "id": "ee-03-02",
+  "slug": "combining-like-terms",
+  "title": "Combining Like Terms",
+  "courseId": "expressions-equations",
+  "chapterId": "ch3-equivalent-expressions",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "3x + 2x is three x's plus two more x's — **five x's**: 3x + 2x = 5x. Terms with the SAME variable part are **like terms**, and they combine by adding their coefficients. It's counting: three apples plus two apples is five apples, whatever an apple costs.",
+      "figure": "ee-like-terms"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Like terms are the tiles that stack.",
+      "widget": {
+        "type": "algebraTiles",
+        "targetX": 3,
+        "targetConst": 5,
+        "maxTiles": 8,
+        "xStart": 0,
+        "constStart": 0,
+        "prompt": "Build 4x + 3 − x + 2 with tiles, then read the simplified expression.",
+        "successFeedback": "3x + 5. The x-tiles stack with the x-tiles and the units with the units — 4x − x leaves 3x, and 3 + 2 makes 5. You cannot add an x-tile to a unit tile any more than you can add a metre to a kilogram.",
+        "xFeedback": "The x-tiles are off: 4x minus one x leaves 3x.",
+        "constFeedback": "The x-tiles are right but the units are wrong: 3 + 2 = 5."
+      },
+      "predict": {
+        "prompt": "Building 4x + 3 − x + 2 with tiles — can the x-tiles and the number-tiles ever combine into ONE kind of tile?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — they stay separate kinds"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — they merge into one pile"
+          },
+          {
+            "id": "ifone",
+            "label": "Only if x equals 1"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "An x-tile and a unit tile are different shapes for a reason — unlike terms collect side by side but never fuse. The answer keeps both kinds."
+      },
+      "conceptTag": "like-terms",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents like terms.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for like terms must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines like terms."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:like-terms",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Subtracting like terms.",
+      "conceptTag": "like-terms",
+      "explanationVariants": [
+        "6m − 2m = (6 − 2)m = 4m — six m's take away two m's leaves four.",
+        "Subtract the coefficients, keep the variable: 4m."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify 6m − 2m.",
+        "options": [
+          {
+            "id": "a",
+            "label": "4m",
+            "correct": true,
+            "feedback": "Right — (6 − 2)m = 4m."
+          },
+          {
+            "id": "b",
+            "label": "4",
+            "feedback": "The m's don't cancel — you still have four of them: 4m, not plain 4."
+          },
+          {
+            "id": "c",
+            "label": "3m",
+            "feedback": "6 − 2 = 4, not 3. Six m's minus two m's leaves 4m."
+          }
+        ]
+      },
+      "hints": [
+        "Six m's, remove two.",
+        "6 − 2 = 4.",
+        "4m."
+      ],
+      "variant": {
+        "gen": "equiv-test",
+        "form": "likeSubtract"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The trap: **unlike terms don't combine.** 3x + 2 is NOT 5x — the 2 has no x, so it's a different kind of thing (two apples plus three dollars stays mixed). A sneaky check: 3x + 2 and 5x happen to agree at x = 1 (both give 5), but at x = 2 they split: 8 vs 10. One lucky match isn't equivalence.",
+      "figure": "ee-like-terms"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The one-value illusion.",
+      "conceptTag": "like-terms",
+      "explanationVariants": [
+        "At x = 2, 3x + 2 = 8 but 5x = 10 — they differ, so they were never equivalent; x = 1 was a coincidence.",
+        "Equivalence must hold at EVERY value; one match (x = 1) proves nothing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A student claims 3x + 2 = 5x because both give 5 at x = 1. Evaluate 3x + 2 at x = 2 to test the claim.",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is 5x at x = 2 — the student's WRONG version. The real expression gives 3 × 2 + 2 = 8. Since 8 ≠ 10, the claim breaks."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the x = 1 value. At x = 2: 3 × 2 + 2 = 8 (while 5x gives 10) — the expressions split apart."
+          }
+        ],
+        "fallbackFeedback": "3 × 2 + 2 = 8, but 5x = 10 — not equivalent; the x = 1 match was luck."
+      },
+      "variant": {
+        "gen": "equiv-test",
+        "form": "claimAtValue"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort: combinable or not?",
+      "conceptTag": "like-terms",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each pair by whether the terms can combine.",
+        "buckets": [
+          {
+            "id": "like",
+            "label": "Like terms — combine"
+          },
+          {
+            "id": "unlike",
+            "label": "Unlike — stay separate"
+          }
+        ],
+        "items": [
+          {
+            "id": "t1",
+            "label": "5x and 3x",
+            "bucketId": "like",
+            "feedback": "Same variable part (x) — combine to 8x."
+          },
+          {
+            "id": "t2",
+            "label": "4n and 7",
+            "bucketId": "unlike",
+            "feedback": "The 7 has no n — different kinds, they stay separate."
+          },
+          {
+            "id": "t3",
+            "label": "2y and 9y",
+            "bucketId": "like",
+            "feedback": "Both are y-terms — combine to 11y."
+          },
+          {
+            "id": "t4",
+            "label": "3a and 3b",
+            "bucketId": "unlike",
+            "feedback": "Same coefficient but DIFFERENT variables — a's and b's don't merge."
+          }
+        ],
+        "missFeedback": "Look at the variable part, not the coefficient: only terms with the identical variable combine.",
+        "successFeedback": "Sorted — like terms share a variable part; nothing else merges."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Combine what you can, keep the rest.",
+      "conceptTag": "like-terms",
+      "explanationVariants": [
+        "4n + 3 + 2n: the n-terms combine (4n + 2n = 6n); the 3 stays: 6n + 3.",
+        "Group like with like: (4 + 2)n + 3 = 6n + 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Simplify 4n + 3 + 2n.",
+        "options": [
+          {
+            "id": "a",
+            "label": "6n + 3",
+            "correct": true,
+            "feedback": "Right — 4n + 2n = 6n, and the lone 3 stays separate: 6n + 3."
+          },
+          {
+            "id": "b",
+            "label": "9n",
+            "feedback": "9n absorbed the 3 into the n-terms, but 3 has no n — it can't merge. 6n + 3."
+          },
+          {
+            "id": "c",
+            "label": "6n + 5",
+            "feedback": "The n-count is right (6n), but the constant is just 3 — nothing else adds to it. 6n + 3."
+          }
+        ]
+      },
+      "hints": [
+        "Which terms have an n?",
+        "4n and 2n combine to 6n.",
+        "The 3 stays as-is: 6n + 3."
+      ],
+      "variant": {
+        "gen": "equiv-test",
+        "form": "likeConstant"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Distribute, then combine.",
+      "conceptTag": "like-terms",
+      "hints": [
+        "Expand 2(x + 3) first.",
+        "That gives 2x + 6; the full expression is 2x + 6 + 4x.",
+        "Combine the x-terms, then evaluate at x = 1."
+      ],
+      "explanationVariants": [
+        "2(x + 3) + 4x = 2x + 6 + 4x = 6x + 6; at x = 1 that's 6 + 6 = 12.",
+        "Expand, combine (6x + 6), substitute: 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify 2(x + 3) + 4x, then evaluate at x = 1.",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 comes from the broken expansion 2x + 3 + 4x = 6x + 3 (the 2 missed the 3). Distribute fully: 2x + 6 + 4x = 6x + 6 = 12 at x = 1."
+          },
+          {
+            "value": 10,
+            "feedback": "10 drops one x-term along the way. Full simplification: 2x + 6 + 4x = 6x + 6, which gives 12 at x = 1."
+          }
+        ],
+        "fallbackFeedback": "2(x + 3) + 4x = 6x + 6; at x = 1: 12."
+      },
+      "variant": {
+        "gen": "equiv-test",
+        "form": "distributeCombine"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Count matching kinds.",
+      "takeaways": [
+        "Like terms share the same variable part; combine by adding coefficients (3x + 2x = 5x).",
+        "Unlike terms never merge: 3x + 2 stays 3x + 2.",
+        "One matching value doesn't prove equivalence — test a second number."
+      ],
+      "teaser": "chapter finale: a reliable test for whether two expressions are truly the same."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "like-terms",
+      "concept": {
+        "id": "rem-lt-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Only matching variable parts combine.** 5y + 2y = 7y (both are y's). But 5y + 2 stays 5y + 2 — the 2 is a different kind of thing. Add coefficients only when the letters match exactly."
+      },
+      "check": {
+        "id": "rem-lt-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "like-terms",
+        "explanationVariants": [
+          "5y + 2y = (5 + 2)y = 7y.",
+          "Five y's plus two y's is seven y's."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Simplify 5y + 2y.",
+          "options": [
+            {
+              "id": "a",
+              "label": "7y",
+              "correct": true,
+              "feedback": "Right — add the coefficients: (5 + 2)y = 7y."
+            },
+            {
+              "id": "b",
+              "label": "10y",
+              "feedback": "10 multiplies 5 × 2. Like terms ADD their coefficients: 7y."
+            },
+            {
+              "id": "c",
+              "label": "7y²",
+              "feedback": "Adding doesn't square the variable — 5y + 2y = 7y, plain."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

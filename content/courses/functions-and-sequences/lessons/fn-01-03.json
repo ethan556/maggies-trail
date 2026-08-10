@@ -1,0 +1,309 @@
+{
+  "id": "fn-01-03",
+  "slug": "functions-from-a-table",
+  "title": "Functions from a Table",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch1-function-basics",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "function-machine",
+      "body": "A table lists inputs and their outputs. To find the rule, ask what turns each input into its output. If inputs 1, 2, 3 give outputs 4, 5, 6, the rule is f(x) = x + 3 — each output is the input plus 3."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A table is a machine you have only seen the outputs of.",
+      "widget": {
+        "type": "functionMachine",
+        "a": 2,
+        "b": 1,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 9,
+        "prompt": "A table shows f(1) = 3, f(2) = 5, f(3) = 7. Find the input that gives 9.",
+        "successFeedback": "f(4) = 9. Each step adds 2, so the rule is f(x) = 2x + 1 — the constant difference IS the coefficient, and the machine reveals the rule the table was only hinting at.",
+        "lowFeedback": "The output is under 9 — feed it a larger input.",
+        "highFeedback": "The output is over 9 — feed it a smaller input."
+      },
+      "predict": {
+        "prompt": "A table's outputs climb by 2 every time the input climbs by 1. Where does that 2 live in the rule?",
+        "options": [
+          {
+            "id": "mult",
+            "label": "As the multiplier: out = 2·in + something"
+          },
+          {
+            "id": "add",
+            "label": "Added at the end: out = in + 2"
+          },
+          {
+            "id": "nowhere",
+            "label": "It doesn't appear in the rule"
+          }
+        ],
+        "outcomeId": "mult",
+        "reveal": "A steady +2 per step is the fingerprint of ×2: the rule is out = 2·in + 1. The '+ something' is whatever the table shows at input 0 — the multiplier does the climbing, the constant sets the start."
+      },
+      "conceptTag": "fn-table-rule",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents table rule.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for table rule must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines table rule."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-and-sequences:fn-table-rule",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A multiplying rule.",
+      "conceptTag": "fn-table-rule",
+      "explanationVariants": [
+        "f(4) = 5·4 = 20.",
+        "The rule multiplies by 5: 5·4 = 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 5x, what is f(4)?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "5x means 5 times x, not 5 + x: 5·4 = 20."
+          },
+          {
+            "value": 45,
+            "feedback": "5x is 5·4 = 20, not 5 next to 4 as \"54\" or similar."
+          }
+        ],
+        "fallbackFeedback": "f(4) = 5·4 = 20."
+      },
+      "variant": {
+        "gen": "fn-evaluate",
+        "form": "mulOnly"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same rule works for inputs the table never showed. If f(x) = 2x, then f(0) = 0, f(1) = 2, f(2) = 4, and even f(20) = 40. A rule extends the table forever.",
+      "figure": "fn-unseen-inputs"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Reach beyond the table.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2x, what is f(20)?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "2x means 2 times x, not 2 + x: 2·20 = 40."
+          },
+          {
+            "value": 42,
+            "feedback": "You added the 2 rather than multiplying by it. f(20) = 2 × 20 = 40."
+          }
+        ],
+        "fallbackFeedback": "f(20) = 2·20 = 40."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A rule can combine steps: f(x) = 3x + 2 multiplies, then adds. So f(6) = 3·6 + 2 = 20. Read left to right with order of operations — the multiplication happens before the addition.",
+      "figure": "fn-combine-steps"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Two-step rule.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 3x + 2, what is f(6)?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "Multiply before adding: 3·6 + 2 = 20, not 3·(6 + 2) = 24."
+          },
+          {
+            "value": 11,
+            "feedback": "The 3 multiplies x: 3·6 = 18, then + 2 = 20 (not 6 + 3 + 2)."
+          }
+        ],
+        "fallbackFeedback": "f(6) = 3·6 + 2 = 20."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A squaring rule.",
+      "conceptTag": "fn-table-rule",
+      "explanationVariants": [
+        "f(6) = 6² = 36.",
+        "The rule squares the input: 6² = 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x^2, what is f(6)?",
+        "answer": 36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "x² means x times x, not x times 2: 6·6 = 36."
+          },
+          {
+            "value": 8,
+            "feedback": "x² is 6·6 = 36, not 6 + 2."
+          }
+        ],
+        "fallbackFeedback": "f(6) = 6² = 36."
+      },
+      "variant": {
+        "gen": "fn-evaluate",
+        "form": "squareOnly"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Multiply then subtract.",
+      "conceptTag": "fn-table-rule",
+      "explanationVariants": [
+        "f(5) = 4·5 − 3 = 20 − 3 = 17.",
+        "Multiply by 4, then subtract 3: 20 − 3 = 17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 4x - 3, what is f(5)?",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "Don't forget the − 3: 4·5 − 3 = 17."
+          },
+          {
+            "value": 12,
+            "feedback": "4·5 = 20 first, then subtract 3: 17 (not 4·(5 − 3))."
+          }
+        ],
+        "fallbackFeedback": "f(5) = 4·5 − 3 = 17."
+      },
+      "variant": {
+        "gen": "fn-evaluate"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Square, scale, subtract.",
+      "conceptTag": "fn-table-rule",
+      "explanationVariants": [
+        "f(3) = 2·3² − 3 = 2·9 − 3 = 15.",
+        "Square first (9), multiply by 2 (18), subtract 3: 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = 2x^2 - 3, what is f(3)?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 33,
+            "feedback": "Square only x, not 2x: 2·(3²) − 3 = 15, not (2·3)² − 3 = 33."
+          },
+          {
+            "value": 9,
+            "feedback": "Square first: 3² = 9, then 2·9 − 3 = 15 (don't skip the ×2)."
+          }
+        ],
+        "fallbackFeedback": "f(3) = 2·3² − 3 = 18 − 3 = 15."
+      },
+      "hints": [
+        "Square the input first: 3² = 9.",
+        "Multiply by 2: 2·9 = 18.",
+        "Subtract 3: 18 − 3 = 15."
+      ],
+      "variant": {
+        "gen": "fn-evaluate",
+        "form": "quadMinus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A rule turns any input into its output — and reaches past the table.",
+      "takeaways": [
+        "Find the rule by comparing inputs to outputs.",
+        "The rule works for inputs the table never listed.",
+        "Follow order of operations for multi-step rules."
+      ],
+      "teaser": "next chapter: sequences that grow by a constant step."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-table-rule",
+      "concept": {
+        "id": "rem-ftr-c",
+        "kind": "concept",
+        "body": "A rule turns each input into its output. For f(x) = 3x + 2: f(6) = 3·6 + 2 = 20. Multiply before adding, and the rule works for any input."
+      },
+      "check": {
+        "id": "rem-ftr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-table-rule",
+        "explanationVariants": [
+          "f(6) = 3·6 + 2 = 20.",
+          "18 + 2 = 20."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = 3x + 2, what is f(6)?",
+          "answer": 20,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 24,
+              "feedback": "Multiply before adding: 3·6 + 2 = 20."
+            },
+            {
+              "value": 11,
+              "feedback": "You added before multiplying. Multiply first: 3 × 6 = 18, then add 2 to get 20."
+            }
+          ],
+          "fallbackFeedback": "f(6) = 18 + 2 = 20."
+        }
+      }
+    }
+  ]
+}

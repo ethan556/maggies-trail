@@ -1,0 +1,307 @@
+{
+  "id": "sc-03-01",
+  "slug": "power-series-operations",
+  "title": "New Series for Nothing",
+  "courseId": "series-convergence",
+  "chapterId": "ch3-power-series-operations",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Inside its radius, a power series behaves like a polynomial — so you may **differentiate it and integrate it term by term**.\n\nAnd that is the cheapest trick in the subject: one known series becomes a whole family, with no new derivatives computed at all.\n\nThe radius survives the operation. Only the endpoints can change.",
+      "figure": "sc-taylor-hug-peel"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The series you are about to exploit.",
+      "widget": {
+        "type": "taylorApprox",
+        "fn": "geometric",
+        "mode": "terms",
+        "atX": 0.5,
+        "tolerance": 0.05,
+        "targetN": 5,
+        "nStart": 0,
+        "targetXTenths": 10,
+        "xStart": 3,
+        "prompt": "1/(1 − x) = 1 + x + x² + … at x = 0.5, where the true value is 2. Add terms until you are within 0.05 — using the FEWEST that will do it.",
+        "successFeedback": "Five terms past the constant: 1 + 0.5 + 0.25 + 0.125 + 0.0625 + 0.03125 = 1.969, within 0.05 of 2. Now hold on to this series — because differentiating and integrating it, term by term, is about to hand you two more for free.",
+        "lowFeedback": "Not close enough to 2 yet. Add another term — each one halves the remaining gap.",
+        "highFeedback": "That works, but it is more terms than you need. Come back down to the smallest number inside the tolerance."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Add local derivative information term by term and compare a polynomial approximation with its target function.",
+        "invariants": [
+          "matched-derivatives-anchor-local-approximation",
+          "more-terms-expand-local-accuracy"
+        ],
+        "misconceptions": [
+          "series-equals-function-everywhere",
+          "highest-degree-term-dominates-near-center"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "series-convergence-taylorApprox",
+        "delayed": false
+      },
+      "conceptTag": "sc-power-ops",
+      "predict": {
+        "prompt": "1 + x + x² + … at x = 0.5 climbs toward 2. After each new term, the distance still remaining to 2 will…",
+        "options": [
+          {
+            "id": "half",
+            "label": "Halve"
+          },
+          {
+            "id": "const",
+            "label": "Shrink by the same fixed amount each time"
+          },
+          {
+            "id": "slow",
+            "label": "Barely change — it takes dozens of terms"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "It halves. After n terms the leftover is exactly (0.5)ⁿ, so every term closes half of whatever gap is left — which is why six terms suffice. Geometric convergence is not merely getting closer; it is taking a fixed FRACTION of the remaining distance every time."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Differentiate it.",
+      "conceptTag": "sc-power-ops",
+      "explanationVariants": [
+        "Differentiating 1 + x + x² + x³ + … term by term gives 1 + 2x + 3x² + … And the left side, d/dx[1/(1 − x)], is 1/(1 − x)². So Σ n·xⁿ⁻¹ = 1/(1 − x)² — a brand-new series, obtained for free.",
+        "You did not compute a single derivative of the new function. The old series did all the work."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Differentiate 1 + x + x² + x³ + … term by term. What do you get, and what does it equal?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1 + 2x + 3x² + … , which equals 1/(1 − x)².",
+            "correct": true,
+            "feedback": "Right — and you obtained the series for 1/(1 − x)² without computing a single derivative of it. The old series did the work."
+          },
+          {
+            "id": "o2",
+            "label": "x + x²/2 + x³/3 + … , which equals −ln(1 − x).",
+            "correct": false,
+            "feedback": "That is what you get by INTEGRATING term by term, which is the next question. Differentiating lowers the powers rather than raising them."
+          },
+          {
+            "id": "o3",
+            "label": "0, because each term differentiates away.",
+            "correct": false,
+            "feedback": "Only the constant does. x differentiates to 1, x² to 2x, and so on — the series survives."
+          },
+          {
+            "id": "o4",
+            "label": "The same series again.",
+            "correct": false,
+            "feedback": "That is eˣ's remarkable property, not this one. Differentiating xⁿ gives nxⁿ⁻¹, so the coefficients change."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-power-ops__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Integrating works the same way, and it is where the famous series come from.\n\n∫ (1 + x + x² + …) dx = **x + x²/2 + x³/3 + … = −ln(1 − x)**.\n\nSwap x for −x² in the original and integrate, and out falls\n\n**arctan x = x − x³/3 + x⁵/5 − …**\n\nNobody differentiated arctan five times. The geometric series did it all.",
+      "figure": "dr-inverse-reciprocal"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Integrate it.",
+      "conceptTag": "sc-power-ops",
+      "explanationVariants": [
+        "∫xⁿ dx = xⁿ⁺¹/(n + 1), so the series becomes x + x²/2 + x³/3 + … — and the left side integrates to −ln(1 − x).",
+        "Setting x = 1/2 then gives ln 2 = 1/2 + 1/8 + 1/24 + … , a series for a logarithm, out of nothing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Integrate 1 + x + x² + … term by term. What function does the result equal?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−ln(1 − x)",
+            "correct": true,
+            "feedback": "Right. And putting x = 1/2 gives a series for ln 2 — a logarithm, obtained from nothing but the geometric series and one integration."
+          },
+          {
+            "id": "o2",
+            "label": "1/(1 − x)²",
+            "correct": false,
+            "feedback": "That is what DIFFERENTIATING gives. Integrating raises the powers instead of lowering them."
+          },
+          {
+            "id": "o3",
+            "label": "eˣ",
+            "correct": false,
+            "feedback": "eˣ has factorials in its denominators. This one has plain integers, which is the fingerprint of an integrated geometric series."
+          },
+          {
+            "id": "o4",
+            "label": "arctan x",
+            "correct": false,
+            "feedback": "arctan comes from integrating the series for 1/(1 + x²) — the geometric series with x replaced by −x². A cousin, but not this one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-power-ops__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Substitution is free too.",
+      "conceptTag": "sc-power-ops",
+      "explanationVariants": [
+        "Replace x by −x² in 1/(1 − x) = Σxⁿ and you get 1/(1 + x²) = 1 − x² + x⁴ − … Integrate that and you have arctan x.",
+        "Substituting into a known series is legal wherever the substituted value stays inside the radius."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To get a series for 1/(1 + x²), what do you substitute into 1/(1 − x) = 1 + x + x² + …?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Replace x with −x², giving 1 − x² + x⁴ − x⁶ + …",
+            "correct": true,
+            "feedback": "Right — and integrating THAT gives arctan x = x − x³/3 + x⁵/5 − …, which at x = 1 gives the famous π/4 series."
+          },
+          {
+            "id": "o2",
+            "label": "Replace x with x².",
+            "correct": false,
+            "feedback": "That gives 1/(1 − x²), with all-positive terms. The plus sign in 1 + x² needs a MINUS in the substitution."
+          },
+          {
+            "id": "o3",
+            "label": "Replace x with 1/x.",
+            "correct": false,
+            "feedback": "That lands you outside the radius for small x, and the resulting series is not a power series at all."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing works — you must differentiate arctan repeatedly.",
+            "correct": false,
+            "feedback": "You could, and it would be painful. The substitution does it in one line, which is the entire point of this lesson."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-power-ops__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sum a series you have never seen.",
+      "conceptTag": "sc-power-ops",
+      "hints": [
+        "You know Σxⁿ⁻¹·n = 1/(1 − x)² from differentiating the geometric series.",
+        "The series 1 + 2(1/2) + 3(1/2)² + 4(1/2)³ + … is that one, evaluated at x = 1/2.",
+        "So the sum is 1/(1 − 1/2)² = 1/(1/4)."
+      ],
+      "explanationVariants": [
+        "1/(1 − 0.5)² = 1/0.25 = 4.",
+        "You summed an infinite series with weights climbing forever, in one line — because differentiating a series you already knew handed you the closed form."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the sum of 1 + 2(1/2) + 3(1/2)² + 4(1/2)³ + …",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That is Σ(1/2)ⁿ, the plain geometric sum. This one has each term multiplied by n, which is 1/(1 − x)², not 1/(1 − x)."
+          },
+          {
+            "value": 8,
+            "feedback": "Check: 1/(1 − 0.5)² = 1/0.25 = 4, not 8."
+          },
+          {
+            "value": 1,
+            "feedback": "The terms 1, 1, 0.75, 0.5, … are all positive and only slowly fading — the sum is well past 1. It is exactly 4."
+          }
+        ],
+        "fallbackFeedback": "It is Σn·xⁿ⁻¹ = 1/(1 − x)² at x = 1/2: 1/0.25 = 4."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-power-ops__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One series, a whole family.",
+      "takeaways": [
+        "Inside the radius, differentiate and integrate term by term. The radius survives; only the endpoints can change.",
+        "Integrating the geometric series gives −ln(1 − x). Substituting −x² and integrating gives arctan x.",
+        "Nobody computed those derivatives. The geometric series did all the work — which is why it is worth knowing by heart."
+      ],
+      "teaser": "That is BC series. What remains in the band: parametric and polar calculus."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sc-power-ops",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Treat the series like the polynomial it behaves as. Differentiate it term by term, or integrate it term by term, and the result is the series for the differentiated (or integrated) function. The hard work was done once, by the original series.",
+        "figure": "dr-chain-gears"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Term by term.",
+        "conceptTag": "sc-power-ops",
+        "explanationVariants": [
+          "Differentiating x²/2 gives x; differentiating x³/3 gives x². So x + x²/2 + x³/3 + … differentiates back to 1 + x + x² + …",
+          "Differentiation and integration undo each other here just as they do for polynomials."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Differentiate x + x²/2 + x³/3 + … term by term.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "1 + x + x² + …",
+              "correct": true,
+              "feedback": "Right — the geometric series comes straight back, which is exactly what it should do."
+            },
+            {
+              "id": "o2",
+              "label": "x + x² + x³ + …",
+              "correct": false,
+              "feedback": "Check the first term: differentiating x gives 1, not x. The whole series drops by one power."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,336 @@
+{
+ "id": "pra-04-03",
+ "slug": "solving-from-scratch",
+ "title": "Polynomial Inequalities from Scratch",
+ "courseId": "polynomial-rational-analysis",
+ "chapterId": "ch4-polynomial-inequalities",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Real problems arrive unfactored, like x² − x ≥ 6. The non-negotiable first move: **get zero on one side** — x² − x − 6 ≥ 0 — then factor and chart. Comparing to 6 directly is meaningless for signs; sign charts only speak the language of **zero**.",
+   "figure": "pra-unfactored"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Rearrange and factor.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "x² − x ≥ 6 rearranges to x² − x − 6 ≥ 0. Which factorization is correct?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(x − 3)(x + 2)",
+      "correct": true,
+      "feedback": "Right — the pair −3, +2 multiplies to −6 and sums to −1."
+     },
+     {
+      "id": "o2",
+      "label": "(x − 6)(x + 1)",
+      "feedback": "That expands to x² − 5x − 6 — the middle term is wrong. Need a pair summing to −1: −3 and +2."
+     },
+     {
+      "id": "o3",
+      "label": "(x − 2)(x + 3)",
+      "feedback": "That sums to +1, giving x² + x − 6. Swap the signs: (x − 3)(x + 2)."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Chart and harvest.",
+   "conceptTag": "pra-ineq-scratch",
+   "explanationVariants": [
+    "Zeros −2 and 3; signs +, −, +; ≥ 0 keeps the outer intervals with endpoints: x ≤ −2 or x ≥ 3.",
+    "Test f(0) = −6 < 0 (middle fails); the outsides pass, closed at the zeros."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "So where is x² − x ≥ 6?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x"
+     },
+     {
+      "id": "t1",
+      "label": "≤"
+     },
+     {
+      "id": "t2",
+      "label": "−2"
+     },
+     {
+      "id": "t3",
+      "label": "or"
+     },
+     {
+      "id": "t4",
+      "label": "≥"
+     },
+     {
+      "id": "t5",
+      "label": "3"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2",
+     "t3",
+     "t0",
+     "t4",
+     "t5"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "t1",
+       "t0",
+       "t1",
+       "t5"
+      ],
+      "feedback": "The middle interval has x² − x − 6 < 0 (test x = 0 gives −6): the solution is the outsides."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t4",
+       "t5"
+      ],
+      "feedback": "Far left works too: at x = −3, x² − x = 12 ≥ 6 ✓. Two branches: x ≤ −2 or x ≥ 3."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Move the 6 over, factor x² − x − 6, chart the signs, and keep the + intervals with their endpoints.",
+    "successFeedback": "Right — outer + intervals, endpoints included by ≥."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-ineq-scratch__buildExpression"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The classic trap: **never divide both sides by a variable expression**. In x³ ≥ 4x, dividing by x silently assumes x > 0 and throws away solutions. Instead: x³ − 4x ≥ 0, factor x(x − 2)(x + 2), chart with all THREE zeros.",
+   "figure": "pra-no-divide-variable"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Do it the safe way.",
+   "conceptTag": "pra-ineq-scratch",
+   "explanationVariants": [
+    "Chart of x(x − 2)(x + 2): signs −, +, −, +; ≥ 0 harvests −2 ≤ x ≤ 0 and x ≥ 2.",
+    "Test f(−1) = 3 ≥ 0 ✓ and f(1) = −3 ✗: the middle-left interval is IN, middle-right is OUT."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Where is x³ ≥ 4x?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "−2"
+     },
+     {
+      "id": "t1",
+      "label": "≤"
+     },
+     {
+      "id": "t2",
+      "label": "x"
+     },
+     {
+      "id": "t3",
+      "label": "0"
+     },
+     {
+      "id": "t4",
+      "label": "or"
+     },
+     {
+      "id": "t5",
+      "label": "≥"
+     },
+     {
+      "id": "t6",
+      "label": "2"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t2",
+     "t1",
+     "t3",
+     "t4",
+     "t2",
+     "t5",
+     "t6"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "t5",
+       "t6"
+      ],
+      "feedback": "That's what dividing by x costs you: at x = −1, (−1)³ = −1 ≥ −4 ✓ — the interval [−2, 0] belongs too."
+     },
+     {
+      "sequence": [
+       "t2",
+       "t5",
+       "t0"
+      ],
+      "feedback": "Test x = 1: 1 ≥ 4 is false. The solution skips (0, 2): −2 ≤ x ≤ 0 or x ≥ 2."
+     }
+    ],
+    "reusable": true,
+    "missFeedback": "Move 4x over and factor x(x − 2)(x + 2) — alternate signs through three simple zeros.",
+    "successFeedback": "Right — the +, − pattern alternates through all three simple zeros; two positive stretches survive."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-ineq-scratch__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Boundary bookkeeping.",
+   "conceptTag": "pra-ineq-scratch",
+   "explanationVariants": [
+    "For the STRICT version x³ > 4x, all three zeros drop out: −2 < x < 0 or x > 2.",
+    "Same intervals, open endpoints — at −2, 0, 2 the two sides are EQUAL, not >."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "How does the answer change for the STRICT inequality x³ > 4x?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Same intervals, but all endpoints excluded: −2 < x < 0 or x > 2",
+      "correct": true,
+      "feedback": "Right — the chart never changes; only the zeros' membership does."
+     },
+     {
+      "id": "o2",
+      "label": "No change at all",
+      "feedback": "At x = 2, x³ = 8 and 4x = 8: equal, so 8 > 8 fails — strict drops the endpoints."
+     },
+     {
+      "id": "o3",
+      "label": "The solution becomes x > 2 only",
+      "feedback": "The interval (−2, 0) still works strictly: (−1)³ = −1 > −4 ✓. Only the ENDPOINTS drop."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-ineq-scratch__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "One from the wild.",
+   "conceptTag": "pra-ineq-scratch",
+   "explanationVariants": [
+    "Move everything left: x² − 6x + 8 ≤ 0 → (x − 2)(x − 4) ≤ 0. Signs +, −, +: the negative middle with endpoints gives 2 ≤ x ≤ 4 — the integers 2, 3, 4: three of them.",
+    "Chart harvest [2, 4]; integer members 2, 3, 4."
+   ],
+   "hints": [
+    "Rearrange x² + 8 ≤ 6x to (something) ≤ 0 and factor.",
+    "x² − 6x + 8 = (x − 2)(x − 4). Chart it.",
+    "Solution 2 ≤ x ≤ 4. Count the integers inside, endpoints included."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "How many INTEGER solutions does x² + 8 ≤ 6x have?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "The interval [2, 4] holds three integers: 2, 3, and 4 — the endpoints satisfy equality (≤)."
+     },
+     {
+      "value": 2,
+      "feedback": "Don't drop the endpoints: at x = 2, 4 + 8 = 12 = 6·2 ✓ and at x = 4, 16 + 8 = 24 = 6·4 ✓. Three integers."
+     },
+     {
+      "value": 5,
+      "feedback": "The solution is only [2, 4] — test x = 1: 1 + 8 = 9 ≤ 6 fails. Integers 2, 3, 4."
+     }
+    ],
+    "fallbackFeedback": "(x − 2)(x − 4) ≤ 0 on [2, 4]: integers 2, 3, 4 → three."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-ineq-scratch__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Zero first, always.",
+   "takeaways": [
+    "Move everything to one side before charting — signs only compare to zero.",
+    "Never divide by a variable expression; factor it out instead.",
+    "Strict vs inclusive changes endpoints only, never intervals."
+   ],
+   "teaser": "Final chapter: rational inequalities — where excluded values join the cut points."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pra-ineq-scratch",
+   "concept": {
+    "id": "rem-pra0403-c",
+    "kind": "concept",
+    "body": "Pipeline: rearrange to ⋛ 0 → factor → zeros cut the line → test or sign-walk → harvest with correct endpoints."
+   },
+   "check": {
+    "id": "rem-pra0403-k",
+    "kind": "check",
+    "body": "One rearrangement.",
+    "conceptTag": "pra-ineq-scratch",
+    "explanationVariants": [
+     "x² < 9 becomes x² − 9 < 0 = (x − 3)(x + 3) < 0: the negative middle, −3 < x < 3.",
+     "Between the zeros ±3 the parabola dips below zero."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Where is x² < 9?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "−3 < x < 3",
+       "correct": true,
+       "feedback": "Right — chart of (x − 3)(x + 3): negative exactly between the zeros."
+      },
+      {
+       "id": "o2",
+       "label": "x < 3",
+       "feedback": "x = −5 gives 25 < 9, false — the left side needs cutting too: −3 < x < 3."
+      },
+      {
+       "id": "o3",
+       "label": "x < ±3",
+       "feedback": "Written as an interval, the solution is the middle piece: −3 < x < 3."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

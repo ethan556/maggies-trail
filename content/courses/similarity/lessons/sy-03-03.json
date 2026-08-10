@@ -1,0 +1,316 @@
+{
+ "id": "sy-03-03",
+ "slug": "proportions-in-figures",
+ "title": "Proportions in Figures",
+ "courseId": "similarity",
+ "chapterId": "ch3-side-splitter",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sy-proportions-figures",
+   "concept": {
+    "id": "rem-sy-proportions-figures-c",
+    "kind": "concept",
+    "body": "Decision guide for proportion problems: PARALLEL marks → Side-Splitter (AD/DB = AE/EC). ANGLE-BISECTOR mark → BD/DC = AB/AC. Matching ANGLE marks with proportional sides → similarity (AA / SAS~ / SSS~). Identify the configuration from the marks, then write a single proportion and cross-multiply."
+   },
+   "check": {
+    "id": "rem-sy-proportions-figures-k",
+    "kind": "check",
+    "body": "Match mark to theorem.",
+    "conceptTag": "sy-proportions-figures",
+    "explanationVariants": [
+     "Parallel arrows point to the Side-Splitter Theorem.",
+     "A parallel mark means side-splitter proportions."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Parallel arrows on a segment inside a triangle signal which theorem?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Side-Splitter Theorem",
+       "correct": true,
+       "feedback": "Parallel ⇒ side-splitter: the segment splits the sides proportionally."
+      },
+      {
+       "id": "o2",
+       "label": "Angle Bisector Theorem",
+       "correct": false,
+       "feedback": "That needs a bisected-angle mark, not parallel arrows."
+      },
+      {
+       "id": "o3",
+       "label": "Pythagorean Theorem",
+       "correct": false,
+       "feedback": "That needs a right angle. Parallel arrows ⇒ side-splitter."
+      },
+      {
+       "id": "o4",
+       "label": "Triangle Inequality",
+       "correct": false,
+       "feedback": "That's about side sums, unrelated to parallel marks. Parallel ⇒ side-splitter."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Real figures stack these ideas. The skill is **spotting which proportion applies**: a parallel line means side-splitter; a shared angle with proportional sides means SAS~; an angle bisector means the bisector ratio. Read the figure's marks — parallel arrows, angle ticks — to choose the right tool, then set up ONE proportion.",
+   "figure": "side-splitter"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Read the marks.",
+   "widget": {
+    "type": "dilationExplore",
+    "prompt": "The arrows mark the inner segment as parallel to the base — that is what the marks are telling you. Slide the cut to the midpoint of AB and read both ratios the whole way.",
+    "shape": [
+     [
+      1,
+      13
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      13,
+      1
+     ]
+    ],
+    "center": [
+     0,
+     0
+    ],
+    "targetK": 0.5,
+    "kMin": 0.1,
+    "kMax": 0.9,
+    "kStep": 0.1,
+    "kStart": 0.2,
+    "gridMin": 0,
+    "gridMax": 14,
+    "showRatios": [
+     "segments"
+    ],
+    "successFeedback": "Both ratios read 1.00 — the cut has bisected AB and AC at once. The marks are the whole warrant: because the segment is parallel to the base, the two ratios are locked together, so cutting one side in half cuts the other in half too. That is the side-splitter theorem, and the midpoint case is the midsegment.",
+    "lowFeedback": "The cut is still above the midpoint — AD/DB is under 1.00. Keep sliding down, and watch the second ratio track the first the entire way rather than lagging behind it.",
+    "highFeedback": "Past the midpoint now — AD/DB has gone above 1.00. Ease back up. Notice that overshooting moved both readouts together; they have never once disagreed."
+   },
+   "predict": {
+    "prompt": "A segment inside a triangle is marked parallel to the base. Sliding it up and down, the two side ratios AD/DB and AE/EC will…",
+    "options": [
+     {
+      "id": "together",
+      "label": "Always match each other, at every position"
+     },
+     {
+      "id": "sometimes",
+      "label": "Match only at the midpoint"
+     },
+     {
+      "id": "never",
+      "label": "Move independently — they measure different sides"
+     }
+    ],
+    "outcomeId": "together",
+    "reveal": "Always. Parallel to the base is the condition, and it holds at every height, so the two ratios are equal everywhere the cut can go. The midpoint is not where the theorem starts working — it is just the position where both ratios happen to read 1."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Parallel or bisector?",
+   "conceptTag": "sy-proportions-figures",
+   "explanationVariants": [
+    "An angle-bisector mark triggers BD/DC = AB/AC; a parallel mark triggers the side-splitter. The figure's marks tell you which.",
+    "Match the mark to the theorem: bisector ⇒ adjacent-side ratio; parallel ⇒ side-splitter."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A cevian from vertex A is marked as bisecting angle A. Which proportion applies?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "BD/DC = AB/AC (Angle Bisector Theorem)",
+      "correct": true,
+      "feedback": "An angle-bisector mark triggers the bisector ratio: the opposite side splits as the adjacent sides do."
+     },
+     {
+      "id": "o2",
+      "label": "AD/DB = AE/EC (Side-Splitter)",
+      "correct": false,
+      "feedback": "That's for a PARALLEL line, not an angle bisector. The bisector gives BD/DC = AB/AC."
+     },
+     {
+      "id": "o3",
+      "label": "AB = AC (isosceles)",
+      "correct": false,
+      "feedback": "A bisector doesn't force equal sides. It gives the ratio BD/DC = AB/AC."
+     },
+     {
+      "id": "o4",
+      "label": "BD = DC (midpoint)",
+      "correct": false,
+      "feedback": "A bisector splits the opposite side PROPORTIONALLY to the adjacent sides, not into equal halves."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-proportions-figures__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "When two similar triangles overlap, corresponding sides may be hard to pair. Anchor on the **equal angles** first — matching angle marks reveal which vertices correspond, and therefore which sides. Get the correspondence right, and the proportion writes itself.",
+   "figure": "aa-similar"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Solve in a figure.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A parallel line gives △ADE ~ △ABC. AD = 6, AB = 15, and DE = 4. Find BC.",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "13 = 4 + 9 guesses. Use AD/AB = DE/BC: 6/15 = 4/BC → BC = 4 × 15 ÷ 6 = 10."
+     },
+     {
+      "value": 1.6,
+      "feedback": "1.6 = 6 × 4 ÷ 15 inverts. BC = 4 × 15 ÷ 6 = 10."
+     }
+    ],
+    "fallbackFeedback": "6/15 = 4/BC → BC = 4 × 15 ÷ 6 = 10."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Anchor the correspondence.",
+   "conceptTag": "sy-proportions-figures",
+   "explanationVariants": [
+    "Match equal angles first — they pin down which vertices (and sides) correspond before you write the ratio.",
+    "Equal angle marks reveal the correspondence, preventing mismatched sides."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "When two similar triangles overlap, what should you identify FIRST to pair corresponding sides?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the equal angles (their marks show which vertices correspond)",
+      "correct": true,
+      "feedback": "Matching angles fix the correspondence of vertices, which then tells you which sides pair up."
+     },
+     {
+      "id": "o2",
+      "label": "the longest side of each",
+      "correct": false,
+      "feedback": "Longest-to-longest can mislead in an overlap. Equal ANGLES reliably fix the correspondence."
+     },
+     {
+      "id": "o3",
+      "label": "the area of each triangle",
+      "correct": false,
+      "feedback": "Area doesn't reveal which parts correspond. Start from the equal angles."
+     },
+     {
+      "id": "o4",
+      "label": "the perimeter of each",
+      "correct": false,
+      "feedback": "Perimeter won't pair the sides. The equal angle marks do that."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-proportions-figures__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "The master strategy for any proportion problem: (1) identify the configuration (parallel, bisector, or shared-angle similarity); (2) name the theorem; (3) write ONE proportion with corresponding parts aligned; (4) cross-multiply and solve. Same four steps, whatever the figure throws at you.",
+   "figure": "side-splitter"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Full setup.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Three parallel lines cut a transversal into 4 and 6, and a second transversal into x and 9. Find x.",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "7 = 4 + 9 − 6 mixes pieces. Match ratios: 4/6 = x/9 → x = 4 × 9 ÷ 6 = 6."
+     },
+     {
+      "value": 13.5,
+      "feedback": "13.5 = 6 × 9 ÷ 4 inverts. Set 4/6 = x/9 → x = 4 × 9 ÷ 6 = 6."
+     }
+    ],
+    "fallbackFeedback": "4/6 = x/9 → x = 4 × 9 ÷ 6 = 6."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Two-step figure.",
+   "conceptTag": "sy-proportions-figures",
+   "hints": [
+    "First use the side-splitter to find the missing piece on one side.",
+    "AD/DB = AE/EC with AD=6, DB=4, AE=9 finds EC.",
+    "6/4 = 9/EC → EC = 9 × 4 ÷ 6 = 6."
+   ],
+   "explanationVariants": [
+    "Side-splitter: AD/DB = AE/EC, so 6/4 = 9/EC → EC = 9 × 4 ÷ 6 = 6.",
+    "The proportion 6/4 = 9/EC gives EC = 36 ÷ 6 = 6."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A parallel line splits the sides: AD = 6, DB = 4, AE = 9. Find EC.",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 11,
+      "feedback": "11 = 9 + 4 − 2 mixes pieces. Use 6/4 = 9/EC → EC = 9 × 4 ÷ 6 = 6."
+     },
+     {
+      "value": 13.5,
+      "feedback": "13.5 = 9 × 6 ÷ 4 inverts the ratio. EC = 9 × 4 ÷ 6 = 6."
+     }
+    ],
+    "fallbackFeedback": "6/4 = 9/EC → EC = 9 × 4 ÷ 6 = 6."
+   },
+   "variant": {
+    "gen": "g10-similarity",
+    "form": "sy-proportions-figures__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One figure, one proportion.",
+   "takeaways": [
+    "Read the marks: parallel ⇒ side-splitter, bisector ⇒ adjacent-side ratio, angles ⇒ similarity.",
+    "Anchor correspondence on equal angles before writing ratios.",
+    "Identify config → name theorem → one proportion → solve."
+   ],
+   "teaser": "Next chapter: the altitude to a right triangle's hypotenuse and the geometric mean."
+  }
+ ]
+}

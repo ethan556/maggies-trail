@@ -1,0 +1,240 @@
+{
+  "id": "ti-04-01",
+  "slug": "double-angle-basics",
+  "title": "Double-Angle: One Angle, Twice",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch4-double-angle",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Set A = B = θ in the sum formulas and the **double-angle** identities fall out:\n\nsin 2θ = **2 sin θ cos θ**\ncos 2θ = **cos²θ − sin²θ**\n\nThese turn a doubled angle into single-angle pieces — the key to both evaluating and later un-doubling.",
+      "figure": "ti-double-angle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Apply sin 2θ.",
+      "predict": {
+        "prompt": "As θ sweeps, a second point rides at 2θ. When does sin 2θ reach its maximum of 1?",
+        "options": [
+          {
+            "id": "t45",
+            "label": "At θ = 45° — the doubled point tops out at 90°"
+          },
+          {
+            "id": "t90",
+            "label": "At θ = 90° — where sine itself peaks"
+          },
+          {
+            "id": "t30",
+            "label": "At θ = 30°"
+          }
+        ],
+        "outcomeId": "t45",
+        "reveal": "θ = 45°: the doubled point moves twice as fast, so it reaches the top of the circle while θ is only halfway there. Watch the formula point 2 sin θ cos θ ride the direct 2θ point the whole way — one angle, used twice, is still one point."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "The direct point rides at 2θ; the second point is computed as (cos²θ − sin²θ, 2 sin θ cos θ). Drag θ to where the doubled point tops the circle — sin 2θ = 1.",
+        "targetAngle": 45,
+        "angleStart": 15,
+        "angleStep": 5,
+        "ghost": "double",
+        "showGhostCoords": true,
+        "successFeedback": "θ = 45° puts 2θ at the very top: sin 90° = 1 = 2 sin 45° cos 45° = 2 · (√2/2)². The formula never let go on the way up — sin 2θ = 2 sin θ cos θ is that grip written down. With sin θ = 3/5, cos θ = 4/5 the same grip reads sin 2θ = 2(3/5)(4/5) = 24/25 = 0.96 — the entry above.",
+        "lowFeedback": "The doubled point hasn't reached the top — remember it climbs twice as fast as your drag. Watch its height, not θ's.",
+        "highFeedback": "The doubled point is past the top and descending — ease θ back toward 45°."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now cos 2θ.",
+      "conceptTag": "ti-double-basic",
+      "explanationVariants": [
+        "cos 2θ = cos²θ − sin²θ = 16/25 − 9/25 = 7/25 = 0.28.",
+        "Square each: (4/5)² − (3/5)² = 7/25 = 0.28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same θ. What is cos 2θ? (As a decimal.)",
+        "answer": 0.28,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.14,
+            "feedback": "0.14 halves the answer. cos²θ − sin²θ = 16/25 − 9/25 = 7/25 = 0.28."
+          },
+          {
+            "value": -0.28,
+            "feedback": "Check the order: cos²θ − sin²θ = 16/25 − 9/25 is POSITIVE 7/25 = 0.28."
+          }
+        ],
+        "fallbackFeedback": "cos²θ − sin²θ = 16/25 − 9/25 = 7/25 = 0.28."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-double-basic__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Sign warning:** cos 2θ can be negative even when θ is acute — it flips once θ passes 45°. And sin 2θ depends on θ's quadrant through cos θ: if θ sits in Quadrant II with sin θ = 3/5, then cos θ = −4/5 and sin 2θ = 2·(3/5)·(−4/5) = **−24/25**.",
+      "figure": "ti-cos2-sign"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Quadrant matters.",
+      "conceptTag": "ti-double-basic",
+      "explanationVariants": [
+        "Q2: cos θ = −4/5, so sin 2θ = 2·(3/5)·(−4/5) = −24/25 = −0.96.",
+        "The negative cosine flips sin 2θ's sign: −0.96."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "θ in Quadrant II with sin θ = 3/5. What is sin 2θ? (As a decimal.)",
+        "answer": -0.96,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.96,
+            "feedback": "In Q2 cos θ is NEGATIVE (−4/5), so sin 2θ = 2·(3/5)·(−4/5) = −0.96."
+          },
+          {
+            "value": -0.6,
+            "feedback": "−0.6 is −sin θ. Apply the full formula with cos θ = −4/5: −24/25 = −0.96."
+          }
+        ],
+        "fallbackFeedback": "cos θ = −4/5 in Q2; sin 2θ = −24/25 = −0.96."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-double-basic__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a compression.",
+      "conceptTag": "ti-double-basic",
+      "explanationVariants": [
+        "2 sin 20° cos 20° matches 2 sinθ cosθ with θ = 20°: it's sin 40°.",
+        "The double-angle pattern read backwards: sin(2·20°) = sin 40°."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "2 sin 20° cos 20° equals:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "sin 40°",
+            "correct": true,
+            "feedback": "Right — it's sin(2·20°), the double-angle formula read backwards."
+          },
+          {
+            "id": "o2",
+            "label": "sin 20°",
+            "feedback": "The factor 2 and the cos DOUBLE the angle: 2 sinθ cosθ = sin 2θ = sin 40°."
+          },
+          {
+            "id": "o3",
+            "label": "2 sin 40°",
+            "feedback": "You may be reading the leading 2 as surviving the compression — but 2 sinθ cosθ IS the complete formula for sin 2θ with coefficient 1, so it equals sin 40°, not 2 sin 40°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-double-basic__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Chain to tan 2θ.",
+      "conceptTag": "ti-double-basic",
+      "explanationVariants": [
+        "With sin 2θ = 24/25 and cos 2θ = 7/25 (acute θ), tan 2θ = sin 2θ/cos 2θ = 24/7 ≈ 3.4286.",
+        "Divide the two double-angle results: (24/25)/(7/25) = 24/7."
+      ],
+      "hints": [
+        "You already have sin 2θ = 24/25 and cos 2θ = 7/25.",
+        "tan 2θ = sin 2θ / cos 2θ.",
+        "The 25s cancel: 24/7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "θ acute, sin θ = 3/5. Find tan 2θ to four decimals.",
+        "answer": 3.4286,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "0.8 = sin 2θ/... no: that's 24/25 ÷ 30/25. Use cos 2θ = 7/25: tan 2θ = 24/7 ≈ 3.4286."
+          },
+          {
+            "value": 0.75,
+            "feedback": "0.75 = tan θ = 3/4. tan 2θ is the doubled-angle tangent: 24/7 ≈ 3.4286."
+          }
+        ],
+        "fallbackFeedback": "tan 2θ = (24/25)/(7/25) = 24/7 ≈ 3.4286."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-double-basic__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Double it, split it.",
+      "takeaways": [
+        "sin 2θ = 2 sinθ cosθ; cos 2θ = cos²θ − sin²θ.",
+        "The quadrant of θ sets the signs of the doubled results.",
+        "Read backwards, 2 sinθ cosθ compresses to sin 2θ."
+      ],
+      "teaser": "Next: cosine's THREE faces — and why they're all useful."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-double-basic",
+      "concept": {
+        "id": "rem-ti0401-c",
+        "kind": "concept",
+        "body": "sin 2θ = 2 sinθ cosθ; cos 2θ = cos²θ − sin²θ. Find cosθ (with the right quadrant sign) before applying."
+      },
+      "check": {
+        "id": "rem-ti0401-k",
+        "kind": "check",
+        "body": "One sin 2θ.",
+        "conceptTag": "ti-double-basic",
+        "explanationVariants": [
+          "sin θ = cos θ = √2/2 at θ = π/4: sin 2θ = 2·(√2/2)² = 2·(1/2) = 1.",
+          "2 sinθ cosθ = 2·(1/2) = 1 — and indeed sin(π/2) = 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "θ = π/4, so sin θ = cos θ = √2/2. What is sin 2θ?",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.5,
+              "feedback": "0.5 = (√2/2)² = sinθ cosθ. Double it: 2·0.5 = 1."
+            },
+            {
+              "value": 1.41,
+              "feedback": "1.41 ≈ √2 = 2·(√2/2) drops one factor. 2·(√2/2)(√2/2) = 1."
+            }
+          ],
+          "fallbackFeedback": "2·(√2/2)(√2/2) = 1."
+        }
+      }
+    }
+  ]
+}

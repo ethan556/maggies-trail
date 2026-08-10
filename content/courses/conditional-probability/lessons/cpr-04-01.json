@@ -1,0 +1,352 @@
+{
+  "id": "cpr-04-01",
+  "slug": "what-independence-means",
+  "title": "What Independence Means",
+  "courseId": "conditional-probability",
+  "chapterId": "ch4-independence",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two events are **independent** when learning one leaves the other's probability exactly where it was:\n\nP(A | B) = P(A).\n\nA card's suit and its rank are like this. P(king) = 4/52 = 1/13. Told the card is a heart, the world shrinks to 13 cards — but exactly one is a king, so it is still 1/13.",
+      "figure": "cpr-suit-rank-grid"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "You are told the card is a heart. Thirteen cards survive.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the kings among the 13 surviving hearts — that fraction is P(king | heart).",
+        "rows": 1,
+        "cols": 13,
+        "targetNum": 1,
+        "targetDen": 13,
+        "start": 0,
+        "successFeedback": "1 of 13 — the same 1/13 as before the condition. Suit carried no information about rank, so the number did not budge.",
+        "lowFeedback": "There is exactly one king of hearts among the 13 hearts. Shade it.",
+        "highFeedback": "Only one heart is a king. Shading four would count the kings of every suit, but three of those were ruled out by the condition."
+      },
+      "predict": {
+        "prompt": "You'll shade 1/13 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 6.5/13 here — and 1 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-independence-def"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compare before and after.",
+      "conceptTag": "cpr-independence-def",
+      "explanationVariants": [
+        "P(king) = 1/13 and P(king | heart) = 1/13. The condition changed nothing, so suit and rank are independent.",
+        "The heart row is a faithful miniature of the whole deck: same mix of ranks, just 13 cards instead of 52."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "P(king) = 1/13 and P(king | heart) = 1/13. What does that tell you?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Suit and rank are independent — knowing the suit tells you nothing about the rank.",
+            "correct": true,
+            "feedback": "Right — the defining test is whether the condition moves the probability. Here it does not."
+          },
+          {
+            "id": "o2",
+            "label": "Kings and hearts are mutually exclusive.",
+            "correct": false,
+            "feedback": "The king of hearts is both at once, so the events certainly can co-occur. Exclusive would mean P(king and heart) = 0."
+          },
+          {
+            "id": "o3",
+            "label": "P(king and heart) = 0.",
+            "correct": false,
+            "feedback": "That card exists: P(king and heart) = 1/52. Independence says the joint equals 1/4 × 1/13, which is exactly 1/52."
+          },
+          {
+            "id": "o4",
+            "label": "Every heart is equally likely to be a king.",
+            "correct": false,
+            "feedback": "That sentence is about one card being a king or not, and it is not what independence compares. Independence compares P(king) with P(king | heart)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "independence-def"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now a dependent pair.",
+      "conceptTag": "cpr-independence-def",
+      "explanationVariants": [
+        "P(sport) = 0.55 across the school, but P(sport | bus) = 0.40. The condition moved the number, so the events are dependent.",
+        "Bus riders play sports at a lower rate than the school as a whole — that difference IS the dependence."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For the 200 students: P(sport) = 0.55 and P(sport | bus) = 0.40. Are travel and sport independent?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Dependent — knowing they take the bus changes the sport probability.",
+            "correct": true,
+            "feedback": "Right — 0.40 ≠ 0.55, so the condition carried real information."
+          },
+          {
+            "id": "o2",
+            "label": "Independent — both numbers are between 0 and 1.",
+            "correct": false,
+            "feedback": "Every probability is between 0 and 1, so that can never distinguish the two cases. The test is whether conditioning moves the number."
+          },
+          {
+            "id": "o3",
+            "label": "Independent — 40% and 55% are both fairly common outcomes.",
+            "correct": false,
+            "feedback": "Independence is not about the sizes being similar; it is about them being *equal*. A 15-point gap means the bus tells you something."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to say without knowing P(bus).",
+            "correct": false,
+            "feedback": "P(A | B) versus P(A) is already the whole test. P(bus) would be needed only for the product form of the same check."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "independence-def",
+        "form": "dependentCheck"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Independence is **symmetric**. If B tells you nothing about A, then A tells you nothing about B:\n\nP(A | B) = P(A)  ⟺  P(B | A) = P(B).\n\nSo you may test whichever direction is easier. Careful: independence is a claim about *information*, not about causation, and it must be checked — never assumed because two things \"feel unrelated\".",
+      "figure": "cpr-conditional-venn"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Test the other direction.",
+      "conceptTag": "cpr-independence-def",
+      "explanationVariants": [
+        "P(heart | king) = 1/4, and P(heart) = 13/52 = 1/4. Same number, so the symmetry holds.",
+        "One of the four kings is a heart, and one of the four suits is hearts — the condition again changes nothing."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A card is drawn and you are told it is a **king**. Find P(heart | king) as a decimal.",
+        "answer": 0.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.077,
+            "feedback": "That is 4/52, the unconditional P(king). The question asks about the suit given the rank, so the four kings are the world: one is a heart."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That would mean half the kings are hearts. There are four kings, one per suit, so it is 1 of 4."
+          },
+          {
+            "value": 0.019,
+            "feedback": "That is 1/52, the joint P(king and heart). Conditioning on king divides that by P(king) = 4/52, giving 1/4."
+          }
+        ],
+        "fallbackFeedback": "One of the 4 kings is a heart: 1/4 = 0.25, exactly P(heart). Independence again."
+      },
+      "variant": {
+        "gen": "independence-def",
+        "form": "conditionalFromDeck"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Sort the pairs.",
+      "conceptTag": "cpr-independence-def",
+      "explanationVariants": [
+        "Ask whether learning the first event would move your estimate of the second. If it would, they are dependent.",
+        "Physical separation is a good clue, but it is not proof — the real test is whether P(A | B) equals P(A)."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Would knowing the first event change the chance of the second?",
+        "buckets": [
+          {
+            "id": "ind",
+            "label": "Leaves it unchanged (independent)",
+            "icon": "⚖️"
+          },
+          {
+            "id": "dep",
+            "label": "Changes it (dependent)",
+            "icon": "🔗"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Flip 1 is heads · flip 2 is heads",
+            "bucketId": "ind",
+            "feedback": "The coin has no memory. P(heads on flip 2) is 1/2 whatever flip 1 did."
+          },
+          {
+            "id": "s2",
+            "label": "First card is an ace · second card is an ace (no replacement)",
+            "bucketId": "dep",
+            "feedback": "Removing an ace leaves 3 aces in 51 cards, so the second probability drops from 4/52 to 3/51. The draw changed the deck."
+          },
+          {
+            "id": "s3",
+            "label": "The card is a heart · the card is a king",
+            "bucketId": "ind",
+            "feedback": "One of the 13 hearts is a king, and one of every 13 cards is a king. The suit carries no rank information."
+          },
+          {
+            "id": "s4",
+            "label": "It rained today · the roads are wet",
+            "bucketId": "dep",
+            "feedback": "Rain sharply raises the chance of wet roads, so knowing one moves the other a long way."
+          }
+        ],
+        "missFeedback": "For each pair, ask: after learning the first, would you revise your estimate of the second?",
+        "successFeedback": "Coins and card-suits carry no information across; a shrinking deck and a rainy sky carry plenty."
+      },
+      "variant": {
+        "gen": "independence-def",
+        "form": "bucketSort"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Decide it from three numbers.",
+      "conceptTag": "cpr-independence-def",
+      "hints": [
+        "You have P(A ∩ B) and P(B). That is enough to build P(A | B).",
+        "P(A | B) = P(A ∩ B)/P(B) = 0.10 / 0.25.",
+        "Compare your answer with P(A) = 0.40. If they match, the events are independent."
+      ],
+      "explanationVariants": [
+        "P(A | B) = 0.10/0.25 = 0.40, which equals P(A). The events are independent — the condition moved nothing.",
+        "Check the product instead: P(A) × P(B) = 0.40 × 0.25 = 0.10, exactly the given joint. Same verdict."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(A) = 0.40, P(B) = 0.25, P(A ∩ B) = 0.10. Find **P(A | B)**.",
+        "answer": 0.4,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.25,
+            "feedback": "That is P(B), the condition itself. You want the share of B that is also A: 0.10 divided by 0.25."
+          },
+          {
+            "value": 0.1,
+            "feedback": "That is the joint P(A ∩ B). A conditional divides it by P(B), which enlarges it to 0.40."
+          },
+          {
+            "value": 0.65,
+            "feedback": "That is 0.40 + 0.25. Conditioning is a ratio, never a sum — and a probability of 0.65 for A given B would need justifying, not adding."
+          }
+        ],
+        "fallbackFeedback": "0.10/0.25 = 0.40 = P(A), so A and B are independent."
+      },
+      "variant": {
+        "gen": "independence-def",
+        "form": "formulaIndependent"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Independence means the condition does nothing.",
+      "takeaways": [
+        "A and B are independent when P(A | B) = P(A) — learning B moves nothing.",
+        "The relation is symmetric: test whichever direction has the easier numbers.",
+        "Independence must be checked against the numbers; \"they seem unrelated\" is not evidence."
+      ],
+      "teaser": "Next: a one-line product test that settles it without any conditioning at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-independence-def",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask one question: *does the news change my estimate?* If P(A) was 0.3 before you heard about B and it is still 0.3 after, B was worthless news and the events are independent. If it moves at all — up or down — they are dependent.",
+        "figure": "cpr-indep-vs-disjoint"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Did the number move?",
+        "conceptTag": "cpr-independence-def",
+        "explanationVariants": [
+          "P(rain) = 0.20 but P(rain | cloudy) = 0.60. The condition tripled it, so the events are dependent.",
+          "Any change at all — even a small one — means the events carry information about each other."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "P(rain) = 0.20 and P(rain | cloudy morning) = 0.60. Independent or dependent?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Dependent",
+              "correct": true,
+              "feedback": "Right — the condition moved the probability from 0.20 to 0.60, so the cloudy morning was informative."
+            },
+            {
+              "id": "o2",
+              "label": "Independent",
+              "correct": false,
+              "feedback": "Independence would require P(rain | cloudy) to still be 0.20. It tripled instead."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

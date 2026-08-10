@@ -1,0 +1,414 @@
+{
+ "id": "pf-04-03",
+ "slug": "sum-and-difference-of-cubes",
+ "title": "Sum & Difference of Cubes",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch4-factoring-higher-degree",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Cubes have their own split. **Difference:** a³ − b³ = (a − b)(a² + ab + b²). **Sum:** a³ + b³ = (a + b)(a² − ab + b²). Signs follow **SOAP**: Same as the original, Opposite next, Always Plus at the end. So x³ − 8 = (x − 2)(x² + 2x + 4).",
+   "figure": "pf-cubes"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Apply the pattern.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Factor x³ − 8.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(x − 2)(x² + 2x + 4)",
+      "correct": true,
+      "feedback": "Right — a = x, b = 2, signs Same-Opposite-Always-plus."
+     },
+     {
+      "id": "o2",
+      "label": "(x − 2)(x² − 2x + 4)",
+      "correct": false,
+      "feedback": "The middle sign is OPPOSITE the original minus: +2x."
+     },
+     {
+      "id": "o3",
+      "label": "(x − 2)³",
+      "correct": false,
+      "feedback": "(x − 2)³ expands to x³ − 6x² + 12x − 8 — extra terms appear; the cube pattern has just two factors."
+     },
+     {
+      "id": "o4",
+      "label": "(x − 2)(x² + 4)",
+      "correct": false,
+      "feedback": "The trinomial keeps its middle term ab = 2x — dropping it breaks the expansion."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The trinomial partner never splits further over the reals: for x² + 2x + 4, D = 4 − 16 = **−12 < 0** — its zeros are a complex conjugate pair. So a difference of cubes has exactly **one real zero** (here x = 2), just like its graph suggests: one crossing.",
+   "figure": "pf-trinomial-irreducible"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The sum pattern.",
+   "conceptTag": "pf-cubes",
+   "explanationVariants": [
+    "27 = 3³: x³ + 27 = (x + 3)(x² − 3x + 9), signs Same-Opposite-Always-plus.",
+    "a = x, b = 3 in the sum formula."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Factor x³ + 27.",
+    "tokens": [
+     {
+      "id": "p3",
+      "label": "(x + 3)"
+     },
+     {
+      "id": "good",
+      "label": "(x² − 3x + 9)"
+     },
+     {
+      "id": "bad",
+      "label": "(x² + 3x + 9)"
+     },
+     {
+      "id": "cube",
+      "label": "(x + 3)³"
+     },
+     {
+      "id": "p27",
+      "label": "(x + 27)"
+     },
+     {
+      "id": "b27",
+      "label": "(x² − 27x + 9)"
+     }
+    ],
+    "correct": [
+     "p3",
+     "good"
+    ],
+    "acceptAlso": [
+     [
+      "good",
+      "p3"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "p3",
+       "bad"
+      ],
+      "feedback": "SOAP's second letter: the middle sign is OPPOSITE the original plus — so −3x."
+     },
+     {
+      "sequence": [
+       "bad",
+       "p3"
+      ],
+      "feedback": "SOAP's second letter: the middle sign is OPPOSITE the original plus — so −3x."
+     },
+     {
+      "sequence": [
+       "cube"
+      ],
+      "feedback": "(x + 3)³ = x³ + 9x² + 27x + 27 — a sum of cubes has no x² or x term to spare."
+     },
+     {
+      "sequence": [
+       "p27",
+       "b27"
+      ],
+      "feedback": "b is the cube ROOT of 27, which is 3 — the pattern uses a = x, b = 3."
+     },
+     {
+      "sequence": [
+       "b27",
+       "p27"
+      ],
+      "feedback": "b is the cube ROOT of 27, which is 3 — the pattern uses a = x, b = 3."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "SOAP: Same sign first (+), Opposite in the middle (−3x), Always Plus at the end (+9).",
+    "successFeedback": "Right — plus, then minus, then always plus."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-cubes__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Check by discriminant.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For the trinomial partner x² − 3x + 9 (from x³ + 27), what is its discriminant?",
+    "answer": -27,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 27,
+      "feedback": "9 − 36 is NEGATIVE 27 — which is why the partner never splits over the reals."
+     },
+     {
+      "value": 45,
+      "feedback": "That's 9 + 36 — the discriminant subtracts: 9 − 36 = −27."
+     }
+    ],
+    "fallbackFeedback": "D = (−3)² − 4(1)(9) = 9 − 36 = −27 < 0: complex pair, no real zeros."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Real zeros of a sum of cubes.",
+   "conceptTag": "pf-cubes",
+   "explanationVariants": [
+    "(x + 3) gives −3; the trinomial's D = −27 keeps its pair complex: one real zero.",
+    "Every sum or difference of cubes crosses the axis exactly once."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "How many REAL zeros does f(x) = x³ + 27 have?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "one: x = −3",
+      "correct": true,
+      "feedback": "Right — the linear factor's zero; the trinomial's pair is complex."
+     },
+     {
+      "id": "o2",
+      "label": "three: −3, 3, and 9",
+      "correct": false,
+      "feedback": "The trinomial x² − 3x + 9 has D = −27 < 0 — no real zeros hide in it."
+     },
+     {
+      "id": "o3",
+      "label": "none",
+      "correct": false,
+      "feedback": "Odd-degree polynomials ALWAYS cross the axis at least once — here at −3."
+     },
+     {
+      "id": "o4",
+      "label": "two: ±3",
+      "correct": false,
+      "feedback": "f(3) = 27 + 27 = 54 ≠ 0 — only −3 works: (−3)³ + 27 = 0."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-cubes__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Cubes with coefficients.",
+   "conceptTag": "pf-cubes",
+   "explanationVariants": [
+    "8x³ = (2x)³ and 27 = 3³: (2x − 3)(4x² + 6x + 9).",
+    "a = 2x, b = 3 — then a² = 4x², ab = 6x, b² = 9."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Factor 8x³ − 27.",
+    "tokens": [
+     {
+      "id": "l",
+      "label": "(2x − 3)"
+     },
+     {
+      "id": "good",
+      "label": "(4x² + 6x + 9)"
+     },
+     {
+      "id": "bad",
+      "label": "(4x² − 6x + 9)"
+     },
+     {
+      "id": "l8",
+      "label": "(8x − 27)"
+     },
+     {
+      "id": "q1",
+      "label": "(x² + x + 1)"
+     },
+     {
+      "id": "half",
+      "label": "(2x² + 6x + 9)"
+     }
+    ],
+    "correct": [
+     "l",
+     "good"
+    ],
+    "acceptAlso": [
+     [
+      "good",
+      "l"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "l",
+       "bad"
+      ],
+      "feedback": "Middle sign flips to OPPOSITE the original minus: +6x."
+     },
+     {
+      "sequence": [
+       "bad",
+       "l"
+      ],
+      "feedback": "Middle sign flips to OPPOSITE the original minus: +6x."
+     },
+     {
+      "sequence": [
+       "l8",
+       "q1"
+      ],
+      "feedback": "Take cube roots first: a = 2x (not 8x), b = 3 (not 27)."
+     },
+     {
+      "sequence": [
+       "q1",
+       "l8"
+      ],
+      "feedback": "Take cube roots first: a = 2x (not 8x), b = 3 (not 27)."
+     },
+     {
+      "sequence": [
+       "l",
+       "half"
+      ],
+      "feedback": "a² = (2x)² = 4x² — square the whole 2x."
+     },
+     {
+      "sequence": [
+       "half",
+       "l"
+      ],
+      "feedback": "a² = (2x)² = 4x² — square the whole 2x."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Cube roots first: a = 2x, b = 3 — then a² = 4x², ab = 6x, b² = 9 with SOAP signs.",
+    "successFeedback": "Right — a = 2x, b = 3, and SOAP sets the signs."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-cubes__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "GCF, then cubes.",
+   "conceptTag": "pf-cubes",
+   "explanationVariants": [
+    "GCF 2: 2(x³ − 27) = 2(x − 3)(x² + 3x + 9). The only real zero is 3.",
+    "Constant multipliers never move zeros — the cube pattern's single crossing stays at 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the ONLY real zero of f(x) = 2x³ − 54?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 27,
+      "feedback": "27 is x³ at the zero — take the cube root: x = 3."
+     },
+     {
+      "value": -3,
+      "feedback": "x³ = 27 needs a POSITIVE root: 3³ = 27, while (−3)³ = −27."
+     }
+    ],
+    "fallbackFeedback": "2x³ = 54 → x³ = 27 → x = 3; equivalently 2(x − 3)(x² + 3x + 9) with D = 9 − 36 < 0 on the partner."
+   },
+   "hints": [
+    "Pull the GCF 2 first: 2(x³ − 27).",
+    "27 is 3³ — a difference of cubes.",
+    "The linear factor (x − 3) holds the only real zero."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-cubes__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Cube patterns split in one move — SOAP sets every sign.",
+   "takeaways": [
+    "a³ ± b³ = (a ± b)(a² ∓ ab + b²): Same, Opposite, Always Plus.",
+    "The trinomial partner always has D < 0 — one real zero per cube pattern.",
+    "Take cube ROOTS to find a and b; square and multiply for the partner."
+   ],
+   "teaser": "Final chapter: assemble everything into full graph sketches and real models."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-cubes",
+   "concept": {
+    "id": "rem-pf0403-c",
+    "kind": "concept",
+    "body": "Name a and b first: they're the CUBE ROOTS of the two terms. For x³ − 64: a = x and b = 4 (since 4³ = 64)."
+   },
+   "check": {
+    "id": "rem-pf0403-k",
+    "kind": "check",
+    "body": "Start the split.",
+    "conceptTag": "pf-cubes",
+    "explanationVariants": [
+     "(x − 4)(x² + 4x + 16).",
+     "First factor (a − b) = (x − 4); partner a² + ab + b²."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What is the first factor of x³ − 64?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "(x − 4)",
+       "correct": true,
+       "feedback": "Right — Same sign as the original: minus, with b = ∛64 = 4."
+      },
+      {
+       "id": "o2",
+       "label": "(x − 64)",
+       "correct": false,
+       "feedback": "b is the cube ROOT of 64 — that's 4, so (x − 4)."
+      },
+      {
+       "id": "o3",
+       "label": "(x + 4)",
+       "correct": false,
+       "feedback": "SOAP starts with the SAME sign as the original — a minus: (x − 4)."
+      },
+      {
+       "id": "o4",
+       "label": "(x − 8)",
+       "correct": false,
+       "feedback": "8 is √64 — cubes use the cube root: ∛64 = 4."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

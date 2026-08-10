@@ -1,0 +1,298 @@
+{
+  "id": "tf-03-02",
+  "slug": "reference-angles",
+  "title": "Reference Angles",
+  "courseId": "trig-functions",
+  "chapterId": "ch3-unit-circle",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Every angle on the circle leans on Quadrant I. The **reference angle** is the acute angle between the terminal side and the X-AXIS — and the point at any angle has the SAME coordinates as its reference point, up to sign. Size from the reference, sign from the quadrant: that's the whole system.",
+      "figure": "tf-reference-angle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reference angles, on the circle itself.",
+      "widget": {
+        "type": "unitCircleExplore",
+        "targetAngle": 150,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 150°. Watch the coordinates, and notice which 30° angle it leans on.",
+        "successFeedback": "150° sits in the second quadrant, and its reference angle is 30° — the acute angle back to the x-axis. That is why cos 150° = −cos 30° and sin 150° = +sin 30°: same size, signs set by the quadrant.",
+        "lowFeedback": "Not far enough round. 150° is past 90° but short of 180°.",
+        "highFeedback": "Too far round — you have passed 150°."
+      },
+      "predict": {
+        "prompt": "You'll rotate from 0° to 150°. What does the point's HEIGHT do along the way?",
+        "options": [
+          {
+            "id": "updown",
+            "label": "Climbs, then falls back"
+          },
+          {
+            "id": "climb",
+            "label": "Climbs the whole way"
+          },
+          {
+            "id": "fall",
+            "label": "Falls the whole way"
+          }
+        ],
+        "outcomeId": "updown",
+        "reveal": "The height rises until the top of the circle at 90°, then falls — the sine's peak is exactly where the point is highest."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Rotate to an angle and coordinate its quadrant, reference angle, point coordinates, sine, and cosine.",
+        "invariants": [
+          "unit-radius",
+          "coordinates-equal-cosine-and-sine",
+          "reference-angle-controls-magnitude"
+        ],
+        "misconceptions": [
+          "reference-angle-keeps-signs",
+          "sine-and-cosine-swapped"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "exact-trigonometric-values-in-all-quadrants",
+        "delayed": true,
+        "counterfactualPrompt": "Keep the 30° reference angle but move the terminal side through all four quadrants. Which coordinate magnitudes stay the same, and which signs change?",
+        "explanation": {
+          "prompt": "How does the reference angle determine exact sine and cosine values at 150°?",
+          "options": [
+            {
+              "id": "magnitudes",
+              "label": "The 30° reference triangle fixes the coordinate magnitudes, while quadrant II makes cosine negative and sine positive.",
+              "correct": true,
+              "feedback": "Exactly — reference angle supplies magnitude and quadrant supplies sign."
+            },
+            {
+              "id": "same",
+              "label": "The reference angle makes both values identical to those at 30°, including their signs.",
+              "correct": false,
+              "feedback": "The magnitudes match, but the quadrant changes the sign of the horizontal coordinate."
+            }
+          ]
+        }
+      },
+      "conceptTag": "tf-reference"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Into Quadrant III.",
+      "conceptTag": "tf-reference",
+      "explanationVariants": [
+        "In Q3 the reference is θ − 180: 225 − 180 = 45°.",
+        "225° sits 45° PAST the x-axis at 180°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the reference angle of 225°, in degrees?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 135,
+            "feedback": "135 is 360 − 225 — the Quadrant IV rule applied in Q3. Past 180°, measure FORWARD from it: 225 − 180 = 45°."
+          },
+          {
+            "value": 225,
+            "feedback": "225° is the full angle — the reference is its acute distance to the x-axis: 45°."
+          }
+        ],
+        "fallbackFeedback": "225 − 180 = 45°."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-reference__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three rules, one per outer quadrant — all measuring the gap to the nearest x-axis crossing. **Q2: 180 − θ. Q3: θ − 180. Q4: 360 − θ.** In radians the same shapes: π − θ, θ − π, 2π − θ. Locate the quadrant first; the rule follows.",
+      "figure": "tf-three-rules"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Quadrant IV's rule.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the reference angle of 300°, in degrees?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "120 is 300 − 180 — the Q3 rule. 300° lives in Q4, measured back from the crossing at 360°: 360 − 300 = 60°."
+          },
+          {
+            "value": 30,
+            "feedback": "300° sits 60° short of 360, not 30 — that would be 330°'s reference. Here: 60°."
+          }
+        ],
+        "fallbackFeedback": "360 − 300 = 60°."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Radian reference.",
+      "conceptTag": "tf-reference",
+      "explanationVariants": [
+        "5π/6 is in Q2, so the reference is π − 5π/6 = π/6: n = 6.",
+        "In degrees: 150° sits 30° from the axis, and 30° = π/6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The reference angle of 5π/6 is π/n. What is n?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "π/3 is 60° — but 5π/6 = 150° sits only 30° = π/6 from the x-axis."
+          },
+          {
+            "value": 5,
+            "feedback": "The 5 is the original numerator recycled — the reference is π − 5π/6 = π/6."
+          }
+        ],
+        "fallbackFeedback": "π − 5π/6 = π/6, so n = 6."
+      },
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-reference__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Now compute anything: **magnitude from the reference angle, sign from A-S-T-C.** cos 150°: reference 30° gives magnitude cos 30° = √3/2 ≈ 0.87; Quadrant II makes cosine negative. Answer: −0.87. Two lookups, one sign check — the whole circle from one quadrant's table.",
+      "figure": "tf-magnitude-sign"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Run the system.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute cos 150°. (Round to hundredths.)",
+        "answer": -0.87,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.87,
+            "feedback": "The size is right but 150° is Quadrant II, where x < 0 — cosine comes out NEGATIVE: −0.87."
+          },
+          {
+            "value": -0.5,
+            "feedback": "−0.5 borrows sin 30°'s magnitude — cos 150° takes COS of the reference: cos 30° = √3/2 ≈ 0.87, negated."
+          }
+        ],
+        "fallbackFeedback": "reference 30°, magnitude √3/2, Q2 sign: −0.87."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Deep in Quadrant III.",
+      "conceptTag": "tf-reference",
+      "explanationVariants": [
+        "Reference: 225 − 180 = 45°; magnitude sin 45° = √2/2 ≈ 0.71; Q3 makes sine negative: −0.71.",
+        "Q3 is the T quadrant — sine AND cosine both flip negative there."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute sin 225°. (Round to hundredths.)",
+        "answer": -0.71,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.71,
+            "feedback": "Magnitude right, sign missed — 225° is Q3, below the x-axis, so sine is NEGATIVE: −0.71."
+          },
+          {
+            "value": -0.5,
+            "feedback": "−0.5 borrows the 30° family — but 225°'s reference is 45°, whose sine is √2/2 ≈ 0.71. Answer −0.71."
+          }
+        ],
+        "fallbackFeedback": "reference 45°, magnitude √2/2, Q3 sign: −0.71."
+      },
+      "hints": [
+        "Locate the quadrant (225° → Q3) and its rule: θ − 180.",
+        "Reference 45° → magnitude √2/2 ≈ 0.71.",
+        "Q3 is below the x-axis — apply the sign."
+      ],
+      "variant": {
+        "gen": "a2-trig",
+        "form": "tf-reference__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One quadrant powers four.",
+      "takeaways": [
+        "Reference angle: the acute gap to the X-axis — never the y-axis.",
+        "Q2: 180−θ · Q3: θ−180 · Q4: 360−θ (same shapes with π in radians).",
+        "Magnitude from the reference, sign from A-S-T-C."
+      ],
+      "teaser": "Next: the exact values themselves — the little table the special triangles hand you."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tf-reference",
+      "concept": {
+        "id": "rem-tf0302-c",
+        "kind": "concept",
+        "body": "One reference, slowly. 120° lands in Quadrant II, between 90° and 180°. Its terminal side is 60° short of the x-axis crossing at 180° — so the reference angle is 180 − 120 = 60°. Always measure to the x-axis, whichever crossing is nearer."
+      },
+      "check": {
+        "id": "rem-tf0302-k",
+        "kind": "check",
+        "body": "Gap to the axis.",
+        "conceptTag": "tf-reference",
+        "explanationVariants": [
+          "180 − 120 = 60°.",
+          "The x-axis crossing at 180° is the near one; the gap to it is the reference."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the reference angle of 120°, in degrees?",
+          "answer": 60,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 120,
+              "feedback": "120° is the angle itself — the reference is its gap to the x-axis: 180 − 120 = 60°."
+            },
+            {
+              "value": 30,
+              "feedback": "30° measures to the Y-axis at 90° — reference angles run to the X-axis: 60°."
+            }
+          ],
+          "fallbackFeedback": "180 − 120 = 60°."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "id": "asv-04-01",
+  "slug": "unfolding-a-rectangular-prism",
+  "title": "Unfolding a Rectangular Prism",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch4-surface-area-prisms",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "prism-net",
+      "body": "Unfold a box flat and you get its **net** — six connected rectangles. **Surface area** is the total area of all six faces. A 4×3×2 box has three PAIRS of matching faces: two 4×3 (top/bottom), two 4×2 (front/back), two 3×2 (sides). Sum: 24 + 16 + 12 = **52** square units."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Unfold the prism and its six faces lie flat. Each face is labelled with its own area — add all six and you have the surface area.",
+      "widget": {
+        "type": "netFold",
+        "prompt": "Set the prism so its net totals 52 square units.",
+        "targetSurfaceArea": 52,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 1,
+        "hStart": 1,
+        "successFeedback": "52 square units — the net shows all six faces, and their areas sum to the surface area.",
+        "lowFeedback": "The six faces don't reach 52 yet. Enlarge a dimension.",
+        "highFeedback": "The faces total more than 52. Shrink a dimension."
+      },
+      "predict": {
+        "prompt": "A box has 6 faces, and they unfold flat in matching pairs. How many DIFFERENT face sizes can a 2 × 3 × 4 box have?",
+        "options": [
+          {
+            "id": "three",
+            "label": "3 sizes, two of each"
+          },
+          {
+            "id": "six",
+            "label": "6 — all different"
+          },
+          {
+            "id": "two",
+            "label": "2 sizes"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Opposite faces are twins: 2×3, 2×4 and 3×4 — three sizes, each appearing twice. Surface area = 2(6 + 8 + 12) = 52, and the unfolded net lays all six faces out flat where you can count them."
+      },
+      "conceptTag": "prism-net",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents prism net.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for prism net must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines prism net."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "area-surface-volume:prism-net",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One pair at a time.",
+      "conceptTag": "prism-net",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 4×3×2 box: the top and bottom faces are each 4×3. What is the area of that PAIR together?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is ONE 4×3 face. The pair has two of them: 2 × 12 = 24."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds 4+3 then doubles. Each face's area MULTIPLIES: 4×3 = 12, and the pair is 24."
+          }
+        ],
+        "fallbackFeedback": "Each face is 4×3 = 12; the pair is 2 × 12 = 24."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "All three pairs.",
+      "conceptTag": "prism-net",
+      "explanationVariants": [
+        "Pairs: 2(4×3)=24, 2(4×2)=16, 2(3×2)=12; total 24+16+12 = 52.",
+        "The compact formula 2(lw+lh+wh) = 2(12+8+6) = 52 gives the same answer — two routes, one result."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Add all three pairs for the 4×3×2 box: 24 + 16 + 12. What is the total surface area?",
+        "answer": 52,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 26,
+            "feedback": "26 counts only ONE face from each pair (12+8+6), covering half the box. Every face has a twin: 2 × 26 = 52."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the box's VOLUME (4×3×2), a completely different measurement. Surface area sums the six FACE areas: 52."
+          }
+        ],
+        "fallbackFeedback": "24 + 16 + 12 = 52 square units."
+      },
+      "variant": {
+        "gen": "box-surface-area",
+        "form": "sumPairs"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The shortcut formula packages the three pairs: **SA = 2(lw + lh + wh)**. For 4×3×2: 2(12 + 8 + 6) = 2 × 26 = 52 — identical to adding all six faces. The two most common slips: counting each pair only once (getting half), or computing l×w×h (that's VOLUME, a different thing entirely).",
+      "figure": "prism-net"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use the formula.",
+      "conceptTag": "prism-net",
+      "explanationVariants": [
+        "2(5×2 + 5×3 + 2×3) = 2(10+15+6) = 2×31 = 62.",
+        "Summing the six faces individually — 10+10+15+15+6+6 — also gives 62."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the surface area of a 5×2×3 box.",
+        "answer": 62,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 31,
+            "feedback": "31 is the sum inside the parentheses (10+15+6) without the ×2. Each face has a twin: 2 × 31 = 62."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is the VOLUME (5×2×3). Surface area sums the FACES: 2(10+15+6) = 62."
+          }
+        ],
+        "fallbackFeedback": "2(10 + 15 + 6) = 62 square units."
+      },
+      "variant": {
+        "gen": "box-surface-area"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match box to surface area.",
+      "conceptTag": "prism-net",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each box to its surface area.",
+        "left": [
+          {
+            "id": "b1",
+            "label": "4×3×2 box"
+          },
+          {
+            "id": "b2",
+            "label": "5×2×3 box"
+          },
+          {
+            "id": "b3",
+            "label": "6×4×2 box"
+          },
+          {
+            "id": "b4",
+            "label": "cube, side 4"
+          }
+        ],
+        "right": [
+          {
+            "id": "v52",
+            "label": "52"
+          },
+          {
+            "id": "v62",
+            "label": "62"
+          },
+          {
+            "id": "v88",
+            "label": "88"
+          },
+          {
+            "id": "v96",
+            "label": "96"
+          }
+        ],
+        "pairs": {
+          "b1": "v52",
+          "b2": "v62",
+          "b3": "v88",
+          "b4": "v96"
+        },
+        "pairErrors": [
+          {
+            "left": "b4",
+            "right": "v88",
+            "feedback": "88 belongs to the 6×4×2 box. The cube has 6 identical 4×4 faces: 6 × 16 = 96."
+          },
+          {
+            "left": "b3",
+            "right": "v96",
+            "feedback": "96 is the cube. The 6×4×2 box: 2(24+12+8) = 88."
+          }
+        ],
+        "missFeedback": "Use 2(lw+lh+wh) for each box; a cube is 6 × side². Check: 52, 62, 88, 96.",
+        "successFeedback": "All matched — three pairs for a box, six identical faces for a cube."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A cube's shortcut.",
+      "conceptTag": "prism-net",
+      "explanationVariants": [
+        "All 6 faces of a cube are identical squares: 6 × (4×4) = 96.",
+        "A cube is the special case where lw = lh = wh, so the formula collapses to 6 × side²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the surface area of a cube with side 4.",
+        "answer": 96,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "64 is the cube's VOLUME (4×4×4). Surface area counts the 6 square faces: 6 × 16 = 96."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is ONE face (4×4). A cube has six of them: 6 × 16 = 96."
+          }
+        ],
+        "fallbackFeedback": "6 × (4 × 4) = 96 square units."
+      },
+      "variant": {
+        "gen": "box-surface-area",
+        "form": "cubeSA"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Verify both ways yourself.",
+      "conceptTag": "prism-net",
+      "hints": [
+        "Formula: 2(6×4 + 6×2 + 4×2).",
+        "That's 2(24 + 12 + 8) = 2 × 44.",
+        "Cross-check by listing all six faces: 24,24,12,12,8,8."
+      ],
+      "explanationVariants": [
+        "2(24+12+8) = 88 — and listing all six faces (24+24+12+12+8+8) also sums to 88.",
+        "Formula and face-by-face sum agree at 88, confirming the answer."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the surface area of a 6×4×2 box (verify with both the formula and a face-by-face sum).",
+        "answer": 88,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 44,
+            "feedback": "44 is one face from each pair (24+12+8) — half the box. Double it: 88."
+          },
+          {
+            "value": 48,
+            "feedback": "48 is the VOLUME (6×4×2). Surface area sums the faces: 2(24+12+8) = 88."
+          }
+        ],
+        "fallbackFeedback": "2(24 + 12 + 8) = 88, matching the face-by-face sum."
+      },
+      "variant": {
+        "gen": "box-surface-area"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Six faces, three pairs.",
+      "takeaways": [
+        "Surface area = total area of all six faces; the net makes them all visible at once.",
+        "The formula 2(lw + lh + wh) packages the three matching pairs.",
+        "Surface area (square units) and volume (cubic units) are different measurements — don't swap them."
+      ],
+      "teaser": "next: prisms whose bases are triangles."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "prism-net",
+      "concept": {
+        "id": "rem-pn-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Three pairs of faces, all added.** A 2×2×3 box: pairs are 2(2×2)=8, 2(2×3)=12, 2(2×3)=12. Total 8+12+12 = 32. Every face has a twin — count both."
+      },
+      "check": {
+        "id": "rem-pn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "prism-net",
+        "explanationVariants": [
+          "2(4 + 6 + 6) = 32.",
+          "Pairs: 8 + 12 + 12 = 32."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Find the surface area of a 2×2×3 box.",
+          "answer": 32,
+          "tolerance": 0,
+          "unit": "square units",
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 counts one face from each pair (4+6+6). Double it — every face has a twin: 32."
+            },
+            {
+              "value": 12,
+              "feedback": "12 is the VOLUME (2×2×3). Surface area sums the six faces: 32."
+            }
+          ],
+          "fallbackFeedback": "2(4 + 6 + 6) = 32."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "id": "rad-04-01",
+  "slug": "the-pythagorean-theorem",
+  "title": "The Pythagorean Theorem",
+  "courseId": "radicals-and-exponents",
+  "chapterId": "ch4-applications",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "right-triangle",
+      "body": "In a right triangle, the hypotenuse c satisfies c² = a² + b², so c = √(a² + b²). For legs 3 and 4: c = √(9 + 16) = √25 = 5. Square each leg, add, and take the root."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Pythagoras, on a grid you can count.",
+      "widget": {
+        "type": "distanceGrid",
+        "anchor": [
+          0,
+          0
+        ],
+        "targetPoint": [
+          6,
+          8
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 0,
+        "startY": 0,
+        "prompt": "Place the point that is 10 units from the origin, with a run of 6.",
+        "successFeedback": "(6, 8): 6² + 8² = 36 + 64 = 100, so the distance is 10. The legs are countable squares and the hypotenuse is not — which is exactly why the theorem is worth having.",
+        "wrongPointFeedback": "Not that point. You need a run of 6 and a rise that satisfies 6² + rise² = 100."
+      },
+      "predict": {
+        "prompt": "Run 6, rise 8 gives distance 10. If BOTH legs doubled, the distance would be…",
+        "options": [
+          {
+            "id": "twenty",
+            "label": "20 — it doubles too"
+          },
+          {
+            "id": "hundred",
+            "label": "100"
+          },
+          {
+            "id": "fourteen",
+            "label": "14"
+          }
+        ],
+        "outcomeId": "twenty",
+        "reveal": "Scale both legs by 2 and the hypotenuse scales by 2: √(144 + 256) = 20. Pythagorean triples come in families — 3-4-5 hides inside 6-8-10, which hides inside 12-16-20."
+      },
+      "conceptTag": "rad-pythagorean",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents rad pythagorean.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for rad pythagorean must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines rad pythagorean."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "radicals-and-exponents:rad-pythagorean",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Scaled up.",
+      "conceptTag": "rad-pythagorean",
+      "explanationVariants": [
+        "c = √(36 + 64) = √100 = 10.",
+        "6² + 8² = 100, so c = √100 = 10."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "pythagoreanArea",
+        "pythagorean": {
+          "legA": 6,
+          "legB": 8,
+          "target": "length"
+        },
+        "prompt": "A right triangle has legs 6 and 8. What is the hypotenuse?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "Add the squares, not the legs: √(36 + 64) = √100 = 10, not 6 + 8."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is c² (36 + 64). Take the square root: c = 10."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "pyth:leg-squares",
+          "pyth:sum",
+          "pyth:identity",
+          "pyth:square-root"
+        ],
+        "requiredExplorations": 4,
+        "successFeedback": "c = √(36 + 64) = √100 = 10.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "c = √(36 + 64) = √100 = 10.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "It works for any right triangle. Legs 5 and 12: c = √(25 + 144) = √169 = 13. As long as the sum of the squares is a perfect square, the hypotenuse is a whole number.",
+      "figure": "rad-pythagorean"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A 5-12-13 triangle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has legs 5 and 12. What is the hypotenuse?",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "Add the squares, not the legs: √(25 + 144) = √169 = 13, not 5 + 12."
+          },
+          {
+            "value": 169,
+            "feedback": "169 is c² (25 + 144). Take the square root: c = 13."
+          }
+        ],
+        "fallbackFeedback": "c = √(25 + 144) = √169 = 13."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "You can also find a **missing leg**: if the hypotenuse and one leg are known, a = √(c² − b²). For c = 13 and b = 5: a = √(169 − 25) = √144 = 12. Subtract the squares this time.",
+      "figure": "rad-missing-leg"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Find the other leg.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has hypotenuse 13, one leg 5. What is the other leg?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "Subtract the squares, not the numbers: √(169 − 25) = √144 = 12, not 13 − 5."
+          },
+          {
+            "value": 144,
+            "feedback": "144 is the leg squared (169 − 25). Take the root: √144 = 12."
+          }
+        ],
+        "fallbackFeedback": "a = √(13² − 5²) = √144 = 12."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "An 8-15-17 triangle.",
+      "conceptTag": "rad-pythagorean",
+      "explanationVariants": [
+        "c = √(64 + 225) = √289 = 17.",
+        "8² + 15² = 289, so c = √289 = 17."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "pythagoreanArea",
+        "pythagorean": {
+          "legA": 8,
+          "legB": 15,
+          "target": "length"
+        },
+        "prompt": "A right triangle has legs 8 and 15. What is the hypotenuse?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 23,
+            "feedback": "Add the squares, not the legs: √(64 + 225) = √289 = 17, not 8 + 15."
+          },
+          {
+            "value": 289,
+            "feedback": "289 is c² (64 + 225). Take the square root: c = 17."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "pyth:leg-squares",
+          "pyth:sum",
+          "pyth:identity",
+          "pyth:square-root"
+        ],
+        "requiredExplorations": 4,
+        "successFeedback": "c = √(64 + 225) = √289 = 17.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "c = √(64 + 225) = √289 = 17.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Missing leg again.",
+      "conceptTag": "rad-pythagorean",
+      "explanationVariants": [
+        "a = √(100 − 36) = √64 = 8.",
+        "10² − 6² = 64, so the leg is √64 = 8."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "pythagoreanArea",
+        "pythagorean": {
+          "legA": 6,
+          "hypotenuse": 10,
+          "target": "legLength"
+        },
+        "prompt": "A right triangle has hypotenuse 10, one leg 6. What is the other leg?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 4,
+            "feedback": "Subtract the squares, not the numbers: √(100 − 36) = √64 = 8, not 10 − 6."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is the leg squared (100 − 36). Take the root: √64 = 8."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "pyth:hyp-square",
+          "pyth:leg-square",
+          "pyth:subtract",
+          "pyth:square-root"
+        ],
+        "requiredExplorations": 4,
+        "successFeedback": "a = √(10² − 6²) = √64 = 8.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "a = √(10² − 6²) = √64 = 8.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A 9-12-15 triangle.",
+      "conceptTag": "rad-pythagorean",
+      "explanationVariants": [
+        "c = √(81 + 144) = √225 = 15.",
+        "9² + 12² = 225, so c = √225 = 15."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "pythagoreanArea",
+        "pythagorean": {
+          "legA": 9,
+          "legB": 12,
+          "target": "length"
+        },
+        "prompt": "A right triangle has legs 9 and 12. What is the hypotenuse?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 21,
+            "feedback": "Add the squares, not the legs: √(81 + 144) = √225 = 15, not 9 + 12."
+          },
+          {
+            "value": 225,
+            "feedback": "225 is c² (81 + 144). Take the square root: c = 15."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "pyth:leg-squares",
+          "pyth:sum",
+          "pyth:identity",
+          "pyth:square-root"
+        ],
+        "requiredExplorations": 4,
+        "successFeedback": "c = √(81 + 144) = √225 = 15.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "c = √(81 + 144) = √225 = 15.",
+        "answerMode": "numeric"
+      },
+      "hints": [
+        "Square each leg: 9² = 81, 12² = 144.",
+        "Add them: 81 + 144 = 225.",
+        "√225 = 15."
+      ],
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-pythagorean__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The hypotenuse is the root of the sum of the squared legs.",
+      "takeaways": [
+        "c = √(a² + b²) for a right triangle.",
+        "Missing leg: a = √(c² − b²).",
+        "Add (or subtract) the squares, then take the root."
+      ],
+      "teaser": "next: when the hypotenuse is an irrational radical."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rad-pythagorean",
+      "concept": {
+        "id": "rem-rpy-c",
+        "kind": "concept",
+        "body": "In a right triangle, c = √(a² + b²). For legs 3 and 4: c = √(9 + 16) = √25 = 5. Square the legs, add, take the root."
+      },
+      "check": {
+        "id": "rem-rpy-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rad-pythagorean",
+        "explanationVariants": [
+          "c = √(9 + 16) = √25 = 5.",
+          "3² + 4² = 25, so c = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A right triangle has legs 3 and 4. What is the hypotenuse c?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "Add the squares, not the legs: √25 = 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is c²; take the root: 5."
+            }
+          ],
+          "fallbackFeedback": "c = √25 = 5."
+        }
+      }
+    }
+  ]
+}

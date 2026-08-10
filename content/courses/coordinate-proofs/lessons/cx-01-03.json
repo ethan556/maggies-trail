@@ -1,0 +1,370 @@
+{
+  "id": "cx-01-03",
+  "slug": "distances-at-work",
+  "title": "Distances at Work",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch1-distance-midpoint",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-dist-apps",
+      "concept": {
+        "id": "rem-cx-dist-apps-c",
+        "kind": "concept",
+        "body": "Coordinate classification: compute ALL side lengths with the distance formula, then compare. Two equal sides ⇒ isosceles; a² + b² = c² on the squared sides (largest as c) ⇒ right, by the Pythagorean converse. Axis-aligned sides are just coordinate gaps. Perimeter = sum of the measured sides."
+      },
+      "check": {
+        "id": "rem-cx-dist-apps-k",
+        "kind": "check",
+        "body": "Measure two sides.",
+        "conceptTag": "cx-dist-apps",
+        "explanationVariants": [
+          "d((0,0),(4,3)) = √(16+9) = 5 and d((4,3),(8,0)) = √(16+9) = 5 — equal: isosceles. Enter 5.",
+          "Both slants measure 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Triangle (0,0), (4,3), (8,0): compute the side from (0,0) to (4,3).",
+          "answer": 5,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 = 4 + 3 adds the coordinates — square, add, root: 5."
+            },
+            {
+              "value": 25,
+              "feedback": "25 is the squared length — root: 5."
+            }
+          ],
+          "fallbackFeedback": "√(4² + 3²) = 5."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Formulas become PROOF TOOLS the moment they classify. Is triangle ABC isosceles? Don't squint at a sketch — **measure all three sides with the distance formula** and compare. Numbers don't wobble the way drawings do; a coordinate computation is a proof, not an impression.",
+      "figure": "cx-classify-isosceles"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Measure, then classify.",
+      "conceptTag": "cx-dist-apps",
+      "explanationVariants": [
+        "AC = √(9 + 25) = √34 and BC = √(9 + 25) = √34 — two equal sides against AB = 6: isosceles.",
+        "Both slanted sides measure √34 ≈ 5.83; enter 5.83."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A(0, 0), B(6, 0), C(3, 5). Compute side AC (2 decimals) — then notice BC matches it.",
+        "answer": 5.83,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 3 + 5 adds C's coordinates — the distance squares them: √(9 + 25) = √34 ≈ 5.83."
+          },
+          {
+            "value": 34,
+            "feedback": "34 is AC² — root it: ≈ 5.83."
+          },
+          {
+            "value": 4,
+            "feedback": "4 ≈ √(25 − 9) subtracts squares — the distance formula ADDS them: √34 ≈ 5.83."
+          }
+        ],
+        "fallbackFeedback": "AC = √((3−0)² + (5−0)²) = √34 ≈ 5.83 = BC: isosceles, proved by measurement."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-dist-apps__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Perimeter on the grid.",
+      "conceptTag": "cx-dist-apps",
+      "explanationVariants": [
+        "Sides: √(9 + 16) = 5, √(9 + 16) = 5, and 6 along the axis — perimeter 16.",
+        "5 + 5 + 6 = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the perimeter of the triangle with vertices (0, 0), (3, 4), (6, 0).",
+        "answer": 16,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 = 5 + 6 counts one slanted side — there are two (each √(9+16) = 5): 5 + 5 + 6 = 16."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds legs 3 + 4 + 3 + 4 walking the staircase — the true sides are the hypotenuses: 16."
+          },
+          {
+            "value": 12,
+            "feedback": "12 = 6 + 6 doubles the base — the slanted sides are 5 each: 16."
+          }
+        ],
+        "fallbackFeedback": "5 + 5 + 6 = 16."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-dist-apps__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Right triangles surrender to the same treatment: measure the three sides, then check the **converse of Pythagoras** — if a² + b² = c² for the longest side c, the angle opposite c is right. Distance gives sides; Pythagoras-in-reverse gives angles. No protractor touches the page.",
+      "figure": "cx-classify-right"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Right or not?",
+      "conceptTag": "cx-dist-apps",
+      "explanationVariants": [
+        "Squared sides: 20, 45, 65. Check 20 + 45 = 65 ✓ — right triangle.",
+        "The two smaller squares sum to the largest: right."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A triangle's squared side lengths are 20, 45, and 65. Classify it.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Right — 20 + 45 = 65, the Pythagorean converse fires",
+            "correct": true,
+            "feedback": "The two smaller squares exactly fill the largest: the angle opposite the √65 side is 90°."
+          },
+          {
+            "id": "o2",
+            "label": "Acute — all sides are short",
+            "correct": false,
+            "feedback": "Classification compares SQUARES, not raw sizes — 20 + 45 = 65 exactly, the right-angle signature."
+          },
+          {
+            "id": "o3",
+            "label": "Obtuse — 65 is much larger than 45",
+            "correct": false,
+            "feedback": "Obtuse needs 20 + 45 < 65 — equality lands precisely on right."
+          },
+          {
+            "id": "o4",
+            "label": "Impossible to classify from squares",
+            "correct": false,
+            "feedback": "Squares are exactly what the converse consumes: sum-equals-largest means right."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-dist-apps__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Distance is Pythagoras in disguise.",
+      "widget": {
+        "type": "coordinateProofLab",
+        "prompt": "Place D so ABCD is a parallelogram, then build two independent coordinate proofs: matching opposite slopes and matching diagonal midpoints.",
+        "fixed": [
+          [
+            1,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            8,
+            5
+          ]
+        ],
+        "target": [
+          3,
+          5
+        ],
+        "start": [
+          8,
+          8
+        ],
+        "targetClaim": "parallelogram",
+        "gridMin": 0,
+        "gridMax": 10,
+        "requiredEvidence": [
+          "slopes",
+          "midpoints"
+        ],
+        "requiredMoves": 4,
+        "successFeedback": "D = (3, 5). Opposite sides have equal slopes, and diagonals AC and BD share midpoint (4.5, 3). Either theorem proves a parallelogram; together they cross-check the construction.",
+        "positionFeedback": "The live slope or midpoint evidence still disagrees. Move D until both opposite-side slope pairs match and the diagonal midpoints coincide.",
+        "evidenceFeedback": "The figure looks right, but a coordinate proof needs computed invariants. Inspect both slopes and diagonal midpoints before checking."
+      },
+      "predict": {
+        "prompt": "Which evidence can prove a coordinate quadrilateral is a parallelogram?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both pairs of opposite sides have equal slopes, or the diagonals share a midpoint"
+          },
+          {
+            "id": "picture",
+            "label": "It looks like a slanted rectangle"
+          },
+          {
+            "id": "one",
+            "label": "One pair of sides has similar length"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "Coordinate proof replaces visual appearance with invariant calculations: parallel opposite sides or bisecting diagonals."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move a vertex and assemble a coordinate proof from synchronized slope and midpoint evidence.",
+        "invariants": [
+          "parallel-lines-equal-slope",
+          "parallelogram-diagonals-bisect"
+        ],
+        "misconceptions": [
+          "picture-is-proof",
+          "one-matching-pair-suffices"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "coordinate-figure-proof",
+        "counterfactualPrompt": "Move D one unit right after the proof works. Which slope and midpoint equalities fail first?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why is visual resemblance not enough for a coordinate proof?",
+          "options": [
+            {
+              "id": "invariants",
+              "label": "A proof must establish defining invariants such as equal slopes or a shared diagonal midpoint.",
+              "correct": true,
+              "feedback": "Exactly—computed invariants survive scale and drawing imperfections."
+            },
+            {
+              "id": "grid",
+              "label": "Every shape drawn on a grid is automatically exact.",
+              "correct": false,
+              "feedback": "The grid provides coordinates, but the relationships still must be proved."
+            },
+            {
+              "id": "name",
+              "label": "Naming the vertices in order guarantees the claim.",
+              "correct": false,
+              "feedback": "Labels organize the figure; they do not create parallelism or bisection."
+            }
+          ]
+        }
+      },
+      "conceptTag": "cx-dist-apps"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The cheap side.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In k2's triangle, the side from (0, 0) to (6, 0) needed no formula. Why?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Both endpoints share y = 0, so the length is just the x-gap: |6 − 0| = 6",
+            "correct": true,
+            "feedback": "Axis-aligned sides are coordinate gaps — which is exactly why coordinate proofs PLACE figures with sides on the axes when they can."
+          },
+          {
+            "id": "o2",
+            "label": "Horizontal sides have no length",
+            "correct": false,
+            "feedback": "It has length 6 — it's just that the formula collapses to a single subtraction when Δy = 0."
+          },
+          {
+            "id": "o3",
+            "label": "The formula fails on horizontal segments",
+            "correct": false,
+            "feedback": "It works fine: √(36 + 0) = 6 — it merely simplifies to the gap."
+          },
+          {
+            "id": "o4",
+            "label": "Because it passes through the origin",
+            "correct": false,
+            "feedback": "The origin is irrelevant — sharing a y-coordinate is what collapses the formula to |Δx|."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Choose the wire route.",
+      "conceptTag": "cx-dist-apps",
+      "hints": [
+        "Price both routes with the distance formula.",
+        "Route 1: (0,0) → (5,12) direct. Route 2: (0,0) → (9,0) → (9,3) — total the two legs.",
+        "Compare: which total is smaller, and by how much?"
+      ],
+      "explanationVariants": [
+        "Route 1: √(25 + 144) = 13. Route 2: the first leg is horizontal (9) and the second vertical (3), totaling 12 — shorter by 1.",
+        "13 versus 9 + 3 = 12: the bent route wins by 1 unit."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A wire runs from (0, 0) either straight to (5, 12), or along (0,0)→(9, 0)→(9, 3). How much SHORTER is the shorter route?",
+        "answer": 1,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 is the straight route's length — the question asks the GAP between routes: 13 − 12 = 1."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the bent route's total — the difference is 13 − 12 = 1."
+          },
+          {
+            "value": 5,
+            "feedback": "5 ≈ √(16+9) prices some other diagonal — the two routes cost 13 and 12: gap 1."
+          }
+        ],
+        "fallbackFeedback": "Straight: √169 = 13. Bent: 9 + 3 = 12. The bend wins by 1 — measured, not guessed."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-dist-apps__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Formulas as instruments.",
+      "takeaways": [
+        "Classify triangles by MEASURING sides (isosceles: two distances match).",
+        "The Pythagorean converse on squared sides detects right angles without a protractor.",
+        "Axis-aligned sides cost one subtraction — which is why proofs place figures on the axes."
+      ],
+      "teaser": "Next chapter: cutting segments in any ratio, and PROVING the slope rules you've used since Algebra 1."
+    }
+  ]
+}

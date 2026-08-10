@@ -1,0 +1,340 @@
+{
+  "id": "alg1-02-03",
+  "slug": "decimal-equations",
+  "title": "Decimal Equations",
+  "courseId": "solving-equations",
+  "chapterId": "ch2-fractions",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "decimal-shift",
+      "body": "Decimals clear like fractions: for **0.5x + 1.2 = 3.7**, multiply EVERY term by 10 — each decimal point slides one place — giving **5x + 12 = 37**. Then the familiar two-step: 5x = 25, x = 5.",
+      "narration": "Decimals clear like fractions: for zero point five x plus one point two equals three point seven, multiply every term by ten — each decimal point slides one place — giving five x plus twelve equals thirty-seven. Then the familiar two-step: five x equals twenty-five, x equals five."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each decimal equation to its ×10 version.",
+      "conceptTag": "decimal-eq",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Shift every term one place. Which whole-number equation matches?",
+        "left": [
+          {
+            "id": "d1",
+            "label": "0.5x + 1.2 = 3.7"
+          },
+          {
+            "id": "d2",
+            "label": "0.2x + 3 = 4"
+          },
+          {
+            "id": "d3",
+            "label": "0.3x + 0.4 = 1.9"
+          }
+        ],
+        "right": [
+          {
+            "id": "w1",
+            "label": "5x + 12 = 37"
+          },
+          {
+            "id": "w2",
+            "label": "2x + 30 = 40"
+          },
+          {
+            "id": "w3",
+            "label": "3x + 4 = 19"
+          }
+        ],
+        "pairs": {
+          "d1": "w1",
+          "d2": "w2",
+          "d3": "w3"
+        },
+        "pairErrors": [
+          {
+            "left": "d2",
+            "right": "w3",
+            "feedback": "0.2x + 3 = 4 shifts to 2x + 30 = 40 — the whole-number 3 becomes 30 too! (3x + 4 = 19 is the shift of 0.3x + 0.4 = 1.9.)"
+          },
+          {
+            "left": "d1",
+            "right": "w2",
+            "feedback": "0.5x + 1.2 = 3.7 shifts to 5x + 12 = 37. (2x + 30 = 40 comes from 0.2x + 3 = 4.)"
+          }
+        ],
+        "missFeedback": "×10 shifts EVERY term one place — whole numbers gain a zero.",
+        "successFeedback": "Every decimal shifted, no term left behind!"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Shift and solve.",
+      "conceptTag": "decimal-eq",
+      "explanationVariants": [
+        "0.5x + 1.2 = 3.7: ×10 gives 5x + 12 = 37, so 5x = 25 and x = 5.",
+        "Direct route: 0.5x = 2.5, and 2.5 ÷ 0.5 = 5. Half of x is 2.5, so x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 0.5x + 1.2 = 3.7",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2.5,
+            "feedback": "2.5 is 0.5x — HALF of x. Divide by 0.5 (or double): x = 5."
+          },
+          {
+            "value": 7.4,
+            "feedback": "That divided before subtracting: 3.7 ÷ 0.5. Undo the +1.2 FIRST: 0.5x = 2.5, x = 5."
+          }
+        ],
+        "fallbackFeedback": "×10: 5x + 12 = 37 → 5x = 25 → x = 5."
+      },
+      "hints": [
+        "×10 every term.",
+        "5x + 12 = 37.",
+        "5x = 25, so x = 5."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "decimal-eq__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The classic slip: shifting the decimals but leaving a **whole number** unshifted. In 0.2x + 3 = 4, the ×10 turns 3 into 30 and 4 into 40 — zeros for everyone.",
+      "narration": "The classic slip: shifting the decimals but leaving a whole number unshifted. In zero point two x plus three equals four, the times ten turns three into thirty and four into forty — zeros for everyone.",
+      "figure": "alg1-decimals"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the decimal solve.",
+      "conceptTag": "decimal-eq",
+      "widget": {
+        "type": "equationOutcomeLab",
+        "mode": "transform",
+        "answerMode": "sequence",
+        "prompt": "Solve 0.2x + 3 = 4 by shifting. Drag the steps into order.",
+        "leftDisplay": "0.2x + 3",
+        "rightDisplay": "4",
+        "leftCoeff": 0.2,
+        "leftConstant": 3,
+        "rightCoeff": 0,
+        "rightConstant": 4,
+        "relation": "eq",
+        "variable": "x",
+        "choices": [],
+        "operations": [
+          {
+            "id": "p-ten",
+            "label": "×10 every term → 2x + 30 = 40",
+            "kind": "normalize",
+            "result": {
+              "leftCoeff": 2,
+              "leftConstant": 30,
+              "rightCoeff": 0,
+              "rightConstant": 40,
+              "relation": "eq"
+            },
+            "feedback": "Shift everything ×10, then the two-step: constant, coefficient."
+          },
+          {
+            "id": "p-two",
+            "label": "subtract 30 → 2x = 10",
+            "kind": "addConstant",
+            "value": -30,
+            "feedback": "There's no 30 to subtract until the ×10 shift creates it — shift first, then run the two-step."
+          },
+          {
+            "id": "p-div",
+            "label": "divide by 2 → x = 5",
+            "kind": "scale",
+            "value": 0.5,
+            "feedback": "Shift everything ×10, then the two-step: constant, coefficient."
+          }
+        ],
+        "correctOrder": [
+          "p-ten",
+          "p-two",
+          "p-div"
+        ],
+        "requiredMoves": 3,
+        "numericErrors": [],
+        "tolerance": 0,
+        "explorationFeedback": "Apply the same legal operation to both sides and inspect how the variable and constants move.",
+        "fallbackFeedback": "Shift everything ×10, then the two-step: constant, coefficient.",
+        "successFeedback": "Shift, subtract, divide — x = 5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Zeros for everyone.",
+      "conceptTag": "decimal-eq",
+      "explanationVariants": [
+        "0.2x + 3 = 4: ×10 gives 2x + 30 = 40, so 2x = 10 and x = 5.",
+        "Direct: 0.2x = 1, and 1 ÷ 0.2 = 5. A fifth of x is 1, so x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 0.2x + 3 = 4",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is 0.2x — a FIFTH of x. Divide by 0.2 (or ×5): x = 5."
+          },
+          {
+            "value": 20,
+            "feedback": "That divided before subtracting: 4 ÷ 0.2. Undo the +3 FIRST: 0.2x = 1, x = 5."
+          }
+        ],
+        "fallbackFeedback": "×10: 2x + 30 = 40 → 2x = 10 → x = 5."
+      },
+      "hints": [
+        "×10: the 3 becomes 30.",
+        "2x + 30 = 40.",
+        "2x = 10, so x = 5."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "decimal-eq__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the uneven shift.",
+      "conceptTag": "decimal-eq",
+      "explanationVariants": [
+        "×10 must reach every term: 0.2x + 3 = 4 becomes 2x + 30 = 40 — the 3 and the 4 shift too.",
+        "Scaling one side (or one term) alone changes the equation; multiplication is an every-term move."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the correct ×10 shift of 0.2x + 3 = 4?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2x + 30 = 40",
+            "correct": true,
+            "feedback": "Yes — every term ×10, whole numbers included."
+          },
+          {
+            "id": "b",
+            "label": "2x + 3 = 4",
+            "feedback": "The 3 and 4 got skipped — the ×10 reaches EVERY term: 2x + 30 = 40."
+          },
+          {
+            "id": "c",
+            "label": "2x + 30 = 4",
+            "feedback": "The right side got skipped — both sides scale: 2x + 30 = 40."
+          }
+        ]
+      },
+      "hints": [
+        "×10 is an every-term move.",
+        "Whole numbers gain a zero.",
+        "2x + 30 = 40."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "decimal-eq__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full shift, solo!",
+      "conceptTag": "decimal-eq",
+      "explanationVariants": [
+        "0.3x + 0.4 = 1.9: ×10 gives 3x + 4 = 19, so 3x = 15 and x = 5.",
+        "Direct: 0.3x = 1.5, and 1.5 ÷ 0.3 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: 0.3x + 0.4 = 1.9",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1.5,
+            "feedback": "1.5 is 0.3x, not x — divide by 0.3: x = 5."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is 3x after the shift (3x = 15) — divide by 3: x = 5."
+          }
+        ],
+        "fallbackFeedback": "×10: 3x + 4 = 19 → 3x = 15 → x = 5."
+      },
+      "hints": [
+        "×10: 3x + 4 = 19.",
+        "3x = 15.",
+        "x = 5."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "decimal-eq__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chapter done — nothing hides x now!",
+      "takeaways": [
+        "×10 (or 100) shifts every decimal to whole.",
+        "Whole numbers shift too — zeros for everyone.",
+        "After the shift, it's the two-step you know."
+      ],
+      "teaser": "next chapter: literal equations — solving for a letter."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decimal-eq",
+      "concept": {
+        "id": "rem-de-c",
+        "kind": "concept",
+        "body": "Slow it down with 0.5x = 3. Half of x is 3, so x = 6. Or shift: ×10 gives 5x = 30, and 30 ÷ 5 = 6. Same answer, both roads.",
+        "narration": "Slow it down with zero point five x equals three. Half of x is three, so x equals six. Or shift: times ten gives five x equals thirty, and thirty divided by five is six. Same answer, both roads."
+      },
+      "check": {
+        "id": "rem-de-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decimal-eq",
+        "explanationVariants": [
+          "0.5x = 3: half of x is 3, so x = 6.",
+          "×10: 5x = 30, so x = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve for x: 0.5x = 3",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1.5,
+              "feedback": "That halved the 3. But 0.5x means HALF of x is 3 — double it: x = 6."
+            },
+            {
+              "value": 30,
+              "feedback": "30 is 5x after shifting (5x = 30) — divide by 5: x = 6."
+            }
+          ],
+          "fallbackFeedback": "Half of x is 3, so x = 6."
+        }
+      }
+    }
+  ]
+}

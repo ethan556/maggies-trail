@@ -1,0 +1,240 @@
+{
+  "id": "dr-03-02",
+  "slug": "the-quotient-rule",
+  "title": "The Quotient Rule",
+  "courseId": "derivative-rules",
+  "chapterId": "ch3-products-and-quotients",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A quotient is a product in disguise: u/v = u·v⁻¹. Push that through the product rule and tidy up, and you get\n\n**(u/v)′ = (u′v − uv′) / v²**.\n\nThe order matters now — the minus sign means **low·d-high minus high·d-low**, and swapping them flips the sign of the whole answer.",
+      "figure": "dr-product-rule-box"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Order matters.",
+      "conceptTag": "dr-quotient-rule",
+      "explanationVariants": [
+        "u = x, u′ = 1; v = x + 1, v′ = 1. So f′ = [1(x+1) − x(1)]/(x+1)² = 1/(x+1)². At x = 1 that is 1/4.",
+        "The numerator collapses to 1, which is why this particular quotient is famously simple."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x/(x + 1). Find f′(1), as a decimal.",
+        "answer": 0.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": -0.25,
+            "feedback": "The sign is flipped — you subtracted in the wrong order. It is u′v − uv′ (low d-high minus high d-low), not the other way round."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is f(1) = 1/2, the height. The slope is 1/(x+1)² = 1/4."
+          },
+          {
+            "value": 1.0,
+            "feedback": "That is the numerator of the derivative before dividing by v² = 4."
+          }
+        ],
+        "fallbackFeedback": "[1(x+1) − x(1)]/(x+1)² = 1/(x+1)² → f′(1) = 1/4 = 0.25."
+      },
+      "variant": {
+        "gen": "deriv-quotient"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The minus sign, and where it comes from.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why a quotient has a minus and a square.",
+        "panels": [
+          {
+            "title": "Rewrite it",
+            "body": "u/v is u · v⁻¹. There is no new idea here — a quotient is a product with a negative power."
+          },
+          {
+            "title": "Push it through",
+            "body": "The product rule gives u′·v⁻¹ + u·(−1)v⁻²·v′. The minus sign is not a convention someone chose: it falls out of differentiating v⁻¹."
+          },
+          {
+            "title": "Tidy up",
+            "body": "Put both terms over v²: (u′v − uv′)/v². The square in the denominator is the v⁻² from the chain, and the minus is the −1 from the power rule. Every part of the rule has a reason."
+          }
+        ],
+        "continueFeedback": "Keep going — the minus sign is about to earn its place.",
+        "successFeedback": "The minus comes from differentiating v⁻¹, and the v² comes from the same place. Nothing was invented."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A harder numerator.",
+      "conceptTag": "dr-quotient-rule",
+      "explanationVariants": [
+        "u = x², u′ = 2x; v = x + 1, v′ = 1. f′ = [2x(x+1) − x²]/(x+1)² = (x² + 2x)/(x+1)². At x = 1: 3/4.",
+        "Numerator: 2(1)(2) − 1 = 3. Denominator: (2)² = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x²/(x + 1). Find f′(1), as a decimal.",
+        "answer": 0.75,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": -0.75,
+            "feedback": "Sign flipped: the order is u′v − uv′, which here is 2x(x+1) − x²(1), not the reverse."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is f(1) = 1/2. The derivative is (x² + 2x)/(x+1)², which at 1 is 3/4."
+          },
+          {
+            "value": 1.5,
+            "feedback": "You may have forgotten to divide by v² = (x+1)² = 4. The numerator alone is 3."
+          }
+        ],
+        "fallbackFeedback": "[2x(x+1) − x²]/(x+1)² = (x² + 2x)/(x+1)² → 3/4 = 0.75."
+      },
+      "variant": {
+        "gen": "deriv-quotient"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two habits worth keeping.\n\n**Simplify before you differentiate.** x³/x is just x². Reaching for the quotient rule there is legal but foolish.\n\n**Never simplify the denominator away.** v² stays as it is — expanding it usually makes the answer harder to read and easier to get wrong.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Do you even need the rule?",
+      "conceptTag": "dr-quotient-rule",
+      "explanationVariants": [
+        "(x³ + x²)/x simplifies to x² + x, whose derivative is 2x + 1. At x = 2 that is 5.",
+        "The quotient rule would get the same answer with four times the work and four times the risk."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = (x³ + x²)/x, for x ≠ 0. Find f′(2).",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is 2x at x = 2, missing the +1. Simplifying gives x² + x, so f′ = 2x + 1 = 5."
+          },
+          {
+            "value": 16,
+            "feedback": "That looks like a quotient-rule slip. Simplify first: (x³ + x²)/x = x² + x."
+          },
+          {
+            "value": 12,
+            "feedback": "That is 3x² at x = 2 — differentiating the numerator alone. Divide through by x first."
+          }
+        ],
+        "fallbackFeedback": "Simplify: x² + x → f′ = 2x + 1 → f′(2) = 5."
+      },
+      "variant": {
+        "gen": "deriv-quotient",
+        "form": "simplifyFirst"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Numbers only, no formulas.",
+      "conceptTag": "dr-quotient-rule",
+      "hints": [
+        "(u/v)′ = (u′v − uv′)/v². You have all four values at x = 2.",
+        "Numerator: u′(2)·v(2) − u(2)·v′(2) = 3(4) − 6(1).",
+        "Denominator: v(2)² = 16."
+      ],
+      "explanationVariants": [
+        "[3(4) − 6(1)]/4² = (12 − 6)/16 = 6/16 = 0.375.",
+        "The rule needs only the four values — which is exactly why it is stated in u and v."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "u(2) = 6, u′(2) = 3, v(2) = 4, v′(2) = 1. Find (u/v)′(2), as a decimal to three places.",
+        "answer": 0.375,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": -0.375,
+            "feedback": "The subtraction ran the wrong way. It is u′v − uv′: 3(4) − 6(1) = 6, positive."
+          },
+          {
+            "value": 0.75,
+            "feedback": "That is the numerator 6 divided by v = 4 instead of v² = 16."
+          },
+          {
+            "value": 1.5,
+            "feedback": "That is 6/4 — the denominator must be SQUARED: 16."
+          }
+        ],
+        "fallbackFeedback": "[3(4) − 6(1)]/16 = 6/16 = 0.375."
+      },
+      "variant": {
+        "gen": "deriv-quotient",
+        "form": "abstractQuot"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Low d-high minus high d-low, over low squared.",
+      "takeaways": [
+        "(u/v)′ = (u′v − uv′)/v². The order of the subtraction decides the sign of the whole answer.",
+        "The minus and the square both fall out of differentiating v⁻¹ — nothing was invented.",
+        "Simplify first where you can: many quotients are powers in disguise."
+      ],
+      "teaser": "Next: pick the right rule, and combine them without panic."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-quotient-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Write the four pieces down before you touch anything: u, u′, v, v′. Then assemble (u′v − uv′)/v² slowly. Almost every error in this chapter is a subtraction done in the wrong order.",
+        "figure": "dr-product-rule-box"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which way round?",
+        "conceptTag": "dr-quotient-rule",
+        "explanationVariants": [
+          "The numerator is u′v − uv′, so the DERIVATIVE OF THE TOP comes first.",
+          "Swapping the two terms negates the whole answer."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is the correct numerator of (u/v)′?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "u′v − uv′",
+              "correct": true,
+              "feedback": "Right — derivative of the top times the bottom, minus the top times the derivative of the bottom."
+            },
+            {
+              "id": "o2",
+              "label": "uv′ − u′v",
+              "correct": false,
+              "feedback": "That is the negative of the truth. The order of subtraction flips the sign of every answer you get."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

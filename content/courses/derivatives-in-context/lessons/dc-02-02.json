@@ -1,0 +1,312 @@
+{
+  "id": "dc-02-02",
+  "slug": "the-sliding-ladder",
+  "title": "The Sliding Ladder",
+  "courseId": "derivatives-in-context",
+  "chapterId": "ch2-related-rates",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A 10-foot ladder leans against a wall. The foot is dragged away at 2 ft/s. How fast is the top sliding **down**?\n\nThe relation is Pythagoras: **x² + y² = 100**, where x is the distance from the wall and y the height on it.\n\nBoth x and y change with time. The 100 does not.",
+      "figure": "dr-implicit-circle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Differentiate the relation.",
+      "conceptTag": "dc-ladder",
+      "explanationVariants": [
+        "Differentiating x² + y² = 100 with respect to t gives 2x(dx/dt) + 2y(dy/dt) = 0. The constant 100 differentiates to zero.",
+        "It is implicit differentiation with t as the hidden variable — and the ladder's length is what makes the right-hand side vanish."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Differentiate x² + y² = 100 with respect to time.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2x(dx/dt) + 2y(dy/dt) = 0",
+            "correct": true,
+            "feedback": "Right. The 100 is a constant — the ladder never changes length — so the whole thing must balance to zero."
+          },
+          {
+            "id": "o2",
+            "label": "2x + 2y = 0",
+            "correct": false,
+            "feedback": "Each variable owes a d/dt. Without them you have differentiated with respect to x and y, not with respect to time."
+          },
+          {
+            "id": "o3",
+            "label": "2x(dx/dt) + 2y(dy/dt) = 100",
+            "correct": false,
+            "feedback": "The 100 is a CONSTANT, and constants differentiate to 0. The ladder's length is not changing."
+          },
+          {
+            "id": "o4",
+            "label": "x² + y² = 0",
+            "correct": false,
+            "feedback": "Nothing has been differentiated at all — the d/dt has not been applied."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-ladder__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the height first.",
+      "conceptTag": "dc-ladder",
+      "explanationVariants": [
+        "At the instant x = 6, Pythagoras gives y² = 100 − 36 = 64, so y = 8. The 6-8-10 triangle again.",
+        "You need BOTH x and y at the instant, and the relation itself supplies the one you were not given."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The ladder is 10 ft long and its foot is 6 ft from the wall. How high is the top?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is 10 − 6. Use Pythagoras: y² = 100 − 36 = 64, so y = 8."
+          },
+          {
+            "value": 10,
+            "feedback": "That is the LADDER's length, which is the hypotenuse. The height is √(100 − 36) = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the distance from the wall. The height is 8 — the 6-8-10 triangle."
+          }
+        ],
+        "fallbackFeedback": "y² = 100 − 36 = 64 → y = 8."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-ladder__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The fixed ladder couples position and velocity. Move it and make the hidden chain rule visible.",
+      "widget": {
+        "type": "relatedRatesLab",
+        "prompt": "Slide a 10-foot ladder through several positions, then place its foot at x = 6 while dx/dt = 2 ft/s.",
+        "ladderLength": 10,
+        "horizontalRate": 2,
+        "targetX": 6,
+        "startX": 2,
+        "requiredMoves": 4,
+        "successFeedback": "At x = 6, y = 8 and dy/dt = −1.5 ft/s. The top descends faster as x/y grows, even though the foot speed is constant.",
+        "explorationFeedback": "Move through several positions and compare how y and dy/dt respond before checking.",
+        "positionFeedback": "Set the foot at x = 6; the fixed-length invariant then determines y and dy/dt."
+      },
+      "predict": {
+        "prompt": "As the ladder foot moves away from the wall at a constant speed, does the top descend at a constant speed?",
+        "options": [
+          {
+            "id": "constant",
+            "label": "Yes, the vertical speed is constant"
+          },
+          {
+            "id": "vary",
+            "label": "No, it depends on the current x and y"
+          },
+          {
+            "id": "zero",
+            "label": "No, the top never moves"
+          }
+        ],
+        "outcomeId": "vary",
+        "reveal": "The fixed-length relation gives dy/dt = −(x/y)dx/dt, so the vertical rate changes as the ladder's position changes."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Move a constrained geometric system and coordinate its changing positions and rates through one invariant.",
+        "invariants": [
+          "ladder-length-fixed",
+          "related-rates-share-time"
+        ],
+        "misconceptions": [
+          "all-rates-constant",
+          "differentiate-variables-without-time"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "derivatives-in-context-relatedRatesLab",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this relatedRatesLab away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why must the two rates be connected through the geometry?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Both positions share the fixed-length invariant and the same time variable, so differentiating couples their rates.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "constant",
+              "label": "Every moving object has one universal constant rate.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "separate",
+              "label": "x and y can be differentiated independently without their equation.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "dc-ladder"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Solve for what you want, and read the **sign**.\n\ndy/dt = −(x/y)·(dx/dt)\n\nWith x, y and dx/dt all positive, dy/dt comes out **negative** — the top is sliding DOWN. The minus sign is not an accident of algebra; it is the physics, reported honestly.",
+      "figure": "dr-implicit-circle"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Solve it.",
+      "conceptTag": "dc-ladder",
+      "explanationVariants": [
+        "2(6)(2) + 2(8)(dy/dt) = 0 → 24 + 16(dy/dt) = 0 → dy/dt = −1.5 ft/s.",
+        "Negative means downward, which is exactly what a ladder whose foot is being dragged away must do."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x = 6, y = 8, dx/dt = 2. Find dy/dt, in ft/s (include the sign).",
+        "answer": -1.5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1.5,
+            "feedback": "The magnitude is right but the SIGN is wrong. dy/dt = −(x/y)(dx/dt) = −(6/8)(2) = −1.5: the top is going DOWN."
+          },
+          {
+            "value": -2.667,
+            "feedback": "That is −(y/x)(dx/dt) = −(8/6)(2). The formula is −(x/y)(dx/dt) = −(6/8)(2) = −1.5."
+          },
+          {
+            "value": -2,
+            "feedback": "That is dx/dt with a minus sign. Solve 24 + 16(dy/dt) = 0."
+          }
+        ],
+        "fallbackFeedback": "24 + 16(dy/dt) = 0 → dy/dt = −1.5 ft/s (downward)."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-ladder__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Later in the slide.",
+      "conceptTag": "dc-ladder",
+      "hints": [
+        "Now x = 8, so find y first: y² = 100 − 64 = 36, so y = 6.",
+        "dy/dt = −(x/y)(dx/dt) = −(8/6)(2).",
+        "Give it to three decimals — and notice it is FASTER than before."
+      ],
+      "explanationVariants": [
+        "dy/dt = −(8/6)(2) = −8/3 ≈ −2.667 ft/s. The top is falling faster than it was at x = 6.",
+        "As the ladder flattens, y shrinks and x/y grows — so the top accelerates downward without the foot going any faster at all. That is the whole reason the problem is interesting."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same ladder, same dx/dt = 2. Find dy/dt when x = 8, to three decimals.",
+        "answer": -2.667,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": -1.5,
+            "feedback": "That was the answer at x = 6. At x = 8 the height is only 6, so dy/dt = −(8/6)(2) ≈ −2.667: the top is falling FASTER."
+          },
+          {
+            "value": 2.667,
+            "feedback": "The magnitude is right; the sign must be negative, because the top is descending."
+          },
+          {
+            "value": -1.333,
+            "feedback": "That is −(x/y)(dx/dt) with the fraction inverted or the rate dropped. It is −(8/6)(2) ≈ −2.667."
+          }
+        ],
+        "fallbackFeedback": "y = 6, so dy/dt = −(8/6)(2) = −8/3 ≈ −2.667 ft/s — faster than before, with the foot moving at the same speed."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-ladder__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Implicit differentiation with a clock.",
+      "takeaways": [
+        "The relation is geometry (Pythagoras). The calculus only differentiates it with respect to t.",
+        "dy/dt = −(x/y)(dx/dt), and the minus sign is the physics: the top slides DOWN.",
+        "As the ladder flattens, x/y grows — so the top falls faster and faster while the foot moves at a constant speed."
+      ],
+      "teaser": "Next: choosing the right relation, when nobody hands you one."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dc-ladder",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Three steps. **Pythagoras** gives the relation. **d/dt** gives the rate equation, with every variable paying a d/dt. **Substitute** the instant's numbers last — and use the relation itself to find any missing side.",
+        "figure": "dr-implicit-circle"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Find the missing side.",
+        "conceptTag": "dc-ladder",
+        "explanationVariants": [
+          "A 13-ft ladder with its foot 5 ft out reaches √(169 − 25) = 12 ft up.",
+          "The 5-12-13 triangle."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A 13-ft ladder has its foot 5 ft from the wall. How high does it reach?",
+          "answer": 12,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "That is 13 − 5. Use Pythagoras: y = √(169 − 25) = 12."
+            },
+            {
+              "value": 13,
+              "feedback": "That is the ladder itself — the hypotenuse. The height is 12."
+            }
+          ],
+          "fallbackFeedback": "y² = 169 − 25 = 144 → y = 12."
+        }
+      }
+    }
+  ]
+}

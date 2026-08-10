@@ -1,0 +1,358 @@
+{
+  "id": "as-02-01",
+  "slug": "partners-of-ten",
+  "title": "Partners of Ten",
+  "courseId": "add-subtract-20",
+  "chapterId": "ch2-making-ten",
+  "minutes": 6,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "tens-partners",
+      "body": "Two numbers that fill a ten-frame are **partners of ten**. 6 and 4 are partners: 6 + 4 = 10.",
+      "narration": "Two numbers that fill a ten-frame are partners of ten. Six and four are partners: six plus four equals ten."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Make a ten.",
+      "conceptTag": "tens-partners",
+      "widget": {
+        "type": "tenFrame",
+        "prompt": "6 dots are here. Tap to add dots until the frame shows 10.",
+        "target": 10,
+        "preFilled": 6,
+        "addColor": "tangerine",
+        "commonCounts": [
+          {
+            "count": 8,
+            "feedback": "That's 8 — two empty cells left. 6's partner is 4, so add 4 in all."
+          },
+          {
+            "count": 9,
+            "feedback": "So close — one cell is still empty. 6 and 4 make 10."
+          }
+        ],
+        "missFeedback": "Fill every empty cell. 6 needs 4 more to make 10.",
+        "successFeedback": "6 and 4 make 10 — partners!"
+      },
+      "predict": {
+        "prompt": "6 dots sit in the ten-frame. Will the number you ADD to reach 10 match the number of EMPTY cells?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — the empty cells ARE the answer"
+          },
+          {
+            "id": "no",
+            "label": "No — you still have to count up"
+          },
+          {
+            "id": "sometimes",
+            "label": "Only sometimes"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "The frame does the work: every empty cell is exactly one missing dot, so the gaps and the answer are the same thing."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "quantity-composition",
+        "actionGoal": "Complete a ten and use the leftover part instead of counting every counter.",
+        "predictionId": "g1-make-ten-prediction",
+        "invariants": [
+          "sum-preserved",
+          "ten-structure"
+        ],
+        "misconceptions": [
+          "counting-all",
+          "lost-part"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "make-ten-new-addends",
+        "delayed": true,
+        "counterfactualPrompt": "Move one counter from one addend to the other. Can you preserve the sum while making a complete ten?",
+        "explanation": {
+          "prompt": "Why does moving a part to make ten keep the answer unchanged?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "The same total is repartitioned into a ten and a leftover part.",
+              "correct": true,
+              "feedback": "Exactly. The addends change form, but their sum is preserved."
+            },
+            {
+              "id": "surface",
+              "label": "Moving a counter always adds one to the total.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. The addends change form, but their sum is preserved."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the partner.",
+      "conceptTag": "tens-partners",
+      "explanationVariants": [
+        "8 already fills 8 cells; 2 cells stay empty, so 8's partner is 2.",
+        "8 + 2 = 10, so the number that makes ten with 8 is 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 + ? = 10. What makes ten with 8?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "8 + 3 = 11 — one too many. 8's partner is 2."
+          },
+          {
+            "value": 18,
+            "feedback": "That put 8 and 10 together. A partner ADDS with 8 to make 10, so it's 2."
+          }
+        ],
+        "fallbackFeedback": "Count the empty cells after 8: two. 8's partner is 2."
+      },
+      "hints": [
+        "How many cells are empty after 8?",
+        "Two.",
+        "8 + 2 = 10."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "TensPartnersNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Learn the partner pairs by heart: 1+9, 2+8, 3+7, 4+6, 5+5. They make adding fast.",
+      "narration": "Learn the partner pairs by heart: one and nine, two and eight, three and seven, four and six, five and five. They make adding fast.",
+      "figure": "as-partners-ten"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Make ten again.",
+      "conceptTag": "tens-partners",
+      "widget": {
+        "type": "tenFrame",
+        "prompt": "3 dots are here. Tap to add dots until the frame shows 10.",
+        "target": 10,
+        "preFilled": 3,
+        "addColor": "tangerine",
+        "commonCounts": [
+          {
+            "count": 6,
+            "feedback": "That's 6 — still four empty. 3's partner is 7, so add 7 in all."
+          },
+          {
+            "count": 9,
+            "feedback": "One cell is still empty. 3 and 7 make 10."
+          }
+        ],
+        "missFeedback": "3 needs 7 more to fill the ten-frame.",
+        "successFeedback": "3 and 7 make 10 — partners!"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tens partners.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tens partners must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tens partners."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-20:tens-partners",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another partner.",
+      "conceptTag": "tens-partners",
+      "explanationVariants": [
+        "6 fills 6 cells; 4 cells stay empty, so 6's partner is 4.",
+        "6 + 4 = 10 — the partner of 6 is 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "6 + ? = 10. What makes ten with 6?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "6 + 3 = 9 — one short. 6's partner is 4."
+          },
+          {
+            "value": 16,
+            "feedback": "That's 6 and 10 stuck together. The partner ADDS to make 10, so it's 4."
+          }
+        ],
+        "fallbackFeedback": "Count the empty cells after 6: four. 6's partner is 4."
+      },
+      "hints": [
+        "How many cells are empty after 6?",
+        "Four.",
+        "6 + 4 = 10."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "TensPartnersNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the pair.",
+      "conceptTag": "tens-partners",
+      "explanationVariants": [
+        "7 + 3 fills all ten cells; 7 + 4 overflows and 6 + 5 overflows too.",
+        "Only 7 and 3 add to exactly 10 — the others go past it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which pair are partners of ten?",
+        "options": [
+          {
+            "id": "a",
+            "label": "7 and 3",
+            "correct": true,
+            "feedback": "Yes — 7 + 3 = 10, a full ten-frame."
+          },
+          {
+            "id": "b",
+            "label": "7 and 4",
+            "feedback": "7 + 4 = 11 — that spills past ten. 7's partner is 3."
+          },
+          {
+            "id": "c",
+            "label": "6 and 5",
+            "feedback": "6 + 5 = 11 — one too many. 6's partner is 4, and 5's is 5."
+          }
+        ]
+      },
+      "hints": [
+        "Which pair adds to exactly 10?",
+        "Not more, not less.",
+        "7 + 3 fills the frame."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "TensPartnersMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Partner puzzle.",
+      "conceptTag": "tens-partners",
+      "explanationVariants": [
+        "If one partner is 2, the other fills the rest of the ten: 8, because 2 + 8 = 10.",
+        "Partners add to 10, so the partner of 2 is 10 − 2 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two numbers are partners of ten. One is 2. What is the other?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That's 10 + 2. Partners ADD to 10, so the other is 10 − 2 = 8."
+          },
+          {
+            "value": 2,
+            "feedback": "That just repeats the 2. 2 + 2 = 4, not 10. The partner of 2 is 8."
+          }
+        ],
+        "fallbackFeedback": "Partners make 10 together: 2 + 8 = 10, so the other is 8."
+      },
+      "hints": [
+        "Partners add to 10.",
+        "10 take away 2.",
+        "2 + 8 = 10."
+      ],
+      "variant": {
+        "gen": "g1-add-subtract",
+        "form": "TensPartnersNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You know your partners!",
+      "takeaways": [
+        "Partners of ten add to exactly 10.",
+        "The pairs: 1+9, 2+8, 3+7, 4+6, 5+5.",
+        "Knowing partners makes bigger adds fast."
+      ],
+      "teaser": "next: use a partner to fill up to ten, then add the rest."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tens-partners",
+      "concept": {
+        "id": "rem-tp-c",
+        "kind": "concept",
+        "body": "Slow it down. A ten-frame has 10 cells. If 4 are full, count the empty ones: 6. So 4 + 6 = 10.",
+        "narration": "A ten-frame has ten cells. If four are full, count the empty ones: six. So four plus six equals ten."
+      },
+      "check": {
+        "id": "rem-tp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tens-partners",
+        "explanationVariants": [
+          "4 fills 4 cells; 6 cells stay empty, so 4's partner is 6.",
+          "4 + 6 = 10 — the partner of 4 is 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "4 + ? = 10. What makes ten with 4?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "4 + 5 = 9 — one short. 4's partner is 6."
+            },
+            {
+              "value": 14,
+              "feedback": "That's 4 and 10 together. The partner adds to 10, so it's 6."
+            }
+          ],
+          "fallbackFeedback": "Count the empty cells after 4: six. 4 + 6 = 10."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "id": "fg-02-01",
+  "slug": "rate-of-change",
+  "title": "Rate of Change",
+  "courseId": "functions-g8",
+  "chapterId": "ch2-rate-of-change",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A function's **rate of change** is how much the output changes each time the input goes up by 1 — the same 'per one step' idea as a unit rate. If a plant grows 3 cm every week, its rate of change is 3 cm per week.",
+      "figure": "slope-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rate of change is the slope of the line between two points.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "average",
+        "a": 1,
+        "targetH": 2,
+        "startH": 0.5,
+        "prompt": "On y = x², set the gap to 2 — the interval from x = 1 to x = 3 — and read the rate of change.",
+        "successFeedback": "Rise 8 over run 2 = 4. On a curve the rate depends on WHICH interval you take, which is exactly what makes a curve non-linear. A straight line is the special case where every interval gives the same rate.",
+        "lowFeedback": "The gap is under 2 — B has not reached x = 3.",
+        "highFeedback": "The gap is over 2 — B has gone past x = 3."
+      },
+      "predict": {
+        "prompt": "You'll build the secant from A at x = 1 out to B at x = 3 on y = x². Compared with the tangent slope AT A (2), the secant's slope will be…",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger (more positive)"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller"
+          },
+          {
+            "id": "equal",
+            "label": "Exactly equal"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "The secant's slope is (f(3) − f(1))/2 = 4, against 2 for the tangent at A. On a curve whose slope keeps growing, the stretch out to B crosses steeper ground than A itself — so the average beats the value at the start."
+      },
+      "conceptTag": "fg-rate-of-change",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents rate of change.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for rate of change must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines rate of change."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "functions-g8:fg-rate-of-change",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "From a table, compute rate of change as (change in output) ÷ (change in input). If the input goes up by 2 and the output goes up by 6, the rate is 6 ÷ 2 = 3 per step — always reduce to the change for ONE input step.",
+      "figure": "fg-rate-table"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Rate of change from a table.",
+      "conceptTag": "fg-rate-of-change",
+      "explanationVariants": [
+        "Output rises 8 as input rises 2, so the rate is 8 ÷ 2 = 4 per step.",
+        "Divide the output change by the input change: 8/2 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "As x goes from 3 to 5, y goes from 10 to 18. What is the rate of change?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's the total output change, not the per-step rate — divide by the input change of 2: 8÷2=4."
+          },
+          {
+            "value": 2,
+            "feedback": "That's the input change, not the rate — the rate is output-change ÷ input-change = 8÷2 = 4."
+          }
+        ],
+        "fallbackFeedback": "Output changes by 18−10=8 as input changes by 5−3=2, so the rate is 8÷2=4."
+      },
+      "variant": {
+        "gen": "g8-fn-rate-of-change",
+        "form": "fgRatePositive"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match tables to their rates.",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Compute (output change)÷(input change) for each, then match its rate.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "x: 0→1, y: 0→5"
+          },
+          {
+            "id": "l2",
+            "label": "x: 0→2, y: 0→6"
+          },
+          {
+            "id": "l3",
+            "label": "x: 0→1, y: 0→2"
+          }
+        ],
+        "right": [
+          {
+            "id": "r5",
+            "label": "rate 5"
+          },
+          {
+            "id": "r3",
+            "label": "rate 3"
+          },
+          {
+            "id": "r2",
+            "label": "rate 2"
+          }
+        ],
+        "pairs": {
+          "l1": "r5",
+          "l2": "r3",
+          "l3": "r2"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r2",
+            "feedback": "For x:0→2, y:0→6, the rate is 6÷2=3, not 2 — divide by the input change of 2."
+          }
+        ],
+        "missFeedback": "Not quite — compute output-change ÷ input-change for each table.",
+        "successFeedback": "Right — each rate is the output change divided by the input change."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A bigger table step.",
+      "conceptTag": "fg-rate-of-change",
+      "explanationVariants": [
+        "Output rises 15 as input rises 3, so the rate is 15 ÷ 3 = 5 per step.",
+        "Divide the output change by the input change: 15/3 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "As x goes from 2 to 5, y goes from 4 to 19. What is the rate of change?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "That's the total output change — divide by the input change of 3: 15÷3=5."
+          },
+          {
+            "value": 3,
+            "feedback": "That's the input change, not the rate — divide output-change by input-change: 15÷3=5."
+          }
+        ],
+        "fallbackFeedback": "Output changes by 19−4=15 as input changes by 5−2=3, so the rate is 15÷3=5."
+      },
+      "variant": {
+        "gen": "g8-fn-rate-of-change",
+        "form": "fgRateWide"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A negative rate of change.",
+      "conceptTag": "fg-rate-of-change",
+      "explanationVariants": [
+        "Output DROPS 6 as input rises 2, so the rate is −6 ÷ 2 = −3 per step.",
+        "A decreasing output gives a negative rate: −6/2 = −3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "As x goes from 1 to 3, y goes from 10 to 4. What is the rate of change?",
+        "answer": -3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "The output DECREASES, so the rate is negative: (4−10)÷(3−1) = −6÷2 = −3."
+          },
+          {
+            "value": -6,
+            "feedback": "That's the total output change — divide by the input change of 2: −6÷2=−3."
+          }
+        ],
+        "fallbackFeedback": "Output changes by 4−10=−6 as input changes by 3−1=2, so the rate is −6÷2=−3."
+      },
+      "variant": {
+        "gen": "g8-fn-rate-of-change",
+        "form": "fgRateNegative"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rate of change in a real story.",
+      "conceptTag": "fg-rate-of-change",
+      "explanationVariants": [
+        "The tank goes from 50 to 30 liters as time goes from 2 to 6 minutes: (30−50)÷(6−2) = −20÷4 = −5 liters per minute.",
+        "Draining is a negative rate: output change −20 over input change 4 gives −5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tank holds 50 liters at 2 minutes and 30 liters at 6 minutes. What is the rate of change, in liters per minute?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "The tank is DRAINING, so the rate is negative: (30−50)÷(6−2) = −20÷4 = −5."
+          },
+          {
+            "value": -20,
+            "feedback": "That's the total change in liters — divide by the 4-minute input change: −20÷4=−5."
+          }
+        ],
+        "fallbackFeedback": "Volume changes by 30−50=−20 liters over 6−2=4 minutes, so the rate is −20÷4=−5 liters per minute."
+      },
+      "hints": [
+        "Find the change in liters and the change in minutes separately.",
+        "Liters change by 30−50=−20; minutes change by 6−2=4.",
+        "Rate = −20 ÷ 4 = −5 liters per minute (negative because it's draining)."
+      ],
+      "variant": {
+        "gen": "g8-fn-rate-of-change",
+        "form": "fgRateContext"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rate of change is the output change per one step of input.",
+      "takeaways": [
+        "Rate of change = (output change) ÷ (input change).",
+        "Always reduce to the change for a single input step.",
+        "A decreasing output gives a negative rate of change."
+      ],
+      "teaser": "Next: why a straight line has the SAME rate of change everywhere."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-rate-of-change",
+      "concept": {
+        "id": "rem-fg0201-c",
+        "kind": "concept",
+        "body": "A function's rate of change is (output change) ÷ (input change) — how much the output moves per one step of input. A decreasing output gives a negative rate."
+      },
+      "check": {
+        "id": "rem-fg0201-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-rate-of-change",
+        "explanationVariants": [
+          "Output rises 6 as input rises 2, so the rate is 6 ÷ 2 = 3.",
+          "Divide output change by input change: 6/2 = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "As x goes from 1 to 3, y goes from 2 to 8. What is the rate of change?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's the total output change — divide by the input change of 2: 6÷2=3."
+            },
+            {
+              "value": 2,
+              "feedback": "That's the input change — the rate is output-change ÷ input-change = 6÷2 = 3."
+            }
+          ],
+          "fallbackFeedback": "Output changes by 8−2=6 as input changes by 3−1=2, so the rate is 6÷2=3."
+        }
+      }
+    }
+  ]
+}

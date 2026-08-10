@@ -1,0 +1,292 @@
+{
+  "id": "ft-05-02",
+  "slug": "finding-an-inverse-rule",
+  "title": "Finding an Inverse Rule",
+  "courseId": "function-transformations",
+  "chapterId": "ch5-inverse-functions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To write a formula for f⁻¹, **reverse f's pipeline**. f(x) = 3x − 4 does: ×3, then −4. The inverse undoes the LAST step first: +4, then ÷3. So **f⁻¹(x) = (x + 4)/3** — like taking off shoes before socks.",
+      "figure": "undo-machine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the undo pipeline.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "f(x) = 3x − 4 does ×3 then −4. Put the INVERSE's steps in the order they run.",
+        "items": [
+          {
+            "id": "s3",
+            "label": "divide by 3"
+          },
+          {
+            "id": "s1",
+            "label": "start with the output x"
+          },
+          {
+            "id": "s2",
+            "label": "add 4"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "s3",
+            "second": "s2",
+            "feedback": "Dividing before adding undoes the steps in f's own order — the inverse must reverse it: strip the −4 FIRST (add 4), then the ×3."
+          }
+        ],
+        "missFeedback": "The inverse peels operations off in reverse: f's last step (−4) is undone first (+4), then the ×3 is undone (÷3).",
+        "successFeedback": "Right — last on, first off: +4, then ÷3 gives f⁻¹(x) = (x + 4)/3."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The algebraic route is **swap and solve**: write y = f(x), swap x and y (that's the pair swap from last lesson), then solve for y. For y = 3x − 4: swap to x = 3y − 4, add 4, divide by 3 — same answer, f⁻¹(x) = (x + 4)/3.",
+      "figure": "ft-swap-solve"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Pick the inverse formula.",
+      "conceptTag": "ft-inverse-rule",
+      "explanationVariants": [
+        "Swap and solve: x = 3y − 4 gives 3y = x + 4, so y = (x + 4)/3.",
+        "Reverse the pipeline ×3, −4: add 4 first, then divide by 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the inverse of f(x) = 3x − 4?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f⁻¹(x) = (x + 4)/3",
+            "correct": true,
+            "feedback": "Right — undo the −4 by adding 4, then undo the ×3 by dividing."
+          },
+          {
+            "id": "o2",
+            "label": "f⁻¹(x) = (x − 4)/3",
+            "correct": false,
+            "feedback": "That subtracts 4 again — but f already subtracted it. Undoing a −4 means ADDING 4: (x + 4)/3."
+          },
+          {
+            "id": "o3",
+            "label": "f⁻¹(x) = x/3 + 4",
+            "correct": false,
+            "feedback": "That divides first — but ÷3 must undo the FIRST thing f did, so it comes LAST: add 4, then divide."
+          },
+          {
+            "id": "o4",
+            "label": "f⁻¹(x) = 1/(3x − 4)",
+            "correct": false,
+            "feedback": "That's the reciprocal of f(x), not the inverse function — ⁻¹ on a name means undo, not one-over."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-rule__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Use the new rule.",
+      "widget": {
+        "type": "solveBalance",
+        "a": 3,
+        "b": -4,
+        "c": 11,
+        "relation": "eq",
+        "prompt": "f⁻¹(11) is the y for which f(y) = 11. Since f(x) = 3x − 4, that means 3y − 4 = 11. Clear the units, then split.",
+        "successFeedback": "y = 5, so f⁻¹(11) = 5 — and checking it the OTHER way, f(5) = 3(5) − 4 = 11 confirms it. Evaluating an inverse and solving the original equation are the same question; f⁻¹(x) = (x+4)/3 is just this same solving process done once and for all.",
+        "unbalancedFeedback": "The pans disagree — the same operation must hit both sides.",
+        "notIsolatedFeedback": "y is not alone yet — units remain on its pan.",
+        "missFeedback": "Not the solution. Add the 4 units back to both pans first, then split into 3 groups.",
+        "unexpandedFeedback": "Deal with the units before splitting into groups."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A fractional pipeline.",
+      "conceptTag": "ft-inverse-rule",
+      "explanationVariants": [
+        "Swap and solve: x = y/2 + 3 gives x − 3 = y/2, so y = 2(x − 3) = 2x − 6.",
+        "g does ÷2 then +3; reversing: subtract 3, then multiply by 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the inverse of g(x) = x/2 + 3?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "g⁻¹(x) = 2x − 6",
+            "correct": true,
+            "feedback": "Right — subtract 3 first, then double: 2(x − 3) = 2x − 6."
+          },
+          {
+            "id": "o2",
+            "label": "g⁻¹(x) = 2x + 6",
+            "correct": false,
+            "feedback": "That's 2(x + 3) — but g ADDED 3, so the inverse must SUBTRACT it before doubling: 2(x − 3) = 2x − 6."
+          },
+          {
+            "id": "o3",
+            "label": "g⁻¹(x) = x/2 − 3",
+            "correct": false,
+            "feedback": "That just flips g's signs but keeps its operations — the inverse swaps ÷2 for ×2 as well: 2x − 6."
+          },
+          {
+            "id": "o4",
+            "label": "g⁻¹(x) = (x − 3)/2",
+            "correct": false,
+            "feedback": "Subtracting 3 is right, but g HALVED its input, so the undo must DOUBLE: 2(x − 3), not divide again."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-rule__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Rule, then value.",
+      "conceptTag": "ft-inverse-rule",
+      "explanationVariants": [
+        "g⁻¹(7) = 2 × 7 − 6 = 8. Check it forward: g(8) = 8/2 + 3 = 7. ✓",
+        "Plug 7 into 2x − 6: 14 − 6 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using g⁻¹(x) = 2x − 6, find g⁻¹(7).",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6.5,
+            "feedback": "6.5 is g(7) = 7/2 + 3 — that's forward. The inverse rule gives 2 × 7 − 6 = 8."
+          },
+          {
+            "value": 20,
+            "feedback": "That's 2 × 7 + 6 — the rule SUBTRACTS 6: 14 − 6 = 8."
+          }
+        ],
+        "fallbackFeedback": "2 × 7 − 6 = 8; and g(8) = 4 + 3 = 7 confirms it."
+      },
+      "variant": {
+        "gen": "fn-inverse-rule"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Rule from scratch.",
+      "conceptTag": "ft-inverse-rule",
+      "explanationVariants": [
+        "f⁻¹(x) = (x − 2)/5, so f⁻¹(17) = 15/5 = 3. Check: f(3) = 15 + 2 = 17. ✓",
+        "Undo in reverse: strip the +2 (17 − 2 = 15), then the ×5 (15 ÷ 5 = 3)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 5x + 2. Find f⁻¹(17).",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 87,
+            "feedback": "87 is f(17) = 5 × 17 + 2 — forward. Reverse the pipeline instead: (17 − 2)/5 = 3."
+          },
+          {
+            "value": 75,
+            "feedback": "After 17 − 2 = 15, undo the ×5 by DIVIDING: 15 ÷ 5 = 3, not 15 × 5."
+          }
+        ],
+        "fallbackFeedback": "(17 − 2)/5 = 15/5 = 3."
+      },
+      "hints": [
+        "Write f's pipeline: ×5, then +2. The inverse reverses it.",
+        "Undo the +2 first: 17 − 2 = 15.",
+        "Now undo the ×5: 15 ÷ 5 = 3."
+      ],
+      "variant": {
+        "gen": "fn-inverse-rule",
+        "form": "undoPipeline"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two routes to f⁻¹: reverse the pipeline, or swap x and y and solve.",
+      "takeaways": [
+        "Undo operations in reverse order — last step of f is undone first.",
+        "Swap and solve: y = f(x) → x = f(y) → solve for y.",
+        "Always check: feeding f⁻¹'s answer back through f should return the original x."
+      ],
+      "teaser": "Next: what inverses look like on a GRAPH — and a test for when one exists."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-inverse-rule",
+      "concept": {
+        "id": "rem-ft0502-c",
+        "kind": "concept",
+        "body": "To invert a one-step rule, apply the opposite operation: f(x) = 4x multiplies by 4, so f⁻¹ divides by 4."
+      },
+      "check": {
+        "id": "rem-ft0502-k",
+        "kind": "check",
+        "body": "Invert one step.",
+        "conceptTag": "ft-inverse-rule",
+        "explanationVariants": [
+          "f multiplies by 4, so the undo divides: f⁻¹(x) = x/4.",
+          "Swap and solve: x = 4y gives y = x/4."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the inverse of f(x) = 4x?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "f⁻¹(x) = x/4",
+              "correct": true,
+              "feedback": "Right — division undoes multiplication."
+            },
+            {
+              "id": "o2",
+              "label": "f⁻¹(x) = 4/x",
+              "correct": false,
+              "feedback": "That's a reciprocal-style rule — undoing ×4 means ÷4: x/4."
+            },
+            {
+              "id": "o3",
+              "label": "f⁻¹(x) = x − 4",
+              "correct": false,
+              "feedback": "Subtraction undoes ADDITION; f multiplied, so divide: x/4."
+            },
+            {
+              "id": "o4",
+              "label": "f⁻¹(x) = −4x",
+              "correct": false,
+              "feedback": "Negating doesn't undo a ×4 — check: f(−4·1) = −16, not 1. Divide instead: x/4."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "id": "pp-03-02",
+  "slug": "multiplication-and-de-moivre",
+  "title": "Multiply by Rotating: De Moivre",
+  "courseId": "polar-parametric",
+  "chapterId": "ch3-complex-polar",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Polar form's payoff: to MULTIPLY two complex numbers, **multiply the moduli and ADD the arguments**:\n\nr₁(cos α + i sin α) · r₂(cos β + i sin β) = r₁r₂(cos(α+β) + i sin(α+β)).\n\nThe addition of angles is exactly the sum formulas (recall) hiding inside. Multiplication is a rotate-and-scale.",
+      "figure": "pp-demoivre-rotate"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "De Moivre, one quarter turn at a time.",
+      "widget": {
+        "type": "argandExplore",
+        "mode": "multiply",
+        "mulRe": 0,
+        "mulIm": 1,
+        "targetRe": -4,
+        "targetIm": 3,
+        "reStart": 0,
+        "imStart": 0,
+        "gridMax": 5,
+        "prompt": "w = i, which rotates by 90°. Find the z whose product lands on −4 + 3i.",
+        "successFeedback": "z = 3 + 4i, and multiplying by i has swung it a quarter turn to −4 + 3i — same length 5, angle up by 90°. De Moivre's theorem is just this observation, repeated: multiply the lengths, ADD the angles. Powers become repeated rotations.",
+        "realFeedback": "The product is missing −4 on the real axis. Turning an arrow 90° anticlockwise sends (a, b) to (−b, a).",
+        "imagFeedback": "The real part is right but the height is wrong. A quarter turn sends (a, b) to (−b, a) exactly."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move complex-number components and connect algebraic multiplication with geometric scale and rotation.",
+        "invariants": [
+          "complex-multiplication-combines-scale-and-rotation",
+          "components-encode-position"
+        ],
+        "misconceptions": [
+          "multiply-components-separately",
+          "imaginary-axis-is-not-spatial"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "polar-parametric-argandExplore",
+        "delayed": false
+      },
+      "conceptTag": "pp-de-moivre",
+      "predict": {
+        "prompt": "Multiplying by i turns a point through 90°. So the z whose product with i is −4 + 3i must have modulus…",
+        "options": [
+          {
+            "id": "five",
+            "label": "5 — the same as −4 + 3i"
+          },
+          {
+            "id": "twentyfive",
+            "label": "25"
+          },
+          {
+            "id": "one",
+            "label": "1"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "5. |i| = 1, so multiplying by i cannot change any length — it only turns. That is De Moivre in a single move: moduli multiply and arguments add, so a factor of modulus 1 is pure rotation and nothing else."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "And the new angle.",
+      "conceptTag": "pp-de-moivre",
+      "explanationVariants": [
+        "Arguments ADD: 20° + 40° = 60°. The product is 6(cos 60° + i sin 60°).",
+        "Rotate by the sum of the angles: 60°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same product. What is the new argument, in degrees?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 800,
+            "feedback": "800 = 20·40 MULTIPLIES the angles. Arguments ADD: 20 + 40 = 60°."
+          },
+          {
+            "value": 20,
+            "feedback": "20° is just the first angle. Add the second: 20 + 40 = 60°."
+          }
+        ],
+        "fallbackFeedback": "Arguments add: 20° + 40° = 60°."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-de-moivre__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Multiplying z by itself n times **repeats** the rotate-and-scale — that's **De Moivre's Theorem**:\n\n[r(cos θ + i sin θ)]ⁿ = rⁿ(cos nθ + i sin nθ).\n\nRaise the modulus to the n; multiply the angle by n. Powers that would be brutal in rectangular form become one line.",
+      "figure": "pp-demoivre-power"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply De Moivre.",
+      "conceptTag": "pp-de-moivre",
+      "explanationVariants": [
+        "(1 + i)⁴: r = √2, θ = π/4. Modulus (√2)⁴ = 4; angle 4·π/4 = π. So 4(cos π + i sin π) = 4(−1) = −4.",
+        "Rectangular check: (1+i)² = 2i, then (2i)² = −4 — De Moivre agrees."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use De Moivre to find (1 + i)⁴. (It is a real number; enter it.)",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "The angle 4·π/4 = π lands on the NEGATIVE real axis: 4(cos π) = −4, not +4."
+          },
+          {
+            "value": 16,
+            "feedback": "16 = (√2)⁸ squares the exponent. Modulus is (√2)⁴ = 4, and cos π = −1: −4."
+          }
+        ],
+        "fallbackFeedback": "(√2)⁴(cos π + i sin π) = 4(−1) = −4."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-de-moivre__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A cube.",
+      "conceptTag": "pp-de-moivre",
+      "explanationVariants": [
+        "(1 + i√3)³: r = 2, θ = π/3. Modulus 2³ = 8; angle 3·π/3 = π. So 8(cos π + i sin π) = −8.",
+        "Rectangular check: (1+i√3)² = −2+2i√3, times (1+i√3) = −8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find (1 + i√3)³. (Real number.)",
+        "answer": -8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "Angle 3·π/3 = π gives cos π = −1: the result is −8, not +8."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the modulus r, not r³. Modulus cubed = 8, times cos π = −1: −8."
+          }
+        ],
+        "fallbackFeedback": "2³(cos π + i sin π) = 8(−1) = −8."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-de-moivre__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A higher power.",
+      "conceptTag": "pp-de-moivre",
+      "explanationVariants": [
+        "(1 + i)⁸: r = √2, θ = π/4. Modulus (√2)⁸ = 16; angle 8·π/4 = 2π ≡ 0. So 16(cos 0 + i sin 0) = 16.",
+        "A full 2π rotation returns to the positive real axis: 16."
+      ],
+      "hints": [
+        "r = √2, θ = π/4.",
+        "Modulus: (√2)⁸. Angle: 8·π/4.",
+        "8·π/4 = 2π, a full turn back to cos 0 = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find (1 + i)⁸. (Real number.)",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -16,
+            "feedback": "Angle 8·π/4 = 2π ≡ 0, NOT π. cos 0 = +1, so +16."
+          },
+          {
+            "value": 256,
+            "feedback": "256 = (√2)¹⁶ doubles the exponent. (√2)⁸ = 16, times cos 2π = 1: +16."
+          }
+        ],
+        "fallbackFeedback": "(√2)⁸(cos 2π + i sin 2π) = 16(1) = 16."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-de-moivre__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Powers are just spinning.",
+      "takeaways": [
+        "Multiply: multiply moduli, add arguments.",
+        "De Moivre: [r(cosθ + i sinθ)]ⁿ = rⁿ(cos nθ + i sin nθ).",
+        "Track where nθ lands on the circle to get the sign right."
+      ],
+      "teaser": "Final complex lesson: running De Moivre BACKWARDS to find roots."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pp-de-moivre",
+      "concept": {
+        "id": "rem-pp0302-c",
+        "kind": "concept",
+        "body": "Multiply: moduli multiply, arguments add. Power n: modulus to the n, argument times n (De Moivre). Reduce the final angle mod 2π to read the value."
+      },
+      "check": {
+        "id": "rem-pp0302-k",
+        "kind": "check",
+        "body": "One power modulus.",
+        "conceptTag": "pp-de-moivre",
+        "explanationVariants": [
+          "[2(cos θ + i sin θ)]³ has modulus 2³ = 8.",
+          "The modulus cubes: 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The modulus of [2(cos θ + i sin θ)]³ is:",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 = 2·3 MULTIPLIES instead of powering. De Moivre raises: 2³ = 8."
+            },
+            {
+              "value": 2,
+              "feedback": "That's the base modulus. Cubed: 2³ = 8."
+            }
+          ],
+          "fallbackFeedback": "2³ = 8."
+        }
+      }
+    }
+  ]
+}

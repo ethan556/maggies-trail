@@ -1,0 +1,226 @@
+{
+ "id": "lc-05-03",
+ "slug": "limits-everywhere",
+ "title": "Limits Everywhere: Series & the Road Ahead",
+ "courseId": "limits-continuity",
+ "chapterId": "ch5-derivative",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "One idea has run through this whole course — the **limit** — and it reaches beyond derivatives. An **infinite sum** is itself a limit: the value of the **partial sums** as you add more and more terms. Adding forever is really asking, 'what limit do the running totals approach?'",
+   "figure": "lc-partial-sums"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "A running total.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Add 1/2 + 1/4 + 1/8 + 1/16. What is this partial sum? (Decimal.)",
+    "answer": 0.9375,
+    "tolerance": 0.0001,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "That's the LIMIT of the infinite sum. Four terms give 15/16 = 0.9375, just short of 1."
+     },
+     {
+      "value": 0.5,
+      "feedback": "Add all four: 1/2 + 1/4 + 1/8 + 1/16 = 15/16 = 0.9375."
+     }
+    ],
+    "fallbackFeedback": "1/2 + 1/4 + 1/8 + 1/16 = 15/16 = 0.9375."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The limit of the totals.",
+   "conceptTag": "lc-series-limit",
+   "explanationVariants": [
+    "The partial sums are 1/2, 3/4, 7/8, 15/16, … = 1 − (1/2)ⁿ, which approaches 1 as n → ∞. So the infinite sum equals 1.",
+    "Each total closes half the remaining gap to 1; the limit is exactly 1."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The partial sums 1/2, 3/4, 7/8, 15/16, … approach what limit (the value of 1/2 + 1/4 + 1/8 + ⋯)?",
+    "answer": 1,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0.9375,
+      "feedback": "0.9375 = 15/16 is just the 4th partial sum. The LIMIT they approach is 1."
+     },
+     {
+      "value": 2,
+      "feedback": "The totals stay below 1 and close in on it: the limit is 1, not 2."
+     }
+    ],
+    "fallbackFeedback": "1 − (1/2)ⁿ → 1 as n → ∞."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-series-limit__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "This is exactly the infinite geometric series from earlier (recall the sum a/(1 − r) for |r| < 1). What that formula computes IS a limit of partial sums. For 1/2 + 1/4 + ⋯: a = 1/2, r = 1/2, so a/(1 − r) = (1/2)/(1/2) = 1 — the same 1 the totals crept toward.",
+   "figure": "lc-infinite-geometric"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Sum via the formula.",
+   "conceptTag": "lc-series-limit",
+   "explanationVariants": [
+    "For 1/3 + 1/9 + 1/27 + ⋯: a = 1/3, r = 1/3, so a/(1 − r) = (1/3)/(2/3) = 1/2.",
+    "The geometric sum is (1/3)/(1 − 1/3) = 1/2 — the limit of its partial sums."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Find 1/3 + 1/9 + 1/27 + ⋯ using a/(1 − r) with a = 1/3, r = 1/3. (Decimal.)",
+    "answer": 0.5,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 0.33,
+      "feedback": "0.33 = 1/3 is only the FIRST term. The full sum is (1/3)/(2/3) = 1/2."
+     },
+     {
+      "value": 1,
+      "feedback": "a/(1 − r) = (1/3)/(1 − 1/3) = (1/3)/(2/3) = 1/2, not 1."
+     }
+    ],
+    "fallbackFeedback": "(1/3)/(2/3) = 1/2."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-series-limit__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Why 0.999… = 1.",
+   "conceptTag": "lc-series-limit",
+   "explanationVariants": [
+    "0.999… = 9/10 + 9/100 + ⋯ = (9/10)/(1 − 1/10) = (9/10)/(9/10) = 1. The endless 9s are a series whose limit is exactly 1.",
+    "As a geometric series it sums to 1 — 0.999… and 1 are the same number."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "The repeating decimal 0.999… equals which number exactly?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "exactly 1",
+      "correct": true,
+      "feedback": "Right — as a geometric series (9/10)/(1 − 1/10) = 1; the partial sums' limit is 1."
+     },
+     {
+      "id": "o2",
+      "label": "just below 1",
+      "feedback": "There's no gap: the series sums exactly to 1. 0.999… = 1."
+     },
+     {
+      "id": "o3",
+      "label": "undefined",
+      "feedback": "It's a convergent geometric series with limit exactly 1."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-series-limit__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "One more infinite sum.",
+   "conceptTag": "lc-series-limit",
+   "explanationVariants": [
+    "For 3/4 + 3/16 + 3/64 + ⋯: a = 3/4, r = 1/4, so a/(1 − r) = (3/4)/(3/4) = 1.",
+    "With a = 3/4 and r = 1/4, the sum is (3/4)/(1 − 1/4) = 1."
+   ],
+   "hints": [
+    "Identify a and r: first term 3/4, ratio 1/4.",
+    "Sum = a/(1 − r) = (3/4)/(1 − 1/4).",
+    "(3/4)/(3/4)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Find 3/4 + 3/16 + 3/64 + ⋯ using a/(1 − r) with a = 3/4, r = 1/4.",
+    "answer": 1,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 0.75,
+      "feedback": "0.75 = 3/4 is the first term only. The sum is (3/4)/(3/4) = 1."
+     },
+     {
+      "value": 3,
+      "feedback": "a/(1 − r) = (3/4)/(1 − 1/4) = (3/4)/(3/4) = 1, not 3."
+     }
+    ],
+    "fallbackFeedback": "(3/4)/(3/4) = 1."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-series-limit__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The doorway to calculus.",
+   "takeaways": [
+    "An infinite sum is the limit of its partial sums.",
+    "The geometric formula a/(1 − r) computes that limit (recall series).",
+    "The same limit machine powers derivatives, infinite sums, and — ahead in calculus — areas under curves; you've built the doorway."
+   ],
+   "teaser": "Course and Precalculus complete — calculus awaits."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lc-series-limit",
+   "concept": {
+    "id": "rem-lc0503-c",
+    "kind": "concept",
+    "body": "An infinite sum is the limit of its partial sums. A geometric series sums to a/(1−r) for |r|<1 — that value IS the limit the running totals approach."
+   },
+   "check": {
+    "id": "rem-lc0503-k",
+    "kind": "check",
+    "body": "One geometric sum.",
+    "conceptTag": "lc-series-limit",
+    "explanationVariants": [
+     "1/2 + 1/4 + 1/8 + ⋯: a = 1/2, r = 1/2, sum = (1/2)/(1/2) = 1.",
+     "The classic halving series sums to 1."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Find 1/2 + 1/4 + 1/8 + ⋯ using a/(1 − r) with a = 1/2, r = 1/2.",
+     "answer": 1,
+     "tolerance": 0.005,
+     "commonErrors": [
+      {
+       "value": 0.5,
+       "feedback": "0.5 is the first term. The full sum is (1/2)/(1 − 1/2) = 1."
+      },
+      {
+       "value": 2,
+       "feedback": "Check the division: a/(1 − r) = (1/2)/(1/2) = 1, not 2."
+      }
+     ],
+     "fallbackFeedback": "(1/2)/(1/2) = 1."
+    }
+   }
+  }
+ ]
+}

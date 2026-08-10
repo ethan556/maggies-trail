@@ -1,0 +1,319 @@
+{
+  "id": "pq-04-03",
+  "slug": "kites",
+  "title": "Kites",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch4-trapezoids-kites",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-kite",
+      "concept": {
+        "id": "rem-pq-kite-c",
+        "kind": "concept",
+        "body": "A kite has two pairs of congruent consecutive sides (top pair, bottom pair). Its symmetry diagonal gives three theorems: the diagonals are perpendicular; the symmetry diagonal bisects the cross diagonal (one direction only — unlike a parallelogram's mutual bisection); the two non-vertex angles are congruent. Area = ½·d₁·d₂ from the perpendicular diagonals."
+      },
+      "check": {
+        "id": "rem-pq-kite-k",
+        "kind": "check",
+        "body": "Which diagonal fact?",
+        "conceptTag": "pq-kite",
+        "explanationVariants": [
+          "Only the perpendicularity is promised; MUTUAL bisection belongs to parallelograms, and a kite is generally not one.",
+          "Kite diagonals: perpendicular yes, mutually bisecting no (one-way only)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A kite's diagonals always:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Meet at right angles",
+              "correct": true,
+              "feedback": "Perpendicularity is the kite's guaranteed diagonal fact — the fold along the symmetry axis forces it."
+            },
+            {
+              "id": "o2",
+              "label": "Bisect each other",
+              "correct": false,
+              "feedback": "Only ONE-way: the axis bisects the cross diagonal, but not vice versa. Mutual bisection is parallelogram territory."
+            },
+            {
+              "id": "o3",
+              "label": "Are congruent",
+              "correct": false,
+              "feedback": "The spine and cross diagonal usually differ — congruent diagonals belong to rectangles and isosceles trapezoids."
+            },
+            {
+              "id": "o4",
+              "label": "Are parallel to the sides",
+              "correct": false,
+              "feedback": "Diagonals cross the interior corner-to-corner; they can't parallel the sides they connect."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **kite** has two pairs of **congruent CONSECUTIVE sides**: the top pair shares the apex, the bottom pair shares the tail. (All four equal still counts — that's the rhombus, a kite that's also a parallelogram.) No parallel sides required. Its symmetry axis runs along one diagonal, and that symmetry is where every kite theorem comes from.",
+      "figure": "kite-diagonals"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Kite vs parallelogram.",
+      "predict": {
+        "prompt": "A kite and a parallelogram both have two pairs of equal sides. Where do the equal sides sit in each?",
+        "options": [
+          {
+            "id": "adjacent",
+            "label": "Kite: the equal sides are ADJACENT (they share a corner). Parallelogram: OPPOSITE."
+          },
+          {
+            "id": "opposite",
+            "label": "The other way round — a kite pairs opposite sides"
+          },
+          {
+            "id": "same",
+            "label": "Both pair them the same way; the difference is only the angles"
+          }
+        ],
+        "outcomeId": "adjacent",
+        "reveal": "Adjacent. That single difference is the whole distinction — place the corner so the two equal sides meet at a vertex and the shape reads as a kite; pair them across from each other instead and it reads as a parallelogram."
+      },
+      "widget": {
+        "type": "quadDrag",
+        "prompt": "Pinned at (0, 0), (4, 3) and (8, 0). Place the fourth corner so the equal sides sit ADJACENT — a kite.",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            8,
+            0
+          ]
+        ],
+        "targetX": 4,
+        "targetY": 8,
+        "startX": 7,
+        "startY": 6,
+        "gridMax": 10,
+        "targetName": "a kite",
+        "successFeedback": "A kite. The two short sides (each 5) share the corner at (4, 3), and the two long sides share the corner you just placed — equal pairs ADJACENT, not opposite. That is the one thing separating this from a parallelogram.",
+        "sideFeedback": "The equal sides here do not share a corner, so the shape has no name beyond \"quadrilateral.\" Move the corner until two sides that MEET are the same length.",
+        "angleFeedback": "Close — there are equal sides, but they are sitting opposite each other, which is a parallelogram's signature. A kite needs them adjacent."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Fold a kite along its symmetry diagonal and the two halves match — that fold proves the theorems: the **diagonals are perpendicular**; the symmetry diagonal **bisects the other diagonal** (one-way — not mutual!); and the two angles between UNEQUAL sides (the non-vertex angles) are **congruent**.",
+      "figure": "pq-kite-symmetry"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One-way bisection.",
+      "conceptTag": "pq-kite",
+      "explanationVariants": [
+        "The symmetry diagonal bisects the cross diagonal, so each half is 18 ÷ 2 = 9.",
+        "The fold matches the two halves of the CROSS diagonal: 9 each."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A kite's cross diagonal (the one perpendicular to the symmetry axis) measures 18. The symmetry diagonal cuts it into pieces of what length?",
+        "answer": 9,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "18 keeps it whole — the symmetry axis BISECTS the cross diagonal: 9 + 9."
+          },
+          {
+            "value": 6,
+            "feedback": "6 = 18 ÷ 3 thirds it — bisection halves: 9."
+          },
+          {
+            "value": 4.5,
+            "feedback": "4.5 = 18 ÷ 4 quarters it — one cut, two equal halves: 9."
+          }
+        ],
+        "fallbackFeedback": "18 ÷ 2 = 9 per half."
+      },
+      "variant": {
+        "gen": "pq-kite"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The congruent pair.",
+      "conceptTag": "pq-kite",
+      "explanationVariants": [
+        "The non-vertex angles (between one long and one short side) are congruent: (360 − 100 − 60)/2 = 100° each.",
+        "Quadrilateral sum 360, minus the two axis angles, split equally: 100°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A kite's two angles ON the symmetry axis measure 100° and 60°. Find each of the other two angles (in degrees).",
+        "answer": 100,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 200,
+            "feedback": "200 = 360 − 100 − 60 is BOTH remaining angles together — they're congruent, so halve: 100° each."
+          },
+          {
+            "value": 80,
+            "feedback": "80° supplements one axis angle — kites don't run on supplements (no parallel sides). Use the 360 sum: 100°."
+          },
+          {
+            "value": 130,
+            "feedback": "130 = (360 − 100)/2 subtracts only ONE axis angle before halving — remove both: (360 − 100 − 60)/2 = 100°."
+          }
+        ],
+        "fallbackFeedback": "(360 − 100 − 60)/2 = 100° each."
+      },
+      "variant": {
+        "gen": "pq-kite",
+        "form": "offAxisAngles"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Perpendicular diagonals hand kites (and rhombi — which are the kites that went parallelogram) a clean **area formula: Area = ½·d₁·d₂**. Why: the diagonals box the kite into a d₁-by-d₂ rectangle, and the kite fills exactly half of it.",
+      "figure": "pq-kite-perp"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Half the diagonal box.",
+      "conceptTag": "pq-kite",
+      "explanationVariants": [
+        "Area = ½ × 8 × 6 = 24.",
+        "Half the product of the diagonals: 48/2 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A kite has diagonals 8 and 6. Its area = ?",
+        "answer": 24,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "48 = 8 × 6 is the bounding RECTANGLE — the kite fills half of it: 24."
+          },
+          {
+            "value": 14,
+            "feedback": "14 = 8 + 6 adds lengths — area needs the half-PRODUCT: ½ × 48 = 24."
+          },
+          {
+            "value": 12,
+            "feedback": "12 = ½ × 8 × 3 halves a diagonal too — the formula halves the PRODUCT once: 24."
+          }
+        ],
+        "fallbackFeedback": "½ × 8 × 6 = 24."
+      },
+      "variant": {
+        "gen": "pq-kite",
+        "form": "kiteArea"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Shared machinery.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does Area = ½·d₁·d₂ work for rhombi too?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A rhombus IS a kite (both consecutive pairs congruent — all four sides), and its diagonals are also perpendicular",
+            "correct": true,
+            "feedback": "The formula only needs perpendicular diagonals; the rhombus qualifies through its kite nature, with mutual bisection as a bonus."
+          },
+          {
+            "id": "o2",
+            "label": "It doesn't — rhombi need base × height only",
+            "correct": false,
+            "feedback": "Both work: perpendicular diagonals validate ½·d₁·d₂ for any rhombus. (Try 6-and-8 diagonals: 24 either way.)"
+          },
+          {
+            "id": "o3",
+            "label": "Because rhombi have congruent diagonals",
+            "correct": false,
+            "feedback": "Rhombus diagonals are generally UNEQUAL (that's the rectangle's trait) — it's their PERPENDICULARITY that powers the formula."
+          },
+          {
+            "id": "o4",
+            "label": "Coincidence of specific numbers",
+            "correct": false,
+            "feedback": "It's structural: perpendicular diagonals box any such quadrilateral into a rectangle it half-fills."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Design the kite.",
+      "conceptTag": "pq-kite",
+      "hints": [
+        "Area = ½·d₁·d₂ with the area and one diagonal known — solve for the other.",
+        "60 = ½ × 12 × d₂ = 6·d₂.",
+        "d₂ = 60 ÷ 6."
+      ],
+      "explanationVariants": [
+        "60 = ½ × 12 × d₂ → d₂ = 60/6 = 10.",
+        "Half of 12 is 6; the other diagonal must supply 60/6 = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A kite must enclose 60 cm² of fabric, and one diagonal (the spine) is 12 cm. How long must the cross diagonal be?",
+        "answer": 10,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 = 60 ÷ 12 forgets the ½ — with it, the divisor is 6, not 12: d₂ = 10."
+          },
+          {
+            "value": 2.5,
+            "feedback": "2.5 = 60 ÷ 24 doubles 12 instead of halving the product's effect — 60 ÷ (½ × 12) = 10."
+          },
+          {
+            "value": 360,
+            "feedback": "360 = ½ × 60 × 12 plugs the AREA in as a diagonal — solve for d₂ instead: 60 ÷ 6 = 10."
+          }
+        ],
+        "fallbackFeedback": "d₂ = 60 ÷ (½ × 12) = 10 cm."
+      },
+      "variant": {
+        "gen": "pq-kite",
+        "form": "solveDiagonal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Folded, not spun.",
+      "takeaways": [
+        "Kite: two pairs of congruent CONSECUTIVE sides; symmetry along one diagonal.",
+        "Diagonals perpendicular; the axis bisects the cross diagonal (one-way); non-vertex angles congruent.",
+        "Area = ½·d₁·d₂ — half the diagonal bounding box (rhombi included)."
+      ],
+      "teaser": "Final chapter: proving parallelogram-hood and placing every family on one map."
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+ "id": "re-05-03",
+ "slug": "radical-models",
+ "title": "Radical Models",
+ "courseId": "radical-functions",
+ "chapterId": "ch5-rational-exponent-equations-and-models",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Radicals model the real world whenever a quantity grows with a **square root**. Crash investigators use s = √(24d): skid length d feet predicts speed s mph. Skids of d = 6: s = √144 = **12 mph**. Quadruple the skid, only double the speed — that's √-growth.",
+   "figure": "re-real-world"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Read a longer skid.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using s = √(24d), what speed (mph) does a 24-foot skid indicate?",
+    "answer": 24,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 576,
+      "feedback": "24 · 24 = 576 is INSIDE the root — the speed is √576 = 24 mph."
+     },
+     {
+      "value": 12,
+      "feedback": "√(24 · 24) = √576 = 24 — don't halve; compute the product first."
+     }
+    ],
+    "fallbackFeedback": "s = √(24 · 24) = √576 = 24 mph."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Falling objects run on the same math: dropping from height h feet takes t = √(h/16) = **√h/4 seconds**. From h = 64: t = 8/4 = 2 s. To ask 'what height gives a chosen time?', **solve the radical equation** — Chapter 4's skill, now employed.",
+   "figure": "re-falling-objects"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Evaluate the drop.",
+   "conceptTag": "re-models",
+   "explanationVariants": [
+    "t = √144/4 = 12/4 = 3 seconds.",
+    "Root first (√144 = 12), then divide by 4."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Using t = √h/4, how many seconds does a drop from h = 144 feet take?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "h",
+      "label": "the height",
+      "value": 144
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "sqrt",
+      "arg": {
+       "op": "const",
+       "id": "h"
+      }
+     },
+     "right": {
+      "op": "lit",
+      "value": 4
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 36,
+      "feedback": "√144 = 12 comes FIRST, then ÷ 4: t = 3 (144/4 = 36 skips the root)."
+     },
+     {
+      "value": 6,
+      "feedback": "√144 = 12, not 24: t = 12/4 = 3."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "t = 12/4 = 3 s.",
+    "successFeedback": "t = 12/4 = 3 s."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-models__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Solve the model backward.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A drop takes t = 5 seconds. Solve 5 = √h/4 for the height h (in feet).",
+    "answer": 400,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 100,
+      "feedback": "Multiply by 4 BEFORE squaring: √h = 20, so h = 400 (squaring the 5 first loses the 4)."
+     },
+     {
+      "value": 20,
+      "feedback": "20 is √h — square it: h = 400."
+     }
+    ],
+    "fallbackFeedback": "√h = 20 → h = 400; check √400/4 = 5. ✓"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Backward through the skid formula.",
+   "conceptTag": "re-models",
+   "explanationVariants": [
+    "36 = √(24d) → 1296 = 24d → d = 54.",
+    "Square the speed, then divide by 24."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A car was going 36 mph. Solve 36 = √(24d) for the skid length d (in feet).",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "v",
+      "label": "the speed",
+      "value": 36
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "v"
+      },
+      "right": {
+       "op": "const",
+       "id": "v"
+      }
+     },
+     "right": {
+      "op": "lit",
+      "value": 24
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 1296,
+      "feedback": "1296 is 36² = 24d — divide by 24: d = 54."
+     },
+     {
+      "value": 1.5,
+      "feedback": "36/24 = 1.5 skips the squaring — square FIRST: 1296/24 = 54."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "36² = 1296 = 24d → d = 54.",
+    "successFeedback": "36² = 1296 = 24d → d = 54."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-models__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Interpret √-growth.",
+   "conceptTag": "re-models",
+   "explanationVariants": [
+    "s = √(24d): quadrupling d multiplies s by √4 = 2 — root growth dampens.",
+    "√(4d) pulls out √4: exactly a doubling."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In s = √(24d), what happens to the speed estimate when a skid is 4 TIMES as long?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "it doubles",
+      "correct": true,
+      "feedback": "Right — √(4d) = 2√d: quadrupled input, doubled output."
+     },
+     {
+      "id": "o2",
+      "label": "it quadruples",
+      "correct": false,
+      "feedback": "That's linear thinking — the root TAMES growth: ×4 inside becomes ×√4 = ×2 outside."
+     },
+     {
+      "id": "o3",
+      "label": "it goes up 4 mph",
+      "correct": false,
+      "feedback": "The change is a FACTOR (×2), not a fixed number of mph."
+     },
+     {
+      "id": "o4",
+      "label": "it halves",
+      "correct": false,
+      "feedback": "Longer skids mean HIGHER speeds — the factor is ×2, upward."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-models__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full model capstone.",
+   "conceptTag": "re-models",
+   "explanationVariants": [
+    "T = 2√L: solve 10 = 2√L → √L = 5 → L = 25.",
+    "Divide by 2 first, then square — Chapter 4's discipline verbatim."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A pendulum's period is modeled by T = 2√L (T in seconds, L in meters). Solve 10 = 2√L for L.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "t",
+      "label": "the period",
+      "value": 10
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "divide",
+      "left": {
+       "op": "const",
+       "id": "t"
+      },
+      "right": {
+       "op": "lit",
+       "value": 2
+      }
+     },
+     "right": {
+      "op": "divide",
+      "left": {
+       "op": "const",
+       "id": "t"
+      },
+      "right": {
+       "op": "lit",
+       "value": 2
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 100,
+      "feedback": "Divide by 2 BEFORE squaring: √L = 5, so L = 25 (squaring the 10 forgets the 2)."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is √L — one more move: square it, L = 25."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "√L = 5 → L = 25; check 2√25 = 10. ✓",
+    "successFeedback": "√L = 5 → L = 25; check 2√25 = 10. ✓"
+   },
+   "hints": [
+    "Isolate the radical: divide both sides by 2.",
+    "√L = 5.",
+    "Square: L = 25."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-models__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Radical formulas evaluate forward and solve backward — with Chapter 4's rules.",
+   "takeaways": [
+    "Evaluate root-first; solve isolate-then-square.",
+    "√-growth dampens: ×4 inside is only ×2 outside.",
+    "Real quantities keep the check honest — negative candidates rarely make sense."
+   ],
+   "teaser": "That completes Radical Functions & Equations — rational functions come next in Algebra 2."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-models",
+   "concept": {
+    "id": "rem-re0503-c",
+    "kind": "concept",
+    "body": "Forward evaluation is substitution: s = √(24d) at d = 6 means s = √(24 · 6)."
+   },
+   "check": {
+    "id": "rem-re0503-k",
+    "kind": "check",
+    "body": "Compute inside first.",
+    "conceptTag": "re-models",
+    "explanationVariants": [
+     "24 · 6 = 144, and √144 = 12 mph.",
+     "Multiply under the root before rooting."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Using s = √(24d), what is s when d = 6?",
+     "answer": 12,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 144,
+       "feedback": "144 is still under the root — take it: √144 = 12."
+      },
+      {
+       "value": 4,
+       "feedback": "24 · 6 = 144 (not 16): s = √144 = 12."
+      }
+     ],
+     "fallbackFeedback": "s = √144 = 12."
+    }
+   }
+  }
+ ]
+}

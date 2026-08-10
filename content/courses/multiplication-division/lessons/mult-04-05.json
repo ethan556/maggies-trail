@@ -1,0 +1,385 @@
+{
+  "id": "mult-04-05",
+  "slug": "does-it-make-sense",
+  "title": "Does the Answer Make Sense?",
+  "courseId": "multiplication-division",
+  "chapterId": "ch4-word-problems",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The last power-up: **sense-checking**. Before trusting any answer, ask if it's the right SIZE. Sharing makes numbers smaller. Multiplying by groups bigger than 1 makes them bigger. A share can never beat the pile it came from. Wrong size = wrong operation, guaranteed.",
+      "figure": "mult3-estimate"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Bust the impossible answers on sight — no computing allowed.",
+      "conceptTag": "reasonableness",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each claim: could it make sense, or can't it possibly be right?",
+        "buckets": [
+          {
+            "id": "ok",
+            "label": "Makes sense",
+            "icon": "👍"
+          },
+          {
+            "id": "no",
+            "label": "Can't be right",
+            "icon": "🚨"
+          }
+        ],
+        "items": [
+          {
+            "id": "a1",
+            "label": "24 ÷ 4 = 96",
+            "bucketId": "no",
+            "feedback": "Sharing 24 four ways made it BIGGER? Splitting always shrinks — a share can't beat the pile."
+          },
+          {
+            "id": "a2",
+            "label": "24 ÷ 4 = 6",
+            "bucketId": "ok",
+            "feedback": "Smaller than 24, and four 6s rebuild the pile — right size, right shape."
+          },
+          {
+            "id": "a3",
+            "label": "5 × 6 = 11",
+            "bucketId": "no",
+            "feedback": "Five whole 6s can barely beat ONE 6? 11 is just 5 + 6 — an adding-sized answer for a multiplying job."
+          },
+          {
+            "id": "a4",
+            "label": "5 × 6 = 30",
+            "bucketId": "ok",
+            "feedback": "Five 6s should land well past 6 — 30 is multiplication-sized."
+          }
+        ],
+        "missFeedback": "Size test each claim: division answers shrink below the pile; multiplication answers grow well past one group.",
+        "successFeedback": "Busted on size alone — no arithmetic needed. That's the sense-check working."
+      },
+      "predict": {
+        "prompt": "24 ÷ 4 = 96 — before any math: can splitting 24 into groups give MORE than 24?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — sharing can't grow the pile"
+          },
+          {
+            "id": "some",
+            "label": "Yes, sometimes"
+          },
+          {
+            "id": "big",
+            "label": "Only with big divisors"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Splitting 24 among 4 groups leaves each group with less than the whole pile — 96 is four times too big (it's 24 × 4, the multiplication in disguise). A size check catches the flip before any computing starts."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Catch the slip WITHOUT redoing the math.",
+      "conceptTag": "reasonableness",
+      "explanationVariants": [
+        "A share can never be bigger than the pile — 32 kids per bus from only 28 kids is impossible on size alone.",
+        "Splitting 28 four ways must give less than 28. Seeing 32 means the operation went the wrong way."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Liam computes: \"28 kids share 4 buses equally — that's 32 kids per bus.\" Without redoing it, how do you KNOW he slipped?",
+        "options": [
+          {
+            "id": "a",
+            "label": "32 is bigger than all 28 kids — a share can't beat the pile",
+            "correct": true,
+            "feedback": "The size busts it instantly: splitting 28 can only give numbers under 28."
+          },
+          {
+            "id": "b",
+            "label": "Because 28 ÷ 4 is actually 7",
+            "feedback": "True — but that's redoing the problem. The size test rejects 32 in one glance, before any dividing."
+          },
+          {
+            "id": "c",
+            "label": "Because real buses hold about 50 kids",
+            "feedback": "Bus trivia won't catch math slips — plenty of wrong answers fit on a real bus. Compare the answer to the PILE instead."
+          },
+          {
+            "id": "d",
+            "label": "You can't know without recomputing",
+            "feedback": "You can! Any share bigger than the whole pile is impossible — that check costs zero arithmetic."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "reasonableness"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Second tool: **estimate with friendly numbers**. For 6 × 9, think 6 × 10 = 60 — the true answer sits just under it. If someone offers 15 (that's 6 + 9 in disguise), the estimate throws it out before you've computed a thing.",
+      "figure": "mult3-estimate"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pick the estimate that guards the answer.",
+      "conceptTag": "reasonableness",
+      "explanationVariants": [
+        "Round 9 up to 10: 6 × 10 = 60, so 6 × 9 lands a bit under 60 — at 54.",
+        "The estimate is a fence: real answers to 6 × 9 must live near 60, and 54 does."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rosa buys 6 packs of 9 cards. Which quick estimate tells her about how many cards to expect?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A bit less than 60 — think 6 × 10",
+            "correct": true,
+            "feedback": "Rounding 9 to 10 gives 60; six 9s sit just under it (54). Any offer far from 60 is busted."
+          },
+          {
+            "id": "b",
+            "label": "About 15 — think 6 + 9",
+            "feedback": "That's an ADDING-sized guess. Six whole packs of 9 stack far past 15 — estimates must match the operation's shape."
+          },
+          {
+            "id": "c",
+            "label": "More than 90",
+            "feedback": "90 would need ten packs of 9. Six packs can't reach past 6 × 10 = 60."
+          },
+          {
+            "id": "d",
+            "label": "Exactly 54 — no estimate needed",
+            "feedback": "54 is indeed exact — but the question asks for the quick GUARD. 6 × 10 = 60 is what confirms 54's size in one glance."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "reasonableness",
+        "form": "quickEstimate"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Train your size sense on a bigger pile.",
+      "conceptTag": "reasonableness",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "An art room has 18 boxes with 10 crayons in each. Slide to estimate the total crayons.",
+        "min": 5,
+        "max": 2000,
+        "start": 5,
+        "target": 180,
+        "acceptFactor": 2,
+        "unitLabel": "crayons",
+        "ticks": [
+          5,
+          50,
+          500,
+          2000
+        ],
+        "lowFeedback": "Too few — one box alone holds 10, and there are 18 boxes. Slide up.",
+        "highFeedback": "That's an art-supply warehouse! 18 tens land in the low hundreds — come back down.",
+        "successFeedback": "About 180 — 18 × 10 shifts 18 into 180. Your size sense is calibrated."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents reasonableness.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for reasonableness must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines reasonableness."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:reasonableness",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Third tool: **rebuild the total** from the answer.",
+      "conceptTag": "reasonableness",
+      "explanationVariants": [
+        "Rebuild: 7 boats × 5 riders = 35, plus the 1 left over = 36 — exactly the riders we started with. The answer fits.",
+        "groups × size + leftover must equal the total. 35 + 1 = 36 ✓, so Tia's claim survives the check."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "36 riders take boats that hold 5 each. Tia says: \"7 full boats, with 1 rider left over.\" What does the quick check say?",
+        "options": [
+          {
+            "id": "a",
+            "label": "It fits: 7 × 5 = 35, plus 1 leftover, rebuilds all 36",
+            "correct": true,
+            "feedback": "Rebuild test passed: 35 + 1 = 36 exactly. Groups × size + leftover = total is the strongest check there is."
+          },
+          {
+            "id": "b",
+            "label": "Wrong — leftovers aren't allowed in math",
+            "feedback": "Leftovers are perfectly legal — piles don't always split evenly. The test is whether the pieces rebuild the total. They do."
+          },
+          {
+            "id": "c",
+            "label": "Wrong — 36 isn't in the 5s table, so 7 boats can't be right",
+            "feedback": "36 missing from the 5s table is exactly WHY one rider is left over. Rebuild instead: 35 + 1 = 36 ✓."
+          },
+          {
+            "id": "d",
+            "label": "You can't check this without a calculator",
+            "feedback": "One times fact does it: 7 × 5 = 35, one more makes 36. The rebuild check runs entirely in your head."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "reasonableness",
+        "form": "rebuildTest"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller flower stand, before the florist's tulips.",
+      "conceptTag": "reasonableness",
+      "explanationVariants": [
+        "3 bunches of 8 tulips is 3×8=24. Selling 5 leaves 24−5=19.",
+        "Multiply for the exact total first (3×8=24), then subtract what's sold (24−5=19)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A florist has 3 bunches of 8 tulips. She counts exactly and sells 5 tulips. Exactly how many tulips remain?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the full exact count (3×8) before any were sold — subtract the 5 she sold: 24−5=19."
+          },
+          {
+            "value": 9,
+            "feedback": "9 comes from subtracting before multiplying (8−5=3, then ×3) — multiply for the full total first (3×8=24), THEN subtract what sold: 24−5=19."
+          }
+        ],
+        "fallbackFeedback": "Multiply for the exact total first (3×8=24), then subtract what was sold (24−5=19)."
+      },
+      "variant": {
+        "gen": "reasonableness",
+        "form": "exactAfterSale"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Estimates guard; exact numbers decide.",
+      "conceptTag": "reasonableness",
+      "hints": [
+        "Two jobs: the estimate (about 40) only CHECKS the size. Selling needs the exact count first.",
+        "Exact count: 4 × 9 — use the nines pattern. Digits will add to 9.",
+        "36 tulips exactly; 12 of them sell."
+      ],
+      "explanationVariants": [
+        "Exact first: 4 × 9 = 36 (just under the 4 × 10 = 40 estimate ✓). Then 36 − 12 = 24 remain.",
+        "The estimate 40 confirms 36 is the right size; the sale leaves 36 − 12 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A florist has 4 bunches of 9 tulips. She estimates \"about 4 × 10 = 40.\" Then she counts exactly and sells 12 tulips. Exactly how many tulips remain?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "tulips",
+        "commonErrors": [
+          {
+            "value": 28,
+            "feedback": "28 subtracts the sale from the ESTIMATE (40 − 12). Estimates only guard the size — exact work needs the exact count: 4 × 9."
+          },
+          {
+            "value": 36,
+            "feedback": "36 is the exact count — and it passes the estimate's size check! But 12 tulips then sell. Subtract them."
+          },
+          {
+            "value": 48,
+            "feedback": "48 ADDS the sold tulips. Sold flowers leave the shop — the second step subtracts."
+          }
+        ],
+        "fallbackFeedback": "Exact count first (4 × 9, a nines fact), sense-check it against 40, then subtract the 12 sold."
+      },
+      "variant": {
+        "gen": "reasonableness",
+        "form": "estimateThenExact"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "No bad answer gets past you now.",
+      "takeaways": [
+        "Size test: shares shrink below the pile; products grow past one group.",
+        "Estimate with friendly numbers to fence in the true answer.",
+        "Rebuild to verify: groups × size + leftover must equal the total."
+      ],
+      "teaser": "the times table has secret pictures inside it — Number Patterns starts the hunt."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "reasonableness",
+      "concept": {
+        "id": "rem-rs-c",
+        "kind": "concept",
+        "body": "Quick rewind. Two size rules catch most slips: **sharing shrinks** — a share is always smaller than the pile it came from — and **grouping grows** — several whole groups beat a single group. If an answer breaks a size rule, the operation went the wrong way."
+      },
+      "check": {
+        "id": "rem-rs-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "reasonableness",
+        "explanationVariants": [
+          "Sharing 20 can only give numbers smaller than 20 — 100 breaks the size rule.",
+          "A share five times bigger than its pile is impossible; the other two claims pass the size test."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which claim CAN'T be right?",
+          "options": [
+            {
+              "id": "a",
+              "label": "20 ÷ 5 = 100",
+              "correct": true,
+              "feedback": "Sharing 20 gave MORE than 20? Impossible — splits always shrink the pile."
+            },
+            {
+              "id": "b",
+              "label": "20 ÷ 5 = 4",
+              "feedback": "That one's fine: 4 is smaller than 20, and five 4s rebuild the pile."
+            },
+            {
+              "id": "c",
+              "label": "5 × 4 = 20",
+              "feedback": "That one's fine too: five 4s outgrow a single 4, just as multiplication should."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

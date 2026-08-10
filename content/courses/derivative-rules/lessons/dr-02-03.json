@@ -1,0 +1,250 @@
+{
+  "id": "dr-02-03",
+  "slug": "higher-derivatives",
+  "title": "The Second Derivative",
+  "courseId": "derivative-rules",
+  "chapterId": "ch2-the-power-rule",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "f′ is a function. So differentiate it again.\n\n**f″** is the derivative of the derivative — the rate at which the SLOPE is changing. If f is position and f′ is velocity, then f″ is acceleration.\n\nA car can be moving forward (f′ > 0) while slowing down (f″ < 0). Direction and change-of-direction are different questions.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Differentiate twice.",
+      "conceptTag": "dr-second-derivative",
+      "explanationVariants": [
+        "f′(x) = 3x² − 12x, and differentiating again gives f″(x) = 6x − 12. At x = 1 that is −6.",
+        "Each differentiation is an independent application of the power rule."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 6x². Find f″(1).",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "That is f′(1) = 3 − 12 = −9, the first derivative. Differentiate once more: f″ = 6x − 12."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the coefficient of x in f″ = 6x − 12; you still have to substitute x = 1 and subtract 12."
+          },
+          {
+            "value": -12,
+            "feedback": "That is the constant term of f″. At x = 1 the 6x contributes 6, giving 6 − 12 = −6."
+          }
+        ],
+        "fallbackFeedback": "f′ = 3x² − 12x → f″ = 6x − 12 → f″(1) = −6."
+      },
+      "variant": {
+        "gen": "second-deriv-poly"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Moving forward while slowing down.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "cubic",
+        "mode": "slope",
+        "targetSlope": 12,
+        "targetX": 2,
+        "prompt": "Trace f(x) = x³ until the tangent slope reads 12. Then ask what the slope of the SLOPE is doing.",
+        "successFeedback": "Slope 12 at x = 2, since f′(x) = 3x². The first derivative is how fast f changes; the second is how fast THAT changes — position, velocity, acceleration are the same three questions asked of one curve.",
+        "lowFeedback": "The tangent is still shallower than 12.",
+        "highFeedback": "The tangent has passed a slope of 12.",
+        "start": -3
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read the motion.",
+      "conceptTag": "dr-second-derivative",
+      "explanationVariants": [
+        "Positive velocity means moving forward; negative acceleration means the velocity is falling. So the car is moving forward and slowing down.",
+        "The sign of f′ is direction; the sign of f″ is whether that speed is growing or shrinking."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "At time t, a car has f′(t) = 20 and f″(t) = −4. What is it doing?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Moving forward, and slowing down.",
+            "correct": true,
+            "feedback": "Right — positive velocity, negative acceleration. Braking while still going forward."
+          },
+          {
+            "id": "o2",
+            "label": "Reversing.",
+            "correct": false,
+            "feedback": "Reversing needs f′ < 0. The velocity is +20: firmly forward."
+          },
+          {
+            "id": "o3",
+            "label": "Moving forward and speeding up.",
+            "correct": false,
+            "feedback": "Speeding up needs f″ > 0. Here the acceleration is negative, so the velocity is falling."
+          },
+          {
+            "id": "o4",
+            "label": "Stopped.",
+            "correct": false,
+            "feedback": "Stopped means f′ = 0. The car is doing 20."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "second-deriv-poly",
+        "form": "motion"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The second derivative also has a shape meaning:\n\n**f″ > 0** → the slope is increasing → the curve bends **upward** (concave up, holding water).\n**f″ < 0** → the curve bends **downward**.\n\nThat is how a critical point gets convicted: flat *and* bending upward is a valley.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Convict a critical point.",
+      "conceptTag": "dr-second-derivative",
+      "explanationVariants": [
+        "f′(x) = 2x is zero at x = 0, and f″(x) = 2 > 0, so the curve bends upward there: a minimum.",
+        "Flat plus concave up is a valley. Flat plus concave down is a peak. Flat plus f″ = 0 is undecided."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x² has f′(0) = 0 and f″(0) = 2. What is at x = 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A minimum — flat, and bending upward.",
+            "correct": true,
+            "feedback": "Right. The second derivative is what promotes a critical point from suspect to verdict."
+          },
+          {
+            "id": "o2",
+            "label": "A maximum.",
+            "correct": false,
+            "feedback": "A maximum needs the curve to bend DOWNWARD, f″ < 0. Here f″ = 2, firmly positive."
+          },
+          {
+            "id": "o3",
+            "label": "A flat pause, like x³ at 0.",
+            "correct": false,
+            "feedback": "x³ has f″(0) = 0 — undecided. Here f″ = 2, which settles it: the curve turns upward."
+          },
+          {
+            "id": "o4",
+            "label": "Cannot tell without more information.",
+            "correct": false,
+            "feedback": "You have everything: f′ = 0 says flat, f″ > 0 says bending upward. That is a minimum."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "second-deriv-poly",
+        "form": "classify"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three derivatives deep.",
+      "conceptTag": "dr-second-derivative",
+      "hints": [
+        "Differentiate three times, one step at a time. Do not try to shortcut it.",
+        "f′ = 4x³ + 6x², then f″ = 12x² + 12x.",
+        "One more: f‴ = 24x + 12. Now put x = 1."
+      ],
+      "explanationVariants": [
+        "f′ = 4x³ + 6x²; f″ = 12x² + 12x; f‴ = 24x + 12. At x = 1 that is 36.",
+        "Each derivative is a fresh function; there is no shortcut past differentiating one at a time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x⁴ + 2x³. Find f‴(1) (the third derivative at 1).",
+        "answer": 36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "That is only the 24x term. The constant 12 from differentiating 12x is still there: 24 + 12 = 36."
+          },
+          {
+            "value": 10,
+            "feedback": "That is f′(1) = 4 + 6. Two more differentiations to go."
+          },
+          {
+            "value": 12,
+            "feedback": "That is f″(1) = 12 + 12 = 24, or a slip. Take one more derivative: f‴ = 24x + 12 → 36."
+          }
+        ],
+        "fallbackFeedback": "f′ = 4x³ + 6x² → f″ = 12x² + 12x → f‴ = 24x + 12 → f‴(1) = 36."
+      },
+      "variant": {
+        "gen": "second-deriv-poly",
+        "form": "third"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Differentiate the derivative.",
+      "takeaways": [
+        "f″ is the rate at which the slope changes: position → velocity → acceleration.",
+        "f′ > 0 with f″ < 0 is moving forward while slowing down. Direction and change-of-direction are different questions.",
+        "f″ > 0 means the curve bends upward, which is how a flat point is convicted as a minimum."
+      ],
+      "teaser": "Next chapter: what the derivative of a PRODUCT really is."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-second-derivative",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Do it in two separate passes. First differentiate f to get f′ — and then treat f′ as a brand-new function and differentiate THAT. There is no shortcut; there are just two applications of the same rules.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Two passes.",
+        "conceptTag": "dr-second-derivative",
+        "explanationVariants": [
+          "f′ = 6x², then f″ = 12x, so f″(2) = 24.",
+          "Differentiate twice, substituting only at the very end."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = 2x³. Find f″(2).",
+          "answer": 24,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "That is f″'s coefficient, or f′(1). Substitute x = 2 into f″ = 12x: 24."
+            },
+            {
+              "value": 48,
+              "feedback": "That is f′(2) = 6(4) = 24 doubled, or a slip. f′ = 6x², f″ = 12x, f″(2) = 24."
+            }
+          ],
+          "fallbackFeedback": "f′ = 6x² → f″ = 12x → f″(2) = 24."
+        }
+      }
+    }
+  ]
+}

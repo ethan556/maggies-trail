@@ -1,0 +1,284 @@
+{
+  "id": "ca-01-03",
+  "slug": "endpoints-and-evt",
+  "title": "Endpoints and the Extreme Value Theorem",
+  "courseId": "curve-analysis",
+  "chapterId": "ch1-critical-points",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "On a **closed interval**, the biggest and smallest values are guaranteed to exist \u2014 and they can hide in only two places:\n\n**at a critical point**, or **at an endpoint**.\n\nThat is the Extreme Value Theorem, and it turns optimisation into a finite checklist. Compute f at every critical point and at both ends; the largest wins.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The endpoint can win.",
+      "conceptTag": "ca-evt",
+      "explanationVariants": [
+        "Critical point: f\u2032 = 3x\u00b2 \u2212 3 = 0 gives x = 1 (in [0, 3]), where f(1) = \u22122. Endpoints: f(0) = 0 and f(3) = 18. The maximum is 18 \u2014 at an ENDPOINT, where the tangent is not flat at all.",
+        "A global maximum need not be a local one. On a closed interval the edges are always candidates."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x\u00b3 \u2212 3x on [0, 3]. Find the MAXIMUM value.",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -2,
+            "feedback": "That is f(1), the local MINIMUM at the critical point. The maximum is at the right endpoint: f(3) = 27 \u2212 9 = 18."
+          },
+          {
+            "value": 0,
+            "feedback": "That is f(0), the left endpoint. The right endpoint is far higher: f(3) = 18."
+          },
+          {
+            "value": 3,
+            "feedback": "That is the endpoint's x-value. Its FUNCTION value is f(3) = 18."
+          }
+        ],
+        "fallbackFeedback": "Candidates: f(1) = \u22122, f(0) = 0, f(3) = 18. The maximum is 18, at an endpoint."
+      },
+      "variant": {
+        "gen": "evt-candidates"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Why the tangent need not be flat at the top.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "How a maximum can hide at an edge.",
+        "panels": [
+          {
+            "title": "Interior maxima are flat",
+            "body": "If the highest point is strictly INSIDE the interval, the curve must stop climbing and start falling \u2014 so f\u2032 = 0 there. That is why critical points matter."
+          },
+          {
+            "title": "Edges have no 'other side'",
+            "body": "At the right endpoint the curve may still be climbing hard. There is simply nowhere further to go. The tangent is steep, and the point is still the maximum."
+          },
+          {
+            "title": "So check both",
+            "body": "The EVT does not say the maximum is at a critical point. It says it is at a critical point OR an endpoint \u2014 and the endpoint case is the one people forget."
+          }
+        ],
+        "continueFeedback": "Keep going \u2014 the middle panel is the one that gets skipped.",
+        "successFeedback": "An interior maximum must be flat. An endpoint maximum need not be \u2014 it just runs out of room."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "The reveal's claim, live. Find the flat tangent yourself \u2014 then look at where the curve is actually tallest.",
+      "predict": {
+        "prompt": "This window shows f(x) = x\u00b3 on [\u22124, 4]. Somewhere the tangent goes flat. Will that flat point be the tallest point of the window?",
+        "options": [
+          {
+            "id": "flat-is-max",
+            "label": "Yes \u2014 flat tangent means maximum"
+          },
+          {
+            "id": "flat-not-max",
+            "label": "No \u2014 the flat point isn't the top here"
+          },
+          {
+            "id": "never-flat",
+            "label": "x\u00b3 never has a flat tangent"
+          }
+        ],
+        "outcomeId": "flat-not-max",
+        "reveal": "Drag and watch the f\u2032 pane: it touches zero at x = 0 while the curve climbs straight past \u2014 the tallest point is the right edge, where f\u2032 = 48."
+      },
+      "widget": {
+        "type": "derivativeTrace",
+        "prompt": "Drag the point until the tangent is FLAT \u2014 drive f\u2032 to zero \u2014 and watch what the curve does there.",
+        "fn": "cubic",
+        "mode": "point",
+        "targetX": 0,
+        "start": -2,
+        "successFeedback": "f\u2032 = 0 at x = 0 \u2014 and yet the curve climbs straight past it. Flat found you a candidate, not the champion: the tallest point on this window is the right edge, where f\u2032 = 48. That endpoint is exactly what the theorem makes you check.",
+        "lowFeedback": "Not flat yet \u2014 the f\u2032 pane is still above zero here, and the curve is still climbing. Keep moving right toward where f\u2032 dips to zero.",
+        "highFeedback": "You passed it \u2014 f\u2032 is positive again and climbing. Back up to where the lower pane touches zero."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What the theorem requires.",
+      "conceptTag": "ca-evt",
+      "explanationVariants": [
+        "The EVT needs a CONTINUOUS function on a CLOSED, bounded interval. Drop either condition and the guarantee vanishes.",
+        "On the open interval (0, 1), f(x) = x has no maximum: it approaches 1 without ever reaching it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does f(x) = x on the OPEN interval (0, 1) have no maximum?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It climbs all the way to 1 but never reaches it \u2014 the endpoint is not included.",
+            "correct": true,
+            "feedback": "Right, and that is precisely why the EVT insists on a CLOSED interval. Without the ends, the maximum can escape."
+          },
+          {
+            "id": "o2",
+            "label": "Because f\u2032 is never zero.",
+            "correct": false,
+            "feedback": "True, but not the reason \u2014 on the CLOSED interval [0, 1] the same function has a maximum of 1, at an endpoint, with f\u2032 still never zero."
+          },
+          {
+            "id": "o3",
+            "label": "Because it is not continuous.",
+            "correct": false,
+            "feedback": "f(x) = x is continuous everywhere. The failure is in the interval, not the function."
+          },
+          {
+            "id": "o4",
+            "label": "It does have one: 1.",
+            "correct": false,
+            "feedback": "1 is not IN the open interval, so f never attains it. There is a supremum, but no maximum."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-evt__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the **closed-interval method** is a three-line recipe:\n\n1. Find every critical point inside the interval.\n2. Evaluate f there, and at both endpoints.\n3. Pick the largest and the smallest.\n\nNo sign charts, no second derivatives. On a closed interval you simply compare a finite list of numbers.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Build the candidate list.",
+      "conceptTag": "ca-evt",
+      "explanationVariants": [
+        "Critical points in [0, 3]: x = 1 only (x = \u22121 is outside). Plus the two endpoints. So three candidates.",
+        "Critical points OUTSIDE the interval are irrelevant and must be discarded."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x\u00b3 \u2212 3x on [0, 3]. How many candidates does the closed-interval method produce?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "f\u2032 = 3x\u00b2 \u2212 3 = 0 gives x = \u00b11, but x = \u22121 is OUTSIDE [0, 3] and must be thrown away. That leaves x = 1 plus the two endpoints: three."
+          },
+          {
+            "value": 2,
+            "feedback": "Do not forget the interior critical point x = 1. Two endpoints plus one critical point makes three."
+          },
+          {
+            "value": 1,
+            "feedback": "The endpoints are candidates too \u2014 that is the whole point of the theorem."
+          }
+        ],
+        "fallbackFeedback": "x = 1 (inside), plus x = 0 and x = 3: three candidates."
+      },
+      "variant": {
+        "gen": "evt-candidates",
+        "form": "candidateCount"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Run the method.",
+      "conceptTag": "ca-evt",
+      "hints": [
+        "f\u2032(x) = 3x\u00b2 \u2212 12 = 0 gives x = \u00b12. Which are inside [0, 3]?",
+        "Only x = 2. So the candidates are x = 0, x = 2 and x = 3.",
+        "Evaluate f at each: f(0) = 0, f(2) = 8 \u2212 24 = \u221216, f(3) = 27 \u2212 36 = \u22129."
+      ],
+      "explanationVariants": [
+        "Candidates give 0, \u221216 and \u22129. The minimum is \u221216, at the critical point x = 2.",
+        "The maximum here is 0, at the LEFT endpoint \u2014 a reminder that both ends must be checked."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x\u00b3 \u2212 12x on [0, 3]. Find the MINIMUM value.",
+        "answer": -16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -9,
+            "feedback": "That is f(3), the right endpoint. The critical point x = 2 goes lower: f(2) = 8 \u2212 24 = \u221216."
+          },
+          {
+            "value": 0,
+            "feedback": "That is f(0), which is the MAXIMUM here. The minimum is \u221216."
+          },
+          {
+            "value": 2,
+            "feedback": "That is where the minimum occurs. Its value is f(2) = \u221216."
+          }
+        ],
+        "fallbackFeedback": "Candidates: f(0) = 0, f(2) = \u221216, f(3) = \u22129. The minimum is \u221216."
+      },
+      "variant": {
+        "gen": "evt-candidates",
+        "form": "minValue"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Critical points, and the ends.",
+      "takeaways": [
+        "On a closed, bounded interval a continuous function ALWAYS attains a maximum and a minimum.",
+        "They hide only at critical points or at endpoints \u2014 an endpoint maximum need not have a flat tangent.",
+        "The closed-interval method is a finite checklist: evaluate, compare, done."
+      ],
+      "teaser": "Next chapter: the second derivative, and the shape of the bend."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-evt",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Make a list. Every critical point INSIDE the interval, plus both endpoints. Evaluate f at each. The biggest number on the list is the maximum and the smallest is the minimum. There is nowhere else to look.",
+        "figure": "dr-flat-not-turning"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Do not forget the ends.",
+        "conceptTag": "ca-evt",
+        "explanationVariants": [
+          "Candidates are f(0) = 1, f(2) = 5 and f(3) = 4, so the maximum is 5.",
+          "Compare all three; do not stop at the critical point."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "On [0, 3], f(0) = 1, f(3) = 4, and the only critical point gives f(2) = 5. What is the maximum?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "That is the right endpoint. The critical point beats it: f(2) = 5."
+            },
+            {
+              "value": 2,
+              "feedback": "That is WHERE the maximum occurs. Its value is 5."
+            }
+          ],
+          "fallbackFeedback": "The largest of 1, 5 and 4 is 5."
+        }
+      }
+    }
+  ]
+}

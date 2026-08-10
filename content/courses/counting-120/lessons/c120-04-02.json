@@ -1,0 +1,347 @@
+{
+  "id": "c120-04-02",
+  "slug": "counting-a-pile",
+  "title": "Counting a Pile",
+  "courseId": "counting-120",
+  "chapterId": "ch4-tens-ones",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "tens-rods",
+      "body": "A big pile is easy in groups of ten. 47 is 4 full tens and 7 leftover ones: count 10, 20, 30, 40… 47.",
+      "narration": "A big pile is easy in groups of ten. Forty-seven is four full tens and seven leftover ones: count ten, twenty, thirty, forty, then forty-seven."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the pile.",
+      "conceptTag": "count-pile",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build 47: make 4 tens and 7 ones.",
+        "target": 47,
+        "requireStandard": true,
+        "commonBuilds": [
+          {
+            "tens": 7,
+            "ones": 4,
+            "feedback": "That builds 74 — the digits swapped. 47 is 4 tens and 7 ones."
+          },
+          {
+            "tens": 4,
+            "ones": 0,
+            "feedback": "That's just 4 tens (40). Add the 7 leftover ones: 47."
+          }
+        ],
+        "missFeedback": "4 tens = 40, then 7 more ones: 47.",
+        "successFeedback": "4 tens and 7 ones — that's 47!"
+      },
+      "predict": {
+        "prompt": "47 and 74 — would they be built from the same blocks?",
+        "options": [
+          {
+            "id": "different",
+            "label": "No — different rods AND different cubes"
+          },
+          {
+            "id": "same",
+            "label": "Yes — the same blocks either way"
+          },
+          {
+            "id": "rods",
+            "label": "Same rods, different cubes"
+          }
+        ],
+        "outcomeId": "different",
+        "reveal": "Swapping the digits swaps the jobs: 47 is four rods and seven cubes, 74 is seven rods and four cubes. Same symbols, different number entirely."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents count pile.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for count pile must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines count pile."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "counting-120:count-pile",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "How many tens?",
+      "conceptTag": "count-pile",
+      "explanationVariants": [
+        "62 is 6 tens and 2 ones — the tens digit tells the number of tens.",
+        "Count by tens to 60, then 2 more: 6 tens, 2 ones."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many TENS are in 62?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the ONES. The tens digit — the first one — is 6."
+          },
+          {
+            "value": 62,
+            "feedback": "That's the whole number. It's made of 6 tens (and 2 ones)."
+          }
+        ],
+        "fallbackFeedback": "62 has 6 tens and 2 ones."
+      },
+      "hints": [
+        "Look at the first digit.",
+        "Count by tens: 10, 20… 60.",
+        "6 tens."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "CountPileNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The tens digit counts the ten-groups; the ones digit counts the leftovers. In 85: 8 tens, 5 ones.",
+      "narration": "The tens digit counts the ten-groups; the ones digit counts the leftovers. In eighty-five: eight tens, five ones.",
+      "figure": "c120-count-pile"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each number to its tens and ones.",
+      "conceptTag": "count-pile",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each number to its groups.",
+        "left": [
+          {
+            "id": "n85",
+            "label": "85"
+          },
+          {
+            "id": "n58",
+            "label": "58"
+          },
+          {
+            "id": "n94",
+            "label": "94"
+          }
+        ],
+        "right": [
+          {
+            "id": "g85",
+            "label": "8 tens, 5 ones"
+          },
+          {
+            "id": "g58",
+            "label": "5 tens, 8 ones"
+          },
+          {
+            "id": "g94",
+            "label": "9 tens, 4 ones"
+          }
+        ],
+        "pairs": {
+          "n85": "g85",
+          "n58": "g58",
+          "n94": "g94"
+        },
+        "pairErrors": [
+          {
+            "left": "n85",
+            "right": "g58",
+            "feedback": "85 has 8 tens and 5 ones. 5 tens 8 ones is 58."
+          },
+          {
+            "left": "n58",
+            "right": "g85",
+            "feedback": "58 has 5 tens and 8 ones. 8 tens 5 ones is 85."
+          }
+        ],
+        "missFeedback": "First digit = tens, second = ones: 85 is 8 and 5.",
+        "successFeedback": "Every number split into tens and ones!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count the leftovers.",
+      "conceptTag": "count-pile",
+      "explanationVariants": [
+        "85 has 5 leftover ones — the ones digit.",
+        "After 8 full tens, 5 are left over in 85."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many leftover ONES are in 85?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the number of TENS. The leftover ones — the last digit — is 5."
+          },
+          {
+            "value": 85,
+            "feedback": "That's the whole number. The leftover ones are just 5."
+          }
+        ],
+        "fallbackFeedback": "85 has 8 tens and 5 leftover ones."
+      },
+      "hints": [
+        "Look at the last digit.",
+        "After the tens, what's left?",
+        "5 ones."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "CountPileNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which pile is bigger?",
+      "conceptTag": "count-pile",
+      "explanationVariants": [
+        "6 tens (60) beats 5 tens and some ones (50-something) — more tens wins.",
+        "Compare the tens first: 6 tens is more than 5 tens, so 62 > 58."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger: 62 or 58?",
+        "options": [
+          {
+            "id": "a",
+            "label": "62 (6 tens)",
+            "correct": true,
+            "feedback": "Yes — 6 tens beats 5 tens, so 62 is bigger."
+          },
+          {
+            "id": "b",
+            "label": "58 (8 ones)",
+            "feedback": "8 ones looks big, but 62 has more TENS (6 vs 5). Tens decide first: 62 wins."
+          },
+          {
+            "id": "c",
+            "label": "they're equal",
+            "feedback": "62 has 6 tens, 58 has 5 tens — not equal. 62 is bigger."
+          }
+        ]
+      },
+      "hints": [
+        "Compare the tens first.",
+        "6 tens vs 5 tens.",
+        "62 is bigger."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "CountPileMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the pile!",
+      "conceptTag": "count-pile",
+      "explanationVariants": [
+        "9 tens and 4 ones is 94.",
+        "90 from the tens, plus 4 ones: 94."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A pile has 9 tens and 4 ones. What number is it?",
+        "answer": 94,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "That swapped them. 9 TENS and 4 ones is 94, not 49."
+          },
+          {
+            "value": 13,
+            "feedback": "That added 9 + 4. Tens are groups of ten: 90 + 4 = 94."
+          }
+        ],
+        "fallbackFeedback": "9 tens (90) and 4 ones = 94."
+      },
+      "hints": [
+        "9 tens is 90.",
+        "Then 4 ones.",
+        "94."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "CountPileNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You count big piles!",
+      "takeaways": [
+        "Group a pile into tens plus leftover ones.",
+        "First digit = tens, second = ones.",
+        "More tens means a bigger number."
+      ],
+      "teaser": "next: one more, one less, ten more, ten less."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "count-pile",
+      "concept": {
+        "id": "rem-cp-c",
+        "kind": "concept",
+        "body": "Slow down. 23 is 2 tens and 3 ones. Count the tens: 10, 20. Then 3 more ones: 23.",
+        "narration": "Slow down. Twenty-three is two tens and three ones. Count the tens: ten, twenty. Then three more ones: twenty-three."
+      },
+      "check": {
+        "id": "rem-cp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "count-pile",
+        "explanationVariants": [
+          "23 has 2 tens — the first digit.",
+          "Count by tens to 20: that's 2 tens in 23."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many TENS are in 23?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is the ones. The tens digit — the first one — is 2."
+            },
+            {
+              "value": 23,
+              "feedback": "That's the whole number. It has 2 tens."
+            }
+          ],
+          "fallbackFeedback": "23 has 2 tens and 3 ones."
+        }
+      }
+    }
+  ]
+}

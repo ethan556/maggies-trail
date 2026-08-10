@@ -1,0 +1,272 @@
+{
+  "id": "pra-03-03",
+  "slug": "the-asymptote-portrait",
+  "title": "The Full Asymptote Portrait",
+  "courseId": "polynomial-rational-analysis",
+  "chapterId": "ch3-slant-asymptotes",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A rational function's complete portrait has **two independent layers**: vertical asymptotes and holes come from the **bottom's zeros** (recall: common factor → hole, otherwise VA); the far-out line — horizontal or slant — comes from the **degree gap**. Find both layers separately, then draw.",
+      "figure": "pra-slant-portrait"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Layer one: the vertical.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "infinite",
+        "a": 1,
+        "leftValue": -1000,
+        "rightValue": 1000,
+        "fAtA": null,
+        "targetVerdict": "no-limit",
+        "prompt": "For f(x) = (x² − 4)/(x − 1), zoom in on x = 1 and decide what kind of break this is.",
+        "successFeedback": "A vertical asymptote at x = 1: the denominator vanishes but the numerator does not, so the two sides fly apart. Compare that with x = 2, where BOTH vanish and the break is a removable hole instead — same-looking equation, different behaviour.",
+        "moreZoomFeedback": "Zoom further. The sides separate more as you go, which is what distinguishes an asymptote from a hole.",
+        "wrongVerdictFeedback": "The two sides disagree without bound, so no limit exists.",
+        "requiredZoom": 2
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Layer two: the far-out line.",
+      "conceptTag": "pra-portrait",
+      "explanationVariants": [
+        "Degree gap +1 → slant; dividing gives quotient x + 1: the far-out line is y = x + 1.",
+        "From the previous lesson's division: f = (x + 1) − 3/(x − 1); the line is y = x + 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Same f. Its far-out asymptote is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the slant line y = x + 1",
+            "correct": true,
+            "feedback": "Right — degree gap +1, and the division's quotient is x + 1."
+          },
+          {
+            "id": "o2",
+            "label": "the horizontal line y = 1",
+            "feedback": "Equal degrees would give a ratio — but the top is degree 2 over degree 1: a slant, y = x + 1."
+          },
+          {
+            "id": "o3",
+            "label": "none — the vertical asymptote is the only one",
+            "feedback": "Vertical and far-out asymptotes are independent layers; the degree gap +1 adds the slant y = x + 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-portrait__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two layers never interfere: the curve can **cross a slant asymptote** near the middle of the graph (only VERTICAL asymptotes are uncrossable). Far out, though, the remainder term −3/(x − 1) pins the curve to the line: below it on the right (negative gap), above it on the left.",
+      "figure": "pra-cross-asymptote"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which asymptotes can a graph cross?",
+      "conceptTag": "pra-portrait",
+      "explanationVariants": [
+        "Vertical asymptotes mark forbidden inputs — the graph can't touch them. Horizontal/slant lines only describe FAR-OUT behavior; mid-graph crossings are allowed.",
+        "Only the vertical is a wall. The slant is a far-out magnet, not a barrier."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which statement is true?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A graph may cross its slant asymptote, but never a vertical one",
+            "correct": true,
+            "feedback": "Right — vertical asymptotes are excluded inputs (walls); slant/horizontal lines only bind the ends."
+          },
+          {
+            "id": "o2",
+            "label": "A graph can never cross any asymptote",
+            "feedback": "Horizontal and slant asymptotes describe end behavior only — e.g. f can equal its slant line at a middle x. Verticals alone are uncrossable."
+          },
+          {
+            "id": "o3",
+            "label": "A graph may cross a vertical asymptote if the remainder is small",
+            "feedback": "The vertical asymptote sits at a forbidden INPUT — the function has no value there at all, remainder or not."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-portrait__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Locate a crossing.",
+      "conceptTag": "pra-portrait",
+      "explanationVariants": [
+        "f(x) = (x + 1) − 3/(x − 1) equals the line exactly when −3/(x − 1) = 0 — never, since the numerator is the constant −3. THIS curve never crosses its slant.",
+        "The gap −3/(x − 1) has no zeros, so curve and line never meet — crossing is allowed in general but doesn't happen here."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = (x² − 4)/(x − 1) = (x + 1) − 3/(x − 1), where does the curve CROSS its slant line?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Nowhere — the gap −3/(x − 1) is never zero",
+            "correct": true,
+            "feedback": "Right — a crossing needs gap = 0, and a nonzero constant over (x − 1) never vanishes. (Other functions' gaps CAN hit zero.)"
+          },
+          {
+            "id": "o2",
+            "label": "At x = 1",
+            "feedback": "x = 1 is the vertical asymptote — f isn't even defined there, let alone equal to the line."
+          },
+          {
+            "id": "o3",
+            "label": "At x = 2",
+            "feedback": "x = 2 is where f itself is 0 (the x-intercept). The line there is y = 3 ≠ 0 — no meeting."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-portrait__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full portrait, one function.",
+      "conceptTag": "pra-portrait",
+      "explanationVariants": [
+        "Bottom zero: x = −2 (no common factor) → VA x = −2. Degree gap +1 → slant; division gives y = 2x + 1. Portrait: VA x = −2, slant y = 2x + 1.",
+        "Both layers: the wall at −2 from the denominator; the far-out line 2x + 1 from the quotient."
+      ],
+      "hints": [
+        "Layer one: where is the denominator zero, and does the top share that factor?",
+        "Layer two: the degree gap is +1 — divide (or recall last lesson's challenge).",
+        "Quotient 2x + 1, remainder −1."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "g(x) = (2x² + 5x + 1)/(x + 2). Which is its complete asymptote portrait?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "Vertical x = −2"
+          },
+          {
+            "id": "t1",
+            "label": "Vertical x = 2"
+          },
+          {
+            "id": "t2",
+            "label": "and"
+          },
+          {
+            "id": "t3",
+            "label": "slant y = 2x + 1"
+          },
+          {
+            "id": "t4",
+            "label": "horizontal y = 2"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t2",
+          "t3"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1",
+              "t2",
+              "t4"
+            ],
+            "feedback": "The denominator x + 2 is zero at −2 (not +2), and the degree gap is +1 — a slant, not a horizontal ratio."
+          },
+          {
+            "sequence": [
+              "t3"
+            ],
+            "feedback": "Don't drop layer one: x = −2 zeroes the bottom with no cancelling factor — a vertical asymptote stands there."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Layer one: the uncancelled bottom zero gives the wall. Layer two: divide — the quotient line is the far-out behavior.",
+        "successFeedback": "Right — the denominator's zero gives the wall; the division's quotient gives the far-out line."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-portrait__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two layers, one portrait.",
+      "takeaways": [
+        "Verticals/holes come from the bottom's zeros; the far-out line from the degree gap.",
+        "Only vertical asymptotes are uncrossable.",
+        "Crossings of the slant happen exactly where the remainder gap equals zero."
+      ],
+      "teaser": "Next chapter: inequalities — where a polynomial is positive, read straight off a sign chart."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pra-portrait",
+      "concept": {
+        "id": "rem-pra0303-c",
+        "kind": "concept",
+        "body": "Portrait checklist: (1) bottom's zeros → VA or hole; (2) degree gap → y = 0 / ratio / slant. The layers are independent."
+      },
+      "check": {
+        "id": "rem-pra0303-k",
+        "kind": "check",
+        "body": "One quick portrait.",
+        "conceptTag": "pra-portrait",
+        "explanationVariants": [
+          "Bottom zero x = 3 → VA; degrees equal (1 and 1) → HA y = 4/1 = 4.",
+          "Wall at 3; far-out flat line at the leading ratio 4."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "h(x) = (4x + 1)/(x − 3). Its portrait is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Vertical x = 3, horizontal y = 4",
+              "correct": true,
+              "feedback": "Right — bottom zero at 3; equal degrees give the ratio 4/1."
+            },
+            {
+              "id": "o2",
+              "label": "Vertical x = 3, slant y = 4x + 1",
+              "feedback": "Slant needs the top one degree HIGHER; equal degrees give the horizontal ratio y = 4."
+            },
+            {
+              "id": "o3",
+              "label": "Vertical x = −3, horizontal y = 4",
+              "feedback": "x − 3 = 0 at +3. The horizontal y = 4 part is right."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

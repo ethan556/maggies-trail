@@ -1,0 +1,310 @@
+{
+  "id": "sy-05-03",
+  "slug": "area-and-perimeter-ratios",
+  "title": "Area & Perimeter Ratios",
+  "courseId": "similarity",
+  "chapterId": "ch5-applications",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sy-area-perimeter",
+      "concept": {
+        "id": "rem-sy-area-perimeter-c",
+        "kind": "concept",
+        "body": "Scaling by dimension: LENGTHS (sides, perimeter) scale by k; AREA scales by k²; VOLUME by k³. To reverse — going from an area ratio back to a side ratio — take the SQUARE ROOT. The most common error is using k where k² belongs (or vice versa); match the exponent to the dimension."
+      },
+      "check": {
+        "id": "rem-sy-area-perimeter-k",
+        "kind": "check",
+        "body": "Area scaling.",
+        "conceptTag": "sy-area-perimeter",
+        "explanationVariants": [
+          "Area scales by k²: with k = 3, area ×9.",
+          "Two dimensions means the exponent is 2: k²."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Two similar figures have scale factor 3. By what factor does the AREA scale?",
+          "answer": 9,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is how LENGTHS scale. Area scales by k² = 3² = 9."
+            },
+            {
+              "value": 27,
+              "feedback": "27 = 3³ is the VOLUME factor. Area (2D) scales by k² = 9."
+            }
+          ],
+          "fallbackFeedback": "Area scales by k² = 3² = 9."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Similar figures scale predictably: **perimeter scales by k** (the same ratio as the sides), but **area scales by k²**. Double every side and the perimeter doubles while the area quadruples. This gap between k and k² is behind everything from pizza pricing to why big animals aren't just scaled-up small ones.",
+      "figure": "sy-perim-ratio"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Lengths scale by k. Areas do not.",
+      "widget": {
+        "type": "dilationExplore",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 3,
+        "kMin": 0.5,
+        "kMax": 4,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 7,
+        "prompt": "Scale the square by 3, then count the squares it now covers.",
+        "successFeedback": "k = 3: every side triples, the perimeter triples — and the AREA grows nine-fold, because area is a product of two lengths and each one tripled. That is why perimeter scales by k and area by k². (Volume, with three lengths, goes by k³.)",
+        "lowFeedback": "The image is smaller than triple.",
+        "highFeedback": "The image is larger than triple."
+      },
+      "predict": {
+        "prompt": "You'll scale every length by k = 3. What happens to the shape's AREA?",
+        "options": [
+          {
+            "id": "k",
+            "label": "It grows by ×3"
+          },
+          {
+            "id": "k2",
+            "label": "It grows by ×9"
+          },
+          {
+            "id": "same",
+            "label": "It stays the same"
+          }
+        ],
+        "outcomeId": "k2",
+        "reveal": "Width AND height both scale by 3, so area picks up that factor twice: k² = 9. Lengths scale by k, areas always by k² — watch the two figures to see it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Vary the scale factor while coordinates, lengths, perimeter, and area update together.",
+        "invariants": [
+          "angle-preserved",
+          "proportional-distance-from-center"
+        ],
+        "misconceptions": [
+          "additive-scaling",
+          "area-scales-linearly"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "similarity",
+        "delayed": false
+      },
+      "conceptTag": "sy-area-perimeter"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Perimeter vs area scaling.",
+      "conceptTag": "sy-area-perimeter",
+      "explanationVariants": [
+        "Perimeter is a length, so it scales by k; area is two-dimensional, so it scales by k².",
+        "Length → k, area → k². The dimension count is the exponent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For similar figures with scale factor k, how do perimeter and area scale?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Perimeter by k, area by k²",
+            "correct": true,
+            "feedback": "Perimeter is one-dimensional (scales by k); area is two-dimensional (scales by k²)."
+          },
+          {
+            "id": "o2",
+            "label": "Both by k",
+            "correct": false,
+            "feedback": "Only PERIMETER scales by k. Area, being 2D, scales by k² — faster."
+          },
+          {
+            "id": "o3",
+            "label": "Both by k²",
+            "correct": false,
+            "feedback": "Area scales by k², but PERIMETER (a length) scales by just k."
+          },
+          {
+            "id": "o4",
+            "label": "Perimeter by k², area by k",
+            "correct": false,
+            "feedback": "It's the reverse: perimeter (length) by k, area (2D) by k²."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-area-perimeter__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Area ratio.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar figures have scale factor 3. The smaller has area 5. What is the larger's area?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 = 5 × 3 uses k — but AREA scales by k² = 9: 5 × 9 = 45."
+          },
+          {
+            "value": 8,
+            "feedback": "8 = 5 + 3 adds. Area scales by k²: 5 × 3² = 45."
+          }
+        ],
+        "fallbackFeedback": "Area scales by k²: 5 × 3² = 5 × 9 = 45."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "From area ratio to side ratio.",
+      "conceptTag": "sy-area-perimeter",
+      "explanationVariants": [
+        "Areas scale by k², so the side ratio is the SQUARE ROOT of the area ratio: √25 = 5.",
+        "k² = 25 gives k = 5 — the sides are in ratio 5 though areas are in ratio 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar figures have areas in the ratio 25 : 1. What is the ratio of their corresponding sides?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is the AREA ratio. Sides scale by k, areas by k², so the side ratio is √25 = 5."
+          },
+          {
+            "value": 12.5,
+            "feedback": "12.5 = 25 ÷ 2 halves it — but you need the SQUARE ROOT: √25 = 5."
+          }
+        ],
+        "fallbackFeedback": "Side ratio = √(area ratio) = √25 = 5."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-area-perimeter__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This is why 'twice the size' can mislead. A 16-inch pizza isn't twice a 8-inch pizza — the diameter doubles (k = 2), so the AREA quadruples (k² = 4). You get four times the pizza, not two. Reasoning with k² instead of k is the difference between a good deal and a bad one.",
+      "figure": "sy-pizza"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Pizza math.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 16-inch pizza has twice the diameter of an 8-inch pizza (k = 2). How many times as much pizza (area) does it have?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the DIAMETER ratio (k). Area scales by k² = 2² = 4 — four times the pizza."
+          },
+          {
+            "value": 8,
+            "feedback": "8 = 2³ is the VOLUME factor. Pizza area scales by k² = 4."
+          }
+        ],
+        "fallbackFeedback": "Area scales by k² = 2² = 4 times."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Total area of similar figures.",
+      "conceptTag": "sy-area-perimeter",
+      "hints": [
+        "The side ratio is 2 : 5, so the area ratio is 2² : 5² = 4 : 25.",
+        "The small figure's area is 4 parts; the large is 25 parts.",
+        "If the small area is 8, scale by 25/4."
+      ],
+      "explanationVariants": [
+        "Area ratio = (2/5)² ... inverted for small-to-large it's 25/4. The large area is 8 × 25 ÷ 4 = 50.",
+        "Sides 2:5 → areas 4:25. Large area = 8 × (25/4) = 50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two similar figures have sides in ratio 2 : 5. The smaller has area 8. What is the larger's area?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 = 8 × 5 ÷ 2 uses the side ratio — but AREA scales by the SQUARE: 8 × (5/2)² = 8 × 25/4 = 50."
+          },
+          {
+            "value": 11,
+            "feedback": "11 = 8 + 5 − 2 mixes operations. Area ratio is (5/2)² = 25/4, so 8 × 25/4 = 50."
+          }
+        ],
+        "fallbackFeedback": "Area ratio (5/2)² = 25/4; 8 × 25/4 = 50."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-area-perimeter__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "k for length, k² for area.",
+      "takeaways": [
+        "Perimeter (and any length) scales by k; area scales by k².",
+        "To get the side ratio from an area ratio, take the square root.",
+        "This is why a 16-inch pizza is four times an 8-inch one, not twice."
+      ],
+      "teaser": "Course complete! Next: right-triangle trigonometry builds on these similar triangles."
+    }
+  ]
+}

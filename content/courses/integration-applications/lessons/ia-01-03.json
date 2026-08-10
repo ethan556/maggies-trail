@@ -1,0 +1,341 @@
+{
+  "id": "ia-01-03",
+  "slug": "the-washer-method",
+  "title": "The Washer: a Disc With a Bite Out of It",
+  "courseId": "integration-applications",
+  "chapterId": "ch1-slicing",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Revolve the region **between two curves** and each strip sweeps out not a disc but a **washer** — a coin with a hole punched through it.\n\nOuter radius R = the top curve. Inner radius r = the bottom one. The face is the big circle minus the small one:\n\n**π(R² − r²)**\n\nAnd once again: slice, measure the slice, add them up. Only the measurement changed.",
+      "figure": "ia-strip-to-disc"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The hole is the point.",
+      "widget": {
+        "type": "sliceSum",
+        "mode": "washer",
+        "tolerance": 0.005,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Revolve the region between y = x (outer) and y = x² (inner) on [0, 1]. Inspect a slice — it is a washer — then raise the count until the sum reaches within 0.005 of the exact 2π/15 ≈ 0.4189.",
+        "successFeedback": "Each slice is π(R² − r²) — the big face minus the hole. And look at the ends: at x = 0 and x = 1 the two curves MEET, so R = r and the washer has no metal in it at all. The solid pinches to nothing at both ends, exactly where the region did.",
+        "lowFeedback": "The sum is under 2π/15. The left and right rules both undershoot a region that pinches at both ends — raise the count, or try the midpoint rule.",
+        "highFeedback": "The sum is over 2π/15. The midpoint rule overshoots here — raise the count and it will settle down."
+      },
+      "predict": {
+        "prompt": "What changes when the number of volume slices increases?",
+        "options": [
+          {
+            "id": "thinner",
+            "label": "Slices become thinner and the estimate usually improves"
+          },
+          {
+            "id": "larger",
+            "label": "Every slice becomes larger"
+          },
+          {
+            "id": "formula",
+            "label": "The cross-section formula is no longer needed"
+          }
+        ],
+        "outcomeId": "thinner",
+        "reveal": "Refinement reduces slice thickness while preserving the same cross-section rule, bringing the sum closer to the limiting volume."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "quantity-composition",
+        "actionGoal": "Refine cross-sectional slices and connect their accumulated volume estimate to a limiting integral.",
+        "invariants": [
+          "volume-is-sum-of-thin-slices",
+          "cross-section-rule-controls-each-slice"
+        ],
+        "misconceptions": [
+          "volume-is-base-area-only",
+          "slice-thickness-does-not-matter"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "integration-applications-sliceSum",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this sliceSum away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why does a slice sum become a volume integral?",
+          "options": [
+            {
+              "id": "limit",
+              "label": "Each cross-sectional area is multiplied by thickness, and refinement takes the sum to a limit.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "base",
+              "label": "Only the base area is needed.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "count",
+              "label": "The number of slices itself is the volume.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "ia-washer"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Subtract the AREAS, not the radii.",
+      "conceptTag": "ia-washer",
+      "explanationVariants": [
+        "The face is πR² − πr² = π(R² − r²). It is NOT π(R − r)² — subtracting the radii first and then squaring is a different number entirely.",
+        "With R = 3 and r = 1: the true face is π(9 − 1) = 8π, while π(3 − 1)² = 4π. Half the answer."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A washer has outer radius 3 and inner radius 1. What is its face area?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π(3² − 1²) = 8π",
+            "correct": true,
+            "feedback": "Right — subtract the AREAS. The big circle is 9π, the hole is π, and what is left is 8π."
+          },
+          {
+            "id": "o2",
+            "label": "π(3 − 1)² = 4π",
+            "correct": false,
+            "feedback": "That subtracts the RADII and then squares, which is a different number — half the truth. Square first, subtract second."
+          },
+          {
+            "id": "o3",
+            "label": "π(3² + 1²) = 10π",
+            "correct": false,
+            "feedback": "The hole is REMOVED, not added. The face is 9π − π = 8π."
+          },
+          {
+            "id": "o4",
+            "label": "π(3)² = 9π",
+            "correct": false,
+            "feedback": "That is the face with no hole at all. The inner circle of area π has been punched out."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-washer__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Set it up.",
+      "conceptTag": "ia-washer",
+      "explanationVariants": [
+        "V = π∫₀¹ (x² − x⁴) dx = π(1/3 − 1/5) = 2π/15 ≈ 0.419.",
+        "Outer radius x gives x²; inner radius x² gives x⁴. The difference is integrated, not the radii."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Revolve the region between y = x and y = x² on [0, 1] about the x-axis. Find the volume, to three decimals.",
+        "answer": 0.419,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.628,
+            "feedback": "That is π/5 — the volume of the INNER solid alone (y = x² revolved). You must subtract it FROM the outer one: π(1/3 − 1/5)."
+          },
+          {
+            "value": 1.047,
+            "feedback": "That is π/3 — the OUTER solid alone (y = x revolved). The hole has not been punched out yet."
+          },
+          {
+            "value": 0.209,
+            "feedback": "That is half the answer. π(1/3 − 1/5) = π(2/15) ≈ 0.419."
+          }
+        ],
+        "fallbackFeedback": "V = π∫₀¹ (x² − x⁴) dx = π(1/3 − 1/5) = 2π/15 ≈ 0.419."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-washer__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the whole course is one sentence, repeated:\n\n**Slice the region. Measure ONE slice. Add them up.**\n\nAn area measures a slice's **height**. A disc measures **πr²**. A washer measures **π(R² − r²)**. The slicing never changes; the summing never changes. Only the measurement does — and that is the only thing you ever have to work out.",
+      "figure": "ia-strip-to-disc"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One idea, three measurements.",
+      "conceptTag": "ia-washer",
+      "explanationVariants": [
+        "Height for an area; πr² for a disc; π(R² − r²) for a washer. Same slicing, same summing, three measurements.",
+        "If you can say what one slice is worth, you have already written the integral."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each quantity to what you measure on ONE slice.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Area between two curves"
+          },
+          {
+            "id": "w2",
+            "label": "Volume by discs"
+          },
+          {
+            "id": "w3",
+            "label": "Volume by washers"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "height = top − bottom"
+          },
+          {
+            "id": "y2",
+            "label": "πr², with r the height of the curve"
+          },
+          {
+            "id": "y3",
+            "label": "π(R² − r²)"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y3",
+            "feedback": "A plain disc has no hole — its face is πr². The subtraction only appears when the region has a gap under it."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "A washer is a VOLUME, so its slice is measured in square units of face, not in height."
+          }
+        ],
+        "missFeedback": "Ask what ONE slice is worth. That measurement is the integrand, and the rest is bookkeeping.",
+        "successFeedback": "Slice, measure, sum. The measurement is the only thing that ever changes — which is why this course is much shorter than it looks."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-washer__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A washer from scratch.",
+      "conceptTag": "ia-washer",
+      "hints": [
+        "Outer radius R = 2 (the horizontal line y = 2). Inner radius r = x.",
+        "The face is π(2² − x²) = π(4 − x²).",
+        "V = π∫₀² (4 − x²) dx = π[4x − x³/3]₀²."
+      ],
+      "explanationVariants": [
+        "V = π(8 − 8/3) = π(16/3) ≈ 16.755.",
+        "Sanity check: the outer solid is a cylinder of radius 2 and length 2, volume 8π ≈ 25.13; the cone drilled out of it is 8π/3 ≈ 8.38; and 25.13 − 8.38 = 16.75 ✓."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Revolve the region between y = 2 (outer) and y = x (inner) on [0, 2] about the x-axis. Find the volume, to three decimals.",
+        "answer": 16.755,
+        "tolerance": 0.02,
+        "commonErrors": [
+          {
+            "value": 25.133,
+            "feedback": "That is 8π — the whole CYLINDER, with no cone drilled out of it. Subtract the inner solid: 8π − 8π/3 = 16π/3."
+          },
+          {
+            "value": 8.378,
+            "feedback": "That is 8π/3 — the CONE that gets removed, not what is left behind."
+          },
+          {
+            "value": 16,
+            "feedback": "That is 16/3 × 3, or a dropped π. The answer is 16π/3 ≈ 16.755."
+          }
+        ],
+        "fallbackFeedback": "V = π∫₀² (4 − x²) dx = π(8 − 8/3) = 16π/3 ≈ 16.755 — and indeed the cylinder (8π) minus the cone (8π/3) gives exactly that."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-washer__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Slice, measure, sum.",
+      "takeaways": [
+        "A washer's face is π(R² − r²) — subtract the AREAS, never the radii.",
+        "R is the far curve from the axis and r is the near one, so the hole is what the gap under the region sweeps out.",
+        "Area, disc, washer: same slicing, same summing, three measurements. Work out what ONE slice is worth and the integral writes itself."
+      ],
+      "teaser": "Still to come in this course: known cross-sections, average value, and motion revisited as ∫|v|."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ia-washer",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two circles, one inside the other. Work out the BIG face, work out the HOLE, and subtract: π R² − π r². Squaring comes first and subtracting comes second — reversing them gives a different (and wrong) number.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Square first, subtract second.",
+        "conceptTag": "ia-washer",
+        "explanationVariants": [
+          "π(5² − 3²) = π(25 − 9) = 16π ≈ 50.27.",
+          "Squaring first is what makes the answer right: π(5 − 3)² would be only 4π."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A washer has outer radius 5 and inner radius 3. Find its face area, to two decimals.",
+          "answer": 50.27,
+          "tolerance": 0.1,
+          "commonErrors": [
+            {
+              "value": 12.57,
+              "feedback": "That is π(5 − 3)² = 4π — you subtracted the radii and then squared. Square FIRST: π(25 − 9) = 16π."
+            },
+            {
+              "value": 78.54,
+              "feedback": "That is π(5²) = 25π — the outer circle with no hole punched out."
+            }
+          ],
+          "fallbackFeedback": "π(25 − 9) = 16π ≈ 50.27."
+        }
+      }
+    }
+  ]
+}

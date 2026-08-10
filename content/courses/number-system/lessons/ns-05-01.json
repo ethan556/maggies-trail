@@ -1,0 +1,310 @@
+{
+  "id": "ns-05-01",
+  "slug": "absolute-value",
+  "title": "Absolute Value",
+  "courseId": "number-system",
+  "chapterId": "ch5-absolute-value",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "absolute-value-arcs",
+      "body": "The **absolute value** of a number is its **distance from zero** — and distance is never negative. Written with bars: |−3| = 3, because −3 sits 3 steps from zero. |3| = 3 too, since 3 is also 3 steps away. Absolute value strips off the sign and keeps only the size."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Distance, not direction.",
+      "conceptTag": "absolute-value",
+      "widget": {
+        "type": "numberLinePlace",
+        "prompt": "Place the marker at −7, then read the distance underneath.",
+        "min": -10,
+        "max": 10,
+        "step": 1,
+        "tickStep": 1,
+        "target": -7,
+        "start": 0,
+        "showDistanceFromZero": true,
+        "commonPlacements": [
+          {
+            "value": 7,
+            "feedback": "That is +7 — the right DISTANCE from zero, on the wrong side. |−7| asks how far −7 sits from 0, not what −7 turns into. Move to the left of zero and watch the distance readout hold at 7."
+          },
+          {
+            "value": -10,
+            "feedback": "Too far left. −7 sits seven steps from zero, not ten — count the ticks back toward 0."
+          }
+        ],
+        "successFeedback": "The marker is at −7 and the distance reads 7. Those are two different numbers about the same point, and that is the whole idea: |−7| = 7 because absolute value reports DISTANCE from zero, which has no direction. Slide across to +7 and the position flips sign while the distance never moves.",
+        "lowFeedback": "Left of −7 now. Come back toward zero — and notice the distance readout climbing as you go further out, never negative.",
+        "highFeedback": "Right of −7. Keep moving left, past zero, and watch the distance readout fall to 0 and then climb again on the other side."
+      },
+      "predict": {
+        "prompt": "Absolute value measures a number's…?",
+        "options": [
+          {
+            "id": "distance",
+            "label": "Distance from zero"
+          },
+          {
+            "id": "sign",
+            "label": "Sign"
+          },
+          {
+            "id": "opposite",
+            "label": "Opposite"
+          }
+        ],
+        "outcomeId": "distance",
+        "reveal": "Absolute value strips the direction and keeps the distance — how far from zero, never which side. Distance can't be negative, so neither can it."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A positive stays put.",
+      "conceptTag": "absolute-value",
+      "explanationVariants": [
+        "|8| = 8 — a positive number is already its own distance from zero.",
+        "8 sits 8 steps from zero, so its absolute value is 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is |8|?",
+        "answer": 8,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": -8,
+            "feedback": "Absolute value is never negative — it's a distance. |8| = 8, not -8."
+          },
+          {
+            "value": 0,
+            "feedback": "8 is 8 steps from zero, not at zero. Its absolute value is 8."
+          }
+        ],
+        "fallbackFeedback": "8 is already 8 steps from zero, so |8| = 8."
+      },
+      "variant": {
+        "gen": "negative-intro",
+        "form": "absoluteNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Because it's a distance, absolute value is **always zero or positive** — never negative. And **opposites share the same absolute value**: |−5| and |5| both equal 5, since both are 5 steps from zero. Only one number has an absolute value of 0: zero itself, which sits right on the center.",
+      "figure": "absolute-value-arcs"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Opposites, same size.",
+      "conceptTag": "absolute-value",
+      "explanationVariants": [
+        "|-12| = 12 and |12| = 12 — opposites are the same distance from zero.",
+        "Both -12 and 12 sit 12 steps from zero, so both have absolute value 12."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is true about |-12| and |12|?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Both equal 12 — opposites are the same distance from zero",
+            "correct": true,
+            "feedback": "Right — -12 and 12 are both 12 steps from zero, so both have absolute value 12."
+          },
+          {
+            "id": "b",
+            "label": "|-12| = -12 and |12| = 12",
+            "feedback": "Absolute value is never negative. |-12| measures DISTANCE, which is 12, same as |12|."
+          },
+          {
+            "id": "c",
+            "label": "|-12| is bigger because -12 is further out",
+            "feedback": "-12 and 12 are the SAME distance from zero (12 steps each), just on opposite sides — so their absolute values are equal."
+          }
+        ]
+      },
+      "hints": [
+        "How far is -12 from zero? How far is 12?",
+        "Both are 12 steps away.",
+        "Same distance means same absolute value."
+      ],
+      "variant": {
+        "gen": "negative-intro",
+        "form": "absoluteEqual"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort by absolute value.",
+      "conceptTag": "absolute-value",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each expression by its value.",
+        "buckets": [
+          {
+            "id": "eq3",
+            "label": "Equals 3"
+          },
+          {
+            "id": "eq5",
+            "label": "Equals 5"
+          }
+        ],
+        "items": [
+          {
+            "id": "a1",
+            "label": "|-3|",
+            "bucketId": "eq3",
+            "feedback": "|-3| is the distance of -3 from zero: 3."
+          },
+          {
+            "id": "a2",
+            "label": "|5|",
+            "bucketId": "eq5",
+            "feedback": "|5| = 5, already its own distance from zero."
+          },
+          {
+            "id": "a3",
+            "label": "|3|",
+            "bucketId": "eq3",
+            "feedback": "|3| = 3, three steps from zero."
+          },
+          {
+            "id": "a4",
+            "label": "|-5|",
+            "bucketId": "eq5",
+            "feedback": "|-5| = 5 — the same distance from zero as 5."
+          }
+        ],
+        "missFeedback": "Absolute value is distance from zero. |-3| and |3| both equal 3; |-5| and |5| both equal 5.",
+        "successFeedback": "Sorted — a number and its opposite always share one absolute value."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Absolute value of zero.",
+      "conceptTag": "absolute-value",
+      "explanationVariants": [
+        "|0| = 0 — zero is zero steps from itself, the only number whose absolute value is 0.",
+        "Zero sits right on the center, so its distance from zero is 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is |0|?",
+        "answer": 0,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 would be one step from zero, but 0 is AT zero — its distance from itself is 0."
+          },
+          {
+            "value": 10,
+            "feedback": "10 misreads the 0. Zero is zero steps from the center, so |0| = 0."
+          }
+        ],
+        "fallbackFeedback": "Zero is 0 steps from zero, so |0| = 0."
+      },
+      "variant": {
+        "gen": "negative-intro",
+        "form": "absoluteNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Absolute value inside a subtraction.",
+      "conceptTag": "absolute-value",
+      "hints": [
+        "Evaluate each absolute value FIRST, before subtracting.",
+        "|-9| = 9 and |4| = 4.",
+        "Then compute 9 - 4."
+      ],
+      "explanationVariants": [
+        "|-9| - |4| = 9 - 4 = 5 — resolve each absolute value, then subtract.",
+        "First |-9| = 9 and |4| = 4, so the expression is 9 - 4 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute |-9| - |4|.",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": -13,
+            "feedback": "-13 treats it as -9 - 4, keeping the sign. But |-9| = 9 (distance), so it's 9 - 4 = 5."
+          },
+          {
+            "value": 13,
+            "feedback": "13 adds the two distances (9 + 4). The expression SUBTRACTS: |-9| - |4| = 9 - 4 = 5."
+          }
+        ],
+        "fallbackFeedback": "|-9| = 9, |4| = 4, so |-9| - |4| = 9 - 4 = 5."
+      },
+      "variant": {
+        "gen": "negative-intro",
+        "form": "absoluteDifference"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance from zero.",
+      "takeaways": [
+        "Absolute value is a number's distance from zero: |-3| = 3, |3| = 3.",
+        "It's always zero or positive — never negative.",
+        "Opposites share one absolute value; only zero has absolute value 0."
+      ],
+      "teaser": "next: when 'bigger' and 'farther from zero' disagree."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "absolute-value",
+      "concept": {
+        "id": "rem-av-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Absolute value = distance from zero, always positive.** |-6| = 6 because -6 is 6 steps from zero. Drop the sign and keep the size: |-6| = 6, |6| = 6."
+      },
+      "check": {
+        "id": "rem-av-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "absolute-value",
+        "explanationVariants": [
+          "|-6| = 6 — six steps from zero.",
+          "Distance is never negative, so |-6| = 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is |-6|?",
+          "answer": 6,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": -6,
+              "feedback": "Absolute value is a distance — never negative. |-6| = 6."
+            },
+            {
+              "value": 0,
+              "feedback": "-6 is 6 steps from zero, not at zero. |-6| = 6."
+            }
+          ],
+          "fallbackFeedback": "-6 is 6 steps from zero, so |-6| = 6."
+        }
+      }
+    }
+  ]
+}

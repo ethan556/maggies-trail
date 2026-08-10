@@ -1,0 +1,287 @@
+{
+  "id": "in-03-02",
+  "slug": "ftc-part-two",
+  "title": "FTC Part 2: Evaluating With an Antiderivative",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch3-the-fundamental-theorem",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Part 1 said A′ = f, so A is **an antiderivative** of f.\n\nBut A(x) = ∫ₐˣ f is the area from a, so A(a) = 0 and A(b) = the area you want. And any other antiderivative F differs from A only by a constant — which cancels in a subtraction. Hence:\n\n**∫ₐᵇ f(x) dx = F(b) − F(a)**, for ANY antiderivative F of f.\n\nNo rectangles. No limits. Just: undo the derivative, and subtract.",
+      "figure": "in-ftc-slope-is-height"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Reverse the power rule.",
+      "conceptTag": "in-ftc2",
+      "explanationVariants": [
+        "An antiderivative of x² is x³/3, because differentiating x³/3 gives x². So ∫₀² x² dx = 8/3 − 0 = 8/3 ≈ 2.667.",
+        "That is the number the Riemann trap was closing on in chapter 1 — reached now in one line."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₀² x² dx. Use F(x) = x³/3. Give a decimal to three places.",
+        "answer": 2.667,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That is 2³ = 8 — you evaluated x³ without dividing by 3. The antiderivative of x² is x³/3."
+          },
+          {
+            "value": 4,
+            "feedback": "That is 2² = 4, the height of f at the endpoint. The area is F(2) − F(0) = 8/3."
+          },
+          {
+            "value": 1.333,
+            "feedback": "That is half of the right answer, or 4/3. F(2) = 8/3 ≈ 2.667, and F(0) = 0."
+          }
+        ],
+        "fallbackFeedback": "F(x) = x³/3 → F(2) − F(0) = 8/3 ≈ 2.667 — exactly the number the rectangles were closing on."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc2__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The same number, two ways.",
+      "widget": {
+        "type": "riemannSum",
+        "fn": "square",
+        "a": 0,
+        "b": 2,
+        "tolerance": 0.05,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Squeeze the Riemann estimate to within 0.05 of 8/3 — the value FTC Part 2 just handed you in one line.",
+        "successFeedback": "The rectangles are grinding their way to 2.667, and the antiderivative got there in a single subtraction: 8/3 − 0. Both routes give the same number because the theorem SAYS they must. The rectangles are the definition; the antiderivative is the shortcut — and the shortcut is why calculus is useful rather than merely true.",
+        "lowFeedback": "Still short of 8/3. Raise n, or switch to the midpoint rule.",
+        "highFeedback": "Still over 8/3. Raise n, or switch rule — the right sum comes down from above."
+      },
+      "predict": {
+        "prompt": "y = x² rises across [0, 2]. Using the LEFT rule, your first estimate will land…",
+        "options": [
+          {
+            "id": "under",
+            "label": "Under the true area"
+          },
+          {
+            "id": "over",
+            "label": "Over the true area"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly on it"
+          }
+        ],
+        "outcomeId": "under",
+        "reveal": "On a rising curve every left-hand strip is only as tall as its shortest edge, so left sums always undershoot — and raising n squeezes the gap toward zero."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Partition an interval and compare how sample rules accumulate approximate signed area.",
+        "invariants": [
+          "sum-is-height-times-width",
+          "refinement-controls-error"
+        ],
+        "misconceptions": [
+          "more-rectangles-always-overestimate",
+          "area-ignores-sign"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-riemannSum",
+        "delayed": false
+      },
+      "conceptTag": "in-ftc2"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why the +C does not matter.",
+      "conceptTag": "in-ftc2",
+      "explanationVariants": [
+        "If F is an antiderivative then so is F + C, and [F(b) + C] − [F(a) + C] = F(b) − F(a). The constant cancels in the subtraction.",
+        "That is why you may pick ANY antiderivative — the simplest one, with C = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why can you use ANY antiderivative F when evaluating ∫ₐᵇ f?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Two antiderivatives differ by a constant, and the constant cancels in F(b) − F(a).",
+            "correct": true,
+            "feedback": "Right — so you always choose the simplest one, with C = 0, and lose nothing."
+          },
+          {
+            "id": "o2",
+            "label": "Because C is small.",
+            "correct": false,
+            "feedback": "C can be a million. It still cancels, because it appears in both F(b) and F(a) and gets subtracted away."
+          },
+          {
+            "id": "o3",
+            "label": "They do not differ — there is only one antiderivative.",
+            "correct": false,
+            "feedback": "There are infinitely many: x³/3, x³/3 + 7, x³/3 − 2… all differentiate to x². They form a family of parallel curves."
+          },
+          {
+            "id": "o4",
+            "label": "Because the integral is definite.",
+            "correct": false,
+            "feedback": "True but incomplete — the REASON the definiteness saves you is the subtraction, which annihilates the constant."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc2__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the antiderivative is the whole game, and you already have it.\n\nEvery derivative rule from C1 runs backwards. **Raise the power by one, then divide by the new power** — that is the power rule reversed, and it is the only antiderivative you need for the rest of this lesson.\n\nAlways check by differentiating your answer. It costs ten seconds and catches almost every error.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate over an interval.",
+      "conceptTag": "in-ftc2",
+      "explanationVariants": [
+        "F(x) = x³/3, so ∫₁³ x² dx = 27/3 − 1/3 = 26/3 ≈ 8.667.",
+        "Both endpoints matter: forgetting to subtract F(1) is the commonest error in the whole chapter."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₁³ x² dx. Give a decimal to three places.",
+        "answer": 8.667,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That is F(3) = 27/3 = 9 — you forgot to subtract F(1) = 1/3. The answer is 9 − 0.333 = 8.667."
+          },
+          {
+            "value": 26,
+            "feedback": "That is the numerator 26 without dividing by 3."
+          },
+          {
+            "value": 8,
+            "feedback": "That is 9 − 1, subtracting f(1) instead of F(1). The antiderivative at 1 is 1/3, not 1."
+          }
+        ],
+        "fallbackFeedback": "F(3) − F(1) = 27/3 − 1/3 = 26/3 ≈ 8.667."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc2__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A rate, integrated properly at last.",
+      "conceptTag": "in-ftc2",
+      "hints": [
+        "The total is ∫₀³ (2t + 1) dt. Find an antiderivative first.",
+        "An antiderivative of 2t + 1 is t² + t (differentiate it back to check).",
+        "Now evaluate F(3) − F(0) = (9 + 3) − 0."
+      ],
+      "explanationVariants": [
+        "F(t) = t² + t, so the total is F(3) − F(0) = 12 − 0 = 12 litres.",
+        "Check it geometrically: a trapezoid of parallel sides 1 and 7 and width 3 has area (1/2)(1 + 7)(3) = 12. The theorem and the geometry agree, as they must."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Water flows in at r(t) = 2t + 1 litres/min. How many litres arrive in the first 3 minutes?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That is r(3) = 7, the RATE at the last instant — litres per minute, not litres. Integrate it."
+          },
+          {
+            "value": 9,
+            "feedback": "That is the t² part alone: you dropped the antiderivative of the +1, which contributes another t."
+          },
+          {
+            "value": 21,
+            "feedback": "That is 3 × 7, treating the rate as constant at its final value. The rate started at 1, so the true total is the trapezoid: 12."
+          }
+        ],
+        "fallbackFeedback": "F(t) = t² + t → F(3) − F(0) = 12 litres. (The trapezoid confirms it: (1/2)(1 + 7)(3) = 12.)"
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc2__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Undo the derivative, then subtract.",
+      "takeaways": [
+        "∫ₐᵇ f dx = F(b) − F(a), for ANY antiderivative F of f.",
+        "The +C cancels in the subtraction, so always take the simplest antiderivative.",
+        "This is why calculus is USEFUL: the rectangles define the integral, and the antiderivative computes it."
+      ],
+      "teaser": "Last lesson: why these two theorems are really one."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-ftc2",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two steps. **One:** find any F with F′ = f — undo the derivative. **Two:** compute F(b) − F(a). The commonest error in the entire chapter is doing step one and forgetting to subtract the lower limit.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Subtract BOTH ends.",
+        "conceptTag": "in-ftc2",
+        "explanationVariants": [
+          "F(x) = x²/2 for f(x) = x, so ∫₁³ x dx = 9/2 − 1/2 = 4.",
+          "Forgetting F(1) would give 4.5 — a small error with a big habit behind it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "∫₁³ x dx, using F(x) = x²/2.",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4.5,
+              "feedback": "That is F(3) = 9/2 alone. You must subtract F(1) = 1/2, giving 4."
+            },
+            {
+              "value": 9,
+              "feedback": "That is 3², forgetting the division by 2 in the antiderivative."
+            }
+          ],
+          "fallbackFeedback": "F(3) − F(1) = 4.5 − 0.5 = 4."
+        }
+      }
+    }
+  ]
+}

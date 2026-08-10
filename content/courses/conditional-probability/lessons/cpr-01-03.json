@@ -1,0 +1,324 @@
+{
+  "id": "cpr-01-03",
+  "slug": "mutually-exclusive-vs-overlapping",
+  "title": "Mutually Exclusive vs Overlapping",
+  "courseId": "conditional-probability",
+  "chapterId": "ch1-events-and-sample-spaces",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two events are **mutually exclusive** when they share no outcome: A ∩ B is empty, so they cannot both happen. Even and odd. Rain all day and dry all day. When events are exclusive, counting a union is pure addition — there is nothing to remove. Most real pairs of events are **not** exclusive.",
+      "figure": "cpr-disjoint-vs-overlap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A spinner with 12 equal sectors, numbered 1–12.",
+      "widget": {
+        "type": "spinnerSim",
+        "prompt": "Shade every sector that is a multiple of 3 **or** a multiple of 4. (Careful: one sector qualifies twice.)",
+        "sectors": 12,
+        "targetFavourable": 6,
+        "favourableStart": 0,
+        "successFeedback": "Six sectors: 3, 4, 6, 8, 9, 12. Sector 12 is on both lists — shade it once, count it once.",
+        "lowFeedback": "Keep going. Multiples of 3: 3, 6, 9, 12. Multiples of 4: 4, 8, 12. Together that is six distinct sectors.",
+        "highFeedback": "Too many. There are only six distinct sectors here — 12 belongs to both lists but it is still one sector."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Change favorable sectors and coordinate geometric fraction with theoretical and experimental probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-favorable-over-total"
+        ],
+        "misconceptions": [
+          "short-run-results-must-match-exactly",
+          "count-boundaries-not-sectors"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-spinnerSim-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-mutually-exclusive",
+      "predict": {
+        "prompt": "Of the 12 sectors, how many are a multiple of 3 OR a multiple of 4?",
+        "options": [
+          {
+            "id": "seven",
+            "label": "7"
+          },
+          {
+            "id": "six",
+            "label": "6"
+          },
+          {
+            "id": "twelve",
+            "label": "12"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "6, not 7. There are four multiples of 3 and three multiples of 4 — but 12 is on both lists and is only one sector. Adding the counts overcounts every shared outcome exactly once, which is the whole reason the addition rule subtracts the overlap."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which pair truly cannot co-occur?",
+      "conceptTag": "cpr-mutually-exclusive",
+      "explanationVariants": [
+        "Mutually exclusive means **zero** shared outcomes. A card cannot be even and odd at the same time; that pair shares nothing.",
+        "Hunt for a single counterexample. If you can name one outcome in both events, the pair is not exclusive."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "One card is drawn from cards 1–20. Which pair of events is mutually exclusive?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"the number is even\" and \"the number is odd\"",
+            "correct": true,
+            "feedback": "Right — no card is both, so the events share zero outcomes and cannot happen together."
+          },
+          {
+            "id": "o2",
+            "label": "\"the number is even\" and \"the number is a multiple of 5\"",
+            "correct": false,
+            "feedback": "Cards 10 and 20 are both even and multiples of 5, so the events overlap — exclusivity needs zero shared outcomes."
+          },
+          {
+            "id": "o3",
+            "label": "\"the number is greater than 15\" and \"the number is a multiple of 3\"",
+            "correct": false,
+            "feedback": "Card 18 satisfies both at once, so these events can co-occur; one shared outcome is enough to break exclusivity."
+          },
+          {
+            "id": "o4",
+            "label": "\"the number is prime\" and \"the number is odd\"",
+            "correct": false,
+            "feedback": "Most primes here are odd — 3, 5, 7, 11 … — so the events overlap heavily. Sharing outcomes is the opposite of exclusive."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-mutually-exclusive__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Overlap in a survey.",
+      "conceptTag": "cpr-overlap-count",
+      "explanationVariants": [
+        "18 + 12 counts the 7 who do both twice, so at least one = 18 + 12 − 7 = 23.",
+        "Split the groups: 11 play only a sport, 5 only an instrument, 7 do both → 11 + 5 + 7 = 23."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a class of 30, 18 play a sport, 12 play an instrument, and 7 do both. How many do **at least one**?",
+        "answer": 23,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That is 18 + 12 with the 7 double-counted, which happens to hit the class size — a coincidence, not an answer. Subtract the overlap: 30 − 7 = 23."
+          },
+          {
+            "value": 7,
+            "feedback": "That is the number doing **both**. \"At least one\" includes the sport-only and instrument-only students too."
+          },
+          {
+            "value": 25,
+            "feedback": "That looks like 30 − 5. The students doing neither are not given; they come *out* of the answer, they do not set it."
+          }
+        ],
+        "fallbackFeedback": "These events are not exclusive: 18 + 12 counts the 7 doubles twice, so at least one = 18 + 12 − 7 = 23."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-overlap-count__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That subtraction has a name coming in Chapter 4: the **addition rule**. For now, hold the picture. Add the two counts, then remove the middle once. Exclusive events just happen to have an empty middle, so nothing gets removed — they are the easy special case, not the rule.",
+      "figure": "cpr-double-count"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Exclusive, or not?",
+      "conceptTag": "cpr-mutually-exclusive",
+      "explanationVariants": [
+        "Ask: can I describe one single outcome where both happen? If yes, the pair is not exclusive.",
+        "A queen of hearts is one card that is both a heart and a queen — so those events overlap. A day cannot be both rainy and dry throughout."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each pair of events.",
+        "buckets": [
+          {
+            "id": "b1",
+            "label": "Mutually exclusive"
+          },
+          {
+            "id": "b2",
+            "label": "Can happen together"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "roll a 2 / roll an odd number",
+            "bucketId": "b1",
+            "feedback": "2 is even, so a roll cannot be a 2 and odd — these events share no outcome."
+          },
+          {
+            "id": "p2",
+            "label": "draw a heart / draw a queen",
+            "bucketId": "b2",
+            "feedback": "The queen of hearts is a single card in both events, so they overlap."
+          },
+          {
+            "id": "p3",
+            "label": "it rains all day / it stays dry all day",
+            "bucketId": "b1",
+            "feedback": "A day cannot do both, so the events are exclusive — they even cover opposite cases."
+          },
+          {
+            "id": "p4",
+            "label": "a student swims / a student plays in the band",
+            "bucketId": "b2",
+            "feedback": "One student can easily do both, so these events overlap."
+          },
+          {
+            "id": "p5",
+            "label": "a card is red / a card is a club",
+            "bucketId": "b1",
+            "feedback": "Clubs are black, so no card is both red and a club — zero shared outcomes."
+          },
+          {
+            "id": "p6",
+            "label": "a number is prime / a number is even",
+            "bucketId": "b2",
+            "feedback": "2 is prime and even, so a single shared outcome makes them non-exclusive."
+          }
+        ],
+        "missFeedback": "For each pair, try to invent one outcome in both events. Succeed and it is not exclusive; fail and it is.",
+        "successFeedback": "All six sorted — you tested each pair by hunting for a shared outcome."
+      },
+      "variant": {
+        "gen": "event-sort",
+        "form": "classify"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work the overlap backwards.",
+      "conceptTag": "cpr-overlap-count",
+      "hints": [
+        "First find how many like at least one drink. The 5 who like neither are outside both circles.",
+        "At least one = 40 − 5 = 35. Meanwhile 25 + 18 = 43 counts the both-likers twice.",
+        "So both = 43 − 35."
+      ],
+      "explanationVariants": [
+        "|C ∪ T| = 40 − 5 = 35. Then |C ∩ T| = |C| + |T| − |C ∪ T| = 25 + 18 − 35 = 8.",
+        "Let b = both. Coffee-only is 25 − b, tea-only is 18 − b, and (25 − b) + (18 − b) + b + 5 = 40 → b = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "40 people are surveyed: 25 like coffee, 18 like tea, 5 like neither. How many like **both**?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is 43 − 40 — you subtracted the whole group instead of the group that likes at least one. Five people like neither, so only 35 are inside the circles."
+          },
+          {
+            "value": 43,
+            "feedback": "That is 25 + 18, the double-counted total. The people who like both were counted in each number, so this sum overshoots."
+          },
+          {
+            "value": 5,
+            "feedback": "That is the number who like **neither** — a given, not the answer. Use it to find that 35 like at least one, then compare with 25 + 18."
+          }
+        ],
+        "fallbackFeedback": "35 like at least one (40 − 5). Since 25 + 18 = 43 counts the both-likers twice, both = 43 − 35 = 8."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-overlap-count__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Exclusive is the exception, not the default.",
+      "takeaways": [
+        "Mutually exclusive = zero shared outcomes = the events cannot co-occur.",
+        "For exclusive events, |A ∪ B| = |A| + |B|; otherwise you must subtract the overlap once.",
+        "Given a total and a \"neither\" count, you can solve backwards for the overlap."
+      ],
+      "teaser": "Next chapter: what happens to a probability when you are *told* that B already happened."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-mutually-exclusive",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "One test decides it. Try to name a **single outcome** that is in both events. If you can name even one, the events are not mutually exclusive. If no such outcome exists, they are.",
+        "figure": "cpr-disjoint-vs-overlap"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Apply the one test.",
+        "conceptTag": "cpr-mutually-exclusive",
+        "explanationVariants": [
+          "A 6 is even and greater than 4, so a single die roll can satisfy both events at once.",
+          "The events share the outcome 6, so their intersection is not empty and they are not exclusive."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Roll one die. Are \"the roll is even\" and \"the roll is greater than 4\" mutually exclusive?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "No — the roll 6 is in both events",
+              "correct": true,
+              "feedback": "Right — a single shared outcome (6) is all it takes to break exclusivity."
+            },
+            {
+              "id": "o2",
+              "label": "Yes — they describe different things",
+              "correct": false,
+              "feedback": "Describing different things is not enough. Exclusivity is about *outcomes*: 6 is even and above 4, so both events happen together."
+            },
+            {
+              "id": "o3",
+              "label": "Yes — even numbers are never large",
+              "correct": false,
+              "feedback": "6 is even and larger than 4, so that rule fails immediately. Test outcomes, not vague impressions of the wording."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

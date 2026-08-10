@@ -1,0 +1,328 @@
+{
+  "id": "md-04-04",
+  "slug": "odd-shapes-add-the-pieces",
+  "title": "Odd Shapes: Add the Pieces",
+  "courseId": "measurement-data",
+  "chapterId": "ch4-area",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An L-shape or a plus-sign isn't a rectangle — but it's **made of rectangles**. Cut it into rectangular pieces, find each area, and add them up. Any straight-sided shape surrenders to 'cut into rectangles, then add.'",
+      "figure": "md3-area-lshape"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plan the cut.",
+      "conceptTag": "area-additive",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "An L-shape splits into a 4-by-2 piece and a 3-by-2 piece. Match each step to its result.",
+        "left": [
+          {
+            "id": "p1",
+            "label": "Area of the 4-by-2 piece"
+          },
+          {
+            "id": "p2",
+            "label": "Area of the 3-by-2 piece"
+          },
+          {
+            "id": "p3",
+            "label": "Total L-shape area"
+          }
+        ],
+        "right": [
+          {
+            "id": "r6",
+            "label": "6 square units"
+          },
+          {
+            "id": "r14",
+            "label": "14 square units"
+          },
+          {
+            "id": "r8",
+            "label": "8 square units"
+          }
+        ],
+        "pairs": {
+          "p1": "r8",
+          "p2": "r6",
+          "p3": "r14"
+        },
+        "pairErrors": [
+          {
+            "left": "p3",
+            "right": "r8",
+            "feedback": "8 is only the first piece. The whole L adds BOTH pieces: 8 + 6 = 14."
+          }
+        ],
+        "missFeedback": "Each piece: rows × columns (4×2 = 8, 3×2 = 6). Total: add them (8 + 6 = 14).",
+        "successFeedback": "8 for the big piece, 6 for the small, 14 for the whole L — cut, compute, add."
+      },
+      "predict": {
+        "prompt": "After cutting an L-shape into two rectangles, what's the LAST step?",
+        "options": [
+          {
+            "id": "add",
+            "label": "Add the two areas"
+          },
+          {
+            "id": "multiply",
+            "label": "Multiply the two areas"
+          },
+          {
+            "id": "sub",
+            "label": "Subtract the smaller from the bigger"
+          }
+        ],
+        "outcomeId": "add",
+        "reveal": "Each rectangle covers its own patch of the L — together they cover it all, so their areas add. Piece + piece = whole."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add the L.",
+      "conceptTag": "area-additive",
+      "explanationVariants": [
+        "The two rectangles are 8 and 6 square units; the L-shape is their sum: 8 + 6 = 14.",
+        "Cut into rectangles, find each, add: 14 square units total."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An L-shape is cut into a 4-by-2 rectangle (area 8) and a 3-by-2 rectangle (area 6). What is the L-shape's area?",
+        "answer": 14,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "48 multiplied the two pieces (8 × 6) — but they're parts of ONE shape, so their areas add: 8 + 6 = 14."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is just the first rectangle. The L includes the second piece too: 8 + 6 = 14."
+          }
+        ],
+        "fallbackFeedback": "Add the two rectangle areas: 8 + 6."
+      },
+      "variant": {
+        "gen": "area-compose"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes SUBTRACTING is faster. Want the bare floor around a rug? Find the **whole room's area, then take away the rug's.** A big rectangle minus a rectangular bite is often quicker than adding up the leftover L-shaped strip piece by piece.",
+      "figure": "md3-area-lshape"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Room minus rug.",
+      "conceptTag": "area-additive",
+      "explanationVariants": [
+        "Room is 5 × 8 = 40; rug is 4 × 6 = 24; bare floor is 40 − 24 = 16 square meters.",
+        "The rug lies INSIDE the room, so subtract its area from the room's: 40 − 24 = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A room is 5 m by 8 m. A rug covering it is 4 m by 6 m. How many square meters of floor are NOT under the rug?",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "square meters",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the RUG's area (4×6) — the part that IS covered. The bare floor is the room minus the rug: 40 − 24."
+          },
+          {
+            "value": 64,
+            "feedback": "64 ADDED the two areas (40 + 24) — but the rug lies INSIDE the room. Subtract it: 40 − 24 = 16."
+          }
+        ],
+        "fallbackFeedback": "Room area (5×8) minus rug area (4×6)."
+      },
+      "variant": {
+        "gen": "area-compose",
+        "form": "rugLeft"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add or subtract?",
+      "conceptTag": "area-additive",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each area task: solve it by ADDING pieces or SUBTRACTING a bite?",
+        "buckets": [
+          {
+            "id": "add",
+            "label": "Add pieces",
+            "icon": "➕"
+          },
+          {
+            "id": "sub",
+            "label": "Subtract a bite",
+            "icon": "➖"
+          }
+        ],
+        "items": [
+          {
+            "id": "a1",
+            "label": "Area of a plus-sign made of 5 squares' worth of rectangles",
+            "bucketId": "add",
+            "feedback": "Build it from rectangular pieces and add — nothing is being removed."
+          },
+          {
+            "id": "a2",
+            "label": "Floor left bare around a rug",
+            "bucketId": "sub",
+            "feedback": "Whole room minus the rug's bite — subtraction is quicker."
+          },
+          {
+            "id": "a3",
+            "label": "A garden with a square pond cut out",
+            "bucketId": "sub",
+            "feedback": "Whole garden minus the pond — subtract the hole."
+          },
+          {
+            "id": "a4",
+            "label": "An L-shaped deck",
+            "bucketId": "add",
+            "feedback": "Two rectangles joined — cut and add their areas."
+          }
+        ],
+        "missFeedback": "Building UP from pieces → add. A whole shape with a piece REMOVED → subtract the bite.",
+        "successFeedback": "Plus-signs and L-decks add up from pieces; rugs and ponds subtract a bite from a whole."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The plus-sign.",
+      "conceptTag": "area-additive",
+      "explanationVariants": [
+        "A plus made of a center and four arms: sum every rectangular piece — here 4 + 3 + 3 + 3 + 3 = 16.",
+        "Add all five rectangular parts: center 4, plus four arms of 3, total 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A plus-sign is built from a center square of area 4 and four arms, each of area 3. What is its total area?",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "square units",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 added just the center and ONE arm (4 + 3). There are FOUR arms: 4 + 3 + 3 + 3 + 3 = 16."
+          },
+          {
+            "value": 12,
+            "feedback": "12 counted the four arms but forgot the center: 4 + (3×4) = 4 + 12 = 16."
+          }
+        ],
+        "fallbackFeedback": "Center (4) plus four arms of 3 each: 4 + 3 + 3 + 3 + 3."
+      },
+      "variant": {
+        "gen": "area-compose",
+        "form": "plusSign"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The garden path.",
+      "conceptTag": "area-additive",
+      "hints": [
+        "This is a subtract-the-bite problem: whole garden minus the pond.",
+        "Garden area = 10 × 7; pond area = 3 × 2.",
+        "Then take the pond out of the garden."
+      ],
+      "explanationVariants": [
+        "Garden is 10 × 7 = 70; pond is 3 × 2 = 6; planted area is 70 − 6 = 64 square meters.",
+        "Whole minus the hole: 70 − 6 = 64 square meters of soil to plant."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rectangular garden is 10 m by 7 m, with a 3 m by 2 m pond cut out of it. How many square meters are left to plant?",
+        "answer": 64,
+        "tolerance": 0,
+        "unit": "square meters",
+        "commonErrors": [
+          {
+            "value": 76,
+            "feedback": "76 ADDED the pond (70 + 6) — but the pond is a HOLE in the garden. Subtract it: 70 − 6 = 64."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the pond's area — the part you CAN'T plant. The plantable soil is the garden minus the pond: 70 − 6 = 64."
+          }
+        ],
+        "fallbackFeedback": "Garden area (10×7) minus pond area (3×2)."
+      },
+      "variant": {
+        "gen": "area-compose",
+        "form": "pondCut"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Any straight-sided shape, solved.",
+      "takeaways": [
+        "Odd shapes cut into rectangles — find each area, add.",
+        "A whole with a piece removed? Subtract the bite instead.",
+        "Match the method to the shape: building up adds, cutting out subtracts."
+      ],
+      "teaser": "final chapter: leaving the inside for the edge — perimeter."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "area-additive",
+      "concept": {
+        "id": "rem-aa-c",
+        "kind": "concept",
+        "body": "Quick rewind. An odd shape is a **jigsaw of rectangles** — find the pieces you know how to measure, then add them. An L is just two rectangles holding hands. Cut, measure each, add."
+      },
+      "check": {
+        "id": "rem-aa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "area-additive",
+        "explanationVariants": [
+          "Two rectangle pieces of 6 and 4 make an area of 6 + 4 = 10.",
+          "Add the pieces of the shape: 6 + 4 = 10."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "An L-shape is a 6-square piece joined to a 4-square piece. Its area is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "10 square units",
+              "correct": true,
+              "feedback": "6 + 4 = 10 — add the pieces of the shape."
+            },
+            {
+              "id": "b",
+              "label": "24 square units",
+              "feedback": "24 multiplied the pieces (6 × 4). Parts of one shape ADD: 6 + 4 = 10."
+            },
+            {
+              "id": "c",
+              "label": "2 square units",
+              "feedback": "2 subtracted them. The pieces JOIN, so add: 6 + 4 = 10."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "id": "ti-04-02",
+  "slug": "three-faces-of-cos2theta",
+  "title": "The Three Faces of cos 2θ",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch4-double-angle",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Using sin²θ + cos²θ = 1, cos 2θ wears **three equal forms**:\n\ncos 2θ = cos²θ − sin²θ = **1 − 2sin²θ** = **2cos²θ − 1**.\n\nEach is best in a different situation: pick the one matching what you're GIVEN or what you want to CANCEL.",
+      "figure": "ti-cos2-faces"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Choose by what's given.",
+      "predict": {
+        "prompt": "cos 2θ is written three ways. How many of them are the same function?",
+        "options": [
+          {
+            "id": "all3",
+            "label": "All three — the Pythagorean identity converts each into the others"
+          },
+          {
+            "id": "one",
+            "label": "Only cos²θ − sin²θ is exact; the others approximate"
+          },
+          {
+            "id": "depends",
+            "label": "It depends on the quadrant"
+          }
+        ],
+        "outcomeId": "all3",
+        "reveal": "All three: substituting sin²θ = 1 − cos²θ turns the first face into the second, and cos²θ = 1 − sin²θ turns it into the third. Try each — three formulas, one glued point. The fourth candidate is a face with its signs backwards; the circle will show you which."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "The direct point rides at 2θ. Choose ANY true face of cos 2θ — it will stay glued — and land θ on 70°. (You know sin θ: the 1 − 2sin²θ face needs nothing else.)",
+        "targetAngle": 70,
+        "angleStart": 20,
+        "angleStep": 5,
+        "ghost": "double",
+        "showGhostCoords": true,
+        "ghostChoices": [
+          {
+            "id": "exact",
+            "label": "cos²θ − sin²θ"
+          },
+          {
+            "id": "face2cos2",
+            "label": "2cos²θ − 1"
+          },
+          {
+            "id": "face1minus2sin2",
+            "label": "1 − 2sin²θ"
+          },
+          {
+            "id": "signError",
+            "label": "sin²θ − cos²θ",
+            "feedback": "Backwards: this is −cos 2θ — the point mirrors across the vertical axis and detaches the moment cos 2θ ≠ 0. Any of the three true faces holds; the efficient one for sin θ = 0.6 is 1 − 2sin²θ = 1 − 0.72 = 0.28."
+          }
+        ],
+        "successFeedback": "Glued at 70° — and with any face you chose, because all three ARE cos 2θ. Given only sin θ = 0.6, the third face answers without a square root: 1 − 2(0.36) = 0.28. “Most efficient” means “built from what you already know” — the mathematics never disagreed.",
+        "lowFeedback": "That face holds — continue the drag to 70°.",
+        "highFeedback": "Past 70° — ease back; the reading is at 70°."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute with it.",
+      "conceptTag": "ti-cos2-forms",
+      "explanationVariants": [
+        "1 − 2sin²θ = 1 − 2(0.36) = 1 − 0.72 = 0.28.",
+        "Only sine needed: 0.6² = 0.36, doubled 0.72, subtracted from 1 → 0.28."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "With sin θ = 0.6, use 1 − 2sin²θ to find cos 2θ.",
+        "answer": 0.28,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.64,
+            "feedback": "0.64 = 1 − 0.36 forgets the factor 2: 1 − 2(0.36) = 0.28."
+          },
+          {
+            "value": 0.72,
+            "feedback": "0.72 = 2sin²θ is the piece being SUBTRACTED: 1 − 0.72 = 0.28."
+          }
+        ],
+        "fallbackFeedback": "1 − 2(0.36) = 0.28."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-cos2-forms__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Read backwards, these give the crucial **power-reduction** formulas — the way to lower an exponent:\n\nsin²θ = (1 − cos 2θ)/2,  cos²θ = (1 + cos 2θ)/2.\n\nThey trade a squared single-angle for a first-power double-angle — indispensable in calculus and for solving certain equations.",
+      "figure": "ti-power-reduction"
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Reduce a power.",
+      "conceptTag": "ti-cos2-forms",
+      "explanationVariants": [
+        "sin²(π/6) = (1 − cos(π/3))/2 = (1 − 1/2)/2 = 1/4 — matching (1/2)² directly.",
+        "Power-reduction: the squared sine becomes a first-power cosine of the doubled angle, giving 1/4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use sin²θ = (1 − cos 2θ)/2 to find sin²(π/6).",
+        "answer": 0.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "0.5 = 1 − cos(π/3) before halving: (1 − 1/2)/2 = 1/4 = 0.25."
+          },
+          {
+            "value": 0.75,
+            "feedback": "cos(π/3) = 1/2, so (1 − 1/2)/2 = 0.25, not 0.75."
+          }
+        ],
+        "fallbackFeedback": "(1 − cos(π/3))/2 = (1 − 1/2)/2 = 1/4."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-cos2-forms__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Choose to cancel.",
+      "conceptTag": "ti-cos2-forms",
+      "explanationVariants": [
+        "1 + cos 2θ pairs with 2cos²θ − 1: 1 + (2cos²θ − 1) = 2cos²θ — the 1's cancel cleanly.",
+        "Adding 1 to the '2cos²θ − 1' face erases the constant, leaving 2cos²θ."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which cos 2θ form makes 1 + cos 2θ collapse most cleanly?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2cos²θ − 1 → gives 1 + 2cos²θ − 1 = 2cos²θ",
+            "correct": true,
+            "feedback": "Right — the +1 cancels the −1, leaving the clean 2cos²θ (the root of the cos² power-reduction)."
+          },
+          {
+            "id": "o2",
+            "label": "1 − 2sin²θ → gives 2 − 2sin²θ",
+            "feedback": "That's valid but leaves a 2 and a sine term — less clean than the 2cos²θ the other form gives."
+          },
+          {
+            "id": "o3",
+            "label": "cos²θ − sin²θ → gives 1 + cos²θ − sin²θ",
+            "feedback": "That keeps both functions. Use 2cos²θ − 1 so the constants cancel to 2cos²θ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-cos2-forms__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Pick the smart face.",
+      "conceptTag": "ti-cos2-forms",
+      "explanationVariants": [
+        "Given cos θ = 1/3 only, use 2cos²θ − 1 = 2(1/9) − 1 = 2/9 − 1 = −7/9 ≈ −0.7778.",
+        "The cosine-only form avoids finding sin θ: 2(1/9) − 1 = −7/9."
+      ],
+      "hints": [
+        "You have cos θ but not sin θ — which face uses only cosine?",
+        "2cos²θ − 1.",
+        "2·(1/3)² − 1 = 2/9 − 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "θ with cos θ = 1/3. Find cos 2θ using the cosine-only form, to four decimals.",
+        "answer": -0.7778,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.7778,
+            "feedback": "Sign: 2(1/9) − 1 = 2/9 − 9/9 = −7/9 ≈ −0.7778, negative."
+          },
+          {
+            "value": -0.3333,
+            "feedback": "−0.3333 = −1/3. Apply the form: 2(1/9) − 1 = −7/9 ≈ −0.7778."
+          }
+        ],
+        "fallbackFeedback": "2(1/3)² − 1 = 2/9 − 1 = −7/9 ≈ −0.7778."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-cos2-forms__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One identity, three doors.",
+      "takeaways": [
+        "cos 2θ = cos²θ − sin²θ = 1 − 2sin²θ = 2cos²θ − 1.",
+        "Pick the face matching your given info or your cancellation goal.",
+        "Backwards, they give power-reduction: sin²θ = (1 − cos2θ)/2, cos²θ = (1 + cos2θ)/2."
+      ],
+      "teaser": "Final chapter: equations that only crack open with an identity."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-cos2-forms",
+      "concept": {
+        "id": "rem-ti0402-c",
+        "kind": "concept",
+        "body": "cos 2θ has three faces. Given sin only → use 1 − 2sin²θ. Given cos only → use 2cos²θ − 1. Power-reduction reads them backwards."
+      },
+      "check": {
+        "id": "rem-ti0402-k",
+        "kind": "check",
+        "body": "Right face.",
+        "conceptTag": "ti-cos2-forms",
+        "explanationVariants": [
+          "Given cos θ = 0.5: 2cos²θ − 1 = 2(0.25) − 1 = −0.5.",
+          "The cosine-only face: 2(0.25) − 1 = −0.5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "cos θ = 0.5. Use 2cos²θ − 1 to find cos 2θ.",
+          "answer": -0.5,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.5,
+              "feedback": "2(0.25) − 1 = 0.5 − 1 = −0.5, negative."
+            },
+            {
+              "value": 0,
+              "feedback": "2(0.25) = 0.5, then − 1 = −0.5, not 0."
+            }
+          ],
+          "fallbackFeedback": "2(0.5)² − 1 = −0.5."
+        }
+      }
+    }
+  ]
+}

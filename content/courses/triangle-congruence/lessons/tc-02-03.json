@@ -1,0 +1,319 @@
+{
+  "id": "tc-02-03",
+  "slug": "overlapping-triangles",
+  "title": "Overlapping Triangles",
+  "courseId": "triangle-congruence",
+  "chapterId": "ch2-hl-and-cpctc",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "tc-overlapping",
+      "concept": {
+        "id": "rem-tc-overlapping-c",
+        "kind": "concept",
+        "body": "Overlapping-triangle playbook: (1) redraw the two triangles separately; (2) the shared side or shared angle is equal to itself by the Reflexive Property; (3) add the given parts and pick a criterion. For a chained goal, use CPCTC from a first congruence to supply a part for a second."
+      },
+      "check": {
+        "id": "rem-tc-overlapping-k",
+        "kind": "check",
+        "body": "Shared angle reason.",
+        "conceptTag": "tc-overlapping",
+        "explanationVariants": [
+          "A shared angle equals itself by the Reflexive Property, just like a shared side.",
+          "Reflexivity covers a common angle as well as a common side."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Two overlapping triangles share angle ∠A. What justifies ∠A = ∠A?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Reflexive Property",
+              "correct": true,
+              "feedback": "Any part shared by both triangles equals itself — reflexive."
+            },
+            {
+              "id": "o2",
+              "label": "Vertical angles",
+              "correct": false,
+              "feedback": "∠A is SHARED, not formed by crossing lines. A common angle is reflexive."
+            },
+            {
+              "id": "o3",
+              "label": "Given",
+              "correct": false,
+              "feedback": "The shared angle usually isn't restated as given — it's reflexively equal."
+            },
+            {
+              "id": "o4",
+              "label": "CPCTC",
+              "correct": false,
+              "feedback": "CPCTC comes after congruence; the shared angle is an input, justified by reflexivity."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The trickiest proofs hide the triangles: they **overlap**, sharing a side or angle. The move is to mentally pull them apart into two separate triangles, then look for the shared part — which is reflexively equal. Once separated, the usual criteria apply as normal.",
+      "figure": "asa-criterion"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the shared part.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two overlapping triangles △ABC and △ABD share the full side AB. In a proof, how is AB handled?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "AB = AB by the Reflexive Property — it's a shared side of both",
+            "correct": true,
+            "feedback": "The overlap means AB belongs to both triangles, so it's reflexively equal — a free part for the criterion."
+          },
+          {
+            "id": "o2",
+            "label": "AB must be given separately for each triangle",
+            "correct": false,
+            "feedback": "You don't need it given twice — the SAME segment is shared, so it's reflexively equal in both."
+          },
+          {
+            "id": "o3",
+            "label": "AB is ignored because it overlaps",
+            "correct": false,
+            "feedback": "Far from ignored — the shared AB is a KEY free part, equal to itself by reflexivity."
+          },
+          {
+            "id": "o4",
+            "label": "AB creates a vertical angle",
+            "correct": false,
+            "feedback": "A shared SIDE gives a reflexive length, not a vertical angle. Vertical angles come from crossing lines."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why separate them?",
+      "conceptTag": "tc-overlapping",
+      "explanationVariants": [
+        "Pulling overlapping triangles apart makes the corresponding parts visible so you can match them to a criterion.",
+        "Separated, the shared side and matching parts are easy to line up — the overlap only hides them."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why redraw overlapping triangles as two separate triangles?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "To see the corresponding parts clearly and match them to a criterion",
+            "correct": true,
+            "feedback": "Separation exposes which sides and angles correspond — including the shared reflexive part — so a criterion can be applied."
+          },
+          {
+            "id": "o2",
+            "label": "Because overlapping triangles aren't real triangles",
+            "correct": false,
+            "feedback": "They're perfectly real — separating them is just a clarity trick, not a fix for something invalid."
+          },
+          {
+            "id": "o3",
+            "label": "To make the figure larger",
+            "correct": false,
+            "feedback": "Size isn't the point; visibility of corresponding parts is. Separation clarifies the correspondence."
+          },
+          {
+            "id": "o4",
+            "label": "Because CPCTC requires separate drawings",
+            "correct": false,
+            "feedback": "CPCTC doesn't require redrawing — separating is an optional aid to spot corresponding parts."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-overlapping__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Some conclusions need **two congruences in sequence**. First prove one pair of triangles congruent to get an intermediate equal part by CPCTC; then USE that part to prove a SECOND pair congruent, and CPCTC again for the final goal. Each CPCTC feeds the next proof — a relay.",
+      "figure": "sss-criterion"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the two-step proof.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "AB = AC locks the legs equal at 8, and BD = CD is given. Drag the apex to 70°, then decide what AD is doing in this figure.",
+        "targetCriterion": "SSS",
+        "startCriterion": "SAS",
+        "sideA": 8,
+        "sideB": 8,
+        "targetAngle": 70,
+        "angleStart": 40,
+        "angleStep": 5,
+        "requiredMoves": 4,
+        "constraint": "isoscelesLegs",
+        "constraintFeedback": "The legs came unlocked, so AB = AC is no longer true and the overlap argument breaks. Re-lock them.",
+        "successFeedback": "AD is the shared side — the part both triangles own. With AB = AC, BD = CD and AD common, that is SSS, so △ABD ≅ △ACD and ∠BAD = ∠CAD. The shared side is free evidence, and spotting it is the whole skill in an overlapping figure.",
+        "criterionFeedback": "Look again at what the givens actually are — every piece of this argument is a SIDE: the two equal legs, the two equal segments, and the one the triangles share. No angle is given anywhere.",
+        "angleFeedback": "Right criterion — now bring the apex angle to 70°.",
+        "evidenceFeedback": "Move through several positions first. The shared side AD stays shared at every one of them, which is why the argument does not depend on the picture."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The relay pattern.",
+      "conceptTag": "tc-overlapping",
+      "explanationVariants": [
+        "In a two-step proof, the first CPCTC produces a part that becomes an INPUT to the second congruence proof.",
+        "Chain: prove congruence, CPCTC a part, use it to prove the next congruence, CPCTC the goal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In a two-congruence proof, what links the first congruence to the second?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A part obtained by CPCTC from the first becomes an input to the second",
+            "correct": true,
+            "feedback": "The first CPCTC hands you an equal part, which you then use to prove the second pair congruent."
+          },
+          {
+            "id": "o2",
+            "label": "The second proof ignores the first",
+            "correct": false,
+            "feedback": "They're linked precisely because the first CPCTC supplies a part the second proof needs."
+          },
+          {
+            "id": "o3",
+            "label": "Both proofs must use SSS",
+            "correct": false,
+            "feedback": "Either proof can use any criterion — the link is the shared part from CPCTC, not a fixed criterion."
+          },
+          {
+            "id": "o4",
+            "label": "The two triangles must be identical",
+            "correct": false,
+            "feedback": "They're different triangles; what connects the stages is the CPCTC part passed between them."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-overlapping__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A planning tip for these: work BACKWARD from the goal. Ask 'which two triangles contain my target part?' Then 'what do I need to prove those congruent?' If a needed part isn't given, ask 'which earlier congruence could CPCTC it?' Backward planning turns a maze into a checklist.",
+      "figure": "sas-criterion"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Plan backward.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Your goal is to prove ∠1 = ∠2, but no triangle congruence is given directly. What's the first planning question?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Which two triangles contain ∠1 and ∠2 as corresponding parts?",
+            "correct": true,
+            "feedback": "Locate the triangles holding your target angles — then you know which congruence to aim for."
+          },
+          {
+            "id": "o2",
+            "label": "What is the measure of ∠1?",
+            "correct": false,
+            "feedback": "Measuring one angle proves nothing generally — you want the triangles that CONTAIN the angles, to set up CPCTC."
+          },
+          {
+            "id": "o3",
+            "label": "Are ∠1 and ∠2 acute or obtuse?",
+            "correct": false,
+            "feedback": "Their type doesn't drive the proof. Finding the triangles that contain them does."
+          },
+          {
+            "id": "o4",
+            "label": "How large is the whole figure?",
+            "correct": false,
+            "feedback": "Size is irrelevant to the logic. Start by locating the two triangles holding the target angles."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Overlap with a shared angle.",
+      "conceptTag": "tc-overlapping",
+      "hints": [
+        "The two triangles share angle ∠A at the common vertex — what's that worth?",
+        "A shared angle is equal to itself (reflexive), like a shared side.",
+        "With the shared ∠A plus the given equal sides around it, which criterion completes?"
+      ],
+      "explanationVariants": [
+        "The shared vertex angle ∠A is reflexively equal to itself; combined with the two given equal sides around it, that's the included angle of an SAS congruence.",
+        "A common angle is a reflexive free part — here it's the included angle, giving SAS."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two overlapping triangles share vertex angle ∠A, and the two sides forming ∠A are equal in each. Which criterion proves them congruent?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "SAS, with the shared ∠A as the included angle",
+            "correct": true,
+            "feedback": "The common angle ∠A equals itself (reflexive) and sits between the two equal sides — that's SAS."
+          },
+          {
+            "id": "o2",
+            "label": "ASA, using two shared angles",
+            "correct": false,
+            "feedback": "Only ONE angle (∠A) is shared. With two SIDES around it, the pattern is SAS, not ASA."
+          },
+          {
+            "id": "o3",
+            "label": "SSS, using three shared sides",
+            "correct": false,
+            "feedback": "Only two sides are known equal here; the shared ∠A supplies the third part. That's SAS."
+          },
+          {
+            "id": "o4",
+            "label": "HL, using a hypotenuse",
+            "correct": false,
+            "feedback": "There's no right angle stated here — the shared angle with two sides gives SAS."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-overlapping__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Untangling triangles.",
+      "takeaways": [
+        "Overlapping triangles: pull them apart; the shared side or angle is reflexively equal.",
+        "Two-step proofs relay a CPCTC part from the first congruence into the second.",
+        "Plan backward: find the triangles holding the target, then what proves them congruent."
+      ],
+      "teaser": "Next chapter: isosceles and equilateral triangles — equal sides and equal angles, each proving the other."
+    }
+  ]
+}

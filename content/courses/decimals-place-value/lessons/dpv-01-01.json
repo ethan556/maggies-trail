@@ -1,0 +1,338 @@
+{
+  "id": "dpv-01-01",
+  "slug": "tenths-the-first-rung-below-one",
+  "title": "Tenths: The First Rung Below One",
+  "courseId": "decimals-place-value",
+  "chapterId": "ch1-ladder-below-one",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You already climbed the ×10 ladder up to a million: each rung left is ten times bigger. Now climb the other way. Split one whole into 10 equal parts and each part is a **tenth** — the first rung *below* the ones place. We write one tenth as **0.1**, and the dot (the decimal point) marks where the ones place ends.",
+      "figure": "decimal-tenths"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A tenth is one of ten equal steps.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 0,
+        "max": 1,
+        "step": 0.1,
+        "tickStep": 0.1,
+        "target": 0.7,
+        "start": 0,
+        "prompt": "Place 0.7 on the line from 0 to 1.",
+        "successFeedback": "Seven steps of one tenth. The gap from 0 to 1 is cut into ten, and 0.7 is the seventh mark — decimals are just a finer set of rungs on the same ladder.",
+        "lowFeedback": "Your marker is below 0.7 — you have taken fewer than 7 tenths.",
+        "highFeedback": "Your marker is above 0.7 — you have taken more than 7 tenths."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 0.7 closer to 0 or to 1?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 0"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 1"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "max",
+        "reveal": "0.7 sits 0.7 from 0 and 0.3 from 1 — the 1 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "tenths-intro",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents tenths intro.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tenths intro must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tenths intro."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimals-place-value:tenths-intro",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Tenths as a fraction.",
+      "conceptTag": "tenths-intro",
+      "explanationVariants": [
+        "0.7 means 7 out of 10 equal parts — the fraction 7/10.",
+        "The tenths digit is the numerator over a denominator of 10."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which fraction equals 0.7?",
+        "options": [
+          {
+            "id": "a",
+            "label": "7/10",
+            "correct": true,
+            "feedback": "0.7 is 7 tenths — exactly 7/10."
+          },
+          {
+            "id": "b",
+            "label": "7/100",
+            "feedback": "7/100 would be 0.07, seven hundredths. A single digit after the point is tenths: 0.7 = 7/10."
+          },
+          {
+            "id": "c",
+            "label": "1/7",
+            "feedback": "1/7 isn't a tenth at all. 0.7 means 7 of the 10 equal parts: 7/10."
+          },
+          {
+            "id": "d",
+            "label": "7",
+            "feedback": "7 is the whole number seven. 0.7 is less than one — seven tenths, or 7/10."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "decimal-representation",
+        "form": "tenthsFraction"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The ladder rule still holds, both directions: the ones place is **ten times** one tenth, and one tenth is **one tenth of** the ones place. So 0.1 × 10 = 1, and 1 ÷ 10 = 0.1. Tenths are just the ladder's next rung down.",
+      "figure": "dpv-ladder-below"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ten tenths.",
+      "conceptTag": "tenths-intro",
+      "explanationVariants": [
+        "Ten tenths rebuild one whole: 10 × 0.1 = 1.",
+        "Since one tenth is 1÷10, stacking ten of them returns to 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many tenths make one whole?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "tenths",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 tenth is just one part. It takes 10 of those parts to rebuild the whole: 10 tenths = 1."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is how many hundredths make a whole — a smaller rung. Ten tenths make one whole."
+          }
+        ],
+        "fallbackFeedback": "The whole was split into 10 equal parts, so it takes all 10 to rebuild it."
+      },
+      "variant": {
+        "gen": "decimal-representation",
+        "form": "unitCount"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each decimal to its fraction.",
+      "conceptTag": "tenths-intro",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each tenths decimal to its fraction.",
+        "left": [
+          {
+            "id": "d1",
+            "label": "0.3"
+          },
+          {
+            "id": "d2",
+            "label": "0.9"
+          },
+          {
+            "id": "d3",
+            "label": "0.6"
+          }
+        ],
+        "right": [
+          {
+            "id": "f1",
+            "label": "3/10"
+          },
+          {
+            "id": "f2",
+            "label": "9/10"
+          },
+          {
+            "id": "f3",
+            "label": "6/10"
+          }
+        ],
+        "pairs": {
+          "d1": "f1",
+          "d2": "f2",
+          "d3": "f3"
+        },
+        "pairErrors": [
+          {
+            "left": "d2",
+            "right": "f3",
+            "feedback": "6/10 is 0.6, not 0.9. The tenths digit is the numerator: 0.9 pairs with 9/10."
+          }
+        ],
+        "missFeedback": "The single digit after the point is the numerator, over a denominator of 10.",
+        "successFeedback": "0.3=3/10, 0.9=9/10, 0.6=6/10 — the tenths digit is always the numerator."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Order three tenths.",
+      "conceptTag": "tenths-intro",
+      "explanationVariants": [
+        "More shaded tenths means a bigger decimal: 0.3 < 0.5 < 0.7.",
+        "Comparing tenths is just comparing the single digits after the point."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which lists 0.3, 0.7, and 0.5 from LEAST to greatest?",
+        "options": [
+          {
+            "id": "a",
+            "label": "0.3, 0.5, 0.7",
+            "correct": true,
+            "feedback": "Comparing the tenths digits 3<5<7 orders them correctly."
+          },
+          {
+            "id": "b",
+            "label": "0.7, 0.5, 0.3",
+            "feedback": "That's greatest to least — the reverse. Least first is 0.3, 0.5, 0.7."
+          },
+          {
+            "id": "c",
+            "label": "0.5, 0.3, 0.7",
+            "feedback": "0.3 is smaller than 0.5, so it comes first. Least to greatest: 0.3, 0.5, 0.7."
+          },
+          {
+            "id": "d",
+            "label": "0.3, 0.7, 0.5",
+            "feedback": "0.5 is smaller than 0.7, so it comes before it. Least to greatest: 0.3, 0.5, 0.7."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "order-decimals",
+        "form": "tenthsOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The pocket of dimes.",
+      "conceptTag": "tenths-intro",
+      "hints": [
+        "A dime is one tenth of a dollar — 0.1 of a dollar.",
+        "Seven dimes is seven tenths.",
+        "Write seven tenths as a decimal."
+      ],
+      "explanationVariants": [
+        "Each dime is 1/10 of a dollar, so 7 dimes is 7/10 = 0.7 of a dollar.",
+        "Seven tenths of a dollar is written 0.7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A dime is one tenth of a dollar. Written as a decimal of a dollar, how much is 7 dimes? Enter the tenths digit (the ? in 0.?).",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70 would be 70 tenths — far more than a dollar. Seven dimes is 7 tenths: 0.7, digit 7."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is how many dimes make a whole dollar, not the count here. Seven dimes is 0.7."
+          }
+        ],
+        "fallbackFeedback": "Each dime is 0.1; seven of them is 7 tenths."
+      },
+      "variant": {
+        "gen": "decimal-representation",
+        "form": "moneyTenths"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rung below the ones.",
+      "takeaways": [
+        "Splitting one whole into 10 equal parts makes tenths; one tenth is written 0.1.",
+        "The single digit after the decimal point is the tenths digit — and the numerator over 10.",
+        "The ×10 ladder still rules: 0.1 × 10 = 1, and 1 ÷ 10 = 0.1."
+      ],
+      "teaser": "next: two more rungs down — hundredths and thousandths."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tenths-intro",
+      "concept": {
+        "id": "rem-ti-c",
+        "kind": "concept",
+        "body": "Quick rewind. **One tenth is one of 10 equal parts of a whole, written 0.1.** If 3 of the 10 parts are shaded, that's 3 tenths — the decimal 0.3, or the fraction 3/10."
+      },
+      "check": {
+        "id": "rem-ti-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tenths-intro",
+        "explanationVariants": [
+          "5 shaded parts of 10 is 5 tenths — 0.5.",
+          "The shaded count out of 10 is the tenths digit."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "5 of 10 equal parts are shaded. As a decimal, that's:",
+          "options": [
+            {
+              "id": "a",
+              "label": "0.5",
+              "correct": true,
+              "feedback": "5 tenths is 0.5."
+            },
+            {
+              "id": "b",
+              "label": "5.0",
+              "feedback": "5.0 is the whole number five. 5 out of 10 parts is 5 tenths: 0.5."
+            },
+            {
+              "id": "c",
+              "label": "0.05",
+              "feedback": "0.05 is five hundredths, a smaller rung. 5 of 10 parts is 5 tenths: 0.5."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

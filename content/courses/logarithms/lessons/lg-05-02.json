@@ -1,0 +1,264 @@
+{
+  "id": "lg-05-02",
+  "slug": "half-life",
+  "title": "Half-Life",
+  "courseId": "logarithms",
+  "chapterId": "ch5-models-and-logarithmic-scales",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Radioactive decay runs on a **half-life** h: every h units of time, half the sample survives. The model: **N = N₀ · (1/2)^(t/h)**. Iodine-131's half-life is 8 days; 160 mg after 24 days is 3 half-lives: 160 → 80 → 40 → **20 mg**. The exponent t/h counts the halvings.",
+      "figure": "lg-half-life"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Count the halvings.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 3,
+        "targetBase": 0.5,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "15 hours is three 5-hour half-lives. Slide the base to 0.5 and read base³.",
+        "successFeedback": "(1/2)³ = 0.125, and 240 × 0.125 = 30 mg. Counting half-lives is counting how many times the base multiplies in — three halvings, not a division by three.",
+        "lowFeedback": "base³ is still above 0.125.",
+        "highFeedback": "base³ has dropped below 0.125."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Fractional half-lives run through the formula's exponent. After 4 days with h = 8: N = 160·(1/2)^(4/8) = 160·(1/2)^(1/2) ≈ 160 · 0.707 ≈ 113 mg — about **71% survives** at the halfway mark, not 75%, because decay compounds. And 'how long?' questions fall to ln, exactly like every exponential equation.",
+      "figure": "lg-fractional-half-life"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the model.",
+      "conceptTag": "lg-halflife",
+      "explanationVariants": [
+        "In N = 500·(1/2)^(t/12), the 12 divides t — it's the half-life; 500 is the start.",
+        "The denominator under t is always the half-life."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For N = 500·(1/2)^(t/12), the starting amount and half-life are:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "500 and 12",
+            "correct": true,
+            "feedback": "Right — at t = 12 exactly one halving has occurred: N = 250."
+          },
+          {
+            "id": "o2",
+            "label": "500 and 1/2",
+            "correct": false,
+            "feedback": "The 1/2 is the decay FACTOR per half-life — the half-life itself is the 12 under t."
+          },
+          {
+            "id": "o3",
+            "label": "12 and 500",
+            "correct": false,
+            "feedback": "The coefficient out front (500) is the start; the t-divisor (12) is the half-life."
+          },
+          {
+            "id": "o4",
+            "label": "250 and 12",
+            "correct": false,
+            "feedback": "250 is the amount AFTER one half-life — the start (t = 0) is the full 500."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-halflife__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Evaluate at a checkpoint.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "N = 500·(1/2)^(t/12): how much remains at t = 36?",
+        "answer": 62.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 125,
+            "feedback": "36/12 = 3 halvings (not 2): 500 → 250 → 125 → 62.5."
+          },
+          {
+            "value": 13.9,
+            "feedback": "36/12 = 3, so (1/2)³ = 1/8: 500/8 = 62.5 (dividing by 36 treats time as the divisor)."
+          }
+        ],
+        "fallbackFeedback": "(1/2)³ = 1/8 → 500/8 = 62.5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Halfway through a half-life.",
+      "conceptTag": "lg-halflife",
+      "explanationVariants": [
+        "(1/2)^(1/2) = 1/√2 ≈ 0.707 — about 71% survives at half a half-life, not 75%.",
+        "The halvings compound; the halfway survival is the square ROOT of 1/2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Half-life 8 days. What fraction survives after 4 days?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(1/2)^(1/2) = 1/√2 ≈ 71%",
+            "correct": true,
+            "feedback": "Right — exponent 4/8 = 1/2, a square root of one half."
+          },
+          {
+            "id": "o2",
+            "label": "exactly 75%",
+            "correct": false,
+            "feedback": "75% averages the endpoints (100% and 50%) — decay compounds: (1/2)^(1/2) ≈ 70.7%."
+          },
+          {
+            "id": "o3",
+            "label": "exactly 50%",
+            "correct": false,
+            "feedback": "50% takes the FULL 8 days — 4 days is only half a halving."
+          },
+          {
+            "id": "o4",
+            "label": "25%",
+            "correct": false,
+            "feedback": "25% is TWO half-lives (16 days) — 4 days leaves ≈ 71%."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-halflife__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Solve for time.",
+      "conceptTag": "lg-halflife",
+      "explanationVariants": [
+        "(1/2)^(t/8) = 1/16: since 1/16 = (1/2)⁴, t/8 = 4 → t = 32 days.",
+        "Match the halvings: four of them reach a sixteenth."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Half-life 8 days. After how many days does 1/16 of the sample remain?",
+        "answer": 32,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "1/16 = (1/2)⁴ needs FOUR half-lives: 4 · 8 = 32 days (2 reads 16/8)."
+          },
+          {
+            "value": 128,
+            "feedback": "Multiply the half-life by the NUMBER of halvings (4), not by 16: 32 days."
+          }
+        ],
+        "fallbackFeedback": "t/8 = 4 → t = 32."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-halflife__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Logs finish the job.",
+      "conceptTag": "lg-halflife",
+      "explanationVariants": [
+        "(1/2)^(t/10) = 0.3 → (t/10)·ln(1/2) = ln 0.3 → t = 10 · (ln 0.3)/(ln 0.5) = 10 · (−1.204)/(−0.693) ≈ 17.4 years.",
+        "Take ln of both sides; two negatives divide to a positive count of halvings ≈ 1.74."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Half-life 10 years. Using ln 0.3 ≈ −1.204 and ln 0.5 ≈ −0.693, after how many YEARS does 30% remain (one decimal)?",
+        "answer": 17.4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4.3,
+            "feedback": "Multiply by the half-life 10: (1.204/0.693) ≈ 1.74 halvings × 10 = 17.4 years."
+          },
+          {
+            "value": 7,
+            "feedback": "70% GONE isn't 7 years — solve (1/2)^(t/10) = 0.3 with logs: ≈ 17.4 years."
+          }
+        ],
+        "fallbackFeedback": "t = 10 · (−1.204)/(−0.693) ≈ 17.4 years; sanity: between 1 half-life (50% left) and 2 (25% left). ✓"
+      },
+      "hints": [
+        "Set (1/2)^(t/10) = 0.3 and take ln of both sides.",
+        "(t/10) · ln(1/2) = ln 0.3 → t/10 = 1.204/0.693 ≈ 1.74.",
+        "t ≈ 17.4 years."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-halflife__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "N = N₀(1/2)^(t/h): the exponent counts halvings.",
+      "takeaways": [
+        "Whole half-lives: divide repeatedly; fractional ones: fractional exponents.",
+        "Half a half-life leaves ≈ 71%, not 75% — decay compounds.",
+        "Non-matching targets fall to ln, like every exponential equation."
+      ],
+      "teaser": "The finale: scales that measure earthquakes, acidity, and loudness — logs in the wild."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-halflife",
+      "concept": {
+        "id": "rem-lg0502-c",
+        "kind": "concept",
+        "body": "Halvings one at a time: 80 mg with half-life 6 hours, after 12 hours. That's 12/6 = 2 halvings."
+      },
+      "check": {
+        "id": "rem-lg0502-k",
+        "kind": "check",
+        "body": "Halve twice.",
+        "conceptTag": "lg-halflife",
+        "explanationVariants": [
+          "80 → 40 → 20 mg.",
+          "Two halvings divide by 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "80 mg, half-life 6 hours: how many mg after 12 hours?",
+          "answer": 20,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 40,
+              "feedback": "12 hours is TWO half-lives (12/6 = 2): 80 → 40 → 20."
+            },
+            {
+              "value": 6.7,
+              "feedback": "Divide by 2 twice (by 4 total), not by 12: 20 mg."
+            }
+          ],
+          "fallbackFeedback": "80/4 = 20."
+        }
+      }
+    }
+  ]
+}

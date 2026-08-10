@@ -1,0 +1,308 @@
+{
+  "id": "nls-02-03",
+  "slug": "miss-touch-cross",
+  "title": "Miss, Touch, Cross",
+  "courseId": "nonlinear-systems",
+  "chapterId": "ch2-line-meets-circle",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The zero-one-two story replays on the circle, and horizontal lines tell it cleanest. y = 3 in x² + y² = 25 leaves x² = 16: two punctures. y = 5 leaves x² = 0: one touch — tangent at the very top. y = 6 leaves x² = −11: impossible, a miss.",
+      "figure": "nls-horizontal-cases"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two, from a chord.",
+      "conceptTag": "nls-tangent-miss",
+      "explanationVariants": [
+        "y = 3 gives x² = 25 − 9 = 16, so x = ±4: crossings (−4, 3) and (4, 3).",
+        "Height 3 is inside the radius, so the line cuts a chord with two ends."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 3 meets x² + y² = 25 where x² = 16. How many intersection points?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "x = +4 AND x = −4 both work — the horizontal line enters and exits."
+          },
+          {
+            "value": 4,
+            "feedback": "Each root is one point on THIS line; the count is 2, not 4."
+          }
+        ],
+        "fallbackFeedback": "x² = 16 gives x = ±4 — two symmetric points, (4, 3) and (−4, 3)."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One, at the top.",
+      "conceptTag": "nls-tangent-miss",
+      "explanationVariants": [
+        "y = 5 forces x² = 0 — the single point (0, 5), where the line grazes the circle's crown.",
+        "x² = 0 has one root, doubled: tangency at the topmost point."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "y = 5 meets x² + y² = 25 where x² = 0. Geometrically the line…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Is tangent at (0, 5)",
+            "correct": true,
+            "feedback": "The one doubled root is the circle's north pole — the line rests on the crown."
+          },
+          {
+            "id": "o2",
+            "label": "Crosses at two points",
+            "correct": false,
+            "feedback": "Two crossings need x² > 0; zero has a single root."
+          },
+          {
+            "id": "o3",
+            "label": "Misses entirely",
+            "correct": false,
+            "feedback": "A miss needs x² NEGATIVE; zero still yields the point (0, 5)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The full altitude test.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Each horizontal line meets x² + y² = 25 how many times? Compute x² = 25 − k² and sort.",
+        "buckets": [
+          {
+            "id": "two",
+            "label": "Two — chord"
+          },
+          {
+            "id": "one",
+            "label": "One — tangent"
+          },
+          {
+            "id": "zero",
+            "label": "None — miss"
+          }
+        ],
+        "items": [
+          {
+            "id": "a",
+            "label": "y = 0",
+            "bucketId": "two",
+            "feedback": "y = 0 is the diameter line: x² = 25 gives ±5 — two points."
+          },
+          {
+            "id": "b",
+            "label": "y = 4",
+            "bucketId": "two",
+            "feedback": "y = 4: x² = 9 gives ±3 — still two, the chord is just shorter."
+          },
+          {
+            "id": "c",
+            "label": "y = 5",
+            "bucketId": "one",
+            "feedback": "y = 5 grazes the top: x² = 0 has one answer — tangent."
+          },
+          {
+            "id": "d",
+            "label": "y = −5",
+            "bucketId": "one",
+            "feedback": "y = −5 grazes the bottom — one point, tangent again."
+          },
+          {
+            "id": "e",
+            "label": "y = 7",
+            "bucketId": "zero",
+            "feedback": "y = 7: x² = 25 − 49 < 0 — no real x, the line sails above the circle."
+          }
+        ],
+        "missFeedback": "x² = 25 − k²: positive → two, zero → one, negative → none. Compare each |k| with the radius 5.",
+        "successFeedback": "Heights inside the radius cut chords (y = 0 is the widest — the diameter), |k| = 5 grazes top and bottom, and y = 7 sails over. The radius is the whole verdict: |k| vs 5."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "One chord point, placed by hand.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "k1's chord: y = 3 meets x² + y² = 25 where x² = 16. Plot the first-quadrant intersection.",
+        "cols": 6,
+        "rows": 6,
+        "targets": [
+          {
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 3,
+            "y": 4,
+            "feedback": "Coordinates swapped — that is the y = 4 chord's point. Here y = 3 is fixed and x² = 16."
+          },
+          {
+            "x": 5,
+            "y": 3,
+            "feedback": "x = 5 only happens at y = 0: check 25 + 9 = 34 ≠ 25. The radius budget is already spent."
+          }
+        ],
+        "missFeedback": "With y = 3 the circle demands x² = 25 − 9 = 16, so the first-quadrant point is (4, 3).",
+        "successFeedback": "(4, 3): 16 + 9 = 25 exactly — on the circle AND on the line, one of the chord's two crossings."
+      },
+      "predict": {
+        "prompt": "Without computing: y = −5 will meet the circle how many times?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Once — tangent at the bottom"
+          },
+          {
+            "id": "two",
+            "label": "Twice"
+          },
+          {
+            "id": "zero",
+            "label": "Never"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "By symmetry with y = 5 — it grazes the BOTTOM at (0, −5), since x² = 25 − 25 = 0 again. The circle treats up and down alike; every tangent height has a mirror twin."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The pattern in one sentence: a horizontal line y = k meets the radius-5 circle twice when |k| < 5, once when |k| = 5, never when |k| > 5. Distance-to-center against radius — the same three-way comparison the discriminant made for parabolas, wearing geometric clothes.",
+      "figure": "nls-height-rule"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Apply the comparison cold.",
+      "conceptTag": "nls-tangent-miss",
+      "explanationVariants": [
+        "|−2| = 2 < 5, so y = −2 cuts a chord: two points, at x = ±√21.",
+        "Height 2 below center is still inside the radius — two crossings."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many times does y = −2 meet x² + y² = 25?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Twice — |−2| < 5",
+            "correct": true,
+            "feedback": "x² = 21 > 0: two roots, a chord below the middle."
+          },
+          {
+            "id": "o2",
+            "label": "Once — negative heights are tangent",
+            "correct": false,
+            "feedback": "Tangency needs |k| EQUAL to 5; 2 is well inside."
+          },
+          {
+            "id": "o3",
+            "label": "Never — the circle stops at y = 0",
+            "correct": false,
+            "feedback": "The circle spans y from −5 to 5; its lower half is half the rim."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tilted tangent, by discriminant.",
+      "conceptTag": "nls-tangent-miss",
+      "explanationVariants": [
+        "y = x + c into the circle gives 2x² + 2cx + c² − 25 = 0; discriminant 4c² − 8(c² − 25) = 200 − 4c², zero at c² = 50 — c = √50 ≈ 7.07.",
+        "Tangency for the tilted line lands at c = ±√50, just past 7 — farther out than the horizontal tangent's 5, because the line meets the circle diagonally."
+      ],
+      "hints": [
+        "Substitute y = x + c: 2x² + 2cx + (c² − 25) = 0. Write the discriminant.",
+        "(2c)² − 8(c² − 25) = 200 − 4c². Set it to zero.",
+        "c² = 50, so the positive c is √50 ≈ 7.07 — enter it to one decimal."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For what positive c (one decimal) is y = x + c tangent to x² + y² = 25?",
+        "answer": 7.1,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the HORIZONTAL tangent height; a tilted line stays farther out — c = √50 ≈ 7.1."
+          },
+          {
+            "value": 50,
+            "feedback": "50 is c²; the tangent offset is its root, ≈ 7.1."
+          },
+          {
+            "value": 7,
+            "feedback": "Close — √50 = 7.07, which rounds to 7.1."
+          }
+        ],
+        "fallbackFeedback": "Tangency puts the line at distance 5 from the center: |c|/√2 = 5, so c = 5√2 ≈ 7.1."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three verdicts, one comparison.",
+      "takeaways": [
+        "|height| vs radius: under cuts, equal grazes, over misses.",
+        "Tangency is the doubled root again — x² = 0 or discriminant 0.",
+        "Tilted lines answer to the same discriminant as parabolas did."
+      ],
+      "teaser": "next course idea: the bell curve — where piles of chance take a predictable shape."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "nls-tangent-miss",
+      "concept": {
+        "id": "rem-nls-tangent-miss-c",
+        "kind": "concept",
+        "body": "The pattern in one sentence: a horizontal line y = k meets the radius-5 circle twice when |k| < 5, once when |k| = 5, never when |k| > 5. Distance-to-center against radius — the same three-way comparison the discriminant made for parabolas, wearing geometric clothes."
+      },
+      "check": {
+        "id": "rem-nls-tangent-miss-k",
+        "kind": "check",
+        "body": "Two, from a chord.",
+        "conceptTag": "nls-tangent-miss",
+        "explanationVariants": [
+          "y = 3 gives x² = 25 − 9 = 16, so x = ±4: crossings (−4, 3) and (4, 3).",
+          "Height 3 is inside the radius, so the line cuts a chord with two ends."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "y = 3 meets x² + y² = 25 where x² = 16. How many intersection points?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "x = +4 AND x = −4 both work — the horizontal line enters and exits."
+            },
+            {
+              "value": 4,
+              "feedback": "Each root is one point on THIS line; the count is 2, not 4."
+            }
+          ],
+          "fallbackFeedback": "x² = 16 gives x = ±4 — two symmetric points, (4, 3) and (−4, 3)."
+        }
+      }
+    }
+  ]
+}

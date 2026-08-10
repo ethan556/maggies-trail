@@ -1,0 +1,269 @@
+{
+ "id": "lg-05-03",
+ "slug": "logarithmic-scales",
+ "title": "Logarithmic Scales",
+ "courseId": "logarithms",
+ "chapterId": "ch5-models-and-logarithmic-scales",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Some quantities span such vast ranges that scientists measure their **logarithms** instead. On a log scale, **each step of 1 means ×10 underneath**: a magnitude-6 earthquake shakes 10 times harder than a magnitude 5, and 100 times harder than a magnitude 4. Equal steps, equal multiplications.",
+   "figure": "log-scale-ladder"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Steps to factors.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "How many times more shaking does a magnitude 7 quake produce than a magnitude 4?",
+    "answer": 1000,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is the STEP COUNT — each step multiplies by 10: 10³ = 1000 times."
+     },
+     {
+      "value": 30,
+      "feedback": "The factors MULTIPLY (10 · 10 · 10), they don't add as 3 · 10: 1000."
+     }
+    ],
+    "fallbackFeedback": "3 steps → 10³ = 1000×."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "pH runs the same way (each pH step = ×10 in acidity, downward: pH 3 is 10× more acidic than pH 4), and decibels use steps of 10 dB per ×10 of intensity. Converting is always the same move: **factor = 10^(difference in scale readings)** — and backwards, **difference = log(factor)**.",
+   "figure": "lg-ph-scale"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "pH gap.",
+   "conceptTag": "lg-scales",
+   "explanationVariants": [
+    "pH 2 vs pH 5: three steps, 10³ = 1000× more acidic.",
+    "Lower pH = more acid; each step is a factor of ten."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "How many times more acidic is pH 2 than pH 5?",
+    "answer": 1000,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is the pH DIFFERENCE — the acidity factor is 10³ = 1000."
+     },
+     {
+      "value": 100,
+      "feedback": "The gap is 5 − 2 = 3 steps, so 10³ = 1000× (100 counts only two)."
+     }
+    ],
+    "fallbackFeedback": "10^(5−2) = 1000×."
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-scales__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Backwards: factor to steps.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "One sound is 100,000 times more intense than another. How many steps apart are they on a log₁₀ intensity scale?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 100000,
+      "feedback": "The scale reads the LOG: log 100000 = 5 steps."
+     },
+     {
+      "value": 4,
+      "feedback": "Count the zeros: 100,000 = 10⁵ — five steps."
+     }
+    ],
+    "fallbackFeedback": "log 100000 = 5."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Non-integer readings.",
+   "conceptTag": "lg-scales",
+   "explanationVariants": [
+    "A gap of 1.5 means 10^1.5 = 10 · 10^0.5 ≈ 10 · 3.16 ≈ 31.6× — between 10× and 100×.",
+    "Fractional steps interpolate multiplicatively."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Magnitude 6.5 vs magnitude 5: about how many times more shaking?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "≈ 32× (10^1.5)",
+      "correct": true,
+      "feedback": "Right — 10^1.5 = 10 · √10 ≈ 31.6."
+     },
+     {
+      "id": "o2",
+      "label": "15×",
+      "correct": false,
+      "feedback": "The gap 1.5 is an EXPONENT on 10 — the factor is 10^1.5 ≈ 32, not 1.5 · 10."
+     },
+     {
+      "id": "o3",
+      "label": "exactly 10×",
+      "correct": false,
+      "feedback": "10× is a gap of exactly 1 — this gap is 1.5, landing near 32×."
+     },
+     {
+      "id": "o4",
+      "label": "150×",
+      "correct": false,
+      "feedback": "150 would need a gap over 2 (100×) — 1.5 steps give ≈ 32×."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-scales__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Why log scales exist.",
+   "conceptTag": "lg-scales",
+   "explanationVariants": [
+    "Plotting 1 to 1,000,000,000 linearly crushes everything small into one pixel — logging the values spreads nine orders of magnitude into nine equal steps.",
+    "Log scales trade absolute gaps for RATIO gaps."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why measure earthquakes on a log scale instead of raw shaking intensity?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "intensities span billions-to-1; logs compress that into small, comparable numbers",
+      "correct": true,
+      "feedback": "Right — magnitudes 1 through 9 stand for nine factors of ten."
+     },
+     {
+      "id": "o2",
+      "label": "logs make the shaking smaller",
+      "correct": false,
+      "feedback": "The QUAKE is unchanged — only the measuring stick compresses; a 9 still devastates."
+     },
+     {
+      "id": "o3",
+      "label": "raw intensity can't be measured",
+      "correct": false,
+      "feedback": "Seismometers measure it fine — the numbers are just unwieldy (billions) without logging."
+     },
+     {
+      "id": "o4",
+      "label": "log scales are more accurate",
+      "correct": false,
+      "feedback": "Accuracy is the instrument's job — logs solve a RANGE problem, not a precision one."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-scales__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Course capstone.",
+   "conceptTag": "lg-scales",
+   "explanationVariants": [
+    "From magnitude 4.0, '×200 stronger' means a gap of log 200 = log 2 + log 100 = 0.301 + 2 ≈ 2.3 — magnitude ≈ 6.3. The properties from Chapter 2 finish a real measurement.",
+    "log 200 = log(2 · 10²) = 2.301 ≈ 2.3 steps above 4.0."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A quake shakes 200× harder than a magnitude 4.0. Using log 2 ≈ 0.301, what is its magnitude (one decimal)?",
+    "answer": 6.3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 204,
+      "feedback": "The scale ADDS the LOG of the factor: 4.0 + log 200 ≈ 6.3 — never the raw 200."
+     },
+     {
+      "value": 6,
+      "feedback": "log 200 = log 2 + log 100 ≈ 2.3 (not 2 exactly): 4.0 + 2.3 = 6.3."
+     }
+    ],
+    "fallbackFeedback": "4.0 + log 200 = 4.0 + 2.301 ≈ 6.3."
+   },
+   "hints": [
+    "The magnitude gap is log(factor) = log 200.",
+    "log 200 = log 2 + log 100 ≈ 0.301 + 2 = 2.301.",
+    "4.0 + 2.3 = 6.3."
+   ],
+   "variant": {
+    "gen": "a2-logarithms",
+    "form": "lg-scales__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Log scales turn factors into steps: factor = 10^gap, gap = log(factor).",
+   "takeaways": [
+    "Each step of 1 is ×10 underneath — steps add, factors multiply.",
+    "Fractional gaps give in-between factors (1.5 steps ≈ 32×).",
+    "The log properties compute real measurements — this is the course, applied."
+   ],
+   "teaser": "That completes Exponentials & Logarithms — sequences and series come next in Algebra 2."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lg-scales",
+   "concept": {
+    "id": "rem-lg0503-c",
+    "kind": "concept",
+    "body": "One step at a time: magnitude 5 vs magnitude 3 is 2 steps, each a ×10."
+   },
+   "check": {
+    "id": "rem-lg0503-k",
+    "kind": "check",
+    "body": "Multiply the tens.",
+    "conceptTag": "lg-scales",
+    "explanationVariants": [
+     "10 · 10 = 100×.",
+     "Two steps compound to a hundredfold."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "How many times more shaking: magnitude 5 vs magnitude 3?",
+     "answer": 100,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "2 is the step count — the FACTOR is 10² = 100."
+      },
+      {
+       "value": 20,
+       "feedback": "The tens MULTIPLY (10 · 10 = 100); they don't add to 20."
+      }
+     ],
+     "fallbackFeedback": "10² = 100×."
+    }
+   }
+  }
+ ]
+}

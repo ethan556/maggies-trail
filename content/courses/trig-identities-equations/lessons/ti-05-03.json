@@ -1,0 +1,249 @@
+{
+  "id": "ti-05-03",
+  "slug": "extraneous-and-lost-roots",
+  "title": "Traps: Extraneous & Lost Roots",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch5-identity-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two operations create traps. **Squaring** both sides can invent **extraneous** roots — always substitute back and discard failures. **Dividing** by a trig factor can DELETE roots — factor instead of dividing (recall). Both traps come from operations that aren't reversible.",
+      "figure": "ti-squaring-trap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Spot the extraneous root.",
+      "predict": {
+        "prompt": "Squaring both sides of cos x = 1 − sin x: does the solution set survive intact?",
+        "options": [
+          {
+            "id": "gains",
+            "label": "No — squaring can ADD impostors that solve the squared version only"
+          },
+          {
+            "id": "same",
+            "label": "Yes — squaring is reversible"
+          },
+          {
+            "id": "loses",
+            "label": "No — squaring silently DROPS solutions"
+          }
+        ],
+        "outcomeId": "gains",
+        "reveal": "Squaring adds: it makes cos x = −(1 − sin x) count too, so candidates appear that fail the original — x = π among them, as the entry shows. The danger zone is wherever cos x changes sign: land on that crossing. (Dividing by a trig factor is the opposite crime — it LOSES roots.)"
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = cos x and land the tip on its zero at 90° — the sign boundary where squaring starts minting extraneous candidates.",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "cos",
+        "targetFeature": {
+          "kind": "zero",
+          "x": 90,
+          "tol": 5
+        },
+        "successFeedback": "The crossing at 90° — past it, cos x is negative, and squaring can no longer tell cos x from −cos x. That blindness is what lets x = π sneak into the candidate list while failing the original: cos π = −1 ≠ 1 − sin π = 1. Always test candidates back in the unsquared equation.",
+        "lowFeedback": "cos is still positive here — squaring is safe on this side. The trouble starts at the crossing: keep dragging.",
+        "highFeedback": "You've crossed into negative territory — back up to the boundary itself, where the sign flips."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Confirm the survivors.",
+      "conceptTag": "ti-root-traps",
+      "explanationVariants": [
+        "x = 0: cos 0 = 1, 1 − sin 0 = 1 ✓. x = π/2: cos(π/2) = 0, 1 − sin(π/2) = 0 ✓. Both valid; π rejected.",
+        "The two survivors both balance the ORIGINAL equation."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "After rejecting the extraneous root, how many valid solutions does cos x = 1 − sin x have on [0, 2π)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "x = π failed the check (−1 ≠ 1). Only x = 0 and π/2 survive: two."
+          },
+          {
+            "value": 1,
+            "feedback": "Both x = 0 and x = π/2 satisfy the original equation: two valid roots."
+          }
+        ],
+        "fallbackFeedback": "x = 0 and π/2 check out; π is extraneous: two."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-root-traps__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The dividing trap: solving sin x cos x = sin x by DIVIDING by sin x gives only cos x = 1 — losing every solution where sin x = 0. Factor instead: sin x(cos x − 1) = 0 keeps BOTH branches. Never divide away a factor that can equal zero.",
+      "figure": "ti-dividing-trap"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Recover the lost roots.",
+      "conceptTag": "ti-root-traps",
+      "explanationVariants": [
+        "Factoring sin x(cos x − 1) = 0: sin x = 0 (0, π) and cos x = 1 (0). Distinct solutions 0 and π — dividing would have dropped π.",
+        "The sin x = 0 branch supplies x = π, invisible to the divide-by-sinx approach."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve sin x cos x = sin x on [0, 2π) by FACTORING. How many distinct solutions?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "Dividing by sin x gives only cos x = 1 (x = 0). Factoring keeps sin x = 0 too, adding x = π: two distinct (0, π)."
+          },
+          {
+            "value": 3,
+            "feedback": "cos x = 1 gives x = 0, which sin x = 0 ALSO gives — they overlap. Distinct solutions: 0 and π, so two."
+          }
+        ],
+        "fallbackFeedback": "sin x(cos x − 1) = 0: x = 0 and π (the cos x = 1 root x = 0 coincides). Two distinct."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-root-traps__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which trap is which?",
+      "conceptTag": "ti-root-traps",
+      "explanationVariants": [
+        "Squaring ADDS extraneous roots (check and discard); dividing REMOVES roots (factor instead).",
+        "Two opposite failures: false positives from squaring, false negatives from dividing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Match the operation to its danger:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Squaring adds extraneous roots; dividing loses roots",
+            "correct": true,
+            "feedback": "Right — always substitute back after squaring, and always factor instead of dividing."
+          },
+          {
+            "id": "o2",
+            "label": "Squaring loses roots; dividing adds roots",
+            "feedback": "Backwards: squaring INVENTS false roots (e.g. from ±); dividing DELETES the zeroed factor's roots."
+          },
+          {
+            "id": "o3",
+            "label": "Both operations only add roots",
+            "feedback": "Dividing removes roots — it's the opposite danger from squaring's added ones."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-root-traps__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full solve with a trap check.",
+      "conceptTag": "ti-root-traps",
+      "explanationVariants": [
+        "2sin x cos x = cos x → factor cos x(2sin x − 1) = 0 (don't divide!) → cos x = 0 (π/2, 3π/2) or sin x = 1/2 (π/6, 5π/6). Four solutions; sum = π/6 + π/2 + 5π/6 + 3π/2 = 3π ≈ 9.4248.",
+        "Factoring preserves the cos x = 0 branch that dividing would erase; four roots summing to 3π."
+      ],
+      "hints": [
+        "This is sin 2x = cos x again — factor, never divide by cos x.",
+        "cos x(2 sin x − 1) = 0.",
+        "cos x = 0 → π/2, 3π/2; sin x = 1/2 → π/6, 5π/6. Sum all four."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 2 sin x cos x = cos x on [0, 2π) by factoring. Sum the solutions, to four decimals.",
+        "answer": 9.4248,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 3.1416,
+            "feedback": "3.1416 = π counts only π/6 + 5π/6. Include the cos x = 0 branch (π/2, 3π/2): total 3π ≈ 9.4248."
+          },
+          {
+            "value": 6.2832,
+            "feedback": "6.2832 = 2π drops a solution — dividing by cos x loses π/2 and 3π/2. Factoring keeps all four: 3π ≈ 9.4248."
+          }
+        ],
+        "fallbackFeedback": "cos x(2sin x − 1) = 0: π/6, π/2, 5π/6, 3π/2; sum 3π ≈ 9.4248."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-root-traps__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Reversible moves only.",
+      "takeaways": [
+        "Squaring can add extraneous roots — always check in the original.",
+        "Dividing by a trig factor loses roots — factor to a product = 0 instead.",
+        "Both traps stem from non-reversible operations."
+      ],
+      "teaser": "Course complete — next in the band: polar coordinates and parametric curves."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-root-traps",
+      "concept": {
+        "id": "rem-ti0503-c",
+        "kind": "concept",
+        "body": "After squaring, TEST every candidate in the original (discard extraneous). Instead of dividing by a trig factor, FACTOR to a product = 0 to keep all roots."
+      },
+      "check": {
+        "id": "rem-ti0503-k",
+        "kind": "check",
+        "body": "One trap call.",
+        "conceptTag": "ti-root-traps",
+        "explanationVariants": [
+          "Dividing sin x = tan x by sin x would lose the sin x = 0 roots — factor instead.",
+          "The safe move is to factor, never divide by a possibly-zero factor."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "To solve sin x = tan x safely, you should:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Rewrite tan x = sin x/cos x and factor — don't divide by sin x",
+              "correct": true,
+              "feedback": "Right — sin x(1 − 1/cos x) = 0 keeps every branch."
+            },
+            {
+              "id": "o2",
+              "label": "Divide both sides by sin x",
+              "feedback": "That deletes the sin x = 0 solutions (0, π). Factor instead."
+            },
+            {
+              "id": "o3",
+              "label": "Square both sides",
+              "feedback": "Squaring risks extraneous roots here and isn't needed — convert tan and factor."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

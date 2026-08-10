@@ -1,0 +1,241 @@
+{
+  "id": "dr-05-03",
+  "slug": "inverses-and-reciprocal-slopes",
+  "title": "Inverses and the Reciprocal Slope",
+  "courseId": "derivative-rules",
+  "chapterId": "ch5-the-function-library",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An inverse is a reflection across y = x. Reflecting a line **swaps its rise and its run** — so a tangent of slope 4 becomes a tangent of slope 1/4.\n\n**(f⁻¹)′(b) = 1 / f′(a), where f(a) = b.**\n\nYou never need a formula for f⁻¹. You only need to know where the point came from.",
+      "figure": "dr-inverse-reciprocal"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Reciprocal, and evaluated at the right place.",
+      "conceptTag": "dr-inverse-derivative",
+      "explanationVariants": [
+        "f(2) = 8 and f′(x) = 3x², so f′(2) = 12. Therefore (f⁻¹)′(8) = 1/12.",
+        "The 8 is where the inverse is being evaluated; the 2 is where the ORIGINAL function is. Mixing them up is the error to avoid."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³, so f(2) = 8. Find (f⁻¹)′(8), as a decimal to four places.",
+        "answer": 0.0833,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is f′(2). The inverse's slope is its RECIPROCAL: 1/12 ≈ 0.0833."
+          },
+          {
+            "value": 0.6667,
+            "feedback": "That looks like 1/(3·something) with the wrong x. Use f′(2) = 3(2)² = 12, then take the reciprocal."
+          },
+          {
+            "value": 0.125,
+            "feedback": "That is 1/8 — the reciprocal of the OUTPUT, not of the derivative. It is 1/f′(2) = 1/12."
+          }
+        ],
+        "fallbackFeedback": "f′(2) = 12, so (f⁻¹)′(8) = 1/12 ≈ 0.0833."
+      },
+      "variant": {
+        "gen": "inverse-deriv"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reflection swaps rise and run.",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "slope",
+        "targetSlope": 4,
+        "targetX": 2,
+        "prompt": "Trace f(x) = x² until the tangent slope reads 4. The inverse curve's slope at the matching point is the reciprocal.",
+        "successFeedback": "Slope 4 at x = 2. Reflecting a curve across y = x swaps run and rise, so every slope becomes its own reciprocal — the inverse of x² has slope 1/4 at the matching point, and that is why the reciprocal rule needs no separate proof.",
+        "lowFeedback": "The tangent is still shallower than 4.",
+        "highFeedback": "The tangent has passed a slope of 4.",
+        "start": -3
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Where do you evaluate?",
+      "conceptTag": "dr-inverse-derivative",
+      "explanationVariants": [
+        "(f⁻¹)′(b) = 1/f′(a) where f(a) = b. The original derivative is evaluated at the INPUT that produced b, not at b itself.",
+        "The reflection sends (a, b) to (b, a), so the point on the inverse at x = b came from the point on f at x = a."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(3) = 10 and f′(3) = 5. What is (f⁻¹)′(10)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1/5",
+            "correct": true,
+            "feedback": "Right — the inverse at 10 corresponds to f at 3, and its slope is the reciprocal of f′(3) = 5."
+          },
+          {
+            "id": "o2",
+            "label": "5",
+            "correct": false,
+            "feedback": "That is f′(3) itself. Reflecting swaps rise and run, so the inverse's slope is the RECIPROCAL."
+          },
+          {
+            "id": "o3",
+            "label": "1/10",
+            "correct": false,
+            "feedback": "You reciprocated the output value instead of the derivative. It is 1/f′(3), not 1/f(3)."
+          },
+          {
+            "id": "o4",
+            "label": "1/3",
+            "correct": false,
+            "feedback": "You reciprocated the input. The rule reciprocates the DERIVATIVE at that input: 1/f′(3) = 1/5."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "inverse-deriv",
+        "form": "knownValues"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This is where the inverse trig derivatives come from — none of them need memorising as isolated facts.\n\n**(arcsin x)′ = 1/√(1 − x²)** · **(arctan x)′ = 1/(1 + x²)**\n\nEach is the reciprocal of the original's derivative, rewritten in terms of the new input. And each one is a clean algebraic expression: the trig has vanished entirely.",
+      "figure": "dr-inverse-reciprocal"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "An inverse trig derivative.",
+      "conceptTag": "dr-inverse-derivative",
+      "explanationVariants": [
+        "(arctan x)′ = 1/(1 + x²), and at x = 1 that is 1/2 = 0.5.",
+        "Notice the trig has disappeared entirely — differentiating an inverse trig function lands you in ordinary algebra."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = arctan x. Find f′(1), as a decimal.",
+        "answer": 0.5,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That is 1/(1 + x²) with x² read as 0. At x = 1 the denominator is 1 + 1 = 2, so the answer is 1/2."
+          },
+          {
+            "value": 0.785,
+            "feedback": "That is arctan 1 = π/4, the HEIGHT of the curve — its value, not its slope."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the denominator. The derivative is its reciprocal: 1/2."
+          }
+        ],
+        "fallbackFeedback": "(arctan x)′ = 1/(1 + x²) → at x = 1, 1/2 = 0.5."
+      },
+      "variant": {
+        "gen": "inverse-deriv",
+        "form": "arctan"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The whole chapter in one question.",
+      "conceptTag": "dr-inverse-derivative",
+      "hints": [
+        "You need (f⁻¹)′(5), so first find the a with f(a) = 5.",
+        "f(x) = x³ + x + 3. Try a = 1: 1 + 1 + 3 = 5. So a = 1.",
+        "f′(x) = 3x² + 1, so f′(1) = 4. Now take the reciprocal."
+      ],
+      "explanationVariants": [
+        "f(1) = 5, and f′(x) = 3x² + 1 gives f′(1) = 4. So (f⁻¹)′(5) = 1/4 = 0.25.",
+        "Notice you never inverted f — and you could not have: x³ + x + 3 = y has no pleasant solution for x. That is exactly why the rule is worth having."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ + x + 3. Find (f⁻¹)′(5), as a decimal.",
+        "answer": 0.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is f′(1). The inverse's slope is its reciprocal: 1/4."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is 1/5 — reciprocating the OUTPUT rather than the derivative. Find the a with f(a) = 5 (it is 1), then use 1/f′(1)."
+          },
+          {
+            "value": 0.0769,
+            "feedback": "That looks like 1/13 = 1/f′(2). But f(2) = 8 + 2 + 3 = 13, not 5. The right input is a = 1."
+          }
+        ],
+        "fallbackFeedback": "f(1) = 5 and f′(1) = 3 + 1 = 4, so (f⁻¹)′(5) = 1/4 = 0.25."
+      },
+      "variant": {
+        "gen": "inverse-deriv",
+        "form": "polyInverse"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Reflection inverts the slope.",
+      "takeaways": [
+        "(f⁻¹)′(b) = 1/f′(a), where f(a) = b — reflecting across y = x swaps rise and run.",
+        "Find the matching point FIRST. Evaluating f′ at the wrong place is the error this rule invites.",
+        "The inverse trig derivatives are just this rule applied, and the trig vanishes when you do it."
+      ],
+      "teaser": "You now have every differentiation rule there is. Next course: what they are FOR."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-inverse-derivative",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two steps, in this order. **One:** find the a with f(a) = b — the point that reflects onto the one you care about. **Two:** take 1/f′(a). Almost every error here is evaluating f′ at b instead of at a.",
+        "figure": "dr-inverse-reciprocal"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Find a first.",
+        "conceptTag": "dr-inverse-derivative",
+        "explanationVariants": [
+          "f(x) = x² with f(3) = 9, and f′(3) = 6. So (f⁻¹)′(9) = 1/6 ≈ 0.167.",
+          "The 9 tells you where the inverse is; the 3 is where f is."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x² (for x > 0), so f(3) = 9. Find (f⁻¹)′(9), as a decimal to three places.",
+          "answer": 0.167,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That is f′(3). Take its reciprocal: 1/6 ≈ 0.167."
+            },
+            {
+              "value": 0.111,
+              "feedback": "That is 1/9 — the reciprocal of the output. The rule reciprocates the DERIVATIVE: 1/f′(3) = 1/6."
+            }
+          ],
+          "fallbackFeedback": "f′(3) = 6, so (f⁻¹)′(9) = 1/6 ≈ 0.167."
+        }
+      }
+    }
+  ]
+}

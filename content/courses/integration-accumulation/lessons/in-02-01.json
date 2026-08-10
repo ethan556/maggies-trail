@@ -1,0 +1,312 @@
+{
+  "id": "in-02-01",
+  "slug": "the-accumulation-function",
+  "title": "The Accumulation Function",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch2-accumulation",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "So far the area has been one fixed number: from a to b.\n\nNow let the far end **move**. Define\n\n**A(x) = ∫ₐˣ f(t) dt** — the area so far, up to x.\n\nA is a brand-new function, built out of f by sweeping. Feed it an x and it hands you back an area.",
+      "figure": "in-ftc-slope-is-height"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sweep the area out and watch a second curve appear.",
+      "widget": {
+        "type": "accumulateArea",
+        "fn": "line",
+        "mode": "area",
+        "targetArea": 4,
+        "targetX": 0,
+        "start": 0,
+        "prompt": "f(x) = 2x. Drag x until the area you have swept out reaches exactly 4 — and watch the curve you are drawing underneath.",
+        "successFeedback": "x = 2, area 4. And look at the second curve: A(x) = x². You did not compute it — you SWEPT it. Now hold that thought: the slope of A at x = 2 is 4, and the height of f at x = 2 is also 4. Keep it in mind; the next chapter is about to make a great deal of it.",
+        "lowFeedback": "Not enough area yet. Keep dragging right — and notice A climbs FASTEST where f is tallest.",
+        "highFeedback": "You have swept past 4. Come back left — and notice A never falls, because f never goes below the axis here."
+      },
+      "predict": {
+        "prompt": "When the integrand is negative, what happens to the accumulation function?",
+        "options": [
+          {
+            "id": "increase",
+            "label": "It must keep increasing because area is positive"
+          },
+          {
+            "id": "decrease",
+            "label": "It decreases"
+          },
+          {
+            "id": "flat",
+            "label": "It becomes constant"
+          }
+        ],
+        "outcomeId": "decrease",
+        "reveal": "The derivative of accumulated signed area is the integrand itself, so negative integrand values make accumulation decrease."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Move an upper bound and coordinate accumulated area with the integrand's current value.",
+        "invariants": [
+          "accumulation-changes-at-integrand-rate",
+          "signed-area-can-decrease"
+        ],
+        "misconceptions": [
+          "integral-is-always-positive-area",
+          "accumulation-graph-copies-integrand"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "integration-accumulation-accumulateArea",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this accumulateArea away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why is the integrand the derivative of accumulation?",
+          "options": [
+            {
+              "id": "increment",
+              "label": "A small increase in the bound adds a thin strip whose area per unit width approaches the integrand's height.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "copy",
+              "label": "The two graphs are identical by definition.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "positive",
+              "label": "Accumulated area can only increase.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "in-accumulation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A is a function of the endpoint.",
+      "conceptTag": "in-accumulation",
+      "explanationVariants": [
+        "A(x) = ∫₀ˣ 2t dt is the area of a triangle with base x and height 2x: (1/2)(x)(2x) = x².",
+        "Every x gives a different area, so A really is a function — and here it happens to be x²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(t) = 2t and A(x) = ∫₀ˣ 2t dt. Find A(3).",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That is f(3) = 6 — the HEIGHT of the curve at x = 3, not the area under it up to there."
+          },
+          {
+            "value": 3,
+            "feedback": "That is x itself. The area under 2t from 0 to 3 is the triangle (1/2)(3)(6) = 9."
+          },
+          {
+            "value": 18,
+            "feedback": "That is base × height without the half. The region is a TRIANGLE: (1/2)(3)(6) = 9."
+          }
+        ],
+        "fallbackFeedback": "A triangle of base 3 and height 6: A(3) = 9. (And indeed A(x) = x².)"
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-accumulation__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The letter inside the integral does not matter.\n\n∫₀ˣ 2t dt and ∫₀ˣ 2u du are the same number. **t is a dummy variable** — it runs across the interval and disappears.\n\nBut x, the upper limit, is real. It survives, and it is what A depends on. Writing ∫₀ˣ 2x dx is a genuine error: the x cannot be both the sweeping variable and the endpoint.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which variable survives?",
+      "conceptTag": "in-accumulation",
+      "explanationVariants": [
+        "The variable of integration is consumed by the sweep. The limit x is what A depends on.",
+        "Compare it to a summation index: Σ from i = 1 to n has an i that vanishes and an n that survives."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In A(x) = ∫₀ˣ f(t) dt, what is t?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A dummy variable — it sweeps across the interval and then disappears.",
+            "correct": true,
+            "feedback": "Right. Rename it u and nothing changes. Only the endpoint x survives into the answer."
+          },
+          {
+            "id": "o2",
+            "label": "The same thing as x.",
+            "correct": false,
+            "feedback": "They cannot be: x is the fixed endpoint of the sweep while t is the thing doing the sweeping. Using one letter for both is a real error."
+          },
+          {
+            "id": "o3",
+            "label": "A constant.",
+            "correct": false,
+            "feedback": "t varies — it runs from 0 all the way to x. It is the variable being integrated."
+          },
+          {
+            "id": "o4",
+            "label": "The width of a strip.",
+            "correct": false,
+            "feedback": "That is dt. The t itself is the POSITION of the strip."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-accumulation__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A constant function accumulates linearly.",
+      "conceptTag": "in-accumulation",
+      "explanationVariants": [
+        "If f is the constant 3, the region up to x is a rectangle of height 3 and width x, so A(x) = 3x. At x = 4 that is 12.",
+        "A steady rate accumulates in a straight line — which is exactly what 'constant rate' has always meant."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(t) = 3 (a constant). Find A(4) = ∫₀⁴ 3 dt.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is the HEIGHT of f. The area up to x = 4 is a rectangle: 3 × 4 = 12."
+          },
+          {
+            "value": 4,
+            "feedback": "That is the width. Multiply by the height 3."
+          },
+          {
+            "value": 7,
+            "feedback": "That is 3 + 4. The area of a rectangle is height TIMES width."
+          }
+        ],
+        "fallbackFeedback": "A rectangle of height 3 and width 4: A(4) = 12."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-accumulation__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Accumulate a triangle.",
+      "conceptTag": "in-accumulation",
+      "hints": [
+        "A(x) = ∫₀ˣ 2t dt is the area of a triangle with base x and height f(x) = 2x.",
+        "So A(x) = (1/2)(x)(2x) = x².",
+        "Now evaluate A(5) − A(3)."
+      ],
+      "explanationVariants": [
+        "A(x) = x², so A(5) − A(3) = 25 − 9 = 16.",
+        "And notice what that difference IS: the area from 3 to 5, computed by subtracting two accumulations. That subtraction is about to become the most useful trick in calculus."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A(x) = ∫₀ˣ 2t dt. Find A(5) − A(3).",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That is 5 − 3. You must accumulate FIRST: A(5) = 25 and A(3) = 9, so the difference is 16."
+          },
+          {
+            "value": 34,
+            "feedback": "That is A(5) + A(3). The area from 3 to 5 is the bigger accumulation MINUS the smaller."
+          },
+          {
+            "value": 25,
+            "feedback": "That is A(5) alone. Subtract A(3) = 9 to isolate the strip between 3 and 5."
+          }
+        ],
+        "fallbackFeedback": "A(x) = x², so A(5) − A(3) = 25 − 9 = 16 — which is precisely the area from 3 to 5."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-accumulation__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Let the endpoint move.",
+      "takeaways": [
+        "A(x) = ∫ₐˣ f(t) dt is a FUNCTION — the area swept out so far.",
+        "The variable of integration is a dummy; only the endpoint survives.",
+        "A(b) − A(a) is the area between a and b. Remember that subtraction: it is about to do a great deal of work."
+      ],
+      "teaser": "Next: read A off f without computing a single area."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-accumulation",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "A(x) answers one question: **how much area have I swept out so far?** Move the endpoint and you get a different answer, which is exactly what makes A a function of x.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Area so far.",
+        "conceptTag": "in-accumulation",
+        "explanationVariants": [
+          "A rectangle of height 2 and width 5 has area 10.",
+          "A constant f accumulates at a steady rate: A(x) = 2x."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(t) = 2 (constant). Find A(5) = ∫₀⁵ 2 dt.",
+          "answer": 10,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "That is the height of f. The area is height × width = 2 × 5 = 10."
+            },
+            {
+              "value": 5,
+              "feedback": "That is the width. Multiply by the height, 2."
+            }
+          ],
+          "fallbackFeedback": "2 × 5 = 10."
+        }
+      }
+    }
+  ]
+}

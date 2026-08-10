@@ -1,0 +1,288 @@
+{
+  "id": "dc-04-01",
+  "slug": "lhopital",
+  "title": "L'Hôpital: 0/0 Explained at Last",
+  "courseId": "derivatives-in-context",
+  "chapterId": "ch4-lhopital",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In precalculus you met 0/0 and were told to **factor and cancel**. It worked. But nobody said WHY, and it only worked when something happened to cancel.\n\nHere is why. Near x = a, both f and g are almost their tangent lines. So their RATIO is almost the ratio of the tangents — and if both vanish at a, that ratio is exactly **f′(a)/g′(a)**.\n\n**L'Hôpital's rule:** if f/g gives 0/0, then lim f/g = lim f′/g′.",
+      "figure": "dc-lhopital-tangents"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The old answer, the new way.",
+      "conceptTag": "dc-lhopital",
+      "explanationVariants": [
+        "(x² − 4)/(x − 2) at x = 2 is 0/0. L'Hôpital gives 2x/1 = 4 — and cancelling gave x + 2 = 4 too. Same answer, and now you know why.",
+        "The cancelling worked precisely BECAUSE the two functions vanish together, which is what makes their tangent ratio meaningful."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "lim(x→2) (x² − 4)/(x − 2). Apply L'Hôpital: differentiate top and bottom separately.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is what you get by substituting x = 2 into the ORIGINAL — the 0/0 form. L'Hôpital says differentiate first: 2x/1 = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "That is x. The derivative of the top is 2x, which at x = 2 is 4."
+          },
+          {
+            "value": 1,
+            "feedback": "That is the derivative of the BOTTOM alone. The rule takes the RATIO: 2x/1 = 4."
+          }
+        ],
+        "fallbackFeedback": "0/0 → differentiate top and bottom: 2x/1 → 4. Exactly what cancelling gave."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-lhopital__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Magnify a 0/0 and see the tangents take over.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "removable",
+        "a": 2,
+        "leftValue": 4,
+        "rightValue": 4,
+        "fAtA": null,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "(x² − 4)/(x − 2) at x = 2 — the classic 0/0. Magnify, and decide whether the limit exists.",
+        "successFeedback": "The hole never fills, and both sides march to 4. Now see WHY L'Hôpital works: zoom in far enough and both x² − 4 and x − 2 look like straight lines through the point — their tangents. The ratio of the functions becomes the ratio of the tangent SLOPES, which is 4/1 = 4. L'Hôpital is not a trick; it is what local straightness does to a quotient.",
+        "moreZoomFeedback": "Magnify further. The whole argument depends on both functions becoming straight, and that only happens close in.",
+        "wrongVerdictFeedback": "The missing point is a fact about f(2), not about the limit. Read the two readouts: both sides settle on 4."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 2. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          },
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          }
+        ],
+        "outcomeId": "agree",
+        "reveal": "Both sides close in on 4 — even though the point itself is missing. A limit only asks where the sides are HEADING, so it exists here despite the hole."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Zoom toward the target input and compare visible local behavior with the symbolic limit claim.",
+        "invariants": [
+          "local-behavior-survives-zoom",
+          "limit-depends-on-approach"
+        ],
+        "misconceptions": [
+          "graph-pixel-is-proof",
+          "function-value-equals-limit"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivatives-in-context-graphZoom",
+        "delayed": false
+      },
+      "conceptTag": "dc-lhopital"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A limit you could not do before.",
+      "conceptTag": "dc-lhopital",
+      "explanationVariants": [
+        "sin x / x at 0 is 0/0. L'Hôpital gives cos x / 1, which at x = 0 is 1.",
+        "Nothing cancels here — no algebra could have done it. This is the limit that motivated the derivative of sine in the first place."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "lim(x→0) sin(x)/x. Apply L'Hôpital.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is what substitution gives — the 0/0 form. Differentiate: cos x / 1, which at 0 is 1."
+          },
+          {
+            "value": 0.017,
+            "feedback": "That is the DEGREES answer. Calculus works in radians, where the limit is exactly 1."
+          },
+          {
+            "value": -1,
+            "feedback": "The derivative of sin is +cos, with no minus sign. cos 0 = 1."
+          }
+        ],
+        "fallbackFeedback": "0/0 → cos x / 1 → cos 0 = 1."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-lhopital__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two warnings, and both are earned:\n\n**Check the form FIRST.** L'Hôpital applies only to 0/0 or ∞/∞. Apply it to anything else and it produces confident nonsense.\n\n**It is not the quotient rule.** You differentiate the top and the bottom **separately** — no minus sign, no square. Confusing the two is the commonest slip in this chapter.",
+      "figure": "dc-lhopital-tangents"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The trap.",
+      "conceptTag": "dc-lhopital",
+      "explanationVariants": [
+        "(x² + 1)/(x + 1) at x = 0 is 1/1 = 1 — NOT indeterminate. Just substitute. Applying L'Hôpital anyway gives 2x/1 = 0, which is simply wrong.",
+        "The rule is not a general-purpose limit tool. Check the form, every single time."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "lim(x→0) (x² + 1)/(x + 1). A student applies L'Hôpital and gets 2x/1 = 0. What went wrong?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The form is not indeterminate — substitution gives 1/1 = 1. L'Hôpital does not apply, and using it produced a wrong answer.",
+            "correct": true,
+            "feedback": "Right, and this is the whole reason the form must be checked FIRST. The rule gave a tidy, confident, wrong number."
+          },
+          {
+            "id": "o2",
+            "label": "They differentiated wrongly.",
+            "correct": false,
+            "feedback": "The derivatives are right: 2x and 1. The error is that the rule should never have been applied at all."
+          },
+          {
+            "id": "o3",
+            "label": "They should have used the quotient rule.",
+            "correct": false,
+            "feedback": "Neither the quotient rule nor any other differentiation is needed here. Substitute directly: (0 + 1)/(0 + 1) = 1, and the limit is done."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — 0 is correct.",
+            "correct": false,
+            "feedback": "Substitute directly: (0 + 1)/(0 + 1) = 1. The function is perfectly well-behaved at 0, and the answer is 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-lhopital__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Twice through.",
+      "conceptTag": "dc-lhopital",
+      "hints": [
+        "Check the form: (1 − cos 0)/0² = 0/0. Indeterminate, so the rule applies.",
+        "Differentiate: sin x / (2x). Check the form AGAIN — it is still 0/0.",
+        "So apply the rule a second time: cos x / 2."
+      ],
+      "explanationVariants": [
+        "First pass: sin x/(2x), still 0/0. Second pass: cos x/2, which at 0 is 1/2.",
+        "You may apply the rule repeatedly — but you must RE-CHECK the form each time, because the moment it stops being indeterminate, one more application would ruin the answer."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "lim(x→0) (1 − cos x)/x². Give a decimal.",
+        "answer": 0.5,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is what one application leaves you looking at (sin x/(2x)) if you substitute too early. It is still 0/0 — apply the rule again: cos x/2 → 1/2."
+          },
+          {
+            "value": 1,
+            "feedback": "That is the limit of sin x / x. Here there is an extra factor of 2 in the denominator: cos x / 2 → 1/2."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the reciprocal. The second application gives cos x / 2, which at 0 is 1/2."
+          }
+        ],
+        "fallbackFeedback": "0/0 → sin x/(2x), still 0/0 → cos x/2 → 1/2."
+      },
+      "variant": {
+        "gen": "g13-derivatives-in-context",
+        "form": "derivatives-in-context__dc-lhopital__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The cancelling worked because of the tangents.",
+      "takeaways": [
+        "If f/g → 0/0, then lim f/g = lim f′/g′. Zoom in and both curves become their tangents, so the ratio becomes the ratio of slopes.",
+        "CHECK THE FORM FIRST. Applied to a non-indeterminate limit, the rule gives a confident wrong answer — (x²+1)/(x+1) at 0 is 1, and the rule says 0.",
+        "It is not the quotient rule: differentiate top and bottom SEPARATELY. And re-check the form before each repeat application."
+      ],
+      "teaser": "That is what derivatives are for. Next course: what INTEGRALS are for — areas, volumes, and average values."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dc-lhopital",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Substitute first. If you get 0/0 or ∞/∞ — and ONLY then — differentiate the top and the bottom **separately** and try again. If you get any ordinary number, you already have the limit and the rule must not be touched.",
+        "figure": "dr-tangent-line"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Check the form.",
+        "conceptTag": "dc-lhopital",
+        "explanationVariants": [
+          "Substituting gives (0 − 0)/(0 + 1) = 0/1 = 0. That is an ordinary number, not an indeterminate form — so the answer is 0 and L'Hôpital is not needed.",
+          "Only 0/0 and ∞/∞ open the door."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "lim(x→0) (x² − x)/(x + 1). Does L'Hôpital apply?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "No — substitution gives 0/1 = 0, an ordinary number.",
+              "correct": true,
+              "feedback": "Right. The form is not indeterminate, so the limit is simply 0 and the rule must be left alone."
+            },
+            {
+              "id": "o2",
+              "label": "Yes — the top goes to 0.",
+              "correct": false,
+              "feedback": "The BOTTOM goes to 1, not 0. The form 0/1 is perfectly ordinary, and its limit is 0."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

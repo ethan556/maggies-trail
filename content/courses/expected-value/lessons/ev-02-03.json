@@ -1,0 +1,256 @@
+{
+  "id": "ev-02-03",
+  "slug": "deciding-by-expectation",
+  "title": "Deciding by Expectation",
+  "courseId": "expected-value",
+  "chapterId": "ch2-deciding-with-expectation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Expectation is a decision tool with a stated domain: it compares options over the LONG RUN. Choosing the higher expected value is right when a choice repeats many times — an insurer writing a million policies, a shop stocking a shelf. For a single irreversible choice it is one consideration among several, not a verdict.",
+      "figure": "ev-long-run-domain"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compare two options on a standardized scale.",
+      "widget": {
+        "type": "distributionCompareLab",
+        "mode": "measure",
+        "tolerance": 0,
+        "prompt": "Plan A averages a $40 return and Plan B averages $25, with a variability measure of 5. How many variability-units apart are they?",
+        "meanA": 40,
+        "meanB": 25,
+        "variability": 5,
+        "answer": 3,
+        "measureChoices": [
+          {
+            "value": 15,
+            "feedback": "That is the raw gap, 40 − 25. Standardize it by dividing by the variability: 15 ÷ 5 = 3."
+          },
+          {
+            "value": 3,
+            "feedback": "(40 − 25) ÷ 5 = 3 variability-units — a genuinely large separation."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the variability measure itself, not the standardized gap."
+          }
+        ],
+        "fallbackFeedback": "(40 − 25) ÷ 5 = 3 variability-units.",
+        "successFeedback": "3 variability-units apart. A gap that large relative to the spread means Plan A really does out-earn Plan B, not just on this occasion."
+      },
+      "predict": {
+        "prompt": "A $1 ticket has an expected prize of $0.50. Is buying one ever reasonable?",
+        "options": [
+          {
+            "id": "never",
+            "label": "No — negative expectation settles it"
+          },
+          {
+            "id": "depends",
+            "label": "It depends what you want from the purchase"
+          },
+          {
+            "id": "always",
+            "label": "Yes — someone has to win"
+          }
+        ],
+        "outcomeId": "depends",
+        "reveal": "Expectation prices the long run, and a single ticket is not a long run. Buying one is a bad INVESTMENT at −$0.50 per play, which the arithmetic settles conclusively; whether an hour of anticipation is worth 50 cents is a different question that expectation does not answer. Knowing which question you are asking is the skill."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compare two repeated options.",
+      "conceptTag": "ev-decisions",
+      "explanationVariants": [
+        "Over many repetitions the higher expected value wins: $12 beats $9.",
+        "Repetition is exactly the condition under which expectation governs."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A shop chooses between two products it will stock every week for years: A expects $12 profit, B expects $9. Which should it stock?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A — expectation governs over many repetitions",
+            "correct": true,
+            "feedback": "Yes. Weekly repetition for years is precisely the long run expectation describes."
+          },
+          {
+            "id": "o2",
+            "label": "B — lower expectation is safer",
+            "correct": false,
+            "feedback": "Nothing here says B is less variable; and over years the higher average compounds."
+          },
+          {
+            "id": "o3",
+            "label": "Neither — expectation cannot compare products",
+            "correct": false,
+            "feedback": "Comparing repeated options is exactly what expectation is for."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two things sit outside expectation's reach. RISK: a $1,000 loss that would be ruinous is not made acceptable by a favourable average. And VALUE THAT IS NOT MONEY: insurance has negative expectation by design, and people rightly buy it, because avoiding a catastrophe is worth more than the premium's arithmetic suggests.",
+      "figure": "ev-risk-outside-expectation"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Why insurance sells.",
+      "conceptTag": "ev-decisions",
+      "explanationVariants": [
+        "Insurers must charge more than the expected payout to survive, so the buyer's expectation is negative.",
+        "The buyer trades a small certain loss for protection from a large uncertain one."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Insurance has a NEGATIVE expected value for the buyer. Why do sensible people buy it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It removes a catastrophic risk, which is worth more than the small average loss",
+            "correct": true,
+            "feedback": "Exactly — expectation prices the average, not the pain of the worst case."
+          },
+          {
+            "id": "o2",
+            "label": "Because the expected value is actually positive for buyers",
+            "correct": false,
+            "feedback": "It cannot be: the insurer's margin is precisely what makes the buyer's expectation negative."
+          },
+          {
+            "id": "o3",
+            "label": "Because they have miscalculated",
+            "correct": false,
+            "feedback": "Avoiding ruin is a rational goal that expectation alone does not capture."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Expectation over many plays.",
+      "conceptTag": "ev-decisions",
+      "explanationVariants": [
+        "100 plays at −$0.50 each averages a $50 loss.",
+        "Multiply the per-play expectation by the number of plays."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A game has expected net −$0.50 per play. Over 100 plays, what total do you expect to lose, in dollars?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "That is one play's worth. Expectation scales with the number of plays."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is the number of plays, not the loss. Each costs $0.50 on average."
+          }
+        ],
+        "fallbackFeedback": "100 × $0.50 = $50 expected loss.",
+        "successFeedback": "$50 — and this is where expectation is at its most reliable, because 100 plays is long-run territory."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Decide with a number.",
+      "conceptTag": "ev-decisions",
+      "explanationVariants": [
+        "Option A: 100(0.5) + (−20)(0.5) = 40, which beats a certain $30.",
+        "The gamble averages $40, ten more than the sure thing."
+      ],
+      "hints": [
+        "Compute the gamble's expected value before comparing it with the certain option.",
+        "It pays $100 half the time and loses $20 half the time.",
+        "100(0.5) + (−20)(0.5) = 50 − 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Option A wins $100 or loses $20, each with probability 0.5. What is its expected value, in dollars?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 80,
+            "feedback": "That subtracts the outcomes without halving each. Both are weighted by 0.5."
+          },
+          {
+            "value": 60,
+            "feedback": "That averages only the win. The −$20 half must be included: 50 − 10."
+          }
+        ],
+        "fallbackFeedback": "100(0.5) + (−20)(0.5) = 50 − 10 = 40.",
+        "successFeedback": "$40 — better than a certain $30 if the choice repeats, though a single player who cannot afford to lose $20 may still take the sure thing."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A tool with a domain.",
+      "takeaways": [
+        "Expectation compares repeated options; over many plays the higher expected value wins.",
+        "It scales with repetitions: n plays expect n times the per-play value.",
+        "It ignores risk of ruin and non-monetary value, which is why negative-expectation insurance is rational."
+      ],
+      "teaser": "Next in statistics: samples, margins of error, and testing whether a difference is real."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ev-decisions",
+      "concept": {
+        "id": "rem-ev-decisions-c",
+        "kind": "concept",
+        "body": "Two things sit outside expectation's reach. RISK: a $1,000 loss that would be ruinous is not made acceptable by a favourable average. And VALUE THAT IS NOT MONEY: insurance has negative expectation by design, and people rightly buy it, because avoiding a catastrophe is worth more than the premium's arithmetic suggests."
+      },
+      "check": {
+        "id": "rem-ev-decisions-k",
+        "kind": "check",
+        "body": "Compare two repeated options.",
+        "conceptTag": "ev-decisions",
+        "explanationVariants": [
+          "Over many repetitions the higher expected value wins: $12 beats $9.",
+          "Repetition is exactly the condition under which expectation governs."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A shop chooses between two products it will stock every week for years: A expects $12 profit, B expects $9. Which should it stock?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "A — expectation governs over many repetitions",
+              "correct": true,
+              "feedback": "Yes. Weekly repetition for years is precisely the long run expectation describes."
+            },
+            {
+              "id": "o2",
+              "label": "B — lower expectation is safer",
+              "correct": false,
+              "feedback": "Nothing here says B is less variable; and over years the higher average compounds."
+            },
+            {
+              "id": "o3",
+              "label": "Neither — expectation cannot compare products",
+              "correct": false,
+              "feedback": "Comparing repeated options is exactly what expectation is for."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "id": "cr-02-03",
+  "slug": "chords-and-distance",
+  "title": "Chords & Distance",
+  "courseId": "circle-theorems",
+  "chapterId": "ch2-chords",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-chord-dist",
+      "concept": {
+        "id": "rem-cr-chord-dist-c",
+        "kind": "concept",
+        "body": "In one circle, congruent chords sit at equal distances from the center, and vice versa — because (chord/2)² + d² = r² pairs each length with exactly one distance. Unequal chords trade: the LONGER chord is CLOSER, from the diameter at d = 0 down to a point at d = r. Compute any missing piece by Pythagoras."
+      },
+      "check": {
+        "id": "rem-cr-chord-dist-k",
+        "kind": "check",
+        "body": "One comparison.",
+        "conceptTag": "cr-chord-dist",
+        "explanationVariants": [
+          "Longer is closer: the 14-chord sits nearer the center than the 10-chord.",
+          "A bigger half-chord leaves less room for d: the 14 wins the closeness contest."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Chords of length 10 and 14 sit in the same circle. Which is closer to the center?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "The 14-chord — longer means closer",
+              "correct": true,
+              "feedback": "(chord/2)² + d² = r²: a bigger half-chord forces a smaller d."
+            },
+            {
+              "id": "o2",
+              "label": "The 10-chord",
+              "correct": false,
+              "feedback": "Shorter chords sit FARTHER out — the trade runs longer = closer: the 14."
+            },
+            {
+              "id": "o3",
+              "label": "They're equidistant",
+              "correct": false,
+              "feedback": "Equidistance is reserved for CONGRUENT chords — 10 ≠ 14, so their distances differ: the 14 is closer."
+            },
+            {
+              "id": "o4",
+              "label": "Depends on their orientation",
+              "correct": false,
+              "feedback": "Orientation never enters — length alone fixes distance in a given circle: the 14 is closer."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Put the right-triangle engine to comparative work: **congruent chords sit at equal distances from the center, and equal-distance chords are congruent.** The equation (chord/2)² + d² = r² makes it plain — fix r, and chord length determines distance exactly, both ways.",
+      "figure": "chord-distance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Equal chords, equal distance.",
+      "conceptTag": "cr-chord-dist",
+      "explanationVariants": [
+        "Congruent chords in one circle sit at the same distance: also 7.",
+        "Same length ⇒ same d (the engine has one output per input): 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Chord AB sits 7 units from the center. Chord CD ≅ AB in the same circle. CD's distance from the center = ?",
+        "answer": 7,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 doubles — the theorem COPIES the distance for congruent chords: 7."
+          },
+          {
+            "value": 3.5,
+            "feedback": "3.5 halves — no halving here; equal chords, equal distances: 7."
+          }
+        ],
+        "fallbackFeedback": "Congruent chords are equidistant: 7."
+      },
+      "variant": {
+        "gen": "chord-dist"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Unequal chords trade off: from (chord/2)² + d² = r², a LONGER chord forces a SMALLER distance — **the closer the chord, the longer it runs**, peaking at the diameter (distance zero). Ranking chords by length is ranking their distances in reverse.",
+      "figure": "cr-longer-chord"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Closer means longer.",
+      "conceptTag": "cr-chord-dist",
+      "explanationVariants": [
+        "Distances 4 < 6 < 9 reverse-rank the lengths: the 4-distance chord is longest.",
+        "Smallest d wins: the chord at distance 4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Three chords of one circle sit at distances 6, 4, and 9 from the center. Which is LONGEST?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The chord at distance 4",
+            "correct": true,
+            "feedback": "Closest to the center = longest chord — the trade-off (chord/2)² = r² − d² falls as d grows."
+          },
+          {
+            "id": "o2",
+            "label": "The chord at distance 9",
+            "correct": false,
+            "feedback": "Distance 9 is the FARTHEST, making it the shortest of the three — the ranking runs in reverse."
+          },
+          {
+            "id": "o3",
+            "label": "The chord at distance 6",
+            "correct": false,
+            "feedback": "Middle distance, middle length — the longest sits closest, at distance 4."
+          },
+          {
+            "id": "o4",
+            "label": "Cannot be determined without the radius",
+            "correct": false,
+            "feedback": "The RANKING never needs r: for any fixed radius, smaller d always means longer chord."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "chord-dist",
+        "form": "whichLongest"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Quantify the trade.",
+      "conceptTag": "cr-chord-dist",
+      "explanationVariants": [
+        "Half-chords: √(15² − 9²) = 12 and √(15² − 12²) = 9. Chords 24 and 18: difference 6.",
+        "The 9-12-15 triple both ways: chords 24 and 18, gap 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 15. One chord sits 9 from the center, another sits 12. How much LONGER is the closer chord?",
+        "answer": 6,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 = 12 − 9 compares the DISTANCES — the chords themselves are 24 and 18, differing by 6."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the closer chord's full length — the question asks the DIFFERENCE: 24 − 18 = 6."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is a half-chord (and a distance) — full chords are 24 and 18: gap 6."
+          }
+        ],
+        "fallbackFeedback": "Chords: 2√(225−81) = 24 and 2√(225−144) = 18; 24 − 18 = 6."
+      },
+      "variant": {
+        "gen": "chord-dist",
+        "form": "howMuchLonger"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Bigger circle, same right triangle.",
+      "predict": {
+        "prompt": "The circle is bigger now — radius 13, chord 24. Does finding the distance to the centre need anything new?",
+        "options": [
+          {
+            "id": "same",
+            "label": "No — the same right triangle: half-chord, distance, radius"
+          },
+          {
+            "id": "bigger",
+            "label": "Yes — larger circles need the arc formula instead"
+          },
+          {
+            "id": "ratio",
+            "label": "Yes — you scale the previous answer by the ratio of the radii"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "Nothing new. Half-chord 12, radius 13, distance 5 — a 5-12-13 triangle, exactly the same machinery as the 3-4-5 and 6-8-10 before it. Chord problems are Pythagoras wearing a circle."
+      },
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "chordDistance",
+        "radius": 13,
+        "targetLength": 24,
+        "start": 0,
+        "prompt": "Radius 13 this time. Slide the chord to a length of 24.",
+        "successFeedback": "Distance 5, half-chord 12, radius 13 — the 5-12-13 triangle. Chord problems are never really about circles: they are right triangles with the radius as the hypotenuse, and r² = d² + (half-chord)² is just Pythagoras wearing a hat.",
+        "lowFeedback": "Shorter than 24 — the chord is too far out.",
+        "highFeedback": "Longer than 24 — bring the chord further from the centre."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate circle measurements while tangent, chord, radius, and power relationships update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "circle-measures-remain-linked"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "diagram-not-to-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-chord-dist"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Rank by length.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 10. Chords of length 19, 12, and 16 sit in the circle. What is the DISTANCE of the shortest one from the center?",
+        "answer": 8,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 3.12,
+            "feedback": "3.12 ≈ √(100 − 9.5²) is the 19-chord's distance — the SHORTEST chord (12) sits farthest: √(100 − 36) = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the 16-chord's distance (√(100 − 64)) — the shortest chord is 12, at distance 8."
+          }
+        ],
+        "fallbackFeedback": "Shortest chord = 12 → half 6 → d = √(100 − 36) = 8 — farthest out, as shortest must be."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The pipe gauge.",
+      "conceptTag": "cr-chord-dist",
+      "hints": [
+        "The water surface is a CHORD of the pipe's circular cross-section.",
+        "Depth at the middle = radius − distance from center to that chord.",
+        "Chord 16 in radius 10: distance √(100 − 64)."
+      ],
+      "explanationVariants": [
+        "d = √(100 − 64) = 6, so the deepest water is r − d = 10 − 6 = 4 dm — the surface sits below center, matching “less than half full.”",
+        "Center-to-surface 6; bottom-to-center 10; water depth 10 − 6 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A horizontal pipe has a circular cross-section of radius 10 dm. Water fills it to a surface (a chord) of width 16 dm, LESS than half full. Find the water's greatest depth.",
+        "answer": 4,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the center-to-surface distance — the DEPTH runs from the bottom up: 10 − 6 = 4 dm."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is the surface WIDTH (the chord) — depth is vertical: 10 − √(100 − 64) = 4 dm."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the HALF-WIDTH of the surface (√(100 − 64)) — the depth is the vertical drop from surface level to the pipe's bottom: 10 − 6 = 4 dm."
+          }
+        ],
+        "fallbackFeedback": "d = 6; depth = 10 − 6 = 4 dm (under the radius, matching “less than half full” ✓)."
+      },
+      "variant": {
+        "gen": "chord-dist",
+        "form": "pipeDepth"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Distance is destiny.",
+      "takeaways": [
+        "Congruent chords ⇔ equidistant from the center — the engine (chord/2)² + d² = r² is one-to-one.",
+        "Closer ⇒ longer, from the diameter (d = 0) down to a point (d = r).",
+        "Real circles — tunnels, pipes — are chord problems wearing overalls."
+      ],
+      "teaser": "Next chapter: lines that touch the circle exactly once — tangents and their perpendicular radii."
+    }
+  ]
+}

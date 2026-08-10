@@ -1,0 +1,300 @@
+{
+  "id": "les-04-01",
+  "slug": "the-substitution-method",
+  "title": "The Substitution Method",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch4-substitution",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Graphing is slow and imprecise. **Substitution** is exact. When one equation already says y = (something), replace y in the OTHER equation with that expression — now there's just one variable to solve.",
+      "figure": "substitution-flow"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Substitution finds the crossing without drawing it.",
+      "widget": {
+        "type": "systemsExplore",
+        "m1": 3,
+        "b1": -2,
+        "m2": 1,
+        "b2": 2,
+        "xMin": 0,
+        "xMax": 6,
+        "yMin": 0,
+        "yMax": 7,
+        "xStart": 0,
+        "yStart": 0,
+        "prompt": "y = 3x − 2 and y = x + 2. Drag the point to where both hold.",
+        "successFeedback": "(2, 4): 3(2) − 2 = 4 and 2 + 2 = 4. Substitution sets the two right-hand sides equal — 3x − 2 = x + 2 — precisely BECAUSE the solution is the place where the two y-values agree. The algebra is the picture, written down.",
+        "offLine1Feedback": "That point is not on y = 3x − 2.",
+        "offLine2Feedback": "That point satisfies the first equation but not y = x + 2."
+      },
+      "predict": {
+        "prompt": "Two lines with different slopes are on the grid. How many points can satisfy BOTH equations at once?",
+        "options": [
+          {
+            "id": "one",
+            "label": "Exactly one"
+          },
+          {
+            "id": "two",
+            "label": "Two"
+          },
+          {
+            "id": "many",
+            "label": "Every point on either line"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "Lines with different slopes cross exactly once, so exactly one pair sits in both solution sets — the crossing point. Being on ONE line is not enough; the system demands both."
+      },
+      "conceptTag": "les-substitution-method",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents les substitution method.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for les substitution method must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines les substitution method."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "linear-equations-systems:les-substitution-method",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked all the way: y = 2x − 1 and 3x + y = 9. Substitute: 3x + (2x − 1) = 9 → 5x − 1 = 9 → 5x = 10 → x = 2. One variable, solved exactly — no graph needed.",
+      "figure": "substitution-flow"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve for x by substitution.",
+      "conceptTag": "les-substitution-method",
+      "explanationVariants": [
+        "Substitute y = x+1 into x + y = 7: x + (x+1) = 7 → 2x + 1 = 7 → 2x = 6 → x = 3.",
+        "Replace y, combine, and solve: x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = x + 1 and x + y = 7. What is x?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's 2x, not x — after 2x = 6, divide by 2 to get x = 3."
+          },
+          {
+            "value": 7,
+            "feedback": "Substitute y = x+1 first: x + (x+1) = 7 gives 2x = 6, so x = 3, not 7."
+          }
+        ],
+        "fallbackFeedback": "Substitute: x + (x + 1) = 7 → 2x + 1 = 7 → 2x = 6 → x = 3."
+      },
+      "variant": {
+        "gen": "g8-les-substitution-method",
+        "form": "lesSubstituteA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the substitution steps.",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Solve y = 3x and 2x + y = 10 by substitution. Order the steps.",
+        "items": [
+          {
+            "id": "s3",
+            "label": "Solve: 5x = 10, so x = 2"
+          },
+          {
+            "id": "s1",
+            "label": "Replace y with 3x: 2x + 3x = 10"
+          },
+          {
+            "id": "s2",
+            "label": "Combine like terms: 5x = 10"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "s2",
+            "second": "s1",
+            "feedback": "Substitute FIRST — replace y with 3x before combining terms."
+          }
+        ],
+        "missFeedback": "Substitute the expression for y first, then combine, then solve.",
+        "successFeedback": "Right — substitute, combine to 5x = 10, then x = 2."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Substitute with a coefficient.",
+      "conceptTag": "les-substitution-method",
+      "explanationVariants": [
+        "Substitute y = 4x into x + y = 10: x + 4x = 10 → 5x = 10 → x = 2.",
+        "Replace y with 4x, combine to 5x = 10, so x = 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = 4x and x + y = 10. What is x?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Substitute y = 4x first: x + 4x = 10 gives 5x = 10, so x = 2, not 10."
+          },
+          {
+            "value": 2.5,
+            "feedback": "Check — x + 4x = 5x, so 5x = 10 gives x = 2, not 2.5."
+          }
+        ],
+        "fallbackFeedback": "Substitute: x + 4x = 10 → 5x = 10 → x = 2."
+      },
+      "variant": {
+        "gen": "g8-les-substitution-method",
+        "form": "lesSubstituteMultiple"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another coefficient case.",
+      "conceptTag": "les-substitution-method",
+      "explanationVariants": [
+        "Substitute y = 2x into x + y = 9: x + 2x = 9 → 3x = 9 → x = 3.",
+        "Replace y with 2x, combine to 3x = 9, so x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = 2x and x + y = 9. What is x?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "Substitute y = 2x first: x + 2x = 9 gives 3x = 9, so x = 3, not 9."
+          },
+          {
+            "value": 4.5,
+            "feedback": "Check — x + 2x = 3x, so 3x = 9 gives x = 3, not 4.5."
+          }
+        ],
+        "fallbackFeedback": "Substitute: x + 2x = 9 → 3x = 9 → x = 3."
+      },
+      "variant": {
+        "gen": "g8-les-substitution-method",
+        "form": "lesSubstituteMultipleB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A substitution with a subtraction.",
+      "conceptTag": "les-substitution-method",
+      "explanationVariants": [
+        "Substitute y = 3x − 5 into x + y = 7: x + (3x−5) = 7 → 4x − 5 = 7 → 4x = 12 → x = 3.",
+        "Replace y, combine to 4x − 5 = 7, solve: x = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve the system y = 3x − 5 and x + y = 7. What is x?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That's 4x, not x — after 4x = 12, divide by 4 to get x = 3."
+          },
+          {
+            "value": 2,
+            "feedback": "Check — x + (3x−5) = 4x−5, so 4x−5 = 7 gives 4x = 12, x = 3."
+          }
+        ],
+        "fallbackFeedback": "Substitute: x + (3x − 5) = 7 → 4x − 5 = 7 → 4x = 12 → x = 3."
+      },
+      "hints": [
+        "Replace y in x + y = 7 with the expression 3x − 5.",
+        "That gives x + (3x − 5) = 7, which combines to 4x − 5 = 7.",
+        "Add 5: 4x = 12, so x = 3."
+      ],
+      "variant": {
+        "gen": "g8-les-substitution-method",
+        "form": "lesSubstituteAffine"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Substitution replaces one variable, turning a system into a single equation.",
+      "takeaways": [
+        "When one equation gives y = (expression), plug it into the other.",
+        "That leaves one variable — solve it exactly, no graph needed.",
+        "Substitution is precise where graphing only estimates."
+      ],
+      "teaser": "Next: finding the second coordinate by back-substituting."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-substitution-method",
+      "concept": {
+        "id": "rem-les0401-c",
+        "kind": "concept",
+        "body": "Substitution: when one equation says y = (expression), replace y in the OTHER equation with that expression, leaving one variable to solve exactly."
+      },
+      "check": {
+        "id": "rem-les0401-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-substitution-method",
+        "explanationVariants": [
+          "Substitute y = 3x into 2x + y = 10: 2x + 3x = 10 → 5x = 10 → x = 2.",
+          "Replace y with 3x, combine to 5x = 10, so x = 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve the system y = 3x and 2x + y = 10. What is x?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "Substitute y = 3x first: 2x + 3x = 10 gives 5x = 10, so x = 2, not 10."
+            },
+            {
+              "value": 5,
+              "feedback": "Check — 2x + 3x = 5x, so 5x = 10 gives x = 2, not 5."
+            }
+          ],
+          "fallbackFeedback": "Substitute: 2x + 3x = 10 → 5x = 10 → x = 2."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "id": "in-04-02",
+  "slug": "the-constant-of-integration",
+  "title": "Pinning Down the Constant",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch4-antiderivatives",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "∫ 2x dx = x² + C is a **family**: a stack of identical parabolas, one for every C.\n\nThey all have the same slope at every x — which is exactly why the derivative could not tell them apart. To choose one, you need a single extra fact: **one point the curve passes through.**\n\nThat fact is called an *initial condition*, and it pins C.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One point does it.",
+      "conceptTag": "in-constant-of-integration",
+      "explanationVariants": [
+        "F(x) = x² + C, and F(1) = 5 gives 1 + C = 5, so C = 4. Then F(x) = x² + 4 and F(3) = 13.",
+        "The derivative told you the SHAPE; the initial condition told you the HEIGHT."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "F′(x) = 2x and F(1) = 5. Find F(3).",
+        "task": "antiderivativeInitialValue",
+        "values": [],
+        "aivRate": [
+          2,
+          0
+        ],
+        "aivOrder": 1,
+        "aivAt0": 1,
+        "aivInit": [
+          5
+        ],
+        "aivTarget": 3,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "That is 3² — you took C = 0. But F(1) = 5 forces 1 + C = 5, so C = 4 and F(3) = 9 + 4 = 13."
+          },
+          {
+            "value": 5,
+            "feedback": "That is F(1), the given value. F(3) = 3² + 4 = 13."
+          },
+          {
+            "value": 14,
+            "feedback": "Check C: F(1) = 1 + C = 5 gives C = 4, not 5. So F(3) = 9 + 4 = 13."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "F(x) = x² + C, and F(1) = 5 → C = 4. So F(3) = 9 + 4 = 13.",
+        "successFeedback": "F(x) = x² + C, and F(1) = 5 → C = 4. So F(3) = 9 + 4 = 13."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-constant-of-integration__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Same slopes, different heights.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why one point is exactly enough.",
+        "panels": [
+          {
+            "title": "The family",
+            "body": "x², x² + 1, x² + 7, x² − 3 — an infinite stack of parabolas, each one a vertical shift of the last. Every one of them has derivative 2x."
+          },
+          {
+            "title": "Why the derivative cannot choose",
+            "body": "Sliding a curve UP does not tilt it anywhere. So the slope function carries no information at all about the vertical position — the information was destroyed, not hidden."
+          },
+          {
+            "title": "One point restores it",
+            "body": "Say the curve passes through (1, 5). Exactly one member of the stack does that. The initial condition does not add new calculus; it replaces the information the derivative threw away."
+          }
+        ],
+        "continueFeedback": "Keep going — the third panel says what an initial condition actually IS.",
+        "successFeedback": "The derivative destroys vertical position. A single point puts it back, and picks one curve out of infinitely many."
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "The reveal made a claim about the whole family at once. Now hold the family in your hands: slide the curve and watch the derivative refuse to react.",
+      "predict": {
+        "prompt": "The top pane shows f(x) = x², the bottom traces f′. If you slide the WHOLE curve upward, what happens in the f′ pane?",
+        "options": [
+          {
+            "id": "f-prime-rises",
+            "label": "f′ rises too — the curve went up"
+          },
+          {
+            "id": "f-prime-still",
+            "label": "Nothing at all — f′ does not move"
+          },
+          {
+            "id": "f-prime-tilts",
+            "label": "f′ tilts, because the curve is steeper up there"
+          }
+        ],
+        "outcomeId": "f-prime-still",
+        "reveal": "Nothing moves. Sliding a curve up does not tilt it anywhere, so every member of the family x² + C has the identical derivative 2x. That is why the derivative alone can never tell you which member you have — and why an initial condition is not extra calculus, it is the missing information put back."
+      },
+      "widget": {
+        "type": "derivativeTrace",
+        "prompt": "Slide C until the curve passes through the point (1, 5), then bring x to 1. Watch the f′ pane the whole time.",
+        "fn": "square",
+        "mode": "point",
+        "targetX": 1,
+        "start": -2,
+        "offsetMax": 6,
+        "successFeedback": "At x = 1 the tangent's slope is 2 — and it was 2 for every single value of C you slid through, because a vertical shift tilts nothing. The point (1, 5) is what picked C = 4 out of the infinite stack: 1 + C = 5. The derivative gave you the shape; one point gave you the position.",
+        "lowFeedback": "You are left of x = 1. Keep going — and notice that whatever you do with the C slider on the way, the f′ trace underneath is unchanged.",
+        "highFeedback": "You have gone past x = 1. Come back — and watch the f′ pane as you slide C: it does not care where the curve sits vertically, which is the whole reason C survives differentiation unseen."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Position from velocity.",
+      "conceptTag": "in-constant-of-integration",
+      "explanationVariants": [
+        "v(t) = 2t means s(t) = t² + C, and s(0) = 10 gives C = 10. So s(3) = 9 + 10 = 19.",
+        "The velocity tells you how the position CHANGES; the starting position tells you where it changes FROM."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A particle has velocity v(t) = 2t and starts at position s(0) = 10. Find s(3).",
+        "task": "antiderivativeInitialValue",
+        "values": [],
+        "aivRate": [
+          2,
+          0
+        ],
+        "aivOrder": 1,
+        "aivAt0": 0,
+        "aivInit": [
+          10
+        ],
+        "aivTarget": 3,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "That is the DISTANCE travelled, ∫₀³ 2t dt = 9. It must be added to the starting position of 10."
+          },
+          {
+            "value": 10,
+            "feedback": "That is where it started. In 3 seconds it also travelled 9, so it ends at 19."
+          },
+          {
+            "value": 6,
+            "feedback": "That is v(3), the velocity at the final instant — not a position at all."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "s(t) = t² + C with s(0) = 10 → C = 10, so s(3) = 9 + 10 = 19.",
+        "successFeedback": "s(t) = t² + C with s(0) = 10 → C = 10, so s(3) = 9 + 10 = 19."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-constant-of-integration__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "That is the shape of every problem in the next course:\n\n**A rate + a starting value = the whole story.**\n\nThe rate gives the shape (the antiderivative). The starting value gives the height (the constant). Neither one alone is enough, and together they are always enough.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which piece is missing?",
+      "conceptTag": "in-constant-of-integration",
+      "explanationVariants": [
+        "Knowing only the rate leaves C unknown, so the position is known only up to a constant — you know how far it moved, not where it is.",
+        "The tank problem is the same: a flow rate tells you how much ARRIVED, never how much was there to begin with."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You know a tank's inflow rate for the whole day but not how full it started. What can you find?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "How much water was ADDED — but not how much is in the tank.",
+            "correct": true,
+            "feedback": "Right. The integral of a rate gives the CHANGE. The starting amount is the constant, and no rate can tell you what it was."
+          },
+          {
+            "id": "o2",
+            "label": "Exactly how much is in the tank.",
+            "correct": false,
+            "feedback": "Not without the starting level. Two tanks with identical inflows can hold wildly different amounts."
+          },
+          {
+            "id": "o3",
+            "label": "Nothing useful.",
+            "correct": false,
+            "feedback": "You get the total change, which is often exactly what is wanted — just not the absolute level."
+          },
+          {
+            "id": "o4",
+            "label": "The final level, if you assume it started empty.",
+            "correct": false,
+            "feedback": "That is an assumption, and it is precisely the extra fact — the initial condition — that the problem did not give you."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-constant-of-integration__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two integrations, two constants.",
+      "conceptTag": "in-constant-of-integration",
+      "hints": [
+        "Acceleration integrates to velocity, and velocity integrates to position — so you will integrate TWICE and meet TWO constants.",
+        "a(t) = 6t → v(t) = 3t² + C₁, and v(0) = 2 gives C₁ = 2.",
+        "v(t) = 3t² + 2 → s(t) = t³ + 2t + C₂, and s(0) = 1 gives C₂ = 1. Now find s(2)."
+      ],
+      "explanationVariants": [
+        "v(t) = 3t² + 2 and s(t) = t³ + 2t + 1, so s(2) = 8 + 4 + 1 = 13.",
+        "Each integration introduces one constant, and each initial condition kills one. Two of each, and the answer is pinned exactly."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "a(t) = 6t, v(0) = 2, s(0) = 1. Find s(2).",
+        "task": "antiderivativeInitialValue",
+        "values": [],
+        "aivRate": [
+          6,
+          0
+        ],
+        "aivOrder": 2,
+        "aivAt0": 0,
+        "aivInit": [
+          2,
+          1
+        ],
+        "aivTarget": 2,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 12,
+            "feedback": "That is 8 + 4 — you dropped the second constant. s(0) = 1 gives C₂ = 1, so s(2) = 13."
+          },
+          {
+            "value": 8,
+            "feedback": "That is t³ alone. The velocity's constant of 2 contributes a 2t term, worth 4 at t = 2, and then s(0) = 1 adds one more."
+          },
+          {
+            "value": 14,
+            "feedback": "Check C₁: v(0) = 2 gives C₁ = 2, not 3. Then s(2) = 8 + 4 + 1 = 13."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "v = 3t² + 2 → s = t³ + 2t + 1 → s(2) = 8 + 4 + 1 = 13.",
+        "successFeedback": "v = 3t² + 2 → s = t³ + 2t + 1 → s(2) = 8 + 4 + 1 = 13."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-constant-of-integration__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A rate plus a starting value is the whole story.",
+      "takeaways": [
+        "∫ f dx is a FAMILY of curves; an initial condition picks one out of it.",
+        "The derivative destroys vertical position, so no amount of calculus can recover it — only a given point can.",
+        "Integrate twice and you meet two constants, which need two conditions to pin down."
+      ],
+      "teaser": "Next: the antiderivatives of the rest of the function library."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-constant-of-integration",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Three steps. **Integrate**, keeping the + C. **Substitute** the given point. **Solve** for C. Only then answer the question that was actually asked.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Solve for C.",
+        "conceptTag": "in-constant-of-integration",
+        "explanationVariants": [
+          "F(x) = x² + C with F(2) = 10 gives 4 + C = 10, so C = 6.",
+          "Substitute the point, then solve."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "F′(x) = 2x and F(2) = 10. Find C.",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "That is F(2), the value given. Substitute it: 4 + C = 10, so C = 6."
+            },
+            {
+              "value": 4,
+              "feedback": "That is 2² — the x² part. The constant is what is LEFT: 10 − 4 = 6."
+            }
+          ],
+          "fallbackFeedback": "4 + C = 10 → C = 6."
+        }
+      }
+    }
+  ]
+}

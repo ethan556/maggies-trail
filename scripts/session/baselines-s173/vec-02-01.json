@@ -1,0 +1,273 @@
+{
+  "id": "vec-02-01",
+  "slug": "adding-vectors",
+  "title": "Adding Vectors: Tip to Tail",
+  "courseId": "vectors-matrices",
+  "chapterId": "ch2-vector-operations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To **add** vectors, add matching components:\n\n⟨a, b⟩ + ⟨c, d⟩ = ⟨a + c, b + d⟩.\n\nGeometrically, place the second vector's tail at the first's tip — the sum runs from the very start to the very end. This **tip-to-tail** picture is why forces and displacements combine the way they do.",
+      "figure": "vec-tiptotail"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Adding is a journey: walk u, then walk v.",
+      "widget": {
+        "type": "vectorExplore",
+        "mode": "add",
+        "ux": 3,
+        "uy": 4,
+        "targetX": 7,
+        "targetY": 1,
+        "vxStart": 0,
+        "vyStart": 0,
+        "gridMax": 8,
+        "prompt": "u = (3, 4) is fixed. Choose v so the journey u THEN v ends at (7, 1).",
+        "successFeedback": "v = (4, −3). Watch the green arrow: v is drawn from the TIP of u, and the red arrow is the single hop that replaces both. Adding components is just bookkeeping for that journey.",
+        "lowFeedback": "The trip ends at the wrong horizontal position. From 3, you need 4 more to reach 7.",
+        "highFeedback": "The horizontal is right, but the height is wrong. From 4 you must come DOWN 3 to reach 1."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change vector components and coordinate geometric movement with component and dot-product representations.",
+        "invariants": [
+          "components-determine-vector",
+          "dot-product-encodes-angle"
+        ],
+        "misconceptions": [
+          "componentwise-magnitude",
+          "dot-product-is-vector"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "vectors-matrices-vectorExplore",
+        "delayed": false
+      },
+      "conceptTag": "vec-add",
+      "predict": {
+        "prompt": "You walk u = ⟨3, 4⟩ first, then v, and must finish at (7, 1). The v you need is…",
+        "options": [
+          {
+            "id": "dest",
+            "label": "⟨7, 1⟩ — the destination itself"
+          },
+          {
+            "id": "diff",
+            "label": "⟨4, −3⟩"
+          },
+          {
+            "id": "sum",
+            "label": "⟨10, 5⟩"
+          }
+        ],
+        "outcomeId": "diff",
+        "reveal": "⟨4, −3⟩: 3 + 4 = 7 and 4 + (−3) = 1. Addition is component-wise, so the second leg is the destination MINUS wherever the first leg already took you. The negative is not a special case — it is simply the part of the journey that heads back down."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The tip-to-tail meaning.",
+      "conceptTag": "vec-add",
+      "explanationVariants": [
+        "Adding ⟨3, 0⟩ + ⟨0, 4⟩ = ⟨3, 4⟩: go 3 right, then 4 up — the resultant is the diagonal of length 5.",
+        "Tip-to-tail: the two legs combine into the hypotenuse ⟨3, 4⟩."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the magnitude of ⟨3, 0⟩ + ⟨0, 4⟩?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The sum is ⟨3, 4⟩, whose magnitude is √(9 + 16) = 5, not 3 + 4."
+          },
+          {
+            "value": 0,
+            "feedback": "⟨3, 0⟩ + ⟨0, 4⟩ = ⟨3, 4⟩, length 5 — the components don't cancel."
+          }
+        ],
+        "fallbackFeedback": "⟨3, 4⟩ → √25 = 5."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-add__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Subtraction** is adding the opposite: ⟨a, b⟩ − ⟨c, d⟩ = ⟨a − c, b − d⟩. Geometrically, u − v points **from the tip of v to the tip of u** — exactly the displacement idea (recall). Order matters: u − v and v − u are opposites.",
+      "figure": "vec-subtraction"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtract componentwise.",
+      "conceptTag": "vec-add",
+      "explanationVariants": [
+        "⟨5, 3⟩ − ⟨2, 1⟩ = ⟨5 − 2, 3 − 1⟩ = ⟨3, 2⟩.",
+        "Subtract each matching component: ⟨3, 2⟩."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Compute ⟨5, 3⟩ − ⟨2, 1⟩.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "⟨3, 2⟩",
+            "correct": true,
+            "feedback": "Right — ⟨5 − 2, 3 − 1⟩ = ⟨3, 2⟩."
+          },
+          {
+            "id": "o2",
+            "label": "⟨7, 4⟩",
+            "feedback": "That ADDS. Subtraction: ⟨5 − 2, 3 − 1⟩ = ⟨3, 2⟩."
+          },
+          {
+            "id": "o3",
+            "label": "⟨−3, −2⟩",
+            "feedback": "That's the reverse (⟨2,1⟩ − ⟨5,3⟩). The given order gives ⟨3, 2⟩."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-add__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Combine, then measure.",
+      "conceptTag": "vec-add",
+      "explanationVariants": [
+        "⟨2, 4⟩ + ⟨1, −1⟩ = ⟨3, 3⟩... but here ⟨1, 2⟩ + ⟨2, 2⟩ = ⟨3, 4⟩, magnitude 5.",
+        "Add to ⟨3, 4⟩ first, then its length is 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the magnitude of ⟨1, 2⟩ + ⟨2, 2⟩?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The sum is ⟨3, 4⟩; its magnitude is √(9 + 16) = 5, not 3 + 4."
+          },
+          {
+            "value": 25,
+            "feedback": "⟨3, 4⟩ has magnitude √25 = 5 — take the root of 25."
+          }
+        ],
+        "fallbackFeedback": "⟨1, 2⟩ + ⟨2, 2⟩ = ⟨3, 4⟩, length 5."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-add__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A resultant force.",
+      "conceptTag": "vec-add",
+      "explanationVariants": [
+        "Two forces ⟨6, 0⟩ and ⟨0, 8⟩ add to ⟨6, 8⟩, whose magnitude is √(36 + 64) = 10.",
+        "Perpendicular pushes combine tip-to-tail into a length-10 resultant."
+      ],
+      "hints": [
+        "Add componentwise: ⟨6 + 0, 0 + 8⟩.",
+        "The resultant is ⟨6, 8⟩.",
+        "Magnitude = √(36 + 64)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two forces ⟨6, 0⟩ N and ⟨0, 8⟩ N act on a point. What is the magnitude of the resultant, in newtons?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "The resultant is ⟨6, 8⟩; its magnitude is √(36 + 64) = 10, not 6 + 8."
+          },
+          {
+            "value": 48,
+            "feedback": "48 = 6·8 multiplies. Add first (⟨6, 8⟩), then √100 = 10."
+          }
+        ],
+        "fallbackFeedback": "⟨6, 8⟩ → √100 = 10 N."
+      },
+      "variant": {
+        "gen": "g12-vectors-matrices",
+        "form": "vectors-matrices__vec-add__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Combine the trips.",
+      "takeaways": [
+        "Add/subtract vectors componentwise: ⟨a±c, b±d⟩.",
+        "Tip-to-tail: the resultant runs start-to-end of the chain.",
+        "The magnitude of a sum is NOT the sum of magnitudes (unless aligned)."
+      ],
+      "teaser": "Next: stretching and flipping vectors with scalars."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "vec-add",
+      "concept": {
+        "id": "rem-vec0201-c",
+        "kind": "concept",
+        "body": "Add/subtract vectors componentwise: ⟨a, b⟩ ± ⟨c, d⟩ = ⟨a ± c, b ± d⟩. Geometrically this is the tip-to-tail resultant."
+      },
+      "check": {
+        "id": "rem-vec0201-k",
+        "kind": "check",
+        "body": "One sum.",
+        "conceptTag": "vec-add",
+        "explanationVariants": [
+          "⟨2, 1⟩ + ⟨3, 4⟩ = ⟨5, 5⟩.",
+          "Add matching components: ⟨5, 5⟩."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Compute ⟨2, 1⟩ + ⟨3, 4⟩.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "⟨5, 5⟩",
+              "correct": true,
+              "feedback": "Right — ⟨2 + 3, 1 + 4⟩ = ⟨5, 5⟩."
+            },
+            {
+              "id": "o2",
+              "label": "⟨6, 4⟩",
+              "feedback": "Add x's and y's separately: ⟨5, 5⟩."
+            },
+            {
+              "id": "o3",
+              "label": "⟨5, 4⟩",
+              "feedback": "The y-components are 1 + 4 = 5, not 4: ⟨5, 5⟩."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

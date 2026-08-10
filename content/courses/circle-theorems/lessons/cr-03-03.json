@@ -1,0 +1,457 @@
+{
+ "id": "cr-03-03",
+ "slug": "circumscribed-figures",
+ "title": "Circumscribed Figures",
+ "courseId": "circle-theorems",
+ "chapterId": "ch3-tangents",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cr-tangent-apps",
+   "concept": {
+    "id": "rem-cr-tangent-apps-c",
+    "kind": "concept",
+    "body": "When a polygon circumscribes a circle (every side tangent), the two-tangent theorem gives each vertex ONE tangent length used by both its sides. Sides = sums of adjacent tangent lengths; the perimeter counts every tangent length twice. Reverse-solve by subtracting a known tangent length from a known side. Right triangle special: r = (leg + leg − hypotenuse)/2."
+   },
+   "check": {
+    "id": "rem-cr-tangent-apps-k",
+    "kind": "check",
+    "body": "One side, assembled.",
+    "conceptTag": "cr-tangent-apps",
+    "explanationVariants": [
+     "Side PQ adds P's and Q's tangent lengths: 2 + 6 = 8.",
+     "Adjacent lengths sum: 8."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A triangle circumscribes a circle with tangent lengths 2 from P and 6 from Q. Side PQ = ?",
+     "answer": 8,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 12,
+       "feedback": "12 = 2 × 6 multiplies — sides ADD the two adjacent tangent lengths: 8."
+      },
+      {
+       "value": 4,
+       "feedback": "4 = 6 − 2 subtracts — the side carries BOTH pieces end to end: 2 + 6 = 8."
+      }
+     ],
+     "fallbackFeedback": "PQ = 2 + 6 = 8."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Wrap a triangle around a circle so every side is tangent — the circle is **inscribed** in the triangle. The two-tangent theorem fires at all three vertices: each vertex owns a matched pair of tangent lengths, call them x, x at A, y, y at B, z, z at C. Every side is then a SUM of two tangent lengths.",
+   "figure": "cr-incircle"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Sides from tangent lengths.",
+   "conceptTag": "cr-tangent-apps",
+   "explanationVariants": [
+    "AB collects A's and B's tangent lengths: x + y = 3 + 4 = 7.",
+    "Each side = the two adjacent vertices' tangent lengths: 7."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A triangle circumscribes a circle. Tangent lengths: x = 3 from A, y = 4 from B, z = 5 from C. Find side AB.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "x",
+      "label": "tangent length from A",
+      "value": 3
+     },
+     {
+      "id": "y",
+      "label": "tangent length from B",
+      "value": 4
+     }
+    ],
+    "approxFormula": {
+     "op": "add",
+     "left": {
+      "op": "const",
+      "id": "x"
+     },
+     "right": {
+      "op": "const",
+      "id": "y"
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 12,
+      "feedback": "12 = 3 + 4 + 5 sums all three — side AB only touches A's and B's pairs: 3 + 4 = 7."
+     },
+     {
+      "value": 9,
+      "feedback": "9 = 4 + 5 grabs B's and C's lengths — that's side BC. AB = 3 + 4 = 7."
+     },
+     {
+      "value": 8,
+      "feedback": "8 = 3 + 5 pairs A with C — that's side AC. AB = 7."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "AB = x + y = 7.",
+    "successFeedback": "AB = x + y = 7."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-tangent-apps__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "The whole perimeter.",
+   "conceptTag": "cr-tangent-apps",
+   "explanationVariants": [
+    "Each tangent length appears in exactly two sides: perimeter = 2(x + y + z) = 2(12) = 24.",
+    "Sides 7 + 9 + 8 = 24 — or the shortcut, twice the tangent-length sum."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Same triangle (tangent lengths 3, 4, 5). Its perimeter = ?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "x",
+      "label": "tangent from A",
+      "value": 3
+     },
+     {
+      "id": "y",
+      "label": "tangent from B",
+      "value": 4
+     },
+     {
+      "id": "z",
+      "label": "tangent from C",
+      "value": 5
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "lit",
+      "value": 2
+     },
+     "right": {
+      "op": "add",
+      "left": {
+       "op": "add",
+       "left": {
+        "op": "const",
+        "id": "x"
+       },
+       "right": {
+        "op": "const",
+        "id": "y"
+       }
+      },
+      "right": {
+       "op": "const",
+       "id": "z"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 12,
+      "feedback": "12 = 3 + 4 + 5 counts each tangent length ONCE — each appears in two sides: 2 × 12 = 24."
+     },
+     {
+      "value": 48,
+      "feedback": "48 doubles twice — once is right: 2(3 + 4 + 5) = 24."
+     },
+     {
+      "value": 60,
+      "feedback": "60 = 3 × 4 × 5 multiplies — perimeters add: 7 + 9 + 8 = 24."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "2(x + y + z) = 24.",
+    "successFeedback": "2(x + y + z) = 24."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-tangent-apps__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Run it in reverse to find unknown pieces. If AB = 12 and the tangent length from A is 4, then B's tangent length is 12 − 4 = 8 — and B carries that same 8 onto side BC. Tangent lengths are a bookkeeping system: each vertex's number is fixed, and sides just add adjacent entries.",
+   "figure": "cr-tangent-segments"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Reverse bookkeeping.",
+   "conceptTag": "cr-tangent-apps",
+   "explanationVariants": [
+    "From A: 4, so B's length is 12 − 4 = 8 and C's is 9 − 4 = 5. BC = 8 + 5 = 13.",
+    "Split both known sides past the shared A-length, then add: 13."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A triangle circumscribes a circle. AB = 12, AC = 9, and the tangent length from A is 4. Find BC.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "AB",
+      "label": "side AB",
+      "value": 12
+     },
+     {
+      "id": "AC",
+      "label": "side AC",
+      "value": 9
+     },
+     {
+      "id": "x",
+      "label": "tangent length from A",
+      "value": 4
+     }
+    ],
+    "approxFormula": {
+     "op": "subtract",
+     "left": {
+      "op": "add",
+      "left": {
+       "op": "const",
+       "id": "AB"
+      },
+      "right": {
+       "op": "const",
+       "id": "AC"
+      }
+     },
+     "right": {
+      "op": "multiply",
+      "left": {
+       "op": "lit",
+       "value": 2
+      },
+      "right": {
+       "op": "const",
+       "id": "x"
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 21,
+      "feedback": "21 = 12 + 9 adds whole sides — BC collects the two FAR tangent lengths: (12−4) + (9−4) = 13."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is B's tangent length alone — BC needs C's 5 as well: 13."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is C's tangent length alone — add B's 8: 13."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "BC = (12 − 4) + (9 − 4) = 13.",
+    "successFeedback": "BC = (12 − 4) + (9 − 4) = 13."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-tangent-apps__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why must an incircle exist?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Every triangle has an inscribed circle. Which construction-course fact delivers its center?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The three angle bisectors meet at one point equidistant from all three sides — that's the center",
+      "correct": true,
+      "feedback": "Equidistant from the sides means one radius fits all three perpendicular distances — tangency on every side."
+     },
+     {
+      "id": "o2",
+      "label": "The three perpendicular bisectors of the sides meet at one point",
+      "correct": false,
+      "feedback": "That point is equidistant from the VERTICES — the circumscribed circle's center. The inscribed one uses angle bisectors."
+     },
+     {
+      "id": "o3",
+      "label": "The three medians meet at one point",
+      "correct": false,
+      "feedback": "The centroid balances area, not side distances — the incircle's center is the angle bisectors' meeting."
+     },
+     {
+      "id": "o4",
+      "label": "It doesn't — only special triangles have one",
+      "correct": false,
+      "feedback": "EVERY triangle's angle bisectors concur, so every triangle owns an incircle."
+     }
+    ]
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Square wrap.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A circle of radius 6 is inscribed in a SQUARE (each side tangent). Find the square's perimeter.",
+    "answer": 48,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "24 = 4 × 6 uses the radius as the side — the side spans a full DIAMETER, 12: perimeter 48."
+     },
+     {
+      "value": 36,
+      "feedback": "36 ≈ π(6)²... that's circle area with π dropped — the square's side is the diameter 12: 4 × 12 = 48."
+     }
+    ],
+    "fallbackFeedback": "Side = diameter = 12 (tangent on both sides pins it); perimeter = 48."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The incircle radius.",
+   "conceptTag": "cr-tangent-apps",
+   "hints": [
+    "A right triangle's incircle touches both legs; the two radii to those touch points are perpendicular to the legs.",
+    "That corner-square means the tangent lengths from the right-angle vertex both equal r.",
+    "Legs 6 and 8: tangent lengths r, 6 − r, 8 − r; the hypotenuse 10 = (6 − r) + (8 − r)."
+   ],
+   "explanationVariants": [
+    "10 = 14 − 2r gives r = 2 — the classic right-triangle incircle formula (leg + leg − hyp)/2.",
+    "(6 + 8 − 10)/2 = 2."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "A right triangle has legs 6 and 8 (hypotenuse 10). Find the radius of its inscribed circle.",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "a",
+      "label": "leg a",
+      "value": 6
+     },
+     {
+      "id": "b",
+      "label": "leg b",
+      "value": 8
+     },
+     {
+      "id": "c",
+      "label": "hypotenuse",
+      "value": 10
+     }
+    ],
+    "approxFormula": {
+     "op": "divide",
+     "left": {
+      "op": "subtract",
+      "left": {
+       "op": "add",
+       "left": {
+        "op": "const",
+        "id": "a"
+       },
+       "right": {
+        "op": "const",
+        "id": "b"
+       }
+      },
+      "right": {
+       "op": "const",
+       "id": "c"
+      }
+     },
+     "right": {
+      "op": "lit",
+      "value": 2
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0.01,
+    "numericErrors": [
+     {
+      "value": 5,
+      "feedback": "5 is the CIRCUMSCRIBED circle's radius (half the hypotenuse, by Thales). The inscribed one: (6 + 8 − 10)/2 = 2."
+     },
+     {
+      "value": 4,
+      "feedback": "4 = (6 + 8 − 10) forgets the final halving: r = 4/2 = 2."
+     },
+     {
+      "value": 7,
+      "feedback": "7 = (6 + 8)/2 averages the legs — the hypotenuse must be SUBTRACTED first: (14 − 10)/2 = 2."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "Corner square makes both right-angle tangent lengths r: 10 = (6−r) + (8−r) ⇒ r = 2.",
+    "successFeedback": "Corner square makes both right-angle tangent lengths r: 10 = (6−r) + (8−r) ⇒ r = 2."
+   },
+   "variant": {
+    "gen": "g10-circle-theorems",
+    "form": "cr-tangent-apps__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Tangents do the bookkeeping.",
+   "takeaways": [
+    "Circumscribed polygon: every side = sum of two adjacent tangent lengths; perimeter = 2(x + y + z).",
+    "Reverse: one tangent length + the sides unlocks all the rest.",
+    "Incircle center = angle bisectors' meeting (constructions course); right-triangle r = (a + b − c)/2."
+   ],
+   "teaser": "Next chapter: angles whose vertices leave the circle entirely — secants, tangents, and their arc arithmetic."
+  }
+ ]
+}

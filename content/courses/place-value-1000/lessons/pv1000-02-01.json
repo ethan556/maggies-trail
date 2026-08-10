@@ -1,0 +1,353 @@
+{
+  "id": "pv1000-02-01",
+  "slug": "skip-counting-by-tens-and-hundreds",
+  "title": "Skip-Counting by Tens and Hundreds",
+  "courseId": "place-value-1000",
+  "chapterId": "ch2-counting-to-1000",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "skip-count-line",
+      "body": "You already skip-count by tens in small numbers. Now stretch it further: 320, 330, 340, 350 — only the tens digit changes, the hundreds digit stays put until it rolls over."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hop the count out on the line.",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Skip-count by 10s: one hop past 340.",
+        "min": 300,
+        "max": 400,
+        "start": 320,
+        "hop": 10,
+        "hops": 3,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 323,
+            "feedback": "You counted by 1s. Skip-counting by 10s jumps a whole ten each time: 320 → 330 → 340 → 350."
+          },
+          {
+            "value": 340,
+            "feedback": "That's the last number GIVEN — the question wants the next hop: 350."
+          }
+        ],
+        "missFeedback": "Each hop adds a full ten: 320 → 330 → 340 → 350.",
+        "successFeedback": "350! The tens digit did all the work — 2, 3, 4, 5 — while the 0 in the ones never moved."
+      },
+      "predict": {
+        "prompt": "Skip-counting 320 → 330 → 340 → … which digit does all the moving?",
+        "options": [
+          {
+            "id": "tens",
+            "label": "The tens digit"
+          },
+          {
+            "id": "ones",
+            "label": "The ones digit"
+          },
+          {
+            "id": "hundreds",
+            "label": "The hundreds digit"
+          }
+        ],
+        "outcomeId": "tens",
+        "reveal": "Hops of ten spin the TENS digit — 2, 3, 4, 5 — while the ones digit stays parked on 0. The hundreds only stir when the tens wrap past 9, which is exactly what the next problem will do."
+      },
+      "conceptTag": "pv1000-skip-hundreds",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents skip hundreds.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for skip hundreds must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines skip hundreds."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-skip-hundreds",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Skip-count by hundreds.",
+      "conceptTag": "pv1000-skip-hundreds",
+      "explanationVariants": [
+        "Skip-counting by hundreds: each jump is +100. 400+100=500.",
+        "Only the hundreds digit changes when skip-counting by hundreds."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 100s: 200, 300, 400, ___?",
+        "answer": 500,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 410,
+            "feedback": "Skip-counting by hundreds jumps 100 each time, not 10: 400+100=500."
+          },
+          {
+            "value": 401,
+            "feedback": "That jumps by 1, not 100. Adding 100 to 400 gives 500."
+          }
+        ],
+        "fallbackFeedback": "400 + 100 = 500."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipHundredsNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When the tens digit hits 9 and jumps by 10 again, it rolls over to 0 and the hundreds digit grows by 1 — just like 90+10=100.",
+      "figure": "pv1000-tens-rollover"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Skip-count across a hundred-rollover.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 10s: 480, 490, ___?",
+        "answer": 500,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4100,
+            "feedback": "The hundreds digit rolls over to the next hundred: 490+10=500, not 4100."
+          },
+          {
+            "value": 590,
+            "feedback": "That jumps by 100, not 10. Adding 10 to 490 gives 500."
+          }
+        ],
+        "fallbackFeedback": "490 + 10 = 500 (the tens rolls over, hundreds grows by 1)."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Skip-counting works the same way anywhere in the 1-1000 range — the rules for tens and hundreds never change.",
+      "figure": "pv1000-skip-anywhere"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Skip-count by hundreds near the top.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 100s: 700, 800, 900, ___?",
+        "answer": 1000,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 910,
+            "feedback": "Skip-counting by hundreds jumps 100 each time, not 10: 900+100=1000."
+          },
+          {
+            "value": 901,
+            "feedback": "That jumps by 1, not 100. Adding 100 to 900 gives 1000."
+          }
+        ],
+        "fallbackFeedback": "900 + 100 = 1000."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another tens-rollover.",
+      "conceptTag": "pv1000-skip-tens",
+      "explanationVariants": [
+        "290+10=300 (the tens rolls over, hundreds grows by 1).",
+        "Skip-counting by tens jumps 10 each time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 10s: 270, 280, 290, ___?",
+        "answer": 300,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2100,
+            "feedback": "The hundreds digit rolls over to the next hundred: 290+10=300, not 2100."
+          },
+          {
+            "value": 390,
+            "feedback": "That jumps by 100, not 10. Adding 10 to 290 gives 300."
+          }
+        ],
+        "fallbackFeedback": "290 + 10 = 300."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipTensNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Skip-count by hundreds, another range.",
+      "conceptTag": "pv1000-skip-hundreds",
+      "explanationVariants": [
+        "500+100=600.",
+        "Only the hundreds digit changes."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 100s: 300, 400, 500, ___?",
+        "answer": 600,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 510,
+            "feedback": "Skip-counting by hundreds jumps 100 each time, not 10: 500+100=600."
+          },
+          {
+            "value": 501,
+            "feedback": "That jumps by 1, not 100. Adding 100 to 500 gives 600."
+          }
+        ],
+        "fallbackFeedback": "500 + 100 = 600."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipHundredsNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier tens-rollover.",
+      "conceptTag": "pv1000-skip-tens",
+      "explanationVariants": [
+        "690+10=700 (the tens rolls over, hundreds grows by 1).",
+        "Skip-counting by tens jumps 10 each time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Skip-count by 10s: 670, 680, 690, ___?",
+        "answer": 700,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6100,
+            "feedback": "The hundreds digit rolls over to the next hundred: 690+10=700, not 6100."
+          },
+          {
+            "value": 790,
+            "feedback": "That jumps by 100, not 10. Adding 10 to 690 gives 700."
+          }
+        ],
+        "fallbackFeedback": "690 + 10 = 700."
+      },
+      "hints": [
+        "You're skip-counting by 10s: each jump adds 10.",
+        "690 + 10 = 700.",
+        "The tens digit rolls over from 9 to 0, and the hundreds grows by 1."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SkipTensNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Skip-counting by tens or hundreds works the same everywhere in the 1-1000 range, including across a rollover.",
+      "takeaways": [
+        "Skip-counting by 10s adds 10 each jump; by 100s adds 100 each jump.",
+        "When a spot rolls over (9 to 0), the next spot over grows by 1.",
+        "The rules never change, even near 1000."
+      ],
+      "teaser": "next: skip-counting by fives."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-skip-tens",
+      "concept": {
+        "id": "rem-pst-c",
+        "kind": "concept",
+        "body": "Skip-counting by tens adds 10 each jump. When the tens digit rolls over from 9 to 0, the hundreds digit grows by 1: 490+10=500."
+      },
+      "check": {
+        "id": "rem-pst-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-skip-tens",
+        "explanationVariants": [
+          "480+10=490, then 490+10=500.",
+          "Each jump adds 10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Skip-count by 10s: 480, 490, ___?",
+          "answer": 500,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4100,
+              "feedback": "The hundreds rolls over: 500, not 4100."
+            },
+            {
+              "value": 590,
+              "feedback": "That's +100, not +10: 500."
+            }
+          ],
+          "fallbackFeedback": "500."
+        }
+      }
+    },
+    {
+      "conceptTag": "pv1000-skip-hundreds",
+      "concept": {
+        "id": "rem-psh-c",
+        "kind": "concept",
+        "body": "Skip-counting by hundreds adds 100 each jump — only the hundreds digit changes. 400+100=500."
+      },
+      "check": {
+        "id": "rem-psh-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-skip-hundreds",
+        "explanationVariants": [
+          "300+100=400, then 400+100=500.",
+          "Each jump adds 100."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Skip-count by 100s: 200, 300, 400, ___?",
+          "answer": 500,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 410,
+              "feedback": "That's +10, not +100: 500."
+            },
+            {
+              "value": 401,
+              "feedback": "That's +1, not +100: 500."
+            }
+          ],
+          "fallbackFeedback": "500."
+        }
+      }
+    }
+  ]
+}

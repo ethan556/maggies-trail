@@ -1,0 +1,339 @@
+{
+  "id": "pv-04-02",
+  "slug": "the-zero-pattern",
+  "title": "The Zero Pattern",
+  "courseId": "place-value",
+  "chapterId": "ch4-mult-tens",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Climb the ladder: 4 × 6 = 24, then 4 × 60 = 240, then 4 × 600 = 2,400. Each extra zero on a factor puts one on the answer. But know WHY: each zero means the units grew ten times — 6 ones, 6 tens, 6 hundreds — so the answer's units grow the same way. **Zeros are unit badges, not glue.**",
+      "figure": "pv3-zero-pattern"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the ladder yourself, rung by rung.",
+      "conceptTag": "zero-pattern",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Order the ladder from the smallest fact to the biggest.",
+        "items": [
+          {
+            "id": "r3",
+            "label": "4 × 600 = 2,400"
+          },
+          {
+            "id": "r1",
+            "label": "4 × 6 = 24"
+          },
+          {
+            "id": "r4",
+            "label": "4 × 6,000 = 24,000"
+          },
+          {
+            "id": "r2",
+            "label": "4 × 60 = 240"
+          }
+        ],
+        "correctOrder": [
+          "r1",
+          "r2",
+          "r3",
+          "r4"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "r2",
+            "second": "r1",
+            "feedback": "240 climbed above 24 — the ladder starts at the bare fact (ones) and each rung's units grow ten times: ones, tens, hundreds, thousands."
+          }
+        ],
+        "missFeedback": "Same fact on every rung (4 × 6 = 24); only the UNITS climb: ones → tens → hundreds → thousands.",
+        "successFeedback": "24 ones, 24 tens, 24 hundreds, 24 thousands — one fact, four unit badges."
+      },
+      "predict": {
+        "prompt": "3 × 10 versus 3 × 100 — how many times bigger is the second?",
+        "options": [
+          {
+            "id": "ten",
+            "label": "Ten times"
+          },
+          {
+            "id": "hundred",
+            "label": "A hundred times"
+          },
+          {
+            "id": "three",
+            "label": "Three times"
+          }
+        ],
+        "outcomeId": "ten",
+        "reveal": "Each rung of the ladder is one more ×10 — the zeros count the climbs. The pattern in the zeros IS the pattern in the sizes."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The badge test — can you say WHY, not just count?",
+      "conceptTag": "zero-pattern",
+      "explanationVariants": [
+        "600 is 6 hundreds, so 4 × 600 is 24 HUNDREDS — and any count of hundreds is written with two zeros holding the tens and ones.",
+        "The zeros report the unit: the answer isn't 24 with decorations; it's twenty-four hundreds."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does 4 × 600 = 2,400 end in two zeros?",
+        "options": [
+          {
+            "id": "a",
+            "label": "600 is 6 hundreds — the answer is 24 HUNDREDS, and hundreds end in two zeros",
+            "correct": true,
+            "feedback": "Unit thinking: the fact counts 24 of something, and that something is hundreds. The zeros are the hundreds' badge."
+          },
+          {
+            "id": "b",
+            "label": "Because you glue the factor's zeros onto whatever the fact gives",
+            "feedback": "Gluing describes the LOOK, not the reason — and it panics the moment a fact makes its own zero. Watch 5 × 40 shortly: unit thinking stays calm, zero-gluing sweats."
+          },
+          {
+            "id": "c",
+            "label": "Because 4 × 6 = 24 already contains a zero",
+            "feedback": "Check it — 24 has no zero at all. Both zeros in 2,400 come from the UNITS (hundreds), not from the fact."
+          },
+          {
+            "id": "d",
+            "label": "It's a coincidence of this example",
+            "feedback": "It never misses: 3 × 200 = 6 hundreds = 600, 7 × 500 = 35 hundreds = 3,500. Units explain every case."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "zero-pattern",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The corner where zero-counters panic: **5 × 40**. The small fact, 5 × 4 = 20, makes its OWN zero. Is the answer 20? 2,000? Unit thinking stays calm: the fact says **20 tens**, and twenty tens are 200. The fact's own zero is part of the count, not a badge.",
+      "figure": "pv3-zero-pattern"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Stay calm in the corner.",
+      "conceptTag": "zero-pattern",
+      "explanationVariants": [
+        "5 × 4 tens = 20 tens, and twenty tens are 200 — count them by tens: 10, 20, 30, … all the way to 200.",
+        "The 0 in 20 belongs to the COUNT; the tens badge adds the final 0. Two zeros total, one from each job."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 × 40 = ?",
+        "answer": 200,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2000,
+            "feedback": "2000 treated the fact's own zero (in 20) as a badge AND added another. The fact counts 20; the unit is tens: 20 tens = 200."
+          },
+          {
+            "value": 20,
+            "feedback": "20 is the tens COUNT — the badge is still owed. Twenty tens read as 200."
+          },
+          {
+            "value": 45,
+            "feedback": "45 adds 5 + 40. Five groups of 4 tens multiply — the key fact is 5 × 4."
+          }
+        ],
+        "fallbackFeedback": "Say it in units: 5 × 4 tens = 20 tens. Now read twenty tens as a number."
+      },
+      "variant": {
+        "gen": "zero-pattern",
+        "form": "zeroProductA"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Size a ×-tens answer without computing it fully.",
+      "conceptTag": "zero-pattern",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each product: bigger than 500, or smaller? (Think in tens — no full computing needed.)",
+        "buckets": [
+          {
+            "id": "big",
+            "label": "Bigger than 500",
+            "icon": "⬆️"
+          },
+          {
+            "id": "small",
+            "label": "Smaller than 500",
+            "icon": "⬇️"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "6 × 90",
+            "bucketId": "big",
+            "feedback": "6 × 9 = 54, so 54 tens = 540 — clears the 500 fence."
+          },
+          {
+            "id": "p2",
+            "label": "7 × 40",
+            "bucketId": "small",
+            "feedback": "7 × 4 = 28, so 28 tens = 280 — well under the fence."
+          },
+          {
+            "id": "p3",
+            "label": "9 × 60",
+            "bucketId": "big",
+            "feedback": "9 × 6 = 54 → 54 tens = 540. Over the fence, same as 6 × 90 (the flip!)."
+          },
+          {
+            "id": "p4",
+            "label": "8 × 30",
+            "bucketId": "small",
+            "feedback": "8 × 3 = 24 → 24 tens = 240. Under with room to spare."
+          }
+        ],
+        "missFeedback": "The tens count decides: more than 50 tens clears 500; fewer stays under.",
+        "successFeedback": "540, 280, 540, 240 — you sized all four from their tens counts alone. That's the pattern paying rent."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more calm-corner rep.",
+      "conceptTag": "zero-pattern",
+      "explanationVariants": [
+        "9 × 9 = 81, so 9 × 9 tens = 81 tens = 810.",
+        "Nines check rides along: 8 + 1 = 9 on the fact, and the tens badge writes the final 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 × 90 = ?",
+        "answer": 810,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 81,
+            "feedback": "81 is the tens count — eighty-one TENS. The badge writes it as 810."
+          },
+          {
+            "value": 8100,
+            "feedback": "8100 wears two badges, but only one unit is in play (90's ten). 81 tens = 810."
+          },
+          {
+            "value": 99,
+            "feedback": "99 adds 9 + 90. Nine groups of 9 tens multiply — the key fact is 9 × 9."
+          }
+        ],
+        "fallbackFeedback": "Key fact 9 × 9 = 81, then read 81 in tens."
+      },
+      "variant": {
+        "gen": "zero-pattern",
+        "form": "zeroProductB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A truck, an order, and the pattern at work.",
+      "conceptTag": "zero-pattern",
+      "hints": [
+        "Truck total first: 9 crates of 6 tens of oranges.",
+        "9 × 6 = 54, so 54 tens = 540 oranges aboard.",
+        "Beyond the order means past 500: subtract 540 − 500."
+      ],
+      "explanationVariants": [
+        "Total: 9 × 60 = 540. Beyond the order: 540 − 500 = 40 extra oranges.",
+        "Size it first: 54 tens clears the 500 fence, so the truck has enough — then the exact extra is 40."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A truck carries 9 crates with 60 oranges in each. A market orders 500 oranges. How many oranges BEYOND the order does the truck carry?",
+        "answer": 40,
+        "tolerance": 0,
+        "unit": "oranges",
+        "commonErrors": [
+          {
+            "value": 540,
+            "feedback": "540 is the whole truck — the total, found! The question asks how far PAST the 500-orange order that goes."
+          },
+          {
+            "value": 1040,
+            "feedback": "1040 ADDED the order to the truck. 'Beyond the order' compares them — subtract 500 from the truck's load."
+          },
+          {
+            "value": 60,
+            "feedback": "60 is one crate, not the overshoot. Find the whole load (9 × 60) first, then subtract the 500 ordered."
+          }
+        ],
+        "fallbackFeedback": "Two steps: total the truck (9 × 6 tens), then subtract the 500-orange order."
+      },
+      "variant": {
+        "gen": "zero-pattern",
+        "form": "beyondOrder"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The zeros work for you — and you know why.",
+      "takeaways": [
+        "Zeros on the answer are unit badges: 24 hundreds must end in two zeros.",
+        "A fact's own zero (5 × 4 = 20) belongs to the count, not the badge: 5 × 40 = 200.",
+        "Tens counts size answers instantly — over or under a fence, no full computing."
+      ],
+      "teaser": "last stop of the course: tens loose in the wild — story problems start to finish."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "zero-pattern",
+      "concept": {
+        "id": "rem-zp-c",
+        "kind": "concept",
+        "body": "Quick rewind. Say the units out loud and the zeros place themselves: 3 × 50 = 3 × 5 tens = **15 tens** = 150. Never count zeros first — count the UNITS, and let the number write itself."
+      },
+      "check": {
+        "id": "rem-zp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "zero-pattern",
+        "explanationVariants": [
+          "4 × 5 tens = 20 tens = 200 — the fact's own zero is part of the twenty.",
+          "Twenty tens: count them by tens — 10, 20, … 200."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "4 × 50 = ?",
+          "options": [
+            {
+              "id": "a",
+              "label": "200",
+              "correct": true,
+              "feedback": "4 × 5 tens = 20 tens = 200."
+            },
+            {
+              "id": "b",
+              "label": "2000",
+              "feedback": "That badge-stamped the fact's own zero (in 20) and added another. Twenty TENS are 200."
+            },
+            {
+              "id": "c",
+              "label": "20",
+              "feedback": "20 is the count of tens — the badge is owed. Twenty tens read as 200."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

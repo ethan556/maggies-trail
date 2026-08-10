@@ -1,0 +1,324 @@
+{
+ "id": "as100-04-02",
+ "slug": "stories-that-trade",
+ "title": "Stories that Trade",
+ "courseId": "add-subtract-100",
+ "chapterId": "ch4-two-step",
+ "minutes": 8,
+ "readingProfile": "early",
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Two-step stories often need a trade. 52 stickers, give away 27 (that's 25), then get 13 back: 25 + 13 = 38.",
+   "narration": "Two-step stories often need a trade. Fifty-two stickers, give away twenty-seven, then get thirteen back: fifty-two minus twenty-seven needs a break, twenty-five, then twenty-five plus thirteen is thirty-eight.",
+   "figure": "as100-story-trade-25"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Do the first step (it breaks a ten).",
+   "conceptTag": "two-step-trade",
+   "widget": {
+    "type": "numeric",
+    "prompt": "52 stickers, give away 27. How many left? (2 can't lose 7 — break a ten.)",
+    "answer": 25,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 35,
+      "feedback": "The flip trap (or a break that kept the spent ten): break gives 12 − 7 = 5, 4 − 2 = 2 → 25."
+     },
+     {
+      "value": 30,
+      "feedback": "That subtracted only the tens (50 − 20), ignoring the ones. Include them: 52 − 27 = 25."
+     }
+    ],
+    "missFeedback": "Break a ten: 4 tens 12 ones, take 27 → 25.",
+    "successFeedback": "25 left after giving away — now the second step.",
+    "fallbackFeedback": "52 − 27 = 25 (break a ten)."
+   },
+   "predict": {
+    "prompt": "52 take away 27: the ones say 2 − 7. Can that happen without breaking open a ten?",
+    "options": [
+     {
+      "id": "no",
+      "label": "No — a ten must be broken"
+     },
+     {
+      "id": "yes",
+      "label": "Yes — 2 minus 7 works fine"
+     },
+     {
+      "id": "swap",
+      "label": "Just do 7 − 2 instead"
+     }
+    ],
+    "outcomeId": "no",
+    "reveal": "Two ones can't give up seven — a ten-rod breaks into ten ones to make it possible. Swapping to 7 − 2 answers a different question."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Finish it.",
+   "conceptTag": "two-step-trade",
+   "explanationVariants": [
+    "52 − 27 = 25, then 25 + 13 = 38.",
+    "Give away first (with a break), then get some back: 38 stickers."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "52 stickers, give away 27, then get 13 back. How many now?",
+    "answer": 38,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 25,
+      "feedback": "That's only step one — 13 come back: 25 + 13 = 38."
+     },
+     {
+      "value": 12,
+      "feedback": "That subtracted the 13 too. You GET them back, so add: 25 + 13 = 38."
+     }
+    ],
+    "fallbackFeedback": "52 − 27 = 25, then 25 + 13 = 38."
+   },
+   "hints": [
+    "Give away first: 52 − 27 = 25.",
+    "Then 13 come back.",
+    "25 + 13 = 38."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "TwoStepTradeNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A story can also **add** into a trade. 46 + 17: ones 6 + 7 make 13, so trade a ten → 63.",
+   "narration": "A story can also add into a trade. Forty-six plus seventeen: the ones six plus seven make thirteen, so trade a ten, sixty-three. Then keep going.",
+   "figure": "as100-add-trade-63"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each first-step to its result.",
+   "conceptTag": "two-step-trade",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Each first step trades. Match it to its total.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "46 + 17 (ones make 13)"
+     },
+     {
+      "id": "s2",
+      "label": "60 − 35 (break a ten)"
+     },
+     {
+      "id": "s3",
+      "label": "38 + 24 (ones make 12)"
+     }
+    ],
+    "right": [
+     {
+      "id": "r63",
+      "label": "63"
+     },
+     {
+      "id": "r25",
+      "label": "25"
+     },
+     {
+      "id": "r62",
+      "label": "62"
+     }
+    ],
+    "pairs": {
+     "s1": "r63",
+     "s2": "r25",
+     "s3": "r62"
+    },
+    "pairErrors": [
+     {
+      "left": "s1",
+      "right": "r62",
+      "feedback": "46 + 17: 6 + 7 = 13, trade → 63. 62 is 38 + 24."
+     },
+     {
+      "left": "s3",
+      "right": "r63",
+      "feedback": "38 + 24: 8 + 4 = 12, trade → 62. 63 is 46 + 17."
+     }
+    ],
+    "missFeedback": "Trade when ones reach ten; break when the top ones fall short.",
+    "successFeedback": "Every trade handled — first steps done!"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Add-trade, then subtract.",
+   "conceptTag": "two-step-trade",
+   "explanationVariants": [
+    "46 + 17 = 63, then 63 − 23 = 40.",
+    "Add into the trade (63), then take 23 away: 40."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "46 shells, find 17 more, then give away 23. How many now?",
+    "answer": 40,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 63,
+      "feedback": "That's only step one — 23 given away: 63 − 23 = 40."
+     },
+     {
+      "value": 52,
+      "feedback": "That did 46 − 17 + 23. The 17 are FOUND (add), the 23 given (subtract): 63 − 23 = 40."
+     }
+    ],
+    "fallbackFeedback": "46 + 17 = 63, then 63 − 23 = 40."
+   },
+   "hints": [
+    "Find more first: 46 + 17 = 63.",
+    "Then give 23 away.",
+    "63 − 23 = 40."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "TwoStepTradeNumeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Does step one trade?",
+   "conceptTag": "two-step-trade",
+   "explanationVariants": [
+    "60 − 35: the ones are 0 and 5 — 0 can't lose 5, so break a ten. 60 − 35 = 25.",
+    "Zero ones on top means a break is needed: 25."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "60 − 35: what happens in the ones?",
+    "options": [
+     {
+      "id": "a",
+      "label": "break a ten — 0 can't lose 5",
+      "correct": true,
+      "feedback": "Yes — 60 is 5 tens 10 ones after the break; 10 − 5 = 5, 5 − 3 = 2 → 25."
+     },
+     {
+      "id": "b",
+      "label": "nothing — just subtract",
+      "feedback": "The top ones are 0, which can't lose 5. Break a ten: 60 − 35 = 25."
+     },
+     {
+      "id": "c",
+      "label": "trade a ten up",
+      "feedback": "Trading up is for adding. Subtracting with too-few ones needs a BREAK: 25."
+     }
+    ]
+   },
+   "hints": [
+    "Look at the ones: 0 and 5.",
+    "Can 0 lose 5?",
+    "Break a ten."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "TwoStepTradeMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Break, then build back!",
+   "conceptTag": "two-step-trade",
+   "explanationVariants": [
+    "60 − 35 = 25, then 25 + 18 = 43.",
+    "Break for the subtract (25), then add 18 back: 43."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "60 cookies, sell 35, then bake 18 more. How many now?",
+    "answer": 43,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 25,
+      "feedback": "That's only step one — 18 more are baked: 25 + 18 = 43."
+     },
+     {
+      "value": 7,
+      "feedback": "That subtracted the 18 too. Baking ADDS: 25 + 18 = 43."
+     }
+    ],
+    "fallbackFeedback": "60 − 35 = 25, then 25 + 18 = 43."
+   },
+   "hints": [
+    "Sell first: 60 − 35 = 25.",
+    "Then bake 18 more.",
+    "25 + 18 = 43."
+   ],
+   "variant": {
+    "gen": "g2-add-subtract-100",
+    "form": "TwoStepTradeNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Trades inside stories — handled!",
+   "takeaways": [
+    "A step may trade (adding) or break (subtracting).",
+    "Do each step fully before the next.",
+    "Watch whether each event adds or removes."
+   ],
+   "teaser": "next: picking the right two steps yourself."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "two-step-trade",
+   "concept": {
+    "id": "rem-2t-c",
+    "kind": "concept",
+    "body": "Slow down. 41 − 15, then + 6. Step 1 breaks a ten: 41 − 15 = 26. Step 2: 26 + 6 = 32.",
+    "narration": "Slow it down. Forty-one minus fifteen, then plus six. Step one breaks a ten: forty-one minus fifteen is twenty-six. Step two: twenty-six plus six is thirty-two."
+   },
+   "check": {
+    "id": "rem-2t-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "two-step-trade",
+    "explanationVariants": [
+     "41 − 15 = 26, then 26 + 6 = 32.",
+     "Break for the subtract, then add 6: 32."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "41 − 15, then + 6. What's the result?",
+     "answer": 32,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 26,
+       "feedback": "That's only step one — add the 6: 26 + 6 = 32."
+      },
+      {
+       "value": 20,
+       "feedback": "That subtracted the 6 too. Step two ADDS: 26 + 6 = 32."
+      }
+     ],
+     "fallbackFeedback": "41 − 15 = 26, then 26 + 6 = 32."
+    }
+   }
+  }
+ ]
+}

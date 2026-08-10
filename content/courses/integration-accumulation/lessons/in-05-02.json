@@ -1,0 +1,251 @@
+{
+ "id": "in-05-02",
+ "slug": "changing-the-limits",
+ "title": "Changing the Limits",
+ "courseId": "integration-accumulation",
+ "chapterId": "ch5-u-substitution",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A definite integral carries limits, and the limits are values of **x**. Change variable to u and they must change too.\n\n∫ₓ₌ₐ^(x=b) → ∫ᵤ₌ᵤ₍ₐ₎^(u=u(b))\n\nOtherwise you would be feeding x-values into a u-integral, which is a category error — and it silently gives the wrong number.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Translate the limits.",
+   "conceptTag": "in-usub-limits",
+   "explanationVariants": [
+    "u = x² + 1, so x = 0 gives u = 1 and x = 2 gives u = 5. The new integral runs from 1 to 5, not from 0 to 2.",
+    "Feed each x-limit through u to get the corresponding u-limit."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For ∫₀² x(x² + 1)³ dx with u = x² + 1, what do the limits become?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "u runs from 1 to 5.",
+      "correct": true,
+      "feedback": "Right: u(0) = 1 and u(2) = 5. The limits travel through the substitution just as the integrand does."
+     },
+     {
+      "id": "o2",
+      "label": "u still runs from 0 to 2.",
+      "correct": false,
+      "feedback": "Those are x-values. Once the integral is written in u, its limits must be u-values — this is the error that silently produces a wrong number."
+     },
+     {
+      "id": "o3",
+      "label": "u runs from 0 to 5.",
+      "correct": false,
+      "feedback": "u(0) = 0² + 1 = 1, not 0. Do not forget the +1."
+     },
+     {
+      "id": "o4",
+      "label": "u runs from 1 to 4.",
+      "correct": false,
+      "feedback": "u(2) = 2² + 1 = 5, not 4. Square first, then add one."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub-limits__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Two ways to finish, and both are legal.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Change the limits, or change back?",
+    "panels": [
+     {
+      "title": "Route one: change the limits",
+      "body": "Convert 0 and 2 into 1 and 5, integrate in u, and evaluate. You never see x again — which is why this route is faster and safer."
+     },
+     {
+      "title": "Route two: substitute back",
+      "body": "Integrate in u, then rewrite the answer in terms of x, and evaluate at the ORIGINAL limits 0 and 2. Also correct, but you must remember to undo the substitution first."
+     },
+     {
+      "title": "The error to avoid",
+      "body": "What you may NOT do is integrate in u and then evaluate at the x-limits. That mixes the two worlds, and it produces a number with no meaning at all — while looking perfectly tidy."
+     }
+    ],
+    "continueFeedback": "Keep going — the third panel is the one that costs marks.",
+    "successFeedback": "Change the limits, or change back. Never mix a u-integral with x-limits."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Finish it properly.",
+   "conceptTag": "in-usub-limits",
+   "explanationVariants": [
+    "(1/2)∫₁⁵ u³ du = (1/2)(u⁴/4) from 1 to 5 = (625 − 1)/8 = 78.",
+    "If you had wrongly used the x-limits 0 and 2, you would have got (16 − 1)/8 = 1.875 — a tidy, confident, wrong answer."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀² x(x² + 1)³ dx.",
+    "answer": 78,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1.875,
+      "feedback": "That is the answer with the WRONG limits — the x-limits 0 and 2 fed into a u-integral. With u from 1 to 5 you get (625 − 1)/8 = 78."
+     },
+     {
+      "value": 156,
+      "feedback": "That is double: the ½ from x dx = du/2 has gone missing."
+     },
+     {
+      "value": 78.125,
+      "feedback": "Close — but the lower limit contributes 1⁴ = 1, not 0. (625 − 1)/8 = 78 exactly."
+     }
+    ],
+    "fallbackFeedback": "u: 1 → 5, so (1/2)(u⁴/4) gives (625 − 1)/8 = 78."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub-limits__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Substitution also handles the plain **linear inside**, which is the commonest case of all:\n\n∫ cos(3x) dx → u = 3x, du = 3 dx → (1/3)∫ cos u du = sin(3x)/3 + C.\n\nThat division by 3 is the same division you met at the end of the last lesson. It is the inner derivative, being paid back.",
+   "figure": "dr-chain-gears"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A linear inside.",
+   "conceptTag": "in-usub-limits",
+   "explanationVariants": [
+    "u = 3x, du = 3 dx. The limits go from x: 0 → π/6 to u: 0 → π/2. So (1/3)∫₀^(π/2) cos u du = (1/3)(sin(π/2) − 0) = 1/3.",
+    "The 1/3 is the price of the inner derivative — exactly the reciprocal of what the chain rule would have charged."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀^(π/6) cos(3x) dx, as a decimal to three places.",
+    "answer": 0.333,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 1,
+      "feedback": "That is sin(π/2) without the 1/3. The inner derivative is 3, so antidifferentiating divides by 3."
+     },
+     {
+      "value": 3,
+      "feedback": "You multiplied by 3 instead of dividing. Differentiating sin(3x) MULTIPLIES by 3, so integrating must divide."
+     },
+     {
+      "value": 0.5,
+      "feedback": "Check the limits in u: x = π/6 gives u = π/2, where sin is 1. So the answer is 1/3."
+     }
+    ],
+    "fallbackFeedback": "u = 3x → (1/3)[sin u] from 0 to π/2 = 1/3 ≈ 0.333."
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub-limits__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Everything, carefully.",
+   "conceptTag": "in-usub-limits",
+   "hints": [
+    "Inside is 2x + 1, whose derivative is 2 — a constant, so this substitution is a gift.",
+    "u = 2x + 1, du = 2 dx, so dx = du/2. The limits become u: 1 → 3.",
+    "(1/2)∫₁³ u² du = (1/2)(u³/3) = (27 − 1)/6."
+   ],
+   "explanationVariants": [
+    "(1/2)(u³/3) from 1 to 3 = (27 − 1)/6 = 26/6 ≈ 4.333.",
+    "Check it by expanding instead: ∫₀¹ (4x² + 4x + 1) dx = 4/3 + 2 + 1 = 13/3 ≈ 4.333 ✓. The two routes agree, as they must."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "∫₀¹ (2x + 1)² dx, as a decimal to three places.",
+    "answer": 4.333,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 8.667,
+      "feedback": "The ½ from dx = du/2 has gone missing: the answer is half of 26/3, which is 26/6 ≈ 4.333."
+     },
+     {
+      "value": 9,
+      "feedback": "That is (u³/3) at u = 3 without the ½ and without subtracting the lower limit."
+     },
+     {
+      "value": 1,
+      "feedback": "Check the limits: u = 2x + 1 sends x = 0 to u = 1 and x = 1 to u = 3."
+     }
+    ],
+    "fallbackFeedback": "u = 2x + 1, limits 1 → 3: (1/2)(u³/3) = (27 − 1)/6 ≈ 4.333. (Expanding gives 13/3 too.)"
+   },
+   "variant": {
+    "gen": "g13-integration-accumulation",
+    "form": "integration-accumulation__in-usub-limits__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The limits are x-values. Translate them.",
+   "takeaways": [
+    "Change variable, change limits: feed each x-limit through u.",
+    "Or substitute back to x and use the original limits — but NEVER mix a u-integral with x-limits.",
+    "A linear inside (kx + c) always costs a factor of 1/k, which is the inner derivative being paid back."
+   ],
+   "teaser": "Last lesson: how to choose u when nothing is labelled."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "in-usub-limits",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "The moment you write du, the integral lives in u — so its limits must be u-values. Compute u at the old lower limit and u at the old upper limit, and write those instead. Mixing the two worlds gives a tidy answer that is simply wrong.",
+    "figure": "dr-chain-gears"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Translate them.",
+    "conceptTag": "in-usub-limits",
+    "explanationVariants": [
+     "u = x + 3 sends x = 1 to u = 4 and x = 2 to u = 5.",
+     "Feed each limit through u."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "∫₁² f(x + 3) dx with u = x + 3. What are the new limits?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "u from 4 to 5",
+       "correct": true,
+       "feedback": "Right — each x-limit goes through u = x + 3."
+      },
+      {
+       "id": "o2",
+       "label": "u from 1 to 2",
+       "correct": false,
+       "feedback": "Those are the x-limits. Once the integral is in u, its limits must be u-values: 4 and 5."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

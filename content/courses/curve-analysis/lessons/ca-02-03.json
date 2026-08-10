@@ -1,0 +1,331 @@
+{
+  "id": "ca-02-03",
+  "slug": "three-charts",
+  "title": "Putting the Three Charts Together",
+  "courseId": "curve-analysis",
+  "chapterId": "ch2-concavity",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You now have three sign charts and they answer three separate questions:\n\n**f** — above or below the axis?\n**f′** — rising or falling?\n**f″** — bending up or down?\n\nStack them and you have the curve. Not an approximation of it — the actual shape, deduced rather than plotted.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The bend chart for a quartic.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 1
+          },
+          {
+            "x": 2,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "f(x) = x⁴ − 4x³, so f″(x) = 12x(x − 2). Set the sign of f″ on each interval.",
+        "successFeedback": "+ − +. The curve bends UP, then DOWN, then UP — so there are inflection points at both 0 and 2. Now stack this against the f′ chart from chapter 1 (−, −, + with critical points at 0 and 3), and the whole shape appears: falling and concave up, falling and concave down, falling and concave up, then rising. x = 0 is a saddle AND an inflection; x = 3 is the minimum.",
+        "crossFeedback": "Both roots of f″ are single, so it changes sign at each. Two flips, three intervals.",
+        "bounceFeedback": "Neither root is repeated here — f″ crosses zero at both 0 and 2 rather than touching."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-signChart",
+        "delayed": false
+      },
+      "conceptTag": "ca-three-charts",
+      "predict": {
+        "prompt": "For f(x) = x⁴ − 4x³ the second derivative f″ = 12x(x − 2) is zero at x = 0 and x = 2. At those two places the curve…",
+        "options": [
+          {
+            "id": "bend",
+            "label": "Changes the way it bends"
+          },
+          {
+            "id": "turn",
+            "label": "Reaches a maximum or a minimum"
+          },
+          {
+            "id": "cross",
+            "label": "Crosses the x-axis"
+          }
+        ],
+        "outcomeId": "bend",
+        "reveal": "It changes its bend — these are inflection points. Maxima and minima come from f′, which here is 4x²(x − 3): a different set of places entirely. Three charts, three questions, and reading an answer off the wrong one is the most common way a sketch goes wrong."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two facts about one point.",
+      "conceptTag": "ca-three-charts",
+      "explanationVariants": [
+        "At x = 0, f′ has a double root (so no sign change: a saddle) while f″ has a single root (so a sign change: an inflection). Both statements are true of the same x, and they are about different things.",
+        "The charts are independent. A point can be a critical point, an inflection, both, or neither."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f = x⁴ − 4x³, x = 0 is a critical point with no sign change in f′, AND a sign change in f″. What is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A saddle AND an inflection point — the two charts describe different things.",
+            "correct": true,
+            "feedback": "Right. f′ says the curve does not turn; f″ says the bend does. Both are true at once, and neither implies the other."
+          },
+          {
+            "id": "o2",
+            "label": "A minimum.",
+            "correct": false,
+            "feedback": "A minimum needs f′ to change from negative to positive. Here f′ is negative on both sides — the curve is falling through the point."
+          },
+          {
+            "id": "o3",
+            "label": "Only an inflection — it cannot be a critical point too.",
+            "correct": false,
+            "feedback": "It can, and it is: f′(0) = 0, which is exactly what a critical point means. The two labels are independent."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing special.",
+            "correct": false,
+            "feedback": "Both derivatives vanish there and one changes sign. That is a great deal of structure for one point."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-three-charts__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So sketching is a procedure, not an art:\n\n**Zeros of f** — where it crosses the axis.\n**Sign chart of f′** — where it rises and falls; mark the extrema.\n**Sign chart of f″** — where it bends; mark the inflections.\n**Ends** — what happens as x → ±∞.\n\nJoin the dots consistently with all four, and there is only one curve that fits.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a curve backwards.",
+      "conceptTag": "ca-three-charts",
+      "explanationVariants": [
+        "Rising means f′ > 0. Bending downward means f″ < 0. Together: the curve is climbing but levelling off — approaching a peak from the left.",
+        "That combination is exactly what the run-up to a maximum looks like."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On an interval, f′ > 0 and f″ < 0. What is the curve doing, and what is it approaching?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Rising, but levelling off — heading toward a maximum.",
+            "correct": true,
+            "feedback": "Right. Positive slope, decreasing slope: the climb is running out of steam, which is what the approach to a peak looks like."
+          },
+          {
+            "id": "o2",
+            "label": "Rising and accelerating.",
+            "correct": false,
+            "feedback": "That needs f″ > 0 — the slope getting steeper. Here the slope is shrinking."
+          },
+          {
+            "id": "o3",
+            "label": "Falling and levelling off.",
+            "correct": false,
+            "feedback": "Falling needs f′ < 0. This curve is going UP; it is just going up more and more gently."
+          },
+          {
+            "id": "o4",
+            "label": "At a maximum already.",
+            "correct": false,
+            "feedback": "At the maximum f′ would be 0. It is still positive, so the peak has not arrived yet."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-three-charts__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Match the pair to the shape.",
+      "conceptTag": "ca-three-charts",
+      "explanationVariants": [
+        "Four combinations of two signs, four shapes: rising-concave-up (accelerating climb), rising-concave-down (levelling climb), falling-concave-down (accelerating fall), falling-concave-up (levelling fall).",
+        "Every point on every curve is one of these four."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each pair of signs to what the curve is doing.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "f′ > 0, f″ > 0"
+          },
+          {
+            "id": "w2",
+            "label": "f′ > 0, f″ < 0"
+          },
+          {
+            "id": "w3",
+            "label": "f′ < 0, f″ < 0"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "climbing, and ever more steeply"
+          },
+          {
+            "id": "y2",
+            "label": "climbing, but levelling off"
+          },
+          {
+            "id": "y3",
+            "label": "falling, and ever more steeply"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "f″ < 0 means the slope is SHRINKING, so the climb is easing off rather than steepening."
+          },
+          {
+            "left": "w3",
+            "right": "y2",
+            "feedback": "f′ < 0 means the curve is going DOWN, not climbing."
+          }
+        ],
+        "missFeedback": "The sign of f′ says up or down. The sign of f″ says whether that is intensifying or easing.",
+        "successFeedback": "Direction from f′, and whether it is intensifying from f″. Four combinations, and every point on every curve is one of them."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-three-charts__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Deduce the shape.",
+      "conceptTag": "ca-three-charts",
+      "hints": [
+        "f′ = 3x² − 12x = 3x(x − 4), so the critical points are 0 and 4.",
+        "f″ = 6x − 12 = 6(x − 2), so the single inflection is at x = 2.",
+        "The question asks how many inflection points there are — not critical points."
+      ],
+      "explanationVariants": [
+        "f″ = 6(x − 2) has one single root, so it changes sign once: exactly ONE inflection point, at x = 2.",
+        "The two critical points (0 and 4) are a different question, answered by a different chart."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x³ − 6x² + 5. How many inflection points does it have?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Two is the number of CRITICAL points (0 and 4). Inflections come from f″ = 6x − 12, which has a single root at x = 2."
+          },
+          {
+            "value": 0,
+            "feedback": "f″ = 6x − 12 does change sign — negative for x < 2 and positive after. That is one inflection."
+          },
+          {
+            "value": 3,
+            "feedback": "A linear f″ can change sign at most once."
+          }
+        ],
+        "fallbackFeedback": "f″ = 6(x − 2): one root, one sign change, one inflection point."
+      },
+      "variant": {
+        "gen": "g13-curve-analysis",
+        "form": "curve-analysis__ca-three-charts__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three charts, one curve.",
+      "takeaways": [
+        "f says where the curve sits, f′ says which way it goes, f″ says how it bends. Three questions, three charts.",
+        "A single x can be a critical point AND an inflection — the labels are independent.",
+        "Sketching is deduction, not plotting: only one curve is consistent with all three charts."
+      ],
+      "teaser": "Still to come in this course: the Mean Value Theorem, curve sketching in full, and optimisation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-three-charts",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two independent questions at every point. **Which way am I going?** — the sign of f′. **Is that intensifying or easing?** — the sign of f″. Four combinations, and every point on every curve is one of them.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Two signs, one shape.",
+        "conceptTag": "ca-three-charts",
+        "explanationVariants": [
+          "f′ < 0 and f″ > 0: falling, but the fall is easing off — approaching a minimum.",
+          "Negative slope, increasing slope: the descent is flattening out."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "f′ < 0 and f″ > 0. What is the curve doing?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Falling, but the fall is easing off.",
+              "correct": true,
+              "feedback": "Right — a negative slope that is rising toward zero. The run-up to a minimum."
+            },
+            {
+              "id": "o2",
+              "label": "Falling faster and faster.",
+              "correct": false,
+              "feedback": "That is f″ < 0. A positive f″ means the slope is INCREASING — heading back toward zero."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "id": "lc-03-03",
+  "slug": "end-behavior-full-picture",
+  "title": "End Behavior: The Full Picture",
+  "courseId": "limits-continuity",
+  "chapterId": "ch3-onesided-infinity",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When the numerator's degree is **larger**, the fraction grows without bound: lim(x→∞) = +∞ or −∞, and there's **no horizontal asymptote**. The top overwhelms the bottom. Intuitively, the fastest-growing term wins the tug-of-war as x races off.",
+      "figure": "lc-infinity-ha"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Top-heavy behavior.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "infinite",
+        "a": 3,
+        "leftValue": -1000,
+        "rightValue": 1000,
+        "fAtA": null,
+        "targetVerdict": "no-limit",
+        "prompt": "For (x² + 1)/(x − 3), zoom in on x = 3 and watch the two sides head in opposite directions.",
+        "successFeedback": "No limit: one side dives, the other climbs. A vertical asymptote is a two-sided disagreement, and it is why 'the limit is infinity' is a description of the failure rather than a value.",
+        "moreZoomFeedback": "Keep zooming. The disagreement grows rather than settling, which is the whole point.",
+        "wrongVerdictFeedback": "The two sides do not approach a common value, so no limit exists here.",
+        "requiredZoom": 2
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which term dominates.",
+      "conceptTag": "lc-endbehavior",
+      "explanationVariants": [
+        "As x → ∞, the highest-degree term dominates every polynomial; lower terms become negligible in the ratio.",
+        "Only the leading terms matter for end behavior."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For end behavior of (7x³ + 2x)/(x³ − 1) as x → ∞, which terms decide the limit?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the leading terms 7x³ and x³ (ratio 7)",
+            "correct": true,
+            "feedback": "Right — leading terms dominate: 7x³/x³ = 7."
+          },
+          {
+            "id": "o2",
+            "label": "the constant terms",
+            "feedback": "Constants are negligible at infinity. The LEADING terms decide: ratio 7."
+          },
+          {
+            "id": "o3",
+            "label": "the middle terms",
+            "feedback": "The highest-degree (leading) terms dominate: 7x³/x³ = 7."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-endbehavior__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Negative infinity.",
+      "conceptTag": "lc-endbehavior",
+      "explanationVariants": [
+        "A top-heavy ratio with opposite-sign leads heads to −∞: e.g. (−2x³)/(x²) → −∞ as x → ∞.",
+        "Higher top degree with a negative lead → −∞."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As x → ∞, (−2x³ + 5)/(x² + 1) behaves like:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "→ −∞ (grows negatively without bound)",
+            "correct": true,
+            "feedback": "Right — top degree 3 > bottom 2, and the −2 lead sends it to −∞."
+          },
+          {
+            "id": "o2",
+            "label": "→ +∞",
+            "feedback": "The leading coefficient is NEGATIVE (−2), so it heads to −∞, not +∞."
+          },
+          {
+            "id": "o3",
+            "label": "→ −2",
+            "feedback": "Unequal degrees don't give a finite limit; top-heavy with a −2 lead → −∞."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-endbehavior__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the full menu, as x → ∞ for a rational function: a **horizontal asymptote** (degrees equal or top smaller) OR **unbounded growth** to ±∞ (top larger). The single tool — compare degrees, then leading coefficients — settles every case at both +∞ and −∞.",
+      "figure": "lc-full-menu"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Classify the end behavior.",
+      "conceptTag": "lc-endbehavior",
+      "explanationVariants": [
+        "(3x + 2)/(x² + 1): top degree 1 < bottom 2, so lim(x→∞) = 0 — a horizontal asymptote y = 0.",
+        "Bottom-heavy → limit 0, asymptote y = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For (3x + 2)/(x² + 1) as x → ∞, the limit is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "0 (horizontal asymptote y = 0)",
+            "correct": true,
+            "feedback": "Right — the bottom degree is larger, so the fraction shrinks to 0."
+          },
+          {
+            "id": "o2",
+            "label": "3",
+            "feedback": "3 would be a leading ratio for EQUAL degrees. Here the bottom wins → 0."
+          },
+          {
+            "id": "o3",
+            "label": "+∞",
+            "feedback": "Top-heavy gives ∞, but here the BOTTOM degree is larger → 0."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-endbehavior__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Name the outcome.",
+      "conceptTag": "lc-endbehavior",
+      "explanationVariants": [
+        "(x³ + 1)/(2x + 5): top degree 3 > bottom 1, so lim(x→∞) = +∞ — grows without bound, no horizontal asymptote.",
+        "Top-heavy with a positive lead → +∞."
+      ],
+      "hints": [
+        "Compare degrees: 3 versus 1.",
+        "Top degree is larger.",
+        "Top-heavy with a positive lead heads where?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As x → ∞, (x³ + 1)/(2x + 5):",
+        "options": [
+          {
+            "id": "o1",
+            "label": "grows without bound (→ +∞), no horizontal asymptote",
+            "correct": true,
+            "feedback": "Right — top degree 3 > bottom 1, so it grows to +∞."
+          },
+          {
+            "id": "o2",
+            "label": "approaches 1/2",
+            "feedback": "1/2 would need equal degrees. Here the top degree is larger → +∞."
+          },
+          {
+            "id": "o3",
+            "label": "approaches 0",
+            "feedback": "0 needs a smaller top. Here the top dominates → +∞."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-limits-continuity",
+        "form": "limits-continuity__lc-endbehavior__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Degrees decide destiny.",
+      "takeaways": [
+        "Top degree > bottom → ±∞ (unbounded, no horizontal asymptote).",
+        "Top < bottom → 0; equal → leading-coefficient ratio.",
+        "The leading terms alone settle end behavior at ±∞."
+      ],
+      "teaser": "Next chapter: continuity and the Intermediate Value Theorem."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lc-endbehavior",
+      "concept": {
+        "id": "rem-lc0303-c",
+        "kind": "concept",
+        "body": "End behavior of a rational function: top degree > bottom → ±∞ (unbounded); top < bottom → 0; equal → leading-coefficient ratio. Leading terms dominate at infinity."
+      },
+      "check": {
+        "id": "rem-lc0303-k",
+        "kind": "check",
+        "body": "One end behavior.",
+        "conceptTag": "lc-endbehavior",
+        "explanationVariants": [
+          "(x² + 1)/(x + 1): top degree 2 > bottom 1, so it grows to +∞.",
+          "Top-heavy → +∞."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "As x → ∞, (x² + 1)/(x + 1):",
+          "options": [
+            {
+              "id": "o1",
+              "label": "grows without bound (→ +∞)",
+              "correct": true,
+              "feedback": "Right — top degree 2 > bottom 1 → +∞."
+            },
+            {
+              "id": "o2",
+              "label": "approaches 1",
+              "feedback": "Equal degrees would give 1; here the top degree is larger → +∞."
+            },
+            {
+              "id": "o3",
+              "label": "approaches 0",
+              "feedback": "0 needs a smaller top. Here the top wins → +∞."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "id": "ia-02-01",
+  "slug": "known-cross-sections",
+  "title": "Known Cross-Sections",
+  "courseId": "integration-applications",
+  "chapterId": "ch2-known-cross-sections",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A solid does not have to be made by revolving anything. Stand a **square** on every slice of a flat region and you get a solid just as real — and just as easy.\n\nThe slice's area is whatever the cross-section's area is. If the side is s = f(x), a square slice is **s²**, and\n\n**V = ∫ₐᵇ [f(x)]² dx.**\n\nAnd notice: **no π anywhere.** π only appeared because a disc is a circle.",
+      "figure": "ia-strip-to-disc"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The disc mode, one last time — and then let go of the circle.",
+      "widget": {
+        "type": "sliceSum",
+        "mode": "disc",
+        "tolerance": 0.05,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Revolve y = x on [0, 2] and each slice is a circle of area πr². Get the sum within 0.05 of 8π/3 — then ask what would change if the slice were a SQUARE instead.",
+        "successFeedback": "8π/3, from circular slices. Now change one thing in your head: make each slice a SQUARE of side r instead of a circle of radius r. Its area is r² rather than πr² — so the whole volume loses its π and becomes ∫₀² x² dx = 8/3. Same slicing, same summing. Only the shape standing on the slice has changed.",
+        "lowFeedback": "The stack is under 8π/3. Raise the count, or try the midpoint rule.",
+        "highFeedback": "The stack is over 8π/3. Raise the count and it will settle."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Refine cross-sectional slices and connect their accumulated volume estimate to a limiting integral.",
+        "invariants": [
+          "volume-is-sum-of-thin-slices",
+          "cross-section-rule-controls-each-slice"
+        ],
+        "misconceptions": [
+          "volume-is-base-area-only",
+          "slice-thickness-does-not-matter"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-applications-sliceSum",
+        "delayed": false
+      },
+      "conceptTag": "ia-cross-sections",
+      "predict": {
+        "prompt": "Keep every slice's size the same but make each cross-section a SQUARE of side r instead of a circle of radius r. The total volume will be…",
+        "options": [
+          {
+            "id": "less",
+            "label": "Smaller"
+          },
+          {
+            "id": "more",
+            "label": "Bigger — a square has corners the circle lacks"
+          },
+          {
+            "id": "same",
+            "label": "The same — the slices are the same size"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Smaller. A square of side r has area r², while the circle of radius r has πr² ≈ 3.14 r² — the circle is inscribed in a square of side 2r, not r. Notice what had to change to answer that: one formula. Slice, find ONE cross-section's area, integrate. The circle was never load-bearing."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Squares instead of circles.",
+      "conceptTag": "ia-cross-sections",
+      "explanationVariants": [
+        "A square of side x has area x², so V = ∫₀² x² dx = 8/3 ≈ 2.667. The π has vanished, because nothing here is round.",
+        "The circle contributed the π. Take the circle away and the π goes with it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The base is the region under y = x on [0, 2]. Cross-sections perpendicular to the x-axis are SQUARES with side y = x. Find the volume, to three decimals.",
+        "answer": 2.667,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 8.378,
+            "feedback": "That is 8π/3 — the answer for CIRCULAR slices. A square of side x has area x², not πx², so the π disappears entirely."
+          },
+          {
+            "value": 4,
+            "feedback": "Check the antiderivative: ∫₀² x² dx = [x³/3]₀² = 8/3 ≈ 2.667."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the length of the base interval. The volume is ∫₀² x² dx = 8/3."
+          }
+        ],
+        "fallbackFeedback": "Square slices have area x², so V = ∫₀² x² dx = 8/3 ≈ 2.667 — no π, because nothing is round."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-cross-sections__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Any shape at all.",
+      "conceptTag": "ia-cross-sections",
+      "explanationVariants": [
+        "An equilateral triangle of side s has area (√3/4)s². So V = (√3/4)∫₀² x² dx = (√3/4)(8/3) ≈ 1.155.",
+        "The constant out front is whatever the shape's area formula gives. The integral ∫s² dx never changes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The slices are equilateral TRIANGLES of side s = f(x), instead of squares. What changes?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Only the constant: multiply the same ∫[f(x)]² dx by √3/4, the triangle's area coefficient.",
+            "correct": true,
+            "feedback": "Right. The slicing and the summing are untouched — only the shape's area formula changes, and it contributes a constant out front."
+          },
+          {
+            "id": "o2",
+            "label": "You must revolve the region first.",
+            "correct": false,
+            "feedback": "Nothing is being revolved here at all. The triangles are simply STANDING on the base, like fins."
+          },
+          {
+            "id": "o3",
+            "label": "The integral becomes ∫f(x) dx.",
+            "correct": false,
+            "feedback": "A triangle's area still depends on the side SQUARED, so the integrand keeps its [f(x)]²."
+          },
+          {
+            "id": "o4",
+            "label": "You cannot integrate triangular slices.",
+            "correct": false,
+            "feedback": "You can integrate ANY slice whose area you can write down. That is the whole liberation of this method."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-cross-sections__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the recipe is completely general:\n\n**Work out the area of ONE cross-section, in terms of x.** Then integrate it.\n\nSquare → s². Equilateral triangle → (√3/4)s². Semicircle → (π/8)s². Circle → πr².\n\nThe calculus never notices which. It only ever adds up slices — and the geometry of the slice is your job, not the integral's.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Semicircular slices.",
+      "conceptTag": "ia-cross-sections",
+      "explanationVariants": [
+        "A semicircle of DIAMETER s has radius s/2, so its area is (1/2)π(s/2)² = (π/8)s². Then V = (π/8)(8/3) = π/3 ≈ 1.047.",
+        "The trap is using s as the radius instead of the diameter — that would give four times too much."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same base (under y = x on [0, 2]), but the slices are SEMICIRCLES of diameter s = x. Find the volume, to three decimals.",
+        "answer": 1.047,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4.189,
+            "feedback": "That treats x as the RADIUS. It is the DIAMETER, so the radius is x/2 and the area is (π/8)x², not (π/2)x²."
+          },
+          {
+            "value": 2.667,
+            "feedback": "That is the answer for SQUARE slices. A semicircle of diameter x has area (π/8)x², so the volume is (π/8)(8/3) = π/3."
+          },
+          {
+            "value": 8.378,
+            "feedback": "That is a full circle of radius x — twice too round and twice too big. Halve it, and remember x is the diameter."
+          }
+        ],
+        "fallbackFeedback": "Semicircle of diameter x: area (π/8)x², so V = (π/8)(8/3) = π/3 ≈ 1.047."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-cross-sections__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the shape, then integrate.",
+      "conceptTag": "ia-cross-sections",
+      "hints": [
+        "The area of an equilateral triangle with side s is (√3/4)s². Here s = x.",
+        "So the integral is (√3/4)∫₀² x² dx.",
+        "∫₀² x² dx = 8/3, so multiply: (√3/4)(8/3)."
+      ],
+      "explanationVariants": [
+        "V = (√3/4)(8/3) = 2√3/3 ≈ 1.155.",
+        "Every one of these problems is the same two steps: write down the area of ONE slice, then integrate it. The difficulty is never the calculus."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Base under y = x on [0, 2], with equilateral-TRIANGLE cross-sections of side x. Find the volume, to three decimals.",
+        "answer": 1.155,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 2.667,
+            "feedback": "That is the SQUARE answer, ∫x² = 8/3. A triangle of side s has area (√3/4)s², so multiply by √3/4 ≈ 0.433."
+          },
+          {
+            "value": 0.577,
+            "feedback": "That is half of the answer — perhaps you used (√3/8). The equilateral triangle's coefficient is √3/4."
+          },
+          {
+            "value": 4.619,
+            "feedback": "That looks like a factor of 4 out. (√3/4)(8/3) ≈ 1.155."
+          }
+        ],
+        "fallbackFeedback": "V = (√3/4)∫₀² x² dx = (√3/4)(8/3) ≈ 1.155."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-cross-sections__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Any slice you can measure, you can integrate.",
+      "takeaways": [
+        "No revolution is needed. Stand ANY shape on the slices and the method is unchanged.",
+        "Write the area of ONE cross-section in terms of x, then integrate it. That is the whole method.",
+        "π appears only when the slice is round. Square slices have no π — which is a useful sanity check."
+      ],
+      "teaser": "Next: the one number that could stand in for a whole function."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ia-cross-sections",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "What shape is standing on the slice, and what is its AREA? Write that in terms of x, then integrate it. The calculus does not care whether the shape is a circle, a square or a triangle — only you do.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "The area of one slice.",
+        "conceptTag": "ia-cross-sections",
+        "explanationVariants": [
+          "A square of side 3 has area 9. No π, because a square is not round.",
+          "Side squared. That is all."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A square cross-section has side 3. What is its area?",
+          "answer": 9,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 28.27,
+              "feedback": "That is π(3²) — the area of a CIRCLE of radius 3. A square of side 3 has area 9, with no π at all."
+            },
+            {
+              "value": 12,
+              "feedback": "That is the PERIMETER, 4 × 3. The area is 3² = 9."
+            }
+          ],
+          "fallbackFeedback": "3² = 9."
+        }
+      }
+    }
+  ]
+}

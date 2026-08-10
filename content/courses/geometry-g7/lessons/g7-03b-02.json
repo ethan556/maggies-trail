@@ -1,0 +1,244 @@
+{
+  "id": "g7-03b-02",
+  "slug": "when-the-conditions-leave-a-choice",
+  "title": "When the Conditions Leave a Choice",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3b-drawing-triangles-from-conditions",
+  "minutes": 12,
+  "standards": [
+    "7.G.A.2"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Give two sides and an angle that is **not** between them, and the triangle stops being unique.\n\nThe second side swings like a door and can reach the base at two different points. Both landings satisfy every given, so the conditions describe *two* different triangles — this is the ambiguous case, SSA.",
+      "figure": "g7-ssa-two-triangles"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the second triangle the givens allow.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "Stay on SSA and hunt for a second valid triangle: set the angle to 35° and look for the alternative landing.",
+        "targetCriterion": "SSA",
+        "startCriterion": "SSA",
+        "sideA": 5,
+        "sideB": 8,
+        "targetAngle": 35,
+        "angleStart": 60,
+        "angleStep": 5,
+        "requiredMoves": 4,
+        "successFeedback": "Two triangles, both obeying every given. That is what makes SSA ambiguous — the swinging side meets the base twice, and nothing in the conditions says which landing to take.",
+        "criterionFeedback": "Stay with SSA for this one — the whole point is to see the criterion that fails to lock.",
+        "angleFeedback": "Bring the angle to 35°, where the second landing is clearly visible.",
+        "evidenceFeedback": "Keep exploring: the claim is that a SECOND triangle exists, so it has to be found, not assumed."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the ambiguous arrangement.",
+      "conceptTag": "triangle-conditions-ambiguous",
+      "explanationVariants": [
+        "When the angle is not between the two given sides, the third side can swing to two positions.",
+        "SSA is ambiguous precisely because the angle sits outside the pair of given sides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which set of conditions can describe TWO different triangles?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Two sides and an angle NOT between them",
+            "correct": true,
+            "feedback": "The unfixed side swings and can meet the base at two points — the ambiguous case."
+          },
+          {
+            "id": "b",
+            "label": "Three sides",
+            "correct": false,
+            "feedback": "Three fixed sides leave no freedom at all: exactly one triangle."
+          },
+          {
+            "id": "c",
+            "label": "Two angles and the side between them",
+            "correct": false,
+            "feedback": "That fixes the triangle completely — one triangle."
+          },
+          {
+            "id": "d",
+            "label": "Two sides and the angle between them",
+            "correct": false,
+            "feedback": "An included angle pins the third vertex: exactly one triangle."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Angles alone fix shape, not size.",
+      "conceptTag": "triangle-conditions-ambiguous",
+      "explanationVariants": [
+        "50°, 60° and 70° describes a shape, and that shape can be drawn at any size — infinitely many triangles.",
+        "No side length is given, so nothing sets the scale."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many triangles have angles 50°, 60° and 70°?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Infinitely many",
+            "correct": true,
+            "feedback": "The angles fix the SHAPE, but no length is given, so it can be drawn at any size at all."
+          },
+          {
+            "id": "b",
+            "label": "Exactly one",
+            "correct": false,
+            "feedback": "Nothing here sets the size — a tiny one and a huge one both fit these angles."
+          },
+          {
+            "id": "c",
+            "label": "None",
+            "correct": false,
+            "feedback": "The angles sum to 180°, so such triangles certainly exist."
+          },
+          {
+            "id": "d",
+            "label": "Two",
+            "correct": false,
+            "feedback": "Two arises from ambiguous side-angle conditions. Here every size works."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Three angles that sum to 180° always describe a real shape — but never a single triangle.\n\nWith no length anywhere in the conditions there is nothing to set the scale, so the same shape can be drawn at every size. That is **infinitely many**, and it is a different kind of non-uniqueness from SSA's exactly two.",
+      "figure": "g7-aaa-same-shape"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Now watch a criterion that does lock.",
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "Switch to ASA — two angles with the side between them — and set the angle to 60°. Then try to find a second triangle.",
+        "targetCriterion": "ASA",
+        "startCriterion": "SSA",
+        "sideA": 6,
+        "sideB": 6,
+        "targetAngle": 60,
+        "angleStart": 40,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "successFeedback": "One triangle only. The side between the two angles sets the size, and the angles set the shape — together they leave nothing to choose.",
+        "criterionFeedback": "SSA is the ambiguous one. Choose the criterion where the given side sits BETWEEN the two given angles.",
+        "angleFeedback": "Right criterion — now bring the angle to 60°.",
+        "evidenceFeedback": "Test a few arrangements before checking, so the uniqueness claim is earned."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sort a condition into its outcome.",
+      "conceptTag": "triangle-conditions-ambiguous",
+      "explanationVariants": [
+        "Angles 90°, 60° and 40° total 190°, which is impossible — no triangle can have them.",
+        "Every triangle's angles sum to exactly 180°, so this set describes nothing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many triangles have angles 90°, 60° and 40°?",
+        "options": [
+          {
+            "id": "a",
+            "label": "None",
+            "correct": true,
+            "feedback": "They total 190°. A triangle's angles always sum to exactly 180°, so no such triangle exists."
+          },
+          {
+            "id": "b",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "That would be right if they summed to 180°. Add them: 90 + 60 + 40 = 190."
+          },
+          {
+            "id": "c",
+            "label": "Exactly one",
+            "correct": false,
+            "feedback": "Angles alone never give exactly one — and these do not sum to 180° anyway."
+          },
+          {
+            "id": "d",
+            "label": "Two",
+            "correct": false,
+            "feedback": "Check the sum first: 190° is impossible for any triangle."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Three outcomes, and you have now met all of them.",
+      "conceptTag": "triangle-conditions-ambiguous",
+      "explanationVariants": [
+        "Two angles plus a non-included side (AAS) still fixes the third angle and therefore the whole triangle — exactly one.",
+        "Knowing two angles gives the third for free, and one side then sets the size."
+      ],
+      "hints": [
+        "If you know two angles of a triangle, what do you know about the third?",
+        "The third angle is forced, since all three must total 180°. So the shape is completely fixed.",
+        "With the shape fixed and one side length given, the size is fixed too — exactly one triangle."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two angles of 50° and 60°, plus a side that is NOT between them. How many triangles?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Exactly one",
+            "correct": true,
+            "feedback": "The third angle must be 70°, so the shape is fixed; the given side then fixes the size."
+          },
+          {
+            "id": "b",
+            "label": "Two",
+            "correct": false,
+            "feedback": "The two-triangle case comes from two SIDES and a non-included angle. Two angles fix the shape completely."
+          },
+          {
+            "id": "c",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "That happens when no length is given at all. Here a side is given, so the size is set."
+          },
+          {
+            "id": "d",
+            "label": "None",
+            "correct": false,
+            "feedback": "50 + 60 = 110, leaving 70° for the third angle — a perfectly ordinary triangle."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Unique, two, infinitely many, or none.",
+      "takeaways": [
+        "Two sides with a NON-included angle (SSA) can give two different triangles.",
+        "Three angles alone give infinitely many — shape without size.",
+        "Angles that do not sum to 180°, or sides that cannot reach, give none."
+      ],
+      "teaser": "Next: drawing these triangles for real, with a compass and a straightedge."
+    }
+  ],
+  "remedials": []
+}

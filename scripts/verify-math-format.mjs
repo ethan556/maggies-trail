@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+/**
+ * verify:math-format (Phase B, §21/§33).
+ *
+ *  M1  single renderer — `katex` is imported ONLY under src/lib/math/ and
+ *      src/components/math/ (incl. its CSS). A second math path cannot appear silently.
+ *  M2  learners never see raw LaTeX — lesson JSON contains no LaTeX commands. The corpus
+ *      is clean today (0 files); this pins it: authored math enters through structured
+ *      fields + the renderer when Phase C adopts it, never as \frac soup in prose.
+ *  M3  the pipeline exists — renderMath.ts and MathText.tsx are present, and MathDisplay
+ *      reserves height (the no-layout-shift contract is grep-able, and its removal fails).
+ */
+import { execSync } from "node:child_process";
+import { readFileSync, existsSync } from "node:fs";
+
+const fail = [];
+
+// M1
+const importers = execSync(
+  `grep -rl "from \\"katex\\|from 'katex\\|import(\\"katex\\|require(\\"katex\\|katex/dist" src --include=*.ts --include=*.tsx || true`,
+  { encoding: "utf8" }
+).trim().split("\n").filter(Boolean);
+for (const f of importers) {
+  if (!f.startsWith("src/lib/math/") && !f.startsWith("src/components/math/")) {
+    fail.push(`M1: ${f} imports katex outside the sanctioned math modules`);
+  }
+}
+if (importers.length === 0) fail.push("M1: no katex importer found — the renderer is missing");
+
+// M2
+const rawLatex = execSync(
+  `grep -rlE '\\\\\\\\(frac|sqrt|int|sum|begin|dfrac|cdot)' content/courses --include=*.json || true`,
+  { encoding: "utf8" }
+).trim().split("\n").filter(Boolean);
+for (const f of rawLatex) fail.push(`M2: raw LaTeX command in lesson content: ${f}`);
+
+// M3
+if (!existsSync("src/lib/math/renderMath.ts")) fail.push("M3: renderMath.ts missing");
+if (!existsSync("src/components/math/MathText.tsx")) fail.push("M3: MathText.tsx missing");
+else {
+  const src = readFileSync("src/components/math/MathText.tsx", "utf8");
+  if (!src.includes("minHeight")) fail.push("M3: MathDisplay no longer reserves height (layout-shift contract)");
+  if (!src.includes("MathInline") || !src.includes("MathDisplay")) fail.push("M3: component pair incomplete");
+}
+
+// M4 — the stage/theme contract is enforced by CSS, not just asserted in a doc. Math must
+// inherit color (so `.stage` ink-on-light holds in dark chrome) and display math must scroll
+// itself rather than the page at 360px.
+const css = readFileSync("src/app/globals.css", "utf8");
+if (!/\.math-display[\s\S]{0,400}color: inherit|color: inherit[\s\S]{0,400}\.math-display/.test(css)) {
+  fail.push("M4: math surfaces no longer inherit color — the .stage dark-theme contract is broken");
+}
+if (!/\.math-display\s*\{[^}]*overflow-x:\s*auto/.test(css)) {
+  fail.push("M4: .math-display lost overflow-x:auto — long math would scroll the page on mobile");
+}
+
+if (fail.length) {
+  console.error(`verify:math-format FAILED:\n${fail.map((f) => `- ${f}`).join("\n")}`);
+  process.exit(1);
+}
+console.log(`math-format: ${importers.length} sanctioned katex importer(s) · 0 raw-LaTeX lesson files · pipeline present`);
+console.log("verify:math-format passed");

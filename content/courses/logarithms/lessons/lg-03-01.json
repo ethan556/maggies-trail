@@ -1,0 +1,356 @@
+{
+  "id": "lg-03-01",
+  "slug": "change-of-base",
+  "title": "Change of Base",
+  "courseId": "logarithms",
+  "chapterId": "ch3-change-of-base-and-exponential-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Calculators usually offer only log (base 10) and ln. The **change-of-base formula** unlocks every other base: **log_b x = (log x)/(log b)** — any base upstairs and downstairs, as long as they match. So log₂ 10 = (log 10)/(log 2) = 1/0.301 ≈ **3.32**.",
+      "figure": "lg-change-base"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Change of base, seen rather than memorised.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "logarithm",
+        "x": 32,
+        "targetBase": 2,
+        "startBase": 6,
+        "showMirror": true,
+        "prompt": "Slide the base until log_b(32) lands on the ring at 5.",
+        "successFeedback": "log₂(32) = 5, because 2⁵ = 32. Notice how the whole curve rises or falls as you drag the base — that continuous dependence is what the change-of-base formula computes in one line.",
+        "lowFeedback": "log_b(32) is above 5 — the base is smaller than 2, so it needs more multiplications to reach 32.",
+        "highFeedback": "log_b(32) is below 5 — the base is larger than 2, so it gets to 32 in fewer steps."
+      },
+      "conceptTag": "lg-cob",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents cob.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for cob must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines cob."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "logarithms:lg-cob",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "log_b(32) = 5. Before sliding anything, the base must be…",
+        "options": [
+          {
+            "id": "five",
+            "label": "5"
+          },
+          {
+            "id": "two",
+            "label": "2"
+          },
+          {
+            "id": "div",
+            "label": "32 ÷ 5, about 6.4"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "2, since 2⁵ = 32. Worth noticing what change-of-base would have said: log 32 / log b = 5, so log b = (log 32)/5 — the same base, reached through base 10 instead. Two routes, one answer, which is the whole claim the formula makes."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why does it work? Let y = log_b x, so bʸ = x. Take log (base 10) of both sides: y · log b = log x — the power property drags y down. Divide: y = (log x)/(log b). The formula is just the power property doing equation work — a preview of this whole chapter.",
+      "figure": "lg-change-base-why"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Set one up.",
+      "conceptTag": "lg-cob",
+      "explanationVariants": [
+        "log₇ 30 = (log 30)/(log 7) — inside upstairs, base downstairs.",
+        "Both new logs share whatever base the calculator offers."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rewrite log₇ 30 for a base-10 calculator.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(log 30)/(log 7)",
+            "correct": true,
+            "feedback": "Right — the INSIDE goes on top, the base underneath."
+          },
+          {
+            "id": "o2",
+            "label": "(log 7)/(log 30)",
+            "correct": false,
+            "feedback": "Upside down — the BASE (7) belongs in the denominator."
+          },
+          {
+            "id": "o3",
+            "label": "log 30 − log 7",
+            "correct": false,
+            "feedback": "Subtraction condenses to log(30/7) — change of base needs a QUOTIENT OF LOGS."
+          },
+          {
+            "id": "o4",
+            "label": "log (30/7)",
+            "correct": false,
+            "feedback": "log(30/7) ≈ 0.63, but log₇ 30 ≈ 1.75 — the formula divides two separate logs."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-cob__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Estimate before computing.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Without a calculator, log₃ 50 must sit between which whole numbers?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "3 and 4",
+            "correct": true,
+            "feedback": "Right — 3³ = 27 < 50 < 81 = 3⁴."
+          },
+          {
+            "id": "o2",
+            "label": "2 and 3",
+            "correct": false,
+            "feedback": "3³ = 27 is still BELOW 50 — the exponent must exceed 3."
+          },
+          {
+            "id": "o3",
+            "label": "4 and 5",
+            "correct": false,
+            "feedback": "3⁴ = 81 already overshoots 50 — the answer is below 4."
+          },
+          {
+            "id": "o4",
+            "label": "16 and 17",
+            "correct": false,
+            "feedback": "50/3 ≈ 16.7 divides — the log asks for an EXPONENT: between 3 and 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute with the formula.",
+      "conceptTag": "lg-cob",
+      "explanationVariants": [
+        "log₅ 625: known answer 4 (5⁴ = 625) — and (log 625)/(log 5) = 2.796/0.699 = 4. ✓",
+        "The formula agrees with direct evaluation whenever both are possible."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Compute log₅ 625 using (log 625)/(log 5) with log 625 ≈ 2.796, log 5 ≈ 0.699.",
+        "task": "logarithmEvaluate",
+        "values": [],
+        "logBase": 5,
+        "logArgument": 625,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 125,
+            "feedback": "125 is 625 ÷ 5 — the formula divides the LOGS, giving the exponent 4."
+          },
+          {
+            "value": 2.097,
+            "feedback": "DIVIDE, don't subtract: 2.796/0.699 = 4."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "2.796/0.699 = 4, matching 5⁴ = 625.",
+        "successFeedback": "2.796/0.699 = 4, matching 5⁴ = 625."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-cob__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Any shared base works.",
+      "conceptTag": "lg-cob",
+      "explanationVariants": [
+        "log₄ 32 = (log₂ 32)/(log₂ 4) = 5/2 — base 2 makes both pieces exact.",
+        "Choosing a clever shared base can turn the formula exact."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Evaluate log₄ 32 by changing to base 2.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5/2",
+            "correct": true,
+            "feedback": "Right — (log₂ 32)/(log₂ 4) = 5/2; check: 4^(5/2) = (√4)⁵ = 32. ✓"
+          },
+          {
+            "id": "o2",
+            "label": "5 − 2 = 3",
+            "correct": false,
+            "feedback": "The formula DIVIDES the two logs (5/2), it never subtracts them."
+          },
+          {
+            "id": "o3",
+            "label": "2/5",
+            "correct": false,
+            "feedback": "The inside's log (5) goes on TOP, the base's log (2) underneath."
+          },
+          {
+            "id": "o4",
+            "label": "8",
+            "correct": false,
+            "feedback": "32 ÷ 4 = 8 divides the numbers — the answer is the ratio of their base-2 EXPONENTS: 5/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-cob__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The 3.32 from Chapter 1.",
+      "conceptTag": "lg-cob",
+      "explanationVariants": [
+        "log₂ 10 = 1/(log 2) since log 10 = 1: 1/0.301 ≈ 3.32 — the exact name from lg-01-01 finally gets its decimal.",
+        "Numerator log 10 = 1 exactly; one division finishes it."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Compute log₂ 10 = (log 10)/(log 2) with log 2 ≈ 0.301. Round to 2 decimals.",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "log2",
+            "label": "log 2",
+            "value": 0.301
+          }
+        ],
+        "approxFormula": {
+          "op": "divide",
+          "left": {
+            "op": "lit",
+            "value": 1
+          },
+          "right": {
+            "op": "const",
+            "id": "log2"
+          }
+        },
+        "approxRound": 2,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 0.3,
+            "feedback": "log 10 = 1 (base 10 of 10) — so the value is 1/0.301 ≈ 3.32, not 0.301 itself."
+          },
+          {
+            "value": 5,
+            "feedback": "2⁵ = 32 overshoots 10 — the true exponent is 1/0.301 ≈ 3.32, matching the between-3-and-4 estimate."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "1/0.301 ≈ 3.32; sanity: 2³ = 8 < 10 < 16 = 2⁴. ✓",
+        "successFeedback": "1/0.301 ≈ 3.32; sanity: 2³ = 8 < 10 < 16 = 2⁴. ✓"
+      },
+      "hints": [
+        "log 10 = 1 exactly (base 10 of 10).",
+        "So log₂ 10 = 1/(log 2) = 1/0.301.",
+        "≈ 3.32."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-cob__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "log_b x = (log x)/(log b) — any calculator base, inside on top.",
+      "takeaways": [
+        "The formula is the power property in disguise.",
+        "Estimate with bracketing powers before trusting a decimal.",
+        "A clever shared base can make the formula exact."
+      ],
+      "teaser": "Next: the main event — solving 2^x = 10 for real."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-cob",
+      "concept": {
+        "id": "rem-lg0301-c",
+        "kind": "concept",
+        "body": "The shape in a known case: log₃ 9 = (log 9)/(log 3). With log 9 ≈ 0.954 and log 3 ≈ 0.477, divide."
+      },
+      "check": {
+        "id": "rem-lg0301-k",
+        "kind": "check",
+        "body": "One division.",
+        "conceptTag": "lg-cob",
+        "explanationVariants": [
+          "0.954/0.477 = 2 — matching 3² = 9.",
+          "Inside's log on top, base's log below."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Compute (log 9)/(log 3) with log 9 ≈ 0.954, log 3 ≈ 0.477.",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.477,
+              "feedback": "DIVIDE the two: 0.954/0.477 = 2 (subtracting gives the wrong 0.477)."
+            },
+            {
+              "value": 3,
+              "feedback": "0.954 ÷ 0.477 = 2 — matching log₃ 9 = 2, since 3² = 9."
+            }
+          ],
+          "fallbackFeedback": "0.954/0.477 = 2."
+        }
+      }
+    }
+  ]
+}

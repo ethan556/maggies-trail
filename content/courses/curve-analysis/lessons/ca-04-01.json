@@ -1,0 +1,295 @@
+{
+  "id": "ca-04-01",
+  "slug": "end-behaviour",
+  "title": "End Behaviour and Asymptotes",
+  "courseId": "curve-analysis",
+  "chapterId": "ch4-curve-sketching",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A sketch needs one more thing the derivatives cannot tell you: **what happens at the far ends.**\n\nFor a polynomial, the highest-power term wins as |x| → ∞. For a rational function, compare the degrees:\n\n**top < bottom** → y = 0. **top = bottom** → y = the ratio of leading coefficients. **top > bottom** → no horizontal asymptote (it runs away).",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the horizontal asymptote.",
+      "conceptTag": "ca-end-behaviour",
+      "explanationVariants": [
+        "Top and bottom are both degree 1, so the asymptote is the ratio of leading coefficients: 2/1 = 2.",
+        "For large x the +1 and the −3 stop mattering — the curve behaves like 2x/x."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = (2x + 1)/(x − 3). Find the horizontal asymptote y = ?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is the VERTICAL asymptote, where the denominator vanishes. The horizontal one comes from the leading coefficients: 2/1 = 2."
+          },
+          {
+            "value": 0,
+            "feedback": "y = 0 is the asymptote when the top has LOWER degree than the bottom. Here the degrees match."
+          },
+          {
+            "value": 1,
+            "feedback": "Compare leading coefficients: 2 on top, 1 on the bottom. The ratio is 2."
+          }
+        ],
+        "fallbackFeedback": "Equal degrees, so y = 2/1 = 2."
+      },
+      "variant": {
+        "gen": "end-behavior"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "And the vertical one.",
+      "conceptTag": "ca-end-behaviour",
+      "explanationVariants": [
+        "The denominator vanishes at x = 3, and the numerator does not (2(3) + 1 = 7 ≠ 0), so there is a vertical asymptote there.",
+        "If BOTH vanished, it would be a hole instead — which is exactly the distinction the limits course drew."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = (2x + 1)/(x − 3). What happens at x = 3?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A vertical asymptote — the bottom vanishes and the top does not.",
+            "correct": true,
+            "feedback": "Right. And if the top HAD vanished too, it would be a hole instead — the distinction you drew with graphZoom in limits-continuity."
+          },
+          {
+            "id": "o2",
+            "label": "A hole.",
+            "correct": false,
+            "feedback": "A hole needs both numerator and denominator to vanish, so the factor CANCELS. Here 2(3) + 1 = 7 ≠ 0, so nothing cancels and the function explodes."
+          },
+          {
+            "id": "o3",
+            "label": "A root.",
+            "correct": false,
+            "feedback": "Roots come from the NUMERATOR vanishing. 2x + 1 = 0 gives x = −1/2, which is where the curve crosses the axis."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing special.",
+            "correct": false,
+            "feedback": "Division by zero is always special: the function has no value at all at x = 3, and it blows up on either side."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "end-behavior",
+        "form": "poleClassify"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Magnify the asymptote and it never settles.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "infinite",
+        "a": 0,
+        "leftValue": 0,
+        "rightValue": 0,
+        "fAtA": null,
+        "targetVerdict": "no-limit",
+        "requiredZoom": 3,
+        "prompt": "A curve with a vertical asymptote, magnified. Do the y-values settle on any number?",
+        "successFeedback": "They never settle — the closer you look, the larger they grow. That is what makes an asymptote different from a hole: a hole keeps its limit, an asymptote destroys it. The same widget, and the same verdict, as in limits-continuity — because it is the same question.",
+        "moreZoomFeedback": "Magnify further. A limit that exists gets EASIER to read as you zoom; this one gets worse.",
+        "wrongVerdictFeedback": "'Goes to infinity' describes how the limit FAILS, not a number it approaches. The values never settle, so there is no limit."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 0. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          },
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          }
+        ],
+        "outcomeId": "blow",
+        "reveal": "Zooming never tames it — the graph climbs off every window near x = 0. When the values grow without bound, there is no height to agree on, so the limit does not exist."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Zoom toward the target input and compare visible local behavior with the symbolic limit claim.",
+        "invariants": [
+          "local-behavior-survives-zoom",
+          "limit-depends-on-approach"
+        ],
+        "misconceptions": [
+          "graph-pixel-is-proof",
+          "function-value-equals-limit"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "curve-analysis-graphZoom",
+        "delayed": false
+      },
+      "conceptTag": "ca-end-behaviour"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "For a polynomial the ends are simpler, and the **leading term decides everything**:\n\n**Even degree, positive lead** → both ends up.\n**Even degree, negative lead** → both ends down.\n**Odd degree, positive lead** → down on the left, up on the right.\n\nAt large |x| every other term is a rounding error.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the ends.",
+      "conceptTag": "ca-end-behaviour",
+      "explanationVariants": [
+        "x⁴ − 4x³ has even degree and a positive leading coefficient, so BOTH ends rise. The −4x³ dominates only for small x; by x = 100 the x⁴ has long since won.",
+        "End behaviour is a statement about the limit, and the highest power always wins that argument."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "f(x) = x⁴ − 4x³. What happens as x → −∞?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f → +∞ — the x⁴ term dominates and is positive for negative x.",
+            "correct": true,
+            "feedback": "Right. (−100)⁴ is enormous and positive, and it dwarfs −4(−100)³ = +4,000,000... which is also positive. Both ends go up."
+          },
+          {
+            "id": "o2",
+            "label": "f → −∞",
+            "correct": false,
+            "feedback": "An even power of a negative number is positive, and x⁴ beats x³ for large |x|. The curve rises on the left."
+          },
+          {
+            "id": "o3",
+            "label": "f → 0",
+            "correct": false,
+            "feedback": "Polynomials of positive degree never settle to a finite limit at infinity — they run away."
+          },
+          {
+            "id": "o4",
+            "label": "f → −4",
+            "correct": false,
+            "feedback": "The coefficient is not a limit. As |x| grows the whole expression grows without bound."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "end-behavior",
+        "form": "polyLimit"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Everything about the ends.",
+      "conceptTag": "ca-end-behaviour",
+      "hints": [
+        "Vertical asymptotes come from the denominator vanishing where the numerator does not.",
+        "x² − 4 = 0 gives x = 2 and x = −2. Check the numerator at each: 3(2) = 6 ≠ 0 and 3(−2) = −6 ≠ 0.",
+        "Neither cancels, so both are genuine asymptotes."
+      ],
+      "explanationVariants": [
+        "The denominator vanishes at x = ±2, and the numerator does not vanish at either, so there are TWO vertical asymptotes.",
+        "The horizontal one is y = 0, because the top has lower degree than the bottom."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 3x/(x² − 4). How many VERTICAL asymptotes does it have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "x² − 4 factors as (x − 2)(x + 2) — it vanishes at TWO places, and the numerator vanishes at neither."
+          },
+          {
+            "value": 0,
+            "feedback": "The denominator certainly vanishes: at x = 2 and x = −2. Since 3x is nonzero at both, both are asymptotes."
+          },
+          {
+            "value": 3,
+            "feedback": "A quadratic denominator has at most two roots, and here it has exactly two."
+          }
+        ],
+        "fallbackFeedback": "x² − 4 = 0 at x = ±2, and 3x ≠ 0 at both: two vertical asymptotes."
+      },
+      "variant": {
+        "gen": "end-behavior",
+        "form": "vertAsymCount"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The ends, before the middle.",
+      "takeaways": [
+        "Rational functions: compare degrees for the horizontal asymptote; a vanishing denominator (with a surviving numerator) gives a vertical one.",
+        "A hole keeps its limit; an asymptote destroys it. Same widget, same verdict, as in limits.",
+        "Polynomials: the leading term decides both ends, and everything else is a rounding error at large |x|."
+      ],
+      "teaser": "Next: put the ends and the three charts together and draw the whole curve."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ca-end-behaviour",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "At the far ends, only the biggest term matters. For a polynomial, that is the leading term. For a rational function, it is the ratio of the leading terms — and everything else fades to nothing.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which term wins?",
+        "conceptTag": "ca-end-behaviour",
+        "explanationVariants": [
+          "For large x, (3x² + 1)/(x² + 5) behaves like 3x²/x² = 3.",
+          "The +1 and +5 vanish into irrelevance."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = (3x² + 1)/(x² + 5). Find the horizontal asymptote y = ?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "y = 0 happens when the top has LOWER degree. Here the degrees match, so the answer is the ratio of leading coefficients."
+            },
+            {
+              "value": 1,
+              "feedback": "Compare leading coefficients: 3 on top, 1 on the bottom."
+            }
+          ],
+          "fallbackFeedback": "Equal degrees → y = 3/1 = 3."
+        }
+      }
+    }
+  ]
+}

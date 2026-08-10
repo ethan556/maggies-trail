@@ -1,0 +1,266 @@
+{
+  "id": "tm-03-02",
+  "slug": "angles-in-a-triangle",
+  "title": "Angles in a Triangle",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch3-angle-relationships",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The three angles inside ANY triangle always add up to **180°**. Know two of them and you can find the third by subtracting from 180. This holds for every triangle, no matter its shape.",
+      "figure": "angle-types"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the third angle.",
+      "widget": {
+        "type": "triangleAngleLab",
+        "prompt": "Drag corner C to reshape the triangle until angle A reads 40°. Watch all three readouts — and especially their total — the whole way.",
+        "fixedA": [
+          1,
+          1
+        ],
+        "fixedB": [
+          7,
+          1
+        ],
+        "startC": [
+          4,
+          6
+        ],
+        "targetAngleA": 40,
+        "tolerance": 3,
+        "gridMax": 8,
+        "requiredMoves": 4,
+        "successFeedback": "Angle A is 40°. Now look at what happened while you were dragging: every angle changed, and the total never did — it read 180° at every single position. That is why knowing two angles fixes the third: the two you know plus the one you don't must fill exactly 180°, so the third is whatever is left over.",
+        "targetFeedback": "Not 40° at corner A yet. Drag C further from A to open that angle, closer to narrow it — and keep an eye on the total as you do.",
+        "invariantFeedback": "Reshape the triangle a few more times first. One position cannot show you that the sum is fixed; watching it survive several different triangles is the entire point."
+      },
+      "predict": {
+        "prompt": "Two angles are set at 40° and 60°. Is the third angle FORCED?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — the three must total 180°"
+          },
+          {
+            "id": "no",
+            "label": "No — triangles vary"
+          },
+          {
+            "id": "right",
+            "label": "Only in right triangles"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "180° is every triangle's fixed budget: 40 + 60 spends 100, leaving exactly 80 — no freedom left. Two angles always determine the third, which is why matching two angles will be enough for similarity."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "This works even for right triangles. A right triangle has one 90° angle, so the other two must add to 90°. If one of them is 35°, the last is 90 − 35 = 55°.",
+      "figure": "la-triangle-sum"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A right triangle's angles.",
+      "conceptTag": "tm-triangle-angle-sum",
+      "explanationVariants": [
+        "With a 90° and a 35° angle, the third is 180 − 90 − 35 = 55°.",
+        "Subtract both from 180: 180 − 90 − 35 = 55°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has a 90° angle and a 35° angle. What is the third angle?",
+        "answer": 55,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "Subtract both known angles: 180 − 90 − 35 = 55°, not 45°."
+          },
+          {
+            "value": 65,
+            "feedback": "Check: 180 − 90 − 35 = 55°."
+          }
+        ],
+        "fallbackFeedback": "The angles sum to 180°: 180 − 90 − 35 = 55°."
+      },
+      "variant": {
+        "gen": "angle-sum"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "An equilateral triangle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "All three angles of a triangle are equal. What is each one, in degrees?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "Three EQUAL angles summing to 180° are each 180 ÷ 3 = 60°, not 90°."
+          },
+          {
+            "value": 180,
+            "feedback": "That's the total of all three — each one is 180 ÷ 3 = 60°."
+          }
+        ],
+        "fallbackFeedback": "Three equal angles sum to 180°, so each is 180 ÷ 3 = 60°."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two known angles.",
+      "conceptTag": "tm-triangle-angle-sum",
+      "explanationVariants": [
+        "180 − 25 − 115 = 40°.",
+        "Subtract both: 180 − 25 − 115 = 40°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has angles of 25° and 115°. What is the third?",
+        "answer": 40,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 140,
+            "feedback": "The three add to 180° — subtract both: 180 − 25 − 115 = 40°."
+          },
+          {
+            "value": 90,
+            "feedback": "Check: 180 − 25 − 115 = 40°."
+          }
+        ],
+        "fallbackFeedback": "The angles sum to 180°: 180 − 25 − 115 = 40°."
+      },
+      "variant": {
+        "gen": "angle-sum"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The exterior angle.",
+      "conceptTag": "tm-triangle-angle-sum",
+      "variant": {
+        "gen": "g8-tm-triangle-exterior",
+        "form": "tmExteriorRemote"
+      },
+      "explanationVariants": [
+        "An exterior angle equals the sum of the two remote interior angles: 50 + 60 = 110°.",
+        "The exterior angle equals the two far interior angles added: 110°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An exterior angle of a triangle equals the sum of the two far (remote) interior angles. If those are 50° and 60°, what is the exterior angle?",
+        "answer": 110,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "Add the two remote angles: 50 + 60 = 110°, don't subtract."
+          },
+          {
+            "value": 10,
+            "feedback": "The exterior angle is the SUM: 50 + 60 = 110°."
+          }
+        ],
+        "fallbackFeedback": "An exterior angle equals the sum of the two remote interior angles: 50 + 60 = 110°."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Combine the angle sum with a straight line.",
+      "conceptTag": "tm-triangle-angle-sum",
+      "variant": {
+        "gen": "g8-tm-triangle-exterior",
+        "form": "tmExteriorThird"
+      },
+      "explanationVariants": [
+        "Third interior angle: 180 − 70 − 60 = 50°. The exterior angle beside it: 180 − 50 = 130° (or add the remotes 70 + 60 = 130°).",
+        "Interior third is 50°; its exterior angle is 130°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has angles 70° and 60°. What is the EXTERIOR angle at the third corner?",
+        "answer": 130,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 50,
+            "feedback": "That's the interior third angle — its EXTERIOR angle is 180 − 50 = 130°."
+          },
+          {
+            "value": 110,
+            "feedback": "The exterior angle equals the two remote interiors: 70 + 60 = 130°, not 110°."
+          }
+        ],
+        "fallbackFeedback": "The third interior angle is 180 − 70 − 60 = 50°, so the exterior angle is 180 − 50 = 130° (= 70 + 60)."
+      },
+      "hints": [
+        "First find the third interior angle: 180 − 70 − 60.",
+        "That gives 50°. The exterior angle is on a straight line with it.",
+        "Exterior = 180 − 50 = 130° — which also equals the two remote angles, 70 + 60."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A triangle's three angles always sum to 180°, and an exterior angle equals the two remote interior angles.",
+      "takeaways": [
+        "The three interior angles of any triangle sum to 180°.",
+        "Find a missing angle by subtracting the known ones from 180.",
+        "An exterior angle equals the sum of the two remote interior angles."
+      ],
+      "teaser": "Next: using equal angles to spot similar triangles."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-triangle-angle-sum",
+      "concept": {
+        "id": "rem-tm0302-c",
+        "kind": "concept",
+        "body": "The three interior angles of any triangle sum to 180°. Find a missing angle by subtracting the known ones from 180. An exterior angle equals the sum of the two remote interior angles."
+      },
+      "check": {
+        "id": "rem-tm0302-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-triangle-angle-sum",
+        "explanationVariants": [
+          "180 − 50 − 60 = 70°.",
+          "Subtract both known angles from 180: 70°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A triangle has angles of 50° and 60°. What is the third?",
+          "answer": 70,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 130,
+              "feedback": "The three add to 180° — subtract both: 180 − 50 − 60 = 70°."
+            },
+            {
+              "value": 110,
+              "feedback": "Check: 180 − 50 − 60 = 70°."
+            }
+          ],
+          "fallbackFeedback": "The angles sum to 180°: 180 − 50 − 60 = 70°."
+        }
+      }
+    }
+  ]
+}

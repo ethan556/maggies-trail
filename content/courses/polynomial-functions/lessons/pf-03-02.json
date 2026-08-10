@@ -1,0 +1,391 @@
+{
+ "id": "pf-03-02",
+ "slug": "synthetic-division",
+ "title": "Synthetic Division",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch3-polynomial-division",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "For a linear divisor (x − c), **synthetic division** compresses long division to three rows of numbers. Write c and the coefficients; **bring down** the first; then repeat: **multiply by c, add the next column**. The bottom row is the quotient's coefficients — last number is the remainder.",
+   "figure": "synthetic-division"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Read the setup.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To divide x³ − 2x² − 5x + 6 by (x − 1) synthetically, what number goes in the box, and what's the top row?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "1, with coefficients 1, −2, −5, 6",
+      "correct": true,
+      "feedback": "Right — c = 1 from (x − 1), and every coefficient in order."
+     },
+     {
+      "id": "o2",
+      "label": "−1, with coefficients 1, −2, −5, 6",
+      "correct": false,
+      "feedback": "The box takes c from (x − c) — for (x − 1), that's +1."
+     },
+     {
+      "id": "o3",
+      "label": "1, with coefficients 1, −2, −5",
+      "correct": false,
+      "feedback": "The constant 6 belongs in the row — dropping it loses the remainder."
+     },
+     {
+      "id": "o4",
+      "label": "1, with coefficients 1, 2, 5, 6",
+      "correct": false,
+      "feedback": "Signs ride along: the coefficients are 1, −2, −5, 6."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Run it: bring down 1. Multiply 1·1 = 1, add to −2 → **−1**. Multiply −1·1 = −1, add to −5 → **−6**. Multiply −6·1 = −6, add to 6 → **0**. Bottom row 1, −1, −6, | 0: quotient **x² − x − 6**, remainder **0** — one degree down.",
+   "figure": "pf-synthetic"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Read the answer row.",
+   "conceptTag": "pf-synthetic",
+   "explanationVariants": [
+    "Bottom row 1, −1, −6 with remainder 0 encodes x² − x − 6 — a degree lower than the cubic.",
+    "The quotient's degree is always one less than f's for a linear divisor."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "The bottom row reads 1, −1, −6, | 0. What is the quotient?",
+    "tokens": [
+     {
+      "id": "x2",
+      "label": "x²"
+     },
+     {
+      "id": "x3",
+      "label": "x³"
+     },
+     {
+      "id": "mx",
+      "label": "− x"
+     },
+     {
+      "id": "px",
+      "label": "+ x"
+     },
+     {
+      "id": "mx2",
+      "label": "− x²"
+     },
+     {
+      "id": "m6x",
+      "label": "− 6x"
+     },
+     {
+      "id": "m6",
+      "label": "− 6"
+     },
+     {
+      "id": "p6",
+      "label": "+ 6"
+     }
+    ],
+    "correct": [
+     "x2",
+     "mx",
+     "m6"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "x3",
+       "mx2",
+       "m6x"
+      ],
+      "feedback": "The quotient drops ONE degree from the cubic: it starts at x², not x³."
+     },
+     {
+      "sequence": [
+       "x2",
+       "mx",
+       "p6"
+      ],
+      "feedback": "The third bottom entry is −6 — signs ride the row: x² − x − 6."
+     },
+     {
+      "sequence": [
+       "x2",
+       "px",
+       "p6"
+      ],
+      "feedback": "The row is 1, −1, −6 — both trailing signs are negative: x² − x − 6."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "The bottom row IS the quotient's coefficients, one degree down: 1, −1, −6 → x² − x − 6.",
+    "successFeedback": "Right — coefficients 1, −1, −6 with the boxed 0 as remainder."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-synthetic__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Run one column.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Dividing x² + 6x + 11 by (x − 2): bring down 1, then multiply 1·2 and add to 6. What is that second bottom entry?",
+    "answer": 8,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "6 − 2 subtracts — synthetic division ADDS each column: 6 + 2 = 8."
+     },
+     {
+      "value": 12,
+      "feedback": "Multiply THEN add: 1·2 = 2, and 6 + 2 = 8 — not 6·2."
+     }
+    ],
+    "fallbackFeedback": "1·2 = 2; 6 + 2 = 8. (Next: 8·2 = 16, 11 + 16 = 27 — the remainder.)"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Finish for the remainder.",
+   "conceptTag": "pf-synthetic",
+   "explanationVariants": [
+    "8·2 = 16 and 11 + 16 = 27 — the last bottom entry is the remainder.",
+    "Cross-check: f(2) = 4 + 12 + 11 = 27. ✓"
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Continuing x² + 6x + 11 ÷ (x − 2) with bottom entries 1, 8: what is the remainder?",
+    "task": "polynomialEvaluate",
+    "values": [],
+    "polyCoefficients": [
+     1,
+     6,
+     11
+    ],
+    "polyAt": 2,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 16,
+      "feedback": "16 is only the multiply (8·2) — ADD the 11: 27."
+     },
+     {
+      "value": 5,
+      "feedback": "The last column adds (11 + 16 = 27) — it doesn't subtract 16 from 11... check f(2) = 27."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "8·2 = 16; 11 + 16 = 27, matching f(2).",
+    "successFeedback": "8·2 = 16; 11 + 16 = 27, matching f(2)."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-synthetic__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Divisor with a plus.",
+   "conceptTag": "pf-synthetic",
+   "explanationVariants": [
+    "(x + 3) is (x − (−3)): the box takes −3.",
+    "Synthetic division's box always holds c from (x − c) — flip the visible sign."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "To divide by (x + 3) synthetically, what goes in the box?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "−3",
+      "correct": true,
+      "feedback": "Right — (x + 3) = (x − (−3)), so c = −3."
+     },
+     {
+      "id": "o2",
+      "label": "3",
+      "correct": false,
+      "feedback": "3 would divide by (x − 3) — the +3 inside flips: box −3."
+     },
+     {
+      "id": "o3",
+      "label": "either 3 or −3",
+      "correct": false,
+      "feedback": "Only −3 reproduces long division for (x + 3) — the box is exactly c from (x − c)."
+     },
+     {
+      "id": "o4",
+      "label": "⅓",
+      "correct": false,
+      "feedback": "The box holds the ROOT of the divisor, not a reciprocal: x + 3 = 0 at −3."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-synthetic__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full run, new numbers.",
+   "conceptTag": "pf-synthetic",
+   "explanationVariants": [
+    "Box 2, row 1, −3, −4: bring 1; 1·2 + (−3) = −1; (−1)·2 + (−4) = −6. Quotient x − 1, remainder −6.",
+    "Cross-check: f(2) = 4 − 6 − 4 = −6. ✓"
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Divide x² − 3x − 4 by (x − 2) synthetically.",
+    "tokens": [
+     {
+      "id": "q1",
+      "label": "quotient x − 1"
+     },
+     {
+      "id": "q5",
+      "label": "quotient x − 5"
+     },
+     {
+      "id": "qp1",
+      "label": "quotient x + 1"
+     },
+     {
+      "id": "c",
+      "label": ","
+     },
+     {
+      "id": "rm6",
+      "label": "remainder −6"
+     },
+     {
+      "id": "r6",
+      "label": "remainder 6"
+     },
+     {
+      "id": "rm2",
+      "label": "remainder −2"
+     }
+    ],
+    "correct": [
+     "q1",
+     "c",
+     "rm6"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "q1",
+       "c",
+       "r6"
+      ],
+      "feedback": "The last add is −4 + (−2) = −6 — both column values are negative."
+     },
+     {
+      "sequence": [
+       "q5",
+       "c",
+       "r6"
+      ],
+      "feedback": "First multiply-add: 1·2 + (−3) = −1, not −5."
+     },
+     {
+      "sequence": [
+       "qp1",
+       "c",
+       "rm2"
+      ],
+      "feedback": "1·2 = 2 ADDS to −3 giving −1 — the middle bottom entry is negative."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Run the row: bring down 1, then 1·2 + (−3) = −1, then (−1)·2 + (−4) = −6.",
+    "successFeedback": "Right — bottom row 1, −1, | −6, and f(2) = −6 confirms."
+   },
+   "hints": [
+    "Box 2; top row 1, −3, −4; bring down the 1.",
+    "1·2 = 2; −3 + 2 = −1.",
+    "−1·2 = −2; −4 + (−2) = −6 — the remainder."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-synthetic__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Bring down, multiply by c, add — three rows replace the whole division.",
+   "takeaways": [
+    "The box holds c from (x − c) — flip the sign you see in (x + c).",
+    "The bottom row IS the quotient, one degree down; its last entry is the remainder.",
+    "f(c) cross-checks the remainder every time."
+   ],
+   "teaser": "Next: division as a factoring machine — crack a cubic wide open."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-synthetic",
+   "concept": {
+    "id": "rem-pf0302-c",
+    "kind": "concept",
+    "body": "The loop is: multiply the newest bottom number by c, then add the next coefficient. With c = 3 and bottom entry 1, the next column holds coefficient 4."
+   },
+   "check": {
+    "id": "rem-pf0302-k",
+    "kind": "check",
+    "body": "One turn of the loop.",
+    "conceptTag": "pf-synthetic",
+    "explanationVariants": [
+     "1·3 = 3, then 4 + 3 = 7.",
+     "Multiply first, add second: the entry is 7."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "c = 3, newest bottom entry 1, next coefficient 4. What is the next bottom entry?",
+     "answer": 7,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 12,
+       "feedback": "That multiplies 4·3 — multiply the BOTTOM entry (1·3 = 3), then add the 4: 7."
+      },
+      {
+       "value": 1,
+       "feedback": "The 4 must join in: 1·3 + 4 = 7."
+      }
+     ],
+     "fallbackFeedback": "1·3 + 4 = 7."
+    }
+   }
+  }
+ ]
+}

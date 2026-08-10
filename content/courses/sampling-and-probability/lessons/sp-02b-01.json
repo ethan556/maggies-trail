@@ -1,0 +1,263 @@
+{
+  "id": "sp-02b-01",
+  "slug": "mad-as-a-ruler",
+  "title": "MAD as a Ruler",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch2b-measuring-the-difference",
+  "minutes": 10,
+  "standards": [
+    "7.SP.B.3"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "sp-mad-ruler",
+      "body": "You have been judging overlap by eye. Now measure it. Each group has a typical wobble — the **mean absolute deviation**, the average distance of its values from its own mean. Treat that wobble as a **ruler**: if two groups' means are 6 apart and a typical value wanders 2 from its mean, the groups are **3 rulers apart**. Same gap, bigger wobble, fewer rulers — and a gap worth less."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the ruler first.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sample A is 10, 11, 13, 14 with mean 12. What is its MAD?",
+        "answer": 1.5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the total of the distances (2 + 1 + 1 + 2). The MAD averages them across the four values: 6 ÷ 4 = 1.5."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the range (14 − 10), built from the endpoints alone. The MAD uses every value's distance from 12: 1.5."
+          }
+        ],
+        "fallbackFeedback": "Distances from 12 are 2, 1, 1, 2, totalling 6, so MAD = 6 ÷ 4 = 1.5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the gap the ruler will measure.",
+      "conceptTag": "sp-mad-multiple",
+      "explanationVariants": [
+        "The gap between centres is a difference of means: 18 − 12 = 6.",
+        "Ignore the spread for a moment — 'how far apart are the groups?' is answered by subtracting one mean from the other, giving 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sample A has mean 12; Sample B has mean 18. How far apart are the two centres?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 adds the means (12 + 18). 'How far apart' is a difference: 18 − 12 = 6."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is the average of the two means, which sits midway between the groups. The distance between them is 18 − 12 = 6."
+          }
+        ],
+        "fallbackFeedback": "Subtract the centres: 18 − 12 = 6."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Lay the ruler along the gap.",
+      "conceptTag": "sp-mad-multiple",
+      "explanationVariants": [
+        "Measuring 6 with a ruler of length 2 gives 6 ÷ 2 = 3, so the centres are 3 MADs apart.",
+        "Each MAD covers 2 units of the gap, and the gap is 6 units, so three of them lie end to end across it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The centres are 6 apart and both samples have a MAD of about 2. How many MADs apart are the centres?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 multiplies the gap by the MAD (6 × 2). Measuring means dividing: 6 ÷ 2 = 3."
+          },
+          {
+            "value": 4,
+            "feedback": "4 subtracts the MAD from the gap (6 − 2). The MAD is a unit of measurement, so divide by it: 6 ÷ 2 = 3."
+          }
+        ],
+        "fallbackFeedback": "Divide the gap by the ruler: 6 ÷ 2 = 3 MADs."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "sp-gap-vs-wobble",
+      "body": "Why the ruler matters. Two situations can share the **same 6-unit gap**. If each group wobbles by only 1, the gap is 6 MADs — the groups barely touch, and the difference is loud. If each group wobbles by 4, the same gap is 1.5 MADs — the two clouds of data overlap heavily, and the difference could easily be sampling luck. The gap alone never settles the question; the gap **in units of wobble** does."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Same gap, noisier groups.",
+      "widget": {
+        "type": "distributionCompareLab",
+        "prompt": "Sample A now centres on 18 and Sample B on 12 — still 6 apart — but each sample has a MAD of 4. How many MADs apart are the centres?",
+        "mode": "measure",
+        "meanA": 18,
+        "meanB": 12,
+        "variability": 4,
+        "answer": 1.5,
+        "tolerance": 0.01,
+        "measureChoices": [
+          {
+            "value": 2,
+            "label": "2",
+            "feedback": "2 subtracts (6 − 4). Measuring the gap in MADs means dividing: 6 ÷ 4 = 1.5."
+          },
+          {
+            "value": 1.5,
+            "label": "1.5",
+            "feedback": "6 ÷ 4 = 1.5. Watch the drawn distributions: wider wobble, same gap, fewer rulers between the centres."
+          },
+          {
+            "value": 24,
+            "label": "24",
+            "feedback": "24 multiplies (6 × 4). The MAD is the unit you are measuring WITH, so divide: 6 ÷ 4 = 1.5."
+          },
+          {
+            "value": 3,
+            "label": "3",
+            "feedback": "3 is the answer from the earlier, quieter groups whose MAD was 2. With a MAD of 4 the same gap covers fewer rulers: 6 ÷ 4 = 1.5."
+          }
+        ],
+        "fallbackFeedback": "Divide the gap by the new ruler: 6 ÷ 4 = 1.5 MADs.",
+        "successFeedback": "6 ÷ 4 = 1.5 MADs — the same gap, measured with a wider ruler, counts for less.",
+        "groupALabel": "Sample A",
+        "groupBLabel": "Sample B"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which difference is the stronger evidence?",
+      "conceptTag": "sp-mad-multiple",
+      "explanationVariants": [
+        "A gap of 6 with a wobble of 1 is 6 MADs; a gap of 6 with a wobble of 4 is 1.5 MADs. More rulers means the groups separate more clearly.",
+        "The raw gaps tie at 6, so the wobble decides: the quieter groups give the bigger multiple, and the bigger multiple is the stronger evidence."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Study 1: centres 6 apart, MAD 1. Study 2: centres 6 apart, MAD 4. Which shows the clearer difference between groups?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Study 1 — its gap is 6 MADs wide, against 1.5 for Study 2",
+            "correct": true,
+            "feedback": "Right — same raw gap, but Study 1's groups wobble so little that the gap dwarfs the noise."
+          },
+          {
+            "id": "b",
+            "label": "Study 2 — a larger MAD means it collected more information",
+            "feedback": "A larger MAD means noisier data, not more of it. That noise makes its 6-unit gap easier to explain away as chance."
+          },
+          {
+            "id": "c",
+            "label": "Neither — the gaps are both 6, so the evidence is identical",
+            "feedback": "The raw gaps tie, which is exactly why the wobble decides. 6 units means far more when a typical value strays only 1 than when it strays 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both steps, one problem.",
+      "conceptTag": "sp-mad-multiple",
+      "explanationVariants": [
+        "Gap = 47 − 38 = 9. With a MAD of 3, the centres are 9 ÷ 3 = 3 MADs apart.",
+        "Subtract the means to get the gap, then divide by the shared wobble: 9 ÷ 3 = 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sample A has mean 38, Sample B has mean 47, and both have a MAD of about 3. How many MADs apart are the centres?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the raw gap (47 − 38), which is only step one. Divide it by the MAD to measure it in rulers: 9 ÷ 3 = 3."
+          },
+          {
+            "value": 27,
+            "feedback": "27 multiplies the gap by the MAD (9 × 3). Measuring in MADs means dividing: 9 ÷ 3 = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "6 subtracts the MAD from the gap (9 − 3). The MAD is the unit of measurement, so divide: 9 ÷ 3 = 3."
+          }
+        ],
+        "fallbackFeedback": "Gap = 47 − 38 = 9, and 9 ÷ 3 = 3 MADs."
+      },
+      "hints": [
+        "Two steps: find the gap between the centres, then measure it with the MAD.",
+        "The gap is 47 − 38 = 9.",
+        "Divide that gap by the MAD of 3."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A gap is only as big as the wobble lets it be.",
+      "takeaways": [
+        "The MAD is each group's typical wobble — use it as a ruler for the gap between centres.",
+        "Difference in MADs = (difference of means) ÷ MAD.",
+        "The same raw gap means more when the groups wobble less."
+      ],
+      "teaser": "next: reading that multiple off real samples, and what counts as a big one."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-mad-multiple",
+      "concept": {
+        "id": "rem-spm-c",
+        "kind": "concept",
+        "body": "Quick rewind. Measuring a gap in MADs takes two steps: **gap = difference of the means**, then **multiple = gap ÷ MAD**. Means 20 and 26 with MAD 3: gap 6, multiple 6 ÷ 3 = 2."
+      },
+      "check": {
+        "id": "rem-spm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-mad-multiple",
+        "explanationVariants": [
+          "Gap = 30 − 22 = 8, and 8 ÷ 4 = 2 MADs.",
+          "The ruler is 4 long and the gap is 8, so two rulers span it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Means 22 and 30, MAD 4. How many MADs apart are the centres?",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 is the raw gap (30 − 22). Divide it by the MAD to get the multiple: 8 ÷ 4 = 2."
+            },
+            {
+              "value": 32,
+              "feedback": "32 multiplies the gap by the MAD. Measuring means dividing: 8 ÷ 4 = 2."
+            }
+          ],
+          "fallbackFeedback": "Gap = 8, MAD = 4, so 8 ÷ 4 = 2 MADs."
+        }
+      }
+    }
+  ]
+}

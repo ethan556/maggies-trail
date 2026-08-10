@@ -1,0 +1,351 @@
+{
+  "id": "sy-01-01",
+  "slug": "dilations-and-scale-factor",
+  "title": "Dilations & Scale Factor",
+  "courseId": "similarity",
+  "chapterId": "ch1-dilations-and-scale",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "sy-dilation",
+      "concept": {
+        "id": "rem-sy-dilation-c",
+        "kind": "concept",
+        "body": "Scale factor is a RATIO, found by dividing image by original: k = (image length) ÷ (original length). It MULTIPLIES distances (OP′ = k·OP), never adds. k > 1 enlarges, k between 0 and 1 reduces. To reverse a dilation, divide by k instead of multiplying."
+      },
+      "check": {
+        "id": "rem-sy-dilation-k",
+        "kind": "check",
+        "body": "Compute the factor.",
+        "conceptTag": "sy-dilation",
+        "explanationVariants": [
+          "Scale factor = image ÷ original = 20 ÷ 10 = 2.",
+          "Divide the new length by the old: 20/10 = 2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An original length of 10 dilates to 20. What is the scale factor?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "10 = 20 − 10 is the difference, not the ratio. Scale factor = 20 ÷ 10 = 2."
+            },
+            {
+              "value": 0.5,
+              "feedback": "0.5 = 10 ÷ 20 inverts it. Scale factor is IMAGE ÷ ORIGINAL = 20 ÷ 10 = 2."
+            }
+          ],
+          "fallbackFeedback": "k = 20 ÷ 10 = 2."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **dilation** resizes a figure from a fixed **center** by a **scale factor** k. Every point moves along the ray from the center so that its distance becomes k times the original: OP′ = k·OP. Unlike the rigid motions, a dilation changes SIZE — but it keeps SHAPE, so angles are preserved and the image is similar to the original.",
+      "figure": "dilation-scale"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A dilation is a scaling from a centre.",
+      "widget": {
+        "type": "dilationExplore",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 7,
+        "prompt": "Scale the triangle by the factor that doubles every side length.",
+        "successFeedback": "k = 2. Every LENGTH doubles and every ANGLE is untouched — which is the whole definition of similar. Note the centre matters as much as the factor: the shape moves away from it as it grows.",
+        "lowFeedback": "The image is smaller than double.",
+        "highFeedback": "The image is larger than double."
+      },
+      "predict": {
+        "prompt": "When the scale factor doubles, what happens to angles and area?",
+        "options": [
+          {
+            "id": "anglearea",
+            "label": "Angles stay equal and area becomes four times as large"
+          },
+          {
+            "id": "bothdouble",
+            "label": "Angles and area both double"
+          },
+          {
+            "id": "areasame",
+            "label": "Angles and area both stay unchanged"
+          }
+        ],
+        "outcomeId": "anglearea",
+        "reveal": "A dilation preserves angles, multiplies every length by k, and multiplies area by k²."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change the scale factor and coordinate the image, side lengths, coordinates, and area factor.",
+        "invariants": [
+          "angle-preserved",
+          "distance-from-center-scales"
+        ],
+        "misconceptions": [
+          "additive-scaling",
+          "area-scales-linearly"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "graph",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "similarity-dilation",
+        "counterfactualPrompt": "Keep the scale factor at 2 but imagine moving the center. Which measurements stay invariant and which coordinates change?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why is the dilated triangle similar to the original?",
+          "options": [
+            {
+              "id": "proportional",
+              "label": "All corresponding lengths share one scale factor while corresponding angles stay equal.",
+              "correct": true,
+              "feedback": "That is the complete similarity structure produced by a dilation."
+            },
+            {
+              "id": "samecoords",
+              "label": "Every vertex keeps the same coordinates.",
+              "correct": false,
+              "feedback": "Coordinates change unless k = 1; proportional structure is what remains."
+            },
+            {
+              "id": "samearea",
+              "label": "The two triangles have equal area.",
+              "correct": false,
+              "feedback": "Area scales by k², so equal area is not required for similarity."
+            }
+          ]
+        }
+      },
+      "conceptTag": "sy-dilation"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What a dilation preserves.",
+      "conceptTag": "sy-dilation",
+      "explanationVariants": [
+        "A dilation preserves ANGLES and shape but scales all lengths by k — so the image is similar, not congruent (unless k = 1).",
+        "Shape is kept, size is multiplied: angles equal, lengths ×k."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is preserved by a dilation with scale factor 2?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "angle measures (the shape stays the same)",
+            "correct": true,
+            "feedback": "Dilations keep angles and shape; only lengths scale — here they double, so the image is similar to the original."
+          },
+          {
+            "id": "o2",
+            "label": "all lengths (they stay the same)",
+            "correct": false,
+            "feedback": "Lengths do NOT stay the same under a dilation — they scale by k. With k = 2 every length doubles. Angles are what's preserved."
+          },
+          {
+            "id": "o3",
+            "label": "the area (it stays the same)",
+            "correct": false,
+            "feedback": "Area changes too — it scales by k² = 4 here. What's preserved is the shape, i.e. the angles."
+          },
+          {
+            "id": "o4",
+            "label": "nothing at all",
+            "correct": false,
+            "feedback": "Dilations preserve SHAPE: angle measures are unchanged. Only sizes scale."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-dilation__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The scale factor tells the whole story. If **k > 1** the image is larger (an enlargement); if **0 < k < 1** it's smaller (a reduction); if **k = 1** the figure is unchanged. The center is the one point that never moves — it's the anchor everything scales away from or toward.",
+      "figure": "dilation-scale"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Enlarge or reduce?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A dilation has scale factor k = ½. The image is…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "smaller than the original (a reduction)",
+            "correct": true,
+            "feedback": "A factor between 0 and 1 shrinks every distance — half the size here, so it's a reduction."
+          },
+          {
+            "id": "o2",
+            "label": "larger than the original (an enlargement)",
+            "correct": false,
+            "feedback": "Factors ABOVE 1 enlarge; ½ is below 1, so it shrinks the figure. That's a reduction."
+          },
+          {
+            "id": "o3",
+            "label": "the same size as the original",
+            "correct": false,
+            "feedback": "Only k = 1 keeps the size. k = ½ halves every length — a reduction."
+          },
+          {
+            "id": "o4",
+            "label": "rotated but the same size",
+            "correct": false,
+            "feedback": "Dilations don't rotate; they scale. k = ½ makes a smaller, same-orientation copy."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the scale factor.",
+      "conceptTag": "sy-dilation",
+      "explanationVariants": [
+        "The scale factor is image length ÷ original length: 12 ÷ 8 = 1.5.",
+        "k = new/old = 12/8 = 1.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An original segment is 8 units; after a dilation its image is 12 units. What is the scale factor?",
+        "answer": 1.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = 12 − 8 is the DIFFERENCE, not the ratio. Scale factor is image ÷ original: 12 ÷ 8 = 1.5."
+          },
+          {
+            "value": 0.667,
+            "feedback": "0.667 = 8 ÷ 12 divides the wrong way. Scale factor is IMAGE over ORIGINAL: 12 ÷ 8 = 1.5."
+          }
+        ],
+        "fallbackFeedback": "k = image ÷ original = 12 ÷ 8 = 1.5."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-dilation__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Coordinates make it concrete when the center is the origin: multiply BOTH coordinates by k. The point (4, 6) under k = 2 becomes (8, 12). Every vertex scales the same way, so the image is a faithful, larger (or smaller) copy — same shape, k times the size.",
+      "figure": "sy-dilation-origin"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Dilate a point.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A dilation centered at the origin has scale factor 2. The point (4, 6) maps to (8, y). What is y?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the original y. Both coordinates scale by k = 2: y = 2 × 6 = 12."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the new X-coordinate. The y-coordinate scales separately: 2 × 6 = 12."
+          }
+        ],
+        "fallbackFeedback": "Multiply both coordinates by 2: (4, 6) → (8, 12)."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Reverse the dilation.",
+      "conceptTag": "sy-dilation",
+      "hints": [
+        "The image point is 18 units from the center; the original was some distance d.",
+        "OP′ = k·OP, so d = OP′ ÷ k.",
+        "With k = 3 and OP′ = 18, solve 18 = 3·d."
+      ],
+      "explanationVariants": [
+        "Since OP′ = k·OP, the original distance is OP′ ÷ k = 18 ÷ 3 = 6.",
+        "Divide the image distance by the scale factor: 18 ÷ 3 = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A dilation with center O and scale factor 3 sends point P to P′, where OP′ = 18. How far was the ORIGINAL point P from O?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "54 = 18 × 3 multiplies again — but P′ is ALREADY the image. To undo, DIVIDE: 18 ÷ 3 = 6."
+          },
+          {
+            "value": 15,
+            "feedback": "15 = 18 − 3 subtracts. Dilation multiplies, so reversing divides: 18 ÷ 3 = 6."
+          }
+        ],
+        "fallbackFeedback": "OP = OP′ ÷ k = 18 ÷ 3 = 6."
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-dilation__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Resizing from a center.",
+      "takeaways": [
+        "A dilation scales distances from a center: OP′ = k·OP.",
+        "It preserves angles and shape; lengths scale by k, so the image is similar.",
+        "k > 1 enlarges, 0 < k < 1 reduces; from the origin, multiply both coordinates by k."
+      ],
+      "teaser": "Next: because dilations preserve shape, they create SIMILAR figures — let's define similarity precisely."
+    }
+  ]
+}

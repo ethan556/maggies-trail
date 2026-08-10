@@ -1,0 +1,389 @@
+{
+  "id": "si-05-02",
+  "slug": "right-number-wrong-claim",
+  "title": "When the Number Is Right and the Claim Is Wrong",
+  "courseId": "statistical-inference",
+  "chapterId": "ch5-judging-claims",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The arithmetic can be perfect while the sentence is false. Three ways it happens:\n\n**Reach** — the claim covers people the sample never included.\n**Extrapolation** — the claim runs past the range of the data.\n**Swapped conditional** — P(A | B) reported as P(B | A).\n\nEach one is a failure of *interpretation*, not of computation.",
+      "figure": "si-claim-ladder"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Reach.",
+      "conceptTag": "si-claim-overreach",
+      "explanationVariants": [
+        "The sample was drawn from one city's commuters, so the estimate describes that group and no other.",
+        "Generalising to \"all workers\" invents a population that was never sampled."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A random sample of commuters at one city's train station finds 61% support a fare freeze. Which claim overreaches?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"61% of all workers in the country support a fare freeze.\"",
+            "correct": true,
+            "feedback": "Right — the sample was random within train commuters in one city, so it can speak for them and nobody else."
+          },
+          {
+            "id": "o2",
+            "label": "\"About 61% of this station's commuters support a fare freeze, ± the margin.\"",
+            "correct": false,
+            "feedback": "That is exactly the claim the design supports: random within the population sampled, and honest about the margin."
+          },
+          {
+            "id": "o3",
+            "label": "\"Support among these commuters is plausibly between 57% and 65%.\"",
+            "correct": false,
+            "feedback": "A perfectly legal band, provided those numbers came from the margin of error."
+          },
+          {
+            "id": "o4",
+            "label": "\"We cannot say what car drivers think from this sample.\"",
+            "correct": false,
+            "feedback": "True and appropriately modest — car drivers were never eligible to be picked."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-claim-overreach__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A line fitted to data from 20 to 60 minutes of study.",
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Study time (minutes) against test score, for 20–60 minutes. Fit the best straight line — then read what it predicts at 600 minutes.",
+        "points": [
+          [
+            20,
+            52
+          ],
+          [
+            30,
+            60
+          ],
+          [
+            40,
+            67
+          ],
+          [
+            50,
+            76
+          ],
+          [
+            60,
+            83
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 70,
+        "yMin": 40,
+        "yMax": 90,
+        "mMin": 0,
+        "mMax": 1.5,
+        "mStep": 0.1,
+        "bMin": 30,
+        "bMax": 50,
+        "bStep": 1,
+        "mStart": 0.4,
+        "bStart": 40,
+        "tolerance": 0.15,
+        "successFeedback": "About ŷ = 0.77x + 37 — an excellent fit across 20 to 60 minutes. Now extend it to 600 minutes and it predicts a score near 500 on a 100-point test. The model is not wrong; it is being used outside the range the data ever visited. That is extrapolation, and it is the failure this lesson is about.",
+        "fallbackFeedback": "Move the slope until the line runs through the middle of the points: roughly 0.77 with an intercept near 37.",
+        "slopeFeedback": "The tilt is off. Each extra 10 minutes buys roughly 8 points, so the slope should sit near 0.77 — not far from 0.8.",
+        "offsetFeedback": "The tilt looks right but the line sits too high or too low. Slide the intercept until the line passes through the middle of the points, around 37."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Extrapolation.",
+      "conceptTag": "si-claim-overreach",
+      "explanationVariants": [
+        "The data run from 20 to 60 minutes. A prediction at 600 minutes is a guess dressed as arithmetic.",
+        "The relationship almost certainly bends — sleep and fatigue arrive — but the line has no way of knowing that."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A line fitted to study times of 20–60 minutes predicts a score of 200 at 10 hours. What went wrong?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The prediction is far outside the range of the data, so the model has no evidence to stand on.",
+            "correct": true,
+            "feedback": "Right — and the 200 on a 100-point test is the tell. A model is only evidence about the range it was fitted to."
+          },
+          {
+            "id": "o2",
+            "label": "The line was fitted incorrectly.",
+            "correct": false,
+            "feedback": "The fit may be excellent within 20–60 minutes. The failure happens the moment it is asked about a place the data never went."
+          },
+          {
+            "id": "o3",
+            "label": "Study time does not affect scores.",
+            "correct": false,
+            "feedback": "Inside the observed range it clearly does — about 3 points per 10 minutes. The trouble is only with the leap beyond the data."
+          },
+          {
+            "id": "o4",
+            "label": "The sample was too small.",
+            "correct": false,
+            "feedback": "Even a million students studying 20–60 minutes would tell you nothing about ten-hour sessions. It is a range problem, not a size problem."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-claim-overreach__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The third failure is the reversal you met in probability.\n\n\"95% of people with the disease test positive\" is P(positive | disease).\n\"95% of positive tests mean disease\" is P(disease | positive).\n\nWhen the disease is rare, these two numbers are wildly different — and the second one is usually the false claim in the headline.",
+      "figure": "si-effect-vs-significance"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which conditional was reported?",
+      "conceptTag": "si-claim-overreach",
+      "explanationVariants": [
+        "Of 10,000 people, 100 have the disease and 95 of them test positive. Of the 9,900 healthy people, 5% — 495 — also test positive. So of 590 positives, only 95 truly have it: about 16%.",
+        "A 95% accurate test on a 1-in-100 disease gives mostly false positives, because the healthy group is a hundred times larger."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A disease affects 1% of people. A test catches 95% of cases and wrongly flags 5% of healthy people. Out of 10,000 people, how many POSITIVE results are there in total?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "N",
+            "label": "the population",
+            "value": 10000
+          },
+          {
+            "id": "prev",
+            "label": "the prevalence",
+            "value": 0.01
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "N"
+              },
+              "right": {
+                "op": "const",
+                "id": "prev"
+              }
+            },
+            "right": {
+              "op": "lit",
+              "value": 0.95
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "N"
+              },
+              "right": {
+                "op": "subtract",
+                "left": {
+                  "op": "lit",
+                  "value": 1
+                },
+                "right": {
+                  "op": "const",
+                  "id": "prev"
+                }
+              }
+            },
+            "right": {
+              "op": "lit",
+              "value": 0.05
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 95,
+            "feedback": "That counts only the true positives (95% of the 100 who are ill). The healthy group also produces positives — 5% of 9,900 is 495 more."
+          },
+          {
+            "value": 500,
+            "feedback": "That is roughly the false positives alone (5% of 9,900 = 495). The 95 true positives belong in the total as well."
+          },
+          {
+            "value": 100,
+            "feedback": "That is the number of people who actually have the disease, not the number who test positive."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "95 true positives + 495 false positives = 590 positive results.",
+        "successFeedback": "95 true positives + 495 false positives = 590 positive results."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-claim-overreach__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Finish the reversal.",
+      "conceptTag": "si-claim-overreach",
+      "hints": [
+        "You have 590 positive results in total. How many of those people actually have the disease?",
+        "Only the 95 true positives are genuinely ill. The other 495 are healthy people the test flagged wrongly.",
+        "So compute 95/590 and express it as a percentage, rounded to a whole number."
+      ],
+      "explanationVariants": [
+        "P(disease | positive) = 95/590 ≈ 16%. The headline's \"95% accurate\" was P(positive | disease) — a completely different number.",
+        "The healthy group is 99 times larger, so even a small false-positive RATE produces a large false-positive COUNT that swamps the true cases."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Of those 590 positive results, what percentage of people actually have the disease? (whole number)",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "tp",
+            "label": "true positives (from the previous step)",
+            "value": 95
+          },
+          {
+            "id": "total",
+            "label": "total positive results",
+            "value": 590
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "tp"
+            },
+            "right": {
+              "op": "const",
+              "id": "total"
+            }
+          },
+          "right": {
+            "op": "lit",
+            "value": 100
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 1,
+        "numericErrors": [
+          {
+            "value": 95,
+            "feedback": "That is the test's catch rate, P(positive | disease). You are being asked the reverse: P(disease | positive), which divides the 95 true positives by all 590 positives."
+          },
+          {
+            "value": 99,
+            "feedback": "That is the healthy fraction of the population, not a conditional on a positive test."
+          },
+          {
+            "value": 5,
+            "feedback": "That is the false-positive rate for healthy people. The question asks what share of POSITIVES are genuinely ill: 95/590."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "95 true positives out of 590 positives ≈ 16%.",
+        "successFeedback": "95 true positives out of 590 positives ≈ 16%."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-claim-overreach__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Perfect arithmetic, false sentence.",
+      "takeaways": [
+        "A claim may not reach beyond the population that was actually sampled.",
+        "A model is evidence only inside the range of its data — extrapolation is assumption, not inference.",
+        "\"95% accurate\" is P(positive | disease). For a rare disease, P(disease | positive) can be tiny."
+      ],
+      "teaser": "Last lesson: everything at once, on claims from the wild."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-claim-overreach",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask two questions of any conclusion. **Who does it speak for?** Only the people who could have been sampled. **Where does it apply?** Only inside the range of the data. A conclusion that leaves either boundary is no longer supported by the study.",
+        "figure": "si-claim-ladder"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Who does it speak for?",
+        "conceptTag": "si-claim-overreach",
+        "explanationVariants": [
+          "The sample came from one hospital's patients, so the estimate speaks for that group.",
+          "Extending it to the general public would include people who had no chance of being sampled."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A random sample of one hospital's patients finds 30% have high blood pressure. Which claim is supported?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "About 30% of that hospital's patients have high blood pressure.",
+              "correct": true,
+              "feedback": "Right — random within the population sampled, and it speaks for that population only."
+            },
+            {
+              "id": "o2",
+              "label": "About 30% of the country has high blood pressure.",
+              "correct": false,
+              "feedback": "Hospital patients are a sicker group than the country as a whole, and nobody outside the hospital could have been sampled."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

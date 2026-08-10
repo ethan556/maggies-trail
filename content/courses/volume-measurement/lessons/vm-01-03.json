@@ -1,0 +1,301 @@
+{
+ "id": "vm-01-03",
+ "slug": "multi-step-conversions",
+ "title": "Multi-Step Conversions",
+ "courseId": "volume-measurement",
+ "chapterId": "ch1-unit-conversion",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Some conversions need two jumps through a middle unit. Yards to inches goes through feet: 3 yd = 3 \u00d7 3 = 9 ft, then 9 \u00d7 12 = 108 in. Plan the chain first \u2014 name the middle unit \u2014 then convert one rung at a time.",
+   "figure": "vm-yard-to-inch"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Chain through feet.",
+   "conceptTag": "multistep-convert",
+   "widget": {
+    "type": "unitChain",
+    "prompt": "3 yd = ? in \u2014 two crossings, through feet.",
+    "startValue": 3,
+    "startUnit": "yd",
+    "targetUnit": "in",
+    "hops": [
+     {
+      "from": "yd",
+      "to": "ft",
+      "bigger": "from",
+      "factor": 3
+     },
+     {
+      "from": "ft",
+      "to": "in",
+      "bigger": "from",
+      "factor": 12
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "Cross both rungs: 3 \u00d7 3 = 9 ft, then 9 \u00d7 12 = 108 in.",
+    "successFeedback": "108 in. Two crossings chained \u2014 and 3 \u00d7 12 = 36, so a yard holds 36 inches in one jump."
+   },
+   "hints": [
+    "First rung: yd\u2192ft is \u00d73.",
+    "That gives 9 ft.",
+    "Second rung: 9 \u00d7 12 = 108."
+   ],
+   "explanationVariants": [
+    "3 yd = 9 ft = 108 in.",
+    "Two rungs: \u00d73 then \u00d712."
+   ],
+   "predict": {
+    "prompt": "Yards to inches crosses two gears, 3 and 12. Combined into one jump, they act like\u2026",
+    "options": [
+     {
+      "id": "mult",
+      "label": "\u00d736 \u2014 chained gears multiply"
+     },
+     {
+      "id": "add",
+      "label": "\u00d715 \u2014 the factors add up"
+     },
+     {
+      "id": "big",
+      "label": "\u00d712 \u2014 the bigger gear wins"
+     }
+    ],
+    "outcomeId": "mult",
+    "reveal": "Each yard is 3 feet and each of those feet is 12 inches \u2014 3 groups of 12, which is multiplication: 36 inches per yard."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A metric chain.",
+   "conceptTag": "multistep-convert",
+   "explanationVariants": [
+    "2 km = 2000 m, then 2000 \u00d7 100 = 200000 cm.",
+    "Chain \u00d71000 then \u00d7100: 200000 cm."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "2 km = ? cm \u2014 a metric chain through meters.",
+    "startValue": 2,
+    "startUnit": "km",
+    "targetUnit": "cm",
+    "hops": [
+     {
+      "from": "km",
+      "to": "m",
+      "bigger": "from",
+      "factor": 1000
+     },
+     {
+      "from": "m",
+      "to": "cm",
+      "bigger": "from",
+      "factor": 100
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "2 \u00d7 1000 = 2000 m, then 2000 \u00d7 100 = 200000 cm.",
+    "successFeedback": "200000 cm. Two metric gears, 1000 then 100 \u2014 chained, that's \u00d7100000."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Capacity chains work the same way. Gallons to cups goes through quarts: 1 gal = 4 qt, and 1 qt = 4 cups. So 1.5 gal = 1.5 \u00d7 4 = 6 qt, then 6 \u00d7 4 = 24 cups. Write the middle unit down \u2014 most multi-step mistakes are a skipped rung.",
+   "figure": "vm-gal-to-cup"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Gallons to cups.",
+   "conceptTag": "multistep-convert",
+   "explanationVariants": [
+    "1.5 gal = 6 qt, then 6 \u00d7 4 = 24 cups.",
+    "Chain \u00d74 then \u00d74: 24 cups."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "1.5 gal = ? cups \u2014 through quarts.",
+    "startValue": 1.5,
+    "startUnit": "gal",
+    "targetUnit": "cups",
+    "hops": [
+     {
+      "from": "gal",
+      "to": "qt",
+      "bigger": "from",
+      "factor": 4
+     },
+     {
+      "from": "qt",
+      "to": "cups",
+      "bigger": "from",
+      "factor": 4
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "1.5 \u00d7 4 = 6 qt, then 6 \u00d7 4 = 24 cups.",
+    "successFeedback": "24 cups. Two \u00d74 gears chain into \u00d716."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Plan the chain.",
+   "conceptTag": "multistep-convert",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To convert yards to inches, which chain works?",
+    "options": [
+     {
+      "id": "a",
+      "label": "yd \u2192 ft \u2192 in: multiply by 3, then by 12",
+      "correct": true,
+      "feedback": "Right \u2014 feet is the middle unit: \u00d73 to feet, \u00d712 to inches."
+     },
+     {
+      "id": "b",
+      "label": "yd \u2192 in directly: multiply by 15",
+      "feedback": "15 adds the factors (3 + 12). Chained factors multiply: 3 \u00d7 12 = 36 inches per yard."
+     },
+     {
+      "id": "c",
+      "label": "yd \u2192 ft \u2192 in: multiply by 12, then by 3",
+      "feedback": "The rungs are the right idea, but yd\u2192ft is \u00d73 and ft\u2192in is \u00d712 \u2014 that order matches the units."
+     }
+    ]
+   },
+   "hints": [
+    "Name the middle unit between yards and inches.",
+    "It's feet.",
+    "\u00d73 to feet, then \u00d712 to inches."
+   ],
+   "explanationVariants": [
+    "yd\u2192ft is \u00d73, ft\u2192in is \u00d712.",
+    "One yard is 36 inches: 3 \u00d7 12."
+   ]
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Gallons to pints.",
+   "conceptTag": "multistep-convert",
+   "explanationVariants": [
+    "3 gal = 12 qt, then 12 \u00d7 2 = 24 pt.",
+    "Chain \u00d74 then \u00d72: 24 pints."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "3 gal = ? pt \u2014 quarts sit in the middle again.",
+    "startValue": 3,
+    "startUnit": "gal",
+    "targetUnit": "pt",
+    "hops": [
+     {
+      "from": "gal",
+      "to": "qt",
+      "bigger": "from",
+      "factor": 4
+     },
+     {
+      "from": "qt",
+      "to": "pt",
+      "bigger": "from",
+      "factor": 2
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "3 \u00d7 4 = 12 qt, then 12 \u00d7 2 = 24 pt.",
+    "successFeedback": "24 pt \u2014 the middle unit carries you across."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A ribbon in inches.",
+   "conceptTag": "multistep-convert",
+   "hints": [
+    "Middle unit between yards and inches: feet.",
+    "2 \u00d7 3 = 6 ft.",
+    "Then 6 \u00d7 12."
+   ],
+   "explanationVariants": [
+    "2 yd = 6 ft = 72 in of ribbon.",
+    "Chain \u00d73 then \u00d712: 72 inches."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A ribbon is 2 yards long. How many inches is that?",
+    "answer": 72,
+    "tolerance": 0,
+    "unit": "in",
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 stops at feet. Finish the chain: 6 \u00d7 12 = 72 in."
+     },
+     {
+      "value": 24,
+      "feedback": "24 skips the \u00d73 to feet (2 \u00d7 12). Chain both rungs: 2 \u00d7 3 \u00d7 12 = 72 in."
+     }
+    ],
+    "fallbackFeedback": "2 \u00d7 3 = 6 ft, then 6 \u00d7 12 = 72 in."
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Name the middle unit.",
+   "takeaways": [
+    "Multi-step conversions chain two rungs through a middle unit \u2014 write it down.",
+    "Chained factors multiply (yd\u2192in is \u00d73 then \u00d712, i.e. \u00d736), never add.",
+    "Most mistakes are a skipped rung: check that you finished the whole chain."
+   ],
+   "teaser": "that completes converting units \u2014 next chapter: line plots with fractions."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "multistep-convert",
+   "concept": {
+    "id": "rem-ms-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Two jumps: convert to the middle unit first, then to the target.** For 2 ft \u2192 in there's one rung (\u00d712 = 24 in), but for 2 yd \u2192 in there are two: 2 \u00d7 3 = 6 ft, then 6 \u00d7 12 = 72 in. Name the middle unit before you start."
+   },
+   "check": {
+    "id": "rem-ms-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "multistep-convert",
+    "explanationVariants": [
+     "1 gal = 4 qt, then 4 \u00d7 4 = 16 cups.",
+     "Chain \u00d74 then \u00d74: 16 cups in a gallon."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "1 gal = ? cups (gal \u2192 qt \u2192 cups: 4 qt, then \u00d7 4)",
+     "answer": 16,
+     "tolerance": 0,
+     "unit": "cups",
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "4 stops at quarts. Finish the chain: 4 \u00d7 4 = 16 cups."
+      },
+      {
+       "value": 8,
+       "feedback": "8 uses \u00d72 for the qt\u2192cups rung, but a quart is 4 cups: 16 cups."
+      }
+     ],
+     "fallbackFeedback": "4 qt \u00d7 4 = 16 cups."
+    }
+   }
+  }
+ ]
+}

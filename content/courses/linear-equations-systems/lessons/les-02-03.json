@@ -1,0 +1,375 @@
+{
+  "id": "les-02-03",
+  "slug": "classifying-any-equation",
+  "title": "Classifying Any Equation",
+  "courseId": "linear-equations-systems",
+  "chapterId": "ch2-one-none-infinite",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Any linear equation falls into exactly three cases. Simplify both sides, then look: if x survives with a real value, ONE solution; if x cancels leaving a true statement, INFINITELY MANY; if x cancels leaving a false statement, NONE.",
+      "figure": "equation-solution-types"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Classify by the leftover.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "You solve an equation and reach x = 7. How many solutions?",
+        "options": [
+          {
+            "id": "a",
+            "label": "One solution",
+            "correct": true,
+            "feedback": "Right — a real value for x means exactly one solution."
+          },
+          {
+            "id": "b",
+            "label": "No solution",
+            "correct": false,
+            "feedback": "You found an actual x-value (7), so there IS a solution — exactly one."
+          },
+          {
+            "id": "c",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "A single value like x = 7 is one solution, not infinitely many — that would need the x to cancel into a true statement."
+          },
+          {
+            "id": "d",
+            "label": "It depends on x",
+            "correct": false,
+            "feedback": "x = 7 pins it down to exactly one solution, no dependence."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "Which ending signals an equation with NO solution — 'x = 7' or '0 = 5'?",
+        "options": [
+          {
+            "id": "false",
+            "label": "0 = 5 — a false statement"
+          },
+          {
+            "id": "x7",
+            "label": "x = 7"
+          },
+          {
+            "id": "true",
+            "label": "7 = 7"
+          }
+        ],
+        "outcomeId": "false",
+        "reveal": "When the x's vanish and what's left is FALSE, no number could ever fix it — zero solutions. A leftover truth like 7 = 7 means every number works instead."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A quick shortcut: compare the simplified x-coefficients. DIFFERENT coefficients always give one solution (the lines cross). SAME coefficients give either none or infinitely many, decided by whether the constants match.",
+      "figure": "equation-solution-types"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the coefficient shortcut.",
+      "conceptTag": "les-classify-solutions",
+      "explanationVariants": [
+        "2x + 5 = 3x − 1 has different x-coefficients (2 vs 3), so exactly one solution.",
+        "Different coefficients → the x survives → one solution."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does 2x + 5 = 3x − 1 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "One solution",
+            "correct": true,
+            "feedback": "Right — the x-coefficients differ (2 vs 3), so x survives with one value."
+          },
+          {
+            "id": "b",
+            "label": "No solution",
+            "correct": false,
+            "feedback": "The coefficients differ (2x vs 3x), so the x does NOT cancel — this has one solution."
+          },
+          {
+            "id": "c",
+            "label": "Infinitely many",
+            "correct": false,
+            "feedback": "That needs identical sides — here the coefficients differ, giving one solution."
+          },
+          {
+            "id": "d",
+            "label": "Two solutions",
+            "correct": false,
+            "feedback": "A linear equation never has exactly two — different coefficients give one solution."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-solution-count",
+        "form": "lesClassifyOne"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Classify a same-coefficient case.",
+      "conceptTag": "les-classify-solutions",
+      "explanationVariants": [
+        "7x + 2 = 7x + 2 has identical sides, so infinitely many solutions.",
+        "Same coefficient AND same constant → infinitely many."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does 7x + 2 = 7x + 2 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Infinitely many",
+            "correct": true,
+            "feedback": "Right — identical sides mean every x works."
+          },
+          {
+            "id": "b",
+            "label": "One solution",
+            "correct": false,
+            "feedback": "The sides are identical, so x cancels into 2 = 2 (always true) — infinitely many, not one."
+          },
+          {
+            "id": "c",
+            "label": "No solution",
+            "correct": false,
+            "feedback": "That needs different constants — here they match (2 = 2), so infinitely many."
+          },
+          {
+            "id": "d",
+            "label": "x = 2",
+            "correct": false,
+            "feedback": "Every x works, not only 2 — infinitely many solutions."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-solution-count",
+        "form": "lesClassifySame"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort three equations.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each equation by its number of solutions.",
+        "buckets": [
+          {
+            "id": "one",
+            "label": "One"
+          },
+          {
+            "id": "none",
+            "label": "None"
+          },
+          {
+            "id": "inf",
+            "label": "Infinitely many"
+          }
+        ],
+        "items": [
+          {
+            "id": "q1",
+            "label": "2x + 1 = 5x − 8",
+            "bucketId": "one",
+            "feedback": "Different coefficients (2 vs 5) — one solution."
+          },
+          {
+            "id": "q2",
+            "label": "4x + 3 = 4x + 3",
+            "bucketId": "inf",
+            "feedback": "Identical sides — infinitely many."
+          },
+          {
+            "id": "q3",
+            "label": "6x + 1 = 6x + 7",
+            "bucketId": "none",
+            "feedback": "Same coefficient, different constants (1 vs 7) — no solution."
+          },
+          {
+            "id": "q4",
+            "label": "x + 9 = 3x + 1",
+            "bucketId": "one",
+            "feedback": "Different coefficients (1 vs 3) — one solution."
+          },
+          {
+            "id": "q5",
+            "label": "2(x + 4) = 2x + 8",
+            "bucketId": "inf",
+            "feedback": "Distributes to 2x + 8 = 2x + 8, identical — infinitely many."
+          }
+        ],
+        "missFeedback": "Not quite — compare the x-coefficients first, then the constants if the coefficients match.",
+        "successFeedback": "All sorted — different coefficients give one; same coefficients give none or infinitely many."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A distributed classification.",
+      "conceptTag": "les-classify-solutions",
+      "explanationVariants": [
+        "2(3x + 1) = 6x + 2 expands to 6x + 2 = 6x + 2 — identical, so infinitely many.",
+        "After distributing, both sides match exactly → infinitely many."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does 2(3x + 1) = 6x + 2 have?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Infinitely many",
+            "correct": true,
+            "feedback": "Right — distribute to 6x + 2 = 6x + 2, identical sides: every x works."
+          },
+          {
+            "id": "b",
+            "label": "One solution",
+            "correct": false,
+            "feedback": "After distributing, both sides are 6x + 2 — identical, so infinitely many, not one."
+          },
+          {
+            "id": "c",
+            "label": "No solution",
+            "correct": false,
+            "feedback": "The constants match after distributing (2 = 2), so infinitely many, not none."
+          },
+          {
+            "id": "d",
+            "label": "x = 2",
+            "correct": false,
+            "feedback": "Every x works — the sides are identical, giving infinitely many solutions."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-les-solution-count",
+        "form": "lesClassifyDistributed"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Classify a fully mixed equation.",
+      "conceptTag": "les-classify-solutions",
+      "explanationVariants": [
+        "3(x + 2) = 3x + 6 distributes to 3x + 6 = 3x + 6 — identical, so infinitely many solutions.",
+        "Distribute and compare: both sides become 3x + 6, giving infinitely many."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Classify: 3(x + 2) = 3x + 6.",
+        "options": [
+          {
+            "id": "a",
+            "label": "Infinitely many solutions",
+            "correct": true,
+            "feedback": "Right — distribute to 3x + 6 = 3x + 6, identical sides: every x works."
+          },
+          {
+            "id": "b",
+            "label": "One solution",
+            "correct": false,
+            "feedback": "Distributing gives 3x + 6 on both sides — identical, so infinitely many, not one."
+          },
+          {
+            "id": "c",
+            "label": "No solution",
+            "correct": false,
+            "feedback": "The constants match (6 = 6) after distributing, so infinitely many, not none."
+          },
+          {
+            "id": "d",
+            "label": "Exactly three solutions",
+            "correct": false,
+            "feedback": "A linear equation is never exactly three — this one is infinitely many."
+          }
+        ]
+      },
+      "hints": [
+        "Distribute the left side first: 3(x + 2) = 3x + 6.",
+        "Now compare: 3x + 6 = 3x + 6 — are the two sides identical?",
+        "They're identical, so the equation is true for every x: infinitely many solutions."
+      ],
+      "variant": {
+        "gen": "g8-les-solution-count",
+        "form": "lesClassifyChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every linear equation has one, none, or infinitely many solutions — the leftover statement tells you which.",
+      "takeaways": [
+        "Different x-coefficients → one solution.",
+        "Same coefficients, same constants → infinitely many.",
+        "Same coefficients, different constants → none."
+      ],
+      "teaser": "Next chapter: systems of two equations and their solutions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "les-classify-solutions",
+      "concept": {
+        "id": "rem-les0203-c",
+        "kind": "concept",
+        "body": "Classify a linear equation by simplifying: different x-coefficients → one solution; same coefficients with same constants → infinitely many; same coefficients with different constants → none."
+      },
+      "check": {
+        "id": "rem-les0203-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "les-classify-solutions",
+        "explanationVariants": [
+          "3x + 2 = 5x − 4 has different coefficients (3 vs 5), so one solution.",
+          "Different coefficients → the x survives → one solution."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "How many solutions does 3x + 2 = 5x − 4 have?",
+          "options": [
+            {
+              "id": "a",
+              "label": "One solution",
+              "correct": true,
+              "feedback": "Right — different x-coefficients (3 vs 5) give exactly one solution."
+            },
+            {
+              "id": "b",
+              "label": "No solution",
+              "correct": false,
+              "feedback": "The coefficients differ, so the x survives — one solution, not none."
+            },
+            {
+              "id": "c",
+              "label": "Infinitely many",
+              "correct": false,
+              "feedback": "That needs identical sides — here the coefficients differ, so one solution."
+            },
+            {
+              "id": "d",
+              "label": "Zero",
+              "correct": false,
+              "feedback": "Different coefficients guarantee exactly one solution."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "id": "in-03-01",
+  "slug": "ftc-part-one",
+  "title": "FTC Part 1: The Slope of the Area",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch3-the-fundamental-theorem",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Push the accumulation forward a hair. From x to x + h you gain a sliver of area — and that sliver is very nearly a rectangle of width h and height f(x).\n\nSo A(x + h) − A(x) ≈ f(x)·h. Divide by h and let h → 0:\n\n**A′(x) = f(x).**\n\nDifferentiation and integration are inverse operations. That is the Fundamental Theorem, and it is why they are taught together.",
+      "figure": "in-ftc-slope-is-height"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Watch the slope of A equal the height of f.",
+      "widget": {
+        "type": "accumulateArea",
+        "fn": "square",
+        "mode": "area",
+        "targetArea": 9,
+        "targetX": 0,
+        "start": 0,
+        "prompt": "f(x) = x². Sweep out an area of exactly 9 — and keep one eye on the tangent to the accumulation curve.",
+        "successFeedback": "x = 3, area 9 (since A(x) = x³/3). And read the line under the graph: the slope of A at x = 3 is 9 — while the HEIGHT of f at x = 3 is also 9. Not close. Equal. A′ = f, everywhere, always. The area function's derivative is the function you started with, and that is the Fundamental Theorem of Calculus.",
+        "lowFeedback": "Not enough area yet. Keep dragging — and watch the accumulation curve steepen as f gets taller.",
+        "highFeedback": "Past 9. Come back — and notice how much faster A climbs out here, because f is so much taller."
+      },
+      "predict": {
+        "prompt": "You'll sweep out area under f(x) = x² from the left. As x moves right, the accumulated area grows…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Faster and faster"
+          },
+          {
+            "id": "steady",
+            "label": "At a steady rate"
+          },
+          {
+            "id": "slower",
+            "label": "Slower and slower"
+          }
+        ],
+        "outcomeId": "faster",
+        "reveal": "Area pours in at exactly the current height of f(x) = x² — and that height keeps rising, so the accumulation curve bends upward. The rate the area grows IS the function's height."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move an upper bound and coordinate accumulated area with the integrand's current value.",
+        "invariants": [
+          "accumulation-changes-at-integrand-rate",
+          "signed-area-can-decrease"
+        ],
+        "misconceptions": [
+          "integral-is-always-positive-area",
+          "accumulation-graph-copies-integrand"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-accumulateArea",
+        "delayed": false
+      },
+      "conceptTag": "in-ftc1"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Differentiate an integral.",
+      "conceptTag": "in-ftc1",
+      "explanationVariants": [
+        "FTC Part 1 says d/dx[∫ₐˣ f(t) dt] = f(x). The integral sign and the derivative sign annihilate each other, leaving f with x substituted in.",
+        "You do not have to compute the integral at all. That is the entire point of the theorem."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is d/dx [ ∫₁ˣ t³ dt ] ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x³",
+            "correct": true,
+            "feedback": "Right — the derivative undoes the accumulation, leaving the integrand with x written in. You never had to work out the integral."
+          },
+          {
+            "id": "o2",
+            "label": "x⁴/4",
+            "correct": false,
+            "feedback": "That is the accumulation itself (up to a constant). Differentiating it takes you back to x³."
+          },
+          {
+            "id": "o3",
+            "label": "3x²",
+            "correct": false,
+            "feedback": "That is the derivative of the INTEGRAND. The theorem says the derivative of the INTEGRAL is the integrand itself, undifferentiated."
+          },
+          {
+            "id": "o4",
+            "label": "1",
+            "correct": false,
+            "feedback": "The lower limit being 1 shifts A by a constant, and constants have zero derivative — so it changes nothing at all. The answer is x³."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc1__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The lower limit does not matter.",
+      "conceptTag": "in-ftc1",
+      "explanationVariants": [
+        "Changing the lower limit from 1 to 5 shifts A by a constant (the area between 1 and 5), and a constant has zero derivative. So A′ is still f.",
+        "Different lower limits give different accumulation functions — but all of them have the SAME derivative."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How does d/dx[∫₅ˣ t³ dt] compare with d/dx[∫₁ˣ t³ dt]?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They are identical — both are x³. The lower limit only shifts A by a constant.",
+            "correct": true,
+            "feedback": "Right, and that is the seed of the +C you are about to meet: the accumulation is pinned down only up to a constant."
+          },
+          {
+            "id": "o2",
+            "label": "They differ by 4.",
+            "correct": false,
+            "feedback": "The FUNCTIONS differ by a constant (the area from 1 to 5), but their DERIVATIVES do not differ at all — a constant differentiates to zero."
+          },
+          {
+            "id": "o3",
+            "label": "The second is larger.",
+            "correct": false,
+            "feedback": "Their values differ; their slopes are the same. Only the slopes are being asked about here."
+          },
+          {
+            "id": "o4",
+            "label": "You cannot compare them.",
+            "correct": false,
+            "feedback": "You can, and the answer is pleasing: both derivatives are x³."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc1__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With the chain rule, the upper limit can be anything:\n\n**d/dx[∫ₐ^(g(x)) f(t) dt] = f(g(x))·g′(x)**\n\nThe accumulation is being swept at a rate g′(x), so the area piles up that much faster. It is the gears again.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A moving upper limit.",
+      "conceptTag": "in-ftc1",
+      "explanationVariants": [
+        "Here g(x) = x², so the answer is f(x²)·2x = (x²)³·2x = 2x⁷.",
+        "Substitute the upper limit into the integrand, then multiply by the derivative of the upper limit. That second factor is the chain rule, doing its usual job."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is d/dx [ ∫₀^(x²) t³ dt ] ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2x⁷",
+            "correct": true,
+            "feedback": "Right: f(x²) = (x²)³ = x⁶, times the inner derivative 2x, gives 2x⁷. The chain rule charges for the moving endpoint."
+          },
+          {
+            "id": "o2",
+            "label": "x⁶",
+            "correct": false,
+            "feedback": "That is f(g(x)) with no inner derivative. The upper limit is racing along at rate 2x, so the area accumulates 2x times faster."
+          },
+          {
+            "id": "o3",
+            "label": "6x²",
+            "correct": false,
+            "feedback": "That differentiates the integrand, which the theorem never asks you to do. Substitute the limit into f, then multiply by g′."
+          },
+          {
+            "id": "o4",
+            "label": "x⁸/4",
+            "correct": false,
+            "feedback": "That is the accumulation itself. The question asks for its DERIVATIVE, which is 2x⁷."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc1__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the minimum of an accumulation.",
+      "conceptTag": "in-ftc1",
+      "hints": [
+        "A′(x) = f(x) by the theorem — so to find where A turns, set f to zero.",
+        "f(x) = x² − 9 is zero at x = ±3. Only x = 3 is in [0, 5].",
+        "Check it is a minimum: f is negative before 3 and positive after, so A falls then rises."
+      ],
+      "explanationVariants": [
+        "A′(x) = x² − 9 = 0 at x = 3 (within [0, 5]), and f changes from negative to positive there — so A has a minimum at x = 3.",
+        "You never computed A. The theorem let you find the turning point of an accumulation by looking only at the thing being accumulated."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A(x) = ∫₀ˣ (t² − 9) dt on [0, 5]. At what x is A smallest?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "A(0) = 0, but A then goes NEGATIVE, because t² − 9 is negative for t < 3. The minimum comes later."
+          },
+          {
+            "value": 5,
+            "feedback": "By x = 5 the positive area has been piling on. A′(5) = 25 − 9 = 16 > 0, so A is climbing there, not bottoming out."
+          },
+          {
+            "value": 9,
+            "feedback": "That is where the integrand is zero as a number, not where x makes it zero. Solve t² − 9 = 0: t = 3."
+          }
+        ],
+        "fallbackFeedback": "A′ = x² − 9 = 0 → x = 3, and f flips from negative to positive there: a minimum."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc1__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Differentiation undoes integration.",
+      "takeaways": [
+        "A′(x) = f(x): the slope of the accumulation IS the height of the function.",
+        "So d/dx[∫ₐˣ f(t) dt] = f(x) — the two operations annihilate, and you never compute the integral.",
+        "The lower limit only shifts A by a constant, and constants have no slope."
+      ],
+      "teaser": "Next: run the theorem the other way, and it becomes a machine for computing areas."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-ftc1",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Push the endpoint forward by h and you gain a thin sliver of area — nearly a rectangle, width h and height f(x). So the area grows at the RATE f(x). That is all the theorem says: **A′ = f**.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Annihilate the pair.",
+        "conceptTag": "in-ftc1",
+        "explanationVariants": [
+          "d/dx[∫₀ˣ t² dt] = x². The derivative undoes the integral.",
+          "The integrand comes back untouched, with x substituted for t."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is d/dx [ ∫₀ˣ t² dt ] ?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x²",
+              "correct": true,
+              "feedback": "Right — the two operations cancel and hand back the integrand."
+            },
+            {
+              "id": "o2",
+              "label": "2x",
+              "correct": false,
+              "feedback": "That differentiates the integrand. The theorem says do NOT differentiate it: the derivative of the integral IS the integrand."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

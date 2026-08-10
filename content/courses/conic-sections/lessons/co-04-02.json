@@ -1,0 +1,228 @@
+{
+  "id": "co-04-02",
+  "slug": "completing-the-square-conics",
+  "title": "Completing the Square to Standard Form",
+  "courseId": "conic-sections",
+  "chapterId": "ch4-general-form",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To find a conic's center and size, **complete the square** (recall the technique) on the x-terms and y-terms separately. Group them, add the square that finishes each perfect-square trinomial, and balance the other side. This turns the messy general form into the clean standard form.",
+      "figure": "complete-square-area"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Complete one square.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 3,
+        "targetK": 0,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 3,
+        "gridMax": 8,
+        "prompt": "x² − 6x becomes a perfect square once the right constant is added. Build the completed square and read what landed at k.",
+        "successFeedback": "The vertex settles at (3, 0) — nothing left over, which is exactly what 'perfect square' means. That vertex says x² − 6x + 9 = (x − 3)², so the constant added was 9: half of −6, squared.",
+        "shapeFeedback": "Leave a at 1; there is no coefficient on x² here.",
+        "vertexFeedback": "Not a perfect square yet — half of −6 is −3, so the vertex belongs at x = 3."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Circle center.",
+      "conceptTag": "co-complete",
+      "explanationVariants": [
+        "x² + y² − 6x + 4y + 9 = 0 → (x − 3)² + (y + 2)² = 4: center (3, −2), radius 2.",
+        "Completing both squares reveals a circle centered at (3, −2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Completing the square, x² + y² − 6x + 4y + 9 = 0 becomes (x − 3)² + (y + 2)² = 4. Its center is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(3, −2)",
+            "correct": true,
+            "feedback": "Right — the center is (3, −2), read from the completed squares."
+          },
+          {
+            "id": "o2",
+            "label": "(−3, 2)",
+            "feedback": "Flip the signs inside: (x − 3) → 3, (y + 2) → −2, giving (3, −2)."
+          },
+          {
+            "id": "o3",
+            "label": "(6, 4)",
+            "feedback": "Those are the linear coefficients, not the center. Center is (3, −2)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "circle-complete"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Circle radius.",
+      "conceptTag": "co-complete",
+      "explanationVariants": [
+        "The right side of (x − 3)² + (y + 2)² = 4 is r² = 4, so r = 2.",
+        "√4 = 2 is the radius."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For (x − 3)² + (y + 2)² = 4, what is the radius?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = r². Take the root: r = 2."
+          },
+          {
+            "value": 16,
+            "feedback": "16 would be if RHS were 16. Here RHS = 4, so r = 2."
+          }
+        ],
+        "fallbackFeedback": "r = √4 = 2."
+      },
+      "variant": {
+        "gen": "circle-complete",
+        "form": "radius"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "For an **ellipse**, after completing the square you must **divide** to make the right side equal 1. From x² + 4y² − 2x − 15 = 0 you complete to (x − 1)² + 4y² = 16, then divide by 16: (x − 1)²/16 + y²/4 = 1 — now a and b are readable.",
+      "figure": "co-ellipse-divide"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Ellipse semi-axis.",
+      "conceptTag": "co-complete",
+      "explanationVariants": [
+        "(x − 1)²/16 + y²/4 = 1 gives a² = 16 so a = 4 (the semi-major axis).",
+        "The larger denominator 16 means a = √16 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For (x − 1)²/16 + y²/4 = 1, what is the semi-major axis a?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is a². Take the root: a = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "2 = b (from the 4). The semi-MAJOR a = √16 = 4."
+          }
+        ],
+        "fallbackFeedback": "a = √16 = 4."
+      },
+      "variant": {
+        "gen": "circle-complete",
+        "form": "semiMajor"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Complete a y-square.",
+      "conceptTag": "co-complete",
+      "explanationVariants": [
+        "To complete y² + 8y, add (8/2)² = 4² = 16, forming (y + 4)².",
+        "Half of 8 is 4; squared is 16."
+      ],
+      "hints": [
+        "Take half the y-coefficient.",
+        "Half of 8 is 4.",
+        "Square it: 4²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What constant completes y² + 8y into a perfect square (y + 4)²?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is half of 8; you must SQUARE it: 16."
+          },
+          {
+            "value": 64,
+            "feedback": "64 = 8². Halve 8 first (4), then square: 16."
+          }
+        ],
+        "fallbackFeedback": "(8/2)² = 4² = 16."
+      },
+      "variant": {
+        "gen": "circle-complete",
+        "form": "completeSquare"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Tidy the equation.",
+      "takeaways": [
+        "Complete the square on x-terms and y-terms separately, balancing both sides.",
+        "Circle/parabola: read center directly; ellipse/hyperbola: divide to make RHS = 1.",
+        "The completed form exposes center, radius, or a and b."
+      ],
+      "teaser": "Final form lesson: hyperbolas and parabolas from general form."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-complete",
+      "concept": {
+        "id": "rem-co0402-c",
+        "kind": "concept",
+        "body": "Complete the square by adding (half the linear coefficient)² to each variable group, balancing the other side. For ellipses/hyperbolas, divide so the right side equals 1."
+      },
+      "check": {
+        "id": "rem-co0402-k",
+        "kind": "check",
+        "body": "One completion.",
+        "conceptTag": "co-complete",
+        "explanationVariants": [
+          "x² + 10x needs (10/2)² = 25 to become (x + 5)².",
+          "Half of 10 is 5, squared is 25."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What constant completes x² + 10x into (x + 5)²?",
+          "answer": 25,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 is half of 10; square it: 25."
+            },
+            {
+              "value": 100,
+              "feedback": "100 = 10². Halve first (5), then square: 25."
+            }
+          ],
+          "fallbackFeedback": "(10/2)² = 25."
+        }
+      }
+    }
+  ]
+}

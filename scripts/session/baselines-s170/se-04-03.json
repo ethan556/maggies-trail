@@ -1,0 +1,320 @@
+{
+ "id": "se-04-03",
+ "slug": "choose-a-method-then-interpret",
+ "title": "Choose a Method, Then Interpret",
+ "courseId": "systems-equations",
+ "chapterId": "ch4-word-problems",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "coordinate-plane",
+   "body": "With three methods available, pick the easiest: **substitution** when a variable is already isolated (or easy to isolate), **elimination** when coefficients line up or scale cleanly, graphing only for a rough read. Then do the last step everyone forgets — **answer the question actually asked**."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Which method fits?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "For the system x + y = 10 and y = 3x − 2, which method is easiest?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Substitution — y is already isolated",
+      "correct": true,
+      "feedback": "Yes — y = 3x − 2 drops straight into the first equation."
+     },
+     {
+      "id": "b",
+      "label": "Elimination — subtract the equations",
+      "feedback": "Nothing lines up to cancel here, and y is already alone. Substitution is the quick path."
+     },
+     {
+      "id": "c",
+      "label": "Graphing — read the crossing",
+      "feedback": "Graphing only estimates. With y isolated, substitution gives the exact answer faster."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Solve it.",
+   "conceptTag": "word-choose-interpret",
+   "explanationVariants": [
+    "Substitute y = 3x − 2 into x + y = 10: x + (3x − 2) = 10 → 4x = 12 → x = 3.",
+    "x + 3x − 2 = 10 gives 4x = 12, so x = 3 (then y = 7)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system x + y = 10 and y = 3x − 2. What is x?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "That's y. Solve for x first: x + (3x − 2) = 10 gives x = 3."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is the total. After substituting, 4x = 12, so x = 3."
+     }
+    ],
+    "fallbackFeedback": "x + (3x − 2) = 10 → 4x = 12 → x = 3."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "word-choose-interpret__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Elimination shines when a variable cancels directly. For **3x + 2y = 12** and **3x − y = 3**, both have 3x — subtract to cancel it: (3x + 2y) − (3x − y) = 12 − 3 → 3y = 9 → **y = 3**, then **x = 2**. Choosing the fitting method saves steps.",
+   "figure": "se-choose-method"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Spot the fast cancel.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "For 3x + 2y = 12 and 3x − y = 3, which method cancels a variable fastest?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Elimination — subtract to cancel 3x",
+      "correct": true,
+      "feedback": "Yes — both have 3x, so subtracting removes x in one step."
+     },
+     {
+      "id": "b",
+      "label": "Substitution — isolate then plug in",
+      "feedback": "You could, but you'd rearrange first. Subtracting cancels the matching 3x immediately."
+     },
+     {
+      "id": "c",
+      "label": "Graphing — plot both lines",
+      "feedback": "Graphing only estimates. The matching 3x terms make elimination the exact, fast choice."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Then **interpret**. The solution is a pair of numbers, but the question asks for one specific thing. If x = adult tickets and the question asks how many children, report **y**. Re-read the question before writing the final answer.",
+   "figure": "se-interpret"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Match each system to its solution.",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Solve each system with the method that fits, then match its solution.",
+    "left": [
+     {
+      "id": "l1",
+      "label": "x + y = 10 and y = 3x − 2"
+     },
+     {
+      "id": "l2",
+      "label": "3x + 2y = 12 and 3x − y = 3"
+     },
+     {
+      "id": "l3",
+      "label": "x + y = 9 and x − y = 3"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "(3, 7)"
+     },
+     {
+      "id": "r2",
+      "label": "(2, 3)"
+     },
+     {
+      "id": "r3",
+      "label": "(6, 3)"
+     }
+    ],
+    "pairs": {
+     "l1": "r1",
+     "l2": "r2",
+     "l3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "l1",
+      "right": "r2",
+      "feedback": "Substituting y = 3x − 2 gives x = 3 and y = 7, so (3, 7), not (2, 3)."
+     },
+     {
+      "left": "l3",
+      "right": "r1",
+      "feedback": "Adding x + y = 9 and x − y = 3 gives 2x = 12, so x = 6, y = 3: (6, 3)."
+     }
+    ],
+    "missFeedback": "Pick the fitting method: substitution for l1, elimination for l2 and l3. Solutions: (3, 7), (2, 3), (6, 3).",
+    "successFeedback": "Method chosen to fit each system — three exact solutions."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A concession-stand problem.",
+   "conceptTag": "word-choose-interpret",
+   "explanationVariants": [
+    "Count x + y = 12, value 3x + 2y = 31. Substitute y = 12 − x: 3x + 2(12 − x) = 31 → x = 7.",
+    "From the count, y = 12 − x; the value equation gives x = 7 hot dogs."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A stand sells x hot dogs ($3) and y drinks ($2): 12 items for $31, so x + y = 12 and 3x + 2y = 31. How many hot dogs x?",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "That's the number of drinks y. Solving gives x = 7 hot dogs."
+     },
+     {
+      "value": 12,
+      "feedback": "12 is the total item count. Solving gives x = 7."
+     }
+    ],
+    "fallbackFeedback": "y = 12 − x, then 3x + 2(12 − x) = 31 → x = 7."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "word-choose-interpret__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Answer the right question.",
+   "conceptTag": "word-choose-interpret",
+   "explanationVariants": [
+    "x = adults and y = children, and the solution is (4, 6), so children = y = 6.",
+    "The question asks for children, which is y in the pair (4, 6): 6."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A system for adults (x) and children (y) solves to (4, 6). How many children attended?",
+    "options": [
+     {
+      "id": "a",
+      "label": "6",
+      "correct": true,
+      "feedback": "Yes — children are y, and y = 6 in the solution (4, 6)."
+     },
+     {
+      "id": "b",
+      "label": "4",
+      "feedback": "4 is x, the number of adults. Children are y = 6."
+     },
+     {
+      "id": "c",
+      "label": "10",
+      "feedback": "10 is the total attendance (4 + 6), not the children. Children are y = 6."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "word-choose-interpret__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Set up, solve, and report.",
+   "conceptTag": "word-choose-interpret",
+   "explanationVariants": [
+    "Count x + y = 11, value 9x + 6y = 84. Substitute y = 11 − x: 9x + 6(11 − x) = 84 → 3x = 18 → x = 6.",
+    "From the count, y = 11 − x; the value equation gives x = 6 of the $9 tickets."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A show sells x tickets at $9 and y at $6: 11 tickets for $84, so x + y = 11 and 9x + 6y = 84. How many $9 tickets x?",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "That's the number of $6 tickets y. Solving gives x = 6 of the $9 tickets."
+     },
+     {
+      "value": 11,
+      "feedback": "11 is the total ticket count. Solving gives x = 6."
+     }
+    ],
+    "fallbackFeedback": "y = 11 − x, then 9x + 6(11 − x) = 84 → 3x = 18 → x = 6."
+   },
+   "hints": [
+    "Count: x + y = 11. Value: 9x + 6y = 84.",
+    "Substitute y = 11 − x: 9x + 6(11 − x) = 84 → 3x + 66 = 84.",
+    "3x = 18, so x = 6."
+   ],
+   "variant": {
+    "gen": "a1-systems",
+    "form": "word-choose-interpret__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Choose the method that fits, solve exactly, and answer the question asked.",
+   "takeaways": [
+    "Substitution when a variable is isolated; elimination when coefficients match or scale.",
+    "The solution is a pair — report the quantity the question wants.",
+    "Systems turn two-unknown stories into exact answers."
+   ],
+   "teaser": "next course: exponents and polynomials."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "word-choose-interpret",
+   "concept": {
+    "id": "rem-wci-c",
+    "kind": "concept",
+    "body": "Pick the fitting method, then interpret. For x + y = 10 and y = 3x − 2, substitution is easy (y is isolated): x + (3x − 2) = 10 → 4x = 12 → x = 3, y = 7. If the question asked for y, the answer is 7."
+   },
+   "check": {
+    "id": "rem-wci-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "word-choose-interpret",
+    "explanationVariants": [
+     "x + (3x − 2) = 10 gives 4x = 12, so x = 3.",
+     "Substitute y = 3x − 2 into x + y = 10: x = 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve the system x + y = 10 and y = 3x − 2. What is x?",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 7,
+       "feedback": "That's y. Solve for x first: x = 3."
+      },
+      {
+       "value": 10,
+       "feedback": "10 is the total. After substituting, 4x = 12, so x = 3."
+      }
+     ],
+     "fallbackFeedback": "x + (3x − 2) = 10 → 4x = 12 → x = 3."
+    }
+   }
+  }
+ ]
+}

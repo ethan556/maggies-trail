@@ -1,0 +1,271 @@
+{
+  "id": "avp-01-02",
+  "slug": "the-v-shaped-graph",
+  "title": "The V-Shaped Graph",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch1-the-v",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Feed every input to |x| and plot the results. Inputs on the right rise along y = x. Inputs on the left are negative, but their DISTANCES are positive, so the left half rises too — mirror-imaging the right. Two rising branches meeting at the origin: a V.",
+      "figure": "avp-plot-folds"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot one point on the left branch.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "On y = |x|, plot the point where x = −2.",
+        "cols": 7,
+        "rows": 4,
+        "xLabels": [
+          "-3",
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "targets": [
+          {
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 2,
+            "y": 1,
+            "feedback": "That would say |−2| = 0 — that −2 sits ON zero. It sits two units away, so the height is 2."
+          },
+          {
+            "x": 6,
+            "y": 3,
+            "feedback": "Correct height, wrong branch: that is x = +2. The left branch is where the mirror argument does its work."
+          }
+        ],
+        "missFeedback": "|−2| is the distance from −2 to 0, which is 2. So the point is (−2, 2).",
+        "successFeedback": "(−2, 2): two units left of zero, plotted two units UP. The left branch climbs as x moves away from the origin."
+      },
+      "predict": {
+        "prompt": "y = |x| at x = −2 — where does the point land?",
+        "options": [
+          {
+            "id": "down",
+            "label": "Two BELOW the axis — negative input, negative height"
+          },
+          {
+            "id": "up",
+            "label": "Two ABOVE the axis"
+          },
+          {
+            "id": "zero",
+            "label": "On the axis — the negative cancels"
+          }
+        ],
+        "outcomeId": "up",
+        "reveal": "Heights on this graph are distances, and distances are never negative. That single fact forces the left half upward and makes the V — the graph can touch the x-axis but can never dip below it."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The lowest point.",
+      "conceptTag": "avp-v-graph",
+      "explanationVariants": [
+        "The smallest possible distance is 0, reached only at x = 0, so the vertex sits at (0, 0).",
+        "Every other input is some positive distance from zero, so nothing on the graph dips below the origin."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the LOWEST point on y = |x|?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(0, 0) — the vertex",
+            "correct": true,
+            "feedback": "Yes: distance 0 happens exactly once, at the origin, and nothing can beat it."
+          },
+          {
+            "id": "o2",
+            "label": "There is none — it goes down forever",
+            "correct": false,
+            "feedback": "That is true of y = x, not y = |x|. Distances have a floor at 0."
+          },
+          {
+            "id": "o3",
+            "label": "(−1, −1)",
+            "correct": false,
+            "feedback": "|−1| = 1, so that point is (−1, 1) — above the axis, not below."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The corner is the signature. A line has one constant slope; the V has two — it falls at slope −1 until the origin, then climbs at slope +1. The switch happens exactly where the inside of the bars changes sign, and that is the vertex.",
+      "figure": "avp-corner-slopes"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate on the left branch.",
+      "conceptTag": "avp-v-graph",
+      "explanationVariants": [
+        "|−4| = 4, so the point at x = −4 has height 4.",
+        "Four units from zero means a height of four, no matter which side."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On y = |x|, what is y when x = −4?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "Heights on the V are distances — they never go negative. |−4| = 4."
+          },
+          {
+            "value": 0,
+            "feedback": "Zero height happens only at the vertex, x = 0."
+          }
+        ],
+        "fallbackFeedback": "y = |−4| = 4.",
+        "successFeedback": "4 — and (4, 4) sits at the same height on the right branch. Mirror images."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compare heights across the vertex.",
+      "conceptTag": "avp-v-graph",
+      "explanationVariants": [
+        "|−3| = 3 = |3|, so the two points sit at the same height.",
+        "Inputs that are mirror images across 0 have equal distances, hence equal heights."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On y = |x|, compare the heights at x = −3 and x = 3.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Equal — both 3",
+            "correct": true,
+            "feedback": "Exactly: the V is symmetric about the y-axis because |−a| = |a|."
+          },
+          {
+            "id": "o2",
+            "label": "The x = 3 point is higher",
+            "correct": false,
+            "feedback": "Both distances are 3. Nothing about the right side makes it taller."
+          },
+          {
+            "id": "o3",
+            "label": "The x = −3 point is lower, at −3",
+            "correct": false,
+            "feedback": "That would put the graph below the axis, which distance forbids."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the V backwards.",
+      "conceptTag": "avp-v-graph",
+      "explanationVariants": [
+        "Height 6 needs distance 6, and two inputs are six units from 0: 6 and −6.",
+        "A horizontal line at y = 6 cuts the V once on each branch."
+      ],
+      "hints": [
+        "Sketch the horizontal line y = 6 across the V.",
+        "Count how many times that line meets the graph — the V has two branches.",
+        "It meets the right branch at x = 6 and the left branch at x = −6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many points on y = |x| have height exactly 6?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "One is the answer for a straight line. The V climbs on BOTH sides of the vertex, so a horizontal line above the vertex hits it twice."
+          },
+          {
+            "value": 6,
+            "feedback": "That is the height, not the count. The qualifying inputs are x = 6 and x = −6."
+          }
+        ],
+        "fallbackFeedback": "y = 6 meets the V twice — at x = 6 and x = −6.",
+        "successFeedback": "Two — every height above the vertex is reached twice, which is exactly why |x| = 6 will have two solutions."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two branches, one corner.",
+      "takeaways": [
+        "y = |x| is a V: slope −1 into the vertex, slope +1 out of it.",
+        "The vertex (0, 0) is the graph's floor — distance cannot go below zero.",
+        "Mirror-image inputs have equal heights, so heights above the vertex are hit twice."
+      ],
+      "teaser": "Next: move that V around — and find out which direction a minus sign inside the bars really pushes it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-v-graph",
+      "concept": {
+        "id": "rem-avp-v-graph-c",
+        "kind": "concept",
+        "body": "The corner is the signature. A line has one constant slope; the V has two — it falls at slope −1 until the origin, then climbs at slope +1. The switch happens exactly where the inside of the bars changes sign, and that is the vertex."
+      },
+      "check": {
+        "id": "rem-avp-v-graph-k",
+        "kind": "check",
+        "body": "The lowest point.",
+        "conceptTag": "avp-v-graph",
+        "explanationVariants": [
+          "The smallest possible distance is 0, reached only at x = 0, so the vertex sits at (0, 0).",
+          "Every other input is some positive distance from zero, so nothing on the graph dips below the origin."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the LOWEST point on y = |x|?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(0, 0) — the vertex",
+              "correct": true,
+              "feedback": "Yes: distance 0 happens exactly once, at the origin, and nothing can beat it."
+            },
+            {
+              "id": "o2",
+              "label": "There is none — it goes down forever",
+              "correct": false,
+              "feedback": "That is true of y = x, not y = |x|. Distances have a floor at 0."
+            },
+            {
+              "id": "o3",
+              "label": "(−1, −1)",
+              "correct": false,
+              "feedback": "|−1| = 1, so that point is (−1, 1) — above the axis, not below."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

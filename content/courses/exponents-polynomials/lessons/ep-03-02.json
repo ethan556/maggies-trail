@@ -1,0 +1,299 @@
+{
+  "id": "ep-03-02",
+  "slug": "multiplying-binomials-foil",
+  "title": "Multiplying Binomials (FOIL)",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch3-multiplying-polynomials",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "foil-box",
+      "body": "To multiply two binomials, multiply **every** term of the first by every term of the second — four products, one per rectangle in the area model. **FOIL** names them: First, Outer, Inner, Last. Then combine like terms."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The middle term.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "prompt": "Lay out (x + 2)(x + 3) as a rectangle. Drag each partition, then read the middle coefficient off the two strips.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 2,
+        "targetB": 3,
+        "startA": 0,
+        "startB": 0,
+        "asks": "middle",
+        "requiredMoves": 3,
+        "successFeedback": "x² + 5x + 6. The 5 is 2 + 3, not 2 × 3 — and the rectangle shows why: the two strips each have one side of length x, so they lie alongside each other and their x-counts add. The 6 is the corner, the one place where the two constants genuinely do multiply.",
+        "productMiddleFeedback": "That layout makes the middle coefficient 6 — which is 2 × 3, the CORNER's area, not the strips'. The corner is the only region where the constants multiply; the strips add.",
+        "partialFeedback": "One partition is placed correctly and the other is not. Move the remaining one and watch only its own strip resize — the other holds still, which is why the middle term is a sum of two independent pieces.",
+        "signFeedback": "Right sizes, wrong direction. Both constants here are added, so both strips sit outside the block in the positive direction."
+      },
+      "predict": {
+        "prompt": "(x + 2)(x + 3): where does the x-term of the answer come from?",
+        "options": [
+          {
+            "id": "cross",
+            "label": "Both crossings: x·3 and 2·x, giving 5x"
+          },
+          {
+            "id": "consts",
+            "label": "Just 2 × 3"
+          },
+          {
+            "id": "firsts",
+            "label": "Just x · x"
+          }
+        ],
+        "outcomeId": "cross",
+        "reveal": "The middle term is BOTH cross-products: 3x + 2x = 5x. Multiplying only firsts and lasts (x² + 6) is the classic half-job — a binomial product has four pairings, and the two you skip are the ones that meet in the middle."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The last term.",
+      "conceptTag": "poly-mul-binomial",
+      "explanationVariants": [
+        "Last: 2·3 = 6, the constant term.",
+        "The constant is the product of the last terms: 2·3 = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (x + 2)(x + 3). What is the constant term?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the middle coefficient (2 + 3). The constant is 2·3 = 6."
+          },
+          {
+            "value": 1,
+            "feedback": "The constant is the product of the last terms: 2·3 = 6."
+          }
+        ],
+        "fallbackFeedback": "2·3 = 6."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-mul-binomial__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked (x + 5)(x − 2): First x², Outer −2x, Inner 5x, Last −10. Combine the middle: −2x + 5x = 3x. Result: **x² + 3x − 10**. The middle term is Outer + Inner, with signs.",
+      "figure": "ep-foil"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Combine outer and inner.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (x + 5)(x - 2). What is the coefficient of x?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The −2 keeps its sign: −2 + 5 = 3, not 2 + 5."
+          },
+          {
+            "value": -10,
+            "feedback": "That's the constant (5·−2). The middle is −2x + 5x = 3x."
+          }
+        ],
+        "fallbackFeedback": "Outer + Inner: −2x + 5x = 3x, so 3."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Two negatives: (x − 4)(x − 1). Outer −x, Inner −4x give −5x; Last (−4)(−1) = **+4**. So x² − 5x + 4. A negative times a negative makes the constant positive.",
+      "figure": "ep-two-negatives"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "The positive constant.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (x - 4)(x - 1). What is the constant term?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "Two negatives multiply to a positive: (−4)(−1) = +4."
+          },
+          {
+            "value": -5,
+            "feedback": "That's the middle coefficient. The constant is (−4)(−1) = 4."
+          }
+        ],
+        "fallbackFeedback": "(−4)(−1) = +4."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A leading coefficient appears.",
+      "conceptTag": "poly-mul-binomial",
+      "explanationVariants": [
+        "Outer 2x·3 = 6x, Inner 1·x = x; 6x + x = 7x.",
+        "The middle term is 6x + x = 7x, so 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (2x + 1)(x + 3). What is the coefficient of x?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That's only the Outer product. Add the Inner: 6x + x = 7x."
+          },
+          {
+            "value": 3,
+            "feedback": "That's the constant (1·3). The middle is 6x + x = 7x."
+          }
+        ],
+        "fallbackFeedback": "Outer + Inner: 6x + x = 7x, so 7."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-mul-binomial__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick the whole product.",
+      "conceptTag": "poly-mul-binomial",
+      "explanationVariants": [
+        "First 2x², Outer 6x, Inner x, Last 3: 2x² + 7x + 3.",
+        "Combine the middle (6x + x = 7x): 2x² + 7x + 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Multiply (2x + 1)(x + 3).",
+        "options": [
+          {
+            "id": "a",
+            "label": "2x^2 + 7x + 3",
+            "correct": true,
+            "feedback": "Yes — 2x², middle 6x + x = 7x, and 3."
+          },
+          {
+            "id": "b",
+            "label": "2x^2 + 6x + 3",
+            "feedback": "The Inner term x was dropped: 6x + x = 7x, so 2x² + 7x + 3."
+          },
+          {
+            "id": "c",
+            "label": "2x^2 + 7x + 4",
+            "feedback": "The constant is 1·3 = 3, not 4: 2x² + 7x + 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-mul-binomial__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A special pattern preview.",
+      "conceptTag": "poly-mul-binomial",
+      "explanationVariants": [
+        "Outer −3x and Inner +3x cancel, leaving x² − 9.",
+        "The middle terms cancel: x² − 9."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Multiply (x + 3)(x - 3).",
+        "options": [
+          {
+            "id": "a",
+            "label": "x^2 - 9",
+            "correct": true,
+            "feedback": "Yes — Outer −3x and Inner +3x cancel, leaving x² − 9."
+          },
+          {
+            "id": "b",
+            "label": "x^2 + 9",
+            "feedback": "Last is (+3)(−3) = −9, so x² − 9."
+          },
+          {
+            "id": "c",
+            "label": "x^2 - 6x - 9",
+            "feedback": "The middle cancels: −3x + 3x = 0, so x² − 9."
+          }
+        ]
+      },
+      "hints": [
+        "Write out First, Outer, Inner, Last.",
+        "Outer = −3x and Inner = +3x — what do they sum to?",
+        "They cancel, leaving x² − 9."
+      ],
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-mul-binomial__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "FOIL: four products, then combine the middle.",
+      "takeaways": [
+        "Multiply every term of one binomial by every term of the other.",
+        "The middle term is Outer + Inner, with signs.",
+        "Watch signs on the Last product."
+      ],
+      "teaser": "next: squares and sum-times-difference shortcuts."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "poly-mul-binomial",
+      "concept": {
+        "id": "rem-pmb-c",
+        "kind": "concept",
+        "body": "FOIL multiplies every term pair: (x + 2)(x + 3) gives First x², Outer 3x, Inner 2x, Last 6. Combine the middle: 3x + 2x = 5x, so x² + 5x + 6."
+      },
+      "check": {
+        "id": "rem-pmb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "poly-mul-binomial",
+        "explanationVariants": [
+          "Outer + Inner: 3x + 2x = 5x.",
+          "The middle coefficient is 3 + 2 = 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Multiply (x + 2)(x + 3). What is the coefficient of x?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That's the constant (2·3). The middle is 3x + 2x = 5x."
+            },
+            {
+              "value": 1,
+              "feedback": "That's the x^2 coefficient. The middle is 5x."
+            }
+          ],
+          "fallbackFeedback": "3x + 2x = 5x."
+        }
+      }
+    }
+  ]
+}

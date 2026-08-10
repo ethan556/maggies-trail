@@ -1,0 +1,312 @@
+{
+ "id": "mc-04-03",
+ "slug": "benchmark-angles",
+ "title": "Benchmark Angles",
+ "courseId": "measure-convert",
+ "chapterId": "ch4-additive-angles",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The pattern extends one more step: **angles all the way around a single point total 360°** — a full turn. Three known angles: 100°, 120°, and 90° sum to 310°; the missing fourth angle is 360−310=**50°.**",
+   "figure": "mc-benchmark-angles"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find the missing angle around a point.",
+   "conceptTag": "benchmark-angles",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Angles all the way around a point add up to 360°. Two known angles are 200° and 90°. What is the third?",
+    "answer": 70,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 110,
+      "feedback": "110 subtracts from 180, but a FULL TURN around a point totals 360°, not 180: 360−(200+90)=70."
+     },
+     {
+      "value": 290,
+      "feedback": "290 is just the sum of the two knowns (200+90), not the missing angle yet. Subtract that from 360: 70."
+     }
+    ],
+    "fallbackFeedback": "Add the two known angles, then subtract that total from 360."
+   },
+   "predict": {
+    "prompt": "Can a single angle around a point measure MORE than 180°?",
+    "options": [
+     {
+      "id": "yes",
+      "label": "Yes — angles can bend past a straight line"
+     },
+     {
+      "id": "no",
+      "label": "No — 180° is the ceiling"
+     },
+     {
+      "id": "neg",
+      "label": "Only as a negative angle"
+     }
+    ],
+    "outcomeId": "yes",
+    "reveal": "A full turn is 360°, and one angle can claim most of it — a 200° angle wraps well past straight. Around-a-point problems welcome the big ones."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Around a point, again.",
+   "conceptTag": "benchmark-angles",
+   "explanationVariants": [
+    "100°+120°+90°=310°; the last angle is 360−310=50°.",
+    "Adding the three knowns, then subtracting from 360."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Four angles surround a point. Three are 100°, 120°, and 90°. What is the fourth?",
+    "answer": 50,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 310,
+      "feedback": "310 is just the sum of the three knowns — not the missing angle yet. Subtract it from 360: 50."
+     },
+     {
+      "value": 130,
+      "feedback": "130 subtracts from 180 instead of the full-turn total. All the way around a point is 360: 360−310=50."
+     }
+    ],
+    "fallbackFeedback": "Add the three known angles, then subtract from 360."
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcBenchmarkAnglesNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Three benchmarks, one toolkit: a **right angle** totals 90°, a **straight line** totals 180°, and **all the way around a point** totals 360°. Reading the figure's description tells you which one applies.",
+   "figure": "mc-benchmark-angles"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Which benchmark applies?",
+   "conceptTag": "benchmark-angles",
+   "explanationVariants": [
+    "'All the way around a point' is the full-turn benchmark: 360°.",
+    "The description names the total directly."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A figure describes angles going 'all the way around a single point.' What do they total?",
+    "options": [
+     {
+      "id": "a",
+      "label": "360°",
+      "correct": true,
+      "feedback": "A full turn around a point always totals 360°."
+     },
+     {
+      "id": "b",
+      "label": "180°",
+      "feedback": "180° is the straight-line benchmark, not a full turn. Around a point is 360°."
+     },
+     {
+      "id": "c",
+      "label": "90°",
+      "feedback": "90° is the right-angle benchmark, far short of a full turn. Around a point is 360°."
+     },
+     {
+      "id": "d",
+      "label": "It depends on how many angles there are",
+      "feedback": "The TOTAL stays 360° regardless of how many angles split it — only the individual pieces change."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcBenchmarkAnglesMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match figure to benchmark.",
+   "conceptTag": "benchmark-angles",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each figure description to its total.",
+    "left": [
+     {
+      "id": "d1",
+      "label": "Angles on a straight line"
+     },
+     {
+      "id": "d2",
+      "label": "A right angle split into parts"
+     },
+     {
+      "id": "d3",
+      "label": "Angles all the way around a point"
+     }
+    ],
+    "right": [
+     {
+      "id": "t1",
+      "label": "180°"
+     },
+     {
+      "id": "t2",
+      "label": "90°"
+     },
+     {
+      "id": "t3",
+      "label": "360°"
+     }
+    ],
+    "pairs": {
+     "d1": "t1",
+     "d2": "t2",
+     "d3": "t3"
+    },
+    "pairErrors": [
+     {
+      "left": "d2",
+      "right": "t3",
+      "feedback": "360° belongs to a full turn around a point. A right angle split into parts still totals 90°."
+     }
+    ],
+    "missFeedback": "Line=180°, right angle=90°, full turn around a point=360°.",
+    "successFeedback": "Three different figures, three different totals — the description names which one applies."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A trickier full-turn problem.",
+   "conceptTag": "benchmark-angles",
+   "explanationVariants": [
+    "150°+80°+60°=290°; the missing angle is 360−290=70°.",
+    "Add the three knowns, then subtract from 360."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Four angles surround a point. Three are 150°, 80°, and 60°. What is the fourth?",
+    "answer": 70,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 290,
+      "feedback": "290 is just the sum of the three knowns — not the missing angle yet. Subtract it from 360: 70."
+     },
+     {
+      "value": 10,
+      "feedback": "10 subtracts the knowns from each other instead of adding them first. Add all three (150+80+60=290), then subtract from 360: 70."
+     }
+    ],
+    "fallbackFeedback": "Add the three known angles, then subtract that total from 360."
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcBenchmarkAnglesNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The spinning wheel.",
+   "conceptTag": "benchmark-angles",
+   "hints": [
+    "The wheel's spokes create angles all the way around its center — a full turn.",
+    "Add the three known spoke angles: 85+95+110.",
+    "Subtract that total from 360 for the last spoke angle."
+   ],
+   "explanationVariants": [
+    "85°+95°+110°=290°; the last spoke angle is 360−290=70°.",
+    "Adding the three known spoke angles, then subtracting from 360, gives the missing one."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A wheel has 4 spokes creating 4 angles around its center. Three of the angles are 85°, 95°, and 110°. What is the fourth angle?",
+    "answer": 70,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 290,
+      "feedback": "290 is just the sum of the three known spoke angles — not the missing one yet. Subtract it from 360: 70."
+     },
+     {
+      "value": 180,
+      "feedback": "180 uses the straight-line benchmark — but spokes around a wheel's center make a full turn, 360°: 360−290=70."
+     }
+    ],
+    "fallbackFeedback": "Add the three known angles, then subtract that total from 360."
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcBenchmarkAnglesNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One toolkit, three totals.",
+   "takeaways": [
+    "A full turn around a single point always totals 360°.",
+    "Right angle (90°), straight line (180°), and full turn (360°) form one benchmark toolkit.",
+    "With several angles, add every known one first, then subtract from the right total."
+   ],
+   "teaser": "next chapter: plotting measurements on a line, down to the nearest fraction."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "benchmark-angles",
+   "concept": {
+    "id": "rem-ba-c",
+    "kind": "concept",
+    "body": "Quick rewind. **A full turn around a point totals 360°.** With three angles known — say 90°, 90°, and 90° — they sum to 270°, so the last one is 360−270=90°."
+   },
+   "check": {
+    "id": "rem-ba-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "benchmark-angles",
+    "explanationVariants": [
+     "90+90+90=270; the last angle is 360−270=90.",
+     "Adding the three knowns, then subtracting from 360."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Four angles surround a point. Three are each 90°. What is the fourth?",
+     "options": [
+      {
+       "id": "a",
+       "label": "90°",
+       "correct": true,
+       "feedback": "90+90+90=270; 360−270=90."
+      },
+      {
+       "id": "b",
+       "label": "270°",
+       "feedback": "270 is just the sum of the three knowns. Subtract it from 360: 90."
+      },
+      {
+       "id": "c",
+       "label": "180°",
+       "feedback": "That uses the straight-line total instead of the full-turn total. Around a point is 360: 360−270=90."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

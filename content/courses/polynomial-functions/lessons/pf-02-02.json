@@ -1,0 +1,364 @@
+{
+  "id": "pf-02-02",
+  "slug": "multiplicity-bounce-or-cross",
+  "title": "Multiplicity: Bounce or Cross",
+  "courseId": "polynomial-functions",
+  "chapterId": "ch2-zeros-and-factors",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When a factor repeats, its zero has **multiplicity**: in f(x) = (x + 2)(x − 1)², the zero 1 has multiplicity 2 and −2 has multiplicity 1. The graph tells them apart: at an **odd** multiplicity it **crosses** the axis; at an **even** one it **bounces** — touching without passing through.",
+      "figure": "multiplicity-bounce-cross"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiplicity, produced rather than recited.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": -2,
+            "mult": 1
+          },
+          {
+            "x": 1,
+            "mult": 2
+          },
+          {
+            "x": 3,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "p(x) = (x + 2)(x − 1)²(x − 3). Set the sign of p on each interval — the sketch will follow your claim.",
+        "successFeedback": "+ − − +. The sign flips at −2 and at 3, but NOT at 1: the double root touches zero and comes straight back the way it came. Odd crosses, even bounces — and you produced that rule instead of being handed it.",
+        "crossFeedback": "A single root is a crossing: the curve goes through zero and out the other side, so the sign MUST flip there. Look either side of −2 and of 3.",
+        "bounceFeedback": "You flipped the sign across x = 1 — but that root is DOUBLE. The curve reaches zero and turns back, leaving on the side it arrived from. An even root never changes the sign."
+      },
+      "predict": {
+        "prompt": "At the double root x = 1, the graph of p(x) = (x + 2)(x − 1)²(x − 3)…",
+        "options": [
+          {
+            "id": "bounce",
+            "label": "Bounces — touches the axis and turns back"
+          },
+          {
+            "id": "cross",
+            "label": "Crosses to the other side"
+          },
+          {
+            "id": "jump",
+            "label": "Jumps over it"
+          }
+        ],
+        "outcomeId": "bounce",
+        "reveal": "An even power can't change sign: (x − 1)² is positive on BOTH sides of 1, so p kisses the axis there and turns back. The odd roots at −2 and 3 cross; even multiplicity bounces."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Build interval signs and use multiplicity to make every intercept cross or bounce consistently with the factorization.",
+        "invariants": [
+          "odd-multiplicity-flips-sign",
+          "even-multiplicity-preserves-sign",
+          "leading-sign-controls-end-interval"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "multiplicity-only-changes-root-location"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "graph",
+        "fadeLevel": 1,
+        "transferFamily": "polynomial-sign-and-intercept-behavior-from-factorization",
+        "delayed": true,
+        "counterfactualPrompt": "Change the double root to multiplicity 3 without moving it. Which interval sign must change, and how must the graph behave at that intercept?",
+        "explanation": {
+          "prompt": "Why does an even-multiplicity root bounce while an odd-multiplicity root crosses?",
+          "options": [
+            {
+              "id": "signpower",
+              "label": "An even power has the same sign on both sides of zero, while an odd power changes sign.",
+              "correct": true,
+              "feedback": "Exactly — multiplicity controls whether the factor changes the product’s sign."
+            },
+            {
+              "id": "height",
+              "label": "Even roots are always higher on the graph than odd roots.",
+              "correct": false,
+              "feedback": "Both root types have output zero; the distinction is the sign on either side."
+            }
+          ]
+        }
+      },
+      "conceptTag": "pf-multiplicity"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why the bounce: near x = 1, (x − 1)² is a tiny **square** — never negative — so the factor can't drag f across the axis; f grazes it and turns back. An odd power does change sign, so the graph pushes through. Sign change ⟺ crossing.",
+      "figure": "pf-bounce"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Bounce or cross?",
+      "conceptTag": "pf-multiplicity",
+      "explanationVariants": [
+        "(x + 1)³ has odd multiplicity 3: the graph crosses at −1 (flattening as it goes).",
+        "Odd powers change sign across their zero, so the curve passes through."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In f(x) = (x + 1)³(x − 2)², what does the graph do at x = −1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "crosses the axis (flattened)",
+            "correct": true,
+            "feedback": "Right — multiplicity 3 is odd: through it goes, with a flat kiss."
+          },
+          {
+            "id": "o2",
+            "label": "bounces off the axis",
+            "correct": false,
+            "feedback": "Bouncing needs an EVEN multiplicity — 3 is odd, so it crosses."
+          },
+          {
+            "id": "o3",
+            "label": "has a hole there",
+            "correct": false,
+            "feedback": "Polynomials never have holes — every zero is a touch or a crossing."
+          },
+          {
+            "id": "o4",
+            "label": "jumps over it",
+            "correct": false,
+            "feedback": "Polynomial graphs are unbroken — at a zero they either cross or bounce; here, cross."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-multiplicity__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The other zero.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Same function, f(x) = (x + 1)³(x − 2)². What happens at x = 2?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the graph bounces off the axis",
+            "correct": true,
+            "feedback": "Right — multiplicity 2 is even: touch and turn back."
+          },
+          {
+            "id": "o2",
+            "label": "the graph crosses the axis",
+            "correct": false,
+            "feedback": "Crossing needs an ODD multiplicity — the square can't change sign, so it bounces."
+          },
+          {
+            "id": "o3",
+            "label": "nothing — 2 isn't a zero",
+            "correct": false,
+            "feedback": "(x − 2)² is zero at x = 2 — it's a genuine zero, just a bouncing one."
+          },
+          {
+            "id": "o4",
+            "label": "the graph ends there",
+            "correct": false,
+            "feedback": "Polynomial graphs never end — the curve bounces at 2 and keeps going."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Degree from multiplicities.",
+      "conceptTag": "pf-multiplicity",
+      "explanationVariants": [
+        "Degree = the multiplicities' sum: 3 + 2 = 5.",
+        "Expanding (x + 1)³(x − 2)² would give a leading x⁵."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the degree of f(x) = (x + 1)³(x − 2)²?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is only the count of DISTINCT zeros — the degree adds the exponents: 3 + 2 = 5."
+          },
+          {
+            "value": 6,
+            "feedback": "Exponents ADD across multiplied factors (3 + 2), they don't multiply: degree 5."
+          }
+        ],
+        "fallbackFeedback": "3 + 2 = 5 — the Fundamental Theorem of Algebra's bookkeeping: 5 zeros counting repeats."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-multiplicity__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Count distinct intercepts.",
+      "conceptTag": "pf-multiplicity",
+      "explanationVariants": [
+        "Degree 4, but only two DISTINCT zeros (5 and −5): two intercepts, one crossing spot each... both squared, so both bounces.",
+        "Multiplicities eat intercepts: (x − 5)²(x + 5)² meets the axis at just 5 and −5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many DISTINCT x-intercepts does f(x) = (x − 5)²(x + 5)² have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the degree (2 + 2) — the graph touches the axis at only the 2 distinct zeros, 5 and −5."
+          },
+          {
+            "value": 0,
+            "feedback": "Both factors do reach zero — at x = 5 and x = −5 the graph bounces on the axis."
+          }
+        ],
+        "fallbackFeedback": "Two distinct zeros, 5 and −5 (each a bounce): 2 intercepts."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-multiplicity__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Assemble the full picture.",
+      "conceptTag": "pf-multiplicity",
+      "explanationVariants": [
+        "x² bounces at 0 (even), (x − 4) crosses at 4 (odd): bounce then cross.",
+        "Check each exponent's parity: 2 at the origin, 1 at four."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = x²(x − 4), what does the graph do at its zeros?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "bounces at 0, crosses at 4",
+            "correct": true,
+            "feedback": "Right — even multiplicity 2 at the origin, odd 1 at four."
+          },
+          {
+            "id": "o2",
+            "label": "crosses at 0, bounces at 4",
+            "correct": false,
+            "feedback": "The parities are the other way: the SQUARE (even) bounces, the single factor crosses."
+          },
+          {
+            "id": "o3",
+            "label": "crosses at both",
+            "correct": false,
+            "feedback": "x² can't change sign, so the graph can't cross at 0 — it bounces there."
+          },
+          {
+            "id": "o4",
+            "label": "bounces at both",
+            "correct": false,
+            "feedback": "(x − 4) has odd multiplicity 1 — the graph passes straight through at 4."
+          }
+        ]
+      },
+      "hints": [
+        "Find each zero's multiplicity: the exponent on its factor.",
+        "x² gives multiplicity 2 at x = 0; (x − 4) gives 1 at x = 4.",
+        "Even bounces, odd crosses."
+      ],
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-multiplicity__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The exponent on a factor decides: even bounces, odd crosses.",
+      "takeaways": [
+        "Multiplicity = the factor's exponent.",
+        "Even multiplicity: the graph touches and turns back; odd: it passes through.",
+        "Degree = sum of all multiplicities — every polynomial of degree n has n zeros counting repeats."
+      ],
+      "teaser": "Next: two theorems that find factors by plugging in a single number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pf-multiplicity",
+      "concept": {
+        "id": "rem-pf0202-c",
+        "kind": "concept",
+        "body": "Even exponent → bounce; odd exponent → cross. In (x − 6)², the exponent at the zero 6 is 2."
+      },
+      "check": {
+        "id": "rem-pf0202-k",
+        "kind": "check",
+        "body": "Call the move.",
+        "conceptTag": "pf-multiplicity",
+        "explanationVariants": [
+          "Multiplicity 2 is even: the graph bounces at 6.",
+          "A squared factor never goes negative, so it can't carry the graph across."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "For f(x) = (x − 6)², what does the graph do at x = 6?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "bounces off the axis",
+              "correct": true,
+              "feedback": "Right — even multiplicity: touch and turn."
+            },
+            {
+              "id": "o2",
+              "label": "crosses the axis",
+              "correct": false,
+              "feedback": "A square never changes sign, so the graph can't get through — it bounces."
+            },
+            {
+              "id": "o3",
+              "label": "skips x = 6",
+              "correct": false,
+              "feedback": "(x − 6)² IS zero at 6 — the graph touches the axis right there."
+            },
+            {
+              "id": "o4",
+              "label": "breaks into two pieces",
+              "correct": false,
+              "feedback": "Polynomial graphs are one unbroken curve — at 6 this one just kisses the axis."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

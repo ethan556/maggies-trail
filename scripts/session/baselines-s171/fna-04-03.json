@@ -1,0 +1,240 @@
+{
+ "id": "fna-04-03",
+ "slug": "decomposing-and-modeling",
+ "title": "Decomposing & Modeling with Composition",
+ "courseId": "function-analysis",
+ "chapterId": "ch4-composition-depth",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Composition also runs **in reverse**: seeing h(x) = (3x + 1)⁴ as a chain — an **inner** step g(x) = 3x + 1 feeding an **outer** step f(x) = x⁴. Decomposing is asking: *what happens to x first, and what happens to that result?*",
+   "figure": "fna-decompose"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Name the inner function.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To write h(x) = (3x + 1)⁴ as f(g(x)), what should the INNER function g be?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "g(x) = 3x + 1",
+      "correct": true,
+      "feedback": "Right — x is first tripled-and-shifted, and only then raised to the 4th power by f(x) = x⁴."
+     },
+     {
+      "id": "o2",
+      "label": "g(x) = x⁴",
+      "feedback": "The 4th power happens LAST — that's the outer f. The first thing done to x is 3x + 1."
+     },
+     {
+      "id": "o3",
+      "label": "g(x) = 3x",
+      "feedback": "Close, but the +1 also happens before the power: the entire 3x + 1 is what gets raised, so g must include it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Check the chain numerically.",
+   "conceptTag": "fna-decompose",
+   "explanationVariants": [
+    "g(2) = 7, then f(7) = 7⁴ = 2401 — matching (3·2 + 1)⁴ directly.",
+    "Inner first: 3·2 + 1 = 7; the outer 4th power gives 2401."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With g(x) = 3x + 1 and f(x) = x⁴, verify the chain: what is f(g(2))?",
+    "answer": 2401,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 49,
+      "feedback": "49 = 7² stops at the SQUARE. The outer function is the 4th power: 7⁴ = 2401."
+     },
+     {
+      "value": 1296,
+      "feedback": "1296 = 6⁴ uses 3·2 = 6, dropping the +1. g(2) = 3·2 + 1 = 7, and 7⁴ = 2401."
+     }
+    ],
+    "fallbackFeedback": "g(2) = 7; 7⁴ = 2401."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-decompose__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Modeling chains two real quantities: a ripple's radius **grows with time**, r(t) = 2t, and area **grows with radius**, A(r) = πr². Composing, A(r(t)) = π(2t)² = **4πt²** — area as a direct function of time. Units chain too: t → meters → square meters.",
+   "figure": "fna-modeling-chain"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Evaluate the model.",
+   "conceptTag": "fna-decompose",
+   "explanationVariants": [
+    "r(3) = 6, so A = π·6² = 36π.",
+    "A(r(t)) = 4πt² at t = 3 gives 4π·9 = 36π — the same number by the composite rule."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A ripple's radius is r(t) = 2t meters after t seconds, and A(r) = πr². What is the area at t = 3, as a multiple of π?",
+    "answer": 36,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "12π would be π·(2·3)·2 — mixing rules. r(3) = 6 first, THEN square: π·36."
+     },
+     {
+      "value": 9,
+      "feedback": "9π squares t instead of the radius. The radius at t = 3 is 6, so the area is 36π."
+     }
+    ],
+    "fallbackFeedback": "r(3) = 6; A = π·6² = 36π."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-decompose__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Which composite is the model?",
+   "conceptTag": "fna-decompose",
+   "explanationVariants": [
+    "Cost depends on gallons, gallons depend on miles: C(g(m)) — miles go in first.",
+    "The chain follows the story: miles → gallons → dollars, so g is inner and C is outer."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "g(m) gives gallons used for m miles; C(g) gives the cost of g gallons. Which composition gives cost as a function of MILES?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "C(g(m))",
+      "correct": true,
+      "feedback": "Right — m enters g first (miles → gallons), then C prices the gallons (gallons → dollars)."
+     },
+     {
+      "id": "o2",
+      "label": "g(C(m))",
+      "feedback": "C's input is gallons, not miles — feeding miles into C skips a link. The story order is miles → gallons → cost: C(g(m))."
+     },
+     {
+      "id": "o3",
+      "label": "m(C(g))",
+      "feedback": "m is the input variable, not a function. The chain that starts from miles is C(g(m))."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-decompose__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Build and use a composite model.",
+   "conceptTag": "fna-decompose",
+   "explanationVariants": [
+    "s(4) = 3·4 + 2 = 14 cm, then P(14) = 4·14 = 56 cm.",
+    "P(s(t)) = 4(3t + 2) = 12t + 8; at t = 4 that's 48 + 8 = 56."
+   ],
+   "hints": [
+    "First find the side length at t = 4 from s(t).",
+    "s(4) = 3·4 + 2. Then the perimeter function multiplies a side by 4.",
+    "Side = 14 cm; perimeter = 4 × 14."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A square's side grows as s(t) = 3t + 2 cm after t minutes, and P(s) = 4s is its perimeter. What is the perimeter at t = 4, in cm?",
+    "answer": 56,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 14,
+      "feedback": "14 is the SIDE at t = 4. The perimeter multiplies it by 4: 56."
+     },
+     {
+      "value": 48,
+      "feedback": "48 = 4·(3·4) drops the +2 inside s(t). s(4) = 14, so P = 56."
+     },
+     {
+      "value": 24,
+      "feedback": "24 = 4·(4 + 2) forgot to triple t. s(4) = 3·4 + 2 = 14; P = 56."
+     }
+    ],
+    "fallbackFeedback": "s(4) = 14; P = 4·14 = 56."
+   },
+   "variant": {
+    "gen": "g12-function-analysis",
+    "form": "function-analysis__fna-decompose__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Chains forward and backward.",
+   "takeaways": [
+    "Decompose by asking what happens to x first (inner) and last (outer).",
+    "Real models compose: each function's output is the next one's input.",
+    "Check any decomposition numerically at one value."
+   ],
+   "teaser": "Final chapter: which functions can be UNDONE — inverses, formalized."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "fna-decompose",
+   "concept": {
+    "id": "rem-fna0403-c",
+    "kind": "concept",
+    "body": "To decompose h(x), circle the expression that gets acted on as a block — that block is the inner g(x); the action applied to it is the outer f."
+   },
+   "check": {
+    "id": "rem-fna0403-k",
+    "kind": "check",
+    "body": "One more decomposition.",
+    "conceptTag": "fna-decompose",
+    "explanationVariants": [
+     "The block under the root is x + 6 — that whole expression is computed first, so g(x) = x + 6 with f(x) = √x.",
+     "x is shifted by 6 first, then rooted: inner g(x) = x + 6."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "To write h(x) = √(x + 6) as f(g(x)) with f(x) = √x, what is g(x)?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "g(x) = x + 6",
+       "correct": true,
+       "feedback": "Right — the addition happens under the root, so it runs first."
+      },
+      {
+       "id": "o2",
+       "label": "g(x) = √x",
+       "feedback": "That's the outer f, already given. The inner step is the block being rooted: x + 6."
+      },
+      {
+       "id": "o3",
+       "label": "g(x) = 6x",
+       "feedback": "The block under the root is x PLUS 6, not 6 times x."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

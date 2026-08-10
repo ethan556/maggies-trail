@@ -1,0 +1,341 @@
+{
+  "id": "ee-04-02",
+  "slug": "solving-with-addition-and-subtraction",
+  "title": "Solving with Addition & Subtraction",
+  "courseId": "expressions-equations",
+  "chapterId": "ch4-one-step-equations",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "balance-scale",
+      "body": "An equation is like a **balance scale** — both sides must stay equal. To solve x + 3 = 7, **undo the +3** by subtracting 3 from BOTH sides: x + 3 − 3 = 7 − 3, leaving x = **4**. Whatever you do to one side, you must do to the other, or the balance tips."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "An equation is a balance, not an instruction.",
+      "widget": {
+        "type": "balanceScale",
+        "a": 1,
+        "b": 5,
+        "c": 12,
+        "xMin": 0,
+        "xMax": 12,
+        "xStart": 0,
+        "prompt": "x + 5 = 12. Slide x until the pans balance.",
+        "successFeedback": "x = 7. The equals sign is not a command to compute — it is a claim that two pans weigh the same, and solving is the hunt for the value that makes the claim true.",
+        "lowFeedback": "The left pan is lighter — x is too small.",
+        "highFeedback": "The left pan is heavier — x is too big."
+      },
+      "predict": {
+        "prompt": "The scale holds x + 5 on the left and 12 on the right, with x starting at 0. Right now the left pan is…",
+        "options": [
+          {
+            "id": "light",
+            "label": "Lighter than the right"
+          },
+          {
+            "id": "heavy",
+            "label": "Heavier than the right"
+          },
+          {
+            "id": "level",
+            "label": "Already balanced"
+          }
+        ],
+        "outcomeId": "light",
+        "reveal": "With x at 0 the left pan holds only the 5 — seven short of the 12. Every unit you give x adds weight to that pan alone, which is why exactly one value levels the scale."
+      },
+      "conceptTag": "solve-add-sub",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents solve add sub.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for solve add sub must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines solve add sub."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:solve-add-sub",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Always check your answer.",
+      "conceptTag": "solve-add-sub",
+      "explanationVariants": [
+        "Substitute x = 4 back: 4 + 3 = 7. It matches, so the solution is confirmed.",
+        "Checking means plugging the answer back into the ORIGINAL equation."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You solved x + 3 = 7 and got x = 4. How do you check it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Substitute 4 back into x + 3 and see if it equals 7",
+            "correct": true,
+            "feedback": "Right — 4 + 3 = 7 confirms it. Checking means plugging the solution into the ORIGINAL equation."
+          },
+          {
+            "id": "b",
+            "label": "Solve the equation again a different way",
+            "feedback": "That could help, but the standard check is substitution: does 4 + 3 actually equal 7? Yes."
+          },
+          {
+            "id": "c",
+            "label": "You don't need to check once you've solved it",
+            "feedback": "Checking catches arithmetic slips. Substitute: 4 + 3 = 7. ✓"
+          }
+        ]
+      },
+      "hints": [
+        "Plug the answer back in.",
+        "4 + 3 = ?",
+        "Does it equal 7?"
+      ],
+      "variant": {
+        "gen": "unknown-letter",
+        "form": "checkAddSolution"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtraction equations undo the same way, in reverse: to solve x − 5 = 12, **undo the −5** by ADDING 5 to both sides: x − 5 + 5 = 12 + 5, giving x = **17**. Whichever operation is attached to x, apply its OPPOSITE to both sides.",
+      "figure": "balance-scale"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Undo a subtraction.",
+      "conceptTag": "solve-add-sub",
+      "explanationVariants": [
+        "To undo −5, add 5 to both sides: 12 + 5 = 17.",
+        "The opposite of subtracting 5 is adding 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x − 5 = 12.",
+        "answer": 17,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 SUBTRACTS 5 from 12 instead of adding. To undo −5, ADD 5 to both sides: 12 + 5 = 17."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the right side of the equation, not the solution. Add 5 to both sides: x = 12 + 5 = 17."
+          }
+        ],
+        "fallbackFeedback": "Add 5 to both sides: x = 12 + 5 = 17."
+      },
+      "variant": {
+        "gen": "unknown-letter",
+        "form": "solveSubtract"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the undo-operation.",
+      "conceptTag": "solve-add-sub",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To solve x + 9 = 15, what should you do to both sides?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Subtract 9",
+            "correct": true,
+            "feedback": "Right — the equation ADDS 9, so undo it by SUBTRACTING 9 from both sides: x = 15 − 9 = 6."
+          },
+          {
+            "id": "b",
+            "label": "Add 9",
+            "feedback": "Adding 9 again would move further from the answer. Since the equation already ADDS 9, undo it by subtracting 9."
+          },
+          {
+            "id": "c",
+            "label": "Multiply by 9",
+            "feedback": "Multiplication undoes division (or vice versa), not addition. Since +9 is attached, subtract 9 to undo it."
+          }
+        ]
+      },
+      "hints": [
+        "What operation is attached to x?",
+        "Addition of 9.",
+        "Undo addition with subtraction."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Solve and verify.",
+      "conceptTag": "solve-add-sub",
+      "explanationVariants": [
+        "x − 8 = 3: add 8 to both sides, x = 11. Check: 11 − 8 = 3. ✓",
+        "Undo −8 with +8: 3 + 8 = 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x − 8 = 3.",
+        "answer": 11,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "-5 subtracts 8 from 3 instead of adding. To undo −8, ADD 8 to both sides: 3 + 8 = 11."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the right side of the equation, not the solution. Add 8 to both sides: x = 3 + 8 = 11."
+          }
+        ],
+        "fallbackFeedback": "Add 8 to both sides: x = 3 + 8 = 11."
+      },
+      "variant": {
+        "gen": "unknown-letter",
+        "form": "solveSubtract"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Write the equation yourself this time, then solve it — the bill is next.",
+      "conceptTag": "solve-add-sub",
+      "explanationVariants": [
+        "\"A $4 fee is added to a price, making $11 total\" becomes n+4=11. Solve: n=11−4=7.",
+        "The unknown price is n; adding the $4 fee gives n+4=11, so n=7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A $4 fee is added to a price, making the total $11. Write and solve an equation for the original price, n.",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 ADDS the fee instead of undoing it. The equation is n+4=11 — solve by SUBTRACTING 4 from both sides: n=7."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the fee itself, not the original price. n+4=11 means n=11−4=7."
+          },
+          {
+            "value": 11,
+            "feedback": "11 is the TOTAL after the fee, not the original price n. Undo the +4: n=11−4=7."
+          }
+        ],
+        "fallbackFeedback": "Let n be the original price. \"Plus a $4 fee, total $11\" is n+4=11. Subtract 4 from both sides: n=7."
+      },
+      "variant": {
+        "gen": "unknown-letter",
+        "form": "feeSolve"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A word problem, one step.",
+      "conceptTag": "solve-add-sub",
+      "hints": [
+        "Write the equation: some number plus 9 equals 15.",
+        "n + 9 = 15.",
+        "Subtract 9 from both sides."
+      ],
+      "explanationVariants": [
+        "n + 9 = 15 → subtract 9 from both sides → n = 6. Check: 6 + 9 = 15. ✓",
+        "The equation n + 9 = 15 undoes to n = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "After a $9 tip is added, a bill totals $15. Write and solve an equation for the original bill, n.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "dollars",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 ADDS 9 and 15 instead of undoing the equation n + 9 = 15. Subtract 9 from both sides: n = 15 − 9 = 6."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is the TOTAL after tip, not the original bill. Subtract the tip: n = 15 − 9 = 6."
+          }
+        ],
+        "fallbackFeedback": "n + 9 = 15, so n = 15 − 9 = 6."
+      },
+      "variant": {
+        "gen": "unknown-letter",
+        "form": "tipSolve"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Undo with the opposite operation.",
+      "takeaways": [
+        "To solve x + a = b, subtract a from both sides.",
+        "To solve x − a = b, add a to both sides.",
+        "Always check by substituting the solution back into the ORIGINAL equation."
+      ],
+      "teaser": "next: solving equations built with multiplication and division."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "solve-add-sub",
+      "concept": {
+        "id": "rem-sas-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Undo with the opposite operation, on both sides.** x + 6 = 10: the equation adds 6, so subtract 6 from both sides: x = 10 − 6 = 4. Same move for subtraction equations, but adding instead."
+      },
+      "check": {
+        "id": "rem-sas-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "solve-add-sub",
+        "explanationVariants": [
+          "Subtract 6 from both sides: x = 10 − 6 = 4.",
+          "Undo +6 with −6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve x + 6 = 10.",
+          "answer": 4,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 ADDS 6 to 10. To undo +6, subtract 6 from both sides: 10 − 6 = 4."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is the right side, not the solution. Subtract 6: x = 10 − 6 = 4."
+            }
+          ],
+          "fallbackFeedback": "Subtract 6 from both sides: x = 10 − 6 = 4."
+        }
+      }
+    }
+  ]
+}

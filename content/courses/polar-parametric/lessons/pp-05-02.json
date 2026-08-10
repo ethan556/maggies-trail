@@ -1,0 +1,221 @@
+{
+ "id": "pp-05-02",
+ "slug": "reading-the-trajectory",
+ "title": "Peak, Flight Time, and Range",
+ "courseId": "polar-parametric",
+ "chapterId": "ch5-applied-parametrics",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Three landmarks fall out of the equations. **Time to peak**: set the vertical velocity v_y − g t = 0, so t_peak = v_y/g. **Max height**: y at that time. **Flight time** (level ground): double the peak time, since the arc is symmetric. Then **range** = vₓ · (flight time).",
+   "figure": "pp-time-to-peak"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Time to the top.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "With v_y = 20 m/s and g = 10, when does the ball reach its peak? (In seconds.)",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 = v_y − g, wrong operation. t_peak = v_y/g = 20/10 = 2 s."
+     },
+     {
+      "value": 0.5,
+      "feedback": "0.5 = g/v_y inverts the ratio. t_peak = v_y/g = 2 s."
+     }
+    ],
+    "fallbackFeedback": "t_peak = v_y/g = 20/10 = 2 s."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Max height.",
+   "conceptTag": "pp-trajectory",
+   "explanationVariants": [
+    "At t = 2: y = 20·2 − 5·2² = 40 − 20 = 20 m.",
+    "The peak height is v_y²/(2g) = 400/20 = 20 m — same answer, one step."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Continuing (v_y = 20, g = 10), what is the maximum height? (In meters.)",
+    "answer": 20,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 40,
+      "feedback": "40 = v_y·t_peak ignores the fall term. Max height = 40 − 20 = 20 m."
+     },
+     {
+      "value": 10,
+      "feedback": "Using v_y²/(2g) = 400/20 = 20 m, not 10."
+     }
+    ],
+    "fallbackFeedback": "y(2) = 40 − 20 = 20 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-trajectory__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Because the up-and-down path is symmetric, the ball spends as long falling as rising: **flight time = 2·t_peak**. During that whole time the horizontal motion never pauses, so the **range** = vₓ · (flight time) — the horizontal reach at landing.",
+   "figure": "pp-symmetric-path"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Flight time.",
+   "conceptTag": "pp-trajectory",
+   "explanationVariants": [
+    "Flight time = 2·t_peak = 2·2 = 4 s.",
+    "Rising 2 s, falling 2 s: 4 s aloft."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With t_peak = 2 s, what is the total flight time on level ground? (In seconds.)",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 s is only the RISING half. Double it for the full flight: 4 s."
+     },
+     {
+      "value": 8,
+      "feedback": "Flight time is 2·t_peak = 4 s, not 4·t_peak."
+     }
+    ],
+    "fallbackFeedback": "2·2 = 4 s."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-trajectory__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Range.",
+   "conceptTag": "pp-trajectory",
+   "explanationVariants": [
+    "Range = vₓ · flight time = 15·4 = 60 m — where the ball lands.",
+    "Horizontal speed 15 for the full 4 s covers 60 m."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With vₓ = 15 m/s and flight time 4 s, what is the range? (In meters.)",
+    "answer": 60,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "30 = vₓ·t_peak uses only half the flight. Range uses the FULL 4 s: 15·4 = 60 m."
+     },
+     {
+      "value": 19,
+      "feedback": "19 = 15 + 4 adds. Range is a product: 15·4 = 60 m."
+     }
+    ],
+    "fallbackFeedback": "Range = 15·4 = 60 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-trajectory__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A fresh launch.",
+   "conceptTag": "pp-trajectory",
+   "explanationVariants": [
+    "v_y = 30, g = 10: t_peak = 3 s, flight = 6 s. With vₓ = 8, range = 8·6 = 48 m.",
+    "Peak at 3 s, aloft 6 s, horizontal 8 m/s → 48 m."
+   ],
+   "hints": [
+    "t_peak = v_y/g = 30/10.",
+    "Flight time = 2·t_peak.",
+    "Range = vₓ · flight time = 8·6."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A ball has vₓ = 8 m/s, v_y = 30 m/s, g = 10. Find its range in meters.",
+    "answer": 48,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "24 = vₓ·t_peak uses half the flight. Full flight is 6 s: 8·6 = 48 m."
+     },
+     {
+      "value": 240,
+      "feedback": "240 = vₓ·v_y mixes speeds. Range = vₓ·flight time = 8·6 = 48 m."
+     }
+    ],
+    "fallbackFeedback": "t_peak = 3, flight = 6, range = 8·6 = 48 m."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-trajectory__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Three numbers from two equations.",
+   "takeaways": [
+    "Time to peak = v_y/g; max height = v_y²/(2g).",
+    "Flight time = 2·t_peak (level ground); range = vₓ · flight time.",
+    "Symmetry makes the fall mirror the rise."
+   ],
+   "teaser": "Finale: erase t to reveal the parabolic path itself."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-trajectory",
+   "concept": {
+    "id": "rem-pp0502-c",
+    "kind": "concept",
+    "body": "t_peak = v_y/g; max height = value of y there; flight time = 2·t_peak; range = vₓ · flight time."
+   },
+   "check": {
+    "id": "rem-pp0502-k",
+    "kind": "check",
+    "body": "One peak time.",
+    "conceptTag": "pp-trajectory",
+    "explanationVariants": [
+     "t_peak = v_y/g = 40/10 = 4 s.",
+     "Divide the vertical speed by g: 4 s."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "v_y = 40 m/s, g = 10. Find the time to peak (seconds).",
+     "answer": 4,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 400,
+       "feedback": "400 = v_y·g multiplies. t_peak = v_y/g = 40/10 = 4 s."
+      },
+      {
+       "value": 30,
+       "feedback": "30 = v_y − g subtracts. Use the ratio v_y/g = 4 s."
+      }
+     ],
+     "fallbackFeedback": "t_peak = 40/10 = 4 s."
+    }
+   }
+  }
+ ]
+}

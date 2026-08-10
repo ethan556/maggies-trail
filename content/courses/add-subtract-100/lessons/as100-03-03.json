@@ -1,0 +1,335 @@
+{
+  "id": "as100-03-03",
+  "slug": "subtracting-two-digit",
+  "title": "Subtracting Two-Digit Numbers",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch3-sub-100",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Take tens from tens, ones from ones. 86 − 52: tens 8−5=3, ones 6−2=4, so 34.",
+      "narration": "Take tens from tens, ones from ones. Eighty-six minus fifty-two: tens eight minus five is three, ones six minus two is four, so thirty-four.",
+      "figure": "as100-sub-by-place-34"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build what's left.",
+      "conceptTag": "sub-2digit",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "86 − 52: take the tens (8−5) and ones (6−2), then build what's left.",
+        "target": 34,
+        "requireStandard": true,
+        "commonBuilds": [
+          {
+            "tens": 4,
+            "ones": 3,
+            "feedback": "That builds 43 — the digits swapped. Tens 8−5=3, ones 6−2=4: 34."
+          },
+          {
+            "tens": 3,
+            "ones": 0,
+            "feedback": "That's just the tens (30). The ones leave too: 6−2=4, so 34."
+          }
+        ],
+        "missFeedback": "Tens: 8−5=3 rods. Ones: 6−2=4 cubes. 34.",
+        "successFeedback": "3 tens and 4 ones — 86 − 52 = 34!"
+      },
+      "predict": {
+        "prompt": "86 − 52, place by place: does the ones answer (6 − 2) care what the tens are doing?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — each place settles its own bill here"
+          },
+          {
+            "id": "borrow",
+            "label": "Yes — always borrow first"
+          },
+          {
+            "id": "mix",
+            "label": "Yes — the ones come from 86 − 2"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "With 6 ≥ 2 and 8 ≥ 5, each column pays independently: 3 tens and 4 ones — 34. The places only have to talk when a top digit comes up short; that conversation is called trading."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents sub 2digit.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for sub 2digit must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines sub 2digit."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:sub-2digit",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Tens from tens, ones from ones.",
+      "conceptTag": "sub-2digit",
+      "explanationVariants": [
+        "78 − 34: tens 7−3=4, ones 8−4=4, so 44.",
+        "70−30=40 and 8−4=4, together 44."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "78 − 34 = ?",
+        "answer": 44,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 54,
+            "feedback": "Tens are 7−3=4, not 5: 44."
+          },
+          {
+            "value": 43,
+            "feedback": "Ones are 8−4=4, not 3: 44."
+          }
+        ],
+        "fallbackFeedback": "Tens 7−3=4, ones 8−4=4: 44."
+      },
+      "hints": [
+        "Split into tens and ones.",
+        "70−30 and 8−4.",
+        "40 + 4 = 44."
+      ]
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Split, take, join: 95 − 63 is 90−60 and 5−3 — that's 30 and 2, so 32.",
+      "narration": "Split, take, join: ninety-five minus sixty-three is ninety minus sixty and five minus three — that's thirty and two, so thirty-two.",
+      "figure": "as100-split-take-32"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match the splits.",
+      "conceptTag": "sub-2digit",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each subtraction to what's left.",
+        "left": [
+          {
+            "id": "s1",
+            "label": "95 − 63"
+          },
+          {
+            "id": "s2",
+            "label": "69 − 25"
+          },
+          {
+            "id": "s3",
+            "label": "87 − 41"
+          }
+        ],
+        "right": [
+          {
+            "id": "u32",
+            "label": "32"
+          },
+          {
+            "id": "u44",
+            "label": "44"
+          },
+          {
+            "id": "u46",
+            "label": "46"
+          }
+        ],
+        "pairs": {
+          "s1": "u32",
+          "s2": "u44",
+          "s3": "u46"
+        },
+        "pairErrors": [
+          {
+            "left": "s1",
+            "right": "u44",
+            "feedback": "95 − 63: tens 9−6=3, ones 5−3=2 → 32. 44 is 69 − 25."
+          },
+          {
+            "left": "s3",
+            "right": "u32",
+            "feedback": "87 − 41: tens 8−4=4, ones 7−1=6 → 46. 32 is 95 − 63."
+          }
+        ],
+        "missFeedback": "Tens from tens, ones from ones: 32, 44, 46.",
+        "successFeedback": "Three splits, three takes — all matched!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another split.",
+      "conceptTag": "sub-2digit",
+      "explanationVariants": [
+        "69 − 25: tens 6−2=4, ones 9−5=4, so 44.",
+        "60−20=40 and 9−5=4, together 44."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "69 − 25 = ?",
+        "answer": 44,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 34,
+            "feedback": "Tens are 6−2=4, not 3: 44."
+          },
+          {
+            "value": 45,
+            "feedback": "Ones are 9−5=4, not 5: 44."
+          }
+        ],
+        "fallbackFeedback": "Tens 6−2=4, ones 9−5=4: 44."
+      },
+      "hints": [
+        "Split both numbers.",
+        "60−20 and 9−5.",
+        "44."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the split.",
+      "conceptTag": "sub-2digit",
+      "explanationVariants": [
+        "95 − 63 splits into (90−60) and (5−3): tens with tens, ones with ones.",
+        "The right split keeps places separate: 30 and 2 make 32."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which split solves 95 − 63?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(90 − 60) and (5 − 3)",
+            "correct": true,
+            "feedback": "Yes — 30 and 2 make 32."
+          },
+          {
+            "id": "b",
+            "label": "(90 − 3) and (5 − 60)",
+            "feedback": "That mixes places — and 5 can't lose 60! Keep tens together: (90−60) and (5−3)."
+          },
+          {
+            "id": "c",
+            "label": "9 − 6 − 5 − 3",
+            "feedback": "That treats every digit as ones. The 9 and 6 are TENS: 30 + 2 = 32."
+          }
+        ]
+      },
+      "hints": [
+        "Keep tens with tens.",
+        "90−60 and 5−3.",
+        "30 + 2 = 32."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "Sub2DigitMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Split it solo!",
+      "conceptTag": "sub-2digit",
+      "explanationVariants": [
+        "95 − 63: tens 9−6=3, ones 5−3=2, so 32.",
+        "90−60=30 and 5−3=2, together 32."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "95 − 63 = ?",
+        "answer": 32,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "Tens are 9−6=3, not 4: 32."
+          },
+          {
+            "value": 31,
+            "feedback": "Ones are 5−3=2, not 1: 32."
+          }
+        ],
+        "fallbackFeedback": "Tens 9−6=3, ones 5−3=2: 32."
+      },
+      "hints": [
+        "Split both numbers.",
+        "90−60 and 5−3.",
+        "32."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You subtract big numbers!",
+      "takeaways": [
+        "Split into tens and ones.",
+        "Take tens from tens, ones from ones.",
+        "Join what's left."
+      ],
+      "teaser": "next: what if the ones run short? Break a ten!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sub-2digit",
+      "concept": {
+        "id": "rem-s2-c",
+        "kind": "concept",
+        "body": "Slow it down. 35 − 12: tens 3−1=2, ones 5−2=3. Join: 23.",
+        "narration": "Thirty-five minus twelve: tens three minus one is two, ones five minus two is three. Join: twenty-three."
+      },
+      "check": {
+        "id": "rem-s2-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sub-2digit",
+        "explanationVariants": [
+          "35 − 12: tens 3−1=2, ones 5−2=3, so 23.",
+          "30−10=20 and 5−2=3, together 23."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "35 − 12 = ?",
+          "answer": 23,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 33,
+              "feedback": "Tens are 3−1=2, not 3: 23."
+            },
+            {
+              "value": 22,
+              "feedback": "Ones are 5−2=3, not 2: 23."
+            }
+          ],
+          "fallbackFeedback": "Tens 3−1=2, ones 5−2=3: 23."
+        }
+      }
+    }
+  ]
+}

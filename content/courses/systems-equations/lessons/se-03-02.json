@@ -1,0 +1,401 @@
+{
+ "id": "se-03-02",
+ "slug": "scale-one-equation-first",
+ "title": "Scale One Equation First",
+ "courseId": "systems-equations",
+ "chapterId": "ch3-elimination",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "coordinate-plane",
+   "body": "When no coefficients line up, **multiply one whole equation** by a number so a coefficient matches the other. Then add or subtract as usual. Multiplying every term of an equation by a nonzero number keeps it the same line — it just rescales it."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Line up the x's.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To eliminate x from 2x + y = 7 and x + 3y = 11, multiply the second equation by what?",
+    "options": [
+     {
+      "id": "a",
+      "label": "2",
+      "correct": true,
+      "feedback": "Yes — 2 times x + 3y = 11 gives 2x + 6y = 22, matching the 2x in the first."
+     },
+     {
+      "id": "b",
+      "label": "3",
+      "feedback": "That makes 3x, which doesn't match 2x. Multiply by 2 to get 2x + 6y = 22."
+     },
+     {
+      "id": "c",
+      "label": "−1",
+      "feedback": "That flips signs without matching the coefficient. Multiply by 2 to line up the 2x terms."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Scale, subtract, solve.",
+   "conceptTag": "eliminate-scale-one",
+   "explanationVariants": [
+    "Double the second: 2x + 6y = 22. Subtract the first: 5y = 15, so y = 3.",
+    "After scaling, (2x + 6y) − (2x + y) = 22 − 7 → 5y = 15 → y = 3."
+   ],
+   "widget": {
+    "type": "affineRelationshipLab",
+    "prompt": "Solve the system 2x + y = 7 and x + 3y = 11 by elimination. What is y?",
+    "task": "intersectionY",
+    "lines": [
+     {
+      "id": "first",
+      "label": "First equation",
+      "m": -2.0,
+      "b": 7.0,
+      "sourceKind": "equation",
+      "sourceText": "2x + 1y = 7",
+      "tablePoints": []
+     },
+     {
+      "id": "second",
+      "label": "Second equation",
+      "m": -0.3333333333333333,
+      "b": 3.6666666666666665,
+      "sourceKind": "equation",
+      "sourceText": "1x + 3y = 11",
+      "tablePoints": []
+     }
+    ],
+    "targetLineId": "first",
+    "rateGoal": "greater",
+    "answerMode": "numeric",
+    "requiredExplorations": 1,
+    "requiredStageKeys": [],
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 2,
+      "feedback": "That's x. After eliminating x you get 5y = 15, so y = 3."
+     },
+     {
+      "value": 15,
+      "feedback": "That's 5y. Divide by 5: y = 3."
+     }
+    ],
+    "pointErrors": [],
+    "authoredStages": [],
+    "explorationFeedback": "Inspect the designated affine states before checking.",
+    "fallbackFeedback": "Double the second equation, subtract: 5y = 15, so y = 3.",
+    "successFeedback": "Double the second equation, subtract: 5y = 15, so y = 3."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-one__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Worked: **2x + y = 7** and **x + 3y = 11**. Multiply the second by 2 → 2x + 6y = 22. Subtract the first: (2x + 6y) − (2x + y) = 22 − 7 → 5y = 15 → **y = 3**, then **x = 2**. Solution **(2, 3)**.",
+   "figure": "se-scale-one"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Which multiplier lines up x?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To eliminate x from x + 3y = 9 and 2x − y = 4, multiply the first equation by what?",
+    "options": [
+     {
+      "id": "a",
+      "label": "2",
+      "correct": true,
+      "feedback": "Yes — 2 times x + 3y = 9 gives 2x + 6y = 18, matching the 2x in the second."
+     },
+     {
+      "id": "b",
+      "label": "3",
+      "feedback": "That makes 3x, not 2x. Multiply the first by 2 to match the 2x."
+     },
+     {
+      "id": "c",
+      "label": "−2",
+      "feedback": "You'd match the size but flip the sign; then you'd add instead. Multiplying by 2 lets you subtract cleanly."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Pick the variable that's easiest to match — usually one with a coefficient of 1, since you just multiply by the other equation's coefficient. Scale only the equation that needs it; leave the other alone.",
+   "figure": "se-pick-easiest"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Solve this one.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system x + 3y = 9 and 2x − y = 4 by elimination. What is y?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "That's x. After eliminating x you get 7y = 14, so y = 2."
+     },
+     {
+      "value": 14,
+      "feedback": "That's 7y. Divide by 7: y = 2."
+     }
+    ],
+    "fallbackFeedback": "Double the first (2x + 6y = 18), subtract the second: 7y = 14, so y = 2."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Scale the simpler equation.",
+   "conceptTag": "eliminate-scale-one",
+   "explanationVariants": [
+    "Double the second: 2x + 2y = 12. Subtract from the first: (3x + 2y) − (2x + 2y) = 16 − 12 → x = 4.",
+    "After scaling, the 2y terms match; subtracting leaves x = 4."
+   ],
+   "widget": {
+    "type": "affineRelationshipLab",
+    "prompt": "Solve the system 3x + 2y = 16 and x + y = 6 by elimination. What is x?",
+    "task": "intersectionX",
+    "lines": [
+     {
+      "id": "first",
+      "label": "First equation",
+      "m": -1.5,
+      "b": 8.0,
+      "sourceKind": "equation",
+      "sourceText": "3x + 2y = 16",
+      "tablePoints": []
+     },
+     {
+      "id": "second",
+      "label": "Second equation",
+      "m": -1.0,
+      "b": 6.0,
+      "sourceKind": "equation",
+      "sourceText": "1x + 1y = 6",
+      "tablePoints": []
+     }
+    ],
+    "targetLineId": "first",
+    "rateGoal": "greater",
+    "answerMode": "numeric",
+    "requiredExplorations": 1,
+    "requiredStageKeys": [],
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 2,
+      "feedback": "That's y. Eliminating y (double the second, subtract) gives x = 4."
+     },
+     {
+      "value": 6,
+      "feedback": "6 is a total, not x. After eliminating y, x = 4."
+     }
+    ],
+    "pointErrors": [],
+    "authoredStages": [],
+    "explorationFeedback": "Inspect the designated affine states before checking.",
+    "fallbackFeedback": "Double x + y = 6 to 2x + 2y = 12, subtract: x = 4.",
+    "successFeedback": "Double x + y = 6 to 2x + 2y = 12, subtract: x = 4."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-one__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Double, then subtract.",
+   "conceptTag": "eliminate-scale-one",
+   "explanationVariants": [
+    "Double the first: 2x + 2y = 10. Subtract from the second: (2x + 3y) − (2x + 2y) = 12 − 10 → y = 2.",
+    "After scaling, the 2x terms match; subtracting leaves y = 2."
+   ],
+   "widget": {
+    "type": "affineRelationshipLab",
+    "prompt": "Solve the system x + y = 5 and 2x + 3y = 12 by elimination. What is y?",
+    "task": "intersectionY",
+    "lines": [
+     {
+      "id": "first",
+      "label": "First equation",
+      "m": -1.0,
+      "b": 5.0,
+      "sourceKind": "equation",
+      "sourceText": "1x + 1y = 5",
+      "tablePoints": []
+     },
+     {
+      "id": "second",
+      "label": "Second equation",
+      "m": -0.6666666666666666,
+      "b": 4.0,
+      "sourceKind": "equation",
+      "sourceText": "2x + 3y = 12",
+      "tablePoints": []
+     }
+    ],
+    "targetLineId": "first",
+    "rateGoal": "greater",
+    "answerMode": "numeric",
+    "requiredExplorations": 1,
+    "requiredStageKeys": [],
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 3,
+      "feedback": "That's x. Eliminating x (double the first, subtract) gives y = 2."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is a total, not y. After eliminating x, y = 2."
+     }
+    ],
+    "pointErrors": [],
+    "authoredStages": [],
+    "explorationFeedback": "Inspect the designated affine states before checking.",
+    "fallbackFeedback": "Double x + y = 5 to 2x + 2y = 10, subtract from the second: y = 2.",
+    "successFeedback": "Double x + y = 5 to 2x + 2y = 10, subtract from the second: y = 2."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-one__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Scale to add this time.",
+   "conceptTag": "eliminate-scale-one",
+   "explanationVariants": [
+    "Triple the second: 3x − 3y = 3. Add the first: (2x + 3y) + (3x − 3y) = 12 + 3 → 5x = 15 → x = 3.",
+    "Scaling the second to −3y lets the +3y and −3y cancel on adding: 5x = 15, x = 3."
+   ],
+   "widget": {
+    "type": "affineRelationshipLab",
+    "prompt": "Solve the system 2x + 3y = 12 and x − y = 1 by elimination. What is x?",
+    "task": "intersectionX",
+    "lines": [
+     {
+      "id": "first",
+      "label": "First equation",
+      "m": -0.6666666666666666,
+      "b": 4.0,
+      "sourceKind": "equation",
+      "sourceText": "2x + 3y = 12",
+      "tablePoints": []
+     },
+     {
+      "id": "second",
+      "label": "Second equation",
+      "m": 1.0,
+      "b": -1.0,
+      "sourceKind": "equation",
+      "sourceText": "1x + -1y = 1",
+      "tablePoints": []
+     }
+    ],
+    "targetLineId": "first",
+    "rateGoal": "greater",
+    "answerMode": "numeric",
+    "requiredExplorations": 1,
+    "requiredStageKeys": [],
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 2,
+      "feedback": "That's y. After eliminating y you get 5x = 15, so x = 3."
+     },
+     {
+      "value": 15,
+      "feedback": "That's 5x. Divide by 5: x = 3."
+     }
+    ],
+    "pointErrors": [],
+    "authoredStages": [],
+    "explorationFeedback": "Inspect the designated affine states before checking.",
+    "fallbackFeedback": "Triple the second (3x − 3y = 3), add the first: 5x = 15, so x = 3.",
+    "successFeedback": "Triple the second (3x − 3y = 3), add the first: 5x = 15, so x = 3."
+   },
+   "hints": [
+    "Multiply x − y = 1 by 3 so the y-terms become +3y and −3y.",
+    "Adding cancels y: (2x + 3y) + (3x − 3y) = 15 → 5x = 15.",
+    "x = 15 / 5 = 3."
+   ],
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-one__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Scale one equation so a coefficient lines up, then eliminate.",
+   "takeaways": [
+    "Multiply a whole equation to match a coefficient — it stays the same line.",
+    "Match a coefficient-1 variable by multiplying by the other's coefficient.",
+    "Then add (opposite) or subtract (matching) as before."
+   ],
+   "teaser": "next: when both equations need scaling."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "eliminate-scale-one",
+   "concept": {
+    "id": "rem-eso-c",
+    "kind": "concept",
+    "body": "Multiply one equation to line up a coefficient. For 2x + y = 7 and x + 3y = 11: double the second to 2x + 6y = 22, subtract the first to get 5y = 15, so y = 3, then x = 2."
+   },
+   "check": {
+    "id": "rem-eso-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "eliminate-scale-one",
+    "explanationVariants": [
+     "Double the second, subtract: 5y = 15, so y = 3.",
+     "After scaling and subtracting, 5y = 15, y = 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve the system 2x + y = 7 and x + 3y = 11 by elimination. What is y?",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "That's x. Eliminating x gives 5y = 15, so y = 3."
+      },
+      {
+       "value": 15,
+       "feedback": "That's 5y. Divide by 5: y = 3."
+      }
+     ],
+     "fallbackFeedback": "Double the second, subtract: 5y = 15, so y = 3."
+    }
+   }
+  }
+ ]
+}

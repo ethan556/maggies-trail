@@ -1,0 +1,236 @@
+{
+ "id": "vec-02-02",
+ "slug": "scalar-multiplication",
+ "title": "Scalar Multiplication: Stretch and Flip",
+ "courseId": "vectors-matrices",
+ "chapterId": "ch2-vector-operations",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Multiplying a vector by a **scalar** k scales every component: k⟨a, b⟩ = ⟨ka, kb⟩. This **stretches** the vector's length by |k| and keeps its direction — unless k is negative, which **flips** it to point the opposite way. The direction is preserved (k > 0) or reversed (k < 0), never rotated.",
+   "figure": "vec-scalar-mult"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Scale a vector.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Compute 3⟨2, −1⟩.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "⟨6, −3⟩",
+      "correct": true,
+      "feedback": "Right — multiply each component by 3: ⟨6, −3⟩."
+     },
+     {
+      "id": "o2",
+      "label": "⟨5, 2⟩",
+      "feedback": "That ADDS 3 to each. Scalar multiplication MULTIPLIES: ⟨6, −3⟩."
+     },
+     {
+      "id": "o3",
+      "label": "⟨6, −1⟩",
+      "feedback": "Scale BOTH components: 3·(−1) = −3, so ⟨6, −3⟩."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Effect on magnitude.",
+   "conceptTag": "vec-scalar",
+   "explanationVariants": [
+    "|3⟨2, −1⟩| = 3·|⟨2, −1⟩| = 3√5 ≈ 6.71 — the length scales by exactly the factor 3.",
+    "Scaling by 3 triples the length: 3√5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "|⟨2, −1⟩| = √5. What is |3⟨2, −1⟩|? (As a decimal to two places.)",
+    "answer": 6.71,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 2.24,
+      "feedback": "2.24 = √5 is the ORIGINAL length. Scaling by 3 gives 3√5 ≈ 6.71."
+     },
+     {
+      "value": 20.12,
+      "feedback": "20.12 = 9√5 scales by 3². Length scales by the FIRST power of |k|: 3√5 ≈ 6.71."
+     }
+    ],
+    "fallbackFeedback": "|3v| = 3|v| = 3√5 ≈ 6.71."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-scalar__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Negative scalars flip.",
+   "conceptTag": "vec-scalar",
+   "explanationVariants": [
+    "−2⟨1, 3⟩ = ⟨−2, −6⟩: both components negate (direction reversed) and the length doubles.",
+    "A negative scalar reverses direction; |−2| = 2 doubles the length."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Compute −2⟨1, 3⟩.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "⟨−2, −6⟩",
+      "correct": true,
+      "feedback": "Right — multiply each by −2: ⟨−2, −6⟩ (reversed and doubled)."
+     },
+     {
+      "id": "o2",
+      "label": "⟨2, 6⟩",
+      "feedback": "The scalar is NEGATIVE, so both components flip sign: ⟨−2, −6⟩."
+     },
+     {
+      "id": "o3",
+      "label": "⟨−2, 3⟩",
+      "feedback": "Scale BOTH: −2·3 = −6, giving ⟨−2, −6⟩."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-scalar__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A **unit vector** has length 1. To build one pointing along v, divide by the magnitude: **û = v/|v|**. For ⟨6, 8⟩ (length 10): û = ⟨6/10, 8/10⟩ = ⟨0.6, 0.8⟩ — same direction, length exactly 1. Unit vectors capture pure direction.",
+   "figure": "vec-unit-vector"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Make a unit vector.",
+   "conceptTag": "vec-scalar",
+   "explanationVariants": [
+    "⟨3, 4⟩ has length 5, so û = ⟨3/5, 4/5⟩ = ⟨0.6, 0.8⟩ — check: √(0.36 + 0.64) = 1.",
+    "Divide by the magnitude 5 to get the unit vector ⟨0.6, 0.8⟩."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The unit vector along ⟨3, 4⟩ is ⟨0.6, 0.8⟩. What is its magnitude?",
+    "answer": 1,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 is the ORIGINAL vector's length. A UNIT vector has length exactly 1: √(0.36 + 0.64) = 1."
+     },
+     {
+      "value": 1.4,
+      "feedback": "√(0.6² + 0.8²) = √(0.36 + 0.64) = √1 = 1, not 1.4."
+     }
+    ],
+    "fallbackFeedback": "√(0.6² + 0.8²) = √1 = 1 — that's the point of a unit vector."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-scalar__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A linear combination.",
+   "conceptTag": "vec-scalar",
+   "explanationVariants": [
+    "2⟨1, 2⟩ + ⟨1, −1⟩ = ⟨2, 4⟩ + ⟨1, −1⟩ = ⟨3, 3⟩; magnitude √(9 + 9) = √18 = 3√2 ≈ 4.24.",
+    "Scale first, then add: ⟨3, 3⟩, length 3√2."
+   ],
+   "hints": [
+    "First scale: 2⟨1, 2⟩ = ⟨2, 4⟩.",
+    "Add ⟨1, −1⟩: ⟨3, 3⟩.",
+    "Magnitude = √(9 + 9)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Find the magnitude of 2⟨1, 2⟩ + ⟨1, −1⟩, to two decimals.",
+    "answer": 4.24,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 = 3 + 3 adds the components of ⟨3, 3⟩. Magnitude is √(9 + 9) = 3√2 ≈ 4.24."
+     },
+     {
+      "value": 3,
+      "feedback": "⟨3, 3⟩ has magnitude √18 ≈ 4.24, not 3."
+     }
+    ],
+    "fallbackFeedback": "2⟨1,2⟩ + ⟨1,−1⟩ = ⟨3, 3⟩ → √18 ≈ 4.24."
+   },
+   "variant": {
+    "gen": "g12-vectors-matrices",
+    "form": "vectors-matrices__vec-scalar__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Scale, don't rotate.",
+   "takeaways": [
+    "k⟨a, b⟩ = ⟨ka, kb⟩: length scales by |k|.",
+    "k < 0 reverses direction; k > 0 preserves it.",
+    "Unit vector û = v/|v| has length 1 and points along v."
+   ],
+   "teaser": "Next chapter: the dot product — multiplying two vectors into a number."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "vec-scalar",
+   "concept": {
+    "id": "rem-vec0202-c",
+    "kind": "concept",
+    "body": "k⟨a, b⟩ = ⟨ka, kb⟩: length scales by |k|, direction flips if k < 0. Unit vector: û = v/|v|, length 1."
+   },
+   "check": {
+    "id": "rem-vec0202-k",
+    "kind": "check",
+    "body": "One scaling.",
+    "conceptTag": "vec-scalar",
+    "explanationVariants": [
+     "2⟨3, −1⟩ = ⟨6, −2⟩.",
+     "Multiply each component by 2: ⟨6, −2⟩."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Compute 2⟨3, −1⟩.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "⟨6, −2⟩",
+       "correct": true,
+       "feedback": "Right — ⟨2·3, 2·(−1)⟩ = ⟨6, −2⟩."
+      },
+      {
+       "id": "o2",
+       "label": "⟨5, 1⟩",
+       "feedback": "That adds 2. Scalar multiplication MULTIPLIES: ⟨6, −2⟩."
+      },
+      {
+       "id": "o3",
+       "label": "⟨6, −1⟩",
+       "feedback": "Scale BOTH: 2·(−1) = −2, so ⟨6, −2⟩."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

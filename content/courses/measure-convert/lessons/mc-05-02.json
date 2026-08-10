@@ -1,0 +1,327 @@
+{
+ "id": "mc-05-02",
+ "slug": "building-a-line-plot",
+ "title": "Building a Line Plot",
+ "courseId": "measure-convert",
+ "chapterId": "ch5-line-plots-fractions",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A line plot stacks a mark above each measurement's spot on a number line. Measure five pencils in eighths — 1/2, 3/4, 1/2, 5/8, 1/2 — and every time 1/2 comes up again, another mark stacks on top of the last one, right above the 1/2 tick.",
+   "figure": "line-plot"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Count the stack.",
+   "conceptTag": "line-plot-build",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Five pencils measure 1/2, 3/4, 1/2, 5/8, and 1/2 inch. How many marks stack above the 1/2 tick?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "marks",
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 counts every pencil, not just the ones measuring 1/2. Only three pencils measured exactly 1/2: three marks."
+     },
+     {
+      "value": 1,
+      "feedback": "1 undercounts — 1/2 appears more than once in this list. Count every pencil that measured exactly 1/2: three."
+     }
+    ],
+    "fallbackFeedback": "Count how many times 1/2 appears in the list of measurements."
+   },
+   "predict": {
+    "prompt": "Can one tick on a line plot carry MORE than one X?",
+    "options": [
+     {
+      "id": "yes",
+      "label": "Yes — one X per data value"
+     },
+     {
+      "id": "no",
+      "label": "No — one X each, maximum"
+     },
+     {
+      "id": "whole",
+      "label": "Only above whole numbers"
+     }
+    ],
+    "outcomeId": "yes",
+    "reveal": "Repeated measurements pile up — every matching pencil stacks another X above the same tick. The height of a stack IS that value's count."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Count a different stack.",
+   "conceptTag": "line-plot-build",
+   "explanationVariants": [
+    "3/4 appears exactly once in the list — just one mark stacks above it.",
+    "Only one pencil measured 3/4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using the same five pencils (1/2, 3/4, 1/2, 5/8, 1/2), how many marks stack above the 3/4 tick?",
+    "answer": 1,
+    "tolerance": 0,
+    "unit": "marks",
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 counts every pencil in the whole list. Only one pencil measured 3/4: one mark."
+     },
+     {
+      "value": 3,
+      "feedback": "3 is how many measured 1/2, not 3/4. Only one pencil measured 3/4: one mark."
+     }
+    ],
+    "fallbackFeedback": "Count how many times 3/4 appears in the list."
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcLinePlotBuildNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The **total** number of data points is every mark on the whole plot added together — every measurement counted once, no matter which tick it landed on.",
+   "figure": "line-plot"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find the total.",
+   "conceptTag": "line-plot-build",
+   "explanationVariants": [
+    "Three marks at 1/2, one at 3/4, one at 5/8: 3+1+1=5 total measurements.",
+    "Adding every stack's height gives the total count."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A line plot has 3 marks at 1/2, 1 mark at 3/4, and 1 mark at 5/8. How many measurements are on the plot in all?",
+    "answer": 5,
+    "tolerance": 0,
+    "unit": "measurements",
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is only the tallest stack (at 1/2). Add every stack together: 3+1+1=5."
+     },
+     {
+      "value": 15,
+      "feedback": "15 multiplies the stacks instead of adding them. Total data points add: 3+1+1=5."
+     }
+    ],
+    "fallbackFeedback": "Add up every stack's height: 3+1+1."
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcLinePlotBuildNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Sort measurements to their tick.",
+   "conceptTag": "line-plot-build",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Six leaf lengths were measured: 3/8, 3/8, 1/2, 1/2, 1/2, 7/8. Sort each measurement to its tick.",
+    "buckets": [
+     {
+      "id": "t38",
+      "label": "3/8",
+      "icon": "🍃"
+     },
+     {
+      "id": "t12",
+      "label": "1/2",
+      "icon": "🍃"
+     },
+     {
+      "id": "t78",
+      "label": "7/8",
+      "icon": "🍃"
+     }
+    ],
+    "items": [
+     {
+      "id": "l1",
+      "label": "Leaf A: 3/8 in",
+      "bucketId": "t38",
+      "feedback": "Matches the 3/8 tick."
+     },
+     {
+      "id": "l2",
+      "label": "Leaf B: 1/2 in",
+      "bucketId": "t12",
+      "feedback": "Matches the 1/2 tick."
+     },
+     {
+      "id": "l3",
+      "label": "Leaf C: 3/8 in",
+      "bucketId": "t38",
+      "feedback": "Another leaf at the 3/8 tick."
+     },
+     {
+      "id": "l4",
+      "label": "Leaf D: 7/8 in",
+      "bucketId": "t78",
+      "feedback": "Matches the 7/8 tick."
+     },
+     {
+      "id": "l5",
+      "label": "Leaf E: 1/2 in",
+      "bucketId": "t12",
+      "feedback": "Another leaf at the 1/2 tick."
+     },
+     {
+      "id": "l6",
+      "label": "Leaf F: 1/2 in",
+      "bucketId": "t12",
+      "feedback": "A third leaf at the 1/2 tick."
+     }
+    ],
+    "missFeedback": "Match each leaf's measurement to its own tick mark.",
+    "successFeedback": "Two leaves at 3/8, three at 1/2, one at 7/8 — the plot's three stacks."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Find the tallest stack.",
+   "conceptTag": "line-plot-build",
+   "explanationVariants": [
+    "The 1/2 tick has 3 leaves stacked — more than any other tick (2 at 3/8, 1 at 7/8).",
+    "Comparing stack heights: 3 beats 2 and 1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For the six leaves (2 at 3/8, 3 at 1/2, 1 at 7/8), which tick has the TALLEST stack?",
+    "options": [
+     {
+      "id": "a",
+      "label": "1/2 — 3 leaves, more than any other tick",
+      "correct": true,
+      "feedback": "3 leaves at 1/2 beats 2 at 3/8 and 1 at 7/8 — the tallest stack."
+     },
+     {
+      "id": "b",
+      "label": "3/8 — it was measured first",
+      "feedback": "Measuring order doesn't matter — stack height does. 3/8 has only 2 leaves, fewer than 1/2's 3."
+     },
+     {
+      "id": "c",
+      "label": "7/8 — it's the biggest measurement",
+      "feedback": "A bigger NUMBER doesn't mean a taller stack. 7/8 has only 1 leaf — the shortest stack here."
+     },
+     {
+      "id": "d",
+      "label": "They're all the same height",
+      "feedback": "They differ: 2, 3, and 1 leaves respectively. The 1/2 tick's stack of 3 is tallest."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcLinePlotBuildMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The seedling heights.",
+   "conceptTag": "line-plot-build",
+   "hints": [
+    "Six seedlings measure 3/8, 3/8, 1/2, 1/2, 1/2, and 7/8 inch.",
+    "Count how many land on each tick.",
+    "Find which tick has the most."
+   ],
+   "explanationVariants": [
+    "3/8 has 2 seedlings, 1/2 has 3, and 7/8 has 1 — the 1/2 tick's stack of 3 is tallest.",
+    "Comparing the three stack heights, 1/2 wins with 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Six seedlings measure: 3/8, 3/8, 1/2, 1/2, 1/2, and 7/8 inch. How many seedlings are in the TALLEST stack on the line plot?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "seedlings",
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 counts every seedling in the whole dataset, not just one stack. The tallest single stack (at 1/2) has 3."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is the 3/8 stack's height, not the tallest. The 1/2 tick has 3 seedlings — the tallest stack."
+     }
+    ],
+    "fallbackFeedback": "Count how many seedlings share each measurement, then find the biggest count."
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcLinePlotBuildNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Data, stacked above a number line.",
+   "takeaways": [
+    "A line plot stacks a mark above each measurement's tick — repeats stack higher.",
+    "The total data count adds up every stack's height.",
+    "The tallest stack shows the most common measurement, no matter its size."
+   ],
+   "teaser": "next: answering real questions using a finished line plot."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "line-plot-build",
+   "concept": {
+    "id": "rem-lb-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Count how many measurements share each value.** For 1/4, 1/4, 1/2: two measurements land on 1/4 (2 marks stack there), and one lands on 1/2 (1 mark)."
+   },
+   "check": {
+    "id": "rem-lb-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "line-plot-build",
+    "explanationVariants": [
+     "1/4 appears twice in the list.",
+     "Two measurements share the 1/4 tick."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Three measurements are 1/4, 1/4, and 1/2. How many marks stack above the 1/4 tick?",
+     "options": [
+      {
+       "id": "a",
+       "label": "2",
+       "correct": true,
+       "feedback": "1/4 appears twice — two marks stack there."
+      },
+      {
+       "id": "b",
+       "label": "3",
+       "feedback": "3 counts every measurement in the list. Only two of them are 1/4."
+      },
+      {
+       "id": "c",
+       "label": "1",
+       "feedback": "1 undercounts — 1/4 appears twice, not once."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

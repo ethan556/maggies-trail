@@ -1,0 +1,254 @@
+{
+  "id": "tg-03-02",
+  "slug": "tangent-values-and-walls",
+  "title": "Exact Values & Life Near a Wall",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch3-tangent-graph",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Tangent's exact values come straight from the ratio of the exact sin/cos values you know: tan(π/6) = (1/2)/(√3/2) = **1/√3 ≈ 0.58**, tan(π/4) = 1, tan(π/3) = (√3/2)/(1/2) = **√3 ≈ 1.73**. The trio 0.58, 1, 1.73 climbs — as every tangent branch does.",
+      "figure": "tg-tangent-values"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build one from the ratio.",
+      "predict": {
+        "prompt": "Walking the tangent trace toward 90°: what does the wave do?",
+        "options": [
+          {
+            "id": "wall",
+            "label": "It climbs without limit — there's a wall at 90°, not a value"
+          },
+          {
+            "id": "peak",
+            "label": "It peaks at 1 and comes back down, like sine"
+          },
+          {
+            "id": "zero",
+            "label": "It crosses zero there"
+          }
+        ],
+        "outcomeId": "wall",
+        "reveal": "A wall. tan θ = sin θ / cos θ, and at 90° the denominator hits zero — the trace shoots off the top of the stage and reappears from the bottom. The zeros live where SINE is zero: at 0°, 180°, 360°. Drag past the wall and land on the crossing at 180°."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = tan x: ride the branch up its wall at 90°, cross the gap, and land the tip exactly on the zero at 180°.",
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "tan",
+        "targetFeature": {
+          "kind": "zero",
+          "x": 180,
+          "tol": 5
+        },
+        "successFeedback": "Zero at 180° — sin 180° = 0 puts the ratio at 0/(−1) = 0. Between here and the wall the ratio ran through every value once, which is why tan(60°) = (√3/2)÷(1/2) = 1.73 exists on this branch: the entry above is one stop on the climb you just made.",
+        "lowFeedback": "Not at the zero — the tip is off the axis here. The crossing sits where the SINE leg vanishes; keep dragging toward 180°, through the wall's gap.",
+        "highFeedback": "Past the zero — the trace has started its next climb. Back up to 180°, where the wave touches the axis between two walls."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "And its little sibling.",
+      "conceptTag": "tg-tan-values",
+      "explanationVariants": [
+        "tan(π/6) = (1/2)/(√3/2) = 1/√3 ≈ 0.58.",
+        "π/6 and π/3 swap sine and cosine, so their tangents are reciprocals: 1/1.73 ≈ 0.58."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is tan(π/6), to hundredths?",
+        "answer": 0.58,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.73,
+            "feedback": "1.73 is tan(π/3). At π/6 the SMALL value (1/2) is on top: 1/√3 ≈ 0.58."
+          },
+          {
+            "value": 0.5,
+            "feedback": "0.5 is sin(π/6) before dividing. The quotient is (1/2)/(√3/2) ≈ 0.58."
+          }
+        ],
+        "fallbackFeedback": "1/√3 ≈ 0.58."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-values__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Pressed against a wall, tangent is one-sided: approaching π/2 **from the left**, cos shrinks through tiny POSITIVE values while sin ≈ 1, so tan → **+∞**; from the right, cos is tiny and NEGATIVE, so tan → **−∞**. Each branch exits its wall at opposite infinities.",
+      "figure": "tg-tangent-asymptote"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Feel the blow-up.",
+      "conceptTag": "tg-tan-values",
+      "explanationVariants": [
+        "Just left of π/2 ≈ 1.5708, e.g. x = 1.55: sin ≈ 1 over cos ≈ +0.0208 gives roughly +48 — huge and positive.",
+        "Dividing nearly-1 by a shrinking positive number explodes upward."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "x = 1.55 sits just LEFT of the wall at π/2 ≈ 1.5708. tan(1.55) is approximately:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "+48 — large and positive",
+            "correct": true,
+            "feedback": "Right — sin(1.55) ≈ 1.0 over cos(1.55) ≈ +0.021: the left side of a wall rockets up."
+          },
+          {
+            "id": "o2",
+            "label": "−48 — large and negative",
+            "feedback": "Negative blow-up happens on the RIGHT of the wall (cos < 0 there). Left side: positive, ≈ +48."
+          },
+          {
+            "id": "o3",
+            "label": "about 1",
+            "feedback": "tan = 1 back at π/4 ≈ 0.79. This close to the wall, cos ≈ 0.021 makes the quotient huge: ≈ 48."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-values__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sign audit by quadrant.",
+      "conceptTag": "tg-tan-values",
+      "explanationVariants": [
+        "In Quadrant II (like 2.5 rad), sin > 0 and cos < 0: tangent is NEGATIVE — e.g. tan(3π/4) = −1.",
+        "Between the wall π/2 and the zero π, the branch is climbing from −∞ up to 0: all negative."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is tan(3π/4)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−1",
+            "correct": true,
+            "feedback": "Right — sin(3π/4) = √2/2, cos(3π/4) = −√2/2: equal sizes, opposite signs → −1."
+          },
+          {
+            "id": "o2",
+            "label": "1",
+            "feedback": "That's Quadrant I (π/4). In Quadrant II cosine has gone negative: tan(3π/4) = −1."
+          },
+          {
+            "id": "o3",
+            "label": "undefined",
+            "feedback": "cos(3π/4) = −√2/2 ≠ 0 — no wall here. The value is −1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-values__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Order the climb.",
+      "conceptTag": "tg-tan-values",
+      "explanationVariants": [
+        "On one branch tangent strictly climbs: tan(1.0) ≈ 1.56 < tan(1.3) ≈ 3.60 < tan(1.5) ≈ 14.1 — the value closest to the wall is largest: x = 1.5.",
+        "All three x's sit left of π/2; nearer the wall means a smaller cosine below, a bigger quotient."
+      ],
+      "hints": [
+        "All of 1.0, 1.3, 1.5 lie on the same branch (left of π/2).",
+        "Each branch is strictly increasing.",
+        "Which x is closest to the wall at π/2 ≈ 1.5708?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Among x = 1.0, 1.3, and 1.5, where is tan x LARGEST?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = 1.5",
+            "correct": true,
+            "feedback": "Right — same branch, strictly climbing, and 1.5 presses closest to the wall (tan ≈ 14)."
+          },
+          {
+            "id": "o2",
+            "label": "x = 1.0",
+            "feedback": "tan(1.0) ≈ 1.6 — the branch keeps climbing past it. The wall-hugger 1.5 wins (≈ 14)."
+          },
+          {
+            "id": "o3",
+            "label": "They're equal — tangent is periodic",
+            "feedback": "Periodic across branches, but WITHIN one branch it strictly increases: 1.5, nearest the wall, is largest."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-tan-values__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Climbing to the wall.",
+      "takeaways": [
+        "tan(π/6), tan(π/4), tan(π/3) = 0.58, 1, 1.73 — from the sin/cos ratios.",
+        "Left of a wall: +∞; right of it: −∞.",
+        "Within a branch, tangent strictly increases."
+      ],
+      "teaser": "Next: stretching and squeezing the whole ladder — tangent transformations."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-tan-values",
+      "concept": {
+        "id": "rem-tg0302-c",
+        "kind": "concept",
+        "body": "To evaluate tangent exactly, divide the exact sine by the exact cosine — and read the SIGN from the quadrant (sin's sign over cos's sign)."
+      },
+      "check": {
+        "id": "rem-tg0302-k",
+        "kind": "check",
+        "body": "One ratio.",
+        "conceptTag": "tg-tan-values",
+        "explanationVariants": [
+          "tan(π/4 + π) = tan(π/4) = 1 by the period — or directly: both coordinates −√2/2, ratio +1.",
+          "5π/4: equal negative coordinates, quotient +1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Using sin(5π/4) = −√2/2 and cos(5π/4) = −√2/2, what is tan(5π/4)?",
+          "answer": 1,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -1,
+              "feedback": "Two negatives divide to a POSITIVE: (−√2/2)/(−√2/2) = +1."
+            },
+            {
+              "value": 0.71,
+              "feedback": "0.71 is √2/2, one coordinate. The quotient of the equal pair is 1."
+            }
+          ],
+          "fallbackFeedback": "(−√2/2)/(−√2/2) = 1."
+        }
+      }
+    }
+  ]
+}

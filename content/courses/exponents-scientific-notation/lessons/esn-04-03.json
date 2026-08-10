@@ -1,0 +1,497 @@
+{
+  "id": "esn-04-03",
+  "slug": "real-world-applications-and-precision",
+  "title": "Real-World Applications & Precision",
+  "courseId": "exponents-scientific-notation",
+  "chapterId": "ch4-computing-scientific-notation",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Real-world problems tell you WHICH operation to use: total amount from a count times a per-item rate is multiplication; combining two differently-sized quantities is addition; figuring out a rate from a total is division. Set up the operation before computing.",
+      "figure": "esn-multiply-sci"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A multiplication context.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A beehive has 3 × 10⁴ bees, and the colony needs 2 × 10² grams of honey per bee each year. How much honey does the colony need in total?",
+        "options": [
+          {
+            "id": "a",
+            "label": "6 × 10⁶ grams",
+            "correct": true,
+            "feedback": "Right — total = count × rate: (3×10⁴)×(2×10²) = 6×10⁶ grams."
+          },
+          {
+            "id": "b",
+            "label": "5 × 10⁶ grams",
+            "correct": false,
+            "feedback": "That adds the coefficients instead of multiplying them for a total-from-rate problem — multiply: 3×2=6."
+          },
+          {
+            "id": "c",
+            "label": "6 × 10⁸ grams",
+            "correct": false,
+            "feedback": "Check the exponent addition — 4+2=6, not 8."
+          },
+          {
+            "id": "d",
+            "label": "6 × 10⁴ grams",
+            "correct": false,
+            "feedback": "This is a multiplication (count × rate), not the count alone — 4+2=6, giving 6×10⁶."
+          }
+        ]
+      },
+      "predict": {
+        "prompt": "Total honey = (3 × 10⁴ bees) × (2 × 10² grams each). Will the answer's size be near 10⁶ or near 10²?",
+        "options": [
+          {
+            "id": "six",
+            "label": "Near 10⁶"
+          },
+          {
+            "id": "two",
+            "label": "Near 10²"
+          },
+          {
+            "id": "eight",
+            "label": "Near 10⁸"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "The powers add: 4 + 2 makes 10⁶ — millions of grams. Estimating the exponent first keeps real-world answers honest."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Precision matters too: don't report more digits than the original data supports. If a measurement is only known to one significant digit (like 3 × 10⁴), the answer shouldn't pretend to be more precise than that.",
+      "figure": "esn-add-sci"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A division context.",
+      "conceptTag": "esn-compute-context",
+      "explanationVariants": [
+        "Time = distance ÷ speed: (3×10⁸) ÷ (6×10⁴) = 5×10³ seconds.",
+        "Dividing the total distance by the speed gives the time: 3÷6=0.5, renormalized to 5×10³."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A signal travels 3 × 10⁸ meters total at a speed of 6 × 10⁴ meters per second. How many seconds does the trip take?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "5"
+          },
+          {
+            "id": "t1",
+            "label": "×"
+          },
+          {
+            "id": "t2",
+            "label": "10³"
+          },
+          {
+            "id": "t3",
+            "label": "2"
+          },
+          {
+            "id": "t4",
+            "label": "10¹²"
+          },
+          {
+            "id": "t5",
+            "label": "10⁴"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t3",
+              "t1",
+              "t2"
+            ],
+            "feedback": "Check the division — 3÷6=0.5, which renormalizes to 5×10³, not 2×10³ (that would come from dividing backward)."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That adds the exponents like multiplying — division subtracts them: 8−4=4, renormalized to 3 after fixing the coefficient."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t5"
+            ],
+            "feedback": "Check the exponent subtraction — 8−4=4, and renormalizing 0.5 to 5 shifts it down by one more: 10³, not 10⁴."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Time = distance ÷ speed: divide the fronts, subtract the exponents.",
+        "successFeedback": "Right — time = distance ÷ speed = (3×10⁸)÷(6×10⁴) = 5×10³ seconds."
+      },
+      "variant": {
+        "gen": "g8-esn-context-compute",
+        "form": "esnContextDivide"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "An addition context.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "City A has a population of 2 × 10⁶ and nearby City B has 5 × 10⁵. What is their combined population?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2.5 × 10⁶",
+            "correct": true,
+            "feedback": "Right — rewrite 5×10⁵ as 0.5×10⁶, then add: 2+0.5=2.5."
+          },
+          {
+            "id": "b",
+            "label": "7 × 10⁶",
+            "correct": false,
+            "feedback": "That adds the coefficients directly without matching exponents first — rewrite 5×10⁵ as 0.5×10⁶: 2+0.5=2.5."
+          },
+          {
+            "id": "c",
+            "label": "2.5 × 10⁵",
+            "correct": false,
+            "feedback": "The matched exponent should be the BIGGER one, 6, not 5."
+          },
+          {
+            "id": "d",
+            "label": "1 × 10¹²",
+            "correct": false,
+            "feedback": "That multiplies the populations instead of adding them — combining two populations is addition, not multiplication."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another multiplication context.",
+      "conceptTag": "esn-compute-context",
+      "explanationVariants": [
+        "Total = count × rate: (4×10³) × (5×10²) = 2×10⁶.",
+        "Multiplying the coefficients (4×5=20) and adding exponents (3+2=5) gives 20×10⁵, which renormalizes to 2×10⁶."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A factory produces 4 × 10³ items per day, and each item requires 5 × 10² microseconds to manufacture. How many microseconds of manufacturing happen per day?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "2"
+          },
+          {
+            "id": "t1",
+            "label": "×"
+          },
+          {
+            "id": "t2",
+            "label": "10⁶"
+          },
+          {
+            "id": "t3",
+            "label": "9"
+          },
+          {
+            "id": "t4",
+            "label": "10⁵"
+          },
+          {
+            "id": "t5",
+            "label": "20"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t3",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That adds the coefficients instead of multiplying — 4×5=20, not 4+5=9."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "Renormalizing 20 to 2 shifts the exponent UP by one too — it becomes 10⁶, not 10⁵."
+          },
+          {
+            "sequence": [
+              "t5",
+              "t1",
+              "t4"
+            ],
+            "feedback": "That's the right value, but not standard form — the coefficient must be under 10: 2×10⁶."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Total = rate × count: multiply the fronts, add the exponents.",
+        "successFeedback": "Right — (4×10³)×(5×10²) = 20×10⁵, renormalized to 2×10⁶."
+      },
+      "variant": {
+        "gen": "g8-esn-context-compute",
+        "form": "esnContextMultiply"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A subtraction context.",
+      "conceptTag": "esn-compute-context",
+      "explanationVariants": [
+        "Rewrite 3×10⁵ as 0.3×10⁶, then subtract: 8−0.3=7.7, giving 7.7×10⁶.",
+        "Converting to the bigger exponent (6) first, then subtracting coefficients."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A reservoir holds 8 × 10⁶ gallons before a drought, and loses 3 × 10⁵ gallons to evaporation. How much water remains?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "7.7"
+          },
+          {
+            "id": "t1",
+            "label": "×"
+          },
+          {
+            "id": "t2",
+            "label": "10⁶"
+          },
+          {
+            "id": "t3",
+            "label": "5"
+          },
+          {
+            "id": "t4",
+            "label": "10⁵"
+          },
+          {
+            "id": "t5",
+            "label": "2.7"
+          },
+          {
+            "id": "t6",
+            "label": "10¹"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t3",
+              "t1",
+              "t2"
+            ],
+            "feedback": "That subtracts the coefficients directly without matching exponents first — rewrite 3×10⁵ as 0.3×10⁶: 8−0.3=7.7."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "The matched exponent should be the BIGGER one, 6, not 5."
+          },
+          {
+            "sequence": [
+              "t5",
+              "t1",
+              "t6"
+            ],
+            "feedback": "That subtracts the exponents like dividing — this is a subtraction of amounts, not a division."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Match powers before subtracting: 8 × 10⁶ − 0.3 × 10⁶ = 7.7 × 10⁶.",
+        "successFeedback": "Right — 3×10⁵ becomes 0.3×10⁶, and 8−0.3=7.7."
+      },
+      "variant": {
+        "gen": "g8-esn-context-compute",
+        "form": "esnContextSubtract"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A capstone multi-step problem.",
+      "conceptTag": "esn-compute-context",
+      "explanationVariants": [
+        "First multiply: (2×10⁴)×(3×10³) = 6×10⁷. Then subtract 4×10⁶ (rewritten as 0.4×10⁷): 6−0.4=5.6, giving 5.6×10⁷.",
+        "Two steps: compute the product first, then match exponents to subtract."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "A shipping company moves 2 × 10⁴ containers, each holding 3 × 10³ kilograms — but 4 × 10⁶ kilograms are later removed for inspection. How many kilograms remain?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "5.6"
+          },
+          {
+            "id": "t1",
+            "label": "×"
+          },
+          {
+            "id": "t2",
+            "label": "10⁷"
+          },
+          {
+            "id": "t3",
+            "label": "2"
+          },
+          {
+            "id": "t4",
+            "label": "10⁶"
+          },
+          {
+            "id": "t5",
+            "label": "6"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t3",
+              "t1",
+              "t2"
+            ],
+            "feedback": "That skips the multiplication step — first find the total (2×10⁴)×(3×10³)=6×10⁷, then subtract."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t4"
+            ],
+            "feedback": "The final exponent should match the LARGER value from the multiplication step, 7, not 6."
+          },
+          {
+            "sequence": [
+              "t5",
+              "t1",
+              "t2"
+            ],
+            "feedback": "That's the total BEFORE the inspection removal — subtract 4×10⁶ from it: 6×10⁷ − 4×10⁶ = 5.6×10⁷."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Multiply first (6 × 10⁷), then subtract the lost 0.4 × 10⁷.",
+        "successFeedback": "Right — (2×10⁴)×(3×10³)=6×10⁷, then subtract 4×10⁶ (=0.4×10⁷): 6−0.4=5.6."
+      },
+      "hints": [
+        "This is a two-step problem — first find the total shipped weight.",
+        "(2×10⁴) × (3×10³) = 6×10⁷ kilograms shipped in total.",
+        "Now subtract the 4×10⁶ removed: rewrite as 0.4×10⁷, so 6−0.4=5.6, giving 5.6×10⁷ kilograms."
+      ],
+      "variant": {
+        "gen": "g8-esn-context-compute",
+        "form": "esnContextMixed"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Real-world problems tell you which operation to use — then apply the scientific-notation rules.",
+      "takeaways": [
+        "Total-from-rate problems multiply; combining differently-scaled quantities adds or subtracts.",
+        "Match exponents before adding/subtracting; add/subtract exponents when multiplying/dividing.",
+        "Don't report more precision than the original data supports."
+      ],
+      "teaser": "This closes Exponents, Roots & Scientific Notation — next up in Grade 8: Functions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "esn-compute-context",
+      "concept": {
+        "id": "rem-esn0403-c",
+        "kind": "concept",
+        "body": "Real-world scientific-notation problems tell you the operation: total-from-rate multiplies; combining quantities adds or subtracts (matching exponents first); finding a rate from a total divides."
+      },
+      "check": {
+        "id": "rem-esn0403-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "esn-compute-context",
+        "explanationVariants": [
+          "Total = count × rate: (2×10³) × (4×10²) = 8×10⁵.",
+          "Multiplying coefficients (2×4=8) and adding exponents (3+2=5) gives 8×10⁵, already standard form."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A warehouse stores 2 × 10³ pallets, each weighing 4 × 10² kilograms. What is the total weight?",
+          "options": [
+            {
+              "id": "a",
+              "label": "8 × 10⁵ kilograms",
+              "correct": true,
+              "feedback": "Right — (2×10³)×(4×10²) = 8×10⁵."
+            },
+            {
+              "id": "b",
+              "label": "6 × 10⁵ kilograms",
+              "correct": false,
+              "feedback": "That adds the coefficients instead of multiplying — 2×4=8, not 2+4=6."
+            },
+            {
+              "id": "c",
+              "label": "8 × 10⁶ kilograms",
+              "correct": false,
+              "feedback": "Check the exponent addition — 3+2=5, not 6."
+            },
+            {
+              "id": "d",
+              "label": "8 × 10³ kilograms",
+              "correct": false,
+              "feedback": "This is a multiplication (count × rate), not the count alone."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

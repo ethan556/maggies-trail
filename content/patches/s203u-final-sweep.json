@@ -1,0 +1,168 @@
+{
+  "tag": "S203U",
+  "label": "final sweep — conic algebra, function composition, polar roots, similarity proportion",
+  "conversions": [
+    {
+      "course": "conic-sections",
+      "lesson": "co-04-02",
+      "step": "i1",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 3,
+        "targetK": 0,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 3,
+        "gridMax": 8,
+        "prompt": "x² − 6x becomes a perfect square once the right constant is added. Build the completed square and read what landed at k.",
+        "successFeedback": "The vertex settles at (3, 0) — nothing left over, which is exactly what 'perfect square' means. That vertex says x² − 6x + 9 = (x − 3)², so the constant added was 9: half of −6, squared.",
+        "shapeFeedback": "Leave a at 1; there is no coefficient on x² here.",
+        "vertexFeedback": "Not a perfect square yet — half of −6 is −3, so the vertex belongs at x = 3."
+      }
+    },
+    {
+      "course": "conic-sections",
+      "lesson": "co-04-03",
+      "step": "i1",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 2,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "a² = 4 asks: what number, squared, gives 4? Slide the base until base² reads 4.",
+        "successFeedback": "Base 2, so 2² = 4 confirms a = 2 — the same relationship as a² = 4, read forward instead of solved backward. Dividing 9x² − 4y² = 36 by 36 was the whole job; finding a is just this one square root.",
+        "lowFeedback": "base² is still under 4.",
+        "highFeedback": "base² has passed 4."
+      }
+    },
+    {
+      "course": "polar-parametric",
+      "lesson": "pp-03-03",
+      "step": "i1",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 0.333,
+        "targetBase": 8,
+        "startBase": 3,
+        "showMirror": false,
+        "prompt": "Every cube root of 8 shares the same modulus. Slide the base until base^(1/3) reads 2.",
+        "successFeedback": "8^(1/3) = 2 — and that is the modulus every one of the three cube roots shares, however different their angles are. Roots of a complex number fan out around a circle of exactly this radius; only the angle changes between them.",
+        "lowFeedback": "base^(1/3) is still under 2.",
+        "highFeedback": "base^(1/3) has passed 2."
+      }
+    },
+    {
+      "course": "function-analysis",
+      "lesson": "fna-04-01",
+      "step": "i1",
+      "widget": {
+        "type": "derivativeTrace",
+        "fn": "square",
+        "mode": "point",
+        "targetX": 3,
+        "start": 0,
+        "prompt": "f(g(3)) works from the inside out. Trace g(x) = x² to x = 3 and read the height — that height becomes f's input next.",
+        "successFeedback": "g(3) = 9. Now feed that INTO f: f(9) = 2(9) − 1 = 17. Composition order matters because the output of the inner function becomes the input of the outer one — g first, then f on whatever g handed back.",
+        "lowFeedback": "Still short of x = 3.",
+        "highFeedback": "Past x = 3 now."
+      }
+    },
+    {
+      "course": "similarity",
+      "lesson": "sy-03-02",
+      "step": "i2",
+      "widget": {
+        "type": "proportionalReasoningLab",
+        "task": "constant",
+        "answerMode": "numeric",
+        "prompt": "Three parallel lines cut one transversal into 6 and 9, and the other into 8 and x. Find the constant ratio from the first pair, then apply it.",
+        "xLabel": "transversal A",
+        "yLabel": "transversal B",
+        "series": [
+          {
+            "id": "cuts",
+            "label": "corresponding segments",
+            "pairs": [
+              [
+                6,
+                8
+              ],
+              [
+                9,
+                12
+              ]
+            ]
+          }
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 6.75,
+            "feedback": "6.75 adds the gap (3) to 9 rather than scaling. The two transversals are proportional, not offset by a constant difference."
+          },
+          {
+            "value": 10.5,
+            "feedback": "10.5 averages 9 and 12. The relationship is a RATIO — the same constant that turned 6 into 8 turns 9 into x."
+          }
+        ],
+        "successFeedback": "8/6 = 4/3 is the constant ratio, and 9 × 4/3 = 12. Parallel lines cut every transversal they cross in the SAME proportion — that is the one fact both segments obey, on both lines, at once.",
+        "explorationFeedback": "Check the first pair (6, 8) before applying the ratio to the second.",
+        "fallbackFeedback": "8 ÷ 6 = 4/3, and 9 × 4/3 = 12."
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "lesson": "conic-sections/co-01-03, co-02-03, co-03-01, co-03-02, co-04-01",
+      "title": "Reflective property, shifted ellipse center, hyperbola constant difference, asymptotes, second-degree classification",
+      "why": "co-01-03 asks WHERE the focus is conceptually, not a numeric target. co-02-03 needs an ellipse-with-translated-center, which conicLocusLab (eccentricity only) and quadraticExplore (single-variable parabola only) both fall short of. co-03-01 asks only for a restatement of a given (2a=6, 'the constant difference' IS 2a) -- nothing to manipulate. co-03-02 identifies asymptote EQUATIONS symbolically. co-04-01 classifies a general second-degree form by its A/C coefficients. Refused."
+    },
+    {
+      "lesson": "function-analysis/fna-03-02, fna-03-03, fna-04-02, fna-04-03",
+      "title": "Piecewise evaluation, absolute value as piecewise, domain of a composition, decomposing a composition",
+      "why": "fna-03-02/03 evaluate a piecewise rule by selecting the correct branch symbolically -- no engine exposes branch selection as state. fna-04-02 finds where an expression under a root becomes non-negative -- a domain-restriction argument, not a traceable curve (derivativeTrace only traces square|cubic|abs, none of which is a square-root function). fna-04-03 identifies which piece is the INNER function of a composition -- classification. Refused."
+    },
+    {
+      "lesson": "polar-parametric/pp-01-02, pp-01-03, pp-04-01, pp-05-01, pp-05-02, pp-05-03",
+      "title": "Polar-rectangular conversion (both directions), parametric substitution, projectile motion, elimination",
+      "why": "Confirmed again: no coordinate-conversion state and no time-parameter engine exist (the parametricMotionLab gap identified in S203R). pp-04-01's landing point (3,4) happens to be integer, but forcing vectorExplore's 'add' mode onto a parameter-substitution task would be a CONCEPT mismatch, not just a numeric convenience -- vectorExplore's whole pedagogical point is vector addition, and 'plugging t=2 into two formulas' is not that, even where the coordinates would validate. Refused rather than force a technically-passing but conceptually dishonest fit."
+    },
+    {
+      "lesson": "polynomial-functions/pf-04-02",
+      "title": "Factoring by Grouping",
+      "why": "A 4-term cubic grouped into two binomial pairs sharing a common factor. binomialAreaLab models a 2-binomial PRODUCT as a rectangle's area, a different pattern from 4-term grouping. Refused."
+    },
+    {
+      "lesson": "polynomial-rational-analysis/pra-01-01, pra-01-03, pra-02-01, pra-02-02, pra-02-03, pra-03-02, pra-05-01",
+      "title": "Rational root candidates, synthetic division pipeline, FTA zero-counting, conjugate pairs, building from mixed zeros, slant division, sign-chart cuts",
+      "why": "All seven are symbolic algebraic PROCEDURES -- listing divisor candidates, running synthetic division, counting zeros by the Fundamental Theorem, applying the Conjugate Root Theorem, polynomial long division, identifying an excluded value. None has a spatial or numeric-dial representation; this whole course is deeply procedural rather than quantity-manipulating. Refused."
+    },
+    {
+      "lesson": "solid-geometry/sg-03-03",
+      "title": "The Sphere Surrenders",
+      "why": "i1 remains refused as in S203L/M/S (a synthesis question about proof structure). i2, newly examined: a hemisphere-inside-its-bounding-cylinder VOLUME RATIO. Checked volumeBuilder's full contract: solid is prism|cylinder|cone|sphere -- no hemisphere, and the engine builds and reads ONE solid's volume, not a ratio between two. Refused."
+    },
+    {
+      "lesson": "conic-sections/co-01-02",
+      "title": "Shifted Parabolas & Orientation",
+      "why": "DISCOVERED BY THE SCHEMA GATE. (x-2)²=8(y+1) rearranges to y=(1/8)(x-2)²-1, and quadraticExplore's targetA/aStart are BOTH .int() -- a constraint that happened to never bind in prior conversions because every earlier lesson's leading coefficient was already a whole number. 1/8 is fixed by the given equation (4p=8), not something reframing can change without altering the actual parabola. Refused -- the same class of gap as vectorExplore's integer coordinates (S203T) and expLogExplore's [0.2,10] grid (S203S): a schema constraint that widget-contract.ts's 'number' label does not distinguish from an unconstrained float."
+    },
+    {
+      "lesson": "function-analysis/fna-05-02",
+      "title": "Restricting the Domain",
+      "why": "DISCOVERED BY THE SOLVABILITY GATE, not by any prior check. targetX=4 makes highFeedback DEAD -- surveyed every OTHER derivativeTrace point-mode usage in the corpus and every single one sits in [-3,3]; 4 is the sole outlier and the sole failure. derivativeTrace's schema declares no explicit x-range (targetX and start are both plain z.number() with no min/max), so this is frontend-component behaviour invisible to schema.ts -- the same shape as triangleSolve's missing angleStep (S203T). Reverted to the sealed pre-session bytes; f(x)=x squared restricted to x>=0 genuinely needs x=4 (f-inverse of 16), and no smaller target represents the same fact. Refused."
+    }
+  ]
+}

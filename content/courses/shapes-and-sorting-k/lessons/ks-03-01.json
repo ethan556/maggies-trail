@@ -1,0 +1,467 @@
+{
+  "id": "ks-03-01",
+  "slug": "longer-or-shorter",
+  "title": "Longer or Shorter",
+  "courseId": "shapes-and-sorting-k",
+  "chapterId": "ch3-compare-and-sort",
+  "minutes": 6,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Line things up to compare length! Start at the **same end**. The one that sticks out is **longer**.",
+      "figure": "ks-compare-length"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Align the start and cover the object with equal units.",
+      "widget": {
+        "type": "unitRuler",
+        "prompt": "Measure the ribbon. Align zero with its start, choose one-unit blocks, and place four blocks with no gaps or overlaps.",
+        "objectStart": 2,
+        "objectEnd": 6,
+        "allowedUnitSizes": [
+          1,
+          2
+        ],
+        "targetUnitSize": 1,
+        "startUnitSize": 2,
+        "requiredPlacements": 4,
+        "successFeedback": "Four equal one-unit blocks cover the ribbon exactly. Same start, no gaps, no overlaps.",
+        "alignFeedback": "Line up zero with the ribbon’s starting end before measuring.",
+        "gapOverlapFeedback": "The blocks must touch end to end—no spaces and no covering the same part twice.",
+        "unitFeedback": "Use the one-unit block so the count tells the ribbon’s length in units."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Measure by zero alignment and iterating equal units.",
+        "invariants": [
+          "zero-alignment",
+          "equal-unit-size",
+          "gap-free-iteration"
+        ],
+        "misconceptions": [
+          "end-label-is-length",
+          "gaps-overlaps"
+        ],
+        "representations": [
+          "concrete",
+          "number-line",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "unit-iteration",
+        "delayed": true,
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the unit size while measuring the same object. What changes, and what physical quantity stays fixed?",
+        "explanation": {
+          "prompt": "Why is the final ruler label not always the object’s length?",
+          "options": [
+            {
+              "id": "difference",
+              "label": "Length is the distance between start and end, not the end label alone.",
+              "correct": true,
+              "feedback": "Exactly — subtract the start or iterate units across the interval."
+            },
+            {
+              "id": "label",
+              "label": "The end label always equals the length.",
+              "correct": false,
+              "feedback": "That works only when the object starts at zero."
+            }
+          ]
+        }
+      },
+      "predict": {
+        "prompt": "What must be true when units measure length?",
+        "options": [
+          {
+            "id": "touch",
+            "label": "Equal units touch end to end from the object’s start."
+          },
+          {
+            "id": "gaps",
+            "label": "Small gaps are harmless."
+          },
+          {
+            "id": "label",
+            "label": "The ending ruler label is always the length."
+          }
+        ],
+        "outcomeId": "touch",
+        "reveal": "Measurement iterates equal units from the correct starting point with no gaps or overlaps."
+      },
+      "conceptTag": "ks-longer-shorter"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Starting at the same end makes it **fair**. If one thing starts ahead, the compare is tricked!",
+      "figure": "ks-same-end-fair"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The fair start.",
+      "conceptTag": "ks-longer-shorter",
+      "explanationVariants": [
+        "Comparing length is fair only when both things start at the same end.",
+        "Line up the starting ends first."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "mode": "align",
+        "prompt": "To compare two ribbons fairly, what must you do first? Make it fair, then tap the longer ribbon.",
+        "items": [
+          {
+            "id": "top",
+            "label": "top ribbon",
+            "length": 5,
+            "startOffset": 3
+          },
+          {
+            "id": "bottom",
+            "label": "bottom ribbon",
+            "length": 7
+          }
+        ],
+        "answerId": "bottom",
+        "unalignedFeedback": "Looks can trick you — line the ends up first.",
+        "missFeedback": "Now the starts are lined up — check the far ends again: the ribbon that reaches farther is the longer one.",
+        "successFeedback": "Yes — same start makes the compare fair."
+      },
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeLengthCompare"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents longer shorter.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for longer shorter must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines longer shorter."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-longer-shorter",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Shorter this time.",
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "Three sticks start at the same line. Tap the SHORTEST stick.",
+        "items": [
+          {
+            "id": "red stick",
+            "label": "red stick",
+            "length": 3
+          },
+          {
+            "id": "blue stick",
+            "label": "blue stick",
+            "length": 6,
+            "feedback": "That one sticks out more — the shortest ends first: red."
+          },
+          {
+            "id": "green stick",
+            "label": "green stick",
+            "length": 8,
+            "feedback": "That one is the LONGEST — the shortest ends first: red."
+          }
+        ],
+        "answerId": "red stick",
+        "missFeedback": "Same start line tells you — red ends first, red is shortest.",
+        "successFeedback": "Yes — ending first means shortest."
+      },
+      "conceptTag": "ks-longer-shorter",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents longer shorter.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for longer shorter must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines longer shorter."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-longer-shorter",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Taller is longer up.",
+      "conceptTag": "ks-longer-shorter",
+      "explanationVariants": [
+        "Taller means longer straight up — the giraffe's head is higher from the same ground.",
+        "Same ground, higher head: taller."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A giraffe and a pony stand on the same ground. Tap the TALLER one.",
+        "items": [
+          {
+            "id": "giraffe",
+            "label": "giraffe",
+            "length": 9
+          },
+          {
+            "id": "pony",
+            "label": "pony",
+            "length": 4,
+            "feedback": "The pony's head is LOWER — the giraffe is taller."
+          }
+        ],
+        "answerId": "giraffe",
+        "missFeedback": "One head is higher — the giraffe is taller.",
+        "successFeedback": "Yes — same ground, higher head: taller.",
+        "orientation": "v"
+      },
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeLengthCompare"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents longer shorter.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for longer shorter must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines longer shorter."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-longer-shorter",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Order by length.",
+      "conceptTag": "ks-longer-shorter",
+      "explanationVariants": [
+        "The train is longer than the car, and the car is longer than the bike — the train is longest.",
+        "Longest beats both others: the train."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "prompt": "A bike is shorter than a car. The car is shorter than a train. Tap the LONGEST.",
+        "items": [
+          {
+            "id": "bike",
+            "label": "bike",
+            "length": 3,
+            "feedback": "The bike is the SHORTEST — the longest is the train."
+          },
+          {
+            "id": "car",
+            "label": "car",
+            "length": 6,
+            "feedback": "The car sits in the middle — the train is longest."
+          },
+          {
+            "id": "train",
+            "label": "train",
+            "length": 10
+          }
+        ],
+        "answerId": "train",
+        "missFeedback": "Each is different — the train is longest.",
+        "successFeedback": "Yes — the train beats the car, which beats the bike."
+      },
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeLengthCompare"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents longer shorter.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for longer shorter must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines longer shorter."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-longer-shorter",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The sneaky compare.",
+      "conceptTag": "ks-longer-shorter",
+      "explanationVariants": [
+        "The compare is unfair — the ribbons start at different ends, so you must line them up first.",
+        "Different starting points trick the eye; align the ends."
+      ],
+      "widget": {
+        "type": "lengthCompare",
+        "mode": "align",
+        "prompt": "Two ribbons look equal, but one starts ahead of the other. Make the compare fair, then tap the longer ribbon.",
+        "items": [
+          {
+            "id": "top",
+            "label": "top ribbon",
+            "length": 6,
+            "startOffset": 2,
+            "feedback": "Starting ahead is a TRICK — line up the ends first."
+          },
+          {
+            "id": "bottom",
+            "label": "bottom ribbon",
+            "length": 8,
+            "feedback": "Maybe — but only lining them up will show it!"
+          }
+        ],
+        "answerId": "bottom",
+        "unalignedFeedback": "You cannot tell yet — line up the starts first.",
+        "missFeedback": "Now the starts are lined up — this ribbon's far end stops short, so the other ribbon is the longer one.",
+        "successFeedback": "Yes — same start line, THEN compare."
+      },
+      "hints": [
+        "Remember the fair-start rule.",
+        "Different starting points trick your eyes.",
+        "Line up the ends, then see which sticks out."
+      ],
+      "variant": {
+        "gen": "g0-shapes-sorting",
+        "form": "shapeLengthCompare"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents longer shorter.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for longer shorter must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines longer shorter."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "shapes-and-sorting-k:ks-longer-shorter",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Compare length fairly: same start, then see what sticks out.",
+      "takeaways": [
+        "Line up starting ends before comparing.",
+        "Sticks out = longer; ends first = shorter.",
+        "Taller is longer, straight up."
+      ],
+      "teaser": "Next: heavy and light!"
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ks-longer-shorter",
+      "concept": {
+        "id": "rem-ks0301-c",
+        "kind": "concept",
+        "body": "Line things up at the same end. The one that sticks out is longer. The one that ends first is shorter."
+      },
+      "check": {
+        "id": "rem-ks0301-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "ks-longer-shorter",
+        "explanationVariants": [
+          "The rope sticks out past the string, so the rope is longer.",
+          "Sticking out means longer."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A rope and a string start at the same line. The rope sticks out. Which is longer?",
+          "options": [
+            {
+              "id": "a",
+              "label": "The rope",
+              "correct": true,
+              "feedback": "Yes — it sticks out, so it is longer."
+            },
+            {
+              "id": "b",
+              "label": "The string",
+              "correct": false,
+              "feedback": "The string ends first — the rope is longer."
+            },
+            {
+              "id": "c",
+              "label": "They are equal",
+              "correct": false,
+              "feedback": "One sticks out — the rope is longer."
+            },
+            {
+              "id": "d",
+              "label": "Cannot tell",
+              "correct": false,
+              "feedback": "Same start makes it fair — the rope is longer."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

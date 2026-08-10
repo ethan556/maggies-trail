@@ -1,0 +1,306 @@
+{
+  "id": "mmt-04-01",
+  "slug": "skip-counting-by-5s-on-the-clock",
+  "title": "Skip-Counting by 5s on the Clock",
+  "courseId": "measure-money-time",
+  "chapterId": "ch4-time-to-five-minutes",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "five-minute-clock",
+      "body": "Each number on the clock face is 5 minutes apart. To find the minutes, skip-count by 5s from 12: the minute hand at 1 means 5 minutes, at 2 means 10, at 3 means 15."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Each number on the clock is five minutes.",
+      "widget": {
+        "type": "clockSet",
+        "targetHour": 3,
+        "targetMinute": 25,
+        "minuteStep": 5,
+        "prompt": "Set the clock to 3:25.",
+        "successFeedback": "3:25 — and the minute hand is on the 5, because each number is worth FIVE minutes, not one. Skip-counting by fives round the face is how you read any minute hand.",
+        "hourFeedback": "The hour hand is on the wrong number.",
+        "minuteFeedback": "The hour is right but the minutes are off. Count by fives: 5, 10, 15, 20, 25."
+      },
+      "predict": {
+        "prompt": "Setting the clock to 3:25 — which numeral will the MINUTE hand point at?",
+        "options": [
+          {
+            "id": "five",
+            "label": "The 5"
+          },
+          {
+            "id": "twentyfive",
+            "label": "A 25 on the clock face"
+          },
+          {
+            "id": "three",
+            "label": "The 3"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "Every numeral is worth five minutes — 25 minutes is five numerals around, so the long hand lands on the 5, not on any 25."
+      },
+      "conceptTag": "mmt-skip-5s",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents skip 5s.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for skip 5s must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines skip 5s."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-skip-5s",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Skip-count again.",
+      "conceptTag": "mmt-skip-5s",
+      "explanationVariants": [
+        "The minute hand at 7 means 7 × 5 = 35 minutes.",
+        "Skip-count by 5s seven times: 35."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points to 7. How many minutes is that?",
+        "answer": 35,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the clock number, not the minutes. Skip-count by 5s: 7 × 5 = 35."
+          },
+          {
+            "value": 12,
+            "feedback": "That's 7 + 5. Skip-count instead: 7 × 5 = 35."
+          }
+        ],
+        "fallbackFeedback": "7 × 5 = 35 minutes."
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtSkip5sNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The minute hand at 12 means 0 minutes past — the very start of the hour. At 6 it's halfway, 30 minutes — you already know this one!",
+      "figure": "mmt-minute-zero"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Halfway around.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points to 6. How many minutes is that?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the clock number, not the minutes. Skip-count by 5s: 6 × 5 = 30."
+          },
+          {
+            "value": 60,
+            "feedback": "60 minutes would be the whole hour. The minute hand at 6 means 30."
+          }
+        ],
+        "fallbackFeedback": "6 × 5 = 30 minutes."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The pattern always multiplies the clock number by 5 — that's the whole trick, however far around the clock face you go.",
+      "figure": "mmt-times-five"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Almost all the way around.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points to 11. How many minutes is that?",
+        "answer": 55,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is the clock number, not the minutes. Skip-count by 5s: 11 × 5 = 55."
+          },
+          {
+            "value": 16,
+            "feedback": "That's 11 + 5. Skip-count instead: 11 × 5 = 55."
+          }
+        ],
+        "fallbackFeedback": "11 × 5 = 55 minutes."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One more skip-count.",
+      "conceptTag": "mmt-skip-5s",
+      "explanationVariants": [
+        "The minute hand at 2 means 2 × 5 = 10 minutes.",
+        "Skip-count by 5s twice: 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points to 2. How many minutes is that?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the clock number, not the minutes. Skip-count by 5s: 2 × 5 = 10."
+          },
+          {
+            "value": 7,
+            "feedback": "That's 2 + 5. Skip-count instead: 2 × 5 = 10."
+          }
+        ],
+        "fallbackFeedback": "2 × 5 = 10 minutes."
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtSkip5sNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Nine on the clock.",
+      "conceptTag": "mmt-skip-5s",
+      "explanationVariants": [
+        "The minute hand at 9 means 9 × 5 = 45 minutes.",
+        "Skip-count by 5s nine times: 45."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points to 9. How many minutes is that?",
+        "answer": 45,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the clock number, not the minutes. Skip-count by 5s: 9 × 5 = 45."
+          },
+          {
+            "value": 14,
+            "feedback": "That's 9 + 5. Skip-count instead: 9 × 5 = 45."
+          }
+        ],
+        "fallbackFeedback": "9 × 5 = 45 minutes."
+      },
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtSkip5sNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One before the hour.",
+      "conceptTag": "mmt-skip-5s",
+      "explanationVariants": [
+        "The minute hand at 1 means 1 × 5 = 5 minutes.",
+        "Skip-count by 5s once: 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points to 1. How many minutes is that?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the clock number, not the minutes. Skip-count by 5s: 1 × 5 = 5."
+          },
+          {
+            "value": 12,
+            "feedback": "That's not related to this clock number. The minute hand at 1 means 5 minutes."
+          }
+        ],
+        "fallbackFeedback": "1 × 5 = 5 minutes."
+      },
+      "hints": [
+        "Each clock number is 5 minutes.",
+        "The minute hand is at 1.",
+        "1 × 5 = 5 minutes."
+      ],
+      "variant": {
+        "gen": "g2-measure-money-time",
+        "form": "MmtSkip5sNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiply the minute hand's clock number by 5 to find the minutes.",
+      "takeaways": [
+        "Each clock number is 5 minutes apart.",
+        "Minutes = clock number × 5.",
+        "12 means 0 minutes; 6 means 30 minutes."
+      ],
+      "teaser": "next: reading full times to the five minutes."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mmt-skip-5s",
+      "concept": {
+        "id": "rem-msf-c",
+        "kind": "concept",
+        "body": "Each number on the clock face is 5 minutes apart. Skip-count by 5s to the minute hand's position: at 4, that's 5,10,15,20 — 20 minutes."
+      },
+      "check": {
+        "id": "rem-msf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mmt-skip-5s",
+        "explanationVariants": [
+          "4 × 5 = 20 minutes.",
+          "Skip-count by 5s four times."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The minute hand points to 4. How many minutes is that?",
+          "answer": 20,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 is the clock number; minutes are 4×5=20."
+            },
+            {
+              "value": 24,
+              "feedback": "Multiply, don't add: 4×5=20."
+            }
+          ],
+          "fallbackFeedback": "4 × 5 = 20 minutes."
+        }
+      }
+    }
+  ]
+}

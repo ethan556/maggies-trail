@@ -1,0 +1,306 @@
+{
+  "id": "cn-03-01",
+  "slug": "adding-and-subtracting-complex",
+  "title": "Adding & Subtracting",
+  "courseId": "complex-numbers",
+  "chapterId": "ch3-complex-arithmetic",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Adding complex numbers works like combining like terms: **real with real, imaginary with imaginary**. (3 + 2i) + (1 + 4i) = (3 + 1) + (2 + 4)i = 4 + 6i. The two parts never mix — just as 3 + 2x stays 3 + 2x.",
+      "figure": "cn-add"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Adding is putting the arrows nose to tail.",
+      "widget": {
+        "type": "argandExplore",
+        "mode": "plot",
+        "targetRe": 4,
+        "targetIm": 1,
+        "reStart": 0,
+        "imStart": 0,
+        "gridMax": 5,
+        "prompt": "Plot the sum (1 + 3i) + (3 − 2i).",
+        "successFeedback": "4 + i. Adding complex numbers adds the real parts and the imaginary parts separately — exactly as vectors add, nose to tail. Nothing exotic happens; the plane just does what a plane does.",
+        "realFeedback": "The real part is off. Add the two real parts: 1 + 3.",
+        "imagFeedback": "The real part is right, but the imaginary part is off. Add 3i and −2i to get i."
+      },
+      "predict": {
+        "prompt": "Adding (1 + 3i) + (3 − 2i): do the real and imaginary parts ever mix?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — reals add to reals, imaginaries to imaginaries"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — everything melts into one number"
+          },
+          {
+            "id": "signs",
+            "label": "Only when the signs differ"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "The two axes keep separate books: 1 + 3 = 4 on the real axis, 3 − 2 = 1 on the imaginary — the sum is 4 + i, a tip-to-tail vector walk. The parts never trade places."
+      },
+      "conceptTag": "cn-add-sub",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents add sub.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for add sub must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines add sub."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "complex-numbers:cn-add-sub",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Subtraction distributes the minus to **both parts** of the second number: (6 + 2i) − (4 + 5i) = (6 − 4) + (2 − 5)i = 2 − 3i. The classic slip is subtracting the real part but forgetting to subtract the imaginary one.",
+      "figure": "cn-subtract"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Watch the imaginary parts.",
+      "conceptTag": "cn-add-sub",
+      "explanationVariants": [
+        "The imaginary parts are −3 and +7: −3 + 7 = 4.",
+        "Only the i-coefficients matter here: −3 + 7 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the IMAGINARY part of (5 − 3i) + (2 + 7i)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That's 3 + 7 with the sign dropped — the first imaginary part is NEGATIVE three: −3 + 7 = 4."
+          },
+          {
+            "value": -10,
+            "feedback": "Both signs flipped: −3 + 7 = +4, not −3 − 7."
+          }
+        ],
+        "fallbackFeedback": "−3 + 7 = 4 (the real parts, 5 + 2, live separately)."
+      },
+      "variant": {
+        "gen": "cn-add-sub"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Distribute a minus.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is (6 + 2i) − (4 + 5i)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2 − 3i",
+            "correct": true,
+            "feedback": "Right — 6 − 4 = 2 and 2 − 5 = −3."
+          },
+          {
+            "id": "o2",
+            "label": "2 + 3i",
+            "correct": false,
+            "feedback": "The minus must hit the 5i too: 2 − 5 = −3, giving 2 − 3i."
+          },
+          {
+            "id": "o3",
+            "label": "2 + 7i",
+            "correct": false,
+            "feedback": "The imaginary parts were ADDED — subtraction gives 2 − 5 = −3."
+          },
+          {
+            "id": "o4",
+            "label": "10 − 3i",
+            "correct": false,
+            "feedback": "The reals were added while the imaginaries were subtracted — subtract both: 6 − 4 = 2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A double negative.",
+      "conceptTag": "cn-add-sub",
+      "explanationVariants": [
+        "6i − (−2i) = 6i + 2i = 8i, so the imaginary part is 8.",
+        "Subtracting a negative adds: 6 − (−2) = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the IMAGINARY part of (1 + 6i) − (3 − 2i)?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "6 − 2 misses the double negative — the second imaginary part is −2, and 6 − (−2) = 8."
+          },
+          {
+            "value": -8,
+            "feedback": "Sign flipped at the end: 6 − (−2) = +8."
+          }
+        ],
+        "fallbackFeedback": "6 − (−2) = 8. (The reals give 1 − 3 = −2, separately.)"
+      },
+      "variant": {
+        "gen": "cn-add-sub",
+        "form": "subtract"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why they never mix.",
+      "conceptTag": "cn-add-sub",
+      "explanationVariants": [
+        "Real and imaginary parts are unlike terms — exactly like constants and x-terms in 3 + 2x.",
+        "i is not a real number, so a real and an i-term can't be merged into one number."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why can't 4 + 6i be simplified to a single number like 10 or 10i?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "real and imaginary parts are unlike terms, like 4 + 6x",
+            "correct": true,
+            "feedback": "Exactly — a + bi is already fully simplified, a two-part number."
+          },
+          {
+            "id": "o2",
+            "label": "because 4 and 6 have different signs",
+            "correct": false,
+            "feedback": "They're both positive — the barrier is the i, which makes them unlike terms."
+          },
+          {
+            "id": "o3",
+            "label": "because 6i is bigger than 4",
+            "correct": false,
+            "feedback": "Size isn't the issue — even 4 + 4i can't merge, because i-terms and reals are unlike."
+          },
+          {
+            "id": "o4",
+            "label": "it can — it equals 10i",
+            "correct": false,
+            "feedback": "Merging them loses information: 4 + 6i is a point off both axes, while 10i sits on the imaginary axis."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-complex",
+        "form": "cn-add-sub__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Signs everywhere.",
+      "conceptTag": "cn-add-sub",
+      "explanationVariants": [
+        "Imaginary parts: −1 − (+3) = −4. (Reals: 4 − (−2) = 6, separately.)",
+        "Distribute the minus onto 3i: −1 − 3 = −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the IMAGINARY part of (4 − i) − (−2 + 3i)?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's −1 + 3 — the minus must flip the 3i: −1 − 3 = −4."
+          },
+          {
+            "value": 4,
+            "feedback": "The size is right but the sign flipped: −1 − 3 = −4."
+          }
+        ],
+        "fallbackFeedback": "−1 − 3 = −4; the real parts give 4 + 2 = 6 on their own."
+      },
+      "hints": [
+        "Write the imaginary parts of each number, signs included: −1 and +3.",
+        "The subtraction flips the second one: −1 − (+3).",
+        "−1 − 3 = −4."
+      ],
+      "variant": {
+        "gen": "cn-add-sub",
+        "form": "subtract"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Add or subtract part-by-part — reals with reals, imaginaries with imaginaries.",
+      "takeaways": [
+        "(a + bi) ± (c + di) = (a ± c) + (b ± d)i.",
+        "A minus sign distributes to BOTH parts of the second number.",
+        "a + bi is already simplified — the parts are unlike terms."
+      ],
+      "teaser": "Next: multiplying — where i² = −1 finally gets to work."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-add-sub",
+      "concept": {
+        "id": "rem-cn0301-c",
+        "kind": "concept",
+        "body": "Add the parts separately: (2 + i) + (3 + 2i) has reals 2 + 3 and imaginaries 1 + 2."
+      },
+      "check": {
+        "id": "rem-cn0301-k",
+        "kind": "check",
+        "body": "Combine once more.",
+        "conceptTag": "cn-add-sub",
+        "explanationVariants": [
+          "The imaginary parts are 1 and 2: 1 + 2 = 3.",
+          "The i-coefficients add to 3; the reals (2 + 3 = 5) stay separate."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the IMAGINARY part of (2 + i) + (3 + 2i)?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 is the REAL part (2 + 3) — the imaginary parts are 1 + 2 = 3."
+            },
+            {
+              "value": 2,
+              "feedback": "That's only the second number's coefficient — the first contributes 1 more: 1 + 2 = 3."
+            }
+          ],
+          "fallbackFeedback": "1 + 2 = 3."
+        }
+      }
+    }
+  ]
+}

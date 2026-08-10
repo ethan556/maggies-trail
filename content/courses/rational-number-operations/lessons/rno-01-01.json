@@ -1,0 +1,329 @@
+{
+  "id": "rno-01-01",
+  "slug": "adding-same-sign-integers",
+  "title": "Adding Same-Sign Integers",
+  "courseId": "rational-number-operations",
+  "chapterId": "ch1-adding-integers",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "integer-jump",
+      "body": "Adding two numbers with the **same sign** is straightforward: add their sizes (magnitudes) and keep the shared sign. -3 + (-5): both negative, so add 3+5=8, keep negative: -8."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Same signs pile up.",
+      "widget": {
+        "type": "integerChips",
+        "target": -7,
+        "maxPos": 10,
+        "maxNeg": 10,
+        "posStart": 0,
+        "negStart": 0,
+        "prompt": "Build −3 + (−4) with chips.",
+        "successFeedback": "−7. Two debts do not cancel each other — they add. Same signs pile up, and the sign of the pile is the sign you started with.",
+        "lowFeedback": "Your pile is worth less than −7 (too far negative).",
+        "highFeedback": "Your pile is worth more than −7. Both numbers are negative, so no positive chips belong here."
+      },
+      "predict": {
+        "prompt": "Building −3 + (−4) with chips: will any chips cancel?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — every chip points the same way"
+          },
+          {
+            "id": "three",
+            "label": "Yes — 3 pairs vanish"
+          },
+          {
+            "id": "all",
+            "label": "Yes — all of them"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Cancelling needs OPPOSITE chips, and here every chip is negative — seven − chips simply stack up to −7. Same signs pile; only different signs fight."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Add and remove zero pairs while tracking the net signed value.",
+        "predictionId": "g6-g7-signed-number-structure-prediction",
+        "invariants": [
+          "value-preserved-by-zero-pairs"
+        ],
+        "misconceptions": [
+          "sign-error",
+          "negative-magnitude"
+        ],
+        "representations": [
+          "concrete",
+          "number-line",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 2,
+        "transferFamily": "signed-operation-without-chips",
+        "delayed": true,
+        "counterfactualPrompt": "Add three positive-negative pairs. How can the board change while its net value stays identical?",
+        "explanation": {
+          "prompt": "Why does a positive chip paired with a negative chip preserve value?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Their values sum to zero.",
+              "correct": true,
+              "feedback": "Exactly. A zero pair changes the model but not the net value."
+            },
+            {
+              "id": "surface",
+              "label": "Two chips always increase the value by two.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. A zero pair changes the model but not the net value."
+            }
+          ]
+        }
+      },
+      "conceptTag": "rno-add-same-sign"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add two positives.",
+      "conceptTag": "rno-add-same-sign",
+      "explanationVariants": [
+        "Both positive: add 4+6=10, keep positive: 10.",
+        "Same-sign addition: add magnitudes, keep the sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "4 + 6 = ?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -10,
+            "feedback": "Both numbers are positive, so the sum is positive: 4+6=10, not -10."
+          },
+          {
+            "value": 2,
+            "feedback": "That subtracts instead of adding. 4+6=10."
+          }
+        ],
+        "fallbackFeedback": "4+6=10."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "samePos"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Picture it on the number line: -3 + (-5) means starting at -3 and jumping 5 MORE to the left, landing at -8 — both jumps go the same direction.",
+      "figure": "integer-jump"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A bigger same-sign sum.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "-7 + (-9) = ?",
+        "answer": -16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "Both numbers are negative, so the sum stays negative: -7 + (-9) = -16."
+          },
+          {
+            "value": -2,
+            "feedback": "That subtracts instead of adding magnitudes. Add 7+9=16, keep the sign: -16."
+          }
+        ],
+        "fallbackFeedback": "Add the magnitudes 7+9=16, keep the shared negative sign: -16."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The rule works no matter how big the numbers get — same sign always means add and keep.",
+      "figure": "rno-same-sign"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Another positive sum.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 + 12 = ?",
+        "answer": 20,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -20,
+            "feedback": "Both numbers are positive, so the sum is positive: 8+12=20."
+          },
+          {
+            "value": 4,
+            "feedback": "That subtracts instead of adding. 8+12=20."
+          }
+        ],
+        "fallbackFeedback": "8+12=20."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another negative sum.",
+      "conceptTag": "rno-add-same-sign",
+      "explanationVariants": [
+        "Both negative: add 2+9=11, keep negative: -11.",
+        "Same-sign addition: add magnitudes, keep the sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-2 + (-9) = ?",
+        "answer": -11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "Both numbers are negative, so the sum stays negative: -2 + (-9) = -11."
+          },
+          {
+            "value": -7,
+            "feedback": "That subtracts instead of adding magnitudes. Add 2+9=11, keep the sign: -11."
+          }
+        ],
+        "fallbackFeedback": "Add the magnitudes 2+9=11, keep the shared negative sign: -11."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "sameNeg"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Large same-sign sum.",
+      "conceptTag": "rno-add-same-sign",
+      "explanationVariants": [
+        "Both negative: add 15+6=21, keep negative: -21.",
+        "Same-sign addition: add magnitudes, keep the sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-15 + (-6) = ?",
+        "answer": -21,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "Both numbers are negative, so the sum stays negative: -15 + (-6) = -21."
+          },
+          {
+            "value": -9,
+            "feedback": "That subtracts instead of adding magnitudes. Add 15+6=21, keep the sign: -21."
+          }
+        ],
+        "fallbackFeedback": "Add the magnitudes 15+6=21, keep the shared negative sign: -21."
+      },
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "sameLarge"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A tricky same-sign sum.",
+      "conceptTag": "rno-add-same-sign",
+      "explanationVariants": [
+        "Both negative: add 18+13=31, keep negative: -31.",
+        "Same-sign addition: add magnitudes, keep the sign."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "-18 + (-13) = ?",
+        "answer": -31,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 31,
+            "feedback": "Both numbers are negative, so the sum stays negative: -18 + (-13) = -31."
+          },
+          {
+            "value": -5,
+            "feedback": "That subtracts instead of adding magnitudes. Add 18+13=31, keep the sign: -31."
+          }
+        ],
+        "fallbackFeedback": "Add the magnitudes 18+13=31, keep the shared negative sign: -31."
+      },
+      "hints": [
+        "Both numbers are negative — the sum will be negative too.",
+        "Add the magnitudes: 18 + 13.",
+        "18 + 13 = 31, so the answer is -31."
+      ],
+      "variant": {
+        "gen": "g7-signed-addition",
+        "form": "sameChallenge"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same-sign addition: add the magnitudes, keep the shared sign.",
+      "takeaways": [
+        "Both positive: add normally.",
+        "Both negative: add the magnitudes, keep negative.",
+        "Same-sign jumps on a number line always go the same direction."
+      ],
+      "teaser": "next: adding numbers with different signs."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rno-add-same-sign",
+      "concept": {
+        "id": "rem-rass-c",
+        "kind": "concept",
+        "body": "When adding two numbers with the same sign, add their magnitudes and keep the shared sign. -3 + (-5): add 3+5=8, keep negative: -8."
+      },
+      "check": {
+        "id": "rem-rass-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rno-add-same-sign",
+        "explanationVariants": [
+          "Add 3+5=8, keep negative: -8.",
+          "Same sign means add and keep."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "-3 + (-5) = ?",
+          "answer": -8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "Both negative, so the sum stays negative: -8."
+            },
+            {
+              "value": -2,
+              "feedback": "Add, don't subtract: 3+5=8, so -8."
+            }
+          ],
+          "fallbackFeedback": "-3 + (-5) = -8."
+        }
+      }
+    }
+  ]
+}

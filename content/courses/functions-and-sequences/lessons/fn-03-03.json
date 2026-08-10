@@ -1,0 +1,278 @@
+{
+  "id": "fn-03-03",
+  "slug": "reading-a-geometric-rule",
+  "title": "Reading a Geometric Rule",
+  "courseId": "functions-and-sequences",
+  "chapterId": "ch3-geometric-sequences",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "geometric-steps",
+      "body": "From a sequence, find a_1 and r, then use a_n = a_1 · r^(n−1). For 3, 6, 12, 24, … : a_1 = 3 and r = 2, so the 5th term is 3 · 2⁴ = 3 · 16 = 48."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read off a_1 and r, then apply.",
+      "predict": {
+        "prompt": "3, 6, 12, 24, … each term doubles. The 5th term is…",
+        "options": [
+          {
+            "id": "fortyeight",
+            "label": "48 — one more doubling"
+          },
+          {
+            "id": "thirty",
+            "label": "30 — add 6 again"
+          },
+          {
+            "id": "twentyseven",
+            "label": "27"
+          }
+        ],
+        "outcomeId": "fortyeight",
+        "reveal": "Geometric growth compounds: 24 doubles to 48. Adding a fixed 6 (the FIRST gap) is arithmetic thinking — but the gaps here grow with the terms: 3, 6, 12. The rule is ×2, and the rule never tires."
+      },
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 3,
+        "atPosition": 5,
+        "targetTerm": 48,
+        "rMax": 9,
+        "start": 5,
+        "prompt": "Drag the ratio to match 3, 6, 12, 24, then read term 5.",
+        "successFeedback": "48 = 3×2⁴.",
+        "lowFeedback": "Term 5 is still under 48.",
+        "highFeedback": "Term 5 has passed 48."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A tripling sequence.",
+      "conceptTag": "fn-geo-rule",
+      "explanationVariants": [
+        "a_1 = 2, r = 3, so a_5 = 2 · 3⁴ = 2 · 81 = 162.",
+        "Four factors of 3 from 2: 2 · 81 = 162."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 2, 6, 18, 54, ..., what is the 5th term?",
+        "answer": 162,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 486,
+            "feedback": "Use r^(5 − 1) = 3⁴, not 3⁵: 2 · 81 = 162, not 2 · 243."
+          },
+          {
+            "value": 54,
+            "feedback": "54 is the 4th term (already listed). The 5th is 2 · 3⁴ = 162."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 2 · 3⁴ = 162."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-rule__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The first term is already in the sequence, so counting factors of r starts from there. For 1, 4, 16, … : a_1 = 1, r = 4, so the 4th term is 1 · 4³ = 64 — three factors of 4.",
+      "figure": "fn-first-term-in"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A power of four.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 1,
+        "atPosition": 5,
+        "targetTerm": 256,
+        "rMax": 9,
+        "start": 2,
+        "prompt": "For 1, 4, 16, 64, ..., drag the ratio and read term 5.",
+        "successFeedback": "256 = 1×4⁴.",
+        "lowFeedback": "Term 5 is still under 256.",
+        "highFeedback": "Term 5 has passed 256."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The rule reaches far-off terms without listing them all. For 5, 10, 20, … : a_1 = 5, r = 2, so the 6th term is 5 · 2⁵ = 5 · 32 = 160.",
+      "figure": "fn-reach-far"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A sixth term.",
+      "widget": {
+        "type": "sequenceBuild",
+        "mode": "geometricTerm",
+        "first": 5,
+        "atPosition": 6,
+        "targetTerm": 160,
+        "rMax": 9,
+        "start": 5,
+        "prompt": "For 5, 10, 20, 40, ..., drag the ratio and read term 6.",
+        "successFeedback": "160 = 5×2⁵.",
+        "lowFeedback": "Term 6 is still under 160.",
+        "highFeedback": "Term 6 has passed 160."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Fifth term of a tripling sequence.",
+      "conceptTag": "fn-geo-rule",
+      "explanationVariants": [
+        "a_1 = 1, r = 3, so a_5 = 1 · 3⁴ = 81.",
+        "Four factors of 3 from 1: 81."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 1, 3, 9, 27, ..., what is the 5th term?",
+        "answer": 81,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 243,
+            "feedback": "Use r^(5 − 1) = 3⁴, not 3⁵: 1 · 81 = 81, not 1 · 243."
+          },
+          {
+            "value": 27,
+            "feedback": "27 is the 4th term (already listed). The 5th is 1 · 3⁴ = 81."
+          }
+        ],
+        "fallbackFeedback": "a_5 = 1 · 3⁴ = 81."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-rule__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A sixth power of two.",
+      "conceptTag": "fn-geo-rule",
+      "explanationVariants": [
+        "a_1 = 2, r = 2, so a_6 = 2 · 2⁵ = 64.",
+        "Five factors of 2 from 2: 64."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 2, 4, 8, 16, ..., what is the 6th term?",
+        "answer": 64,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 128,
+            "feedback": "Use r^(6 − 1) = 2⁵, not 2⁶: 2 · 32 = 64, not 2 · 64."
+          },
+          {
+            "value": 32,
+            "feedback": "32 is the 5th term. The 6th is 2 · 2⁵ = 64."
+          }
+        ],
+        "fallbackFeedback": "a_6 = 2 · 2⁵ = 64."
+      },
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-rule__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "An eighth power of two.",
+      "conceptTag": "fn-geo-rule",
+      "explanationVariants": [
+        "a_1 = 1, r = 2, so a_8 = 1 · 2⁷ = 128.",
+        "Seven factors of 2 from 1: 128."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For the sequence 1, 2, 4, 8, ..., what is the 8th term?",
+        "answer": 128,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 256,
+            "feedback": "Use r^(8 − 1) = 2⁷, not 2⁸: 1 · 128 = 128, not 1 · 256."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is the 7th term. The 8th is 1 · 2⁷ = 128."
+          }
+        ],
+        "fallbackFeedback": "a_8 = 1 · 2⁷ = 128."
+      },
+      "hints": [
+        "Read off a_1 = 1 and r = 2.",
+        "Use exponent (8 − 1) = 7: 2⁷ = 128.",
+        "1 · 128 = 128."
+      ],
+      "variant": {
+        "gen": "a1-functions-sequences",
+        "form": "fn-geo-rule__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read a_1 and r from the sequence, then the formula gives any term.",
+      "takeaways": [
+        "Find a_1 and r, then use a_n = a_1 · r^(n − 1).",
+        "The exponent is (n − 1), counting from the first term.",
+        "One rule replaces multiplying step by step."
+      ],
+      "teaser": "next chapter: telling arithmetic and geometric sequences apart."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fn-geo-rule",
+      "concept": {
+        "id": "rem-fgr-c",
+        "kind": "concept",
+        "body": "Read a_1 and r from the sequence, then use a_n = a_1 · r^(n − 1). For 3, 6, 12, 24, … : a_1 = 3, r = 2, so the 5th term is 3 · 2⁴ = 48."
+      },
+      "check": {
+        "id": "rem-fgr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fn-geo-rule",
+        "explanationVariants": [
+          "a_5 = 3 · 2⁴ = 48.",
+          "Four factors of 2 from 3: 48."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For the sequence 3, 6, 12, 24, ..., what is the 5th term?",
+          "answer": 48,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 96,
+              "feedback": "Use r^(5 − 1) = 2⁴: 3 · 16 = 48."
+            },
+            {
+              "value": 24,
+              "feedback": "24 is the 4th term; the 5th is 48."
+            }
+          ],
+          "fallbackFeedback": "a_5 = 3 · 16 = 48."
+        }
+      }
+    }
+  ]
+}

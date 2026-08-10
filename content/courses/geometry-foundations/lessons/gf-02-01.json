@@ -1,0 +1,279 @@
+{
+  "id": "gf-02-01",
+  "slug": "segment-addition-and-midpoints",
+  "title": "Segment Addition & Midpoints",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch2-measure",
+  "minutes": 8,
+  "remedials": [
+    {
+      "conceptTag": "gf-segment-addition",
+      "concept": {
+        "id": "rem-gf-segment-addition-c",
+        "kind": "concept",
+        "body": "Piece + piece = whole. When B sits between A and C, segment AB and segment BC share only the point B — laid end to end they exactly make AC. So the whole is the SUM, and a missing piece is the whole MINUS the known piece."
+      },
+      "check": {
+        "id": "rem-gf-segment-addition-k",
+        "kind": "check",
+        "body": "Find the missing piece.",
+        "conceptTag": "gf-segment-addition",
+        "explanationVariants": [
+          "The whole is 50 and one piece is 30, so the other piece is 50 − 30 = 20.",
+          "AB + BC = AC becomes 30 + BC = 50 — subtract 30 from both sides."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "B is between A and C. AC = 50 and AB = 30. Find BC.",
+          "answer": 20,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 80,
+              "feedback": "80 is 50 + 30 — but AC = 50 is already the WHOLE. The missing piece is whole minus known piece: 20."
+            },
+            {
+              "value": 40,
+              "feedback": "40 would make the pieces 30 and 40 sum to 70, not 50. Check: AB + BC must equal AC exactly."
+            }
+          ],
+          "fallbackFeedback": "Whole minus known piece: 50 − 30 = 20."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **Ruler Postulate** lets every point on a line wear a number (its coordinate), and the distance between two points is the positive difference of their coordinates. From it comes the **Segment Addition Postulate**: if B is between A and C, then **AB + BC = AC** — the two pieces tile the whole with no gap and no overlap.",
+      "figure": "addition-postulates"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the ruler.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "On a number line, P has coordinate 2 and Q has coordinate 9. What is PQ?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is 2 + 9 — but distance is the DIFFERENCE of coordinates, not their sum: 9 − 2 = 7."
+          },
+          {
+            "value": -7,
+            "feedback": "Distance is never negative: take the positive difference, |2 − 9| = 7."
+          }
+        ],
+        "fallbackFeedback": "Subtract the coordinates and keep the positive value: 9 − 2 = 7."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Two pieces, one whole.",
+      "conceptTag": "gf-segment-addition",
+      "explanationVariants": [
+        "B between A and C means the pieces add: AC = AB + BC = 17 + 26 = 43.",
+        "Walk it: 17 units from A to B, then 26 more to C — 43 units door to door."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "B is between A and C. AB = 17 and BC = 26. Find AC.",
+        "answer": 43,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is 26 − 17. \"Between\" means the pieces ADD to the whole — subtraction would find a missing PIECE, and AC is the whole."
+          },
+          {
+            "value": 21.5,
+            "feedback": "21.5 is the average of the pieces. The whole trip is both pieces end to end: 17 + 26 = 43."
+          }
+        ],
+        "fallbackFeedback": "AB + BC = AC when B is between: 17 + 26 = 43."
+      },
+      "variant": {
+        "gen": "gf-segment-add"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The **midpoint** M of segment AB is the point that splits it into two congruent halves: AM ≅ MB. On a number line the midpoint's coordinate is the **average** of the endpoints' coordinates — halfway between is exactly the mean.",
+      "figure": "gf-midpoint"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Slide to the middle.",
+      "widget": {
+        "type": "slider",
+        "prompt": "Endpoints sit at 3 and 11. Slide the marker to the midpoint.",
+        "min": 0,
+        "max": 14,
+        "step": 1,
+        "start": 3,
+        "target": 7,
+        "visual": "numberline",
+        "groupLayout": "grid",
+        "itemEmoji": "📍",
+        "lowFeedback": "Still closer to 3 than to 11 — the midpoint is the same distance from BOTH endpoints.",
+        "highFeedback": "Past the middle — now 11 is nearer than 3. Balance the two distances.",
+        "successFeedback": "7 sits 4 from each endpoint — and (3 + 11) / 2 = 7, the average."
+      },
+      "conceptTag": "gf-segment-addition",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents gf segment addition.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for gf segment addition must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines gf segment addition."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-foundations:gf-segment-addition",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "The endpoints sit at 3 and 11. The midpoint is at…",
+        "options": [
+          {
+            "id": "seven",
+            "label": "7"
+          },
+          {
+            "id": "eight",
+            "label": "8"
+          },
+          {
+            "id": "four",
+            "label": "4"
+          }
+        ],
+        "outcomeId": "seven",
+        "reveal": "7 — the average, (3 + 11) ÷ 2. The 8 is the segment's LENGTH, 11 − 3, which is a distance rather than a place. A midpoint is a coordinate, and it has to sit between the two endpoints it splits."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Midpoint by averaging.",
+      "conceptTag": "gf-segment-addition",
+      "explanationVariants": [
+        "Average the endpoint coordinates: (5 + 17) / 2 = 11.",
+        "Half the length is (17 − 5)/2 = 6; start at 5 and step 6 in: 5 + 6 = 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Endpoints of a segment have coordinates 5 and 17. What is the coordinate of the midpoint?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is HALF THE LENGTH, (17 − 5)/2 — a distance, not a location. Add it to the left endpoint: 5 + 6 = 11."
+          },
+          {
+            "value": 22,
+            "feedback": "22 is 5 + 17. Averaging needs one more move: divide the sum by 2 to get 11."
+          }
+        ],
+        "fallbackFeedback": "Midpoint coordinate = average of the endpoints: (5 + 17)/2 = 11."
+      },
+      "variant": {
+        "gen": "gf-segment-add",
+        "form": "coordMid"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Vocabulary upgrade: anything that passes through a segment's midpoint — a line, ray, or segment — is a **segment bisector**. Bisecting talk runs both directions: from the whole, each half is half; from one half, the whole is DOUBLE.",
+      "figure": "gf-bisector-vocab"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A bisector at work.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Line ℓ bisects segment AB at point M, and AB = 30. Find AM.",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 is 30 doubled — doubling goes from a half UP to the whole. AB = 30 is already the whole, so the half is 15."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is all of AB. The bisector cuts it at the midpoint, so AM is half: 15."
+          }
+        ],
+        "fallbackFeedback": "A bisector passes through the midpoint: AM = 30 ÷ 2 = 15."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "From half to whole.",
+      "conceptTag": "gf-segment-addition",
+      "hints": [
+        "M is the midpoint — how do AM and MB compare?",
+        "The two halves are congruent, so the whole is two copies of AM.",
+        "AB = 2 · AM. You know AM = 19."
+      ],
+      "explanationVariants": [
+        "M is the midpoint, so AM = MB = 19 and AB = 19 + 19 = 38.",
+        "Midpoint means AM is exactly half of AB — so AB = 2 × 19 = 38."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "M is the midpoint of segment AB, and AM = 19. Find AB.",
+        "answer": 38,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9.5,
+            "feedback": "9.5 is 19 ÷ 2 — that would treat 19 as the WHOLE. But AM is a HALF, so the whole doubles it: 38."
+          },
+          {
+            "value": 19,
+            "feedback": "19 is AM itself. AB is the full segment — both congruent halves together: 19 + 19 = 38."
+          }
+        ],
+        "fallbackFeedback": "AM is half the segment, so AB = 2 · AM = 38."
+      },
+      "variant": {
+        "gen": "gf-segment-add",
+        "form": "halfToWhole"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Numbers on the line.",
+      "takeaways": [
+        "Coordinates turn distance into arithmetic: PQ = positive difference.",
+        "B between A and C ⇒ AB + BC = AC — pieces tile the whole.",
+        "Midpoint = average of endpoint coordinates; half ↔ whole by doubling."
+      ],
+      "teaser": "Next: the same two moves for angles — an Angle Addition Postulate and the angle bisector."
+    }
+  ]
+}

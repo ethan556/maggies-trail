@@ -1,0 +1,290 @@
+{
+ "id": "cx-05-03",
+ "slug": "circles-in-disguise",
+ "title": "Circles in Disguise",
+ "courseId": "coordinate-proofs",
+ "chapterId": "ch5-circle-equation",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "cx-circle-cts",
+   "concept": {
+    "id": "rem-cx-circle-cts-c",
+    "kind": "concept",
+    "body": "General form x² + y² + Dx + Ey + F = 0 hides a circle. Complete the square: group x-terms and y-terms, add (half of D)² and (half of E)² to BOTH sides, move F across. The result (x − h)² + (y − k)² = r² reveals center and radius — then all earlier circle tools apply."
+   },
+   "check": {
+    "id": "rem-cx-circle-cts-k",
+    "kind": "check",
+    "body": "One unmasking.",
+    "conceptTag": "cx-circle-cts",
+    "explanationVariants": [
+     "x² − 2x needs 1; y² needs nothing: (x − 1)² + y² = 8 + 1.",
+     "(x − 1)² + y² = 9: r = 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Complete the square on x² + y² − 2x − 8 = 0. The radius r = ?",
+     "answer": 3,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 9,
+       "feedback": "9 is r², not r itself. Take the square root to finish: r = 3."
+      },
+      {
+       "value": 8,
+       "feedback": "8 forgets the completion — both sides gain 1: r² = 9, r = 3."
+      }
+     ],
+     "fallbackFeedback": "(x − 1)² + y² = 9 ⇒ r = 3."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Expand (x − 3)² + (y − 2)² = 25 and the disguise appears: x² + y² − 6x − 4y − 12 = 0. To reverse it, **complete the square** — the algebra course's move, now with a geometric payoff: group x-terms, group y-terms, add (half the linear coefficient)² to each side, and the center-radius form steps out.",
+   "figure": "cx-expand-circle"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Unmask the figure's circle.",
+   "conceptTag": "cx-circle-cts",
+   "explanationVariants": [
+    "x² − 6x needs (6/2)² = 9; y² − 4y needs (4/2)² = 4: (x−3)² + (y−2)² = 12 + 9 + 4.",
+    "12 + 9 + 4 = 25 — the figure's circle was hiding in plain sight."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Complete the square on x² + y² − 6x − 4y − 12 = 0. The right side becomes r² = ?",
+    "answer": 25,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "12 forgets the completions — moving −12 over AND adding 9 + 4 to both sides gives 25."
+     },
+     {
+      "value": 13,
+      "feedback": "13 = 9 + 4 counts only the completions — the original 12 crosses over too: 25."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is the radius — the equation's right side is r² = 25."
+     }
+    ],
+    "fallbackFeedback": "−12 → +12, plus 9 and 4: (x − 3)² + (y − 2)² = 25 — center (3, 2), radius 5: the course figure itself."
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-circle-cts__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Signs in the dark.",
+   "conceptTag": "cx-circle-cts",
+   "explanationVariants": [
+    "x² + 8x needs 16, giving (x + 4)² — center x = −4. y² − 2y needs 1, giving (y − 1)².",
+    "(x + 4)² + (y − 1)² = −8 + 16 + 1 = 9: center (−4, 1), r = 3."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Unmask x² + y² + 8x − 2y + 8 = 0:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Center (−4, 1), radius 3",
+      "correct": true,
+      "feedback": "Completions 16 and 1; right side −8 + 16 + 1 = 9 — and (x + 4)² flips to h = −4, exactly lesson 1's sign rule."
+     },
+     {
+      "id": "o2",
+      "label": "Center (4, −1), radius 3",
+      "correct": false,
+      "feedback": "(x + 4)² means h = −4 and (y − 1)² means k = +1 — the signs flip coming out."
+     },
+     {
+      "id": "o3",
+      "label": "Center (−4, 1), radius 9",
+      "correct": false,
+      "feedback": "9 is r² — the radius is 3."
+     },
+     {
+      "id": "o4",
+      "label": "Center (−8, 2), radius 3",
+      "correct": false,
+      "feedback": "The center uses HALF each linear coefficient: 8/2 = 4 (flipped to −4) and 2/2 = 1."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-circle-cts__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The unmasked form makes every earlier tool available: center and radius feed the position judge, the distance and midpoint formulas, even cr's tangent theorems. One completed square converts an opaque quadratic into geometry you've been computing with for five chapters.",
+   "figure": "cx-unmasked"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Chain the tools.",
+   "conceptTag": "cx-circle-cts",
+   "explanationVariants": [
+    "From k1: center (3, 2), r² = 25. Judge (0, 6): (0−3)² + (6−2)² = 9 + 16.",
+    "25 = 25: ON the circle."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Using k1's unmasked circle (center (3, 2), r² = 25): where does (0, 6) sit?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "On the circle — 9 + 16 = 25 exactly (another 3-4-5)",
+      "correct": true,
+      "feedback": "The disguised equation would've hidden it; the standard form makes the verdict a one-line 3-4-5 check."
+     },
+     {
+      "id": "o2",
+      "label": "Inside",
+      "correct": false,
+      "feedback": "Inside needs LESS than 25 — the point delivers exactly 25: on the circle."
+     },
+     {
+      "id": "o3",
+      "label": "Outside",
+      "correct": false,
+      "feedback": "Exactly 25 is the boundary itself — on the circle."
+     },
+     {
+      "id": "o4",
+      "label": "At the center",
+      "correct": false,
+      "feedback": "The center (3, 2) evaluates to 0 — this point evaluates to 25 = r²: on the rim."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-circle-cts__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Where circle meets line.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Circle x² + y² = 25 meets the line y = x + 1. Substituting gives x² + (x + 1)² = 25, which simplifies to x² + x − 12 = 0. Enter the POSITIVE solution for x.",
+    "answer": 3,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": -4,
+      "feedback": "−4 is the OTHER root — (x − 3)(x + 4) = 0 has two, and the question asks the positive one: 3."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is that point's y-value (y = 3 + 1) — the x asked for is 3."
+     }
+    ],
+    "fallbackFeedback": "(x − 3)(x + 4) = 0 ⇒ x = 3 (point (3, 4)) or x = −4 (point (−4, −3)) — the line crosses the circle in a chord."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Count the meetings.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Substituting a line into a circle's equation yields a quadratic. Its number of REAL solutions tells you:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "2 = the line crosses (a chord), 1 = it's tangent, 0 = it misses — the discriminant is doing cr's tangency geometry",
+      "correct": true,
+      "feedback": "Algebra and geometry agree: cr's secant/tangent/miss trichotomy is the quadratic's discriminant in disguise."
+     },
+     {
+      "id": "o2",
+      "label": "Always exactly 2",
+      "correct": false,
+      "feedback": "Tangent lines touch ONCE (repeated root) and distant lines never — the discriminant decides."
+     },
+     {
+      "id": "o3",
+      "label": "The circle's radius",
+      "correct": false,
+      "feedback": "The root COUNT counts intersections — the radius lives elsewhere in the equation."
+     },
+     {
+      "id": "o4",
+      "label": "Nothing geometric",
+      "correct": false,
+      "feedback": "It's entirely geometric: 2, 1, or 0 meetings — secant, tangent, or miss."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Full circuit.",
+   "conceptTag": "cx-circle-cts",
+   "hints": [
+    "Unmask first: x² − 4x needs 4; y² − 6y needs 9.",
+    "(x − 2)² + (y − 3)² = −4 + 4 + 9 — read r².",
+    "Then judge (8, 11) against center (2, 3): (8−2)² + (11−3)² vs r²."
+   ],
+   "explanationVariants": [
+    "r² = 9 (r = 3). The point: 36 + 64 = 100 > 9 — far outside. Its distance is 10 against a radius of 3.",
+    "Unmasked: center (2, 3), r² = 9; the point evaluates to 100: outside."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Unmask x² + y² − 4x − 6y + 4 = 0, then evaluate (x − h)² + (y − k)² at the point (8, 11). The evaluation = ?",
+    "answer": 100,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is the circle's r² — the POINT evaluates to (8−2)² + (11−3)² = 100: far outside."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is the point's DISTANCE from the center — the evaluation is its square: 100."
+     },
+     {
+      "value": 17,
+      "feedback": "17 completes the square wrong (4 + 4 + 9) — r² = −4 + 4 + 9 = 9, and the point gives 36 + 64 = 100."
+     }
+    ],
+    "fallbackFeedback": "Center (2, 3): (8 − 2)² + (11 − 3)² = 100 — the opening 6-8-10 triangle takes the course's final bow."
+   },
+   "variant": {
+    "gen": "g10-coordinate-proofs",
+    "form": "cx-circle-cts__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Disguises off.",
+   "takeaways": [
+    "Complete the square (from Algebra) to convert x² + y² + Dx + Ey + F = 0 into center-radius form.",
+    "The unmasked form feeds every earlier tool: position judging, distance, midpoint, tangency.",
+    "Line-meets-circle = substitute and solve; the root count IS the secant/tangent/miss trichotomy."
+   ],
+   "teaser": "Course complete — the plane now measures, classifies, proves, and circles."
+  }
+ ]
+}

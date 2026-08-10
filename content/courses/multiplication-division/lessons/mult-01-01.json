@@ -1,0 +1,444 @@
+{
+  "id": "mult-01-01",
+  "slug": "what-multiplication-means",
+  "title": "Groups of: What Multiplication Means",
+  "courseId": "multiplication-division",
+  "chapterId": "ch1-equal-groups",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Maya packs 3 bags for a picnic. She puts 4 apples in every bag. Same number in each bag — that's called **equal groups**. When groups are equal, there's a shortcut for counting everything fast. Let's find it.",
+      "figure": "mult3-equal-groups"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Every bag adds the **same amount**. Watch how the total jumps.",
+      "conceptTag": "equal-groups",
+      "widget": {
+        "type": "slider",
+        "prompt": "Slide to pack bags. Each bag holds 4 apples. Make exactly 20 apples.",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "start": 1,
+        "target": 5,
+        "visual": "groups",
+        "groupSize": 4,
+        "itemEmoji": "🍎",
+        "unitLabel": "apples in all",
+        "lowFeedback": "More apples needed — every new bag adds 4 at once. Slide up.",
+        "highFeedback": "Too many! Each bag you remove takes away 4 apples. Slide down.",
+        "successFeedback": "5 bags of 4 apples makes 20. You just multiplied!"
+      },
+      "predict": {
+        "prompt": "Each bag holds 4 apples. Before you pack: how many bags will 20 apples fill?",
+        "options": [
+          {
+            "id": "five",
+            "label": "5 bags"
+          },
+          {
+            "id": "four",
+            "label": "4 bags"
+          },
+          {
+            "id": "sixteen",
+            "label": "16 bags"
+          }
+        ],
+        "outcomeId": "five",
+        "reveal": "Five bags of 4 — the slider counts GROUPS, and 5 groups of 4 is the multiplication 5 × 4 = 20. Groups-of is what the × sign means."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents equal groups.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for equal groups must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines equal groups."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:equal-groups",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Time to read the **×** sign.",
+      "conceptTag": "mult-meaning",
+      "explanationVariants": [
+        "3 × 4 is a shortcut for 4 + 4 + 4. The first number counts the groups; the second tells how many are inside each one.",
+        "Read 3 × 4 as '3 groups of 4.' Picture 3 bags. Drop 4 apples into each. The × sign glues the groups to their size."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which picture matches 3 × 4?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3 bags with 4 apples in each bag",
+            "correct": true,
+            "feedback": "Yes — 3 × 4 means 3 groups of 4."
+          },
+          {
+            "id": "b",
+            "label": "3 apples and 4 more apples",
+            "feedback": "That's adding: 3 + 4 = 7. Multiplying means 3 whole groups of 4, not 3 and 4 together."
+          },
+          {
+            "id": "c",
+            "label": "1 bag with 34 apples",
+            "feedback": "Careful — 3 and 4 written side by side make the number 34. The × sign means groups, not digits stuck together."
+          },
+          {
+            "id": "d",
+            "label": "4 bags with 4 apples in each bag",
+            "feedback": "That's 4 groups of 4, which is 4 × 4. In 3 × 4, the first number tells how many groups: 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mult-meaning"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The shortcut has a name: **multiplication**. We write 3 × 4 = 12 and say '3 times 4.' It means 4 + 4 + 4. Adding the same number again and again is exactly what × does — in one step.",
+      "figure": "mult3-equal-groups"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Your turn to use the shortcut.",
+      "conceptTag": "equal-groups",
+      "explanationVariants": [
+        "2 trays of 6 is 2 × 6. That's 6 + 6 = 12 muffins.",
+        "Skip-count by 6, once for each tray: 6... 12. Two trays lands you on 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A muffin tray holds 6 muffins. You bake 2 full trays. How many muffins?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "muffins",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 comes from adding 6 + 2. But you have 2 whole groups of 6 — count 6 twice: 6 + 6."
+          },
+          {
+            "value": 4,
+            "feedback": "4 comes from 6 − 2. Nothing was taken away — you're combining 2 equal groups of 6."
+          },
+          {
+            "value": 62,
+            "feedback": "62 puts the digits side by side. Instead, count 6 muffins two times: 6 + 6."
+          }
+        ],
+        "fallbackFeedback": "Picture the trays: 6 muffins, then 6 more. Count them all together."
+      },
+      "variant": {
+        "gen": "mult-meaning",
+        "form": "equalGroupsStory"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Multiplication only works when the groups are **equal**. Spot them.",
+      "conceptTag": "equal-groups",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Equal groups only! Tap every plate that has exactly 3 cookies.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 3
+        },
+        "hotspots": [
+          {
+            "id": "p1",
+            "x": 28,
+            "y": 30,
+            "label": "Plate with 3 cookies",
+            "icon": "🍪",
+            "count": 3,
+            "correct": true
+          },
+          {
+            "id": "p2",
+            "x": 72,
+            "y": 30,
+            "label": "Plate with 2 cookies",
+            "icon": "🍪",
+            "count": 2,
+            "feedback": "That plate holds only 2 cookies. Count each plate before you tap — we want exactly 3."
+          },
+          {
+            "id": "p3",
+            "x": 28,
+            "y": 72,
+            "label": "Plate with 3 cookies",
+            "icon": "🍪",
+            "count": 3,
+            "correct": true
+          },
+          {
+            "id": "p4",
+            "x": 72,
+            "y": 72,
+            "label": "Plate with 4 cookies",
+            "icon": "🍪",
+            "count": 4,
+            "feedback": "That plate has 4 cookies — one too many. Exactly 3 is the rule."
+          }
+        ],
+        "missFeedback": "Count the cookies on each plate, one plate at a time. Tap every plate showing exactly 3 — and only those.",
+        "successFeedback": "Both 3-cookie plates — equal groups spotted!"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents equal groups.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for equal groups must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines equal groups."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:equal-groups",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Stories hide multiplication. Find it.",
+      "conceptTag": "mult-meaning",
+      "explanationVariants": [
+        "Each night adds the same 5 pages: 5 + 5 + 5 = 15 — written as 3 × 5.",
+        "Ask two questions. How many groups? 3 nights. How big is each group? 5 pages. Groups × size: 3 × 5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Leo reads 5 pages every night for 3 nights. Which one finds his total pages?",
+        "options": [
+          {
+            "id": "a",
+            "label": "5 + 3",
+            "feedback": "5 + 3 mixes up the two jobs. The 3 counts nights (groups); the 5 is pages per night. We need 3 groups of 5."
+          },
+          {
+            "id": "b",
+            "label": "3 × 5",
+            "correct": true,
+            "feedback": "3 nights of 5 pages each — 3 groups of 5. That's 3 × 5 = 15."
+          },
+          {
+            "id": "c",
+            "label": "5 − 3",
+            "feedback": "Subtracting is for taking away. Leo keeps reading more each night, so his total grows."
+          },
+          {
+            "id": "d",
+            "label": "3 + 5 + 3",
+            "feedback": "This adds the group count in with the pages. Only the 5s repeat — one 5 per night: 5 + 5 + 5."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mult-meaning",
+        "form": "whichOperation"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller two-step gift, before the sticker sheets.",
+      "conceptTag": "mult-meaning",
+      "explanationVariants": [
+        "3 stickers per sheet × 2 sheets = 6, then take away the 1 given away: 6 − 1 = 5.",
+        "Multiply first to get the full amount (3×2=6), then subtract what's given away (6−1=5)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sticker sheet holds 3 stickers. Tom fills 2 sheets, then gives 1 sticker away. How many does he have now?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is just 3×2, the sheets multiplied — you still need to take away the 1 sticker Tom gave away: 6−1=5."
+          },
+          {
+            "value": 4,
+            "feedback": "4 comes from subtracting before multiplying (3−1=2, then ×2) — multiply the sheets first (3×2=6), THEN subtract the 1 given away: 6−1=5."
+          }
+        ],
+        "fallbackFeedback": "Multiply stickers per sheet by sheets first (3×2=6), then subtract the 1 given away: 6−1=5."
+      },
+      "variant": {
+        "gen": "mult-meaning",
+        "form": "sheetsMinus"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A two-step puzzle. Take it one step at a time.",
+      "conceptTag": "mult-meaning",
+      "hints": [
+        "Two things happen: first Zoe fills sheets, then she gives some away. Find the total stickers first.",
+        "4 sheets of 5 stickers is 4 groups of 5. Multiply — or add 5 + 5 + 5 + 5.",
+        "4 × 5 = 20 stickers in all. Now take away the 2 she gave to a friend."
+      ],
+      "explanationVariants": [
+        "Step 1: 4 sheets × 5 stickers = 20. Step 2: 20 − 2 = 18 stickers left.",
+        "Count by 5s for the sheets: 5, 10, 15, 20. Then hand 2 to a friend: 20 − 2 = 18."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A sticker sheet holds 5 stickers. Zoe fills 4 sheets, then gives 2 stickers away. How many stickers does she have now?",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "stickers",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is every sticker she made — but she gave 2 away. One more step!"
+          },
+          {
+            "value": 11,
+            "feedback": "11 comes from 4 + 5 + 2. The sheets are groups of 5, so start with 4 × 5."
+          },
+          {
+            "value": 13,
+            "feedback": "Close — check the first part again: 4 sheets of 5 is 4 × 5 = 20, then subtract 2."
+          }
+        ],
+        "fallbackFeedback": "Break it into two steps: find the total stickers made, then subtract the 2 she gave away."
+      },
+      "variant": {
+        "gen": "mult-meaning",
+        "form": "sheetsMinus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You cracked multiplication's big idea!",
+      "takeaways": [
+        "Multiplication counts equal groups fast.",
+        "3 × 4 means 3 groups of 4 — the same as 4 + 4 + 4.",
+        "Groups must be equal, or × doesn't apply."
+      ],
+      "teaser": "arrange groups into rows and columns — arrays make multiplying something you can see."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "equal-groups",
+      "concept": {
+        "id": "rem-eg-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Equal groups** means every group holds the same amount. 2 bowls of 5 grapes? Equal. A bowl of 5 and a bowl of 3? Not equal — the shortcut won't work there. Check the groups first, then count one group and repeat it."
+      },
+      "check": {
+        "id": "rem-eg-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "equal-groups",
+        "explanationVariants": [
+          "Equal groups all hold the same amount. 3 boxes of 5 crayons each — every box matches, so you can count 5 + 5 + 5.",
+          "Test each choice: do all the groups hold the same number? Only the 3 boxes of 5 pass that test."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which one shows equal groups?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2 boxes: one with 6 crayons, one with 4",
+              "feedback": "6 and 4 are different amounts — those groups aren't equal, so the counting shortcut won't work."
+            },
+            {
+              "id": "b",
+              "label": "3 boxes with 5 crayons in each",
+              "correct": true,
+              "feedback": "Every box holds 5 — equal groups, ready to multiply."
+            },
+            {
+              "id": "c",
+              "label": "1 pile of 15 crayons",
+              "feedback": "One pile is just one big group. To see equal groups, you need 2 or more groups holding the same amount."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "conceptTag": "mult-meaning",
+      "concept": {
+        "id": "rem-mm-c",
+        "kind": "concept",
+        "body": "Quick rewind. Read **×** as 'groups of.' So 2 × 6 says: 2 groups of 6. The first number tells how many groups. The second tells how many are in each group. Then add that many: 6 + 6."
+      },
+      "check": {
+        "id": "rem-mm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mult-meaning",
+        "explanationVariants": [
+          "2 × 6 reads as '2 groups of 6' — that's 6 + 6 = 12.",
+          "First number = number of groups (2). Second number = size of each group (6). Two 6s together."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What does 2 × 6 mean?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2 groups of 6",
+              "correct": true,
+              "feedback": "Exactly — 2 groups of 6, which is 6 + 6."
+            },
+            {
+              "id": "b",
+              "label": "2 more than 6",
+              "feedback": "'More than' is adding: 6 + 2 = 8. The × sign repeats the 6 instead: 6 + 6."
+            },
+            {
+              "id": "c",
+              "label": "6 take away 2",
+              "feedback": "Take away is subtraction (−). The × sign builds groups up: 6 + 6."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

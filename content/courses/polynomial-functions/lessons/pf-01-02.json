@@ -1,0 +1,435 @@
+{
+  "id": "pf-01-02",
+  "slug": "end-behavior",
+  "title": "End Behavior",
+  "courseId": "polynomial-functions",
+  "chapterId": "ch1-shape-and-end-behavior",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**End behavior** is what the graph does far left and far right. Two facts decide it: the **degree's parity** and the **leading coefficient's sign**. Even degree: both ends match (both up, or both down). Odd degree: the ends oppose. A negative lead flips the picture upside down.",
+      "figure": "end-behavior-quadrants"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The basic cubic.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the end behavior of f(x) = x³?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "falls to the left, rises to the right",
+            "correct": true,
+            "feedback": "Right — odd degree with a positive lead: the ends oppose, up on the right."
+          },
+          {
+            "id": "o2",
+            "label": "rises on both ends",
+            "correct": false,
+            "feedback": "Both ends matching is EVEN-degree behavior — a cubic's ends must oppose."
+          },
+          {
+            "id": "o3",
+            "label": "falls on both ends",
+            "correct": false,
+            "feedback": "Matching ends need an even degree — and falling both ways needs a negative lead too."
+          },
+          {
+            "id": "o4",
+            "label": "rises to the left, falls to the right",
+            "correct": false,
+            "feedback": "That's an odd degree with a NEGATIVE lead — x³ has a positive one."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Test one value if unsure: for x⁴ with a huge positive x, the value is huge positive; with a huge negative x, the even power wipes out the sign — still huge positive. Both ends **up**. Put a minus in front (−x⁴) and both ends flip **down**.",
+      "figure": "pf-test-value"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Flip an even one.",
+      "conceptTag": "pf-end-behavior",
+      "explanationVariants": [
+        "Even degree makes the ends match; the negative lead points them both down.",
+        "−x⁴ is x⁴'s picture flipped upside down: down · down."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is the end behavior of f(x) = −x⁴ + 3x?",
+        "tokens": [
+          {
+            "id": "rl",
+            "label": "rises on the left"
+          },
+          {
+            "id": "fl",
+            "label": "falls on the left"
+          },
+          {
+            "id": "rr",
+            "label": "rises on the right"
+          },
+          {
+            "id": "fr",
+            "label": "falls on the right"
+          }
+        ],
+        "correct": [
+          "fl",
+          "fr"
+        ],
+        "acceptAlso": [
+          [
+            "fr",
+            "fl"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "rl",
+              "rr"
+            ],
+            "feedback": "That's the POSITIVE-lead even case — the −1 out front flips both ends down."
+          },
+          {
+            "sequence": [
+              "rr",
+              "rl"
+            ],
+            "feedback": "That's the POSITIVE-lead even case — the −1 out front flips both ends down."
+          },
+          {
+            "sequence": [
+              "fl",
+              "rr"
+            ],
+            "feedback": "Opposing ends belong to ODD degrees — degree 4 makes them match."
+          },
+          {
+            "sequence": [
+              "rr",
+              "fl"
+            ],
+            "feedback": "Opposing ends belong to ODD degrees — degree 4 makes them match."
+          },
+          {
+            "sequence": [
+              "rl",
+              "fr"
+            ],
+            "feedback": "Opposing ends need an odd degree — the +3x doesn't outrank the −x⁴."
+          },
+          {
+            "sequence": [
+              "fr",
+              "rl"
+            ],
+            "feedback": "Opposing ends need an odd degree — the +3x doesn't outrank the −x⁴."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Even degree makes the ends MATCH; the negative lead points them both down.",
+        "successFeedback": "Right — even degree (ends match) with a negative lead (down)."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-end-behavior__buildExpression"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the far right.",
+      "predict": {
+        "prompt": "f(x) = -2x^5. The x^5 grows huge and positive on the right. What does the -2 do to that?",
+        "options": [
+          {
+            "id": "flip",
+            "label": "Flips it negative — the right end falls"
+          },
+          {
+            "id": "shrink",
+            "label": "Shrinks it toward zero, so the end levels off"
+          },
+          {
+            "id": "nothing",
+            "label": "Nothing to the direction — only the steepness"
+          }
+        ],
+        "outcomeId": "flip",
+        "reveal": "It flips the sign. A negative leading coefficient turns a huge positive x^5 into a huge negative value, so the far-right end of the chart is negative — and because x^5 keeps growing without bound, so does the fall."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for f(x) = -2x^5, then read the far-right interval — that is its end behaviour.",
+        "roots": [
+          {
+            "x": 0,
+            "mult": 5
+          }
+        ],
+        "leadingPositive": false,
+        "successFeedback": "The far-right interval is negative: as x grows huge and positive, f(x) is negative — and since x^5 grows without bound, f(x) plunges toward -∞ rather than settling anywhere. The left end is positive, because an ODD power crosses at the origin instead of bouncing off it.",
+        "crossFeedback": "The origin is a root of multiplicity 5 — odd, so the curve CROSSES there and the two sides must have opposite signs. Right now both ends agree, which would mean it touched and turned back.",
+        "bounceFeedback": "That flip would be right for an even multiplicity, where the curve bounces. Here the power is 5 — odd — so it crosses, and the sign genuinely changes."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pick the function from the ends.",
+      "conceptTag": "pf-end-behavior",
+      "explanationVariants": [
+        "Rising on both ends needs an even degree and a positive lead — only 3x⁶ − x qualifies.",
+        "Ends match → even degree; both up → positive leading coefficient."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which function RISES on both ends?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f(x) = 3x⁶ − x",
+            "correct": true,
+            "feedback": "Right — even degree 6, positive lead 3."
+          },
+          {
+            "id": "o2",
+            "label": "f(x) = x⁵ + 2",
+            "correct": false,
+            "feedback": "Odd degree: the ends must oppose, not match."
+          },
+          {
+            "id": "o3",
+            "label": "f(x) = −x² + 9",
+            "correct": false,
+            "feedback": "Even degree, but the negative lead sends both ends DOWN."
+          },
+          {
+            "id": "o4",
+            "label": "f(x) = −4x³",
+            "correct": false,
+            "feedback": "Odd degree AND negative lead: rises left, falls right — the ends oppose."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-end-behavior__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Left end of an odd one.",
+      "conceptTag": "pf-end-behavior",
+      "explanationVariants": [
+        "Odd degree, positive lead: down-left, up-right — so the LEFT end falls.",
+        "For huge negative x, x⁷ is huge negative and the +5 lead keeps it negative."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As x goes far NEGATIVE, what does f(x) = 5x⁷ + x² do?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "plunges toward −∞",
+            "correct": true,
+            "feedback": "Right — odd power keeps the sign: huge negative in, huge negative out."
+          },
+          {
+            "id": "o2",
+            "label": "soars toward +∞",
+            "correct": false,
+            "feedback": "An odd power keeps a negative input negative — (−big)⁷ is −big, times 5 still negative."
+          },
+          {
+            "id": "o3",
+            "label": "approaches 0",
+            "correct": false,
+            "feedback": "The +x² can't rescue it — the x⁷ term runs off to −∞ and takes f with it."
+          },
+          {
+            "id": "o4",
+            "label": "oscillates forever",
+            "correct": false,
+            "feedback": "Polynomial ends never oscillate — they commit to one direction. Here: down."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-end-behavior__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both ends at once.",
+      "conceptTag": "pf-end-behavior",
+      "explanationVariants": [
+        "Degree 3 is odd (ends oppose); lead −7 is negative: rises left, falls right.",
+        "Take x³'s down-left/up-right and flip it for the negative lead."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "What is the end behavior of f(x) = −7x³ + 50x² + 1?",
+        "tokens": [
+          {
+            "id": "rl",
+            "label": "rises on the left"
+          },
+          {
+            "id": "fl",
+            "label": "falls on the left"
+          },
+          {
+            "id": "rr",
+            "label": "rises on the right"
+          },
+          {
+            "id": "fr",
+            "label": "falls on the right"
+          }
+        ],
+        "correct": [
+          "rl",
+          "fr"
+        ],
+        "acceptAlso": [
+          [
+            "fr",
+            "rl"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "fl",
+              "rr"
+            ],
+            "feedback": "That's the POSITIVE-lead odd pattern — the −7 flips it."
+          },
+          {
+            "sequence": [
+              "rr",
+              "fl"
+            ],
+            "feedback": "That's the POSITIVE-lead odd pattern — the −7 flips it."
+          },
+          {
+            "sequence": [
+              "rl",
+              "rr"
+            ],
+            "feedback": "Matching ends need an EVEN degree — the 50x² doesn't set the ends; the −7x³ does."
+          },
+          {
+            "sequence": [
+              "rr",
+              "rl"
+            ],
+            "feedback": "Matching ends need an EVEN degree — the 50x² doesn't set the ends; the −7x³ does."
+          },
+          {
+            "sequence": [
+              "fl",
+              "fr"
+            ],
+            "feedback": "Matching ends need even degree — degree 3 forces the ends to oppose."
+          },
+          {
+            "sequence": [
+              "fr",
+              "fl"
+            ],
+            "feedback": "Matching ends need even degree — degree 3 forces the ends to oppose."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Odd degree makes the ends OPPOSE; the −7 lead flips the usual x³ pattern.",
+        "successFeedback": "Right — odd degree, negative lead: x³'s pattern, flipped."
+      },
+      "hints": [
+        "Only the leading term matters: −7x³.",
+        "Odd degree → the two ends oppose each other.",
+        "Negative lead → flip x³'s pattern: up-left, down-right."
+      ],
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-end-behavior__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Parity sets the pattern; the leading sign can flip it.",
+      "takeaways": [
+        "Even degree: ends match. Odd degree: ends oppose.",
+        "Positive lead: right end up. Negative lead: right end down.",
+        "Lower-degree terms never change the ends."
+      ],
+      "teaser": "Next: WHY the leading term rules — it simply outgrows everything else."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pf-end-behavior",
+      "concept": {
+        "id": "rem-pf0102-c",
+        "kind": "concept",
+        "body": "Two questions settle the ends: is the degree even or odd, and is the leading coefficient positive or negative? For x⁴: even and positive."
+      },
+      "check": {
+        "id": "rem-pf0102-k",
+        "kind": "check",
+        "body": "Read the small case.",
+        "conceptTag": "pf-end-behavior",
+        "explanationVariants": [
+          "Even degree, positive lead: both ends rise.",
+          "x⁴'s even power makes both far ends huge and positive."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is the end behavior of f(x) = x⁴?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "rises on both ends",
+              "correct": true,
+              "feedback": "Right — even degree, positive lead: up · up."
+            },
+            {
+              "id": "o2",
+              "label": "falls on both ends",
+              "correct": false,
+              "feedback": "Both-down needs a NEGATIVE lead — x⁴'s is +1."
+            },
+            {
+              "id": "o3",
+              "label": "falls left, rises right",
+              "correct": false,
+              "feedback": "Opposing ends belong to odd degrees — 4 is even, so the ends match."
+            },
+            {
+              "id": "o4",
+              "label": "rises left, falls right",
+              "correct": false,
+              "feedback": "Opposing ends belong to odd degrees — x⁴'s ends match: both up."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

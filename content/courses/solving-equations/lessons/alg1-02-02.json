@@ -1,0 +1,339 @@
+{
+  "id": "alg1-02-02",
+  "slug": "clear-with-the-lcd",
+  "title": "Clear with the LCD",
+  "courseId": "solving-equations",
+  "chapterId": "ch2-fractions",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "lcd-clear",
+      "body": "Two fractions? Clear them both at once. For **x/2 + x/3 = 5**, multiply EVERY term by the LCD 6: the fractions become whole — **3x + 2x = 30** — so 5x = 30 and x = 6.",
+      "narration": "Two fractions? Clear them both at once. For x over two plus x over three equals five, multiply every term by the least common denominator six: the fractions become whole — three x plus two x equals thirty — so five x equals thirty and x equals six."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each equation to its LCD.",
+      "conceptTag": "lcd-clear",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Pick the smallest multiplier that clears BOTH fractions.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "x/2 + x/3 = 5"
+          },
+          {
+            "id": "l2",
+            "label": "x/2 + x/5 = 7"
+          },
+          {
+            "id": "l3",
+            "label": "x/3 + x/4 = 7"
+          }
+        ],
+        "right": [
+          {
+            "id": "m6",
+            "label": "× 6 (LCD of 2 and 3)"
+          },
+          {
+            "id": "m10",
+            "label": "× 10 (LCD of 2 and 5)"
+          },
+          {
+            "id": "m12",
+            "label": "× 12 (LCD of 3 and 4)"
+          }
+        ],
+        "pairs": {
+          "l1": "m6",
+          "l2": "m10",
+          "l3": "m12"
+        },
+        "pairErrors": [
+          {
+            "left": "l1",
+            "right": "m12",
+            "feedback": "×12 clears 2 and 3, but it's not the SMALLEST — the LCD of 2 and 3 is 6."
+          },
+          {
+            "left": "l2",
+            "right": "m6",
+            "feedback": "×6 doesn't clear the /5 (6/5 isn't whole). The LCD of 2 and 5 is 10."
+          }
+        ],
+        "missFeedback": "The LCD is the smallest number both denominators divide into.",
+        "successFeedback": "Three LCDs found — the smallest clean multipliers!"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Clear and solve.",
+      "conceptTag": "lcd-clear",
+      "explanationVariants": [
+        "x/2 + x/3 = 5: ×6 everywhere gives 3x + 2x = 30, so 5x = 30 and x = 6.",
+        "Half of 6 is 3, a third of 6 is 2 — and 3 + 2 = 5. ✓ The LCD turns fractions into counting."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: x/2 + x/3 = 5",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The ×6 hit only the LEFT side: 5x = 5 gives 1. Both sides scale: 5x = 30, x = 6."
+          },
+          {
+            "value": 30,
+            "feedback": "30 is 5x, not x — one more step: 30 ÷ 5 = 6."
+          }
+        ],
+        "fallbackFeedback": "×6 every term: 3x + 2x = 30 → 5x = 30 → x = 6."
+      },
+      "hints": [
+        "Multiply EVERY term by 6.",
+        "3x + 2x = 30.",
+        "5x = 30, so x = 6."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "lcd-clear__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The LCD stamp hits **both sides** — scaling only the left breaks the balance, just like removing weight from one pan.",
+      "narration": "The LCD stamp hits both sides — scaling only the left breaks the balance, just like removing weight from one pan.",
+      "figure": "alg1-lcd"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the LCD solve.",
+      "conceptTag": "lcd-clear",
+      "widget": {
+        "type": "equationOutcomeLab",
+        "mode": "transform",
+        "answerMode": "sequence",
+        "prompt": "Solve x/2 + x/5 = 7. Drag the steps into order.",
+        "leftDisplay": "x/2 + x/5",
+        "rightDisplay": "7",
+        "leftCoeff": 0.7,
+        "leftConstant": 0,
+        "rightCoeff": 0,
+        "rightConstant": 7,
+        "relation": "eq",
+        "variable": "x",
+        "choices": [],
+        "operations": [
+          {
+            "id": "n-lcd",
+            "label": "multiply every term by 10 → 5x + 2x = 70",
+            "kind": "normalize",
+            "result": {
+              "leftCoeff": 7,
+              "leftConstant": 0,
+              "rightCoeff": 0,
+              "rightConstant": 70,
+              "relation": "eq"
+            },
+            "feedback": "Clear fractions (×10 everywhere), combine like terms, divide."
+          },
+          {
+            "id": "n-comb",
+            "label": "combine → 7x = 70",
+            "kind": "normalize",
+            "feedback": "x/2 and x/5 don't combine as-is — different denominators. Clear them with ×10 first, THEN combine 5x + 2x."
+          },
+          {
+            "id": "n-div",
+            "label": "divide by 7 → x = 10",
+            "kind": "scale",
+            "value": 0.14285714285714285,
+            "feedback": "Clear fractions (×10 everywhere), combine like terms, divide."
+          }
+        ],
+        "correctOrder": [
+          "n-lcd",
+          "n-comb",
+          "n-div"
+        ],
+        "requiredMoves": 3,
+        "numericErrors": [],
+        "tolerance": 0,
+        "explorationFeedback": "Apply the same legal operation to both sides and inspect how the variable and constants move.",
+        "fallbackFeedback": "Clear fractions (×10 everywhere), combine like terms, divide.",
+        "successFeedback": "Clear, combine, divide — x = 10."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Your turn with LCD 10.",
+      "conceptTag": "lcd-clear",
+      "explanationVariants": [
+        "x/2 + x/5 = 7: ×10 gives 5x + 2x = 70, so 7x = 70 and x = 10.",
+        "Half of 10 is 5, a fifth of 10 is 2 — and 5 + 2 = 7. ✓"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: x/2 + x/5 = 7",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The ×10 hit only the LEFT side: 7x = 7 gives 1. Both sides scale: 7x = 70, x = 10."
+          },
+          {
+            "value": 70,
+            "feedback": "70 is 7x, not x — divide by 7: x = 10."
+          }
+        ],
+        "fallbackFeedback": "×10 every term: 5x + 2x = 70 → 7x = 70 → x = 10."
+      },
+      "hints": [
+        "LCD of 2 and 5 is 10.",
+        "5x + 2x = 70.",
+        "7x = 70, so x = 10."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "lcd-clear__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why every term?",
+      "conceptTag": "lcd-clear",
+      "explanationVariants": [
+        "Multiplying is a both-sides move: scale the whole left AND the whole right, or the equation stops being true.",
+        "×6 on just x/2 changes the equation's meaning — every term on both sides must scale together."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When clearing x/2 + x/3 = 5 with ×6, which terms get multiplied?",
+        "options": [
+          {
+            "id": "a",
+            "label": "every term on both sides",
+            "correct": true,
+            "feedback": "Yes — x/2, x/3, AND the 5 all take the ×6: 3x + 2x = 30."
+          },
+          {
+            "id": "b",
+            "label": "only the fraction terms",
+            "feedback": "Then the left side grows ×6 while the right stays — the balance breaks. The 5 becomes 30 too."
+          },
+          {
+            "id": "c",
+            "label": "only the left side",
+            "feedback": "A one-sided scaling tips the scale — the sides stop being equal. Multiply the 5 as well: it becomes 30."
+          }
+        ]
+      },
+      "hints": [
+        "Multiplying is a both-sides move.",
+        "The 5 scales too.",
+        "Every term, both sides."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "lcd-clear__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Big LCD, solo!",
+      "conceptTag": "lcd-clear",
+      "explanationVariants": [
+        "x/3 + x/4 = 7: ×12 gives 4x + 3x = 84, so 7x = 84 and x = 12.",
+        "A third of 12 is 4, a quarter of 12 is 3 — and 4 + 3 = 7. ✓"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve for x: x/3 + x/4 = 7",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "The ×12 hit only the LEFT side: 7x = 7 gives 1. The 7 scales too: 7x = 84, x = 12."
+          },
+          {
+            "value": 84,
+            "feedback": "84 is 7x, not x — divide by 7: x = 12."
+          }
+        ],
+        "fallbackFeedback": "×12 every term: 4x + 3x = 84 → 7x = 84 → x = 12."
+      },
+      "hints": [
+        "LCD of 3 and 4 is 12.",
+        "4x + 3x = 84.",
+        "7x = 84, so x = 12."
+      ],
+      "variant": {
+        "gen": "a1-solving-equations",
+        "form": "lcd-clear__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Denominators cleared!",
+      "takeaways": [
+        "The LCD is the smallest number all denominators divide.",
+        "The LCD multiplies EVERY term, both sides.",
+        "After clearing, it's a whole-number solve."
+      ],
+      "teaser": "next: decimals — a ×10 shift does the same trick."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lcd-clear",
+      "concept": {
+        "id": "rem-lc-c",
+        "kind": "concept",
+        "body": "Slow it down with x/2 + x/2 = 4. Two halves of x make a whole x — so x = 4. With ×2: x + x = 8, 2x = 8, x = 4. Same answer, both roads.",
+        "narration": "Slow it down with x over two plus x over two equals four. Two halves of x make a whole x — so x equals four. With times two: x plus x equals eight, two x equals eight, x equals four. Same answer, both roads."
+      },
+      "check": {
+        "id": "rem-lc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "lcd-clear",
+        "explanationVariants": [
+          "x/2 + x/2 = 4: two halves make a whole, so x = 4.",
+          "×2 every term: x + x = 8, so 2x = 8 and x = 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve for x: x/2 + x/2 = 4",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "That halved the 4. Two halves of x already make one whole x, so x = 4."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is 2x after clearing (x + x = 8) — divide by 2: x = 4."
+            }
+          ],
+          "fallbackFeedback": "x/2 + x/2 = x, so x = 4."
+        }
+      }
+    }
+  ]
+}

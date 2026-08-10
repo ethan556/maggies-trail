@@ -1,0 +1,292 @@
+{
+  "id": "rr-05-02",
+  "slug": "chaining-conversions",
+  "title": "Chaining Conversions",
+  "courseId": "ratios-rates",
+  "chapterId": "ch5-converting",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sometimes there's no direct rate — so **chain two**. Hours to seconds has no single number handy, but hours → minutes (×60) → seconds (×60) does the job: 2 hours = 120 minutes = **7200 seconds**. Each link is one ratio; run them in order and the units hand off cleanly.",
+      "figure": "rr-chain"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "First link.",
+      "conceptTag": "chain-convert",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Step one of hours → seconds: how many minutes are in 2 hours?",
+        "answer": 120,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 62,
+            "feedback": "62 added 60 and 2. Hours to minutes multiplies: 2 × 60 = 120."
+          },
+          {
+            "value": 30,
+            "feedback": "30 divided 60 ÷ 2 — wrong direction. Minutes are smaller: 2 × 60 = 120."
+          }
+        ],
+        "fallbackFeedback": "2 hours × 60 = 120 minutes."
+      },
+      "hints": [
+        "60 minutes per hour.",
+        "2 × 60.",
+        "120."
+      ],
+      "explanationVariants": [
+        "Two hours is 120 minutes.",
+        "Scale 60 : 1 by 2."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Second link.",
+      "conceptTag": "chain-convert",
+      "explanationVariants": [
+        "120 minutes × 60 seconds/minute = 7200 seconds.",
+        "Each minute is 60 seconds, and there are 120 of them: 7200."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Step two: how many seconds are in 120 minutes?",
+        "answer": 7200,
+        "tolerance": 0,
+        "unit": "seconds",
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "180 added 120 and 60. Minutes to seconds multiplies: 120 × 60 = 7200."
+          },
+          {
+            "value": 2,
+            "feedback": "2 divided 120 ÷ 60 — that heads back toward hours. Seconds are smaller: 120 × 60 = 7200."
+          }
+        ],
+        "fallbackFeedback": "120 × 60 = 7200 seconds."
+      },
+      "hints": [
+        "60 seconds per minute.",
+        "120 × 60.",
+        "7200."
+      ],
+      "variant": {
+        "gen": "metric-convert",
+        "form": "rrMinutesSeconds"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The safety check for any chain: **watch the units hand off.** Hours → minutes → seconds moves smaller-smaller, so you multiply at each step. If a link went to a bigger unit, that link would divide. Track the unit at every stage and you can't chain in the wrong direction.",
+      "figure": "rr-chain"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Both links at once.",
+      "conceptTag": "chain-convert",
+      "explanationVariants": [
+        "3 hours × 60 = 180 minutes, then × 60 = 10,800 seconds.",
+        "Two ×60 steps: 3 × 60 × 60 = 10,800."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many seconds are in 3 hours? (Chain: hours → minutes → seconds.)",
+        "answer": 10800,
+        "tolerance": 0,
+        "unit": "seconds",
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "120 added 60 + 60 somewhere. Chain by multiplying: 3 × 60 × 60 = 10,800."
+          },
+          {
+            "value": 180,
+            "feedback": "180 is just 3 hours in MINUTES (3 × 60). One more link to seconds: 180 × 60 = 10,800."
+          }
+        ],
+        "fallbackFeedback": "3 × 60 × 60 = 10,800 seconds."
+      },
+      "hints": [
+        "Hours to minutes first: 3 × 60 = 180.",
+        "Then minutes to seconds: × 60.",
+        "180 × 60."
+      ],
+      "variant": {
+        "gen": "metric-convert",
+        "form": "rrHoursSeconds"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order the chain.",
+      "conceptTag": "chain-convert",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the steps in order to convert 2 kilometers into centimeters.",
+        "items": [
+          {
+            "id": "s3",
+            "label": "× 100 → 200,000 centimeters"
+          },
+          {
+            "id": "s1",
+            "label": "Start: 2 kilometers"
+          },
+          {
+            "id": "s4",
+            "label": "Done: 200,000 cm"
+          },
+          {
+            "id": "s2",
+            "label": "× 1000 → 2000 meters"
+          }
+        ],
+        "correctOrder": [
+          "s1",
+          "s2",
+          "s3",
+          "s4"
+        ],
+        "missFeedback": "Chain from the biggest unit down: kilometers → meters (×1000) → centimeters (×100). Each step moves to a smaller unit, so each multiplies.",
+        "successFeedback": "Ordered — kilometers to meters to centimeters, multiplying down the chain."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A two-link total.",
+      "conceptTag": "chain-convert",
+      "explanationVariants": [
+        "2 km × 1000 = 2000 m, then × 100 = 200,000 cm.",
+        "Two multiplying links: 2 × 1000 × 100 = 200,000."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many centimeters are in 2 kilometers? (km → m → cm.)",
+        "answer": 200000,
+        "tolerance": 0,
+        "unit": "cm",
+        "commonErrors": [
+          {
+            "value": 2100,
+            "feedback": "2100 added the factors (1000 + 100) instead of chaining them. Multiply each link: 2 × 1000 × 100 = 200,000."
+          },
+          {
+            "value": 2000,
+            "feedback": "2000 stopped at METERS (2 × 1000). One more link to centimeters: 2000 × 100 = 200,000."
+          }
+        ],
+        "fallbackFeedback": "2 × 1000 × 100 = 200,000 cm."
+      },
+      "hints": [
+        "km to m: × 1000.",
+        "m to cm: × 100.",
+        "2 × 1000 × 100."
+      ],
+      "variant": {
+        "gen": "metric-convert",
+        "form": "multistep"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Chain, then compare.",
+      "conceptTag": "chain-convert",
+      "hints": [
+        "Convert the day to hours first.",
+        "1 day = 24 hours; is that more or fewer than 20 hours?",
+        "No second conversion needed — just compare in the same unit."
+      ],
+      "explanationVariants": [
+        "1 day = 24 hours, which is more than 20 hours — so the day is longer.",
+        "Put both in hours: 24 vs 20; the day wins."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is longer: 1 day, or 20 hours?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1 day — it equals 24 hours, more than 20",
+            "correct": true,
+            "feedback": "Right — convert the day to hours (× 24) and compare: 24 > 20."
+          },
+          {
+            "id": "b",
+            "label": "20 hours — the number is bigger... no",
+            "feedback": "20 is a bigger number, but the UNITS differ. Convert first: 1 day = 24 hours > 20 hours."
+          },
+          {
+            "id": "c",
+            "label": "They're equal — a day is about 20 hours",
+            "feedback": "A day is 24 hours, not 20. Once both are in hours, the day is longer."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "metric-convert",
+        "form": "rrCompareUnits"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Link the ratios in order.",
+      "takeaways": [
+        "No direct rate? Chain two: hours → minutes → seconds.",
+        "Multiply toward smaller units at each link; divide toward bigger.",
+        "Compare quantities by converting both to the SAME unit first."
+      ],
+      "teaser": "course finale: every ratio tool on one problem set."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "chain-convert",
+      "concept": {
+        "id": "rem-cc-c",
+        "kind": "concept",
+        "body": "Quick rewind. **One link at a time.** Hours → seconds: first hours → minutes (× 60), then minutes → seconds (× 60). Finish one conversion before starting the next, and keep track of which unit you're in."
+      },
+      "check": {
+        "id": "rem-cc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "chain-convert",
+        "explanationVariants": [
+          "1 hour × 60 = 60 minutes, then × 60 = 3600 seconds.",
+          "Two ×60 links: 60 × 60 = 3600."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many seconds are in 1 hour? (hours → minutes → seconds)",
+          "answer": 3600,
+          "tolerance": 0,
+          "unit": "seconds",
+          "commonErrors": [
+            {
+              "value": 120,
+              "feedback": "120 added 60 + 60. Chain by multiplying: 60 × 60 = 3600."
+            },
+            {
+              "value": 60,
+              "feedback": "60 stopped at minutes. One more link: 60 × 60 = 3600 seconds."
+            }
+          ],
+          "fallbackFeedback": "1 × 60 × 60 = 3600 seconds."
+        }
+      }
+    }
+  ]
+}

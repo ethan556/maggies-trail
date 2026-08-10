@@ -1,0 +1,452 @@
+{
+  "id": "exp-02-02",
+  "slug": "decay-models",
+  "title": "Decay Models",
+  "courseId": "exponential-functions",
+  "chapterId": "ch2-modeling",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-decay",
+      "body": "Decay models shrink by a fixed factor. A substance that halves each hour from 8000 is V(x) = 8000 · (1/2)ˣ, where x is hours. Each step multiplies by 1/2, so the amount falls toward zero."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "After two hours.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 0.5,
+        "startBase": 1.5,
+        "showMirror": false,
+        "prompt": "V(x) = 8000·bˣ halves each hour. Slide the base until b² reads 0.25.",
+        "successFeedback": "Base 0.5, so b² = 0.25 and V(2) = 8000 × 0.25 = 2000. A base below 1 is decay, and two halvings leave a quarter — not half of a half taken away, but half OF a half.",
+        "lowFeedback": "b² is below 0.25, so this decays faster than halving. Raise the base toward 0.5.",
+        "highFeedback": "b² is above 0.25 — slower than halving. Lower the base toward 0.5."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Three half-steps.",
+      "conceptTag": "exp-decay-model",
+      "explanationVariants": [
+        "Halve three times: 640 → 320 → 160 → 80.",
+        "A(3) = 640 · (1/2)³ = 640/8 = 80."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A drug halves each period: A(x) = 640 * (1/2)^x. What is A(3)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount",
+            "value": 640
+          },
+          {
+            "id": "h",
+            "label": "the decay factor 1/2 (one factor per step)",
+            "value": 0.5
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "a"
+              },
+              "right": {
+                "op": "const",
+                "id": "h"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "h"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 160,
+            "feedback": "That's A(2). One more halving gives A(3) = 80."
+          },
+          {
+            "value": 320,
+            "feedback": "That's A(1). Keep halving: A(2) = 160, A(3) = 80."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:h",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "A(3) = 640/8 = 80.",
+        "successFeedback": "A(3) = 640/8 = 80."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "decayModel"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The starting amount is the value at x = 0. For V(x) = 8000 · (1/2)ˣ, V(0) = 8000. Then 4000, 2000, 1000, … — halving toward zero, but never quite reaching it.",
+      "figure": "exp-v0-8000"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the start.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For V(x) = 8000 * (1/2)^x, what is the starting value V(0)?",
+        "answer": 8000,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4000,
+            "feedback": "That's V(1), after one step. At x = 0, (1/2)⁰ = 1, so V(0) = 8000."
+          },
+          {
+            "value": 1,
+            "feedback": "(1/2)⁰ = 1, but you still multiply by a: V(0) = 8000."
+          }
+        ],
+        "fallbackFeedback": "V(0) = 8000 · (1/2)⁰ = 8000."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Decay by other factors works the same way. A value that keeps 1/3 each step from 729 is V(x) = 729 · (1/3)ˣ: 729, 243, 81, … The decay factor sets how fast it falls.",
+      "figure": "exp-keep-third"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Thirds this time.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A signal keeps a third each step: V(x) = 729 * (1/3)^x. What is V(2)?",
+        "answer": 81,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 243,
+            "feedback": "That's V(1) = 729 · ⅓. One more step: V(2) = 81."
+          },
+          {
+            "value": 27,
+            "feedback": "That's V(3). After two steps, V(2) = 81."
+          }
+        ],
+        "fallbackFeedback": "V(2) = 729 · (1/3)² = 729/9 = 81."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A depreciating car.",
+      "conceptTag": "exp-decay-model",
+      "explanationVariants": [
+        "Halve three times: 24000 → 12000 → 6000 → 3000.",
+        "V(3) = 24000 · (1/2)³ = 24000/8 = 3000."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A car's value halves each period: V(x) = 24000 * (1/2)^x. What is V(3)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount",
+            "value": 24000
+          },
+          {
+            "id": "h",
+            "label": "the decay factor 1/2 (one factor per step)",
+            "value": 0.5
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "a"
+              },
+              "right": {
+                "op": "const",
+                "id": "h"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "h"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 6000,
+            "feedback": "That's V(2). One more halving gives V(3) = 3000."
+          },
+          {
+            "value": 12000,
+            "feedback": "That's V(1). Keep halving: V(2) = 6000, V(3) = 3000."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:h",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "V(3) = 24000/8 = 3000.",
+        "successFeedback": "V(3) = 24000/8 = 3000."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "decayModel"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Its starting amount.",
+      "conceptTag": "exp-decay-model",
+      "explanationVariants": [
+        "A(0) = 640, since (1/2)⁰ = 1.",
+        "The starting amount is the coefficient, 640."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "For A(x) = 640 * (1/2)^x, what is the starting amount A(0)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the coefficient a",
+            "value": 640
+          },
+          {
+            "id": "h",
+            "label": "the decay factor 1/2 ((1/2)^0 = 1)",
+            "value": 0.5
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "a"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "h"
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 320,
+            "feedback": "That's A(1). At x = 0, (1/2)⁰ = 1, so A(0) = 640."
+          },
+          {
+            "value": 1,
+            "feedback": "(1/2)⁰ = 1, but you still multiply by a: A(0) = 640."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:h",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "A(0) = 640 · (1/2)⁰ = 640.",
+        "successFeedback": "A(0) = 640 · (1/2)⁰ = 640."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "decayStart"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Quarters, two steps out.",
+      "conceptTag": "exp-decay-model",
+      "explanationVariants": [
+        "(1/4)² = 1/16, then 256 · 1/16 = 16.",
+        "Q(2) = 256 · (1/4)² = 256/16 = 16."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A material decays to a quarter each step: Q(x) = 256 * (1/4)^x. What is Q(2)?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "a",
+            "label": "the start amount",
+            "value": 256
+          },
+          {
+            "id": "h",
+            "label": "the decay factor 1/4 (one factor per step)",
+            "value": 0.25
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "a"
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "h"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 64,
+            "feedback": "That's Q(1) = 256 · ¼. One more step: Q(2) = 16."
+          },
+          {
+            "value": 4,
+            "feedback": "That's Q(3). After two steps, Q(2) = 16."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:a",
+          "approx:h",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Q(2) = 256 · (1/4)² = 256/16 = 16.",
+        "successFeedback": "Q(2) = 256 · (1/4)² = 256/16 = 16."
+      },
+      "hints": [
+        "Apply the factor 1/4 twice: (1/4)² = 1/16.",
+        "Multiply the start: 256 · 1/16.",
+        "That gives 16."
+      ],
+      "variant": {
+        "gen": "exp-function",
+        "form": "decayModel"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Decay models multiply a starting amount by a factor below 1 each period.",
+      "takeaways": [
+        "V(x) = a · bˣ with 0 < b < 1 shrinks toward zero.",
+        "The starting amount is V(0) = a.",
+        "Apply the decay factor once per period."
+      ],
+      "teaser": "next: turning percents into growth and decay factors."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-decay-model",
+      "concept": {
+        "id": "rem-edm-c",
+        "kind": "concept",
+        "body": "A decay model V(x) = a · bˣ with b < 1 multiplies the start by b each step. For V(x) = 8000 · (1/2)ˣ: V(0) = 8000, V(1) = 4000, V(2) = 2000."
+      },
+      "check": {
+        "id": "rem-edm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-decay-model",
+        "explanationVariants": [
+          "Halve twice: 8000 → 4000 → 2000.",
+          "V(2) = 8000/4 = 2000."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For V(x) = 8000 * (1/2)^x, what is V(2)?",
+          "answer": 2000,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4000,
+              "feedback": "That's V(1); halve again for V(2) = 2000."
+            },
+            {
+              "value": 1000,
+              "feedback": "That's V(3); V(2) = 2000."
+            }
+          ],
+          "fallbackFeedback": "V(2) = 8000/4 = 2000."
+        }
+      }
+    }
+  ]
+}

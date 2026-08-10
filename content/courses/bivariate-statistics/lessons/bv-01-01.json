@@ -1,0 +1,478 @@
+{
+  "id": "bv-01-01",
+  "slug": "plotting-paired-data",
+  "title": "Plotting Paired Data",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch1-scatter-association",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **scatter plot** shows **paired data** — two numbers measured on each thing. Each dot uses one measurement for its across-position (x) and the other for its up-position (y). One dot per item.",
+      "figure": "scatter-association"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Plot a data point.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "A plant is 3 weeks old and 5 cm tall. Plot the point (weeks = 3, height = 5).",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 5,
+            "y": 3,
+            "feedback": "You swapped the numbers — weeks (3) is the across-value and height (5) is the up-value: plot (3, 5)."
+          },
+          {
+            "x": 3,
+            "y": 3,
+            "feedback": "The height is 5, not 3 — go up to 5: plot (3, 5)."
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "feedback": "The plant is 3 weeks old, so go across to 3: plot (3, 5)."
+          }
+        ],
+        "missFeedback": "Each dot pairs the two measurements — across for weeks, up for height.",
+        "successFeedback": "Plotted — across to 3 weeks, up to 5 cm."
+      },
+      "predict": {
+        "prompt": "The plant is 3 weeks old and 5 cm tall. Would plotting (5, 3) land on the same spot as (3, 5)?",
+        "options": [
+          {
+            "id": "different",
+            "label": "No — a different spot"
+          },
+          {
+            "id": "same",
+            "label": "Yes — the same spot"
+          },
+          {
+            "id": "depends",
+            "label": "Depends on the grid"
+          }
+        ],
+        "outcomeId": "different",
+        "reveal": "Order carries meaning: the first number is always the across, the second the up. Swap them and the plant teleports."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Place ordered pairs and coordinate each observation across two quantitative variables.",
+        "invariants": [
+          "coordinate-order-matches-variable-order",
+          "one-point-links-one-paired-observation"
+        ],
+        "misconceptions": [
+          "swap-coordinates",
+          "treat-axes-as-unrelated-lists"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-plotPoint-new-context",
+        "delayed": false
+      },
+      "conceptTag": "bv-scatter-plot"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two measurements must stay in order: the first number is always the across-value, the second the up-value. Swapping them puts the dot in the wrong place and can hide the real pattern in the data.",
+      "figure": "bv-pair-order"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read a plotted point.",
+      "conceptTag": "bv-scatter-plot",
+      "variant": {
+        "gen": "g8-bv-scatter-basics",
+        "form": "bvScatterPair"
+      },
+      "explanationVariants": [
+        "A dot at across-4, up-7 represents the pair (4, 7): 4 hours studied, 7 problems solved.",
+        "Read across first (4), then up (7): the pair is (4, 7)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On a study-time scatter plot (x = hours, y = problems solved), a dot sits at across-position 4, up-position 7. What pair does it show?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4 hours, 7 problems",
+            "correct": true,
+            "feedback": "Right — across is hours (4), up is problems (7)."
+          },
+          {
+            "id": "b",
+            "label": "7 hours, 4 problems",
+            "correct": false,
+            "feedback": "That swaps them — across (4) is hours, up (7) is problems: 4 hours, 7 problems."
+          },
+          {
+            "id": "c",
+            "label": "11 total",
+            "correct": false,
+            "feedback": "A scatter point shows a PAIR, not a sum — it's 4 hours and 7 problems."
+          },
+          {
+            "id": "d",
+            "label": "4 problems, 7 hours",
+            "correct": false,
+            "feedback": "The across-axis is hours (4) and the up-axis is problems (7): 4 hours, 7 problems."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Plot another point.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "A student studied 2 hours and solved 4 problems. Plot the point (hours = 2, problems = 4).",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 4,
+            "y": 2,
+            "feedback": "You swapped them — hours (2) is across, problems (4) is up: plot (2, 4)."
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "feedback": "The student solved 4 problems, so go up to 4: plot (2, 4)."
+          },
+          {
+            "x": 2,
+            "y": 6,
+            "feedback": "The problems value is 4, not 6 — plot (2, 4)."
+          }
+        ],
+        "missFeedback": "Across for hours, up for problems.",
+        "successFeedback": "Plotted — across to 2 hours, up to 4 problems."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Place ordered pairs and coordinate each observation across two quantitative variables.",
+        "invariants": [
+          "coordinate-order-matches-variable-order",
+          "one-point-links-one-paired-observation"
+        ],
+        "misconceptions": [
+          "swap-coordinates",
+          "treat-axes-as-unrelated-lists"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-plotPoint-new-context",
+        "delayed": false
+      },
+      "conceptTag": "bv-scatter-plot"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One dot per item.",
+      "conceptTag": "bv-scatter-plot",
+      "variant": {
+        "gen": "g8-bv-scatter-basics",
+        "form": "bvScatterCount"
+      },
+      "explanationVariants": [
+        "Each item (each student) contributes exactly one dot, holding its two measurements.",
+        "One dot represents one item's pair of values."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On a scatter plot of 10 students' height and shoe size, how many dots appear?",
+        "options": [
+          {
+            "id": "a",
+            "label": "10 — one dot per student",
+            "correct": true,
+            "feedback": "Right — each student is one dot holding both measurements."
+          },
+          {
+            "id": "b",
+            "label": "20 — two per student",
+            "correct": false,
+            "feedback": "Each student is ONE dot; the two measurements are its across and up positions, not two dots."
+          },
+          {
+            "id": "c",
+            "label": "2 — one per measurement",
+            "correct": false,
+            "feedback": "The plot has one dot per STUDENT (10), not one per measurement."
+          },
+          {
+            "id": "d",
+            "label": "100",
+            "correct": false,
+            "feedback": "It's one dot per student: 10 dots."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why pair the data?",
+      "conceptTag": "bv-scatter-plot",
+      "variant": {
+        "gen": "g8-bv-scatter-basics",
+        "form": "bvScatterPurpose"
+      },
+      "explanationVariants": [
+        "A scatter plot reveals how two quantities move together — a relationship a single-variable plot can't show.",
+        "Pairing lets you see whether one measurement relates to the other."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What can a scatter plot show that a plot of just one measurement cannot?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Whether the two measurements are related",
+            "correct": true,
+            "feedback": "Right — pairing the data reveals a relationship between the two quantities."
+          },
+          {
+            "id": "b",
+            "label": "The exact average of one measurement",
+            "correct": false,
+            "feedback": "A single-variable plot shows an average fine — the scatter plot's job is the RELATIONSHIP between two."
+          },
+          {
+            "id": "c",
+            "label": "Nothing new",
+            "correct": false,
+            "feedback": "It shows something new: how the two measurements move together."
+          },
+          {
+            "id": "d",
+            "label": "Only the largest value",
+            "correct": false,
+            "feedback": "It reveals the relationship between two measurements, not just an extreme value."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Plot a taller, older plant.",
+      "conceptTag": "bv-scatter-plot",
+      "variant": {
+        "gen": "g8-bv-scatter-basics",
+        "form": "bvScatterPlot"
+      },
+      "explanationVariants": [
+        "A 5-week-old, 6-cm plant is the pair (5, 6): across to 5, up to 6.",
+        "Across for weeks (5), up for height (6): plot (5, 6)."
+      ],
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "A second plant is 5 weeks old and 6 cm tall. Plot the point (weeks = 5, height = 6).",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "targets": [
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 6,
+            "y": 5,
+            "feedback": "You swapped them — weeks (5) is across, height (6) is up: plot (5, 6)."
+          },
+          {
+            "x": 5,
+            "y": 5,
+            "feedback": "The height is 6, not 5 — go up to 6: plot (5, 6)."
+          },
+          {
+            "x": 4,
+            "y": 6,
+            "feedback": "The plant is 5 weeks old — go across to 5: plot (5, 6)."
+          }
+        ],
+        "missFeedback": "Across for weeks, up for height.",
+        "successFeedback": "Plotted — this older plant sits up and to the right of the younger one."
+      },
+      "hints": [
+        "The first number (weeks = 5) is the across-position.",
+        "The second number (height = 6) is the up-position.",
+        "Go across to 5, then up to 6: plot (5, 6)."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Place ordered pairs and coordinate each observation across two quantitative variables.",
+        "invariants": [
+          "coordinate-order-matches-variable-order",
+          "one-point-links-one-paired-observation"
+        ],
+        "misconceptions": [
+          "swap-coordinates",
+          "treat-axes-as-unrelated-lists"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-plotPoint-new-context",
+        "delayed": false
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A scatter plot places one dot per item, pairing its two measurements as across and up.",
+      "takeaways": [
+        "Each dot pairs two measurements: first across (x), then up (y).",
+        "One dot per item — keep the two numbers in order.",
+        "Scatter plots reveal relationships between two quantities."
+      ],
+      "teaser": "Next: reading the overall direction — association."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-scatter-plot",
+      "concept": {
+        "id": "rem-bv0101-c",
+        "kind": "concept",
+        "body": "A scatter plot shows paired data with one dot per item. The first measurement is the across-position (x), the second is the up-position (y). Keep the two numbers in order."
+      },
+      "check": {
+        "id": "rem-bv0101-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-scatter-plot",
+        "explanationVariants": [
+          "A dot at across-3, up-6 shows the pair (3, 6).",
+          "Read across (3) then up (6): the pair is (3, 6)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A scatter-plot dot sits at across-position 3, up-position 6. What pair does it represent?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(3, 6)",
+              "correct": true,
+              "feedback": "Right — across is 3, up is 6."
+            },
+            {
+              "id": "b",
+              "label": "(6, 3)",
+              "correct": false,
+              "feedback": "That swaps them — across (3) comes first: (3, 6)."
+            },
+            {
+              "id": "c",
+              "label": "9",
+              "correct": false,
+              "feedback": "A point is a PAIR, not a sum: (3, 6)."
+            },
+            {
+              "id": "d",
+              "label": "(3, 3)",
+              "correct": false,
+              "feedback": "The up-value is 6, not 3: (3, 6)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

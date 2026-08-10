@@ -1,0 +1,389 @@
+{
+  "id": "cg-03-02",
+  "slug": "the-quadrilateral-family",
+  "title": "The Quadrilateral Family",
+  "courseId": "coordinate-geometry",
+  "chapterId": "ch3-shape-families",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Meet the family. Any 4-sided shape is a **quadrilateral**. Two pairs of parallel sides make it a **parallelogram**. A parallelogram with 4 right angles is a **rectangle**; with 4 equal sides, a **rhombus**; with BOTH, a **square**. Each level keeps everything from its parent and adds one new attribute.",
+      "figure": "quad-family-tree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the rectangle branch yourself.",
+      "conceptTag": "quad-family",
+      "widget": {
+        "type": "quadDrag",
+        "prompt": "Three corners are pinned. Move the tangerine fourth corner until the shape names itself a rectangle.",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            6,
+            3
+          ]
+        ],
+        "targetX": 0,
+        "targetY": 3,
+        "startX": 2,
+        "startY": 5,
+        "gridMax": 8,
+        "targetName": "a rectangle",
+        "successFeedback": "You built a rectangle: opposite sides match, the diagonals match, and every corner is square. The name came from the attributes you constructed.",
+        "sideFeedback": "The moving corner is not aligned to make both pairs of opposite sides equal. Compare the live side lengths.",
+        "angleFeedback": "The opposite sides now match, but the corners are not all square. Use the right-angle marks and equal diagonals as evidence."
+      },
+      "hints": [
+        "Which attribute does it add: angles or sides?",
+        "Right angles → the rectangle branch.",
+        "Not all sides equal, so not square."
+      ],
+      "explanationVariants": [
+        "Right angles without equal sides is a rectangle.",
+        "It takes the angle branch of the tree, not the side branch."
+      ],
+      "predict": {
+        "prompt": "Can a shape be BOTH a rectangle and a parallelogram at the same time?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — every rectangle IS a parallelogram"
+          },
+          {
+            "id": "no",
+            "label": "No — it must be one or the other"
+          },
+          {
+            "id": "square",
+            "label": "Only squares can be both"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Shape families nest: a rectangle has two pairs of parallel sides, so it already qualifies as a parallelogram — one with right angles as a bonus."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Construct a rectangle by coordinating opposite-side equality, diagonal equality, and right angles.",
+        "invariants": [
+          "four-sided-closed-figure",
+          "attributes-determine-family"
+        ],
+        "misconceptions": [
+          "prototype-only",
+          "single-attribute-only"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "diagram",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "language",
+        "fadeLevel": 1,
+        "transferFamily": "quadrilateral-counterexamples",
+        "delayed": true,
+        "counterfactualPrompt": "Move the corner away from the target. Which single attribute breaks first, and how does the family name change?",
+        "explanation": {
+          "prompt": "Why does the finished shape belong to the rectangle family?",
+          "options": [
+            {
+              "id": "attr",
+              "label": "Its measured attributes force four right angles and equal opposite sides.",
+              "correct": true,
+              "feedback": "Exactly. The classification follows from invariant attributes, not how the drawing happens to look."
+            },
+            {
+              "id": "look",
+              "label": "It looks like the rectangles I remember.",
+              "feedback": "Appearance can mislead after a rotation or stretch. Use the live side, diagonal, and angle evidence."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "What makes a square a square?",
+      "conceptTag": "quad-family",
+      "explanationVariants": [
+        "Equal sides is the extra attribute.",
+        "Rectangles + equal sides = squares."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Every square is a rectangle. What EXTRA attribute makes a square special among rectangles?",
+        "options": [
+          {
+            "id": "a",
+            "label": "All four sides are equal",
+            "correct": true,
+            "feedback": "Right — equal sides is the square's addition to the rectangle package."
+          },
+          {
+            "id": "b",
+            "label": "It has more right angles",
+            "feedback": "Still exactly 4 — inherited from rectangles. The addition is equal SIDES."
+          },
+          {
+            "id": "c",
+            "label": "Its opposite sides are parallel",
+            "feedback": "Every rectangle already has that (inherited from parallelograms). The square's new attribute is equal sides."
+          }
+        ]
+      },
+      "hints": [
+        "What do all rectangles already have?",
+        "Angles and parallel pairs come inherited.",
+        "The new thing is the sides."
+      ],
+      "variant": {
+        "gen": "attributes",
+        "form": "cgSquareExtra"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One cousin stands apart: the **trapezoid**, which in this course means **exactly one pair of parallel sides**. (Some books say \"at least one pair\" — we use \"exactly one.\") Under our definition, a trapezoid is never a parallelogram, and a parallelogram is never a trapezoid: two pairs is one too many.",
+      "figure": "cg-trapezoid"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Apply the definition.",
+      "conceptTag": "quad-family",
+      "explanationVariants": [
+        "Two pairs breaks 'exactly one': not a trapezoid.",
+        "The definitions make the categories disjoint here."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Using our definition (exactly one pair of parallel sides), is a parallelogram a trapezoid?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — it has two pairs of parallel sides, one too many",
+            "correct": true,
+            "feedback": "Right — exactly-one-pair rules parallelograms out."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it has parallel sides",
+            "feedback": "That reads the definition as \"at least one pair\" — the other convention. Ours says EXACTLY one, so two pairs disqualifies it."
+          },
+          {
+            "id": "c",
+            "label": "Only if its sides are equal",
+            "feedback": "Side lengths aren't the test at all — the trapezoid definition counts parallel PAIRS, and a parallelogram has two."
+          }
+        ]
+      },
+      "hints": [
+        "Count the parallel pairs, nothing else.",
+        "A parallelogram has two.",
+        "Exactly one means two is out."
+      ],
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgParallelogramTrapezoid"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort four parallelograms.",
+      "conceptTag": "quad-family",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Each shape below is a parallelogram. Sort each one into the most specific family it belongs to.",
+        "buckets": [
+          {
+            "id": "rect",
+            "label": "Rectangle (4 right angles)"
+          },
+          {
+            "id": "rhom",
+            "label": "Rhombus (4 equal sides)"
+          },
+          {
+            "id": "square",
+            "label": "Square (both)"
+          },
+          {
+            "id": "para",
+            "label": "Just a parallelogram"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "Right angles, sides 6, 3, 6, 3",
+            "bucketId": "rect",
+            "feedback": "Right angles put it in the rectangle branch, and sides 6, 3, 6, 3 aren't all equal — so rectangle, not rhombus or square."
+          },
+          {
+            "id": "p2",
+            "label": "All sides 5, tilted corners",
+            "bucketId": "rhom",
+            "feedback": "Four equal sides make it a rhombus; the tilted corners mean no right angles, so it can't be a rectangle or square."
+          },
+          {
+            "id": "p3",
+            "label": "Right angles, all sides 4",
+            "bucketId": "square",
+            "feedback": "It has BOTH special attributes — right angles and equal sides — so the most specific family is square."
+          },
+          {
+            "id": "p4",
+            "label": "Sides 7, 4, 7, 4, tilted corners",
+            "bucketId": "para",
+            "feedback": "Neither addition is present here — the corners are tilted and the sides come in two lengths — so it stays just a parallelogram."
+          }
+        ],
+        "missFeedback": "Check two things per shape: right angles? all sides equal? Angles alone → rectangle; sides alone → rhombus; both → square; neither → plain parallelogram.",
+        "successFeedback": "All four placed — you just walked the whole family tree."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Equal sides, measured.",
+      "conceptTag": "quad-family",
+      "explanationVariants": [
+        "All four sides are 6, so the perimeter is 4 × 6 = 24.",
+        "The rhombus attribute (equal sides) makes the perimeter one multiplication."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rhombus has all sides equal to 6 units. What is its perimeter, in units?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 adds only two sides. A quadrilateral has four: 4 × 6 = 24."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is one side. Perimeter goes all the way around: 4 × 6 = 24."
+          }
+        ],
+        "fallbackFeedback": "Four equal sides: 4 × 6 = 24 units."
+      },
+      "variant": {
+        "gen": "quadrilaterals",
+        "form": "cgEqualSidePerimeter"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Only one claim survives.",
+      "conceptTag": "quad-family",
+      "hints": [
+        "Test each claim against the tree.",
+        "A square has 4 equal sides — which family does that admit it to?",
+        "Equal sides is the rhombus attribute."
+      ],
+      "explanationVariants": [
+        "Squares have 4 equal sides, so every square is a rhombus; the other claims fail on counterexamples.",
+        "Only the downward claim holds — a 5-by-2 rectangle and a tilted parallelogram sink the others."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Exactly ONE of these claims is true. Which?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Every square is a rhombus",
+            "correct": true,
+            "feedback": "Right — a square has 4 equal sides, the rhombus attribute, so it belongs to that family too."
+          },
+          {
+            "id": "b",
+            "label": "Every rectangle is a square",
+            "feedback": "A 5-by-2 rectangle is the counterexample — its sides aren't all equal. Squares sit INSIDE rectangles, not the reverse."
+          },
+          {
+            "id": "c",
+            "label": "Every parallelogram is a rectangle",
+            "feedback": "A tilted parallelogram with no right angles is the counterexample. Rectangles are the parallelograms that ADD right angles."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "hierarchyTruth"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One tree, four branches.",
+      "takeaways": [
+        "Quadrilateral → parallelogram → rectangle / rhombus → square; each level adds one attribute.",
+        "A square is both a rectangle and a rhombus — it has both additions.",
+        "Our trapezoid has exactly one parallel pair, so it sits outside the parallelogram branch."
+      ],
+      "teaser": "next: triangles — one shape, two family systems at once."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-family",
+      "concept": {
+        "id": "rem-qf-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Climb the ladder one attribute at a time.** Parallelogram (two parallel pairs) + right angles = rectangle. Parallelogram + equal sides = rhombus. A shape with both additions is a square. Ask: which addition does this shape have?"
+      },
+      "check": {
+        "id": "rem-qf-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-family",
+        "explanationVariants": [
+          "Equal sides without right angles is the rhombus rung.",
+          "It made the sides addition, not the angles addition."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A parallelogram has all sides equal but NO right angles. What is it?",
+          "options": [
+            {
+              "id": "a",
+              "label": "A rhombus",
+              "correct": true,
+              "feedback": "Right — equal sides is the rhombus addition; no right angles keeps it out of the rectangle branch."
+            },
+            {
+              "id": "b",
+              "label": "A square",
+              "feedback": "A square needs right angles too. With tilted corners, equal sides alone makes a rhombus."
+            },
+            {
+              "id": "c",
+              "label": "A rectangle",
+              "feedback": "Rectangles are the right-ANGLE branch. This shape's addition is equal sides: rhombus."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

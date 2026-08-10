@@ -1,0 +1,241 @@
+{
+ "id": "dc-01-03",
+ "slug": "distance-vs-displacement",
+ "title": "Distance Travelled vs Displacement",
+ "courseId": "derivatives-in-context",
+ "chapterId": "ch1-motion",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Two different questions, and they have different answers:\n\n**Displacement** = s(b) − s(a). Where you ended up, relative to where you began.\n**Total distance** = every mile you actually covered, forwards and backwards.\n\nIf the particle never reverses, they agree. The moment it turns round, they part company — and the turning points are exactly where v changes sign.",
+   "figure": "dr-derivative-as-function"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Split at the turns.",
+   "conceptTag": "dc-distance",
+   "explanationVariants": [
+    "The particle turns at t = 1 and t = 3 (where v changes sign), so [0, 4] splits into three legs: [0,1], [1,3], [3,4].",
+    "You cannot compute total distance without first finding where it reversed — the legs must be measured separately and then added as positive amounts."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "s(t) = t³ − 6t² + 9t on [0, 4], with v = 3(t − 1)(t − 3). Into how many LEGS must the journey be split?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "The particle reverses TWICE (at t = 1 and t = 3), which cuts [0, 4] into three legs: [0,1], [1,3] and [3,4]."
+     },
+     {
+      "value": 1,
+      "feedback": "Only if it never turned round. But v changes sign at t = 1 and again at t = 3."
+     },
+     {
+      "value": 4,
+      "feedback": "Two turning points make three legs, not four."
+     }
+    ],
+    "fallbackFeedback": "Turns at t = 1 and t = 3 → three legs."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-distance__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Compute the displacement.",
+   "conceptTag": "dc-distance",
+   "explanationVariants": [
+    "s(4) = 64 − 96 + 36 = 4 and s(0) = 0, so the displacement is 4 − 0 = 4.",
+    "Displacement never cares what happened in between — only the two ends."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "s(t) = t³ − 6t² + 9t. Find the DISPLACEMENT over [0, 4].",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "That is the TOTAL DISTANCE, which counts every leg. Displacement is just s(4) − s(0) = 4 − 0 = 4."
+     },
+     {
+      "value": 0,
+      "feedback": "s(4) = 64 − 96 + 36 = 4, not 0. (s(3) = 0, but that is a different time.)"
+     },
+     {
+      "value": 64,
+      "feedback": "That is only the t³ term. Compute the whole thing: 64 − 96 + 36 = 4."
+     }
+    ],
+    "fallbackFeedback": "s(4) − s(0) = 4 − 0 = 4."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-distance__numeric"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why the two answers differ.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Walk the journey leg by leg.",
+    "panels": [
+     {
+      "title": "Leg one: 0 to 1",
+      "body": "The particle moves forward from s = 0 to s = 4. Distance covered: 4. Position now 4."
+     },
+     {
+      "title": "Leg two: 1 to 3",
+      "body": "It reverses and slides back from 4 to s(3) = 0. Distance covered: another 4 — and distance is always counted POSITIVE, however you were facing."
+     },
+     {
+      "title": "Leg three: 3 to 4",
+      "body": "Forward again, from 0 to s(4) = 4. Distance: 4 more. TOTAL travelled: 12. But it ends at 4, so the displacement is only 4. It covered twelve units to end up four from home."
+     }
+    ],
+    "continueFeedback": "Keep going — the second leg is where they part company.",
+    "successFeedback": "Twelve units travelled, four units displaced. The backtracking is invisible to the displacement and fully counted by the distance."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "So the recipe for total distance is:\n\n**Find where v = 0 and changes sign.** Those are the turns.\n**Compute |s| change on each leg.**\n**Add them all as positive numbers.**\n\nIn integral language — which is the next course — displacement is ∫v dt and total distance is ∫|v| dt. The absolute value is doing exactly the work you just did by hand.",
+   "figure": "dr-derivative-as-function"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Add the legs.",
+   "conceptTag": "dc-distance",
+   "explanationVariants": [
+    "Leg 1: |4 − 0| = 4. Leg 2: |0 − 4| = 4. Leg 3: |4 − 0| = 4. Total = 12.",
+    "Every leg contributes its length as a POSITIVE number, which is exactly what taking |v| would do."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The three legs run 0 → 4, then 4 → 0, then 0 → 4. Find the TOTAL DISTANCE travelled.",
+    "answer": 12,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "That is the DISPLACEMENT — where it ended up. The distance counts all three legs: 4 + 4 + 4 = 12."
+     },
+     {
+      "value": 8,
+      "feedback": "That is only two legs. There are three: 4 + 4 + 4 = 12."
+     },
+     {
+      "value": 0,
+      "feedback": "The legs cancel only if you add them with SIGNS, which is what displacement does. Distance adds their magnitudes: 12."
+     }
+    ],
+    "fallbackFeedback": "4 + 4 + 4 = 12 units travelled, though the displacement is only 4."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-distance__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Both answers, one journey.",
+   "conceptTag": "dc-distance",
+   "hints": [
+    "The particle turns only at t = 1 (where v changes sign), so [0, 2] has two legs.",
+    "s(0) = 0, s(1) = 4, s(2) = 8 − 24 + 18 = 2.",
+    "Distance = |4 − 0| + |2 − 4| = 4 + 2. Displacement = s(2) − s(0)."
+   ],
+   "explanationVariants": [
+    "Total distance = 4 + 2 = 6, while the displacement is s(2) − s(0) = 2. The difference, 4, is exactly twice the backtracking.",
+    "The two numbers answer different questions, and a problem will always tell you which it wants — read carefully."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "s(t) = t³ − 6t² + 9t on [0, 2]. Find the TOTAL DISTANCE travelled.",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That is the DISPLACEMENT, s(2) − s(0) = 2. The distance counts the backtracking: 4 forward then 2 back, so 6."
+     },
+     {
+      "value": 4,
+      "feedback": "That is only the first leg (0 to 1). After the turn it slides back 2 more units, making 6 in total."
+     },
+     {
+      "value": 10,
+      "feedback": "Check s(2) = 8 − 24 + 18 = 2. So the second leg is from 4 back to 2 — a distance of 2, not 6."
+     }
+    ],
+    "fallbackFeedback": "Legs: 0→4 (distance 4) and 4→2 (distance 2). Total = 6, though the displacement is only 2."
+   },
+   "variant": {
+    "gen": "g13-derivatives-in-context",
+    "form": "derivatives-in-context__dc-distance__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Twelve travelled, four displaced.",
+   "takeaways": [
+    "Displacement is s(b) − s(a). Total distance adds the length of every leg as a positive number.",
+    "Split the journey wherever v changes sign — those are the turns, and only there.",
+    "In the next course: displacement is ∫v dt, and total distance is ∫|v| dt. The absolute value does this by hand-work automatically."
+   ],
+   "teaser": "Next chapter: when two quantities are linked, their RATES are linked too."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "dc-distance",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Find where the particle turns round (v changes sign). Measure each leg separately. Add the lengths as POSITIVE numbers for distance; subtract the ends for displacement.",
+    "figure": "dr-derivative-as-function"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Which question?",
+    "conceptTag": "dc-distance",
+    "explanationVariants": [
+     "Displacement is just the difference of the endpoints: 10 − 3 = 7.",
+     "It does not matter what happened in between."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A particle starts at s = 3 and ends at s = 10, wandering back and forth in between. Find the DISPLACEMENT.",
+     "answer": 7,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 13,
+       "feedback": "That is 3 + 10. Displacement is the DIFFERENCE of the endpoints: 10 − 3 = 7."
+      },
+      {
+       "value": 10,
+       "feedback": "That is the final position. The displacement measures the CHANGE: 10 − 3 = 7."
+      }
+     ],
+     "fallbackFeedback": "10 − 3 = 7, whatever happened in between."
+    }
+   }
+  }
+ ]
+}

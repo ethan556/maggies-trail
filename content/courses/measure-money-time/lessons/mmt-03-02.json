@@ -1,0 +1,527 @@
+{
+  "id": "mmt-03-02",
+  "slug": "counting-mixed-coins",
+  "title": "Counting Mixed Coins",
+  "courseId": "measure-money-time",
+  "chapterId": "ch3-money-coins-and-dollars",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "coin-values",
+      "body": "Count the biggest coins first — it's faster. For 3 dimes and 2 pennies: skip-count the dimes (10, 20, 30), then add the pennies (30, 31, 32) = 32 cents."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Biggest coins first.",
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 3 dimes and 2 pennies?",
+        "show": [
+          {
+            "cents": 10,
+            "label": "dime",
+            "count": 3
+          },
+          {
+            "cents": 1,
+            "label": "penny",
+            "count": 2
+          }
+        ],
+        "answerCents": 32,
+        "commonEntries": [
+          {
+            "cents": 5,
+            "feedback": "That's just counting the coins (3+2), not their value. 10+10+10+1+1 = 32."
+          },
+          {
+            "cents": 23,
+            "feedback": "That reverses the coins — 3 dimes is 30, plus 2 pennies is 32, not 2 dimes plus 3 pennies."
+          }
+        ],
+        "fallbackFeedback": "3 dimes (30) + 2 pennies (2) = 32 cents.",
+        "successFeedback": "32¢ — every coin's value counted."
+      },
+      "predict": {
+        "prompt": "3 dimes and 2 pennies — is that the same as 5 cents, since there are 5 coins?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — coins carry different values"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — 5 coins is 5 cents"
+          },
+          {
+            "id": "cannot",
+            "label": "You can't tell without a price tag"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Counting coins isn't counting cents — each dime alone is worth ten pennies. Five coins here hold far more than five cents."
+      },
+      "conceptTag": "mmt-coin-total",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Quarters and a nickel.",
+      "conceptTag": "mmt-coin-total",
+      "explanationVariants": [
+        "2 quarters (50) + 1 nickel (5) = 55 cents.",
+        "Skip-count the quarters: 25, 50. Add the nickel: 55."
+      ],
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 2 quarters and 1 nickel?",
+        "show": [
+          {
+            "cents": 25,
+            "label": "quarter",
+            "count": 2
+          },
+          {
+            "cents": 5,
+            "label": "nickel",
+            "count": 1
+          }
+        ],
+        "answerCents": 55,
+        "commonEntries": [
+          {
+            "cents": 3,
+            "feedback": "That's just counting the coins (2+1), not their value. 25+25+5 = 55."
+          },
+          {
+            "cents": 45,
+            "feedback": "Don't forget one of the quarters. 25 + 25 + 5 = 55, not 45."
+          }
+        ],
+        "fallbackFeedback": "25 + 25 + 5 = 55 cents.",
+        "successFeedback": "55¢ — every coin's value counted."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Starting with the biggest coin keeps skip-counting simple: 25, 50, 75 for quarters is easier than adding pennies one at a time up to 75.",
+      "figure": "mmt-biggest-first"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Three quarters.",
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 3 quarters?",
+        "show": [
+          {
+            "cents": 25,
+            "label": "quarter",
+            "count": 3
+          }
+        ],
+        "answerCents": 75,
+        "commonEntries": [
+          {
+            "cents": 3,
+            "feedback": "That's just the count of coins, not their value. 3 quarters = 25+25+25 = 75."
+          },
+          {
+            "cents": 30,
+            "feedback": "A quarter is 25 cents, not 10. 3 quarters = 75 cents."
+          }
+        ],
+        "fallbackFeedback": "25 + 25 + 25 = 75 cents.",
+        "successFeedback": "75¢ — every coin's value counted."
+      },
+      "conceptTag": "mmt-coin-total",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Mixing coin types is normal in real life — a dollar can be made many different ways, like 4 quarters, or 10 dimes, or 2 quarters + 5 dimes.",
+      "figure": "mmt-dollar-ways"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Mixed dimes and nickels.",
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 4 dimes and 3 nickels?",
+        "show": [
+          {
+            "cents": 10,
+            "label": "dime",
+            "count": 4
+          },
+          {
+            "cents": 5,
+            "label": "nickel",
+            "count": 3
+          }
+        ],
+        "answerCents": 55,
+        "commonEntries": [
+          {
+            "cents": 7,
+            "feedback": "That's just counting the coins (4+3), not their value. 40+15 = 55."
+          },
+          {
+            "cents": 43,
+            "feedback": "That mixes up the coin counts. 4 dimes (40) + 3 nickels (15) = 55."
+          }
+        ],
+        "fallbackFeedback": "4 dimes (40) + 3 nickels (15) = 55 cents.",
+        "successFeedback": "55¢ — every coin's value counted."
+      },
+      "conceptTag": "mmt-coin-total",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Nickels alone.",
+      "conceptTag": "mmt-coin-total",
+      "explanationVariants": [
+        "5 nickels is 5 × 5 = 25 cents.",
+        "Count by 5s five times: 5, 10, 15, 20, 25."
+      ],
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 5 nickels?",
+        "show": [
+          {
+            "cents": 5,
+            "label": "nickel",
+            "count": 5
+          }
+        ],
+        "answerCents": 25,
+        "commonEntries": [
+          {
+            "cents": 5,
+            "feedback": "That's just the count of coins. 5 nickels = 5 × 5 = 25 cents."
+          },
+          {
+            "cents": 50,
+            "feedback": "That's double the real value. 5 nickels = 25 cents, not 50."
+          }
+        ],
+        "fallbackFeedback": "5 nickels = 25 cents.",
+        "successFeedback": "25¢ — every coin's value counted."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A big mix.",
+      "conceptTag": "mmt-coin-total",
+      "explanationVariants": [
+        "1 quarter (25) + 3 dimes (30) + 1 penny (1) = 56 cents.",
+        "Add each type's value: 25 + 30 + 1 = 56."
+      ],
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 1 quarter, 3 dimes, and 1 penny?",
+        "show": [
+          {
+            "cents": 25,
+            "label": "quarter",
+            "count": 1
+          },
+          {
+            "cents": 10,
+            "label": "dime",
+            "count": 3
+          },
+          {
+            "cents": 1,
+            "label": "penny",
+            "count": 1
+          }
+        ],
+        "answerCents": 56,
+        "commonEntries": [
+          {
+            "cents": 5,
+            "feedback": "That's just counting the coins (1+3+1), not their value. 25+30+1 = 56."
+          },
+          {
+            "cents": 55,
+            "feedback": "Don't forget the penny. 25 + 30 + 1 = 56, not 55."
+          }
+        ],
+        "fallbackFeedback": "25 + 30 + 1 = 56 cents.",
+        "successFeedback": "56¢ — every coin's value counted."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The trickiest mix yet.",
+      "conceptTag": "mmt-coin-total",
+      "explanationVariants": [
+        "2 quarters (50) + 2 dimes (20) + 3 nickels (15) + 4 pennies (4) = 89 cents.",
+        "Add each type in order from biggest to smallest: 50+20+15+4 = 89."
+      ],
+      "widget": {
+        "type": "moneyBoard",
+        "mode": "count",
+        "prompt": "How many cents is 2 quarters, 2 dimes, 3 nickels, and 4 pennies?",
+        "show": [
+          {
+            "cents": 25,
+            "label": "quarter",
+            "count": 2
+          },
+          {
+            "cents": 10,
+            "label": "dime",
+            "count": 2
+          },
+          {
+            "cents": 5,
+            "label": "nickel",
+            "count": 3
+          },
+          {
+            "cents": 1,
+            "label": "penny",
+            "count": 4
+          }
+        ],
+        "answerCents": 89,
+        "commonEntries": [
+          {
+            "cents": 11,
+            "feedback": "That's just counting the coins (2+2+3+4), not their value. 50+20+15+4 = 89."
+          },
+          {
+            "cents": 85,
+            "feedback": "Don't forget the pennies. 50+20+15+4 = 89, not 85."
+          }
+        ],
+        "fallbackFeedback": "50 + 20 + 15 + 4 = 89 cents.",
+        "successFeedback": "89¢ — every coin's value counted."
+      },
+      "hints": [
+        "Start with the quarters: 25 + 25 = 50.",
+        "Add the dimes: 50 + 20 = 70. Add the nickels: 70 + 15 = 85.",
+        "Add the pennies: 85 + 4 = 89."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents coin total.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for coin total must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines coin total."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measure-money-time:mmt-coin-total",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Count from the biggest coin down, adding each type's value.",
+      "takeaways": [
+        "Start with the biggest coins and skip-count.",
+        "Add each coin type's total value in order.",
+        "The same amount can be made with different mixes of coins."
+      ],
+      "teaser": "next: comparing amounts and writing dollars and cents."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mmt-coin-total",
+      "concept": {
+        "id": "rem-mct-c",
+        "kind": "concept",
+        "body": "Count coins from biggest to smallest, adding each type's total value. 3 dimes and 2 pennies: 30 (dimes) + 2 (pennies) = 32 cents."
+      },
+      "check": {
+        "id": "rem-mct-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mmt-coin-total",
+        "explanationVariants": [
+          "3 dimes (30) + 2 pennies (2) = 32 cents.",
+          "Add the coin values: 30 + 2 = 32."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many cents is 3 dimes and 2 pennies?",
+          "answer": 32,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "That counts coins, not value: 30+2=32."
+            },
+            {
+              "value": 23,
+              "feedback": "That swaps the coin counts; it's 32."
+            }
+          ],
+          "fallbackFeedback": "30 + 2 = 32 cents."
+        }
+      }
+    }
+  ]
+}

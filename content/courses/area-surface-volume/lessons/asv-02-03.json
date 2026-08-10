@@ -1,0 +1,495 @@
+{
+  "id": "asv-02-03",
+  "slug": "multi-step-composite-problems",
+  "title": "Multi-Step Composite Problems",
+  "courseId": "area-surface-volume",
+  "chapterId": "ch2-composite-figures",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Real floor plans often need THREE or more pieces: a main room, an extension, maybe a nook. The rule scales up perfectly — identify every piece's shape, compute each area, then combine with add or subtract as each piece demands. A main room (12×8=96) plus an extension (4×5=20) plus a triangular reading nook (1/2×4×3=6) totals **122**.",
+      "figure": "l-shape-decompose"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two rectangular rooms.",
+      "conceptTag": "composite-multistep",
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A floor plan has two rectangular rooms: 7×4 and 3×6. What is the total floor area?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "r1",
+            "label": "7 × 4 room",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 7,
+            "height": 4
+          },
+          {
+            "id": "r2",
+            "label": "3 × 6 room",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 6
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "46 square units",
+            "value": 46,
+            "feedback": "7×4 = 28, and 3×6 = 18; total = 46."
+          },
+          {
+            "id": "wrong-1",
+            "label": "28 square units",
+            "value": 28,
+            "feedback": "28 is only the first room (7×4), leaving out the second. Add both: 28 + 18 = 46."
+          },
+          {
+            "id": "wrong-2",
+            "label": "504 square units",
+            "value": 504,
+            "feedback": "504 multiplies the two room-areas together. Combine separate rooms by ADDING: 28 + 18 = 46."
+          }
+        ],
+        "fallbackFeedback": "7×4 = 28, and 3×6 = 18; total = 46.",
+        "successFeedback": "7×4 = 28, and 3×6 = 18; total = 46."
+      },
+      "predict": {
+        "prompt": "Two rooms, 7 × 4 and 3 × 6. Can you total the floor by combining dimensions first — (7 + 3) × (4 + 6)?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — areas add, dimensions don't"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — 10 × 10 covers both rooms"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Gluing the rooms doesn't build a 10 × 10 square — that phantom square holds 100, more than double the truth. Each room's area is computed on its own — 28 and 18 — and only the AREAS are added: 46."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add a triangular piece.",
+      "conceptTag": "composite-multistep",
+      "explanationVariants": [
+        "Rectangle 6×5 = 30, triangle 1/2×6×2 = 6; total = 36.",
+        "Compute each piece by its own shape's formula, then add."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A floor plan has a 6×5 rectangular room plus a triangular bay window (base 6, height 2). What is the total area?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "room",
+            "label": "6 × 5 room",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 6,
+            "height": 5
+          },
+          {
+            "id": "bay",
+            "label": "triangular bay",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 6,
+            "height": 2
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "36 square units",
+            "value": 36,
+            "feedback": "Room 30, bay window 6: total 36."
+          },
+          {
+            "id": "wrong-1",
+            "label": "42 square units",
+            "value": 42,
+            "feedback": "42 treats the bay window like a rectangle (6×2=12, plus 30=42). It's a TRIANGLE: 1/2×6×2=6, giving 30+6=36."
+          },
+          {
+            "id": "wrong-2",
+            "label": "30 square units",
+            "value": 30,
+            "feedback": "30 is only the main room, forgetting the bay window. Add it: 30 + 6 = 36."
+          }
+        ],
+        "fallbackFeedback": "Room 30, bay window 6: total 36.",
+        "successFeedback": "Room 30, bay window 6: total 36."
+      },
+      "variant": {
+        "gen": "composite-area-lab"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The ORDER you add pieces never changes the total — 96 + 20 + 6 gives the same result as 20 + 6 + 96. Group however makes the arithmetic easiest, especially when a subtraction is mixed in: compute every piece first, THEN combine with the correct signs (+ for attached, − for removed).",
+      "figure": "asv-subtract"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Three rectangular pieces.",
+      "conceptTag": "composite-multistep",
+      "explanationVariants": [
+        "5×4=20, 3×3=9, 2×6=12; total = 20+9+12 = 41.",
+        "Compute each piece, then add all three: 41."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A floor plan has three rectangular sections: 5×4, 3×3, and 2×6. What is the total area?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "r1",
+            "label": "5 × 4 section",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 5,
+            "height": 4
+          },
+          {
+            "id": "r2",
+            "label": "3 × 3 section",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 3
+          },
+          {
+            "id": "r3",
+            "label": "2 × 6 section",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 2,
+            "height": 6
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "41 square units",
+            "value": 41,
+            "feedback": "20 + 9 + 12 = 41."
+          },
+          {
+            "id": "wrong-1",
+            "label": "29 square units",
+            "value": 29,
+            "feedback": "29 leaves out one section — check: 20 + 9 = 29, missing the 2×6 piece (12). Full total: 20+9+12 = 41."
+          },
+          {
+            "id": "wrong-2",
+            "label": "2160 square units",
+            "value": 2160,
+            "feedback": "2160 multiplies all three areas together. Combine separate sections by ADDING: 20+9+12 = 41."
+          }
+        ],
+        "fallbackFeedback": "20 + 9 + 12 = 41.",
+        "successFeedback": "20 + 9 + 12 = 41."
+      },
+      "variant": {
+        "gen": "composite-area-lab",
+        "form": "threeRects"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add a pool, subtract... wait, other way.",
+      "conceptTag": "composite-multistep",
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A 15×10 yard has a triangular pool (base 4, height 3) dug OUT of it, and a 3×3 shed built onto the remaining space. What is the total usable area (yard minus pool, plus shed)?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "yard",
+            "label": "15 × 10 yard",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 15,
+            "height": 10
+          },
+          {
+            "id": "pool",
+            "label": "triangular pool dug out",
+            "shape": "triangle",
+            "operation": "subtract",
+            "base": 4,
+            "height": 3
+          },
+          {
+            "id": "shed",
+            "label": "3 × 3 shed added",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 3
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "153 square units",
+            "value": 153,
+            "feedback": "Yard 150, minus pool 6, plus shed 9: 150 − 6 + 9 = 153."
+          },
+          {
+            "id": "wrong-1",
+            "label": "141 square units",
+            "value": 141,
+            "feedback": "141 subtracts the shed instead of adding it. The shed is BUILT ON (add); the pool is DUG OUT (subtract): 150 − 6 + 9 = 153."
+          },
+          {
+            "id": "wrong-2",
+            "label": "165 square units",
+            "value": 165,
+            "feedback": "165 adds the pool instead of subtracting it. A dug-out pool REMOVES area: 150 − 6 + 9 = 153."
+          }
+        ],
+        "fallbackFeedback": "Yard 150, minus pool 6, plus shed 9: 150 − 6 + 9 = 153.",
+        "successFeedback": "Yard 150, minus pool 6, plus shed 9: 150 − 6 + 9 = 153."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Grouping order doesn't matter.",
+      "conceptTag": "composite-multistep",
+      "explanationVariants": [
+        "(96 + 20) + 6 = 122, and 96 + (20 + 6) = 122 — same total, regardless of grouping.",
+        "Addition can be grouped any way without changing the sum."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For the three-piece floor plan (96 + 20 + 6 = 122), does grouping the addition differently — (20 + 6) + 96 instead — change the total?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — addition gives the same total regardless of grouping",
+            "correct": true,
+            "feedback": "Right — (20 + 6) + 96 = 26 + 96 = 122, matching (96 + 20) + 6 = 116 + 6 = 122."
+          },
+          {
+            "id": "b",
+            "label": "Yes — you must add pieces in the exact order given",
+            "feedback": "Addition is flexible — you can group pieces in whatever order makes the arithmetic easiest, and the total stays 122."
+          },
+          {
+            "id": "c",
+            "label": "It depends on which piece is the triangle",
+            "feedback": "The shape identity affects each piece's OWN formula, but once you have each area, adding them in any order gives 122."
+          }
+        ]
+      },
+      "hints": [
+        "Try both groupings.",
+        "(96+20)+6 and 96+(20+6).",
+        "Both give 122."
+      ],
+      "variant": {
+        "gen": "composite-multi",
+        "form": "groupingOrder"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Four pieces, mixed operations.",
+      "conceptTag": "composite-multistep",
+      "hints": [
+        "Two rectangles ADD: 10×6=60 and 4×4=16.",
+        "A triangle nook ADDS: 1/2×4×3=6.",
+        "A different triangular notch is CUT AWAY (subtract): 1/2×3×2=3."
+      ],
+      "explanationVariants": [
+        "60 + 16 + 6 − 3 = 79 — two rectangles and a nook add, while the cut-away notch subtracts.",
+        "Compute each of the four pieces separately, then combine with the right signs: 79."
+      ],
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A floor plan has: a 10×6 rectangle, a 4×4 rectangle (both added), a triangular nook added (base 4, height 3), and a triangular notch cut away (base 3, height 2). What is the total area?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "r1",
+            "label": "10 × 6 rectangle",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 10,
+            "height": 6
+          },
+          {
+            "id": "r2",
+            "label": "4 × 4 rectangle",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 4,
+            "height": 4
+          },
+          {
+            "id": "nook",
+            "label": "triangular nook added",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 4,
+            "height": 3
+          },
+          {
+            "id": "notch",
+            "label": "triangular notch cut away",
+            "shape": "triangle",
+            "operation": "subtract",
+            "base": 3,
+            "height": 2
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "correct",
+            "label": "79 square units",
+            "value": 79,
+            "feedback": "60 + 16 + 6 − 3 = 79 square units."
+          },
+          {
+            "id": "wrong-1",
+            "label": "85 square units",
+            "value": 85,
+            "feedback": "85 adds the notch instead of subtracting it (60+16+6+3). The notch is CUT AWAY: 60+16+6−3 = 79."
+          },
+          {
+            "id": "wrong-2",
+            "label": "76 square units",
+            "value": 76,
+            "feedback": "76 forgets the added nook's area. Include all four pieces with correct signs: 60+16+6−3 = 79."
+          }
+        ],
+        "fallbackFeedback": "60 + 16 + 6 − 3 = 79 square units.",
+        "successFeedback": "60 + 16 + 6 − 3 = 79 square units."
+      },
+      "variant": {
+        "gen": "composite-area-lab",
+        "form": "fourPieces"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every piece, its own formula, combined correctly.",
+      "takeaways": [
+        "Multi-piece figures scale the same rule: identify each piece's shape, compute separately.",
+        "Addition can be grouped any way without changing the total.",
+        "Track which pieces ADD (attached) and which SUBTRACT (cut away) before combining."
+      ],
+      "teaser": "next chapter: measuring shapes plotted on the coordinate plane."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "composite-multistep",
+      "concept": {
+        "id": "rem-cm-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Compute every piece, THEN combine with the right sign.** Two added rectangles (5×3=15 and 2×4=8) plus one subtracted triangle (1/2×2×2=2): 15 + 8 − 2 = 21."
+      },
+      "check": {
+        "id": "rem-cm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "composite-multistep",
+        "explanationVariants": [
+          "15 + 8 − 2 = 21.",
+          "Add the two rectangles, then subtract the cut-away triangle: 21."
+        ],
+        "widget": {
+          "type": "compositeAreaLab",
+          "prompt": "A figure has two added rectangles (5×3 and 2×4) and one subtracted triangle (base 2, height 2). What is the total area?",
+          "scene": "piece-ledger",
+          "pieces": [
+            {
+              "id": "r1",
+              "label": "5 × 3 rectangle",
+              "shape": "rectangle",
+              "operation": "add",
+              "width": 5,
+              "height": 3
+            },
+            {
+              "id": "r2",
+              "label": "2 × 4 rectangle",
+              "shape": "rectangle",
+              "operation": "add",
+              "width": 2,
+              "height": 4
+            },
+            {
+              "id": "cut",
+              "label": "triangular piece cut away",
+              "shape": "triangle",
+              "operation": "subtract",
+              "base": 2,
+              "height": 2
+            }
+          ],
+          "target": {
+            "kind": "total"
+          },
+          "choices": [
+            {
+              "id": "correct",
+              "label": "21 square units",
+              "value": 21,
+              "feedback": "15 + 8 − 2 = 21."
+            },
+            {
+              "id": "wrong-1",
+              "label": "25 square units",
+              "value": 25,
+              "feedback": "25 adds the triangle instead of subtracting it (15+8+2). It's cut away: 15+8−2 = 21."
+            },
+            {
+              "id": "wrong-2",
+              "label": "13 square units",
+              "value": 13,
+              "feedback": "13 forgets one of the rectangles. Include all three pieces with correct signs: 15+8−2 = 21."
+            }
+          ],
+          "fallbackFeedback": "15 + 8 − 2 = 21.",
+          "successFeedback": "15 + 8 − 2 = 21."
+        }
+      }
+    }
+  ]
+}

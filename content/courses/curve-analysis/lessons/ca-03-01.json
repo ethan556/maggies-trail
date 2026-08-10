@@ -1,0 +1,249 @@
+{
+ "id": "ca-03-01",
+ "slug": "rolles-theorem",
+ "title": "Rolle's Theorem",
+ "courseId": "curve-analysis",
+ "chapterId": "ch3-the-mean-value-theorem",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "If a curve starts and ends at the **same height**, it must have turned round somewhere.\n\n**Rolle's theorem:** if f is continuous on [a, b], differentiable on (a, b), and f(a) = f(b), then there is at least one c inside where **f′(c) = 0**.\n\nIt sounds too obvious to be worth a name. It is the engine of everything in this chapter.",
+   "figure": "ca-mvt-parallel"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find the flat spot.",
+   "conceptTag": "ca-rolle",
+   "explanationVariants": [
+    "f(0) = 0 and f(4) = 16 − 16 = 0, so Rolle applies. f′ = 2x − 4 = 0 gives c = 2.",
+    "The parabola goes down and comes back up; the vertex is where it turned."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x² − 4x on [0, 4]. Note f(0) = f(4) = 0. Find the c that Rolle guarantees.",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "That is an endpoint. Rolle promises a c strictly INSIDE the interval: f′ = 2x − 4 = 0 gives c = 2."
+     },
+     {
+      "value": 4,
+      "feedback": "Also an endpoint. The flat tangent is at the vertex, x = 2."
+     },
+     {
+      "value": -4,
+      "feedback": "That is the coefficient. Set f′ = 2x − 4 to zero: x = 2."
+     }
+    ],
+    "fallbackFeedback": "f′ = 2x − 4 = 0 → c = 2, the vertex."
+   },
+   "variant": {
+    "gen": "rolle-c"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Why the hypotheses are not decoration.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "Break each condition in turn, and watch the theorem fail.",
+    "panels": [
+     {
+      "title": "Drop differentiability",
+      "body": "Take f(x) = |x| − 1 on [−1, 1]. The ends match (both 0), it is continuous — and f′ is NEVER zero. The corner ate the flat spot. Differentiability is not a technicality."
+     },
+     {
+      "title": "Drop continuity",
+      "body": "A function that jumps can start and end at the same height without ever turning round. Continuity is what forces it to come back the way it went."
+     },
+     {
+      "title": "Drop f(a) = f(b)",
+      "body": "Then there is nothing to prove — a curve that ends higher than it started need never be flat anywhere. It can climb the whole way."
+     }
+    ],
+    "continueFeedback": "Keep going — each hypothesis is load-bearing.",
+    "successFeedback": "Every condition earns its place: |x| − 1 kills the theorem with a single corner."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Where Rolle fails.",
+   "conceptTag": "ca-rolle",
+   "explanationVariants": [
+    "f(x) = |x| − 1 on [−1, 1] has f(−1) = f(1) = 0 and is continuous — but f′ is −1 or +1 everywhere and never 0. Differentiability fails at the corner.",
+    "The theorem does not merely fail to apply; its conclusion is genuinely false here."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "f(x) = |x| − 1 on [−1, 1] has f(−1) = f(1) = 0, yet f′ is never zero. Which hypothesis fails?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Differentiability — there is a corner at x = 0.",
+      "correct": true,
+      "feedback": "Right, and it is the whole point: without differentiability the curve can turn round at a corner, where there is no tangent to be flat."
+     },
+     {
+      "id": "o2",
+      "label": "Continuity.",
+      "correct": false,
+      "feedback": "|x| − 1 is perfectly continuous — you can draw it without lifting the pen. The failure is in the SLOPE, not the value."
+     },
+     {
+      "id": "o3",
+      "label": "f(a) = f(b).",
+      "correct": false,
+      "feedback": "Both ends are 0, so that hypothesis holds. Something else has broken."
+     },
+     {
+      "id": "o4",
+      "label": "None — Rolle is simply false.",
+      "correct": false,
+      "feedback": "Rolle is a theorem, and theorems do not fail. What fails is a hypothesis — differentiability, at the corner."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g13-curve-analysis",
+    "form": "curve-analysis__ca-rolle__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Rolle also counts your roots for you.\n\nBetween any two roots of f there must be a root of f′. So if f′ has only **two** zeros, f can have at most **three** roots — because four roots would force three flat spots.\n\nThe derivative constrains the function, which is the reverse of the usual traffic.",
+   "figure": "dr-derivative-as-function"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Bound the roots.",
+   "conceptTag": "ca-rolle",
+   "explanationVariants": [
+    "Between consecutive roots of f, Rolle forces a root of f′. With only 2 roots of f′, there can be at most 3 roots of f — a fourth would demand a third flat spot.",
+    "It is a counting argument, and it is the first time the derivative has been used to constrain f rather than describe it."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f′ has exactly 2 zeros. What is the MAXIMUM number of roots f can have?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "Rolle gives a root of f′ BETWEEN each consecutive pair of roots of f. Three roots of f need only two gaps, so two zeros of f′ suffice."
+     },
+     {
+      "value": 4,
+      "feedback": "Four roots of f would create three gaps, each demanding its own zero of f′. With only two available, four roots are impossible."
+     },
+     {
+      "value": 1,
+      "feedback": "You can certainly do better than one — three roots are compatible with two zeros of f′."
+     }
+    ],
+    "fallbackFeedback": "3 roots create 2 gaps, and 2 zeros of f′ can fill them. A 4th root would need a 3rd zero."
+   },
+   "variant": {
+    "gen": "rolle-c",
+    "form": "maxRoots"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Rolle on a cubic.",
+   "conceptTag": "ca-rolle",
+   "hints": [
+    "First check the hypotheses: is f(0) = f(3)? Compute both.",
+    "f(0) = 0 and f(3) = 27 − 27 = 0. Rolle applies.",
+    "f′ = 3x² − 6x = 3x(x − 2), which is zero at x = 0 and x = 2. Which one is strictly INSIDE (0, 3)?"
+   ],
+   "explanationVariants": [
+    "f′ = 3x(x − 2) is zero at 0 and 2, but Rolle promises a c strictly inside (0, 3). Only c = 2 qualifies — x = 0 is an endpoint.",
+    "The theorem is careful about that: the flat spot is guaranteed in the OPEN interval."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = x³ − 3x² on [0, 3]. Find the c strictly inside that Rolle guarantees.",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "f′(0) = 0 is true, but 0 is an ENDPOINT. Rolle promises a c strictly inside the open interval (0, 3), and that is c = 2."
+     },
+     {
+      "value": 3,
+      "feedback": "f′(3) = 27 − 18 = 9, not zero — and it is an endpoint besides."
+     },
+     {
+      "value": 1,
+      "feedback": "f′(1) = 3 − 6 = −3, not zero. Solve 3x(x − 2) = 0."
+     }
+    ],
+    "fallbackFeedback": "f′ = 3x(x − 2) = 0 at x = 0 and x = 2; only x = 2 lies strictly inside (0, 3)."
+   },
+   "variant": {
+    "gen": "rolle-c",
+    "form": "cubicRepeated"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Same height at both ends means a flat spot in between.",
+   "takeaways": [
+    "Rolle: continuous, differentiable, f(a) = f(b) ⇒ some c inside has f′(c) = 0.",
+    "Every hypothesis is load-bearing — |x| − 1 breaks the conclusion with a single corner.",
+    "Between consecutive roots of f there is always a root of f′, which lets the derivative COUNT the function's roots."
+   ],
+   "teaser": "Next: tilt the picture, and Rolle becomes the Mean Value Theorem."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "ca-rolle",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "If you leave home and come back to the same height, you must have stopped climbing at some point. That is the whole theorem — and the flat spot is guaranteed strictly BETWEEN the two ends, never at them.",
+    "figure": "dr-flat-not-turning"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Find the turn.",
+    "conceptTag": "ca-rolle",
+    "explanationVariants": [
+     "f′ = 2x − 6 = 0 gives c = 3, the vertex — and f(0) = f(6) = 0, so Rolle applies.",
+     "For a parabola the guaranteed c is always the vertex."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "f(x) = x² − 6x on [0, 6], where f(0) = f(6) = 0. Find c.",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "An endpoint. The flat tangent is strictly inside, at the vertex x = 3."
+      },
+      {
+       "value": 6,
+       "feedback": "Also an endpoint. Set f′ = 2x − 6 to zero: x = 3."
+      }
+     ],
+     "fallbackFeedback": "f′ = 2x − 6 = 0 → c = 3."
+    }
+   }
+  }
+ ]
+}

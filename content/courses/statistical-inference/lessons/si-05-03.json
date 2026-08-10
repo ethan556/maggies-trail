@@ -1,0 +1,292 @@
+{
+ "id": "si-05-03",
+ "slug": "the-statistics-detective",
+ "title": "The Statistics Detective",
+ "courseId": "statistical-inference",
+ "chapterId": "ch5-judging-claims",
+ "minutes": 12,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "You now have five questions, and in this order they catch almost everything:\n\n1. **How was the data made?** (design → ceiling)\n2. **Who was left out?** (bias — the margin cannot see it)\n3. **How much wobble?** (margin of error)\n4. **Is the effect bigger than the wobble?** (significance)\n5. **Is it big enough to matter?** (effect size)",
+   "figure": "si-claim-ladder"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Case one.",
+   "conceptTag": "si-claim-capstone",
+   "explanationVariants": [
+    "The sample is enormous but self-selected — app users who chose to answer. Question 2 fails, and the tiny margin in question 3 is measuring the wrong thing.",
+    "A precise number from a broken frame is the most dangerous object in statistics."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "\"In a survey of 300,000 of our app's users, 78% ± 0.2% say the app improved their focus.\" Which question does this claim fail first?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Who was left out — only app users who chose to respond are in it.",
+      "correct": true,
+      "feedback": "Right, and it fails at question 2, which means the ±0.2% is precision about a group nobody asked about."
+     },
+     {
+      "id": "o2",
+      "label": "How much wobble — the sample is too small.",
+      "correct": false,
+      "feedback": "300,000 makes the wobble tiny. That is precisely why the bias is so dangerous here."
+     },
+     {
+      "id": "o3",
+      "label": "Is the effect big enough — 78% is not much.",
+      "correct": false,
+      "feedback": "78% would be a large number if it meant anything. The problem arrives earlier, at who was asked."
+     },
+     {
+      "id": "o4",
+      "label": "It fails nothing — the sample is huge.",
+      "correct": false,
+      "feedback": "Size is not representativeness. Every respondent chose both to use the app and to answer the survey."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-capstone__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Run the five questions on a real-shaped claim.",
+   "widget": {
+    "type": "steppedReveal",
+    "prompt": "\"New drug cuts recovery time by 12 hours (p = 0.03, 40 patients).\"",
+    "panels": [
+     {
+      "title": "Questions 1 and 2",
+      "body": "Were patients randomly assigned? If yes, a causal claim is available for patients like these. If they chose the drug, the claim collapses to association immediately."
+     },
+     {
+      "title": "Questions 3 and 4",
+      "body": "Forty patients is a small study, so the wobble is large. p = 0.03 clears the conventional bar, but only just — and one small study clearing 0.05 is exactly what a fluke looks like."
+     },
+     {
+      "title": "Question 5",
+      "body": "Twelve hours off a recovery: is that worth the drug's cost and side effects? Statistics has now done its whole job. This last question is a judgement, and it is yours."
+     }
+    ],
+    "continueFeedback": "Keep going — the last question is not a statistical one.",
+    "successFeedback": "The tools tell you whether the effect is real and how big it is. Whether it is worth having is a decision, and the numbers never make it for you."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Case two.",
+   "conceptTag": "si-claim-capstone",
+   "explanationVariants": [
+    "A randomised trial licenses cause; the p-value clears the bar; but a 0.4-point gain on a 100-point test fails question 5.",
+    "Real and trivial. The design is clean and the finding is still not worth buying."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "\"A randomised trial of 80,000 students found the tool raised scores by 0.4 points (p < 0.001).\" Which question does it fail?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Question 5 — the effect is real but far too small to matter.",
+      "correct": true,
+      "feedback": "Right. The design is impeccable and the evidence is strong. The effect is simply not worth having."
+     },
+     {
+      "id": "o2",
+      "label": "Question 1 — the design cannot support a causal claim.",
+      "correct": false,
+      "feedback": "It was randomised, so cause is licensed. The design is the one thing this study got right."
+     },
+     {
+      "id": "o3",
+      "label": "Question 4 — the effect is not bigger than the wobble.",
+      "correct": false,
+      "feedback": "With 80,000 students the wobble is tiny, which is exactly why 0.4 points cleared it. It passes question 4 and fails the next one."
+     },
+     {
+      "id": "o4",
+      "label": "It fails nothing — p < 0.001 settles it.",
+      "correct": false,
+      "feedback": "p < 0.001 settles question 4 and nothing else. It has no opinion on whether 0.4 points is worth a purchase order."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-capstone__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Two habits worth keeping for life:\n\n**Ask what was randomised** before you read anything else. It is one question and it settles what the claim may say.\n\n**Read the band, not the number.** Every estimate is a range, every gap has its own wobble, and every \"significant\" finding still owes you an effect size.",
+   "figure": "si-margin-band"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Case three.",
+   "conceptTag": "si-claim-capstone",
+   "explanationVariants": [
+    "Twelve patients cannot rule out chance: a p-value of 0.30 says data like this arise easily when nothing is happening.",
+    "A promising effect size with no evidence behind it is a reason to run a bigger study, not to prescribe anything."
+   ],
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each finding: act on it, or wait?",
+    "buckets": [
+     {
+      "id": "act",
+      "label": "Act",
+      "icon": "✅"
+     },
+     {
+      "id": "wait",
+      "label": "Wait",
+      "icon": "⏳"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "Randomised, n = 900, +14 points, p = 0.001",
+      "bucketId": "act",
+      "feedback": "Clean design, large effect, strong evidence. All five questions pass."
+     },
+     {
+      "id": "s2",
+      "label": "Randomised, n = 12, +14 points, p = 0.30",
+      "bucketId": "wait",
+      "feedback": "The effect looks big, but twelve patients cannot rule out luck. Run a bigger trial before acting."
+     },
+     {
+      "id": "s3",
+      "label": "Observational, n = 200,000, +14 points, p < 0.001",
+      "bucketId": "wait",
+      "feedback": "Precise and probably real — but nothing was assigned, so a lurking variable could be producing the whole gap."
+     },
+     {
+      "id": "s4",
+      "label": "Randomised, n = 5,000, +0.2 points, p = 0.004",
+      "bucketId": "wait",
+      "feedback": "Real and trivial. The study is sound; the effect is not worth the trouble."
+     }
+    ],
+    "missFeedback": "Only a randomised design, a large enough effect, and evidence against chance together justify acting.",
+    "successFeedback": "One finding passes all five questions. The other three fail a different one each — design, evidence, and size."
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-capstone__dragBucket"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The full audit.",
+   "conceptTag": "si-claim-capstone",
+   "hints": [
+    "Start with question 1: what was randomised? Nothing — the cities chose their own policies.",
+    "So no causal claim is available, whatever the p-value says. Note the huge sample makes the association precise, not causal.",
+    "Then check the effect size and ask whether a 2% difference in a self-selected set of cities could plausibly come from the kind of city that adopts such a policy."
+   ],
+   "explanationVariants": [
+    "Cities chose their own policies, so this is observational: the 2% gap is an association, and cities that adopt such policies likely differ in many other ways.",
+    "The 500,000 residents make the estimate precise. Precision about an association is still an association, and 2% is a small effect besides."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "\"Cities with the new recycling policy have 2% less landfill waste (500,000 residents surveyed, p < 0.001). Every city should adopt it.\" What is the strongest objection?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The cities chose their own policies, so this is observational — the kind of city that adopts it may already recycle more.",
+      "correct": true,
+      "feedback": "Right, and this is question 1. No amount of data or significance can promote an association to a cause."
+     },
+     {
+      "id": "o2",
+      "label": "p < 0.001 is suspiciously small.",
+      "correct": false,
+      "feedback": "With half a million residents, a small p-value is exactly what you would expect even from a trivial association. It is not suspicious, just uninformative about cause."
+     },
+     {
+      "id": "o3",
+      "label": "The sample is too small to support a policy change.",
+      "correct": false,
+      "feedback": "500,000 residents is a very large sample. The break is in the design, not the size."
+     },
+     {
+      "id": "o4",
+      "label": "2% is impossible to measure accurately.",
+      "correct": false,
+      "feedback": "It is perfectly measurable, and the margin here is tiny. The problem is what the 2% is allowed to mean."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-statistics",
+    "form": "si-claim-capstone__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Five questions, in order.",
+   "takeaways": [
+    "Design first (what was randomised?), then who was left out, then the wobble, then whether the effect clears it, then whether it matters.",
+    "Bias is invisible to the margin of error, and significance is invisible to the question of size.",
+    "The numbers tell you what is real and how big. Whether it is worth doing is a judgement — and it stays yours."
+   ],
+   "teaser": "You have finished the inference strand: from how data is made to what a claim may honestly say."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "si-claim-capstone",
+   "concept": {
+    "id": "rc1",
+    "kind": "concept",
+    "body": "Take the questions in order and stop at the first failure. A claim that fails question 1 cannot be rescued by a beautiful p-value at question 4 — the later answers are only meaningful once the earlier ones pass.",
+    "figure": "si-claim-ladder"
+   },
+   "check": {
+    "id": "rk1",
+    "kind": "check",
+    "body": "Where does it fail first?",
+    "conceptTag": "si-claim-capstone",
+    "explanationVariants": [
+     "Nothing was randomly assigned, so the claim fails at question 1 and the rest of the audit cannot save it.",
+     "Design failures are fatal; later strengths cannot compensate for them."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "An observational study with a perfect sample, a tiny margin, p < 0.001 and a huge effect claims a CAUSE. Where does it fail?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Question 1 — nothing was randomly assigned, so no causal claim is available.",
+       "correct": true,
+       "feedback": "Right. Everything downstream is excellent and none of it can promote an association to a cause."
+      },
+      {
+       "id": "o2",
+       "label": "Question 3 — the margin must be wrong.",
+       "correct": false,
+       "feedback": "The margin is fine. The problem is that the design never licensed the word 'cause' in the first place."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

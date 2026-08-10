@@ -1,0 +1,308 @@
+{
+ "id": "fa-02-03",
+ "slug": "ordering-with-benchmarks",
+ "title": "Ordering with Benchmarks",
+ "courseId": "fractions-add",
+ "chapterId": "ch2-benchmark-comparisons",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Ordering a whole list of fractions starts with a coarse sort: is each one **near 0, near 1/2, or near 1?** That alone separates most of the list instantly. Only fractions landing in the same zone need a closer look.",
+   "figure": "fa-benchmark-half"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Order from least to greatest.",
+   "conceptTag": "benchmark-order",
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "Put these four fractions in order, least to greatest.",
+    "items": [
+     {
+      "id": "n9-10",
+      "label": "9/10"
+     },
+     {
+      "id": "n1-10",
+      "label": "1/10"
+     },
+     {
+      "id": "n5-8",
+      "label": "5/8"
+     },
+     {
+      "id": "n4-9",
+      "label": "4/9"
+     }
+    ],
+    "correctOrder": [
+     "n1-10",
+     "n4-9",
+     "n5-8",
+     "n9-10"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "n5-8",
+      "second": "n4-9",
+      "feedback": "Both are near 1/2, but on opposite sides — doubling shows 4/9 falls short of 1/2 while 5/8 clears it, so 4/9 comes first."
+     }
+    ],
+    "missFeedback": "Sort by zone first: 1/10 is near 0, 9/10 is near 1; then place the two 'near half' fractions by which side of 1/2 they land on.",
+    "successFeedback": "1/10 (near 0), 4/9 (near half, below), 5/8 (near half, above), 9/10 (near 1) — zones first, then fine sort."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "The coarse sort alone.",
+   "conceptTag": "benchmark-order",
+   "explanationVariants": [
+    "1/12 is near 0 and 11/12 is near 1 — no fine comparison needed at all here.",
+    "One is barely past nothing; the other is barely short of a whole."
+   ],
+   "widget": {
+    "type": "rationalCompare",
+    "prompt": "Which is smaller: 1/12 or 11/12?",
+    "left": {
+     "num": 1,
+     "den": 12
+    },
+    "right": {
+     "num": 11,
+     "den": 12
+    },
+    "answer": "lt",
+    "eqFeedback": "They're actually far apart — one is near 0, the other near 1, about as different as two fractions can be.",
+    "gtFeedback": "A bigger numerator alone doesn't decide it here — what matters is the fraction's OVERALL size. 1/12 is near 0, far smaller than 11/12 near 1.",
+    "successFeedback": "1/12 is barely more than nothing; 11/12 is barely short of a whole — no fine comparison needed."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faBenchmarkOrderRational"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "When two fractions both land in the 'near half' zone but on the SAME side, finish with cross-multiplication: compare a/b and c/d by checking a×d against b×c. Whichever product is bigger names the bigger fraction.",
+   "figure": "fa-compare-benchmark"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Fine-sort two close fractions.",
+   "conceptTag": "benchmark-order",
+   "explanationVariants": [
+    "Cross-multiply: 3×5=15 and 7×2=14. Since 15>14, 3/7 is bigger than 2/5.",
+    "15 beats 14, so 3/7 wins."
+   ],
+   "widget": {
+    "type": "rationalCompare",
+    "prompt": "3/7 and 2/5 are both near 1/2. Which is bigger?",
+    "left": {
+     "num": 3,
+     "den": 7
+    },
+    "right": {
+     "num": 2,
+     "den": 5
+    },
+    "answer": "gt",
+    "ltFeedback": "Denominator size alone doesn't decide same-side comparisons. Cross-multiplying gives 15 (for 3/7) vs. 14 (for 2/5) — 3/7 wins.",
+    "eqFeedback": "Cross-multiplying shows 15 vs. 14 — not equal. 3/7 is very slightly bigger.",
+    "successFeedback": "3×5=15 and 7×2=14. Since 15 is bigger, 3/7 is the larger fraction."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faBenchmarkOrderRational"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each fraction to its zone.",
+   "conceptTag": "benchmark-order",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each fraction to the zone it belongs in.",
+    "left": [
+     {
+      "id": "z1",
+      "label": "1/12"
+     },
+     {
+      "id": "z2",
+      "label": "6/11"
+     },
+     {
+      "id": "z3",
+      "label": "11/12"
+     }
+    ],
+    "right": [
+     {
+      "id": "zn0",
+      "label": "Near 0"
+     },
+     {
+      "id": "zn5",
+      "label": "Near 1/2"
+     },
+     {
+      "id": "zn1",
+      "label": "Near 1"
+     }
+    ],
+    "pairs": {
+     "z1": "zn0",
+     "z2": "zn5",
+     "z3": "zn1"
+    },
+    "pairErrors": [
+     {
+      "left": "z2",
+      "right": "zn1",
+      "feedback": "6/11 is close to half (doubled: 12, just past 11) — that's the 'near 1/2' zone, not 'near 1.'"
+     }
+    ],
+    "missFeedback": "Check the doubling trick against the denominator, and how close the fraction is to 0 or 1.",
+    "successFeedback": "1/12 sits near 0, 6/11 sits near 1/2, and 11/12 sits near 1."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Find the middle value.",
+   "conceptTag": "benchmark-order",
+   "explanationVariants": [
+    "1/5 is near 0 (0.2), 3/4 is near 1 (0.75), and 4/9 sits between them (about 0.44) — the middle value.",
+    "Ordering least to greatest: 1/5, then 4/9, then 3/4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Order 1/5, 3/4, and 4/9 from least to greatest. Which one is in the MIDDLE?",
+    "options": [
+     {
+      "id": "a",
+      "label": "4/9",
+      "correct": true,
+      "feedback": "1/5 is near 0, 3/4 is near 1, and 4/9 (just below half) sits between them."
+     },
+     {
+      "id": "b",
+      "label": "1/5",
+      "feedback": "1/5 is near 0 — the SMALLEST of the three, not the middle. 4/9 sits between 1/5 and 3/4."
+     },
+     {
+      "id": "c",
+      "label": "3/4",
+      "feedback": "3/4 is near 1 — the LARGEST of the three, not the middle. 4/9 sits between 1/5 and 3/4."
+     },
+     {
+      "id": "d",
+      "label": "They're all about the same",
+      "feedback": "They're spread across the whole range — near 0, near half, and near 1 are quite different zones."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faBenchmarkOrderMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The full four-fraction order.",
+   "conceptTag": "benchmark-order",
+   "hints": [
+    "1/8 is near 0 and 11/12 is near 1 — those two are easy to place.",
+    "5/12 and 7/15 are both near 1/2, but on the same side — use cross-multiplication.",
+    "5×15=75 and 12×7=84 — compare those to see which is smaller."
+   ],
+   "explanationVariants": [
+    "1/8 (near 0) is least, 11/12 (near 1) is greatest. Between them, cross-multiplying 5/12 and 7/15 (5×15=75 vs. 12×7=84) shows 5/12 is smaller, so the order is 1/8, 5/12, 7/15, 11/12 — the second-least is 5/12, with denominator 12.",
+    "5/12 comes before 7/15 since 75<84 in the cross-multiplication check."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Order 1/8, 5/12, 7/15, and 11/12 from least to greatest. What is the DENOMINATOR of the fraction that comes SECOND?",
+    "answer": 12,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 15,
+      "feedback": "15 would be right if 7/15 came second — but cross-multiplying (5×15=75 vs. 12×7=84) shows 5/12 is actually smaller, so 5/12 (denominator 12) comes second."
+     },
+     {
+      "value": 8,
+      "feedback": "8 belongs to 1/8, which is LEAST (near 0), not second. The second-least is 5/12."
+     }
+    ],
+    "fallbackFeedback": "Place 1/8 and 11/12 first (near 0 and near 1), then cross-multiply 5/12 and 7/15 to order the middle two."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faBenchmarkOrderNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "A whole list, sorted in two passes.",
+   "takeaways": [
+    "Sort roughly by zone first: near 0, near 1/2, or near 1.",
+    "Fractions on opposite sides of 1/2 are already ordered by the coarse sort alone.",
+    "Same-side ties need a finer method — cross-multiplication finishes the job."
+   ],
+   "teaser": "next chapter: adding and subtracting fractions that already share a denominator."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "benchmark-order",
+   "concept": {
+    "id": "rem-bo-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Sort by zone first: near 0, near 1/2, or near 1.** For 1/9, 5/9, and 8/9: 1/9 is near 0, 8/9 is near 1, and 5/9 sits just past half in the middle. Order least to greatest: 1/9, 5/9, 8/9."
+   },
+   "check": {
+    "id": "rem-bo-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "benchmark-order",
+    "explanationVariants": [
+     "1/9 is near 0, the smallest of the three.",
+     "8/9 and 5/9 are both bigger than 1/9."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Among 1/9, 5/9, and 8/9, which is SMALLEST?",
+     "options": [
+      {
+       "id": "a",
+       "label": "1/9",
+       "correct": true,
+       "feedback": "1/9 is near 0 — the smallest of the three."
+      },
+      {
+       "id": "b",
+       "label": "5/9",
+       "feedback": "5/9 is near half, bigger than 1/9. The smallest is 1/9."
+      },
+      {
+       "id": "c",
+       "label": "8/9",
+       "feedback": "8/9 is near 1, the LARGEST of the three, not smallest. That's 1/9."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

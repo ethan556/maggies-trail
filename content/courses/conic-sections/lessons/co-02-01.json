@@ -1,0 +1,218 @@
+{
+  "id": "co-02-01",
+  "slug": "ellipse-two-foci",
+  "title": "The Ellipse: Two Foci and a String",
+  "courseId": "conic-sections",
+  "chapterId": "ch2-ellipses",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An **ellipse** is every point whose distances to **two fixed foci** add up to a constant. Pin a string at both foci, pull it taut with a pencil, and trace: the constant string length is the sum. That sum equals **2a**, the length of the long (major) axis.",
+      "figure": "co-ellipse-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read the string length.",
+      "widget": {
+        "type": "conicLocusLab",
+        "targetEccentricityTenths": 6,
+        "startEccentricityTenths": 2,
+        "prompt": "Slide the eccentricity to 0.6 and watch the two focal distances as the point travels — their SUM is what to keep an eye on.",
+        "successFeedback": "The two distances trade off but always total the same 2a. That constant sum is the ellipse's definition — the pin-and-string construction — and the eccentricity only decides how far apart the pins sit.",
+        "explorationFeedback": "Slide a few more times. The claim is that the sum is constant for EVERY position, which one snapshot cannot establish.",
+        "lowFeedback": "Eccentricity still below 0.6.",
+        "highFeedback": "Eccentricity above 0.6."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Check a vertex.",
+      "conceptTag": "co-ellipse",
+      "explanationVariants": [
+        "At the vertex (5, 0) with foci (±4, 0): distances 1 and 9 sum to 10 = 2a. The definition holds.",
+        "1 + 9 = 10 confirms the constant sum at the far end of the major axis."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Foci at (±4, 0), vertex at (5, 0). The distances to the two foci are 1 and 9. What is their sum?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 9 − 1 subtracts. The ellipse uses the SUM: 1 + 9 = 10."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the focal distance c. Add the two distances: 1 + 9 = 10."
+          }
+        ],
+        "fallbackFeedback": "1 + 9 = 10 = 2a."
+      },
+      "variant": {
+        "gen": "ellipse-axes",
+        "form": "focalSum"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Centered at the origin, the ellipse has the tidy equation\n\nx²/a² + y²/b² = 1,\n\nwith **a > b**. Here a is the semi-major axis (half the long way) and b the semi-minor (half the short way). For x²/25 + y²/9 = 1: a = 5, b = 3 — the curve reaches 5 along x and 3 along y.",
+      "figure": "co-ellipse-standard"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a and b.",
+      "conceptTag": "co-ellipse",
+      "explanationVariants": [
+        "x²/25 + y²/9 = 1: a = √25 = 5 (semi-major, along x) and b = √9 = 3 (semi-minor).",
+        "The denominators are a² and b²: take square roots to get 5 and 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/25 + y²/9 = 1, what is the semi-major axis length a?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "25 is a², not a. Take the square root: a = √25 = 5."
+          },
+          {
+            "value": 3,
+            "feedback": "3 = b (the smaller). The semi-MAJOR a = √25 = 5."
+          }
+        ],
+        "fallbackFeedback": "a = √25 = 5."
+      },
+      "variant": {
+        "gen": "ellipse-axes"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which way is long?",
+      "conceptTag": "co-ellipse",
+      "explanationVariants": [
+        "The larger denominator sits under x² (25 > 9), so the major axis is horizontal — the ellipse is wider than it is tall.",
+        "a² = 25 is under x², so the long axis runs along x."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For x²/25 + y²/9 = 1, the major (long) axis is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "horizontal (along the x-axis)",
+            "correct": true,
+            "feedback": "Right — the bigger denominator (25) is under x², so the ellipse stretches horizontally."
+          },
+          {
+            "id": "o2",
+            "label": "vertical (along the y-axis)",
+            "feedback": "The larger denominator is under x² here, so the long axis is HORIZONTAL."
+          },
+          {
+            "id": "o3",
+            "label": "diagonal",
+            "feedback": "Axis-aligned ellipses stretch along x or y. Here the bigger denominator (25) is under x²: horizontal."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-ellipse__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A taller ellipse.",
+      "conceptTag": "co-ellipse",
+      "explanationVariants": [
+        "x²/9 + y²/25 = 1 now has the 25 under y², so a = 5 along the VERTICAL axis; 2a = 10.",
+        "When the larger denominator is under y², the major axis is vertical with a = 5, giving 2a = 10."
+      ],
+      "hints": [
+        "a² is the LARGER denominator.",
+        "Here 25 > 9, and 25 is under y².",
+        "2a = 2·√25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/9 + y²/25 = 1, what is the major axis length 2a?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 = 2·3 uses the smaller value. a = √25 = 5, so 2a = 10."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = a. The full major axis is 2a = 10."
+          }
+        ],
+        "fallbackFeedback": "a = √25 = 5, so 2a = 10 (vertical major axis)."
+      },
+      "variant": {
+        "gen": "ellipse-axes",
+        "form": "majorLength"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two pins and a loop.",
+      "takeaways": [
+        "Ellipse = points whose distances to two foci sum to 2a.",
+        "Standard form x²/a² + y²/b² = 1 with a > b.",
+        "The larger denominator marks the major (long) axis direction."
+      ],
+      "teaser": "Next: locating the foci from a and b."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-ellipse",
+      "concept": {
+        "id": "rem-co0201-c",
+        "kind": "concept",
+        "body": "Ellipse: distances to two foci sum to 2a. Standard form x²/a²+y²/b²=1 with a>b; the larger denominator is a² and marks the major axis."
+      },
+      "check": {
+        "id": "rem-co0201-k",
+        "kind": "check",
+        "body": "One a.",
+        "conceptTag": "co-ellipse",
+        "explanationVariants": [
+          "x²/16 + y²/4 = 1: a = √16 = 4.",
+          "The larger denominator 16 gives a = 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For x²/16 + y²/4 = 1, what is a (the semi-major axis)?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "16 is a². Take the root: a = 4."
+            },
+            {
+              "value": 2,
+              "feedback": "2 = b. The semi-major a = √16 = 4."
+            }
+          ],
+          "fallbackFeedback": "a = √16 = 4."
+        }
+      }
+    }
+  ]
+}

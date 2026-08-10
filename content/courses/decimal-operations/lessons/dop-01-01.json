@@ -1,0 +1,337 @@
+{
+  "id": "dop-01-01",
+  "slug": "why-order-matters",
+  "title": "Why Order Matters",
+  "courseId": "decimal-operations",
+  "chapterId": "ch1-order-of-operations",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Take 2 + 3 × 4. Do it left to right and you get (2 + 3) × 4 = 20. Do the multiplication first and you get 2 + 12 = 14. Same numbers, two answers. Math can't allow that — so there's an agreed **order of operations** everyone follows, giving one answer every time.",
+      "figure": "dop-order-matters"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "See the two answers.",
+      "conceptTag": "order-matters",
+      "widget": {
+        "type": "numeric",
+        "prompt": "If you (wrongly) worked 2 + 3 × 4 strictly left to right, adding first, what would you get?",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is the CORRECT answer (multiply first). The question asks for the left-to-right result: (2+3)×4 = 20."
+          },
+          {
+            "value": 24,
+            "feedback": "24 doesn't match either path. Adding first gives (2+3)×4 = 5×4 = 20."
+          }
+        ],
+        "fallbackFeedback": "Adding first: 2+3 = 5, then 5×4 = 20."
+      },
+      "hints": [
+        "Add first: 2 + 3.",
+        "That's 5.",
+        "Then 5 × 4 = 20."
+      ],
+      "explanationVariants": [
+        "Left to right: (2+3)×4 = 5×4 = 20.",
+        "This is the answer the convention avoids — order needs a rule."
+      ],
+      "predict": {
+        "prompt": "You'll evaluate 2 + 3 × 4 twice: multiply-first versus strict left-to-right. Will the answers agree?",
+        "options": [
+          {
+            "id": "differ",
+            "label": "No — the order changes the answer"
+          },
+          {
+            "id": "same",
+            "label": "Yes — same numbers, same answer"
+          }
+        ],
+        "outcomeId": "differ",
+        "reveal": "Multiply-first gives 2 + 12 = 14; left-to-right gives 5 × 4 = 20. The same three numbers land six apart — which is exactly why everyone must agree on ONE order before any expression means anything."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule for now: **multiplication and division come before addition and subtraction.** So in 2 + 3 × 4, the 3 × 4 happens first, giving 2 + 12 = 14. Think of × and ÷ as binding tighter — they grab their numbers before + and − get a turn.",
+      "figure": "dop-precedence"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Multiply before add.",
+      "conceptTag": "order-matters",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "mulAddEval"
+      },
+      "explanationVariants": [
+        "The 3 × 4 happens first: 2 + 12 = 14.",
+        "× binds tighter than +, so multiply first, then add: 14."
+      ],
+      "widget": {
+        "type": "evalOrder",
+        "prompt": "Following the order of operations, what is 2 + 3 × 4? Tap an operator to work it out.",
+        "tokens": [
+          "2",
+          "+",
+          "3",
+          "×",
+          "4"
+        ],
+        "target": 14,
+        "commonResults": [
+          {
+            "value": 20,
+            "feedback": "20 adds first. The rule does the multiplication first: 3×4 = 12, then 2 + 12 = 14."
+          }
+        ],
+        "fallbackFeedback": "Multiply first (3×4 = 12), then add: 2 + 12 = 14.",
+        "successFeedback": "Multiply first (3×4 = 12), then add: 2 + 12 = 14."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents order matters.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for order matters must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines order matters."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:order-matters",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtraction waits too.",
+      "conceptTag": "order-matters",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "mulSubNumeric"
+      },
+      "explanationVariants": [
+        "The 2 × 3 happens first: 10 − 6 = 4.",
+        "× binds tighter than −, so 10 − 2×3 = 10 − 6 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 10 − 2 × 3?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 subtracts first: (10−2)×3. The rule multiplies first: 10 − 6 = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is just 2×3 — the subtraction still happens: 10 − 6 = 4."
+          }
+        ],
+        "fallbackFeedback": "Multiply first (2×3 = 6), then subtract: 10 − 6 = 4."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Division binds tight as well.",
+      "conceptTag": "order-matters",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is 6 + 8 ÷ 2?",
+        "options": [
+          {
+            "id": "a",
+            "label": "10",
+            "correct": true,
+            "feedback": "Divide first: 8 ÷ 2 = 4, then 6 + 4 = 10."
+          },
+          {
+            "id": "b",
+            "label": "7",
+            "feedback": "7 adds first: (6+8)÷2. Division comes first: 6 + 4 = 10."
+          },
+          {
+            "id": "c",
+            "label": "4",
+            "feedback": "4 is just 8÷2 — the addition still happens: 6 + 4 = 10."
+          }
+        ]
+      },
+      "hints": [
+        "Division comes before addition.",
+        "8 ÷ 2 = 4.",
+        "Then 6 + 4 = 10."
+      ],
+      "explanationVariants": [
+        "Divide first: 8÷2 = 4, then 6 + 4 = 10.",
+        "÷ binds tighter than +, so it goes first."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the first step.",
+      "conceptTag": "order-matters",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "divAddNumeric"
+      },
+      "explanationVariants": [
+        "In 20 ÷ 4 + 1, the division goes first: 5 + 1 = 6.",
+        "÷ binds tighter than +, so divide first, then add."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 20 ÷ 4 + 1?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 adds first: 20 ÷ (4+1) = 20 ÷ 5. The rule divides first: 5 + 1 = 6."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is just 20÷4 — the addition still happens: 5 + 1 = 6."
+          }
+        ],
+        "fallbackFeedback": "Divide first (20÷4 = 5), then add: 5 + 1 = 6."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One clean expression.",
+      "conceptTag": "order-matters",
+      "variant": {
+        "gen": "grouping-first",
+        "form": "mulAddEval"
+      },
+      "hints": [
+        "Find the multiplication or division first.",
+        "Here it's 6 × 2 = 12.",
+        "Then add: 5 + 12."
+      ],
+      "explanationVariants": [
+        "Multiply first: 6 × 2 = 12, then 5 + 12 = 17.",
+        "× binds tighter than +, so 5 + 6×2 = 5 + 12 = 17."
+      ],
+      "widget": {
+        "type": "evalOrder",
+        "prompt": "What is 5 + 6 × 2? Tap an operator to work it out.",
+        "tokens": [
+          "5",
+          "+",
+          "6",
+          "×",
+          "2"
+        ],
+        "target": 17,
+        "commonResults": [
+          {
+            "value": 22,
+            "feedback": "22 adds first: (5+6)×2. The rule multiplies first: 6×2 = 12, then 5 + 12 = 17."
+          }
+        ],
+        "fallbackFeedback": "Multiply first (6×2 = 12), then add: 5 + 12 = 17.",
+        "successFeedback": "Multiply first (6×2 = 12), then add: 5 + 12 = 17."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents order matters.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for order matters must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines order matters."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimal-operations:order-matters",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One expression, one answer.",
+      "takeaways": [
+        "Without a rule, the same expression could give different answers — so we agree on an order.",
+        "Multiplication and division come before addition and subtraction.",
+        "Think of × and ÷ as binding tighter: they take their turn first."
+      ],
+      "teaser": "next: grouping symbols, which can override the order on purpose."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "order-matters",
+      "concept": {
+        "id": "rem-om-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Do multiplication and division before addition and subtraction.** In 4 + 5 × 2, the 5 × 2 happens first: 4 + 10 = 14. The × takes its turn before the + does."
+      },
+      "check": {
+        "id": "rem-om-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "order-matters",
+        "explanationVariants": [
+          "Multiply first: 5 × 2 = 10, then 4 + 10 = 14.",
+          "× binds tighter than +, so 4 + 5×2 = 14."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is 4 + 5 × 2?",
+          "answer": 14,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 18,
+              "feedback": "18 adds first: (4+5)×2. Multiply first: 5×2 = 10, then 4 + 10 = 14."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is just 5×2 — the addition still happens: 4 + 10 = 14."
+            }
+          ],
+          "fallbackFeedback": "Multiply first (5×2 = 10), then add: 4 + 10 = 14."
+        }
+      }
+    }
+  ]
+}

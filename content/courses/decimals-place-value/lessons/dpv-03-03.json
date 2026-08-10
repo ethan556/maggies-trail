@@ -1,0 +1,299 @@
+{
+  "id": "dpv-03-03",
+  "slug": "ordering-a-set-of-decimals",
+  "title": "Ordering a Set of Decimals",
+  "courseId": "decimals-place-value",
+  "chapterId": "ch3-comparing-decimals",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To order a whole set of decimals, use one trick: **pad them all to the same number of places** with trailing zeros, then read them like whole numbers. Once every number has the same length, the smallest \"whole number\" is the least decimal.",
+      "figure": "dpv-line-up-compare"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Ordering decimals is reading positions, not counting digits.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "tickStep": 0.1,
+        "target": 0.45,
+        "start": 0,
+        "prompt": "Place 0.45. Then ask yourself whether it is bigger or smaller than 0.5.",
+        "successFeedback": "0.45 sits just BELOW 0.5, even though it has more digits. More digits does not mean bigger — 0.45 is 45 hundredths and 0.5 is 50 hundredths, and the line settles the argument instantly.",
+        "lowFeedback": "Below 0.45.",
+        "highFeedback": "Above 0.45."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 0.45 closer to 0 or to 1?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 0"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 1"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "0.45 sits 0.45 from 0 and 0.55 from 1 — the 0 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "order-decimals",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents order decimals.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for order decimals must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines order decimals."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimals-place-value:order-decimals",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which is least?",
+      "conceptTag": "order-decimals",
+      "explanationVariants": [
+        "Padded to 0.50, 0.45, 0.54, the smallest is 0.45.",
+        "As hundredths: 45 < 50 < 54, so 0.45 is least."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Which is the LEAST: 0.5, 0.45, or 0.54?",
+        "answer": 0.45,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "Pad to 0.50: it's bigger than 0.45. The least is 0.45."
+          },
+          {
+            "value": 0.54,
+            "feedback": "0.54 is the largest of the three, not the least. The least is 0.45."
+          }
+        ],
+        "fallbackFeedback": "Pad all three to hundredths — 0.45, 0.50, 0.54 — then compare 45, 50, 54.",
+        "successFeedback": "Padded to 0.45, 0.50, 0.54 — 45 is smallest, so 0.45 is least."
+      },
+      "variant": {
+        "gen": "order-decimals"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The padding trick shines when lengths are mixed. For 0.3, 0.25, 0.301, 0.31, pad to three places: 0.300, 0.250, 0.301, 0.310. Now compare 300, 250, 301, 310 — the order falls right out.",
+      "figure": "dpv-trailing-zero"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Order the middle two.",
+      "conceptTag": "order-decimals",
+      "explanationVariants": [
+        "Padded: 0.250, 0.300, 0.301, 0.310 — after 0.25 comes 0.3.",
+        "As thousandths 250, 300, 301, 310: the second smallest is 300 = 0.3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In 0.3, 0.25, 0.301, 0.31 ordered least to greatest, which comes SECOND?",
+        "answer": 0.3,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.25,
+            "feedback": "0.25 is the smallest — it comes first, not second. Second is 0.3."
+          },
+          {
+            "value": 0.301,
+            "feedback": "0.301 (301) is third. After 0.25 comes 0.3 (300)."
+          },
+          {
+            "value": 0.31,
+            "feedback": "0.31 (310) is the largest — it comes last. Second is 0.3."
+          }
+        ],
+        "fallbackFeedback": "Pad to thousandths — 300, 250, 301, 310 — then order them and take the second smallest.",
+        "successFeedback": "Padded to thousandths: 250, 300, 301, 310. Second smallest is 300 = 0.3."
+      },
+      "variant": {
+        "gen": "order-decimals",
+        "form": "secondOf4"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Order four, mixed lengths.",
+      "conceptTag": "order-decimals",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Drag least to greatest: 0.4, 0.38, 0.409, 0.5",
+        "items": [
+          {
+            "id": "j4",
+            "label": "0.4"
+          },
+          {
+            "id": "j409",
+            "label": "0.409"
+          },
+          {
+            "id": "j38",
+            "label": "0.38"
+          },
+          {
+            "id": "j5",
+            "label": "0.5"
+          }
+        ],
+        "correctOrder": [
+          "j38",
+          "j4",
+          "j409",
+          "j5"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "j409",
+            "second": "j4",
+            "feedback": "Pad to 0.409 vs 0.400: 409 is bigger than 400, so 0.4 comes before 0.409."
+          },
+          {
+            "first": "j4",
+            "second": "j38",
+            "feedback": "Pad to 0.400 vs 0.380: 400 is bigger than 380, so 0.38 comes before 0.4."
+          }
+        ],
+        "missFeedback": "Pad to three places: 0.400, 0.380, 0.409, 0.500 → 380, 400, 409, 500.",
+        "successFeedback": "Padded: 0.380 < 0.400 < 0.409 < 0.500."
+      },
+      "hints": [
+        "Pad each to three places.",
+        "0.4→0.400, 0.38→0.380.",
+        "Compare 380, 400, 409, 500."
+      ],
+      "explanationVariants": [
+        "Order: 0.38, 0.4, 0.409, 0.5.",
+        "As thousandths: 380 < 400 < 409 < 500."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Greatest of the mixed set.",
+      "conceptTag": "order-decimals",
+      "hints": [
+        "Pad the whole set to the same length first.",
+        "0.09→0.09, 0.9→0.90, 0.19→0.19.",
+        "Compare 09, 90, 19 — the biggest is 90."
+      ],
+      "explanationVariants": [
+        "Padded to 0.09, 0.90, 0.19, the greatest is 0.90 = 0.9.",
+        "As hundredths 9, 90, 19 — 90 wins, so 0.9 is greatest."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Which is the GREATEST: 0.09, 0.9, or 0.19?",
+        "answer": 0.9,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.19,
+            "feedback": "0.19 looks long, but pad 0.9 to 0.90: 90 beats 19. The greatest is 0.9."
+          },
+          {
+            "value": 0.09,
+            "feedback": "0.09 is the smallest of the three. Padded, 0.90 is greatest: 0.9."
+          }
+        ],
+        "fallbackFeedback": "Pad to hundredths — 90, 19, 9 — the biggest padded number is the greatest decimal.",
+        "successFeedback": "Padded to 0.90, it's 90 hundredths — bigger than 0.19 (19) and 0.09 (9). 0.9 is greatest."
+      },
+      "variant": {
+        "gen": "order-decimals",
+        "form": "greatestOf3"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same length, then read as whole numbers.",
+      "takeaways": [
+        "Pad every decimal to the same number of places with trailing zeros.",
+        "Then compare and order them exactly like whole numbers.",
+        "This handles mixed-length sets (0.3 vs 0.301) without any guesswork."
+      ],
+      "teaser": "next chapter: rounding decimals to a chosen place."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "order-decimals",
+      "concept": {
+        "id": "rem-od-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Give every decimal the same number of places (pad with trailing zeros), then compare like whole numbers.** For 0.5 and 0.42, pad to 0.50 and 0.42 → compare 50 and 42 → 0.42 is smaller. Equal lengths make ordering easy."
+      },
+      "check": {
+        "id": "rem-od-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "order-decimals",
+        "explanationVariants": [
+          "Padded to 0.50 and 0.42, 42 < 50, so 0.42 is least.",
+          "Equal lengths: 42 < 50 means 0.42 is smaller."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is less: 0.5 or 0.42?",
+          "options": [
+            {
+              "id": "a",
+              "label": "0.42",
+              "correct": true,
+              "feedback": "Pad to 0.50 vs 0.42: 42 < 50, so 0.42 is less."
+            },
+            {
+              "id": "b",
+              "label": "0.5",
+              "feedback": "Pad 0.5 to 0.50: 50 is bigger than 42, so 0.5 is the greater one. 0.42 is less."
+            },
+            {
+              "id": "c",
+              "label": "Equal",
+              "feedback": "Padded to 0.50 and 0.42 they differ (50 vs 42), so 0.42 is less."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

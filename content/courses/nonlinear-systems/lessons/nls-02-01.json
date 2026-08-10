@@ -1,0 +1,239 @@
+{
+  "id": "nls-02-01",
+  "slug": "the-circle-as-an-equation",
+  "title": "The Circle as an Equation",
+  "courseId": "nonlinear-systems",
+  "chapterId": "ch2-line-meets-circle",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A circle is an equation too: x² + y² = 25 collects every point exactly 5 from the origin — because x² + y² is the squared DISTANCE to (0, 0), by Pythagoras. Radius 5, radius squared 25. Membership is arithmetic: square, add, compare.",
+      "figure": "nls-circle-is-distance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Test a point for membership.",
+      "conceptTag": "nls-circle-equation",
+      "explanationVariants": [
+        "3² + 4² = 9 + 16 = 25 — exactly the radius squared, so (3, 4) sits ON the circle.",
+        "The 3-4-5 triple makes the distance to the origin exactly 5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is (3, 4) on the circle x² + y² = 25?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Yes — 9 + 16 = 25",
+            "correct": true,
+            "feedback": "The 3-4-5 right triangle, standing inside the circle's equation."
+          },
+          {
+            "id": "o2",
+            "label": "No — 3 + 4 ≠ 25",
+            "correct": false,
+            "feedback": "The equation squares FIRST: 3² + 4², not 3 + 4."
+          },
+          {
+            "id": "o3",
+            "label": "No — only (5, 0) and (0, 5) qualify",
+            "correct": false,
+            "feedback": "Axis points qualify, but so does every Pythagorean pair: 9 + 16 = 25."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Collect lattice members.",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "Plot BOTH first-quadrant lattice points on x² + y² = 25 that sit off the axes.",
+        "cols": 6,
+        "rows": 6,
+        "xLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "yLabels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "targets": [
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "connectTargets": false,
+        "pointErrors": [
+          {
+            "x": 6,
+            "y": 1,
+            "feedback": "(5, 0) is on the circle but ON the x-axis — the prompt wants the off-axis pair."
+          },
+          {
+            "x": 4,
+            "y": 4,
+            "feedback": "(3, 3): 9 + 9 = 18 < 25 — inside the circle, not on it."
+          }
+        ],
+        "missFeedback": "Which whole-number squares add to 25? 9 + 16 does — in both orders.",
+        "successFeedback": "(3, 4) and (4, 3): the same triple wearing both orders. Symmetry across y = x is the circle's equation being symmetric in x and y."
+      },
+      "predict": {
+        "prompt": "Where does (2, 4) live relative to x² + y² = 25?",
+        "options": [
+          {
+            "id": "inside",
+            "label": "Inside — the sum falls short of 25"
+          },
+          {
+            "id": "on",
+            "label": "On the circle"
+          },
+          {
+            "id": "outside",
+            "label": "Outside — the sum exceeds 25"
+          }
+        ],
+        "outcomeId": "inside",
+        "reveal": "4 + 16 = 20 < 25 — inside. The comparison does everything: sum under 25 is inside, equal is on, over is outside. The circle's equation is a distance meter with three readings."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So one equation sorts the whole plane: x² + y² < 25 is the open disk, = 25 the rim, > 25 the exterior. The rim is what a LINE will soon be probing — and the same substitution recipe from parabolas will do the probing.",
+      "figure": "nls-plane-sorted-by-circle"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Sort by the meter.",
+      "conceptTag": "nls-circle-equation",
+      "explanationVariants": [
+        "(−4, 3): 16 + 9 = 25 — on the rim; signs vanish under squaring.",
+        "Squares ignore sign, so (−4, 3) scores exactly 25, same as (4, 3)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where is (−4, 3) relative to x² + y² = 25?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "On the circle — squaring erases the minus",
+            "correct": true,
+            "feedback": "(−4)² = 16, and 16 + 9 = 25: all four sign-variants of (4, 3) ride the rim."
+          },
+          {
+            "id": "o2",
+            "label": "Inside — negatives shrink the sum",
+            "correct": false,
+            "feedback": "(−4)² is +16; squaring never outputs a negative."
+          },
+          {
+            "id": "o3",
+            "label": "Outside — negative x isn't allowed",
+            "correct": false,
+            "feedback": "The circle surrounds the origin on all sides; negative coordinates are half of it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Radius from the equation.",
+      "conceptTag": "nls-circle-equation",
+      "explanationVariants": [
+        "x² + y² = 49 has radius √49 = 7 — the equation stores the radius SQUARED.",
+        "The right side is r², so r = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the radius of the circle x² + y² = 49?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "That's r². The equation says (distance)² = 49, so the distance is 7."
+          },
+          {
+            "value": 24,
+            "feedback": "Halving 49 has no role; take its square root: 7."
+          },
+          {
+            "value": 14,
+            "feedback": "That's the DIAMETER; the radius is half — 7."
+          }
+        ],
+        "fallbackFeedback": "x² + y² = r² — so r² = 49 means r = 7, not 49. The equation stores the radius squared."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build the equation from a point.",
+      "conceptTag": "nls-circle-equation",
+      "explanationVariants": [
+        "Through (6, 8): r² = 36 + 64 = 100, so the circle is x² + y² = 100 — radius 10.",
+        "The point's squared distance, 100, becomes the equation's right side."
+      ],
+      "hints": [
+        "A circle centered at the origin through (6, 8) has what r²?",
+        "r² is the point's x² + y².",
+        "36 + 64 = ? — that number IS the equation's right side."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The origin-centered circle through (6, 8) is x² + y² = k. Find k.",
+        "answer": 100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the radius; the equation stores its SQUARE, 100."
+          },
+          {
+            "value": 14,
+            "feedback": "6 + 8 adds unsquared coordinates; the recipe is 6² + 8²."
+          },
+          {
+            "value": 28,
+            "feedback": "That's 2·(6 + 8); squares first: 36 + 64."
+          }
+        ],
+        "fallbackFeedback": "k = 6² + 8² = 36 + 64 = 100. The circle through a point inherits k from that point's coordinates."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A circle is a distance meter.",
+      "takeaways": [
+        "x² + y² = r² collects the points at distance r from the origin.",
+        "Under, equal, over 25 sorts inside, on, outside.",
+        "Signs die under squaring — the rim is symmetric four ways."
+      ],
+      "teaser": "next: push a line through the rim and count the punctures."
+    }
+  ]
+}

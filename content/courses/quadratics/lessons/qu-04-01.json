@@ -1,0 +1,316 @@
+{
+  "id": "qu-04-01",
+  "slug": "projectile-motion",
+  "title": "Projectile Motion",
+  "courseId": "quadratics",
+  "chapterId": "ch4-applications",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-vertex",
+      "body": "A thrown object traces a parabola. If its height after x seconds is h = −x² + 6x, it's on the ground when h = 0. Solving −x² + 6x = 0 (that is, x² − 6x = 0) gives the launch and landing times."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A thrown ball is a parabola opening downward.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": -1,
+        "targetH": 2,
+        "targetK": 4,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 8,
+        "prompt": "A ball's height is h = −(t − 2)² + 4. Build its path.",
+        "successFeedback": "Peak at t = 2, height 4 — and the ball lands where the curve crosses zero, at t = 0 and t = 4. A negative leading coefficient is gravity: it is what turns the parabola over and gives the flight a maximum rather than a minimum.",
+        "shapeFeedback": "The curve must open DOWNWARD — a ball comes back down, so a is negative.",
+        "vertexFeedback": "The shape is right but the peak is in the wrong place: the maximum is at t = 2, height 4."
+      },
+      "predict": {
+        "prompt": "You'll move h UP in y = a(x − h)² + k. Which way does the parabola slide?",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right"
+          },
+          {
+            "id": "left",
+            "label": "To the left"
+          },
+          {
+            "id": "upward",
+            "label": "Straight up"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "Raising h moves the vertex RIGHT even though h is subtracted — (x − h)² is smallest exactly when x = h, so the low point chases h. The minus sign is why so many people guess the wrong direction."
+      },
+      "conceptTag": "quad-projectile",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents quad projectile.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for quad projectile must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines quad projectile."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "quadratics:quad-projectile",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A different flight.",
+      "conceptTag": "quad-projectile",
+      "explanationVariants": [
+        "x² − 8x = 0 factors as x(x − 8) = 0, so it lands at x = 8.",
+        "The positive root of x² − 8x = 0 is 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rocket's height is h = -x^2 + 8x, so it lands when x^2 - 8x = 0. At what positive time does it land?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "x = 0 is the launch. The landing is the other root, x = 8."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the peak time, not the landing. It lands at x = 8."
+          }
+        ],
+        "fallbackFeedback": "x(x − 8) = 0 gives x = 0 or 8; it lands at 8."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-projectile__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two roots are the launch and landing times; the **vertex** in between is the peak. For h = −x² + 6x, it launches at x = 0 and lands at x = 6, so it reaches its highest point halfway, at the axis x = −b/(2a) = 3.",
+      "figure": "qu-projectile"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "When is it highest?",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h = -x^2 + 6x, at what time is the height greatest (the axis of symmetry)?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is when it lands. The peak is halfway, at x = −b/(2a) = 3."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the launch. The peak is at the axis, x = 3."
+          }
+        ],
+        "fallbackFeedback": "Axis x = −6/(2·−1) = 3."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Substitute the peak time back in for the **maximum height**. For h = −x² + 6x at x = 3: h = −(3)² + 6(3) = −9 + 18 = 9. So the ball reaches 9 units at the top of its arc.",
+      "figure": "qu-max-height"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "How high does it get?",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h = -x^2 + 6x, what is the maximum height (the value at the vertex)?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the time of the peak, not the height. Substitute it: h = −9 + 18 = 9."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the landing time. The maximum height is h = 9 at x = 3."
+          }
+        ],
+        "fallbackFeedback": "h(3) = −9 + 18 = 9."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Peak height, new flight.",
+      "conceptTag": "quad-projectile",
+      "explanationVariants": [
+        "Axis x = −8/(2·−1) = 4; h(4) = −16 + 32 = 16.",
+        "At the peak x = 4, h = −16 + 32 = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ball follows h = -x^2 + 8x. What is the maximum height (the value at the vertex)?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the landing time, not the height. The max height is h(4) = 16."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the peak time. Substitute it: h = −16 + 32 = 16."
+          }
+        ],
+        "fallbackFeedback": "h(4) = −16 + 32 = 16."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-projectile__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Its peak time.",
+      "conceptTag": "quad-projectile",
+      "explanationVariants": [
+        "Axis x = −8/(2·−1) = 4.",
+        "The peak is at the axis, x = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For h = -x^2 + 8x, at what time does it reach the maximum height (the axis of symmetry)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the landing time. The peak is halfway, at x = 4."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is the maximum height, not the time. The time is x = 4."
+          }
+        ],
+        "fallbackFeedback": "Axis x = −8/(2·−1) = 4."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-projectile__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A longer flight.",
+      "conceptTag": "quad-projectile",
+      "explanationVariants": [
+        "x² − 10x = 0 factors as x(x − 10) = 0, so it lands at x = 10.",
+        "The positive root of x² − 10x = 0 is 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A rocket's height gives x^2 - 10x = 0 at the ground. At what positive time does it land?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "x = 0 is the launch. The landing is x = 10."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the peak time (halfway), not the landing. It lands at x = 10."
+          }
+        ],
+        "fallbackFeedback": "x(x − 10) = 0 gives x = 0 or 10; it lands at 10."
+      },
+      "hints": [
+        "Factor out x: x(x − 10) = 0.",
+        "The roots are x = 0 and x = 10.",
+        "The positive landing time is 10."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-projectile__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A height model's roots are the ground times; its vertex is the peak.",
+      "takeaways": [
+        "Set h = 0 and solve for the launch and landing times.",
+        "The axis x = −b/(2a) is the time of maximum height.",
+        "Substitute that time back in for the maximum height."
+      ],
+      "teaser": "next: area problems that become quadratics."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-projectile",
+      "concept": {
+        "id": "rem-qp-c",
+        "kind": "concept",
+        "body": "A height model h = −x² + 6x hits the ground when h = 0. Factor x(x − 6) = 0: launch at x = 0, landing at x = 6. The peak is halfway, at the axis x = 3."
+      },
+      "check": {
+        "id": "rem-qp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-projectile",
+        "explanationVariants": [
+          "x(x − 6) = 0 gives the landing at x = 6.",
+          "The positive root is 6."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A ball lands when x^2 - 6x = 0. At what positive time does it land?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "x = 0 is the launch; the landing is x = 6."
+            },
+            {
+              "value": 3,
+              "feedback": "3 is the peak time, not the landing."
+            }
+          ],
+          "fallbackFeedback": "x(x − 6) = 0 gives x = 6."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,483 @@
+{
+  "id": "fa-04-03",
+  "slug": "adding-subtracting-mixed-numbers",
+  "title": "Adding & Subtracting Mixed Numbers",
+  "courseId": "fractions-add",
+  "chapterId": "ch4-mixed-numbers",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Add or subtract the whole numbers and the fraction parts **separately** — like adding dollars and cents on their own. 2 1/5 + 1 2/5: whole parts 2+1=3; fraction parts 1/5+2/5=3/5. Combined: **3 3/5.**",
+      "figure": "fa-improper-mixed"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match the simple sum.",
+      "conceptTag": "mixed-number-add-subtract",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each addition or subtraction to its result.",
+        "left": [
+          {
+            "id": "e1",
+            "label": "2 1/5 + 1 2/5"
+          },
+          {
+            "id": "e2",
+            "label": "3 4/5 − 1 2/5"
+          },
+          {
+            "id": "e3",
+            "label": "1 1/4 + 2 1/4"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "3 3/5"
+          },
+          {
+            "id": "r2",
+            "label": "2 2/5"
+          },
+          {
+            "id": "r3",
+            "label": "3 2/4"
+          }
+        ],
+        "pairs": {
+          "e1": "r1",
+          "e2": "r2",
+          "e3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "e2",
+            "right": "r3",
+            "feedback": "3 2/4 belongs to 1 1/4 + 2 1/4. For 3 4/5 − 1 2/5: wholes 3−1=2, fractions 4/5−2/5=2/5, giving 2 2/5."
+          }
+        ],
+        "missFeedback": "Combine the whole numbers together, and the fraction parts together, separately.",
+        "successFeedback": "Wholes with wholes, fractions with fractions — no regrouping needed in any of these three."
+      },
+      "predict": {
+        "prompt": "Adding 1½ + 1½ — can the fraction parts alone push the answer up to a new WHOLE?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — the halves combine into a whole"
+          },
+          {
+            "id": "no",
+            "label": "No — wholes and parts stay separate"
+          },
+          {
+            "id": "sub",
+            "label": "Only when subtracting"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Half and half make a full one — the parts regroup upward exactly like ones carrying into tens. Mixed numbers trade between their two columns."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Simple addition.",
+      "conceptTag": "mixed-number-add-subtract",
+      "explanationVariants": [
+        "Whole parts: 1+2=3. Fraction parts: 1/6+3/6=4/6. Combined: 3 4/6.",
+        "No regrouping needed — the fraction parts stay under one whole."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "1 1/6 + 2 3/6 = 3 ?/6. What is the numerator of the fraction part?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 adds the denominators, not the numerators. Only the fraction-part numerators combine: 1+3=4."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the sum of the WHOLE numbers (1+2). The fraction parts add separately: 1+3=4."
+          }
+        ],
+        "fallbackFeedback": "Add just the fraction-part numerators: 1+3."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedAddSubNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Sometimes the pieces don't cooperate. **Adding:** if the fraction parts pass a whole, carry that extra whole into the whole-number part. 3/5+4/5=7/5=1 2/5, so carry the 1: 2+1+1=4, leaving 2/5 — total 4 2/5. **Subtracting:** if the fraction part is too small, borrow 1 whole and turn it into that many pieces. For 3 1/5−1 3/5: borrow from the 3, turning 1/5 into 6/5; then 2 6/5−1 3/5=1 3/5.",
+      "figure": "fa-mixed-improper"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Carry the extra whole.",
+      "conceptTag": "mixed-number-add-subtract",
+      "explanationVariants": [
+        "Fraction parts: 3/5+4/5=7/5, which is 1 whole plus 2/5 — past a whole. Carrying that 1: wholes 2+1+1=4.",
+        "The fraction sum passes a whole, so an extra 1 joins the whole-number part."
+      ],
+      "widget": {
+        "type": "mixedRegroup",
+        "prompt": "2 3/5 + 1 4/5 = what mixed number? Work out the parts column, make any whole it holds, then the whole column.",
+        "mode": "add",
+        "den": 5,
+        "aWhole": 2,
+        "aNum": 3,
+        "bWhole": 1,
+        "bNum": 4,
+        "commonResults": [
+          {
+            "whole": 3,
+            "num": 7,
+            "feedback": "3 is just 2+1, the whole numbers alone. The fraction parts (3/5+4/5=7/5) pass a whole, adding one MORE to the total: 4."
+          }
+        ],
+        "fallbackFeedback": "Add the fraction parts first (3/5+4/5=7/5) — since that passes a whole, carry 1 into the whole-number sum (2+1).",
+        "successFeedback": "2 3/5 + 1 4/5 = 4 2/5 — the parts made 7/5, one whole came out of it, and that whole joined 2 + 1."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedAddSubMixed"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mixed number add subtract.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mixed number add subtract must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mixed number add subtract."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:mixed-number-add-subtract",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Regrouping needed, or not?",
+      "conceptTag": "mixed-number-add-subtract",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each operation: does it need regrouping (carrying or borrowing), or not?",
+        "buckets": [
+          {
+            "id": "no",
+            "label": "No regrouping",
+            "icon": "✅"
+          },
+          {
+            "id": "yes",
+            "label": "Needs regrouping",
+            "icon": "🔁"
+          }
+        ],
+        "items": [
+          {
+            "id": "q1",
+            "label": "2 1/7 + 3 2/7",
+            "bucketId": "no",
+            "feedback": "1/7+2/7=3/7 — under a whole, no carry needed."
+          },
+          {
+            "id": "q2",
+            "label": "4 5/9 + 2 6/9",
+            "bucketId": "yes",
+            "feedback": "5/9+6/9=11/9 — past a whole, needs a carry."
+          },
+          {
+            "id": "q3",
+            "label": "5 3/8 − 2 1/8",
+            "bucketId": "no",
+            "feedback": "3/8 is bigger than 1/8 — no borrow needed."
+          },
+          {
+            "id": "q4",
+            "label": "6 2/6 − 3 5/6",
+            "bucketId": "yes",
+            "feedback": "2/6 is smaller than 5/6 — needs a borrow."
+          }
+        ],
+        "missFeedback": "Check the fraction parts: for addition, do they pass a whole? For subtraction, is the first one too small?",
+        "successFeedback": "Two pairs regroup cleanly; the other two need a carry or a borrow first."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Borrow a whole.",
+      "conceptTag": "mixed-number-add-subtract",
+      "explanationVariants": [
+        "1/7 is smaller than 5/7, so borrow 1 from the 4, turning 1/7 into 8/7. Now 3 8/7 − 2 5/7 = 1 3/7 — fraction part 3.",
+        "Borrowing converts the whole into 7/7, added to the 1/7 already there."
+      ],
+      "widget": {
+        "type": "mixedRegroup",
+        "prompt": "4 1/7 − 2 5/7 = what mixed number? Break a whole if the parts column needs one, then work out both columns.",
+        "mode": "subtract",
+        "den": 7,
+        "aWhole": 4,
+        "aNum": 1,
+        "bWhole": 2,
+        "bNum": 5,
+        "commonResults": [
+          {
+            "whole": 2,
+            "num": 4,
+            "feedback": "4 comes from subtracting backward (5−1) instead of borrowing. Borrow 1 whole (making it 8/7), then 8−5=3."
+          },
+          {
+            "whole": 0,
+            "num": 10,
+            "feedback": "10/7 is bigger than a whole — a second whole was broken that wasn't needed. One break turns 1/7 into 8/7, which is already enough to take 5/7 away."
+          }
+        ],
+        "fallbackFeedback": "1/7 is too small for 5/7 — borrow 1 whole (turning it into 7/7+1/7=8/7), then subtract.",
+        "successFeedback": "4 1/7 − 2 5/7 = 1 3/7 — one whole broke into 7/7, making 8/7 on top, and 8 − 5 = 3 sevenths."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedAddSubMixed"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mixed number add subtract.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mixed number add subtract must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mixed number add subtract."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:mixed-number-add-subtract",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A whole number has no fraction part to subtract from — so one whole has to come apart first.",
+      "conceptTag": "mixed-number-add-subtract",
+      "predict": {
+        "prompt": "3 − 1 2/5. The whole-number part of the answer will be:",
+        "options": [
+          {
+            "id": "two",
+            "label": "2 — just 3 minus 1"
+          },
+          {
+            "id": "less",
+            "label": "Less than 2 — a whole gets broken"
+          },
+          {
+            "id": "three",
+            "label": "3 — the fraction is too small to matter"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "There are no fifths on top to take 2/5 from, so one of the 3 wholes breaks into 5/5. That leaves 2 wholes and 5/5, and after subtracting: 1 3/5."
+      },
+      "widget": {
+        "type": "mixedRegroup",
+        "prompt": "3 − 1 2/5. Break a whole so the parts column has something to subtract from, then work out both columns.",
+        "mode": "subtract",
+        "den": 5,
+        "aWhole": 3,
+        "aNum": 0,
+        "bWhole": 1,
+        "bNum": 2,
+        "commonResults": [
+          {
+            "whole": 2,
+            "num": 2,
+            "feedback": "2 2/5 takes the 2/5 from nothing and copies it down. There are zero fifths on top — a whole must break into 5/5 first, and then 5 − 2 = 3 fifths."
+          },
+          {
+            "whole": 0,
+            "num": 8,
+            "feedback": "8/5 is more than a whole, so a second whole was broken that wasn't needed. One break gives 5/5 on top, which already covers 2/5."
+          }
+        ],
+        "fallbackFeedback": "Write 3 as 2 wholes and 5/5 first — then the parts column reads 5/5 − 2/5.",
+        "successFeedback": "3 − 1 2/5 = 1 3/5 — one whole broke into 5/5, leaving 2 and 5/5, and 5 − 2 = 3 fifths."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mixed number add subtract.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mixed number add subtract must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mixed number add subtract."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "fractions-add:mixed-number-add-subtract",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Same move, no manipulative — write it out.",
+      "conceptTag": "mixed-number-add-subtract",
+      "explanationVariants": [
+        "5 has no eighths, so borrow one whole: 5 becomes 4 and 8/8. Then 8/8 − 3/8 = 5/8, and 4 − 2 = 2, giving 2 5/8 — fraction numerator 5.",
+        "Think of 5 as 4 8/8. Subtracting 2 3/8 takes 3 eighths from 8 eighths, leaving 5 eighths."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 − 2 3/8 = what mixed number? What is the numerator of the fraction part?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 copies the bottom fraction straight down. There are no eighths in 5 to subtract from — borrow one whole to get 8/8, then 8 − 3 = 5."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the borrowed whole written as 8/8, before the 3/8 is taken away. Finish the subtraction: 8 − 3 = 5 eighths."
+          }
+        ],
+        "fallbackFeedback": "Rewrite 5 as 4 8/8, then subtract 2 3/8 — the fraction part is 8/8 − 3/8."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedAddSubNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The flour left over.",
+      "conceptTag": "mixed-number-add-subtract",
+      "hints": [
+        "1/6 is smaller than 5/6 — a borrow is needed.",
+        "Borrow 1 from the 4, turning 1/6 into 7/6.",
+        "Now subtract: 7/6−5/6, and 3−1 for the wholes."
+      ],
+      "explanationVariants": [
+        "1/6 is too small for 5/6, so borrow 1 from the 4: 1/6 becomes 7/6. Now 3 7/6 − 1 5/6 = 2 2/6 — whole number part 2.",
+        "Borrowing converts the whole into sixths, resolving the subtraction."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A recipe needs 4 1/6 cups of flour total. You've already used 1 5/6 cups. How much flour is left? What is the WHOLE NUMBER part of the answer?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "cups",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is just 4−1, ignoring the borrow. Since 1/6 is smaller than 5/6, one whole must be borrowed first, changing the whole-number part to 2."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is the original whole number, before any borrowing. Since 1/6 can't cover subtracting 5/6, a whole is borrowed, leaving 2."
+          }
+        ],
+        "fallbackFeedback": "Since 1/6 is smaller than 5/6, borrow 1 whole from the 4 (turning 1/6 into 7/6) before subtracting."
+      },
+      "variant": {
+        "gen": "g4-fractions",
+        "form": "faMixedAddSubNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Wholes and fractions, handled together.",
+      "takeaways": [
+        "Combine whole numbers and fraction parts separately.",
+        "Adding: if the fraction parts pass a whole, carry the extra into the whole-number part.",
+        "Subtracting: if the fraction part is too small, borrow a whole and convert it into that many pieces."
+      ],
+      "teaser": "next chapter: multiplying a fraction by a whole number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mixed-number-add-subtract",
+      "concept": {
+        "id": "rem-ms-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Combine wholes with wholes, fractions with fractions.** If subtracting and the fraction part is too small, borrow 1 whole and turn it into that many pieces. For 2 1/3 − 1 2/3: 1/3 is smaller than 2/3, so borrow: 1/3 becomes 4/3 (a whole is 3/3, plus the 1/3 already there). Now 1 4/3 − 1 2/3 = 0 2/3."
+      },
+      "check": {
+        "id": "rem-ms-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mixed-number-add-subtract",
+        "explanationVariants": [
+          "1/3 is too small for 2/3, so borrow: it becomes 4/3. Then 4−2=2, wholes 1−1=0: result 2/3.",
+          "Borrowing a whole resolves the subtraction, leaving 2/3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is 2 1/3 − 1 2/3?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2/3",
+              "correct": true,
+              "feedback": "Borrowing turns 1/3 into 4/3; then 4−2=2, wholes 1−1=0: 2/3."
+            },
+            {
+              "id": "b",
+              "label": "1 1/3",
+              "feedback": "That skips the borrow. Since 1/3 is smaller than 2/3, a whole must be borrowed first, giving 2/3."
+            },
+            {
+              "id": "c",
+              "label": "1/3",
+              "feedback": "Borrowing changes the fraction part too. 1/3 becomes 4/3, and 4−2=2: the true answer is 2/3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

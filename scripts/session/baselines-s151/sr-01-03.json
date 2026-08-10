@@ -1,0 +1,310 @@
+{
+ "id": "sr-01-03",
+ "slug": "converting-between-forms",
+ "title": "Converting Between Forms",
+ "courseId": "sequences-series",
+ "chapterId": "ch1-recursive-explicit",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Converting an **arithmetic** recursive rule to explicit is a hop count. a₁ = 5, aₙ = aₙ₋₁ + 4 means term n sits (n − 1) hops of 4 past the start: **aₙ = 5 + (n − 1)·4**. The start appears once; the hop appears (n − 1) times — because the first term takes zero hops.",
+   "figure": "sr-arith-to-explicit"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build the explicit rule.",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Build the explicit rule for a₁ = 9, aₙ = aₙ₋₁ + 2.  (aₙ = …)",
+    "tokens": [
+     {
+      "id": "t9",
+      "label": "9"
+     },
+     {
+      "id": "tplus",
+      "label": "+"
+     },
+     {
+      "id": "tnm1",
+      "label": "(n − 1)"
+     },
+     {
+      "id": "tdot",
+      "label": "·"
+     },
+     {
+      "id": "t2",
+      "label": "2"
+     },
+     {
+      "id": "tn",
+      "label": "n"
+     }
+    ],
+    "correct": [
+     "t9",
+     "tplus",
+     "tnm1",
+     "tdot",
+     "t2"
+    ],
+    "acceptAlso": [
+     [
+      "t9",
+      "tplus",
+      "t2",
+      "tdot",
+      "tnm1"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t9",
+       "tplus",
+       "tn",
+       "tdot",
+       "t2"
+      ],
+      "feedback": "Using n counts one hop too many — the first term takes ZERO hops, so term n is only (n − 1) steps of 2 past the 9."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Start once, then (n − 1) hops of the step: 9 + (n − 1)·2.",
+    "successFeedback": "That's the conversion: the start appears once, the hop (n − 1) times."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Use what you built.",
+   "conceptTag": "sr-convert",
+   "explanationVariants": [
+    "a₁₂ = 5 + (12 − 1)·4 = 5 + 44 = 49.",
+    "Eleven hops of 4 past the start of 5 lands on 49."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Convert a₁ = 5, aₙ = aₙ₋₁ + 4 to explicit form, then find a₁₂.",
+    "answer": 49,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 53,
+      "feedback": "53 comes from 5 + 12·4 — the n-instead-of-(n−1) slip. Twelve terms means eleven hops: 5 + 11·4 = 49."
+     },
+     {
+      "value": 44,
+      "feedback": "44 is the hops with the start dropped — 11·4 alone. The rule is start PLUS hops: 5 + 44 = 49."
+     }
+    ],
+    "fallbackFeedback": "5 + 11·4 = 49 — eleven hops of 4 from 5."
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-convert__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Geometric rules convert the same way, with **factors** instead of hops. a₁ = 3, aₙ = 2·aₙ₋₁ means term n carries (n − 1) factors of 2: **aₙ = 3·2ⁿ⁻¹**. And converting explicit → recursive just reads the parts back out: the start is a₁, the multiplier (or added step) becomes the hop.",
+   "figure": "sr-geom-to-explicit"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Explicit to recursive.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Convert aₙ = 7 + (n − 1)·5 to a recursive rule.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "a₁ = 7, aₙ = aₙ₋₁ + 5",
+      "correct": true,
+      "feedback": "Right — the start is 7 and every hop adds the step 5."
+     },
+     {
+      "id": "o2",
+      "label": "a₁ = 5, aₙ = aₙ₋₁ + 7",
+      "correct": false,
+      "feedback": "Start and step traded places — this builds 5, 12, 19. The formula starts at 7 (plug in n = 1) and hops by 5."
+     },
+     {
+      "id": "o3",
+      "label": "a₁ = 7, aₙ = aₙ₋₁ + 5(n − 1)",
+      "correct": false,
+      "feedback": "That makes the hop GROW each time. In the explicit rule the 5 multiplies (n − 1) once overall — each single hop is a constant +5."
+     },
+     {
+      "id": "o4",
+      "label": "a₁ = 7, aₙ = 5·aₙ₋₁",
+      "correct": false,
+      "feedback": "A multiply hop builds 7, 35, 175 — a ratio pattern. This formula ADDS 5 per step, so the hop is + 5."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Recursive to explicit, multiply edition.",
+   "conceptTag": "sr-convert",
+   "explanationVariants": [
+    "The start 4 appears once; each hop contributes one factor of 3, and term n has taken (n − 1) hops.",
+    "Check n = 2: 4·3¹ = 12, matching one tripling of 4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Convert a₁ = 4, aₙ = 3·aₙ₋₁ to explicit form.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "aₙ = 4·3ⁿ⁻¹",
+      "correct": true,
+      "feedback": "Right — (n − 1) triplings of the start 4."
+     },
+     {
+      "id": "o2",
+      "label": "aₙ = 4·3ⁿ",
+      "correct": false,
+      "feedback": "The exponent counts hops, and the first term has taken ZERO of them — 3ⁿ gives a₁ = 12 instead of 4. It's 3ⁿ⁻¹."
+     },
+     {
+      "id": "o3",
+      "label": "aₙ = (4·3)ⁿ⁻¹",
+      "correct": false,
+      "feedback": "Only the RATIO repeats — the start 4 appears once, outside the power. (4·3)ⁿ⁻¹ would multiply the 4 in again at every hop."
+     },
+     {
+      "id": "o4",
+      "label": "aₙ = 4 + (n − 1)·3",
+      "correct": false,
+      "feedback": "That's the ADD pattern's conversion. This rule multiplies by 3 each hop, so the hops stack as a power: 4·3ⁿ⁻¹."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-convert__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Always **sanity-check a conversion** at n = 1 and n = 2. For aₙ = 4·3ⁿ⁻¹: n = 1 gives 4·3⁰ = 4 ✓ (the start), n = 2 gives 4·3¹ = 12 ✓ (one tripling). Two cheap checks catch nearly every conversion slip — especially the n-versus-(n − 1) one.",
+   "figure": "sr-sanity-check"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Verify by computing.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using your converted rule aₙ = 4·3ⁿ⁻¹, what is a₃?",
+    "answer": 36,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 108,
+      "feedback": "108 is 4·3³ — the exponent-n slip again. The third term carries only TWO factors of 3: 4·9 = 36."
+     },
+     {
+      "value": 12,
+      "feedback": "12 is a₂ (one factor of 3). The third term takes two: 4·3² = 36."
+     }
+    ],
+    "fallbackFeedback": "4·3² = 4·9 = 36."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Convert, then leap.",
+   "conceptTag": "sr-convert",
+   "explanationVariants": [
+    "Explicit: aₙ = 40 + (n − 1)(−6); a₁₅ = 40 + 14·(−6) = 40 − 84 = −44.",
+    "Fourteen hops of −6 from 40: 40 − 84 = −44."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Convert a₁ = 40, aₙ = aₙ₋₁ − 6 to explicit form, then find a₁₅.",
+    "answer": -44,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -50,
+      "feedback": "−50 comes from 40 − 15·6 — fifteen hops. The fifteenth term is only fourteen hops from the first: 40 − 14·6 = −44."
+     },
+     {
+      "value": -84,
+      "feedback": "−84 is the hops alone — 14·(−6) with the start dropped. Add the 40 back: 40 − 84 = −44."
+     }
+    ],
+    "fallbackFeedback": "a₁₅ = 40 + 14·(−6) = −44."
+   },
+   "hints": [
+    "Convert first — the walk is −6 per hop, starting from 40.",
+    "Explicit form: aₙ = 40 + (n − 1)(−6). You need n = 15.",
+    "40 − 14·6 — finish the arithmetic."
+   ],
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-convert__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Two forms, one conversion move.",
+   "takeaways": [
+    "Arithmetic: start once + (n − 1) hops of d. Geometric: start once × rⁿ⁻¹.",
+    "Explicit → recursive just reads the start and the hop back out.",
+    "Test n = 1 and n = 2 — two cheap checks catch the (n − 1) slip."
+   ],
+   "teaser": "Next: a compact way to write a whole SUM of terms — the sigma."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "sr-convert",
+   "concept": {
+    "id": "rem-sr0103-c",
+    "kind": "concept",
+    "body": "The (n − 1) is a hop count. Term 1 has taken 0 hops, term 2 has taken 1, term n has taken n − 1. That's why the explicit rules read a₁ + (n − 1)d and a₁·rⁿ⁻¹ — the start, then exactly (n − 1) hops."
+   },
+   "check": {
+    "id": "rem-sr0103-k",
+    "kind": "check",
+    "body": "Count the hops.",
+    "conceptTag": "sr-convert",
+    "explanationVariants": [
+     "Term 6 has taken 5 hops from the start.",
+     "Hops = position − 1, because the first term takes none."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "In any sequence, how many hops from a₁ does it take to reach a₆?",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 6,
+       "feedback": "Six hops would land on a₇ — the first term takes ZERO hops, so a₆ is five hops in."
+      },
+      {
+       "value": 4,
+       "feedback": "Four hops reach a₅. Count positions: a₁ (0 hops), a₂ (1), … a₆ (5)."
+      }
+     ],
+     "fallbackFeedback": "Hops = position − 1: a₆ is 5 hops from a₁."
+    }
+   }
+  }
+ ]
+}

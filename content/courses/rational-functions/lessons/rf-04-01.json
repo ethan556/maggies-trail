@@ -1,0 +1,347 @@
+{
+  "id": "rf-04-01",
+  "slug": "the-reciprocal-parent",
+  "title": "The Reciprocal Function",
+  "courseId": "rational-functions",
+  "chapterId": "ch4-graphs-asymptotes-and-holes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Meet the parent: f(x) = 1/x. Two sweeping branches — first and third quadrants — that **hug two lines without ever touching them**: the vertical line x = 0 (banned input) and the horizontal line y = 0 (unreachable output). Those lines are the **asymptotes**.",
+      "figure": "reciprocal-parent"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Magnify the reciprocal at the one place it refuses to exist.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "infinite",
+        "a": 0,
+        "leftValue": 0,
+        "rightValue": 0,
+        "fAtA": null,
+        "targetVerdict": "no-limit",
+        "requiredZoom": 3,
+        "prompt": "y = 1/x² near x = 0. Magnify and decide whether the y-values settle on any number.",
+        "successFeedback": "They never settle — the closer you look, the larger they grow. A vertical asymptote is not a value the function reaches; it is a place where the function has no value AND no limit, and no magnification will repair it.",
+        "moreZoomFeedback": "Keep magnifying. A limit that exists gets EASIER to read as you zoom; this one gets worse, and that is the diagnosis.",
+        "wrongVerdictFeedback": "'Goes to infinity' describes how the limit fails, not a number it approaches. The y-values never settle, so there is no limit here."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 0. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          },
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          }
+        ],
+        "outcomeId": "blow",
+        "reveal": "Zooming never tames it — the graph climbs off every window near x = 0. When the values grow without bound, there is no height to agree on, so the limit does not exist."
+      },
+      "conceptTag": "rf-reciprocal",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents rf reciprocal.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for rf reciprocal must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines rf reciprocal."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "rational-functions:rf-reciprocal",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Near x = 0 the outputs explode (1/0.001 = 1000); far away they flatten (1/1000 = 0.001, never reaching 0 exactly). Transformations move the whole picture: f(x) = 1/(x − 2) + 1 slides the asymptote pair to **x = 2 and y = 1** — the branches follow their guide rails.",
+      "figure": "rf-vertical-asymptote"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why y = 0 is unreachable.",
+      "conceptTag": "rf-reciprocal",
+      "explanationVariants": [
+        "1/x = 0 would need a numerator of 0 — but the top is fixed at 1: no input works.",
+        "A fraction is zero only when its TOP is zero; this top never is."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does f(x) = 1/x never output 0?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a fraction equals 0 only when its numerator does — and this one is always 1",
+            "correct": true,
+            "feedback": "Right — solve 1/x = 0: no x can make it true."
+          },
+          {
+            "id": "o2",
+            "label": "because x = 0 is excluded",
+            "correct": false,
+            "feedback": "That explains the VERTICAL asymptote (banned input) — the unreachable OUTPUT is about the numerator staying 1."
+          },
+          {
+            "id": "o3",
+            "label": "it does, at very large x",
+            "correct": false,
+            "feedback": "1/1000000 is tiny but still positive — flattening toward 0 is not reaching 0."
+          },
+          {
+            "id": "o4",
+            "label": "because 1/x is always positive",
+            "correct": false,
+            "feedback": "1/(−2) = −½ is negative — the third-quadrant branch exists; it's exactly 0 that's impossible."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-reciprocal__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Shifted asymptotes.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where are the asymptotes of g(x) = 1/(x − 2) + 1?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = 2 and y = 1",
+            "correct": true,
+            "feedback": "Right — the denominator dies at 2; the +1 lifts the horizontal rail."
+          },
+          {
+            "id": "o2",
+            "label": "x = −2 and y = 1",
+            "correct": false,
+            "feedback": "Inside shifts oppose their sign: x − 2 dies at POSITIVE 2."
+          },
+          {
+            "id": "o3",
+            "label": "x = 2 and y = −1",
+            "correct": false,
+            "feedback": "The +1 is outside and as-written: the horizontal asymptote RISES to y = 1."
+          },
+          {
+            "id": "o4",
+            "label": "x = 1 and y = 2",
+            "correct": false,
+            "feedback": "Vertical comes from the DENOMINATOR (x = 2); horizontal from the outside shift (y = 1) — don't swap."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Behavior near the wall.",
+      "conceptTag": "rf-reciprocal",
+      "explanationVariants": [
+        "Just right of 2, the denominator x − 2 is tiny and positive: 1/(tiny+) is huge and positive — up the wall.",
+        "Test x = 2.001: 1/0.001 + 1 ≈ 1001."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As x approaches 2 from the RIGHT, what does g(x) = 1/(x − 2) + 1 do?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "shoots up toward +∞",
+            "correct": true,
+            "feedback": "Right — a tiny POSITIVE denominator makes the fraction enormous and positive."
+          },
+          {
+            "id": "o2",
+            "label": "shoots down toward −∞",
+            "correct": false,
+            "feedback": "From the right, x − 2 is a tiny POSITIVE number — the fraction blows up UPWARD (down happens from the left)."
+          },
+          {
+            "id": "o3",
+            "label": "levels off at y = 1",
+            "correct": false,
+            "feedback": "Leveling at y = 1 happens FAR from the wall (large x) — near x = 2 the fraction dominates."
+          },
+          {
+            "id": "o4",
+            "label": "approaches g(2)",
+            "correct": false,
+            "feedback": "g(2) doesn't exist — 2 is the banned input; the graph climbs the asymptote instead."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-reciprocal__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Range of the parent.",
+      "conceptTag": "rf-reciprocal",
+      "explanationVariants": [
+        "Every output except 0 is achieved: y = 5 at x = 1/5, y = −3 at x = −1/3 — only 0 is impossible.",
+        "Solve 1/x = k: x = 1/k works for every k ≠ 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the RANGE of f(x) = 1/x?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "all real numbers except 0",
+            "correct": true,
+            "feedback": "Right — for any k ≠ 0, x = 1/k lands exactly on it."
+          },
+          {
+            "id": "o2",
+            "label": "all real numbers",
+            "correct": false,
+            "feedback": "0 is the one impossible output — the numerator can never vanish."
+          },
+          {
+            "id": "o3",
+            "label": "y > 0",
+            "correct": false,
+            "feedback": "Negative inputs give negative outputs: f(−2) = −½ — the third-quadrant branch is real."
+          },
+          {
+            "id": "o4",
+            "label": "y ≠ 1",
+            "correct": false,
+            "feedback": "f(1) = 1 works fine — the unreachable value is 0, the horizontal asymptote."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-reciprocal__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full transformation profile.",
+      "conceptTag": "rf-reciprocal",
+      "explanationVariants": [
+        "h(x) = 1/(x + 3) − 2: denominator dies at −3 (vertical); the −2 drops the horizontal rail to y = −2.",
+        "Asymptotes move with the shifts: left 3, down 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where are the asymptotes of h(x) = 1/(x + 3) − 2?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = −3 and y = −2",
+            "correct": true,
+            "feedback": "Right — inside shift left 3, outside shift down 2."
+          },
+          {
+            "id": "o2",
+            "label": "x = 3 and y = −2",
+            "correct": false,
+            "feedback": "x + 3 = 0 at NEGATIVE 3 — inside shifts flip their sign."
+          },
+          {
+            "id": "o3",
+            "label": "x = −3 and y = 2",
+            "correct": false,
+            "feedback": "The −2 outside is as-written: the horizontal asymptote sits at y = −2."
+          },
+          {
+            "id": "o4",
+            "label": "x = −2 and y = −3",
+            "correct": false,
+            "feedback": "Vertical tracks the denominator's zero (−3); horizontal tracks the outside shift (−2) — swapped here."
+          }
+        ]
+      },
+      "hints": [
+        "Vertical: solve the denominator = 0.",
+        "x + 3 = 0 at x = −3.",
+        "Horizontal: the outside −2 sets y = −2."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-reciprocal__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two guide rails: banned input (vertical), unreachable output (horizontal).",
+      "takeaways": [
+        "Near the vertical asymptote outputs explode; far away they flatten.",
+        "Shifts move the asymptote pair exactly like a start point.",
+        "1/x's range misses exactly one value: 0."
+      ],
+      "teaser": "Next: when a denominator zero is NOT an asymptote — holes."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-reciprocal",
+      "concept": {
+        "id": "rem-rf0401-c",
+        "kind": "concept",
+        "body": "Feel the explosion: 1/x at x = 0.1, 0.01, 0.001 gives 10, 100, 1000. Smaller input, bigger output."
+      },
+      "check": {
+        "id": "rem-rf0401-k",
+        "kind": "check",
+        "body": "One more step in.",
+        "conceptTag": "rf-reciprocal",
+        "explanationVariants": [
+          "1/0.0001 = 10000.",
+          "Dividing 1 by a ten-times-smaller number gives a ten-times-bigger result."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is 1/x at x = 0.0001?",
+          "answer": 10000,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0.0001,
+              "feedback": "1 ÷ 0.0001 flips the smallness into bigness: 10000."
+            },
+            {
+              "value": 1000,
+              "feedback": "Each factor of 10 smaller in x is a factor of 10 BIGGER in 1/x: 10000, one step past 1000."
+            }
+          ],
+          "fallbackFeedback": "1/0.0001 = 10⁴ = 10000."
+        }
+      }
+    }
+  ]
+}

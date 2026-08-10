@@ -1,0 +1,257 @@
+{
+  "id": "tg-04-03",
+  "slug": "reading-inverse-graphs",
+  "title": "The Inverse Graphs & the y = x Mirror",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch4-inverse-trig",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Each inverse graph is its branch **reflected across y = x** (recall the mirror). Arcsine: an S-shaped climb from (−1, −π/2) to (1, π/2). Arccosine: a descent from (−1, π) to (1, 0). Arctangent: a flattening climb pinched between the lines y = ±π/2.",
+      "figure": "tg-reflect-yx"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reflect a point.",
+      "predict": {
+        "prompt": "The branch point (30°, 1/2) is on restricted sine. What point must arcsin's graph carry?",
+        "options": [
+          {
+            "id": "swap",
+            "label": "(1/2, 30°) — inputs and outputs trade places"
+          },
+          {
+            "id": "same",
+            "label": "(30°, 1/2) — the graphs share their points"
+          },
+          {
+            "id": "neg",
+            "label": "(−1/2, −30°) only"
+          }
+        ],
+        "outcomeId": "swap",
+        "reveal": "(1/2, 30°): an inverse answers the reversed question, so every point swaps coordinates — the y = x mirror. On the circle that reads: sine SENDS 30° to 1/2, arcsine sends 1/2 BACK to 30°, and the branch guarantees the return address is unique. Land on it."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Inside arcsine's branch, drag to the angle that 1/2 maps back to — the second coordinate of the mirrored point (1/2, 30°).",
+        "targetAngle": 30,
+        "angleStart": -60,
+        "angleStep": 5,
+        "branch": [
+          -90,
+          90
+        ],
+        "successFeedback": "30°: sin 30° = 1/2 going out, arcsin(1/2) = 30° coming back — the same fact read in both directions, which is exactly what reflecting a graph across y = x does to a point. The branch is why the return trip has one destination.",
+        "lowFeedback": "sin here is under 1/2 — this angle maps to the wrong height. Climb toward the angle whose sine reads exactly 0.5.",
+        "highFeedback": "sin here is over 1/2 — too high on the branch. Ease back down to the angle 1/2 actually came from."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read arccos's endpoints.",
+      "conceptTag": "tg-inverse-graphs",
+      "explanationVariants": [
+        "The branch runs from (0, 1) down to (π, −1); mirrored, arccos runs from (−1, π) to (1, 0) — so arccos(1) = 0.",
+        "cos 0 = 1 flips to arccos(1) = 0: the descent's start becomes the mirror's right endpoint."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is arccos(1)?",
+        "answer": 0,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 3.14,
+            "feedback": "arccos(−1) = π. For the input +1, the branch angle is 0 (cos 0 = 1)."
+          },
+          {
+            "value": 1.57,
+            "feedback": "1.57 ≈ π/2 is arccos(0). Cosine equals 1 at the angle 0."
+          }
+        ],
+        "fallbackFeedback": "cos 0 = 1 ⇒ arccos(1) = 0."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-inverse-graphs__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Monotone direction.",
+      "conceptTag": "tg-inverse-graphs",
+      "explanationVariants": [
+        "The cosine branch DESCENDS, and mirrors preserve monotonic direction along the swap: arccos also descends — bigger inputs give smaller angles.",
+        "Endpoints tell it: arccos(−1) = π down to arccos(1) = 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "As its input increases from −1 to 1, arccos:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "decreases from π to 0",
+            "correct": true,
+            "feedback": "Right — it inherits the branch's descent: larger cosines belong to smaller angles."
+          },
+          {
+            "id": "o2",
+            "label": "increases from 0 to π",
+            "feedback": "That's backwards: arccos(−1) = π and arccos(1) = 0 — it falls as the input grows."
+          },
+          {
+            "id": "o3",
+            "label": "stays constant at π/2",
+            "feedback": "π/2 is only the MIDPOINT value, arccos(0). The graph sweeps the whole [0, π]."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-inverse-graphs__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Arctangent's mirror inherits tangent's landmarks: the branch's center (0, 0) stays put, its steepness flattens (steep sections mirror into flat ones), and the vertical walls x = ±π/2 mirror into the **horizontal fences y = ±π/2** that arctan approaches forever.",
+      "figure": "tg-arctan-mirror"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Bound the outputs.",
+      "conceptTag": "tg-inverse-graphs",
+      "explanationVariants": [
+        "Every arctan output is strictly between −π/2 ≈ −1.571 and π/2 ≈ 1.571 — so 1.5 is possible and 2 is not.",
+        "2 > π/2: no tangent branch angle is that large; 1.5 < π/2 works (arctan(≈14.1) = 1.5)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which value can arctan(x) actually output?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "1.5 — it's inside (−π/2, π/2)",
+            "correct": true,
+            "feedback": "Right — 1.5 < π/2 ≈ 1.5708; the input would be tan(1.5) ≈ 14.1."
+          },
+          {
+            "id": "o2",
+            "label": "2 — for a large enough x",
+            "feedback": "2 exceeds π/2 ≈ 1.5708: outputs are fenced strictly inside (−π/2, π/2), no matter the input."
+          },
+          {
+            "id": "o3",
+            "label": "π/2 exactly — at x = ∞",
+            "feedback": "The fence is approached, never touched: no real input gives exactly π/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-inverse-graphs__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Which graph is which?",
+      "conceptTag": "tg-inverse-graphs",
+      "explanationVariants": [
+        "Passing through (0, π/2) with a descent: arccos (arccos(0) = π/2, falling). Arcsin passes (0, 0) rising; arctan passes (0, 0) rising with fences.",
+        "Only arccos has value π/2 at input 0 AND a downhill run."
+      ],
+      "hints": [
+        "Evaluate each candidate at input 0.",
+        "arcsin(0) = 0, arctan(0) = 0, arccos(0) = π/2.",
+        "Which one also DESCENDS?"
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A graph passes through (0, π/2) and decreases across its whole domain. It is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "arccos",
+            "correct": true,
+            "feedback": "Right — arccos(0) = π/2 and it inherits the branch's descent from π to 0."
+          },
+          {
+            "id": "o2",
+            "label": "arcsin",
+            "feedback": "arcsin passes through (0, 0) and CLIMBS — wrong point, wrong direction."
+          },
+          {
+            "id": "o3",
+            "label": "arctan",
+            "feedback": "arctan also passes (0, 0) and climbs (with fences). The (0, π/2) descender is arccos."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-inverse-graphs__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Mirrors keep the story.",
+      "takeaways": [
+        "Inverse graphs are branch reflections: swap every (a, b) to (b, a).",
+        "arcsin & arctan climb through (0, 0); arccos descends through (0, π/2).",
+        "Walls mirror into fences: arctan lives strictly between y = ±π/2."
+      ],
+      "teaser": "Final chapter: compositions — round trips that work, and the famous one that doesn't."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-inverse-graphs",
+      "concept": {
+        "id": "rem-tg0403-c",
+        "kind": "concept",
+        "body": "To identify an inverse-trig graph: check its value at 0 and its direction. (0,0) climbing unbounded-domain-with-fences → arctan; (0,0) climbing on [−1,1] → arcsin; (0, π/2) descending → arccos."
+      },
+      "check": {
+        "id": "rem-tg0403-k",
+        "kind": "check",
+        "body": "One mirror point.",
+        "conceptTag": "tg-inverse-graphs",
+        "explanationVariants": [
+          "tan(π/4) = 1 mirrors to arctan(1) = π/4: the point (1, π/4).",
+          "Swap (π/4, 1) → (1, π/4)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "(π/4, 1) lies on tangent's branch. Which point lies on arctan's graph?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(1, π/4)",
+              "correct": true,
+              "feedback": "Right — coordinates swap across y = x."
+            },
+            {
+              "id": "o2",
+              "label": "(π/4, −1)",
+              "feedback": "That's an x-axis flip. The inverse SWAPS: (1, π/4)."
+            },
+            {
+              "id": "o3",
+              "label": "(−1, −π/4)",
+              "feedback": "That's the origin reflection — actually also on arctan (it's odd!), but not the MIRROR of (π/4, 1), which is (1, π/4)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

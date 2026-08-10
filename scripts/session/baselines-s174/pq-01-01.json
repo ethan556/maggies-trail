@@ -1,0 +1,251 @@
+{
+ "id": "pq-01-01",
+ "slug": "interior-angle-sum",
+ "title": "The Interior Angle Sum",
+ "courseId": "polygons-quadrilaterals",
+ "chapterId": "ch1-angle-sums",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "pq-interior-sum",
+   "concept": {
+    "id": "rem-pq-interior-sum-c",
+    "kind": "concept",
+    "body": "Diagonals from one vertex split an n-sided polygon into n − 2 triangles (the fan vertex and its two neighbors contribute no extra triangle). Each triangle's angles total 180°, so the polygon's interior angles total (n − 2) × 180°. To recover n from a sum: divide by 180, then add 2."
+   },
+   "check": {
+    "id": "rem-pq-interior-sum-k",
+    "kind": "check",
+    "body": "One clean pass.",
+    "conceptTag": "pq-interior-sum",
+    "explanationVariants": [
+     "(5 − 2) × 180 = 3 × 180 = 540°.",
+     "A pentagon fans into 3 triangles: 540°."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Interior angle sum of a pentagon?",
+     "answer": 540,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 900,
+       "feedback": "900 = 5 × 180 forgets the − 2: three triangles, so 3 × 180 = 540."
+      },
+      {
+       "value": 360,
+       "feedback": "360 is the QUADRILATERAL's sum (2 triangles). A pentagon fans into 3: 540."
+      }
+     ],
+     "fallbackFeedback": "(5 − 2) × 180 = 540°."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Pick any vertex of a polygon and fan diagonals to every other vertex: the polygon shatters into triangles. A pentagon yields 3, a hexagon 4 — always **n − 2** triangles for n sides, because the fan vertex and its two neighbors don't receive diagonals. Each triangle carries 180°, and together they carry ALL the polygon's interior angle.",
+   "figure": "polygon-triangulation"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Count the fan.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Fan diagonals from one vertex of a 12-gon. How many triangles appear?",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 12,
+      "feedback": "12 matches the SIDES — but the fan vertex and its two neighbors form no extra triangle. n − 2 = 10."
+     },
+     {
+      "value": 11,
+      "feedback": "11 is n − 1, one too many — the fan skips BOTH neighbors, not one. 12 − 2 = 10."
+     },
+     {
+      "value": 9,
+      "feedback": "9 = n − 3 counts the DIAGONALS from the vertex. Triangles run one higher: 10."
+     }
+    ],
+    "fallbackFeedback": "n − 2 = 12 − 2 = 10 triangles."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "So the interior angles of any n-gon total **(n − 2) × 180°**. Triangle: 1 × 180 = 180°. Quadrilateral: 2 × 180 = 360°. Pentagon: 3 × 180 = 540°. Every new side donates one more triangle — one more 180°.",
+   "figure": "pq-interior-sum"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Run the formula.",
+   "conceptTag": "pq-interior-sum",
+   "explanationVariants": [
+    "(6 − 2) × 180° = 4 × 180° = 720°.",
+    "A hexagon fans into 4 triangles; 4 × 180 = 720°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Interior angle sum of a hexagon, in degrees?",
+    "answer": 720,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1080,
+      "feedback": "1080 = 6 × 180 skips the − 2 — the fan makes n − 2 triangles, not n. 4 × 180 = 720."
+     },
+     {
+      "value": 900,
+      "feedback": "900 = 5 × 180 subtracts only 1. Both neighbors of the fan vertex drop out: (6 − 2) × 180 = 720."
+     }
+    ],
+    "fallbackFeedback": "(6 − 2) × 180 = 720°."
+   },
+   "variant": {
+    "gen": "polygon-angles"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Bigger polygon, same machine.",
+   "conceptTag": "pq-interior-sum",
+   "explanationVariants": [
+    "(10 − 2) × 180° = 8 × 180° = 1440°.",
+    "Ten sides fan into 8 triangles: 1440°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Interior angle sum of a decagon (10 sides)?",
+    "answer": 1440,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 1800,
+      "feedback": "1800 = 10 × 180 forgets the − 2 again: (10 − 2) × 180 = 1440."
+     },
+     {
+      "value": 1620,
+      "feedback": "1620 = 9 × 180 is the (n − 1) off-by-one. Two vertices leave the fan: 8 × 180 = 1440."
+     }
+    ],
+    "fallbackFeedback": "(10 − 2) × 180 = 1440°."
+   },
+   "variant": {
+    "gen": "polygon-angles"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "The formula runs backwards too. Told a polygon's angles sum to 900°? Divide by 180 to count the triangles — five — then add back the 2: **n = sum/180 + 2 = 7** sides. And inside any one polygon, a single missing angle is just the known sum minus the angles you have.",
+   "figure": "pq-backwards"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Sum to sides.",
+   "conceptTag": "pq-interior-sum",
+   "explanationVariants": [
+    "900 ÷ 180 = 5 triangles, so n = 5 + 2 = 7 sides.",
+    "Each triangle is 180°: five of them, plus the two fan-adjacent vertices, gives a heptagon."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A polygon's interior angles sum to 900°. How many sides?",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 is the TRIANGLE count (900/180) — add back the 2 vertices the fan skips: n = 7."
+     },
+     {
+      "value": 6,
+      "feedback": "6 adds only 1 to the triangle count. The formula is n − 2 triangles, so reverse with + 2: n = 7."
+     }
+    ],
+    "fallbackFeedback": "n = 900/180 + 2 = 7."
+   },
+   "variant": {
+    "gen": "polygon-angles",
+    "form": "sidesFromSum"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "One angle missing.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Three angles of a quadrilateral are 85°, 100°, and 95°. The fourth?",
+    "answer": 80,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 260,
+      "feedback": "260 = 540 − 280 borrows the PENTAGON's sum. A quadrilateral holds (4 − 2) × 180 = 360: the fourth is 360 − 280 = 80."
+     },
+     {
+      "value": 280,
+      "feedback": "280 is the partial sum of the three givens — subtract it from 360 to finish: 80."
+     }
+    ],
+    "fallbackFeedback": "360 − (85 + 100 + 95) = 80°."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Pentagon with a gap.",
+   "conceptTag": "pq-interior-sum",
+   "hints": [
+    "A pentagon's interior angles sum to (5 − 2) × 180.",
+    "That's 540°. Add the four known angles.",
+    "540 − (100 + 110 + 95 + 120)."
+   ],
+   "explanationVariants": [
+    "The four givens total 425°; the pentagon holds 540°, so the fifth is 540 − 425 = 115°.",
+    "(5 − 2) × 180 = 540; subtracting 425 leaves 115°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Four angles of a pentagon are 100°, 110°, 95°, and 120°. Find the fifth.",
+    "answer": 115,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 295,
+      "feedback": "295 = 720 − 425 uses the HEXAGON's sum. Five sides hold (5 − 2) × 180 = 540: the fifth angle is 115°."
+     },
+     {
+      "value": 425,
+      "feedback": "425 is the four givens added up — the question wants what's LEFT of 540: 115°."
+     }
+    ],
+    "fallbackFeedback": "540 − 425 = 115°."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-interior-sum__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Triangles all the way down.",
+   "takeaways": [
+    "Fanning from one vertex splits an n-gon into n − 2 triangles.",
+    "Interior angle sum = (n − 2) × 180°; reverse it with n = sum/180 + 2.",
+    "A missing angle is the total sum minus the angles in hand."
+   ],
+   "teaser": "Next: step OUTSIDE the polygon — the exterior angles hide a much simpler sum."
+  }
+ ]
+}

@@ -1,0 +1,258 @@
+{
+  "id": "dd-04b-02",
+  "slug": "comparing-with-box-plots",
+  "title": "Comparing with Box Plots",
+  "courseId": "data-distributions",
+  "chapterId": "ch4b-box-plots-and-mad",
+  "minutes": 10,
+  "standards": [
+    "6.SP.B.4"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "dd-box-compare-two",
+      "body": "Two box plots on the **same scale** answer two questions at a glance. Line up the median lines to compare **centres**; compare box widths to compare **spread**. Class A runs 8 to 18 with a box from 11 to 15. Class B runs 2 to 22 with a box from 9 to 17. Both medians sit at 13 — identical centres — but B's box is 8 wide against A's 4. Same typical value, very different consistency."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Put a number on the difference in consistency.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Class A has Q1 = 11 and Q3 = 15. Class B has Q1 = 9 and Q3 = 17. How much wider is B's box than A's?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is B's box width on its own (17 − 9). The question wants the difference between the widths: 8 − 4 = 4."
+          },
+          {
+            "value": 12,
+            "feedback": "12 adds the two widths (8 + 4). To compare them, subtract: 8 − 4 = 4."
+          }
+        ],
+        "fallbackFeedback": "A's box is 15 − 11 = 4 wide, B's is 17 − 9 = 8 wide, so B is 8 − 4 = 4 wider."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same centre, different story.",
+      "conceptTag": "box-plot-compare",
+      "explanationVariants": [
+        "Both medians are 13, so the typical score matches. B's box and whiskers stretch much further, so B's scores are far less consistent.",
+        "Centre and spread are separate questions. Here the centres tie and only the spread separates the classes — B is the more variable group."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Class A and Class B both have a median of 13, but B's box and whiskers are much wider. What is the fair comparison?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Typical scores are the same; Class B's scores vary much more",
+            "correct": true,
+            "feedback": "Right — matching medians means matching centres, and the wider box and whiskers mean B is the less consistent class."
+          },
+          {
+            "id": "b",
+            "label": "Class B did better overall because its plot reaches higher",
+            "feedback": "B does reach 22, but it also drops to 2. A longer plot means more spread in both directions, not a higher typical score — the medians are tied at 13."
+          },
+          {
+            "id": "c",
+            "label": "Class A has fewer students because its plot is shorter",
+            "feedback": "Length shows the spread of values, never how many there are. A box plot of 10 scores and one of 200 scores can look identical."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Overlap is a comparison too.",
+      "conceptTag": "box-plot-compare",
+      "explanationVariants": [
+        "A's box spans 11 to 15 and B's spans 9 to 17, so every value in A's box range also lies inside B's — A's middle half sits entirely within B's.",
+        "B's box starts lower (9 < 11) and ends higher (17 > 15), so it completely contains A's box."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A's box runs 11 to 15; B's box runs 9 to 17. How do the two middle halves relate?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A's middle half sits entirely inside the range of B's middle half",
+            "correct": true,
+            "feedback": "Yes — 9 < 11 and 17 > 15, so B's box swallows A's completely."
+          },
+          {
+            "id": "b",
+            "label": "The two middle halves do not overlap at all",
+            "feedback": "They overlap heavily — 11 to 15 is common to both boxes. Non-overlapping boxes would sit side by side with a gap."
+          },
+          {
+            "id": "c",
+            "label": "They overlap only between 15 and 17",
+            "feedback": "That is the part of B's box ABOVE A's. The shared stretch is all of 11 to 15, because A's box lies wholly within B's."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "dd-box-quarters",
+      "body": "One warning when comparing. A box plot hides the **individual values** — it shows only five numbers. Two very different data sets can produce the **same** box plot: one with values evenly sprinkled, one with values clumped at each end. If the question is about gaps, clusters or repeated values, go back to the dot plot; the box plot answers centre and spread."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build the second plot so the medians match but the spreads do not.",
+      "widget": {
+        "type": "boxPlot",
+        "prompt": "Draw Class B: min 2, Q1 9, median 13, Q3 17, max 22.",
+        "axisMin": 0,
+        "axisMax": 24,
+        "targetMin": 2,
+        "targetQ1": 9,
+        "targetMed": 13,
+        "targetQ3": 17,
+        "targetMax": 22,
+        "startMin": 6,
+        "startQ1": 10,
+        "startMed": 14,
+        "startQ3": 18,
+        "startMax": 24,
+        "successFeedback": "That is Class B — same median line as A at 13, but a box twice as wide and whiskers reaching much further.",
+        "orderFeedback": "Keep the order min ≤ Q1 ≤ median ≤ Q3 ≤ max; one handle has passed its neighbour.",
+        "valueFeedback": "In order, but not yet on target. Check each handle against its number."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Choose the right tool.",
+      "conceptTag": "box-plot-compare",
+      "explanationVariants": [
+        "Box plots report five summary numbers, so a gap in the middle of the data is invisible to them. A dot plot shows every value and would reveal the gap.",
+        "Only a display that draws individual values can show a hole in the data — the box plot would look completely normal."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You suspect a data set has a gap — no values at all between 10 and 14. Which display would show it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A dot plot, because it draws every individual value",
+            "correct": true,
+            "feedback": "Right — the empty stretch appears immediately as a hole in the dots. The box plot would hide it entirely."
+          },
+          {
+            "id": "b",
+            "label": "A box plot, because the box would be split at the gap",
+            "feedback": "A box plot is drawn from just five numbers and is never split. A gap inside the box leaves the picture looking completely ordinary."
+          },
+          {
+            "id": "c",
+            "label": "Neither — a gap can never be seen in a display",
+            "feedback": "A gap is very visible in the right display. A dot plot draws each value, so an empty stretch shows up as blank space."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two plots, one honest sentence.",
+      "conceptTag": "box-plot-compare",
+      "explanationVariants": [
+        "Bus median 24, walk median 12: the bus riders' typical trip is 24 − 12 = 12 minutes longer. Bus IQR = 30 − 18 = 12, walk IQR = 16 − 8 = 8, so the bus is also less predictable.",
+        "Compare the median lines for the centre gap (12 minutes) and the box widths for consistency (12 against 8, so the bus varies more)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Bus trips: Q1 18, median 24, Q3 30. Walking trips: Q1 8, median 12, Q3 16. How many minutes longer is the bus riders' TYPICAL trip?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "min",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the difference between the two IQRs (12 − 8), which compares consistency. The typical trip is the MEDIAN: 24 − 12 = 12."
+          },
+          {
+            "value": 36,
+            "feedback": "36 adds the two medians (24 + 12). 'How much longer' asks for the difference: 24 − 12 = 12."
+          },
+          {
+            "value": 10,
+            "feedback": "10 compares the Q1 values (18 − 8). The typical trip is measured at the median line, giving 24 − 12 = 12."
+          }
+        ],
+        "fallbackFeedback": "The typical value is the median. Bus 24, walking 12, so the bus trip is 24 − 12 = 12 minutes longer."
+      },
+      "hints": [
+        "'Typical' points at one of the five numbers in particular.",
+        "Compare the two median lines, not the box edges.",
+        "Subtract: 24 − 12."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two summaries, side by side.",
+      "takeaways": [
+        "On a shared scale, median lines compare centres and box widths compare spread.",
+        "Equal medians with unequal boxes means the same typical value with different consistency.",
+        "Box plots hide individual values — use a dot plot when gaps or clusters matter."
+      ],
+      "teaser": "next: a spread measure built from the mean instead of the median — the typical distance from centre."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "box-plot-compare",
+      "concept": {
+        "id": "rem-bpc-c",
+        "kind": "concept",
+        "body": "Quick rewind. Comparing two box plots on one scale: **median lines** answer 'which centre is higher?' and **box widths** answer 'which group is more consistent?' A narrower box means a tighter, more predictable middle half."
+      },
+      "check": {
+        "id": "rem-bpc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "box-plot-compare",
+        "explanationVariants": [
+          "Team P's box is 30 − 26 = 4 wide; Team Q's is 34 − 22 = 12. The narrower box, P, is the more consistent team.",
+          "Consistency is about width, not position: 4 is narrower than 12, so Team P varies less."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Team P's box runs 26 to 30. Team Q's box runs 22 to 34. Which team is more consistent?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Team P — its box is narrower",
+              "correct": true,
+              "feedback": "Right — a 4-wide box means P's middle half is packed tightly together."
+            },
+            {
+              "id": "b",
+              "label": "Team Q — its box is wider",
+              "feedback": "A wider box means MORE variation, not less. Q's middle half is spread over 12 units against P's 4."
+            },
+            {
+              "id": "c",
+              "label": "They are equally consistent — the boxes overlap",
+              "feedback": "Overlapping says the two groups cover common ground; consistency is about each box's own width, and 4 is much narrower than 12."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

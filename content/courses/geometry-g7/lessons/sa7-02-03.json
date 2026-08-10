@@ -1,0 +1,241 @@
+{
+  "id": "sa7-02-03",
+  "slug": "area-surface-area-and-volume-in-context",
+  "title": "Area, Surface Area & Volume in Context",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3d-filling-and-combining",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One crate, three questions. How much floor does it stand on? Area. How much paint wraps it? Surface area. How much sand fills it? Volume. The numbers are the same; the question decides which measure answers it — and the units confirm the choice.",
+      "figure": "sa7-three-questions-one-crate"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the crate the story describes.",
+      "widget": {
+        "type": "areaModel",
+        "prompt": "The crate's rectangular FOOTPRINT must cover exactly 12 square units. Build it as 4 by 3.",
+        "targetArea": 12,
+        "wMax": 6,
+        "hMax": 6,
+        "wStart": 1,
+        "hStart": 1,
+        "requireFactors": {
+          "w": 4,
+          "h": 3
+        },
+        "factorFeedback": "That rectangle does cover 12 square units, but the crate in this story is 4 across and 3 deep — build those exact sides, since the surface-area and volume questions ahead depend on them.",
+        "successFeedback": "A 4 by 3 footprint is 12 square units of floor — the base the whole crate will stand on and be stacked from.",
+        "lowFeedback": "Footprint still under 12 square units — widen or deepen it.",
+        "highFeedback": "Footprint past 12 square units — pull a side back in."
+      },
+      "predict": {
+        "prompt": "The crate is 4 by 3 by 2. Which is LARGEST as a number: footprint area, surface area, or volume?",
+        "options": [
+          {
+            "id": "floor",
+            "label": "Footprint area"
+          },
+          {
+            "id": "surface",
+            "label": "Surface area"
+          },
+          {
+            "id": "volume",
+            "label": "Volume"
+          }
+        ],
+        "outcomeId": "surface",
+        "reveal": "Footprint 12, volume 24, surface area 52 — the wrapping wins here. But this is a fact about these particular numbers, not a rule: a tall thin crate would order them differently. Comparing measures across different units is a habit worth distrusting."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Pick the measure.",
+      "conceptTag": "sa7-asv-context",
+      "explanationVariants": [
+        "Filling the crate with sand is a capacity question, so volume answers it.",
+        "Anything that fills is measured in cubic units."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which measure tells you how much SAND fits in the crate?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Volume",
+            "correct": true,
+            "feedback": "Yes — filling is a volume question, answered in cubic units."
+          },
+          {
+            "id": "o2",
+            "label": "Surface area",
+            "correct": false,
+            "feedback": "Surface area is what you would need to PAINT the crate, not fill it."
+          },
+          {
+            "id": "o3",
+            "label": "Footprint area",
+            "correct": false,
+            "feedback": "The footprint is the floor space it occupies, ignoring height entirely."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The reliable check is units. Floor space and paint are square units. Sand is cubic units. Tape along an edge would be linear units. When an answer's units do not match what the question is asking for, the wrong measure was computed — no matter how clean the arithmetic was.",
+      "figure": "sa7-units-check"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The paint job.",
+      "conceptTag": "sa7-asv-context",
+      "explanationVariants": [
+        "A 4 by 3 by 2 crate has surface area 2(12 + 8 + 6) = 52.",
+        "Three distinct faces, doubled."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The crate is 4 by 3 by 2. How many square units must be painted to cover the whole outside?",
+        "answer": 52,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "That is the volume — how much fits inside. Paint covers the outside."
+          },
+          {
+            "value": 26,
+            "feedback": "That sums the three distinct faces but forgets their twins. Double it."
+          }
+        ],
+        "fallbackFeedback": "2(4×3 + 4×2 + 3×2) = 2(12 + 8 + 6) = 52 square units.",
+        "successFeedback": "52 square units of paint — and 24 cubic units of sand would fill the same crate."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The sand order.",
+      "conceptTag": "sa7-asv-context",
+      "explanationVariants": [
+        "Volume is 4×3×2 = 24 cubic units.",
+        "Multiply all three dimensions to fill it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same crate. How many cubic units of sand fill it?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 52,
+            "feedback": "That is the surface area, in square units — the paint answer, not the sand answer."
+          },
+          {
+            "value": 12,
+            "feedback": "That is the footprint. It still has to be stacked two layers high."
+          }
+        ],
+        "fallbackFeedback": "4×3×2 = 24 cubic units.",
+        "successFeedback": "24 cubic units — the footprint of 12, stacked twice."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Price the job.",
+      "conceptTag": "sa7-asv-context",
+      "explanationVariants": [
+        "52 square units of paint at $2 each costs $104.",
+        "Choose surface area, then multiply by the rate."
+      ],
+      "hints": [
+        "Decide first which measure a paint job needs — the units of the price will tell you.",
+        "Paint is sold per square unit, so surface area is the quantity to compute.",
+        "The surface area is 52; multiply by $2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Paint costs $2 per square unit. What does it cost to paint the whole 4 by 3 by 2 crate?",
+        "answer": 104,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 48,
+            "feedback": "That prices the VOLUME at $2 per unit. Paint is sold by area, and volume's cubic units do not match the price's square units."
+          },
+          {
+            "value": 52,
+            "feedback": "That is the surface area itself — it still has to be multiplied by the $2 rate."
+          }
+        ],
+        "fallbackFeedback": "Surface area 52 square units × $2 = $104.",
+        "successFeedback": "$104 — and the units settled the choice before any arithmetic happened."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One object, three questions.",
+      "takeaways": [
+        "Footprint area, surface area and volume answer different questions about the same solid.",
+        "Units identify the right measure: linear, square, or cubic.",
+        "Real problems usually name the measure indirectly — covering, filling, or bordering."
+      ],
+      "teaser": "Next chapter: which sets of three lengths make a triangle, and what a solid looks like when it is sliced."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa7-asv-context",
+      "concept": {
+        "id": "rem-sa7-asv-context-c",
+        "kind": "concept",
+        "body": "The reliable check is units. Floor space and paint are square units. Sand is cubic units. Tape along an edge would be linear units. When an answer's units do not match what the question is asking for, the wrong measure was computed — no matter how clean the arithmetic was."
+      },
+      "check": {
+        "id": "rem-sa7-asv-context-k",
+        "kind": "check",
+        "body": "Pick the measure.",
+        "conceptTag": "sa7-asv-context",
+        "explanationVariants": [
+          "Filling the crate with sand is a capacity question, so volume answers it.",
+          "Anything that fills is measured in cubic units."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which measure tells you how much SAND fits in the crate?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Volume",
+              "correct": true,
+              "feedback": "Yes — filling is a volume question, answered in cubic units."
+            },
+            {
+              "id": "o2",
+              "label": "Surface area",
+              "correct": false,
+              "feedback": "Surface area is what you would need to PAINT the crate, not fill it."
+            },
+            {
+              "id": "o3",
+              "label": "Footprint area",
+              "correct": false,
+              "feedback": "The footprint is the floor space it occupies, ignoring height entirely."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

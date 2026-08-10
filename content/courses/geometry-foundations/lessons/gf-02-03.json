@@ -1,0 +1,346 @@
+{
+ "id": "gf-02-03",
+ "slug": "algebra-meets-geometry",
+ "title": "Algebra Meets Geometry",
+ "courseId": "geometry-foundations",
+ "chapterId": "ch2-measure",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "gf-algebra-measures",
+   "concept": {
+    "id": "rem-gf-algebra-measures-c",
+    "kind": "concept",
+    "body": "Two setups, two equations. \"B is BETWEEN\" or \"ray is INTERIOR\": piece + piece = whole. \"BISECTS\" or \"MIDPOINT\": piece = piece. Read the geometry word first — it hands you the equation before any algebra starts."
+   },
+   "check": {
+    "id": "rem-gf-algebra-measures-k",
+    "kind": "check",
+    "body": "Which equation?",
+    "conceptTag": "gf-algebra-measures",
+    "explanationVariants": [
+     "M is the MIDPOINT, so the two pieces are equal: 4x = x + 12.",
+     "Midpoint is the segment version of a bisector — equate the halves, don't sum them."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "M is the midpoint of segment AB. AM = 4x and MB = x + 12. Which equation is right?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "4x = x + 12",
+       "correct": true,
+       "feedback": "Midpoint means AM ≅ MB — set the two halves equal."
+      },
+      {
+       "id": "o2",
+       "label": "4x + (x + 12) = 180",
+       "correct": false,
+       "feedback": "180 belongs to straight ANGLES — segments have no built-in whole of 180. Midpoint equates the halves."
+      },
+      {
+       "id": "o3",
+       "label": "4x + (x + 12) = 12",
+       "correct": false,
+       "feedback": "12 is just part of MB's expression, not the whole segment. No whole is given — use the equal-halves fact instead."
+      },
+      {
+       "id": "o4",
+       "label": "4x = 2(x + 12)",
+       "correct": false,
+       "feedback": "That makes AM twice MB — but a midpoint splits the segment into EQUAL pieces."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Now the pieces wear algebra. \"B is between A and C\" is still AB + BC = AC — even when AB = 2x + 3 and BC = 3x − 7. **Translate the geometry sentence into an equation first**, then solve. The postulate chooses the equation; the algebra does the rest.",
+   "figure": "gf-between-algebra"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build the equation.",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "B is between A and C, with AB = 2x + 3, BC = 3x − 7, and AC = 41. Assemble the equation the Segment Addition Postulate gives you.",
+    "tokens": [
+     {
+      "id": "t1",
+      "label": "2x + 3"
+     },
+     {
+      "id": "tp",
+      "label": "+"
+     },
+     {
+      "id": "t2",
+      "label": "3x − 7"
+     },
+     {
+      "id": "te",
+      "label": "="
+     },
+     {
+      "id": "t41",
+      "label": "41"
+     },
+     {
+      "id": "t90",
+      "label": "90"
+     }
+    ],
+    "correct": [
+     "t1",
+     "tp",
+     "t2",
+     "te",
+     "t41"
+    ],
+    "acceptAlso": [
+     [
+      "t2",
+      "tp",
+      "t1",
+      "te",
+      "t41"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t1",
+       "te",
+       "t2"
+      ],
+      "feedback": "Setting the pieces EQUAL is the bisector/midpoint setup. \"Between\" says the pieces ADD to the whole instead."
+     },
+     {
+      "sequence": [
+       "t1",
+       "tp",
+       "t2",
+       "te",
+       "t90"
+      ],
+      "feedback": "90 belongs to right angles — the whole segment here is AC = 41."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Start from the postulate: piece + piece = whole, then substitute the three given values.",
+    "successFeedback": "(2x + 3) + (3x − 7) = 41 — geometry chose the equation; algebra takes it from here."
+   },
+   "predict": {
+    "prompt": "B sits between A and C. Which relationship MUST hold?",
+    "options": [
+     {
+      "id": "add",
+      "label": "AB + BC = AC — the parts fill the whole"
+     },
+     {
+      "id": "equal",
+      "label": "AB = BC"
+     },
+     {
+      "id": "mult",
+      "label": "AB × BC = AC"
+     }
+    ],
+    "outcomeId": "add",
+    "reveal": "Betweenness is additive: walking A to B and then B to C covers exactly A to C. So (2x + 3) + (3x − 7) = 41, which is 5x − 4 = 41 — geometry hands algebra the equation, and x = 9 falls out."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Solve it.",
+   "conceptTag": "gf-algebra-measures",
+   "explanationVariants": [
+    "(2x + 3) + (3x − 7) = 41 → 5x − 4 = 41 → 5x = 45 → x = 9.",
+    "Combine like terms: 5x and (3 − 7) = −4. Add 4 to both sides, then divide by 5."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "AB = 2x + 3, BC = 3x − 7, AC = 41, with B between A and C. Solve for x.",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "x = 10 comes from 2x + 3 = 3x − 7 — the pieces set EQUAL. That's a midpoint setup; \"between\" adds them to 41 instead."
+     },
+     {
+      "value": 7.4,
+      "feedback": "7.4 comes from 5x + 4 = 41 — the −7 flipped sign while combining. 3 + (−7) = −4, so it's 5x − 4 = 41."
+     }
+    ],
+    "fallbackFeedback": "Combine to 5x − 4 = 41, so x = 9."
+   },
+   "variant": {
+    "gen": "g10-geometry-foundations",
+    "form": "gf-algebra-measures__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "**Answer the question asked.** Solving for x is usually the halfway point — the question may want a LENGTH. Finish by substituting x back into the right expression, and sanity-check that the pieces really total the whole.",
+   "figure": "gf-answer-asked"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Now the length.",
+   "conceptTag": "gf-algebra-measures",
+   "explanationVariants": [
+    "AB = 2x + 3 with x = 9: 2(9) + 3 = 21.",
+    "Check the whole: AB = 21 and BC = 3(9) − 7 = 20, and 21 + 20 = 41 ✓."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using x = 9 from the same setup, find the length AB.",
+    "answer": 21,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 is BC — you substituted into 3x − 7. The question asks for AB = 2x + 3 = 21."
+     },
+     {
+      "value": 41,
+      "feedback": "41 is AC, the whole segment. AB is just the first piece: 2(9) + 3 = 21."
+     }
+    ],
+    "fallbackFeedback": "Substitute into AB's expression: 2(9) + 3 = 21."
+   },
+   "variant": {
+    "gen": "g10-geometry-foundations",
+    "form": "gf-algebra-measures__numeric"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Bisectors write a DIFFERENT equation. \"QR bisects ∠PQS\" means the two pieces are **equal**: m∠PQR = m∠RQS. No whole is needed — the geometry word tells you whether to ADD the pieces (between/interior) or EQUATE them (bisects/midpoint).",
+   "figure": "gf-bisector-equation"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Pick the equation.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Ray QR bisects ∠PQS. m∠PQR = 3x + 5 and m∠RQS = 5x − 17. Which equation does the geometry give you?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "3x + 5 = 5x − 17",
+      "correct": true,
+      "feedback": "\"Bisects\" means the two pieces are congruent — set their measures equal."
+     },
+     {
+      "id": "o2",
+      "label": "(3x + 5) + (5x − 17) = 180",
+      "correct": false,
+      "feedback": "Summing to 180 needs a STRAIGHT angle — nothing here says the outer rays are opposite. Bisects means the pieces are EQUAL."
+     },
+     {
+      "id": "o3",
+      "label": "(3x + 5) + (5x − 17) = 90",
+      "correct": false,
+      "feedback": "90 would need ∠PQS to be a right angle — not given. The bisector fact is about the pieces matching each other."
+     },
+     {
+      "id": "o4",
+      "label": "3x + 5 = 2(5x − 17)",
+      "correct": false,
+      "feedback": "Doubling one piece says it's TWICE the other — the opposite of a bisector's equal split."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Solve the bisector equation.",
+   "conceptTag": "gf-algebra-measures",
+   "explanationVariants": [
+    "3x + 5 = 5x − 17 → 22 = 2x → x = 11.",
+    "Move the x's right and numbers left: 5 + 17 = 5x − 3x, so 22 = 2x."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve 3x + 5 = 5x − 17 for x.",
+    "answer": 11,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 24,
+      "feedback": "x = 24 solves 8x − 12 = 180 — the pieces SUMMED to a straight angle. Bisects sets them equal, no 180 involved."
+     },
+     {
+      "value": -6,
+      "feedback": "x = −6 comes from 3x + 5 = 5x + 17 — the −17 flipped sign crossing over. Moving −17 left ADDS 17: 22 = 2x."
+     }
+    ],
+    "fallbackFeedback": "Collect x's on one side: 22 = 2x, so x = 11."
+   },
+   "variant": {
+    "gen": "g10-geometry-foundations",
+    "form": "gf-algebra-measures__numeric"
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The whole angle.",
+   "conceptTag": "gf-algebra-measures",
+   "hints": [
+    "You know x = 11 — first find ONE piece's measure.",
+    "Each piece: 3(11) + 5 = 38. What is the whole in terms of a piece?",
+    "The bisector makes two equal pieces, so the whole is double one piece."
+   ],
+   "explanationVariants": [
+    "Each piece is 3(11) + 5 = 38 (check: 5(11) − 17 = 38 ✓). The whole is 2 × 38 = 76.",
+    "m∠PQS = (3x + 5) + (5x − 17) = 8x − 12 = 8(11) − 12 = 76."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With x = 11 in the same bisector setup, find m∠PQS in degrees.",
+    "answer": 76,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 38,
+      "feedback": "38° is ONE PIECE (either half — they match). The whole angle ∠PQS is both halves: 76°."
+     },
+     {
+      "value": 88,
+      "feedback": "88 is 8x alone — the −12 got dropped. The sum of the pieces is 8x − 12 = 76."
+     }
+    ],
+    "fallbackFeedback": "Double one piece: 2 × 38 = 76 (or 8x − 12 at x = 11)."
+   },
+   "variant": {
+    "gen": "g10-geometry-foundations",
+    "form": "gf-algebra-measures__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Words choose the equation.",
+   "takeaways": [
+    "\"Between/interior\" ⇒ pieces ADD to the whole; \"bisects/midpoint\" ⇒ pieces are EQUAL.",
+    "Solving for x is halfway — substitute back for the length or measure asked.",
+    "Sanity check every answer: the pieces must really rebuild the whole."
+   ],
+   "teaser": "Next chapter: transformations become functions — (x, y) → (x + 5, y + 2), with inputs, outputs, and primes."
+  }
+ ]
+}

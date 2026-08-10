@@ -1,0 +1,311 @@
+{
+ "id": "pq-05-03",
+ "slug": "capstone-dispatch",
+ "title": "The Quadrilateral Capstone",
+ "courseId": "polygons-quadrilaterals",
+ "chapterId": "ch5-proving-and-placing",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "pq-capstone",
+   "concept": {
+    "id": "rem-pq-capstone-c",
+    "kind": "concept",
+    "body": "Dispatch order: (1) read the markings; (2) certify the most specific name they FORCE — mutual diagonal bisection = parallelogram, + congruent diagonals = rectangle, + perpendicular = rhombus, both upgrades = square; consecutive congruent pairs = kite; one parallel pair + congruent legs = isosceles trapezoid; (3) apply only that name's theorems to compute."
+   },
+   "check": {
+    "id": "rem-pq-capstone-k",
+    "kind": "check",
+    "body": "Certify one figure.",
+    "conceptTag": "pq-capstone",
+    "explanationVariants": [
+     "Mutual bisection certifies parallelogram; congruent diagonals upgrade to rectangle — and no perpendicularity mark means stop there.",
+     "Bisecting + congruent = rectangle (perpendicularity would be needed to reach square)."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Diagonals bisect each other and are congruent — no other marks. Most specific name?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "Rectangle",
+       "correct": true,
+       "feedback": "Test 3 gives parallelogram; congruent diagonals are exactly the rectangle upgrade. Square would demand perpendicularity too."
+      },
+      {
+       "id": "o2",
+       "label": "Square",
+       "correct": false,
+       "feedback": "Square needs BOTH upgrades — congruent AND perpendicular diagonals. Only congruence is marked: rectangle."
+      },
+      {
+       "id": "o3",
+       "label": "Rhombus",
+       "correct": false,
+       "feedback": "Rhombus is the PERPENDICULAR-diagonal upgrade. Congruent diagonals point to rectangle."
+      },
+      {
+       "id": "o4",
+       "label": "Parallelogram — nothing more certifiable",
+       "correct": false,
+       "feedback": "The congruent diagonals certify more: among parallelograms that's the rectangle signature."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The capstone skill: read a figure's MARKINGS — ticks, arrows, right-angle boxes, diagonal data — and answer two questions in order. First: what's the **most specific** name the markings FORCE? Second: which theorem does that name unlock for the computation? Never claim more than the marks prove.",
+   "figure": "quad-family-tree"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Force it, then certify it.",
+   "widget": {
+    "type": "coordinateProofLab",
+    "prompt": "The claim on screen is rhombus, earned only if two conditions both hold: the diagonals bisect each other AND cross at a right angle. Move D until both do, then inspect the evidence that certifies it.",
+    "fixed": [[2, 5], [5, 1], [8, 5]],
+    "target": [5, 9],
+    "start": [2, 2],
+    "targetClaim": "rhombus",
+    "gridMin": 0,
+    "gridMax": 10,
+    "requiredEvidence": ["midpoints", "distances"],
+    "requiredMoves": 3,
+    "successFeedback": "D = (5, 9): the diagonals now share the midpoint (5, 5) — one running level from (2,5) to (8,5), the other running plumb from (5,1) to (5,9), meeting at a right angle. That is exactly what forces every side to come out to 5: rhombus certified, the same theorem the four-right-triangles trick in the next problem depends on.",
+    "positionFeedback": "D is not in position yet. Check which condition is failing: if the midpoint dots are apart the diagonals aren't bisecting each other, and if the side lengths disagree the shape isn't even a parallelogram yet — both must hold together.",
+    "evidenceFeedback": "Inspect both midpoints AND distances, and move D a few times — the position itself is right, but the certificate needs the evidence gathered too, not just a correct-looking corner."
+   },
+   "predict": {
+    "prompt": "Before you place D: if the diagonals bisect each other AND cross at a right angle, must the four sides come out equal, or could they differ?",
+    "options": [
+     {
+      "id": "equal",
+      "label": "They must be equal — the right-angle crossing makes congruent triangles on every side"
+     },
+     {
+      "id": "differ",
+      "label": "They could differ — a right angle controls angles, not side lengths"
+     },
+     {
+      "id": "twopairs",
+      "label": "Only the opposite sides must match; the adjacent pair is still free"
+     }
+    ],
+    "outcomeId": "equal",
+    "reveal": "They must be equal. The bisection point splits each diagonal into two equal halves, and the right angle there is shared by all four corner triangles, so SAS makes them congruent — every side ends up the same length. That is why 'perpendicular bisecting diagonals' and 'all four sides equal' certify the identical shape: a rhombus. It stops there, though — a square additionally needs the diagonals themselves to be congruent, a condition perpendicular bisection alone never supplies."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Name, then compute.",
+   "conceptTag": "pq-capstone",
+   "explanationVariants": [
+    "Perpendicular bisecting diagonals → rhombus → half-diagonals 5 and 12 are legs → side = 13 (the 5-12-13 triple).",
+    "The rhombus name unlocks the four-right-triangles theorem: √(25 + 144) = 13."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A quadrilateral's diagonals (10 and 24) bisect each other at right angles. Find its side length.",
+    "answer": 13,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 17,
+      "feedback": "17 = 5 + 12 adds the half-diagonals — they're perpendicular LEGS: √(5² + 12²) = 13."
+     },
+     {
+      "value": 26,
+      "feedback": "26 = √(10² + 24²) forgot to halve the diagonals first: √(5² + 12²) = 13."
+     },
+     {
+      "value": 34,
+      "feedback": "34 = 10 + 24 adds full diagonals — neither halved nor Pythagorized: 13."
+     }
+    ],
+    "fallbackFeedback": "√(5² + 12²) = 13."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-capstone__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "And the perimeter.",
+   "conceptTag": "pq-capstone",
+   "explanationVariants": [
+    "A rhombus's four sides match: 4 × 13 = 52.",
+    "One side prices all: 52."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Same figure. Its perimeter = ?",
+    "answer": 52,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 13,
+      "feedback": "13 is ONE side — the rhombus has four of them: 52."
+     },
+     {
+      "value": 120,
+      "feedback": "120 = ½ × 10 × 24 is the AREA (the perpendicular-diagonals formula) — the perimeter adds sides: 52."
+     },
+     {
+      "value": 68,
+      "feedback": "68 = 2 × (10 + 24) treats the diagonals as sides — sides are 13 each: 52."
+     }
+    ],
+    "fallbackFeedback": "4 × 13 = 52."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-capstone__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "When diagonal data is missing, side-and-angle marks dispatch the same way. Two pairs of OPPOSITE congruent sides: parallelogram (test 1). Two pairs of CONSECUTIVE congruent sides: kite. One parallel pair with congruent legs: isosceles trapezoid. The marks' GEOGRAPHY — opposite vs consecutive, same-pair vs mixed — is the whole decision.",
+   "figure": "pq-side-angle-marks"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Geography of the ticks.",
+   "conceptTag": "pq-capstone",
+   "explanationVariants": [
+    "Consecutive congruent pairs are the kite's signature — opposite pairs would spell parallelogram.",
+    "Ticks meeting at shared vertices: kite."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A figure shows tick marks: the two TOP sides match each other, the two BOTTOM sides match each other (top ≠ bottom). No other marks. Most specific name?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Kite — two pairs of congruent CONSECUTIVE sides",
+      "correct": true,
+      "feedback": "Each pair shares a vertex (top pair at the apex, bottom pair at the tail) — the kite's defining geography."
+     },
+     {
+      "id": "o2",
+      "label": "Parallelogram — two pairs of congruent sides",
+      "correct": false,
+      "feedback": "The parallelogram test needs OPPOSITE pairs; these pairs are consecutive. That's kite country."
+     },
+     {
+      "id": "o3",
+      "label": "Isosceles trapezoid",
+      "correct": false,
+      "feedback": "That needs a marked PARALLEL pair with congruent legs — no parallel marks appear here. The consecutive ticks say kite."
+     },
+     {
+      "id": "o4",
+      "label": "Rhombus — sides congruent in pairs",
+      "correct": false,
+      "feedback": "A rhombus needs all FOUR sides equal; here top ≠ bottom. Two distinct consecutive pairs: kite."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-capstone__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The property, dispatched.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "You've certified a shape as an ISOSCELES TRAPEZOID and need a diagonal's length, knowing the other diagonal. What do you know instantly?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The diagonals are congruent — the unknown equals the known",
+      "correct": true,
+      "feedback": "Ch4's isosceles-trapezoid theorem: congruent diagonals. Certification makes the computation a copy."
+     },
+     {
+      "id": "o2",
+      "label": "The diagonals are perpendicular — use ½·d₁·d₂",
+      "correct": false,
+      "feedback": "Perpendicular diagonals belong to kites and rhombi — isosceles trapezoids offer CONGRUENT diagonals instead."
+     },
+     {
+      "id": "o3",
+      "label": "The diagonals bisect each other",
+      "correct": false,
+      "feedback": "Mutual bisection is parallelogram machinery — the trapezoid branch doesn't carry it. Congruence is the usable fact."
+     },
+     {
+      "id": "o4",
+      "label": "Nothing — trapezoids promise no diagonal facts",
+      "correct": false,
+      "feedback": "The ISOSCELES qualifier is the promise: congruent legs buy congruent diagonals."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Full dispatch.",
+   "conceptTag": "pq-capstone",
+   "hints": [
+    "Certify first: diagonals bisecting each other is parallelogram test 3; congruent diagonals then upgrade it (ch3).",
+    "The name is rectangle — whose diagonal is a hypotenuse over the sides.",
+    "One side 8, diagonal 17: the other side is √(17² − 8²). "
+   ],
+   "explanationVariants": [
+    "Rectangle certified (bisecting + congruent diagonals); side = √(289 − 64) = √225 = 15 — the 8-15-17 triple.",
+    "Diagonal as hypotenuse: √(17² − 8²) = 15."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A quadrilateral's diagonals bisect each other AND are congruent, each measuring 17. One side is 8. Find the adjacent side.",
+    "answer": 15,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 = 17 − 8 subtracts lengths — Pythagoras subtracts SQUARES: √(289 − 64) = 15."
+     },
+     {
+      "value": 18.79,
+      "feedback": "18.79 ≈ √(289 + 64) ADDS — but 17 is the hypotenuse (the diagonal), so subtract: 15."
+     },
+     {
+      "value": 12.5,
+      "feedback": "12.5 = (17 + 8)/2 averages — the certified rectangle calls for the right-triangle relationship: 15."
+     }
+    ],
+    "fallbackFeedback": "Rectangle ⇒ right angles ⇒ √(17² − 8²) = 15."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-capstone__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Read, certify, compute.",
+   "takeaways": [
+    "Marks first: what's the MOST SPECIFIC name the evidence forces?",
+    "Opposite pairs → parallelogram family; consecutive pairs → kite; one parallel pair + congruent legs → isosceles trapezoid.",
+    "The certified name unlocks exactly its theorems — never compute past the evidence."
+   ],
+   "teaser": "Course complete — the trail continues into circles, where new families of angles await."
+  }
+ ]
+}

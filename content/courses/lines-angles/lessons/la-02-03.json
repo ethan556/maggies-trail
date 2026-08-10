@@ -1,0 +1,338 @@
+{
+ "id": "la-02-03",
+ "slug": "spotting-both-in-figures",
+ "title": "Spotting Both in Figures",
+ "courseId": "lines-angles",
+ "chapterId": "ch2-parallel-perpendicular",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Real figures often hide BOTH relationships at once. A rectangle's **opposite sides are parallel** (top-bottom, left-right); its **adjacent sides are perpendicular** (each corner is a 90° crossing). One shape, two relationships.",
+   "figure": "la-parallel"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Classify a rectangle's sides.",
+   "conceptTag": "parallel-perpendicular-identify",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "In a rectangle, match each pair of sides to their relationship.",
+    "left": [
+     {
+      "id": "p1",
+      "label": "Top side and bottom side"
+     },
+     {
+      "id": "p2",
+      "label": "Top side and left side"
+     },
+     {
+      "id": "p3",
+      "label": "Left side and right side"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "Parallel"
+     },
+     {
+      "id": "r2",
+      "label": "Perpendicular"
+     },
+     {
+      "id": "r3",
+      "label": "Parallel"
+     }
+    ],
+    "pairs": {
+     "p1": "r1",
+     "p2": "r2",
+     "p3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "p2",
+      "right": "r1",
+      "feedback": "The top and left sides are ADJACENT, meeting at a 90° corner — perpendicular, not parallel."
+     }
+    ],
+    "missFeedback": "Opposite sides never meet (parallel); adjacent sides meet at a corner (perpendicular).",
+    "successFeedback": "Top-bottom and left-right are parallel (opposite sides); top-left is perpendicular (adjacent sides, a 90° corner)."
+   },
+   "predict": {
+    "prompt": "In a rectangle, the two sides that MEET at a corner — parallel or perpendicular?",
+    "options": [
+     {
+      "id": "perp",
+      "label": "Perpendicular"
+     },
+     {
+      "id": "para",
+      "label": "Parallel"
+     },
+     {
+      "id": "neither",
+      "label": "Neither"
+     }
+    ],
+    "outcomeId": "perp",
+    "reveal": "Meeting sides form the rectangle's right-angle corners — perpendicular. The parallel pairs are the sides that face each other and never touch."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Count the rectangle's parallel pairs.",
+   "conceptTag": "parallel-perpendicular-identify",
+   "explanationVariants": [
+    "A rectangle has exactly 2 pairs of parallel sides: top-bottom, and left-right.",
+    "Only the opposite-side pairs are parallel."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "How many pairs of PARALLEL sides does a rectangle have?",
+    "answer": 2,
+    "tolerance": 0,
+    "unit": "pairs",
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 counts every side, not just the parallel PAIRS. Only opposite sides are parallel: top-bottom and left-right — 2 pairs."
+     },
+     {
+      "value": 1,
+      "feedback": "1 undercounts — a rectangle has TWO pairs of opposite sides (top-bottom AND left-right), both parallel."
+     }
+    ],
+    "fallbackFeedback": "Count only the OPPOSITE side pairs, which never meet."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelPerpIdentifyNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "A tic-tac-toe grid hides the same idea at a bigger scale: the 2 horizontal lines are parallel to each other, the 2 vertical lines are parallel to each other, and every horizontal-vertical crossing is perpendicular.",
+   "figure": "la-perpendicular"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Count the perpendicular pairs.",
+   "conceptTag": "parallel-perpendicular-identify",
+   "explanationVariants": [
+    "2 horizontal lines × 2 vertical lines gives 4 perpendicular crossing pairs.",
+    "Every horizontal line crosses every vertical line at 90°."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A tic-tac-toe grid has 2 horizontal lines and 2 vertical lines. How many perpendicular crossing PAIRS are there in total?",
+    "answer": 4,
+    "tolerance": 0,
+    "unit": "pairs",
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 only counts one line from each direction. Each of the 2 horizontal lines crosses EACH of the 2 vertical lines: 2×2=4 pairs."
+     },
+     {
+      "value": 8,
+      "feedback": "8 overcounts. There are only 2 horizontal and 2 vertical lines — 2×2=4 crossing pairs, not 8."
+     }
+    ],
+    "fallbackFeedback": "Multiply the number of horizontal lines by the number of vertical lines: 2×2."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelPerpIdentifyNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Classify a window frame's parts.",
+   "conceptTag": "parallel-perpendicular-identify",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "A window has 2 vertical sides and a horizontal crossbar in the middle. Sort each pair of parts.",
+    "buckets": [
+     {
+      "id": "par",
+      "label": "Parallel",
+      "icon": "═"
+     },
+     {
+      "id": "perp",
+      "label": "Perpendicular",
+      "icon": "➕"
+     }
+    ],
+    "items": [
+     {
+      "id": "w1",
+      "label": "The two vertical sides",
+      "bucketId": "par",
+      "feedback": "Both vertical sides run the same direction, never meeting — parallel."
+     },
+     {
+      "id": "w2",
+      "label": "A vertical side and the horizontal crossbar",
+      "bucketId": "perp",
+      "feedback": "A vertical side meets the horizontal crossbar at 90° — perpendicular."
+     },
+     {
+      "id": "w3",
+      "label": "The top and bottom horizontal edges of the frame",
+      "bucketId": "par",
+      "feedback": "The top and bottom edges run the same direction, never meeting — parallel."
+     },
+     {
+      "id": "w4",
+      "label": "The horizontal crossbar and the top edge",
+      "bucketId": "par",
+      "feedback": "Both are horizontal, running the same direction — parallel to each other."
+     }
+    ],
+    "missFeedback": "Same-direction pairs that never meet are parallel; pairs that cross at 90° are perpendicular.",
+    "successFeedback": "The verticals pair up parallel, the horizontals pair up parallel, and every vertical-horizontal pair is perpendicular."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Apply both rules at once.",
+   "conceptTag": "parallel-perpendicular-identify",
+   "explanationVariants": [
+    "A rectangle's diagonal doesn't run parallel OR perpendicular to any side — it cuts across at some other angle.",
+    "Diagonals are a third case: neither relationship applies."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In a rectangle, how does a diagonal line (corner to corner) relate to the top side?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Neither parallel nor perpendicular — it crosses at some other angle",
+      "correct": true,
+      "feedback": "A rectangle's diagonal cuts across at an angle that's neither 0° (parallel) nor 90° (perpendicular)."
+     },
+     {
+      "id": "b",
+      "label": "Parallel — it never touches the top side",
+      "feedback": "The diagonal actually DOES touch a corner shared with the top side — and its angle to the top isn't 0°. It's neither parallel nor perpendicular."
+     },
+     {
+      "id": "c",
+      "label": "Perpendicular — diagonals always cross at 90°",
+      "feedback": "A rectangle's diagonal crosses the top side at some angle other than exactly 90°, unless the rectangle happens to be a special case. Generally, it's neither."
+     },
+     {
+      "id": "d",
+      "label": "Both, depending on the rectangle's size",
+      "feedback": "A single line can't be both parallel and perpendicular to the same side. Generally, a rectangle's diagonal is neither."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelPerpIdentifyMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The window with a plus-shaped divider.",
+   "conceptTag": "parallel-perpendicular-identify",
+   "hints": [
+    "This window has 2 vertical framing sides plus 1 vertical crossbar — 3 vertical lines total.",
+    "It also has 2 horizontal framing sides plus 1 horizontal crossbar — 3 horizontal lines total.",
+    "Multiply the verticals by the horizontals for the total perpendicular pairs."
+   ],
+   "explanationVariants": [
+    "3 vertical lines × 3 horizontal lines = 9 perpendicular crossing pairs.",
+    "Every one of the 3 verticals crosses every one of the 3 horizontals."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A four-pane window has a plus-shaped divider: 2 vertical framing sides plus 1 vertical crossbar (3 verticals total), and 2 horizontal framing sides plus 1 horizontal crossbar (3 horizontals total). How many perpendicular crossing PAIRS does this create?",
+    "answer": 9,
+    "tolerance": 0,
+    "unit": "pairs",
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 undercounts. There are 3 verticals AND 3 horizontals — every vertical crosses every horizontal: 3×3=9."
+     },
+     {
+      "value": 3,
+      "feedback": "3 only counts one direction. Multiply the verticals by the horizontals: 3×3=9."
+     }
+    ],
+    "fallbackFeedback": "Multiply the number of vertical lines (3) by the number of horizontal lines (3)."
+   },
+   "variant": {
+    "gen": "g4-lines-angles",
+    "form": "laParallelPerpIdentifyNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Both relationships, spotted together.",
+   "takeaways": [
+    "A rectangle's opposite sides are parallel; its adjacent sides are perpendicular.",
+    "In a grid, every same-direction pair is parallel; every cross-direction pair is perpendicular.",
+    "Some lines, like a rectangle's diagonal, are neither parallel nor perpendicular to a given side."
+   ],
+   "teaser": "next chapter: classifying whole shapes by the angles they contain."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "parallel-perpendicular-identify",
+   "concept": {
+    "id": "rem-pi-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Same-direction, never-meeting pairs are parallel. Crossing-at-90° pairs are perpendicular.** A door frame's two vertical sides are parallel to each other; each vertical side meets the horizontal top at 90° — perpendicular."
+   },
+   "check": {
+    "id": "rem-pi-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "parallel-perpendicular-identify",
+    "explanationVariants": [
+     "The two vertical sides of a door frame run the same direction, never meeting — parallel.",
+     "Same direction and never touching is exactly the parallel test."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A door frame's two vertical sides run straight up, the same distance apart everywhere. How do they relate?",
+     "options": [
+      {
+       "id": "a",
+       "label": "Parallel",
+       "correct": true,
+       "feedback": "Same direction, constant distance, never meeting — parallel."
+      },
+      {
+       "id": "b",
+       "label": "Perpendicular",
+       "feedback": "Perpendicular lines CROSS at 90°. These two sides never meet at all — parallel."
+      },
+      {
+       "id": "c",
+       "label": "Neither",
+       "feedback": "Constant distance and never meeting is exactly the parallel definition — that's a real relationship here."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

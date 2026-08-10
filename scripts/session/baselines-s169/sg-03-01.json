@@ -1,0 +1,346 @@
+{
+  "id": "sg-03-01",
+  "slug": "prism-to-cylinder",
+  "title": "Prism to Cylinder",
+  "courseId": "solid-geometry",
+  "chapterId": "ch3-volume-justifications",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-cylinder-justified",
+      "concept": {
+        "id": "rem-sg-cylinder-justified-c",
+        "kind": "concept",
+        "body": "Why V = πr²h: a cylinder's cross-sections are constantly πr² (chapter 1), so it matches any prism of equal base area and height at every level, and Cavalieri (chapter 2) forces equal volumes — the prism's V = Bh transfers. The same argument prices ANY solid with constant sections: V = (section area)(length)."
+      },
+      "check": {
+        "id": "rem-sg-cylinder-justified-k",
+        "kind": "check",
+        "body": "One transfer.",
+        "conceptTag": "sg-cylinder-justified",
+        "explanationVariants": [
+          "Constant sections of area 12 along height 7.",
+          "V = 12 × 7 = 84."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A solid has constant cross-section area 12 at every level of its height 7. Volume = ?",
+          "answer": 84,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 19,
+              "feedback": "19 adds — constant sections MULTIPLY: 84."
+            },
+            {
+              "value": 28,
+              "feedback": "28 charges a third — that's for shrinking sections; constant pays full: 84."
+            }
+          ],
+          "fallbackFeedback": "12 × 7 = 84."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Grade 5 counted unit cubes into V = Bh for prisms. The cylinder inherits the formula by Cavalieri: stand it next to ANY prism with the same base AREA and height — every level of both shows that same area — so their volumes agree, and the cylinder's is Bh = πr²h. The formula Grade 8 recalled is now JUSTIFIED, not just remembered.",
+      "figure": "sg-prism-to-cylinder"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Run the argument.",
+      "conceptTag": "sg-cylinder-justified",
+      "explanationVariants": [
+        "Match the cylinder (base 25π) to a prism of base area 25π, height 8: every level shows 25π on both.",
+        "Equal slices everywhere ⇒ V = 25π × 8 = 200π."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cylinder has radius 5 and height 8. Its Cavalieri twin is a prism with base area 25π and height 8. Both volumes' coefficient (of π) = ?",
+        "answer": 200,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 = 5 × 8 forgets the square — the base is π(5²) = 25π: coefficient 200."
+          },
+          {
+            "value": 66.67,
+            "feedback": "66.67 sneaks in a ⅓ — cylinders are prisms-in-spirit: full Bh = 200."
+          },
+          {
+            "value": 400,
+            "feedback": "400 doubles — 25 × 8 = 200."
+          }
+        ],
+        "fallbackFeedback": "Bh = 25π × 8 = 200π — the prism twin certifies it slice by slice."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cylinder-justified__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What did the argument need?",
+      "conceptTag": "sg-cylinder-justified",
+      "explanationVariants": [
+        "Cavalieri's two clauses: same height, equal sections at every level.",
+        "The cylinder's constant circular sections make the second clause automatic."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The prism-to-cylinder justification works because:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The cylinder's sections are constantly πr² — so any equal-base-area prism matches it at EVERY level, and Cavalieri closes the deal",
+            "correct": true,
+            "feedback": "Constancy (chapter 1's cylinder catalog) plus Cavalieri (chapter 2) — the course assembled this proof in pieces."
+          },
+          {
+            "id": "o2",
+            "label": "Circles are approximately polygons",
+            "correct": false,
+            "feedback": "Polygonal approximation is a valid alternative road, but the clean argument here is exact: constant equal sections + Cavalieri."
+          },
+          {
+            "id": "o3",
+            "label": "All solids satisfy V = Bh",
+            "correct": false,
+            "feedback": "Cones and spheres refuse Bh — the cylinder qualifies precisely BECAUSE its sections never change."
+          },
+          {
+            "id": "o4",
+            "label": "The prism and cylinder have equal surface areas",
+            "correct": false,
+            "feedback": "Surfaces differ and don't matter — Cavalieri reads slice areas only."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cylinder-justified__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Justify, then use.",
+      "conceptTag": "sg-cylinder-justified",
+      "explanationVariants": [
+        "The newly justified formula, on an oblique case: Cavalieri handles the lean too.",
+        "π(6²)(10) = 360π ≈ 1130.97."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A leaning cylinder: radius 6, vertical height 10. Volume (2 decimals) = ?",
+        "answer": 1130.97,
+        "tolerance": 1,
+        "commonErrors": [
+          {
+            "value": 376.99,
+            "feedback": "376.99 ≈ 120π charges a cone's third — cylinders take full Bh: 360π ≈ 1130.97."
+          },
+          {
+            "value": 188.5,
+            "feedback": "188.5 ≈ 60π forgets the square — π(36)(10) = 360π ≈ 1130.97."
+          },
+          {
+            "value": 1357.17,
+            "feedback": "1357.17 ≈ 432π bills a slant of 12 — vertical height is 10: 360π ≈ 1130.97."
+          }
+        ],
+        "fallbackFeedback": "π(36)(10) = 360π ≈ 1130.97 — justified upright, extended oblique, all by slices."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cylinder-justified__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A prism is its base, stacked.",
+      "widget": {
+        "type": "solidSliceLab",
+        "prompt": "Move a horizontal section through the cylinder, then add a prism whose base has the same area. Test Cavalieri at several heights and finish at the middle slice.",
+        "solid": "cylinder",
+        "radius": 4,
+        "height": 8,
+        "baseArea": 50.2654824574,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.1,
+        "tolerance": 0.01,
+        "comparisonRequired": true,
+        "requiredMoves": 5,
+        "successFeedback": "At every tested height, both solids expose the same cross-sectional area, and their heights match. Cavalieri therefore forces equal volumes—even though the base shapes and outer surfaces differ.",
+        "positionFeedback": "Keep testing sections, then place the section plane at the middle height to complete the comparison.",
+        "comparisonFeedback": "Add the equal-base-area prism. Cavalieri is a comparison theorem, so matching sections must be visible in both solids.",
+        "invariantFeedback": "Move the plane through several heights. One snapshot is not enough to establish that the section area stays constant."
+      },
+      "predict": {
+        "prompt": "A cylinder and a prism have equal heights and equal base areas. What must match at every horizontal level?",
+        "options": [
+          {
+            "id": "sections",
+            "label": "Their cross-sectional areas"
+          },
+          {
+            "id": "perimeters",
+            "label": "Their cross-sectional perimeters"
+          },
+          {
+            "id": "surfaces",
+            "label": "Their lateral surface areas"
+          }
+        ],
+        "outcomeId": "sections",
+        "reveal": "Cavalieri compares area slice by slice. Equal cross-sectional area at every height implies equal volume."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move a section plane and compare cross-sectional areas of two solids at matching heights.",
+        "invariants": [
+          "equal-sections-equal-volume",
+          "constant-cylinder-section-area"
+        ],
+        "misconceptions": [
+          "same-base-shape-required",
+          "surface-area-determines-volume"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "cavalieri-volume",
+        "counterfactualPrompt": "Replace the cylinder with a cone of the same base and height. Which section invariant breaks as the plane rises?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why may the comparison prism have a differently shaped base?",
+          "options": [
+            {
+              "id": "area",
+              "label": "Cavalieri needs equal cross-sectional area at each height, not matching outlines.",
+              "correct": true,
+              "feedback": "Exactly—area, not section shape or perimeter, is the load-bearing invariant."
+            },
+            {
+              "id": "surface",
+              "label": "The lateral surfaces are automatically equal.",
+              "correct": false,
+              "feedback": "Lateral surface area is unrelated to the slice-by-slice volume proof."
+            },
+            {
+              "id": "name",
+              "label": "All prisms and cylinders have the same volume formula by definition.",
+              "correct": false,
+              "feedback": "The formula is justified by the equal-section argument, not by naming."
+            }
+          ]
+        }
+      },
+      "conceptTag": "sg-cylinder-justified"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Choose the twin.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To justify a cylinder's volume with Cavalieri, the comparison prism must have:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The same height and the same BASE AREA (its base shape is irrelevant)",
+            "correct": true,
+            "feedback": "Any base shape works — square, triangle, blob — as long as its area is πr²; sections then match at every level."
+          },
+          {
+            "id": "o2",
+            "label": "A square base of side r",
+            "correct": false,
+            "feedback": "That base area is r², not πr² — the sections would run π-to-1 forever. Equal AREA is the requirement."
+          },
+          {
+            "id": "o3",
+            "label": "The same lateral surface",
+            "correct": false,
+            "feedback": "Surfaces don't testify — the twin needs equal base area and height."
+          },
+          {
+            "id": "o4",
+            "label": "A circular base of twice the radius",
+            "correct": false,
+            "feedback": "That quadruples the section — the twin must MATCH πr², whatever its shape."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The engineer's shortcut.",
+      "conceptTag": "sg-cylinder-justified",
+      "hints": [
+        "The tunnel's cross-section is constant along its 50-length — a generalized cylinder (prism with a curvy base).",
+        "The justified rule for constant sections: V = (section area)(length).",
+        "Section area 18 given — no π, no decomposition needed."
+      ],
+      "explanationVariants": [
+        "Constant sections of area 18 along length 50: V = 900 by the very argument that priced the cylinder.",
+        "18 × 50 = 900."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tunnel's cross-section is a constant curvy shape of area 18 m², and the tunnel runs 50 m. Its volume = ?",
+        "answer": 900,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 68,
+            "feedback": "68 adds — constant sections multiply: 18 × 50 = 900 m³."
+          },
+          {
+            "value": 300,
+            "feedback": "300 sneaks a ⅓ — thirds belong to shrinking sections (cones); constant ones pay full: 900."
+          },
+          {
+            "value": 450,
+            "feedback": "450 halves — the full run of constant 18-slices: 900."
+          }
+        ],
+        "fallbackFeedback": "V = 18 × 50 = 900 m³ — 'cylinder' was never about circles; it's about CONSTANT sections."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-cylinder-justified__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Bh, earned.",
+      "takeaways": [
+        "Cylinder volume = Bh, justified: constant sections + Cavalieri against any equal-base prism.",
+        "The argument covers oblique cylinders and ANY constant-section solid (tunnels, troughs).",
+        "Half or partial sections scale the price by their ratio."
+      ],
+      "teaser": "Next: solids whose sections SHRINK — and where the ⅓ really comes from."
+    }
+  ]
+}

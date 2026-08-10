@@ -1,0 +1,476 @@
+{
+ "id": "re-02-02",
+ "slug": "binomial-radical-products",
+ "title": "Binomial Radical Products",
+ "courseId": "radical-functions",
+ "chapterId": "ch2-rationalizing-and-radical-arithmetic",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "FOIL works on radicals unchanged. (1 + √2)(3 + √2) = 3 + √2 + 3√2 + √2·√2 = 3 + 4√2 + 2 = **5 + 4√2**. Radical terms combine like like-terms; √2 · √2 collapses to plain 2.",
+   "figure": "re-foil-radicals"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Track the rational part.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For (1 + √2)(3 + √2), the rational part collects 1·3 and √2·√2. What is it?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "The Last product √2 · √2 = 2 is rational too: 3 + 2 = 5."
+     },
+     {
+      "value": 7,
+      "feedback": "√2 · √2 = 2, not 4: the rational part is 3 + 2 = 5."
+     }
+    ],
+    "fallbackFeedback": "1·3 = 3 and √2·√2 = 2: together 5."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Squares follow the (a + b)² pattern: (2 + √3)² = 4 + 2·2·√3 + 3 = **7 + 4√3**. The middle term 2ab is where dropped work shows — squaring is never term-by-term.",
+   "figure": "re-square-binomial"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Square a radical binomial.",
+   "conceptTag": "re-products",
+   "explanationVariants": [
+    "(1 + √5)² = 1 + 2√5 + 5 = 6 + 2√5.",
+    "a² + 2ab + b² with a = 1, b = √5."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Expand (1 + √5)².",
+    "tokens": [
+     {
+      "id": "t6",
+      "label": "6"
+     },
+     {
+      "id": "plus",
+      "label": "+"
+     },
+     {
+      "id": "m",
+      "label": "2√5"
+     },
+     {
+      "id": "one",
+      "label": "1"
+     },
+     {
+      "id": "five",
+      "label": "5"
+     },
+     {
+      "id": "s5",
+      "label": "√5"
+     },
+     {
+      "id": "t26",
+      "label": "26"
+     }
+    ],
+    "correct": [
+     "t6",
+     "plus",
+     "m"
+    ],
+    "acceptAlso": [
+     [
+      "m",
+      "plus",
+      "t6"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "one",
+       "plus",
+       "five"
+      ],
+      "feedback": "Squaring isn't term-by-term — the middle term 2·1·√5 = 2√5 must appear."
+     },
+     {
+      "sequence": [
+       "five",
+       "plus",
+       "one"
+      ],
+      "feedback": "Squaring isn't term-by-term — the middle term 2·1·√5 = 2√5 must appear."
+     },
+     {
+      "sequence": [
+       "t6",
+       "plus",
+       "s5"
+      ],
+      "feedback": "The middle term is 2ab = 2·1·√5 = 2√5 — the 2 belongs."
+     },
+     {
+      "sequence": [
+       "s5",
+       "plus",
+       "t6"
+      ],
+      "feedback": "The middle term is 2ab = 2·1·√5 = 2√5 — the 2 belongs."
+     },
+     {
+      "sequence": [
+       "t26"
+      ],
+      "feedback": "(1 + √5)² keeps its radical part — only conjugate PAIRS multiply to a pure number."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Square with (a + b)² = a² + 2ab + b²: the middle term 2√5 must appear.",
+    "successFeedback": "Right — 1 + 5 = 6 rational, plus the middle 2√5."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-products__buildExpression"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Mixed radicals.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For (√3 + √2)(√3 + 2√2), the rational part collects √3·√3 and √2·2√2. What is it?",
+    "answer": 7,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "The Last term is √2 · 2√2 = 2 · 2 = 4 (not 2): 3 + 4 = 7."
+     },
+     {
+      "value": 12,
+      "feedback": "√3·√3 = 3 and √2·2√2 = 4 — the rational part ADDS them: 7 (the cross terms stay radical)."
+     }
+    ],
+    "fallbackFeedback": "3 + 4 = 7; the radical part is 2√6 + √6 = 3√6."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "And its radical part.",
+   "conceptTag": "re-products",
+   "explanationVariants": [
+    "Outer √3·2√2 = 2√6 and Inner √2·√3 = √6 combine: 3√6.",
+    "Both cross terms carry √6 — add the coefficients 2 + 1."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "For (√3 + √2)(√3 + 2√2), what is the radical part of the product?",
+    "tokens": [
+     {
+      "id": "a",
+      "label": "3√6"
+     },
+     {
+      "id": "b",
+      "label": "2√6"
+     },
+     {
+      "id": "c",
+      "label": "3√5"
+     },
+     {
+      "id": "plus",
+      "label": "+"
+     },
+     {
+      "id": "d",
+      "label": "√6"
+     }
+    ],
+    "correct": [
+     "a"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "b"
+      ],
+      "feedback": "The Inner term √2·√3 = √6 joins the Outer 2√6: total 3√6."
+     },
+     {
+      "sequence": [
+       "c"
+      ],
+      "feedback": "√3 · √2 = √6 (multiply radicands) — √5 never appears."
+     },
+     {
+      "sequence": [
+       "b",
+       "plus",
+       "d"
+      ],
+      "feedback": "Same radicand √6 means they're like terms: 2√6 + 1√6 = 3√6."
+     },
+     {
+      "sequence": [
+       "d",
+       "plus",
+       "b"
+      ],
+      "feedback": "Same radicand √6 means they're like terms: 2√6 + 1√6 = 3√6."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Outer gives 2√6 and Inner gives √6 — same radicand, so they add: 3√6.",
+    "successFeedback": "Right — 2√6 + √6 = 3√6."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-products__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Spot the perfect square.",
+   "conceptTag": "re-products",
+   "explanationVariants": [
+    "(√7)² = 7 exactly — the radical and the square undo each other.",
+    "Squaring a pure root always lands on the radicand."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "What is (√7)²?",
+    "task": "radicalProduct",
+    "values": [
+     {
+      "id": "left",
+      "label": "√7 (factor 1)",
+      "kind": "root",
+      "radicand": 7,
+      "coefficient": 1
+     },
+     {
+      "id": "right",
+      "label": "√7 (factor 2)",
+      "kind": "root",
+      "radicand": 7,
+      "coefficient": 1
+     }
+    ],
+    "targetRadicand": 1,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 49,
+      "feedback": "That squares the 7 as well — √7 · √7 = 7, done."
+     },
+     {
+      "value": 14,
+      "feedback": "Squaring multiplies √7 by itself (giving 7); it doesn't double it."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "√7 · √7 = 7.",
+    "successFeedback": "√7 · √7 = 7."
+   },
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-products__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "A full expansion.",
+   "conceptTag": "re-products",
+   "explanationVariants": [
+    "(2 + √3)(1 + 2√3) = 2 + 4√3 + √3 + 2·3 = 8 + 5√3.",
+    "Rational: 2 + 6 = 8; radical: 4√3 + √3 = 5√3."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Expand (2 + √3)(1 + 2√3).",
+    "tokens": [
+     {
+      "id": "t8",
+      "label": "8"
+     },
+     {
+      "id": "t2",
+      "label": "2"
+     },
+     {
+      "id": "t14",
+      "label": "14"
+     },
+     {
+      "id": "plus",
+      "label": "+"
+     },
+     {
+      "id": "a5",
+      "label": "5√3"
+     },
+     {
+      "id": "a4",
+      "label": "4√3"
+     }
+    ],
+    "correct": [
+     "t8",
+     "plus",
+     "a5"
+    ],
+    "acceptAlso": [
+     [
+      "a5",
+      "plus",
+      "t8"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "plus",
+       "a5"
+      ],
+      "feedback": "The Last term √3 · 2√3 = 6 is rational — it joins the 2: 8."
+     },
+     {
+      "sequence": [
+       "a5",
+       "plus",
+       "t2"
+      ],
+      "feedback": "The Last term √3 · 2√3 = 6 is rational — it joins the 2: 8."
+     },
+     {
+      "sequence": [
+       "t8",
+       "plus",
+       "a4"
+      ],
+      "feedback": "The Inner term 1·√3 = √3 still counts: 4√3 + √3 = 5√3."
+     },
+     {
+      "sequence": [
+       "a4",
+       "plus",
+       "t8"
+      ],
+      "feedback": "The Inner term 1·√3 = √3 still counts: 4√3 + √3 = 5√3."
+     },
+     {
+      "sequence": [
+       "t14",
+       "plus",
+       "a5"
+      ],
+      "feedback": "√3 · 2√3 = 2 · 3 = 6 (not 12): rational part 2 + 6 = 8."
+     },
+     {
+      "sequence": [
+       "a5",
+       "plus",
+       "t14"
+      ],
+      "feedback": "√3 · 2√3 = 2 · 3 = 6 (not 12): rational part 2 + 6 = 8."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "FOIL it out: the rational part is 2 + 6 = 8; the radical part is 4√3 + √3 = 5√3.",
+    "successFeedback": "Right — Last gives √3·2√3 = 6; rational 2 + 6 = 8, radical 4√3 + √3 = 5√3."
+   },
+   "hints": [
+    "FOIL: 2·1, 2·2√3, √3·1, √3·2√3.",
+    "The last product is 2 · 3 = 6 — rational.",
+    "Collect: (2 + 6) + (4 + 1)√3."
+   ],
+   "variant": {
+    "gen": "a2-radicals",
+    "form": "re-products__buildExpression"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "FOIL as usual — roots times themselves turn rational.",
+   "takeaways": [
+    "√a · √a = a: watch products go rational.",
+    "Like radicals in the result combine by coefficient.",
+    "Squaring keeps its middle term: (a + b)² = a² + 2ab + b²."
+   ],
+   "teaser": "Next: the special pair whose product has NO radical at all — conjugates."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "re-products",
+   "concept": {
+    "id": "rem-re0202-c",
+    "kind": "concept",
+    "body": "One product at a time: √5 · √5 = 5, and 2 · √5 stays 2√5. For (1 + √5)(2 + √5), FOIL gives 2, √5, 2√5, and 5."
+   },
+   "check": {
+    "id": "rem-re0202-k",
+    "kind": "check",
+    "body": "Collect the pieces.",
+    "conceptTag": "re-products",
+    "explanationVariants": [
+     "Rational 2 + 5 = 7; radical √5 + 2√5 = 3√5: total 7 + 3√5.",
+     "Group the plain numbers, then the like radicals."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What is (1 + √5)(2 + √5)?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "7 + 3√5",
+       "correct": true,
+       "feedback": "Right — 2 + 5 = 7 and √5 + 2√5 = 3√5."
+      },
+      {
+       "id": "o2",
+       "label": "2 + 3√5",
+       "correct": false,
+       "feedback": "The Last product √5·√5 = 5 is a plain number — add it: 2 + 5 = 7."
+      },
+      {
+       "id": "o3",
+       "label": "7 + 2√5",
+       "correct": false,
+       "feedback": "Both cross terms count: 1·√5 + 2·√5 = 3√5."
+      },
+      {
+       "id": "o4",
+       "label": "10 + 3√5",
+       "correct": false,
+       "feedback": "√5 · √5 = 5, not... adding wrong: the rational part is 2 + 5 = 7."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

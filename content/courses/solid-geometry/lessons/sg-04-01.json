@@ -1,0 +1,659 @@
+{
+  "id": "sg-04-01",
+  "slug": "adding-solids",
+  "title": "Adding Solids",
+  "courseId": "solid-geometry",
+  "chapterId": "ch4-composite-solids",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-composite-add",
+      "concept": {
+        "id": "rem-sg-composite-add-c",
+        "kind": "concept",
+        "body": "Composite solids price by decomposition: split at the seams (a silo = cylinder + hemisphere; a capsule's two hemispherical caps = one sphere), apply the justified formula to each piece, and ADD. Matched radii make seams clean — no gaps or overlaps to correct."
+      },
+      "check": {
+        "id": "rem-sg-composite-add-k",
+        "kind": "check",
+        "body": "One sum.",
+        "conceptTag": "sg-composite-add",
+        "explanationVariants": [
+          "Cylinder π(2²)(6) = 24π; hemisphere ⅔π(2³) = 16π/3.",
+          "24 + 16/3 = 88/3 ≈ 29.33."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Cylinder (radius 2, height 6) plus hemisphere (radius 2). Total coefficient of π (2 decimals) = ?",
+          "answer": 29.33,
+          "tolerance": 0.05,
+          "commonErrors": [
+            {
+              "value": 24,
+              "feedback": "24 is the cylinder alone — the dome adds ⅔(2³) = 16/3 ≈ 5.33: total ≈ 29.33."
+            },
+            {
+              "value": 34.67,
+              "feedback": "34.67 caps with a FULL sphere (32/3) — half is 16/3: ≈ 29.33."
+            }
+          ],
+          "fallbackFeedback": "24 + 16/3 = 88/3 ≈ 29.33."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Real objects are compounds: a silo is a cylinder wearing a hemisphere; a capsule is a cylinder with hemispherical caps. Volume ADDS across a clean joint — decompose, price each piece with the justified formulas, sum. The only skill is seeing the seam.",
+      "figure": "sg-adding-solids"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The silo.",
+      "conceptTag": "sg-composite-add",
+      "explanationVariants": [
+        "Cylinder: π(36)(10) = 360π. Hemisphere: ½(4/3)π(216) = 144π.",
+        "360 + 144 = 504."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A silo: cylinder of radius 6 and height 10, topped by a hemisphere of radius 6. Total volume coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "r",
+            "label": "the radius",
+            "value": 6
+          },
+          {
+            "id": "h",
+            "label": "the cylinder height",
+            "value": 10
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "const",
+                "id": "r"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "lit",
+                "value": 3
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 648,
+            "feedback": "648 adds a FULL sphere (288) — the cap is half: 360 + 144 = 504."
+          },
+          {
+            "value": 360,
+            "feedback": "360 is the cylinder alone — the dome adds ⅔(216) = 144: 504."
+          },
+          {
+            "value": 432,
+            "feedback": "432 caps with a cone's 72 — the hemisphere holds ⅔πr³ = 144π: 504."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "360 + 144 = 504 — seam at the top circle, volumes added across it.",
+        "successFeedback": "360 + 144 = 504 — seam at the top circle, volumes added across it."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-add__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The capsule trick.",
+      "conceptTag": "sg-composite-add",
+      "explanationVariants": [
+        "Two hemispherical caps of the same radius = one full sphere.",
+        "Cylinder 72π + sphere 36π = 108π."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A capsule: cylinder of radius 3 and height 8, with a hemispherical cap on EACH end. Total volume coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "r",
+            "label": "the radius",
+            "value": 3
+          },
+          {
+            "id": "h",
+            "label": "the cylinder height",
+            "value": 8
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "const",
+                "id": "r"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "h"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "lit",
+                "value": 4
+              },
+              "right": {
+                "op": "lit",
+                "value": 3
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 90,
+            "feedback": "90 counts only ONE cap (72 + 18) — both ends together make a full sphere: 72 + 36 = 108."
+          },
+          {
+            "value": 144,
+            "feedback": "144 caps with two full spheres — two HALVES make one: 108."
+          },
+          {
+            "value": 72,
+            "feedback": "72 is the cylinder alone — the two caps add (4/3)(27) = 36: 108."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "72 + 36 = 108 — the two caps reassemble into one r = 3 sphere.",
+        "successFeedback": "72 + 36 = 108 — the two caps reassemble into one r = 3 sphere."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-add__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The cone below.",
+      "conceptTag": "sg-composite-add",
+      "explanationVariants": [
+        "Cone: ⅓π(9)(7) = 21π. Hemisphere scoop: 18π.",
+        "21 + 18 = 39."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "An ice-cream: cone of radius 3 and height 7, topped by a hemisphere of radius 3. Total coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "r",
+            "label": "the radius",
+            "value": 3
+          },
+          {
+            "id": "h",
+            "label": "the cone height",
+            "value": 7
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "lit",
+                "value": 1
+              },
+              "right": {
+                "op": "lit",
+                "value": 3
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              },
+              "right": {
+                "op": "const",
+                "id": "h"
+              }
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "lit",
+                "value": 3
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 81,
+            "feedback": "81 charges the cone full Bh (63) — cones pay a third (21): 21 + 18 = 39."
+          },
+          {
+            "value": 57,
+            "feedback": "57 tops with a FULL sphere (36) — the scoop is half (18): 39."
+          },
+          {
+            "value": 21,
+            "feedback": "21 is the cone alone — the scoop adds ⅔(27) = 18: 39."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "21 + 18 = 39 — the third and the two-thirds, working the same seam.",
+        "successFeedback": "21 + 18 = 39 — the third and the two-thirds, working the same seam."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-add__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the seam.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why must the hemisphere and cylinder of a silo share the SAME radius for clean addition?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "So the joint is a single full circle — the pieces meet exactly, with no gap and no overlap to correct",
+            "correct": true,
+            "feedback": "Matched radii make the seam a shared cross-section: volumes add with no adjustment. Mismatched pieces would need gap or overlap accounting."
+          },
+          {
+            "id": "o2",
+            "label": "Because hemispheres only exist in one size",
+            "correct": false,
+            "feedback": "Any radius works — the MATCH is what makes the sum clean."
+          },
+          {
+            "id": "o3",
+            "label": "It's aesthetic only",
+            "correct": false,
+            "feedback": "It's arithmetic: a mismatch leaves a ledge (gap/overlap) that plain addition misprices."
+          },
+          {
+            "id": "o4",
+            "label": "Volume can never add otherwise",
+            "correct": false,
+            "feedback": "It can — with extra terms for the mismatch. The matched seam just makes addition EXACT as-is."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i1b",
+      "kind": "interactive",
+      "body": "Find the join by measuring it.",
+      "conceptTag": "sg-add-solids",
+      "widget": {
+        "type": "solidSliceLab",
+        "prompt": "Sweep a section through the sphere, with a constant-area prism beside it for reference. Test several heights, then stop where the sphere's section matches the prism's — that height is where a hemisphere can be joined cleanly.",
+        "solid": "sphere",
+        "radius": 5,
+        "height": 10,
+        "baseArea": 78.5398163397,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.1,
+        "tolerance": 0.01,
+        "comparisonRequired": true,
+        "requiredMoves": 5,
+        "successFeedback": "Only at the equator does the sphere's section reach πr² — everywhere else it is smaller. That is exactly why the cylinder's radius must equal the hemisphere's: the join is a shared circle, and the hemisphere's widest circle is the only one that can match a cylinder's constant section. Mismatch the radii and the two solids meet along a step, not a surface, and the volumes stop simply adding.",
+        "positionFeedback": "Keep sweeping, then settle at the height where the two section areas agree. On a sphere that happens at one height only.",
+        "comparisonFeedback": "Bring in the constant-area prism. “Same radius at the join” is a COMPARISON, so both sections have to be on screen to be compared.",
+        "invariantFeedback": "Move the plane through several heights first. The point is that the sphere's section keeps changing while the prism's does not — one snapshot cannot show that."
+      },
+      "predict": {
+        "prompt": "A hemisphere of radius 5 sits on a cylinder. Across how many heights does the sphere's horizontal section have area π·5²?",
+        "options": [
+          {
+            "id": "one",
+            "label": "One — the equator, and nowhere else"
+          },
+          {
+            "id": "all",
+            "label": "Every height — the radius is 5 throughout"
+          },
+          {
+            "id": "none",
+            "label": "None — a curved surface never gives a flat circle"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "A sphere's sections are circles that shrink as you move away from the equator, so π·5² is reached exactly once. The equator is therefore the only circle a cylinder of radius 5 can be joined to — which is why the two radii must match."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Reverse-engineer.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A composite of a cylinder (radius 5, height h) plus a matching hemisphere has total volume 775π/3. The hemisphere holds 250π/3 (chapter 3's number). The cylinder's height h = ?",
+        "answer": 7,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10.33,
+            "feedback": "10.33 ≈ (775/3)/25 skips removing the dome — the cylinder holds 775/3 − 250/3 = 175, so h = 175/25 = 7."
+          },
+          {
+            "value": 21,
+            "feedback": "21 = 525/25 drops the /3 — (775 − 250)/3 = 175 first, then ÷25: h = 7."
+          }
+        ],
+        "fallbackFeedback": "Cylinder = 775π/3 − 250π/3 = 175π = 25πh ⇒ h = 7."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The water tower.",
+      "conceptTag": "sg-composite-add",
+      "hints": [
+        "Three pieces: cone (stand), cylinder (tank), hemisphere (roof) — all radius 6.",
+        "Cone h = 5: ⅓(36)(5). Cylinder h = 10: 360. Hemisphere: 144.",
+        "Sum the coefficients."
+      ],
+      "explanationVariants": [
+        "⅓(36)(5) = 60; 60 + 360 + 144 = 564.",
+        "Cone 60, cylinder 360, dome 144: total 564π."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A water tower (radius 6 throughout): cone base of height 5, cylindrical tank of height 10, hemispherical roof. Total volume coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "r",
+            "label": "the radius",
+            "value": 6
+          },
+          {
+            "id": "hc",
+            "label": "the cone height",
+            "value": 5
+          },
+          {
+            "id": "ht",
+            "label": "the tank height",
+            "value": 10
+          }
+        ],
+        "approxFormula": {
+          "op": "add",
+          "left": {
+            "op": "add",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "divide",
+                "left": {
+                  "op": "lit",
+                  "value": 1
+                },
+                "right": {
+                  "op": "lit",
+                  "value": 3
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "const",
+                    "id": "r"
+                  },
+                  "right": {
+                    "op": "const",
+                    "id": "r"
+                  }
+                },
+                "right": {
+                  "op": "const",
+                  "id": "hc"
+                }
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              },
+              "right": {
+                "op": "const",
+                "id": "ht"
+              }
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "lit",
+                "value": 3
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 684,
+            "feedback": "684 charges the cone full Bh (180) — a third (60) is its share: 60 + 360 + 144 = 564."
+          },
+          {
+            "value": 708,
+            "feedback": "708 roofs with a full sphere (288) — half (144): 564."
+          },
+          {
+            "value": 420,
+            "feedback": "420 skips the roof — the dome adds 144: 564."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "60 + 360 + 144 = 564 — three justified formulas, two seams, one sum.",
+        "successFeedback": "60 + 360 + 144 = 564 — three justified formulas, two seams, one sum."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-add__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Decompose and sum.",
+      "takeaways": [
+        "Composite volume = sum of the pieces across clean (matched-radius) seams.",
+        "Standard compounds: silo (cylinder + hemisphere), capsule (cylinder + sphere-in-two-halves), ice-cream (cone + hemisphere).",
+        "Reverse problems: subtract known pieces to expose the unknown dimension."
+      ],
+      "teaser": "Next: composites built by TAKING AWAY — bores, tubes, and hollows."
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "id": "fr-03-02",
+  "slug": "seeing-2-4-equals-1-2",
+  "title": "Seeing 2/4 = 1/2",
+  "courseId": "fractions",
+  "chapterId": "ch3-equivalent",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here's WHY the point never moves. Shade half a chocolate bar. Now cut EVERY piece in half: the cut lines multiply, but the shading stays put. One half became two fourths — **same chocolate, more (smaller) pieces**. That's a fair trade.",
+      "figure": "frac-equiv-half"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Inspector duty: fair trade or robbery?",
+      "conceptTag": "equiv-models",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each swap: does it keep the amount exactly the same?",
+        "buckets": [
+          {
+            "id": "fair",
+            "label": "Fair trade — same amount",
+            "icon": "🤝"
+          },
+          {
+            "id": "unfair",
+            "label": "Unfair — amount changed",
+            "icon": "🚨"
+          }
+        ],
+        "items": [
+          {
+            "id": "t1",
+            "label": "1 half ↔ 2 fourths",
+            "bucketId": "fair",
+            "feedback": "Cut the half in half: two fourths, covering exactly the same chocolate."
+          },
+          {
+            "id": "t2",
+            "label": "1 half ↔ 2 sixths",
+            "bucketId": "unfair",
+            "feedback": "Two sixths only make a THIRD — sixths are smaller than fourths. Whoever took this trade lost chocolate."
+          },
+          {
+            "id": "t3",
+            "label": "1 third ↔ 2 sixths",
+            "bucketId": "fair",
+            "feedback": "Cut the third in half: two sixths, same amount to the crumb."
+          },
+          {
+            "id": "t4",
+            "label": "1 fourth ↔ 2 eighths",
+            "bucketId": "fair",
+            "feedback": "One fourth splits into exactly two eighths — a clean, even trade."
+          }
+        ],
+        "missFeedback": "A fair trade cuts the SAME piece into equal mini-pieces — the swap must rebuild exactly the original.",
+        "successFeedback": "Halves→fourths, thirds→sixths, fourths→eighths all trade clean; 2 sixths for a half is a robbery (that's only a third)."
+      },
+      "predict": {
+        "prompt": "Cutting every piece of a bar in half — does the shaded AMOUNT change?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — same amount, more pieces"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — more pieces means more"
+          },
+          {
+            "id": "less",
+            "label": "Yes — cutting shrinks it"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "The cuts multiply the count and shrink the size in perfect balance — 2/4 covers exactly the ground 1/2 did. That balance IS equivalence."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "After the cut.",
+      "conceptTag": "equiv-models",
+      "explanationVariants": [
+        "The knife added lines, not chocolate — the shaded half now reads 2/4, but its edges never moved.",
+        "Twice the pieces, each half the size: twice × half = the same amount."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A bar has 1/2 shaded. You cut every piece in half. The shaded part now reads…",
+        "options": [
+          {
+            "id": "a",
+            "label": "2/4 — the same amount, renamed",
+            "correct": true,
+            "feedback": "New lines, same shading: the half is now called two fourths."
+          },
+          {
+            "id": "b",
+            "label": "1/4 — cutting halved it",
+            "feedback": "The PIECES got halved, not the shading. The shaded region kept both of its new fourth-pieces: 2/4."
+          },
+          {
+            "id": "c",
+            "label": "2/2 — the whole bar",
+            "feedback": "2/2 would mean ALL pieces shaded. Only the original half is — which is 2 of the 4 new pieces."
+          },
+          {
+            "id": "d",
+            "label": "1/8",
+            "feedback": "Eighths would need another round of cutting — and even then, the shaded amount would read 4/8, not 1/8."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equiv-models"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The trade rule, in words: cut every piece into the same number of mini-pieces, and BOTH counts grow together — total pieces and taken pieces alike. The amount stands still. That's why **1/2 = 2/4 = 4/8**: fair trades, all the way down.",
+      "figure": "frac-equiv-half"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Trade a half into sixths.",
+      "conceptTag": "equiv-models",
+      "explanationVariants": [
+        "Cut each half into 3 minis: the whole becomes 6 pieces, and your half becomes 3 of them — 3/6.",
+        "Check it on the line: 3 of 6 jumps is halfway, exactly 1/2's spot."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You hold 1/2 of a bar and trade it into SIXTHS (each half gets cut into 3 minis). How many sixths do you hold?",
+        "answer": 3,
+        "tolerance": 0,
+        "unit": "sixths",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 sixths is the WHOLE bar. You only held half of it — half of the 6 pieces is 3."
+          },
+          {
+            "value": 2,
+            "feedback": "2 copied the bottom of 1/2 — but the trade is into sixths now. Your half-bar cuts into 3 of the 6 minis."
+          }
+        ],
+        "fallbackFeedback": "The whole becomes 6 minis; your half is half of them."
+      },
+      "variant": {
+        "gen": "equiv-models",
+        "form": "tradeInto"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Why can't the amount move? Step through it.",
+      "conceptTag": "equiv-models",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "The case for the loyal amount.",
+        "panels": [
+          {
+            "title": "Knives add lines, not chocolate",
+            "body": "When you cut every piece in half, you draw new lines INSIDE the bar. The shaded region's outer edges never move a hair."
+          },
+          {
+            "title": "Twice the pieces, half the size",
+            "body": "Your shaded part now holds twice as many pieces — but each is half as big. Twice as many × half as big = exactly what you had."
+          },
+          {
+            "title": "Renaming, never resizing",
+            "body": "That's all equivalence is: the same amount answering to a new name. 1/2, 2/4, 4/8 — one region, three labels."
+          }
+        ],
+        "continueFeedback": "Keep going — the trade's secret is in the next panel.",
+        "successFeedback": "Cutting finer renames the amount without resizing it — the whole story of equivalent fractions."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the fair trade for 2/3.",
+      "conceptTag": "equiv-models",
+      "explanationVariants": [
+        "Cut each third in half: the 3 pieces become 6, and your 2 pieces become 4 — 4/6, same amount.",
+        "Both counts must grow by the SAME cutting: 2→4 taken and 3→6 total is one clean halving of every piece."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is a FAIR trade for 2/3?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4/6",
+            "correct": true,
+            "feedback": "Every third cut in half: 2 taken become 4, 3 total become 6. The amount never flinched."
+          },
+          {
+            "id": "b",
+            "label": "3/4",
+            "feedback": "Adding 1 to top and bottom isn't a trade — no cutting does that. It quietly changes the amount (3/4 is more than 2/3)."
+          },
+          {
+            "id": "c",
+            "label": "2/6",
+            "feedback": "The total was traded (3→6) but your taken pieces weren't (still 2) — you'd lose half your chocolate. Both counts must grow together."
+          },
+          {
+            "id": "d",
+            "label": "4/3",
+            "feedback": "4/3 is MORE than a whole bar — no fair trade turns two-thirds into that. Trades rename amounts, never grow them."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "equiv-models",
+        "form": "fairTrade"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The eighths trade.",
+      "conceptTag": "equiv-models",
+      "hints": [
+        "Trade fourths for eighths: cut each fourth in half.",
+        "Every taken fourth becomes 2 eighths.",
+        "You hold 3 fourths — trade them one by one."
+      ],
+      "explanationVariants": [
+        "Each of your 3 fourths splits into 2 eighths: 3 × 2 = 6 eighths — and 6/8 stands on 3/4's exact spot.",
+        "The whole bar becomes 8 pieces; your share keeps its edges and now counts 6 of them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "You hold 3/4 of a bar and trade it into EIGHTHS. How many eighths do you hold?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "eighths",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 eighths is the whole bar — you hold three-quarters of it. Each of your 3 fourths trades for 2 eighths."
+          },
+          {
+            "value": 7,
+            "feedback": "7 added the 3 and the 4 — but adding tops to bottoms isn't a trade. Cut each of your 3 fourths in half: 3 × 2."
+          }
+        ],
+        "fallbackFeedback": "One fourth = two eighths. Trade your three fourths piece by piece."
+      },
+      "variant": {
+        "gen": "equiv-models",
+        "form": "tradeEighths"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You've seen the machinery.",
+      "takeaways": [
+        "Cutting finer renames an amount — it never resizes it.",
+        "Fair trade = every piece cut the same way, so both counts grow together.",
+        "Test any trade on the bar or the line, never by digit patterns."
+      ],
+      "teaser": "one more disguise to unmask: whole numbers hiding inside fractions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "equiv-models",
+      "concept": {
+        "id": "rem-em-c",
+        "kind": "concept",
+        "body": "Quick rewind. Think money: **one half-dollar trades for 2 quarters** — nobody gets richer or poorer. Fair fraction trades work the same: swap a piece for the minis that exactly rebuild it, and the amount can't change."
+      },
+      "check": {
+        "id": "rem-em-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "equiv-models",
+        "explanationVariants": [
+          "One half-piece splits into exactly two fourth-pieces — a clean trade, same amount.",
+          "Like the half-dollar for two quarters: 1/2 = 2/4."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "One HALF of a bar trades fairly for how many FOURTH-pieces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "2",
+              "correct": true,
+              "feedback": "Cut the half in half: two fourths, same chocolate."
+            },
+            {
+              "id": "b",
+              "label": "4",
+              "feedback": "Four fourths would be the WHOLE bar — that trade steals the other half. Your half rebuilds from 2 fourths."
+            },
+            {
+              "id": "c",
+              "label": "1",
+              "feedback": "One fourth is only half of your half — you'd lose chocolate. It takes 2 fourths to rebuild a half."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

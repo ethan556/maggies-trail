@@ -1,0 +1,379 @@
+{
+ "id": "geo-01-02",
+ "slug": "the-quadrilateral-family",
+ "title": "The Quadrilateral Family",
+ "courseId": "shapes-space",
+ "chapterId": "ch1-shape-families",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "**Quadrilateral** is the umbrella club for every closed shape with four straight sides. Inside it live smaller clubs with stricter rules: the rectangle, the square, the rhombus, the trapezoid. One big family, many branches — each branch adds a rule.",
+   "figure": "geo3-quad-family"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build a square by satisfying both the rectangle and rhombus rules.",
+   "conceptTag": "quadrilaterals",
+   "widget": {
+    "type": "shapeFamilyBuilder",
+    "prompt": "Build a square from attributes: four sides, four right angles, four equal sides, and two parallel pairs.",
+    "targetName": "square",
+    "targetSides": 4,
+    "targetRightAngles": 4,
+    "targetEqualSides": 4,
+    "targetParallelPairs": 2,
+    "startSides": 3,
+    "successFeedback": "A square satisfies both rule sets: it is a rectangle and a rhombus.",
+    "sidesFeedback": "Start inside the quadrilateral family with four sides.",
+    "attributesFeedback": "A square needs both four right angles and four equal sides, plus two parallel pairs."
+   },
+   "predict": {
+    "prompt": "A square obeys the rectangle's rule AND adds more of its own. Does that make it a rectangle too?",
+    "options": [
+     {
+      "id": "yes",
+      "label": "Yes — meeting the rule means membership"
+     },
+     {
+      "id": "no",
+      "label": "No — it's a square instead"
+     },
+     {
+      "id": "neither",
+      "label": "It stops being either"
+     }
+    ],
+    "outcomeId": "yes",
+    "reveal": "Shape clubs admit anyone who satisfies the rule — extra qualities don't disqualify. A square is a rectangle with a bonus, not a rival."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": true,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Construct a square as the intersection of shape-family rules.",
+    "invariants": [
+     "family-hierarchy",
+     "attribute-definition"
+    ],
+    "misconceptions": [
+     "exclusive-category",
+     "prototype-only"
+    ],
+    "representations": [
+     "diagram",
+     "table",
+     "symbolic",
+     "language"
+    ],
+    "fadeLevel": 1,
+    "transferFamily": "shape-families",
+    "delayed": true,
+    "translationFrom": "table",
+    "translationTo": "diagram",
+    "counterfactualPrompt": "Change one non-defining attribute while preserving family membership. Which changes are legal?",
+    "explanation": {
+     "prompt": "Why can two shapes look different but belong to the same family?",
+     "options": [
+      {
+       "id": "attributes",
+       "label": "They satisfy the same defining rules.",
+       "correct": true,
+       "feedback": "Yes — orientation and size are irrelevant to membership."
+      },
+      {
+       "id": "picture",
+       "label": "They must match one prototype picture.",
+       "correct": false,
+       "feedback": "A family includes every shape satisfying its rules."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Name that quadrilateral.",
+   "conceptTag": "quadrilaterals",
+   "explanationVariants": [
+    "Four square corners but sides of different lengths is exactly the rectangle's rule — and not a square, since the sides aren't all equal.",
+    "Square corners → rectangle branch; unequal sides means it stops short of the square club."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A four-sided shape has 4 square corners, but its length and width are different. What is it?",
+    "options": [
+     {
+      "id": "a",
+      "label": "A rectangle",
+      "correct": true,
+      "feedback": "Four square corners is the rectangle rule — and unequal sides mean it's not the stricter square."
+     },
+     {
+      "id": "b",
+      "label": "A square",
+      "feedback": "A square also needs all four sides EQUAL. Different length and width keeps it in the rectangle club, not the square one."
+     },
+     {
+      "id": "c",
+      "label": "A rhombus",
+      "feedback": "A rhombus needs four EQUAL sides — this shape has different length and width. Its square corners make it a rectangle."
+     },
+     {
+      "id": "d",
+      "label": "Just a quadrilateral, nothing more",
+      "feedback": "It's a quadrilateral AND more — the four square corners earn it the rectangle name."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "quadrilaterals"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The **trapezoid** joins the family with a gentler rule: at least one pair of parallel sides (two sides heading the same direction, like railroad tracks that never meet). It usually doesn't have square corners or equal sides — a looser branch, but still four sides, still a quadrilateral.",
+   "figure": "geo3-trapezoid"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Parallel tracks.",
+   "conceptTag": "quadrilaterals",
+   "explanationVariants": [
+    "One pair of parallel sides with no square corners and unequal sides fits the trapezoid, not the stricter branches.",
+    "Rectangles and rhombuses demand more; a single parallel pair is the trapezoid's calling card."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A four-sided shape has exactly one pair of parallel sides, no square corners, and no equal sides. What is it?",
+    "options": [
+     {
+      "id": "a",
+      "label": "A trapezoid",
+      "correct": true,
+      "feedback": "One parallel pair, and none of the stricter rules — that's the trapezoid branch."
+     },
+     {
+      "id": "b",
+      "label": "A rectangle",
+      "feedback": "A rectangle needs four SQUARE corners — this shape has none. One parallel pair points to the trapezoid."
+     },
+     {
+      "id": "c",
+      "label": "A rhombus",
+      "feedback": "A rhombus needs four EQUAL sides — this shape has none. Its single parallel pair makes it a trapezoid."
+     },
+     {
+      "id": "d",
+      "label": "Not a quadrilateral at all",
+      "feedback": "Four straight sides always means quadrilateral. This one's specific branch is the trapezoid."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "quadrilaterals",
+    "form": "trapezoidByParallel"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Sort the family reunion.",
+   "conceptTag": "quadrilaterals",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each four-sided shape into its branch by the rules it follows.",
+    "buckets": [
+     {
+      "id": "rect",
+      "label": "Rectangle (square corners)",
+      "icon": "▭"
+     },
+     {
+      "id": "rhom",
+      "label": "Rhombus (equal sides)",
+      "icon": "◆"
+     },
+     {
+      "id": "trap",
+      "label": "Trapezoid (one parallel pair)",
+      "icon": "⏢"
+     }
+    ],
+    "items": [
+     {
+      "id": "s1",
+      "label": "4 square corners, sides 6 and 3",
+      "bucketId": "rect",
+      "feedback": "Square corners, unequal sides — a rectangle."
+     },
+     {
+      "id": "s2",
+      "label": "4 equal sides, corners tilted (not square)",
+      "bucketId": "rhom",
+      "feedback": "Equal sides but no square corners — a rhombus (a 'pushed-over square')."
+     },
+     {
+      "id": "s3",
+      "label": "One pair of parallel sides, nothing else equal",
+      "bucketId": "trap",
+      "feedback": "A single parallel pair — the trapezoid branch."
+     },
+     {
+      "id": "s4",
+      "label": "4 square corners, sides 5 and 2",
+      "bucketId": "rect",
+      "feedback": "Square corners with unequal sides — another rectangle."
+     }
+    ],
+    "missFeedback": "Look for the branch rule: square corners → rectangle, equal sides → rhombus, one parallel pair → trapezoid.",
+    "successFeedback": "Two rectangles, one rhombus, one trapezoid — sorted by the rule each shape follows."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The umbrella still holds.",
+   "conceptTag": "quadrilaterals",
+   "explanationVariants": [
+    "Rectangle, rhombus, trapezoid, square — all have four straight sides, so all are quadrilaterals under the one umbrella.",
+    "The branch name adds rules, but every branch still meets the four-sided umbrella rule."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which of these is a quadrilateral: a rectangle, a rhombus, a trapezoid, or a square?",
+    "options": [
+     {
+      "id": "a",
+      "label": "All of them — each has four straight sides",
+      "correct": true,
+      "feedback": "Every branch keeps the umbrella's rule of four sides, so all four are quadrilaterals."
+     },
+     {
+      "id": "b",
+      "label": "Only the rectangle and square",
+      "feedback": "The rhombus and trapezoid have four sides too — so they're also under the quadrilateral umbrella."
+     },
+     {
+      "id": "c",
+      "label": "Only the trapezoid",
+      "feedback": "The trapezoid qualifies, but so do the others — all four have four straight sides."
+     },
+     {
+      "id": "d",
+      "label": "None — those are their own shapes",
+      "feedback": "Being a rectangle doesn't cancel being a quadrilateral — the branch sits INSIDE the umbrella family."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "quadrilaterals",
+    "form": "allQuadrilateralSet"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The mystery quadrilateral.",
+   "conceptTag": "quadrilaterals",
+   "hints": [
+    "Check the strictest rules first: are all four corners square? Are all four sides equal?",
+    "Four equal sides but corners that aren't square — which branch guards equal sides?",
+    "That's the rhombus rule."
+   ],
+   "explanationVariants": [
+    "Four equal sides is the rhombus rule; because the corners aren't square, it isn't the stricter square. So: a rhombus.",
+    "Equal sides → rhombus branch; missing the square-corner rule keeps it out of the square club."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A four-sided shape has 4 equal sides but its corners are NOT square (they're tilted). Which branch is it?",
+    "options": [
+     {
+      "id": "a",
+      "label": "A rhombus",
+      "correct": true,
+      "feedback": "Four equal sides is the rhombus rule; tilted corners keep it out of the square club."
+     },
+     {
+      "id": "b",
+      "label": "A square",
+      "feedback": "A square also demands SQUARE corners — these are tilted. Equal sides alone make it a rhombus."
+     },
+     {
+      "id": "c",
+      "label": "A rectangle",
+      "feedback": "A rectangle demands square corners, which this shape lacks. Its equal sides point to the rhombus."
+     },
+     {
+      "id": "d",
+      "label": "A trapezoid",
+      "feedback": "A trapezoid's rule is one parallel pair, not four equal sides. Four equal sides is the rhombus."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "quadrilaterals",
+    "form": "rhombusBySides"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The four-sided family, mapped.",
+   "takeaways": [
+    "Quadrilateral is the umbrella: any closed 4-sided shape.",
+    "Rectangle = square corners; rhombus = equal sides; square = both; trapezoid = one parallel pair.",
+    "Branch names add rules, but every branch is still a quadrilateral."
+   ],
+   "teaser": "next: a shock — the square secretly belongs to the rectangle club."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "quadrilaterals",
+   "concept": {
+    "id": "rem-qu-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Quadrilateral just means four sides** — it's the whole family. The special names (rectangle, rhombus, square, trapezoid) are branches, each with one extra rule. Count four straight sides first; then look for the extra rule to name the branch."
+   },
+   "check": {
+    "id": "rem-qu-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "quadrilaterals",
+    "explanationVariants": [
+     "Four square corners is the rectangle's rule.",
+     "Square corners with sides that can differ → rectangle branch."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A 4-sided shape with 4 square corners (length ≠ width) is a…",
+     "options": [
+      {
+       "id": "a",
+       "label": "Rectangle",
+       "correct": true,
+       "feedback": "Square corners → rectangle."
+      },
+      {
+       "id": "b",
+       "label": "Triangle",
+       "feedback": "A triangle has 3 sides — this has 4. Square corners make it a rectangle."
+      },
+      {
+       "id": "c",
+       "label": "Rhombus",
+       "feedback": "A rhombus needs equal sides; this has square corners instead — a rectangle."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

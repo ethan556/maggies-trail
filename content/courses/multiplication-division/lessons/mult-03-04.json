@@ -1,0 +1,413 @@
+{
+  "id": "mult-03-04",
+  "slug": "nines-pattern",
+  "title": "The Nines Pattern",
+  "courseId": "multiplication-division",
+  "chapterId": "ch3-fact-fluency",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The nines hide the prettiest pattern in the table. Look: 9, 18, 27, 36, 45… Two clues in every answer — **the digits add up to 9**, and **the tens digit is one less** than the number you multiplied. For 9 × 7: tens digit 6, and 6 + 3 = 9 → 63.",
+      "figure": "mult3-nines"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Use both clues to lock each fact to its answer.",
+      "conceptTag": "times-9",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each nines fact to its answer. Clue: tens digit is one less, digits add to 9.",
+        "left": [
+          {
+            "id": "l1",
+            "label": "9 × 3"
+          },
+          {
+            "id": "l2",
+            "label": "9 × 6"
+          },
+          {
+            "id": "l3",
+            "label": "9 × 8"
+          }
+        ],
+        "right": [
+          {
+            "id": "r1",
+            "label": "54"
+          },
+          {
+            "id": "r2",
+            "label": "72"
+          },
+          {
+            "id": "r3",
+            "label": "27"
+          }
+        ],
+        "pairs": {
+          "l1": "r3",
+          "l2": "r1",
+          "l3": "r2"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r2",
+            "feedback": "72's tens digit is 7 — one less than 8, so 72 belongs to 9 × 8. For 9 × 6 the tens digit must be 5: fifty-something with digits adding to 9."
+          }
+        ],
+        "missFeedback": "Check the tens digit first — it's one less than the number multiplying the 9. Then make the digits add to 9.",
+        "successFeedback": "27, 54, 72 — every one passes both clues: tens digit one less, digits summing to 9."
+      },
+      "predict": {
+        "prompt": "Before matching: the digits of every ×9 answer on the board will add up to…",
+        "options": [
+          {
+            "id": "nine",
+            "label": "9, every single time"
+          },
+          {
+            "id": "small",
+            "label": "9 only for the small facts"
+          },
+          {
+            "id": "none",
+            "label": "No fixed total"
+          }
+        ],
+        "outcomeId": "nine",
+        "reveal": "9 is one less than ten: 9 × n = 10n − n, so the tens digit is n − 1 and the ones digit fills the rest of the way to 9. The digits always total 9 — that sum is your built-in answer checker."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Run the two clues yourself.",
+      "conceptTag": "times-9",
+      "explanationVariants": [
+        "Tens digit: one less than 4 is 3. Digits add to 9: 3 + 6. So 9 × 4 = 36.",
+        "Ten-minus-one thinking: 10 × 4 = 40, give back one 4 → 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 × 4 = ?",
+        "answer": 36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 adds 9 + 4. Nine groups of 4 stack far higher — use the pattern: tens digit one less than 4."
+          },
+          {
+            "value": 45,
+            "feedback": "45 is 9 × 5 — one fact too far. The tens digit should be one less than 4, so thirty-something."
+          },
+          {
+            "value": 34,
+            "feedback": "34 has the right tens digit — but its digits add to 7. Every nines answer's digits add to exactly 9: 3 + ? = 9."
+          }
+        ],
+        "fallbackFeedback": "Two clues: tens digit = 4 − 1 = 3, and the digits must add to 9."
+      },
+      "variant": {
+        "gen": "times-nine"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Why** the pattern works: 9 is one less than 10. So 9 × 7 is 10 × 7 with one 7 given back — 70 − 7 = 63. Take the easy ten-fact, then hand back **one whole group**. That's where the \"one less\" tens digit comes from.",
+      "figure": "mult3-nines"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ten-fact first, then give one group back.",
+      "conceptTag": "times-9",
+      "explanationVariants": [
+        "10 × 6 = 60, give back one 6: 60 − 6 = 54.",
+        "Pattern check: tens digit 5 (one less than 6), and 5 + 4 = 9. Both clues say 54."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "9 × 6 = ?",
+        "answer": 54,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 adds 9 + 6. Go through the ten-fact instead: 10 × 6, then give one group back."
+          },
+          {
+            "value": 60,
+            "feedback": "60 is the ten-fact 10 × 6 — you stopped before giving back the extra group of 6."
+          },
+          {
+            "value": 51,
+            "feedback": "51 gave back a 9 instead of a 6. The extra group you hand back is a group of SIX: 60 − 6."
+          }
+        ],
+        "fallbackFeedback": "10 × 6 = 60. Nine 6s is one 6 fewer than that."
+      },
+      "variant": {
+        "gen": "times-nine"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Nines answers pass the **digit-sum test** — hunt them down.",
+      "conceptTag": "times-9",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every number that could be a ×9 answer — its digits must add up to 9.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 5,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "h18",
+            "x": 10,
+            "y": 50,
+            "label": "Number 18",
+            "icon": "18",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h35",
+            "x": 30,
+            "y": 50,
+            "label": "Number 35",
+            "icon": "35",
+            "count": 1,
+            "feedback": "So close — 3 + 5 = 8, one short. 35 belongs to the fives, not the nines."
+          },
+          {
+            "id": "h54",
+            "x": 50,
+            "y": 50,
+            "label": "Number 54",
+            "icon": "54",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "h46",
+            "x": 70,
+            "y": 50,
+            "label": "Number 46",
+            "icon": "46",
+            "count": 1,
+            "feedback": "4 + 6 = 10 — one over. No nines fact lands on 46."
+          },
+          {
+            "id": "h72",
+            "x": 90,
+            "y": 50,
+            "label": "Number 72",
+            "icon": "72",
+            "count": 1,
+            "correct": true
+          }
+        ],
+        "missFeedback": "Add each number's digits: exactly 9 means it's on the nines list. 1+8, 5+4, and 7+2 all pass.",
+        "successFeedback": "18, 54, 72 — digits summing to 9, every time. That test spots a nines answer instantly."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents times 9.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for times 9 must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines times 9."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:times-9",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which claims about the nines actually hold?",
+      "conceptTag": "times-9",
+      "explanationVariants": [
+        "List them — 9, 18, 27, 36, 45, 54, 63, 72, 81, 90 — every one has digits summing to 9.",
+        "Each answer is a ten-fact minus one group, which nudges the tens up by one and the ones down — keeping the digit sum at 9."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is TRUE about every ×9 answer (from 9 × 1 up to 9 × 10)?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Its digits add up to 9",
+            "correct": true,
+            "feedback": "Check any of them — 27, 63, 81 — the digits always sum to 9. That's the nines badge."
+          },
+          {
+            "id": "b",
+            "label": "It always ends in 9",
+            "feedback": "Only 9 itself ends in 9. The ONES digit changes every step — it's the digit SUM that stays at 9."
+          },
+          {
+            "id": "c",
+            "label": "It's always an odd number",
+            "feedback": "18, 36, 54, 72 are all even. Nines answers alternate odd and even."
+          },
+          {
+            "id": "d",
+            "label": "It's exactly 1 less than the matching ×10 answer",
+            "feedback": "9 × 7 = 63 is SEVEN less than 70, not one less — you give back one whole GROUP, and the group has 7 in it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "times-nine",
+        "form": "patternClaim"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller theater, before tonight's full house.",
+      "conceptTag": "times-9",
+      "explanationVariants": [
+        "9 rows of 3 seats is 9×3=27 total seats. Take away the 2 empty ones: 27−2=25.",
+        "Multiply for the total seats first (9×3=27), then subtract the empty ones (27−2=25)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A theater has 9 rows with 3 seats in each row. Tonight 2 seats are empty. How many people are watching?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27 is every seat in the theater (9×3) — 2 of them are empty, so subtract those: 27−2=25."
+          },
+          {
+            "value": 21,
+            "feedback": "21 comes from subtracting before multiplying (9×(3−2)=9) times something else — find the FULL seat total first (9×3=27), THEN subtract the empty seats: 27−2=25."
+          }
+        ],
+        "fallbackFeedback": "Multiply for the total seats first (9×3=27), then subtract the empty ones (27−2=25)."
+      },
+      "variant": {
+        "gen": "times-nine",
+        "form": "theaterSeats"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Fill the theater, then check who's missing.",
+      "conceptTag": "times-9",
+      "hints": [
+        "First find the total seats — 9 rows of 8 is a nines fact.",
+        "Ten-minus-one: 10 × 8 = 80, give back one group of 8.",
+        "72 seats in all, and 5 of them sit empty tonight."
+      ],
+      "explanationVariants": [
+        "Seats: 9 × 8 = 80 − 8 = 72. People: 72 − 5 = 67.",
+        "Pattern-check 72 (7 + 2 = 9 ✓), then subtract the 5 empty seats: 67 watching."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A theater has 9 rows with 8 seats in each row. Tonight 5 seats are empty. How many people are watching?",
+        "answer": 67,
+        "tolerance": 0,
+        "unit": "people",
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "72 is every seat filled — the nines fact worked! But 5 seats are empty tonight. Take those people out."
+          },
+          {
+            "value": 75,
+            "feedback": "75 comes from 80 − 5: the ten-fact minus the empties — but the give-back group of 8 got skipped. Do 80 − 8 first, THEN subtract the 5."
+          },
+          {
+            "value": 77,
+            "feedback": "77 adds the 5 to 72 — but empty seats mean FEWER people, not more. Subtract."
+          }
+        ],
+        "fallbackFeedback": "Two steps: seats = 9 × 8 (use ten-minus-one), then remove the 5 empty ones."
+      },
+      "variant": {
+        "gen": "times-nine",
+        "form": "theaterSeats"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The nines can't hide from you now.",
+      "takeaways": [
+        "Nines answers: digits add to 9, tens digit one less than the multiplier.",
+        "The reason: 9 × n = 10 × n − n — a ten-fact giving one group back.",
+        "Patterns are checkers — use them to catch your own slips."
+      ],
+      "teaser": "the last stubborn facts — 6s, 7s, 8s — crack open with one split."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "times-9",
+      "concept": {
+        "id": "rem-t9-c",
+        "kind": "concept",
+        "body": "Quick rewind. To find any nines fact, **go through ten**: 9 × 3 is 10 × 3 = 30, minus one group of 3 → 27. Check yourself with the digit sum: 2 + 7 = 9. Ten-fact, give one group back, digit-check."
+      },
+      "check": {
+        "id": "rem-t9-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "times-9",
+        "explanationVariants": [
+          "10 × 5 = 50, give back one 5: 45. And 4 + 5 = 9 ✓.",
+          "Tens digit one less than 5 is 4; digits add to 9: 45."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "9 × 5 = ?",
+          "options": [
+            {
+              "id": "a",
+              "label": "45",
+              "correct": true,
+              "feedback": "50 minus one group of 5 — and 4 + 5 = 9. Both clues agree."
+            },
+            {
+              "id": "b",
+              "label": "50",
+              "feedback": "50 is the ten-fact 10 × 5. Nine groups is one group FEWER — give a 5 back."
+            },
+            {
+              "id": "c",
+              "label": "40",
+              "feedback": "40 gave back a whole 10 instead of a 5. The group you return has 5 in it: 50 − 5."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

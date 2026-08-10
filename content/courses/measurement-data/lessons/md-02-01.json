@@ -1,0 +1,342 @@
+{
+  "id": "md-02-01",
+  "slug": "how-heavy-grams-and-kilograms",
+  "title": "How Heavy? Grams and Kilograms",
+  "courseId": "measurement-data",
+  "chapterId": "ch2-grams-liters",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Heaviness is measured in **grams (g)** for light things and **kilograms (kg)** for heavy ones. Anchors to keep in your pocket: a paperclip is about 1 gram; a bag of flour is about 1 kilogram. Pick the unit that keeps the number friendly.",
+      "figure": "md3-mass-scale"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sort by the right unit.",
+      "conceptTag": "mass",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Which unit keeps each object's number friendly — grams or kilograms?",
+        "buckets": [
+          {
+            "id": "g",
+            "label": "Grams (light)",
+            "icon": "🪶"
+          },
+          {
+            "id": "kg",
+            "label": "Kilograms (heavy)",
+            "icon": "🏋️"
+          }
+        ],
+        "items": [
+          {
+            "id": "o1",
+            "label": "A single grape",
+            "bucketId": "g",
+            "feedback": "A grape is a few grams — in kilograms it'd be a tiny fraction, an unfriendly number."
+          },
+          {
+            "id": "o2",
+            "label": "A watermelon",
+            "bucketId": "kg",
+            "feedback": "A watermelon is several kilograms — in grams that's thousands, clumsy to say."
+          },
+          {
+            "id": "o3",
+            "label": "A feather",
+            "bucketId": "g",
+            "feedback": "Featherlight — well under a gram even. Grams are the small-thing unit."
+          },
+          {
+            "id": "o4",
+            "label": "A big dog",
+            "bucketId": "kg",
+            "feedback": "A big dog is tens of kilograms — the heavy-thing unit."
+          }
+        ],
+        "missFeedback": "Light enough to hold in your fingers → grams; heavy enough to lift with effort → kilograms.",
+        "successFeedback": "Grape and feather ride in grams; watermelon and dog need kilograms — the unit keeps the number comfy."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Estimate an apple.",
+      "conceptTag": "mass",
+      "explanationVariants": [
+        "An apple is heavier than a couple of paperclips but far lighter than a flour bag — about 200 grams.",
+        "Anchor it: paperclip ≈ 1 g, apple ≈ 200 g, flour bag ≈ 1,000 g. The apple sits low on that ladder."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "About how much does one apple weigh?",
+        "options": [
+          {
+            "id": "a",
+            "label": "About 200 grams",
+            "correct": true,
+            "feedback": "A solid handful — a couple hundred paperclip-weights. Good gram sense."
+          },
+          {
+            "id": "b",
+            "label": "About 200 kilograms",
+            "feedback": "That's the weight of three grown-ups! Kilograms are the BIG unit — one apple never needs them."
+          },
+          {
+            "id": "c",
+            "label": "About 2 grams",
+            "feedback": "Two grams is a couple of paperclips — an apple clearly outweighs that."
+          },
+          {
+            "id": "d",
+            "label": "About 20 kilograms",
+            "feedback": "20 kg is a heavy suitcase — a whole crate of apples, not one. A single apple is a couple hundred grams."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mass"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The two units are linked by a code word: **kilo means one thousand.** So **1 kilogram = 1,000 grams** — the kilo is a thousand-badge stamped on the gram. Going kg → g, stamp on three zeros; going g → kg, peel them off.",
+      "figure": "md3-kilo"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Stamp the badge.",
+      "conceptTag": "mass",
+      "explanationVariants": [
+        "Each kilogram carries 1,000 grams, so 3 kg is 3 × 1,000 = 3,000 g.",
+        "Three thousand-badges: 3 kg → 3,000 g, just three zeros on the 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many grams are in 3 kilograms?",
+        "answer": 3000,
+        "tolerance": 0,
+        "unit": "g",
+        "commonErrors": [
+          {
+            "value": 300,
+            "feedback": "300 used a hundred-badge — but kilo is the THOUSAND code. 3 kg = 3 × 1,000 = 3,000 g."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the kilogram count itself — the question wants grams, and each kilo unpacks into 1,000 of them."
+          }
+        ],
+        "fallbackFeedback": "Kilo = 1,000. Stamp three zeros onto the 3."
+      },
+      "variant": {
+        "gen": "mass",
+        "form": "kgToG"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Estimate the backpack — order of magnitude.",
+      "conceptTag": "mass",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "A full school backpack — about how many GRAMS? Slide to your best estimate.",
+        "min": 10,
+        "max": 100000,
+        "start": 30,
+        "target": 4000,
+        "acceptFactor": 2,
+        "unitLabel": "g",
+        "ticks": [
+          10,
+          100,
+          1000,
+          10000,
+          100000
+        ],
+        "lowFeedback": "Too light — that's pencil-case territory. A loaded backpack is heavier; slide up toward the kilograms.",
+        "highFeedback": "Too heavy — that's a grown adult! A backpack is a few kilograms, not tens of them.",
+        "successFeedback": "A few thousand grams — about 4 kg. A loaded pack sits in the low kilograms, which is thousands of grams."
+      },
+      "predict": {
+        "prompt": "A full school backpack — is its mass on the 100-gram side of the line or the 10,000-gram side?",
+        "options": [
+          {
+            "id": "big",
+            "label": "Near 10,000 g"
+          },
+          {
+            "id": "small",
+            "label": "Near 100 g"
+          },
+          {
+            "id": "tiny",
+            "label": "Under 100 g"
+          }
+        ],
+        "outcomeId": "big",
+        "reveal": "A loaded backpack weighs a few kilograms — thousands of grams — landing far up toward the 10,000 mark, not near a small apple's 100."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents mass.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mass must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mass."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:mass",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compare across units.",
+      "conceptTag": "mass",
+      "explanationVariants": [
+        "Convert to the same unit first: 2 kg = 2,000 g, which easily beats 500 g.",
+        "Don't race a kg number against a g number raw — 2 kg is 2,000 g, four times the 500 g."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is heavier: 2 kilograms or 500 grams?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2 kilograms",
+            "correct": true,
+            "feedback": "2 kg = 2,000 g — four times the 500 g. Convert to one unit and it's clear."
+          },
+          {
+            "id": "b",
+            "label": "500 grams",
+            "feedback": "500 looks bigger than 2 — but they're different units! 2 kg unpacks to 2,000 g, well over 500."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "Equal would need 500 g to be 2 kg — but 2 kg is 2,000 g. Always match units before comparing."
+          },
+          {
+            "id": "d",
+            "label": "Can't compare different units",
+            "feedback": "You can — just convert first. 2 kg → 2,000 g, then compare to 500 g: the kilograms win."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "mass",
+        "form": "whichHeavier"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The fruit-stand mix-up.",
+      "conceptTag": "mass",
+      "hints": [
+        "The units don't match yet — fix that first.",
+        "2,000 g is how many kilograms?",
+        "Then add the crate's kilograms to that."
+      ],
+      "explanationVariants": [
+        "Convert first: 2,000 g = 2 kg. Then 5 kg + 2 kg = 7 kg total.",
+        "Same amount, two costumes: the bananas are 2 kg, so the crate holds 5 + 2 = 7 kg."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A crate holds 5 kg of apples. A grocer adds 2,000 g of bananas. What is the total mass, in KILOGRAMS?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "kg",
+        "commonErrors": [
+          {
+            "value": 2005,
+            "feedback": "2005 glued a kg number to a g number — unit glue! Convert the 2,000 g to 2 kg first, then add: 5 + 2."
+          },
+          {
+            "value": 7000,
+            "feedback": "7,000 is the right amount in GRAMS (5,000 + 2,000). But the question asks kilograms: 7 kg."
+          }
+        ],
+        "fallbackFeedback": "Convert 2,000 g to kg, then add to the 5 kg."
+      },
+      "variant": {
+        "gen": "mass",
+        "form": "mixedTotal"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You've got a feel for mass.",
+      "takeaways": [
+        "Grams for light things, kilograms for heavy — keep the number friendly.",
+        "Kilo = 1,000: 1 kg = 1,000 g, the thousand-badge.",
+        "Match units before you compare or add."
+      ],
+      "teaser": "next: from how HEAVY to how MUCH — measuring liquid in liters."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "mass",
+      "concept": {
+        "id": "rem-ms-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Kilo is a thousand-badge** — it works the same on every unit. A kiloGRAM is 1,000 grams, a kiloMETER is 1,000 meters. To go from the big unit to the small one, stamp on three zeros."
+      },
+      "check": {
+        "id": "rem-ms-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "mass",
+        "explanationVariants": [
+          "One kilogram carries its thousand grams: 1 kg = 1,000 g.",
+          "The kilo-badge is worth three zeros — stamp them onto the 1."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "1 kilogram = ?",
+          "options": [
+            {
+              "id": "a",
+              "label": "1,000 grams",
+              "correct": true,
+              "feedback": "The thousand-badge, unpacked."
+            },
+            {
+              "id": "b",
+              "label": "100 grams",
+              "feedback": "100 is the CENTI code (a hundredth). Kilo is the thousand: 1,000 g."
+            },
+            {
+              "id": "c",
+              "label": "10 grams",
+              "feedback": "Ten grams is a couple of coins. A whole kilogram packs a thousand grams."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

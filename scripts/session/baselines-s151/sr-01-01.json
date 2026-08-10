@@ -1,0 +1,264 @@
+{
+  "id": "sr-01-01",
+  "slug": "two-ways-to-give-a-rule",
+  "title": "Two Ways to Give a Rule",
+  "courseId": "sequences-series",
+  "chapterId": "ch1-recursive-explicit",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A sequence is an ordered list: 4, 7, 10, 13, … There are two ways to write its rule. A **recursive rule** gives the start and how each term comes from the previous one: a₁ = 4, aₙ = aₙ₋₁ + 3. An **explicit rule** jumps from a position n straight to its term: aₙ = 4 + (n − 1)·3. Same sequence — two very different instructions.",
+      "figure": "recursive-vs-explicit"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Spot the recursive rule.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is the RECURSIVE rule for 4, 7, 10, 13, …?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a₁ = 4, aₙ = aₙ₋₁ + 3",
+            "correct": true,
+            "feedback": "Right — a start, plus a next-from-previous instruction. That pair is what makes a rule recursive."
+          },
+          {
+            "id": "o2",
+            "label": "aₙ = 4 + (n − 1)·3",
+            "correct": false,
+            "feedback": "That rule jumps straight from the position n to the term — the EXPLICIT form. Recursive rules lean on the previous term aₙ₋₁."
+          },
+          {
+            "id": "o3",
+            "label": "aₙ = 3n + 4",
+            "correct": false,
+            "feedback": "Test it: n = 1 gives 7, but the sequence starts at 4. And it never mentions aₙ₋₁, so it isn't recursive either."
+          },
+          {
+            "id": "o4",
+            "label": "a₁ = 3, aₙ = aₙ₋₁ + 4",
+            "correct": false,
+            "feedback": "The start and the step traded places — this builds 3, 7, 11, 15. The sequence starts at 4 and hops by 3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Walk the chain.",
+      "conceptTag": "sr-recursive",
+      "explanationVariants": [
+        "a₃ takes two hops from a₁: 4 → 7 → 10.",
+        "Each term is the previous plus 3, and you apply that twice to reach the third term."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using a₁ = 4, aₙ = aₙ₋₁ + 3, what is a₃?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 is a₄ — you hopped three times. Reaching the THIRD term takes only two hops: 4 → 7 → 10."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is a₂ — one hop in. Take one more: 7 + 3 = 10."
+          }
+        ],
+        "fallbackFeedback": "Hop twice from the start: 4 → 7 → 10."
+      },
+      "variant": {
+        "gen": "sr-recursive"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Each form answers a different question well. “What comes next?” is the recursive rule's home turf — add 3 to what you have. “What is a₁₀₀?” is the explicit rule's: aₙ = 4 + (n − 1)·3 computes any term in one line, no chain of ninety-nine hops required.",
+      "figure": "sr-forms-questions"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Take the leap.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Use the explicit rule aₙ = 4 + (n − 1)·3 to find a₆.",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 22,
+            "feedback": "22 comes from 4 + 6·3 — using n instead of n − 1. The first term takes ZERO hops, so a₆ needs five: 4 + 5·3 = 19."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is a₅ (four hops). The sixth term takes five hops of 3: 4 + 15 = 19."
+          }
+        ],
+        "fallbackFeedback": "Five hops of 3 from 4: 4 + 5·3 = 19."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What does recursion need?",
+      "conceptTag": "sr-recursive",
+      "explanationVariants": [
+        "A recursive rule computes aₙ from aₙ₋₁, so the previous term must already be in hand.",
+        "The rule's formula literally contains aₙ₋₁ — without that value there is nothing to plug in."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "To compute a term from a recursive rule, what must you already know?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "the term right before it",
+            "correct": true,
+            "feedback": "Exactly — the rule feeds on aₙ₋₁, so the chain must reach that term first."
+          },
+          {
+            "id": "o2",
+            "label": "only the position n",
+            "correct": false,
+            "feedback": "Position-only is the EXPLICIT rule's superpower. A recursive rule's formula contains aₙ₋₁, and n alone can't supply that value."
+          },
+          {
+            "id": "o3",
+            "label": "the final term of the sequence",
+            "correct": false,
+            "feedback": "Sequences build forward from the start — there's no final term to borrow, and the rule never asks for one."
+          },
+          {
+            "id": "o4",
+            "label": "every future term",
+            "correct": false,
+            "feedback": "Recursion looks BACKWARD one step, never ahead: aₙ needs aₙ₋₁, nothing more."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "sr-recursive",
+        "form": "needPrior"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Recursion isn't only for adding. A **multiply** rule works the same way: a₁ = 2, aₙ = 2·aₙ₋₁ builds 2, 4, 8, 16, … — each term doubles the one before. The chain idea is identical; only the hop changes from “add 3” to “double.”",
+      "figure": "sr-multiply-recursion"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "A doubling chain.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using a₁ = 2, aₙ = 2·aₙ₋₁, what is a₄?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is a₃ — two doublings in. One more doubling reaches a₄: 8 · 2 = 16."
+          },
+          {
+            "value": 32,
+            "feedback": "32 is a₅ — you doubled four times. The fourth term takes three doublings: 2 → 4 → 8 → 16."
+          }
+        ],
+        "fallbackFeedback": "Three doublings: 2 → 4 → 8 → 16."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A longer walk.",
+      "conceptTag": "sr-recursive",
+      "explanationVariants": [
+        "a₅ = 5 + 4·6 = 29 — four hops of 6 from the first term.",
+        "Walk it out: 5 → 11 → 17 → 23 → 29."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using a₁ = 5, aₙ = aₙ₋₁ + 6, what is a₅?",
+        "answer": 29,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "35 is a₆ — five hops. The FIFTH term is only four hops from the first: 5 + 4·6 = 29."
+          },
+          {
+            "value": 23,
+            "feedback": "23 is a₄ — one hop short. Add 6 once more: 23 + 6 = 29."
+          }
+        ],
+        "fallbackFeedback": "Four hops of +6 from 5: 5 → 11 → 17 → 23 → 29."
+      },
+      "hints": [
+        "Each new term is the one before it plus 6 — count your hops carefully.",
+        "From a₁ to a₅ takes exactly four hops of +6.",
+        "5 + 4·6 — finish the arithmetic."
+      ],
+      "variant": {
+        "gen": "sr-recursive"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One sequence, two rule styles.",
+      "takeaways": [
+        "Recursive: a start plus a next-from-previous instruction.",
+        "Explicit: position n straight to the term, no chain.",
+        "Both describe the SAME sequence — they just answer different questions fast."
+      ],
+      "teaser": "Next: putting recursive rules to work — and meeting their one weakness."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-recursive",
+      "concept": {
+        "id": "rem-sr0101-c",
+        "kind": "concept",
+        "body": "A recursive rule is a chain: each link hangs on the one before it. a₁ = 3, aₙ = aₙ₋₁ + 2 builds 3, 5, 7, 9 — every term is just the previous term plus 2."
+      },
+      "check": {
+        "id": "rem-sr0101-k",
+        "kind": "check",
+        "body": "Follow the chain.",
+        "conceptTag": "sr-recursive",
+        "explanationVariants": [
+          "a₃ is two hops from the start: 3 → 5 → 7.",
+          "Apply “add 2” twice to the first term."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Using a₁ = 3, aₙ = aₙ₋₁ + 2, what is a₃?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is a₄ — one hop too many. Two hops reach the third term: 3 → 5 → 7."
+            },
+            {
+              "value": 5,
+              "feedback": "5 is a₂ — one hop in. One more: 5 + 2 = 7."
+            }
+          ],
+          "fallbackFeedback": "Two hops of +2: 3 → 5 → 7."
+        }
+      }
+    }
+  ]
+}

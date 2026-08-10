@@ -1,0 +1,382 @@
+{
+  "id": "rf-04-02",
+  "slug": "holes-vs-asymptotes",
+  "title": "Holes vs Vertical Asymptotes",
+  "courseId": "rational-functions",
+  "chapterId": "ch4-graphs-asymptotes-and-holes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two denominator zeros, two different fates. For f(x) = (x − 1)/((x − 1)(x − 3)): the factor (x − 1) **cancels** — at x = 1 the graph has a **hole**, a single missing point. The factor (x − 3) **survives** — at x = 3 the graph has a true **vertical asymptote**.",
+      "figure": "hole-vs-asymptote"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A hole and an asymptote look nothing alike under magnification.",
+      "widget": {
+        "type": "graphZoom",
+        "behaviour": "removable",
+        "a": 2,
+        "leftValue": 4,
+        "rightValue": 4,
+        "fAtA": null,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "(x² − 4)/(x − 2) is undefined at x = 2 — but is it a hole or an asymptote? Magnify and decide whether the limit exists.",
+        "successFeedback": "A HOLE. The point never fills in, yet both sides march to 4 and stay there. That is the whole distinction: a hole comes from a factor that CANCELS (the limit survives), an asymptote from one that does not (the limit dies). Both make f undefined; only one keeps a limit.",
+        "moreZoomFeedback": "Magnify further before judging. The hole-versus-asymptote question is exactly a question about arbitrarily small neighbourhoods.",
+        "wrongVerdictFeedback": "Compare this with the asymptote you just saw: there the values exploded, here they settle. The missing point is a fact about f(2), not about the limit — which is 4."
+      },
+      "predict": {
+        "prompt": "You'll zoom in at x = 2. What will the two sides of the graph do?",
+        "options": [
+          {
+            "id": "agree",
+            "label": "Close in on the same height"
+          },
+          {
+            "id": "differ",
+            "label": "Settle on two different heights"
+          },
+          {
+            "id": "blow",
+            "label": "Climb off the screen"
+          }
+        ],
+        "outcomeId": "agree",
+        "reveal": "Both sides close in on 4 — even though the point itself is missing. A limit only asks where the sides are HEADING, so it exists here despite the hole."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Magnify a removable discontinuity and distinguish the function value from the two-sided limiting behavior.",
+        "invariants": [
+          "limit-depends-on-nearby-values",
+          "two-sided-agreement",
+          "cancelled-factor-creates-hole"
+        ],
+        "misconceptions": [
+          "undefined-point-means-no-limit",
+          "hole-is-vertical-asymptote"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "classifying-removable-jump-and-infinite-discontinuities",
+        "delayed": true,
+        "counterfactualPrompt": "Replace the cancelled denominator factor with one that remains after simplification. Under repeated zoom, what changes from a hole to an asymptote and why?",
+        "explanation": {
+          "prompt": "How can a two-sided limit exist when the function is not defined at the point?",
+          "options": [
+            {
+              "id": "nearby",
+              "label": "The limit depends on values arbitrarily near the point, and both sides can approach the same number even when the point is missing.",
+              "correct": true,
+              "feedback": "Exactly — f(a) and the limit at a answer different questions."
+            },
+            {
+              "id": "fill",
+              "label": "Zooming eventually fills the missing point, making the function defined there.",
+              "correct": false,
+              "feedback": "The hole never fills; only the nearby values settle toward a common height."
+            }
+          ]
+        }
+      },
+      "conceptTag": "rf-holes"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The hole has an exact **location**: cancel first, then substitute. f simplifies to 1/(x − 3), and at x = 1 that gives 1/(1 − 3) = **−½**. So the hole is the point (1, −½) — the graph of 1/(x − 3) with one point plucked out. Near a hole, values stay calm; near an asymptote, they explode.",
+      "figure": "rf-hole"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find a hole's height.",
+      "conceptTag": "rf-holes",
+      "explanationVariants": [
+        "g(x) = (x − 2)/((x − 2)(x + 4)) simplifies to 1/(x + 4); at x = 2: 1/6 — hole at (2, 1/6).",
+        "Cancel, then substitute the hole's x into the simplified form."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Where EXACTLY is the hole of g(x) = (x − 2)/((x − 2)(x + 4))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(2, 1/6)",
+            "correct": true,
+            "feedback": "Right — simplify to 1/(x + 4), then evaluate at the cancelled zero: 1/6."
+          },
+          {
+            "id": "o2",
+            "label": "(2, 0)",
+            "correct": false,
+            "feedback": "The hole's height comes from the SIMPLIFIED form 1/(x + 4) = 1/6 — not from the 0/0 of the original."
+          },
+          {
+            "id": "o3",
+            "label": "(−4, 1/6)",
+            "correct": false,
+            "feedback": "−4 is the SURVIVING zero — that's the asymptote; the hole sits at the cancelled x = 2."
+          },
+          {
+            "id": "o4",
+            "label": "(2, 1/2)",
+            "correct": false,
+            "feedback": "That divides 1 by the hole's x alone — substitute the FULL denominator: 1/(2 + 4) = 1/6."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-holes__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "0/0 is the hole's signature.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Substituting x = 2 into the ORIGINAL g gives 0/0. What does that signal?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a common factor — likely a hole, so simplify and re-evaluate",
+            "correct": true,
+            "feedback": "Right — 0/0 means top AND bottom share the zero; cancellation reveals the hole's height."
+          },
+          {
+            "id": "o2",
+            "label": "a vertical asymptote",
+            "correct": false,
+            "feedback": "An asymptote's signature is (nonzero)/0 — the top staying alive while the bottom dies."
+          },
+          {
+            "id": "o3",
+            "label": "the function equals 0 there",
+            "correct": false,
+            "feedback": "0/0 is UNDEFINED, not 0 — the point is missing, with a well-defined height nearby."
+          },
+          {
+            "id": "o4",
+            "label": "an arithmetic mistake",
+            "correct": false,
+            "feedback": "The computation is fine — 0/0 is real information: a shared factor to cancel."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The signatures.",
+      "conceptTag": "rf-holes",
+      "explanationVariants": [
+        "At x = 3: top 3 − 1 = 2 (alive), bottom 0 (dead) — 2/0 signals the asymptote.",
+        "Nonzero-over-zero explodes; zero-over-zero cancels."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Substituting x = 3 into f(x) = (x − 1)/((x − 1)(x − 3)) gives 2/0. What does that signal?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a vertical asymptote at x = 3",
+            "correct": true,
+            "feedback": "Right — a living numerator over a dead denominator means true blow-up."
+          },
+          {
+            "id": "o2",
+            "label": "a hole at x = 3",
+            "correct": false,
+            "feedback": "Holes announce themselves with 0/0 — here the top is 2, very much alive."
+          },
+          {
+            "id": "o3",
+            "label": "f(3) = 2",
+            "correct": false,
+            "feedback": "2/0 is not 2 — division by zero is undefined; the graph climbs a wall instead."
+          },
+          {
+            "id": "o4",
+            "label": "f(3) = 0",
+            "correct": false,
+            "feedback": "A zero OUTPUT needs a zero TOP — this is the opposite: exploding, not vanishing."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-holes__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Squared shared factor.",
+      "conceptTag": "rf-holes",
+      "explanationVariants": [
+        "(x − 5)/((x − 5)²): one copy cancels, one SURVIVES underneath — 1/(x − 5): asymptote at 5, no hole.",
+        "Cancellation must remove the factor ENTIRELY to leave a hole."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What happens at x = 5 for f(x) = (x − 5)/(x − 5)²?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a vertical asymptote — one (x − 5) survives below",
+            "correct": true,
+            "feedback": "Right — f simplifies to 1/(x − 5): the leftover copy still explodes."
+          },
+          {
+            "id": "o2",
+            "label": "a hole",
+            "correct": false,
+            "feedback": "A hole needs the factor GONE from the bottom — here (x − 5)² loses only one copy: 1/(x − 5) remains."
+          },
+          {
+            "id": "o3",
+            "label": "f(5) = 1",
+            "correct": false,
+            "feedback": "That cancels both copies against one — the bottom had TWO: 1/(x − 5) is undefined at 5."
+          },
+          {
+            "id": "o4",
+            "label": "nothing special",
+            "correct": false,
+            "feedback": "The denominator still dies at 5 after simplifying — a genuine wall."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-holes__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full anatomy.",
+      "conceptTag": "rf-holes",
+      "explanationVariants": [
+        "(x² − 4)/((x − 2)(x + 1)) = ((x−2)(x+2))/((x−2)(x+1)): hole at x = 2 with height (2+2)/(2+1) = 4/3; asymptote at x = −1.",
+        "Factor, cancel (x − 2), evaluate the survivor form at 2."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Analyze f(x) = (x² − 4)/((x − 2)(x + 1)).",
+        "options": [
+          {
+            "id": "o1",
+            "label": "hole at (2, 4/3); asymptote x = −1",
+            "correct": true,
+            "feedback": "Right — (x − 2) cancels; the simplified (x + 2)/(x + 1) gives 4/3 at the hole."
+          },
+          {
+            "id": "o2",
+            "label": "hole at (−2, 0); asymptote x = −1",
+            "correct": false,
+            "feedback": "−2 zeroes only the TOP — that's an x-intercept, not a hole; the shared factor is (x − 2)."
+          },
+          {
+            "id": "o3",
+            "label": "asymptotes at x = 2 and x = −1",
+            "correct": false,
+            "feedback": "x² − 4 shares (x − 2) with the bottom — cancellation demotes x = 2 to a hole."
+          },
+          {
+            "id": "o4",
+            "label": "hole at (2, 0); asymptote x = −1",
+            "correct": false,
+            "feedback": "The hole's height uses the SIMPLIFIED form: (x + 2)/(x + 1) at 2 is 4/3, not 0."
+          }
+        ]
+      },
+      "hints": [
+        "Factor the top: x² − 4 = (x − 2)(x + 2).",
+        "(x − 2) cancels → hole at x = 2; (x + 1) survives → asymptote at −1.",
+        "Hole height: (x + 2)/(x + 1) at x = 2 is 4/3."
+      ],
+      "variant": {
+        "gen": "a2-rationals",
+        "form": "rf-holes__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "0/0 marks a hole; nonzero/0 marks a wall.",
+      "takeaways": [
+        "Cancelled factor → hole; surviving factor → vertical asymptote.",
+        "A hole's height comes from the SIMPLIFIED form at that x.",
+        "Squared factors can survive their own cancellation — still a wall."
+      ],
+      "teaser": "Next: horizontal asymptotes — where the far ends settle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rf-holes",
+      "concept": {
+        "id": "rem-rf0402-c",
+        "kind": "concept",
+        "body": "The two signatures side by side: substitute and read. 0/0 → shared factor → hole. (nonzero)/0 → wall."
+      },
+      "check": {
+        "id": "rem-rf0402-k",
+        "kind": "check",
+        "body": "Classify one.",
+        "conceptTag": "rf-holes",
+        "explanationVariants": [
+          "5/0 pattern → vertical asymptote.",
+          "The top is alive (5), the bottom dead: explosion."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Substituting a value gives 5/0. Hole or asymptote?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "vertical asymptote",
+              "correct": true,
+              "feedback": "Right — a living top over a dead bottom always explodes."
+            },
+            {
+              "id": "o2",
+              "label": "hole",
+              "correct": false,
+              "feedback": "Holes need 0/0 — BOTH levels dying together; here the top survives."
+            },
+            {
+              "id": "o3",
+              "label": "neither — it equals 5",
+              "correct": false,
+              "feedback": "5/0 is undefined, not 5 — no output exists there."
+            },
+            {
+              "id": "o4",
+              "label": "it equals 0",
+              "correct": false,
+              "feedback": "Zero outputs come from a zero TOP — this top is 5."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

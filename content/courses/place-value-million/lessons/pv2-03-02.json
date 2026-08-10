@@ -1,0 +1,358 @@
+{
+  "id": "pv2-03-02",
+  "slug": "rounding-word-problems",
+  "title": "Rounding Word Problems",
+  "courseId": "place-value-million",
+  "chapterId": "ch3-rounding-any-place",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Rounding is perfect for quick real-world estimates — but WHEN you round matters. You can round each number first, then add (fast). Or you can add the exact numbers first, then round the total (more precise). These two paths don't always agree.",
+      "figure": "pv4-round-place"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Round-first, add second.",
+      "conceptTag": "rounding-estimation",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "roundPartsThenSum",
+        "answerMode": "numeric",
+        "prompt": "62,300 rounds to 60,000 (nearest ten-thousand). 24,800 rounds to 20,000. Adding those ROUNDED pieces, what do you get?",
+        "values": [
+          62300,
+          24800
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 87100,
+            "feedback": "87,100 is the EXACT sum before rounding. This step just adds the already-rounded pieces: 60,000 + 20,000 = 80,000."
+          },
+          {
+            "value": 20000,
+            "feedback": "20,000 is only one of the two rounded pieces. Add both: 60,000 + 20,000 = 80,000."
+          }
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Add the two already-rounded numbers: 60,000 + 20,000.",
+        "explorationFeedback": "Inspect at least 3 base-ten stages before checking.",
+        "fallbackFeedback": "Add the two already-rounded numbers: 60,000 + 20,000.",
+        "tolerance": 0,
+        "targetExponent": 4
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add first, round second.",
+      "conceptTag": "rounding-estimation",
+      "explanationVariants": [
+        "62,300 + 24,800 = 87,100 exactly; rounding THAT to the nearest ten-thousand (thousands digit 7, ≥5) gives 90,000.",
+        "The exact sum 87,100 rounds up to 90,000."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "round",
+        "answerMode": "numeric",
+        "prompt": "What is 62,300 + 24,800, rounded to the nearest ten-thousand, using the EXACT sum first?",
+        "values": [
+          62300,
+          24800
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 80000,
+            "feedback": "80,000 is what you get by rounding EACH number first, then adding — a different (less precise) path. Adding exactly first gives 87,100, which rounds to 90,000."
+          },
+          {
+            "value": 87100,
+            "feedback": "87,100 is the exact sum, not yet rounded. Rounding it to the nearest ten-thousand (its thousands digit is 7) gives 90,000."
+          }
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Add the exact numbers (62,300 + 24,800 = 87,100), then round that total.",
+        "explorationFeedback": "Inspect at least 3 base-ten stages before checking.",
+        "fallbackFeedback": "Add the exact numbers (62,300 + 24,800 = 87,100), then round that total.",
+        "tolerance": 0,
+        "targetExponent": 4
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvRoundingNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice: those two paths gave **different answers** — 80,000 versus 90,000. Rounding each number first can drift away from the truly rounded total, especially when the pieces are each close to rolling over. **For an accurate rounded estimate, always add exact numbers first, then round once.**",
+      "figure": "pv4-round-place"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pick the accurate method.",
+      "conceptTag": "rounding-estimation",
+      "explanationVariants": [
+        "Adding the exact numbers first, then rounding the total once, gives the TRUE rounded sum.",
+        "Rounding each piece before adding can drift from the real rounded total."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "roundMethod",
+        "answerMode": "choice",
+        "prompt": "Which method gives the EXACT rounded value of a sum?",
+        "values": [
+          62300,
+          24800
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "Add the exact numbers first, then round the total",
+            "feedback": "Rounding once, after adding exactly, always matches the true rounded sum.",
+            "claim": "method:exact-then-round"
+          },
+          {
+            "id": "b",
+            "label": "Round each number first, then add the rounded pieces",
+            "feedback": "That's faster, but it can drift from the true rounded total — each piece's rounding compounds.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "Both methods always agree",
+            "feedback": "They can disagree, sometimes by a full rung — as seen with 62,300 + 24,800 (80,000 versus 90,000).",
+            "claim": "misconception:c"
+          },
+          {
+            "id": "d",
+            "label": "Neither method gives a useful estimate",
+            "feedback": "Both are useful — one's just faster, the other's more accurate. Adding exactly then rounding gives the true total.",
+            "claim": "misconception:d"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 2,
+        "successFeedback": "Rounding once, after adding exactly, always matches the true rounded sum.",
+        "explorationFeedback": "Inspect at least 2 base-ten stages before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0,
+        "targetExponent": 4
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvRoundingMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sam's rounding drift.",
+      "conceptTag": "rounding-estimation",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "round",
+        "answerMode": "numeric",
+        "prompt": "Sam rounds 38,600 to 40,000 and 45,900 to 50,000 (nearest ten-thousand each), then adds: 90,000. What is the EXACT sum of 38,600 + 45,900, rounded to the nearest ten-thousand?",
+        "values": [
+          38600,
+          45900
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 90000,
+            "feedback": "90,000 is Sam's round-first estimate. The exact sum is 84,500, and its thousands digit (4) rounds DOWN: 80,000."
+          },
+          {
+            "value": 84500,
+            "feedback": "84,500 is the exact sum, not yet rounded. Its thousands digit (4) is <5, so it rounds down to 80,000."
+          }
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Add exactly (38,600 + 45,900 = 84,500), then round that total.",
+        "explorationFeedback": "Inspect at least 3 base-ten stages before checking.",
+        "fallbackFeedback": "Add exactly (38,600 + 45,900 = 84,500), then round that total.",
+        "tolerance": 0,
+        "targetExponent": 4
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot Sam's mistake.",
+      "conceptTag": "rounding-estimation",
+      "explanationVariants": [
+        "Both 38,600 and 45,900 individually round UP, but their exact sum (84,500) actually rounds DOWN — Sam's round-first shortcut missed that.",
+        "Rounding each piece up before adding overestimated the true total."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "roundGapCause",
+        "answerMode": "choice",
+        "prompt": "Sam's round-first method gave 90,000, but the true rounded total is 80,000. What caused the gap?",
+        "values": [
+          38600,
+          45900
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "label": "Both numbers rounded UP individually, overestimating the exact sum's true rounded value",
+            "feedback": "Each piece rounded up on its own, but the real combined total (84,500) actually rounds down.",
+            "claim": "bias:both-up"
+          },
+          {
+            "id": "b",
+            "label": "Sam added the numbers wrong",
+            "feedback": "Sam's addition of the ROUNDED pieces (40,000 + 50,000) was correct arithmetic — the gap comes from rounding too early, not a wrong addition.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "There's no real gap — both are equally correct",
+            "feedback": "80,000 is the TRUE rounded total; 90,000 only approximates it. The two methods genuinely disagree here.",
+            "claim": "misconception:c"
+          },
+          {
+            "id": "d",
+            "label": "45,900 was rounded to the wrong place",
+            "feedback": "45,900 correctly rounds to 50,000 at the ten-thousands place — the issue is that rounding early, before adding, drifted from the exact rounded total.",
+            "claim": "misconception:d"
+          }
+        ],
+        "numericErrors": [],
+        "requiredExplorations": 3,
+        "successFeedback": "Each piece rounded up on its own, but the real combined total (84,500) actually rounds down.",
+        "explorationFeedback": "Inspect at least 3 base-ten stages before checking.",
+        "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+        "tolerance": 0,
+        "targetExponent": 4
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvRoundingMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The stadium attendance.",
+      "conceptTag": "rounding-estimation",
+      "hints": [
+        "Add the two EXACT crowd sizes first: 24,600 + 36,800.",
+        "That exact sum is 61,400.",
+        "Now round 61,400 to the nearest thousand — check its hundreds digit."
+      ],
+      "explanationVariants": [
+        "The exact sum is 61,400; its hundreds digit (4) is less than 5, so it rounds DOWN to 61,000 — even though each crowd alone would round UP.",
+        "Adding exactly first (61,400) and then rounding gives 61,000, the true rounded total."
+      ],
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "round",
+        "answerMode": "numeric",
+        "prompt": "Two games had attendances of 24,600 and 36,800. What is the ACTUAL total attendance, rounded to the nearest thousand?",
+        "values": [
+          24600,
+          36800
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 62000,
+            "feedback": "62,000 comes from rounding each crowd first (25,000 + 37,000). The exact combined total is 61,400, which rounds DOWN to 61,000."
+          },
+          {
+            "value": 61400,
+            "feedback": "61,400 is the exact sum, not yet rounded. Its hundreds digit (4) is <5, so it rounds down to 61,000."
+          }
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Add the two exact crowd sizes first, then round that total to the nearest thousand.",
+        "explorationFeedback": "Inspect at least 3 base-ten stages before checking.",
+        "fallbackFeedback": "Add the two exact crowd sizes first, then round that total to the nearest thousand.",
+        "tolerance": 0,
+        "targetExponent": 3,
+        "answerUnit": "people"
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvRoundingNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Round once, round right.",
+      "takeaways": [
+        "Rounding each number before adding is fast, but it can drift from the true rounded total.",
+        "For an accurate estimate, add the exact numbers first, then round once.",
+        "The two methods can disagree — sometimes by a full rung."
+      ],
+      "teaser": "next: an even faster (but rougher) estimating trick — front-end estimation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rounding-estimation",
+      "concept": {
+        "id": "rem-re-c",
+        "kind": "concept",
+        "body": "Quick rewind. **For an accurate rounded estimate, add the exact numbers first, then round the total once.** For 3,400 + 2,700: add exactly (6,100), then round to the nearest thousand (6,000) — not rounding each piece before adding."
+      },
+      "check": {
+        "id": "rem-re-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rounding-estimation",
+        "explanationVariants": [
+          "3,400 + 2,700 = 6,100 exactly; rounded to the nearest thousand, that's 6,000.",
+          "Add exactly first, then round the total: 6,000."
+        ],
+        "widget": {
+          "type": "placeValueTransformLab",
+          "task": "round",
+          "answerMode": "choice",
+          "prompt": "What is 3,400 + 2,700, rounded to the nearest thousand, using the exact sum first?",
+          "values": [
+            3400,
+            2700
+          ],
+          "choices": [
+            {
+              "id": "a",
+              "label": "6,000",
+              "feedback": "3,400 + 2,700 = 6,100, which rounds to 6,000.",
+              "value": 6000
+            },
+            {
+              "id": "b",
+              "label": "6,100",
+              "feedback": "6,100 is the exact sum, not yet rounded. Rounded to the nearest thousand, it's 6,000.",
+              "claim": "misconception:b"
+            },
+            {
+              "id": "c",
+              "label": "7,000",
+              "feedback": "7,000 rounds up, but the hundreds digit of 6,100 is 1 (<5) — it rounds DOWN to 6,000.",
+              "claim": "misconception:c"
+            }
+          ],
+          "numericErrors": [],
+          "requiredExplorations": 3,
+          "successFeedback": "3,400 + 2,700 = 6,100, which rounds to 6,000.",
+          "explorationFeedback": "Inspect at least 3 base-ten stages before checking.",
+          "fallbackFeedback": "Use the aligned place-value model and the inspected stages.",
+          "tolerance": 0,
+          "targetExponent": 3
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "id": "rns-03-02",
+  "slug": "locating-irrationals-on-the-number-line",
+  "title": "Locating Irrationals on the Number Line",
+  "courseId": "the-real-number-system",
+  "chapterId": "ch3-approximating-irrationals",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Once √n sits between two whole numbers, narrow further with decimals — testing 7.0², 7.1², 7.2²… — the same squeezing idea, one decimal place at a time.",
+      "figure": "number-line-between-integers"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The line has no gaps — irrationals live in them.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 3,
+        "max": 4,
+        "step": 0.01,
+        "tickStep": 0.1,
+        "target": 3.14,
+        "start": 3,
+        "prompt": "Place π to two decimal places.",
+        "successFeedback": "3.14 — but only to two places. π keeps going forever without repeating, and it still has ONE exact spot on this line. Every point on the line is a real number, and most of them cannot be written as fractions at all.",
+        "lowFeedback": "Below π. It sits just past 3.1.",
+        "highFeedback": "Above π. It stops short of 3.15."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 3.14 closer to 3 or to 4?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 3"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 4"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "3.14 sits 0.14 from 3 and 0.86 from 4 — the 3 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "rns-locate-number-line",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents rns locate number line.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for rns locate number line must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines rns locate number line."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "the-real-number-system:rns-locate-number-line",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same idea applies to π: since π ≈ 3.14159…, at one decimal place π ≈ 3.1. We could keep narrowing to as many decimal places as we want — the digits just never stop or repeat.",
+      "figure": "number-line-between-integers"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Narrow √10.",
+      "conceptTag": "rns-locate-number-line",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsRoundA"
+      },
+      "explanationVariants": [
+        "√10 ≈ 3.162, which rounds up to 3.2 at one decimal place.",
+        "3.1² = 9.61 undershoots 10, and 3.2² = 10.24 overshoots it, so √10 rounds to 3.2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "To one decimal place, √10 ≈ ____",
+        "answer": 3.2,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 3.1,
+            "feedback": "√10 ≈ 3.162, which rounds UP to 3.2, not down to 3.1."
+          },
+          {
+            "value": 3,
+            "feedback": "That's just the whole-number bound, not the one-decimal estimate — try 3.2."
+          }
+        ],
+        "fallbackFeedback": "√10 ≈ 3.162, so to one decimal place it's 3.2."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Narrow √2.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "To one decimal place, √2 ≈ ____",
+        "answer": 1.4,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 1.5,
+            "feedback": "√2 ≈ 1.414, which rounds DOWN to 1.4, not up to 1.5."
+          },
+          {
+            "value": 1,
+            "feedback": "That's just the whole-number bound — try 1.4."
+          }
+        ],
+        "fallbackFeedback": "√2 ≈ 1.414, so to one decimal place it's 1.4."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Narrow √3.",
+      "conceptTag": "rns-locate-number-line",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsRoundB"
+      },
+      "explanationVariants": [
+        "√3 ≈ 1.732, which rounds down to 1.7 at one decimal place.",
+        "1.7² = 2.89 undershoots 3, and 1.8² = 3.24 overshoots it, so √3 rounds to 1.7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "To one decimal place, √3 ≈ ____",
+        "answer": 1.7,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 1.8,
+            "feedback": "√3 ≈ 1.732, which rounds DOWN to 1.7, not up to 1.8."
+          },
+          {
+            "value": 2,
+            "feedback": "That's not even the right whole-number bound — 1² = 1 and 2² = 4 trap √3 between 1 and 2, closer to 1.7."
+          }
+        ],
+        "fallbackFeedback": "√3 ≈ 1.732, so to one decimal place it's 1.7."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Narrow √27.",
+      "conceptTag": "rns-locate-number-line",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsRoundC"
+      },
+      "explanationVariants": [
+        "√27 ≈ 5.196, which rounds to 5.2 at one decimal place.",
+        "5.1² = 26.01 undershoots 27, and 5.2² = 27.04 overshoots it, so √27 rounds to 5.2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "To one decimal place, √27 ≈ ____",
+        "answer": 5.2,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 5.1,
+            "feedback": "√27 ≈ 5.196, which rounds UP to 5.2, not down to 5.1."
+          },
+          {
+            "value": 5,
+            "feedback": "That's just the whole-number bound — narrow further to one decimal place: 5.2."
+          }
+        ],
+        "fallbackFeedback": "√27 ≈ 5.196, so to one decimal place it's 5.2."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Narrow a bigger root.",
+      "conceptTag": "rns-locate-number-line",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsRoundChallenge"
+      },
+      "explanationVariants": [
+        "√83 ≈ 9.110, which rounds to 9.1 at one decimal place.",
+        "9.1² = 82.81 undershoots 83, and 9.2² = 84.64 overshoots it, so √83 rounds to 9.1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "To one decimal place, √83 ≈ ____",
+        "answer": 9.1,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 9.2,
+            "feedback": "√83 ≈ 9.11, which rounds DOWN to 9.1, not up to 9.2."
+          },
+          {
+            "value": 9,
+            "feedback": "That's just the whole-number bound — narrow further to one decimal place: 9.1."
+          }
+        ],
+        "fallbackFeedback": "√83 ≈ 9.110, so to one decimal place it's 9.1."
+      },
+      "hints": [
+        "First bracket √83 between whole numbers: 9² = 81 and 10² = 100, so it's between 9 and 10.",
+        "Now test tenths: 9.1² = 82.81 and 9.2² = 84.64 — where does 83 fall?",
+        "82.81 < 83 < 84.64, so √83 rounds to 9.1 at one decimal place."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Narrow with decimals the same way as with whole numbers.",
+      "takeaways": [
+        "Test tenths (7.0², 7.1², 7.2², …) to narrow a bracket to one decimal place.",
+        "Every irrational number can be approximated to any precision this way.",
+        "The approximation never becomes exact — the true value never terminates or repeats."
+      ],
+      "teaser": "Next: comparing and estimating expressions that mix rationals and irrationals."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rns-locate-number-line",
+      "concept": {
+        "id": "rem-rns0302-c",
+        "kind": "concept",
+        "body": "To narrow √n to one decimal place, test tenths near its whole-number bracket (e.g. 7.0², 7.1², 7.2²) and see which two straddle n."
+      },
+      "check": {
+        "id": "rem-rns0302-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rns-locate-number-line",
+        "explanationVariants": [
+          "√5 ≈ 2.236, which rounds to 2.2 at one decimal place.",
+          "2.2² = 4.84 undershoots 5, and 2.3² = 5.29 overshoots it, so √5 rounds to 2.2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "To one decimal place, √5 ≈ ____",
+          "answer": 2.2,
+          "tolerance": 0.05,
+          "commonErrors": [
+            {
+              "value": 2.3,
+              "feedback": "√5 ≈ 2.236, which rounds DOWN to 2.2, not up to 2.3."
+            },
+            {
+              "value": 2,
+              "feedback": "That's just the whole-number bound — narrow further to one decimal place: 2.2."
+            }
+          ],
+          "fallbackFeedback": "√5 ≈ 2.236, so to one decimal place it's 2.2."
+        }
+      }
+    }
+  ]
+}

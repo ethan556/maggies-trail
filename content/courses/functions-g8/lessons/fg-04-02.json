@@ -1,0 +1,492 @@
+{
+  "id": "fg-04-02",
+  "slug": "reading-graph-shapes",
+  "title": "Reading Graph Shapes",
+  "courseId": "functions-g8",
+  "chapterId": "ch4-linear-vs-nonlinear",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A graph's SHAPE tells a story even without numbers. Going UP means the output is increasing; going DOWN means decreasing; FLAT means staying the same. Steeper means changing faster.",
+      "figure": "fg-graph-shape"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match shape to meaning.",
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "read",
+        "prompt": "A distance-vs-time graph is FLAT (horizontal) for a while. What's happening?",
+        "axisContext": "distanceFromOrigin",
+        "distanceRule": "awayOnly",
+        "xAxisLabel": "time",
+        "yAxisLabel": "distance",
+        "segments": [
+          {
+            "id": "A",
+            "label": "A",
+            "kind": "riseSteady",
+            "meaning": "The output increases at a constant rate."
+          },
+          {
+            "id": "B",
+            "label": "B",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          }
+        ],
+        "readTask": "flatMeaning",
+        "targetSegmentId": "B",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Not moving — distance stays the same",
+            "claim": "motion:stopped",
+            "feedback": "Right — a flat graph means the output (distance) isn't changing: standing still."
+          },
+          {
+            "id": "b",
+            "label": "Moving faster and faster",
+            "claim": "rate:speeding-up",
+            "feedback": "That would be a graph curving upward more steeply, not a flat line."
+          },
+          {
+            "id": "c",
+            "label": "Moving at a steady speed",
+            "claim": "motion:constant-speed",
+            "feedback": "Steady speed is a straight SLANTED line — flat means not moving at all."
+          },
+          {
+            "id": "d",
+            "label": "Moving backward",
+            "claim": "motion:moving-backward",
+            "feedback": "Moving backward would slope DOWN — a flat line means no movement."
+          }
+        ],
+        "bank": [],
+        "wrongSequences": [],
+        "successFeedback": "Right — a flat graph means the output (distance) isn't changing: standing still.",
+        "explorationFeedback": "Read the graph from left to right, then choose the claim supported by its direction, steepness, flatness, or curvature.",
+        "fallbackFeedback": "Use the visible graph shape and the axis labels together; do not infer from color alone."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A steeper section means the output changes faster there. On a distance-vs-time graph, a steep climb is fast movement and a gentle climb is slow movement. Reading steepness reads speed.",
+      "figure": "fg-graph-shape"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Interpret steepness.",
+      "conceptTag": "fg-qualitative-graphs",
+      "variant": {
+        "gen": "g8-fn-qualitative-graphs",
+        "form": "fgQualSteeper"
+      },
+      "explanationVariants": [
+        "A steeper part of a distance-time graph means moving FASTER there.",
+        "Steeper slope = faster rate of change = faster movement."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "read",
+        "prompt": "On a distance-vs-time graph, one section is much STEEPER than the rest. What does that mean?",
+        "axisContext": "distanceFromOrigin",
+        "distanceRule": "awayOnly",
+        "xAxisLabel": "time",
+        "yAxisLabel": "distance",
+        "segments": [
+          {
+            "id": "A",
+            "label": "A",
+            "kind": "riseGentle",
+            "meaning": "The output increases at a slower constant rate."
+          },
+          {
+            "id": "B",
+            "label": "B",
+            "kind": "riseSteep",
+            "meaning": "The output increases at a faster constant rate."
+          }
+        ],
+        "readTask": "steepMeaning",
+        "targetSegmentId": "B",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Moving faster during that section",
+            "claim": "rate:faster",
+            "feedback": "Right — steeper means a bigger rate of change: faster movement."
+          },
+          {
+            "id": "b",
+            "label": "Moving slower during that section",
+            "claim": "rate:slower",
+            "feedback": "Steeper means FASTER, not slower — a gentle slope would be slow."
+          },
+          {
+            "id": "c",
+            "label": "Standing still during that section",
+            "claim": "motion:stopped",
+            "feedback": "Standing still is a FLAT section — steep means fast movement."
+          },
+          {
+            "id": "d",
+            "label": "Turning around during that section",
+            "claim": "motion:turning-around",
+            "feedback": "Turning around would slope downward — steep upward means fast forward movement."
+          }
+        ],
+        "bank": [],
+        "wrongSequences": [],
+        "successFeedback": "Right — steeper means a bigger rate of change: faster movement.",
+        "explorationFeedback": "Read the graph from left to right, then choose the claim supported by its direction, steepness, flatness, or curvature.",
+        "fallbackFeedback": "Use the visible graph shape and the axis labels together; do not infer from color alone."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Increasing then flat.",
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "read",
+        "prompt": "A graph rises steadily, then goes flat. What's the story?",
+        "axisContext": "generic",
+        "distanceRule": "notDistance",
+        "xAxisLabel": "time",
+        "yAxisLabel": "output",
+        "segments": [
+          {
+            "id": "A",
+            "label": "Rising part",
+            "kind": "riseSteady",
+            "meaning": "The output climbs steadily — something is increasing at a constant rate."
+          },
+          {
+            "id": "B",
+            "label": "Flat part",
+            "kind": "flat",
+            "meaning": "The output stops changing — it holds steady at its value."
+          }
+        ],
+        "readTask": "storySummary",
+        "targetSegmentId": "A",
+        "choices": [
+          {
+            "id": "story",
+            "label": "The story",
+            "claim": "sequence:riseSteady>flat",
+            "feedback": "For example: a car drives at steady speed (rising distance), then parks (flat distance)."
+          }
+        ],
+        "bank": [],
+        "wrongSequences": [],
+        "successFeedback": "Right — the shape maps directly onto the story: steady increase, then holding steady.",
+        "explorationFeedback": "Reveal the next part.",
+        "fallbackFeedback": "Read the rising stage first and the flat stage second; the graph order is the story order."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Down means decreasing.",
+      "conceptTag": "fg-qualitative-graphs",
+      "variant": {
+        "gen": "g8-fn-qualitative-graphs",
+        "form": "fgQualDirection"
+      },
+      "explanationVariants": [
+        "A graph sloping DOWN means the output is decreasing over time.",
+        "A downward slope shows the value falling."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "read",
+        "prompt": "A temperature-vs-time graph slopes DOWNWARD. What's happening to the temperature?",
+        "axisContext": "temperature",
+        "distanceRule": "notDistance",
+        "xAxisLabel": "time",
+        "yAxisLabel": "temperature",
+        "segments": [
+          {
+            "id": "A",
+            "label": "A",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          }
+        ],
+        "readTask": "directionMeaning",
+        "targetSegmentId": "A",
+        "choices": [
+          {
+            "id": "a",
+            "label": "It's decreasing over time",
+            "claim": "change:decreasing",
+            "feedback": "Right — a downward slope means the output (temperature) is falling."
+          },
+          {
+            "id": "b",
+            "label": "It's increasing over time",
+            "claim": "change:increasing",
+            "feedback": "Increasing would slope UP — a downward slope means it's falling."
+          },
+          {
+            "id": "c",
+            "label": "It's staying constant",
+            "claim": "change:constant",
+            "feedback": "Constant is a FLAT line — a downward slope means decreasing."
+          },
+          {
+            "id": "d",
+            "label": "It's rising then falling",
+            "claim": "change:rise-then-fall",
+            "feedback": "Rising then falling would go up then down — a steady downward slope is just decreasing."
+          }
+        ],
+        "bank": [],
+        "wrongSequences": [],
+        "successFeedback": "Right — a downward slope means the output (temperature) is falling.",
+        "explorationFeedback": "Read the graph from left to right, then choose the claim supported by its direction, steepness, flatness, or curvature.",
+        "fallbackFeedback": "Use the visible graph shape and the axis labels together; do not infer from color alone."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A curve that flattens.",
+      "conceptTag": "fg-qualitative-graphs",
+      "variant": {
+        "gen": "g8-fn-qualitative-graphs",
+        "form": "fgQualFlattening"
+      },
+      "explanationVariants": [
+        "A graph that rises but flattens out is increasing more and more SLOWLY — the rate of change is shrinking.",
+        "Flattening while still rising means slowing growth."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "read",
+        "prompt": "A graph keeps rising but gets less and less steep (flattening out). What does this show?",
+        "axisContext": "generic",
+        "distanceRule": "notDistance",
+        "xAxisLabel": "time",
+        "yAxisLabel": "output",
+        "segments": [
+          {
+            "id": "A",
+            "label": "A",
+            "kind": "riseConcaveDown",
+            "meaning": "The output still increases, but more and more slowly."
+          }
+        ],
+        "readTask": "flatteningMeaning",
+        "targetSegmentId": "A",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Still increasing, but more and more slowly",
+            "claim": "rate:increasing-more-slowly",
+            "feedback": "Right — rising means increasing; flattening means the rate of change is shrinking."
+          },
+          {
+            "id": "b",
+            "label": "Decreasing steadily",
+            "claim": "change:decreasing",
+            "feedback": "It's still RISING (increasing) — just more slowly; decreasing would slope down."
+          },
+          {
+            "id": "c",
+            "label": "Increasing faster and faster",
+            "claim": "rate:increasing-faster",
+            "feedback": "Getting less steep means SLOWING down, not speeding up."
+          },
+          {
+            "id": "d",
+            "label": "Staying completely flat",
+            "claim": "change:constant",
+            "feedback": "It's still rising, just gently — a completely flat graph wouldn't rise at all."
+          }
+        ],
+        "bank": [],
+        "wrongSequences": [],
+        "successFeedback": "Right — rising means increasing; flattening means the rate of change is shrinking.",
+        "explorationFeedback": "Read the graph from left to right, then choose the claim supported by its direction, steepness, flatness, or curvature.",
+        "fallbackFeedback": "Use the visible graph shape and the axis labels together; do not infer from color alone."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Match graph sections to a bike ride.",
+      "conceptTag": "fg-qualitative-graphs",
+      "variant": {
+        "gen": "g8-fn-qualitative-graphs",
+        "form": "fgQualStopped"
+      },
+      "explanationVariants": [
+        "Steep up = pedaling fast; gentle up = pedaling slowly; flat = stopped; down = coasting back. Match each shape to its action.",
+        "Each shape maps to an action: steepness is speed, flat is stopped, down is returning."
+      ],
+      "widget": {
+        "type": "graphStoryLab",
+        "mode": "read",
+        "prompt": "On a distance-from-home vs. time graph for a bike ride, which section shows the rider STOPPED to rest?",
+        "axisContext": "distanceFromOrigin",
+        "distanceRule": "mayReturn",
+        "xAxisLabel": "time",
+        "yAxisLabel": "distance from home",
+        "segments": [
+          {
+            "id": "A",
+            "label": "A",
+            "kind": "riseSteep",
+            "meaning": "The output increases at a faster constant rate."
+          },
+          {
+            "id": "B",
+            "label": "B",
+            "kind": "flat",
+            "meaning": "The output does not change."
+          },
+          {
+            "id": "C",
+            "label": "C",
+            "kind": "riseGentle",
+            "meaning": "The output increases at a slower constant rate."
+          },
+          {
+            "id": "D",
+            "label": "D",
+            "kind": "fallSteady",
+            "meaning": "The output decreases at a constant rate."
+          }
+        ],
+        "readTask": "locateStopped",
+        "targetSegmentId": "B",
+        "choices": [
+          {
+            "id": "a",
+            "label": "A flat (horizontal) section",
+            "claim": "section:B",
+            "feedback": "Right — flat means distance isn't changing: the rider is stopped."
+          },
+          {
+            "id": "b",
+            "label": "A steep upward section",
+            "claim": "section:A",
+            "feedback": "Steep upward means riding away fast — not stopped."
+          },
+          {
+            "id": "c",
+            "label": "A gentle upward section",
+            "claim": "section:C",
+            "feedback": "Gentle upward means riding away slowly — still moving, not stopped."
+          },
+          {
+            "id": "d",
+            "label": "A downward section",
+            "claim": "section:D",
+            "feedback": "Downward means heading back toward home — moving, not stopped."
+          }
+        ],
+        "bank": [],
+        "wrongSequences": [],
+        "successFeedback": "Right — flat means distance isn't changing: the rider is stopped.",
+        "explorationFeedback": "Read the graph from left to right, then choose the claim supported by its direction, steepness, flatness, or curvature.",
+        "fallbackFeedback": "Use the visible graph shape and the axis labels together; do not infer from color alone."
+      },
+      "hints": [
+        "Stopped means the distance from home isn't changing.",
+        "On the graph, 'not changing' shows up as a flat, horizontal section.",
+        "So the flat section is where the rider stopped to rest."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A graph's shape encodes the story: direction, steepness, and flatness all mean something.",
+      "takeaways": [
+        "Up = increasing, down = decreasing, flat = unchanging.",
+        "Steeper = changing faster; gentler = changing slower.",
+        "A rising graph that flattens is still increasing, just more slowly."
+      ],
+      "teaser": "Next: sketching a graph to match a described situation."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fg-qualitative-graphs",
+      "concept": {
+        "id": "rem-fg0402-c",
+        "kind": "concept",
+        "body": "A graph's shape tells a story: up = increasing, down = decreasing, flat = unchanging, and steeper = changing faster."
+      },
+      "check": {
+        "id": "rem-fg0402-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "fg-qualitative-graphs",
+        "explanationVariants": [
+          "A flat (horizontal) graph means the output isn't changing.",
+          "Flat means no change — the value holds steady."
+        ],
+        "widget": {
+          "type": "graphStoryLab",
+          "mode": "read",
+          "prompt": "What does a FLAT (horizontal) section of a graph mean?",
+          "axisContext": "generic",
+          "distanceRule": "notDistance",
+          "xAxisLabel": "time",
+          "yAxisLabel": "output",
+          "segments": [
+            {
+              "id": "A",
+              "label": "A",
+              "kind": "flat",
+              "meaning": "The output does not change."
+            }
+          ],
+          "readTask": "flatMeaning",
+          "targetSegmentId": "A",
+          "choices": [
+            {
+              "id": "a",
+              "label": "The output is not changing",
+              "claim": "change:constant",
+              "feedback": "Right — flat means the value holds steady."
+            },
+            {
+              "id": "b",
+              "label": "The output is increasing fast",
+              "claim": "change:increasing",
+              "feedback": "Increasing fast is a STEEP upward line — flat means no change."
+            },
+            {
+              "id": "c",
+              "label": "The output is decreasing",
+              "claim": "change:decreasing",
+              "feedback": "Decreasing slopes DOWN — flat means unchanging."
+            },
+            {
+              "id": "d",
+              "label": "The graph has ended",
+              "claim": "graph:ended",
+              "feedback": "A flat section is still part of the graph — it just shows no change."
+            }
+          ],
+          "bank": [],
+          "wrongSequences": [],
+          "successFeedback": "Right — flat means the value holds steady.",
+          "explorationFeedback": "Read the graph from left to right, then choose the claim supported by its direction, steepness, flatness, or curvature.",
+          "fallbackFeedback": "Use the visible graph shape and the axis labels together; do not infer from color alone."
+        }
+      }
+    }
+  ]
+}

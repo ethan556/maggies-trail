@@ -1,0 +1,252 @@
+{
+  "id": "tg-05-01",
+  "slug": "round-trips-and-the-trap",
+  "title": "Round Trips & the arcsin(sin x) Trap",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch5-compositions-solving",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One composition direction is always safe: **sin(arcsin v) = v** for every v in [−1, 1] — arcsin outputs a branch angle, and sine happily eats it. The reverse, **arcsin(sin x)**, equals x ONLY when x already lies in the branch [−π/2, π/2]. Outside it, the round trip returns a different angle (recall the same one-way trap from verifying inverses).",
+      "figure": "tg-sin-arcsin-safe"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The safe direction.",
+      "predict": {
+        "prompt": "arcsin(sin 150°): sine of 150° is 1/2. Does the round trip return 150°?",
+        "options": [
+          {
+            "id": "fold",
+            "label": "No — arcsin can only answer from inside its branch: you get 30° back"
+          },
+          {
+            "id": "same",
+            "label": "Yes — inverse means you always get your angle back"
+          },
+          {
+            "id": "zero",
+            "label": "It returns 0°"
+          }
+        ],
+        "outcomeId": "fold",
+        "reveal": "You get 30°. sin(arcsin x) is the SAFE direction — 0.3 in, 0.3 out, as above — but arcsin(sin θ) must answer from inside [−90°, 90°], and 150° lives outside. Try to drag to 150°: the wall you hit is the fold happening under your hand."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Try to reach 150° — then settle for what arcsin actually returns: the angle INSIDE the branch that shares 150°'s sine.",
+        "targetAngle": 30,
+        "angleStart": 0,
+        "angleStep": 5,
+        "branch": [
+          -90,
+          90
+        ],
+        "successFeedback": "30° — the branch's representative for sine 1/2. The wall at 90° is why arcsin(sin 150°) = 30°, not 150°: the round trip folds everything back into the arc where the inverse is allowed to live. sin(arcsin 0.3) = 0.3 has no such fold — that direction never leaves home.",
+        "lowFeedback": "Sine is below 1/2 here — climb. (150° stays unreachable however hard you push the wall; that push IS the lesson.)",
+        "highFeedback": "Sine is above 1/2 — ease back to 30°, the one angle this branch offers for that sine."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the trap.",
+      "conceptTag": "tg-composition-trap",
+      "explanationVariants": [
+        "sin(5π/6) = 1/2, then arcsin(1/2) = π/6 — the branch angle with the SAME sine, not the angle you started with.",
+        "5π/6 is outside [−π/2, π/2]; arcsin can only answer with in-branch angles, so it returns π/6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is arcsin(sin(5π/6))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π/6",
+            "correct": true,
+            "feedback": "Right — the sine collapses to 1/2 and arcsin returns the BRANCH angle for 1/2: π/6, not 5π/6."
+          },
+          {
+            "id": "o2",
+            "label": "5π/6",
+            "feedback": "arcsin's outputs live in [−π/2, π/2]; 5π/6 ≈ 2.62 can never come out. The trip lands on π/6."
+          },
+          {
+            "id": "o3",
+            "label": "1/2",
+            "feedback": "1/2 is the intermediate SINE value. arcsin turns it back into an angle: π/6."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-composition-trap__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "When the round trip IS safe.",
+      "conceptTag": "tg-composition-trap",
+      "explanationVariants": [
+        "0.4 rad already lies inside [−π/2, π/2], so arcsin(sin(0.4)) = 0.4 exactly.",
+        "In-branch angles survive the trip unchanged — that's what inverse-on-its-branch means."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is arcsin(sin(0.4))? (0.4 radians.)",
+        "answer": 0.4,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.39,
+            "feedback": "You may be rounding the intermediate sin(0.4) ≈ 0.389 — but no rounding survives an exact inverse: 0.4 lies inside the branch, so the round trip returns 0.4 itself."
+          },
+          {
+            "value": -0.4,
+            "feedback": "Nothing flips: sin(0.4) ≈ 0.389 is positive, and its branch angle is +0.4 itself."
+          }
+        ],
+        "fallbackFeedback": "0.4 ∈ [−π/2, π/2]: the trip returns 0.4 exactly."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-composition-trap__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The general rule: **arcsin(sin x)** answers *\"which BRANCH angle has the same sine as x?\"* For second-quadrant x, that's the mirror **π − x**; the same logic gives arccos(cos x) = the [0, π] angle sharing x's cosine. Compositions of DIFFERENT functions, like cos(arcsin v), come next.",
+      "figure": "tg-arcsin-sin-branch"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Predict with the rule.",
+      "conceptTag": "tg-composition-trap",
+      "explanationVariants": [
+        "x = 3π/4 is in Quadrant II; the branch angle with the same sine is π − 3π/4 = π/4.",
+        "sin(3π/4) = √2/2 and arcsin(√2/2) = π/4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is arcsin(sin(3π/4))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "π/4",
+            "correct": true,
+            "feedback": "Right — π − 3π/4 = π/4 shares the sine √2/2 and lives in the branch."
+          },
+          {
+            "id": "o2",
+            "label": "3π/4",
+            "feedback": "3π/4 > π/2: outside the branch, so it can't be arcsin's output. The mirror π/4 is."
+          },
+          {
+            "id": "o3",
+            "label": "−π/4",
+            "feedback": "sin(3π/4) is POSITIVE (√2/2), so the branch angle is positive too: π/4."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-composition-trap__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Trap with a negative twist.",
+      "conceptTag": "tg-composition-trap",
+      "explanationVariants": [
+        "sin(7π/6) = −1/2 (Quadrant III), and arcsin(−1/2) = −π/6 — the branch handles negative sines with negative angles.",
+        "The branch angle sharing sine −1/2 is −π/6; 7π/6 itself is far outside [−π/2, π/2]."
+      ],
+      "hints": [
+        "First: what is sin(7π/6)? (Quadrant III — sign matters.)",
+        "sin(7π/6) = −1/2. Now: arcsin(−1/2) = ?",
+        "Recall arcsin(−1/2) from the arcsine lesson."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is arcsin(sin(7π/6))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−π/6",
+            "correct": true,
+            "feedback": "Right — the sine is −1/2, and the branch's angle for −1/2 is −π/6."
+          },
+          {
+            "id": "o2",
+            "label": "7π/6",
+            "feedback": "7π/6 ≈ 3.67 is way outside the output fence [−π/2, π/2]. The trip lands at −π/6."
+          },
+          {
+            "id": "o3",
+            "label": "π/6",
+            "feedback": "Sign check: sin(7π/6) = −1/2, NEGATIVE — so the branch angle is −π/6."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-composition-trap__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One direction is a promise; the other, a question.",
+      "takeaways": [
+        "sin(arcsin v) = v always (v in [−1, 1]).",
+        "arcsin(sin x) = x only for x in [−π/2, π/2]; otherwise it returns the branch angle with x's sine.",
+        "Quadrant II inputs map to π − x; negative sines map to negative branch angles."
+      ],
+      "teaser": "Next: mixed compositions — cos(arcsin v) and the triangle that solves them."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-composition-trap",
+      "concept": {
+        "id": "rem-tg0501-c",
+        "kind": "concept",
+        "body": "To evaluate arcsin(sin x): compute the sine, then ask which angle IN [−π/2, π/2] has that sine. The answer is x itself only when x is already in the branch."
+      },
+      "check": {
+        "id": "rem-tg0501-k",
+        "kind": "check",
+        "body": "One trip.",
+        "conceptTag": "tg-composition-trap",
+        "explanationVariants": [
+          "sin π = 0 and arcsin(0) = 0 — not π, which is outside the branch.",
+          "The branch angle with sine 0 is 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is arcsin(sin(π))?",
+          "answer": 0,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 3.14,
+              "feedback": "π is outside [−π/2, π/2]: arcsin can't return it. sin π = 0, and arcsin(0) = 0."
+            },
+            {
+              "value": 1,
+              "feedback": "sin π = 0 (not 1): the trip gives arcsin(0) = 0."
+            }
+          ],
+          "fallbackFeedback": "arcsin(sin π) = arcsin(0) = 0."
+        }
+      }
+    }
+  ]
+}

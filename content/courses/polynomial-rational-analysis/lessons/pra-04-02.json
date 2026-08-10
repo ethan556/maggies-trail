@@ -1,0 +1,415 @@
+{
+  "id": "pra-04-02",
+  "slug": "the-multiplicity-shortcut",
+  "title": "The Multiplicity Shortcut",
+  "courseId": "polynomial-rational-analysis",
+  "chapterId": "ch4-polynomial-inequalities",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Testing every interval is honest but slow. The shortcut (recall bounce vs cross): at an **odd-multiplicity** zero the sign **flips**; at an **even-multiplicity** zero it **doesn't**. Find ONE interval's sign, then walk the chart flipping only at odd zeros.",
+      "figure": "pra-signchart-shortcut"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The multiplicity shortcut, in one picture.",
+      "widget": {
+        "type": "signChart",
+        "roots": [
+          {
+            "x": -3,
+            "mult": 1
+          },
+          {
+            "x": 0,
+            "mult": 3
+          },
+          {
+            "x": 2,
+            "mult": 2
+          }
+        ],
+        "leadingPositive": true,
+        "prompt": "p(x) = (x + 3)x³(x − 2)². Set the signs. Watch the CUBED root carefully.",
+        "successFeedback": "− + + +. The cube at 0 is ODD, so it flips the sign just like a single root does — multiplicity 3 crosses, it merely flattens on the way through. The square at 2 is even, so it bounces and changes nothing. Only the parity matters.",
+        "crossFeedback": "An odd multiplicity — 1 or 3 — is a crossing. Both x = −3 and x = 0 must flip the sign.",
+        "bounceFeedback": "You flipped across x = 2, but that root is squared. Even multiplicity bounces off the axis and leaves the sign alone."
+      },
+      "predict": {
+        "prompt": "At a root of even multiplicity, what happens to the function's sign?",
+        "options": [
+          {
+            "id": "flip",
+            "label": "It always flips"
+          },
+          {
+            "id": "stay",
+            "label": "It stays the same across the root"
+          },
+          {
+            "id": "unknown",
+            "label": "Multiplicity gives no information"
+          }
+        ],
+        "outcomeId": "stay",
+        "reveal": "An even-multiplicity root touches the axis and turns back, so the sign on the two neighboring intervals matches."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Set interval signs and use root multiplicity to explain where a function crosses or only touches the axis.",
+        "invariants": [
+          "odd-multiplicity-crosses",
+          "even-multiplicity-bounces"
+        ],
+        "misconceptions": [
+          "every-root-flips-sign",
+          "sign-is-read-from-root-value"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "polynomial-rational-analysis-signChart",
+        "delayed": true,
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this signChart away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why does an even root not reverse the interval sign?",
+          "options": [
+            {
+              "id": "bounce",
+              "label": "The factor changes sign an even number of times, so the graph touches and returns to the same side.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "root",
+              "label": "All roots force a crossing.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "leading",
+              "label": "Only the leading coefficient matters at every interval.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "pra-mult-shortcut"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Walk left across x = 3.",
+      "conceptTag": "pra-mult-shortcut",
+      "explanationVariants": [
+        "x = 3 has multiplicity 2 — even — so NO flip: g stays positive just left of 3.",
+        "(x − 3)² can't change the product's sign; crossing 3 leaves g at +."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Crossing the zero x = 3 (multiplicity 2) from right to left, the sign of g:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "stays positive — even multiplicity, no flip",
+            "correct": true,
+            "feedback": "Right — the squared factor touches zero and bounces; the sign survives."
+          },
+          {
+            "id": "o2",
+            "label": "flips to negative",
+            "feedback": "Flips happen at ODD multiplicity. The square (even) bounces: still +. Check g(0) = 9·2 = 18 > 0."
+          },
+          {
+            "id": "o3",
+            "label": "becomes zero on the whole interval",
+            "feedback": "g is zero only AT x = 3; between zeros the sign is constant — here, still positive."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-mult-shortcut__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now across x = −2.",
+      "conceptTag": "pra-mult-shortcut",
+      "explanationVariants": [
+        "x = −2 has multiplicity 1 — odd — so the sign FLIPS to negative left of −2. Chart: −, +, +.",
+        "Verify with a test: g(−3) = 36·(−1) = −36 < 0 ✓."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Continuing the walk across x = −2 (multiplicity 1), the full sign chart of g, left to right, is:",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "−"
+          },
+          {
+            "id": "t1",
+            "label": "+"
+          },
+          {
+            "id": "t2",
+            "label": ","
+          }
+        ],
+        "correct": [
+          "t0",
+          "t2",
+          "t1",
+          "t2",
+          "t1"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1",
+              "t2",
+              "t0",
+              "t2",
+              "t1"
+            ],
+            "feedback": "That pattern flips at BOTH zeros — but x = 3 is even multiplicity and doesn't flip: −, +, +."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t2",
+              "t0",
+              "t2",
+              "t1"
+            ],
+            "feedback": "That flips at 3 instead of −2 — backwards: the odd zero is −2. The chart is −, +, +."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Flip only at odd-multiplicity zeros: −2 flips, the even 3 does not.",
+        "successFeedback": "Right — flip at the odd zero −2, no flip at the even zero 3."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-mult-shortcut__buildExpression"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Harvesting from −, +, +: g > 0 on (−2, 3) **and** (3, ∞) — but watch x = 3 itself: g(3) = 0, so for a **strict** inequality the point x = 3 is a **puncture** in an otherwise positive run.",
+      "figure": "pra-harvest-intervals"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Mind the puncture.",
+      "conceptTag": "pra-mult-shortcut",
+      "explanationVariants": [
+        "g > 0 everywhere right of −2 EXCEPT the single point x = 3, where g = 0: x > −2 with x ≠ 3.",
+        "Both + intervals join, minus the puncture at the bounce point."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Where is (x − 3)²(x + 2) > 0?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": ">"
+          },
+          {
+            "id": "t2",
+            "label": "−2"
+          },
+          {
+            "id": "t3",
+            "label": ","
+          },
+          {
+            "id": "t4",
+            "label": "except x = 3"
+          },
+          {
+            "id": "t5",
+            "label": "3"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t2"
+            ],
+            "feedback": "Almost — at x = 3 itself g = 0, which is not > 0. Puncture it: x > −2, x ≠ 3."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t5"
+            ],
+            "feedback": "g(0) = 9 · 2 = 18 > 0 — the interval (−2, 3) is positive too. Only the single point 3 fails."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "The even zero never separates signs — it only punctures the strict inequality at the single point.",
+        "successFeedback": "Right — the even zero doesn't separate signs, but it IS a zero: strictly positive fails exactly there."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-mult-shortcut__buildExpression"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full shortcut run.",
+      "conceptTag": "pra-mult-shortcut",
+      "explanationVariants": [
+        "Far right +; flip at 5 (odd) → −; no flip at −1 (even, exponent 2) → −. Chart: −, −, +. So h ≤ 0 on x ≤ 5, with the zero 5 included and −1 automatically included (h(−1) = 0).",
+        "h < 0 on both left intervals; adding equality pulls in the zeros −1 and 5: all of x ≤ 5."
+      ],
+      "hints": [
+        "Start far right: sign of h for huge x?",
+        "Walk left: flip at the odd zero 5; then what happens at the even zero −1?",
+        "Chart −, −, +. For ≤ 0, harvest the − intervals plus every zero."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "h(x) = (x + 1)²(x − 5). Where is h ≤ 0?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "x"
+          },
+          {
+            "id": "t1",
+            "label": "≤"
+          },
+          {
+            "id": "t2",
+            "label": "5"
+          },
+          {
+            "id": "t3",
+            "label": "−1"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t3"
+            ],
+            "feedback": "h(0) = 1 · (−5) = −5 < 0: the negativity continues past −1 all the way to 5."
+          },
+          {
+            "sequence": [
+              "t3",
+              "t1",
+              "t0",
+              "t1",
+              "t2"
+            ],
+            "feedback": "The far-left interval is negative too — check h(−2) = 1·(−7) = −7. All of x ≤ 5 works."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "The even zero at −1 brings no sign flip — negativity runs from far left up through 5, endpoints in.",
+        "successFeedback": "Right — both left intervals are negative (no flip at the even zero −1), and the zeros −1, 5 satisfy h = 0."
+      },
+      "variant": {
+        "gen": "g12-polynomial-rational-analysis",
+        "form": "polynomial-rational-analysis__pra-mult-shortcut__buildExpression"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Count the exponents, skip the tests.",
+      "takeaways": [
+        "Odd multiplicity flips the sign; even doesn't.",
+        "Anchor one interval (far right is easiest), then walk.",
+        "Even zeros can puncture a strict-inequality solution."
+      ],
+      "teaser": "Next: solving inequalities that don't arrive pre-factored."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pra-mult-shortcut",
+      "concept": {
+        "id": "rem-pra0402-c",
+        "kind": "concept",
+        "body": "Sign-walk recipe: pick the far-right sign from the leading coefficient, then moving left, flip at odd-multiplicity zeros only."
+      },
+      "check": {
+        "id": "rem-pra0402-k",
+        "kind": "check",
+        "body": "One walk step.",
+        "conceptTag": "pra-mult-shortcut",
+        "explanationVariants": [
+          "Multiplicity 4 is even: no flip — the sign stays positive.",
+          "Even powers bounce; the chart keeps its + across x = 2."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Walking a sign chart across a zero of multiplicity 4, the sign:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "stays the same",
+              "correct": true,
+              "feedback": "Right — even multiplicity never flips the sign."
+            },
+            {
+              "id": "o2",
+              "label": "flips",
+              "feedback": "Flips are for ODD multiplicities (1, 3, 5, …). Four is even: no flip."
+            },
+            {
+              "id": "o3",
+              "label": "flips twice",
+              "feedback": "There's no double-flip — one crossing, one decision: even means unchanged."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "id": "pp-02-03",
+  "slug": "limacons-and-cardioids",
+  "title": "Limaçons & Cardioids",
+  "courseId": "polar-parametric",
+  "chapterId": "ch2-polar-graphs",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**Limaçons** r = a ± b cos θ (or sin θ) come in four shapes set by the ratio a/b:\n\n• a/b < 1: **inner loop**\n• a/b = 1: **cardioid** (heart, with a cusp)\n• 1 < a/b < 2: **dimpled**\n• a/b ≥ 2: **convex** (no dimple)\n\nOne family, four faces — decided by a single ratio.",
+      "figure": "pp-limacon"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A cardioid is a limaçon caught at one exact moment.",
+      "widget": {
+        "type": "polarTrace",
+        "mode": "limacon",
+        "targetPetals": 4,
+        "targetA": 2,
+        "start": 1,
+        "prompt": "r = a + 2cos θ. Dial a until the inner loop closes to a single point — that is the cardioid.",
+        "successFeedback": "a = 2, where a equals the coefficient of cos θ. Below that the curve overshoots the pole and makes an inner loop; above it the loop is gone and only a dimple remains, flattening out to an oval by a = 4. The cardioid is not a separate species — it is the exact frontier between the two.",
+        "lowFeedback": "a is still under 2, so the curve is passing through the pole and doubling back into an inner loop. Raise a until the loop pinches shut.",
+        "highFeedback": "a has passed 2, so the loop is gone and the curve has only a dimple. Come back down to the moment it closes."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change a polar parameter and coordinate angle, radius, tracing direction, and resulting curve family.",
+        "invariants": [
+          "polar-point-depends-on-angle-and-radius",
+          "parameter-controls-symmetry"
+        ],
+        "misconceptions": [
+          "negative-radius-is-invalid",
+          "petal-count-always-equals-n"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "polar-parametric-polarTrace",
+        "delayed": false
+      },
+      "conceptTag": "pp-limacons",
+      "predict": {
+        "prompt": "r = a + 2cos θ has an inner loop. Raising a will close that loop to a single cusp when a reaches…",
+        "options": [
+          {
+            "id": "zero",
+            "label": "0"
+          },
+          {
+            "id": "two",
+            "label": "2 — matching the coefficient of cos θ"
+          },
+          {
+            "id": "four",
+            "label": "4"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "a = 2, where the ratio a/b hits 1. The loop exists only while r can go negative; at a = 2 the smallest r is exactly 0, reached at one angle alone — and a single point where the curve touches the origin is precisely a cusp. Past 2, r never reaches zero and the shape dimples instead."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Spot the cardioid.",
+      "conceptTag": "pp-limacons",
+      "explanationVariants": [
+        "r = 3 + 3 cos θ has a = b = 3, so a/b = 1 → cardioid, with a cusp at the pole (r = 0 at θ = π).",
+        "Equal coefficients (a = b) always give the heart-shaped cardioid."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is a cardioid?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "r = 3 + 3 cos θ",
+            "correct": true,
+            "feedback": "Right — a = b (ratio 1) gives the heart with a cusp at the pole."
+          },
+          {
+            "id": "o2",
+            "label": "r = 3 + 2 cos θ",
+            "feedback": "a/b = 3/2 = 1.5 → dimpled, not a cardioid. Cardioid needs a = b."
+          },
+          {
+            "id": "o3",
+            "label": "r = 2 + 4 cos θ",
+            "feedback": "a/b = 1/2 < 1 → inner loop. Cardioid needs a/b = 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-limacons__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The cusp/loop happens where **r = 0**. For a cardioid r = a(1 + cos θ), r = 0 at θ = π — the heart's dimple touches the pole. For an inner-loop limaçon, r passes THROUGH zero and goes negative, and those negative-r points draw the loop inside.",
+      "figure": "pp-cusp-zero"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the max reach.",
+      "conceptTag": "pp-limacons",
+      "explanationVariants": [
+        "r = 2 + 3 cos θ maxes when cos θ = 1 (θ = 0): r = 2 + 3 = 5.",
+        "The far tip is at θ = 0: r = a + b = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the maximum value of r for r = 2 + 3 cos θ?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is b alone. Max r is at cos θ = 1: a + b = 2 + 3 = 5."
+          },
+          {
+            "value": 1,
+            "feedback": "1 = a − b is the MINIMUM (at θ = π). The max is a + b = 5."
+          }
+        ],
+        "fallbackFeedback": "Max at θ = 0: 2 + 3 = 5."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-limacons__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Dimple vs convex.",
+      "conceptTag": "pp-limacons",
+      "explanationVariants": [
+        "r = 5 + 2 cos θ: a/b = 2.5 ≥ 2 → convex (no dimple).",
+        "Ratio ≥ 2 means the curve bulges smoothly with no inward dent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What shape is r = 5 + 2 cos θ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Convex (a/b = 2.5 ≥ 2)",
+            "correct": true,
+            "feedback": "Right — ratio at least 2 removes the dimple: a smooth convex limaçon."
+          },
+          {
+            "id": "o2",
+            "label": "Dimpled",
+            "feedback": "Dimpled is 1 < a/b < 2. Here a/b = 2.5 ≥ 2 → convex."
+          },
+          {
+            "id": "o3",
+            "label": "Cardioid",
+            "feedback": "Cardioid is a/b = 1 exactly. 2.5 gives a convex limaçon."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-limacons__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Classify and measure.",
+      "conceptTag": "pp-limacons",
+      "explanationVariants": [
+        "r = 4 + 4 sin θ: a/b = 1 → cardioid; max r = a + b = 8 (at θ = π/2 for sine). The max reach is 8.",
+        "Equal coefficients → cardioid; its far tip is a + b = 8."
+      ],
+      "hints": [
+        "Compare a and b: 4 and 4.",
+        "Equal → cardioid. Max r = a + b.",
+        "4 + 4 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For r = 4 + 4 sin θ, what is the maximum value of r?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is a (or b) alone. Max r = a + b = 4 + 4 = 8."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the MINIMUM (the cusp, at θ = 3π/2). The max is a + b = 8."
+          }
+        ],
+        "fallbackFeedback": "Cardioid; max r = 4 + 4 = 8."
+      },
+      "variant": {
+        "gen": "g12-polar-parametric",
+        "form": "polar-parametric__pp-limacons__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One ratio, four hearts.",
+      "takeaways": [
+        "Limaçon r = a ± b·trig θ; shape from a/b: <1 loop, =1 cardioid, 1–2 dimpled, ≥2 convex.",
+        "r = 0 gives the cusp (cardioid) or the inner loop's crossing.",
+        "Max r = a + b; min r = a − b."
+      ],
+      "teaser": "Next chapter: complex numbers put on polar clothing."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pp-limacons",
+      "concept": {
+        "id": "rem-pp0203-c",
+        "kind": "concept",
+        "body": "Limaçon r = a ± b·trig θ. Ratio a/b: <1 inner loop, =1 cardioid, 1–2 dimpled, ≥2 convex. Max r = a + b, min r = a − b."
+      },
+      "check": {
+        "id": "rem-pp0203-k",
+        "kind": "check",
+        "body": "One shape.",
+        "conceptTag": "pp-limacons",
+        "explanationVariants": [
+          "r = 2 + 2 cos θ: a = b → cardioid.",
+          "Equal coefficients give the cardioid heart."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What shape is r = 2 + 2 cos θ?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Cardioid",
+              "correct": true,
+              "feedback": "Right — a = b means ratio 1: a cardioid."
+            },
+            {
+              "id": "o2",
+              "label": "Inner loop",
+              "feedback": "Inner loop needs a/b < 1. Here a = b, so cardioid."
+            },
+            {
+              "id": "o3",
+              "label": "Circle",
+              "feedback": "Circles are r = a or r = 2a cos θ. This a + b cos θ form with a = b is a cardioid."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

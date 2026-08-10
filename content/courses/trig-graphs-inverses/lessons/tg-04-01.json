@@ -1,0 +1,252 @@
+{
+  "id": "tg-04-01",
+  "slug": "arcsin-restricted",
+  "title": "Arcsine: a Rescued Inverse",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch4-inverse-trig",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "sin x fails the horizontal line test spectacularly — every output is hit infinitely often — so, recall the rescue: **restrict the domain**. Keep only **[−π/2, π/2]**, one clean climb from −1 to 1. THAT piece is one-to-one, and its inverse is **arcsin** (also written sin⁻¹).",
+      "figure": "tg-arcsin-branch"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Run the inverse.",
+      "predict": {
+        "prompt": "sin 150° = 1/2 too. Can the drag reach 150° to claim it as arcsin(1/2)?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — the branch stops at 90°; only one angle per sine value is allowed in"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — any angle with the right sine counts"
+          },
+          {
+            "id": "wrap",
+            "label": "Yes, by dragging the long way around"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "No — you hit a wall at 90°. That wall is the whole point: inside [−90°, 90°] every sine value appears exactly once, so “the angle whose sine is 1/2” picks out one answer. Feel for the wall, then land on 30°."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Only the arc from −90° to 90° is open — the rest is walled off. Find the one angle in this branch whose sine is 1/2.",
+        "targetAngle": 30,
+        "angleStart": 0,
+        "angleStep": 5,
+        "branch": [
+          -90,
+          90
+        ],
+        "successFeedback": "30° — π/6, the n = 6 above. Inside the branch, sine climbs steadily from −1 to 1 and never repeats a value, so arcsin can answer with a single angle. The wall you bumped at 90° is what makes the inverse a function.",
+        "lowFeedback": "The sine here is below 1/2 — climb counterclockwise and watch the sin readout rise toward 0.5.",
+        "highFeedback": "The sine here is above 1/2 — ease back down. (And if you were hunting 150°: the wall already told you that door is closed.)"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why only ONE answer.",
+      "conceptTag": "tg-arcsin",
+      "explanationVariants": [
+        "5π/6 also has sine 1/2, but it sits OUTSIDE the restricted branch [−π/2, π/2] — the restriction is exactly what makes arcsin single-valued.",
+        "A function returns one output; the domain restriction chose which of the infinitely many candidate angles survives: π/6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "sin(5π/6) = 1/2 too. Why isn't arcsin(1/2) = 5π/6?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "5π/6 is outside the restricted branch [−π/2, π/2] that defines arcsin",
+            "correct": true,
+            "feedback": "Right — the restriction discarded it, the same move that defined √x from x² (recall)."
+          },
+          {
+            "id": "o2",
+            "label": "Because 5π/6 is negative",
+            "feedback": "5π/6 ≈ 2.6 is positive — the issue is it exceeds π/2, leaving the kept branch."
+          },
+          {
+            "id": "o3",
+            "label": "It is — arcsin has two values",
+            "feedback": "A FUNCTION can't return two values. The restriction picks exactly one: π/6."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arcsin__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Negative inputs.",
+      "conceptTag": "tg-arcsin",
+      "explanationVariants": [
+        "arcsin(−1/2) = −π/6: the branch includes negative angles, and sin(−π/6) = −1/2.",
+        "The kept climb passes through negatives — no reference-angle gymnastics needed: just −π/6."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is arcsin(−1/2)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "−π/6",
+            "correct": true,
+            "feedback": "Right — the branch [−π/2, π/2] handles negatives directly: sin(−π/6) = −1/2."
+          },
+          {
+            "id": "o2",
+            "label": "5π/6",
+            "feedback": "sin(5π/6) = +1/2, wrong sign — and 5π/6 isn't in the branch anyway. Answer: −π/6."
+          },
+          {
+            "id": "o3",
+            "label": "7π/6",
+            "feedback": "sin(7π/6) = −1/2 is true, but 7π/6 lies far outside [−π/2, π/2]. The branch's angle is −π/6."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arcsin__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Domain and range swap (recall): sin on the branch has domain [−π/2, π/2] and range [−1, 1], so **arcsin has domain [−1, 1] and range [−π/2, π/2]**. Inputs beyond ±1 are meaningless — no angle has sine 2.",
+      "figure": "tg-arcsin-domain-swap"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Domain check.",
+      "conceptTag": "tg-arcsin",
+      "explanationVariants": [
+        "arcsin(2) asks for an angle whose sine is 2 — impossible, since sine never leaves [−1, 1]: undefined.",
+        "arcsin's domain is sin's RANGE: [−1, 1]. 2 is outside."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is arcsin(2)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Undefined — no angle has sine 2",
+            "correct": true,
+            "feedback": "Right — sine's outputs fill only [−1, 1], so arcsin accepts only [−1, 1]."
+          },
+          {
+            "id": "o2",
+            "label": "π/2",
+            "feedback": "arcsin(1) = π/2 — sine's MAXIMUM is 1, so 2 is unreachable: undefined."
+          },
+          {
+            "id": "o3",
+            "label": "About 1.09",
+            "feedback": "That's arcsin of ≈0.89. For the input 2 there is no angle at all: undefined."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arcsin__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Edge of the branch.",
+      "conceptTag": "tg-arcsin",
+      "explanationVariants": [
+        "arcsin(1) = π/2: the branch's right endpoint, where the climb tops out at sine 1. n = 2.",
+        "The only angle in [−π/2, π/2] with sine 1 is π/2 itself."
+      ],
+      "hints": [
+        "Which angle in the branch has sine exactly 1?",
+        "Sine reaches 1 at the top of the unit circle.",
+        "That's the branch's right endpoint."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "arcsin(1) = π/n. What is n?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "sin π = 0, not 1. Sine hits 1 at π/2: n = 2."
+          },
+          {
+            "value": 6,
+            "feedback": "π/6 has sine 1/2. The FULL value 1 needs π/2: n = 2."
+          }
+        ],
+        "fallbackFeedback": "arcsin(1) = π/2: n = 2."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-arcsin__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One branch, one answer.",
+      "takeaways": [
+        "arcsin inverts sine's restricted climb on [−π/2, π/2].",
+        "Domain [−1, 1], range [−π/2, π/2]; negatives handled directly.",
+        "Candidate angles outside the branch are discarded by definition."
+      ],
+      "teaser": "Next: cosine needs a DIFFERENT branch — and tangent gets one with asymptotes."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-arcsin",
+      "concept": {
+        "id": "rem-tg0401-c",
+        "kind": "concept",
+        "body": "arcsin(v) = the unique angle in [−π/2, π/2] whose sine is v. Check any answer two ways: sine of it gives v, AND it lies in the branch."
+      },
+      "check": {
+        "id": "rem-tg0401-k",
+        "kind": "check",
+        "body": "One evaluation.",
+        "conceptTag": "tg-arcsin",
+        "explanationVariants": [
+          "sin 0 = 0 and 0 is in the branch: arcsin(0) = 0.",
+          "The climb crosses height 0 exactly at its center, angle 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is arcsin(0)?",
+          "answer": 0,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 3.14,
+              "feedback": "sin π = 0 too, but π is outside [−π/2, π/2]. The branch's angle is 0."
+            },
+            {
+              "value": 1,
+              "feedback": "arcsin returns an ANGLE; the angle with sine 0 in the branch is 0 itself."
+            }
+          ],
+          "fallbackFeedback": "arcsin(0) = 0."
+        }
+      }
+    }
+  ]
+}

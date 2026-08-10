@@ -1,0 +1,299 @@
+{
+  "id": "ep-03-03",
+  "slug": "special-products",
+  "title": "Special Products",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch3-multiplying-polynomials",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "foil-box",
+      "body": "Two patterns are worth memorizing. A **square**: (a + b)² = a² + 2ab + b² — note the middle term 2ab, not just a² + b². A **sum times difference**: (a + b)(a − b) = a² − b², where the middle cancels."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the middle term.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "prompt": "Lay out (x + 4)(x + 4) as a rectangle. Drag both partitions to 4, then look at what sits between the two squares.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 4,
+        "targetB": 4,
+        "startA": 1,
+        "startB": 0,
+        "asks": "middle",
+        "requiredMoves": 3,
+        "successFeedback": "x² + 8x + 16 — not x² + 16. The two squares you expected are there (the x-block and the 16 corner), but they do not touch: two strips of 4x each sit between them, and 4 + 4 = 8. Squaring a binomial cannot skip the middle, because the rectangle has four regions and only two of them are squares.",
+        "productMiddleFeedback": "That layout makes the middle 16, which is 4 × 4 — the corner. The corner is one region; the two strips are two others, and they add to 8.",
+        "partialFeedback": "One partition is at 4 and the other is not. Bring them level and watch the two strips become the same size — which is what makes this a perfect square.",
+        "signFeedback": "Right sizes, wrong direction. (x + 4) adds its 4, so both strips lie outside the block rather than being taken away."
+      },
+      "predict": {
+        "prompt": "(x + 4)²: is it just x² + 16?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a middle term 8x appears"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — square each piece"
+          },
+          {
+            "id": "eight",
+            "label": "It's x² + 8"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "(x + 4)(x + 4) has cross-terms: 4x + 4x = 8x. Squaring term-by-term drops them — the single most famous error in algebra. The square of a sum is a² + 2ab + b², middle term and all."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "And its square term.",
+      "conceptTag": "poly-special-products",
+      "explanationVariants": [
+        "b² = 4² = 16, the constant.",
+        "The last term is 4·4 = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (x + 4)(x + 4). What is the constant term?",
+        "answer": 16,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's the middle term 2ab. The constant is b² = 4² = 16."
+          },
+          {
+            "value": 4,
+            "feedback": "You carried the 4 through unchanged. The constant is the 4 times itself: 4² = 16."
+          }
+        ],
+        "fallbackFeedback": "b² = 16."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-special-products__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The middle term is easy to forget — squaring is **not** distributing the exponent. (x − 5)²: a² = x², 2ab = 2·x·(−5) = −10x, b² = 25. So x² − 10x + 25, never x² + 25.",
+      "figure": "ep-square-middle"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A negative middle.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (x - 5)(x - 5). What is the coefficient of x?",
+        "answer": -10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "The middle is 2·(−5) = −10, keeping the sign."
+          },
+          {
+            "value": 25,
+            "feedback": "That's b² (the constant). The middle is 2ab = −10."
+          }
+        ],
+        "fallbackFeedback": "2ab = 2·(−5) = −10."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Sum times difference: (x + 6)(x − 6). Outer −6x and Inner +6x cancel, so only the squares remain: **x² − 36**. This is the a² − b² pattern — no middle term at all.",
+      "figure": "ep-sum-diff"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "No middle term.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (x + 6)(x - 6). What is the constant term?",
+        "answer": -36,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "Last is (+6)(−6) = −36, so the constant is negative."
+          },
+          {
+            "value": 12,
+            "feedback": "The constant is b² with a sign: −6² pattern gives −36, not 2·6."
+          }
+        ],
+        "fallbackFeedback": "(+6)(−6) = −36."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A coefficient inside the square.",
+      "conceptTag": "poly-special-products",
+      "explanationVariants": [
+        "2ab = 2·(2x)·3 = 12x, so the coefficient of x is 12.",
+        "The middle term is 2·2·3 = 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Multiply (2x + 3)(2x + 3). What is the coefficient of x?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's b² (3·3). The middle is 2·(2)·(3) = 12."
+          },
+          {
+            "value": 6,
+            "feedback": "Include the coefficient 2: 2·2·3 = 12, not 2·3."
+          }
+        ],
+        "fallbackFeedback": "2ab = 2·2·3 = 12."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-special-products__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sum times difference with a coefficient.",
+      "conceptTag": "poly-special-products",
+      "explanationVariants": [
+        "(3x)² − 1² = 9x² − 1; the middle cancels.",
+        "a² − b² with a = 3x, b = 1: 9x² − 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Multiply (3x - 1)(3x + 1).",
+        "options": [
+          {
+            "id": "a",
+            "label": "9x^2 - 1",
+            "correct": true,
+            "feedback": "Yes — (3x)² − 1² = 9x² − 1; the middle cancels."
+          },
+          {
+            "id": "b",
+            "label": "9x^2 + 1",
+            "feedback": "Last is (−1)(+1) = −1, so 9x² − 1."
+          },
+          {
+            "id": "c",
+            "label": "6x^2 - 1",
+            "feedback": "Square the coefficient: (3x)² = 9x², so 9x² − 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-special-products__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Square a binomial with a coefficient.",
+      "conceptTag": "poly-special-products",
+      "explanationVariants": [
+        "(2x)² = 4x², 2ab = 12x, b² = 9: 4x² + 12x + 9.",
+        "a² + 2ab + b² with a = 2x, b = 3: 4x² + 12x + 9."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Multiply (2x + 3)(2x + 3).",
+        "options": [
+          {
+            "id": "a",
+            "label": "4x^2 + 12x + 9",
+            "correct": true,
+            "feedback": "Yes — 4x², middle 2·2·3 = 12x, and 9."
+          },
+          {
+            "id": "b",
+            "label": "4x^2 + 9",
+            "feedback": "The middle term 2ab = 12x was dropped: 4x² + 12x + 9."
+          },
+          {
+            "id": "c",
+            "label": "2x^2 + 12x + 9",
+            "feedback": "Square the coefficient: (2x)² = 4x², so 4x² + 12x + 9."
+          }
+        ]
+      },
+      "hints": [
+        "Use (a + b)² = a² + 2ab + b² with a = 2x, b = 3.",
+        "a² = 4x², b² = 9, and 2ab = 2·2x·3.",
+        "2ab = 12x, so 4x² + 12x + 9."
+      ],
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "poly-special-products__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two shortcuts: the square keeps a middle term; the sum-times-difference loses it.",
+      "takeaways": [
+        "(a + b)² = a² + 2ab + b² — never forget the 2ab.",
+        "(a + b)(a − b) = a² − b² — the middle cancels.",
+        "Square coefficients too: (2x)² = 4x²."
+      ],
+      "teaser": "next chapter: factoring — running multiplication backward."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "poly-special-products",
+      "concept": {
+        "id": "rem-psp-c",
+        "kind": "concept",
+        "body": "A square has three terms: (a + b)² = a² + 2ab + b². For (x + 4)²: x² + 8x + 16. The middle 2ab is the piece people forget."
+      },
+      "check": {
+        "id": "rem-psp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "poly-special-products",
+        "explanationVariants": [
+          "2ab = 2·4 = 8, the middle coefficient.",
+          "The middle term is 2·1·4 = 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Multiply (x + 4)(x + 4). What is the coefficient of x?",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That's b². The middle is 2ab = 8."
+            },
+            {
+              "value": 4,
+              "feedback": "The middle is 2ab = 2·4 = 8, not 4."
+            }
+          ],
+          "fallbackFeedback": "2ab = 8."
+        }
+      }
+    }
+  ]
+}

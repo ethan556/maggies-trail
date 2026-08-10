@@ -1,0 +1,347 @@
+{
+  "id": "sp-01-01",
+  "slug": "estimating-from-a-sample",
+  "title": "Estimating from a Sample",
+  "courseId": "sampling-and-probability",
+  "chapterId": "ch1-random-sampling-and-making-inferences",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "sample-to-population",
+      "body": "A random sample lets you estimate the WHOLE population without asking everyone. If 30 of 50 sampled students like pizza, that's 3/5 — scale that same ratio up to the full school."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Scale a sample up to the population.",
+      "predict": {
+        "prompt": "30 of 50 sampled students prefer pizza. The school has 500 students — ten times the sample. What should the estimate be?",
+        "options": [
+          {
+            "id": "ten",
+            "label": "Ten times the sample count — 300"
+          },
+          {
+            "id": "same",
+            "label": "Still 30 — the sample already counted them"
+          },
+          {
+            "id": "half",
+            "label": "250 — half the school, since 30 is about half the sample"
+          }
+        ],
+        "outcomeId": "ten",
+        "reveal": "A sample estimate assumes the same RATIO holds in the whole population. 500 is ten times 50, so the count scales by ten as well: 300. The ratio stays fixed while both numbers grow — which is what the table will show."
+      },
+      "widget": {
+        "type": "ratioTable",
+        "prompt": "The sample is 30 out of 50. Fill in the row for the whole school of 500, keeping the ratio the same.",
+        "colA": "students asked",
+        "colB": "prefer pizza",
+        "rows": [
+          [
+            50,
+            30
+          ],
+          [
+            100,
+            60
+          ]
+        ],
+        "askA": 500,
+        "targetB": 300,
+        "bMax": 500,
+        "bStep": 10,
+        "bStart": 0,
+        "successFeedback": "300. Look down the column: 30 out of 50, 60 out of 100, 300 out of 500 — the ratio never changed, only the size of the group. That constant ratio IS the assumption a sample estimate rests on.",
+        "lowFeedback": "Too low. 500 is ten times the 50 you sampled, so the count has to grow by the same factor — compare your row against the ones above it.",
+        "highFeedback": "Too high — that is more than the ratio allows. 30 out of every 50 is well under everyone; scaling it to 500 cannot exceed 300."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another sample-to-population estimate.",
+      "conceptTag": "sp-sample-estimate",
+      "explanationVariants": [
+        "12/40 = 3/10, and 3/10 of 200 is 60.",
+        "Scale the sample's ratio up to the full population."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 40 people, 12 own a bike. If the town has 200 people, estimate how many own a bike.",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That's just the sample count. Scale it up: 12/40 of 200 = 60."
+          },
+          {
+            "value": 200,
+            "feedback": "That's the whole town, not just bike owners. Scale the ratio: 60."
+          }
+        ],
+        "fallbackFeedback": "12/40 = 3/10, and 3/10 of 200 is 60."
+      },
+      "variant": {
+        "gen": "g7-sp-sample-estimate",
+        "form": "spEstimateTown"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A sample must be RANDOM to give a fair estimate — asking only your friends, or only people at one club meeting, skews the result toward that group.",
+      "figure": "sp-random-sample"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot a biased sample.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A school wants to know if students like math class. Which sampling method gives the LEAST biased estimate?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Randomly select 50 students from the full enrollment list",
+            "correct": true,
+            "feedback": "Yes — a random selection from everyone gives every student an equal chance, avoiding bias."
+          },
+          {
+            "id": "b",
+            "label": "Ask the 50 students in the math club",
+            "feedback": "Math club members are far more likely to enjoy math class — this sample is biased toward liking it."
+          },
+          {
+            "id": "c",
+            "label": "Ask the first 50 students who arrive early",
+            "feedback": "Early arrivers might share other traits unrelated to random chance — not a fair, random sample."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A bigger, truly random sample usually gives a more reliable estimate than a small one — but even a modest random sample beats a large biased one.",
+      "figure": "sp-sample-size"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Another scaling estimate.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 25 people, 7 prefer tea over coffee. If the office has 300 people, estimate how many prefer tea.",
+        "answer": 84,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That's just the sample count. Scale it up: 7/25 of 300 = 84."
+          },
+          {
+            "value": 300,
+            "feedback": "That's the whole office, not just tea-drinkers. Scale the ratio: 84."
+          }
+        ],
+        "fallbackFeedback": "7/25 of 300 is 84."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another biased-sample check.",
+      "conceptTag": "sp-random-vs-biased",
+      "explanationVariants": [
+        "A random selection from the whole list avoids bias toward any one group.",
+        "Convenience samples (easiest to reach) tend to skew results."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A city wants to know how residents feel about a new park. Which method is LEAST biased?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Randomly call 200 residents from the full city directory",
+            "correct": true,
+            "feedback": "Yes — a random call list gives every resident an equal chance of being included."
+          },
+          {
+            "id": "b",
+            "label": "Survey people already AT the park",
+            "feedback": "People at the park likely already like parks — this sample is biased in favor."
+          },
+          {
+            "id": "c",
+            "label": "Post a survey only on the parks department's social media",
+            "feedback": "Only parks-department followers would see it — a biased, non-random group."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g7-sp-sampling-bias",
+        "form": "spBiasCivic"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another scaling estimate.",
+      "conceptTag": "sp-sample-estimate",
+      "explanationVariants": [
+        "18/60 = 3/10, and 3/10 of 480 is 144.",
+        "Scale the sample's ratio up to the full population."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 60 students, 18 walk to school. If the district has 480 students, estimate how many walk to school.",
+        "answer": 144,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "That's just the sample count. Scale it up: 18/60 of 480 = 144."
+          },
+          {
+            "value": 480,
+            "feedback": "That's the whole district, not just walkers. Scale the ratio: 144."
+          }
+        ],
+        "fallbackFeedback": "18/60 of 480 is 144."
+      },
+      "variant": {
+        "gen": "g7-sp-sample-estimate",
+        "form": "spEstimateDistrict"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier scaling estimate.",
+      "conceptTag": "sp-sample-estimate",
+      "explanationVariants": [
+        "9/30 = 3/10, and 3/10 of 900 is 270.",
+        "Scale the sample's ratio up to the full population."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a sample of 30 shoppers, 9 use reusable bags. If the store sees 900 shoppers a week, estimate how many use reusable bags.",
+        "answer": 270,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That's just the sample count. Scale it up: 9/30 of 900 = 270."
+          },
+          {
+            "value": 900,
+            "feedback": "That's all shoppers, not just reusable-bag users. Scale the ratio: 270."
+          }
+        ],
+        "fallbackFeedback": "9/30 of 900 is 270."
+      },
+      "hints": [
+        "Find the sample's ratio: 9 out of 30 = 3/10.",
+        "Apply that same ratio to 900: 3/10 of 900.",
+        "3/10 × 900 = 270."
+      ],
+      "variant": {
+        "gen": "g7-sp-sample-estimate",
+        "form": "spEstimateStore"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Scale a random sample's ratio up to estimate the whole population — but only if the sample was truly random, not biased toward one group.",
+      "takeaways": [
+        "Estimate = (trait count in sample ÷ sample size) × population size.",
+        "A random sample gives every member an equal chance of being chosen.",
+        "A biased sample (friends, convenience, self-selected) skews the estimate."
+      ],
+      "teaser": "next: comparing two populations using their samples."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sp-sample-estimate",
+      "concept": {
+        "id": "rem-sse-c",
+        "kind": "concept",
+        "body": "Scale a sample's ratio up to the whole population: (trait count ÷ sample size) × population size. 30 of 50 sampled (3/5) scales to 3/5 of 500 = 300."
+      },
+      "check": {
+        "id": "rem-sse-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-sample-estimate",
+        "explanationVariants": [
+          "30/50 of 500 is 300.",
+          "Scale the sample's ratio up to the population."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In a sample of 50 students, 30 prefer pizza. If the school has 500 students, estimate how many prefer pizza.",
+          "answer": 300,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 30,
+              "feedback": "Scale up the sample count: 300."
+            },
+            {
+              "value": 500,
+              "feedback": "That's everyone, not just pizza-lovers: 300."
+            }
+          ],
+          "fallbackFeedback": "300."
+        }
+      }
+    },
+    {
+      "conceptTag": "sp-random-vs-biased",
+      "concept": {
+        "id": "rem-srvb-c",
+        "kind": "concept",
+        "body": "A random sample gives every member of the population an equal chance of being chosen. Sampling only from a convenient or self-selected group (friends, a club, people already present) introduces bias."
+      },
+      "check": {
+        "id": "rem-srvb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sp-random-vs-biased",
+        "explanationVariants": [
+          "A random selection from everyone avoids bias.",
+          "Convenience samples tend to skew results."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A school wants to know if students like math class. Which sampling method gives the LEAST biased estimate?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Randomly select 50 students from the full enrollment list",
+              "correct": true,
+              "feedback": "Yes — random selection avoids bias."
+            },
+            {
+              "id": "b",
+              "label": "Ask the 50 students in the math club",
+              "feedback": "Math club members are biased toward liking math."
+            },
+            {
+              "id": "c",
+              "label": "Ask the first 50 students who arrive early",
+              "feedback": "Early arrivers aren't a random cross-section."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+ "id": "sr-03-03",
+ "slug": "arithmetic-series-at-work",
+ "title": "Arithmetic Series at Work",
+ "courseId": "sequences-series",
+ "chapterId": "ch3-arithmetic-series",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Word problems hide the three numbers in plain sight. “A theater's first row has 20 seats, each row behind adds 2, and there are 12 rows — how many seats in all?” reads off as a₁ = 20, d = 2, n = 12. “In all” is the signal: this asks for a SUM, not a term.",
+   "figure": "sr-word-theater"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Seat the theater.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "First row 20 seats, each row adds 2, twelve rows. Total seats?",
+    "answer": 372,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 42,
+      "feedback": "42 is only the LAST row (20 + 11·2). “Total” gathers all twelve rows: 12 · (20 + 42) / 2 = 372."
+     },
+     {
+      "value": 744,
+      "feedback": "744 is 12 · 62 unhalved — twelve rows fold into six pairs of 62: 372."
+     }
+    ],
+    "fallbackFeedback": "a₁₂ = 42; S = 12 · 62 / 2 = 372."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Stack the pipes.",
+   "conceptTag": "sr-arith-apply",
+   "explanationVariants": [
+    "Rows run 15, 14, …, 8 — eight rows, ends 15 and 8: S = 8 · 23 / 2 = 92.",
+    "The row counts are consecutive integers from 8 to 15; fencepost gives 8 rows."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Pipes are stacked in rows: 15 on the bottom, each row one fewer, 8 on top. How many pipes?",
+    "answer": 92,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 is just the TOP row. The stack holds every row from 15 down to 8: 8 rows folding to 92."
+     },
+     {
+      "value": 184,
+      "feedback": "184 is 8 · 23 unhalved — eight rows make four pairs of 23: 92."
+     }
+    ],
+    "fallbackFeedback": "8 rows, ends 15 and 8: 8 · 23 / 2 = 92."
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-arith-apply__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Sigma notation and the fold now team up. Σ from k = 1 to 20 of (2k + 3) is an arithmetic series in disguise — first term 5 (k = 1), last term 43 (k = 20), twenty terms — so the fold clears it instantly: 20 · (5 + 43) / 2 = 480. Recognize the shape, skip the grind.",
+   "figure": "sr-sigma-fold-team"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Fold a sigma.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Evaluate Σ from k = 1 to 20 of (2k + 3).",
+    "answer": 480,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 43,
+      "feedback": "43 is only the last term (k = 20). The sigma sums all twenty: 20 · (5 + 43) / 2 = 480."
+     },
+     {
+      "value": 960,
+      "feedback": "960 is 20 · 48 unhalved — twenty terms fold into ten pairs of 48: 480."
+     }
+    ],
+    "fallbackFeedback": "Ends 5 and 43, twenty terms: 20 · 48 / 2 = 480."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Order the solution.",
+   "conceptTag": "sr-arith-apply",
+   "explanationVariants": [
+    "Extract a₁ = 5, d = 2, n = 8 first; the pair formula needs a₈ = 19 in hand before it can fold; then 8 · 24 / 2 = 96.",
+    "Setup → last term → fold → total: each move feeds the next."
+   ],
+   "widget": {
+    "type": "dragOrder",
+    "prompt": "“Save $5 in week 1, then $2 more each week, for 8 weeks. Total saved?” Put the solution steps in order.",
+    "items": [
+     {
+      "id": "s3",
+      "label": "Apply S = 8 · (5 + 19) / 2"
+     },
+     {
+      "id": "s1",
+      "label": "Extract a₁ = 5, d = 2, n = 8"
+     },
+     {
+      "id": "s4",
+      "label": "Total: $96"
+     },
+     {
+      "id": "s2",
+      "label": "Find the last deposit: a₈ = 5 + 7·2 = 19"
+     }
+    ],
+    "correctOrder": [
+     "s1",
+     "s2",
+     "s3",
+     "s4"
+    ],
+    "misorderFeedback": [
+     {
+      "first": "s3",
+      "second": "s2",
+      "feedback": "The pair formula needs the LAST term in hand — find a₈ = 19 before folding."
+     },
+     {
+      "first": "s2",
+      "second": "s1",
+      "feedback": "You can't build a₈ until a₁, d, and n are extracted from the story — setup comes first."
+     }
+    ],
+    "missFeedback": "Trace the dependency: the setup feeds the last term, the last term feeds the fold, the fold gives the total.",
+    "successFeedback": "Setup → last term → fold → total — the universal series workflow."
+   },
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-arith-apply__dragOrder"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "The single most common trap: **term versus total**. “How much in week 8?” asks for a₈ — one deposit. “How much in ALL?” asks for S₈ — everything so far. Same setup, wildly different answers ($19 versus $96 above). Read for which one the question wants before touching a formula.",
+   "figure": "sr-term-vs-total"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Term or total?",
+   "widget": {
+    "type": "mcq",
+    "prompt": "“How many seats are in row 10?” asks for which quantity?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "a₁₀ — a single term",
+      "correct": true,
+      "feedback": "Right — one row, one term. Only “how many in all” would call for the sum."
+     },
+     {
+      "id": "o2",
+      "label": "S₁₀ — a sum",
+      "correct": false,
+      "feedback": "S₁₀ pools rows 1 through 10 together — the question wants row 10 alone, the term a₁₀."
+     },
+     {
+      "id": "o3",
+      "label": "d — the common difference",
+      "correct": false,
+      "feedback": "d is the row-to-row CHANGE, not any row's size. A row's size is a term."
+     },
+     {
+      "id": "o4",
+      "label": "n — the number of rows",
+      "correct": false,
+      "feedback": "10 is the position being asked about; the answer is the term AT that position, a₁₀."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The brick wall.",
+   "conceptTag": "sr-arith-apply",
+   "explanationVariants": [
+    "Top row: 24 − 9·2 = 6; total: 10 · (24 + 6) / 2 = 150.",
+    "Ten rows, ends 24 and 6, five pairs of 30."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A wall's bottom row has 24 bricks; each row above has 2 fewer; there are 10 rows. Total bricks?",
+    "answer": 150,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 is only the TOP row (24 − 9·2). The wall is all ten rows: 10 · 30 / 2 = 150."
+     },
+     {
+      "value": 300,
+      "feedback": "300 is 10 · 30 unhalved — ten rows fold into five pairs of 30: 150."
+     }
+    ],
+    "fallbackFeedback": "a₁₀ = 6; S = 10 · (24 + 6) / 2 = 150."
+   },
+   "hints": [
+    "Extract the three numbers: a₁ = 24, d = −2, n = 10.",
+    "Find the top row with the nth-term formula, then fold: S = n(a₁ + aₙ)/2.",
+    "a₁₀ = 6, pair value 30 — finish: 10 · 30 / 2."
+   ],
+   "variant": {
+    "gen": "a2-series",
+    "form": "sr-arith-apply__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Series in the wild.",
+   "takeaways": [
+    "Extract a₁, d, n from the story — they're always there.",
+    "Sigma sums with rules like 2k + 3 are arithmetic series: fold them.",
+    "Term vs total: “in row 8” is a₈; “in all” is S₈."
+   ],
+   "teaser": "Next: what happens when the terms MULTIPLY instead — and why the fold suddenly fails."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "sr-arith-apply",
+   "concept": {
+    "id": "rem-sr0303-c",
+    "kind": "concept",
+    "body": "Term versus total, side by side. Save $4 in week 1, then $3 more each week. Week 3's deposit is a₃ = 4 + 2·3 = 10. The total saved over three weeks is S₃ = 4 + 7 + 10 = 21. One question, one number; the other question, the whole pile."
+   },
+   "check": {
+    "id": "rem-sr0303-k",
+    "kind": "check",
+    "body": "The whole pile.",
+    "conceptTag": "sr-arith-apply",
+    "explanationVariants": [
+     "S₃ = 4 + 7 + 10 = 21 — or fold: 3 · (4 + 10) / 2.",
+     "The total gathers every deposit, not just the newest one."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Save $4 in week 1, then $3 more each week. How much is saved IN TOTAL after 3 weeks?",
+     "answer": 21,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 10,
+       "feedback": "10 is week 3's deposit alone (a₃). “In total” gathers all three: 4 + 7 + 10 = 21."
+      },
+      {
+       "value": 42,
+       "feedback": "42 is 3 · 14 unhalved — three terms fold to one-and-a-half pairs of 14: 21."
+      }
+     ],
+     "fallbackFeedback": "4 + 7 + 10 = 21."
+    }
+   }
+  }
+ ]
+}

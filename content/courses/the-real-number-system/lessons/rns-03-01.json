@@ -1,0 +1,307 @@
+{
+  "id": "rns-03-01",
+  "slug": "estimating-square-roots-between-integers",
+  "title": "Estimating Square Roots Between Integers",
+  "courseId": "the-real-number-system",
+  "chapterId": "ch3-approximating-irrationals",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To estimate √n, find the two perfect squares n sits between. For √50: 49 < 50 < 64, and 49 = 7², 64 = 8², so 7 < √50 < 8 — √50 is trapped between the whole numbers 7 and 8.",
+      "figure": "number-line-between-integers"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Trap an irrational between two decimals.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 3,
+        "max": 4,
+        "step": 0.01,
+        "tickStep": 0.1,
+        "target": 3.16,
+        "start": 3,
+        "prompt": "√10 lies between 3 and 4. Place it to two decimal places.",
+        "successFeedback": "3.16, because 3.16² = 9.9856 and 3.17² = 10.0489 — so √10 is trapped between them. You can never write it exactly, but you can pin it as tightly as you like, and that is what 'irrational' actually costs you.",
+        "lowFeedback": "Too low: 3.15² is under 10.",
+        "highFeedback": "Too high: your square has passed 10."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 3.16 closer to 3 or to 4?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 3"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 4"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "3.16 sits 0.16 from 3 and 0.84 from 4 — the 3 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "rns-estimate-integer-bounds",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents rns estimate integer bounds.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for rns estimate integer bounds must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines rns estimate integer bounds."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "the-real-number-system:rns-estimate-integer-bounds",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Once you know the two whole numbers, decide which one it's closer to by comparing how far n is from each perfect square. Since 50 is very close to 49, √50 is much closer to 7 than to 8.",
+      "figure": "number-line-between-integers"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Bracket another root.",
+      "conceptTag": "rns-estimate-integer-bounds",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsBoundsA"
+      },
+      "explanationVariants": [
+        "64 < 70 < 81, and those are 8² and 9², so √70 is between 8 and 9.",
+        "8² undershoots 70 and 9² overshoots it — the smaller bound is 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Between which two whole numbers does √70 lie? Type the smaller one.",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9² = 81 is bigger than 70 — try the perfect square just below 70."
+          },
+          {
+            "value": 7,
+            "feedback": "7² = 49, which is less than 64 — 8² = 64 is the perfect square just below 70."
+          }
+        ],
+        "fallbackFeedback": "64 < 70 < 81, and 8² = 64, 9² = 81, so √70 is between 8 and 9 — type 8."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which integer is it closer to?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "√70 (between 8 and 9) is closer to which integer?",
+        "options": [
+          {
+            "id": "a",
+            "label": "8, since 70 is closer to 64 than to 81",
+            "correct": true,
+            "feedback": "Right — 70 − 64 = 6, but 81 − 70 = 11, so 8 is closer."
+          },
+          {
+            "id": "b",
+            "label": "9, since 70 rounds up",
+            "correct": false,
+            "feedback": "70 isn't past the midpoint — check the actual distances: it's closer to 64 than 81."
+          },
+          {
+            "id": "c",
+            "label": "8.5, exactly between",
+            "correct": false,
+            "feedback": "The midpoint of 64 and 81 is 72.5, and 70 is below that — so it's not exactly between."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without a calculator",
+            "correct": false,
+            "feedback": "You can tell by comparing 70 to 64 and 81 directly — no calculator needed."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Bracket √95.",
+      "conceptTag": "rns-estimate-integer-bounds",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsBoundsB"
+      },
+      "explanationVariants": [
+        "81 < 95 < 100, and those are 9² and 10², so √95 is between 9 and 10.",
+        "9² undershoots 95 and 10² overshoots it — the smaller bound is 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Between which two whole numbers does √95 lie? Type the smaller one.",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10² = 100 is bigger than 95 — try the perfect square just below 95."
+          },
+          {
+            "value": 8,
+            "feedback": "8² = 64, which is less than 81 — 9² = 81 is the perfect square just below 95."
+          }
+        ],
+        "fallbackFeedback": "81 < 95 < 100, and 9² = 81, 10² = 100, so √95 is between 9 and 10 — type 9."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which integer is √95 closer to?",
+      "conceptTag": "rns-estimate-integer-bounds",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsCloserInteger"
+      },
+      "explanationVariants": [
+        "100 − 95 = 5, but 95 − 81 = 14, so √95 is closer to 10 than to 9.",
+        "95 sits much nearer 100 than 81, so the closer integer is 10."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "√95 is closer to:",
+        "options": [
+          {
+            "id": "a",
+            "label": "10, since 95 is closer to 100 than to 81",
+            "correct": true,
+            "feedback": "Right — 100−95=5 is much less than 95−81=14."
+          },
+          {
+            "id": "b",
+            "label": "9",
+            "correct": false,
+            "feedback": "Compare the distances: 95 is only 5 away from 100, but 14 away from 81 — 10 is closer."
+          },
+          {
+            "id": "c",
+            "label": "9.5, the exact midpoint",
+            "correct": false,
+            "feedback": "The midpoint of 81 and 100 is 90.5, and 95 is well past that — not exactly between."
+          },
+          {
+            "id": "d",
+            "label": "Neither — they're equally close",
+            "correct": false,
+            "feedback": "They're not equal — 95 is much nearer 100 than 81."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Bracket a bigger one.",
+      "conceptTag": "rns-estimate-integer-bounds",
+      "variant": {
+        "gen": "g8-rns-root-estimate",
+        "form": "rnsBoundsChallenge"
+      },
+      "explanationVariants": [
+        "144 < 150 < 169, and those are 12² and 13², so √150 is between 12 and 13.",
+        "12² undershoots 150 and 13² overshoots it — the smaller bound is 12."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Between which two whole numbers does √150 lie? Type the smaller one.",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13² = 169, bigger than 150 — try the perfect square just below."
+          },
+          {
+            "value": 11,
+            "feedback": "11² = 121, which is less than 144 — 12² = 144 is the perfect square just below 150."
+          }
+        ],
+        "fallbackFeedback": "144 < 150 < 169, so the smaller bound is 12."
+      },
+      "hints": [
+        "List perfect squares until you bracket 150: 100, 121, 144, 169…",
+        "144 = 12² is just under 150, and 169 = 13² is just over — so √150 is between 12 and 13.",
+        "144 < 150 < 169, so the smaller bound is 12."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Bracket √n between consecutive perfect squares, then judge which is closer.",
+      "takeaways": [
+        "Find the perfect squares just below and just above n.",
+        "Compare distances to decide which whole number √n is closer to.",
+        "This bracketing technique works for any non-perfect-square n."
+      ],
+      "teaser": "Next: narrowing further with decimals to locate irrationals precisely."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rns-estimate-integer-bounds",
+      "concept": {
+        "id": "rem-rns0301-c",
+        "kind": "concept",
+        "body": "To bracket √n, find the two perfect squares n sits between: the smaller root is the whole number just below the smaller perfect square's root."
+      },
+      "check": {
+        "id": "rem-rns0301-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rns-estimate-integer-bounds",
+        "explanationVariants": [
+          "16 < 20 < 25, and those are 4² and 5², so √20 is between 4 and 5.",
+          "4² undershoots 20 and 5² overshoots it — the smaller bound is 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Between which two whole numbers does √20 lie? Type the smaller one.",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5² = 25 is bigger than 20 — try the perfect square just below."
+            },
+            {
+              "value": 16,
+              "feedback": "16 is the perfect square itself, not the whole number — 4² = 16, so start with 4."
+            }
+          ],
+          "fallbackFeedback": "16 < 20 < 25, so √20 is between 4 and 5 — type 4."
+        }
+      }
+    }
+  ]
+}

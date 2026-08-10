@@ -1,0 +1,253 @@
+{
+  "id": "sr-03-02",
+  "slug": "the-two-sum-formulas",
+  "title": "The Two Sum Formulas",
+  "courseId": "sequences-series",
+  "chapterId": "ch3-arithmetic-series",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Sₙ = n(a₁ + aₙ)/2 needs the last term — and problems don't always hand it over. Substituting aₙ = a₁ + (n − 1)d gives the second form: **Sₙ = n/2 · (2a₁ + (n − 1)d)** — the same fold, rebuilt from the start, the step, and the count. Two forms, one fact.",
+      "figure": "sr-needs-last-term"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Use whichever fits.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "An arithmetic series has a₁ = 6, d = 5, n = 12. Find S₁₂.",
+        "answer": 402,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 61,
+            "feedback": "61 is only a₁₂ (the last term: 6 + 11·5). The SUM gathers all twelve: 12/2 · (6 + 61) = 402."
+          },
+          {
+            "value": 804,
+            "feedback": "804 is 12 · 67 without the halving — twelve terms fold into six pairs of 67: 402."
+          }
+        ],
+        "fallbackFeedback": "a₁₂ = 61, then S = 12 · (6 + 61) / 2 = 402. Or directly: 6 · (12 + 55)."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A falling series.",
+      "conceptTag": "sr-arith-sum",
+      "explanationVariants": [
+        "a₈ = 10 + 7·(−2) = −4, so S = 8 · (10 + (−4)) / 2 = 4 · 6 = 24.",
+        "The pair value is 10 − 4 = 6 — the negative last term shrinks it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "a₁ = 10, d = −2, n = 8. Find S₈.",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "−4 is only the last term a₈. The sum folds all eight: 8 · (10 − 4) / 2 = 24."
+          },
+          {
+            "value": 56,
+            "feedback": "56 treats the last term as +4 — but a₈ = 10 + 7·(−2) = −4, making the pair value 6, not 14: S = 24."
+          }
+        ],
+        "fallbackFeedback": "a₈ = −4; S = 8 · 6 / 2 = 24."
+      },
+      "variant": {
+        "gen": "arith-series",
+        "form": "paramsNegD"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Choosing is simple: **ends in hand → first form; start-step-count in hand → second form.** They always agree, because the second is the first with aₙ rebuilt. Reaching for the wrong one isn't fatal — it just costs you the extra trip of computing aₙ yourself.",
+      "figure": "sr-choose-form"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the fast lane.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "You know a₁ = 7, d = 3, n = 20 — but not the last term. The fastest correct tool?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "S = n/2 · (2a₁ + (n − 1)d)",
+            "correct": true,
+            "feedback": "Right — it runs on exactly the three numbers you hold."
+          },
+          {
+            "id": "o2",
+            "label": "S = n(a₁ + aₙ)/2, immediately",
+            "correct": false,
+            "feedback": "aₙ isn't in hand — you'd have to build it first with a₁ + (n − 1)d, an extra trip the second form skips."
+          },
+          {
+            "id": "o3",
+            "label": "add the twenty terms one by one",
+            "correct": false,
+            "feedback": "Twenty additions would get there — the formulas exist precisely to spare that grind."
+          },
+          {
+            "id": "o4",
+            "label": "aₙ = a₁·rⁿ⁻¹, then sum",
+            "correct": false,
+            "feedback": "That's the GEOMETRIC nth term — nothing multiplies here. This series climbs by adding d = 3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Run the second form.",
+      "conceptTag": "sr-arith-sum",
+      "explanationVariants": [
+        "S = 20/2 · (2·7 + 19·3) = 10 · (14 + 57) = 710.",
+        "The bracket 2a₁ + (n − 1)d = 71 is first-plus-last in disguise; ten of them make 710."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "a₁ = 7, d = 3, n = 20. Find S₂₀ with the second form.",
+        "answer": 710,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 71,
+            "feedback": "71 is the bracket 2a₁ + (n−1)d alone — the pair value. Multiply by n/2 = 10: 710."
+          },
+          {
+            "value": 1420,
+            "feedback": "1420 is 20 · 71 without the halving — twenty terms fold into ten pairs: 710."
+          }
+        ],
+        "fallbackFeedback": "10 · (14 + 57) = 710."
+      },
+      "variant": {
+        "gen": "arith-series",
+        "form": "secondForm"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Every arithmetic-series problem starts the same way: **extract a₁, d, and n from the setup** — three numbers unlock everything. If the last term is given instead of d or n, the nth-term formula recovers whichever piece is missing before the sum formula runs.",
+      "figure": "sr-extract-three"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Extract, then sum.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the sum of the first 15 terms of 9 + 13 + 17 + ⋯",
+        "answer": 555,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1110,
+            "feedback": "1110 is 15 · 74 unhalved — the fold halves it: 555."
+          },
+          {
+            "value": 65,
+            "feedback": "65 is only a₁₅ (9 + 14·4). The series wants all fifteen terms: 15 · (9 + 65) / 2 = 555."
+          }
+        ],
+        "fallbackFeedback": "a₁₅ = 65; S = 15 · 74 / 2 = 555."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A famous total.",
+      "conceptTag": "sr-arith-sum",
+      "explanationVariants": [
+        "S = 30 · (1 + 59) / 2 = 30 · 30 = 900 — the first n odd numbers always sum to n².",
+        "Thirty terms, pair value 60, fifteen pairs of 60."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the sum of the first 30 odd numbers: 1 + 3 + 5 + ⋯ + 59.",
+        "answer": 900,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1800,
+            "feedback": "1800 is 30 · 60 unhalved — thirty terms make fifteen pairs of 60: 900."
+          },
+          {
+            "value": 885,
+            "feedback": "885 is 30 · 59 / 2 — the last term standing in where the PAIR value belongs. Pairs add first AND last: 1 + 59 = 60."
+          }
+        ],
+        "fallbackFeedback": "30 · (1 + 59) / 2 = 900 = 30²."
+      },
+      "hints": [
+        "The ends are 1 and 59, and there are 30 terms.",
+        "S = n(a₁ + aₙ)/2 with n = 30 — the pair value is 1 + 59.",
+        "30 · 60 / 2 — and notice the answer is 30²."
+      ],
+      "variant": {
+        "gen": "arith-series",
+        "form": "odds"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two forms, one fold.",
+      "takeaways": [
+        "Ends known → S = n(a₁ + aₙ)/2. Start-step-count known → S = n/2·(2a₁ + (n−1)d).",
+        "The second form is the first with aₙ rebuilt — they always agree.",
+        "Every problem starts by extracting a₁, d, n."
+      ],
+      "teaser": "Next: series out in the world — theaters, stacks, and savings plans."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sr-arith-sum",
+      "concept": {
+        "id": "rem-sr0302-c",
+        "kind": "concept",
+        "body": "The second form in miniature: a₁ = 2, d = 3, n = 5. The bracket is 2·2 + 4·3 = 16 — that's first-plus-last without ever computing the last — and S = 5/2 · 16 = 40."
+      },
+      "check": {
+        "id": "rem-sr0302-k",
+        "kind": "check",
+        "body": "Run the bracket.",
+        "conceptTag": "sr-arith-sum",
+        "explanationVariants": [
+          "S = 5/2 · (4 + 12) = 40.",
+          "The series is 2+5+8+11+14; ends 2 and 14 confirm the bracket: 16."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "a₁ = 2, d = 3, n = 5. Find S₅.",
+          "answer": 40,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 14,
+              "feedback": "14 is only the last term (2 + 4·3). The sum gathers all five: 5 · 16 / 2 = 40."
+            },
+            {
+              "value": 80,
+              "feedback": "80 is 5 · 16 unhalved — five terms fold to two-and-a-half pairs of 16: 40."
+            }
+          ],
+          "fallbackFeedback": "5/2 · (2·2 + 4·3) = 40."
+        }
+      }
+    }
+  ]
+}

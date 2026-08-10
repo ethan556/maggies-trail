@@ -1,0 +1,286 @@
+{
+  "id": "ft-02-02",
+  "slug": "horizontal-shifts",
+  "title": "Horizontal Shifts",
+  "courseId": "function-transformations",
+  "chapterId": "ch2-shifts",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A number **inside** the function moves the graph **sideways** — and the direction is the opposite of the sign. **f(x − 5)** slides **right** 5; **f(x + 5)** slides **left** 5. Inside changes what the input must be, so the graph shifts along the x-axis.",
+      "figure": "transformation-shifts"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Slide the vertex to x = 3 — then read what the equation wrote.",
+      "widget": {
+        "type": "quadraticExplore",
+        "prompt": "Move the vertex to (3, 0). Keep one eye on the equation — the inside sign is the surprise.",
+        "targetA": 1,
+        "targetH": 3,
+        "targetK": 0,
+        "successFeedback": "Vertex at (3, 0) and the equation says y = (x − 3)² — a MINUS for a move to the RIGHT, because the inside hits 0 at x = 3.",
+        "shapeFeedback": "You changed a — that reshapes the parabola. This move is a pure sideways slide: keep a = 1 and adjust only h.",
+        "vertexFeedback": "The vertex lives at (h, k). Right 3 means h = 3 with k = 0 — if the vertex climbed or sank, k drifted off zero."
+      },
+      "predict": {
+        "prompt": "You'll slide the parabola's vertex RIGHT to x = 3. The equation will read…",
+        "options": [
+          {
+            "id": "minus",
+            "label": "y = (x − 3)²"
+          },
+          {
+            "id": "plus",
+            "label": "y = (x + 3)²"
+          }
+        ],
+        "outcomeId": "minus",
+        "reveal": "Right 3 writes MINUS 3: the inside x − 3 hits zero at x = +3, so that is where the vertex lands. The sign inside the parentheses runs opposite to the direction of travel — the most-missed fact in this chapter."
+      },
+      "conceptTag": "ft-hshift",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents hshift.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for hshift must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines hshift."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-hshift",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why the flip? y = (x − 3)² does at x = 3 exactly what the parent does at x = 0. So the vertex of **(x − h)²** sits at **x = h**. For (x + 4)², rewrite as (x − (−4))²: h = −4, vertex at x = −4 — left 4.",
+      "figure": "ft-horiz-shift"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Locate a shifted vertex.",
+      "conceptTag": "ft-hshift",
+      "explanationVariants": [
+        "The inside x − 8 equals 0 at x = 8 — that's where the vertex lands.",
+        "(x − h)² has vertex x = h; here h = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the x-coordinate of the vertex of y = (x − 8)²?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -8,
+            "feedback": "The minus inside sends the vertex to POSITIVE 8 — the inside is 0 when x = 8."
+          },
+          {
+            "value": 0,
+            "feedback": "0 is the parent's vertex — the (x − 8) inside slides it right to x = 8."
+          }
+        ],
+        "fallbackFeedback": "x − 8 = 0 at x = 8, so the vertex is at x = 8."
+      },
+      "variant": {
+        "gen": "horizontal-shift"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Now with a plus inside.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the x-coordinate of the vertex of y = (x + 5)²?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "A PLUS inside moves the graph LEFT: x + 5 = 0 at x = −5."
+          },
+          {
+            "value": 0,
+            "feedback": "The +5 inside shifts the parent's vertex — set the inside to 0: x = −5."
+          }
+        ],
+        "fallbackFeedback": "x + 5 = 0 at x = −5, so the vertex is at x = −5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pick the rule.",
+      "conceptTag": "ft-hshift",
+      "explanationVariants": [
+        "Left 2 means the inside must be x + 2 — it reaches 0 at x = −2, two units left of the parent's start.",
+        "Inside signs flip direction: left needs a PLUS inside the root."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which rule shifts y = √x LEFT 2 units?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = √(x + 2)",
+            "correct": true,
+            "feedback": "Right — the inside x + 2 hits 0 at x = −2, so the curve starts 2 units left."
+          },
+          {
+            "id": "o2",
+            "label": "y = √(x − 2)",
+            "correct": false,
+            "feedback": "A minus inside moves the graph RIGHT 2 — the start slides to x = 2, not −2."
+          },
+          {
+            "id": "o3",
+            "label": "y = √x + 2",
+            "correct": false,
+            "feedback": "The +2 is outside the root — that lifts the graph UP 2 instead of sliding it left."
+          },
+          {
+            "id": "o4",
+            "label": "y = √x − 2",
+            "correct": false,
+            "feedback": "Outside the root means vertical: this moves the graph DOWN 2, not left."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "horizontal-shift",
+        "form": "whichRule"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Evaluate through a horizontal shift.",
+      "conceptTag": "ft-hshift",
+      "explanationVariants": [
+        "Inside first: 6 − 4 = 2, then square: 2² = 4.",
+        "At x = 6, y = (x − 4)² does what the parent does at 2 — output 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = (x − 4)², what is y when x = 6?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 36,
+            "feedback": "You squared 6 itself — the shift changes the input first: 6 − 4 = 2, then 2² = 4."
+          },
+          {
+            "value": 100,
+            "feedback": "That's (6 + 4)² — the inside SUBTRACTS: 6 − 4 = 2, so y = 4."
+          }
+        ],
+        "fallbackFeedback": "6 − 4 = 2, then 2² = 4."
+      },
+      "variant": {
+        "gen": "horizontal-shift",
+        "form": "evalShifted"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Absolute value, shifted.",
+      "conceptTag": "ft-hshift",
+      "explanationVariants": [
+        "Inside first: 1 − 5 = −4, then |−4| = 4.",
+        "y = |x − 5| has its corner at x = 5; at x = 1 you're 4 away from the corner, so y = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = |x − 5|, what is y when x = 1?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "The inside 1 − 5 = −4 is negative, but the bars strip the sign: |−4| = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "That's 1 + 5 — the inside SUBTRACTS: 1 − 5 = −4, then |−4| = 4."
+          }
+        ],
+        "fallbackFeedback": "1 − 5 = −4, and |−4| = 4."
+      },
+      "hints": [
+        "Work the inside first: what is 1 − 5?",
+        "1 − 5 = −4 — now apply the absolute value.",
+        "|−4| = 4."
+      ],
+      "variant": {
+        "gen": "horizontal-shift",
+        "form": "evalShifted"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Inside numbers move the graph sideways — against the sign.",
+      "takeaways": [
+        "f(x − h) slides right h; f(x + h) slides left h.",
+        "The key point lands where the inside equals 0.",
+        "Evaluate inside-out: shift the input, then apply the parent."
+      ],
+      "teaser": "Next: combining both moves — and reading a vertex straight off the rule."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-hshift",
+      "concept": {
+        "id": "rem-ft0202-c",
+        "kind": "concept",
+        "body": "The inside moves the graph sideways, opposite to the sign: (x − h) goes right h, (x + h) goes left h. The key point sits where the inside equals 0."
+      },
+      "check": {
+        "id": "rem-ft0202-k",
+        "kind": "check",
+        "body": "One more sideways read.",
+        "conceptTag": "ft-hshift",
+        "explanationVariants": [
+          "x − 6 = 0 at x = 6, so the vertex is at x = 6.",
+          "(x − h)² has vertex x = h; here h = 6 — right 6 from the parent."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the x-coordinate of the vertex of y = (x − 6)²?",
+          "answer": 6,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -6,
+              "feedback": "The minus inside means RIGHT: the inside is 0 at x = +6."
+            },
+            {
+              "value": 0,
+              "feedback": "That's the parent's vertex — this one slid right to where x − 6 = 0."
+            }
+          ],
+          "fallbackFeedback": "Set the inside to 0: x = 6."
+        }
+      }
+    }
+  ]
+}

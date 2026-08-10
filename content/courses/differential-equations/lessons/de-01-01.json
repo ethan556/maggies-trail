@@ -1,0 +1,325 @@
+{
+  "id": "de-01-01",
+  "slug": "slope-fields",
+  "title": "Instructions a Curve Obeys",
+  "courseId": "differential-equations",
+  "chapterId": "ch1-slope-fields",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A differential equation does not tell you what y IS. It tells you, at every point, **which way to go**.\n\ndy/dx = f(x, y) is an instruction: *at this point, leave with this slope.*\n\nDraw a tiny segment at every point with the prescribed slope and you have a **slope field** — a set of instructions. A solution is any curve that obeys them everywhere.",
+      "figure": "de-slope-field-threads"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Thread a curve through the instructions.",
+      "widget": {
+        "type": "slopeField",
+        "equation": "linear",
+        "targetY0": 5,
+        "startY0": 1,
+        "prompt": "dy/dx = x. Drag the starting value to y = 5, and watch the curve thread through the field.",
+        "successFeedback": "Look at the field: the segments depend only on x, so every column is identical. That means every solution is just a VERTICAL SHIFT of every other — which is the + C from C4, drawn. Slide the starting value up and down and watch the same curve slide with it.",
+        "lowFeedback": "Below 5. Keep dragging up — and notice the curve's SHAPE never changes as you do.",
+        "highFeedback": "Above 5. Come back down — and notice, again, that only the height changed."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change an initial condition and trace a solution that remains tangent to the local direction field.",
+        "invariants": [
+          "field-slope-depends-on-position",
+          "solution-follows-local-slopes"
+        ],
+        "misconceptions": [
+          "all-solutions-share-one-curve",
+          "field-arrows-are-motion-vectors"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "differential-equations-slopeField",
+        "delayed": false
+      },
+      "conceptTag": "de-slope-field",
+      "predict": {
+        "prompt": "dy/dx = x — the slope depends on x alone. Start two curves at different heights. Compared with each other they will be…",
+        "options": [
+          {
+            "id": "shifted",
+            "label": "The same shape, one sitting above the other"
+          },
+          {
+            "id": "different",
+            "label": "Different shapes entirely"
+          },
+          {
+            "id": "cross",
+            "label": "Different at first, then crossing somewhere"
+          }
+        ],
+        "outcomeId": "shifted",
+        "reveal": "The same shape, shifted. Every point in a vertical column has the same slope, because x is the same all the way up it — so the whole family is one curve translated up and down. That translation is the + C, and this is the picture it has been standing in for."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the instruction.",
+      "conceptTag": "de-slope-field",
+      "explanationVariants": [
+        "dy/dx = x says the slope depends only on x. At x = 2 the slope is 2, no matter what y is — so every segment in that column is identical.",
+        "That is why every solution of dy/dx = x is a vertical shift of the others: the instructions never mention y."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For dy/dx = x, what is the slope of the field at the point (2, 7)?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That is the y-coordinate. The equation says dy/dx = x, and it never mentions y at all."
+          },
+          {
+            "value": 3.5,
+            "feedback": "That is 7/2. The equation is not a ratio of the coordinates; it says the slope IS x."
+          },
+          {
+            "value": 14,
+            "feedback": "That is xy. Read the equation literally: dy/dx = x."
+          }
+        ],
+        "fallbackFeedback": "Read dy/dx = x literally: the slope equals the x-coordinate, so at x = 2 it is 2.",
+        "successFeedback": "Right. Every segment in the column x = 2 has slope 2, which is exactly why the solutions are vertical shifts of one another."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-slope-field__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Infinitely many solutions.",
+      "conceptTag": "de-slope-field",
+      "explanationVariants": [
+        "Every starting point has exactly ONE curve through it, and there are infinitely many starting points — so infinitely many solutions. The initial condition picks one.",
+        "That is precisely the + C: the general solution is a whole family, and one extra fact selects a member of it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many curves obey the instructions of a slope field?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Infinitely many — one through every starting point. The initial condition picks one.",
+            "correct": true,
+            "feedback": "Right, and that is the + C, drawn. The differential equation gives the FAMILY; the initial condition selects the member."
+          },
+          {
+            "id": "o2",
+            "label": "Exactly one.",
+            "correct": false,
+            "feedback": "Drag the starting value in the widget and a different curve appears each time. Every one of them obeys the same instructions."
+          },
+          {
+            "id": "o3",
+            "label": "None, until you solve it algebraically.",
+            "correct": false,
+            "feedback": "The curves exist whether or not you can write them down — the field defines them. Many differential equations have solutions that no formula can express."
+          },
+          {
+            "id": "o4",
+            "label": "Two — one going each way.",
+            "correct": false,
+            "feedback": "Each starting point gives one curve, traced both forward and backward. Different starting points give different curves."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-slope-field__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So this is the picture the + C has been waiting for.\n\n**The differential equation gives the FAMILY.** (the field)\n**The initial condition selects ONE.** (the starting point)\n\nAnd the field exists even when no formula does. Most differential equations cannot be solved with symbols at all — but their slope fields can always be drawn, and their curves always exist.",
+      "figure": "de-slope-field-threads"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When the field mentions y.",
+      "conceptTag": "de-slope-field",
+      "explanationVariants": [
+        "dy/dx = 0.5y depends on y, so the slope changes as you move UP the page — the segments get steeper the higher you go. That is what exponential growth looks like as an instruction.",
+        "A field that mentions y is one where the solutions are NOT vertical shifts of each other — they fan out."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For dy/dx = 0.5y, what happens to the field as you move upward (larger y)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The segments get STEEPER — the bigger y is, the faster it grows.",
+            "correct": true,
+            "feedback": "Right, and that sentence IS exponential growth: the rate of growth is proportional to how much you already have."
+          },
+          {
+            "id": "o2",
+            "label": "They get flatter.",
+            "correct": false,
+            "feedback": "The slope is 0.5y, which grows WITH y. Bigger y, steeper segment."
+          },
+          {
+            "id": "o3",
+            "label": "Nothing changes.",
+            "correct": false,
+            "feedback": "That would be true if the equation mentioned only x. This one mentions y, so height matters."
+          },
+          {
+            "id": "o4",
+            "label": "They turn downward.",
+            "correct": false,
+            "feedback": "For positive y the slope 0.5y is positive, so the segments point up — and increasingly steeply."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-slope-field__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Match the field to the equation.",
+      "conceptTag": "de-slope-field",
+      "hints": [
+        "Ask what the slope depends on. If the equation mentions only x, every column is identical.",
+        "If it mentions only y, every ROW is identical — the slope depends on how high you are, not how far along.",
+        "dy/dx = 2 gives the same slope everywhere: a field of parallel segments."
+      ],
+      "explanationVariants": [
+        "dy/dx = 2 prescribes slope 2 at EVERY point, so the field is a set of parallel segments — and the solutions are the parallel lines y = 2x + C.",
+        "The number of distinct slopes in a field tells you what the equation depends on. A constant field means a constant equation."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each equation to what its field looks like.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "dy/dx = 2"
+          },
+          {
+            "id": "w2",
+            "label": "dy/dx = x"
+          },
+          {
+            "id": "w3",
+            "label": "dy/dx = y"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "every segment identical — parallel lines"
+          },
+          {
+            "id": "y2",
+            "label": "each COLUMN identical; steeper to the right"
+          },
+          {
+            "id": "y3",
+            "label": "each ROW identical; steeper higher up"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w2",
+            "right": "y3",
+            "feedback": "dy/dx = x depends on x, so it is the COLUMNS that are identical — the slope changes as you move right, not as you move up."
+          },
+          {
+            "left": "w3",
+            "right": "y2",
+            "feedback": "dy/dx = y depends on y, so it is the ROWS that match — the slope changes with HEIGHT."
+          }
+        ],
+        "missFeedback": "Ask which variable the right-hand side mentions. That is the one the slope varies with.",
+        "successFeedback": "Mentions neither → parallel. Mentions x → columns match. Mentions y → rows match. The field is a picture of the equation."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-slope-field__matchPairs"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "An equation that tells a curve which way to go.",
+      "takeaways": [
+        "dy/dx = f(x, y) is an INSTRUCTION at every point, and a solution is any curve that obeys it.",
+        "There are infinitely many solutions — one per starting point — and the initial condition picks one. That is the + C, drawn.",
+        "The field exists even when no formula does. Most differential equations cannot be solved with symbols; their curves exist anyway."
+      ],
+      "teaser": "Next: the one curve that never moves at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "de-slope-field",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Read the right-hand side as a command: *at this point, head off with THIS slope.* Draw the command as a little segment at every point, and a solution is any curve that follows the segments wherever it goes.",
+        "figure": "dr-chain-gears"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "What is the instruction?",
+        "conceptTag": "de-slope-field",
+        "explanationVariants": [
+          "dy/dx = y at the point (0, 3) says: leave with slope 3.",
+          "Substitute the point into the right-hand side."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For dy/dx = y, what slope does the field prescribe at the point (0, 3)?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "That is the x-coordinate. The equation says the slope IS y, which is 3 here."
+            },
+            {
+              "value": 1,
+              "feedback": "Substitute the point: dy/dx = y = 3."
+            }
+          ],
+          "fallbackFeedback": "dy/dx = y = 3 at that point."
+        }
+      }
+    }
+  ]
+}

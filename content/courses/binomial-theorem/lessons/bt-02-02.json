@@ -1,0 +1,234 @@
+{
+  "id": "bt-02-02",
+  "slug": "finding-a-single-term",
+  "title": "Finding a Single Term",
+  "courseId": "binomial-theorem",
+  "chapterId": "ch2-the-theorem-at-work",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The theorem's real power is selective. If you want only the b³ term of (a + b)⁷, you need not expand the other seven — set k = 3 and write C(7,3)·a⁴·b³. The whole skill is deciding what k is, and reading it off the power of b every time.",
+      "figure": "bt-single-term-extraction"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Which region is which, when the constants differ.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "requiredMoves": 3,
+        "startA": 1,
+        "startB": 1,
+        "prompt": "Build (x + 4)(x + 2) and read the CONSTANT term — the corner alone.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 4,
+        "targetB": 2,
+        "asks": "constant",
+        "successFeedback": "x² + 6x + 8. The corner is 4×2 = 8 and the strips add to 6x — selecting one region is exactly what ‘find a single term’ asks you to do.",
+        "productMiddleFeedback": "That reads the strips instead of the corner. The corner multiplies the two partitions: 4×2 = 8.",
+        "partialFeedback": "One partition has not arrived — this rectangle is 4 down and 2 across.",
+        "signFeedback": "Both partitions are added here, so both stay positive."
+      },
+      "predict": {
+        "prompt": "In (a + b)⁷, which k gives the term containing b³?",
+        "options": [
+          {
+            "id": "k3",
+            "label": "k = 3"
+          },
+          {
+            "id": "k4",
+            "label": "k = 4"
+          },
+          {
+            "id": "k7",
+            "label": "k = 7"
+          }
+        ],
+        "outcomeId": "k3",
+        "reveal": "k IS the exponent on b, always — so b³ means k = 3 and the coefficient is C(7,3) = 35. The tempting C(7,4) comes from reading k off the power of a instead, and here it happens to give 35 as well, which hides the error. In (a + b)⁸ the same slip would give 70 instead of 56."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read k off the b-power.",
+      "conceptTag": "bt-general-term",
+      "explanationVariants": [
+        "b³ in (a + b)⁷ means k = 3, so the coefficient is C(7,3) = 35.",
+        "The a-power is then 7 − 3 = 4, and 4 + 3 = 7 checks out."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In (a + b)⁷, what is the coefficient of a⁴b³?",
+        "answer": 35,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 is C(7,2). The b-power here is 3, so k = 3, not 2."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is C(7,1), the coefficient of a⁶b. Match k to the exponent on b."
+          }
+        ],
+        "fallbackFeedback": "k = 3 gives C(7,3) = 35.",
+        "successFeedback": "35 — and C(7,4) is also 35, which is why this particular case forgives the wrong reasoning. The next one will not."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Because rows are symmetric, C(n,k) and C(n,n−k) agree — so mixing up which exponent supplies k sometimes yields the right number by luck. Depending on that luck is how the error survives. Anchor k to the power of b and it never matters.",
+      "figure": "bt-symmetry-trap"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Where the luck runs out.",
+      "conceptTag": "bt-general-term",
+      "explanationVariants": [
+        "b³ in (a + b)⁸ means k = 3, so the coefficient is C(8,3) = 56.",
+        "C(8,3) = 56, while C(8,4) = 70 — here the two disagree."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In (a + b)⁸, what is the coefficient of a⁵b³?",
+        "answer": 56,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70 is C(8,4) — k was read off the power of a. With n = 8 the symmetry no longer covers the mistake."
+          },
+          {
+            "value": 28,
+            "feedback": "28 is C(8,2). The b-power is 3."
+          }
+        ],
+        "fallbackFeedback": "k = 3, so the coefficient is C(8,3) = 56.",
+        "successFeedback": "56 — and note that C(8,4) = 70 is a different number entirely. Anchoring k to b is what protects you."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Locate the term.",
+      "conceptTag": "bt-general-term",
+      "explanationVariants": [
+        "Terms are numbered from k = 0, so the term with k = 3 is the fourth one.",
+        "k = 0 is the first term, so k = 3 is the fourth."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Counting from the start, which term of (a + b)⁷ contains b³?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The 4th",
+            "correct": true,
+            "feedback": "Yes — k runs 0, 1, 2, 3, so k = 3 sits in fourth place."
+          },
+          {
+            "id": "o2",
+            "label": "The 3rd",
+            "correct": false,
+            "feedback": "That reads k as the position. Position is k + 1, because k starts at 0."
+          },
+          {
+            "id": "o3",
+            "label": "The 7th",
+            "correct": false,
+            "feedback": "The 7th term would be k = 6, giving b⁶."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A substituted single term.",
+      "conceptTag": "bt-general-term",
+      "explanationVariants": [
+        "The x² term of (x + 3)⁵ is C(5,3)·x²·3³ = 10×27 = 270.",
+        "k = 3 because b³ = 3³, giving 10 × 27."
+      ],
+      "hints": [
+        "Decide k first: which power of the constant 3 pairs with x² in (x + 3)⁵?",
+        "x² leaves three factors of 3, so k = 3 and the combination is C(5,3) = 10.",
+        "Multiply 10 by 3³ = 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In (x + 3)⁵, what is the coefficient of x²?",
+        "answer": 270,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That is C(5,3) alone — the 3³ = 27 still has to multiply it."
+          },
+          {
+            "value": 30,
+            "feedback": "That uses 3¹ instead of 3³. Three factors of the constant accompany x²."
+          }
+        ],
+        "fallbackFeedback": "C(5,3)·x²·3³ = 10·27 = 270.",
+        "successFeedback": "270 — one term extracted, four never computed."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Pick the term, skip the rest.",
+      "takeaways": [
+        "The general term is C(n,k)·aⁿ⁻ᵏ·bᵏ, with k read off the power of b.",
+        "Row symmetry can hide a wrong k — anchor it to b every time.",
+        "The term with exponent k sits in position k + 1."
+      ],
+      "teaser": "Next: let a and b be probabilities, and the expansion becomes a distribution."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bt-general-term",
+      "concept": {
+        "id": "rem-bt-general-term-c",
+        "kind": "concept",
+        "body": "Because rows are symmetric, C(n,k) and C(n,n−k) agree — so mixing up which exponent supplies k sometimes yields the right number by luck. Depending on that luck is how the error survives. Anchor k to the power of b and it never matters."
+      },
+      "check": {
+        "id": "rem-bt-general-term-k",
+        "kind": "check",
+        "body": "Read k off the b-power.",
+        "conceptTag": "bt-general-term",
+        "explanationVariants": [
+          "b³ in (a + b)⁷ means k = 3, so the coefficient is C(7,3) = 35.",
+          "The a-power is then 7 − 3 = 4, and 4 + 3 = 7 checks out."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In (a + b)⁷, what is the coefficient of a⁴b³?",
+          "answer": 35,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 21,
+              "feedback": "21 is C(7,2). The b-power here is 3, so k = 3, not 2."
+            },
+            {
+              "value": 7,
+              "feedback": "7 is C(7,1), the coefficient of a⁶b. Match k to the exponent on b."
+            }
+          ],
+          "fallbackFeedback": "k = 3 gives C(7,3) = 35.",
+          "successFeedback": "35 — and C(7,4) is also 35, which is why this particular case forgives the wrong reasoning. The next one will not."
+        }
+      }
+    }
+  ]
+}

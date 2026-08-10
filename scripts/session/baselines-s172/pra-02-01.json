@@ -1,0 +1,226 @@
+{
+ "id": "pra-02-01",
+ "slug": "how-many-zeros-must-exist",
+ "title": "The Fundamental Theorem: How Many Zeros Must Exist",
+ "courseId": "polynomial-rational-analysis",
+ "chapterId": "ch2-fta-conjugates",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The **Fundamental Theorem of Algebra**: every degree-n polynomial has **exactly n zeros** in the complex numbers, as long as you count each zero by its **multiplicity**. No polynomial escapes — zeros the real line can't show are hiding in the complex plane.",
+   "figure": "pra-fta"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Count by degree.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Counting multiplicity, how many complex zeros does a degree-5 polynomial have?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "A degree-5 graph shows at most 4 TURNING points — but the FTA counts zeros: exactly 5, degree itself."
+     },
+     {
+      "value": 10,
+      "feedback": "Each zero is counted once per multiplicity, not doubled: a degree-5 polynomial has exactly 5."
+     }
+    ],
+    "fallbackFeedback": "Exactly the degree: 5 zeros, with multiplicity."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Count with multiplicity.",
+   "conceptTag": "pra-fta-count",
+   "explanationVariants": [
+    "(x − 1)² contributes the zero 1 TWICE and (x + 2) once: 2 + 1 = 3 — matching the degree 3.",
+    "Multiplicities add up to the degree: 2 + 1 = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = (x − 1)²(x + 2). Counting multiplicity, how many zeros does f have?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "Only two DISTINCT zeros (1 and −2), but the FTA counts the double zero at 1 twice: 2 + 1 = 3."
+     },
+     {
+      "value": 4,
+      "feedback": "The exponent 2 doesn't square the count — it says the zero 1 counts twice. Total 2 + 1 = 3."
+     }
+    ],
+    "fallbackFeedback": "Degree 3 = multiplicity 2 (at x = 1) + 1 (at x = −2)."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-fta-count__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "When a graph shows **fewer** real zeros than the degree, the FTA tells you exactly where the rest are: **off the real line**. A quartic crossing the x-axis only twice has 4 − 2 = **two non-real zeros** — invisible on the graph, guaranteed by the theorem.",
+   "figure": "pra-fewer-real"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find the hidden count.",
+   "conceptTag": "pra-fta-count",
+   "explanationVariants": [
+    "Degree 4 promises 4 zeros; 2 are real, so 4 − 2 = 2 are non-real complex.",
+    "The two missing zeros can't be real (the graph would show them) — they're complex, and there are exactly 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A degree-4 polynomial's graph crosses the x-axis exactly twice (simple crossings). How many NON-REAL zeros does it have?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "The FTA guarantees 4 zeros total. With only 2 visible on the axis, 2 more exist off the real line."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is the TOTAL. Subtract the 2 real crossings: 2 non-real remain."
+     }
+    ],
+    "fallbackFeedback": "4 total − 2 real = 2 non-real zeros."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-fta-count__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A concrete quartic.",
+   "conceptTag": "pra-fta-count",
+   "explanationVariants": [
+    "x⁴ − 1 = (x² − 1)(x² + 1): real zeros ±1 from the first factor; x² + 1 = 0 gives the non-real ±i. Four zeros in all.",
+    "Two factors, two zeros each: ±1 (real) and ±i (imaginary) — the FTA's full count of 4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "f(x) = x⁴ − 1. Which list is ALL of its complex zeros?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "1, −1, i, −i",
+      "correct": true,
+      "feedback": "Right — (x² − 1) contributes ±1 and (x² + 1) contributes ±i: four zeros for degree four."
+     },
+     {
+      "id": "o2",
+      "label": "1 and −1 only",
+      "feedback": "That's only the REAL zeros. x² + 1 = 0 still demands solutions: x = ±i complete the count of 4."
+     },
+     {
+      "id": "o3",
+      "label": "1, −1, and 0",
+      "feedback": "f(0) = −1 ≠ 0, so 0 isn't a zero. The missing pair solves x² = −1: ±i."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-fta-count__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Read a factored inventory.",
+   "conceptTag": "pra-fta-count",
+   "explanationVariants": [
+    "Multiplicities 3 + 2 + 1 = 6 zeros with multiplicity, but only 3 DISTINCT zeros: 5, −1, and 4.",
+    "The exponents inflate the count to 6, yet the zero LIST has three entries: 5, −1, 4."
+   ],
+   "hints": [
+    "Distinct zeros = the number of different factors, ignoring exponents.",
+    "The factors are (x − 5), (x + 1), (x − 4) — how many different zeros is that?",
+    "Exponents change multiplicity, not distinctness: 3 distinct zeros."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "g(x) = (x − 5)³(x + 1)²(x − 4). How many DISTINCT zeros does g have?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 counts multiplicity (3 + 2 + 1) — the degree. DISTINCT zeros ignore the exponents: 5, −1, 4 → three."
+     },
+     {
+      "value": 5,
+      "feedback": "5 is one of the zeros' values, not the count. The distinct zeros are 5, −1, and 4: three of them."
+     }
+    ],
+    "fallbackFeedback": "Three distinct zeros: 5, −1, 4 (multiplicities 3, 2, 1)."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-fta-count__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Zeros are conserved.",
+   "takeaways": [
+    "Degree n ⇒ exactly n complex zeros, counted with multiplicity.",
+    "Missing real zeros are hiding off the real line, never absent.",
+    "Distinct zeros ≤ degree; multiplicities fill the gap."
+   ],
+   "teaser": "Next: WHY complex zeros of real polynomials always arrive in mirror pairs."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pra-fta-count",
+   "concept": {
+    "id": "rem-pra0201-c",
+    "kind": "concept",
+    "body": "FTA bookkeeping: total zeros (with multiplicity) = degree. Non-real zeros = degree − real zeros (with multiplicity)."
+   },
+   "check": {
+    "id": "rem-pra0201-k",
+    "kind": "check",
+    "body": "One count.",
+    "conceptTag": "pra-fta-count",
+    "explanationVariants": [
+     "Degree 6 with 4 real zeros leaves 6 − 4 = 2 non-real.",
+     "The FTA's ledger: 6 total, 4 on the axis, 2 off it."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A degree-6 polynomial has 4 real zeros (with multiplicity). How many non-real zeros does it have?",
+     "answer": 2,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 6,
+       "feedback": "6 is the total. Subtract the 4 real: 2 non-real."
+      },
+      {
+       "value": 4,
+       "feedback": "4 is the real count. The remainder 6 − 4 = 2 is non-real."
+      }
+     ],
+     "fallbackFeedback": "6 − 4 = 2 non-real zeros."
+    }
+   }
+  }
+ ]
+}

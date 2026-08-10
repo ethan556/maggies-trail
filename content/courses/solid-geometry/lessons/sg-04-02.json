@@ -1,0 +1,558 @@
+{
+  "id": "sg-04-02",
+  "slug": "subtracting-solids",
+  "title": "Subtracting Solids",
+  "courseId": "solid-geometry",
+  "chapterId": "ch4-composite-solids",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sg-composite-subtract",
+      "concept": {
+        "id": "rem-sg-composite-subtract-c",
+        "kind": "concept",
+        "body": "Hollow solids price by subtraction: volume = outer solid − removed solid. The tube: π(R² − r²)h — subtract the SQUARES, never square the difference ((R − r)² misprices the ring). Bores through blocks and carved cavities follow the same one-minus pattern, and bending a constant-section solid changes nothing (Cavalieri)."
+      },
+      "check": {
+        "id": "rem-sg-composite-subtract-k",
+        "kind": "check",
+        "body": "One ring.",
+        "conceptTag": "sg-composite-subtract",
+        "explanationVariants": [
+          "(R² − r²)h = (16 − 1)(3).",
+          "15 × 3 = 45."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Tube: outer radius 4, inner radius 1, length 3. Coefficient of π = ?",
+          "answer": 45,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 27,
+              "feedback": "27 = (4−1)²(3) squares the difference — difference the squares: (16 − 1)(3) = 45."
+            },
+            {
+              "value": 48,
+              "feedback": "48 is the solid cylinder — the bore removes (1)(3) = 3: 45."
+            }
+          ],
+          "fallbackFeedback": "(16 − 1)(3) = 45."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Hollows price by SUBTRACTION: outer solid minus the removed one. Chapter 1's offset sweep — the tube — finally gets its bill: outer cylinder minus inner cylinder, π(R² − r²)h. Every ring-sectioned solid works this way, and the drilled cylinder that priced the sphere already showed the pattern.",
+      "figure": "sg-subtracting"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The tube's bill.",
+      "conceptTag": "sg-composite-subtract",
+      "explanationVariants": [
+        "Outer π(25)(6) minus inner π(4)(6).",
+        "(25 − 4)(6) = 126."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A tube: outer radius 5, inner radius 2, length 6. Volume coefficient (of π) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "R",
+            "label": "the outer radius",
+            "value": 5
+          },
+          {
+            "id": "r",
+            "label": "the inner radius",
+            "value": 2
+          },
+          {
+            "id": "L",
+            "label": "the length",
+            "value": 6
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "R"
+              },
+              "right": {
+                "op": "const",
+                "id": "R"
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "r"
+              },
+              "right": {
+                "op": "const",
+                "id": "r"
+              }
+            }
+          },
+          "right": {
+            "op": "const",
+            "id": "L"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0.01,
+        "numericErrors": [
+          {
+            "value": 150,
+            "feedback": "150 is the SOLID outer cylinder — the bore removes (4)(6) = 24: 126."
+          },
+          {
+            "value": 54,
+            "feedback": "54 = (5−2)²(6) squares the DIFFERENCE — subtract the squares: (25 − 4)(6) = 126."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the BORE alone — the tube keeps 150 − 24 = 126."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "π(25 − 4)(6) = 126π — R² − r², never (R − r)².",
+        "successFeedback": "π(25 − 4)(6) = 126π — R² − r², never (R − r)²."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-subtract__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Bore through a block.",
+      "conceptTag": "sg-composite-subtract",
+      "explanationVariants": [
+        "Block 10 × 10 × 4 = 400; the drill removes a cylinder r = 2 through the 4-thickness.",
+        "400 − π(4)(4) = 400 − 16π ≈ 349.73."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A 10 × 10 × 4 block has a cylindrical hole of radius 2 drilled straight through its 4-unit thickness. Remaining volume (2 decimals) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "pi",
+            "label": "π",
+            "value": 3.141592653589793
+          },
+          {
+            "id": "s",
+            "label": "the block side",
+            "value": 10
+          },
+          {
+            "id": "t",
+            "label": "the block thickness",
+            "value": 4
+          },
+          {
+            "id": "r",
+            "label": "the hole radius",
+            "value": 2
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "s"
+              },
+              "right": {
+                "op": "const",
+                "id": "s"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "t"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "const",
+              "id": "pi"
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "r"
+                }
+              },
+              "right": {
+                "op": "const",
+                "id": "t"
+              }
+            }
+          }
+        },
+        "approxRound": 2,
+        "answerMode": "numeric",
+        "tolerance": 0.5,
+        "numericErrors": [
+          {
+            "value": 400,
+            "feedback": "400 ignores the hole — the drill removes π(2²)(4) = 16π ≈ 50.27: ≈ 349.73."
+          },
+          {
+            "value": 374.87,
+            "feedback": "374.87 removes only half the bore (8π) — the full hole is 16π: ≈ 349.73."
+          },
+          {
+            "value": 299.46,
+            "feedback": "299.46 subtracts the bore twice — once: 400 − 16π ≈ 349.73."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "400 − 16π ≈ 349.73 — mixed exact-and-π bookkeeping, subtraction across shapes.",
+        "successFeedback": "400 − 16π ≈ 349.73 — mixed exact-and-π bookkeeping, subtraction across shapes."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-subtract__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The mold.",
+      "conceptTag": "sg-composite-subtract",
+      "explanationVariants": [
+        "The mold = block minus the hemisphere-shaped cavity.",
+        "Block 8 × 8 × 4 = 256; cavity ⅔π(27) = 18π ≈ 56.55."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A hemispherical bowl of radius 3 is carved (flat side up) into an 8 × 8 × 4 block. Remaining material (2 decimals) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "pi",
+            "label": "π",
+            "value": 3.141592653589793
+          },
+          {
+            "id": "s",
+            "label": "the block side",
+            "value": 8
+          },
+          {
+            "id": "t",
+            "label": "the block thickness",
+            "value": 4
+          },
+          {
+            "id": "r",
+            "label": "the bowl radius",
+            "value": 3
+          }
+        ],
+        "approxFormula": {
+          "op": "subtract",
+          "left": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "s"
+              },
+              "right": {
+                "op": "const",
+                "id": "s"
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "t"
+            }
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "divide",
+              "left": {
+                "op": "lit",
+                "value": 2
+              },
+              "right": {
+                "op": "lit",
+                "value": 3
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "const",
+                "id": "pi"
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "r"
+                },
+                "right": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "const",
+                    "id": "r"
+                  },
+                  "right": {
+                    "op": "const",
+                    "id": "r"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "approxRound": 2,
+        "answerMode": "numeric",
+        "tolerance": 0.5,
+        "numericErrors": [
+          {
+            "value": 256,
+            "feedback": "256 ignores the carving — the hemisphere removes ⅔π(27) ≈ 56.55: ≈ 199.45."
+          },
+          {
+            "value": 142.9,
+            "feedback": "142.9 carves a FULL sphere (≈ 113.1) — the bowl is half: ≈ 199.45."
+          },
+          {
+            "value": 227.72,
+            "feedback": "227.72 removes a CONE of matching size (⅓π·9·3 = 9π) — the carved bowl is a hemisphere holding ⅔π(27) = 18π: 256 − 18π ≈ 199.45."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "256 − 18π ≈ 199.45 — carve-outs bill exactly like caps, with a minus sign.",
+        "successFeedback": "256 − 18π ≈ 199.45 — carve-outs bill exactly like caps, with a minus sign."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-subtract__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Which subtraction?",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "Build the solid block first: 5 long, 4 wide, 3 tall. The hole drilled out of it will be subtracted next.",
+        "targetVolume": 60,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 2,
+        "wStart": 2,
+        "hStart": 2,
+        "lockW": false,
+        "lockH": false,
+        "commonBuilds": [
+          {
+            "volume": 12,
+            "feedback": "12 is one face's area, not the volume. Volume needs all three dimensions multiplied: 5 × 4 × 3."
+          },
+          {
+            "volume": 20,
+            "feedback": "20 is 5 × 4 — the base only. Multiply by the height of 3 as well."
+          }
+        ],
+        "successFeedback": "60 cubic units. Now the subtraction is easy to see: whatever the hole removes comes straight off this 60, which is why composite volume is always build-then-subtract rather than a new formula.",
+        "lowFeedback": "Fewer cubes than the block needs — grow a dimension toward 5 by 4 by 3.",
+        "highFeedback": "More cubes than the block needs — shrink a dimension toward 5 by 4 by 3."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Cavalieri, again.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The tube from k1 (ring sections of constant area 21π, length 6) is BENT into a gentle arc, keeping every section the same. Its volume coefficient = ?",
+        "answer": 126,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 63,
+            "feedback": "63 halves for the bend — Cavalieri charges nothing for stacking shape: still 126."
+          },
+          {
+            "value": 132,
+            "feedback": "132 pads for the arc — constant sections × length: 126."
+          }
+        ],
+        "fallbackFeedback": "Constant 21π sections over 6: 126 — the bend was free (chapter 2, still on duty)."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The pipe order.",
+      "conceptTag": "sg-composite-subtract",
+      "hints": [
+        "Concrete = outer cylinder minus the water channel.",
+        "Outer radius = inner + wall = 4 + 1 = 5.",
+        "Per meter of length: π(25 − 16)(1); then 50 meters."
+      ],
+      "explanationVariants": [
+        "Ring (25 − 16) = 9 per unit length; 9 × 50 = 450π ≈ 1413.72 — about 1414 cubic units of concrete.",
+        "9 × 50 = 450; ≈ 1413.72."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "A concrete pipe: inner (water) radius 4, wall thickness 1, length 50. Concrete volume (2 decimals) = ?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "pi",
+            "label": "π",
+            "value": 3.141592653589793
+          },
+          {
+            "id": "ri",
+            "label": "the inner radius",
+            "value": 4
+          },
+          {
+            "id": "ro",
+            "label": "the outer radius",
+            "value": 5
+          },
+          {
+            "id": "L",
+            "label": "the length",
+            "value": 50
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "pi"
+          },
+          "right": {
+            "op": "multiply",
+            "left": {
+              "op": "subtract",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "ro"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "ro"
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "const",
+                  "id": "ri"
+                },
+                "right": {
+                  "op": "const",
+                  "id": "ri"
+                }
+              }
+            },
+            "right": {
+              "op": "const",
+              "id": "L"
+            }
+          }
+        },
+        "approxRound": 2,
+        "answerMode": "numeric",
+        "tolerance": 2,
+        "numericErrors": [
+          {
+            "value": 1256.64,
+            "feedback": "1256.64 ≈ 400π prices the WATER channel — the concrete is the ring: (25 − 16)(50) = 450π ≈ 1413.72."
+          },
+          {
+            "value": 157.08,
+            "feedback": "157.08 ≈ 50π uses (R − r)² = 1 — rings difference the squares: 9 per length, 450π total."
+          },
+          {
+            "value": 3926.99,
+            "feedback": "3926.99 ≈ 1250π pours the pipe SOLID — subtract the channel: 450π ≈ 1413.72."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "π(5² − 4²)(50) = 450π ≈ 1413.72 — the wall is thin, but R² − r² = 9, not 1.",
+        "successFeedback": "π(5² − 4²)(50) = 450π ≈ 1413.72 — the wall is thin, but R² − r² = 9, not 1."
+      },
+      "variant": {
+        "gen": "g10-solid-geometry",
+        "form": "sg-composite-subtract__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Price the absence.",
+      "takeaways": [
+        "Hollow volume = outer minus removed: tubes π(R² − r²)h, bores, carved cavities.",
+        "R² − r², never (R − r)² — areas subtract, radii don't.",
+        "Bends are free (Cavalieri); mixed exact-and-π answers are normal bookkeeping."
+      ],
+      "teaser": "Finale of the chapter: what these compounds cost in SURFACE."
+    }
+  ]
+}

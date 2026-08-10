@@ -1,0 +1,349 @@
+{
+  "id": "pv-01-03",
+  "slug": "which-is-bigger",
+  "title": "Which Is Bigger?",
+  "courseId": "place-value",
+  "chapterId": "ch1-inside-a-number",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To compare two numbers, **walk the spots left to right** — hundreds first. The first spot where the digits differ settles it, instantly. 452 vs 449: hundreds tie (4 = 4), tens differ (5 > 4) — done, 452 wins. Whatever the ones say afterward can't change it.",
+      "figure": "pv3-compare"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Put the left-to-right walk to work.",
+      "conceptTag": "compare-numbers",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Order these from smallest to largest: 89, 401, 98, 140.",
+        "items": [
+          {
+            "id": "n401",
+            "label": "401"
+          },
+          {
+            "id": "n89",
+            "label": "89"
+          },
+          {
+            "id": "n140",
+            "label": "140"
+          },
+          {
+            "id": "n98",
+            "label": "98"
+          }
+        ],
+        "correctOrder": [
+          "n89",
+          "n98",
+          "n140",
+          "n401"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "n98",
+            "second": "n89",
+            "feedback": "98 slipped in front of 89 — but their TENS differ first: 8 tens vs 9 tens, so 89 is the smaller one."
+          },
+          {
+            "first": "n401",
+            "second": "n140",
+            "feedback": "401 landed before 140 — check the hundreds first: 4 hundreds beat 1 hundred, so 401 is the bigger of the two."
+          }
+        ],
+        "missFeedback": "Two-digit numbers first (compare their tens), then the three-digit ones (compare their hundreds).",
+        "successFeedback": "89 < 98 < 140 < 401 — every decision came from the first spot that differed."
+      },
+      "predict": {
+        "prompt": "Can a 2-digit number ever beat a 3-digit number?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — more digits always wins"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — if its digits are big"
+          },
+          {
+            "id": "some",
+            "label": "Sometimes"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "A third digit means the hundreds place is occupied — even 100 outranks 99. Big digits can't rescue a number from a missing place."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Big digits can still lose.",
+      "conceptTag": "compare-numbers",
+      "explanationVariants": [
+        "The first spot decides: 4 hundreds beat 3 hundreds, and 399's two nines can't make up a whole hundreds step.",
+        "399 is one step from 400; 401 is one step past it. The hundreds digit already told the story."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger — 399 or 401 — and what's the FASTEST way to know?",
+        "options": [
+          {
+            "id": "a",
+            "label": "401 — its hundreds digit wins (4 > 3), and the 99 can't catch up",
+            "correct": true,
+            "feedback": "One glance at the first spot: 4 beats 3. Everything to the right is too small to matter."
+          },
+          {
+            "id": "b",
+            "label": "399 — it's full of big digits",
+            "feedback": "Nines LOOK big, but they sit in cheap spots. Two nines together are worth 99 — less than the single hundreds step 401 has extra."
+          },
+          {
+            "id": "c",
+            "label": "They're basically equal",
+            "feedback": "Close, but comparison has no 'basically' — the hundreds spot differs, so 401 is strictly bigger, by 2."
+          },
+          {
+            "id": "d",
+            "label": "You must subtract them to be sure",
+            "feedback": "Subtracting works but wastes effort — the leftmost differing spot settles every comparison in one look."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "compare-numbers",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Why can't later spots fight back?** Because one hundreds step is worth 100, and the tens and ones together can reach at most 99. Each spot outweighs everything to its right, combined. That's the whole reason the left-to-right walk works.",
+      "figure": "pv3-compare"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Diagnose a comparison gone wrong.",
+      "conceptTag": "compare-numbers",
+      "explanationVariants": [
+        "The walk goes left to right: hundreds first. 312's 3 beats 275's 2 before the tens ever get a vote.",
+        "275's flashy 7 sits in the tens — worth at most 70 — while 312 holds a whole extra hundred."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Tori says 275 > 312 \"because 7 is bigger than 1.\" What went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "She compared tens before hundreds — 312's 3 hundreds win first",
+            "correct": true,
+            "feedback": "The walk starts at the LEFT. Hundreds differ (3 > 2), so 312 wins before the 7 gets a say."
+          },
+          {
+            "id": "b",
+            "label": "Nothing — she's right",
+            "feedback": "Check the hundreds: 275 has two, 312 has three. A whole extra hundred beats any tens digit."
+          },
+          {
+            "id": "c",
+            "label": "She should have compared the ones first",
+            "feedback": "Starting at the RIGHT is even worse — the cheapest spot speaks first. Comparison walks from the most valuable spot down."
+          },
+          {
+            "id": "d",
+            "label": "Numbers with different digits can't be compared",
+            "feedback": "Any two numbers can be compared — that's what the spot-walk is for. Digits differing is exactly what settles it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "compare-numbers",
+        "form": "leadingDigitError"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "500 is the fence — which side does each number land on?",
+      "conceptTag": "compare-numbers",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each number: bigger than 500, or smaller?",
+        "buckets": [
+          {
+            "id": "small",
+            "label": "Smaller than 500",
+            "icon": "⬇️"
+          },
+          {
+            "id": "big",
+            "label": "Bigger than 500",
+            "icon": "⬆️"
+          }
+        ],
+        "items": [
+          {
+            "id": "n499",
+            "label": "499",
+            "bucketId": "small",
+            "feedback": "So close — but 4 hundreds can never reach 5 hundreds, no matter how loud the 99 shouts."
+          },
+          {
+            "id": "n505",
+            "label": "505",
+            "bucketId": "big",
+            "feedback": "Hundreds tie at 5, so walk right: 505 has 5 extra ones past 500 — bigger."
+          },
+          {
+            "id": "n89",
+            "label": "89",
+            "bucketId": "small",
+            "feedback": "89 has no hundreds spot at all — a two-digit number can't reach any three-digit number."
+          },
+          {
+            "id": "n512",
+            "label": "512",
+            "bucketId": "big",
+            "feedback": "Hundreds tie, tens differ: 1 ten beats 0 tens, so 512 clears the fence."
+          }
+        ],
+        "missFeedback": "Check the hundreds digit against 5 first; on a tie, keep walking right until a spot differs.",
+        "successFeedback": "Every call came from the first differing spot — even the 499 squeaker."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Build for smallness — give the cheap digits the expensive spots.",
+      "conceptTag": "compare-numbers",
+      "explanationVariants": [
+        "Smallest number = smallest digits in the most valuable spots. 2 leads (0 can't), then 0 takes the tens, leaving 7 for the ones: 207.",
+        "Compare the candidates: 207 vs 270 — tens differ, 0 < 7, so 207 wins the small crown."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using each of the digits 7, 0, and 2 exactly once, what is the SMALLEST 3-digit number you can build? (It can't start with 0.)",
+        "answer": 207,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 27,
+            "feedback": "27 starts with the 0 and drops it — that's a 2-digit number. The 0 must take a middle or last spot instead."
+          },
+          {
+            "value": 270,
+            "feedback": "270 wastes the 0 on the cheapest spot. Put the 0 in the TENS and 270 shrinks to 207 — smaller digits belong in bigger spots."
+          },
+          {
+            "value": 702,
+            "feedback": "702 leads with the biggest digit — that builds the LARGEST number. For the smallest, the littlest legal digit (2) leads."
+          }
+        ],
+        "fallbackFeedback": "Smallest legal leader first (2), then the smallest remaining digit (0) in tens, then 7."
+      },
+      "variant": {
+        "gen": "compare-numbers",
+        "form": "smallestWithZero"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Climb the scoreboard, one spot at a time.",
+      "conceptTag": "compare-numbers",
+      "hints": [
+        "Find Leo first: 10 more than 438 moves which digit?",
+        "Leo = 448 — only the tens digit climbed.",
+        "Nia beats Leo by exactly 100: one hundreds step up from 448."
+      ],
+      "explanationVariants": [
+        "Leo: 438 + 10 = 448. Nia: 448 + 100 = 548 — each step moved exactly one spot's digit.",
+        "Two climbs: tens digit 3→4 (Leo), then hundreds digit 4→5 (Nia). Final: 548."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Mia's score is 438. Leo scores 10 more than Mia. Nia beats Leo by exactly 100. What is Nia's score?",
+        "answer": 548,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 448,
+            "feedback": "448 is LEO's score — step one done! Nia beats him by a full hundreds step. Add 100."
+          },
+          {
+            "value": 538,
+            "feedback": "538 adds the 100 to MIA's score, skipping Leo's +10. Nia's 100 stacks on top of Leo's 448."
+          },
+          {
+            "value": 458,
+            "feedback": "458 added 10 twice. Nia's lead over Leo is 100 — a hundreds-spot step, not another tens step."
+          }
+        ],
+        "fallbackFeedback": "Chain it: Mia 438 → Leo +10 → Nia +100. Each addition moves one spot."
+      },
+      "variant": {
+        "gen": "compare-numbers",
+        "form": "scoreChain"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "No comparison can slow you down now.",
+      "takeaways": [
+        "Walk the spots left to right; the first difference decides everything.",
+        "Each spot outweighs all the spots to its right combined — that's why the walk works.",
+        "Building small means parking small digits in expensive spots."
+      ],
+      "teaser": "ten of these is one of those — the trade that secretly runs all of arithmetic."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "compare-numbers",
+      "concept": {
+        "id": "rem-cn-c",
+        "kind": "concept",
+        "body": "Quick rewind. Line both numbers up and **scan from the left**. Same digit? Step right. Different? The bigger digit's number wins — stop there. 56 vs 61: tens differ right away (5 vs 6), so 61 is bigger. The ones never get a vote."
+      },
+      "check": {
+        "id": "rem-cn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "compare-numbers",
+        "explanationVariants": [
+          "Tens differ first: 6 > 5, so 61 > 56 — decided in one spot.",
+          "One extra ten (worth 10) beats the biggest possible ones digit (9)."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is bigger: 56 or 61?",
+          "options": [
+            {
+              "id": "a",
+              "label": "61 — the tens differ first, and 6 > 5",
+              "correct": true,
+              "feedback": "First differing spot wins: 6 tens beat 5 tens, and the walk stops."
+            },
+            {
+              "id": "b",
+              "label": "56 — because 6 beats 1 in the ones",
+              "feedback": "The ones only matter if the tens TIE. Here the tens already differ — and 61 holds the bigger one."
+            },
+            {
+              "id": "c",
+              "label": "They're equal",
+              "feedback": "Line them up: 5-6 versus 6-1. The very first spot differs, so one of them must be bigger — it's 61."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

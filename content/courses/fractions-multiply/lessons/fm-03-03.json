@@ -1,0 +1,337 @@
+{
+  "id": "fm-03-03",
+  "slug": "simplify-the-product",
+  "title": "Simplify the Product",
+  "courseId": "fractions-multiply",
+  "chapterId": "ch3-fraction-times-fraction",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A product isn't finished until it's in lowest terms. Multiply across, then divide top and bottom by their common factor. 4/9 × 3/8 = 12/72, and 12/72 divides by 12 to give 1/6. Always ask: can this be reduced?",
+      "figure": "fm-cancel"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiply, then reduce.",
+      "conceptTag": "simplify-product",
+      "predict": {
+        "prompt": "2/3 × 6/7. Both factors are less than one whole. Where must the product land?",
+        "options": [
+          {
+            "id": "belowboth",
+            "label": "Below both of them — taking a part of a part shrinks it twice"
+          },
+          {
+            "id": "between",
+            "label": "Somewhere between 2/3 and 6/7"
+          },
+          {
+            "id": "above",
+            "label": "Above both — two fractions multiplied grow"
+          }
+        ],
+        "outcomeId": "belowboth",
+        "reveal": "Below both. 2/3 of 6/7 is a part OF a part, so it is smaller than either piece you started with. Multiplying across gives 12/21, which reduces to 4/7 — and 4/7 is indeed under both 2/3 and 6/7."
+      },
+      "widget": {
+        "type": "fractionBar",
+        "prompt": "Build the product of 2/3 × 6/7 in its simplest form.",
+        "targetNum": 4,
+        "targetDen": 7,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 1,
+        "denStart": 1,
+        "commonFractions": [
+          {
+            "num": 8,
+            "den": 10,
+            "feedback": "That looks like the numerators and denominators were ADDED, not multiplied. Multiply across: 2×6 over 3×7."
+          },
+          {
+            "num": 12,
+            "den": 7,
+            "feedback": "The numerator is right (2×6 = 12) but the denominator was not multiplied — 3×7 = 21, and 12/21 reduces to 4/7."
+          }
+        ],
+        "lowFeedback": "Below the product — build a slightly larger share.",
+        "highFeedback": "Above the product — build a slightly smaller share.",
+        "successFeedback": "4/7. Multiplying across gives 12/21, and dividing both by 3 gives 4/7 — the same length either way, which is what \"reducing\" means: a different name for one bar, not a different bar."
+      },
+      "hints": [
+        "Tops: 2 × 6 = 12.",
+        "Bottoms: 3 × 7 = 21.",
+        "12/21 divides by 3 → 4/7."
+      ],
+      "explanationVariants": [
+        "2/3 × 6/7 = 12/21 = 4/7.",
+        "Multiply across, then divide by 3: 4/7."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Finish the reduction.",
+      "conceptTag": "simplify-product",
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "denominatorOnly"
+      },
+      "explanationVariants": [
+        "15/60 = 1/4.",
+        "Divide both by 15: the denominator is 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "5/6 × 3/10 = 15/60. In lowest terms this is 1 over what number? (divide both by 15)",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 leaves it unreduced. Divide top and bottom by 15: 15/60 = 1/4."
+          },
+          {
+            "value": 10,
+            "feedback": "10 only partly reduces. The greatest common factor of 15 and 60 is 15, giving 1/4."
+          }
+        ],
+        "fallbackFeedback": "15/60 divides by 15 to give 1/4."
+      },
+      "hints": [
+        "What divides both 15 and 60? 15.",
+        "15 ÷ 15 = 1, 60 ÷ 15 = 4.",
+        "1/4."
+      ]
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You can also **cancel before** multiplying, to keep numbers small. In 4/9 × 3/8, the 3 and 9 share a factor of 3, and the 4 and 8 share a factor of 4. Cancel first: 1/3 × 1/2 = 1/6 — the same answer, but with much smaller numbers to handle.",
+      "figure": "fm-cancel"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Same product, either path.",
+      "conceptTag": "simplify-product",
+      "explanationVariants": [
+        "4/9 × 3/8 = 1/6.",
+        "Cancel to 1/3 × 1/2 = 1/6."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "4/9 × 3/8 = ? (cancel first, or multiply then reduce)",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 6,
+        "allowWhole": false,
+        "form": "lowestTerms",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 7,
+            "den": 17,
+            "feedback": "7/17 adds across (4+3 over 9+8). Multiply: 12/72 = 1/6."
+          },
+          {
+            "whole": 0,
+            "num": 32,
+            "den": 27,
+            "feedback": "32/27 cross-multiplies. Straight across gives 12/72 = 1/6."
+          }
+        ],
+        "fallbackFeedback": "Cancel first (4/9 × 3/8 → 1/3 × 1/2) or reduce 12/72 — both give 1/6.",
+        "successFeedback": "Right — cancel to 1/3 × 1/2, or reduce 12/72; both give 1/6.",
+        "formFeedback": "That's the right amount — now simplify it: divide the top and bottom by their common factor."
+      },
+      "hints": [
+        "Cancel 3&9 (÷3) and 4&8 (÷4).",
+        "That leaves 1/3 × 1/2.",
+        "1/6."
+      ],
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "cancelFirst"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Reduce the result.",
+      "conceptTag": "simplify-product",
+      "widget": {
+        "type": "numeric",
+        "prompt": "3/5 × 10/12 = 30/60. In lowest terms this is 1 over what number? (divide both by 30)",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 leaves it unreduced. Divide top and bottom by 30: 30/60 = 1/2."
+          },
+          {
+            "value": 5,
+            "feedback": "5 only partly reduces. The greatest common factor of 30 and 60 is 30, giving 1/2."
+          }
+        ],
+        "fallbackFeedback": "30/60 divides by 30 to give 1/2."
+      },
+      "hints": [
+        "What divides both 30 and 60? 30.",
+        "30 ÷ 30 = 1, 60 ÷ 30 = 2.",
+        "1/2."
+      ],
+      "explanationVariants": [
+        "30/60 = 1/2.",
+        "Divide both by 30: the denominator is 2."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "When a whole factor cancels.",
+      "conceptTag": "simplify-product",
+      "explanationVariants": [
+        "4/7 × 7/8 = 1/2 (the 7s cancel).",
+        "Cancelling the 7s leaves 4/8 = 1/2."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "4/7 × 7/8 = ? (notice the 7s)",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 2,
+        "allowWhole": false,
+        "form": "lowestTerms",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 11,
+            "den": 15,
+            "feedback": "11/15 adds across (4+7 over 7+8). Multiply: 28/56 = 1/2."
+          },
+          {
+            "whole": 0,
+            "num": 32,
+            "den": 49,
+            "feedback": "32/49 cross-multiplies. Straight across gives 28/56 = 1/2."
+          }
+        ],
+        "fallbackFeedback": "The 7s cancel: 4/7 × 7/8 leaves 4/8, which simplifies.",
+        "successFeedback": "Right — the 7s cancel, leaving 4/8 = 1/2.",
+        "formFeedback": "That's the right amount — now simplify it: divide the top and bottom by their common factor."
+      },
+      "hints": [
+        "The 7 on top and 7 on bottom cancel.",
+        "That leaves 4/8.",
+        "4/8 = 1/2."
+      ],
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "noticeShared"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Multiply and simplify.",
+      "conceptTag": "simplify-product",
+      "hints": [
+        "Tops: 2 × 3 = 6.",
+        "Bottoms: 9 × 4 = 36.",
+        "6/36 divides by 6."
+      ],
+      "explanationVariants": [
+        "2/9 × 3/4 = 6/36, which reduces to 1/6.",
+        "Or cancel the 3 with the 9 first: 2/3 × 1/4 = 2/12 = 1/6."
+      ],
+      "widget": {
+        "type": "fractionEntry",
+        "prompt": "2/9 × 3/4 = ?",
+        "answerWhole": 0,
+        "answerNum": 1,
+        "answerDen": 6,
+        "allowWhole": false,
+        "form": "lowestTerms",
+        "commonEntries": [
+          {
+            "whole": 0,
+            "num": 5,
+            "den": 13,
+            "feedback": "5/13 adds across (2+3 over 9+4). Multiply: 6/36 = 1/6."
+          },
+          {
+            "whole": 0,
+            "num": 8,
+            "den": 27,
+            "feedback": "8/27 cross-multiplies. Straight across gives 6/36 = 1/6."
+          }
+        ],
+        "fallbackFeedback": "Multiply across (2 × 3 over 9 × 4 = 6/36), then reduce by 6.",
+        "successFeedback": "Right — 6/36 reduces to 1/6 (divide both by 6).",
+        "formFeedback": "That's the right amount — now simplify it: divide the top and bottom by their common factor."
+      },
+      "variant": {
+        "gen": "frac-multiply",
+        "form": "bareMultiply"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Always land in lowest terms.",
+      "takeaways": [
+        "After multiplying across, reduce the product by its greatest common factor.",
+        "You can cancel common factors before multiplying to keep the numbers small.",
+        "Both paths — reduce-after and cancel-before — reach the same simplified answer."
+      ],
+      "teaser": "next chapter: multiplying as scaling — bigger, smaller, or the same."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "simplify-product",
+      "concept": {
+        "id": "rem-sp-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Multiply across, then divide top and bottom by their common factor.** For 2/3 × 3/4: straight across is 6/12, and 6/12 divides by 6 to give 1/2. Not finished until it's in lowest terms."
+      },
+      "check": {
+        "id": "rem-sp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "simplify-product",
+        "explanationVariants": [
+          "6/12 divides by 6 top and bottom → 1/2.",
+          "The product 6/12 reduces to 1/2."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "2/3 × 3/4 = 6/12. In lowest terms this is 1 over what number? (divide both by 6)",
+          "answer": 2,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 12,
+              "feedback": "12 leaves it unreduced. Divide top and bottom by 6: 6/12 = 1/2."
+            },
+            {
+              "value": 4,
+              "feedback": "4 only partly reduces. The greatest common factor of 6 and 12 is 6, giving 1/2."
+            }
+          ],
+          "fallbackFeedback": "6/12 divides by 6 to give 1/2."
+        }
+      }
+    }
+  ]
+}

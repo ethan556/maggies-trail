@@ -1,0 +1,288 @@
+{
+  "id": "ee-02-02",
+  "slug": "evaluating-expressions",
+  "title": "Evaluating Expressions",
+  "courseId": "expressions-equations",
+  "chapterId": "ch2-variables",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "expression-machine",
+      "body": "**Evaluating** an expression means running the machine: substitute the value, then follow the order of operations. 2n + 1 at n = 4: replace n (2 × 4 + 1), multiply first (8 + 1), then add — output **9**. Substitute completely before computing anything."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Run the expression as a machine.",
+      "conceptTag": "evaluate-expr",
+      "widget": {
+        "type": "functionMachine",
+        "prompt": "The machine runs 2n + 1. Feed it inputs until the output reads 9.",
+        "a": 2,
+        "b": 1,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 9,
+        "successFeedback": "n = 4: 2·4 + 1 = 9. Substituting is running the machine — multiply by 2, then add 1, in that order.",
+        "lowFeedback": "Output's too small — feed it a bigger n.",
+        "highFeedback": "Output's too big — feed it a smaller n."
+      },
+      "predict": {
+        "prompt": "Evaluating 2n + 1 at n = 4: does the 2 multiply BEFORE or after the +1?",
+        "options": [
+          {
+            "id": "before",
+            "label": "Before: 2·4 + 1 = 9"
+          },
+          {
+            "id": "after",
+            "label": "After: 2·(4 + 1) = 10"
+          },
+          {
+            "id": "either",
+            "label": "Either — same answer"
+          }
+        ],
+        "outcomeId": "before",
+        "reveal": "2n glues the 2 to the n by multiplication, which outranks the +1: 8 + 1 = 9. Adding first would need parentheses — 2(n + 1) is a different machine, and the widget will show which one you built."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents evaluate expr.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for evaluate expr must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines evaluate expr."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:evaluate-expr",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Subtraction version.",
+      "conceptTag": "evaluate-expr",
+      "explanationVariants": [
+        "3x − 2 at x = 5: multiply first (3 × 5 = 15), then subtract 2: 13.",
+        "Substitute, then order of operations: 15 − 2 = 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 3x − 2 at x = 5.",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 subtracts first — 3(x − 2) = 3 × 3. But 3x − 2 multiplies first: 3 × 5 = 15, then − 2 = 13."
+          },
+          {
+            "value": 15,
+            "feedback": "15 is 3 × 5 but stops before the − 2. Finish the expression: 15 − 2 = 13."
+          }
+        ],
+        "fallbackFeedback": "3 × 5 = 15, then − 2 = 13."
+      },
+      "variant": {
+        "gen": "eval-expression"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Exponents on variables follow the same order rules. x² at x = 3 means 3² = 3 × 3 = **9** — square the value, don't double it. And in x² + 1, the square resolves before the addition, exactly as it did with plain numbers last chapter.",
+      "figure": "expression-machine"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A variable squared.",
+      "conceptTag": "evaluate-expr",
+      "explanationVariants": [
+        "x² at x = 3 is 3 × 3 = 9 — squaring, not doubling.",
+        "Replace x with 3, then square: 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate x² at x = 3.",
+        "answer": 9,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 DOUBLES x (2 × 3). Squaring multiplies x by ITSELF: 3 × 3 = 9."
+          },
+          {
+            "value": 5,
+            "feedback": "5 adds 3 + 2, reading the exponent as an addend. x² = x × x = 3 × 3 = 9."
+          }
+        ],
+        "fallbackFeedback": "x² = 3 × 3 = 9."
+      },
+      "variant": {
+        "gen": "eval-expression",
+        "form": "square"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Two variables at once.",
+      "conceptTag": "evaluate-expr",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate a + 2b at a = 3, b = 5.",
+        "answer": 13,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 doubles BOTH variables — 2(a + b) = 2 × 8. Only b is doubled: 3 + 2 × 5 = 3 + 10 = 13."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is 2b alone (2 × 5), dropping the a. Add it back: 3 + 10 = 13."
+          }
+        ],
+        "fallbackFeedback": "a + 2b = 3 + 2 × 5 = 3 + 10 = 13."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Parentheses in the rule.",
+      "conceptTag": "evaluate-expr",
+      "explanationVariants": [
+        "(n + 2) ÷ 2 at n = 6: parentheses first (6 + 2 = 8), then divide: 4.",
+        "Add inside the parentheses before dividing: 8 ÷ 2 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate (n + 2) ÷ 2 at n = 6.",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 divides only the 2 (6 + 2÷2 = 6 + 1). The parentheses group FIRST: (6 + 2) ÷ 2 = 8 ÷ 2 = 4."
+          },
+          {
+            "value": 8,
+            "feedback": "8 is the parentheses result (6 + 2) but skips the ÷ 2. Finish: 8 ÷ 2 = 4."
+          }
+        ],
+        "fallbackFeedback": "(6 + 2) ÷ 2 = 8 ÷ 2 = 4."
+      },
+      "variant": {
+        "gen": "eval-expression",
+        "form": "parenDiv"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full order, with a variable.",
+      "conceptTag": "evaluate-expr",
+      "hints": [
+        "Substitute m = 2 everywhere first.",
+        "The expression becomes 3 × 2² + 4.",
+        "Exponent, then multiply, then add."
+      ],
+      "explanationVariants": [
+        "3m² + 4 at m = 2: exponent first (2² = 4), then multiply (3 × 4 = 12), then add (12 + 4 = 16).",
+        "Substitute, then E-M-A order: 4 → 12 → 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 3m² + 4 at m = 2.",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 squares 3m first — (3 × 2)² + 4 = 36 + 4. The exponent touches only m: 2² = 4, then 3 × 4 + 4 = 16."
+          },
+          {
+            "value": 22,
+            "feedback": "22 squares the 4 instead of the m (3 × 2 + 4² = 6 + 16). The exponent sits on m: 2² = 4, then 3 × 4 + 4 = 16."
+          }
+        ],
+        "fallbackFeedback": "2² = 4, then 3 × 4 = 12, then + 4 = 16."
+      },
+      "variant": {
+        "gen": "eval-expression",
+        "form": "squarePlus"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Substitute, then follow the order.",
+      "takeaways": [
+        "Evaluating = replacing each variable with its value, then computing in order.",
+        "Multiplication in 2n + 1 resolves before the addition; exponents on variables resolve first of all.",
+        "Substitute completely before computing anything."
+      ],
+      "teaser": "chapter finale: turning words into expressions — and one famous trap."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "evaluate-expr",
+      "concept": {
+        "id": "rem-ee-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Substitute first, then order of operations.** 4n − 1 at n = 2: swap n for 2, giving 4 × 2 − 1. Multiply first: 8. Then subtract: 7."
+      },
+      "check": {
+        "id": "rem-ee-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "evaluate-expr",
+        "explanationVariants": [
+          "4 × 2 = 8, then − 1 = 7.",
+          "Substitute n = 2, multiply, then subtract: 7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Evaluate 4n − 1 at n = 2.",
+          "answer": 7,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 subtracts first — 4(n − 1) = 4 × 1. Multiply first: 4 × 2 = 8, then − 1 = 7."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is 4 × 2 but skips the − 1. Finish: 8 − 1 = 7."
+            }
+          ],
+          "fallbackFeedback": "4 × 2 = 8, then − 1 = 7."
+        }
+      }
+    }
+  ]
+}

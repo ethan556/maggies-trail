@@ -1,0 +1,331 @@
+{
+  "id": "ee-04-03",
+  "slug": "solving-with-multiplication-and-division",
+  "title": "Solving with Multiplication & Division",
+  "courseId": "expressions-equations",
+  "chapterId": "ch4-one-step-equations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Multiplication equations undo with **division**, and vice versa. To solve 4x = 20, **undo the ×4** by dividing BOTH sides by 4: 4x ÷ 4 = 20 ÷ 4, giving x = **5**. The same balance rule applies — whatever you do to one side, do to the other.",
+      "figure": "ee-mult-div-solve"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Multiplication balances too.",
+      "widget": {
+        "type": "balanceScale",
+        "a": 3,
+        "b": 0,
+        "c": 12,
+        "xMin": 0,
+        "xMax": 8,
+        "xStart": 0,
+        "prompt": "3x = 12. Slide x until the pans balance.",
+        "successFeedback": "x = 4: three boxes of 4 weigh the same as 12. Dividing both sides by 3 is not a rule you obey — it is the arithmetic of sharing the pan's contents equally between the three boxes.",
+        "lowFeedback": "Three boxes of that size are too light.",
+        "highFeedback": "Three boxes of that size are too heavy."
+      },
+      "predict": {
+        "prompt": "The scale starts with x = 0. Right now the left pan (3x + 0) is…",
+        "options": [
+          {
+            "id": "light",
+            "label": "Lighter than the right pan"
+          },
+          {
+            "id": "heavy",
+            "label": "Heavier than the right pan"
+          },
+          {
+            "id": "level",
+            "label": "Already balanced"
+          }
+        ],
+        "outcomeId": "light",
+        "reveal": "At x = 0 the left pan weighs 0 against 12 on the right — 12 short. Every unit you add to x moves only that pan, which is why exactly one value levels the scale."
+      },
+      "conceptTag": "solve-mult-div",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents solve mult div.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for solve mult div must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines solve mult div."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:solve-mult-div",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Check it.",
+      "conceptTag": "solve-mult-div",
+      "explanationVariants": [
+        "Substitute x = 5 back into 4x: 4 × 5 = 20. It matches.",
+        "Checking confirms the solution in the ORIGINAL equation."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Verify x = 5 solves 4x = 20 by computing 4 × 5.",
+        "answer": 20,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 ADDS 4 and 5 instead of multiplying. The check multiplies: 4 × 5 = 20."
+          },
+          {
+            "value": 45,
+            "feedback": "45 glues digits together. Multiply properly: 4 × 5 = 20, matching the original equation."
+          }
+        ],
+        "fallbackFeedback": "4 × 5 = 20, confirming the solution."
+      },
+      "variant": {
+        "gen": "solve-mult-div",
+        "form": "verifyMul"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Division equations undo with **multiplication**. To solve x ÷ 3 = 6, undo the ÷3 by multiplying both sides by 3: x = 6 × 3 = **18**. Notice the pattern across all four one-step types: the opposite operation, applied to both sides, isolates x.",
+      "figure": "ee-mult-div-solve"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Undo a division.",
+      "conceptTag": "solve-mult-div",
+      "explanationVariants": [
+        "To undo ÷3, multiply both sides by 3: 6 × 3 = 18.",
+        "The opposite of dividing by 3 is multiplying by 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve x ÷ 3 = 6.",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 DIVIDES 6 ÷ 3 instead of multiplying. To undo ÷3, multiply both sides by 3: 6 × 3 = 18."
+          },
+          {
+            "value": 9,
+            "feedback": "9 ADDS 3 and 6. The equation uses division, so undo it with multiplication: 6 × 3 = 18."
+          }
+        ],
+        "fallbackFeedback": "Multiply both sides by 3: x = 6 × 3 = 18."
+      },
+      "variant": {
+        "gen": "solve-mult-div",
+        "form": "solveDiv"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pick the undo-operation, round two.",
+      "conceptTag": "solve-mult-div",
+      "widget": {
+        "type": "mcq",
+        "prompt": "To solve x ÷ 4 = 9, what should you do to both sides?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Multiply by 4",
+            "correct": true,
+            "feedback": "Right — the equation DIVIDES by 4, so undo it by multiplying both sides by 4: x = 9 × 4 = 36."
+          },
+          {
+            "id": "b",
+            "label": "Divide by 4",
+            "feedback": "Dividing again would move further from the answer. Since ÷4 is attached, undo it with ×4."
+          },
+          {
+            "id": "c",
+            "label": "Subtract 4",
+            "feedback": "Subtraction undoes addition, not division. Undo ÷4 with its opposite, ×4."
+          }
+        ]
+      },
+      "hints": [
+        "What operation is attached to x?",
+        "Division by 4.",
+        "Undo division with multiplication."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Solve and verify.",
+      "conceptTag": "solve-mult-div",
+      "explanationVariants": [
+        "5x = 35: divide both sides by 5, x = 7. Check: 5 × 7 = 35. ✓",
+        "Undo ×5 with ÷5: 35 ÷ 5 = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve 5x = 35.",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 175,
+            "feedback": "175 MULTIPLIES 5 × 35 instead of dividing. To undo ×5, divide both sides by 5: 35 ÷ 5 = 7."
+          },
+          {
+            "value": 30,
+            "feedback": "30 SUBTRACTS 5 from 35. The equation multiplies, so undo it by dividing: 35 ÷ 5 = 7."
+          }
+        ],
+        "fallbackFeedback": "Divide both sides by 5: x = 35 ÷ 5 = 7."
+      },
+      "variant": {
+        "gen": "solve-mult-div"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Write the equation yourself this time, then solve it — the ticket problem is next.",
+      "conceptTag": "solve-mult-div",
+      "explanationVariants": [
+        "\"Tickets cost $5 each; a group spent $30\" becomes 5t=30. Solve: t=30÷5=6.",
+        "The unknown ticket count is t; 5 dollars per ticket times t tickets equals $30, so 5t=30 and t=6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Tickets cost $5 each, and a group spent $30. Write and solve an equation for the number of tickets, t.",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 150,
+            "feedback": "150 MULTIPLIES 5×30 instead of solving 5t=30. Undo the ×5 by DIVIDING both sides: t=30÷5=6."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the price per ticket, not the number of tickets. 5t=30 means t=30÷5=6."
+          },
+          {
+            "value": 25,
+            "feedback": "25 comes from 30−5 — but the relationship is MULTIPLICATION (5t=30), undone by dividing, not subtracting: t=6."
+          }
+        ],
+        "fallbackFeedback": "Let t be the number of tickets. \"$5 each, $30 total\" is 5t=30. Divide both sides by 5: t=6."
+      },
+      "variant": {
+        "gen": "solve-mult-div",
+        "form": "tickets"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A word problem, one step.",
+      "conceptTag": "solve-mult-div",
+      "hints": [
+        "Write the equation: 6 times the number of tickets equals 42.",
+        "6t = 42.",
+        "Divide both sides by 6."
+      ],
+      "explanationVariants": [
+        "6t = 42 → divide both sides by 6 → t = 7. Check: 6 × 7 = 42. ✓",
+        "The equation 6t = 42 undoes to t = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Tickets cost $6 each, and a group spent $42 total. Write and solve an equation for the number of tickets, t.",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "tickets",
+        "commonErrors": [
+          {
+            "value": 252,
+            "feedback": "252 MULTIPLIES 6 × 42 instead of undoing the equation 6t = 42. Divide both sides by 6: t = 42 ÷ 6 = 7."
+          },
+          {
+            "value": 36,
+            "feedback": "36 SUBTRACTS 6 from 42. The equation is 6t = 42 — divide both sides by 6: t = 7."
+          }
+        ],
+        "fallbackFeedback": "6t = 42, so t = 42 ÷ 6 = 7."
+      },
+      "variant": {
+        "gen": "solve-mult-div",
+        "form": "tickets"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Four operations, one balance rule.",
+      "takeaways": [
+        "To solve ax = b, divide both sides by a.",
+        "To solve x ÷ a = b, multiply both sides by a.",
+        "Every one-step equation follows the same principle: apply the OPPOSITE operation to both sides."
+      ],
+      "teaser": "next chapter: when the answer isn't one number, but infinitely many."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "solve-mult-div",
+      "concept": {
+        "id": "rem-smd-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Undo with the opposite operation, on both sides.** 3x = 12: the equation multiplies by 3, so divide both sides by 3: x = 12 ÷ 3 = 4. For division equations, multiply instead."
+      },
+      "check": {
+        "id": "rem-smd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "solve-mult-div",
+        "explanationVariants": [
+          "Divide both sides by 3: x = 12 ÷ 3 = 4.",
+          "Undo ×3 with ÷3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve 3x = 12.",
+          "answer": 4,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 36,
+              "feedback": "36 MULTIPLIES 3 × 12. To undo ×3, divide both sides by 3: 12 ÷ 3 = 4."
+            },
+            {
+              "value": 9,
+              "feedback": "9 SUBTRACTS 3 from 12. The equation multiplies, so divide: 12 ÷ 3 = 4."
+            }
+          ],
+          "fallbackFeedback": "Divide both sides by 3: x = 12 ÷ 3 = 4."
+        }
+      }
+    }
+  ]
+}

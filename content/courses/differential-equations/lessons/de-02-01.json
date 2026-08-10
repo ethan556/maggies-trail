@@ -1,0 +1,330 @@
+{
+  "id": "de-02-01",
+  "slug": "separable-equations",
+  "title": "Separating the Variables",
+  "courseId": "differential-equations",
+  "chapterId": "ch2-separable-equations",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Some differential equations can be **untangled**: get every y on one side, every x on the other, and integrate both.\n\ndy/dx = 2xy → **(1/y) dy = 2x dx** → ∫(1/y) dy = ∫2x dx → ln|y| = x² + C\n\nThe dy and the dx are being treated like quantities you can move about — and the chain rule is what makes that legal. Substitution earned it for you in C4.",
+      "figure": "dr-chain-gears"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Separate it.",
+      "conceptTag": "de-separable",
+      "explanationVariants": [
+        "dy/dx = 2xy separates as (1/y) dy = 2x dx — everything with a y on the left, everything with an x on the right.",
+        "An equation is separable exactly when it can be written as a function of y times a function of x. Not all can."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "Separate dy/dx = 2xy.",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "(1/y) dy"
+          },
+          {
+            "id": "t1",
+            "label": "y dy"
+          },
+          {
+            "id": "t2",
+            "label": "dy"
+          },
+          {
+            "id": "t3",
+            "label": "="
+          },
+          {
+            "id": "t4",
+            "label": "2x dx"
+          },
+          {
+            "id": "t5",
+            "label": "2xy dx"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t3",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t1",
+              "t3",
+              "t4"
+            ],
+            "feedback": "You multiplied by y instead of dividing. The y is on the WRONG side of the fraction: dy/y = 2x dx."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t3",
+              "t5"
+            ],
+            "feedback": "That is true but not separated — the right-hand side still has a y in it, so you cannot integrate it with respect to x alone."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "It can: the right-hand side is a function of x (2x) TIMES a function of y (y), which is exactly the condition for separability.",
+        "successFeedback": "Right — divide by y and multiply by dx. Every y is now on the left and every x on the right, ready to integrate."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-separable__buildExpression"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Integrate both sides.",
+      "conceptTag": "de-separable",
+      "explanationVariants": [
+        "∫(1/y) dy = ln|y| and ∫2x dx = x² + C, so ln|y| = x² + C. Exponentiating gives y = Ae^(x²), where A = e^C.",
+        "The + C appears once, not twice — a constant on each side would just be one constant in disguise."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "ln|y| = x² + C. Solve for y.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = Ae^(x²), where A = e^C",
+            "correct": true,
+            "feedback": "Right — exponentiate both sides. The e^C is just another constant, so it is renamed A, and it can be found from the initial condition."
+          },
+          {
+            "id": "o2",
+            "label": "y = x² + C",
+            "correct": false,
+            "feedback": "That drops the logarithm. To undo ln you must EXPONENTIATE: y = e^(x² + C)."
+          },
+          {
+            "id": "o3",
+            "label": "y = e^(x²) + C",
+            "correct": false,
+            "feedback": "e^(x² + C) is e^(x²)·e^C — a MULTIPLIER, not an addition. The exponent does not split into a sum outside."
+          },
+          {
+            "id": "o4",
+            "label": "y = ln(x² + C)",
+            "correct": false,
+            "feedback": "That applies ln to the wrong side. It is ln|y| that must be undone, and undoing it means exponentiating."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-separable__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The constant is the starting point.",
+      "widget": {
+        "type": "slopeField",
+        "equation": "exponential",
+        "targetY0": 3,
+        "startY0": 1,
+        "prompt": "dy/dx = 0.5y, whose solutions are y = Ae^(0.5x). Drag the starting value to 3 — and watch which member of the family you have selected.",
+        "successFeedback": "Starting at (0, 3) means A = 3, because at x = 0 the exponential is 1. The differential equation gave the whole FAMILY y = Ae^(0.5x); the initial condition picked this one. Every curve in the picture obeys the same instructions — they differ only in A.",
+        "lowFeedback": "Below 3 — you have selected a smaller A, and a flatter curve.",
+        "highFeedback": "Above 3 — a larger A, and a steeper curve. Same family, different member."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Change an initial condition and trace a solution that remains tangent to the local direction field.",
+        "invariants": [
+          "field-slope-depends-on-position",
+          "solution-follows-local-slopes"
+        ],
+        "misconceptions": [
+          "all-solutions-share-one-curve",
+          "field-arrows-are-motion-vectors"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "differential-equations-slopeField",
+        "delayed": false
+      },
+      "conceptTag": "de-separable",
+      "predict": {
+        "prompt": "dy/dx = 0.5y — here the slope depends on y instead. Two curves started at different heights will…",
+        "options": [
+          {
+            "id": "spread",
+            "label": "Spread further and further apart"
+          },
+          {
+            "id": "parallel",
+            "label": "Stay a fixed distance apart"
+          },
+          {
+            "id": "meet",
+            "label": "Close together and meet"
+          }
+        ],
+        "outcomeId": "spread",
+        "reveal": "They spread. The solutions are y = Ae^(0.5x), so the constant MULTIPLIES rather than adds — the gap between two of them is itself an exponential. That is the difference between a family built by shifting and a family built by scaling, and you can read which one you have off where the constant sits."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two habits worth forming:\n\n**Apply the initial condition EARLY.** Solve for the constant as soon as you have an equation containing it, rather than dragging C through three more lines of algebra.\n\n**Watch for the equilibrium you divided away.** Dividing by y assumed y ≠ 0 — and y = 0 is a perfectly good solution that the algebra has just quietly discarded. The slope field would never have lost it.",
+      "figure": "de-slope-field-threads"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use the initial condition.",
+      "conceptTag": "de-separable",
+      "explanationVariants": [
+        "y = Ae^(x²) with y(0) = 3 gives 3 = Ae⁰ = A, so A = 3 and y = 3e^(x²). Then y(1) = 3e ≈ 8.155.",
+        "The initial condition is what turns a family of curves into a single answer."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "dy/dx = 2xy with y(0) = 3, so y = 3e^(x²). Find y(1), to three decimals.",
+        "answer": 8.155,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is y(0), the starting value. At x = 1 the exponential has grown: y = 3e¹ ≈ 8.155."
+          },
+          {
+            "value": 2.718,
+            "feedback": "That is e itself. You must still multiply by the constant A = 3."
+          },
+          {
+            "value": 9,
+            "feedback": "That is 3², or 3e with e read as 3. e ≈ 2.71828, so 3e ≈ 8.155."
+          }
+        ],
+        "fallbackFeedback": "y = 3e^(x²) → y(1) = 3e ≈ 8.155."
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-separable__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The solution the algebra threw away.",
+      "conceptTag": "de-separable",
+      "hints": [
+        "To separate dy/dx = 2xy you divided by y. What did that step assume?",
+        "It assumed y ≠ 0. So any solution with y = 0 was excluded before the integration even began.",
+        "Check whether y = 0 actually IS a solution: substitute it into the original equation."
+      ],
+      "explanationVariants": [
+        "y = 0 satisfies dy/dx = 2xy (both sides are 0), so it IS a solution — but dividing by y silently ruled it out. It is the equilibrium, and the slope field shows it plainly.",
+        "That is a real strength of the field: it never loses a solution to an algebraic step, because it never performs one."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Separating dy/dx = 2xy required dividing by y. Which solution did that step lose?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = 0 — the equilibrium. Both sides are zero there, so it IS a solution, but dividing by y excluded it.",
+            "correct": true,
+            "feedback": "Right. The general solution y = Ae^(x²) can never be zero, so y = 0 is not a member of that family — the algebra dropped it, and the slope field would not have."
+          },
+          {
+            "id": "o2",
+            "label": "None — the family covers everything.",
+            "correct": false,
+            "feedback": "y = Ae^(x²) is never zero for any A, so the constant zero solution is genuinely missing from it."
+          },
+          {
+            "id": "o3",
+            "label": "y = 1",
+            "correct": false,
+            "feedback": "y = 1 does not satisfy the equation: its derivative is 0 but 2xy = 2x, which is not zero. It is not a solution at all."
+          },
+          {
+            "id": "o4",
+            "label": "The negative solutions.",
+            "correct": false,
+            "feedback": "Those are covered — a negative A gives them. The one genuinely lost is y = 0."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-differential-equations",
+        "form": "differential-equations__de-separable__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Untangle, integrate, then pin the constant.",
+      "takeaways": [
+        "Separable means the right-hand side is (a function of x) × (a function of y). Get the y's left, the x's right, integrate both.",
+        "One + C, not two — and apply the initial condition as early as you can.",
+        "Dividing by y discards the equilibrium y = 0. The algebra loses it; the slope field never would."
+      ],
+      "teaser": "Next: the equation that finally EXPLAINS exponential growth."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "de-separable",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Every y (including the dy) to the left. Every x (including the dx) to the right. Integrate both sides, put ONE + C on the right, and only then solve for y.",
+        "figure": "dr-chain-gears"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which side?",
+        "conceptTag": "de-separable",
+        "explanationVariants": [
+          "dy/dx = y/x separates as (1/y) dy = (1/x) dx.",
+          "Divide by y and multiply by dx."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Separate dy/dx = y/x.",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(1/y) dy = (1/x) dx",
+              "correct": true,
+              "feedback": "Right — every y on the left, every x on the right."
+            },
+            {
+              "id": "o2",
+              "label": "y dy = x dx",
+              "correct": false,
+              "feedback": "Both variables ended up on the wrong side of their fractions. Divide by y, do not multiply."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

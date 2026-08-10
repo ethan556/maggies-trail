@@ -1,0 +1,321 @@
+{
+  "id": "pv1000-01-03",
+  "slug": "any-number-any-spot",
+  "title": "Any Number, Any Spot",
+  "courseId": "place-value-1000",
+  "chapterId": "ch1-hundreds-tens-and-ones",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "hundred-tens-ones",
+      "body": "You can now go both ways: find any digit's worth in any number, or build any number from its hundreds, tens, and ones counts."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build 641 and read each digit's worth off the blocks.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build 641 in standard form: flats, rods, cubes.",
+        "target": 641,
+        "requireStandard": true,
+        "maxHundreds": 9,
+        "maxTens": 9,
+        "maxOnes": 9,
+        "commonBuilds": [
+          {
+            "hundreds": 4,
+            "tens": 6,
+            "ones": 1,
+            "feedback": "That builds 461 — the flats and rods swapped jobs. In 641 the 6 counts FLATS (hundreds): 6 flats, 4 rods, 1 cube."
+          },
+          {
+            "hundreds": 6,
+            "tens": 1,
+            "ones": 4,
+            "feedback": "That builds 614 — the rods and cubes swapped. The 4 sits in the tens spot: 4 rods, then 1 cube."
+          }
+        ],
+        "missFeedback": "Read left to right: 6 flats, 4 rods, 1 cube.",
+        "successFeedback": "6 flats, 4 rods, 1 cube — 641. The 4 you'll be asked about is 4 rods: worth 40, not 4."
+      },
+      "predict": {
+        "prompt": "In 641, which digit is worth the MOST?",
+        "options": [
+          {
+            "id": "six",
+            "label": "The 6"
+          },
+          {
+            "id": "four",
+            "label": "The 4"
+          },
+          {
+            "id": "one",
+            "label": "The 1"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "Worth comes from the spot: the 6 carries 600, the 4 carries 40, the 1 carries 1. Leftmost wins — and you'll see it as 6 big flats against 4 rods and a lone cube."
+      },
+      "conceptTag": "pv1000-mixed",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents mixed.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for mixed must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines mixed."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-mixed",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Build a number from parts.",
+      "conceptTag": "pv1000-mixed",
+      "explanationVariants": [
+        "2 hundreds, 6 tens, 8 ones = 268.",
+        "Combine the counts in order."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 2 hundreds, 6 tens, and 8 ones?",
+        "answer": 268,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That adds the counts together (2+6+8=16) instead of building the number: 268."
+          },
+          {
+            "value": 862,
+            "feedback": "Keep the order: hundreds, tens, ones: 268, not 862."
+          }
+        ],
+        "fallbackFeedback": "2 hundreds, 6 tens, 8 ones = 268."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000MixedNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Watch for zero spots in either direction — a digit's worth calculation and a number-building task both need to respect an empty spot.",
+      "figure": "pv1000-zero-spots"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A digit's worth with a zero elsewhere.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 705, what is the 7 worth?",
+        "answer": 700,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The 7 is in the HUNDREDS spot: 700, not just 7."
+          },
+          {
+            "value": 70,
+            "feedback": "70 would be the tens spot, but this number has 0 tens. The 7 is worth 700."
+          }
+        ],
+        "fallbackFeedback": "The 7 is in the hundreds spot: 700."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Practice both directions until they feel automatic — reading a number's parts, and building a number from its parts.",
+      "figure": "pv1000-both-directions"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Build with an empty tens spot.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 9 hundreds, 0 tens, and 2 ones?",
+        "answer": 902,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 92,
+            "feedback": "Don't skip the empty tens spot — it still holds a 0: 902, not 92."
+          },
+          {
+            "value": 920,
+            "feedback": "Keep the order: hundreds, tens, ones. 9 hundreds, 0 tens, 2 ones is 902, not 920."
+          }
+        ],
+        "fallbackFeedback": "9 hundreds, 0 tens, 2 ones = 902."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another digit's worth.",
+      "conceptTag": "pv1000-mixed",
+      "explanationVariants": [
+        "The 3 is in the ones spot: worth just 3.",
+        "Check the digit's spot to find its worth."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 493, what is the 3 worth?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 would be the tens spot. The 3 is in the ONES spot: worth just 3."
+          },
+          {
+            "value": 300,
+            "feedback": "300 would be the hundreds spot. The 3 is in the ones spot: worth just 3."
+          }
+        ],
+        "fallbackFeedback": "The 3 is in the ones spot: worth 3."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000MixedNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Build another number.",
+      "conceptTag": "pv1000-mixed",
+      "explanationVariants": [
+        "1 hundred, 4 tens, 7 ones = 147.",
+        "Combine the counts in order."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 1 hundred, 4 tens, and 7 ones?",
+        "answer": 147,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That adds the counts together (1+4+7=12) instead of building the number: 147."
+          },
+          {
+            "value": 741,
+            "feedback": "Keep the order: hundreds, tens, ones: 147, not 741."
+          }
+        ],
+        "fallbackFeedback": "1 hundred, 4 tens, 7 ones = 147."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000MixedNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full mixed challenge.",
+      "conceptTag": "pv1000-mixed",
+      "explanationVariants": [
+        "The left-most digit 6 is in the hundreds spot: worth 600.",
+        "Check the digit's spot carefully."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 606, what is the LEFT-MOST 6 worth?",
+        "answer": 600,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "The left-most 6 is in the HUNDREDS spot: 600, not just 6."
+          },
+          {
+            "value": 60,
+            "feedback": "60 would be the tens spot, but this number has 0 tens. The left-most 6 is in hundreds: 600."
+          }
+        ],
+        "fallbackFeedback": "The left-most 6 is in the hundreds spot: 600."
+      },
+      "hints": [
+        "Find the left-most digit: 6.",
+        "Which spot is it in? The hundreds spot.",
+        "6 hundreds = 600."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000MixedNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can read any digit's worth and build any number from its hundreds, tens, and ones — even with empty spots.",
+      "takeaways": [
+        "A digit's worth depends entirely on its spot.",
+        "Building a number combines hundreds, tens, and ones in order.",
+        "Zero spots always count — never skip them."
+      ],
+      "teaser": "next chapter: counting all the way to 1000."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-mixed",
+      "concept": {
+        "id": "rem-pmx-c",
+        "kind": "concept",
+        "body": "A digit's worth depends on its spot (hundreds/tens/ones); building a number combines the counts in that same order, respecting any empty spots."
+      },
+      "check": {
+        "id": "rem-pmx-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-mixed",
+        "explanationVariants": [
+          "2 hundreds, 6 tens, 8 ones = 268.",
+          "Combine the counts in order."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What number has 2 hundreds, 6 tens, and 8 ones?",
+          "answer": 268,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "Build the number, don't add the counts: 268."
+            },
+            {
+              "value": 862,
+              "feedback": "Keep hundreds first: 268, not 862."
+            }
+          ],
+          "fallbackFeedback": "268."
+        }
+      }
+    }
+  ]
+}

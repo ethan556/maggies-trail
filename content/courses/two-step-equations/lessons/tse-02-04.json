@@ -1,0 +1,323 @@
+{
+  "id": "tse-02-04",
+  "slug": "solving-on-the-balance",
+  "title": "Solving on the Balance",
+  "courseId": "two-step-equations",
+  "chapterId": "ch2-two-step-equations",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An equation is a balanced scale: 2x + 3 = 11 says the two pans weigh the same. You can take tiles away — but only if you take the SAME amount off BOTH pans. Take from one side only and the beam tips: the two sides stop being equal, and the equation you're holding is no longer the one you started with.",
+      "figure": "tse-balance-same-both"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve your first equation by moving the tiles themselves.",
+      "predict": {
+        "prompt": "If you take 3 unit tiles off ONLY the left pan of 2x + 3 = 11, what happens to the beam?",
+        "options": [
+          {
+            "id": "level",
+            "label": "It stays level — the x-tiles keep it steady"
+          },
+          {
+            "id": "tips",
+            "label": "It tips — the right pan is now heavier"
+          },
+          {
+            "id": "flips",
+            "label": "It tips the other way — the left pan gets heavier"
+          }
+        ],
+        "outcomeId": "tips",
+        "reveal": "The beam tips toward the right pan. Taking 3 off the left made that side lighter, and nothing changed on the right — so the sides are no longer equal. Every fair move comes in pairs: what leaves the left must leave the right."
+      },
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 2x + 3 = 11. Clear the unit tiles from both pans, then split both sides into equal groups.",
+        "a": 2,
+        "b": 3,
+        "c": 11,
+        "successFeedback": "x = 4. Three units left each pan (2x = 8), then both sides split into 2 groups — one x-tile against 4 units.",
+        "unbalancedFeedback": "The beam tipped — tiles left one pan only. Undo, and this time pair every removal: one off the left, one off the right.",
+        "notIsolatedFeedback": "Balanced the whole way — every move was fair. But x isn't alone yet. Clear the remaining units from both sides, then use the split button.",
+        "missFeedback": "The x-tiles are the thing you're solving for — keep them on the pan. Clear the UNIT tiles from both sides, then split both sides into equal groups."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Apply legal inverse operations to both sides and preserve the solution set at every move.",
+        "predictionId": "g7-equation-transformations-prediction",
+        "invariants": [
+          "equality-preserved",
+          "solution-set-preserved"
+        ],
+        "misconceptions": [
+          "one-sided-operation",
+          "wrong-inverse"
+        ],
+        "representations": [
+          "diagram",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 2,
+        "transferFamily": "equation-with-fractions-no-balance",
+        "delayed": true,
+        "counterfactualPrompt": "Apply an operation to only one side on purpose. What breaks, and how would you repair the trace?",
+        "explanation": {
+          "prompt": "Why must the same legal operation be applied to both sides?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "It creates an equivalent equation with the same solutions.",
+              "correct": true,
+              "feedback": "Exactly. Balanced transformations preserve equality and the solution set."
+            },
+            {
+              "id": "surface",
+              "label": "The two sides can be changed independently as long as x is isolated.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Balanced transformations preserve equality and the solution set."
+            }
+          ]
+        }
+      },
+      "conceptTag": "tse-solve-two-step"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same balance, new equation.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Take 3 units off each pan to get 4x = 12, then split both sides into 4 equal groups: x = 3.",
+        "Units first, groups second: clearing the + 3 leaves the x-tiles alone on the left, and only then can the pans be shared out evenly."
+      ],
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 4x + 3 = 15 on the balance.",
+        "a": 4,
+        "b": 3,
+        "c": 15,
+        "successFeedback": "x = 3. The pans stayed level through every move: 4x + 3 = 15, then 4x = 12, then x = 3.",
+        "unbalancedFeedback": "The beam tipped, so somewhere a tile came off one side without its partner leaving the other. Undo back to level, then remove in pairs.",
+        "notIsolatedFeedback": "Still level — good. Now finish: get every unit tile off the left pan (matching each removal on the right), then split.",
+        "missFeedback": "Don't remove the x-tiles — x is what the question asks for. Clear units from both sides, then split both sides into 4 groups."
+      },
+      "variant": {
+        "gen": "g7-tse-balance-solve",
+        "form": "tseBalanceA"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Notice the order the balance forces on you. You can't share the pans into equal groups while loose unit tiles sit next to the x-tiles — so the units must be cleared FIRST, and the splitting comes LAST. That is exactly why, on paper, you subtract before you divide.",
+      "figure": "tse-clear-units-first"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A heavier equation — watch the equation line update with every move.",
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 3x + 6 = 18. Keep one eye on the equation above the beam as you work.",
+        "a": 3,
+        "b": 6,
+        "c": 18,
+        "successFeedback": "x = 4. The equation line walked with you: 3x + 6 = 18 → 3x = 12 → x = 4. The tiles and the algebra are the same moves.",
+        "unbalancedFeedback": "Tipped — a removal wasn't paired. The equation line shows a left side and right side that are no longer equal at the same x. Undo and re-pair.",
+        "notIsolatedFeedback": "Level, but unfinished. Six units have to leave BOTH pans before the three-way split becomes fair.",
+        "missFeedback": "Keep all three x-tiles. Clear the six unit tiles from each side, then split both sides into 3 equal groups."
+      },
+      "conceptTag": "tse-solve-two-step",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "One more on the balance — this time, plan both moves before you touch a tile.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Clear 2 units from each pan (5x = 15), then split both sides into 5 groups: x = 3.",
+        "Two fair moves: an equal removal, then an equal share-out. The beam stays level through both, which is the proof each move was legal."
+      ],
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 5x + 2 = 17 on the balance.",
+        "a": 5,
+        "b": 2,
+        "c": 17,
+        "successFeedback": "x = 3. Two units off each side, then a five-way split — and the beam never moved.",
+        "unbalancedFeedback": "The tip means the sides no longer weigh the same. Every removal needs its twin on the other pan. Undo to level and pair up.",
+        "notIsolatedFeedback": "Balanced but not done — x still shares its pan. Finish clearing units from both sides, then split.",
+        "missFeedback": "Leave the x-tiles alone; they're the unknown you're isolating. Units off both sides first, then split both sides into 5 groups."
+      },
+      "variant": {
+        "gen": "g7-tse-balance-solve",
+        "form": "tseBalanceB"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Now without tiles. Solve it on paper the way the balance made you solve it with your hands.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Subtract 7 from both sides: 4x = 24. Divide both sides by 4: x = 6.",
+        "The balance order, in symbols: the + 7 is cleared first (it's loose units), and the ×4 is undone last (it's the share-out)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 4x + 7 = 31",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "That's 4x, not x — the units are cleared (31 − 7 = 24) but the four-way split hasn't happened. Divide both sides by 4: x = 6."
+          },
+          {
+            "value": 0.75,
+            "feedback": "That divided before subtracting — sharing out the pans while 7 loose units still sat on the left. Clear the + 7 first: (31 − 7) ÷ 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "Balance order: subtract 7 from both sides (4x = 24), then divide both sides by 4 (x = 6)."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The biggest balance yet. Every move must keep the beam level.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Four units off each pan leaves 6x = 24; a six-way split of both sides gives x = 4.",
+        "Two-step equations are always these same two fair moves: equal removal, then equal share-out — the size of the numbers changes nothing."
+      ],
+      "hints": [
+        "Which tiles are stopping you from splitting right now — the x-tiles or the loose units?",
+        "Clear the 4 loose units, one from each pan at a time, until the left pan is pure x-tiles.",
+        "With 6x = 24 on the pans, split both sides into 6 equal groups: each x-tile matches 4 units."
+      ],
+      "widget": {
+        "type": "solveBalance",
+        "prompt": "Solve 6x + 4 = 28 on the balance.",
+        "a": 6,
+        "b": 4,
+        "c": 28,
+        "successFeedback": "x = 4, and the beam never tipped. Equal removal, equal share-out — that pair of moves solves every equation in this chapter.",
+        "unbalancedFeedback": "Tipped. Somewhere a tile left one pan alone. Undo until the beam is level again, then remove strictly in pairs.",
+        "notIsolatedFeedback": "Level so far — every move fair. Keep going: all four loose units off both sides, then the six-way split.",
+        "missFeedback": "Six x-tiles stay put — they're the unknown. Take the four unit tiles off each pan, then split both sides into 6 groups."
+      },
+      "variant": {
+        "gen": "g7-tse-balance-solve",
+        "form": "tseBalanceC"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents tse solve two step.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tse solve two step must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tse solve two step."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "two-step-equations:tse-solve-two-step",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "takeaways": [
+        "An equation is a level beam: any move that touches only one side breaks the equality — and the beam shows it instantly.",
+        "The balance forces the solving order: clear loose units from both sides FIRST, split into equal groups LAST — which is why on paper you subtract before you divide."
+      ],
+      "teaser": "Next: equations where the x-tiles come wrapped in parentheses — and the balance needs one extra move before it can help.",
+      "body": "Two fair moves solved every equation today — and the beam was the referee."
+    }
+  ]
+}

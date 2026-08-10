@@ -1,0 +1,379 @@
+{
+  "id": "tm-01-01",
+  "slug": "sliding-with-translations",
+  "title": "Sliding with Translations",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch1-rigid-transformations",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **translation** slides every point of a shape the same distance in the same direction — no turning, no flipping. On the grid, add the slide to each point: sliding right 4 and down 1 sends (x, y) to (x + 4, y − 1).",
+      "figure": "rigid-transformations"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A translation is one instruction, applied to every point.",
+      "widget": {
+        "type": "transformExplore",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            4
+          ]
+        ],
+        "target": [
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -6,
+        "dyMax": 6,
+        "allowReflect": false,
+        "prompt": "Slide the triangle onto its target: right 2 and up 3.",
+        "successFeedback": "Every vertex moved by exactly (+2, +3) — and the shape did not change at all. That is why a translation is rigid: it adds the same vector to every point, so lengths and angles cannot move.",
+        "offsetFeedback": "Not there yet. Each vertex must move the SAME amount: compare (1, 1) with (3, 4).",
+        "reflectFeedback": "A flip has crept in. This target is a pure slide — the triangle keeps its orientation, so turn the reflection back off."
+      },
+      "predict": {
+        "prompt": "You'll slide the triangle right 2 and up 3. What happens to its side lengths?",
+        "options": [
+          {
+            "id": "same",
+            "label": "They stay exactly the same"
+          },
+          {
+            "id": "stretch",
+            "label": "They stretch a little"
+          },
+          {
+            "id": "depends",
+            "label": "It depends how far it slides"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "A translation adds the same vector to every vertex, so the distances BETWEEN vertices cannot change — no matter how far it slides. That is what makes it a rigid motion."
+      },
+      "conceptTag": "tm-translation",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents tm translation.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tm translation must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tm translation."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "transformations-measurement:tm-translation",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Right and up are POSITIVE moves; left and down are NEGATIVE. Sliding left 3 subtracts 3 from x; sliding down 2 subtracts 2 from y. Apply the same shift to every point, and the shape arrives unchanged in size and shape.",
+      "figure": "tm-translation-signs"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the new y-coordinate.",
+      "conceptTag": "tm-translation",
+      "explanationVariants": [
+        "Sliding down 2 subtracts 2 from y: 3 − 2 = 1.",
+        "Down is negative, so y drops by 2: 3 − 2 = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Translate (5, 3) left 1 and down 2. What is the new y-coordinate?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That's the y after sliding down 2 wrongly added — down 2 SUBTRACTS: 3 − 2 = 1."
+          },
+          {
+            "value": 2,
+            "feedback": "That subtracted the left-1 from y — 'down 2' changes y: 3 − 2 = 1."
+          }
+        ],
+        "fallbackFeedback": "Sliding down 2 subtracts 2 from the y-coordinate: 3 − 2 = 1."
+      },
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmTranslateY"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Both coordinates at once.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Translate (1, 4) right 3 and down 1. What is the new point?",
+        "options": [
+          {
+            "id": "a",
+            "label": "(4, 3)",
+            "correct": true,
+            "feedback": "Right — x: 1 + 3 = 4, y: 4 − 1 = 3."
+          },
+          {
+            "id": "b",
+            "label": "(4, 5)",
+            "correct": false,
+            "feedback": "The y should go DOWN 1: 4 − 1 = 3, not up to 5 — so (4, 3)."
+          },
+          {
+            "id": "c",
+            "label": "(−2, 5)",
+            "correct": false,
+            "feedback": "Right 3 ADDS to x (1 + 3 = 4) and down 1 SUBTRACTS from y (4 − 1 = 3): (4, 3)."
+          },
+          {
+            "id": "d",
+            "label": "(3, 4)",
+            "correct": false,
+            "feedback": "That swapped the moves — right 3 makes x = 4 and down 1 makes y = 3: (4, 3)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "What stays the same?",
+      "conceptTag": "tm-translation",
+      "explanationVariants": [
+        "A translation keeps size, shape, and orientation identical — only the position changes.",
+        "Sliding never resizes or turns a shape, so it stays congruent."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "After a translation, what is DIFFERENT about the shape?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Only its position — size and shape stay the same",
+            "correct": true,
+            "feedback": "Right — a translation just moves the shape; it stays identical otherwise."
+          },
+          {
+            "id": "b",
+            "label": "Its size gets bigger",
+            "correct": false,
+            "feedback": "Translations never resize — the shape is exactly the same size, just moved."
+          },
+          {
+            "id": "c",
+            "label": "It gets flipped",
+            "correct": false,
+            "feedback": "Flipping is a REFLECTION — a translation only slides, without flipping."
+          },
+          {
+            "id": "d",
+            "label": "It gets turned",
+            "correct": false,
+            "feedback": "Turning is a ROTATION — a translation slides without turning."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmTranslateProperty"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A left-and-up slide.",
+      "conceptTag": "tm-translation",
+      "explanationVariants": [
+        "Left 2 subtracts from x (6 − 2 = 4); up 3 adds to y (1 + 3 = 4): (4, 4).",
+        "x: 6 − 2 = 4, y: 1 + 3 = 4."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Translate (6, 1) left 2 and up 3. What is the new point?",
+        "answer": [
+          4,
+          4
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              8,
+              4
+            ],
+            "feedback": "Left 2 SUBTRACTS from x: 6 − 2 = 4, not 8 — so (4, 4)."
+          },
+          {
+            "values": [
+              4,
+              -2
+            ],
+            "feedback": "Up 3 ADDS to y: 1 + 3 = 4, not −2 — so (4, 4)."
+          },
+          {
+            "values": [
+              8,
+              -2
+            ],
+            "feedback": "Left subtracts from x and up adds to y: (6−2, 1+3) = (4, 4)."
+          }
+        ],
+        "fallbackFeedback": "Left SUBTRACTS from x, up ADDS to y: (6−2, 1+3).",
+        "successFeedback": "Right — x: 6 − 2 = 4, y: 1 + 3 = 4."
+      },
+      "variant": {
+        "gen": "point-transform",
+        "form": "translate"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Describe the slide.",
+      "conceptTag": "tm-translation",
+      "explanationVariants": [
+        "From (2, 5) to (7, 2): x went up by 5 (right 5), y went down by 3 (down 3).",
+        "Compare coordinates: 7 − 2 = 5 right, 2 − 5 = −3 means down 3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A translation moves (2, 5) to (7, 2). What is the slide?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Right 5 and down 3",
+            "correct": true,
+            "feedback": "Right — x increased by 5 (right 5), y decreased by 3 (down 3)."
+          },
+          {
+            "id": "b",
+            "label": "Right 5 and up 3",
+            "correct": false,
+            "feedback": "The y went DOWN from 5 to 2 (a drop of 3), so it's down 3, not up 3."
+          },
+          {
+            "id": "c",
+            "label": "Left 5 and down 3",
+            "correct": false,
+            "feedback": "The x INCREASED from 2 to 7 (right 5), not left — so right 5, down 3."
+          },
+          {
+            "id": "d",
+            "label": "Right 3 and down 5",
+            "correct": false,
+            "feedback": "The x change is 7 − 2 = 5 (right 5) and the y change is 5 − 2 = 3 (down 3), not the reverse."
+          }
+        ]
+      },
+      "hints": [
+        "Compare the x-coordinates, then the y-coordinates.",
+        "x goes from 2 to 7: that's +5, a slide right 5. Now the y.",
+        "y goes from 5 to 2: that's −3, a slide down 3. So: right 5, down 3."
+      ],
+      "variant": {
+        "gen": "g8-tm-rigid-motion",
+        "form": "tmTranslateRule"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A translation slides every point the same way, leaving size and shape unchanged.",
+      "takeaways": [
+        "Right/up add to a coordinate; left/down subtract.",
+        "Apply the same shift to every point of the shape.",
+        "Size, shape, and orientation all stay the same — only position changes."
+      ],
+      "teaser": "Next: flipping shapes with reflections."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-translation",
+      "concept": {
+        "id": "rem-tm0101-c",
+        "kind": "concept",
+        "body": "A translation slides every point the same distance and direction. Right/up add to a coordinate; left/down subtract. Size and shape never change."
+      },
+      "check": {
+        "id": "rem-tm0101-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-translation",
+        "explanationVariants": [
+          "Translate (3, 2) right 2, up 1: x = 3 + 2 = 5, y = 2 + 1 = 3, giving (5, 3).",
+          "x: 3 + 2 = 5, y: 2 + 1 = 3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Translate (3, 2) right 2 and up 1. What is the new point?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(5, 3)",
+              "correct": true,
+              "feedback": "Right — x: 3 + 2 = 5, y: 2 + 1 = 3."
+            },
+            {
+              "id": "b",
+              "label": "(1, 1)",
+              "correct": false,
+              "feedback": "Right and up ADD: (3+2, 2+1) = (5, 3), not subtract."
+            },
+            {
+              "id": "c",
+              "label": "(5, 1)",
+              "correct": false,
+              "feedback": "Up 1 ADDS to y: 2 + 1 = 3, not down to 1 — so (5, 3)."
+            },
+            {
+              "id": "d",
+              "label": "(3, 3)",
+              "correct": false,
+              "feedback": "Right 2 adds to x: 3 + 2 = 5 — so (5, 3), not (3, 3)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

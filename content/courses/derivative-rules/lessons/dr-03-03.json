@@ -1,0 +1,271 @@
+{
+  "id": "dr-03-03",
+  "slug": "choosing-the-rule",
+  "title": "Choosing and Combining the Rules",
+  "courseId": "derivative-rules",
+  "chapterId": "ch3-products-and-quotients",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Before differentiating anything, ask one question: **what is this expression, structurally?**\n\nA sum of terms → differentiate term by term.\nA product of two things → product rule.\nOne thing over another → quotient rule (or simplify it away).\n\nThe rules are easy. Choosing the right one is where the marks go.",
+      "figure": "dr-product-rule-box"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Classify before computing.",
+      "conceptTag": "dr-choose-rule",
+      "explanationVariants": [
+        "x²·(x + 3) is a product. (x + 3)/x² is a quotient — or simplify it to x⁻¹ + 3x⁻². x² + 3x is a sum. Each structure gets its own tool.",
+        "Read the OUTERMOST operation: what is done last is what you differentiate first."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each expression to the tool it needs.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "x²(x + 3)"
+          },
+          {
+            "id": "w2",
+            "label": "(x + 3)/x²"
+          },
+          {
+            "id": "w3",
+            "label": "x² + 3x"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "product rule"
+          },
+          {
+            "id": "y2",
+            "label": "quotient rule (or rewrite as powers)"
+          },
+          {
+            "id": "y3",
+            "label": "term by term"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y3",
+            "feedback": "x²(x + 3) is a PRODUCT, not a sum — unless you expand it first, which is also perfectly legal here."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "x² + 3x is a sum of two terms; there is nothing to multiply."
+          }
+        ],
+        "missFeedback": "Look at the outermost operation: multiplied, divided, or added?",
+        "successFeedback": "Structure first, tool second. Reading the expression correctly is most of the work."
+      },
+      "variant": {
+        "gen": "choose-rule"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sometimes the best rule is no rule.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Three routes to the same derivative.",
+        "panels": [
+          {
+            "title": "The product rule route",
+            "body": "For x²(x + 3): u = x², v = x + 3 gives 2x(x + 3) + x²(1) = 2x² + 6x + x² = 3x² + 6x."
+          },
+          {
+            "title": "The expand-first route",
+            "body": "x²(x + 3) = x³ + 3x², whose derivative is 3x² + 6x. Same answer, half the writing, and far fewer places to slip."
+          },
+          {
+            "title": "The moral",
+            "body": "The rules are always available; they are not always the fastest road. Expand or simplify whenever it is cheap — and use the rules when it is not."
+          }
+        ],
+        "continueFeedback": "Keep going — both routes must agree, and they do.",
+        "successFeedback": "Same derivative, two roads. Simplify when it is cheap; reach for a rule when it is not."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Product inside a sum.",
+      "conceptTag": "dr-choose-rule",
+      "explanationVariants": [
+        "Differentiate term by term. The x(x + 1) term needs the product rule (or expansion): its derivative is 2x + 1. The 4x term gives 4. Total: 2x + 5, and at x = 2 that is 9.",
+        "Expanding first gives x² + 5x, whose derivative is 2x + 5 — the same."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x(x + 1) + 4x. Find f′(2).",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is 2x + 1 at x = 2, forgetting the +4 from the second term."
+          },
+          {
+            "value": 4,
+            "feedback": "That is only the 4x term. The product x(x+1) contributes 2x + 1 = 5."
+          },
+          {
+            "value": 13,
+            "feedback": "Check the expansion: x(x+1) + 4x = x² + 5x, whose derivative is 2x + 5 = 9."
+          }
+        ],
+        "fallbackFeedback": "x² + 5x → 2x + 5 → f′(2) = 9."
+      },
+      "variant": {
+        "gen": "choose-rule",
+        "form": "expandProduct"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When rules nest, work from the **outside in**.\n\nFor a product whose factors are themselves complicated, apply the product rule first and let each u′ and v′ be a smaller problem you solve afterwards.\n\nNever try to do two rules in one line. That is where the errors live.",
+      "figure": "dr-product-rule-box"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A quotient with a product inside.",
+      "conceptTag": "dr-choose-rule",
+      "explanationVariants": [
+        "Simplify first: x(x + 2)/x = x + 2 for x ≠ 0, whose derivative is 1. The quotient rule would agree, at ten times the cost.",
+        "Always look for the cancellation before you commit to a rule."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x(x + 2)/x, for x ≠ 0. Find f′(3).",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That looks like differentiating x(x+2) and forgetting to divide. The x cancels first, leaving x + 2."
+          },
+          {
+            "value": 8,
+            "feedback": "That is f(3) = 5, or a quotient-rule slip. Cancel the x: f(x) = x + 2, so f′ = 1 everywhere."
+          },
+          {
+            "value": 0,
+            "feedback": "The function is x + 2, a line of slope 1 — not a constant."
+          }
+        ],
+        "fallbackFeedback": "The x cancels: f(x) = x + 2, so f′(x) = 1 for every x."
+      },
+      "variant": {
+        "gen": "choose-rule",
+        "form": "cancelFirst"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Everything at once.",
+      "conceptTag": "dr-choose-rule",
+      "hints": [
+        "Structure first: this is a PRODUCT of x² and (x − 1), plus a separate term.",
+        "Expanding is cheapest: x²(x − 1) = x³ − x², so f(x) = x³ − x² + 6x.",
+        "Now differentiate term by term and put x = 2."
+      ],
+      "explanationVariants": [
+        "Expand: f(x) = x³ − x² + 6x. Then f′ = 3x² − 2x + 6, and at x = 2 that is 12 − 4 + 6 = 14.",
+        "The product rule gives the same: 2x(x−1) + x²(1) + 6 = 3x² − 2x + 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x²(x − 1) + 6x. Find f′(2).",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That may be the product term alone (2x(x−1) + x² = 8 at x = 2), forgetting the +6 from 6x."
+          },
+          {
+            "value": 12,
+            "feedback": "That is 3x² at x = 2. The full derivative is 3x² − 2x + 6 = 12 − 4 + 6 = 14."
+          },
+          {
+            "value": 18,
+            "feedback": "Check the middle term: −2x at x = 2 is −4, not +4. The total is 12 − 4 + 6 = 14."
+          }
+        ],
+        "fallbackFeedback": "f(x) = x³ − x² + 6x → f′ = 3x² − 2x + 6 → f′(2) = 14."
+      },
+      "variant": {
+        "gen": "choose-rule",
+        "form": "cubicProduct"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read the structure before you reach for a rule.",
+      "takeaways": [
+        "Identify the outermost operation first: sum, product, or quotient.",
+        "Expand or cancel whenever it is cheap — the rules are always available but rarely the fastest road.",
+        "When rules nest, work outside in and never run two rules in one line."
+      ],
+      "teaser": "Next chapter: the rule that unravels a function inside a function."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-choose-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask what the expression IS before you ask how to differentiate it. Multiplied together → product rule. Divided → quotient rule, unless it cancels. Added → term by term. Getting the structure right is most of the battle.",
+        "figure": "dr-product-rule-box"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Name the structure.",
+        "conceptTag": "dr-choose-rule",
+        "explanationVariants": [
+          "(x + 1)(x + 2) is a product of two factors — or, if you expand it, a simple quadratic.",
+          "Either route is legal. What is not legal is multiplying the derivatives."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "How would you differentiate (x + 1)(x + 2)?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Expand to x² + 3x + 2, or use the product rule — both give 2x + 3.",
+              "correct": true,
+              "feedback": "Right, and they must agree. Expanding is cheaper here."
+            },
+            {
+              "id": "o2",
+              "label": "Multiply the derivatives: 1 × 1 = 1.",
+              "correct": false,
+              "feedback": "That shortcut is false. Check it: the true derivative is 2x + 3, which is not the constant 1."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,349 @@
+{
+  "id": "c120-02-03",
+  "slug": "down-a-row-ten-more",
+  "title": "Down a Row is Ten More",
+  "courseId": "counting-120",
+  "chapterId": "ch2-120-chart",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "chart-down-ten",
+      "body": "Move down one row and you add ten. 34 is above 44. Ten more than 34 is 44.",
+      "narration": "Move down one row and you add ten. Thirty-four is above forty-four. Ten more than thirty-four is forty-four."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Jump down a row.",
+      "conceptTag": "chart-pattern",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Going down a row adds 10. Start at 34 and make one hop of 10. Tap where you land.",
+        "min": 30,
+        "max": 50,
+        "start": 34,
+        "hop": 10,
+        "hops": 1,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 35,
+            "feedback": "That's just one more (one spot right). Down a whole row adds TEN: 44."
+          },
+          {
+            "value": 54,
+            "feedback": "That's two rows down (twenty more). One row down from 34 is 44."
+          }
+        ],
+        "missFeedback": "One row down = ten more. 34 + 10 = 44.",
+        "successFeedback": "34 down one row is 44 — ten more!"
+      },
+      "predict": {
+        "prompt": "One hop of 10 from 34 — which digit of the number will change?",
+        "options": [
+          {
+            "id": "tens",
+            "label": "The tens digit"
+          },
+          {
+            "id": "ones",
+            "label": "The ones digit"
+          },
+          {
+            "id": "both",
+            "label": "Both digits"
+          }
+        ],
+        "outcomeId": "tens",
+        "reveal": "A ten-hop moves you a whole row: the tens digit climbs by one and the ones digit stays exactly where it was."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents chart pattern.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for chart pattern must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines chart pattern."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "counting-120:chart-pattern",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Ten more.",
+      "conceptTag": "chart-pattern",
+      "explanationVariants": [
+        "Down one row adds ten: 34 + 10 = 44.",
+        "The number below 34 on the chart is 44."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is ten more than 34 (one row down)?",
+        "answer": 44,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 35,
+            "feedback": "35 is one MORE (right). Ten more (down a row) is 44."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is ten LESS (up a row). Ten MORE is 44."
+          }
+        ],
+        "fallbackFeedback": "34 + 10 = 44, one row down."
+      },
+      "hints": [
+        "Down a row adds ten.",
+        "34 + 10.",
+        "44."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "ChartPatternNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Up a row takes ten away. A whole column shares the same ones digit: 4, 14, 24, 34.",
+      "narration": "Up a row takes ten away. A whole column shares the same ones digit: four, fourteen, twenty-four, thirty-four.",
+      "figure": "c120-down-ten"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each number to ten more.",
+      "conceptTag": "chart-pattern",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each number to the one just below it (ten more).",
+        "left": [
+          {
+            "id": "a34",
+            "label": "34"
+          },
+          {
+            "id": "a58",
+            "label": "58"
+          },
+          {
+            "id": "a21",
+            "label": "21"
+          }
+        ],
+        "right": [
+          {
+            "id": "b44",
+            "label": "44"
+          },
+          {
+            "id": "b68",
+            "label": "68"
+          },
+          {
+            "id": "b31",
+            "label": "31"
+          }
+        ],
+        "pairs": {
+          "a34": "b44",
+          "a58": "b68",
+          "a21": "b31"
+        },
+        "pairErrors": [
+          {
+            "left": "a34",
+            "right": "b68",
+            "feedback": "34 plus ten is 44, not 68. Add just one ten."
+          },
+          {
+            "left": "a58",
+            "right": "b44",
+            "feedback": "58 plus ten is 68. 44 is ten more than 34."
+          }
+        ],
+        "missFeedback": "Add ten to each: 34→44, 58→68, 21→31.",
+        "successFeedback": "Each number met the one below it — ten more each time!"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ten more again.",
+      "conceptTag": "chart-pattern",
+      "explanationVariants": [
+        "Down one row adds ten: 58 + 10 = 68.",
+        "The number below 58 is 68."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is ten more than 58?",
+        "answer": 68,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 59,
+            "feedback": "59 is one more. Ten more than 58 is 68."
+          },
+          {
+            "value": 48,
+            "feedback": "48 is ten LESS. Ten MORE than 58 is 68."
+          }
+        ],
+        "fallbackFeedback": "58 + 10 = 68."
+      },
+      "hints": [
+        "Down a row adds ten.",
+        "58 + 10.",
+        "68."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "ChartPatternNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Column pattern.",
+      "conceptTag": "chart-pattern",
+      "explanationVariants": [
+        "A column runs straight down, and every number in it shares the same ones digit.",
+        "Down a column only the tens change, so the ones digit stays the same."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What do all the numbers in one column share?",
+        "options": [
+          {
+            "id": "a",
+            "label": "the same ones digit",
+            "correct": true,
+            "feedback": "Yes — a column is 4, 14, 24, 34… only the tens change."
+          },
+          {
+            "id": "b",
+            "label": "the same tens digit",
+            "feedback": "Same tens digit means the same ROW, not a column. A column shares the ones digit."
+          },
+          {
+            "id": "c",
+            "label": "nothing",
+            "feedback": "A column has a strong pattern: every number ends in the same ones digit."
+          }
+        ]
+      },
+      "hints": [
+        "Think of the column 4, 14, 24, 34.",
+        "What's the same in each?",
+        "The ones digit."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "ChartPatternMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two rows down!",
+      "conceptTag": "chart-pattern",
+      "explanationVariants": [
+        "Each row down adds ten, so two rows down adds twenty: 27 + 20 = 47.",
+        "27 → 37 (one row) → 47 (two rows)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Go down two rows from 27 (add ten twice). What number?",
+        "answer": 47,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 37,
+            "feedback": "37 is only ONE row down. Two rows adds ten twice: 47."
+          },
+          {
+            "value": 29,
+            "feedback": "That added two ONES. Two rows down adds two TENS: 27 + 20 = 47."
+          }
+        ],
+        "fallbackFeedback": "27 + 10 = 37, + 10 = 47."
+      },
+      "hints": [
+        "Each row down is ten more.",
+        "27 → 37 → ?",
+        "47."
+      ],
+      "variant": {
+        "gen": "g1-counting-120",
+        "form": "ChartPatternNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You read the chart's patterns!",
+      "takeaways": [
+        "Down a row = ten more.",
+        "Up a row = ten less.",
+        "A column shares the ones digit."
+      ],
+      "teaser": "next chapter: reading and writing numerals to 120."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "chart-pattern",
+      "concept": {
+        "id": "rem-patt-c",
+        "kind": "concept",
+        "body": "Slow it down. One row down is ten more. Below 12 is 22. Below 22 is 32. The ones stay the same.",
+        "narration": "One row down is ten more. Below twelve is twenty-two. Below twenty-two is thirty-two. The ones stay the same."
+      },
+      "check": {
+        "id": "rem-patt-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "chart-pattern",
+        "explanationVariants": [
+          "Ten more than 12 is 22 (one row down).",
+          "Below 12 on the chart is 22."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is ten more than 12?",
+          "answer": 22,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 13,
+              "feedback": "13 is one more. Ten more than 12 is 22."
+            },
+            {
+              "value": 2,
+              "feedback": "2 is ten LESS. Ten MORE than 12 is 22."
+            }
+          ],
+          "fallbackFeedback": "12 + 10 = 22."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "id": "co-03-03",
+  "slug": "hyperbola-foci-eccentricity",
+  "title": "Foci, Orientation & Eccentricity",
+  "courseId": "conic-sections",
+  "chapterId": "ch3-hyperbolas",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The foci sit on the opening axis, c units from center — for a horizontal hyperbola, at (±c, 0), always BEYOND the vertices (±a, 0) since c > a. For x²/9 − y²/16 = 1: c = 5, so foci at (±5, 0), outside the vertices (±3, 0).",
+      "figure": "co-hyperbola-foci"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Locate the foci.",
+      "widget": {
+        "type": "conicLocusLab",
+        "targetEccentricityTenths": 15,
+        "startEccentricityTenths": 8,
+        "prompt": "Push the eccentricity past 1 — to 1.5 — and watch the closed curve break open.",
+        "successFeedback": "Past e = 1 the ellipse becomes a hyperbola. For x²/9 − y²/16 = 1 with a = 3 and c = 5, e = 5/3 ≈ 1.67 and the foci sit at (±5, 0) on the opening axis. Eccentricity is one dial running through every conic: circle, ellipse, parabola, hyperbola.",
+        "explorationFeedback": "Slide across e = 1 a few times to see the transition rather than just the endpoint.",
+        "lowFeedback": "Still below 1.5 — the curve has not opened as far as the target.",
+        "highFeedback": "Past 1.5 now."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Orientation from the positive term.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The hyperbola y²/25 − x²/9 = 1 has the y² term positive. It opens:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "up and down (vertical)",
+            "correct": true,
+            "feedback": "Right — the positive y² term means vertices and foci sit on the y-axis."
+          },
+          {
+            "id": "o2",
+            "label": "left and right (horizontal)",
+            "feedback": "That needs x² positive. Here y² is positive → vertical opening."
+          },
+          {
+            "id": "o3",
+            "label": "it has no fixed direction",
+            "feedback": "The positive term fixes it: y² positive → opens up-down."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Vertical foci.",
+      "conceptTag": "co-hyp-ecc",
+      "explanationVariants": [
+        "y²/9 − x²/16 = 1 opens up-down (y² positive): a = 3, b = 4, c = 5, so foci at (0, ±5).",
+        "Positive y² → vertical, foci on the y-axis at (0, ±c) = (0, ±5)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For y²/9 − x²/16 = 1 (c = 5), the foci are at:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(0, ±5)",
+            "correct": true,
+            "feedback": "Right — y² is positive, so it opens vertically with foci at (0, ±5)."
+          },
+          {
+            "id": "o2",
+            "label": "(±5, 0)",
+            "feedback": "The y² term is positive → vertical opening. Foci are (0, ±5)."
+          },
+          {
+            "id": "o3",
+            "label": "(0, ±3)",
+            "feedback": "(0, ±3) are the vertices (a = 3). Foci use c = 5: (0, ±5)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-hyp-ecc__mcq"
+      }
+    },
+    {
+      "id": "c2b",
+      "kind": "concept",
+      "body": "**Eccentricity** e = c/a again — but for a hyperbola c > a, so **e > 1** always. The bigger e, the more sharply the branches flare open (wider asymptote angle). This single number > 1 is the hyperbola's fingerprint (recall: ellipse had e < 1).",
+      "figure": "co-hyperbola-eccentricity"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Compute e.",
+      "conceptTag": "co-hyp-ecc",
+      "explanationVariants": [
+        "e = c/a = 5/3 ≈ 1.67 — greater than 1, as every hyperbola is.",
+        "Divide c by a: 5/3 ≈ 1.67."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/9 − y²/16 = 1 (a = 3, c = 5), find the eccentricity e = c/a, to two decimals.",
+        "answer": 1.67,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0.6,
+            "feedback": "0.6 = a/c inverts it. e = c/a = 5/3 ≈ 1.67 (and must exceed 1)."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = c. Divide by a = 3: e = 5/3 ≈ 1.67."
+          }
+        ],
+        "fallbackFeedback": "e = c/a = 5/3 ≈ 1.67."
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-hyp-ecc__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full hyperbola read-off.",
+      "conceptTag": "co-hyp-ecc",
+      "explanationVariants": [
+        "x²/16 − y²/9 = 1: a = 4, b = 3, c = √(16+9) = 5; e = c/a = 5/4 = 1.25.",
+        "c = 5, a = 4 → e = 5/4 = 1.25 (just above 1, a gently flaring hyperbola)."
+      ],
+      "hints": [
+        "c² = a² + b² = 16 + 9 = 25 → c = 5.",
+        "a = √16 = 4.",
+        "e = c/a = 5/4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For x²/16 − y²/9 = 1, find the eccentricity e = c/a. (Decimal.)",
+        "answer": 1.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "0.8 = a/c, inverted. e = c/a = 5/4 = 1.25."
+          },
+          {
+            "value": 1.67,
+            "feedback": "1.67 = 5/3 uses a = 3. Here a = 4, so e = 5/4 = 1.25."
+          }
+        ],
+        "fallbackFeedback": "c = 5, a = 4, e = 5/4 = 1.25."
+      },
+      "variant": {
+        "gen": "g12-conic-sections",
+        "form": "conic-sections__co-hyp-ecc__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Beyond the vertices.",
+      "takeaways": [
+        "Foci on the opening axis at distance c > a (beyond the vertices).",
+        "Orientation = the positive term's variable (x² horizontal, y² vertical).",
+        "Eccentricity e = c/a > 1 for every hyperbola."
+      ],
+      "teaser": "Next chapter: turning any messy second-degree equation into standard form."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-hyp-ecc",
+      "concept": {
+        "id": "rem-co0303-c",
+        "kind": "concept",
+        "body": "Hyperbola foci: distance c > a on the opening axis (the positive term's variable). Eccentricity e = c/a > 1 always."
+      },
+      "check": {
+        "id": "rem-co0303-k",
+        "kind": "check",
+        "body": "One eccentricity.",
+        "conceptTag": "co-hyp-ecc",
+        "explanationVariants": [
+          "a = 4, c = 5: e = 5/4 = 1.25.",
+          "Divide: 5/4 = 1.25 (> 1)."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A hyperbola has a = 4, c = 5. Find e = c/a. (Decimal.)",
+          "answer": 1.25,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.8,
+              "feedback": "That's a/c. Eccentricity is c/a = 5/4 = 1.25."
+            },
+            {
+              "value": 1,
+              "feedback": "A hyperbola always has e > 1: here 5/4 = 1.25."
+            }
+          ],
+          "fallbackFeedback": "e = 5/4 = 1.25."
+        }
+      }
+    }
+  ]
+}

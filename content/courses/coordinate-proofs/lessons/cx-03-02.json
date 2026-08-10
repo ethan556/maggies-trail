@@ -1,0 +1,322 @@
+{
+  "id": "cx-03-02",
+  "slug": "classifying-quadrilaterals",
+  "title": "Classifying Quadrilaterals",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch3-classification-proofs",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-classify-quad",
+      "concept": {
+        "id": "rem-cx-classify-quad-c",
+        "kind": "concept",
+        "body": "Classify a coordinate quadrilateral in layers. BASE: parallelogram if both opposite slope pairs match, or (faster) if the two diagonal midpoints coincide. UPGRADES: rhombus if all four squared sides are equal; rectangle if the squared diagonals are equal (or adjacent slopes multiply to −1); square if both. Report the most specific name the numbers support."
+      },
+      "check": {
+        "id": "rem-cx-classify-quad-k",
+        "kind": "check",
+        "body": "One layer.",
+        "conceptTag": "cx-classify-quad",
+        "explanationVariants": [
+          "Diagonal midpoints: ((0+4)/2, (0+6)/2) = (2, 3) and ((5+(−1))/2, (1+5)/2) = (2, 3) — they coincide.",
+          "Coinciding diagonal midpoints certify a parallelogram."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Quadrilateral (0,0), (5,1), (4,6), (−1,5). Its diagonal midpoints both equal (2, 3). What's certified?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Parallelogram — diagonals bisecting each other is a complete test",
+              "correct": true,
+              "feedback": "pq's diagonal test, executed by the midpoint formula: one computation, base layer done."
+            },
+            {
+              "id": "o2",
+              "label": "Rectangle",
+              "correct": false,
+              "feedback": "Bisection alone stops at parallelogram — a rectangle would additionally need equal diagonal lengths."
+            },
+            {
+              "id": "o3",
+              "label": "Just a quadrilateral",
+              "correct": false,
+              "feedback": "Coinciding diagonal midpoints is one of pq's PROVEN parallelogram tests — the certificate counts."
+            },
+            {
+              "id": "o4",
+              "label": "Square",
+              "correct": false,
+              "feedback": "The square needs equal sides AND right angles on top — midpoint coincidence only buys the parallelogram layer."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Four vertices, same discipline — and the quadrilateral course's tests become CHECKLISTS. Parallelogram: both slope pairs match (or diagonal midpoints coincide). Upgrade to **rectangle**: adjacent slopes multiply to −1 (or diagonals congruent). Upgrade to **rhombus**: all four sides equal (or diagonals perpendicular). Both upgrades at once: **square**.",
+      "figure": "cx-quad-vertices"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Run the base test.",
+      "conceptTag": "cx-classify-quad",
+      "explanationVariants": [
+        "Slope PQ = 1/5 and slope SR = 1/5; slope QR = 4 and slope PS = 4 — both pairs parallel.",
+        "Two matched slope pairs certify the parallelogram."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "P(1, 2), Q(6, 3), R(7, 7), S(2, 6). The slope audit (PQ, QR, RS, SP) finds:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "PQ ∥ SR (both 1/5) and QR ∥ PS (both 4) — a parallelogram",
+            "correct": true,
+            "feedback": "Both opposite pairs match: the definition itself is satisfied, straight from chapter 2's parallel criterion."
+          },
+          {
+            "id": "o2",
+            "label": "Only one parallel pair — a trapezoid",
+            "correct": false,
+            "feedback": "BOTH pairs match: 1/5 = 1/5 and 4/1 = 4/1. The second pair is easy to miss on the steep sides — parallelogram."
+          },
+          {
+            "id": "o3",
+            "label": "No parallel pairs",
+            "correct": false,
+            "feedback": "Compute: (3−2)/(6−1) = 1/5 = (7−6)/(7−2), and (7−3)/(7−6) = 4 = (6−2)/(2−1). Parallelogram."
+          },
+          {
+            "id": "o4",
+            "label": "Perpendicular adjacent sides",
+            "correct": false,
+            "feedback": "(1/5)(4) = 4/5 ≠ −1 — no right angles here. Just the two parallel pairs: parallelogram."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-quad__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Test the upgrades.",
+      "conceptTag": "cx-classify-quad",
+      "explanationVariants": [
+        "Sides: PQ² = 26, QR² = 17 — unequal, so not a rhombus. Diagonals: PR² = 61, QS² = 25 — unequal, so not a rectangle.",
+        "Both upgrade tests fail: it stays a plain parallelogram."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Same PQRS. Checking upgrades — rhombus (equal sides) and rectangle (equal diagonals):",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Neither — PQ² = 26 ≠ 17 = QR² kills rhombus; PR² = 61 ≠ 25 = QS² kills rectangle. Most specific name: parallelogram",
+            "correct": true,
+            "feedback": "The pq course's most-specific-name discipline, now with receipts: both upgrade certificates fail, the base one stands."
+          },
+          {
+            "id": "o2",
+            "label": "Rectangle — it looks upright",
+            "correct": false,
+            "feedback": "Looks don't testify; diagonals do: √61 ≠ 5. Not a rectangle — parallelogram only."
+          },
+          {
+            "id": "o3",
+            "label": "Rhombus — the sides look even",
+            "correct": false,
+            "feedback": "√26 ≠ √17 — adjacent sides differ. Parallelogram only."
+          },
+          {
+            "id": "o4",
+            "label": "Square",
+            "correct": false,
+            "feedback": "A square needs BOTH upgrades; this figure earns neither. Parallelogram."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-quad__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A rhombus, certified.",
+      "conceptTag": "cx-classify-quad",
+      "explanationVariants": [
+        "All four squared sides: 25, 25, 25, 25. Diagonal slopes: 4/8 = 1/2 and 4/(−2) = −2 — product −1.",
+        "Equal sides say rhombus; perpendicular diagonals co-sign (pq's rhombus signature)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Quadrilateral (0, 0), (5, 0), (8, 4), (3, 4) — all four sides square to 25. Compute the product of the two DIAGONAL slopes.",
+        "answer": -1,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 drops a sign — the diagonals run (0,0)→(8,4) at 1/2 and (5,0)→(3,4) at −2: product −1, perpendicular — the rhombus signature."
+          },
+          {
+            "value": -0.25,
+            "feedback": "−0.25 = (1/2)(−1/2) reuses the first slope's reciprocal — the second diagonal's slope is 4/(3−5) = −2: product −1."
+          },
+          {
+            "value": 0,
+            "feedback": "0 would need a horizontal diagonal — (0,0)→(8,4) climbs at 1/2. Product: (1/2)(−2) = −1."
+          }
+        ],
+        "fallbackFeedback": "(1/2)(−2) = −1 — perpendicular diagonals, exactly what pq promised a rhombus."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-quad__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "But is it a square?",
+      "predict": {
+        "prompt": "All four sides of this shape will measure exactly 5. Is that enough to make it a SQUARE?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — four equal sides settle it"
+          },
+          {
+            "id": "check",
+            "label": "Not yet — the corners (or diagonals) still have to be checked"
+          },
+          {
+            "id": "never",
+            "label": "It can never be a square on a slanted grid"
+          }
+        ],
+        "outcomeId": "check",
+        "reveal": "Equal sides make a rhombus. Whether it is also a square is decided by one more check — right angles, or equivalently equal diagonals — and that check is exactly what the shape's own name will report."
+      },
+      "widget": {
+        "type": "quadDrag",
+        "prompt": "Three corners sit at (0, 0), (5, 0), (8, 4). Place S so all four sides are equal — then read what the shape calls itself.",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            8,
+            4
+          ]
+        ],
+        "targetX": 3,
+        "targetY": 4,
+        "startX": 2,
+        "startY": 7,
+        "gridMax": 9,
+        "targetName": "a rhombus",
+        "successFeedback": "Four sides of 5 — and the name reads rhombus, not square. Run the deciding check: the diagonals measure √80 and √20. Unequal diagonals mean the corners are not right angles, so equal sides alone never promote a rhombus to a square.",
+        "sideFeedback": "Track the side lengths: from (8, 4), the fourth corner must sit a distance of 5 from both (8, 4) and (0, 0). Slide across until the two remaining sides match the first pair.",
+        "angleFeedback": "The across position is right — now the height. The fourth side closes back to (0, 0), and only one height makes both remaining sides equal 5."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A square, certified.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Quadrilateral (0, 0), (3, 4), (−1, 7), (−4, 3): all sides square to 25. Compute the product of two ADJACENT side slopes.",
+        "answer": -1,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 drops the sign — slopes 4/3 and (7−4)/(−1−3) = −3/4 multiply to −1: right angle, so with equal sides this is a SQUARE."
+          },
+          {
+            "value": 0.5625,
+            "feedback": "0.5625 = (3/4)² squares a reciprocal — the adjacent slopes are 4/3 and −3/4: product −1."
+          }
+        ],
+        "fallbackFeedback": "(4/3)(−3/4) = −1 — equal sides + right angle = square, fully certified."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Name it, prove it.",
+      "conceptTag": "cx-classify-quad",
+      "hints": [
+        "Run the layers in order: parallelogram first (slopes or diagonal midpoints).",
+        "Diagonal midpoints: ((0+6)/2, (0+8)/2) vs ((7+(−1))/2, (3+5)/2).",
+        "Then the upgrades: side lengths for rhombus, diagonal lengths (or adjacent slopes) for rectangle."
+      ],
+      "explanationVariants": [
+        "Midpoints (3, 4) and (3, 4) coincide: parallelogram. Sides: 58, 26, 58, 26 — not a rhombus. Diagonals: 100 and 68 — not a rectangle. Verdict: parallelogram, and the diagonal-midpoint test did the base work in one line.",
+        "Diagonal midpoints coincide at (3, 4); upgrades both fail (58 ≠ 26; 100 ≠ 68). Parallelogram."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "W(0, 0), X(7, 3), Y(6, 8), Z(−1, 5). Most specific name, with the fastest base certificate?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Parallelogram — diagonal midpoints BOTH land on (3, 4); sides 58/26 and diagonals 100/68 block both upgrades",
+            "correct": true,
+            "feedback": "One midpoint computation certifies the base layer (pq's bisecting-diagonals test); the failed upgrades pin the most specific name."
+          },
+          {
+            "id": "o2",
+            "label": "Rectangle — the diagonals bisect each other",
+            "correct": false,
+            "feedback": "Bisection is the PARALLELOGRAM certificate — rectangles need congruent diagonals, and 100 ≠ 68."
+          },
+          {
+            "id": "o3",
+            "label": "Rhombus — diagonals cross at one point",
+            "correct": false,
+            "feedback": "Crossing at the shared midpoint says parallelogram; rhombus needs equal sides, and 58 ≠ 26."
+          },
+          {
+            "id": "o4",
+            "label": "Kite",
+            "correct": false,
+            "feedback": "A kite pairs CONSECUTIVE equal sides without the parallelogram structure — this figure has coinciding diagonal midpoints: parallelogram."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-quad__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Checklists with receipts.",
+      "takeaways": [
+        "Base layer: parallelogram by slope pairs OR coinciding diagonal midpoints (usually fastest).",
+        "Upgrades: equal sides ⇒ rhombus; equal diagonals or a −1 slope product ⇒ rectangle; both ⇒ square.",
+        "Always the most specific name — with the computations as receipts."
+      ],
+      "teaser": "Finale of the chapter: proofs that work for EVERY figure at once — variables in the coordinates."
+    }
+  ]
+}

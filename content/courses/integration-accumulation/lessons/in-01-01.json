@@ -1,0 +1,296 @@
+{
+  "id": "in-01-01",
+  "slug": "estimating-with-rectangles",
+  "title": "Estimating with Rectangles",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch1-area-under-a-curve",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You can find the area of a rectangle. You cannot find the area under a curve — so **cover the curve in rectangles** and add them up.\n\nThe answer will be wrong. That is fine: the question is not whether it is wrong but **how** it is wrong, and whether the error can be made as small as you like.",
+      "figure": "in-riemann-trap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Cover the curve and count.",
+      "widget": {
+        "type": "riemannSum",
+        "fn": "square",
+        "a": 0,
+        "b": 2,
+        "tolerance": 0.1,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Estimate the area under y = x² from 0 to 2. Get within 0.1 of the truth (which is 8/3 ≈ 2.667).",
+        "successFeedback": "Within a tenth. But look at the line underneath the picture: the LEFT sum is always short and the RIGHT sum is always over. The true area is TRAPPED between them — and raising n squeezes the trap shut.",
+        "lowFeedback": "Your estimate is UNDER the truth. On a rising curve every left-hand strip is only as tall as its shortest edge, so the left rule can only ever undershoot. Raise n, or change rule.",
+        "highFeedback": "Your estimate is OVER. On a rising curve every right-hand strip is as tall as its TALLEST edge, so the right rule can only overshoot."
+      },
+      "predict": {
+        "prompt": "y = x² rises across [0, 2]. Using the LEFT rule, your first estimate will land…",
+        "options": [
+          {
+            "id": "under",
+            "label": "Under the true area"
+          },
+          {
+            "id": "over",
+            "label": "Over the true area"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly on it"
+          }
+        ],
+        "outcomeId": "under",
+        "reveal": "On a rising curve every left-hand strip is only as tall as its shortest edge, so left sums always undershoot — and raising n squeezes that gap toward zero."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Partition an interval and compare how sample rules accumulate approximate signed area.",
+        "invariants": [
+          "sum-is-height-times-width",
+          "refinement-controls-error"
+        ],
+        "misconceptions": [
+          "more-rectangles-always-overestimate",
+          "area-ignores-sign"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-riemannSum",
+        "delayed": false
+      },
+      "conceptTag": "in-riemann"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why left undershoots.",
+      "conceptTag": "in-riemann",
+      "explanationVariants": [
+        "On a rising curve, the left edge of each strip is its lowest point, so a rectangle of that height sits entirely under the curve. Every strip is short, so the total is short.",
+        "The error is not random. It is systematic, and knowing its DIRECTION is what makes the estimate useful."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On a rising curve, why does the left-endpoint rule always underestimate?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Each rectangle is only as tall as the LOWEST point of its strip, so it fits under the curve with room to spare.",
+            "correct": true,
+            "feedback": "Right — and that means the error has a known SIGN. The estimate is not just wrong, it is wrong in a direction you can count on."
+          },
+          {
+            "id": "o2",
+            "label": "Because rectangles are smaller than curves.",
+            "correct": false,
+            "feedback": "Rectangles can just as easily be too big — the right-endpoint rule overshoots for exactly the mirror-image reason."
+          },
+          {
+            "id": "o3",
+            "label": "Because we did not use enough of them.",
+            "correct": false,
+            "feedback": "More strips shrink the error but do not change its sign: a left sum on a rising curve is short at n = 4 and still short at n = 4,000."
+          },
+          {
+            "id": "o4",
+            "label": "It does not — it can go either way.",
+            "correct": false,
+            "feedback": "On a RISING curve it cannot. Try it: every value of n leaves the left sum below the truth."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-riemann__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rules differ only in **where each rectangle takes its height**:\n\n**Left** — the left edge. Undershoots a rising curve.\n**Right** — the right edge. Overshoots it.\n**Midpoint** — the middle. Usually far better than either.\n**Trapezoid** — join the two edges with a slanted top, which is the average of left and right.",
+      "figure": "dr-tangent-line"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "When a rule is exact.",
+      "conceptTag": "in-riemann",
+      "explanationVariants": [
+        "A trapezoid with a slanted top matches a straight line exactly, so on a LINEAR function the trapezoid rule has no error at all — even with a single strip.",
+        "The error of the trapezoid rule comes from the curve BENDING away from the chord. A line does not bend."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For f(x) = 2x (a straight line), which rule gives the EXACT area even with one strip?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The trapezoid rule — a slanted top matches a straight line perfectly.",
+            "correct": true,
+            "feedback": "Right. The trapezoid's error comes entirely from the curve bending away from the chord, and a line does not bend."
+          },
+          {
+            "id": "o2",
+            "label": "The left rule.",
+            "correct": false,
+            "feedback": "With one strip the left rule builds a rectangle of height f(0) = 0 — an area of zero. It is as wrong as it is possible to be."
+          },
+          {
+            "id": "o3",
+            "label": "The right rule.",
+            "correct": false,
+            "feedback": "It overshoots badly with one strip: a rectangle as tall as the line's highest point."
+          },
+          {
+            "id": "o4",
+            "label": "None — every rule has some error.",
+            "correct": false,
+            "feedback": "Not on a line. Try it in the widget: the trapezoid rule lands on 9 exactly, at any n."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-riemann__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Do one by hand.",
+      "conceptTag": "in-riemann",
+      "explanationVariants": [
+        "Strips of width 1 at x = 0 and x = 1. Heights f(0) = 0 and f(1) = 1. Area ≈ 1(0) + 1(1) = 1.",
+        "The truth is 8/3 ≈ 2.667, so this crude estimate is short by a lot — as a left sum on a rising curve must be."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x² on [0, 2] with 2 strips, LEFT rule. What is the estimate?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is the RIGHT sum: heights f(1) = 1 and f(2) = 4, giving 1 + 4 = 5. The left rule uses the LEFT edges: f(0) = 0 and f(1) = 1."
+          },
+          {
+            "value": 2.667,
+            "feedback": "That is the exact area, which two rectangles cannot possibly hit. The left sum with 2 strips gives 1."
+          },
+          {
+            "value": 3,
+            "feedback": "Check the heights: the left edges are at x = 0 and x = 1, where f is 0 and 1. Width 1 each, so 0 + 1 = 1."
+          }
+        ],
+        "fallbackFeedback": "Left edges: f(0) = 0, f(1) = 1. Each strip has width 1, so the estimate is 0 + 1 = 1."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-riemann__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "How wide is the trap?",
+      "conceptTag": "in-riemann",
+      "hints": [
+        "With 4 strips on [0, 2], the left and right sums differ by a predictable amount.",
+        "Every strip's right rectangle exceeds its left one by [f(xᵢ₊₁) − f(xᵢ)]·h. Summing telescopes: only the ends survive.",
+        "The gap is [f(2) − f(0)]·h = (4 − 0)(0.5)."
+      ],
+      "explanationVariants": [
+        "Right − left = [f(b) − f(a)]·h = (4 − 0) × 0.5 = 2. Every interior term cancels — the sum telescopes.",
+        "And that formula is the whole reason the trap closes: h = (b−a)/n, so the gap shrinks like 1/n and can be made as small as you like."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = x² on [0, 2] with 4 strips. By how much does the RIGHT sum exceed the LEFT sum?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is f(2) − f(0), the height difference. It must still be multiplied by the strip width h = 0.5."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is h alone. The gap is [f(b) − f(a)]·h = 4 × 0.5 = 2."
+          },
+          {
+            "value": 2.667,
+            "feedback": "That is the exact area, not the gap between the two estimates."
+          }
+        ],
+        "fallbackFeedback": "The sum telescopes: right − left = [f(2) − f(0)]·h = 4 × 0.5 = 2."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-riemann__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cover it in rectangles, and know which way you are wrong.",
+      "takeaways": [
+        "Rectangles turn an impossible area into an easy sum — at the cost of an error you can predict.",
+        "On a rising curve the left rule always undershoots and the right rule always overshoots.",
+        "The trapezoid rule is exact on a straight line, because a slanted top is a straight line."
+      ],
+      "teaser": "Next: those two errors are not just predictable — together they TRAP the answer."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-riemann",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Each rectangle has the same width, h = (b − a)/n. Only its HEIGHT is a choice — and the rule you pick just says where in the strip that height is measured. Left edge, right edge, or middle.",
+        "figure": "dr-tangent-line"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "How wide is each strip?",
+        "conceptTag": "in-riemann",
+        "explanationVariants": [
+          "h = (b − a)/n = (6 − 0)/3 = 2.",
+          "The width never depends on the function — only on the interval and the number of strips."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Interval [0, 6], 3 strips. How wide is each one?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "That is the NUMBER of strips, not their width. h = (6 − 0)/3 = 2."
+            },
+            {
+              "value": 6,
+              "feedback": "That is the whole interval. Divide it among the 3 strips: 6/3 = 2."
+            }
+          ],
+          "fallbackFeedback": "h = (b − a)/n = 6/3 = 2."
+        }
+      }
+    }
+  ]
+}

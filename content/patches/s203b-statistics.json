@@ -1,0 +1,1192 @@
+{
+  "label": "S203B statistics batch — box plots (6.SP.B.4), MAD (6.SP.B.5c), difference in MADs (7.SP.B.3)",
+  "totalLessons": 6,
+  "chapterInsertions": [
+    {
+      "courseSlug": "data-distributions",
+      "position": { "after": "ch4-range-iqr" },
+      "chapter": {
+        "id": "ch4b-box-plots-and-mad",
+        "title": "Box Plots & Typical Distance",
+        "lessonIds": ["dd-04b-01", "dd-04b-02", "dd-04b-03"]
+      },
+      "seamEdit": {
+        "lessonId": "dd-04-03",
+        "field": "recap.teaser",
+        "expect": "final chapter: put shape, center, and spread together into one honest paragraph about any data set.",
+        "newValue": "next: turning the five-number summary into a picture — the box plot — and then a second way to measure spread."
+      },
+      "lessons": [
+        {
+          "id": "dd-04b-01",
+          "slug": "building-a-box-plot",
+          "title": "Building a Box Plot",
+          "courseId": "data-distributions",
+          "chapterId": "ch4b-box-plots-and-mad",
+          "minutes": 10,
+          "standards": ["6.SP.B.4"],
+          "steps": [
+            {
+              "id": "c1",
+              "kind": "concept",
+              "figure": "dd-box-five-number",
+              "body": "You already find the median, Q1 and Q3. Add the smallest and largest values and you have the **five-number summary**: min, Q1, median, Q3, max. A **box plot** draws that summary. The **box** runs from Q1 to Q3 with a line at the median; the **whiskers** reach out to the min and the max. For 2, 5, 7, 8, 11, 13, 14, 16, 19, 20 the summary is min 2, Q1 7, median 12, Q3 16, max 20."
+            },
+            {
+              "id": "i1",
+              "kind": "interactive",
+              "body": "Drag each handle into place. The box holds the middle half; the whiskers reach the extremes.",
+              "widget": {
+                "type": "boxPlot",
+                "prompt": "Build the summary: min 2, Q1 6, median 10, Q3 15, max 20.",
+                "axisMin": 0,
+                "axisMax": 22,
+                "targetMin": 2,
+                "targetQ1": 6,
+                "targetMed": 10,
+                "targetQ3": 15,
+                "targetMax": 20,
+                "startMin": 0,
+                "startQ1": 4,
+                "startMed": 8,
+                "startQ3": 12,
+                "startMax": 16,
+                "successFeedback": "That's it — box from Q1 to Q3 cut at the median, whiskers out to the smallest and largest values.",
+                "orderFeedback": "Keep them in order: min ≤ Q1 ≤ median ≤ Q3 ≤ max. One handle has jumped its neighbour.",
+                "valueFeedback": "Ordered correctly, but not on the target values yet. Match each handle to its number."
+              },
+              "predict": {
+                "prompt": "Once it is built, which part of the picture will the WHISKERS cover?",
+                "options": [
+                  { "id": "outer", "label": "The outer quarters — the lowest 25% and the highest 25%" },
+                  { "id": "middle", "label": "The middle half of the data" },
+                  { "id": "all", "label": "All of the data at once" }
+                ],
+                "outcomeId": "outer",
+                "reveal": "The box already owns the middle half, so the two whiskers split what is left: the bottom quarter and the top quarter."
+              }
+            },
+            {
+              "id": "k1",
+              "kind": "check",
+              "body": "Read a summary straight off the picture.",
+              "conceptTag": "box-plot",
+              "explanationVariants": [
+                "The left edge of the box is Q1. Here the box starts at 7, so Q1 = 7 — the whisker end at 2 is the minimum, not a quartile.",
+                "Walk in from the left: 2 is where the whisker starts (the min), and the box's first wall is Q1 at 7."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "A box plot has its whisker starting at 2, box edges at 7 and 16, median line at 12, and whisker ending at 20. What is Q1?",
+                "answer": 7,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 2, "feedback": "2 is the MINIMUM — where the whisker begins. Q1 is the first wall of the box, at 7." },
+                  { "value": 12, "feedback": "12 is the MEDIAN, the line inside the box. Q1 is the box's left edge, at 7." }
+                ],
+                "fallbackFeedback": "Q1 is the left edge of the box. The box runs 7 to 16, so Q1 = 7."
+              }
+            },
+            {
+              "id": "k2",
+              "kind": "check",
+              "body": "How much data does the box hold?",
+              "conceptTag": "box-plot",
+              "explanationVariants": [
+                "Q1 cuts off the bottom quarter and Q3 cuts off the top quarter, so the box between them holds the two middle quarters — half the data.",
+                "The four sections of a box plot each hold a quarter. The box covers two of those four sections, which is 50%."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "About what share of the data sits inside the box, between Q1 and Q3?",
+                "options": [
+                  { "id": "a", "label": "About half of it", "correct": true, "feedback": "Right — the box spans the two middle quarters, so about 50% of the values live inside it." },
+                  { "id": "b", "label": "About a quarter of it", "feedback": "A quarter is what ONE section holds. The box covers two sections — from Q1 to the median, and from the median to Q3 — so about half." },
+                  { "id": "c", "label": "All of it", "feedback": "All the data spans the whole picture, whiskers included. The box alone leaves out the bottom quarter and the top quarter." }
+                ]
+              }
+            },
+            {
+              "id": "c2",
+              "kind": "concept",
+              "figure": "dd-box-quarters",
+              "body": "Every one of the four pieces — lower whisker, lower box, upper box, upper whisker — holds the **same quarter** of the data. So a **wide** piece does not mean more values; it means that quarter is **spread out**. A long whisker and a short whisker on the same plot hold equally many values, packed loosely on one side and tightly on the other."
+            },
+            {
+              "id": "i2",
+              "kind": "interactive",
+              "body": "The box's width has a name you already know.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "For the box plot with Q1 = 7 and Q3 = 16, how wide is the box? (That width is the IQR.)",
+                "answer": 9,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 23, "feedback": "23 adds the quartiles (7 + 16). Width is a distance, so subtract: 16 − 7 = 9." },
+                  { "value": 18, "feedback": "18 is the whole range, max − min (20 − 2). The box only spans Q1 to Q3: 16 − 7 = 9." }
+                ],
+                "fallbackFeedback": "The box runs from Q1 = 7 to Q3 = 16, so its width is 16 − 7 = 9."
+              }
+            },
+            {
+              "id": "k3",
+              "kind": "check",
+              "body": "Read what a long whisker is telling you.",
+              "conceptTag": "box-plot",
+              "explanationVariants": [
+                "Both whiskers carry a quarter of the data. A longer one means that quarter is stretched over more ground — more spread out, not more numerous.",
+                "Length measures distance, not headcount. The top quarter covering a longer stretch means those values are scattered further apart."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "On one box plot the upper whisker is much longer than the lower whisker. What does that tell you?",
+                "options": [
+                  { "id": "a", "label": "The top quarter of the values is more spread out than the bottom quarter", "correct": true, "feedback": "Exactly — same number of values in each quarter, stretched across more ground at the top." },
+                  { "id": "b", "label": "There are more values in the top quarter than the bottom quarter", "feedback": "Each of the four sections always holds the same quarter of the data. The whisker's length shows spread, never count." },
+                  { "id": "c", "label": "The median must be closer to Q3 than to Q1", "feedback": "The whiskers sit OUTSIDE the box, so they say nothing about where the median falls inside it. They describe the outer quarters." }
+                ]
+              }
+            },
+            {
+              "id": "ch1",
+              "kind": "challenge",
+              "body": "Raw data in, summary out.",
+              "conceptTag": "box-plot",
+              "explanationVariants": [
+                "Sorted: 4, 6, 9, 10, 12, 15, 18, 21. Eight values, so the median splits 4, 6, 9, 10 from 12, 15, 18, 21. Q1 is the lower half's median, (6 + 9) ÷ 2 = 7.5.",
+                "With an even count there is no single middle value in the lower half either, so average its central pair: 6 and 9 give Q1 = 7.5."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "You are drawing a box plot for 10, 4, 15, 9, 21, 6, 12, 18. Where does the LEFT edge of the box go? (Sort first.)",
+                "answer": 7.5,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 4, "feedback": "4 is the minimum — that is where the whisker starts. The box's left edge is Q1, the median of the lower half 4, 6, 9, 10, which is 7.5." },
+                  { "value": 9, "feedback": "9 is one of the lower half's two middle values. With four values there, average the middle pair: (6 + 9) ÷ 2 = 7.5." },
+                  { "value": 11, "feedback": "11 is the median of the WHOLE set — that is the line inside the box, not its left edge. Q1 comes from the lower half only: 7.5." }
+                ],
+                "fallbackFeedback": "Sorted: 4, 6, 9, 10, 12, 15, 18, 21. Lower half 4, 6, 9, 10 has middle pair 6 and 9, so Q1 = 7.5."
+              },
+              "hints": [
+                "The left edge of a box is always Q1.",
+                "Sort the eight values, split them into two halves of four, and work with the lower half only.",
+                "The lower half is 4, 6, 9, 10 — average its middle pair, 6 and 9."
+              ]
+            },
+            {
+              "id": "r1",
+              "kind": "recap",
+              "body": "Five numbers, one picture.",
+              "takeaways": [
+                "A box plot draws the five-number summary: min, Q1, median, Q3, max.",
+                "The box spans Q1 to Q3 — the middle half — and its width is the IQR.",
+                "All four sections hold a quarter of the data, so width shows spread, never how many."
+              ],
+              "teaser": "next: two box plots side by side, and what their shapes say about each other."
+            }
+          ],
+          "remedials": [
+            {
+              "conceptTag": "box-plot",
+              "concept": {
+                "id": "rem-bp-c",
+                "kind": "concept",
+                "body": "Quick rewind. Left to right, a box plot reads: whisker start = **min**, box left edge = **Q1**, line in the box = **median**, box right edge = **Q3**, whisker end = **max**."
+              },
+              "check": {
+                "id": "rem-bp-k",
+                "kind": "check",
+                "body": "",
+                "conceptTag": "box-plot",
+                "explanationVariants": [
+                  "The line drawn inside the box is always the median, so it is 14.",
+                  "Box edges are the quartiles (11 and 19); the line between them is the median, 14."
+                ],
+                "widget": {
+                  "type": "numeric",
+                  "prompt": "A box plot has box edges at 11 and 19 with a line at 14 inside. What is the median?",
+                  "answer": 14,
+                  "tolerance": 0,
+                  "unit": "",
+                  "commonErrors": [
+                    { "value": 11, "feedback": "11 is the box's left edge, which is Q1. The median is the line drawn inside the box: 14." },
+                    { "value": 19, "feedback": "19 is the box's right edge, which is Q3. The median is the interior line: 14." }
+                  ],
+                  "fallbackFeedback": "The line inside the box marks the median, so the median is 14."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "dd-04b-02",
+          "slug": "comparing-with-box-plots",
+          "title": "Comparing with Box Plots",
+          "courseId": "data-distributions",
+          "chapterId": "ch4b-box-plots-and-mad",
+          "minutes": 10,
+          "standards": ["6.SP.B.4"],
+          "steps": [
+            {
+              "id": "c1",
+              "kind": "concept",
+              "figure": "dd-box-compare-two",
+              "body": "Two box plots on the **same scale** answer two questions at a glance. Line up the median lines to compare **centres**; compare box widths to compare **spread**. Class A runs 8 to 18 with a box from 11 to 15. Class B runs 2 to 22 with a box from 9 to 17. Both medians sit at 13 — identical centres — but B's box is 8 wide against A's 4. Same typical value, very different consistency."
+            },
+            {
+              "id": "i1",
+              "kind": "interactive",
+              "body": "Put a number on the difference in consistency.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "Class A has Q1 = 11 and Q3 = 15. Class B has Q1 = 9 and Q3 = 17. How much wider is B's box than A's?",
+                "answer": 4,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 8, "feedback": "8 is B's box width on its own (17 − 9). The question wants the difference between the widths: 8 − 4 = 4." },
+                  { "value": 12, "feedback": "12 adds the two widths (8 + 4). To compare them, subtract: 8 − 4 = 4." }
+                ],
+                "fallbackFeedback": "A's box is 15 − 11 = 4 wide, B's is 17 − 9 = 8 wide, so B is 8 − 4 = 4 wider."
+              }
+            },
+            {
+              "id": "k1",
+              "kind": "check",
+              "body": "Same centre, different story.",
+              "conceptTag": "box-plot-compare",
+              "explanationVariants": [
+                "Both medians are 13, so the typical score matches. B's box and whiskers stretch much further, so B's scores are far less consistent.",
+                "Centre and spread are separate questions. Here the centres tie and only the spread separates the classes — B is the more variable group."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Class A and Class B both have a median of 13, but B's box and whiskers are much wider. What is the fair comparison?",
+                "options": [
+                  { "id": "a", "label": "Typical scores are the same; Class B's scores vary much more", "correct": true, "feedback": "Right — matching medians means matching centres, and the wider box and whiskers mean B is the less consistent class." },
+                  { "id": "b", "label": "Class B did better overall because its plot reaches higher", "feedback": "B does reach 22, but it also drops to 2. A longer plot means more spread in both directions, not a higher typical score — the medians are tied at 13." },
+                  { "id": "c", "label": "Class A has fewer students because its plot is shorter", "feedback": "Length shows the spread of values, never how many there are. A box plot of 10 scores and one of 200 scores can look identical." }
+                ]
+              }
+            },
+            {
+              "id": "k2",
+              "kind": "check",
+              "body": "Overlap is a comparison too.",
+              "conceptTag": "box-plot-compare",
+              "explanationVariants": [
+                "A's box spans 11 to 15 and B's spans 9 to 17, so every value in A's box range also lies inside B's — A's middle half sits entirely within B's.",
+                "B's box starts lower (9 < 11) and ends higher (17 > 15), so it completely contains A's box."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "A's box runs 11 to 15; B's box runs 9 to 17. How do the two middle halves relate?",
+                "options": [
+                  { "id": "a", "label": "A's middle half sits entirely inside the range of B's middle half", "correct": true, "feedback": "Yes — 9 < 11 and 17 > 15, so B's box swallows A's completely." },
+                  { "id": "b", "label": "The two middle halves do not overlap at all", "feedback": "They overlap heavily — 11 to 15 is common to both boxes. Non-overlapping boxes would sit side by side with a gap." },
+                  { "id": "c", "label": "They overlap only between 15 and 17", "feedback": "That is the part of B's box ABOVE A's. The shared stretch is all of 11 to 15, because A's box lies wholly within B's." }
+                ]
+              }
+            },
+            {
+              "id": "c2",
+              "kind": "concept",
+              "figure": "dd-box-quarters",
+              "body": "One warning when comparing. A box plot hides the **individual values** — it shows only five numbers. Two very different data sets can produce the **same** box plot: one with values evenly sprinkled, one with values clumped at each end. If the question is about gaps, clusters or repeated values, go back to the dot plot; the box plot answers centre and spread."
+            },
+            {
+              "id": "i2",
+              "kind": "interactive",
+              "body": "Build the second plot so the medians match but the spreads do not.",
+              "widget": {
+                "type": "boxPlot",
+                "prompt": "Draw Class B: min 2, Q1 9, median 13, Q3 17, max 22.",
+                "axisMin": 0,
+                "axisMax": 24,
+                "targetMin": 2,
+                "targetQ1": 9,
+                "targetMed": 13,
+                "targetQ3": 17,
+                "targetMax": 22,
+                "startMin": 6,
+                "startQ1": 10,
+                "startMed": 14,
+                "startQ3": 18,
+                "startMax": 24,
+                "successFeedback": "That is Class B — same median line as A at 13, but a box twice as wide and whiskers reaching much further.",
+                "orderFeedback": "Keep the order min ≤ Q1 ≤ median ≤ Q3 ≤ max; one handle has passed its neighbour.",
+                "valueFeedback": "In order, but not yet on target. Check each handle against its number."
+              }
+            },
+            {
+              "id": "k3",
+              "kind": "check",
+              "body": "Choose the right tool.",
+              "conceptTag": "box-plot-compare",
+              "explanationVariants": [
+                "Box plots report five summary numbers, so a gap in the middle of the data is invisible to them. A dot plot shows every value and would reveal the gap.",
+                "Only a display that draws individual values can show a hole in the data — the box plot would look completely normal."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "You suspect a data set has a gap — no values at all between 10 and 14. Which display would show it?",
+                "options": [
+                  { "id": "a", "label": "A dot plot, because it draws every individual value", "correct": true, "feedback": "Right — the empty stretch appears immediately as a hole in the dots. The box plot would hide it entirely." },
+                  { "id": "b", "label": "A box plot, because the box would be split at the gap", "feedback": "A box plot is drawn from just five numbers and is never split. A gap inside the box leaves the picture looking completely ordinary." },
+                  { "id": "c", "label": "Neither — a gap can never be seen in a display", "feedback": "A gap is very visible in the right display. A dot plot draws each value, so an empty stretch shows up as blank space." }
+                ]
+              }
+            },
+            {
+              "id": "ch1",
+              "kind": "challenge",
+              "body": "Two plots, one honest sentence.",
+              "conceptTag": "box-plot-compare",
+              "explanationVariants": [
+                "Bus median 24, walk median 12: the bus riders' typical trip is 24 − 12 = 12 minutes longer. Bus IQR = 30 − 18 = 12, walk IQR = 16 − 8 = 8, so the bus is also less predictable.",
+                "Compare the median lines for the centre gap (12 minutes) and the box widths for consistency (12 against 8, so the bus varies more)."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Bus trips: Q1 18, median 24, Q3 30. Walking trips: Q1 8, median 12, Q3 16. How many minutes longer is the bus riders' TYPICAL trip?",
+                "answer": 12,
+                "tolerance": 0,
+                "unit": "min",
+                "commonErrors": [
+                  { "value": 4, "feedback": "4 is the difference between the two IQRs (12 − 8), which compares consistency. The typical trip is the MEDIAN: 24 − 12 = 12." },
+                  { "value": 36, "feedback": "36 adds the two medians (24 + 12). 'How much longer' asks for the difference: 24 − 12 = 12." },
+                  { "value": 10, "feedback": "10 compares the Q1 values (18 − 8). The typical trip is measured at the median line, giving 24 − 12 = 12." }
+                ],
+                "fallbackFeedback": "The typical value is the median. Bus 24, walking 12, so the bus trip is 24 − 12 = 12 minutes longer."
+              },
+              "hints": [
+                "'Typical' points at one of the five numbers in particular.",
+                "Compare the two median lines, not the box edges.",
+                "Subtract: 24 − 12."
+              ]
+            },
+            {
+              "id": "r1",
+              "kind": "recap",
+              "body": "Two summaries, side by side.",
+              "takeaways": [
+                "On a shared scale, median lines compare centres and box widths compare spread.",
+                "Equal medians with unequal boxes means the same typical value with different consistency.",
+                "Box plots hide individual values — use a dot plot when gaps or clusters matter."
+              ],
+              "teaser": "next: a spread measure built from the mean instead of the median — the typical distance from centre."
+            }
+          ],
+          "remedials": [
+            {
+              "conceptTag": "box-plot-compare",
+              "concept": {
+                "id": "rem-bpc-c",
+                "kind": "concept",
+                "body": "Quick rewind. Comparing two box plots on one scale: **median lines** answer 'which centre is higher?' and **box widths** answer 'which group is more consistent?' A narrower box means a tighter, more predictable middle half."
+              },
+              "check": {
+                "id": "rem-bpc-k",
+                "kind": "check",
+                "body": "",
+                "conceptTag": "box-plot-compare",
+                "explanationVariants": [
+                  "Team P's box is 30 − 26 = 4 wide; Team Q's is 34 − 22 = 12. The narrower box, P, is the more consistent team.",
+                  "Consistency is about width, not position: 4 is narrower than 12, so Team P varies less."
+                ],
+                "widget": {
+                  "type": "mcq",
+                  "prompt": "Team P's box runs 26 to 30. Team Q's box runs 22 to 34. Which team is more consistent?",
+                  "options": [
+                    { "id": "a", "label": "Team P — its box is narrower", "correct": true, "feedback": "Right — a 4-wide box means P's middle half is packed tightly together." },
+                    { "id": "b", "label": "Team Q — its box is wider", "feedback": "A wider box means MORE variation, not less. Q's middle half is spread over 12 units against P's 4." },
+                    { "id": "c", "label": "They are equally consistent — the boxes overlap", "feedback": "Overlapping says the two groups cover common ground; consistency is about each box's own width, and 4 is much narrower than 12." }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "dd-04b-03",
+          "slug": "typical-distance-the-mad",
+          "title": "Typical Distance: the MAD",
+          "courseId": "data-distributions",
+          "chapterId": "ch4b-box-plots-and-mad",
+          "minutes": 11,
+          "standards": ["6.SP.B.5c"],
+          "steps": [
+            {
+              "id": "c1",
+              "kind": "concept",
+              "figure": "dd-mad-distances",
+              "body": "The IQR measures spread using quartiles. Here is a second measure that uses the **mean**. For each value, find how far it sits from the mean — always as a positive distance. Then average those distances. That average is the **mean absolute deviation**, or **MAD**: the typical distance from centre. For 2, 4, 6, 9, 9 the mean is 6, the distances are 4, 2, 0, 3, 3, and MAD = (4 + 2 + 0 + 3 + 3) ÷ 5 = **2.4**."
+            },
+            {
+              "id": "i1",
+              "kind": "interactive",
+              "body": "Start with a single distance.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "A data set has mean 10. One of its values is 4. How far is that value from the mean?",
+                "answer": 6,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": -6, "feedback": "Distance is never negative — 4 − 10 = −6, but a value 6 below the mean is still 6 away. Use the size of the gap: 6." },
+                  { "value": 14, "feedback": "14 adds the value and the mean (4 + 10). Distance is a difference: the gap from 4 up to 10 is 6." }
+                ],
+                "fallbackFeedback": "The gap between 4 and 10 is 6, and distances are counted as positive, so the distance is 6."
+              }
+            },
+            {
+              "id": "k1",
+              "kind": "check",
+              "body": "Now all the distances at once.",
+              "conceptTag": "mad",
+              "explanationVariants": [
+                "The mean is (3 + 7 + 8 + 10 + 12) ÷ 5 = 8. The distances are 5, 1, 0, 2, 4, adding to 12, so MAD = 12 ÷ 5 = 2.4.",
+                "Line each value up against 8: 3 is 5 away, 7 is 1 away, 8 is on it, 10 is 2 away, 12 is 4 away. Average those five distances to get 2.4."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Find the MAD of 3, 7, 8, 10, 12. (The mean is 8.)",
+                "answer": 2.4,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 12, "feedback": "12 is the TOTAL of the distances (5 + 1 + 0 + 2 + 4). The MAD averages them, so divide by 5: 12 ÷ 5 = 2.4." },
+                  { "value": 3, "feedback": "3 divides the total by 4 instead of 5. Every value counts, including the 8 that sits exactly on the mean with distance 0: 12 ÷ 5 = 2.4." },
+                  { "value": 9, "feedback": "9 is the range (12 − 3), which uses only the endpoints. The MAD uses every value's distance from the mean: 2.4." }
+                ],
+                "fallbackFeedback": "Distances from 8 are 5, 1, 0, 2, 4. They total 12, and 12 ÷ 5 = 2.4."
+              }
+            },
+            {
+              "id": "k2",
+              "kind": "check",
+              "body": "What does a small MAD mean?",
+              "conceptTag": "mad",
+              "explanationVariants": [
+                "The MAD is the typical distance from the mean, so a small MAD says values sit close to the mean — a tightly clustered set.",
+                "Small typical distance means the data huddles near its centre; a large MAD would mean values scattered far from it."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Two data sets have the same mean, but one has a MAD of 0.8 and the other a MAD of 7.5. What does the MAD of 0.8 tell you?",
+                "options": [
+                  { "id": "a", "label": "Its values sit close to the mean — a tightly clustered set", "correct": true, "feedback": "Right — a typical value is only 0.8 away from centre, so that data huddles together." },
+                  { "id": "b", "label": "Its values are further from the mean than the other set's", "feedback": "That is backwards. A SMALLER typical distance means closer to the mean; 7.5 is the scattered set." },
+                  { "id": "c", "label": "Its mean is smaller than the other set's", "feedback": "The two sets have the same mean — that was given. The MAD measures spread around the centre, not where the centre is." }
+                ]
+              }
+            },
+            {
+              "id": "c2",
+              "kind": "concept",
+              "figure": "dd-mad-vs-iqr",
+              "body": "Two spread measures, two partners. The **IQR** is built from quartiles, so it pairs with the **median** and, like the median, shrugs off wild values. The **MAD** is built from distances to the mean, so it pairs with the **mean** and, like the mean, an extreme value pulls it upward. Report median with IQR, or mean with MAD — matching the centre to the spread that was built from it."
+            },
+            {
+              "id": "i2",
+              "kind": "interactive",
+              "body": "Watch one wild value do its work.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "The set 5, 5, 5, 5 has mean 5 and MAD 0. Replace one 5 with 25, giving 5, 5, 5, 25. The new mean is 10. What is the new MAD?",
+                "answer": 7.5,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 5, "feedback": "5 is each small value's distance from the new mean of 10, but the 25 sits 15 away. Average all four: (5 + 5 + 5 + 15) ÷ 4 = 7.5." },
+                  { "value": 30, "feedback": "30 is the total of the four distances (5 + 5 + 5 + 15). The MAD averages them: 30 ÷ 4 = 7.5." },
+                  { "value": 20, "feedback": "20 is the range (25 − 5). The MAD averages every value's distance from the mean instead: 7.5." }
+                ],
+                "fallbackFeedback": "Distances from the new mean 10 are 5, 5, 5 and 15. Their total is 30, and 30 ÷ 4 = 7.5."
+              }
+            },
+            {
+              "id": "k3",
+              "kind": "check",
+              "body": "Match the centre to its spread.",
+              "conceptTag": "mad",
+              "explanationVariants": [
+                "One enormous value drags the mean upward, and the MAD is measured from the mean, so it is dragged too. The median and IQR are built from position, so both hold steady.",
+                "Outlier-resistant pair: median with IQR. Outlier-sensitive pair: mean with MAD. A house price of ten million pushes the mean and MAD, not the median and IQR."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "House prices on one street include a single enormous mansion. Which summary pair describes that street more fairly?",
+                "options": [
+                  { "id": "a", "label": "Median with IQR — both resist the one extreme value", "correct": true, "feedback": "Right — the mansion changes position hardly at all, so median and IQR keep describing the typical house." },
+                  { "id": "b", "label": "Mean with MAD — both use every value, so both are fairer", "feedback": "Using every value is exactly the problem here: the mansion drags the mean up, and the MAD measures distance from that dragged mean. Both get distorted." },
+                  { "id": "c", "label": "Mean with IQR — one of each keeps it balanced", "feedback": "Mixing them describes a centre and a spread that were built from different ideas. Pair median with IQR, or mean with MAD — here the resistant pair fits." }
+                ]
+              }
+            },
+            {
+              "id": "ch1",
+              "kind": "challenge",
+              "body": "Full pipeline: mean first, then distances.",
+              "conceptTag": "mad",
+              "explanationVariants": [
+                "Mean = (12 + 15 + 15 + 18 + 20) ÷ 5 = 80 ÷ 5 = 16. Distances: 4, 1, 1, 2, 4, totalling 12, so MAD = 12 ÷ 5 = 2.4.",
+                "Find centre before spread: the five values total 80 so the mean is 16, and the average gap to 16 works out at 2.4."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Find the MAD of 12, 15, 15, 18, 20. (Find the mean first.)",
+                "answer": 2.4,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 16, "feedback": "16 is the MEAN, which is only step one. Now average each value's distance from 16: (4 + 1 + 1 + 2 + 4) ÷ 5 = 2.4." },
+                  { "value": 12, "feedback": "12 is the total of the distances. The MAD averages them across all five values: 12 ÷ 5 = 2.4." },
+                  { "value": 3, "feedback": "3 uses the median 15 as the centre instead of the mean. The MAD measures from the MEAN, which is 16, giving 2.4." }
+                ],
+                "fallbackFeedback": "Mean = 80 ÷ 5 = 16. Distances from 16 are 4, 1, 1, 2, 4, totalling 12, so MAD = 12 ÷ 5 = 2.4."
+              },
+              "hints": [
+                "The MAD is measured from the mean, so find the mean before anything else.",
+                "The five values total 80, so the mean is 16. Now list each distance from 16.",
+                "The distances are 4, 1, 1, 2, 4 — average them."
+              ]
+            },
+            {
+              "id": "r1",
+              "kind": "recap",
+              "body": "The typical distance from centre.",
+              "takeaways": [
+                "MAD = average of every value's distance from the mean; distances are always positive.",
+                "A small MAD means tightly clustered data; a large MAD means scattered data.",
+                "Pair mean with MAD and median with IQR — an extreme value moves the first pair, not the second."
+              ],
+              "teaser": "final chapter: put shape, center, and spread together into one honest paragraph about any data set."
+            }
+          ],
+          "remedials": [
+            {
+              "conceptTag": "mad",
+              "concept": {
+                "id": "rem-mad-c",
+                "kind": "concept",
+                "body": "Quick rewind. **MAD** = average distance from the mean. Two steps: find the mean, then average how far each value sits from it. For 1, 3, 5 the mean is 3, the distances are 2, 0, 2, and MAD = 4 ÷ 3."
+              },
+              "check": {
+                "id": "rem-mad-k",
+                "kind": "check",
+                "body": "",
+                "conceptTag": "mad",
+                "explanationVariants": [
+                  "Distances from the mean 20 are 5 and 5, so the MAD is (5 + 5) ÷ 2 = 5.",
+                  "Both values sit exactly 5 from centre, so the typical distance is 5."
+                ],
+                "widget": {
+                  "type": "numeric",
+                  "prompt": "The set 15, 25 has mean 20. What is its MAD?",
+                  "answer": 5,
+                  "tolerance": 0,
+                  "unit": "",
+                  "commonErrors": [
+                    { "value": 10, "feedback": "10 is the total of the two distances (5 + 5), or the range. The MAD averages them: 10 ÷ 2 = 5." },
+                    { "value": 20, "feedback": "20 is the mean itself, not the spread. Average the distances from it: (5 + 5) ÷ 2 = 5." }
+                  ],
+                  "fallbackFeedback": "Each value is 5 from the mean, so the average distance is 5."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseSlug": "sampling-and-probability",
+      "position": { "after": "ch2-comparing-two-populations" },
+      "chapter": {
+        "id": "ch2b-measuring-the-difference",
+        "title": "Measuring the Difference",
+        "lessonIds": ["sp-02b-01", "sp-02b-02", "sp-02b-03"]
+      },
+      "seamEdit": {
+        "lessonId": "sp-02-03",
+        "field": "recap.teaser",
+        "expect": "you've completed sampling, inference, and comparing populations — more of this course is still ahead.",
+        "newValue": "next: putting a number on 'clearly different' — measuring the gap between two groups in units of their own wobble."
+      },
+      "lessons": [
+        {
+          "id": "sp-02b-01",
+          "slug": "mad-as-a-ruler",
+          "title": "MAD as a Ruler",
+          "courseId": "sampling-and-probability",
+          "chapterId": "ch2b-measuring-the-difference",
+          "minutes": 10,
+          "standards": ["7.SP.B.3"],
+          "steps": [
+            {
+              "id": "c1",
+              "kind": "concept",
+              "figure": "sp-mad-ruler",
+              "body": "You have been judging overlap by eye. Now measure it. Each group has a typical wobble — the **mean absolute deviation**, the average distance of its values from its own mean. Treat that wobble as a **ruler**: if two groups' means are 6 apart and a typical value wanders 2 from its mean, the groups are **3 rulers apart**. Same gap, bigger wobble, fewer rulers — and a gap worth less."
+            },
+            {
+              "id": "i1",
+              "kind": "interactive",
+              "body": "Build the ruler first.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "Sample A is 10, 11, 13, 14 with mean 12. What is its MAD?",
+                "answer": 1.5,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 6, "feedback": "6 is the total of the distances (2 + 1 + 1 + 2). The MAD averages them across the four values: 6 ÷ 4 = 1.5." },
+                  { "value": 4, "feedback": "4 is the range (14 − 10), built from the endpoints alone. The MAD uses every value's distance from 12: 1.5." }
+                ],
+                "fallbackFeedback": "Distances from 12 are 2, 1, 1, 2, totalling 6, so MAD = 6 ÷ 4 = 1.5."
+              }
+            },
+            {
+              "id": "k1",
+              "kind": "check",
+              "body": "Now the gap the ruler will measure.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "The gap between centres is a difference of means: 18 − 12 = 6.",
+                "Ignore the spread for a moment — 'how far apart are the groups?' is answered by subtracting one mean from the other, giving 6."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Sample A has mean 12; Sample B has mean 18. How far apart are the two centres?",
+                "answer": 6,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 30, "feedback": "30 adds the means (12 + 18). 'How far apart' is a difference: 18 − 12 = 6." },
+                  { "value": 15, "feedback": "15 is the average of the two means, which sits midway between the groups. The distance between them is 18 − 12 = 6." }
+                ],
+                "fallbackFeedback": "Subtract the centres: 18 − 12 = 6."
+              }
+            },
+            {
+              "id": "k2",
+              "kind": "check",
+              "body": "Lay the ruler along the gap.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "Measuring 6 with a ruler of length 2 gives 6 ÷ 2 = 3, so the centres are 3 MADs apart.",
+                "Each MAD covers 2 units of the gap, and the gap is 6 units, so three of them lie end to end across it."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "The centres are 6 apart and both samples have a MAD of about 2. How many MADs apart are the centres?",
+                "answer": 3,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 12, "feedback": "12 multiplies the gap by the MAD (6 × 2). Measuring means dividing: 6 ÷ 2 = 3." },
+                  { "value": 4, "feedback": "4 subtracts the MAD from the gap (6 − 2). The MAD is a unit of measurement, so divide by it: 6 ÷ 2 = 3." }
+                ],
+                "fallbackFeedback": "Divide the gap by the ruler: 6 ÷ 2 = 3 MADs."
+              }
+            },
+            {
+              "id": "c2",
+              "kind": "concept",
+              "figure": "sp-gap-vs-wobble",
+              "body": "Why the ruler matters. Two situations can share the **same 6-unit gap**. If each group wobbles by only 1, the gap is 6 MADs — the groups barely touch, and the difference is loud. If each group wobbles by 4, the same gap is 1.5 MADs — the two clouds of data overlap heavily, and the difference could easily be sampling luck. The gap alone never settles the question; the gap **in units of wobble** does."
+            },
+            {
+              "id": "i2",
+              "kind": "interactive",
+              "body": "Same gap, noisier groups.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "The centres are still 6 apart, but now each sample has a MAD of 4. How many MADs apart are the centres?",
+                "answer": 1.5,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 2, "feedback": "2 subtracts (6 − 4). Measuring the gap in MADs means dividing: 6 ÷ 4 = 1.5." },
+                  { "value": 24, "feedback": "24 multiplies (6 × 4). The MAD is the unit you are measuring WITH, so divide: 6 ÷ 4 = 1.5." },
+                  { "value": 3, "feedback": "3 is the answer from the earlier, quieter groups whose MAD was 2. With a MAD of 4 the same gap covers fewer rulers: 6 ÷ 4 = 1.5." }
+                ],
+                "fallbackFeedback": "Divide the gap by the new ruler: 6 ÷ 4 = 1.5 MADs."
+              }
+            },
+            {
+              "id": "k3",
+              "kind": "check",
+              "body": "Which difference is the stronger evidence?",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "A gap of 6 with a wobble of 1 is 6 MADs; a gap of 6 with a wobble of 4 is 1.5 MADs. More rulers means the groups separate more clearly.",
+                "The raw gaps tie at 6, so the wobble decides: the quieter groups give the bigger multiple, and the bigger multiple is the stronger evidence."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Study 1: centres 6 apart, MAD 1. Study 2: centres 6 apart, MAD 4. Which shows the clearer difference between groups?",
+                "options": [
+                  { "id": "a", "label": "Study 1 — its gap is 6 MADs wide, against 1.5 for Study 2", "correct": true, "feedback": "Right — same raw gap, but Study 1's groups wobble so little that the gap dwarfs the noise." },
+                  { "id": "b", "label": "Study 2 — a larger MAD means it collected more information", "feedback": "A larger MAD means noisier data, not more of it. That noise makes its 6-unit gap easier to explain away as chance." },
+                  { "id": "c", "label": "Neither — the gaps are both 6, so the evidence is identical", "feedback": "The raw gaps tie, which is exactly why the wobble decides. 6 units means far more when a typical value strays only 1 than when it strays 4." }
+                ]
+              }
+            },
+            {
+              "id": "ch1",
+              "kind": "challenge",
+              "body": "Both steps, one problem.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "Gap = 47 − 38 = 9. With a MAD of 3, the centres are 9 ÷ 3 = 3 MADs apart.",
+                "Subtract the means to get the gap, then divide by the shared wobble: 9 ÷ 3 = 3."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Sample A has mean 38, Sample B has mean 47, and both have a MAD of about 3. How many MADs apart are the centres?",
+                "answer": 3,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 9, "feedback": "9 is the raw gap (47 − 38), which is only step one. Divide it by the MAD to measure it in rulers: 9 ÷ 3 = 3." },
+                  { "value": 27, "feedback": "27 multiplies the gap by the MAD (9 × 3). Measuring in MADs means dividing: 9 ÷ 3 = 3." },
+                  { "value": 6, "feedback": "6 subtracts the MAD from the gap (9 − 3). The MAD is the unit of measurement, so divide: 9 ÷ 3 = 3." }
+                ],
+                "fallbackFeedback": "Gap = 47 − 38 = 9, and 9 ÷ 3 = 3 MADs."
+              },
+              "hints": [
+                "Two steps: find the gap between the centres, then measure it with the MAD.",
+                "The gap is 47 − 38 = 9.",
+                "Divide that gap by the MAD of 3."
+              ]
+            },
+            {
+              "id": "r1",
+              "kind": "recap",
+              "body": "A gap is only as big as the wobble lets it be.",
+              "takeaways": [
+                "The MAD is each group's typical wobble — use it as a ruler for the gap between centres.",
+                "Difference in MADs = (difference of means) ÷ MAD.",
+                "The same raw gap means more when the groups wobble less."
+              ],
+              "teaser": "next: reading that multiple off real samples, and what counts as a big one."
+            }
+          ],
+          "remedials": [
+            {
+              "conceptTag": "sp-mad-multiple",
+              "concept": {
+                "id": "rem-spm-c",
+                "kind": "concept",
+                "body": "Quick rewind. Measuring a gap in MADs takes two steps: **gap = difference of the means**, then **multiple = gap ÷ MAD**. Means 20 and 26 with MAD 3: gap 6, multiple 6 ÷ 3 = 2."
+              },
+              "check": {
+                "id": "rem-spm-k",
+                "kind": "check",
+                "body": "",
+                "conceptTag": "sp-mad-multiple",
+                "explanationVariants": [
+                  "Gap = 30 − 22 = 8, and 8 ÷ 4 = 2 MADs.",
+                  "The ruler is 4 long and the gap is 8, so two rulers span it."
+                ],
+                "widget": {
+                  "type": "numeric",
+                  "prompt": "Means 22 and 30, MAD 4. How many MADs apart are the centres?",
+                  "answer": 2,
+                  "tolerance": 0,
+                  "unit": "",
+                  "commonErrors": [
+                    { "value": 8, "feedback": "8 is the raw gap (30 − 22). Divide it by the MAD to get the multiple: 8 ÷ 4 = 2." },
+                    { "value": 32, "feedback": "32 multiplies the gap by the MAD. Measuring means dividing: 8 ÷ 4 = 2." }
+                  ],
+                  "fallbackFeedback": "Gap = 8, MAD = 4, so 8 ÷ 4 = 2 MADs."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "sp-02b-02",
+          "slug": "how-many-mads-apart",
+          "title": "How Many MADs Apart?",
+          "courseId": "sampling-and-probability",
+          "chapterId": "ch2b-measuring-the-difference",
+          "minutes": 11,
+          "standards": ["7.SP.B.3"],
+          "steps": [
+            {
+              "id": "c1",
+              "kind": "concept",
+              "figure": "sp-gap-vs-wobble",
+              "body": "Real samples rarely hand you the MAD — you compute it, then use it. The routine has three steps: **means** for each group, **MAD** for each group, then **gap ÷ MAD**. When the two groups have slightly different MADs, use a typical value of the two. The answer is a plain number with no units, which is the point: it compares a gap to the noise it is competing against."
+            },
+            {
+              "id": "i1",
+              "kind": "interactive",
+              "body": "Step one, on real numbers.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "Group A's heights are 60, 62, 63, 67 cm. What is their mean?",
+                "answer": 63,
+                "tolerance": 0,
+                "unit": "cm",
+                "commonErrors": [
+                  { "value": 252, "feedback": "252 is the TOTAL of the four heights. The mean shares it out: 252 ÷ 4 = 63." },
+                  { "value": 62.5, "feedback": "62.5 is the median, the midpoint of the middle pair 62 and 63. The mean adds all four and divides: 252 ÷ 4 = 63." }
+                ],
+                "fallbackFeedback": "60 + 62 + 63 + 67 = 252, and 252 ÷ 4 = 63."
+              }
+            },
+            {
+              "id": "k1",
+              "kind": "check",
+              "body": "Step two: that group's wobble.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "Distances from 63 are 3, 1, 0, 4, totalling 8, so MAD = 8 ÷ 4 = 2.",
+                "Each height's gap to 63: 60 is 3 below, 62 is 1 below, 63 is on it, 67 is 4 above. Those four distances average to 2."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Group A's heights are 60, 62, 63, 67 cm with mean 63. What is their MAD?",
+                "answer": 2,
+                "tolerance": 0,
+                "unit": "cm",
+                "commonErrors": [
+                  { "value": 8, "feedback": "8 is the total of the distances (3 + 1 + 0 + 4). The MAD averages them: 8 ÷ 4 = 2." },
+                  { "value": 7, "feedback": "7 is the range (67 − 60), which only looks at the endpoints. The MAD averages every distance from the mean: 2." },
+                  { "value": 2.67, "feedback": "2.67 divides the total by 3, skipping the value that sits exactly on the mean. That 0 still counts: 8 ÷ 4 = 2." }
+                ],
+                "fallbackFeedback": "Distances from 63 are 3, 1, 0 and 4. They total 8, so MAD = 8 ÷ 4 = 2."
+              }
+            },
+            {
+              "id": "k2",
+              "kind": "check",
+              "body": "Step three: measure the gap.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "Group B's mean is 69, so the gap is 69 − 63 = 6. Both MADs are about 2, so the centres are 6 ÷ 2 = 3 MADs apart.",
+                "Six centimetres of gap, measured with a 2 cm ruler, comes to 3."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Group A: mean 63 cm, MAD 2 cm. Group B: mean 69 cm, MAD 2 cm. How many MADs apart are the centres?",
+                "answer": 3,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 6, "feedback": "6 cm is the raw gap. Measuring it in MADs means dividing by 2: the answer is 3." },
+                  { "value": 132, "feedback": "132 adds the means (63 + 69). Start from their difference, 6, then divide by the MAD: 3." },
+                  { "value": 12, "feedback": "12 multiplies the gap by the MAD (6 × 2). The MAD is the unit you measure with, so divide: 6 ÷ 2 = 3." }
+                ],
+                "fallbackFeedback": "Gap = 69 − 63 = 6 cm; 6 ÷ 2 = 3 MADs."
+              }
+            },
+            {
+              "id": "c2",
+              "kind": "concept",
+              "figure": "sp-same-gap-different-verdict",
+              "body": "How big is big? A rough reading, and one worth stating carefully: under about **1 MAD**, the two groups blur together so thoroughly that ordinary sampling luck could easily produce the gap. Around **2 MADs or more**, the clouds pull apart and the difference is worth reporting. Between them is genuinely uncertain — the honest answer there is 'not yet convincing', not a verdict."
+            },
+            {
+              "id": "i2",
+              "kind": "interactive",
+              "body": "A noisier pair of samples.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "Group C: mean 45, MAD 6. Group D: mean 51, MAD 6. How many MADs apart are the centres?",
+                "answer": 1,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 6, "feedback": "6 is the raw gap (51 − 45). Divide by the MAD of 6 to measure it: the answer is 1." },
+                  { "value": 36, "feedback": "36 multiplies the gap by the MAD. Measuring in MADs is division: 6 ÷ 6 = 1." },
+                  { "value": 0, "feedback": "0 would mean the centres sit on top of each other, but they differ by 6. Dividing that gap by the MAD of 6 gives 1." }
+                ],
+                "fallbackFeedback": "Gap = 51 − 45 = 6, and 6 ÷ 6 = 1 MAD."
+              }
+            },
+            {
+              "id": "k3",
+              "kind": "check",
+              "body": "Now say what that means.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "One MAD is right at the weak end of the scale: the two groups overlap so much that sampling luck alone could produce a gap that size.",
+                "A gap equal to a single typical wobble is not much of a gap. It is not evidence of nothing — it is simply not yet convincing."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Groups C and D come out 1 MAD apart. What is the honest conclusion?",
+                "options": [
+                  { "id": "a", "label": "Not convincing yet — a gap that small could easily come from sampling luck", "correct": true, "feedback": "Right — at about 1 MAD the two groups overlap heavily, so this sample cannot settle the question either way." },
+                  { "id": "b", "label": "Group D is definitely higher than Group C", "feedback": "The sample means do differ, but by only one typical wobble. Another pair of samples from identical populations could easily show the same gap." },
+                  { "id": "c", "label": "The two groups are proven identical", "feedback": "A weak result never proves sameness — it just fails to show a difference. 'Not convincing' and 'no difference exists' are different claims." }
+                ]
+              }
+            },
+            {
+              "id": "ch1",
+              "kind": "challenge",
+              "body": "Raw data to verdict.",
+              "conceptTag": "sp-mad-multiple",
+              "explanationVariants": [
+                "Group P: mean = (18 + 20 + 22) ÷ 3 = 20; distances 2, 0, 2 give MAD = 4 ÷ 3 ≈ 1.3. Group Q has mean 26, so the gap is 6 and 6 ÷ 1.3 ≈ 4.5 MADs — a wide separation.",
+                "Both groups wobble a little over 1 while their centres sit 6 apart, so the gap is roughly four and a half wobbles wide: strong evidence."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Group P is 18, 20, 22 (mean 20). Group Q is 24, 26, 28 (mean 26). Each group's MAD is about 1.3. What should you report?",
+                "options": [
+                  { "id": "a", "label": "A clear difference — the centres are about 4.5 MADs apart", "correct": true, "feedback": "Right — a 6-unit gap measured with a 1.3-unit ruler is roughly 4.5, far past the 2-MAD mark. The two sets do not even overlap." },
+                  { "id": "b", "label": "No real difference — the gap is only 6 units", "feedback": "Six units is large HERE precisely because each group wobbles only about 1.3. Compare the gap to the wobble: 6 ÷ 1.3 ≈ 4.5." },
+                  { "id": "c", "label": "Not convincing — the groups are about 1 MAD apart", "feedback": "That would be true if the MAD were near 6. It is about 1.3, so the gap spans roughly 4.5 of them." }
+                ]
+              },
+              "hints": [
+                "Work out the gap between the two means first.",
+                "The gap is 26 − 20 = 6, and the ruler is about 1.3 long.",
+                "Divide: 6 ÷ 1.3 is roughly 4.5 — compare that with the 2-MAD mark."
+              ]
+            },
+            {
+              "id": "r1",
+              "kind": "recap",
+              "body": "Three steps, then a judgement.",
+              "takeaways": [
+                "Means, then MADs, then gap ÷ MAD — the result is a plain number with no units.",
+                "Roughly: under 1 MAD is not convincing, about 2 MADs or more is a real gap.",
+                "Failing to show a difference is not the same as showing there is none."
+              ],
+              "teaser": "next: the same measurement on messier, real comparisons where the two groups disagree about their wobble."
+            }
+          ],
+          "remedials": [
+            {
+              "conceptTag": "sp-mad-multiple",
+              "concept": {
+                "id": "rem-spm2-c",
+                "kind": "concept",
+                "body": "Quick rewind. The multiple is always **gap ÷ MAD**, and it carries no units. A gap of 10 with a MAD of 5 is 2 MADs; the same gap of 10 with a MAD of 10 is only 1."
+              },
+              "check": {
+                "id": "rem-spm2-k",
+                "kind": "check",
+                "body": "",
+                "conceptTag": "sp-mad-multiple",
+                "explanationVariants": [
+                  "Gap = 40 − 34 = 6, MAD 3, so 6 ÷ 3 = 2 MADs.",
+                  "Two rulers of length 3 lie end to end across a gap of 6."
+                ],
+                "widget": {
+                  "type": "numeric",
+                  "prompt": "Means 34 and 40, each MAD about 3. How many MADs apart are the centres?",
+                  "answer": 2,
+                  "tolerance": 0,
+                  "unit": "",
+                  "commonErrors": [
+                    { "value": 6, "feedback": "6 is the raw gap. Divide by the MAD of 3 to measure it: 2." },
+                    { "value": 18, "feedback": "18 multiplies gap by MAD. Measuring means dividing: 6 ÷ 3 = 2." }
+                  ],
+                  "fallbackFeedback": "Gap = 6, MAD = 3, so 6 ÷ 3 = 2 MADs."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "sp-02b-03",
+          "slug": "is-the-gap-big-enough",
+          "title": "Is the Gap Big Enough?",
+          "courseId": "sampling-and-probability",
+          "chapterId": "ch2b-measuring-the-difference",
+          "minutes": 11,
+          "standards": ["7.SP.B.3"],
+          "steps": [
+            {
+              "id": "c1",
+              "kind": "concept",
+              "figure": "sp-same-gap-different-verdict",
+              "body": "Real comparisons arrive messy. The two groups rarely share a MAD, the numbers rarely divide evenly, and the answer usually lands somewhere in the middle of the scale. Three habits keep it honest: use a **typical** MAD when the two differ a little, **round the multiple** rather than reporting false precision, and say what the multiple means **in the situation** — a difference of 2 MADs in reaction times and in bus fares are the same number about very different things."
+            },
+            {
+              "id": "i1",
+              "kind": "interactive",
+              "body": "When the two wobbles disagree a little, take a typical value.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "Group A's MAD is 4 and Group B's MAD is 6. What is a typical MAD to use as the ruler?",
+                "answer": 5,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 10, "feedback": "10 adds the two MADs. A typical value is their average: (4 + 6) ÷ 2 = 5." },
+                  { "value": 2, "feedback": "2 is the difference between the MADs (6 − 4). You want a single ruler that represents both, which is their average: 5." }
+                ],
+                "fallbackFeedback": "Average the two: (4 + 6) ÷ 2 = 5."
+              }
+            },
+            {
+              "id": "k1",
+              "kind": "check",
+              "body": "Measure a real gap.",
+              "conceptTag": "sp-realworld-mad",
+              "explanationVariants": [
+                "Gap = 78 − 63 = 15, ruler 5, so 15 ÷ 5 = 3 MADs — comfortably past the 2-MAD mark.",
+                "Fifteen points of difference measured with a five-point wobble is three rulers: a difference worth reporting."
+              ],
+              "widget": {
+                "type": "numeric",
+                "prompt": "Morning class mean 63, afternoon class mean 78, typical MAD 5. How many MADs apart are the centres?",
+                "answer": 3,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 15, "feedback": "15 is the raw gap in points. Divide by the 5-point ruler to measure it: 15 ÷ 5 = 3." },
+                  { "value": 141, "feedback": "141 adds the means. Start from their difference, 15, then divide by the MAD: 3." },
+                  { "value": 75, "feedback": "75 multiplies the gap by the MAD (15 × 5). Measuring in MADs is division: 15 ÷ 5 = 3." }
+                ],
+                "fallbackFeedback": "Gap = 78 − 63 = 15, and 15 ÷ 5 = 3 MADs."
+              }
+            },
+            {
+              "id": "k2",
+              "kind": "check",
+              "body": "Say it in the situation.",
+              "conceptTag": "sp-realworld-mad",
+              "explanationVariants": [
+                "Three MADs is past the 2-MAD mark, so the afternoon class really does score higher — but a sample cannot say WHY, so the claim stops at the difference.",
+                "The measurement supports 'the afternoon class scored higher', not any explanation for it. Time of day, who chose that class, and what else changed are all untested here."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "The two classes come out 3 MADs apart, with the afternoon class higher. What can you fairly report?",
+                "options": [
+                  { "id": "a", "label": "The afternoon class scored clearly higher — the gap is well past sampling noise", "correct": true, "feedback": "Right — 3 MADs is a real separation, and the honest claim describes the difference without explaining it." },
+                  { "id": "b", "label": "Afternoon lessons cause higher scores", "feedback": "The measurement shows a gap; it cannot show a cause. Different students chose each class, and any number of other things differ alongside the time of day." },
+                  { "id": "c", "label": "Every afternoon student scored above every morning student", "feedback": "A 3-MAD gap separates the CENTRES, not every individual. Plenty of students on both sides will still overlap." }
+                ]
+              }
+            },
+            {
+              "id": "c2",
+              "kind": "concept",
+              "figure": "sp-mad-ruler",
+              "body": "One more habit: check whether the difference **matters**, not only whether it is measurable. A delivery service whose vans arrive 3 MADs earlier than a rival's may be 3 MADs apart on a gap of two minutes. The multiple says the difference is real; only the situation says whether two minutes is worth paying for. Statistics settles 'is it there?' — people settle 'do we care?'"
+            },
+            {
+              "id": "i2",
+              "kind": "interactive",
+              "body": "Real, and small.",
+              "widget": {
+                "type": "numeric",
+                "prompt": "Service X arrives at mean 12.0 min, Service Y at mean 13.2 min, typical MAD 0.4 min. How many MADs apart are the centres?",
+                "answer": 3,
+                "tolerance": 0,
+                "unit": "",
+                "commonErrors": [
+                  { "value": 1.2, "feedback": "1.2 minutes is the raw gap. Divide by the 0.4-minute ruler: 1.2 ÷ 0.4 = 3." },
+                  { "value": 0.48, "feedback": "0.48 multiplies the gap by the MAD (1.2 × 0.4). Measuring in MADs means dividing: 3." },
+                  { "value": 0.8, "feedback": "0.8 subtracts (1.2 − 0.4). The MAD is the unit of measurement, so divide by it: 1.2 ÷ 0.4 = 3." }
+                ],
+                "fallbackFeedback": "Gap = 13.2 − 12.0 = 1.2 min, and 1.2 ÷ 0.4 = 3 MADs."
+              }
+            },
+            {
+              "id": "k3",
+              "kind": "check",
+              "body": "Real does not mean important.",
+              "conceptTag": "sp-realworld-mad",
+              "explanationVariants": [
+                "Three MADs makes the 1.2-minute difference genuine rather than noise, but 1.2 minutes is a small amount of time — whether that matters is a judgement about deliveries, not about statistics.",
+                "The multiple answers 'is the gap real?'; the size in minutes answers 'is the gap worth acting on?'. Here the answers can point in different directions."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Services X and Y are 3 MADs apart, a difference of 1.2 minutes. What is the fair summary?",
+                "options": [
+                  { "id": "a", "label": "The difference is real but small — 1.2 minutes may not matter in practice", "correct": true, "feedback": "Exactly — the multiple establishes that the gap is not noise, and the raw size tells you whether anyone should care." },
+                  { "id": "b", "label": "The difference is not real, because 1.2 minutes is tiny", "feedback": "It is real: measured against a wobble of only 0.4 minutes, a 1.2-minute gap is three rulers wide. Small and real are not opposites." },
+                  { "id": "c", "label": "Service X is 3 minutes faster than Service Y", "feedback": "3 is the number of MADs, not minutes. The gap in minutes is 1.2; the 3 says how that compares with the noise." }
+                ]
+              }
+            },
+            {
+              "id": "ch1",
+              "kind": "challenge",
+              "body": "Everything together, one report.",
+              "conceptTag": "sp-realworld-mad",
+              "explanationVariants": [
+                "Typical MAD = (7 + 9) ÷ 2 = 8. Gap = 96 − 88 = 8. So the centres are 8 ÷ 8 = 1 MAD apart — inside the uncertain zone, so the honest report is 'not convincing yet'.",
+                "The gap and the wobble are the same size here, which is the definition of a weak result: one typical wobble of separation cannot rule out sampling luck."
+              ],
+              "widget": {
+                "type": "mcq",
+                "prompt": "Brand A: mean life 88 hours, MAD 7. Brand B: mean life 96 hours, MAD 9. What should the report say?",
+                "options": [
+                  { "id": "a", "label": "About 1 MAD apart — not convincing yet from these samples", "correct": true, "feedback": "Right — typical MAD 8, gap 8, so the multiple is 1. The brands may well differ, but this sample cannot show it." },
+                  { "id": "b", "label": "About 8 MADs apart — a very clear difference", "feedback": "8 is the gap in HOURS, not the multiple. Divide it by the typical MAD of 8 to get 1." },
+                  { "id": "c", "label": "Exactly 0 MADs apart — the brands are identical", "feedback": "The means genuinely differ by 8 hours, so the multiple is not 0. It is 1, which means the gap is the same size as the ordinary wobble." }
+                ]
+              },
+              "hints": [
+                "The two MADs differ, so build one typical ruler from them first.",
+                "Typical MAD = (7 + 9) ÷ 2 = 8, and the gap is 96 − 88 = 8.",
+                "Divide the gap by the ruler, then compare the result with the 1-MAD and 2-MAD marks."
+              ]
+            },
+            {
+              "id": "r1",
+              "kind": "recap",
+              "body": "A number, then a sentence.",
+              "takeaways": [
+                "When two groups' MADs differ a little, average them into one ruler.",
+                "Report the multiple, then say what it means in the situation — and never claim a cause from a comparison.",
+                "A real difference can still be too small to matter; the multiple and the raw size answer different questions."
+              ],
+              "teaser": "next chapter: from comparing groups to predicting single outcomes — the language of probability."
+            }
+          ],
+          "remedials": [
+            {
+              "conceptTag": "sp-realworld-mad",
+              "concept": {
+                "id": "rem-spr-c",
+                "kind": "concept",
+                "body": "Quick rewind. With two different MADs, average them for a single ruler, then divide the gap by it. Means 50 and 62 with MADs 5 and 7: ruler 6, gap 12, multiple 12 ÷ 6 = 2."
+              },
+              "check": {
+                "id": "rem-spr-k",
+                "kind": "check",
+                "body": "",
+                "conceptTag": "sp-realworld-mad",
+                "explanationVariants": [
+                  "Typical MAD = (2 + 4) ÷ 2 = 3, gap = 41 − 32 = 9, so 9 ÷ 3 = 3 MADs.",
+                  "Average the wobbles into a 3-unit ruler, then measure the 9-unit gap with it."
+                ],
+                "widget": {
+                  "type": "numeric",
+                  "prompt": "Means 32 and 41, with MADs 2 and 4. How many MADs apart are the centres?",
+                  "answer": 3,
+                  "tolerance": 0,
+                  "unit": "",
+                  "commonErrors": [
+                    { "value": 9, "feedback": "9 is the raw gap. Divide it by the typical MAD of 3: the answer is 3." },
+                    { "value": 4.5, "feedback": "4.5 divides the gap by 2, the smaller MAD. Use a typical ruler from both: (2 + 4) ÷ 2 = 3, so 9 ÷ 3 = 3." }
+                  ],
+                  "fallbackFeedback": "Typical MAD = 3 and the gap is 9, so 9 ÷ 3 = 3 MADs."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

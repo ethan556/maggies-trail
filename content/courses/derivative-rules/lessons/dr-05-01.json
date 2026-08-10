@@ -1,0 +1,275 @@
+{
+  "id": "dr-05-01",
+  "slug": "exponentials-and-logs",
+  "title": "e^x and ln x",
+  "courseId": "derivative-rules",
+  "chapterId": "ch5-the-function-library",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Differentiate 2ˣ from the definition and you get 2ˣ times a stubborn constant (about 0.693). Differentiate 3ˣ and you get 3ˣ times about 1.099.\n\nSomewhere between 2 and 3 lies the base whose constant is exactly **1** — the base whose curve is its own derivative.\n\nThat number is **e ≈ 2.71828**, and (eˣ)′ = eˣ. That is what e is FOR.",
+      "figure": "dr-e-self-derivative"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The self-derivative.",
+      "conceptTag": "dr-exp-log",
+      "explanationVariants": [
+        "(eˣ)′ = eˣ, so the slope at any point equals the height at that point. At x = 0 both are 1.",
+        "e is not a mysterious constant; it is DEFINED as the base that makes the derivative come out clean."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = eˣ. Find f′(0).",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "The derivative of eˣ is eˣ, not 0 — and e⁰ = 1. It is the only function that survives differentiation unchanged."
+          },
+          {
+            "value": 2.718,
+            "feedback": "That is e¹, the value at x = 1. At x = 0 the height (and so the slope) is e⁰ = 1."
+          },
+          {
+            "value": 2,
+            "feedback": "e ≈ 2.718, but you want e⁰, which is 1."
+          }
+        ],
+        "fallbackFeedback": "(eˣ)′ = eˣ, so f′(0) = e⁰ = 1."
+      },
+      "variant": {
+        "gen": "g13-derivative-rules",
+        "form": "derivative-rules__dr-exp-log__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Slope equals height, everywhere.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 1,
+        "targetBase": 2.7,
+        "startBase": 1.5,
+        "showMirror": true,
+        "prompt": "Slide the base until b¹ lands near 2.7 — the base whose curve is its own derivative.",
+        "successFeedback": "Base ≈ 2.7 is e, and it is the only base for which the slope of bˣ equals its height at every point. Look at the mirror curve: that is ln x, and it inherits the same special status — its derivative is 1/x, the cleanest derivative in mathematics.",
+        "lowFeedback": "Below e. At smaller bases the exponential curve is too shallow — its slope falls short of its height.",
+        "highFeedback": "Above e. At larger bases the curve outruns itself: the slope exceeds the height."
+      },
+      "predict": {
+        "prompt": "Both bases are above 1. Moving the base from 1.5 to 2.7, the curve will…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Rise faster"
+          },
+          {
+            "id": "slower",
+            "label": "Rise more slowly"
+          },
+          {
+            "id": "shift",
+            "label": "Slide sideways without changing steepness"
+          }
+        ],
+        "outcomeId": "faster",
+        "reveal": "A bigger base multiplies by more at every step, so 2.7 outruns 1.5 — the base IS the growth factor per unit of x, not a sideways shift."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Change the base and coordinate exponential output with the inverse logarithmic input.",
+        "invariants": [
+          "logarithm-inverts-exponential",
+          "base-controls-growth-direction"
+        ],
+        "misconceptions": [
+          "logarithm-is-division",
+          "base-one-is-valid"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "derivative-rules-expLogExplore",
+        "delayed": false
+      },
+      "conceptTag": "dr-exp-log"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The logarithm's derivative.",
+      "conceptTag": "dr-exp-log",
+      "explanationVariants": [
+        "(ln x)′ = 1/x, so at x = 4 the slope is 1/4 = 0.25.",
+        "ln x rises forever but ever more slowly, and 1/x is exactly that fading: still positive, always shrinking."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = ln x. Find f′(4), as a decimal.",
+        "answer": 0.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.386,
+            "feedback": "That is ln 4, the HEIGHT of the curve. Its SLOPE is 1/x = 1/4."
+          },
+          {
+            "value": 4,
+            "feedback": "That is x itself. The derivative puts it in the denominator: 1/x."
+          },
+          {
+            "value": 0,
+            "feedback": "ln x is still rising at x = 4 — slowly, at a rate of 1/4. It never flattens completely."
+          }
+        ],
+        "fallbackFeedback": "(ln x)′ = 1/x, so f′(4) = 0.25."
+      },
+      "variant": {
+        "gen": "deriv-explog"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "With the chain rule, the whole family follows:\n\n**(e^u)′ = e^u · u′**\n**(ln u)′ = u′/u**\n**(aˣ)′ = aˣ · ln a** — the stubborn constant is ln a, and it is 1 exactly when a = e.\n\nEvery one of these is the base case times the derivative of the inside.",
+      "figure": "dr-e-self-derivative"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "An exponential with an inside.",
+      "conceptTag": "dr-exp-log",
+      "explanationVariants": [
+        "(e^(3x))′ = e^(3x)·3, so at x = 0 that is 1 × 3 = 3.",
+        "The base case survives unchanged; the chain rule charges you the inner derivative, which is 3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = e^(3x). Find f′(0).",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That is e^(3x) at x = 0 — the outside only. The chain rule owes you the inner derivative, 3."
+          },
+          {
+            "value": 0,
+            "feedback": "e to anything is never 0, and its derivative is itself times the inner rate. At x = 0 that is 1 × 3."
+          },
+          {
+            "value": 8.155,
+            "feedback": "That looks like 3e. At x = 0 the exponential is e⁰ = 1, so the answer is 3 × 1 = 3."
+          }
+        ],
+        "fallbackFeedback": "(e^(3x))′ = 3e^(3x) → at x = 0, 3 × 1 = 3."
+      },
+      "variant": {
+        "gen": "deriv-explog",
+        "form": "expChain"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A log with an inside.",
+      "conceptTag": "dr-exp-log",
+      "hints": [
+        "(ln u)′ = u′/u. Here u = x² + 1.",
+        "u′ = 2x, so the derivative is 2x/(x² + 1).",
+        "Substitute x = 1: the top is 2 and the bottom is 2."
+      ],
+      "explanationVariants": [
+        "(ln(x²+1))′ = 2x/(x²+1), and at x = 1 that is 2/2 = 1.",
+        "The inner derivative goes on TOP and the inside itself goes underneath — that is the whole shape of a log derivative."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = ln(x² + 1). Find f′(1).",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "That is 1/(x²+1) at x = 1 — you forgot the inner derivative 2x on top. The rule is u′/u."
+          },
+          {
+            "value": 2,
+            "feedback": "That is the inner derivative 2x at x = 1. It still has to be divided by u = x² + 1 = 2."
+          },
+          {
+            "value": 0.693,
+            "feedback": "That is ln 2, the HEIGHT of the curve at x = 1, not its slope."
+          }
+        ],
+        "fallbackFeedback": "(ln u)′ = u′/u = 2x/(x²+1) → f′(1) = 2/2 = 1."
+      },
+      "variant": {
+        "gen": "deriv-explog",
+        "form": "lnChain"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The base that differentiates to itself.",
+      "takeaways": [
+        "(eˣ)′ = eˣ — the slope equals the height at every point. That property is what DEFINES e.",
+        "(ln x)′ = 1/x: still rising at every x, but ever more slowly.",
+        "With the chain rule: (e^u)′ = e^u·u′ and (ln u)′ = u′/u."
+      ],
+      "teaser": "Next: the derivatives that go round in a circle."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "dr-exp-log",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two facts, and everything else is the chain rule attached to them. **eˣ differentiates to itself.** **ln x differentiates to 1/x.** When there is an inside, multiply by its derivative — and for a log, that inner derivative goes on top.",
+        "figure": "dr-e-self-derivative"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "The two base cases.",
+        "conceptTag": "dr-exp-log",
+        "explanationVariants": [
+          "(ln x)′ = 1/x, so at x = 2 the slope is 1/2.",
+          "The log's derivative is the reciprocal — always positive, always fading."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = ln x. Find f′(2), as a decimal.",
+          "answer": 0.5,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.693,
+              "feedback": "That is ln 2, the height. The slope is 1/x = 1/2."
+            },
+            {
+              "value": 2,
+              "feedback": "That is x. The derivative is its reciprocal: 1/2."
+            }
+          ],
+          "fallbackFeedback": "(ln x)′ = 1/x → f′(2) = 0.5."
+        }
+      }
+    }
+  ]
+}

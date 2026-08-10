@@ -1,0 +1,375 @@
+{
+  "id": "rr-02-01",
+  "slug": "ratio-tables",
+  "title": "Ratio Tables",
+  "courseId": "ratios-rates",
+  "chapterId": "ch2-ratio-tables",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "ratio-table",
+      "body": "A **ratio table** is a machine for equivalent ratios. Put one ratio in the first row — say 2 cups flour : 3 cups milk — and every other row is that row **multiplied by the same number**: ×2 gives 4 : 6, ×3 gives 6 : 9. Any row of the table names the same relationship."
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "A ratio table lists equivalent ratios. Every row scales by the same multiplier — whatever you do to one column, you do to the other.",
+      "widget": {
+        "type": "ratioTable",
+        "prompt": "3 cups serve 2 people. How many people do 12 cups serve?",
+        "colA": "cups",
+        "colB": "people",
+        "rows": [
+          [
+            3,
+            2
+          ],
+          [
+            6,
+            4
+          ]
+        ],
+        "askA": 12,
+        "targetB": 8,
+        "bMax": 16,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "12 cups serve 8 people — 12 is 4 times 3, so the people scale by 4 too.",
+        "lowFeedback": "Too few. Multiply the people by the same number you multiplied the cups by.",
+        "highFeedback": "Too many. 12 cups is 4 times the 3-cup row — scale the people by 4, not more."
+      },
+      "predict": {
+        "prompt": "3 cups serve 2 people. 12 cups is 3 cups four times over, so it serves…",
+        "options": [
+          {
+            "id": "eight",
+            "label": "8 — 2 people, four times over"
+          },
+          {
+            "id": "eleven",
+            "label": "11 — 12 is 9 more, so add 9"
+          },
+          {
+            "id": "twentyfour",
+            "label": "24"
+          }
+        ],
+        "outcomeId": "eight",
+        "reveal": "Scaling the cups ×4 scales the people ×4: 2 × 4 = 8. The additive route — '9 more cups, so 9 more people' — breaks the recipe. Ratios scale by multiplying, never by adding."
+      },
+      "conceptTag": "ratio-tables",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents ratio tables.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for ratio tables must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines ratio tables."
+        ],
+        "representations": [
+          "table",
+          "symbolic"
+        ],
+        "translationFrom": "table",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "ratios-rates:ratio-tables",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Fill a row.",
+      "conceptTag": "ratio-tables",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ratio table starts with the row 2 : 3. In the row where the first number is 8, what is the second number?",
+        "answer": 12,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 ADDS the same amount to each side (8 = 2 + 6, 3 + 6 = 9). Table rows MULTIPLY: 8 is 2 × 4, so the partner is 3 × 4 = 12."
+          },
+          {
+            "value": 6,
+            "feedback": "6 uses ×2 (3 × 2), but 8 is 2 × FOUR. Both numbers take the same ×4: 3 × 4 = 12."
+          }
+        ],
+        "fallbackFeedback": "8 = 2 × 4, so the partner is 3 × 4 = 12."
+      },
+      "hints": [
+        "What was 2 multiplied by to reach 8?",
+        "2 × 4 = 8.",
+        "The 3 takes the same ×4."
+      ],
+      "explanationVariants": [
+        "8 is four copies of 2, so the partner is four copies of 3: 12.",
+        "Same multiplier on both columns: ×4 each."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Spot the broken row.",
+      "conceptTag": "ratio-tables",
+      "explanationVariants": [
+        "4 : 5 added 2 to each side of 2 : 3 — rows must multiply, and 4 : 5 is not 2 : 3 scaled.",
+        "Test each row by shrinking: 4 : 6 and 10 : 15 return to 2 : 3; 4 : 5 doesn't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A table for the ratio 2 : 3 has rows 4 : 6, 4 : 5, and 10 : 15. Which row is WRONG?",
+        "options": [
+          {
+            "id": "a",
+            "label": "4 : 5",
+            "correct": true,
+            "feedback": "Right — it added 2 to each side. Rows scale by MULTIPLYING: 2 : 3 × 2 is 4 : 6, never 4 : 5."
+          },
+          {
+            "id": "b",
+            "label": "4 : 6",
+            "feedback": "4 : 6 is a fine row — it's 2 : 3 with both parts × 2."
+          },
+          {
+            "id": "c",
+            "label": "10 : 15",
+            "feedback": "10 : 15 is a fine row — 2 : 3 with both parts × 5."
+          }
+        ]
+      },
+      "hints": [
+        "Shrink each row back down.",
+        "4 : 6 → 2 : 3. 10 : 15 → 2 : 3.",
+        "One row won't shrink to 2 : 3."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrWrongRow"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Tables also run **row to row**: from 4 : 6 you can double to 8 : 12 without touching the first row, or **halve** to 2 : 3. Any row times or divided by any number makes another true row. That freedom is the table's power — take whatever path makes the arithmetic easy.",
+      "figure": "ratio-table"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Take the easy path.",
+      "conceptTag": "ratio-tables",
+      "explanationVariants": [
+        "Halving the 4 : 6 row gives 2 : 3, then ×5 lands on 10 : 15 — or go straight from 2 : 3.",
+        "Any route through true rows works; they all land on 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A table for 2 : 3 contains the row 4 : 6. Using any route you like, what number pairs with 10?",
+        "answer": 15,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 keeps a DIFFERENCE of 1 from 10 — but 2 : 3's rows keep a RATIO, not a gap. 10 is 2 × 5, so the partner is 3 × 5 = 15."
+          },
+          {
+            "value": 12,
+            "feedback": "12 pairs with 8 (2 × 4 : 3 × 4). For 10, the multiplier is 5: 3 × 5 = 15."
+          }
+        ],
+        "fallbackFeedback": "10 = 2 × 5, so its partner is 3 × 5 = 15."
+      },
+      "hints": [
+        "What times 2 gives 10?",
+        "×5.",
+        "3 × 5 = 15."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrTablePartner"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which rows belong?",
+      "conceptTag": "ratio-tables",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "A table is built from the ratio 3 : 4. Sort each candidate row.",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Belongs in the table"
+          },
+          {
+            "id": "no",
+            "label": "Breaks the table"
+          }
+        ],
+        "items": [
+          {
+            "id": "r1",
+            "label": "6 : 8",
+            "bucketId": "yes",
+            "feedback": "6 : 8 is 3 : 4 with both parts × 2 — a true row."
+          },
+          {
+            "id": "r2",
+            "label": "9 : 12",
+            "bucketId": "yes",
+            "feedback": "9 : 12 is 3 : 4 × 3 — it shrinks right back to 3 : 4."
+          },
+          {
+            "id": "r3",
+            "label": "5 : 6",
+            "bucketId": "no",
+            "feedback": "5 : 6 added 2 to each part of 3 : 4 — the additive trap. It doesn't shrink back to 3 : 4."
+          },
+          {
+            "id": "r4",
+            "label": "30 : 40",
+            "bucketId": "yes",
+            "feedback": "30 : 40 is 3 : 4 × 10 — big numbers, same relationship."
+          }
+        ],
+        "missFeedback": "Shrink each candidate to simplest form. Rows that return to 3 : 4 belong; anything built by ADDING does not.",
+        "successFeedback": "Sorted — a table only holds multiplied copies of its ratio."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Scale a real recipe.",
+      "conceptTag": "ratio-tables",
+      "explanationVariants": [
+        "12 cups of flour is the 3 × 4 row, so sugar takes the same ×4: 16.",
+        "Ride the table from 3 : 4 down to 12 : 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A recipe's table starts 3 cups flour : 4 cups sugar. In the row with 12 cups of flour, how much sugar?",
+        "answer": 16,
+        "tolerance": 0,
+        "unit": "cups",
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "13 adds 1 to 12, copying the 3-to-4 GAP. The table multiplies: 12 is 3 × 4, so sugar is 4 × 4 = 16."
+          },
+          {
+            "value": 48,
+            "feedback": "48 multiplies 12 × 4 — that scales the flour AGAIN. The sugar column starts at 4: 4 × 4 = 16."
+          }
+        ],
+        "fallbackFeedback": "12 = 3 × 4, so sugar is 4 × 4 = 16 cups."
+      },
+      "hints": [
+        "Find the row's multiplier from the flour.",
+        "12 ÷ 3 = 4.",
+        "Sugar: 4 × 4."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrTablePartner"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A table with a hole in the middle.",
+      "conceptTag": "ratio-tables",
+      "hints": [
+        "You know two full rows: 2 : 3 and 8 : 12.",
+        "The mystery row has second number 9.",
+        "What times 3 gives 9?"
+      ],
+      "explanationVariants": [
+        "9 is 3 × 3, so the first number is 2 × 3 = 6 — check: 6 : 9 shrinks to 2 : 3.",
+        "Work backwards from the second column: ÷3 direction from 9 lands the row on 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A table for 2 : 3 shows the rows 2 : 3, ? : 9, and 8 : 12. What is the missing first number?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 belongs to the 8 : 12 row. The mystery row pairs with 9, and 9 = 3 × 3, so the first number is 2 × 3 = 6."
+          },
+          {
+            "value": 7,
+            "feedback": "7 keeps a difference of 2 from 9 — the additive trap again. Rows multiply: 9 = 3 × 3, so the partner is 2 × 3 = 6."
+          }
+        ],
+        "fallbackFeedback": "9 = 3 × 3, so the first number is 2 × 3 = 6."
+      },
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "rrTableMissingFirst"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rows are multiplied copies.",
+      "takeaways": [
+        "Every table row = the base ratio × one number, applied to BOTH columns.",
+        "Adding the same amount to both columns breaks the table.",
+        "Any route through true rows works — take the easy arithmetic."
+      ],
+      "teaser": "next: the same idea stretched along two number lines."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ratio-tables",
+      "concept": {
+        "id": "rem-rt-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Find the row's multiplier first.** In a 2 : 3 table, if one column shows 6, ask: 2 × what = 6? The answer (×3) applies to the OTHER column too: 3 × 3 = 9. One multiplier, both columns."
+      },
+      "check": {
+        "id": "rem-rt-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "ratio-tables",
+        "explanationVariants": [
+          "6 = 2 × 3, so the partner is 3 × 3 = 9.",
+          "The row's multiplier is ×3 — both columns take it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In a table for 2 : 3, one row starts with 6. What is its second number?",
+          "answer": 9,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 adds 1, copying the gap. The multiplier is ×3 (2 × 3 = 6), so the partner is 3 × 3 = 9."
+            },
+            {
+              "value": 4,
+              "feedback": "4 subtracts 2. Find the multiplier instead: 6 ÷ 2 = 3, and 3 × 3 = 9."
+            }
+          ],
+          "fallbackFeedback": "6 = 2 × 3, so the second number is 3 × 3 = 9."
+        }
+      }
+    }
+  ]
+}

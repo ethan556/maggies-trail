@@ -1,0 +1,313 @@
+{
+ "id": "mc-01-03",
+ "slug": "converting-mass-and-volume",
+ "title": "Converting Mass & Volume",
+ "courseId": "measure-convert",
+ "chapterId": "ch1-converting-units",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The same kilo badge you just used for length works for mass and volume too. **1,000 grams = 1 kilogram. 1,000 milliliters = 1 liter.** Same ×1000 rule, just measuring weight and liquid instead of distance.",
+   "figure": "mc-mass-volume"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the equal amounts.",
+   "conceptTag": "convert-mass-volume",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each amount to its equivalent in a different unit.",
+    "left": [
+     {
+      "id": "e1",
+      "label": "5 kg"
+     },
+     {
+      "id": "e2",
+      "label": "3 L"
+     },
+     {
+      "id": "e3",
+      "label": "4,000 g"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "5,000 g"
+     },
+     {
+      "id": "r2",
+      "label": "3,000 mL"
+     },
+     {
+      "id": "r3",
+      "label": "4 kg"
+     }
+    ],
+    "pairs": {
+     "e1": "r1",
+     "e2": "r2",
+     "e3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "e2",
+      "right": "r3",
+      "feedback": "4 kg belongs to 4,000 g. For 3 L: multiply by 1,000 (the kilo badge) to get 3,000 mL."
+     }
+    ],
+    "missFeedback": "Multiply by 1,000 to go bigger-to-smaller (kg to g, L to mL); divide to go the other way.",
+    "successFeedback": "5 kg→5,000 g, 3 L→3,000 mL, 4,000 g→4 kg — the same ×1,000 badge every time."
+   },
+   "predict": {
+    "prompt": "1 kilogram versus 1000 grams — which is heavier?",
+    "options": [
+     {
+      "id": "equal",
+      "label": "They're exactly equal"
+     },
+     {
+      "id": "kilo",
+      "label": "The kilogram"
+     },
+     {
+      "id": "grams",
+      "label": "The 1000 grams"
+     }
+    ],
+    "outcomeId": "equal",
+    "reveal": "They're the same mass in two costumes — kilo MEANS a thousand. Conversions rename an amount; they never change it."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Convert to grams.",
+   "conceptTag": "convert-mass-volume",
+   "explanationVariants": [
+    "The kilo badge means ×1000, so 5 kg is 5×1,000=5,000 g.",
+    "Same badge as before, just for mass now."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "5 kilograms = how many grams?",
+    "startValue": 5,
+    "startUnit": "kg",
+    "targetUnit": "g",
+    "hops": [
+     {
+      "from": "kg",
+      "to": "g",
+      "bigger": "from",
+      "factor": 1000
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "Each kilogram is 1000 grams: 5 × 1000 = 5000 g.",
+    "successFeedback": "5000 g — the same mass, counted in a unit a thousand times smaller."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Picking the right unit matters in real life. You'd measure an elephant's weight in **kilograms**, not grams (the number would be absurdly huge) — and a raindrop in **milliliters**, not liters (the number would be a tiny fraction). Choose the unit that keeps the number reasonable.",
+   "figure": "mc-mass-volume"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Convert to liters.",
+   "conceptTag": "convert-mass-volume",
+   "explanationVariants": [
+    "1,000 mL make 1 L, so 6,000 mL ÷ 1,000 = 6 L.",
+    "Dividing by the kilo badge's 1,000 gives liters."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "6,000 milliliters = how many liters? Up the chain this time.",
+    "startValue": 6000,
+    "startUnit": "mL",
+    "targetUnit": "L",
+    "hops": [
+     {
+      "from": "mL",
+      "to": "L",
+      "bigger": "to",
+      "factor": 1000
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "A liter holds 1000 milliliters, so going up divides: 6000 ÷ 1000 = 6 L.",
+    "successFeedback": "6 L. Bigger unit, smaller count — the volume itself never moved."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Pick the sensible unit.",
+   "conceptTag": "convert-mass-volume",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each item by the more SENSIBLE unit to measure it in.",
+    "buckets": [
+     {
+      "id": "big",
+      "label": "Bigger unit (kg or L)",
+      "icon": "🐘"
+     },
+     {
+      "id": "small",
+      "label": "Smaller unit (g or mL)",
+      "icon": "💧"
+     }
+    ],
+    "items": [
+     {
+      "id": "d1",
+      "label": "An elephant's weight",
+      "bucketId": "big",
+      "feedback": "Kilograms keep the number reasonable — grams would be an enormous count."
+     },
+     {
+      "id": "d2",
+      "label": "A single raindrop",
+      "bucketId": "small",
+      "feedback": "Milliliters keep the number reasonable — a liter would be a tiny fraction."
+     },
+     {
+      "id": "d3",
+      "label": "A bathtub of water",
+      "bucketId": "big",
+      "feedback": "Liters keep the number reasonable for that much water."
+     },
+     {
+      "id": "d4",
+      "label": "A grain of rice",
+      "bucketId": "small",
+      "feedback": "Grams keep the number reasonable — kilograms would be a tiny fraction."
+     }
+    ],
+    "missFeedback": "Pick whichever unit keeps the resulting number from being absurdly huge or a tiny fraction.",
+    "successFeedback": "Elephants and bathtubs call for the bigger unit; raindrops and rice grains call for the smaller one."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One more conversion.",
+   "conceptTag": "convert-mass-volume",
+   "explanationVariants": [
+    "1,000 g make 1 kg, so 4,000 g ÷ 1,000 = 4 kg.",
+    "Dividing by 1,000 gives kilograms."
+   ],
+   "widget": {
+    "type": "unitChain",
+    "prompt": "4,000 grams = how many kilograms?",
+    "startValue": 4000,
+    "startUnit": "g",
+    "targetUnit": "kg",
+    "hops": [
+     {
+      "from": "g",
+      "to": "kg",
+      "bigger": "to",
+      "factor": 1000
+     }
+    ],
+    "commonResults": [],
+    "fallbackFeedback": "A kilogram holds 1000 grams, so going up to kilograms divides: 4000 ÷ 1000 = 4 kg.",
+    "successFeedback": "4 kg — mass and volume cross exactly like length does."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The recipe conversion.",
+   "conceptTag": "convert-mass-volume",
+   "hints": [
+    "Convert 2 L to milliliters first.",
+    "2 L = 2,000 mL.",
+    "Subtract the 350 mL already measured."
+   ],
+   "explanationVariants": [
+    "2 L = 2,000 mL; subtracting the 350 mL already measured gives 2,000−350=1,650 mL still needed.",
+    "Converting to one unit before subtracting avoids mixing L and mL."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A recipe needs 2 L of broth total. You've already measured 350 mL. How many more milliliters do you need?",
+    "answer": 1650,
+    "tolerance": 0,
+    "unit": "milliliters",
+    "commonErrors": [
+     {
+      "value": 1650000,
+      "feedback": "That's off by a factor of 1,000 somewhere in the conversion. 2 L = 2,000 mL, and 2,000−350=1,650."
+     },
+     {
+      "value": 350,
+      "feedback": "350 is what's already measured, not what's still needed. 2,000−350=1,650 mL remaining."
+     }
+    ],
+    "fallbackFeedback": "Convert 2 L to mL (×1,000), then subtract 350."
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Every quantity, one badge system.",
+   "takeaways": [
+    "The kilo badge works identically for mass (g/kg) and volume (mL/L): ×1,000.",
+    "Choose the unit that keeps the number reasonable — not absurdly huge or a tiny fraction.",
+    "Convert to matching units before adding or subtracting different-unit amounts."
+   ],
+   "teaser": "next chapter: formalizing area and perimeter as named formulas."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "convert-mass-volume",
+   "concept": {
+    "id": "rem-mv-c",
+    "kind": "concept",
+    "body": "Quick rewind. **The kilo badge means ×1,000 for mass and volume too.** For 3 kg to g: multiply by 1,000 (3×1,000=3,000 g). For 2,000 mL to L: divide by 1,000 (2,000÷1,000=2 L)."
+   },
+   "check": {
+    "id": "rem-mv-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "convert-mass-volume",
+    "explanationVariants": [
+     "3×1,000=3,000 g.",
+     "Kilograms to grams multiplies by 1,000."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "3 kilograms = how many grams?",
+     "options": [
+      {
+       "id": "a",
+       "label": "3,000 g",
+       "correct": true,
+       "feedback": "3×1,000=3,000."
+      },
+      {
+       "id": "b",
+       "label": "300 g",
+       "feedback": "That's ×100, not ×1,000. Kilograms to grams is ×1,000: 3,000 g."
+      },
+      {
+       "id": "c",
+       "label": "30 g",
+       "feedback": "That's ×10, far too small. Kilograms to grams is ×1,000: 3,000 g."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

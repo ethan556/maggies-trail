@@ -1,0 +1,319 @@
+{
+  "id": "ee-01-03",
+  "slug": "order-of-operations-with-exponents",
+  "title": "Order of Operations with Exponents",
+  "courseId": "expressions-equations",
+  "chapterId": "ch1-exponents",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Exponents have a fixed place in the **order of operations**: Parentheses first, then **Exponents**, then Multiply/Divide, then Add/Subtract. So in 2 + 3², the exponent comes before the addition: 3² = 9 first, then 2 + 9 = **11**. Do the power before touching the plus sign.",
+      "figure": "ee-order-ops"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Exponent before addition.",
+      "conceptTag": "order-ops",
+      "widget": {
+        "type": "evalOrder",
+        "prompt": "Evaluate 2 + 3^2. Tap an operator to work it out.",
+        "tokens": [
+          "2",
+          "+",
+          "3",
+          "^",
+          "2"
+        ],
+        "target": 11,
+        "commonResults": [
+          {
+            "value": 25,
+            "feedback": "25 adds first (2 + 3 = 5) then squares. But exponents come BEFORE addition: 3^2 = 9 first, then 2 + 9 = 11."
+          }
+        ],
+        "fallbackFeedback": "Exponent first: 3^2 = 9, then 2 + 9 = 11.",
+        "successFeedback": "Exponent first: 3^2 = 9, then 2 + 9 = 11."
+      },
+      "predict": {
+        "prompt": "2 + 3²: what happens first?",
+        "options": [
+          {
+            "id": "power",
+            "label": "The power: 3² = 9, then 2 + 9"
+          },
+          {
+            "id": "sum",
+            "label": "The sum: 5² = 25"
+          },
+          {
+            "id": "left",
+            "label": "Strict left-to-right, always"
+          }
+        ],
+        "outcomeId": "power",
+        "reveal": "Exponents outrank addition: 3² = 9 first, then 2 + 9 = 11. Adding first gives 25 — a different number entirely, which is exactly why the order exists: so everyone reads 2 + 3² the same way."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents order ops.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for order ops must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines order ops."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:order-ops",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Parentheses change everything.",
+      "conceptTag": "order-ops",
+      "explanationVariants": [
+        "(2 + 3)^2 does the parentheses first: 2 + 3 = 5, then 5^2 = 25.",
+        "Parentheses outrank exponents, so add inside first, then square: 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate (2 + 3)^2.",
+        "answer": 25,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is 2 + 3^2 WITHOUT the parentheses. Here the parentheses come first: 2 + 3 = 5, then 5^2 = 25."
+          },
+          {
+            "value": 13,
+            "feedback": "13 squares only the 3 (giving 9) then adds 2 + ... plus something. With parentheses, add first: (2+3) = 5, then 5^2 = 25."
+          }
+        ],
+        "fallbackFeedback": "Parentheses first: 2 + 3 = 5, then 5^2 = 25."
+      },
+      "variant": {
+        "gen": "power-product",
+        "form": "parenPower"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Same digits, different grouping, different answer: 2 + 3² = 11 but (2 + 3)² = 25. The exponent applies only to what's **directly under it** — in 4 × 2³, the exponent touches only the 2, giving 4 × 8 = 32, NOT (4 × 2)³. Watch exactly what the exponent sits on.",
+      "figure": "ee-order-ops"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Exponent binds tight.",
+      "conceptTag": "order-ops",
+      "explanationVariants": [
+        "In 4 × 2^3, the exponent applies only to the 2: 2^3 = 8, then 4 × 8 = 32.",
+        "Do the power first (2^3 = 8), then multiply: 32."
+      ],
+      "widget": {
+        "type": "evalOrder",
+        "prompt": "Evaluate 4 × 2^3. Tap an operator to work it out.",
+        "tokens": [
+          "4",
+          "×",
+          "2",
+          "^",
+          "3"
+        ],
+        "target": 32,
+        "commonResults": [
+          {
+            "value": 512,
+            "feedback": "512 is (4 × 2)^3 = 8^3 — but the exponent only touches the 2, not the 4 × 2. Do 2^3 = 8 first, then 4 × 8 = 32."
+          }
+        ],
+        "fallbackFeedback": "2^3 = 8 first, then 4 × 8 = 32.",
+        "successFeedback": "2^3 = 8 first, then 4 × 8 = 32."
+      },
+      "variant": {
+        "gen": "grouping-first",
+        "form": "powerMulEval"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents order ops.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for order ops must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines order ops."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "expressions-equations:order-ops",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Subtraction after a power.",
+      "conceptTag": "order-ops",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 10 - 2^2.",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "64 subtracts first (10 - 2 = 8) then squares. Exponents come BEFORE subtraction: 2^2 = 4 first, then 10 - 4 = 6."
+          },
+          {
+            "value": 6.5,
+            "feedback": "The answer is a whole number. Do the power first: 2^2 = 4, then 10 - 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "2^2 = 4 first, then 10 - 4 = 6."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two powers, then add.",
+      "conceptTag": "order-ops",
+      "explanationVariants": [
+        "3^2 + 4^2 = 9 + 16 = 25 — evaluate both powers first, then add.",
+        "Each exponent resolves before the plus: 9 + 16 = 25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 3^2 + 4^2.",
+        "answer": 25,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "49 adds the bases first (3 + 4 = 7) then squares. Exponents come first: 3^2 = 9, 4^2 = 16, then 9 + 16 = 25."
+          },
+          {
+            "value": 14,
+            "feedback": "14 treats the exponents as multipliers (3×2 + 4×2 = 6 + 8). They mean squares: 9 + 16 = 25."
+          }
+        ],
+        "fallbackFeedback": "3^2 = 9, 4^2 = 16, then 9 + 16 = 25."
+      },
+      "variant": {
+        "gen": "power-product",
+        "form": "sumPowers"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The full order in one expression.",
+      "conceptTag": "order-ops",
+      "hints": [
+        "Find the exponent first.",
+        "3^2 = 9, so the expression is 8 + 2 × 9.",
+        "Then multiply before adding: 2 × 9 = 18, then 8 + 18."
+      ],
+      "explanationVariants": [
+        "8 + 2 × 3^2: exponent first (3^2 = 9), then multiply (2 × 9 = 18), then add (8 + 18 = 26).",
+        "Order of operations: 3^2 = 9, then 2 × 9 = 18, then 8 + 18 = 26."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 8 + 2 × 3^2.",
+        "answer": 26,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 90,
+            "feedback": "90 works left to right ignoring order: (8+2)×3^2 = 10×9. But multiplication and exponents come before addition: 3^2 = 9, 2×9 = 18, 8+18 = 26."
+          },
+          {
+            "value": 42,
+            "feedback": "42 does 8 + 2 = 10 then... no. Exponent first (3^2 = 9), then 2 × 9 = 18, then 8 + 18 = 26."
+          }
+        ],
+        "fallbackFeedback": "3^2 = 9, then 2 × 9 = 18, then 8 + 18 = 26."
+      },
+      "variant": {
+        "gen": "power-product",
+        "form": "mixedPowerOrder"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Exponents come early.",
+      "takeaways": [
+        "Order: Parentheses, Exponents, Multiply/Divide, Add/Subtract.",
+        "2 + 3^2 = 11, but (2 + 3)^2 = 25 — grouping changes the result.",
+        "An exponent applies only to what's directly beneath it."
+      ],
+      "teaser": "next chapter: letters standing in for numbers — variables."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "order-ops",
+      "concept": {
+        "id": "rem-oo-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Exponents before add/subtract.** In 5 + 2^2, do the power first: 2^2 = 4, then 5 + 4 = 9. The exponent always resolves before the plus or minus around it."
+      },
+      "check": {
+        "id": "rem-oo-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "order-ops",
+        "explanationVariants": [
+          "2^2 = 4 first, then 5 + 4 = 9.",
+          "Power before addition: 9."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Evaluate 5 + 2^2.",
+          "answer": 9,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 49,
+              "feedback": "49 adds first (5 + 2 = 7) then squares. Exponents come first: 2^2 = 4, then 5 + 4 = 9."
+            },
+            {
+              "value": 14,
+              "feedback": "14 doubles somewhere. Do the power first: 2^2 = 4, then 5 + 4 = 9."
+            }
+          ],
+          "fallbackFeedback": "2^2 = 4 first, then 5 + 4 = 9."
+        }
+      }
+    }
+  ]
+}

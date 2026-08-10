@@ -1,0 +1,374 @@
+{
+  "id": "pq-05-02",
+  "slug": "always-sometimes-never",
+  "title": "Always, Sometimes, Never",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch5-proving-and-placing",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "pq-hierarchy",
+      "concept": {
+        "id": "rem-pq-hierarchy-c",
+        "kind": "concept",
+        "body": "Read hierarchy claims by direction. UP the family tree (specific → general): always true — a square is always a rhombus. DOWN the tree (general → specific): sometimes true — a rhombus is a square only when right angles appear. ACROSS disjoint branches (parallelogram vs trapezoid under the exactly-one-pair convention): never."
+      },
+      "check": {
+        "id": "rem-pq-hierarchy-k",
+        "kind": "check",
+        "body": "One claim, one direction.",
+        "conceptTag": "pq-hierarchy",
+        "explanationVariants": [
+          "Rhombus → parallelogram travels UP the tree (a rhombus is a special parallelogram): always.",
+          "Every rhombus satisfies the parallelogram definition — up-flow is automatic."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "“A rhombus is a parallelogram” is:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Always true — up the tree",
+              "correct": true,
+              "feedback": "Rhombus is defined as a parallelogram with congruent sides; membership flows upward unconditionally."
+            },
+            {
+              "id": "o2",
+              "label": "Sometimes true",
+              "correct": false,
+              "feedback": "There's no condition attached — the parallelogram requirement is inside the rhombus definition. Always."
+            },
+            {
+              "id": "o3",
+              "label": "Never true",
+              "correct": false,
+              "feedback": "The rhombus region sits wholly INSIDE the parallelogram region — the claim can't fail."
+            },
+            {
+              "id": "o4",
+              "label": "True only for squares",
+              "correct": false,
+              "feedback": "Leaning rhombi qualify equally — all of them are parallelograms. Always."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The family tree is a logic machine. **Always** true: any claim that flows UP the tree (a square is always a rhombus). **Sometimes**: claims that flow DOWN (a rhombus is sometimes a square — when right angles show up). **Never**: claims that jump between disjoint branches (under our convention, a parallelogram is never a trapezoid).",
+      "figure": "quad-family-tree"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Run the machine.",
+      "conceptTag": "pq-hierarchy",
+      "explanationVariants": [
+        "Rectangles sit inside the parallelogram region — every rectangle inherits the definition. Always.",
+        "Up-the-tree claims are automatic: rectangle ⇒ parallelogram, always."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "“A rectangle is a parallelogram.” Always, sometimes, or never?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Always — rectangle is DEFINED as a special parallelogram",
+            "correct": true,
+            "feedback": "Membership flows up: every rectangle carries the parallelogram definition inside its own."
+          },
+          {
+            "id": "o2",
+            "label": "Sometimes — only when the sides differ",
+            "correct": false,
+            "feedback": "Side lengths never matter for this one — the parallelogram requirement is built into being a rectangle. Always."
+          },
+          {
+            "id": "o3",
+            "label": "Never — they're different shapes",
+            "correct": false,
+            "feedback": "Different NAMES, nested sets: the rectangle region lives wholly inside the parallelogram region."
+          },
+          {
+            "id": "o4",
+            "label": "Sometimes — only when it's also a square",
+            "correct": false,
+            "feedback": "Squarehood is irrelevant here; even the most elongated rectangle is a parallelogram. Always."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-hierarchy__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Downward flow.",
+      "conceptTag": "pq-hierarchy",
+      "explanationVariants": [
+        "Down-the-tree: a parallelogram is a rectangle only when a right angle appears — sometimes.",
+        "Some parallelograms lean (no), some stand square (yes): sometimes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "“A parallelogram is a rectangle.” Always, sometimes, or never?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Sometimes — exactly when it has a right angle",
+            "correct": true,
+            "feedback": "Downward claims are conditional: the leaning ones fail, the right-angled ones qualify."
+          },
+          {
+            "id": "o2",
+            "label": "Always — the terms coincide",
+            "correct": false,
+            "feedback": "A 60°-leaning parallelogram is the counterexample — no right angles, no rectangle. Sometimes."
+          },
+          {
+            "id": "o3",
+            "label": "Never — parallelograms exclude rectangles",
+            "correct": false,
+            "feedback": "Rectangles are IN the parallelogram family — the claim succeeds precisely on those members. Sometimes."
+          },
+          {
+            "id": "o4",
+            "label": "Sometimes — exactly when all sides are congruent",
+            "correct": false,
+            "feedback": "All-congruent-sides makes a RHOMBUS. The rectangle condition is the right ANGLE. Sometimes, but for the angle reason."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-hierarchy__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two placements trip everyone. **A square is always a rhombus AND always a rectangle** — it sits at the intersection, holding both memberships fully. And under our EXACTLY-one-pair convention, **a parallelogram is never a trapezoid**: two parallel pairs is one too many for the trapezoid branch.",
+      "figure": "pq-square-placement"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Branch jump.",
+      "conceptTag": "pq-hierarchy",
+      "explanationVariants": [
+        "Our convention demands EXACTLY one parallel pair — a parallelogram's two pairs disqualify it. Never.",
+        "The branches are disjoint by definition here (the “at least one” convention would answer differently)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Under this course's convention, “a parallelogram is a trapezoid” is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Never true — exactly one parallel pair excludes two-pair figures",
+            "correct": true,
+            "feedback": "The exclusive definition splits the branches cleanly: two parallel pairs means not-a-trapezoid, full stop."
+          },
+          {
+            "id": "o2",
+            "label": "Always true — it has at least one parallel pair",
+            "correct": false,
+            "feedback": "That's the OTHER convention (“at least one”). Ours says exactly one, so parallelograms are excluded."
+          },
+          {
+            "id": "o3",
+            "label": "Sometimes true — when it leans",
+            "correct": false,
+            "feedback": "Leaning never removes the second parallel pair — every parallelogram keeps both pairs at any slant. Never."
+          },
+          {
+            "id": "o4",
+            "label": "Sometimes true — when it's a rhombus",
+            "correct": false,
+            "feedback": "A rhombus has two parallel pairs like every parallelogram — still excluded under exactly-one. Never."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-hierarchy__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Always, sometimes, never — now testable.",
+      "predict": {
+        "prompt": "You will place the corner so all four sides equal 5. Will that alone make it a square, or only a rhombus?",
+        "options": [
+          {
+            "id": "rhombus",
+            "label": "Only a rhombus — equal sides say nothing about the angles"
+          },
+          {
+            "id": "square",
+            "label": "A square — four equal sides is exactly what a square means"
+          },
+          {
+            "id": "depends",
+            "label": "It depends where the other three corners were pinned"
+          }
+        ],
+        "outcomeId": "rhombus",
+        "reveal": "Only a rhombus. Four equal sides leave the angles free to lean — \"all sides equal\" is ALWAYS true of a square but only SOMETIMES gives you one. That gap is the whole point of always/sometimes/never."
+      },
+      "widget": {
+        "type": "quadDrag",
+        "fixed": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            8,
+            4
+          ]
+        ],
+        "targetX": 3,
+        "targetY": 4,
+        "startX": 6,
+        "startY": 6,
+        "gridMax": 8,
+        "targetName": "a rhombus",
+        "prompt": "Pinned at (0,0), (5,0) and (8,4). Place the fourth corner so every side is 5 — a rhombus.",
+        "successFeedback": "(3, 4): all four sides 5, but the diagonals are 8.94 and 4.47 — UNEQUAL. So this rhombus is not a rectangle, and certainly not a square. 'A rhombus is sometimes a rectangle' is now a claim you have tested rather than recited: it happens exactly when the diagonals agree.",
+        "sideFeedback": "Not in the right column: the sides cannot all reach 5 from there.",
+        "angleFeedback": "Right column, wrong height — check the four side lengths, which must all be 5."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Move one vertex while side, diagonal, angle, and family evidence update together.",
+        "invariants": [
+          "attributes-determine-family",
+          "quadrilateral-hierarchy"
+        ],
+        "misconceptions": [
+          "prototype-only",
+          "single-attribute-only"
+        ],
+        "representations": [
+          "graph",
+          "diagram",
+          "table",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "polygons-quadrilaterals",
+        "delayed": false
+      },
+      "conceptTag": "pq-hierarchy"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sometimes, quantified.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "“A rhombus is a kite.” Under the standard (inclusive) kite definition used in ch4, this is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Always — all four sides congruent gives BOTH consecutive pairs congruent",
+            "correct": true,
+            "feedback": "A rhombus over-delivers on the kite's requirement: each consecutive pair matches. That's why ½·d₁·d₂ covers rhombi."
+          },
+          {
+            "id": "o2",
+            "label": "Never — kites can't have parallel sides",
+            "correct": false,
+            "feedback": "The kite definition demands congruent consecutive pairs and says nothing forbidding parallels — rhombi qualify."
+          },
+          {
+            "id": "o3",
+            "label": "Sometimes — only for squares",
+            "correct": false,
+            "feedback": "EVERY rhombus qualifies, leaning or square: four equal sides always split into two congruent consecutive pairs."
+          },
+          {
+            "id": "o4",
+            "label": "Sometimes — only when the diagonals are equal",
+            "correct": false,
+            "feedback": "Diagonal lengths don't gate kite membership — the side pairs do, and a rhombus always has them."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Three claims, one verdict each.",
+      "conceptTag": "pq-hierarchy",
+      "hints": [
+        "Claim A flows up the tree; claim B flows down; claim C jumps branches.",
+        "Up = always. Down = sometimes. Disjoint jump (our convention) = never.",
+        "A: square→rectangle. B: rectangle→square. C: rhombus→trapezoid."
+      ],
+      "explanationVariants": [
+        "A square is always a rectangle (up); a rectangle is sometimes a square (down — needs equal sides); a rhombus is never a trapezoid (two parallel pairs, exclusive convention).",
+        "Always / sometimes / never, in that order — the tree's three directions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Verdicts for: (A) a square is a rectangle; (B) a rectangle is a square; (C) a rhombus is a trapezoid.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "A: always. B: sometimes. C: never",
+            "correct": true,
+            "feedback": "Up-flow, down-flow, branch-jump — the three logical directions of the family tree, one of each."
+          },
+          {
+            "id": "o2",
+            "label": "A: sometimes. B: sometimes. C: sometimes",
+            "correct": false,
+            "feedback": "Only B is conditional. A holds by definition (up-flow); C is blocked by the exactly-one-pair convention."
+          },
+          {
+            "id": "o3",
+            "label": "A: always. B: never. C: never",
+            "correct": false,
+            "feedback": "B isn't never — rectangles with congruent consecutive sides ARE squares. Down-flow means sometimes."
+          },
+          {
+            "id": "o4",
+            "label": "A: always. B: sometimes. C: always",
+            "correct": false,
+            "feedback": "C fails our convention: a rhombus's TWO parallel pairs exceed the trapezoid's exactly-one. Never."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-polygons-quadrilaterals",
+        "form": "pq-hierarchy__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three directions, three words.",
+      "takeaways": [
+        "Up the tree: always. Down the tree: sometimes. Across disjoint branches: never (exclusive convention).",
+        "The square holds dual citizenship: always a rectangle AND always a rhombus.",
+        "Regular quadrilateral = square: ch1's angle formula meets the hierarchy."
+      ],
+      "teaser": "Finale: mixed dispatch — read the markings, name the most specific shape, compute."
+    }
+  ]
+}

@@ -1,0 +1,323 @@
+{
+  "id": "rr-04-03",
+  "slug": "percents-over-and-under",
+  "title": "Percents Over and Under",
+  "courseId": "ratios-rates",
+  "chapterId": "ch4-percent",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "**100% is the whole itself.** 100% of 60 is 60 — all of it. Less than 100% is part of the whole; MORE than 100% is bigger than the whole: 150% of 20 is 30, because 150/100 × 20 = 30. Percent isn't capped at 100 — it's a rate, and rates can run past the whole.",
+      "figure": "rr-percent-over"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "All of it.",
+      "conceptTag": "percent-reason",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 100% of 60?",
+        "answer": 60,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 drops a zero — that's 10% of 60. 100% is the WHOLE thing: 60."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is the percent, not the amount. 100% of 60 means all 60."
+          }
+        ],
+        "fallbackFeedback": "100% of 60 is the whole: 60."
+      },
+      "hints": [
+        "100% means the whole.",
+        "All of 60.",
+        "60."
+      ],
+      "explanationVariants": [
+        "100% is everything: 60.",
+        "The full amount is 60."
+      ],
+      "predict": {
+        "prompt": "100% of a number is…?",
+        "options": [
+          {
+            "id": "itself",
+            "label": "The whole number itself"
+          },
+          {
+            "id": "half",
+            "label": "Half of it"
+          },
+          {
+            "id": "more",
+            "label": "A little more than it"
+          }
+        ],
+        "outcomeId": "itself",
+        "reveal": "Percent means per hundred — and 100 per hundred is everything, exactly once. 100% is the identity, the anchor every other percent measures against."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Past the whole.",
+      "conceptTag": "percent-reason",
+      "explanationVariants": [
+        "150/100 × 20 = 30 — one and a half times the whole.",
+        "100% of 20 is 20, plus another 50% (10), makes 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is 150% of 20?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is just 100%. The extra 50% adds half again: 20 + 10 = 30."
+          },
+          {
+            "value": 35,
+            "feedback": "35 adds 15 to 20, reading 150% as \"+15\". It's 150/100 × 20 = 30."
+          }
+        ],
+        "fallbackFeedback": "150/100 × 20 = 30."
+      },
+      "hints": [
+        "150% = 100% + 50%.",
+        "100% of 20 = 20, 50% of 20 = 10.",
+        "20 + 10."
+      ],
+      "variant": {
+        "gen": "pct-of-number",
+        "form": "rrPercentOver100"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "You can also work **backwards**: given a part and its percent, find the whole. If 20% of a number is 8, then the whole is **40** — because 20% is one fifth, and if a fifth is 8, five fifths is 8 × 5 = 40. Check it: 20% of 40 is indeed 8.",
+      "figure": "rr-percent-over"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the whole.",
+      "conceptTag": "percent-reason",
+      "explanationVariants": [
+        "25% is a quarter, so if a quarter is 9, the whole is 9 × 4 = 36.",
+        "Four quarters rebuild the whole: 9 × 4 = 36."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "25% of a number is 9. What is the whole number?",
+        "answer": 36,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the PART (the 25%). The whole is four of those quarters: 9 × 4 = 36."
+          },
+          {
+            "value": 2,
+            "feedback": "2.25 rounds oddly — you divided 9 by 4 instead of multiplying. A quarter is 9, so the whole is 9 × 4 = 36."
+          }
+        ],
+        "fallbackFeedback": "25% is 1/4, so the whole is 9 × 4 = 36."
+      },
+      "hints": [
+        "25% is what fraction?",
+        "A quarter.",
+        "If a quarter is 9, the whole is 9 × 4."
+      ],
+      "variant": {
+        "gen": "pct-of-number",
+        "form": "rrWholeFromPercent"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Over, under, or exactly 100?",
+      "conceptTag": "percent-reason",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each result against its whole.",
+        "buckets": [
+          {
+            "id": "under",
+            "label": "Less than the whole"
+          },
+          {
+            "id": "equal",
+            "label": "Equals the whole"
+          },
+          {
+            "id": "over",
+            "label": "More than the whole"
+          }
+        ],
+        "items": [
+          {
+            "id": "o1",
+            "label": "80% of 50",
+            "bucketId": "under",
+            "feedback": "80% is under 100%, so 80% of 50 (which is 40) is less than 50."
+          },
+          {
+            "id": "o2",
+            "label": "100% of 50",
+            "bucketId": "equal",
+            "feedback": "100% is the whole itself — exactly 50."
+          },
+          {
+            "id": "o3",
+            "label": "120% of 50",
+            "bucketId": "over",
+            "feedback": "120% is past 100%, so 120% of 50 (which is 60) exceeds 50."
+          },
+          {
+            "id": "o4",
+            "label": "200% of 50",
+            "bucketId": "over",
+            "feedback": "200% is double — 100 — well over the whole of 50."
+          }
+        ],
+        "missFeedback": "Compare each percent to 100%: under 100% lands below the whole, exactly 100% equals it, above 100% overshoots. You don't even need the arithmetic.",
+        "successFeedback": "Sorted — 100% is the dividing line between part and surplus."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Benchmark estimate.",
+      "conceptTag": "percent-reason",
+      "explanationVariants": [
+        "5% is half of 10%; 10% of 80 is 8, so 5% is 4.",
+        "Halve the 10% anchor: 8 becomes 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Estimate with benchmarks: what is 5% of 80?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is 50% of 80 — a decimal slipped. 5% is half of 10%: half of 8 is 4."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is 20% of 80. 5% is much smaller: half of 10% (8) is 4."
+          }
+        ],
+        "fallbackFeedback": "10% of 80 = 8, and 5% is half of that: 4."
+      },
+      "hints": [
+        "Start from 10% of 80.",
+        "10% = 8.",
+        "5% is half: 8 ÷ 2."
+      ],
+      "variant": {
+        "gen": "pct-of-number",
+        "form": "rrBenchmarkFive"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Work all the way back.",
+      "conceptTag": "percent-reason",
+      "hints": [
+        "The 15 is the part; 30% is the rate.",
+        "30% is what fraction? Roughly 3/10.",
+        "If 3/10 of the whole is 15, one tenth is 5."
+      ],
+      "explanationVariants": [
+        "30% of the whole is 15, so 10% is 5 (15 ÷ 3), and the whole (100%) is 5 × 10 = 50.",
+        "Break to 10% first: 15 ÷ 3 = 5 per ten percent, times ten = 50."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "30% of the students in a club is 15 students. How many students are in the whole club?",
+        "answer": 50,
+        "tolerance": 0,
+        "unit": "students",
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "45 adds 30 to 15. Work backwards instead: 30% is 15, so 10% is 5, and 100% is 50."
+          },
+          {
+            "value": 150,
+            "feedback": "150 multiplied 15 × 10 — but 15 is 30%, not 10%. First drop to 10%: 15 ÷ 3 = 5, then ×10 = 50."
+          }
+        ],
+        "fallbackFeedback": "30% = 15, so 10% = 5, and the whole (100%) = 50 students."
+      },
+      "variant": {
+        "gen": "pct-of-number",
+        "form": "rrWholeFromPercent"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "100% is the pivot.",
+      "takeaways": [
+        "100% is the whole; under is a part, over exceeds it (150% of 20 = 30).",
+        "Work backwards from a part: 20% is 8 means the whole is 40.",
+        "Benchmarks (10%, 5%, 1%) make estimates quick."
+      ],
+      "teaser": "next chapter: ratios as the engine behind every unit conversion."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "percent-reason",
+      "concept": {
+        "id": "rem-pr-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Rebuild the whole from a part.** If 25% of a number is 7, that 25% is one quarter — so the whole is four quarters: 7 × 4 = 28. The percent tells you how many equal pieces to reassemble."
+      },
+      "check": {
+        "id": "rem-pr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "percent-reason",
+        "explanationVariants": [
+          "50% is a half, so the whole is 6 × 2 = 12.",
+          "Two halves rebuild the whole: 6 × 2 = 12."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "50% of a number is 6. What is the whole number?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is the half itself. Two halves make the whole: 6 × 2 = 12."
+            },
+            {
+              "value": 3,
+              "feedback": "3 halved the 6 — go the other way. If half is 6, the whole is 6 × 2 = 12."
+            }
+          ],
+          "fallbackFeedback": "50% is 1/2, so the whole is 6 × 2 = 12."
+        }
+      }
+    }
+  ]
+}

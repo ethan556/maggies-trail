@@ -1,0 +1,230 @@
+{
+  "id": "co-03-01",
+  "slug": "hyperbola-difference",
+  "title": "The Hyperbola: A Difference of Distances",
+  "courseId": "conic-sections",
+  "chapterId": "ch3-hyperbolas",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **hyperbola** flips the ellipse's rule: instead of a constant SUM of focal distances, it's a constant **difference**. Every point satisfies |r₁ − r₂| = 2a. This splits the curve into **two separate branches**, one hugging each focus.",
+      "figure": "co-hyperbola-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The defining difference.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A hyperbola has |r₁ − r₂| = 2a. If 2a = 6, what is the constant difference of focal distances for every point?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 = a is half. The difference is 2a = 6."
+          },
+          {
+            "value": 12,
+            "feedback": "12 = 4a. The constant difference is 2a = 6."
+          }
+        ],
+        "fallbackFeedback": "|r₁ − r₂| = 2a = 6."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Check a vertex.",
+      "conceptTag": "co-hyperbola",
+      "explanationVariants": [
+        "Vertex (3, 0) with foci (±5, 0): distances 2 and 8, and |2 − 8| = 6 = 2a. The difference definition holds.",
+        "|8 − 2| = 6 confirms the constant difference at the vertex."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Foci (±5, 0), vertex (3, 0), focal distances 2 and 8. What is |2 − 8|?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 = 2 + 8 adds. The hyperbola uses the DIFFERENCE: |2 − 8| = 6."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = c. The difference of distances is |2 − 8| = 6."
+          }
+        ],
+        "fallbackFeedback": "|2 − 8| = 6 = 2a."
+      },
+      "variant": {
+        "gen": "hyperbola-anatomy"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Centered at the origin and opening left-right, the standard form is\n\nx²/a² − y²/b² = 1\n\n— note the **minus sign**, the hyperbola's signature. The vertices are at (±a, 0); the curve never crosses the y-axis. For x²/9 − y²/16 = 1: a = 3, so vertices at (±3, 0).",
+      "figure": "co-hyperbola-standard"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the vertices.",
+      "conceptTag": "co-hyperbola",
+      "explanationVariants": [
+        "x²/9 − y²/16 = 1: a² = 9 so a = 3, vertices at (±3, 0) — where each branch turns around.",
+        "The term with the plus sign (x²) locates the vertices: (±3, 0)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For x²/9 − y²/16 = 1, the vertices are at:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(±3, 0)",
+            "correct": true,
+            "feedback": "Right — a = √9 = 3, so the branches turn at (±3, 0)."
+          },
+          {
+            "id": "o2",
+            "label": "(±4, 0)",
+            "feedback": "4 = b (under the minus term). Vertices use a = √9 = 3: (±3, 0)."
+          },
+          {
+            "id": "o3",
+            "label": "(0, ±4)",
+            "feedback": "A hyperbola opening left-right has no y-intercepts. Vertices are (±3, 0)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "hyperbola-anatomy",
+        "form": "vertices"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which term is positive?",
+      "conceptTag": "co-hyperbola",
+      "explanationVariants": [
+        "The POSITIVE term shows the opening direction: x² positive → opens left-right; y² positive → opens up-down.",
+        "Whichever variable has the plus sign is the axis the branches open along."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A hyperbola x²/9 − y²/16 = 1 opens:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "left and right (along the x-axis)",
+            "correct": true,
+            "feedback": "Right — the x² term is positive, so the branches open horizontally."
+          },
+          {
+            "id": "o2",
+            "label": "up and down",
+            "feedback": "That needs the y² term positive. Here x² is positive → opens left-right."
+          },
+          {
+            "id": "o3",
+            "label": "in all four directions",
+            "feedback": "A hyperbola opens along ONE axis — here left-right (x² is the positive term)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "hyperbola-anatomy",
+        "form": "opens"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A vertical hyperbola.",
+      "conceptTag": "co-hyperbola",
+      "explanationVariants": [
+        "y²/9 − x²/16 = 1 has the y² term positive, so it opens UP-DOWN with a = 3; vertices at (0, ±3), so 2a = 6.",
+        "Positive y² → vertical opening, a = 3, vertices (0, ±3)."
+      ],
+      "hints": [
+        "The positive term is y² now.",
+        "a² = 9 → a = 3, along the y-axis.",
+        "Vertices (0, ±3); 2a = 2·3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y²/9 − x²/16 = 1, find the distance 2a between the two vertices.",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 = 2·4 uses b. a = √9 = 3, so 2a = 6."
+          },
+          {
+            "value": 3,
+            "feedback": "3 = a. The full vertex-to-vertex distance is 2a = 6."
+          }
+        ],
+        "fallbackFeedback": "a = 3, vertices (0, ±3), 2a = 6."
+      },
+      "variant": {
+        "gen": "hyperbola-anatomy",
+        "form": "twoA"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A difference, and two branches.",
+      "takeaways": [
+        "Hyperbola: |r₁ − r₂| = 2a (constant difference of focal distances).",
+        "Standard form has a MINUS: x²/a² − y²/b² = 1 (or y² positive for vertical).",
+        "Vertices at (±a, 0) — the positive term's variable."
+      ],
+      "teaser": "Next: the asymptotes that guide the branches."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-hyperbola",
+      "concept": {
+        "id": "rem-co0301-c",
+        "kind": "concept",
+        "body": "Hyperbola: |r₁ − r₂| = 2a, two branches. Standard form x²/a² − y²/b² = 1 (minus sign). Vertices at (±a,0) — the positive term's variable, along the opening direction."
+      },
+      "check": {
+        "id": "rem-co0301-k",
+        "kind": "check",
+        "body": "One vertex distance.",
+        "conceptTag": "co-hyperbola",
+        "explanationVariants": [
+          "x²/25 − y²/9 = 1: a = 5, vertices (±5, 0), so 2a = 10.",
+          "√25 = 5, doubled is 10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For x²/25 − y²/9 = 1, find 2a.",
+          "answer": 10,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 = 2·3 uses b. a = √25 = 5, so 2a = 10."
+            },
+            {
+              "value": 5,
+              "feedback": "5 = a; the full distance is 2a = 10."
+            }
+          ],
+          "fallbackFeedback": "a = 5, 2a = 10."
+        }
+      }
+    }
+  ]
+}

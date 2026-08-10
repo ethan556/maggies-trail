@@ -1,0 +1,540 @@
+{
+ "id": "dd-04-01",
+ "slug": "range-how-far-data-stretches",
+ "title": "Range: How Far Data Stretches",
+ "courseId": "data-distributions",
+ "chapterId": "ch4-range-iqr",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "range-stretch",
+   "body": "Centers say where data sits; **spread** says how far it stretches. The simplest spread measure is the **range**: **maximum − minimum**. Swim laps of 3, 5, 7, 9, and 12 stretch from a min of 3 to a max of 12, so the range is 12 − 3 = **9 laps**. One subtraction, two values — everything in between is ignored."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find the two values that matter.",
+   "conceptTag": "range",
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "choice",
+    "prompt": "For the laps data 3, 5, 7, 9, 12 — which values does the range use?",
+    "task": "rangeEndpoints",
+    "xLabel": "laps",
+    "sets": [
+     {
+      "id": "data",
+      "label": "laps data",
+      "points": [
+       {
+        "id": "data-0",
+        "label": "value 1",
+        "x": 3
+       },
+       {
+        "id": "data-1",
+        "label": "value 2",
+        "x": 5
+       },
+       {
+        "id": "data-2",
+        "label": "value 3",
+        "x": 7
+       },
+       {
+        "id": "data-3",
+        "label": "value 4",
+        "x": 9
+       },
+       {
+        "id": "data-4",
+        "label": "value 5",
+        "x": 12
+       }
+      ]
+     }
+    ],
+    "targetSetId": "data",
+    "choices": [
+     {
+      "id": "a",
+      "label": "Only the max (12) and the min (3)",
+      "feedback": "Yes — range is a two-value summary: the endpoints of the stretch. The 5, 7, and 9 never enter the calculation.",
+      "claim": "range:endpoints:3:12"
+     },
+     {
+      "id": "b",
+      "label": "All five values, added up",
+      "feedback": "Adding every value is the MEAN's opening move. The range only touches the endpoints: max − min.",
+      "claim": "misconception:b"
+     },
+     {
+      "id": "c",
+      "label": "The middle value, 7",
+      "feedback": "The middle is the MEDIAN's territory — a center, not a spread. Range measures the stretch between min and max.",
+      "claim": "misconception:c"
+     }
+    ],
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "range:min",
+     "range:max",
+     "range:span"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Yes — range is a two-value summary: the endpoints of the stretch. The 5, 7, and 9 never enter the calculation.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Choose the conclusion supported by the point-set state.",
+    "tolerance": 0
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Compute a range.",
+   "conceptTag": "range",
+   "explanationVariants": [
+    "Max 71, min 58: range = 71 − 58 = 13 degrees — the temperatures stretched across a 13-degree band.",
+    "Find the hottest and coldest readings, then subtract: 71 − 58 = 13."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "This week's noon temperatures were 58, 64, 71, and 62 degrees. What is the RANGE?",
+    "task": "rangeValue",
+    "xLabel": "temperature",
+    "sets": [
+     {
+      "id": "data",
+      "label": "temperatures",
+      "points": [
+       {
+        "id": "data-0",
+        "label": "value 1",
+        "x": 58
+       },
+       {
+        "id": "data-1",
+        "label": "value 2",
+        "x": 64
+       },
+       {
+        "id": "data-2",
+        "label": "value 3",
+        "x": 71
+       },
+       {
+        "id": "data-3",
+        "label": "value 4",
+        "x": 62
+       }
+      ]
+     }
+    ],
+    "targetSetId": "data",
+    "answerUnit": "degrees",
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 129,
+      "feedback": "129 is max PLUS min (71 + 58). Range measures the gap between them: 71 − 58 = 13."
+     },
+     {
+      "value": 71,
+      "feedback": "71 is just the maximum. The range asks how far the max sits ABOVE the min: 71 − 58 = 13."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "range:min",
+     "range:max",
+     "range:span"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Range = max − min = 71 − 58 = 13 degrees.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Range = max − min = 71 − 58 = 13 degrees.",
+    "tolerance": 0
+   },
+   "hints": [
+    "Pick out the largest and smallest readings.",
+    "Max 71, min 58.",
+    "Subtract: 71 − 58."
+   ],
+   "variant": {
+    "gen": "g6-center-spread",
+    "form": "ddRangeBasic"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Because range ignores everything between the endpoints, two very different data sets can share one. Both 2, 6, 6, 6, 10 and 2, 3, 5, 8, 10 have range 10 − 2 = **8** — yet the first bunches tightly at 6 while the second scatters. Range is a fast first look at spread, but it can't tell these stories apart. (And it inherits a weakness: the endpoints might be outliers.)",
+   "figure": "range-stretch"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Same range, different data.",
+   "conceptTag": "range",
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "Verify it: what is the range of 2, 3, 5, 8, 10?",
+    "task": "rangeValue",
+    "xLabel": "value",
+    "sets": [
+     {
+      "id": "data",
+      "label": "data",
+      "points": [
+       {
+        "id": "data-0",
+        "label": "value 1",
+        "x": 2
+       },
+       {
+        "id": "data-1",
+        "label": "value 2",
+        "x": 3
+       },
+       {
+        "id": "data-2",
+        "label": "value 3",
+        "x": 5
+       },
+       {
+        "id": "data-3",
+        "label": "value 4",
+        "x": 8
+       },
+       {
+        "id": "data-4",
+        "label": "value 5",
+        "x": 10
+       }
+      ]
+     }
+    ],
+    "targetSetId": "data",
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 12,
+      "feedback": "12 is 10 + 2 — the endpoints added instead of subtracted. Range = 10 − 2 = 8."
+     },
+     {
+      "value": 10,
+      "feedback": "10 is the maximum alone. Range measures the stretch from the min: 10 − 2 = 8."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "range:min",
+     "range:max",
+     "range:span"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Max 10, min 2: range = 10 − 2 = 8 — identical to the bunched-at-6 set's range.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Max 10, min 2: range = 10 − 2 = 8 — identical to the bunched-at-6 set's range.",
+    "tolerance": 0
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "What range can't see.",
+   "conceptTag": "range",
+   "explanationVariants": [
+    "Range only reads the two endpoints, and both sets share min 2 and max 10 — the bunching at 6 versus the scatter is invisible to it.",
+    "A two-value summary can't describe the interior; identical endpoints force identical ranges."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "choice",
+    "prompt": "The sets 2, 6, 6, 6, 10 and 2, 3, 5, 8, 10 both have range 8. Why can't the range tell them apart?",
+    "task": "rangeBlindness",
+    "xLabel": "value",
+    "sets": [
+     {
+      "id": "a",
+      "label": "bunched set",
+      "points": [
+       {
+        "id": "a-0",
+        "label": "value 1",
+        "x": 2
+       },
+       {
+        "id": "a-1",
+        "label": "value 2",
+        "x": 6
+       },
+       {
+        "id": "a-2",
+        "label": "value 3",
+        "x": 6
+       },
+       {
+        "id": "a-3",
+        "label": "value 4",
+        "x": 6
+       },
+       {
+        "id": "a-4",
+        "label": "value 5",
+        "x": 10
+       }
+      ]
+     },
+     {
+      "id": "b",
+      "label": "spread interior set",
+      "points": [
+       {
+        "id": "b-0",
+        "label": "value 1",
+        "x": 2
+       },
+       {
+        "id": "b-1",
+        "label": "value 2",
+        "x": 3
+       },
+       {
+        "id": "b-2",
+        "label": "value 3",
+        "x": 5
+       },
+       {
+        "id": "b-3",
+        "label": "value 4",
+        "x": 8
+       },
+       {
+        "id": "b-4",
+        "label": "value 5",
+        "x": 10
+       }
+      ]
+     }
+    ],
+    "targetSetId": "a",
+    "choices": [
+     {
+      "id": "a",
+      "label": "Range only uses the endpoints, and both sets share min 2 and max 10",
+      "feedback": "Exactly — the interior values, where these sets differ completely, never enter a range calculation.",
+      "claim": "range:interior-blind"
+     },
+     {
+      "id": "b",
+      "label": "Because both sets have five values",
+      "feedback": "The count doesn't drive the range at all — sets of different sizes can share a range, and same-size sets can differ. It's the shared ENDPOINTS (2 and 10) doing it.",
+      "claim": "misconception:b"
+     },
+     {
+      "id": "c",
+      "label": "It can — the first set's range is really 4",
+      "feedback": "Tempting, since the first set bunches within 6 ± something — but range is defined off the full endpoints: 10 − 2 = 8 for both. Measuring the bunched middle needs a better tool (next lesson).",
+      "claim": "misconception:c"
+     }
+    ],
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "range:a:endpoints",
+     "range:b:endpoints",
+     "range:interior"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Exactly — the interior values, where these sets differ completely, never enter a range calculation.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Choose the conclusion supported by the point-set state.",
+    "tolerance": 0
+   },
+   "hints": [
+    "Which two numbers feed a range?",
+    "Both sets start at 2 and end at 10.",
+    "Everything between is invisible to it."
+   ],
+   "variant": {
+    "gen": "g6-center-spread",
+    "form": "ddRangeEndpointsOnly"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Range plus reasoning.",
+   "conceptTag": "range",
+   "explanationVariants": [
+    "The old range was 12 − 3 = 9. The new 20-lap day replaces 12 as the max: 20 − 3 = 17. One big day stretched the range by 8.",
+    "Range chases the endpoints — move the max from 12 to 20 and the range jumps from 9 to 17."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "The laps data 3, 5, 7, 9, 12 gets a new entry: a 20-lap day. What is the NEW range?",
+    "task": "rangeUpdate",
+    "xLabel": "laps",
+    "sets": [
+     {
+      "id": "data",
+      "label": "original laps",
+      "points": [
+       {
+        "id": "data-0",
+        "label": "value 1",
+        "x": 3
+       },
+       {
+        "id": "data-1",
+        "label": "value 2",
+        "x": 5
+       },
+       {
+        "id": "data-2",
+        "label": "value 3",
+        "x": 7
+       },
+       {
+        "id": "data-3",
+        "label": "value 4",
+        "x": 9
+       },
+       {
+        "id": "data-4",
+        "label": "value 5",
+        "x": 12
+       }
+      ]
+     }
+    ],
+    "targetSetId": "data",
+    "addedValue": 20,
+    "answerUnit": "laps",
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 9,
+      "feedback": "9 was the OLD range (12 − 3). The 20-lap day is the new maximum, so the range stretches: 20 − 3 = 17."
+     },
+     {
+      "value": 8,
+      "feedback": "8 is the jump from the old max to the new one (20 − 12). The range itself runs from the MIN: 20 − 3 = 17."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "range:old",
+     "range:added",
+     "range:new-endpoints",
+     "range:new-span"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "New max 20, min still 3: range = 20 − 3 = 17 laps. Like the mean, the range has no outlier resistance.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "New max 20, min still 3: range = 20 − 3 = 17 laps. Like the mean, the range has no outlier resistance.",
+    "tolerance": 0
+   },
+   "hints": [
+    "Did the min or the max change?",
+    "The new max is 20; the min is still 3.",
+    "Subtract: 20 − 3."
+   ],
+   "variant": {
+    "gen": "g6-center-spread",
+    "form": "ddRangeNewOutlier"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The stretch from end to end.",
+   "takeaways": [
+    "Range = max − min: the fastest measure of spread.",
+    "It ignores every interior value — different data sets can share a range.",
+    "It has zero outlier resistance: one extreme day rewrites it."
+   ],
+   "teaser": "next: a spread measure that ignores the wild endpoints and measures the calm middle half — the IQR."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "range",
+   "concept": {
+    "id": "rem-rg-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Range = max − min.** Data 4, 9, 6: the largest is 9, the smallest is 4, so the range is 9 − 4 = 5."
+   },
+   "check": {
+    "id": "rem-rg-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "range",
+    "explanationVariants": [
+     "Max 9 minus min 4 gives range 5.",
+     "The data stretches from 4 up to 9 — a stretch of 5."
+    ],
+    "widget": {
+     "type": "pointSetReasoningLab",
+     "answerMode": "numeric",
+     "prompt": "What is the range of 4, 9, 6?",
+     "task": "rangeValue",
+     "xLabel": "value",
+     "sets": [
+      {
+       "id": "data",
+       "label": "data",
+       "points": [
+        {
+         "id": "data-0",
+         "label": "value 1",
+         "x": 4
+        },
+        {
+         "id": "data-1",
+         "label": "value 2",
+         "x": 9
+        },
+        {
+         "id": "data-2",
+         "label": "value 3",
+         "x": 6
+        }
+       ]
+      }
+     ],
+     "targetSetId": "data",
+     "choices": [],
+     "numericErrors": [
+      {
+       "value": 13,
+       "feedback": "13 adds max and min (9 + 4). Range subtracts them: 9 − 4 = 5."
+      },
+      {
+       "value": 9,
+       "feedback": "9 is the maximum by itself. Range = max − min = 9 − 4 = 5."
+      }
+     ],
+     "authoredStages": [],
+     "requiredStageKeys": [
+      "range:min",
+      "range:max",
+      "range:span"
+     ],
+     "requiredExplorations": 3,
+     "successFeedback": "Max − min: 9 − 4 = 5.",
+     "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+     "fallbackFeedback": "Max − min: 9 − 4 = 5.",
+     "tolerance": 0
+    }
+   }
+  }
+ ]
+}

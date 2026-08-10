@@ -1,0 +1,308 @@
+{
+  "id": "pr-04-03",
+  "slug": "percent-increase-and-decrease",
+  "title": "Percent Increase and Decrease",
+  "courseId": "proportional-relationships",
+  "chapterId": "ch4-percent-problems",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "percent-price",
+      "body": "Percent change compares the CHANGE to the ORIGINAL: (new − old) ÷ old × 100. A price rising from 20 to 25: (25−20)÷20×100 = 5÷20×100 = 25% increase."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Increase and decrease are both percents OF the original.",
+      "widget": {
+        "type": "percentBar",
+        "whole": 50,
+        "targetPercent": 30,
+        "percentStep": 5,
+        "startPercent": 0,
+        "unit": "dollars",
+        "prompt": "A $50 jacket rises in price by 30%. Shade the INCREASE.",
+        "successFeedback": "$15, so the new price is $65. The percent is always taken of the ORIGINAL — which is why a 30% rise followed by a 30% fall does not bring you home: the fall is taken of a bigger number.",
+        "lowFeedback": "That is less than 30% of $50.",
+        "highFeedback": "That is more than 30% of $50."
+      },
+      "predict": {
+        "prompt": "A $50 jacket rises by 30%. The new price is…",
+        "options": [
+          {
+            "id": "right",
+            "label": "$65 — the increase is $15"
+          },
+          {
+            "id": "dollars",
+            "label": "$80 — it rises BY $30"
+          },
+          {
+            "id": "tiny",
+            "label": "$50.30"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "30% is a share of the base, not raw dollars: 0.30 × $50 = $15 of increase, so $65. Reading '30%' as '$30' is the classic slip — the bar you're about to shade is the $15 slice."
+      },
+      "conceptTag": "pr-percent-change",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents percent change.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for percent change must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines percent change."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "proportional-relationships:pr-percent-change",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another percent increase.",
+      "conceptTag": "pr-percent-change",
+      "explanationVariants": [
+        "(100−80)÷80×100 = 25%.",
+        "Divide the change by the original: 25%."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A price rises from 80 to 100. What is the percent change?",
+        "answer": 25,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the raw change, not the percent. Divide by the ORIGINAL: 20÷80×100 = 25%."
+          },
+          {
+            "value": 80,
+            "feedback": "That divides by the wrong number. Use the ORIGINAL (80) as the base: 20÷80×100=25%."
+          }
+        ],
+        "fallbackFeedback": "(100−80)÷80×100 = 25%."
+      },
+      "variant": {
+        "gen": "pr-percent-change-g7",
+        "form": "percentIncrease"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A decrease works the same way — the change is still (new − old), which comes out negative, showing the percent DROPPED.",
+      "figure": "pr-percent-change"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find a percent decrease.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A price falls from 50 to 40. What is the percent change?",
+        "answer": -20,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "The price FELL, so the change should be negative: (40−50)÷50×100 = −20%."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the raw change, not the percent. Divide by the ORIGINAL: (40−50)÷50×100 = −20%."
+          }
+        ],
+        "fallbackFeedback": "(40−50)÷50×100 = −20%."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Always use the ORIGINAL value as the base — never the new value. Dividing by the wrong number gives a different, incorrect percent.",
+      "figure": "pr-percent-change"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Watch the base carefully.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A price falls from 10 to 8. What is the percent change?",
+        "answer": -20,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "The price FELL, so the change should be negative: (8−10)÷10×100 = −20%."
+          },
+          {
+            "value": 25,
+            "feedback": "That divides by the NEW value (8) instead of the original (10): (8−10)÷10×100 = −20%."
+          }
+        ],
+        "fallbackFeedback": "(8−10)÷10×100 = −20%."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another percent decrease.",
+      "conceptTag": "pr-percent-change",
+      "explanationVariants": [
+        "(30−40)÷40×100 = −25%.",
+        "Divide the change by the original: −25%."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A price falls from 40 to 30. What is the percent change?",
+        "answer": -25,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "The price FELL, so the change should be negative: (30−40)÷40×100 = −25%."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the raw change, not the percent. Divide by the ORIGINAL: (30−40)÷40×100 = −25%."
+          }
+        ],
+        "fallbackFeedback": "(30−40)÷40×100 = −25%."
+      },
+      "variant": {
+        "gen": "pr-percent-change-g7",
+        "form": "percentDecrease"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger percent increase.",
+      "conceptTag": "pr-percent-change",
+      "explanationVariants": [
+        "(60−50)÷50×100 = 20%.",
+        "Divide the change by the original: 20%."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A price rises from 50 to 60. What is the percent change?",
+        "answer": 20,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is the raw change, not the percent. Divide by the ORIGINAL: 10÷50×100 = 20%."
+          },
+          {
+            "value": 16.67,
+            "feedback": "That divides by the NEW value (60) instead of the original (50): 10÷50×100=20%."
+          }
+        ],
+        "fallbackFeedback": "(60−50)÷50×100 = 20%."
+      },
+      "variant": {
+        "gen": "pr-percent-change-g7",
+        "form": "percentIncrease"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A full multistep problem.",
+      "conceptTag": "pr-percent-change",
+      "explanationVariants": [
+        "(90−75)÷75×100 = 20%.",
+        "Divide the change by the original: 20%."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A price rises from 75 to 90. What is the percent change?",
+        "answer": 20,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is the raw change, not the percent. Divide by the ORIGINAL: 15÷75×100 = 20%."
+          },
+          {
+            "value": 16.67,
+            "feedback": "That divides by the NEW value (90) instead of the original (75): 15÷75×100=20%."
+          }
+        ],
+        "fallbackFeedback": "(90−75)÷75×100 = 20%."
+      },
+      "hints": [
+        "Change = new − old = 90 − 75 = 15.",
+        "Divide by the ORIGINAL: 15 ÷ 75.",
+        "15 ÷ 75 × 100 = 20%."
+      ],
+      "variant": {
+        "gen": "pr-percent-change-g7",
+        "form": "percentIncrease"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Percent change always divides by the original value, never the new one.",
+      "takeaways": [
+        "Percent change = (new − old) ÷ old × 100.",
+        "A rise gives a positive percent; a fall gives a negative percent.",
+        "Always use the ORIGINAL value as the base."
+      ],
+      "teaser": "next: percents at work — interest on a loan, commission on a sale, and how far an estimate missed."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pr-percent-change",
+      "concept": {
+        "id": "rem-ppc-c",
+        "kind": "concept",
+        "body": "Percent change = (new − old) ÷ old × 100, always using the ORIGINAL value as the base. A rise from 20 to 25: (25−20)÷20×100 = 25%."
+      },
+      "check": {
+        "id": "rem-ppc-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pr-percent-change",
+        "explanationVariants": [
+          "(25−20)÷20×100 = 25%.",
+          "Divide the change by the original."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A price rises from 20 to 25. What is the percent change?",
+          "answer": 25,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "5 is the raw change; divide by the original: 25%."
+            },
+            {
+              "value": 20,
+              "feedback": "Divide by the ORIGINAL, not itself: 25%."
+            }
+          ],
+          "fallbackFeedback": "(25−20)÷20×100 = 25%."
+        }
+      }
+    }
+  ]
+}

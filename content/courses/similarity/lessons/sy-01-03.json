@@ -1,0 +1,298 @@
+{
+  "id": "sy-01-03",
+  "slug": "the-aa-criterion",
+  "title": "The AA Criterion",
+  "courseId": "similarity",
+  "chapterId": "ch1-dilations-and-scale",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "sy-aa",
+      "concept": {
+        "id": "rem-sy-aa-c",
+        "kind": "concept",
+        "body": "AA criterion: if two angles of one triangle equal two angles of another, the triangles are SIMILAR. It works because the third angle is forced by the 180° sum, so all three match. AA needs NO side (unlike every congruence criterion) and yields similarity, not congruence."
+      },
+      "check": {
+        "id": "rem-sy-aa-k",
+        "kind": "check",
+        "body": "How many angles?",
+        "conceptTag": "sy-aa",
+        "explanationVariants": [
+          "AA needs two pairs of equal angles — the third follows automatically.",
+          "Two matching angles is the full requirement for AA similarity."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many pairs of equal ANGLES does the AA similarity criterion require?",
+          "answer": 2,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 works but is more than needed — the third pair is forced by the angle sum once TWO match. AA needs 2."
+            },
+            {
+              "value": 1,
+              "feedback": "1 equal angle isn't enough (many different triangles share one angle). AA needs 2 pairs."
+            }
+          ],
+          "fallbackFeedback": "AA requires 2 pairs of equal angles."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Proving similarity is EASIER than proving congruence. For triangles, just **two pairs of equal angles** guarantee similarity — the **AA criterion**. Why so cheap? Because a triangle's angles sum to 180°, so two equal angles force the third to match too; all three angles equal means the same shape, hence similar.",
+      "figure": "aa-similar"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The third angle is free.",
+      "widget": {
+        "type": "triangleAngleLab",
+        "prompt": "Two triangles each have angles of 40° and 75°. Drag corner C until angle A reads the third angle they must share — and watch the total the whole way.",
+        "fixedA": [
+          1,
+          1
+        ],
+        "fixedB": [
+          7,
+          1
+        ],
+        "startC": [
+          3,
+          6
+        ],
+        "targetAngleA": 65,
+        "tolerance": 3,
+        "gridMax": 8,
+        "requiredMoves": 4,
+        "successFeedback": "65°, because 40 + 75 + 65 = 180. Notice what the readouts did while you dragged: every angle changed, the total never did. That invariant is the whole reason AA works — fix two angles and the third has nowhere else to go, so the shapes must match.",
+        "targetFeedback": "Not 65° yet. The other two angles are 40° and 75°, and all three must total 180°.",
+        "invariantFeedback": "Watch the total as you drag, not just angle A. It reads 180° at every position, and that is the fact the AA criterion rests on."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why AA is enough.",
+      "conceptTag": "sy-aa",
+      "explanationVariants": [
+        "Two equal angles force the third (180° sum), so all three angles match — that's identical shape, hence similar. No side information is needed.",
+        "AA works because knowing two angles determines the whole angle set, and equal angles mean same shape."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why do just TWO pairs of equal angles prove two triangles similar?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The angle sum forces the third pair equal too, so all angles match — same shape",
+            "correct": true,
+            "feedback": "With two angles equal, the 180° sum makes the third equal automatically; equal angles throughout means similar."
+          },
+          {
+            "id": "o2",
+            "label": "Because two angles determine the side lengths",
+            "correct": false,
+            "feedback": "Angles alone don't fix LENGTHS — that's why AA gives SIMILARITY (same shape, any size), not congruence."
+          },
+          {
+            "id": "o3",
+            "label": "Because AA is the same as SAS",
+            "correct": false,
+            "feedback": "AA uses only angles; SAS uses sides and an angle. AA works via the angle-sum forcing the third angle."
+          },
+          {
+            "id": "o4",
+            "label": "Because all triangles with two equal angles are congruent",
+            "correct": false,
+            "feedback": "They're SIMILAR, not congruent — sizes can differ. AA guarantees same shape only."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-aa__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "AA is the similarity cousin of ASA/AAS from congruence — but WEAKER in what it demands and what it delivers. It needs no side at all (cheaper), and it yields similarity, not congruence (weaker conclusion). For congruence you always needed at least one side; for similarity, pure angles suffice.",
+      "figure": "aa-similar"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Congruence or similarity?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two triangles have all three angles equal (AAA) but you know nothing about their sides. What can you conclude?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They are similar",
+            "correct": true,
+            "feedback": "Equal angles guarantee same shape — similar. Without side info you can't claim congruence."
+          },
+          {
+            "id": "o2",
+            "label": "They are congruent",
+            "correct": false,
+            "feedback": "Equal angles alone allow different sizes — similar, not congruent. Congruence needs a side."
+          },
+          {
+            "id": "o3",
+            "label": "Nothing",
+            "correct": false,
+            "feedback": "Equal angles DO give a conclusion: similarity. You just can't upgrade to congruence without a side."
+          },
+          {
+            "id": "o4",
+            "label": "They are both right triangles",
+            "correct": false,
+            "feedback": "Nothing forces a right angle here — the triangles are simply similar, whatever their angle values."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Spot the similar pair.",
+      "conceptTag": "sy-aa",
+      "explanationVariants": [
+        "Triangles sharing two equal angles are similar by AA — here both have a 90° and a 30°, so the third (60°) matches.",
+        "Two matching angles is all AA needs; the pair with 90° and 30° in common qualifies."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which pair of triangles is guaranteed similar by AA?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "One with angles 90°, 30° and another with 90°, 30°",
+            "correct": true,
+            "feedback": "Two equal angles (90° and 30°) — AA applies, and the third angle (60°) matches automatically."
+          },
+          {
+            "id": "o2",
+            "label": "One with sides 3, 4, 5 and another with sides 6, 7, 8",
+            "correct": false,
+            "feedback": "Those side sets aren't proportional (6,8,10 would be), and no angles are given — AA needs equal ANGLES."
+          },
+          {
+            "id": "o3",
+            "label": "One with angles 90°, 30° and another with angles 90°, 45°",
+            "correct": false,
+            "feedback": "Only ONE angle (90°) matches; 30° ≠ 45°. AA needs TWO equal angle pairs."
+          },
+          {
+            "id": "o4",
+            "label": "Any two triangles with a right angle",
+            "correct": false,
+            "feedback": "A shared right angle is just ONE equal angle — not enough. AA needs a second matching angle."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-aa__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "AA shines in the real world through **shadows and reflections**. A person and a flagpole cast shadows at the same time of day, so the sun's rays hit both at the same angle — plus both stand at 90° to the ground. Two equal angles, so the triangles are similar, and one proportion finds the pole's height.",
+      "figure": "indirect-measurement"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Shadow proportion.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 6-ft person casts a 4-ft shadow. At the same time a tree casts a 20-ft shadow. Using similar triangles, how tall is the tree, in feet?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "120 = 6 × 20 forgets to divide by the person's shadow. Set up the proportion 6/4 = h/20 → h = 6 × 20 ÷ 4 = 30."
+          },
+          {
+            "value": 18,
+            "feedback": "18 wrongly does 6 + 20 − 4 or similar. The proportion is 6/4 = h/20, giving h = 30."
+          }
+        ],
+        "fallbackFeedback": "6/4 = h/20 → h = 6 × 20 ÷ 4 = 30 ft."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Which criterion, and why.",
+      "conceptTag": "sy-aa",
+      "hints": [
+        "The shadow triangles share the sun-ray angle and both have a right angle to the ground.",
+        "That's TWO pairs of equal angles.",
+        "Two equal angles is the AA similarity criterion."
+      ],
+      "explanationVariants": [
+        "Both triangles have a right angle (object to ground) and share the sun's ray angle, giving two equal angles — AA similarity, which justifies the proportion.",
+        "The equal sun-ray angle plus the shared right angle is AA; that's what licenses the shadow proportion."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What justifies using a proportion for the shadow problem — WHY are the two triangles similar?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "AA: both have a right angle to the ground and share the sun's ray angle",
+            "correct": true,
+            "feedback": "Two equal angles — the right angle and the common sun-ray angle — make the triangles similar by AA."
+          },
+          {
+            "id": "o2",
+            "label": "SSS~: all three sides are proportional",
+            "correct": false,
+            "feedback": "You don't know the sides in advance — that's what you're solving for. The similarity comes from the two equal ANGLES (AA)."
+          },
+          {
+            "id": "o3",
+            "label": "They are congruent",
+            "correct": false,
+            "feedback": "The person and tree are different sizes — similar, not congruent. AA gives the similarity."
+          },
+          {
+            "id": "o4",
+            "label": "The shadows are equal in length",
+            "correct": false,
+            "feedback": "The shadows differ (4 ft vs 20 ft). Similarity comes from equal angles, not equal shadows."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-similarity",
+        "form": "sy-aa__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Two angles is all it takes.",
+      "takeaways": [
+        "AA: two pairs of equal angles ⇒ similar triangles (the third angle follows).",
+        "Similarity needs no side; it gives same shape, not necessarily same size.",
+        "AA powers indirect measurement — shadows and reflections share angles."
+      ],
+      "teaser": "Next chapter: the side-based similarity criteria, SAS~ and SSS~, and the side-splitter theorem."
+    }
+  ]
+}

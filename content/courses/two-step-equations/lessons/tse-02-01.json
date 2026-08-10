@@ -1,0 +1,304 @@
+{
+  "id": "tse-02-01",
+  "slug": "undoing-addition-then-multiplication",
+  "title": "Undoing Addition, Then Multiplication",
+  "courseId": "two-step-equations",
+  "chapterId": "ch2-two-step-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "two-step-balance",
+      "body": "A two-step equation like 3x + 4 = 19 needs two undo-moves: first subtract 4 from both sides (3x = 15), then divide both sides by 3 (x = 5)."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Solve a two-step equation.",
+      "predict": {
+        "prompt": "To undo x → ×3 → +4, which move comes FIRST on the way back?",
+        "options": [
+          {
+            "id": "sub",
+            "label": "Subtract 4 — undo the last thing that happened"
+          },
+          {
+            "id": "div",
+            "label": "Divide by 3 — undo the multiplication"
+          },
+          {
+            "id": "either",
+            "label": "Either order gives the same answer"
+          }
+        ],
+        "outcomeId": "sub",
+        "reveal": "Subtract 4 first. Going forward, ×3 happened and THEN +4, so coming back you meet +4 first — the way you take off a coat before the shirt that went on under it. Build the track and watch the order reverse itself."
+      },
+      "widget": {
+        "type": "inversePipeline",
+        "prompt": "3x + 4 = 19. The forward chain does ×3 then +4. Build the track that undoes it, in the order you would actually walk it back.",
+        "forward": [
+          {
+            "id": "f1",
+            "op": "mul",
+            "n": 3
+          },
+          {
+            "id": "f2",
+            "op": "add",
+            "n": 4
+          }
+        ],
+        "tray": [
+          {
+            "id": "s4",
+            "op": "sub",
+            "n": 4
+          },
+          {
+            "id": "d3",
+            "op": "div",
+            "n": 3
+          },
+          {
+            "id": "a4",
+            "op": "add",
+            "n": 4
+          },
+          {
+            "id": "m3",
+            "op": "mul",
+            "n": 3
+          }
+        ],
+        "answer": [
+          "s4",
+          "d3"
+        ],
+        "sampleInput": 5,
+        "successFeedback": "x = 5. The track runs −4 then ÷3 — the forward chain read backwards with every operation turned around. 19 → 15 → 5.",
+        "forwardOrderFeedback": "Right operations, forward order. ÷3 is sitting first, but ×3 was the FIRST thing done to x, so it is the LAST thing to undo. Drag the −4 to the front of the track.",
+        "unflippedFeedback": "The order is right, but a card is still doing what the forward chain did. Undoing +4 means −4, and undoing ×3 means ÷3 — every card has to turn around, not just move.",
+        "missFeedback": "The track needs exactly two cards: one to undo the +4 and one to undo the ×3. Check the forward chain above and reverse it card by card."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another two-step equation.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Subtract 3: 5x=25. Divide by 5: x=5.",
+        "Undo addition first, then multiplication."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 5x + 3 = 28",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 25,
+            "feedback": "That's only the first step (5x=25). Finish by dividing both sides by 5: x=5."
+          },
+          {
+            "value": 6.2,
+            "feedback": "Undo the ADDITION first (subtract 3), then divide: (28-3)÷5=5."
+          }
+        ],
+        "fallbackFeedback": "Subtract 3: 5x=25. Divide by 5: x=5."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The order matters: undo addition/subtraction FIRST (it's outside the multiplication), then undo the multiplication last.",
+      "figure": "tse-undo-order"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Undo subtraction, then multiplication.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 2x - 6 = 8",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "That's only the first step (2x=14). Finish by dividing both sides by 2: x=7."
+          },
+          {
+            "value": 1,
+            "feedback": "Undo the SUBTRACTION first (add 6), then divide: (8+6)÷2=7."
+          }
+        ],
+        "fallbackFeedback": "Add 6: 2x=14. Divide by 2: x=7."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Always check your answer by substituting it back into the ORIGINAL equation — if both sides match, you solved it correctly.",
+      "figure": "tse-check-eval"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Solve and mentally verify.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 4x - 1 = 11",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That's only the first step (4x=12). Finish by dividing both sides by 4: x=3."
+          },
+          {
+            "value": 2.5,
+            "feedback": "Undo the SUBTRACTION first (add 1), then divide: (11+1)÷4=3."
+          }
+        ],
+        "fallbackFeedback": "Add 1: 4x=12. Divide by 4: x=3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another subtraction-first equation.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Add 5: 6x=30. Divide by 6: x=5.",
+        "Undo subtraction first, then multiplication."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 6x - 5 = 25",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That's only the first step (6x=30). Finish by dividing both sides by 6: x=5."
+          },
+          {
+            "value": 3.33,
+            "feedback": "Undo the SUBTRACTION first (add 5), then divide: (25+5)÷6=5."
+          }
+        ],
+        "fallbackFeedback": "Add 5: 6x=30. Divide by 6: x=5."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A bigger addition-first equation.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Subtract 7: 8x=32. Divide by 8: x=4.",
+        "Undo addition first, then multiplication."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 8x + 7 = 39",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 32,
+            "feedback": "That's only the first step (8x=32). Finish by dividing both sides by 8: x=4."
+          },
+          {
+            "value": 5.75,
+            "feedback": "Undo the ADDITION first (subtract 7), then divide: (39-7)÷8=4."
+          }
+        ],
+        "fallbackFeedback": "Subtract 7: 8x=32. Divide by 8: x=4."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier two-step equation.",
+      "conceptTag": "tse-solve-two-step",
+      "explanationVariants": [
+        "Subtract 9: 7x=42. Divide by 7: x=6.",
+        "Undo addition first, then multiplication."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Solve: 7x + 9 = 51",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 42,
+            "feedback": "That's only the first step (7x=42). Finish by dividing both sides by 7: x=6."
+          },
+          {
+            "value": 8.57,
+            "feedback": "Undo the ADDITION first (subtract 9), then divide: (51-9)÷7=6."
+          }
+        ],
+        "fallbackFeedback": "Subtract 9: 7x=42. Divide by 7: x=6."
+      },
+      "hints": [
+        "Undo the addition first: subtract 9 from both sides.",
+        "51 - 9 = 42, so 7x = 42.",
+        "Divide both sides by 7: x = 6."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Undo addition or subtraction first, then undo the multiplication.",
+      "takeaways": [
+        "Two-step equations need two undo-moves, in order.",
+        "Undo +/- first, then undo ×/÷.",
+        "Check by substituting the solution back into the original equation."
+      ],
+      "teaser": "next: two-step equations with negative coefficients."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tse-solve-two-step",
+      "concept": {
+        "id": "rem-tst-c",
+        "kind": "concept",
+        "body": "Solve a two-step equation by undoing addition/subtraction first, then undoing the multiplication. 3x+4=19: subtract 4 to get 3x=15, divide by 3 to get x=5."
+      },
+      "check": {
+        "id": "rem-tst-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tse-solve-two-step",
+        "explanationVariants": [
+          "Subtract 4: 3x=15. Divide by 3: x=5.",
+          "Undo addition first, then multiplication."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Solve: 3x + 4 = 19",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 15,
+              "feedback": "You stopped after subtracting 4. Now divide by 3: 15 ÷ 3 = 5."
+            },
+            {
+              "value": 7.67,
+              "feedback": "Subtract 4 first: (19-4)÷3=5."
+            }
+          ],
+          "fallbackFeedback": "x=5."
+        }
+      }
+    }
+  ]
+}

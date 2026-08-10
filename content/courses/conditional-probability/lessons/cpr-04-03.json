@@ -1,0 +1,338 @@
+{
+  "id": "cpr-04-03",
+  "slug": "independent-vs-exclusive",
+  "title": "Independent vs Mutually Exclusive",
+  "courseId": "conditional-probability",
+  "chapterId": "ch4-independence",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "These two words sound similar and mean nearly opposite things.\n\n**Mutually exclusive:** A happening makes B *impossible*. P(B | A) = 0.\n**Independent:** A happening leaves B *untouched*. P(B | A) = P(B).\n\nSo if both events have a real chance of happening, being exclusive is the strongest possible dependence — the news is devastating, not useless.",
+      "figure": "cpr-indep-vs-disjoint"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One roll of a die. A = \"even\", B = \"shows a 5\".",
+      "widget": {
+        "type": "spinnerSim",
+        "prompt": "Shade every face that satisfies BOTH \"even\" and \"shows a 5\".",
+        "sectors": 6,
+        "targetFavourable": 0,
+        "favourableStart": 3,
+        "successFeedback": "Zero faces. The events are mutually exclusive, so P(A and B) = 0 — while the product P(A) × P(B) = 1/2 × 1/6 = 1/12 is not 0. Exclusive events fail the independence test.",
+        "lowFeedback": "There is nothing left to remove — no face is both even and a 5.",
+        "highFeedback": "Each shaded face must be even AND show a 5. The 5 is odd, so no face qualifies."
+      },
+      "predict": {
+        "prompt": "You'll shade 0 of the 6 equal sectors. Is that chance more or less than a coin flip?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than 1/2"
+          },
+          {
+            "id": "less",
+            "label": "Less than 1/2"
+          },
+          {
+            "id": "half",
+            "label": "Exactly 1/2"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half of 6 sectors is 3, and 0 is less — so the chance 0/6 sits below 1/2. Benchmarking against a coin flip is the fastest sanity check a probability has."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Change favorable sectors and coordinate geometric fraction with theoretical and experimental probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-favorable-over-total"
+        ],
+        "misconceptions": [
+          "short-run-results-must-match-exactly",
+          "count-boundaries-not-sectors"
+        ],
+        "representations": [
+          "concrete",
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-spinnerSim-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-indep-vs-disjoint"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Test the exclusive pair.",
+      "conceptTag": "cpr-indep-vs-disjoint",
+      "explanationVariants": [
+        "P(even) × P(5) = 1/2 × 1/6 = 1/12, but P(even and 5) = 0. Since 0 ≠ 1/12, the events are dependent.",
+        "Told the roll is a 5, the chance it is even collapses from 1/2 to 0 — the maximum possible movement."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "One die. A = \"even\", B = \"shows a 5\". These are mutually exclusive. Are they independent?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Dependent — knowing it is a 5 drops P(even) from 1/2 to 0.",
+            "correct": true,
+            "feedback": "Right — exclusivity is the strongest dependence there is: one event rules the other out completely."
+          },
+          {
+            "id": "o2",
+            "label": "Independent — they never interfere with each other.",
+            "correct": false,
+            "feedback": "They interfere as much as two events possibly can. Learning that A happened makes B impossible, which is the opposite of leaving it unchanged."
+          },
+          {
+            "id": "o3",
+            "label": "Independent — P(A and B) = 0 = P(A) × P(B).",
+            "correct": false,
+            "feedback": "The joint is 0, but the product is 1/2 × 1/6 = 1/12, not 0. The product test fails."
+          },
+          {
+            "id": "o4",
+            "label": "Both, since the two ideas mean the same thing.",
+            "correct": false,
+            "feedback": "They are different ideas — and for events with non-zero probability, they cannot both hold."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-indep-vs-disjoint__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which rule goes with which word?",
+      "conceptTag": "cpr-indep-vs-disjoint",
+      "explanationVariants": [
+        "Exclusive kills the AND term: P(A ∪ B) = P(A) + P(B). Independent lets you factor the AND term: P(A ∩ B) = P(A) × P(B).",
+        "Exclusive is a shortcut for OR questions; independent is a shortcut for AND questions. Each one licenses exactly one shortcut."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each property to the shortcut it licenses.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Mutually exclusive"
+          },
+          {
+            "id": "w2",
+            "label": "Independent"
+          },
+          {
+            "id": "w3",
+            "label": "Neither of the two"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "P(A ∪ B) = P(A) + P(B)"
+          },
+          {
+            "id": "y2",
+            "label": "P(A ∩ B) = P(A) × P(B)"
+          },
+          {
+            "id": "y3",
+            "label": "No shortcut — use P(A ∩ B) = P(B) × P(A|B)"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "Exclusive events have P(A ∩ B) = 0, while P(A) × P(B) is positive — so that is the one product formula exclusivity forbids."
+          },
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "Independent events usually overlap, so plain addition double-counts the overlap. Independence licenses the AND shortcut, not the OR one."
+          }
+        ],
+        "missFeedback": "Exclusive simplifies OR (nothing to subtract). Independent simplifies AND (no conditional needed).",
+        "successFeedback": "One property per shortcut — and with neither property you fall back on the general multiplication rule."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-indep-vs-disjoint__matchPairs"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A test you can apply in one second: could both events happen at once?\n\n– If **no**, they are mutually exclusive, hence dependent (assuming each has a real chance).\n– If **yes**, they overlap, and you must still check the product to know whether they are independent.\n\nOverlapping is necessary for independence, but it is not enough.",
+      "figure": "cpr-indep-vs-disjoint"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Sort four pairs.",
+      "conceptTag": "cpr-indep-vs-disjoint",
+      "explanationVariants": [
+        "First ask whether the two can co-occur. If they cannot, they are exclusive; if they can, check whether the condition moves the probability.",
+        "Exclusive events cannot both happen. Independent events usually do happen together — at exactly the product rate."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "One card is drawn. Classify each pair of events.",
+        "buckets": [
+          {
+            "id": "exc",
+            "label": "Mutually exclusive",
+            "icon": "🚫"
+          },
+          {
+            "id": "ind",
+            "label": "Independent",
+            "icon": "⚖️"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "the card is a heart · the card is a spade",
+            "bucketId": "exc",
+            "feedback": "A card has one suit, so these cannot both happen. P(spade | heart) = 0, far from P(spade) = 1/4."
+          },
+          {
+            "id": "s2",
+            "label": "the card is a heart · the card is a queen",
+            "bucketId": "ind",
+            "feedback": "The queen of hearts exists, and P(queen | heart) = 1/13 = P(queen). They overlap at exactly the product rate."
+          },
+          {
+            "id": "s3",
+            "label": "the card is red · the card is a club",
+            "bucketId": "exc",
+            "feedback": "Clubs are black, so no card is both. Learning it is red makes 'club' impossible."
+          },
+          {
+            "id": "s4",
+            "label": "the card is red · the card is an ace",
+            "bucketId": "ind",
+            "feedback": "P(ace | red) = 2/26 = 1/13 = P(ace). Red aces exist, and they occur at exactly the product rate."
+          }
+        ],
+        "missFeedback": "Ask first: can one card satisfy both? If it cannot, they are exclusive. If it can, compare P(A | B) with P(A).",
+        "successFeedback": "Suit-vs-suit and colour-vs-suit collide; suit-vs-rank never does — and rank is independent of suit."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-indep-vs-disjoint__dragBucket"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The trap, stated as plainly as possible.",
+      "conceptTag": "cpr-indep-vs-disjoint",
+      "hints": [
+        "Mutually exclusive means the two events cannot happen together at all.",
+        "So if B has happened, what is left of A's chance?",
+        "Write P(A | B) = P(A ∩ B)/P(B), and remember what exclusivity forces P(A ∩ B) to be."
+      ],
+      "explanationVariants": [
+        "Exclusive means P(A ∩ B) = 0, so P(A | B) = 0/0.3 = 0. Being told B happened rules A out entirely.",
+        "If A and B cannot co-occur, then inside the B-world there are no A outcomes at all — the conditional probability is 0, not 0.5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(A) = 0.5, P(B) = 0.3, and A and B are **mutually exclusive**. Find P(A | B).",
+        "answer": 0,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "That is P(A) — the answer if the events were *independent*. Exclusive is the opposite: B happening makes A impossible."
+          },
+          {
+            "value": 0.15,
+            "feedback": "That is 0.5 × 0.3, the product an independence assumption would give for the joint. But exclusivity forces the joint to 0."
+          },
+          {
+            "value": 0.8,
+            "feedback": "That is 0.5 + 0.3 = P(A ∪ B), which is the one thing exclusivity *does* let you compute by adding. The conditional is 0."
+          }
+        ],
+        "fallbackFeedback": "Exclusive ⇒ P(A ∩ B) = 0, so P(A | B) = 0/0.3 = 0."
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-indep-vs-disjoint__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Opposite ends of the same dial.",
+      "takeaways": [
+        "Mutually exclusive: P(A ∩ B) = 0 and P(A | B) = 0 — maximal dependence, not independence.",
+        "Independent: P(A ∩ B) = P(A) × P(B) — the events must overlap, at exactly the product rate.",
+        "Exclusive gives an OR shortcut; independent gives an AND shortcut. Two words, two different rules."
+      ],
+      "teaser": "Next chapter: when the outcomes are too many to list, count them instead."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-indep-vs-disjoint",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Picture the Venn diagram. Mutually exclusive events are **drawn apart** — no shared region at all. Independent events **must overlap**, and the overlap has to be exactly the product size. Separate circles can never be independent.",
+        "figure": "cpr-indep-vs-disjoint"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Can they be both?",
+        "conceptTag": "cpr-indep-vs-disjoint",
+        "explanationVariants": [
+          "If both events have a real chance, exclusivity forces the joint to 0 while independence forces it to a positive product. Those cannot both hold.",
+          "Exclusive means one event kills the other. Independent means neither event affects the other. They contradict."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Can two events with P(A) = 0.4 and P(B) = 0.3 be mutually exclusive AND independent?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "They cannot be both.",
+              "correct": true,
+              "feedback": "Right — exclusivity needs P(A ∩ B) = 0, independence needs it to be 0.12. One overlap cannot be two numbers."
+            },
+            {
+              "id": "o2",
+              "label": "Yes — the two properties are unrelated.",
+              "correct": false,
+              "feedback": "They both make a claim about the same quantity, P(A ∩ B): exclusivity says it is 0, independence says it is 0.12."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

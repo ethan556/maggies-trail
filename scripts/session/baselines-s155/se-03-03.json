@@ -1,0 +1,286 @@
+{
+ "id": "se-03-03",
+ "slug": "scale-both-and-special-cases",
+ "title": "Scale Both, and Special Cases",
+ "courseId": "systems-equations",
+ "chapterId": "ch3-elimination",
+ "minutes": 11,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "figure": "coordinate-plane",
+   "body": "Sometimes **both** equations need scaling. Multiply each by its own number so one variable's coefficients match, then subtract (or add). It's the same method with one extra multiplication — aim for the least common multiple of the two coefficients you're matching."
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the x-coefficients.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "To eliminate x from 2x + 3y = 13 and 3x + 2y = 12, multiply the first by 3 and the second by what?",
+    "options": [
+     {
+      "id": "a",
+      "label": "2",
+      "correct": true,
+      "feedback": "Yes — first×3 gives 6x, and second×2 gives 6x, so both match at 6x."
+     },
+     {
+      "id": "b",
+      "label": "3",
+      "feedback": "That makes 9x, not 6x. First×3 is 6x, so multiply the second by 2."
+     },
+     {
+      "id": "c",
+      "label": "−2",
+      "feedback": "The size 6 is right but the sign flips; then you'd add. Multiply by 2 to subtract cleanly."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Scale both, then solve.",
+   "conceptTag": "eliminate-scale-both",
+   "explanationVariants": [
+    "First×3: 6x + 9y = 39. Second×2: 6x + 4y = 24. Subtract: 5y = 15, so y = 3.",
+    "After matching x at 6x, subtracting leaves 5y = 15, y = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system 2x + 3y = 13 and 3x + 2y = 12 by elimination. What is y?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That's x. After eliminating x you get 5y = 15, so y = 3."
+     },
+     {
+      "value": 15,
+      "feedback": "That's 5y. Divide by 5: y = 3."
+     }
+    ],
+    "fallbackFeedback": "First×3 and second×2 to match 6x, subtract: 5y = 15, so y = 3."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-both__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Worked: **2x + 3y = 13** and **3x + 2y = 12**. First×3 → 6x + 9y = 39. Second×2 → 6x + 4y = 24. Subtract: 5y = 15 → **y = 3**, then **x = 2**. The 6 is the LCM of 2 and 3 — the smallest match to aim for.",
+   "figure": "se-scale-both"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Scale both again.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system 3x + 4y = 10 and 2x + 3y = 7 by elimination. What is y?",
+    "answer": 1,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That's x. Matching x at 6 (first×2, second×3) then subtracting gives y = 1."
+     },
+     {
+      "value": -1,
+      "feedback": "Close — watch the subtraction direction: −y = −1 means y = +1."
+     }
+    ],
+    "fallbackFeedback": "First×2 (6x + 8y = 20), second×3 (6x + 9y = 21), subtract: −y = −1, so y = 1."
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Elimination also exposes the **special cases**. If both variables cancel and you're left with a **false** statement like 0 = 7, the lines are parallel — **no solution**. If you're left with a **true** one like 0 = 0, they're the same line — **infinitely many**.",
+   "figure": "se-special-cases"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Read the leftover statement.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "For 2x + y = 5 and 4x + 2y = 3, eliminating x gives 0 = 7. How many solutions does the system have?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No solution",
+      "correct": true,
+      "feedback": "Yes — 0 = 7 is impossible, so the lines are parallel and share no point."
+     },
+     {
+      "id": "b",
+      "label": "Exactly one",
+      "feedback": "A leftover 0 = 7 is false, meaning the lines never meet — parallel, so no solution."
+     },
+     {
+      "id": "c",
+      "label": "Infinitely many",
+      "feedback": "That needs 0 = 0. Here 0 = 7 is false, so the lines are parallel: no solution."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A clean solvable one.",
+   "conceptTag": "eliminate-scale-both",
+   "explanationVariants": [
+    "First×2: 8x + 6y = 36. Second×3: 9x + 6y = 39. Subtract: −x = −3, so x = 3.",
+    "Matching y at 6, subtracting gives −x = −3, so x = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system 4x + 3y = 18 and 3x + 2y = 13 by elimination. What is x?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "That's y. Eliminating y (match at 6y) then solving gives x = 3."
+     },
+     {
+      "value": 6,
+      "feedback": "6 is the matched coefficient, not x. Finishing the subtraction gives x = 3."
+     }
+    ],
+    "fallbackFeedback": "First×2 and second×3 to match 6y, subtract: −x = −3, so x = 3."
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-both__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "The other special case.",
+   "conceptTag": "eliminate-scale-both",
+   "explanationVariants": [
+    "Doubling the first gives 2x + 2y = 6, identical to the second, so subtracting gives 0 = 0 — infinitely many.",
+    "0 = 0 is always true, so the two equations are the same line: infinitely many solutions."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For x + y = 3 and 2x + 2y = 6, eliminating gives 0 = 0. How many solutions does the system have?",
+    "options": [
+     {
+      "id": "a",
+      "label": "Infinitely many",
+      "correct": true,
+      "feedback": "Yes — 0 = 0 always holds, so the equations are the same line and every point works."
+     },
+     {
+      "id": "b",
+      "label": "Exactly one",
+      "feedback": "0 = 0 is always true, so the lines coincide — infinitely many solutions, not one."
+     },
+     {
+      "id": "c",
+      "label": "No solution",
+      "feedback": "That's for a false leftover like 0 = 5. Here 0 = 0 is true, so infinitely many."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-both__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full scale-both solve.",
+   "conceptTag": "eliminate-scale-both",
+   "explanationVariants": [
+    "Double the first: 10x + 4y = 32. Subtract the second: (10x + 4y) − (3x + 4y) = 32 − 18 → 7x = 14 → x = 2.",
+    "Matching y at 4 (first×2), subtracting the second leaves 7x = 14, so x = 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Solve the system 5x + 2y = 16 and 3x + 4y = 18 by elimination. What is x?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "That's y. After eliminating y you get 7x = 14, so x = 2."
+     },
+     {
+      "value": 14,
+      "feedback": "That's 7x. Divide by 7: x = 2."
+     }
+    ],
+    "fallbackFeedback": "Double the first (10x + 4y = 32), subtract the second: 7x = 14, so x = 2."
+   },
+   "hints": [
+    "Match the y-terms: double the first so 2y becomes 4y, like the second.",
+    "Subtract: (10x + 4y) − (3x + 4y) = 32 − 18 → 7x = 14.",
+    "x = 14 / 7 = 2."
+   ],
+   "variant": {
+    "gen": "a1-systems",
+    "form": "eliminate-scale-both__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Scale both equations to match, then eliminate — and read the leftovers.",
+   "takeaways": [
+    "Multiply each equation to match a coefficient (aim for the LCM).",
+    "Both variables cancel to a false statement → no solution; to a true one → infinitely many.",
+    "Otherwise solve the remaining variable and back-substitute."
+   ],
+   "teaser": "next chapter: turning word problems into systems."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "eliminate-scale-both",
+   "concept": {
+    "id": "rem-esb-c",
+    "kind": "concept",
+    "body": "Scale both equations to match a coefficient. For 2x + 3y = 13 and 3x + 2y = 12: first×3 (6x + 9y = 39) and second×2 (6x + 4y = 24), subtract to get 5y = 15, so y = 3, then x = 2."
+   },
+   "check": {
+    "id": "rem-esb-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "eliminate-scale-both",
+    "explanationVariants": [
+     "Match x at 6, subtract: 5y = 15, so y = 3.",
+     "First×3 and second×2, subtract: 5y = 15, y = 3."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Solve the system 2x + 3y = 13 and 3x + 2y = 12 by elimination. What is y?",
+     "answer": 3,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 2,
+       "feedback": "That's x. Eliminating x gives 5y = 15, so y = 3."
+      },
+      {
+       "value": 15,
+       "feedback": "That's 5y. Divide by 5: y = 3."
+      }
+     ],
+     "fallbackFeedback": "First×3 and second×2 to match 6x, subtract: 5y = 15, so y = 3."
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,324 @@
+{
+  "id": "ft-03-01",
+  "slug": "reflections",
+  "title": "Reflections",
+  "courseId": "function-transformations",
+  "chapterId": "ch3-reflections-stretches",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A minus sign **in front** flips the graph over the **x-axis**: y = −f(x) turns every output upside down. A minus sign **inside** flips it over the **y-axis**: y = f(−x) swaps left and right. Front → outputs, inside → inputs — the same rule as shifts.",
+      "figure": "stretch-reflect"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Flip the parabola over the x-axis — and track one point through the flip.",
+      "widget": {
+        "type": "quadraticExplore",
+        "prompt": "Turn the parabola upside down: land on y = −x², vertex still at (0, 0).",
+        "targetA": -1,
+        "targetH": 0,
+        "targetK": 0,
+        "successFeedback": "a = −1 negates every output: y = −x² opens downward, and (2, 4) landed on (2, −4). The x-axis was the mirror.",
+        "shapeFeedback": "The sign of a controls the flip: a = −1 opens the parabola downward. An a of −2 or −3 flips AND stretches — this target keeps the shape, so use exactly −1.",
+        "vertexFeedback": "A reflection over the x-axis pivots the graph around the axis — the vertex at (0, 0) stays put. If it moved, h or k drifted; return both to 0."
+      },
+      "predict": {
+        "prompt": "You'll flip a from 1 to −1. The point (2, 4) on the old parabola will land at…",
+        "options": [
+          {
+            "id": "negOut",
+            "label": "(2, −4) — the output flips sign"
+          },
+          {
+            "id": "negIn",
+            "label": "(−2, 4) — the input flips sign"
+          },
+          {
+            "id": "stays",
+            "label": "(2, 4) — flips move the vertex, not the arms"
+          }
+        ],
+        "outcomeId": "negOut",
+        "reveal": "The minus in front negates every OUTPUT: (2, 4) → (2, −4). The x-axis is the mirror. Flipping inputs — (−2, 4) — is what a minus INSIDE the function does, a y-axis flip; this lesson's second half meets it."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Reflect a quadratic by changing its output multiplier and coordinate every point, the vertex, and the symbolic rule.",
+        "invariants": [
+          "x-coordinates-preserved-under-x-axis-reflection",
+          "output-sign-reversed",
+          "vertex-on-mirror-axis-fixed"
+        ],
+        "misconceptions": [
+          "negate-input-instead-of-output",
+          "reflection-always-translates-vertex"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "reflections-and-vertical-scalings-of-parent-functions",
+        "delayed": true,
+        "counterfactualPrompt": "Set a to −2 and then to 2. Which change is the reflection, which is the vertical stretch, and which coordinates remain unchanged?",
+        "explanation": {
+          "prompt": "Why does a negative multiplier outside f(x) reflect the graph over the x-axis?",
+          "options": [
+            {
+              "id": "outputs",
+              "label": "It negates every output while leaving each input unchanged, so (x, y) becomes (x, −y).",
+              "correct": true,
+              "feedback": "Exactly — the transformation acts on outputs, so the x-axis is the mirror."
+            },
+            {
+              "id": "inputs",
+              "label": "It negates every input, so (x, y) becomes (−x, y).",
+              "correct": false,
+              "feedback": "That describes replacing x by −x, which reflects across the y-axis instead."
+            }
+          ]
+        }
+      },
+      "conceptTag": "ft-reflect"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "y = −f(x) sends every point (x, y) to **(x, −y)** — heights negate, positions stay. y = f(−x) sends (x, y) to **(−x, y)**. On a symmetric shape like x² the y-axis flip is invisible; on a lopsided one like √x it swings the whole curve to the other side.",
+      "figure": "ft-reflection"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Picture the flipped V.",
+      "conceptTag": "ft-reflect",
+      "explanationVariants": [
+        "−|x| negates every output of the V, so the graph opens downward from the origin — an upside-down V.",
+        "Each point (x, |x|) drops to (x, −|x|): the corner stays at (0,0) but the arms now point down."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does the graph of y = −|x| look like?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "an upside-down V, opening downward",
+            "correct": true,
+            "feedback": "Right — the front minus flips every output below the axis."
+          },
+          {
+            "id": "o2",
+            "label": "a V opening upward, shifted down",
+            "correct": false,
+            "feedback": "A shift would come from subtracting a number, like |x| − 3. A minus in FRONT flips, it doesn't slide."
+          },
+          {
+            "id": "o3",
+            "label": "a V opening upward, moved left",
+            "correct": false,
+            "feedback": "Sideways moves live INSIDE the bars, like |x + 3|. This minus is outside — it flips the graph over the x-axis."
+          },
+          {
+            "id": "o4",
+            "label": "the same V as y = |x|",
+            "correct": false,
+            "feedback": "|x| is symmetric over the y-axis, so f(−x) would look unchanged — but this minus is in FRONT, negating outputs: the V flips upside down."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "reflect-fn",
+        "form": "shapeDescribe"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A y-axis flip changes which inputs work.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = √(−x), what is y when x = −9?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "The flip was on the INPUT, not the output — the square root still returns the nonnegative root: √9 = 3."
+          },
+          {
+            "value": 81,
+            "feedback": "That's (−9)² — the rule takes a square ROOT: −(−9) = 9, then √9 = 3."
+          }
+        ],
+        "fallbackFeedback": "Inside first: −(−9) = 9, then √9 = 3."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Flip a cubic.",
+      "conceptTag": "ft-reflect",
+      "explanationVariants": [
+        "Cube first: 2³ = 8; the front minus negates it: −8.",
+        "y = −x³ turns the point (2, 8) into (2, −8)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "On the graph of y = −x³, what is y when x = 2?",
+        "answer": -8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That's the parent's output — the minus in front flips it: −8."
+          },
+          {
+            "value": -2,
+            "feedback": "That's −x. Cube FIRST (2³ = 8), then apply the front minus: −8."
+          }
+        ],
+        "fallbackFeedback": "2³ = 8, then the front minus gives −8."
+      },
+      "variant": {
+        "gen": "reflect-fn"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick the reflection rule.",
+      "conceptTag": "ft-reflect",
+      "explanationVariants": [
+        "Over the y-axis means negate the INPUT: y = √(−x). The curve now grows to the left, accepting x ≤ 0.",
+        "Inside minus swaps left and right; a front minus would instead dunk the curve below the x-axis."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which rule reflects y = √x over the y-axis?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = √(−x)",
+            "correct": true,
+            "feedback": "Right — negating the input mirrors the curve to the left side."
+          },
+          {
+            "id": "o2",
+            "label": "y = −√x",
+            "correct": false,
+            "feedback": "The minus in FRONT flips over the x-axis — the curve dives downward instead of swinging left."
+          },
+          {
+            "id": "o3",
+            "label": "y = −√(−x)",
+            "correct": false,
+            "feedback": "Two minuses flip over BOTH axes — that curve grows down-and-left. Over the y-axis alone needs just the inside minus."
+          },
+          {
+            "id": "o4",
+            "label": "y = √x",
+            "correct": false,
+            "feedback": "That's the original — with no minus anywhere, nothing reflects."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "reflect-fn",
+        "form": "whichReflection"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Track one point through a flip.",
+      "conceptTag": "ft-reflect",
+      "explanationVariants": [
+        "The parent has (2, 4) since 2² = 4; the front minus negates the height: (2, −4), so y = −4.",
+        "−f(x) keeps x-positions and negates heights: 4 becomes −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The point (2, 4) sits on y = x². On the graph of y = −x², what is y at x = 2?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "The front minus flips every output — the height 4 becomes −4."
+          },
+          {
+            "value": -2,
+            "feedback": "The x-position doesn't negate — the OUTPUT does: −(2²) = −4."
+          }
+        ],
+        "fallbackFeedback": "2² = 4, and the front minus makes it −4."
+      },
+      "hints": [
+        "A minus in front acts on the output, after the squaring.",
+        "First find the parent's output: 2² = 4.",
+        "Now negate it: y = −4."
+      ],
+      "variant": {
+        "gen": "reflect-fn"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Front minus flips outputs (over x-axis); inside minus flips inputs (over y-axis).",
+      "takeaways": [
+        "y = −f(x): every (x, y) becomes (x, −y).",
+        "y = f(−x): every (x, y) becomes (−x, y).",
+        "Compute the parent first, then apply a front minus."
+      ],
+      "teaser": "Next: multiplying by more than −1 — stretches and compressions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-reflect",
+      "concept": {
+        "id": "rem-ft0301-c",
+        "kind": "concept",
+        "body": "A minus in FRONT flips the graph over the x-axis: compute the parent's output first, then negate it."
+      },
+      "check": {
+        "id": "rem-ft0301-k",
+        "kind": "check",
+        "body": "One more flip.",
+        "conceptTag": "ft-reflect",
+        "explanationVariants": [
+          "Parent: 4² = 16; the front minus gives −16.",
+          "−x² sends (4, 16) to (4, −16)."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "On the graph of y = −x², what is y when x = 4?",
+          "answer": -16,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 16,
+              "feedback": "That's the parent — the front minus negates it: −16."
+            },
+            {
+              "value": -4,
+              "feedback": "Square first: 4² = 16, THEN flip: −16."
+            }
+          ],
+          "fallbackFeedback": "4² = 16, then negate: −16."
+        }
+      }
+    }
+  ]
+}

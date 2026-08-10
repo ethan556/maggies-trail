@@ -1,0 +1,331 @@
+{
+  "id": "cx-03-01",
+  "slug": "classifying-triangles",
+  "title": "Classifying Triangles",
+  "courseId": "coordinate-proofs",
+  "chapterId": "ch3-classification-proofs",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cx-classify-tri",
+      "concept": {
+        "id": "rem-cx-classify-tri-c",
+        "kind": "concept",
+        "body": "Classify triangles from coordinates with two audits. SIDES: compute all three squared distances; equal pairs mean isosceles, all equal means equilateral, all different means scalene. ANGLES: a right angle shows up as two slopes multiplying to \u22121, or as the largest squared side equaling the sum of the other two (Pythagorean converse). State the numbers, then the definition they meet."
+      },
+      "check": {
+        "id": "rem-cx-classify-tri-k",
+        "kind": "check",
+        "body": "One audit.",
+        "conceptTag": "cx-classify-tri",
+        "explanationVariants": [
+          "Squared sides: 9 + 16 = 25, 9 + 16 = 25, and 36 \u2014 a matched pair of 25s.",
+          "Two equal sides: isosceles."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Triangle (0, 0), (3, 4), (6, 0). Side audit verdict:",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Isosceles \u2014 two squared sides equal 25, the base squares to 36",
+              "correct": true,
+              "feedback": "The apex (3, 4) rides the base's perpendicular bisector x = 3 \u2014 chapter 1's equidistance line \u2014 and the numbers agree: 25 = 25 \u2260 36."
+            },
+            {
+              "id": "o2",
+              "label": "Equilateral",
+              "correct": false,
+              "feedback": "The base squares to 36, the slants to 25 \u2014 only a pair matches: isosceles."
+            },
+            {
+              "id": "o3",
+              "label": "Scalene",
+              "correct": false,
+              "feedback": "Both slants square to 25 \u2014 a match exists: isosceles."
+            },
+            {
+              "id": "o4",
+              "label": "Right",
+              "correct": false,
+              "feedback": "25 + 25 = 50 \u2260 36 fails the converse \u2014 and 'right' is an ANGLE verdict anyway; the side audit says isosceles."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Chapter 1 measured; Chapter 2 proved slopes. Now combine them into **coordinate proofs**: compute, then CONCLUDE by a definition or theorem. Triangle classification runs two audits \u2014 **sides** by the distance formula (scalene / isosceles / equilateral) and **angles** by slopes or the Pythagorean converse (right or not). Squared distances suffice: comparing d\u00b2 avoids every root.",
+      "figure": "cx-combine-classify"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The side audit.",
+      "conceptTag": "cx-classify-tri",
+      "explanationVariants": [
+        "AC\u00b2 = 3\u00b2 + 5\u00b2 = 34 and BC\u00b2 = 3\u00b2 + 5\u00b2 = 34 \u2014 two equal sides. AB\u00b2 = 36 differs.",
+        "Two of three sides match (\u221a34): isosceles, not equilateral."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Triangle with A(0, 0), B(6, 0), C(3, 5). The side audit says:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Isosceles \u2014 AC\u00b2 = BC\u00b2 = 34, but AB\u00b2 = 36 differs",
+            "correct": true,
+            "feedback": "The apex sits on the base's perpendicular bisector x = 3 (chapter 1's equidistance line) \u2014 two slants match, the base doesn't."
+          },
+          {
+            "id": "o2",
+            "label": "Equilateral \u2014 all three sides equal",
+            "correct": false,
+            "feedback": "The slants square to 34 but the base squares to 36 \u2014 close is not equal. Isosceles."
+          },
+          {
+            "id": "o3",
+            "label": "Scalene \u2014 all different",
+            "correct": false,
+            "feedback": "AC\u00b2 and BC\u00b2 both compute to 9 + 25 = 34 \u2014 a matched pair: isosceles."
+          },
+          {
+            "id": "o4",
+            "label": "Cannot classify without angle measures",
+            "correct": false,
+            "feedback": "Side lengths alone settle scalene/isosceles/equilateral \u2014 the distance formula is the whole audit."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-tri__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The angle audit.",
+      "conceptTag": "cx-classify-tri",
+      "explanationVariants": [
+        "Slope AB = (3\u22121)/(5\u22121) = 1/2; slope BC = (7\u22123)/(3\u22125) = \u22122. Product = \u22121: right angle at B.",
+        "(1/2)(\u22122) = \u22121 \u2014 the chapter-2 criterion fires at B."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle A(1, 1), B(5, 3), C(3, 7). Compute slope AB \u00d7 slope BC.",
+        "answer": -1,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 misses a sign \u2014 slope BC = 4/(\u22122) = \u22122, so (1/2)(\u22122) = \u22121: a right angle at B."
+          },
+          {
+            "value": -4,
+            "feedback": "\u22124 multiplies the raw rises (2)(\u22122) \u2014 slope divides rise by run FIRST: (1/2)(\u22122) = \u22121."
+          },
+          {
+            "value": 0.25,
+            "feedback": "0.25 squares slope AB \u2014 the audit multiplies the TWO slopes: (1/2)(\u22122) = \u22121."
+          }
+        ],
+        "fallbackFeedback": "(1/2) \u00d7 (\u22122) = \u22121 \u21d2 right angle at B."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-tri__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Both audits at once.",
+      "conceptTag": "cx-classify-tri",
+      "explanationVariants": [
+        "Sides: AB\u00b2 = 16 + 4 = 20, BC\u00b2 = 4 + 16 = 20, AC\u00b2 = 4 + 36 = 40. Two equal legs AND 20 + 20 = 40.",
+        "Right (Pythagorean converse) and isosceles (equal legs): both audits pass."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Same triangle A(1, 1), B(5, 3), C(3, 7). Full classification:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Right AND isosceles \u2014 legs \u221a20 = \u221a20, and 20 + 20 = 40 = AC\u00b2 confirms the right angle",
+            "correct": true,
+            "feedback": "Both routes agree: the slope product hit \u22121 at B, and the Pythagorean converse (20 + 20 = 40) co-signs. Double-verified."
+          },
+          {
+            "id": "o2",
+            "label": "Right and scalene",
+            "correct": false,
+            "feedback": "AB\u00b2 and BC\u00b2 both equal 20 \u2014 the legs MATCH. Right isosceles."
+          },
+          {
+            "id": "o3",
+            "label": "Isosceles but not right",
+            "correct": false,
+            "feedback": "20 + 20 = 40 is exactly the Pythagorean equation \u2014 the right angle is certified at B."
+          },
+          {
+            "id": "o4",
+            "label": "Equilateral",
+            "correct": false,
+            "feedback": "The hypotenuse squares to 40, not 20 \u2014 and no right triangle is ever equilateral."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-tri__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Which tool for which claim?",
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "answerMode": "choice",
+        "prompt": "To prove a triangle is RIGHT, which pairings work?",
+        "coordinateProof": {
+          "kind": "triangleCertificate",
+          "points": [
+            {
+              "id": "A",
+              "label": "A",
+              "x": 0,
+              "y": 0
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "x": 3,
+              "y": 0
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "x": 0,
+              "y": 4
+            }
+          ]
+        },
+        "answerUnit": "",
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "o1",
+            "label": "Slope product \u22121 on two sides, OR the Pythagorean converse on the squared sides \u2014 either alone suffices",
+            "claim": "triangle:right:slope-or-converse",
+            "feedback": "Two independent certificates: slopes catch the right angle directly; a\u00b2 + b\u00b2 = c\u00b2 catches it from the side audit you already ran."
+          },
+          {
+            "id": "o2",
+            "label": "Only a protractor drawing",
+            "claim": "wrong:o2",
+            "feedback": "Coordinates replace the protractor \u2014 slopes or the converse PROVE it, no measuring device needed."
+          },
+          {
+            "id": "o3",
+            "label": "Only the distance formula, never slopes",
+            "claim": "wrong:o3",
+            "feedback": "Distances feed the Pythagorean converse, yes \u2014 but the slope product is an equally valid (often faster) certificate."
+          },
+          {
+            "id": "o4",
+            "label": "The midpoint formula",
+            "claim": "wrong:o4",
+            "feedback": "Midpoints bisect \u2014 they certify medians and diagonal bisection, not right angles. Use slopes or the converse."
+          }
+        ],
+        "numericErrors": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 2,
+        "successFeedback": "Two independent certificates: slopes catch the right angle directly; a\u00b2 + b\u00b2 = c\u00b2 catches it from the side audit you already ran.",
+        "explorationFeedback": "Open at least two coordinate-proof states before checking.",
+        "fallbackFeedback": "Inspect the coordinate invariants, then choose the supported conclusion."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Scalene sweep.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Triangle (0, 0), (5, 1), (2, 4). Compute all three squared sides \u2014 enter the LARGEST.",
+        "answer": 26,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 = 2\u00b2 + 4\u00b2 is the (0,0)\u2013(2,4) side \u2014 a genuine side, but not the champion: the largest is 5\u00b2 + 1\u00b2 = 26."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is the smallest ((5\u22122)\u00b2 + (1\u22124)\u00b2 = 9 + 9) \u2014 the largest is 5\u00b2 + 1\u00b2 = 26."
+          }
+        ],
+        "fallbackFeedback": "Squared sides: 26, 18, 20 \u2014 all distinct (scalene), largest 26."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Design the apex.",
+      "conceptTag": "cx-classify-tri",
+      "hints": [
+        "Isosceles over base (0, 0)\u2013(8, 0) needs the apex on the base's perpendicular bisector.",
+        "Chapter 1 named that line: x = 4.",
+        "Right angle AT the apex adds the slope condition: (h/4)(\u2212h/4) = \u22121; solve for h > 0."
+      ],
+      "explanationVariants": [
+        "Apex (4, h): slopes h/4 and h/(\u22124); product \u2212h\u00b2/16 = \u22121 gives h = 4. The apex is (4, 4).",
+        "Equidistance puts x = 4; the right-angle condition forces h\u00b2 = 16, h = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangle has base (0, 0) to (8, 0) and an apex ABOVE the base making the triangle BOTH isosceles (apex equidistant from the base ends) AND right-angled at the apex. Enter the apex's y-coordinate.",
+        "answer": 4,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 copies the base length \u2014 the right-angle condition is h\u00b2/16 = 1, so h = 4 (half the base, exactly Thales' circle radius)."
+          },
+          {
+            "value": 5.66,
+            "feedback": "5.66 \u2248 4\u221a2 prices the slant \u2014 the QUESTION asks the height: h = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "2 halves the answer \u2014 slopes h/4 and \u2212h/4 multiply to \u22121 when h\u00b2 = 16: h = 4."
+          }
+        ],
+        "fallbackFeedback": "(h/4)(\u2212h/4) = \u22121 \u21d2 h = 4 \u2014 the apex rides Thales' semicircle over the base."
+      },
+      "variant": {
+        "gen": "g10-coordinate-proofs",
+        "form": "cx-classify-tri__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Compute, then conclude.",
+      "takeaways": [
+        "Side audit (squared distances): scalene / isosceles / equilateral \u2014 no roots needed.",
+        "Angle audit: slope product \u22121 OR Pythagorean converse \u2014 two independent right-angle certificates.",
+        "A coordinate proof = the numbers plus the definition they satisfy."
+      ],
+      "teaser": "Next: the same two audits, four vertices at a time."
+    }
+  ]
+}

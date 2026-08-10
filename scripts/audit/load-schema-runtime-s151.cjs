@@ -1,0 +1,7 @@
+const fs=require('fs'),vm=require('vm'),path=require('path'),cp=require('child_process');
+let ts;for(const candidate of ['typescript',path.join(cp.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript')]){try{ts=require(candidate);break}catch{}}if(!ts)throw new Error('TypeScript compiler unavailable');
+const root=path.resolve(__dirname,'../..');
+function schemaProxy(){// eslint-disable-next-line prefer-const -- `fn` closes over `proxy` before it is assigned, so `const` would be a TDZ error.
+let proxy;const fn=()=>proxy;proxy=new Proxy(fn,{get(_t,p){if(p==='parse')return x=>x;if(p==='safeParse')return x=>({success:true,data:x});if(p===Symbol.toPrimitive)return()=>'';return(..._args)=>proxy},apply(){return proxy}});return proxy}
+const source=fs.readFileSync(path.join(root,'src/lib/schema.ts'),'utf8');const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
+const sandboxModule={exports:{}};const z=schemaProxy();const sandbox={module:sandboxModule,exports:sandboxModule.exports,require(id){if(id==='zod')return{z};if(id==='./mathUtils')return{gcd:(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b)[a,b]=[b,a%b];return a}};throw new Error('require '+id)},console,process,Map,Set,Math,Number,String,Array,Object,JSON,Error};vm.runInNewContext(js,sandbox,{filename:'schema.cjs'});module.exports=sandboxModule.exports;

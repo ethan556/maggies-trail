@@ -1,0 +1,224 @@
+{
+  "id": "fna-03-02",
+  "slug": "piecewise-functions",
+  "title": "Piecewise Functions",
+  "courseId": "function-analysis",
+  "chapterId": "ch3-symmetry-piecewise",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **piecewise function** applies different rules on different stretches of x:\n\np(x) = **x + 5** if x < 2, and **x²** if x ≥ 2.\n\nEvaluating is a two-step ritual: **first** find which condition your input satisfies, **then** use only that rule. The other rule doesn't exist for that input.",
+      "figure": "fna-piecewise"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Pick the branch, then compute.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using p(x) above, what is p(−3)?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "−3 < 2, so the FIRST rule applies: −3 + 5 = 2. Squaring (−3)² = 9 uses the wrong branch — x² is only for x ≥ 2."
+          },
+          {
+            "value": -8,
+            "feedback": "The first branch ADDS 5: −3 + 5 = 2, not −3 − 5."
+          }
+        ],
+        "fallbackFeedback": "−3 < 2 → use x + 5: p(−3) = 2."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Boundaries are decided by the **inequality symbols**, not by taste. At x = 2, the condition x ≥ 2 is the one that's true — so p(2) = 2² = 4, never 2 + 5 = 7. Exactly one branch may claim each input, which is why one side is strict (<) and the other isn't (≥).",
+      "figure": "fna-boundary-symbols"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The boundary itself.",
+      "conceptTag": "fna-piecewise",
+      "explanationVariants": [
+        "x = 2 satisfies x ≥ 2, so the second rule fires: p(2) = 2² = 4.",
+        "The first branch requires x STRICTLY less than 2 — at 2 exactly, it steps aside for x²."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is p(2)?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "2 + 5 = 7 uses the first branch, but its condition is x < 2 — STRICT. x = 2 belongs to x ≥ 2, so p(2) = 2² = 4."
+          },
+          {
+            "value": 2,
+            "feedback": "Don't return the input. Apply the owning rule x²: p(2) = 4."
+          }
+        ],
+        "fallbackFeedback": "x = 2 → second branch: p(2) = 4."
+      },
+      "variant": {
+        "gen": "piecewise-eval"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Deep in the second branch.",
+      "conceptTag": "fna-piecewise",
+      "explanationVariants": [
+        "3 ≥ 2 → second rule: p(3) = 3² = 9.",
+        "Only one rule owns x = 3, and it's the squaring one: 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is p(3)?",
+        "answer": 9,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "3 + 5 = 8 is the first branch, but 3 is NOT less than 2 — the condition fails. Use x²: 9."
+          },
+          {
+            "value": 6,
+            "feedback": "You may have doubled instead of squared: 3² = 3·3 = 9."
+          }
+        ],
+        "fallbackFeedback": "3 ≥ 2 → p(3) = 9."
+      },
+      "variant": {
+        "gen": "piecewise-eval"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why the conditions can't overlap.",
+      "conceptTag": "fna-piecewise",
+      "explanationVariants": [
+        "If both branches claimed x = 2, p(2) would be both 7 and 4 — two outputs for one input, which no function allows.",
+        "A function must give exactly ONE output per input; splitting < from ≥ guarantees a single owner for every x."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why is the pair of conditions written as x < 2 and x ≥ 2 (rather than x ≤ 2 and x ≥ 2)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "So every input has exactly one owning rule — otherwise x = 2 would get two different outputs",
+            "correct": true,
+            "feedback": "Exactly — with ≤ and ≥ both true at x = 2, p(2) would ambiguously be 7 AND 4, breaking the definition of a function."
+          },
+          {
+            "id": "o2",
+            "label": "Because x = 2 is not in the domain",
+            "feedback": "x = 2 IS in the domain — the second branch handles it (p(2) = 4). The strict < just keeps the first branch from also claiming it."
+          },
+          {
+            "id": "o3",
+            "label": "It's only a style preference",
+            "feedback": "It's structural: overlapping conditions would assign x = 2 the two outputs 7 and 4, and a function may give only one."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "piecewise-eval",
+        "form": "whyDisjoint"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Hunt for a target output.",
+      "conceptTag": "fna-piecewise",
+      "explanationVariants": [
+        "Try each branch: x + 5 = 9 gives x = 4, rejected since 4 is not < 2. x² = 9 gives x = 3 (valid, 3 ≥ 2) or x = −3 (rejected, −3 not ≥ 2). Only x = 3 works.",
+        "Work backwards per branch and CHECK each candidate against its own condition — two of the three candidates fail theirs."
+      ],
+      "hints": [
+        "Set each rule equal to 9 separately.",
+        "x + 5 = 9 → x = 4: does 4 satisfy x < 2? x² = 9 → x = ±3: which satisfies x ≥ 2?",
+        "Candidates 4 and −3 violate their branch conditions; only x = 3 survives."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For what x does p(x) = 9? (Enter the only valid solution.)",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "x + 5 = 9 does give x = 4, but 4 fails that branch's condition x < 2 — a candidate must satisfy the condition of the rule that produced it. The valid solution comes from x² = 9 with x ≥ 2: x = 3."
+          },
+          {
+            "value": -3,
+            "feedback": "(−3)² = 9, but the squaring rule only owns x ≥ 2, and −3 fails it (there p(−3) = −3 + 5 = 2). The valid root is +3."
+          }
+        ],
+        "fallbackFeedback": "Only x = 3 satisfies both its equation (3² = 9) and its condition (3 ≥ 2)."
+      },
+      "variant": {
+        "gen": "piecewise-eval",
+        "form": "solveBranch"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Condition first, rule second.",
+      "takeaways": [
+        "Find the branch whose condition your input satisfies, then use only that rule.",
+        "Boundary inputs follow the inequality symbols exactly.",
+        "Solving backwards: every candidate must satisfy its own branch's condition."
+      ],
+      "teaser": "Next: absolute value and step functions — famous graphs that are secretly piecewise."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-piecewise",
+      "concept": {
+        "id": "rem-fna0302-c",
+        "kind": "concept",
+        "body": "Two steps every time: (1) test the input against each condition to find the owning branch; (2) apply that branch's rule and no other."
+      },
+      "check": {
+        "id": "rem-fna0302-k",
+        "kind": "check",
+        "body": "One more evaluation.",
+        "conceptTag": "fna-piecewise",
+        "explanationVariants": [
+          "0 < 2 → first branch: p(0) = 0 + 5 = 5.",
+          "Zero fails x ≥ 2, so the squaring rule never sees it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is p(0)?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "0² = 0 is the wrong branch — the condition x ≥ 2 fails at 0. Use x + 5: p(0) = 5."
+            },
+            {
+              "value": 25,
+              "feedback": "Don't square the 5; the rule is x + 5 = 0 + 5 = 5."
+            }
+          ],
+          "fallbackFeedback": "0 < 2 → p(0) = 0 + 5 = 5."
+        }
+      }
+    }
+  ]
+}

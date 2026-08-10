@@ -1,0 +1,366 @@
+{
+  "id": "mult-02-02",
+  "slug": "how-many-groups",
+  "title": "How Many Groups?",
+  "courseId": "multiplication-division",
+  "chapterId": "ch2-meet-division",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Division has a **second question**. Not \"how many does each get?\" but \"**how many groups?**\" 12 eggs packed 4 to a box: count out groups of 4 until the eggs run out — you fill 3 boxes. Still written 12 ÷ 4 = 3.",
+      "figure": "mult3-how-many-groups"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Pack until **nothing is left over**.",
+      "conceptTag": "grouping-division",
+      "widget": {
+        "type": "slider",
+        "prompt": "Pack 12 eggs into boxes that each hold 4. Slide the number of boxes until every egg is packed.",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "start": 1,
+        "target": 3,
+        "visual": "groups",
+        "groupSize": 4,
+        "itemEmoji": "🥚",
+        "unitLabel": "eggs packed",
+        "lowFeedback": "Eggs are still waiting — every new box swallows 4 more. Add a box.",
+        "highFeedback": "You're packing more than 12 eggs now — take a box away; each one removes 4.",
+        "successFeedback": "3 boxes of 4 pack exactly 12 eggs. 12 ÷ 4 = 3 boxes."
+      },
+      "predict": {
+        "prompt": "You'll pack 12 eggs into boxes of 4. If the boxes instead held MORE eggs each, you'd need…",
+        "options": [
+          {
+            "id": "fewer",
+            "label": "Fewer boxes — each box swallows more"
+          },
+          {
+            "id": "more",
+            "label": "More boxes — more eggs per box means more boxes"
+          }
+        ],
+        "outcomeId": "fewer",
+        "reveal": "Bigger groups means fewer groups: 12 eggs fill 3 boxes of 4 but only 2 boxes of 6. The total never changes — group size and group count trade off against each other. That trade IS division."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents grouping division.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for grouping division must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines grouping division."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:grouping-division",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Same division sign — but which question is the story asking?",
+      "conceptTag": "grouping-division",
+      "explanationVariants": [
+        "The team SIZE (2) is given; the unknown is how many teams form — 14 ÷ 2 counts the groups: 7 teams.",
+        "Count out pairs from 14 kids until no one is left: 7 pairs come out. The division counts those pairs."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "14 kids split into teams of 2. What does 14 ÷ 2 count in this story?",
+        "options": [
+          {
+            "id": "a",
+            "label": "How many teams form",
+            "correct": true,
+            "feedback": "The group size (2) is already known, so the division counts the GROUPS: 7 teams."
+          },
+          {
+            "id": "b",
+            "label": "How many kids are on each team",
+            "feedback": "That's the sharing question — but this story already SAYS each team has 2. The unknown here is the number of teams."
+          },
+          {
+            "id": "c",
+            "label": "How many kids there are in all",
+            "feedback": "The 14 is the total, given at the start. Division works down from the total to something unknown."
+          },
+          {
+            "id": "d",
+            "label": "How many kids sit out",
+            "feedback": "Teams of 2 use up 14 kids exactly — 14 splits evenly by 2, so nobody sits out."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "group-division"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two questions, **one division**. 12 ÷ 4 answers both: \"12 shared by 4 kids → 3 each\" and \"12 packed in groups of 4 → 3 groups.\" The arithmetic is identical — the **story** tells you which question you just answered.",
+      "figure": "mult3-how-many-groups"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Grouping works on lengths too: how many pieces fit?",
+      "conceptTag": "grouping-division",
+      "explanationVariants": [
+        "Cut 5 cm at a time: 5, 10, 15, 20 — four cuts of 5 use the whole ribbon, so 4 pieces.",
+        "Ask the hidden multiplication: how many 5s make 20? Four, because 4 × 5 = 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ribbon 20 cm long is cut into pieces that are each 5 cm. How many pieces?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "pieces",
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 cuts off 5 cm once and reports what's LEFT. Keep cutting groups of 5 until the ribbon is gone, and count the pieces."
+          },
+          {
+            "value": 25,
+            "feedback": "25 adds 20 + 5. Cutting splits the ribbon down — the answer counts pieces, and they can't outgrow the ribbon."
+          },
+          {
+            "value": 100,
+            "feedback": "100 multiplies 20 × 5 — that's the length of 20 whole ribbons in 5 cm bits. Count how many 5s fit inside ONE 20."
+          }
+        ],
+        "fallbackFeedback": "Mark the ribbon every 5 cm: 5, 10, 15, 20. Count the pieces those marks make."
+      },
+      "variant": {
+        "gen": "group-division",
+        "form": "howManyPieces"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Grouping is **counting down** — take the same amount away until you hit 0.",
+      "conceptTag": "grouping-division",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "A squirrel hides 15 acorns, burying 5 per hole. Put the countdown in order, starting from 15.",
+        "items": [
+          {
+            "id": "n5",
+            "label": "5"
+          },
+          {
+            "id": "n15",
+            "label": "15"
+          },
+          {
+            "id": "n0",
+            "label": "0"
+          },
+          {
+            "id": "n10",
+            "label": "10"
+          }
+        ],
+        "correctOrder": [
+          "n15",
+          "n10",
+          "n5",
+          "n0"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "n0",
+            "second": "n15",
+            "feedback": "0 landed before 15 — but the squirrel STARTS with all 15 acorns and buries its way down to 0."
+          }
+        ],
+        "missFeedback": "Start at the full pile, 15, and take away 5 for each hole: 15, 10, 5, 0.",
+        "successFeedback": "15 → 10 → 5 → 0. Three take-aways of 5 empty the pile — so 15 ÷ 5 = 3 holes."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Both stories below use 18 ÷ 6 = 3 — but only one asks the **grouping** question.",
+      "conceptTag": "grouping-division",
+      "explanationVariants": [
+        "Grouping fixes the group SIZE (6 per bag) and counts the groups: 3 bags.",
+        "Sharing would fix the number of receivers instead. Here the bags' size is fixed, so the 3 counts bags."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which story asks the GROUPING question for 18 ÷ 6 = 3?",
+        "options": [
+          {
+            "id": "a",
+            "label": "18 apples packed 6 to a bag — how many bags?",
+            "correct": true,
+            "feedback": "The group size (6) is fixed and the division counts groups: 3 bags. That's grouping."
+          },
+          {
+            "id": "b",
+            "label": "18 apples shared among 6 kids — how many each?",
+            "feedback": "Perfectly good math — but that's the SHARING question: the receivers are fixed and you find each share. Grouping fixes the group size instead."
+          },
+          {
+            "id": "c",
+            "label": "6 apples packed 18 to a bag",
+            "feedback": "You can't pack 18 into a pile of 6 — the total being split must be the bigger starting amount, 18."
+          },
+          {
+            "id": "d",
+            "label": "18 bags with 6 apples in each bag",
+            "feedback": "That story multiplies UP: 18 × 6 = 108 apples. Grouping starts with one total and splits it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "group-division",
+        "form": "whichStory"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller sale, before the baker's rolls.",
+      "conceptTag": "grouping-division",
+      "explanationVariants": [
+        "20 rolls minus the 4 sold leaves 16: 20−4=16. Then pack 16 into bags of 4: 16÷4=4 bags.",
+        "Remove what's sold before packing: 20−4=16, then divide into bags: 16÷4=4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A baker has 20 rolls. He sells 4, then packs the rest into bags of 4. How many bags does he fill?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 packs all 20 rolls (20÷4) — 4 were already sold, so only 16 are left to pack: 16÷4=4."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is how many rolls are left AFTER the sale — that still needs packing into bags of 4: 16÷4=4."
+          }
+        ],
+        "fallbackFeedback": "Subtract what's sold first (20−4=16), then pack the rest into bags (16÷4=4)."
+      },
+      "variant": {
+        "gen": "group-division",
+        "form": "sellThenPack"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Sell first, pack second.",
+      "conceptTag": "grouping-division",
+      "hints": [
+        "Two steps: some rolls sell before the packing starts. How many are left to pack?",
+        "26 − 2 = 24 rolls to pack, in bags of 6.",
+        "Count the 6s inside 24: 6, 12, 18, 24."
+      ],
+      "explanationVariants": [
+        "Step 1: 26 − 2 = 24 rolls remain. Step 2: 24 ÷ 6 = 4 bags.",
+        "After the sale, count out groups of 6 from 24: four groups empty the tray, so 4 bags."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A baker has 26 rolls. He sells 2, then packs the rest into bags of 6. How many bags does he fill?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "bags",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is the rolls left after the sale — step one done! Now count how many groups of 6 fit inside 24."
+          },
+          {
+            "value": 20,
+            "feedback": "20 takes one bag's worth (6) from 26. First remove the 2 SOLD rolls, then count whole bags of 6 until none remain."
+          },
+          {
+            "value": 144,
+            "feedback": "144 multiplies 24 × 6 — that would be 24 full bags. Packing asks how many 6s fit INSIDE 24."
+          }
+        ],
+        "fallbackFeedback": "Take away the 2 sold rolls first. Then pull out bags of 6 from what's left, counting bags as you go."
+      },
+      "variant": {
+        "gen": "group-division",
+        "form": "sellThenPack"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Division answers two questions now.",
+      "takeaways": [
+        "Grouping division counts how many equal groups fit in a total.",
+        "It works like repeated subtraction: take the group size away until you reach 0.",
+        "Same division, two stories — the story tells you whether the answer counts groups or a share."
+      ],
+      "teaser": "the fastest way to divide — turn every division into a multiplication with a blank."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "grouping-division",
+      "concept": {
+        "id": "rem-gd-c",
+        "kind": "concept",
+        "body": "Quick rewind. To count groups, **pull them out one at a time**: 8 socks in pairs — take 2, take 2, take 2, take 2. Four pulls empty the drawer, so 8 ÷ 2 = 4 pairs. Group size stays the same; you count the pulls."
+      },
+      "check": {
+        "id": "rem-gd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "grouping-division",
+        "explanationVariants": [
+          "Pull out cans of 3: after 3 pulls (3, 6, 9) the balls are gone — 3 cans.",
+          "How many 3s make 9? Three, because 3 × 3 = 9."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "9 tennis balls are packed into cans of 3. How many cans?",
+          "options": [
+            {
+              "id": "a",
+              "label": "3",
+              "correct": true,
+              "feedback": "Three groups of 3 use all 9 balls: 9 ÷ 3 = 3 cans."
+            },
+            {
+              "id": "b",
+              "label": "6",
+              "feedback": "6 takes one can's worth (3) away from 9 — that's after just ONE can. Keep packing until no balls remain."
+            },
+            {
+              "id": "c",
+              "label": "27",
+              "feedback": "27 multiplies 9 × 3 — that's 9 full cans of balls. Count how many 3s fit inside 9 instead."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

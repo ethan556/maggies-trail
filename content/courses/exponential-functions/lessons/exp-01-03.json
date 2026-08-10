@@ -1,0 +1,483 @@
+{
+  "id": "exp-01-03",
+  "slug": "the-constant-ratio",
+  "title": "The Constant Ratio",
+  "courseId": "exponential-functions",
+  "chapterId": "ch1-growth-and-decay",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exp-curve-growth",
+      "body": "In an exponential table, consecutive outputs share a **constant ratio**. Divide any term by the one before it to find the base b. For the sequence 3, 6, 12, 24: 6/3 = 12/6 = 24/12 = 2, so b = 2."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The base IS the constant ratio.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 2,
+        "targetBase": 3,
+        "startBase": 2,
+        "showMirror": false,
+        "prompt": "A table triples at every step. Slide the base until b² lands on the ring at 9.",
+        "successFeedback": "Base 3: every step multiplies by 3, so two steps give 3 × 3 = 9. The base is not just a number in the formula — it is the constant ratio between consecutive outputs.",
+        "lowFeedback": "b² is below 9, so the step ratio is under 3. Raise the base.",
+        "highFeedback": "b² is above 9 — the outputs are multiplying by more than 3 each step."
+      },
+      "predict": {
+        "prompt": "Both bases are above 1. Moving the base from 2 to 3, the curve will…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Rise faster"
+          },
+          {
+            "id": "slower",
+            "label": "Rise more slowly"
+          },
+          {
+            "id": "shift",
+            "label": "Slide sideways without changing steepness"
+          }
+        ],
+        "outcomeId": "faster",
+        "reveal": "A bigger base multiplies by more at every step, so 3 outruns 2 — the base IS the growth factor per unit of x, not a sideways shift."
+      },
+      "conceptTag": "exp-ratio",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents ratio.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for ratio must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines ratio."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponential-functions:exp-ratio",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another table.",
+      "conceptTag": "exp-ratio",
+      "explanationVariants": [
+        "10/5 = 20/10 = 40/20 = 2.",
+        "Each term is double the last, so the ratio is 2."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "In the sequence 5, 10, 20, 40, what is the constant ratio?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "t0",
+            "label": "the first term",
+            "value": 5
+          },
+          {
+            "id": "t1",
+            "label": "the second term",
+            "value": 10
+          }
+        ],
+        "approxFormula": {
+          "op": "divide",
+          "left": {
+            "op": "const",
+            "id": "t1"
+          },
+          "right": {
+            "op": "const",
+            "id": "t0"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 5,
+            "feedback": "The terms are multiplied, not added: 10/5 = 2, so the ratio is 2 (not the +5)."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the second term. The ratio is 10 ÷ 5 = 2."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:t0",
+          "approx:t1",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "10/5 = 2.",
+        "successFeedback": "10/5 = 2."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "ratio"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Once you know b, extend the table by **multiplying**. For 2, 6, 18, 54 with b = 3, the next term is 54 · 3 = 162. The constant ratio drives the whole sequence forward — you never add.",
+      "figure": "exp-multiply-extend"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Extend it.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "The sequence 2, 6, 18, 54 continues. What is the next term?",
+        "answer": 162,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 108,
+            "feedback": "The ratio is 3, not 2: the next term is 54 · 3 = 162."
+          },
+          {
+            "value": 58,
+            "feedback": "You multiply by the ratio, not add: 54 · 3 = 162, not 54 + 4."
+          }
+        ],
+        "fallbackFeedback": "54 · 3 = 162."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A constant **difference** means linear (add the same amount each step); a constant **ratio** means exponential (multiply the same factor each step). Checking whether you add or multiply tells you which kind of change you're seeing.",
+      "figure": "exp-const-diff-linear"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Add or multiply?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "The sequence 4, 12, 36, 108 grows by...",
+        "options": [
+          {
+            "id": "a",
+            "label": "multiplying by 3",
+            "correct": true,
+            "feedback": "Yes — 12/4 = 36/12 = 108/36 = 3, a constant ratio."
+          },
+          {
+            "id": "b",
+            "label": "adding 8",
+            "feedback": "4 + 8 = 12 works once, but 12 + 8 = 20 ≠ 36. The pattern multiplies by 3."
+          },
+          {
+            "id": "c",
+            "label": "multiplying by 2",
+            "feedback": "4 · 2 = 8 ≠ 12. The ratio is 12/4 = 3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ratio of four.",
+      "conceptTag": "exp-ratio",
+      "explanationVariants": [
+        "4/1 = 16/4 = 64/16 = 4.",
+        "Each term is 4 times the last, so the ratio is 4."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "In the sequence 1, 4, 16, 64, what is the constant ratio?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "t0",
+            "label": "the first term",
+            "value": 1
+          },
+          {
+            "id": "t1",
+            "label": "the second term",
+            "value": 4
+          }
+        ],
+        "approxFormula": {
+          "op": "divide",
+          "left": {
+            "op": "const",
+            "id": "t1"
+          },
+          "right": {
+            "op": "const",
+            "id": "t0"
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 3,
+            "feedback": "The terms are multiplied, not added: 4/1 = 4, so the ratio is 4 (not the +3)."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is a term. The ratio is 4 ÷ 1 = 4."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:t0",
+          "approx:t1",
+          "approx:compute"
+        ],
+        "requiredExplorations": 3,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "4/1 = 4.",
+        "successFeedback": "4/1 = 4."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "ratio"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Extend a doubling.",
+      "conceptTag": "exp-ratio",
+      "explanationVariants": [
+        "The ratio is 2, so the next term is 24 · 2 = 48.",
+        "Double the last term: 24 · 2 = 48."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "The sequence 3, 6, 12, 24 continues. What is the next term?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "t0",
+            "label": "the first term",
+            "value": 3
+          },
+          {
+            "id": "t1",
+            "label": "the second term",
+            "value": 6
+          },
+          {
+            "id": "tLast",
+            "label": "the last given term",
+            "value": 24
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "tLast"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "t1"
+            },
+            "right": {
+              "op": "const",
+              "id": "t0"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 36,
+            "feedback": "You multiply by the ratio, not add: 24 · 2 = 48, not 24 + 12."
+          },
+          {
+            "value": 26,
+            "feedback": "The pattern multiplies by 2: 24 · 2 = 48."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:t0",
+          "approx:t1",
+          "approx:tLast",
+          "approx:compute"
+        ],
+        "requiredExplorations": 4,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "24 · 2 = 48.",
+        "successFeedback": "24 · 2 = 48."
+      },
+      "variant": {
+        "gen": "exp-function",
+        "form": "nextTerm"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the ratio, then extend.",
+      "conceptTag": "exp-ratio",
+      "explanationVariants": [
+        "The ratio is 15/5 = 3, so the next term is 135 · 3 = 405.",
+        "Multiply the last term by 3: 135 · 3 = 405."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "The sequence 5, 15, 45, 135 continues. What is the next term?",
+        "task": "approximationEvaluate",
+        "values": [],
+        "approxConstants": [
+          {
+            "id": "t0",
+            "label": "the first term",
+            "value": 5
+          },
+          {
+            "id": "t1",
+            "label": "the second term",
+            "value": 15
+          },
+          {
+            "id": "tLast",
+            "label": "the last given term",
+            "value": 135
+          }
+        ],
+        "approxFormula": {
+          "op": "multiply",
+          "left": {
+            "op": "const",
+            "id": "tLast"
+          },
+          "right": {
+            "op": "divide",
+            "left": {
+              "op": "const",
+              "id": "t1"
+            },
+            "right": {
+              "op": "const",
+              "id": "t0"
+            }
+          }
+        },
+        "approxRound": 0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 270,
+            "feedback": "The ratio is 3, not 2: the next term is 135 · 3 = 405."
+          },
+          {
+            "value": 145,
+            "feedback": "You multiply by the ratio, not add: 135 · 3 = 405, not 135 + 10."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "approx:t0",
+          "approx:t1",
+          "approx:tLast",
+          "approx:compute"
+        ],
+        "requiredExplorations": 4,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "Ratio 15/5 = 3; next term 135 · 3 = 405.",
+        "successFeedback": "Ratio 15/5 = 3; next term 135 · 3 = 405."
+      },
+      "hints": [
+        "Find the ratio: 15 ÷ 5 = 3.",
+        "Multiply the last term by 3: 135 · 3.",
+        "That gives 405."
+      ],
+      "variant": {
+        "gen": "exp-function",
+        "form": "nextTerm"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A constant ratio is the fingerprint of an exponential pattern.",
+      "takeaways": [
+        "Divide consecutive terms to find the base b.",
+        "Extend by multiplying by b — never add.",
+        "Constant difference = linear; constant ratio = exponential."
+      ],
+      "teaser": "next chapter: modeling real growth and decay."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exp-ratio",
+      "concept": {
+        "id": "rem-erat-c",
+        "kind": "concept",
+        "body": "Divide consecutive terms to find the constant ratio b, then multiply to extend. For 2, 6, 18, 54: 6/2 = 3, so b = 3, and the next term is 54 · 3 = 162."
+      },
+      "check": {
+        "id": "rem-erat-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exp-ratio",
+        "explanationVariants": [
+          "6/2 = 3, so the ratio is 3.",
+          "Each term triples, so b = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the sequence 2, 6, 18, 54, what is the constant ratio?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "Terms are multiplied, not added: 6/2 = 3."
+            },
+            {
+              "value": 6,
+              "feedback": "6 is the second term; the ratio is 6 ÷ 2 = 3."
+            }
+          ],
+          "fallbackFeedback": "6/2 = 3."
+        }
+      }
+    }
+  ]
+}

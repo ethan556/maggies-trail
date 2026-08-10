@@ -1,0 +1,448 @@
+{
+  "id": "g5l-03-01",
+  "slug": "adjusting-a-too-big-guess",
+  "title": "Adjusting a Too-Big Guess",
+  "courseId": "long-division-g5",
+  "chapterId": "ch3-adjusting-and-checking",
+  "minutes": 7,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Trial digits with a two-digit divisor are guesses, and guessing too high is routine: if 4 × 24 = 96 exceeds the 88 available, lower the digit to 3.",
+      "narration": "Trial digits with a two-digit divisor are guesses, and guessing too high is routine: if 4 × 24 = 96 exceeds the 88 available, lower the digit to 3."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g5ld-adjust",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "4 × 24 = 96 overshoots the 88 available — slide to what 3 × 24 gives.",
+        "min": 5,
+        "max": 200,
+        "start": 5,
+        "target": 72,
+        "acceptFactor": 2,
+        "unitLabel": "units",
+        "ticks": [
+          5,
+          103,
+          200
+        ],
+        "lowFeedback": "Too low — three twenty-fours already pass seventy.",
+        "highFeedback": "Too high — three twenty-fours is seventy-two, comfortably under eighty-eight.",
+        "successFeedback": "72 — which fits inside 88, leaving 16 for the next step."
+      },
+      "predict": {
+        "prompt": "4 × 24 = 96 exceeds 88. What now?",
+        "options": [
+          {
+            "id": "lower",
+            "label": "Lower the digit to 3"
+          },
+          {
+            "id": "negative",
+            "label": "Subtract anyway"
+          }
+        ],
+        "outcomeId": "lower",
+        "reveal": "An overshoot means the trial digit was too big; the algorithm never carries a negative remainder."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld adjust.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld adjust always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-adjust",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g5ld-adjust",
+      "explanationVariants": [
+        "Overshoot means lower.",
+        "Try again."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You try 4 as a digit, but 4 × 24 = 96 exceeds the 88 available. What now?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Lower the digit to 3 and multiply again",
+            "correct": true,
+            "feedback": "Correct — an overshoot means the trial digit was too big, and adjusting down is a normal part of the method."
+          },
+          {
+            "id": "o1",
+            "label": "Subtract anyway and carry a negative",
+            "correct": false,
+            "feedback": "The algorithm never leaves a negative remainder; the digit must be reduced instead."
+          },
+          {
+            "id": "o2",
+            "label": "Start the whole division again",
+            "correct": false,
+            "feedback": "Only this digit is wrong; the earlier steps are unaffected."
+          },
+          {
+            "id": "o3",
+            "label": "Round 88 up to 96",
+            "correct": false,
+            "feedback": "Changing the dividend changes the problem; the trial digit is what must move."
+          }
+        ]
+      },
+      "hints": [
+        "Take convenient batches.",
+        "Total them at the end.",
+        "Same groups either way."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld adjust.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld adjust always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-adjust",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Adjusting is part of the method, not a sign of failure. The algorithm never leaves a negative remainder.",
+      "narration": "Adjusting is part of the method, not a sign of failure. The algorithm never leaves a negative remainder."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g5ld-adjust",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "4 × 24 = 96 overshoots the 88 available — slide to what 3 × 24 gives.",
+        "min": 5,
+        "max": 200,
+        "start": 5,
+        "target": 72,
+        "acceptFactor": 2,
+        "unitLabel": "units",
+        "ticks": [
+          5,
+          103,
+          200
+        ],
+        "lowFeedback": "Too low — three twenty-fours already pass seventy.",
+        "highFeedback": "Too high — three twenty-fours is seventy-two, comfortably under eighty-eight.",
+        "successFeedback": "72 — which fits inside 88, leaving 16 for the next step."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld adjust.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld adjust always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-adjust",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g5ld-adjust",
+      "explanationVariants": [
+        "Multiply to test a digit.",
+        "Compare with what is left."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 8 × 23 — multiplying the quotient back by the divisor to check.",
+        "answer": 184,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 31,
+            "feedback": "Adding does not undo division; multiplying the quotient by the divisor must rebuild the dividend."
+          },
+          {
+            "value": 161,
+            "feedback": "That is one group short — the quotient counts 8 groups, not 7."
+          }
+        ],
+        "fallbackFeedback": "Ask how many whole groups of the divisor the dividend holds, then check what is left over.",
+        "successFeedback": "Correct — 184."
+      },
+      "hints": [
+        "Multiply back, add the remainder.",
+        "It must rebuild.",
+        "Remainder under the divisor."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld adjust.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld adjust always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-adjust",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbMultiplyTensNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g5ld-adjust",
+      "explanationVariants": [
+        "Then continue.",
+        "Digit by digit."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute 468 ÷ 26 — a two-digit divisor that divides evenly.",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 180,
+            "feedback": "That misplaced the quotient's digits by a whole place; check how many groups the first partial step accounts for."
+          },
+          {
+            "value": 442,
+            "feedback": "Subtracting the divisor once removes a single group; division counts how many groups FIT."
+          }
+        ],
+        "fallbackFeedback": "Ask how many whole groups of the divisor the dividend holds, then check what is left over.",
+        "successFeedback": "Correct — 18."
+      },
+      "hints": [
+        "Take convenient batches.",
+        "Total them at the end.",
+        "Same groups either way."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld adjust.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld adjust always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-adjust",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbDivideBigNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g5ld-adjust",
+      "explanationVariants": [
+        "Only that digit changes.",
+        "Earlier steps stand."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You try 4 as a digit, but 4 × 24 = 96 exceeds the 88 available. What now?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Lower the digit to 3 and multiply again",
+            "correct": true,
+            "feedback": "Correct — an overshoot means the trial digit was too big, and adjusting down is a normal part of the method."
+          },
+          {
+            "id": "o1",
+            "label": "Subtract anyway and carry a negative",
+            "correct": false,
+            "feedback": "The algorithm never leaves a negative remainder; the digit must be reduced instead."
+          },
+          {
+            "id": "o2",
+            "label": "Start the whole division again",
+            "correct": false,
+            "feedback": "Only this digit is wrong; the earlier steps are unaffected."
+          },
+          {
+            "id": "o3",
+            "label": "Round 88 up to 96",
+            "correct": false,
+            "feedback": "Changing the dividend changes the problem; the trial digit is what must move."
+          }
+        ]
+      },
+      "hints": [
+        "Take convenient batches.",
+        "Total them at the end.",
+        "Same groups either way."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Count how many whole groups of the divisor fit, in whatever batches are convenient, for g5ld adjust.",
+        "invariants": [
+          "Division counts groups, and every method — estimating, partial quotients, the standard algorithm — counts the SAME groups in different batches, which is why g5ld adjust always ends with quotient times divisor plus remainder rebuilding the dividend."
+        ],
+        "misconceptions": [
+          "Placing a quotient digit a place out, treating an overshoot as final rather than adjusting the trial digit, or reporting a remainder that is as large as the divisor."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "long-division-g5:g5ld-adjust",
+        "delayed": true,
+        "counterfactualPrompt": "If the remainder came out equal to the divisor, what would that tell you about the quotient?"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "Trial digits are guesses.",
+        "An overshoot means lower the digit.",
+        "No step leaves a negative remainder."
+      ],
+      "teaser": "next: checking and reading the answer."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g5ld-adjust",
+      "concept": {
+        "id": "rem-g5ld-adjust-c",
+        "kind": "concept",
+        "body": "Adjusting is part of the method, not a sign of failure. The algorithm never leaves a negative remainder.",
+        "narration": "Adjusting is part of the method, not a sign of failure. The algorithm never leaves a negative remainder."
+      },
+      "check": {
+        "id": "rem-g5ld-adjust-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g5ld-adjust",
+        "explanationVariants": [
+          "Overshoot means lower.",
+          "Try again."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "You try 4 as a digit, but 4 × 24 = 96 exceeds the 88 available. What now?",
+          "options": [
+            {
+              "id": "o0",
+              "label": "Lower the digit to 3 and multiply again",
+              "correct": true,
+              "feedback": "Correct — an overshoot means the trial digit was too big, and adjusting down is a normal part of the method."
+            },
+            {
+              "id": "o1",
+              "label": "Subtract anyway and carry a negative",
+              "correct": false,
+              "feedback": "The algorithm never leaves a negative remainder; the digit must be reduced instead."
+            },
+            {
+              "id": "o2",
+              "label": "Start the whole division again",
+              "correct": false,
+              "feedback": "Only this digit is wrong; the earlier steps are unaffected."
+            },
+            {
+              "id": "o3",
+              "label": "Round 88 up to 96",
+              "correct": false,
+              "feedback": "Changing the dividend changes the problem; the trial digit is what must move."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

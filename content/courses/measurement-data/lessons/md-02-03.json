@@ -1,0 +1,355 @@
+{
+  "id": "md-02-03",
+  "slug": "measure-and-solve-stories",
+  "title": "Measure-and-Solve Stories",
+  "courseId": "measurement-data",
+  "chapterId": "ch2-grams-liters",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Now put the units to work. A measurement story is just arithmetic wearing a costume: **read what's being measured, pick the operation, keep the unit attached.** 'How much altogether' adds; 'how much is left' subtracts; 'how many fit' divides.",
+      "figure": "md3-mass-scale"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each phrase to its operation.",
+      "conceptTag": "measure-problems",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Connect each story phrase to the operation it signals.",
+        "left": [
+          {
+            "id": "p1",
+            "label": "\"…in all / altogether\""
+          },
+          {
+            "id": "p2",
+            "label": "\"…how much is left\""
+          },
+          {
+            "id": "p3",
+            "label": "\"…how many jugs fit\""
+          }
+        ],
+        "right": [
+          {
+            "id": "sub",
+            "label": "Subtract"
+          },
+          {
+            "id": "div",
+            "label": "Divide"
+          },
+          {
+            "id": "add",
+            "label": "Add"
+          }
+        ],
+        "pairs": {
+          "p1": "add",
+          "p2": "sub",
+          "p3": "div"
+        },
+        "pairErrors": [
+          {
+            "left": "p2",
+            "right": "add",
+            "feedback": "\"How much is LEFT\" means something was taken away — that's subtraction, not adding."
+          }
+        ],
+        "missFeedback": "Altogether combines (add); what's left removes (subtract); how many fit shares into groups (divide).",
+        "successFeedback": "Altogether → add, what's left → subtract, how many fit → divide. The words point to the operation."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One-step: total mass.",
+      "conceptTag": "measure-problems",
+      "explanationVariants": [
+        "'In all' adds the two masses: 250 + 150 = 400 g — and the tens overflow into a fourth hundred.",
+        "Both ingredients go in the bowl, so add: 250 g + 150 g = 400 g."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A recipe uses 250 g of sugar and 150 g of butter. How many grams in all?",
+        "answer": 400,
+        "tolerance": 0,
+        "unit": "g",
+        "commonErrors": [
+          {
+            "value": 300,
+            "feedback": "300 dropped the tens' trade — 5 tens + 5 tens make a hundred that must join the count: 250 + 150 = 400."
+          },
+          {
+            "value": 100,
+            "feedback": "100 SUBTRACTED. Both go in the bowl, so 'in all' adds them."
+          }
+        ],
+        "fallbackFeedback": "'In all' means add: 250 + 150."
+      },
+      "variant": {
+        "gen": "measure-word"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Two-step stories chain the moves — and guard your answer with an estimate. Before trusting an exact number, ask: *is it even the right SIZE?* If you pour water OUT of a tank and get more than you started with, the answer is busted before you check a single digit.",
+      "figure": "md3-liter"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two-step: the water tank.",
+      "conceptTag": "measure-problems",
+      "explanationVariants": [
+        "In order: 20 − 8 = 12 liters after the drain, then 12 + 5 = 17 liters after the refill.",
+        "Track the tank: starts at 20, drops to 12, climbs to 17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tank holds 20 liters. 8 liters drain out, then 5 liters are added. How many liters now?",
+        "answer": 17,
+        "tolerance": 0,
+        "unit": "liters",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the tank right after the drain — the 5-liter refill hasn't been added yet."
+          },
+          {
+            "value": 33,
+            "feedback": "33 added all three numbers (20 + 8 + 5) — but the 8 liters DRAINED. Subtract them, then add the 5."
+          }
+        ],
+        "fallbackFeedback": "Two moves: 20 − 8, then + 5."
+      },
+      "variant": {
+        "gen": "measure-word",
+        "form": "drainRefill"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Bust the broken answers.",
+      "conceptTag": "measure-problems",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "For '600 g of soup, 200 g eaten, how much left?' — tap every answer you can BUST as the wrong size, before doing the exact math.",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 4,
+          "h": 2
+        },
+        "hotspots": [
+          {
+            "id": "b800",
+            "x": 25,
+            "y": 25,
+            "label": "800 g",
+            "icon": "800 g",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "b400",
+            "x": 75,
+            "y": 25,
+            "label": "400 g",
+            "icon": "400 g",
+            "count": 1,
+            "feedback": "This one's actually the right size — less than 600, as eating requires. Don't bust it; it's the answer."
+          },
+          {
+            "id": "b650",
+            "x": 25,
+            "y": 75,
+            "label": "650 g",
+            "icon": "650 g",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "b350",
+            "x": 75,
+            "y": 75,
+            "label": "350 g",
+            "icon": "350 g",
+            "count": 1,
+            "feedback": "This is a plausible size (under 600) — a size-guard can't bust it. Only the exact math would (and it's not the answer, but it passes the guard)."
+          }
+        ],
+        "missFeedback": "Eating can only SHRINK the soup — any answer 600 g or more is busted on sight, no arithmetic needed.",
+        "successFeedback": "800 g and 650 g both exceed the starting 600 g — impossible after eating. The real answer (400 g) sits safely below."
+      },
+      "predict": {
+        "prompt": "600 g of soup, some eaten. Before any exact math: could the amount LEFT ever be bigger than 600 g?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — never bigger than the start"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — it could be"
+          },
+          {
+            "id": "depends",
+            "label": "Only exact math can tell"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Eating only removes soup — what's left must be smaller than what you started with. Size alone busts some answers before any arithmetic."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents measure problems.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for measure problems must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines measure problems."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "measurement-data:measure-problems",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Guard, then solve.",
+      "conceptTag": "measure-problems",
+      "explanationVariants": [
+        "Guard first: a leftover must be under 900 g. Then 900 − 350 = 550 g, which passes.",
+        "900 − 350: repackage 900 as 8 hundreds, 9 tens, 10 ones — 550 g, comfortably under the start."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 900 g block of cheese has 350 g sliced off. How many grams remain?",
+        "answer": 550,
+        "tolerance": 0,
+        "unit": "g",
+        "commonErrors": [
+          {
+            "value": 1250,
+            "feedback": "1250 ADDED — but slicing off REMOVES cheese. The leftover must be under 900: subtract 350."
+          },
+          {
+            "value": 650,
+            "feedback": "650 mis-traded across the zero. Check by rebuilding: 550 + 350 = 900 ✓, but 650 + 350 = 1000, too much."
+          }
+        ],
+        "fallbackFeedback": "Slicing removes cheese: 900 − 350, and the answer must be under 900."
+      },
+      "variant": {
+        "gen": "measure-word",
+        "form": "sliceOff"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The lemonade stand — mixed units.",
+      "conceptTag": "measure-problems",
+      "hints": [
+        "The units don't match — fix that first.",
+        "3,000 mL is how many liters? (Milli = a thousandth, so 1,000 mL = 1 L.)",
+        "Then subtract what sold from the total made."
+      ],
+      "explanationVariants": [
+        "Convert first: 3,000 mL = 3 L, so total made = 5 + 3 = 8 L. Sold 6 L, so 8 − 6 = 2 L left.",
+        "Same amount, matched units: 8 L made, 6 L sold, 2 L in the cooler."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A stand makes 5 L of lemonade in one jug and 3,000 mL in another (1,000 mL = 1 L). They sell 6 L. How many liters are left?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "liters",
+        "commonErrors": [
+          {
+            "value": 2995,
+            "feedback": "2995 glued mismatched units (5 L + 3,000 mL − 6, all mixed). Convert 3,000 mL to 3 L first, then 5 + 3 − 6."
+          },
+          {
+            "value": 8,
+            "feedback": "8 L is the total MADE (5 + 3) — but 6 L sold. Subtract the sales: 8 − 6."
+          }
+        ],
+        "fallbackFeedback": "Convert 3,000 mL to L, add to 5 L, then subtract the 6 L sold."
+      },
+      "variant": {
+        "gen": "measure-word",
+        "form": "unitMix"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You can solve measurement stories.",
+      "takeaways": [
+        "Read the phrase, pick the operation, keep the unit attached.",
+        "Two-step stories chain the moves in order.",
+        "Guard with a size-check first — and match units before computing."
+      ],
+      "teaser": "next chapter: making data talk — pictographs, bar graphs, and line plots."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "measure-problems",
+      "concept": {
+        "id": "rem-mp-c",
+        "kind": "concept",
+        "body": "Quick rewind. Two-step stories are just **one step, then another** — finish the first move completely before starting the second. Water tank: subtract the drain FIRST, land on a number, THEN add the refill to that number."
+      },
+      "check": {
+        "id": "rem-mp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "measure-problems",
+        "explanationVariants": [
+          "First 10 − 4 = 6, then 6 + 2 = 8 liters.",
+          "One move at a time: drain to 6, refill to 8."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "A tank has 10 L. 4 L drain, then 2 L are added. How many liters now?",
+          "options": [
+            {
+              "id": "a",
+              "label": "8 L",
+              "correct": true,
+              "feedback": "10 − 4 = 6, then 6 + 2 = 8."
+            },
+            {
+              "id": "b",
+              "label": "16 L",
+              "feedback": "16 added all three — but the 4 L drained. Subtract first: 10 − 4, then + 2."
+            },
+            {
+              "id": "c",
+              "label": "4 L",
+              "feedback": "4 L forgot the refill. After draining to 6, the 2 L bring it to 8."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

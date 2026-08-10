@@ -1,0 +1,308 @@
+{
+  "id": "ep-02-03",
+  "slug": "subtracting-polynomials",
+  "title": "Subtracting Polynomials",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch2-polynomial-basics",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "like-terms-group",
+      "body": "**Subtracting** means adding the opposite. Distribute the minus sign across **every** term of the second polynomial — each sign flips — and then combine like terms as usual. The minus belongs to the whole polynomial, not just its first term."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Subtracting flips every sign in the bracket.",
+      "widget": {
+        "type": "algebraTiles",
+        "targetX": 1,
+        "targetConst": 4,
+        "maxTiles": 8,
+        "xStart": 0,
+        "constStart": 0,
+        "prompt": "Build (2x + 3) − (x − 1) with tiles.",
+        "successFeedback": "x + 4. The minus sign flips BOTH terms of the bracket: −x and +1. Forgetting the second flip is the classic error, and the tiles make it impossible to hide — you can see the +1 arrive.",
+        "xFeedback": "The x-tiles are off: 2x minus x leaves 1x.",
+        "constFeedback": "The x-tiles are right but the units are wrong: 3 − (−1) = 4, not 2."
+      },
+      "predict": {
+        "prompt": "(2x + 3) − (x − 1): what happens to the −1 inside the second package?",
+        "options": [
+          {
+            "id": "flip",
+            "label": "It flips to +1 — subtracting a negative adds"
+          },
+          {
+            "id": "stay",
+            "label": "It stays −1"
+          },
+          {
+            "id": "gone",
+            "label": "It disappears"
+          }
+        ],
+        "outcomeId": "flip",
+        "reveal": "The minus distributes over everything inside: −(x − 1) = −x + 1. So the constants give 3 + 1 = 4 and the tiles will land on x + 4. Leaving the −1 alone gives x + 2 — the single most common slip in polynomial subtraction."
+      },
+      "conceptTag": "poly-subtract",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents poly subtract.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for poly subtract must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines poly subtract."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "exponents-polynomials:poly-subtract",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The x-column.",
+      "conceptTag": "poly-subtract",
+      "explanationVariants": [
+        "Subtracting flips the second x-term: 3x − 7x = −4x, so the coefficient is −4.",
+        "3 − 7 = −4 for the x-terms."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract: (5x^2 + 3x - 2) - (2x^2 + 7x - 6). What is the coefficient of x?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "Subtraction flips the second term: 3 − 7 = −4, not 3 + 7."
+          },
+          {
+            "value": 4,
+            "feedback": "Watch the sign: 3 − 7 = −4, not +4."
+          }
+        ],
+        "fallbackFeedback": "Subtract the x-coefficients: 3 − 7 = −4."
+      },
+      "variant": {
+        "gen": "poly-addsub",
+        "form": "subX"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: (5x² + 3x − 2) − (2x² + 7x − 6) = 5x² + 3x − 2 − 2x² − 7x + 6 = **3x² − 4x + 4**. Notice the −6 became +6. Every sign in the second polynomial flipped before combining.",
+      "figure": "ep-subtract-poly"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Subtract with a negative middle term.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract: (4x^2 - x + 3) - (x^2 - 5x + 8). What is the coefficient of x?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "The −5x flips to +5x: −1 − (−5) = −1 + 5 = 4."
+          },
+          {
+            "value": 6,
+            "feedback": "The first x-term is −1, not +1: −1 + 5 = 4."
+          }
+        ],
+        "fallbackFeedback": "−1 − (−5) = −1 + 5 = 4."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The classic mistake is flipping only the first term. −(x² − 5x + 8) = −x² **+** 5x **−** 8 — all three flip. Miss even one sign and the whole answer is wrong, so change them all before you combine.",
+      "figure": "ep-flip-all"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "The constant column.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract: (4x^2 - x + 3) - (x^2 - 5x + 8). What is the constant term?",
+        "answer": -5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "The sign is off: 3 − 8 = −5."
+          },
+          {
+            "value": 11,
+            "feedback": "Subtraction, not addition: 3 − 8 = −5, not 3 + 8."
+          }
+        ],
+        "fallbackFeedback": "Subtract the constants: 3 − 8 = −5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "When a column cancels.",
+      "conceptTag": "poly-subtract",
+      "explanationVariants": [
+        "The x-terms are 2 and 2: 2 − 2 = 0, so the x-term disappears.",
+        "2x − 2x = 0, so the coefficient of x is 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract: (6x^2 + 2x - 1) - (3x^2 + 2x - 5). What is the coefficient of x?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "Subtraction, not addition: 2 − 2 = 0, not 2 + 2."
+          },
+          {
+            "value": -4,
+            "feedback": "Both x-coefficients are +2: 2 − 2 = 0."
+          }
+        ],
+        "fallbackFeedback": "2 − 2 = 0, so there's no x-term."
+      },
+      "variant": {
+        "gen": "poly-addsub",
+        "form": "subX"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Its constant.",
+      "conceptTag": "poly-subtract",
+      "explanationVariants": [
+        "The constants are −1 and −5: −1 − (−5) = −1 + 5 = 4.",
+        "Subtracting −5 adds 5: −1 + 5 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract: (6x^2 + 2x - 1) - (3x^2 + 2x - 5). What is the constant term?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -6,
+            "feedback": "The −5 flips to +5: −1 − (−5) = −1 + 5 = 4."
+          },
+          {
+            "value": -4,
+            "feedback": "Watch the signs: −1 + 5 = +4."
+          }
+        ],
+        "fallbackFeedback": "−1 − (−5) = −1 + 5 = 4."
+      },
+      "variant": {
+        "gen": "poly-addsub",
+        "form": "subConst"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Flip a negative to solve it.",
+      "conceptTag": "poly-subtract",
+      "explanationVariants": [
+        "The x-terms are 4 and −1: 4 − (−1) = 4 + 1 = 5.",
+        "Subtracting −1x adds it: 4 + 1 = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Subtract: (7x^2 + 4x - 2) - (3x^2 - x + 5). What is the coefficient of x?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "The second x-term is −x, which flips to +x: 4 − (−1) = 5."
+          },
+          {
+            "value": -5,
+            "feedback": "Watch the signs: 4 + 1 = +5."
+          }
+        ],
+        "fallbackFeedback": "4 − (−1) = 4 + 1 = 5."
+      },
+      "hints": [
+        "The second polynomial's x-term is −x, coefficient −1.",
+        "Subtracting flips it: 4 − (−1).",
+        "4 + 1 = 5."
+      ],
+      "variant": {
+        "gen": "poly-addsub",
+        "form": "subFlip"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Subtracting is adding the opposite — flip every sign of the second polynomial.",
+      "takeaways": [
+        "Distribute the minus across every term, then combine like terms.",
+        "Subtracting a negative adds: −(−5) = +5.",
+        "Flip all signs, not just the first, before combining."
+      ],
+      "teaser": "next chapter: multiplying polynomials."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "poly-subtract",
+      "concept": {
+        "id": "rem-ps-c",
+        "kind": "concept",
+        "body": "Subtracting flips every sign of the second polynomial, then you combine. (5x^2 + 3x − 2) − (2x^2 + 7x − 6) = 5x^2 + 3x − 2 − 2x^2 − 7x + 6 = 3x^2 − 4x + 4."
+      },
+      "check": {
+        "id": "rem-ps-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "poly-subtract",
+        "explanationVariants": [
+          "The x-terms give 3 − 7 = −4.",
+          "Subtraction flips the 7x: 3 − 7 = −4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Subtract: (5x^2 + 3x - 2) - (2x^2 + 7x - 6). What is the coefficient of x?",
+          "answer": -4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 10,
+              "feedback": "Subtraction flips the second term: 3 − 7 = −4."
+            },
+            {
+              "value": 4,
+              "feedback": "Watch the sign: 3 − 7 = −4."
+            }
+          ],
+          "fallbackFeedback": "3 − 7 = −4."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "id": "sy-06-01",
+  "slug": "dilations-and-parallel-lines",
+  "title": "Dilations and Parallel Lines",
+  "courseId": "similarity",
+  "chapterId": "ch6-the-parallel-line-theorem",
+  "minutes": 10,
+  "standards": [
+    "G-SRT.A.1a"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A dilation stretches everything away from (or toward) one fixed **centre**, by the scale factor k. When a line segment does NOT pass through the centre, dilating it produces a new segment that is longer or shorter — but always running exactly **parallel** to the original. That parallelism is not a coincidence; it is what a dilation always does to a line it doesn't touch.",
+      "figure": "sy-dilation-parallel"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Dilate the rectangle from the origin by a factor of 2.",
+      "predict": {
+        "prompt": "A rectangle sits away from the centre of dilation. After dilating by k = 2, will its sides still be parallel to the original rectangle's sides?",
+        "options": [
+          {
+            "id": "yes",
+            "label": "Yes — dilation preserves the direction of every line not through the centre"
+          },
+          {
+            "id": "no",
+            "label": "No — stretching would tilt the sides"
+          }
+        ],
+        "outcomeId": "yes",
+        "reveal": "Yes. Every side of the rectangle avoids the centre, so every side comes out parallel to where it started — only the LENGTHS change, never the directions."
+      },
+      "widget": {
+        "type": "dilationExplore",
+        "shape": [
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 2,
+        "kMin": 0.5,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1,
+        "gridMin": 0,
+        "gridMax": 14,
+        "showRatios": [
+          "length"
+        ],
+        "prompt": "Scale the rectangle to twice its size.",
+        "successFeedback": "k = 2 — every side doubled in length, and every side still runs in exactly the same direction as before. Watch the bottom side: 3 units long, now 6, still perfectly horizontal.",
+        "lowFeedback": "The rectangle is smaller than twice the original.",
+        "highFeedback": "The rectangle is larger than twice the original."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute a scaled length directly.",
+      "conceptTag": "sy-dilation-parallel",
+      "explanationVariants": [
+        "A 3-unit side scales to 3 × 2 = 6 under k = 2.",
+        "Every length multiplies by k; direction never changes."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The rectangle's bottom side is 3 units long. After dilating by k = 2, how long is the image's bottom side?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 adds 2 to the original length instead of MULTIPLYING by the scale factor: 3 × 2 = 6."
+          },
+          {
+            "value": 1.5,
+            "feedback": "1.5 divides by 2. Scaling by k = 2 means multiplying: 3 × 2 = 6."
+          }
+        ],
+        "fallbackFeedback": "3 × 2 = 6."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Separate what a dilation changes from what it preserves.",
+      "conceptTag": "sy-dilation-parallel",
+      "explanationVariants": [
+        "Dilation changes lengths but preserves every angle — the shape looks identical, just resized.",
+        "Angles are untouched by a pure scale change; only distances stretch or shrink."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Does dilating a shape change its ANGLES?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — angles stay exactly the same; only lengths change",
+            "correct": true,
+            "feedback": "A dilation is a pure resize: every distance scales by k, but every angle is preserved exactly. That is why the dilated shape still LOOKS like the original, just bigger or smaller."
+          },
+          {
+            "id": "b",
+            "label": "Yes — larger shapes always have larger angles",
+            "correct": false,
+            "feedback": "Angle measure has nothing to do with size — a huge triangle and a tiny one can share identical angles, which is exactly what similarity means."
+          },
+          {
+            "id": "c",
+            "label": "Only the angle at the centre of dilation changes",
+            "correct": false,
+            "feedback": "Every angle stays fixed under a dilation, including any angle measured at the centre — only distances from the centre are affected, never angle measures."
+          },
+          {
+            "id": "d",
+            "label": "It depends on the scale factor",
+            "correct": false,
+            "feedback": "Angles are preserved for EVERY scale factor, whether k is large, small, or a fraction."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The parallel-line property doesn't depend on stretching versus shrinking, or on where exactly the centre sits. Whether k is greater than 1 (enlarging) or between 0 and 1 (reducing), any segment that misses the centre comes out parallel to where it started — the theorem holds across the whole range of scale factors.",
+      "figure": "dilation-scale"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Dilate the same rectangle by a factor of 0.5 this time.",
+      "widget": {
+        "type": "dilationExplore",
+        "shape": [
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 0.5,
+        "kMin": 0,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 2,
+        "gridMin": 0,
+        "gridMax": 14,
+        "showRatios": [
+          "length"
+        ],
+        "prompt": "Scale the rectangle down to half its size.",
+        "successFeedback": "k = 0.5 — every side shrank to half its length, and every side is STILL parallel to the original. Enlarging or shrinking, the direction never turns.",
+        "lowFeedback": "Smaller than half the original size.",
+        "highFeedback": "Larger than half the original size."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute a shrunk length.",
+      "conceptTag": "sy-dilation-parallel",
+      "explanationVariants": [
+        "3 × 0.5 = 1.5.",
+        "Multiplying by a scale factor under 1 shrinks the length."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The same 3-unit side, dilated by k = 0.5, has what new length?",
+        "answer": 1.5,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is 3 × 2, using the wrong scale factor. This dilation uses k = 0.5: 3 × 0.5 = 1.5."
+          },
+          {
+            "value": 2.5,
+            "feedback": "2.5 subtracts 0.5 instead of multiplying by it. Length × k: 3 × 0.5 = 1.5."
+          }
+        ],
+        "fallbackFeedback": "3 × 0.5 = 1.5."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Test whether the theorem depends on the centre's location.",
+      "conceptTag": "sy-dilation-parallel",
+      "explanationVariants": [
+        "The theorem never mentioned WHERE the centre sits — only that the segment must avoid it. Moving the centre changes nothing about the conclusion.",
+        "Re-read what the theorem actually requires: a segment not through the centre, any centre."
+      ],
+      "hints": [
+        "What does the parallel-line theorem actually require about the centre's position?",
+        "It only says the SEGMENT must not pass through the centre — it places no restriction on where the centre itself is.",
+        "So moving the centre elsewhere still leaves the theorem's condition satisfied."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A dilation uses a centre that is NOT at the origin — somewhere else entirely. Does the parallel-line theorem still apply to a segment that avoids that centre?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — the theorem only requires the segment to miss the centre, wherever the centre is",
+            "correct": true,
+            "feedback": "Nothing in the theorem singles out the origin — 'not through the centre' is the only condition, and it's satisfied for any centre location, not just (0,0)."
+          },
+          {
+            "id": "b",
+            "label": "No — the theorem only works when the centre is at the origin",
+            "correct": false,
+            "feedback": "The origin was just a convenient choice for the examples here. The theorem's condition is about the segment missing the centre, not about which point the centre happens to be."
+          },
+          {
+            "id": "c",
+            "label": "It depends on the scale factor used",
+            "correct": false,
+            "feedback": "The scale factor changes the LENGTH, not whether the parallel property holds — that only depends on the segment missing the centre."
+          },
+          {
+            "id": "d",
+            "label": "Only if the centre is inside the original shape",
+            "correct": false,
+            "feedback": "The centre's position relative to the shape doesn't matter — only whether the specific segment being dilated passes through it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Miss the centre, stay parallel — always.",
+      "takeaways": [
+        "A segment not passing through the centre of dilation comes out parallel to its original direction.",
+        "Dilation changes every length by the scale factor k, but preserves every angle exactly.",
+        "The parallel property holds for any scale factor and any centre — the only requirement is that the segment misses the centre."
+      ],
+      "teaser": "next chapter: applying similarity to indirect measurement."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sy-dilation-parallel",
+      "concept": {
+        "id": "rem-sdp-c",
+        "kind": "concept",
+        "body": "Rewind. Dilating multiplies every length by the scale factor k. A 4-unit segment dilated by k = 3 becomes 4 × 3 = 12 units — and it still points the same direction it always did."
+      },
+      "check": {
+        "id": "rem-sdp-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "sy-dilation-parallel",
+        "explanationVariants": [
+          "4 × 3 = 12.",
+          "Multiply the original length by the scale factor."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A 4-unit segment is dilated by a scale factor of 3. What is its new length?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 7,
+              "feedback": "7 adds 3 to the length instead of multiplying by it: 4 × 3 = 12."
+            },
+            {
+              "value": 1.33,
+              "feedback": "1.33 divides by 3. A scale factor of 3 MULTIPLIES: 4 × 3 = 12."
+            }
+          ],
+          "fallbackFeedback": "4 × 3 = 12."
+        }
+      }
+    }
+  ]
+}

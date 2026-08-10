@@ -1,0 +1,234 @@
+{
+  "id": "bt-02-01",
+  "slug": "the-binomial-theorem",
+  "title": "The Binomial Theorem",
+  "courseId": "binomial-theorem",
+  "chapterId": "ch2-the-theorem-at-work",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Written out, the identification of the last lesson becomes one line: (a + b)ⁿ is the sum, over k from 0 to n, of C(n,k)·aⁿ⁻ᵏ·bᵏ. Three moving parts — a combination, a falling power of a, a rising power of b — and their exponents always total n, which is the fastest check that a term was written correctly.",
+      "figure": "bt-theorem-line"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Confirm the n = 2 case against the theorem.",
+      "widget": {
+        "type": "binomialAreaLab",
+        "requiredMoves": 3,
+        "startA": 0,
+        "startB": 0,
+        "prompt": "Build (x + 5)(x + 1) and read the middle coefficient — the case where the two partitions differ.",
+        "pX": 1,
+        "qX": 1,
+        "targetA": 5,
+        "targetB": 1,
+        "asks": "middle",
+        "successFeedback": "x² + 6x + 5. The strips are 5x and 1x, and they ADD to 6x — while the corner multiplies to 5. Two regions, two different operations.",
+        "productMiddleFeedback": "The strips were multiplied: 5×1 = 5 is the corner. The middle coefficient adds them: 5 + 1 = 6.",
+        "partialFeedback": "One partition is right and the other is not — this rectangle is 5 down and 1 across.",
+        "signFeedback": "Right sizes, wrong direction — both partitions are added here, so both are positive."
+      },
+      "predict": {
+        "prompt": "In every term C(n,k)·aⁿ⁻ᵏ·bᵏ, what do the two exponents always add to?",
+        "options": [
+          {
+            "id": "n",
+            "label": "n"
+          },
+          {
+            "id": "k",
+            "label": "k"
+          },
+          {
+            "id": "2n",
+            "label": "2n"
+          }
+        ],
+        "outcomeId": "n",
+        "reveal": "(n − k) + k = n identically, so every term's exponents total n no matter which term you are in. That is the cheapest error-check available: write a term, add its exponents, and if the total is not n something has gone wrong before any arithmetic was attempted."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Assemble one term.",
+      "conceptTag": "bt-theorem",
+      "explanationVariants": [
+        "The a²b³ term of (a + b)⁵ has coefficient C(5,3) = 10.",
+        "b³ means k = 3, so the coefficient is C(5,3) = 10."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In (a + b)⁵, what is the coefficient of a²b³?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "That is C(5,1). Here k = 3, because b appears three times."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is a row-4 entry. This is row 5, whose entries are 1, 5, 10, 10, 5, 1."
+          }
+        ],
+        "fallbackFeedback": "b³ means k = 3, so the coefficient is C(5,3) = 10.",
+        "successFeedback": "10 — and the exponents 2 and 3 total 5, confirming the term belongs to this expansion."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The theorem also handles binomials that are not bare letters. For (2x + 3)⁴, take a = 2x and b = 3 and apply the formula unchanged — but every power now acts on the whole quantity, so a² means (2x)² = 4x², coefficient included. Forgetting to raise the 2 is the standard slip.",
+      "figure": "bt-substitute-whole-blocks"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Powers act on everything.",
+      "conceptTag": "bt-theorem",
+      "explanationVariants": [
+        "(2x)³ = 8x³ — the exponent applies to the 2 as well as the x.",
+        "Cubing 2x cubes both factors."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the coefficient of x³ in (2x)³?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The exponent applies to the whole quantity 2x, so the 2 is cubed too: 2³ = 8."
+          },
+          {
+            "value": 6,
+            "feedback": "That multiplies 2 by 3 instead of cubing 2. (2x)³ = 2³x³."
+          }
+        ],
+        "fallbackFeedback": "(2x)³ = 2³ · x³ = 8x³.",
+        "successFeedback": "8 — and this is why substituted binomials need brackets kept until the very last step."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Spot the malformed term.",
+      "conceptTag": "bt-theorem",
+      "explanationVariants": [
+        "In (a + b)⁶ every term's exponents total 6, so a³b² cannot belong to it.",
+        "3 + 2 = 5 ≠ 6, so that term fails the exponent check."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these CANNOT be a term of (a + b)⁶?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "20a³b²",
+            "correct": true,
+            "feedback": "Right — 3 + 2 = 5, not 6. The coefficient happens to be a real Pascal entry, which is what makes this one tempting."
+          },
+          {
+            "id": "o2",
+            "label": "15a⁴b²",
+            "correct": false,
+            "feedback": "4 + 2 = 6 and C(6,2) = 15 — this term is genuine."
+          },
+          {
+            "id": "o3",
+            "label": "6a⁵b",
+            "correct": false,
+            "feedback": "5 + 1 = 6 and C(6,1) = 6 — also genuine."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Apply it to a substituted binomial.",
+      "conceptTag": "bt-theorem",
+      "explanationVariants": [
+        "The x² term of (x + 2)⁴ is C(4,2)·x²·2² = 6×4 = 24.",
+        "Coefficient 6 from the triangle, times 2² = 4 from the substitution."
+      ],
+      "hints": [
+        "Identify which k gives x² when a = x and b = 2, in (a + b)⁴.",
+        "x² needs k = 2, so the combination is C(4,2) = 6 — but b² = 2² also contributes.",
+        "Multiply 6 by 2² = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the expansion of (x + 2)⁴, what is the coefficient of x²?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That is C(4,2) alone. The b² = 2² = 4 has to multiply it."
+          },
+          {
+            "value": 12,
+            "feedback": "That uses 2·C(4,2), raising the 2 to the first power. The b exponent here is 2, so it contributes 4."
+          }
+        ],
+        "fallbackFeedback": "C(4,2)·x²·2² = 6·4 = 24, so the coefficient is 24.",
+        "successFeedback": "24 — combination times substituted power, which is the whole procedure in one product."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One line, three parts.",
+      "takeaways": [
+        "(a + b)ⁿ = Σ C(n,k)·aⁿ⁻ᵏ·bᵏ for k from 0 to n.",
+        "Every term's exponents total n — a one-second check on any written term.",
+        "For substituted binomials the powers act on the whole quantity, coefficients included."
+      ],
+      "teaser": "Next: reach a single term without expanding anything before it."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bt-theorem",
+      "concept": {
+        "id": "rem-bt-theorem-c",
+        "kind": "concept",
+        "body": "The theorem also handles binomials that are not bare letters. For (2x + 3)⁴, take a = 2x and b = 3 and apply the formula unchanged — but every power now acts on the whole quantity, so a² means (2x)² = 4x², coefficient included. Forgetting to raise the 2 is the standard slip."
+      },
+      "check": {
+        "id": "rem-bt-theorem-k",
+        "kind": "check",
+        "body": "Assemble one term.",
+        "conceptTag": "bt-theorem",
+        "explanationVariants": [
+          "The a²b³ term of (a + b)⁵ has coefficient C(5,3) = 10.",
+          "b³ means k = 3, so the coefficient is C(5,3) = 10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In (a + b)⁵, what is the coefficient of a²b³?",
+          "answer": 10,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "That is C(5,1). Here k = 3, because b appears three times."
+            },
+            {
+              "value": 6,
+              "feedback": "6 is a row-4 entry. This is row 5, whose entries are 1, 5, 10, 10, 5, 1."
+            }
+          ],
+          "fallbackFeedback": "b³ means k = 3, so the coefficient is C(5,3) = 10.",
+          "successFeedback": "10 — and the exponents 2 and 3 total 5, confirming the term belongs to this expansion."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,284 @@
+{
+  "id": "tm-04-02",
+  "slug": "finding-missing-lengths",
+  "title": "Finding Missing Lengths",
+  "courseId": "transformations-measurement",
+  "chapterId": "ch4-pythagorean",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To find the hypotenuse, add the leg-squares and take the square root: c = √(a² + b²). For legs 3 and 4: c = √(9 + 16) = √25 = 5. Here every answer comes out a whole number.",
+      "figure": "right-triangle"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the triangle the theorem describes.",
+      "widget": {
+        "type": "distanceGrid",
+        "prompt": "Place the point a run of 6 and rise of 8 from the origin, then read the diagonal.",
+        "anchor": [
+          0,
+          0
+        ],
+        "targetPoint": [
+          6,
+          8
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 0,
+        "startY": 0,
+        "successFeedback": "Run 6, rise 8, diagonal 10 — the 6-8-10 triangle is 3-4-5 doubled. Pythagoras is a distance machine.",
+        "wrongPointFeedback": "Check the legs: 6 across and 8 up from (0, 0)."
+      },
+      "predict": {
+        "prompt": "A right triangle has legs 6 and 8. Its hypotenuse is…",
+        "options": [
+          {
+            "id": "ten",
+            "label": "10 — from √(36 + 64)"
+          },
+          {
+            "id": "fourteen",
+            "label": "14 — the legs added"
+          },
+          {
+            "id": "fortyeight",
+            "label": "48 — the legs multiplied"
+          }
+        ],
+        "outcomeId": "ten",
+        "reveal": "c² = 36 + 64 = 100, so c = 10. The diagonal always beats either leg but undercuts their sum — 14 is the walk AROUND the corner, and the grid will show the shortcut."
+      },
+      "conceptTag": "tm-pythagorean-apply",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents tm pythagorean apply.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for tm pythagorean apply must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines tm pythagorean apply."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "transformations-measurement:tm-pythagorean-apply",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "To find a missing LEG instead, subtract: a = √(c² − b²). If the hypotenuse is 13 and one leg is 5, then a = √(169 − 25) = √144 = 12. Subtract because the hypotenuse-square is the biggest.",
+      "figure": "tm-missing-leg"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find the hypotenuse.",
+      "conceptTag": "tm-pythagorean-apply",
+      "explanationVariants": [
+        "c = √(5² + 12²) = √(25 + 144) = √169 = 13.",
+        "Add leg-squares then root: √169 = 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has legs 5 and 12. What is the hypotenuse?",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 17,
+            "feedback": "That added the legs — use √(25 + 144) = √169 = 13."
+          },
+          {
+            "value": 169,
+            "feedback": "That's c² — take the square root: √169 = 13."
+          }
+        ],
+        "fallbackFeedback": "c = √(5² + 12²) = √(25 + 144) = √169 = 13."
+      },
+      "variant": {
+        "gen": "pythagorean"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find a missing leg.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has hypotenuse 13 and one leg 5. What is the other leg?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 18,
+            "feedback": "For a LEG, SUBTRACT: √(13² − 5²) = √(169 − 25) = √144 = 12, don't add."
+          },
+          {
+            "value": 144,
+            "feedback": "That's the leg squared — take the square root: √144 = 12."
+          }
+        ],
+        "fallbackFeedback": "a = √(13² − 5²) = √(169 − 25) = √144 = 12."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another hypotenuse.",
+      "conceptTag": "tm-pythagorean-apply",
+      "explanationVariants": [
+        "c = √(8² + 15²) = √(64 + 225) = √289 = 17.",
+        "Add leg-squares then root: √289 = 17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has legs 8 and 15. What is the hypotenuse?",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 23,
+            "feedback": "That added the legs — use √(64 + 225) = √289 = 17."
+          },
+          {
+            "value": 289,
+            "feedback": "That's c² — take the square root: √289 = 17."
+          }
+        ],
+        "fallbackFeedback": "c = √(8² + 15²) = √(64 + 225) = √289 = 17."
+      },
+      "variant": {
+        "gen": "pythagorean"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Another missing leg.",
+      "conceptTag": "tm-pythagorean-apply",
+      "explanationVariants": [
+        "a = √(10² − 6²) = √(100 − 36) = √64 = 8.",
+        "Subtract for a leg then root: √64 = 8."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A right triangle has hypotenuse 10 and one leg 6. What is the other leg?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "For a LEG, SUBTRACT: √(100 − 36) = √64 = 8, don't add."
+          },
+          {
+            "value": 64,
+            "feedback": "That's the leg squared — take the square root: √64 = 8."
+          }
+        ],
+        "fallbackFeedback": "a = √(10² − 6²) = √(100 − 36) = √64 = 8."
+      },
+      "variant": {
+        "gen": "pythagorean",
+        "form": "legFromHyp"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A real-world distance.",
+      "conceptTag": "tm-pythagorean-apply",
+      "explanationVariants": [
+        "The ladder is the hypotenuse: c = √(9² + 12²) = √(81 + 144) = √225 = 15 feet.",
+        "Add the leg-squares then root: √225 = 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ladder leans against a wall. Its base is 9 feet from the wall and it reaches 12 feet up. How long is the ladder, in feet?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "That added the sides — the ladder is the hypotenuse: √(81 + 144) = √225 = 15."
+          },
+          {
+            "value": 225,
+            "feedback": "That's the ladder squared — take the square root: √225 = 15."
+          }
+        ],
+        "fallbackFeedback": "The ladder is the hypotenuse: c = √(9² + 12²) = √(81 + 144) = √225 = 15 feet."
+      },
+      "hints": [
+        "The ladder is the hypotenuse; the 9 ft and 12 ft are the legs.",
+        "c = √(9² + 12²) = √(81 + 144) = √225.",
+        "√225 = 15, so the ladder is 15 feet long."
+      ],
+      "variant": {
+        "gen": "pythagorean",
+        "form": "ladder"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Use c = √(a² + b²) for the hypotenuse and a = √(c² − b²) for a missing leg.",
+      "takeaways": [
+        "Hypotenuse: add the leg-squares, then take the square root.",
+        "Missing leg: subtract the known leg-square from c², then take the root.",
+        "In these problems every answer is a whole number."
+      ],
+      "teaser": "Next: testing whether a triangle is right at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tm-pythagorean-apply",
+      "concept": {
+        "id": "rem-tm0402-c",
+        "kind": "concept",
+        "body": "Find the hypotenuse with c = √(a² + b²); find a missing leg with a = √(c² − b²). Add the leg-squares for the hypotenuse; subtract for a leg."
+      },
+      "check": {
+        "id": "rem-tm0402-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tm-pythagorean-apply",
+        "explanationVariants": [
+          "c = √(9² + 12²) = √(81 + 144) = √225 = 15.",
+          "Add leg-squares then root: √225 = 15."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A right triangle has legs 9 and 12. What is the hypotenuse?",
+          "answer": 15,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 21,
+              "feedback": "That added the legs — use √(81 + 144) = √225 = 15."
+            },
+            {
+              "value": 225,
+              "feedback": "That's c² — take the square root: √225 = 15."
+            }
+          ],
+          "fallbackFeedback": "c = √(9² + 12²) = √(81 + 144) = √225 = 15."
+        }
+      }
+    }
+  ]
+}

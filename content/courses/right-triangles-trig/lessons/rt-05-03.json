@@ -1,0 +1,347 @@
+{
+  "id": "rt-05-03",
+  "slug": "law-of-cosines",
+  "title": "The Law of Cosines",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch5-relationships-and-laws",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "rt-law-cosines",
+      "concept": {
+        "id": "rem-rt-law-cosines-c",
+        "kind": "concept",
+        "body": "Law of Cosines: c² = a² + b² − 2ab·cos C, where C sits BETWEEN sides a and b, and c faces C. Use for SAS (find the far side) or SSS (solve for cos C, then inverse-cos). Order matters: square both sides, sum, subtract the full 2ab·cos C product, then square-root. Negative cosine = obtuse angle, and C = 90° recovers Pythagoras."
+      },
+      "check": {
+        "id": "rem-rt-law-cosines-k",
+        "kind": "check",
+        "body": "Right-angle special case.",
+        "conceptTag": "rt-law-cosines",
+        "explanationVariants": [
+          "cos 90° = 0 removes the correction: c² = 36 + 64 = 100, c = 10.",
+          "With the included angle square, it IS Pythagoras: √(36 + 64) = 10."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "a = 6, b = 8, included angle C = 90°. Use the Law of Cosines to find c.",
+          "answer": 10,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 14,
+              "feedback": "14 = 6 + 8 adds plain lengths — the law adds SQUARES (then roots): √100 = 10."
+            },
+            {
+              "value": 100,
+              "feedback": "100 is c². One more step — the square root: 10."
+            }
+          ],
+          "fallbackFeedback": "c² = 36 + 64 − 0 = 100 → c = 10."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two sides hugging a known angle — SAS — leaves no matched pair for the Law of Sines. The Law of Cosines steps in: **c² = a² + b² − 2ab·cos C**, where C is the angle BETWEEN a and b, and c faces it. It's Pythagoras with a correction term that pays for the missing right angle.",
+      "figure": "oblique-triangle-laws"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The law of cosines is Pythagoras with a correction term.",
+      "widget": {
+        "type": "triangleSolve",
+        "mode": "sas",
+        "a": 3,
+        "b": 4,
+        "target": 5,
+        "start": 30,
+        "prompt": "Sides 3 and 4. Open the angle until the third side is exactly 5.",
+        "successFeedback": "90°, and the correction term −2ab·cos θ vanishes because cos 90° = 0 — leaving 3² + 4² = 5². Pythagoras is not a separate theorem; it is the law of cosines at the one angle where the correction disappears. Open the angle further and the third side grows beyond 5.",
+        "lowFeedback": "Under 5 — the angle is still acute, so the correction term is subtracting from a² + b².",
+        "highFeedback": "Over 5 — the angle is obtuse, so cosine has gone negative and the correction term is now ADDING."
+      },
+      "predict": {
+        "prompt": "At what included angle does the law of cosines become the Pythagorean theorem?",
+        "options": [
+          {
+            "id": "right",
+            "label": "90°"
+          },
+          {
+            "id": "sixty",
+            "label": "60°"
+          },
+          {
+            "id": "zero",
+            "label": "0°"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "At 90°, cos 90° = 0, so the correction term disappears and a² + b² = c² remains."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Change the included angle and observe how the opposite side and cosine correction term covary.",
+        "invariants": [
+          "side-angle-dependence",
+          "pythagorean-is-right-angle-case"
+        ],
+        "misconceptions": [
+          "pythagorean-for-all-triangles",
+          "cosine-sign-irrelevant"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 2,
+        "transferFamily": "nonright-triangle-solving",
+        "counterfactualPrompt": "Move past 90°. Why does the opposite side grow even though a and b do not change?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why does the third side equal 5 exactly at 90°?",
+          "options": [
+            {
+              "id": "zero",
+              "label": "cos 90° is zero, so the correction term vanishes.",
+              "correct": true,
+              "feedback": "Exactly—the general law collapses to the Pythagorean theorem."
+            },
+            {
+              "id": "largest",
+              "label": "The third side is always the sum of the other two.",
+              "correct": false,
+              "feedback": "Triangle inequality prevents equality, and the relationship depends on the angle."
+            },
+            {
+              "id": "rounding",
+              "label": "It is only a graphical rounding coincidence.",
+              "correct": false,
+              "feedback": "The equality is exact because the cosine term is exactly zero."
+            }
+          ]
+        }
+      },
+      "conceptTag": "rt-law-cosines"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Run SAS: a = 7, b = 9, C = 52°. Then c² = 49 + 81 − 2·7·9·cos 52° = 130 − 126·cos 52° ≈ 52.43, so c ≈ 7.24. Order of operations is the whole battle: square, sum, subtract the FULL product, and only then take the root.",
+      "figure": "rt-law-cosines-sas"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "SAS, start to finish.",
+      "conceptTag": "rt-law-cosines",
+      "explanationVariants": [
+        "c² = 130 − 126·cos 52° ≈ 130 − 77.57 = 52.43, so c = √52.43 ≈ 7.24.",
+        "Squares (49 + 81), correction (126 × 0.6157), subtract, root: ≈ 7.24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "a = 7, b = 9, included angle C = 52°. Find side c (2 decimals).",
+        "answer": 7.24,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 11.4,
+            "feedback": "11.4 = √130 skips the correction term entirely — valid only at C = 90°. Subtract 126·cos 52° first: ≈ 7.24."
+          },
+          {
+            "value": 14.41,
+            "feedback": "14.41 = √(130 + 126·cos 52°) flips the sign — the term SUBTRACTS for our formula's form. √52.43 ≈ 7.24."
+          },
+          {
+            "value": 52.43,
+            "feedback": "52.43 is c², one step from done. Take the square root: ≈ 7.24."
+          }
+        ],
+        "fallbackFeedback": "c = √(130 − 126·cos 52°) ≈ 7.24."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-cosines__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Given all three sides — SSS — solve the formula for the cosine instead: **cos C = (a² + b² − c²)/(2ab)**. A bonus signal rides along: a NEGATIVE cosine means C is obtuse. Sides 5, 7, 10: cos C = (25 + 49 − 100)/70 = −26/70 ≈ −0.3714 — obtuse before you even press inverse-cos.",
+      "figure": "rt-law-cosines-sss"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Angle from three sides.",
+      "conceptTag": "rt-law-cosines",
+      "explanationVariants": [
+        "cos C = −26/70 ≈ −0.3714, so C = cos⁻¹(−0.3714) ≈ 111.8° — obtuse, as the negative promised.",
+        "The 10 faces the biggest angle: (25 + 49 − 100)/70 is negative, landing at ≈ 111.8°."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sides 5, 7, and 10. Find the angle OPPOSITE the 10, in degrees (1 decimal).",
+        "answer": 111.8,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 68.2,
+            "feedback": "68.2° = cos⁻¹(+0.3714) drops the minus sign — but 25 + 49 − 100 is NEGATIVE, and negative cosine means obtuse: ≈ 111.8°."
+          },
+          {
+            "value": 27.7,
+            "feedback": "27.7° is the angle opposite the 5 — the sides got shuffled in the formula. The angle opposite the 10 puts 100 in the c² slot: ≈ 111.8°."
+          }
+        ],
+        "fallbackFeedback": "C = cos⁻¹(−26/70) ≈ 111.8°."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-cosines__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the sign.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For sides a, b, c (c largest), what does the SIGN of a² + b² − c² tell you about the angle opposite c?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Positive → acute, zero → right, negative → obtuse",
+            "correct": true,
+            "feedback": "It's Chapter 1's classifier reborn: the sign of the correction numerator IS the sign of cos C, which classifies the angle."
+          },
+          {
+            "id": "o2",
+            "label": "Nothing — only the magnitude matters",
+            "correct": false,
+            "feedback": "The sign carries the classification: cos C inherits it, and negative cosine means obtuse. Magnitude just says how much."
+          },
+          {
+            "id": "o3",
+            "label": "Negative means the triangle is impossible",
+            "correct": false,
+            "feedback": "Perfectly possible — obtuse triangles live there. Impossible shows up as a cosine below −1, not merely negative."
+          },
+          {
+            "id": "o4",
+            "label": "Positive means the triangle is right-angled",
+            "correct": false,
+            "feedback": "Right angles need EXACTLY zero (a² + b² = c²). Positive leaves the angle acute."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Choose your law.",
+      "conceptTag": "rt-law-cosines",
+      "explanationVariants": [
+        "SAS has no side-angle matched pair, so the Law of Sines can't start — Cosines is built for exactly this.",
+        "Two sides + included angle → Cosines; a matched pair → Sines."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You know two sides and the angle BETWEEN them. Which tool finds the third side?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Law of Cosines — SAS is its home turf",
+            "correct": true,
+            "feedback": "The included angle plugs straight into c² = a² + b² − 2ab·cos C."
+          },
+          {
+            "id": "o2",
+            "label": "Law of Sines",
+            "correct": false,
+            "feedback": "Sines needs a side matched with its OPPOSITE angle — the included angle faces the side you don't have yet. Cosines first."
+          },
+          {
+            "id": "o3",
+            "label": "SOH-CAH-TOA directly",
+            "correct": false,
+            "feedback": "The plain ratios require a right angle, which SAS doesn't promise. Cosines handles any included angle."
+          },
+          {
+            "id": "o4",
+            "label": "The Pythagorean theorem",
+            "correct": false,
+            "feedback": "Only if the included angle is exactly 90° — otherwise you need the full formula with its correction term."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-cosines__mcq"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Off-course.",
+      "conceptTag": "rt-law-cosines",
+      "hints": [
+        "The two legs (140 km and 90 km) hug the 118° turn angle between the paths — SAS.",
+        "d² = 140² + 90² − 2·140·90·cos 118° — note cos 118° is NEGATIVE, so the correction ADDS distance.",
+        "d² = 27700 − 25200·(−0.4695) ≈ 39530.6; take the root."
+      ],
+      "explanationVariants": [
+        "d = √(27700 + 25200·0.4695) ≈ √39530.6 ≈ 198.82 km — more than √27700 ≈ 166, since the wide 118° pushes the endpoints apart.",
+        "With an obtuse included angle the correction term flips positive: d ≈ 198.82 km."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A ship sails 140 km, turns so the two path segments meet at 118°, then sails 90 km. How far is it from the start (2 decimals)?",
+        "answer": 198.82,
+        "tolerance": 0.5,
+        "commonErrors": [
+          {
+            "value": 166.43,
+            "feedback": "166.43 = √(140² + 90²) ignores the angle — Pythagoras only rules at 90°. The 118° correction ADDS: ≈ 198.82."
+          },
+          {
+            "value": 125.97,
+            "feedback": "125.97 ≈ √(27700 − 25200·0.4695) subtracts the magnitude — but cos 118° is already NEGATIVE, so the formula's − sign turns it into addition: ≈ 198.82."
+          },
+          {
+            "value": 230,
+            "feedback": "230 = 140 + 90 measures the path SAILED, not the straight-line displacement asked: ≈ 198.82."
+          }
+        ],
+        "fallbackFeedback": "d = √(140² + 90² − 25200·cos 118°) ≈ 198.82 km."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-law-cosines__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Pythagoras, corrected.",
+      "takeaways": [
+        "SAS: c² = a² + b² − 2ab·cos C, with C the INCLUDED angle.",
+        "SSS: cos C = (a² + b² − c²)/(2ab); a negative cosine flags an obtuse angle.",
+        "At C = 90° the correction dies and Pythagoras returns."
+      ],
+      "teaser": "Finale: choosing the right tool every time — plus a trig formula for area."
+    }
+  ]
+}

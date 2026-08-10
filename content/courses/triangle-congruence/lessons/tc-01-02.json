@@ -1,0 +1,348 @@
+{
+  "id": "tc-01-02",
+  "slug": "the-one-that-fails",
+  "title": "The One That Fails",
+  "courseId": "triangle-congruence",
+  "chapterId": "ch1-congruence-criteria",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "tc-ssa-fails",
+      "concept": {
+        "id": "rem-tc-ssa-fails-c",
+        "kind": "concept",
+        "body": "Two impostors to remember. SSA (two sides + non-included angle): the un-pinned side can swing to two spots — TWO triangles, ambiguous. AAA (three angles): fixes shape only — SIMILAR triangles of any size. Every valid criterion has at least one side AND locks the size."
+      },
+      "check": {
+        "id": "rem-tc-ssa-fails-k",
+        "kind": "check",
+        "body": "Which impostor?",
+        "conceptTag": "tc-ssa-fails",
+        "explanationVariants": [
+          "AAA gives similar triangles — same shape, any size — so it can't guarantee congruence.",
+          "Three angles fix shape but not size: similarity, not congruence."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which arrangement gives only SIMILAR triangles, not necessarily congruent?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "AAA (three equal angles)",
+              "correct": true,
+              "feedback": "Equal angles fix shape only — the triangles can be any size, so similar not congruent."
+            },
+            {
+              "id": "o2",
+              "label": "SSS (three equal sides)",
+              "correct": false,
+              "feedback": "SSS locks size AND shape — it's a valid congruence criterion, not merely similarity."
+            },
+            {
+              "id": "o3",
+              "label": "SAS (two sides, included angle)",
+              "correct": false,
+              "feedback": "SAS fully determines the triangle — congruent, not just similar."
+            },
+            {
+              "id": "o4",
+              "label": "ASA (two angles, included side)",
+              "correct": false,
+              "feedback": "ASA includes a side, so it fixes size too — congruent, not just similar."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Not every arrangement locks a triangle. **SSA** — two sides and a NON-included angle — can leave TWO different triangles. Swing the second side from its fixed angle and, for the right lengths, it can reach the base line at two different points. Both fit the given parts; both are legal. So SSA is NOT a congruence criterion.",
+      "figure": "ssa-ambiguous"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "See the ambiguity.",
+      "predict": {
+        "prompt": "Two sides and a non-included angle (SSA) are given. Will they always lock ONE triangle?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — the same givens can close into two different triangles"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — any two sides and an angle pin the shape"
+          },
+          {
+            "id": "depends",
+            "label": "Only if you also know it's a right triangle"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "No. Swing the free side from the given angle: it can meet the opposite ray at TWO different points, and both finish a legitimate triangle from the same three parts. SSA is the one combination that doesn't guarantee congruence — build both triangles and see them stand side by side."
+      },
+      "widget": {
+        "type": "triangleConstraintLab",
+        "prompt": "The givens are SSA. Test the angle, then use the second-triangle control — does the same set of parts really finish only one triangle?",
+        "targetCriterion": "SSA",
+        "startCriterion": "SSA",
+        "sideA": 5,
+        "sideB": 8,
+        "targetAngle": 35,
+        "angleStart": 35,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "successFeedback": "Two noncongruent triangles, both built from the same 5, 8, and 35° — that is what \"SSA fails\" means. Nothing was drawn wrong; the parts themselves don't pin down a unique shape.",
+        "criterionFeedback": "Keep the givens set to SSA — that is the combination in question.",
+        "angleFeedback": "Bring the angle back to 35° and reveal the second triangle from there.",
+        "evidenceFeedback": "Reveal the second triangle at least once before deciding — one glance isn't a test."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why SSA differs from SAS.",
+      "conceptTag": "tc-ssa-fails",
+      "explanationVariants": [
+        "In SAS the angle is BETWEEN the two sides, so the third side is pinned. In SSA the angle is opposite a side, letting that side swing to two positions.",
+        "Included angle (SAS) fixes the triangle; non-included angle (SSA) leaves the swinging side free to land twice."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What makes SSA fail where SAS succeeds?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "SSA's angle is NOT between the two sides, so a side can swing to two positions",
+            "correct": true,
+            "feedback": "The non-included angle lets the opposite side reach two points — two triangles. SAS's included angle allows only one."
+          },
+          {
+            "id": "o2",
+            "label": "SSA uses angles and SAS uses sides",
+            "correct": false,
+            "feedback": "Both use two sides and one angle — the difference is the angle's POSITION: included (SAS) vs not (SSA)."
+          },
+          {
+            "id": "o3",
+            "label": "SSA triangles are always larger",
+            "correct": false,
+            "feedback": "Size isn't the issue — it's that SSA can produce two DIFFERENT triangles from one set of parts."
+          },
+          {
+            "id": "o4",
+            "label": "SAS is newer than SSA",
+            "correct": false,
+            "feedback": "Neither is 'newer' — SAS works and SSA doesn't because of where the angle sits relative to the sides."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-ssa-fails__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The same logic exposes **AAA**: three equal angles fix the SHAPE but not the SIZE. A triangle and a scaled-up copy have identical angles yet different side lengths — they're **similar**, not congruent. Angles alone never guarantee congruence; you always need at least one side.",
+      "figure": "tc-aaa-fails"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "AAA gives what?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Two triangles have all three pairs of angles equal. What is guaranteed?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They are similar (same shape), but not necessarily congruent",
+            "correct": true,
+            "feedback": "Equal angles fix the shape; without a matching side, one could be a scaled copy — similar, not congruent."
+          },
+          {
+            "id": "o2",
+            "label": "They are congruent",
+            "correct": false,
+            "feedback": "A triangle and its enlargement share all angles but differ in size — equal angles alone don't give congruence."
+          },
+          {
+            "id": "o3",
+            "label": "They are identical in every way",
+            "correct": false,
+            "feedback": "Only the SHAPE matches. Sizes can differ freely when just angles are equal."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing can be concluded",
+            "correct": false,
+            "feedback": "Equal angles DO conclude similarity — same shape. They just fall short of congruence."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Similar or congruent?",
+      "conceptTag": "tc-ssa-fails",
+      "explanationVariants": [
+        "Equal angles but a scaled size means SIMILAR: same shape, different size.",
+        "Congruence needs equal size too; matching angles alone give similarity."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A triangle and a copy twice as large have the same three angles. They are…",
+        "options": [
+          {
+            "id": "o1",
+            "label": "similar but not congruent",
+            "correct": true,
+            "feedback": "Same angles → same shape → similar; the doubled size breaks congruence."
+          },
+          {
+            "id": "o2",
+            "label": "congruent",
+            "correct": false,
+            "feedback": "Congruent triangles are the SAME size. Doubling the copy makes them similar, not congruent."
+          },
+          {
+            "id": "o3",
+            "label": "neither similar nor congruent",
+            "correct": false,
+            "feedback": "They ARE similar — identical angles guarantee same shape. They just aren't congruent."
+          },
+          {
+            "id": "o4",
+            "label": "congruent only if right triangles",
+            "correct": false,
+            "feedback": "Right or not, a doubled copy is similar, never congruent — the sizes differ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-ssa-fails__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "So the valid criteria are exactly **SSS, SAS, ASA, AAS** — each with at least one side, each locking size AND shape. The two impostors are **SSA** (ambiguous — two triangles) and **AAA** (similar — any size). Memorize the winners; recognize the two traps.",
+      "figure": "tc-valid-criteria"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Sort the criteria.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Sort each arrangement: does it GUARANTEE congruence, or NOT?",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "guarantees congruence"
+          },
+          {
+            "id": "no",
+            "label": "does not guarantee"
+          }
+        ],
+        "items": [
+          {
+            "id": "sss",
+            "label": "SSS",
+            "bucketId": "yes",
+            "feedback": "Three equal sides lock one triangle — a valid criterion."
+          },
+          {
+            "id": "sas",
+            "label": "SAS",
+            "bucketId": "yes",
+            "feedback": "Two sides with the INCLUDED angle — valid."
+          },
+          {
+            "id": "ssa",
+            "label": "SSA",
+            "bucketId": "no",
+            "feedback": "Two sides and a NON-included angle can give two triangles — ambiguous, not valid."
+          },
+          {
+            "id": "aaa",
+            "label": "AAA",
+            "bucketId": "no",
+            "feedback": "Three equal angles fix only the shape — similar, any size. Not a congruence criterion."
+          }
+        ],
+        "missFeedback": "A valid criterion needs at least one side AND must lock the triangle uniquely.",
+        "successFeedback": "SSS and SAS lock it; SSA and AAA don't."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Spot the fake.",
+      "conceptTag": "tc-ssa-fails",
+      "hints": [
+        "List the four valid criteria — which given arrangement is NOT among them?",
+        "SSS, SAS, ASA, AAS are valid. Check each option against that list.",
+        "Two sides and a non-included angle has a name — and it's one of the two that fail."
+      ],
+      "explanationVariants": [
+        "SSA (two sides + a non-included angle) is the impostor — it's ambiguous. The others (SAS, ASA, AAS) are all valid criteria.",
+        "The valid set is SSS/SAS/ASA/AAS; SSA is the two-triangle trap."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which of these does NOT guarantee two triangles are congruent?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "SSA — two sides and a non-included angle",
+            "correct": true,
+            "feedback": "SSA is the ambiguous case — one set of parts, potentially two triangles. Not a valid criterion."
+          },
+          {
+            "id": "o2",
+            "label": "SAS — two sides and the included angle",
+            "correct": false,
+            "feedback": "SAS is valid: the included angle locks the third side to one length."
+          },
+          {
+            "id": "o3",
+            "label": "ASA — two angles and the included side",
+            "correct": false,
+            "feedback": "ASA is valid: two angles and the side between them fix the triangle."
+          },
+          {
+            "id": "o4",
+            "label": "AAS — two angles and a non-included side",
+            "correct": false,
+            "feedback": "AAS is valid: the angle sum recovers the third angle, reducing it to ASA."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-triangle-congruence",
+        "form": "tc-ssa-fails__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Winners and impostors.",
+      "takeaways": [
+        "SSA is ambiguous — a side can swing to two positions, giving two triangles.",
+        "AAA gives similar (same shape, any size), never guaranteed congruent.",
+        "Valid criteria: SSS, SAS, ASA, AAS — each has at least one side."
+      ],
+      "teaser": "Next: use the criteria in proofs — pick the right one, then unlock equal parts with CPCTC."
+    }
+  ]
+}

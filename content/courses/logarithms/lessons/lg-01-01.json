@@ -1,0 +1,339 @@
+{
+  "id": "lg-01-01",
+  "slug": "the-exponent-finder",
+  "title": "The Exponent-Finder",
+  "courseId": "logarithms",
+  "chapterId": "ch1-log-as-inverse",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You can solve 2^x = 8 by matching bases. But 2^x = 10? No power of 2 matches. Math's answer is a new function: **log₂ 10 means 'the exponent that turns 2 into 10.'** In general: **log_b x = y  ⟺  b^y = x**. A logarithm IS an exponent — nothing more exotic.",
+      "figure": "lg-need-log"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A logarithm is the exponent-finder.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "logarithm",
+        "x": 8,
+        "targetBase": 2,
+        "startBase": 5,
+        "showMirror": true,
+        "prompt": "Slide the base until log_b(8) lands on the ring at 3 — the base that must be cubed to reach 8.",
+        "successFeedback": "log₂(8) = 3, because 2³ = 8. Look at the two curves: they are mirror images across y = x. A logarithm is not a new animal — it is an exponential read backwards.",
+        "lowFeedback": "log_b(8) is above 3, which means the base is too small: a small base needs MANY multiplications to reach 8. Raise the base to bring the exponent down.",
+        "highFeedback": "log_b(8) is below 3, which means the base is too large: a big base reaches 8 in fewer multiplications. Lower the base to push the exponent up."
+      },
+      "conceptTag": "lg-define",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents define.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for define must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines define."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "logarithms:lg-define",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "log_b(8) = 3 asks: which base, cubed, gives 8? The base is…",
+        "options": [
+          {
+            "id": "two",
+            "label": "2"
+          },
+          {
+            "id": "three",
+            "label": "3"
+          },
+          {
+            "id": "div",
+            "label": "8 ÷ 3, about 2.67"
+          }
+        ],
+        "outcomeId": "two",
+        "reveal": "2, because 2³ = 8. A logarithm normally hands back the exponent; here the exponent was handed to you and the base was the unknown — the same equation read from a third side. 8 ÷ 3 is what division would give, and nothing here was a division."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Every log statement has a twin exponential statement, and converting between them is the core skill. log₅ 25 = 2 twins with 5² = 25. Going the other way: 3⁴ = 81 twins with log₃ 81 = 4. **Base stays the base; the log's output is the exponent.**",
+      "figure": "lg-twin"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Convert to exponential form.",
+      "conceptTag": "lg-define",
+      "explanationVariants": [
+        "log₃ 81 = 4 says: 3 raised to 4 gives 81 — that is, 3⁴ = 81.",
+        "Base 3, exponent 4 (the log's value), result 81."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rewrite log₃ 81 = 4 in exponential form.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "3⁴ = 81",
+            "correct": true,
+            "feedback": "Right — the base carries the log's output as its exponent."
+          },
+          {
+            "id": "o2",
+            "label": "4³ = 81",
+            "correct": false,
+            "feedback": "The BASE is 3 (the small subscript) — 4 is the exponent, not the base: 3⁴ = 81."
+          },
+          {
+            "id": "o3",
+            "label": "81³ = 4",
+            "correct": false,
+            "feedback": "81 is the RESULT of the power, never the base here: 3⁴ = 81."
+          },
+          {
+            "id": "o4",
+            "label": "3⁸¹ = 4",
+            "correct": false,
+            "feedback": "The log's value (4) is the EXPONENT; 81 is what the power equals: 3⁴ = 81."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-define__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "And back again.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Rewrite 2⁶ = 64 in logarithmic form.",
+        "options": [
+          {
+            "id": "o1",
+            "label": "log₂ 64 = 6",
+            "correct": true,
+            "feedback": "Right — 'the exponent turning 2 into 64' is 6."
+          },
+          {
+            "id": "o2",
+            "label": "log₆ 64 = 2",
+            "correct": false,
+            "feedback": "The log's base matches the POWER's base: 2, not the exponent 6."
+          },
+          {
+            "id": "o3",
+            "label": "log₂ 6 = 64",
+            "correct": false,
+            "feedback": "The log EQUALS the exponent (6); 64 goes inside: log₂ 64 = 6."
+          },
+          {
+            "id": "o4",
+            "label": "log₆₄ 2 = 6",
+            "correct": false,
+            "feedback": "64 is the power's result — it belongs INSIDE the log, with base 2."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Evaluate by asking the question.",
+      "conceptTag": "lg-define",
+      "explanationVariants": [
+        "log₅ 125: 5 to what power gives 125? 5³ = 125, so 3.",
+        "Hunt the exponent: 5¹ = 5, 5² = 25, 5³ = 125."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Evaluate log₅ 125.",
+        "task": "logarithmEvaluate",
+        "values": [],
+        "logBase": 5,
+        "logArgument": 125.0,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 25,
+            "feedback": "The log asks for an EXPONENT, not a quotient: 125 ÷ 5 = 25, but 5³ = 125 — the answer is 3."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the base — the question is 5^? = 125, and 5³ = 125."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "5³ = 125 → log₅ 125 = 3.",
+        "successFeedback": "5³ = 125 → log₅ 125 = 3."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-define__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The unmatchable case has a name.",
+      "conceptTag": "lg-define",
+      "explanationVariants": [
+        "2³ = 8 and 2⁴ = 16, so the exponent solving 2^x = 10 sits strictly between 3 and 4 — log₂ 10 names it exactly.",
+        "The log gives the equation's exact answer even when no whole number works."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The exact solution of 2^x = 10 is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = log₂ 10, a number between 3 and 4",
+            "correct": true,
+            "feedback": "Right — 2³ = 8 < 10 < 16 = 2⁴ pins it between 3 and 4; the log names it exactly."
+          },
+          {
+            "id": "o2",
+            "label": "x = 5",
+            "correct": false,
+            "feedback": "2⁵ = 32, far past 10 — no whole exponent works, which is exactly why logs exist."
+          },
+          {
+            "id": "o3",
+            "label": "no solution",
+            "correct": false,
+            "feedback": "The graph of 2^x passes through every positive height — a solution exists; log₂ 10 is its name."
+          },
+          {
+            "id": "o4",
+            "label": "x = 10/2 = 5",
+            "correct": false,
+            "feedback": "Dividing swaps in the wrong operation — the unknown is an EXPONENT: x = log₂ 10 ≈ 3.32."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-define__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full round trip.",
+      "conceptTag": "lg-define",
+      "explanationVariants": [
+        "log₄ x = 3 twins with 4³ = x, so x = 64.",
+        "Convert to exponential form, then evaluate the power."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "Solve for x: log₄ x = 3.",
+        "task": "logarithmArgument",
+        "values": [],
+        "logBase": 4,
+        "logResult": 3,
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 12,
+            "feedback": "The 3 is an EXPONENT, not a factor: 4³ = 64, not 4 · 3."
+          },
+          {
+            "value": 81,
+            "feedback": "The base is 4 (the subscript): 4³ = 64 — 81 would be 3⁴, base and exponent swapped."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "4³ = 64 → x = 64.",
+        "successFeedback": "4³ = 64 → x = 64."
+      },
+      "hints": [
+        "Convert: log₄ x = 3 means 4^3 = x.",
+        "Compute the power.",
+        "4³ = 64."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-define__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A log is an exponent: log_b x = y ⟺ b^y = x.",
+      "takeaways": [
+        "Read log_b x as 'b to what power gives x?'",
+        "Base stays the base in both forms; the log's value is the exponent.",
+        "Logs name exact solutions when no base-matching works."
+      ],
+      "teaser": "Next: rapid-fire evaluation — including the strange ones like log of 1."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-define",
+      "concept": {
+        "id": "rem-lg0101-c",
+        "kind": "concept",
+        "body": "One translation at a time: log₂ 16 asks '2 to what power gives 16?' Count up: 2, 4, 8, 16."
+      },
+      "check": {
+        "id": "rem-lg0101-k",
+        "kind": "check",
+        "body": "How many doublings?",
+        "conceptTag": "lg-define",
+        "explanationVariants": [
+          "Four: 2⁴ = 16, so log₂ 16 = 4.",
+          "Each step multiplies by 2; sixteen is four steps from 1."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Evaluate log₂ 16.",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "16 ÷ 2 = 8 divides — the log counts EXPONENTS: 2⁴ = 16, so 4."
+            },
+            {
+              "value": 2,
+              "feedback": "2 is the base — the question is 2^? = 16, and the answer is 4."
+            }
+          ],
+          "fallbackFeedback": "2⁴ = 16 → 4."
+        }
+      }
+    }
+  ]
+}

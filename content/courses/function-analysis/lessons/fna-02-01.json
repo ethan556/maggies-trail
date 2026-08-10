@@ -1,0 +1,418 @@
+{
+  "id": "fna-02-01",
+  "slug": "increasing-decreasing",
+  "title": "Where a Function Rises and Falls",
+  "courseId": "function-analysis",
+  "chapterId": "ch2-graph-behavior",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Read a graph left to right, like a sentence. A function is **increasing** where the graph climbs and **decreasing** where it falls. We name the stretches by their **x-values** — the inputs where the behavior happens — never by the heights.",
+      "figure": "fna-cubic-behavior"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A negative slope is a falling function.",
+      "widget": {
+        "type": "secantSlope",
+        "curve": "square",
+        "mode": "average",
+        "a": -2,
+        "targetH": 1,
+        "startH": 2,
+        "prompt": "A sits at x = −2 on y = x². Set the gap to 1 and read the sign of the slope.",
+        "successFeedback": "The slope is −3: negative, and the function is FALLING across that interval even though y = x² is famously a rising parabola. Rising and falling are local facts, and the sign of the slope is how you read them.",
+        "lowFeedback": "The gap is under 1 — B has not reached x = −1 yet.",
+        "highFeedback": "The gap is over 1 — B has passed x = −1."
+      },
+      "predict": {
+        "prompt": "You'll build the secant from A at x = -2 out to B at x = -1 on y = x². Compared with the tangent slope AT A (-4), the secant's slope will be…",
+        "options": [
+          {
+            "id": "bigger",
+            "label": "Bigger (more positive)"
+          },
+          {
+            "id": "smaller",
+            "label": "Smaller"
+          },
+          {
+            "id": "equal",
+            "label": "Exactly equal"
+          }
+        ],
+        "outcomeId": "bigger",
+        "reveal": "The secant's slope is (f(-1) − f(-2))/1 = -3, against -4 for the tangent at A. On a curve whose slope keeps growing, the stretch out to B crosses steeper ground than A itself — so the average beats the value at the start."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Shrink the interval between two points and compare secant slope with the limiting tangent slope.",
+        "invariants": [
+          "difference-quotient-measures-average-rate",
+          "tangent-is-secant-limit"
+        ],
+        "misconceptions": [
+          "derivative-is-y-value",
+          "zero-gap-can-be-substituted-directly"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "function-analysis-secantSlope",
+        "delayed": false
+      },
+      "conceptTag": "fna-inc-dec"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Between its two turning points this curve **falls**: it is decreasing on the interval −1 < x < 1. Outside them it rises. Notice the answer is a set of **inputs** — 'decreasing on (−1, 1)' — even though your eye tracks the heights.",
+      "figure": "fna-falls-between"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Name the decreasing stretch.",
+      "conceptTag": "fna-inc-dec",
+      "explanationVariants": [
+        "The graph falls exactly between its peak at x = −1 and its valley at x = 1: decreasing on (−1, 1).",
+        "Pick test inputs: from x = −0.5 to x = 0.5 the outputs drop (1.375 down to −1.375), and this holds across all of (−1, 1)."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "On which interval is y = x³ − 3x decreasing?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "("
+          },
+          {
+            "id": "t1",
+            "label": "−1"
+          },
+          {
+            "id": "t2",
+            "label": ","
+          },
+          {
+            "id": "t3",
+            "label": "1"
+          },
+          {
+            "id": "t4",
+            "label": ")"
+          },
+          {
+            "id": "t5",
+            "label": "−2"
+          },
+          {
+            "id": "t6",
+            "label": "2"
+          },
+          {
+            "id": "t7",
+            "label": "∞"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t5",
+              "t2",
+              "t6",
+              "t4"
+            ],
+            "feedback": "That interval is named by the HEIGHTS of the turning points (2 and −2). Intervals use x-values: the fall spans x = −1 to x = 1."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2",
+              "t7",
+              "t4"
+            ],
+            "feedback": "Past x = 1 the curve has already turned back UP — it's increasing there. The fall is between the turns, on (−1, 1)."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "Decreasing runs BETWEEN the turning inputs x = −1 and x = 1: the interval (−1, 1).",
+        "successFeedback": "Right — the fall runs between the two turning inputs x = −1 and x = 1."
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-inc-dec__buildExpression"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A parabola's split.",
+      "conceptTag": "fna-inc-dec",
+      "explanationVariants": [
+        "The vertex of y = −(x − 2)² + 9 is at x = 2; an opening-down parabola rises up to its vertex and falls after: increasing on (−∞, 2).",
+        "Test inputs: g(0) = 5 < g(1) = 8 < g(2) = 9, climbing all the way to x = 2 — then g(3) = 8 starts the fall."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "On which interval is y = −(x − 2)² + 9 increasing?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "("
+          },
+          {
+            "id": "t1",
+            "label": "−∞"
+          },
+          {
+            "id": "t2",
+            "label": ","
+          },
+          {
+            "id": "t3",
+            "label": "2"
+          },
+          {
+            "id": "t4",
+            "label": ")"
+          },
+          {
+            "id": "t5",
+            "label": "∞"
+          },
+          {
+            "id": "t6",
+            "label": "9"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2",
+              "t5",
+              "t4"
+            ],
+            "feedback": "After x = 2 this downward parabola FALLS. It increases on the way up to the vertex, (−∞, 2)."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t2",
+              "t6",
+              "t4"
+            ],
+            "feedback": "9 is the vertex's HEIGHT. Increasing/decreasing intervals are sets of x-values: (−∞, 2)."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "This downward parabola climbs UP TO its vertex at x = 2: increasing on (−∞, 2).",
+        "successFeedback": "Yes — it climbs toward the vertex at x = 2, then falls."
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-inc-dec__buildExpression"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A vee shape.",
+      "conceptTag": "fna-inc-dec",
+      "explanationVariants": [
+        "y = |x − 3| + 1 is a V with corner at x = 3: it falls until x = 3 and rises afterward, so decreasing on (−∞, 3).",
+        "Test: at x = 0, 2, 3 the outputs are 4, 2, 1 — dropping; past 3 they climb again."
+      ],
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "On which interval is y = |x − 3| + 1 decreasing?",
+        "tokens": [
+          {
+            "id": "t0",
+            "label": "("
+          },
+          {
+            "id": "t1",
+            "label": "−∞"
+          },
+          {
+            "id": "t2",
+            "label": ","
+          },
+          {
+            "id": "t3",
+            "label": "3"
+          },
+          {
+            "id": "t4",
+            "label": ")"
+          },
+          {
+            "id": "t5",
+            "label": "∞"
+          },
+          {
+            "id": "t6",
+            "label": "1"
+          }
+        ],
+        "correct": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "acceptAlso": [],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t0",
+              "t3",
+              "t2",
+              "t5",
+              "t4"
+            ],
+            "feedback": "To the right of the corner the V climbs. The descent is the LEFT arm, (−∞, 3)."
+          },
+          {
+            "sequence": [
+              "t0",
+              "t1",
+              "t2",
+              "t6",
+              "t4"
+            ],
+            "feedback": "1 is the corner's height, not its input. The corner sits at x = 3, so the fall is (−∞, 3)."
+          }
+        ],
+        "reusable": true,
+        "missFeedback": "The left arm of the V descends into the corner at x = 3: decreasing on (−∞, 3).",
+        "successFeedback": "Right — the left arm of the V descends into the corner at x = 3."
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-inc-dec__buildExpression"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Behavior without a picture.",
+      "conceptTag": "fna-inc-dec",
+      "explanationVariants": [
+        "Compute a few outputs of y = x³ − 3x past x = 1: f(1) = −2, f(2) = 2, f(3) = 18 — climbing without bound, so increasing on (1, ∞).",
+        "After its valley at x = 1 the cubic turns up and never turns again (only two turning points exist, at x = ±1)."
+      ],
+      "hints": [
+        "The curve's only turns are at x = −1 and x = 1 — what must it do after the last turn?",
+        "Evaluate f at x = 1, 2, 3 and watch the direction.",
+        "f(1) = −2, f(2) = 2, f(3) = 18: rising from x = 1 onward."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is y = x³ − 3x doing on the interval (1, ∞)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Increasing the whole way",
+            "correct": true,
+            "feedback": "Yes — after the valley at x = 1 the outputs climb forever: −2, 2, 18, …"
+          },
+          {
+            "id": "o2",
+            "label": "Decreasing the whole way",
+            "feedback": "Check outputs: f(1) = −2 but f(2) = 2 — that's a climb. The fall happened BEFORE x = 1, on (−1, 1)."
+          },
+          {
+            "id": "o3",
+            "label": "It turns again at x = 2",
+            "feedback": "f(2) = 2 being positive doesn't make x = 2 a turn — outputs keep growing (f(3) = 18). This cubic's only turns are at x = ±1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-function-analysis",
+        "form": "function-analysis__fna-inc-dec__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rising, falling — named by inputs.",
+      "takeaways": [
+        "Increasing = graph climbs left-to-right; decreasing = it falls.",
+        "Report intervals with x-values, never heights.",
+        "Turning points are where the behavior switches."
+      ],
+      "teaser": "Next: the turning points themselves — peaks and valleys, local and absolute."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "fna-inc-dec",
+      "concept": {
+        "id": "rem-fna0201-c",
+        "kind": "concept",
+        "body": "Trace left to right. Climbing = increasing, falling = decreasing. Name the stretch by the x-values where it happens."
+      },
+      "check": {
+        "id": "rem-fna0201-k",
+        "kind": "check",
+        "body": "One simple parabola.",
+        "conceptTag": "fna-inc-dec",
+        "explanationVariants": [
+          "y = x² falls until its vertex at x = 0, then rises: decreasing on (−∞, 0).",
+          "Outputs at x = −2, −1, 0 are 4, 1, 0 — dropping toward the vertex."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "On which interval is y = x² decreasing?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(−∞, 0)",
+              "correct": true,
+              "feedback": "Right — the left half of the parabola descends into the vertex."
+            },
+            {
+              "id": "o2",
+              "label": "(0, ∞)",
+              "feedback": "The right half CLIMBS: 0, 1, 4, … The descent is the left half, (−∞, 0)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "id": "ia-01-01",
+  "slug": "area-between-curves",
+  "title": "Area Between Two Curves",
+  "courseId": "integration-applications",
+  "chapterId": "ch1-slicing",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "One curve gave you the area under it. **Two curves give you the area between them** — and the only thing that changes is the height of a strip.\n\nEach strip runs from the **bottom** curve to the **top** one, so its height is **top − bottom**. Add the strips:\n\n**Area = ∫ₐᵇ (top − bottom) dx**\n\nThat is the entire idea, and everything in this course is a variation on it.",
+      "figure": "ia-strip-to-disc"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Inspect one strip, then add them all.",
+      "widget": {
+        "type": "sliceSum",
+        "mode": "areaBetween",
+        "tolerance": 0.005,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "The region between y = x (top) and y = x² (bottom) on [0, 1]. Inspect a slice, then raise the count until the sum lands within 0.005 of the exact area, 1/6 ≈ 0.1667.",
+        "successFeedback": "Every slice measures TOP MINUS BOTTOM — and that height is the whole idea. Notice it is fattest in the middle and vanishes at BOTH ends, where the curves meet. The integral is just adding those heights, and the limits of integration are exactly where the height reaches zero.",
+        "lowFeedback": "The sum is under 1/6. The left and right rules both undershoot here, because the region pinches to nothing at both ends — raise the count, or try the midpoint rule.",
+        "highFeedback": "The sum is over 1/6. The midpoint rule overshoots a region that bulges in the middle — raise the count and it will settle."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Refine cross-sectional slices and connect their accumulated volume estimate to a limiting integral.",
+        "invariants": [
+          "volume-is-sum-of-thin-slices",
+          "cross-section-rule-controls-each-slice"
+        ],
+        "misconceptions": [
+          "volume-is-base-area-only",
+          "slice-thickness-does-not-matter"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-applications-sliceSum",
+        "delayed": false
+      },
+      "conceptTag": "ia-area-between",
+      "predict": {
+        "prompt": "Between x = 0 and x = 1, which curve is on top — y = x or y = x²?",
+        "options": [
+          {
+            "id": "line",
+            "label": "y = x"
+          },
+          {
+            "id": "para",
+            "label": "y = x² — squaring makes things bigger"
+          },
+          {
+            "id": "swap",
+            "label": "They swap over somewhere inside the interval"
+          }
+        ],
+        "outcomeId": "line",
+        "reveal": "y = x. Squaring makes numbers bigger only above 1; between 0 and 1 it makes them SMALLER, so the parabola sits underneath. They touch only at the two ends. That is why each strip's height is x − x², and why writing it the other way round hands back a negative answer that no area could have."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which is on top?",
+      "conceptTag": "ia-area-between",
+      "explanationVariants": [
+        "On (0, 1), x > x² — try x = 0.5: 0.5 > 0.25. So y = x is the TOP curve and the height is x − x².",
+        "Test a single point inside the interval. That one substitution settles the order for the whole strip."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "On the interval (0, 1), which of y = x and y = x² is on top?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "y = x — test x = 0.5: it gives 0.5 against 0.25.",
+            "correct": true,
+            "feedback": "Right, and one test point is all it takes. Between 0 and 1, squaring a number makes it SMALLER."
+          },
+          {
+            "id": "o2",
+            "label": "y = x² — squaring makes things bigger.",
+            "correct": false,
+            "feedback": "Only for x > 1. Between 0 and 1, squaring shrinks: 0.5² = 0.25. That is why the parabola dips below the line here."
+          },
+          {
+            "id": "o3",
+            "label": "They never cross, so it depends.",
+            "correct": false,
+            "feedback": "They DO cross — at x = 0 and x = 1, which is exactly why those are the limits of integration. In between, the order is fixed."
+          },
+          {
+            "id": "o4",
+            "label": "Neither is always on top.",
+            "correct": false,
+            "feedback": "On the OPEN interval (0, 1) the order never changes. Substituting any interior point proves it."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-area-between__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Set the limits.",
+      "conceptTag": "ia-area-between",
+      "explanationVariants": [
+        "The limits are where the curves MEET: x = x² gives x(1 − x) = 0, so x = 0 and x = 1.",
+        "The height is zero exactly at the crossing points — which is why they are the natural ends of the region."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = x and y = x² meet where? Give the larger of the two x-values.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "That is the SMALLER crossing point. x = x² gives x(1 − x) = 0, so the two solutions are 0 and 1."
+          },
+          {
+            "value": 2,
+            "feedback": "Solve x = x²: x − x² = 0, so x(1 − x) = 0, giving x = 0 or x = 1."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is where the strip is fattest, not where the curves meet. At x = 0.5 the height is 0.25."
+          }
+        ],
+        "fallbackFeedback": "x = x² → x(1 − x) = 0 → x = 0 or 1. The larger is 1."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-area-between__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Get the order wrong and the integral comes out **negative**. Area cannot be negative — so a negative answer is the integral telling you that you subtracted the wrong way round.\n\nAnd if the curves **cross inside** the interval, the top and bottom SWAP. Split the integral at the crossing and do each piece separately, or you will silently subtract one region from the other.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A negative answer means something.",
+      "conceptTag": "ia-area-between",
+      "explanationVariants": [
+        "∫₀¹ (x² − x) dx = 1/3 − 1/2 = −1/6. The magnitude is right; the sign says the curves were subtracted the wrong way.",
+        "The integral is signed, and a negative area is the machinery reporting an error you made, not an error it made."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A student computes ∫₀¹ (x² − x) dx and gets a negative number. What is its value, as a decimal to four places?",
+        "answer": -0.1667,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.1667,
+            "feedback": "The magnitude is right, but the student subtracted the wrong way round, so the answer comes out NEGATIVE: −1/6."
+          },
+          {
+            "value": 0,
+            "feedback": "The two integrals are not equal: ∫x² = 1/3 and ∫x = 1/2, so the difference is −1/6."
+          },
+          {
+            "value": -0.3333,
+            "feedback": "That is −1/3, which is only the ∫x² part. The full expression is 1/3 − 1/2 = −1/6."
+          }
+        ],
+        "fallbackFeedback": "1/3 − 1/2 = −1/6 ≈ −0.1667. The sign is the integral telling you the order was reversed."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-area-between__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Do it properly.",
+      "conceptTag": "ia-area-between",
+      "hints": [
+        "Top is y = x, bottom is y = x². The height is x − x².",
+        "Antidifferentiate: x²/2 − x³/3.",
+        "Evaluate from 0 to 1: (1/2 − 1/3) − 0."
+      ],
+      "explanationVariants": [
+        "∫₀¹ (x − x²) dx = [x²/2 − x³/3]₀¹ = 1/2 − 1/3 = 1/6 ≈ 0.1667.",
+        "And that is exactly the number the slices were converging on — the widget was computing this integral by hand, one strip at a time."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the exact area between y = x and y = x² on [0, 1], as a decimal to four places.",
+        "answer": 0.1667,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "That is ∫x dx alone — the area under the LINE. You must subtract the area under the parabola, 1/3."
+          },
+          {
+            "value": 0.3333,
+            "feedback": "That is ∫x² dx — the area under the parabola alone. The region between them is 1/2 − 1/3 = 1/6."
+          },
+          {
+            "value": -0.1667,
+            "feedback": "The magnitude is right but the sign is flipped: the top curve is y = x, so the height is x − x²."
+          }
+        ],
+        "fallbackFeedback": "∫₀¹ (x − x²) dx = 1/2 − 1/3 = 1/6 ≈ 0.1667."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-area-between__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Top minus bottom, integrated.",
+      "takeaways": [
+        "Area between curves = ∫(top − bottom) dx. Only the strip's HEIGHT has changed from C4.",
+        "The limits are where the curves meet — precisely where the height reaches zero.",
+        "A negative answer means you subtracted the wrong way. If the curves cross INSIDE the interval, split there."
+      ],
+      "teaser": "Next: take the same strip and spin it. It becomes a disc."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ia-area-between",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Draw a vertical strip through the region. Its top end sits on one curve and its bottom end on the other. **Height = top − bottom.** That height is what you integrate — and nothing else about the problem matters.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Height of a strip.",
+        "conceptTag": "ia-area-between",
+        "explanationVariants": [
+          "At x = 0.5 the top is 0.5 and the bottom is 0.25, so the strip is 0.25 tall.",
+          "Top minus bottom, at that x."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "y = x is above y = x². How tall is the strip at x = 0.5?",
+          "answer": 0.25,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.75,
+              "feedback": "That is the SUM of the two heights. A strip's height is the DIFFERENCE: 0.5 − 0.25."
+            },
+            {
+              "value": 0.5,
+              "feedback": "That is the TOP alone. Subtract the bottom, 0.25."
+            }
+          ],
+          "fallbackFeedback": "0.5 − 0.25 = 0.25."
+        }
+      }
+    }
+  ]
+}

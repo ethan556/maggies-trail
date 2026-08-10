@@ -1,0 +1,328 @@
+{
+  "id": "cpr-03-03",
+  "slug": "the-multiplication-rule",
+  "title": "The Multiplication Rule",
+  "courseId": "conditional-probability",
+  "chapterId": "ch3-conditioning",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Multiply both sides of P(A | B) = P(A ∩ B)/P(B) by P(B):\n\nP(A ∩ B) = P(B) × P(A | B).\n\nIn words: to get **both**, first get B, then get A *in the world where B already happened*. Half the students ride the bus; 40% of those play a sport; so 0.5 × 0.4 = 0.20 do both.",
+      "figure": "cpr-multiplication-area"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A hundred squares, one per percent of the school.",
+      "widget": {
+        "type": "probabilityArea",
+        "prompt": "Shade the students who take the bus **and** play a sport — half the width, then 40% of that strip.",
+        "rows": 10,
+        "cols": 10,
+        "targetNum": 1,
+        "targetDen": 5,
+        "start": 0,
+        "successFeedback": "20 of 100 squares. The rectangle is 0.5 wide and 0.4 tall, and 0.5 × 0.4 = 0.20 — the joint probability as an area.",
+        "lowFeedback": "Smaller than the rectangle. Take half the square (the bus riders), then 40% of that half.",
+        "highFeedback": "Larger than 0.5 × 0.4. Shading half the square would be P(bus) alone, before the sport condition is applied."
+      },
+      "predict": {
+        "prompt": "You'll shade 1/5 of the grid. Will that cover more or less than half of it?",
+        "options": [
+          {
+            "id": "more",
+            "label": "More than half"
+          },
+          {
+            "id": "less",
+            "label": "Less than half"
+          },
+          {
+            "id": "half",
+            "label": "Exactly half"
+          }
+        ],
+        "outcomeId": "less",
+        "reveal": "Half means the numerator is half the denominator — 2.5/5 here — and 1 is less. Probability as shaded area makes the benchmark visible before you count a single cell."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Select regions of an equal-outcome sample space and coordinate area with event probability.",
+        "invariants": [
+          "sample-space-fixed",
+          "probability-is-selected-part-over-whole"
+        ],
+        "misconceptions": [
+          "use-wrong-denominator",
+          "double-count-overlap"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "statistics-probability-probabilityArea-new-context",
+        "delayed": false
+      },
+      "conceptTag": "cpr-multiplication-rule"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which product is legitimate?",
+      "conceptTag": "cpr-multiplication-rule",
+      "explanationVariants": [
+        "P(bus and sport) = P(bus) × P(sport | bus) = 0.50 × 0.40 = 0.20. The second factor must be conditional on the first.",
+        "Using 0.50 × 0.55 would assume bus riders play sports at the school-wide rate. They do not: their rate is 0.40."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "P(bus) = 0.50, P(sport) = 0.55, P(sport | bus) = 0.40. Which product gives P(bus and sport)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "0.50 × 0.40",
+            "correct": true,
+            "feedback": "Right — P(B) × P(A | B). The second factor is measured inside the first event's world."
+          },
+          {
+            "id": "o2",
+            "label": "0.50 × 0.55",
+            "correct": false,
+            "feedback": "That multiplies the two marginals, which silently assumes bus riders play sports at the school-wide 55% rate. Their real rate is 40%, so this overstates the joint (0.275 instead of 0.20)."
+          },
+          {
+            "id": "o3",
+            "label": "0.55 × 0.40",
+            "correct": false,
+            "feedback": "Both of those factors already involve sport, so the product double-counts the sport condition and never uses P(bus)."
+          },
+          {
+            "id": "o4",
+            "label": "0.50 + 0.40 − 0.20",
+            "correct": false,
+            "feedback": "That is the addition rule, which answers \"bus OR sport\". For AND you multiply along a condition."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "multiplication-rule"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two cards, no replacement.",
+      "conceptTag": "cpr-multiplication-rule",
+      "explanationVariants": [
+        "P(both hearts) = 13/52 × 12/51 = 1/4 × 4/17 = 1/17, so n = 17.",
+        "After a heart leaves, 51 cards remain and only 12 are hearts — the second factor must use the shrunken deck."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Draw 2 cards without replacing the first. P(both hearts) works out to exactly 1/n. Find **n**.",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That is 13/52 × 13/52 = 1/16 — the with-replacement answer. Without replacement the second draw sees 51 cards, only 12 of them hearts."
+          },
+          {
+            "value": 4,
+            "feedback": "That is 1/(13/52) — the first draw alone. The second draw must be conditioned on the first and multiplied in."
+          },
+          {
+            "value": 26,
+            "feedback": "That looks like half the deck. Multiply the two draws: (13/52) × (12/51) = 1/17."
+          }
+        ],
+        "fallbackFeedback": "13/52 × 12/51 = 1/17, so n = 17."
+      },
+      "variant": {
+        "gen": "multiplication-rule",
+        "form": "withoutReplacement"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The rule works from either end:\n\nP(A ∩ B) = P(B) × P(A | B) = P(A) × P(B | A).\n\nUse whichever conditional you actually know. That freedom is what makes the rule usable — and it is the seed of Bayes' rule, since both products describe the same overlap.",
+      "figure": "cpr-conditional-venn"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Chain two stages.",
+      "conceptTag": "cpr-multiplication-rule",
+      "explanationVariants": [
+        "P(rain and traffic) = P(rain) × P(traffic | rain) = 0.30 × 0.80 = 0.24.",
+        "Rain happens 30% of days, and on those days traffic happens 80% of the time. 80% of 30% is 24%."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "P(rain) = 0.30. On rainy days, P(traffic | rain) = 0.80. Find P(rain and traffic).",
+        "answer": 0.24,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.8,
+            "feedback": "That is P(traffic | rain) on its own — the chance of traffic *given* rain. Most days are not rainy, so the joint must be smaller than 0.30."
+          },
+          {
+            "value": 1.1,
+            "feedback": "That is 0.30 + 0.80. Adding would answer \"rain OR traffic\", and it also exceeds 1 — a sure sign the wrong rule was applied."
+          },
+          {
+            "value": 0.375,
+            "feedback": "That is 0.30/0.80 — dividing instead of multiplying. Division recovers a conditional from a joint; here you already have the conditional."
+          }
+        ],
+        "fallbackFeedback": "0.30 × 0.80 = 0.24."
+      },
+      "variant": {
+        "gen": "multiplication-rule",
+        "form": "chainNumeric"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "When is multiplying the marginals safe?",
+      "conceptTag": "cpr-multiplication-rule",
+      "explanationVariants": [
+        "P(A) × P(B) is only the joint when P(B | A) = P(B) — that is, when knowing A tells you nothing about B.",
+        "The general rule always needs a conditional as the second factor. Marginal × marginal is a special case, not the default."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When can you compute P(A and B) as simply P(A) × P(B)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "When knowing A leaves the chance of B unchanged.",
+            "correct": true,
+            "feedback": "Right — then P(B | A) = P(B), and the general rule collapses to the product of marginals. That condition has a name, coming next chapter."
+          },
+          {
+            "id": "o2",
+            "label": "Always — that is what \"and\" means.",
+            "correct": false,
+            "feedback": "The bus students showed otherwise: 0.50 × 0.55 = 0.275, but the true joint is 0.20. Knowing they ride the bus changes their sport rate."
+          },
+          {
+            "id": "o3",
+            "label": "Whenever A and B cannot both happen.",
+            "correct": false,
+            "feedback": "If they cannot both happen, P(A and B) is 0, and the product of two positive marginals certainly is not 0."
+          },
+          {
+            "id": "o4",
+            "label": "Whenever A and B have the same probability.",
+            "correct": false,
+            "feedback": "Equal probabilities say nothing about whether one event informs the other. What matters is whether P(B | A) equals P(B)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-conditional-probability",
+        "form": "conditional-probability__cpr-multiplication-rule__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Aces, one after another.",
+      "conceptTag": "cpr-multiplication-rule",
+      "hints": [
+        "Draw one ace first: 4 aces in 52 cards.",
+        "If that succeeds, the deck now holds 51 cards and only 3 aces.",
+        "Multiply the two stages, then write the result as 1/n."
+      ],
+      "explanationVariants": [
+        "P(both aces) = 4/52 × 3/51 = 1/13 × 1/17 = 1/221, so n = 221.",
+        "12 ordered ace-pairs exist out of 52 × 51 = 2652 ordered draws, and 2652/12 = 221."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Draw 2 cards without replacement. P(both aces) is exactly 1/n. Find **n**.",
+        "answer": 221,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 169,
+            "feedback": "That is 13 × 13, the with-replacement answer (4/52 × 4/52 = 1/169). The first ace is not put back, so the second draw sees 3 aces in 51 cards."
+          },
+          {
+            "value": 13,
+            "feedback": "That is 1/(4/52) — only the first draw. The second draw still has to happen, and multiplying by 3/51 makes the event much rarer."
+          },
+          {
+            "value": 204,
+            "feedback": "That is 12 × 17, or 52 × 51 divided by 13 — a slip in one of the factors. The clean route: (1/13) × (1/17) = 1/221."
+          }
+        ],
+        "fallbackFeedback": "4/52 × 3/51 = 1/221, so n = 221."
+      },
+      "variant": {
+        "gen": "multiplication-rule",
+        "form": "withoutReplacement"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "AND means multiply — along a condition.",
+      "takeaways": [
+        "P(A ∩ B) = P(B) × P(A | B) = P(A) × P(B | A). Pick the conditional you know.",
+        "The second factor lives in the world where the first event already happened — that is why deck sizes shrink.",
+        "P(A) × P(B) is a special case that needs justifying, not a default."
+      ],
+      "teaser": "Next: chain the rule down a tree, one draw at a time."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cpr-multiplication-rule",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Think of it as a two-stage journey. Stage one: how likely is B at all? Stage two: **given you got there**, how likely is A? Multiply the two stages. The second probability must be measured inside the world the first one created.",
+        "figure": "cpr-multiplication-area"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Two stages, one product.",
+        "conceptTag": "cpr-multiplication-rule",
+        "explanationVariants": [
+          "0.60 × 0.50 = 0.30.",
+          "Six in ten students own a bike; half of those ride it to school; so three in ten do both."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "60% of students own a bike. Of the bike owners, 50% ride to school. What fraction of all students own a bike and ride it to school?",
+          "answer": 0.3,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.5,
+              "feedback": "That is the conditional 50% — the rate among bike owners only. Bike owners are just 60% of the school, so the joint must be less than 0.60."
+            },
+            {
+              "value": 1.1,
+              "feedback": "That is 0.60 + 0.50. Adding overshoots (it even exceeds 1); a two-stage AND multiplies."
+            }
+          ],
+          "fallbackFeedback": "0.60 × 0.50 = 0.30."
+        }
+      }
+    }
+  ]
+}

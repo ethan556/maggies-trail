@@ -1,0 +1,329 @@
+{
+  "id": "dpv-01-02",
+  "slug": "hundredths-and-thousandths",
+  "title": "Hundredths and Thousandths",
+  "courseId": "decimals-place-value",
+  "chapterId": "ch1-ladder-below-one",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Keep climbing down. Split one tenth into 10 equal parts and each is a **hundredth** — written 0.01, because it takes two places after the point. A 10×10 grid shows it: 100 tiny cells fill one whole, so each cell is one hundredth.",
+      "figure": "dpv-hundredths-grid"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hundredths cut each tenth into ten again.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "tickStep": 0.1,
+        "target": 0.36,
+        "start": 0,
+        "prompt": "Place 0.36 on the line.",
+        "successFeedback": "Between 0.3 and 0.4, six hundredths past the 0.3 mark. 0.36 is not 'thirty-six', it is 3 tenths and 6 hundredths — and the line shows you exactly where that is.",
+        "lowFeedback": "Your marker is below 0.36. It sits between 0.3 and 0.4.",
+        "highFeedback": "Your marker is above 0.36. It sits between 0.3 and 0.4, not past it."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 0.36 closer to 0 or to 1?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 0"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 1"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "0.36 sits 0.36 from 0 and 0.64 from 1 — the 0 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "smaller-rungs",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents smaller rungs.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for smaller rungs must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines smaller rungs."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "decimals-place-value:smaller-rungs",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Hundredths in a tenth.",
+      "conceptTag": "smaller-rungs",
+      "explanationVariants": [
+        "One tenth is a full row of 10 cells on the grid — 10 hundredths.",
+        "Since 0.1 = 0.10, one tenth equals 10 hundredths."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many hundredths make one tenth?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "hundredths",
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 hundredths make a whole, not a tenth. One tenth is just one row of the grid: 10 hundredths."
+          },
+          {
+            "value": 1,
+            "feedback": "1 hundredth is a single cell. A whole tenth is a full row: 10 hundredths."
+          }
+        ],
+        "fallbackFeedback": "One tenth is a full row of the 10×10 grid — count the cells in a row."
+      },
+      "variant": {
+        "gen": "decimal-representation",
+        "form": "rungCount"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "One more rung: split a hundredth into 10 and you get a **thousandth** — written 0.001, three places after the point. The ladder never runs out downward, but Grade 5 stops here: tenths, hundredths, thousandths.",
+      "figure": "dpv-hundredths-grid"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the place.",
+      "conceptTag": "smaller-rungs",
+      "explanationVariants": [
+        "The third digit after the point is the thousandths place — here, 5.",
+        "Counting places past the point: tenths, hundredths, thousandths lands on 5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the number 0.375, which digit is in the THOUSANDTHS place?",
+        "options": [
+          {
+            "id": "a",
+            "label": "5 — the third place after the point",
+            "correct": true,
+            "feedback": "Counting past the point — tenths (3), hundredths (7), thousandths (5) — the thousandths digit is 5."
+          },
+          {
+            "id": "b",
+            "label": "3 — it comes first",
+            "feedback": "3 is the first place after the point, which is TENTHS. The third place, thousandths, is 5."
+          },
+          {
+            "id": "c",
+            "label": "7 — it's in the middle",
+            "feedback": "7 is the second place, HUNDREDTHS. The third place, thousandths, is 5."
+          },
+          {
+            "id": "d",
+            "label": "0 — the leading zero",
+            "feedback": "The 0 is the ones place, before the point. The thousandths place is the third digit after it: 5."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "decimal-place-value",
+        "form": "placeDigitMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each fraction to its decimal.",
+      "conceptTag": "smaller-rungs",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each fraction to its decimal form.",
+        "left": [
+          {
+            "id": "f1",
+            "label": "7/100"
+          },
+          {
+            "id": "f2",
+            "label": "3/1000"
+          },
+          {
+            "id": "f3",
+            "label": "7/10"
+          }
+        ],
+        "right": [
+          {
+            "id": "d1",
+            "label": "0.07"
+          },
+          {
+            "id": "d2",
+            "label": "0.003"
+          },
+          {
+            "id": "d3",
+            "label": "0.7"
+          }
+        ],
+        "pairs": {
+          "f1": "d1",
+          "f2": "d2",
+          "f3": "d3"
+        },
+        "pairErrors": [
+          {
+            "left": "f1",
+            "right": "d3",
+            "feedback": "0.7 is 7 TENTHS (7/10). 7/100 is seven hundredths — two places — which is 0.07."
+          }
+        ],
+        "missFeedback": "Count the zeros in the denominator: that's how many decimal places the fraction needs.",
+        "successFeedback": "7/10=0.7 (one place), 7/100=0.07 (two places), 3/1000=0.003 (three places)."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Thousandths in a hundredth.",
+      "conceptTag": "smaller-rungs",
+      "explanationVariants": [
+        "Splitting one hundredth into 10 gives 10 thousandths.",
+        "Each rung down is a ×10 split, so one hundredth is 10 thousandths."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many thousandths make one hundredth?",
+        "answer": 10,
+        "tolerance": 0,
+        "unit": "thousandths",
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 thousandths make a tenth, not a hundredth. Each single rung down is a split into 10: one hundredth is 10 thousandths."
+          },
+          {
+            "value": 1000,
+            "feedback": "1000 thousandths make a whole. Just one hundredth is 10 thousandths."
+          }
+        ],
+        "fallbackFeedback": "Every rung down splits one part into 10 — so one hundredth becomes 10 thousandths."
+      },
+      "variant": {
+        "gen": "decimal-representation",
+        "form": "rungCount"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The jar of pennies.",
+      "conceptTag": "smaller-rungs",
+      "hints": [
+        "A penny is one hundredth of a dollar — 0.01 of a dollar.",
+        "23 pennies is 23 hundredths.",
+        "Write 23 hundredths as a decimal of a dollar."
+      ],
+      "explanationVariants": [
+        "Each penny is 1/100 of a dollar, so 23 pennies is 23/100 = 0.23.",
+        "23 hundredths of a dollar is written 0.23."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A penny is one hundredth of a dollar. Written as a decimal of a dollar (0.??), how much is 23 pennies? Enter the two-digit hundredths value (the ?? part).",
+        "answer": 23,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 230,
+            "feedback": "230 reads the pennies as thousandths. 23 pennies is 23 hundredths: 0.23."
+          },
+          {
+            "value": 2,
+            "feedback": "2 catches only part of the value. 23 pennies is a full 23 hundredths: 0.23."
+          }
+        ],
+        "fallbackFeedback": "Each penny is 0.01; 23 of them is 23 hundredths."
+      },
+      "variant": {
+        "gen": "decimal-representation",
+        "form": "moneyHundredths"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three rungs, named.",
+      "takeaways": [
+        "A hundredth is one of 100 equal parts (0.01, two places); a thousandth is one of 1000 (0.001, three places).",
+        "Each rung down splits the one above into 10: 10 hundredths make a tenth, 10 thousandths make a hundredth.",
+        "The zeros in a fraction's denominator match the number of decimal places."
+      ],
+      "teaser": "next: the ×10 and ÷10 moves that slide a digit along the whole ladder."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "smaller-rungs",
+      "concept": {
+        "id": "rem-sr-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Each place after the point is ten times smaller than the one before: tenths, then hundredths, then thousandths.** So 0.4 is four tenths, 0.04 is four hundredths, and 0.004 is four thousandths — each zero pushes the 4 one rung smaller."
+      },
+      "check": {
+        "id": "rem-sr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "smaller-rungs",
+        "explanationVariants": [
+          "0.04 has the 4 in the second place — hundredths.",
+          "Two places after the point is the hundredths place."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In 0.04, the digit 4 is in which place?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Hundredths",
+              "correct": true,
+              "feedback": "The second place after the point is hundredths — 0.04 is four hundredths."
+            },
+            {
+              "id": "b",
+              "label": "Tenths",
+              "feedback": "Tenths is the FIRST place. Here the tenths digit is 0, and the 4 sits in the second place: hundredths."
+            },
+            {
+              "id": "c",
+              "label": "Thousandths",
+              "feedback": "Thousandths is the THIRD place. The 4 is in the second place: hundredths."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

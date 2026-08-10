@@ -1,0 +1,345 @@
+{
+  "id": "pv1000-01-01",
+  "slug": "hundreds-join-the-party",
+  "title": "Hundreds Join the Party",
+  "courseId": "place-value-1000",
+  "chapterId": "ch1-hundreds-tens-and-ones",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "hundred-tens-ones",
+      "body": "You know tens and ones. Now meet **hundreds** — 10 tens bundled together make 1 hundred. A 3-digit number has three spots: hundreds, tens, ones."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Hundreds, tens and ones — build the number.",
+      "widget": {
+        "type": "placeValue",
+        "target": 342,
+        "maxHundreds": 9,
+        "maxTens": 12,
+        "maxOnes": 15,
+        "hStart": 0,
+        "tStart": 0,
+        "oStart": 0,
+        "prompt": "Build 342 with hundreds, tens and ones.",
+        "successFeedback": "3 hundreds, 4 tens, 2 ones. Each place is worth ten of the one to its right — that is the whole idea, and the blocks make it something you can see rather than something you are told.",
+        "lowFeedback": "Your blocks add to less than 342.",
+        "highFeedback": "Your blocks add to more than 342."
+      },
+      "predict": {
+        "prompt": "You'll set 3 hundreds, 4 tens and 2 ones. Which single control moves the number MOST per click?",
+        "options": [
+          {
+            "id": "h",
+            "label": "Hundreds"
+          },
+          {
+            "id": "t",
+            "label": "Tens"
+          },
+          {
+            "id": "o",
+            "label": "Ones"
+          }
+        ],
+        "outcomeId": "h",
+        "reveal": "One click of hundreds is worth 100 — the same move as ten clicks of tens or a hundred clicks of ones. The spot multiplies the click: that's the whole point of place value."
+      },
+      "conceptTag": "pv1000-digit-worth",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents digit worth.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for digit worth must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines digit worth."
+        ],
+        "representations": [
+          "concrete",
+          "symbolic"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-1000:pv1000-digit-worth",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another digit's worth.",
+      "conceptTag": "pv1000-digit-worth",
+      "explanationVariants": [
+        "The 4 is in the hundreds spot: 4 hundreds = 400.",
+        "Same digit, different spot, different worth."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 427, what is the 4 worth?",
+        "answer": 400,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "The 4 sits in the HUNDREDS spot, so it's worth 4 hundreds = 400, not just 4."
+          },
+          {
+            "value": 40,
+            "feedback": "40 would be the tens spot. The 4 is in the hundreds spot: 400."
+          }
+        ],
+        "fallbackFeedback": "The 4 is in the hundreds spot: 4 hundreds = 400."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000DigitWorthNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A placeholder zero still counts — 507 has NO tens at all, but the 0 must stay to hold that spot open, or the number reads wrong.",
+      "figure": "pv1000-placeholder-507"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Find a digit's worth with a zero.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 503, what is the 5 worth?",
+        "answer": 500,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "The 5 is in the HUNDREDS spot: 5 hundreds = 500, not just 5."
+          },
+          {
+            "value": 50,
+            "feedback": "50 would be the tens spot, but this number has 0 tens. The 5 is worth 500."
+          }
+        ],
+        "fallbackFeedback": "The 5 is in the hundreds spot: 500."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Build a number by combining its hundreds, tens, and ones counts — just like stacking base-ten blocks.",
+      "figure": "pv1000-build"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Build a number from parts.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 4 hundreds, 0 tens, and 9 ones?",
+        "answer": 409,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "Don't skip the empty tens spot — it still holds a 0: 409, not 49."
+          },
+          {
+            "value": 4009,
+            "feedback": "That's 4 digits — a 3-digit number only needs one digit per spot: 409."
+          }
+        ],
+        "fallbackFeedback": "4 hundreds, 0 tens, 9 ones = 409."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Build another number from parts.",
+      "conceptTag": "pv1000-build-number",
+      "explanationVariants": [
+        "3 hundreds, 5 tens, 2 ones = 352.",
+        "Combine the counts in order: hundreds, tens, ones."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 3 hundreds, 5 tens, and 2 ones?",
+        "answer": 352,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "That adds the counts together (3+5+2=10) instead of building the number: 352."
+          },
+          {
+            "value": 235,
+            "feedback": "Keep the order: hundreds first, then tens, then ones: 352, not 235."
+          }
+        ],
+        "fallbackFeedback": "3 hundreds, 5 tens, 2 ones = 352."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000BuildNumberNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A digit's worth, tricky spot.",
+      "conceptTag": "pv1000-digit-worth",
+      "explanationVariants": [
+        "The 6 is in the ones spot: worth just 6.",
+        "Check which spot the digit sits in."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In the number 816, what is the 6 worth?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "60 would be the tens spot. The 6 is in the ONES spot: worth just 6."
+          },
+          {
+            "value": 600,
+            "feedback": "600 would be the hundreds spot. The 6 is in the ones spot: worth just 6."
+          }
+        ],
+        "fallbackFeedback": "The 6 is in the ones spot: worth 6."
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000DigitWorthNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build a number with a zero spot.",
+      "conceptTag": "pv1000-build-number",
+      "explanationVariants": [
+        "6 hundreds, 0 tens, 8 ones = 608.",
+        "Don't skip the empty tens spot — it holds a 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What number has 6 hundreds, 0 tens, and 8 ones?",
+        "answer": 608,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 68,
+            "feedback": "Don't skip the empty tens spot — it still holds a 0: 608, not 68."
+          },
+          {
+            "value": 680,
+            "feedback": "Keep the order: hundreds, tens, ones. 6 hundreds, 0 tens, 8 ones is 608, not 680."
+          }
+        ],
+        "fallbackFeedback": "6 hundreds, 0 tens, 8 ones = 608."
+      },
+      "hints": [
+        "Hundreds spot: 6.",
+        "Tens spot: 0 (empty, but still counts).",
+        "Ones spot: 8. Put them in order: 608."
+      ],
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000BuildNumberNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A 3-digit number has three worth-spots: hundreds, tens, ones — a placeholder zero still holds its spot.",
+      "takeaways": [
+        "Hundreds, tens, and ones are the three spots in a 3-digit number.",
+        "The same digit is worth different amounts in different spots.",
+        "A zero spot still counts — it can't be skipped."
+      ],
+      "teaser": "next: breaking a number into its worth-pieces."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pv1000-digit-worth",
+      "concept": {
+        "id": "rem-pdw-c",
+        "kind": "concept",
+        "body": "A digit's worth depends on its spot: hundreds, tens, or ones. In 582, the 8 sits in the tens spot, so it's worth 8 tens = 80."
+      },
+      "check": {
+        "id": "rem-pdw-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-digit-worth",
+        "explanationVariants": [
+          "The 8 is in the tens spot: worth 80.",
+          "Check the digit's spot to find its worth."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In the number 582, what is the 8 worth?",
+          "answer": 80,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "The 8 is in the tens spot: 80, not just 8."
+            },
+            {
+              "value": 800,
+              "feedback": "That's the hundreds spot. The 8 is in tens: 80."
+            }
+          ],
+          "fallbackFeedback": "80."
+        }
+      }
+    },
+    {
+      "conceptTag": "pv1000-build-number",
+      "concept": {
+        "id": "rem-pbn-c",
+        "kind": "concept",
+        "body": "Build a number by combining hundreds, tens, and ones counts in order. 4 hundreds, 0 tens, 9 ones = 409 — the empty tens spot still holds its 0."
+      },
+      "check": {
+        "id": "rem-pbn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pv1000-build-number",
+        "explanationVariants": [
+          "4 hundreds, 0 tens, 9 ones = 409.",
+          "Combine the counts in order."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What number has 4 hundreds, 0 tens, and 9 ones?",
+          "answer": 409,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 49,
+              "feedback": "Don't skip the empty tens spot: 409."
+            },
+            {
+              "value": 4009,
+              "feedback": "Only one digit per spot: 409."
+            }
+          ],
+          "fallbackFeedback": "409."
+        }
+      }
+    }
+  ]
+}

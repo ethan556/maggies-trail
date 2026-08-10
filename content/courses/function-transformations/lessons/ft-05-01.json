@@ -1,0 +1,308 @@
+{
+  "id": "ft-05-01",
+  "slug": "undoing-a-function",
+  "title": "Undoing a Function",
+  "courseId": "function-transformations",
+  "chapterId": "ch5-inverse-functions",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An **inverse function** runs a function backward: whatever f does, **f⁻¹ undoes**. If f turns 3 into 8, then f⁻¹ turns 8 back into 3. Careful with the notation: the ⁻¹ sits on the function's NAME — it means *undo*, not an exponent.",
+      "figure": "undo-machine"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Undoing means running the machine backwards.",
+      "widget": {
+        "type": "functionMachine",
+        "a": 2,
+        "b": -3,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 7,
+        "prompt": "f(x) = 2x − 3. Find the input that produces 7 — you are inverting the machine by hand.",
+        "successFeedback": "f(5) = 7, so f⁻¹(7) = 5. The inverse is not a new function pulled from nowhere: it is this machine run backwards, undoing ×2 then −3 in the reverse order.",
+        "lowFeedback": "Output below 7 — try a bigger input.",
+        "highFeedback": "Output above 7 — try a smaller input."
+      },
+      "predict": {
+        "prompt": "To UNDO f(x) = 2x − 3 and recover the input, which reverse step comes FIRST?",
+        "options": [
+          {
+            "id": "add",
+            "label": "Add 3 back, then halve"
+          },
+          {
+            "id": "halve",
+            "label": "Halve, then add 3"
+          },
+          {
+            "id": "same",
+            "label": "Same order: double, then subtract"
+          }
+        ],
+        "outcomeId": "add",
+        "reveal": "Undoing runs the machine backwards, LAST step first: the −3 went on last, so +3 comes off first, then ÷2 — (7 + 3) ÷ 2 = 5, and f(5) = 7 checks out. Shoes off before socks."
+      },
+      "conceptTag": "ft-inverse-undo",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Manipulate the model and track how it represents inverse undo.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for inverse undo must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines inverse undo."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "function-transformations:ft-inverse-undo",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Inverses **swap every input–output pair**: if f(a) = b, then f⁻¹(b) = a. That single fact defines the inverse. And a warning worth repeating: **f⁻¹(x) is NOT 1/f(x)** — the reciprocal is a different object entirely.",
+      "figure": "ft-inverse-swap"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "One pair is enough.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "f(4) = 9 says the pair (4, 9) belongs to f; the inverse swaps it, so f⁻¹(9) = 4.",
+        "The inverse runs the arrow backward: 4 → 9 under f becomes 9 → 4 under f⁻¹."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "If f(4) = 9, what is f⁻¹(9)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4",
+            "correct": true,
+            "feedback": "Right — inverses swap each pair, so 9 goes back to the input that made it: 4."
+          },
+          {
+            "id": "o2",
+            "label": "1/9",
+            "correct": false,
+            "feedback": "That's the reciprocal of 9. On a function name, ⁻¹ means UNDO, not one-over."
+          },
+          {
+            "id": "o3",
+            "label": "9",
+            "correct": false,
+            "feedback": "9 is the output. f⁻¹ carries the output BACK to its input, which was 4."
+          },
+          {
+            "id": "o4",
+            "label": "can't tell without f's formula",
+            "correct": false,
+            "feedback": "A formula isn't required — the single pair f(4) = 9 already pins down f⁻¹(9) = 4, because inverses swap pairs."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-undo__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Undo a doubling.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 2x. What is f⁻¹(10)?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is f(10) = 2 × 10 — forward again. Which input DOUBLES to 10? That's 5."
+          },
+          {
+            "value": 8,
+            "feedback": "You subtracted 2, but f multiplies by 2 — undo multiplication by dividing: 10 ÷ 2 = 5."
+          }
+        ],
+        "fallbackFeedback": "f doubles its input, so f⁻¹ halves: 10 ÷ 2 = 5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Undo a subtraction.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "g subtracted 7 to land on 4, so g⁻¹ adds 7 back: 4 + 7 = 11.",
+        "Ask which input gives 4: solve x − 7 = 4, so x = 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "g(x) = x − 7. What is g⁻¹(4)?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "−3 is g(4) = 4 − 7 — that's forward. The inverse ADDS the 7 back: 4 + 7 = 11."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the shift itself, not the recovered input — undo the subtraction: 4 + 7 = 11."
+          }
+        ],
+        "fallbackFeedback": "g⁻¹ reverses the −7: 4 + 7 = 11."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-undo__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What ⁻¹ really claims.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "The defining property is the pair swap: f(a) = b exactly when f⁻¹(b) = a.",
+        "Everything about inverses — tables, rules, graphs — follows from swapping inputs with outputs."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which statement is always true about an inverse function?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "if f(a) = b, then f⁻¹(b) = a",
+            "correct": true,
+            "feedback": "Exactly — the inverse swaps every input–output pair of f."
+          },
+          {
+            "id": "o2",
+            "label": "f⁻¹(x) = 1/f(x)",
+            "correct": false,
+            "feedback": "That's the reciprocal of the output. For f(x) = x + 5, f⁻¹(8) = 3, but 1/f(8) = 1/13 — completely different."
+          },
+          {
+            "id": "o3",
+            "label": "f⁻¹(b) = −f(b)",
+            "correct": false,
+            "feedback": "Negating an output doesn't recover an input: for f(x) = x + 5, −f(8) = −13, but f⁻¹(8) = 3."
+          },
+          {
+            "id": "o4",
+            "label": "f⁻¹ always doubles its input",
+            "correct": false,
+            "feedback": "The inverse depends on what f does — it undoes THAT. Only f(x) = x/2 has a doubling inverse."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-undo__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Undo two operations.",
+      "conceptTag": "ft-inverse-undo",
+      "explanationVariants": [
+        "h⁻¹(19) asks which input h sends to 19: solve 3x + 1 = 19, so 3x = 18 and x = 6.",
+        "Undo in reverse order: strip the +1 first (19 − 1 = 18), then the ×3 (18 ÷ 3 = 6)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "h(x) = 3x + 1. What is h⁻¹(19)?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 58,
+            "feedback": "58 is h(19) = 3 × 19 + 1 — forward. The inverse asks which input REACHES 19: x = 6."
+          },
+          {
+            "value": 54,
+            "feedback": "After 19 − 1 = 18, undo the ×3 by DIVIDING: 18 ÷ 3 = 6, not 18 × 3."
+          }
+        ],
+        "fallbackFeedback": "Solve 3x + 1 = 19: subtract 1 (18), divide by 3 (6)."
+      },
+      "hints": [
+        "The inverse asks: which input makes h output 19?",
+        "Set 3x + 1 = 19 and undo the operations in reverse — subtract 1 first.",
+        "3x = 18, so x = 18 ÷ 3 = 6."
+      ],
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-inverse-undo__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "An inverse runs the function backward, swapping every input–output pair.",
+      "takeaways": [
+        "If f(a) = b, then f⁻¹(b) = a.",
+        "f⁻¹(x) is NOT 1/f(x) — ⁻¹ on a function name means undo.",
+        "Undo multi-step functions in reverse order."
+      ],
+      "teaser": "Next: turning that undo idea into an actual FORMULA for f⁻¹."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-inverse-undo",
+      "concept": {
+        "id": "rem-ft0501-c",
+        "kind": "concept",
+        "body": "The inverse swaps input and output. If f adds 2, then f⁻¹ subtracts 2: to find f⁻¹(9), ask which input f sends to 9."
+      },
+      "check": {
+        "id": "rem-ft0501-k",
+        "kind": "check",
+        "body": "One more undo.",
+        "conceptTag": "ft-inverse-undo",
+        "explanationVariants": [
+          "f added 2 to reach 9, so the original input was 9 − 2 = 7.",
+          "Solve x + 2 = 9: x = 7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "f(x) = x + 2. What is f⁻¹(9)?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 11,
+              "feedback": "11 is f(9) = 9 + 2 — forward. Go backward instead: 9 − 2 = 7."
+            },
+            {
+              "value": 2,
+              "feedback": "2 is what f adds; the inverse recovers the INPUT: 9 − 2 = 7."
+            }
+          ],
+          "fallbackFeedback": "Undo the +2: 9 − 2 = 7."
+        }
+      }
+    }
+  ]
+}

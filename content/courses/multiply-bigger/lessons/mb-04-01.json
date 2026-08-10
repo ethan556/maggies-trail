@@ -1,0 +1,338 @@
+{
+ "id": "mb-04-01",
+ "slug": "sharing-with-leftovers",
+ "title": "Sharing with Leftovers",
+ "courseId": "multiply-bigger",
+ "chapterId": "ch4-division-leftovers",
+ "minutes": 6,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Division doesn't always come out even. Share 23 candies among 4 kids: each gets 5, and **3 are left over** — that leftover is the **remainder**. We write it as 23 ÷ 4 = 5 remainder 3. The remainder is whatever's too small to split into one more full share.",
+   "figure": "mb-remainder"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Even split, or leftovers?",
+   "conceptTag": "remainders",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each division: does it come out EVEN, or does it leave a REMAINDER?",
+    "buckets": [
+     {
+      "id": "even",
+      "label": "Even (no remainder)",
+      "icon": "✅"
+     },
+     {
+      "id": "rem",
+      "label": "Has a remainder",
+      "icon": "➕"
+     }
+    ],
+    "items": [
+     {
+      "id": "d1",
+      "label": "20 ÷ 4",
+      "bucketId": "even",
+      "feedback": "4 × 5 = 20 exactly — nothing left over."
+     },
+     {
+      "id": "d2",
+      "label": "23 ÷ 4",
+      "bucketId": "rem",
+      "feedback": "4 × 5 = 20, and 23 − 20 = 3 left over — a remainder of 3."
+     },
+     {
+      "id": "d3",
+      "label": "18 ÷ 3",
+      "bucketId": "even",
+      "feedback": "3 × 6 = 18 exactly — no leftovers."
+     },
+     {
+      "id": "d4",
+      "label": "17 ÷ 5",
+      "bucketId": "rem",
+      "feedback": "5 × 3 = 15, and 17 − 15 = 2 left over — a remainder of 2."
+     }
+    ],
+    "missFeedback": "Check whether the divisor fits an exact whole number of times, or leaves a bit over.",
+    "successFeedback": "20 and 18 split perfectly; 23 and 17 each leave a small leftover — their remainders."
+   },
+   "predict": {
+    "prompt": "What makes a division come out perfectly EVEN?",
+    "options": [
+     {
+      "id": "multiple",
+      "label": "The total is a multiple of the group size"
+     },
+     {
+      "id": "even",
+      "label": "The total is an even number"
+     },
+     {
+      "id": "small",
+      "label": "The divisor is small"
+     }
+    ],
+    "outcomeId": "multiple",
+    "reveal": "Even splits happen when the group size fits the total a whole number of times — 12 by 4, clean; 13 by 4, one left over. Multiples, not evenness, decide it."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find the remainder.",
+   "conceptTag": "remainders",
+   "explanationVariants": [
+    "5 × 4 = 20, and 22 − 20 = 2 left over — the remainder is 2.",
+    "22 splits into four groups of 5 (20), with 2 candies too few for a fifth group."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "22 ÷ 5 — what is the remainder?",
+    "answer": 2,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is the QUOTIENT (how many full groups of 5 fit). The remainder is what's left after: 22 − 20 = 2."
+     },
+     {
+      "value": 20,
+      "feedback": "20 is the amount used up by the 4 full groups (4 × 5). The remainder is what's left over: 22 − 20 = 2."
+     }
+    ],
+    "fallbackFeedback": "Find how many 5s fit, multiply, then subtract from 22."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbRemaindersNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "One rule keeps a remainder honest: **it must always be smaller than the divisor.** If you divide by 6 and get a remainder of 7, that's a red flag — 7 is bigger than 6, so one more whole group of 6 still fits inside it. A remainder that's too big just means you stopped sharing one round too soon.",
+   "figure": "mb-remainder"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Spot the too-big remainder.",
+   "conceptTag": "remainders",
+   "explanationVariants": [
+    "A remainder of 7 is bigger than the divisor 6, so one more full group of 6 fits: quotient becomes 5, remainder shrinks to 31 − 30 = 1.",
+    "Since 7 ≥ 6, another 6 hides inside the 'remainder' — bump the quotient up and recompute: 5 remainder 1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Sam divides 31 by 6 and says 'quotient 4, remainder 7.' What's the fix?",
+    "options": [
+     {
+      "id": "a",
+      "label": "The remainder (7) is bigger than the divisor (6) — one more group fits: quotient 5, remainder 1",
+      "correct": true,
+      "feedback": "7 is at least 6, so a whole extra group of 6 was hiding in there. Correct answer: 5 remainder 1."
+     },
+     {
+      "id": "b",
+      "label": "Sam's answer is already correct",
+      "feedback": "A remainder must be SMALLER than the divisor. 7 is bigger than 6, so Sam stopped sharing one round too soon."
+     },
+     {
+      "id": "c",
+      "label": "The quotient should be 31",
+      "feedback": "31 is the whole dividend, not a quotient. The real fix bumps the quotient from 4 to 5, shrinking the remainder to 1."
+     },
+     {
+      "id": "d",
+      "label": "Keep quotient 5 but leave the remainder at 7",
+      "feedback": "Bumping the quotient uses up one more group of 6, so the remainder must shrink too: 7 − 6 = 1."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbRemaindersMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each division to its answer.",
+   "conceptTag": "remainders",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each division problem to its quotient and remainder.",
+    "left": [
+     {
+      "id": "e29",
+      "label": "29 ÷ 5"
+     },
+     {
+      "id": "e35",
+      "label": "35 ÷ 6"
+     },
+     {
+      "id": "e27",
+      "label": "27 ÷ 4"
+     }
+    ],
+    "right": [
+     {
+      "id": "r5r4",
+      "label": "5 remainder 4"
+     },
+     {
+      "id": "r5r5",
+      "label": "5 remainder 5"
+     },
+     {
+      "id": "r6r3",
+      "label": "6 remainder 3"
+     }
+    ],
+    "pairs": {
+     "e29": "r5r4",
+     "e35": "r5r5",
+     "e27": "r6r3"
+    },
+    "pairErrors": [
+     {
+      "left": "e35",
+      "right": "r6r3",
+      "feedback": "6 × 5 = 30, and 35 − 30 = 5 — that's '5 remainder 5', not '6 remainder 3' (which belongs to 27 ÷ 4)."
+     }
+    ],
+    "missFeedback": "Find how many whole groups of the divisor fit, then what's left over.",
+    "successFeedback": "29÷5=5r4, 35÷6=5r5, 27÷4=6r3 — every remainder here is smaller than its divisor, as it must be."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "One more remainder.",
+   "conceptTag": "remainders",
+   "explanationVariants": [
+    "7 × 6 = 42, and 45 − 42 = 3 — the remainder is 3.",
+    "Six groups of 7 use up 42, leaving 3 over from 45."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "45 ÷ 7 — what is the remainder?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 is the QUOTIENT. The remainder is what's left after 6 groups of 7: 45 − 42 = 3."
+     },
+     {
+      "value": 42,
+      "feedback": "42 is how much the 6 full groups used up (6 × 7). What's left over is the remainder: 45 − 42 = 3."
+     }
+    ],
+    "fallbackFeedback": "How many 7s fit into 45? Multiply, then subtract from 45."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbRemaindersNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The sticker giveaway.",
+   "conceptTag": "remainders",
+   "hints": [
+    "Find how many full groups of 5 fit into 38.",
+    "5 × 7 = 35 — that's 7 friends fully sorted.",
+    "Subtract 35 from 38 for the leftover."
+   ],
+   "explanationVariants": [
+    "5 × 7 = 35, and 38 − 35 = 3 — after 7 friends get 5 stickers each, 3 stickers are left over.",
+    "Seven full shares of 5 use up 35 stickers, leaving a remainder of 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "38 stickers are shared equally among 5 friends, giving each the same whole number of stickers. How many stickers are left over?",
+    "answer": 3,
+    "tolerance": 0,
+    "unit": "stickers",
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "7 is how many stickers EACH friend gets (the quotient). The leftover is what's left after: 38 − 35 = 3."
+     },
+     {
+      "value": 35,
+      "feedback": "35 is the amount actually given out (5 × 7). What's left over is the remainder: 38 − 35 = 3."
+     }
+    ],
+    "fallbackFeedback": "How many full groups of 5 fit in 38? Multiply, then subtract from 38."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbRemaindersNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Leftovers, named and tamed.",
+   "takeaways": [
+    "A remainder is what's left after the biggest whole number of full groups.",
+    "A remainder must always be smaller than the divisor.",
+    "A too-big remainder means one more full group still fits — bump the quotient and recompute."
+   ],
+   "teaser": "next: dividing bigger numbers, using the same place-value splitting trick."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "remainders",
+   "concept": {
+    "id": "rem-rm-c",
+    "kind": "concept",
+    "body": "Quick rewind. To find a remainder: figure out the biggest number of FULL groups that fit, multiply, then subtract from the total. For 13 ÷ 4: 4 × 3 = 12 fits (3 full groups), and 13 − 12 = 1 is what's left over — the remainder."
+   },
+   "check": {
+    "id": "rem-rm-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "remainders",
+    "explanationVariants": [
+     "4 × 3 = 12, and 13 − 12 = 1 — the remainder is 1.",
+     "Three full groups of 4 use 12, leaving 1 over from 13."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "13 ÷ 4 — what is the remainder?",
+     "options": [
+      {
+       "id": "a",
+       "label": "1",
+       "correct": true,
+       "feedback": "4 × 3 = 12, and 13 − 12 = 1."
+      },
+      {
+       "id": "b",
+       "label": "3",
+       "feedback": "3 is the quotient (how many full groups of 4 fit). The remainder is 13 − 12 = 1."
+      },
+      {
+       "id": "c",
+       "label": "4",
+       "feedback": "4 is the divisor itself — a remainder can never equal or exceed it. The true remainder is 1."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

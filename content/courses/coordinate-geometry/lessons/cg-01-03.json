@@ -1,0 +1,557 @@
+{
+ "id": "cg-01-03",
+ "slug": "graphs-that-tell-stories",
+ "title": "Graphs That Tell Stories",
+ "courseId": "coordinate-geometry",
+ "chapterId": "ch1-coordinate-plane",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Coordinates can **mean** things. On a town map, x can count blocks **east** of the town square and y blocks **north**. Then the library at (2, 3) is a real place: 2 blocks east, 3 blocks north. The axes' meanings — east and north here — turn every pair into a location you could walk to.",
+   "figure": "cg-town-map"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Read the map's language.",
+   "conceptTag": "coord-realworld",
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "choice",
+    "prompt": "On the town map (x = blocks east, y = blocks north), the school is at (5, 1). What does the 5 tell you?",
+    "task": "axisMeaning",
+    "xLabel": "blocks east",
+    "yLabel": "blocks north",
+    "sets": [
+     {
+      "id": "story",
+      "label": "story observations",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 5,
+        "y": 1
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "targetPointId": "p1",
+    "targetAxis": "x",
+    "choices": [
+     {
+      "id": "a",
+      "label": "The school is 5 blocks east of the town square",
+      "feedback": "Right — the first slot is the east-distance on this map.",
+      "claim": "axis:x:blocks east"
+     },
+     {
+      "id": "b",
+      "label": "The school is 5 blocks north of the town square",
+      "feedback": "North is the second slot — that's the 1. The 5 sits in the east slot.",
+      "claim": "misconception:b"
+     },
+     {
+      "id": "c",
+      "label": "The school is 5 minutes away",
+      "feedback": "The axes count blocks, not time. The 5 means 5 blocks east.",
+      "claim": "misconception:c"
+     }
+    ],
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "axis:x",
+     "point:p1"
+    ],
+    "requiredExplorations": 2,
+    "successFeedback": "Right — the first slot is the east-distance on this map.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Choose the conclusion supported by the point-set state.",
+    "tolerance": 0
+   },
+   "hints": [
+    "What does this map's x mean?",
+    "x counts blocks east.",
+    "5 blocks east."
+   ],
+   "explanationVariants": [
+    "x = 5 means 5 blocks east.",
+    "The first slot is east on this map."
+   ]
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Walk one street.",
+   "conceptTag": "coord-realworld",
+   "explanationVariants": [
+    "Same north-distance, so subtract the east-numbers: 6 − 1 = 5 blocks.",
+    "Both sit 4 blocks north; the walk is all eastward, 5 blocks."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "The library is at (1, 4) and the park is at (6, 4). Walking straight along the street, how many blocks apart are they?",
+    "task": "axisDistance",
+    "xLabel": "blocks east",
+    "yLabel": "blocks north",
+    "sets": [
+     {
+      "id": "story",
+      "label": "story observations",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 1,
+        "y": 4
+       },
+       {
+        "id": "p2",
+        "label": "point 2",
+        "x": 6,
+        "y": 4
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "pathPointIds": [
+     "p1",
+     "p2"
+    ],
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 6,
+      "feedback": "6 counts the corners you pass (1 through 6). Blocks are the spaces between corners: 6 − 1 = 5."
+     },
+     {
+      "value": 10,
+      "feedback": "10 adds 6 + 4 — numbers from different axes. Same height, so subtract the east-numbers: 6 − 1 = 5."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "point:p1",
+     "point:p2",
+     "distance:changes",
+     "distance:total"
+    ],
+    "requiredExplorations": 4,
+    "successFeedback": "Both are 4 north, so the distance is 6 − 1 = 5 blocks east-to-west.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Both are 4 north, so the distance is 6 − 1 = 5 blocks east-to-west.",
+    "tolerance": 0
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "cgAxisDistance"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Graphs tell stories over time, too. Suppose Maya saves $3 every week and plots her total: (1, 3), (2, 6), (3, 9). Here x is the **week** and y is the **dollars saved so far**. Reading a point answers a question — at week 2, the height 6 says she had $6.",
+   "figure": "cg-maya-saves"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Read the story.",
+   "conceptTag": "coord-realworld",
+   "explanationVariants": [
+    "Week 3's point (3, 9) means $9.",
+    "x picks the week; y is the money."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "choice",
+    "prompt": "Maya's savings points are (1, 3), (2, 6), (3, 9). How many dollars had she saved by week 3?",
+    "task": "pointRead",
+    "xLabel": "week",
+    "yLabel": "dollars saved",
+    "sets": [
+     {
+      "id": "story",
+      "label": "story observations",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 1,
+        "y": 3
+       },
+       {
+        "id": "p2",
+        "label": "point 2",
+        "x": 2,
+        "y": 6
+       },
+       {
+        "id": "p3",
+        "label": "point 3",
+        "x": 3,
+        "y": 9
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "targetPointId": "p3",
+    "targetAxis": "y",
+    "choices": [
+     {
+      "id": "a",
+      "label": "$9",
+      "feedback": "Right — the point (3, 9) puts week 3 at $9.",
+      "numberValue": 9
+     },
+     {
+      "id": "b",
+      "label": "$3",
+      "feedback": "3 is the week number — the x-slot. The savings are the height: $9.",
+      "claim": "misconception:b"
+     },
+     {
+      "id": "c",
+      "label": "$6",
+      "feedback": "$6 is week 2's height. Week 3's point is (3, 9): $9.",
+      "claim": "misconception:c"
+     }
+    ],
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "point:p3",
+     "axis:y"
+    ],
+    "requiredExplorations": 2,
+    "successFeedback": "Right — the point (3, 9) puts week 3 at $9.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Choose the conclusion supported by the point-set state.",
+    "tolerance": 0
+   },
+   "hints": [
+    "Find the point with x = 3.",
+    "That point is (3, 9).",
+    "Read its height."
+   ],
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "cgContextRead"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Extend the story.",
+   "conceptTag": "coord-realworld",
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "Maya keeps saving $3 each week. What will the height of her week-4 point be, in dollars?",
+    "task": "sequenceExtend",
+    "xLabel": "week",
+    "yLabel": "dollars saved",
+    "sets": [
+     {
+      "id": "story",
+      "label": "story observations",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 1,
+        "y": 3
+       },
+       {
+        "id": "p2",
+        "label": "point 2",
+        "x": 2,
+        "y": 6
+       },
+       {
+        "id": "p3",
+        "label": "point 3",
+        "x": 3,
+        "y": 9
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "targetX": 4,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 9,
+      "feedback": "9 is week 3's total. One more week adds $3: 9 + 3 = 12."
+     },
+     {
+      "value": 7,
+      "feedback": "7 adds the coordinates 4 + 3. The pattern adds $3 to last week's total: 9 + 3 = 12."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "point:p1",
+     "point:p2",
+     "point:p3",
+     "sequence:rate",
+     "sequence:extend"
+    ],
+    "requiredExplorations": 5,
+    "successFeedback": "Each week adds $3: week 4 is 9 + 3 = 12, the point (4, 12).",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Each week adds $3: week 4 is 9 + 3 = 12, the point (4, 12).",
+    "tolerance": 0
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A two-street walk.",
+   "conceptTag": "coord-realworld",
+   "explanationVariants": [
+    "North leg: 5 − 1 = 4 blocks; east leg: 7 − 2 = 5 blocks; total 9.",
+    "Add the two straight legs: 4 up plus 5 across is 9 blocks."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "numeric",
+    "prompt": "Sam walks from (2, 1) straight north to (2, 5), then straight east to (7, 5). How many blocks does he walk in all?",
+    "task": "pathLength",
+    "xLabel": "blocks east",
+    "yLabel": "blocks north",
+    "sets": [
+     {
+      "id": "story",
+      "label": "story observations",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 2,
+        "y": 1
+       },
+       {
+        "id": "p2",
+        "label": "point 2",
+        "x": 2,
+        "y": 5
+       },
+       {
+        "id": "p3",
+        "label": "point 3",
+        "x": 7,
+        "y": 5
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "pathPointIds": [
+     "p1",
+     "p2",
+     "p3"
+    ],
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 11,
+      "feedback": "11 counts corners on each leg (5 and 6) instead of blocks. Blocks are differences: (5 − 1) + (7 − 2) = 4 + 5 = 9."
+     },
+     {
+      "value": 12,
+      "feedback": "12 adds the final corner's numbers, 7 + 5. Use the change on each leg: 4 north + 5 east = 9."
+     }
+    ],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "point:p1",
+     "point:p2",
+     "path:leg:1",
+     "point:p3",
+     "path:leg:2",
+     "path:total"
+    ],
+    "requiredExplorations": 6,
+    "successFeedback": "Leg 1: 5 − 1 = 4. Leg 2: 7 − 2 = 5. Total 4 + 5 = 9 blocks.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Leg 1: 5 − 1 = 4. Leg 2: 7 − 2 = 5. Total 4 + 5 = 9 blocks.",
+    "tolerance": 0
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "cgPathLength"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Say what a point says.",
+   "conceptTag": "coord-realworld",
+   "hints": [
+    "First name the axes: x is the day, y is the tomatoes.",
+    "The 4 sits in the day slot; the 8 in the tomato slot.",
+    "Day 4, eight tomatoes."
+   ],
+   "explanationVariants": [
+    "(4, 8) pairs day 4 with 8 tomatoes picked.",
+    "x = 4 picks the day; y = 8 counts that day's tomatoes."
+   ],
+   "widget": {
+    "type": "pointSetReasoningLab",
+    "answerMode": "choice",
+    "prompt": "On a garden graph, x = the day and y = tomatoes picked that day. What does the point (4, 8) say?",
+    "task": "pointMeaning",
+    "xLabel": "day",
+    "yLabel": "tomatoes picked",
+    "sets": [
+     {
+      "id": "story",
+      "label": "story observations",
+      "points": [
+       {
+        "id": "p1",
+        "label": "point 1",
+        "x": 4,
+        "y": 8
+       }
+      ]
+     }
+    ],
+    "targetSetId": "story",
+    "targetPointId": "p1",
+    "choices": [
+     {
+      "id": "a",
+      "label": "On day 4, 8 tomatoes were picked",
+      "feedback": "Right — day in the first slot, tomatoes in the second.",
+      "claim": "point:4:8:day:tomatoes picked"
+     },
+     {
+      "id": "b",
+      "label": "On day 8, 4 tomatoes were picked",
+      "feedback": "That swaps the slots. The day is x = 4; the tomatoes are y = 8.",
+      "claim": "misconception:b"
+     },
+     {
+      "id": "c",
+      "label": "12 tomatoes were picked over two days",
+      "feedback": "Adding 4 + 8 mixes a day count with a tomato count. The point pairs them: day 4, 8 tomatoes.",
+      "claim": "misconception:c"
+     }
+    ],
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "axis:x",
+     "axis:y",
+     "point:p1"
+    ],
+    "requiredExplorations": 3,
+    "successFeedback": "Right — day in the first slot, tomatoes in the second.",
+    "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+    "fallbackFeedback": "Choose the conclusion supported by the point-set state.",
+    "tolerance": 0
+   },
+   "variant": {
+    "gen": "coordinate-plot",
+    "form": "cgContextRead"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Axes give points meaning.",
+   "takeaways": [
+    "Real-world graphs name their axes; a point pairs one x-meaning with one y-meaning.",
+    "Distance along one street is the difference of the numbers that change.",
+    "Reading a point answers a question: find the x, read the height."
+   ],
+   "teaser": "next chapter: two number rules run side by side — and their pairs draw a line."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "coord-realworld",
+   "concept": {
+    "id": "rem-rw-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Name the axes first, then read the pair.** If x = blocks east and y = blocks north, then (3, 2) is a place: 3 east, 2 north. The numbers only mean something once you know what each axis counts."
+   },
+   "check": {
+    "id": "rem-rw-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "coord-realworld",
+    "explanationVariants": [
+     "(3, 2) on this map: 3 blocks east, 2 blocks north.",
+     "x is east, y is north — read the slots in order."
+    ],
+    "widget": {
+     "type": "pointSetReasoningLab",
+     "answerMode": "choice",
+     "prompt": "On the map (x = blocks east, y = blocks north), where is the point (3, 2)?",
+     "task": "pointMeaning",
+     "xLabel": "blocks east",
+     "yLabel": "blocks north",
+     "sets": [
+      {
+       "id": "story",
+       "label": "story observations",
+       "points": [
+        {
+         "id": "p1",
+         "label": "point 1",
+         "x": 3,
+         "y": 2
+        }
+       ]
+      }
+     ],
+     "targetSetId": "story",
+     "targetPointId": "p1",
+     "choices": [
+      {
+       "id": "a",
+       "label": "3 blocks east and 2 blocks north",
+       "feedback": "Right — east first, north second.",
+       "claim": "point:3:2:blocks east:blocks north"
+      },
+      {
+       "id": "b",
+       "label": "2 blocks east and 3 blocks north",
+       "feedback": "That reads the slots backwards. East is the first number: 3 east, 2 north.",
+       "claim": "misconception:b"
+      },
+      {
+       "id": "c",
+       "label": "3 blocks east and 3 blocks north",
+       "feedback": "That repeats the 3. North is the second number, 2: 3 east, 2 north.",
+       "claim": "misconception:c"
+      }
+     ],
+     "numericErrors": [],
+     "authoredStages": [],
+     "requiredStageKeys": [
+      "axis:x",
+      "axis:y",
+      "point:p1"
+     ],
+     "requiredExplorations": 3,
+     "successFeedback": "Right — east first, north second.",
+     "explorationFeedback": "Inspect every required observation and derived point-set state before checking.",
+     "fallbackFeedback": "Choose the conclusion supported by the point-set state.",
+     "tolerance": 0
+    }
+   }
+  }
+ ]
+}

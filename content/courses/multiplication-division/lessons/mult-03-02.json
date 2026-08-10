@@ -1,0 +1,369 @@
+{
+  "id": "mult-03-02",
+  "slug": "fives-and-tens",
+  "title": "Fives and Tens",
+  "courseId": "multiplication-division",
+  "chapterId": "ch3-fact-fluency",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "×10 is a **shift**, not a trick. In 7 × 10, every one of the 7 becomes a ten — the 7 slides into the tens place and a 0 holds the ones place: 70. It's not \"glue a zero on\"; it's ones turning into tens.",
+      "figure": "mult3-fives"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Tens make big totals **guessable**.",
+      "conceptTag": "times-5-10",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "A school has 32 classrooms with about 10 kids in each. Slide to estimate the total number of kids.",
+        "min": 10,
+        "max": 10000,
+        "start": 10,
+        "target": 320,
+        "acceptFactor": 2,
+        "unitLabel": "kids",
+        "ticks": [
+          10,
+          100,
+          1000,
+          10000
+        ],
+        "lowFeedback": "Too few — even ONE classroom holds about 10 kids, and there are 32 of them. Slide up.",
+        "highFeedback": "That's a stadium, not a school! 32 tens land in the hundreds — ease back down.",
+        "successFeedback": "About 320 — because 32 × 10 shifts 32 into 320. Tens turn counts into quick estimates."
+      },
+      "predict": {
+        "prompt": "32 classrooms of about 10 kids each — the total lands between…",
+        "options": [
+          {
+            "id": "mid",
+            "label": "100 and 1,000"
+          },
+          {
+            "id": "low",
+            "label": "10 and 100"
+          },
+          {
+            "id": "high",
+            "label": "1,000 and 10,000"
+          }
+        ],
+        "outcomeId": "mid",
+        "reveal": "32 × 10 = 320 — a three-digit answer, parked between 100 and 1,000. Multiplying by ten slides a number one whole tick along this line: that power-of-ten skeleton is what every estimate hangs on."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents times 5 10.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for times 5 10 must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines times 5 10."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:times-5-10",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Know **why** the shift works, and it can't fool you.",
+      "conceptTag": "times-5-10",
+      "explanationVariants": [
+        "6 × 10 turns each of the 6 ones into a ten: six tens are 60.",
+        "Six dimes: each dime is ten pennies, so 6 coins hold 60 pennies."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why does 6 × 10 = 60?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Each of the 6 ones becomes a ten — six tens make 60",
+            "correct": true,
+            "feedback": "That's the real reason: the 6 shifts into the tens place, and 0 holds the empty ones place."
+          },
+          {
+            "id": "b",
+            "label": "Because you can glue a 0 onto any multiplication answer",
+            "feedback": "Gluing zeros only LOOKS like the rule. It happens here because ones become tens — try gluing a 0 for 6 × 5 and it falls apart."
+          },
+          {
+            "id": "c",
+            "label": "Because 6 + 10 makes 60",
+            "feedback": "6 + 10 is 16. Adding joins once; multiplying by 10 turns all six ones into tens."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "times-five-ten"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "×5 rides along: **5 is half of 10**, so every ×5 answer is half its ×10 answer — 8 × 10 = 80, so 8 × 5 = 40. That's why ×5 answers always end in **0 or 5**, and why the clock counts by them.",
+      "figure": "mult3-fives"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Straight recall.",
+      "conceptTag": "times-5-10",
+      "explanationVariants": [
+        "6 × 5 is half of 6 × 10: half of 60 is 30.",
+        "Skip count six 5s: 5, 10, 15, 20, 25, 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "6 × 5 = ?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 adds 6 + 5. Six GROUPS of 5 stack up: 5, 10, 15, 20, 25, 30."
+          },
+          {
+            "value": 65,
+            "feedback": "65 glues the digits together. Use the half-of-ten shortcut instead: 6 × 10 = 60, and half of that."
+          },
+          {
+            "value": 35,
+            "feedback": "35 is 7 × 5 — one group of 5 too many. Six hops of 5 stop at 30."
+          }
+        ],
+        "fallbackFeedback": "Half-of-ten: 6 × 10 = 60, then take half."
+      },
+      "variant": {
+        "gen": "times-five-ten",
+        "form": "timesFive"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "×5 answers wear a **uniform** — check the last digit.",
+      "conceptTag": "times-5-10",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Could each number be a ×5 answer? Sort by its last digit.",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Could be ×5 (ends in 0 or 5)",
+            "icon": "✅"
+          },
+          {
+            "id": "no",
+            "label": "Could not be ×5",
+            "icon": "❌"
+          }
+        ],
+        "items": [
+          {
+            "id": "n40",
+            "label": "40",
+            "bucketId": "yes",
+            "feedback": "40 ends in 0 — it's 8 × 5. Every ×5 answer ends in 0 or 5."
+          },
+          {
+            "id": "n23",
+            "label": "23",
+            "bucketId": "no",
+            "feedback": "23 ends in 3. Count by 5s and you only ever land on numbers ending in 5 or 0 — 23 gets skipped."
+          },
+          {
+            "id": "n15",
+            "label": "15",
+            "bucketId": "yes",
+            "feedback": "15 ends in 5 — it's 3 × 5. The 5-count lands right on it."
+          },
+          {
+            "id": "n52",
+            "label": "52",
+            "bucketId": "no",
+            "feedback": "52 ends in 2, so no ×5 fact reaches it — even though it LOOKS like 5 and 2 swapped places."
+          }
+        ],
+        "missFeedback": "Check each number's last digit: 0 or 5 means the 5-count can land there; anything else gets hopped over.",
+        "successFeedback": "Sorted by uniform! Last digit 0 or 5 — that's the ×5 badge."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "The clock is a ×5 machine.",
+      "conceptTag": "times-5-10",
+      "explanationVariants": [
+        "Each clock number is worth 5 minutes: pointing at the 9 means 9 × 5 = 45 minutes.",
+        "Count by 5s around the face to the 9: 5, 10, 15, 20, 25, 30, 35, 40, 45."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand points straight at the 9. How many minutes past the hour is it?",
+        "answer": 45,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the clock NUMBER, not the minutes. Each number on the face is worth 5 minutes — multiply."
+          },
+          {
+            "value": 14,
+            "feedback": "14 adds 9 + 5. The hand has passed NINE marks, each worth 5 minutes: 9 × 5."
+          },
+          {
+            "value": 95,
+            "feedback": "95 glues 9 and 5 together — and an hour only has 60 minutes! Nine 5s make 45."
+          }
+        ],
+        "fallbackFeedback": "Count by 5s once per clock number, stopping at the 9."
+      },
+      "variant": {
+        "gen": "times-five-ten",
+        "form": "clockMinutes"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "A smaller stretch of the clock, before recess.",
+      "conceptTag": "times-5-10",
+      "explanationVariants": [
+        "The minute hand at the 1 means 1×5=5 minutes; at the 4 means 4×5=20 minutes. The gap is 20−5=15.",
+        "Turn each clock position into minutes first (5 and 20), then subtract to find the elapsed time (20−5=15)."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The minute hand starts at the 1 (5 minutes past) and moves to the 4 (20 minutes past). How many minutes passed?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 subtracts the clock NUMBERS themselves (4−1) — each number stands for 5 minutes, so convert first: 20−5=15."
+          },
+          {
+            "value": 25,
+            "feedback": "25 adds the two times (20+5) instead of finding the gap between them — subtract instead: 20−5=15."
+          }
+        ],
+        "fallbackFeedback": "Convert each clock position to minutes first (1→5, 4→20), then subtract to find the elapsed time (20−5=15)."
+      },
+      "variant": {
+        "gen": "times-five-ten",
+        "form": "clockElapsed"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two clock readings, one recess.",
+      "conceptTag": "times-5-10",
+      "hints": [
+        "Turn each hand position into minutes first — each clock number is worth 5.",
+        "Start: hand at the 3 → 15 minutes past. End: hand at the 9 → 45 minutes past.",
+        "Recess runs from 15 to 45 — subtract to find its length."
+      ],
+      "explanationVariants": [
+        "Start 3 × 5 = 15, end 9 × 5 = 45; the recess lasts 45 − 15 = 30 minutes.",
+        "From the 3 to the 9 the hand crosses 6 numbers, each worth 5 minutes: 6 × 5 = 30."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Recess starts when the minute hand points at the 3 and ends when it points at the 9. How many minutes long is recess?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "minutes",
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 subtracts the clock numbers (9 − 3) — but each number is worth 5 whole minutes. Turn both into minutes first."
+          },
+          {
+            "value": 60,
+            "feedback": "60 adds 45 + 15. Recess is the time BETWEEN the readings — find the gap, not the sum."
+          },
+          {
+            "value": 45,
+            "feedback": "45 is when recess ENDS. It didn't start at zero, though — it started at 15. Subtract."
+          }
+        ],
+        "fallbackFeedback": "Convert both: hand at 3 = 15 minutes, hand at 9 = 45 minutes. The recess is the difference."
+      },
+      "variant": {
+        "gen": "times-five-ten",
+        "form": "clockElapsed"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Fives and tens: unlocked.",
+      "takeaways": [
+        "×10 shifts the number left — ones become tens, 0 holds the ones place.",
+        "×5 is half of ×10, and its answers always end in 0 or 5.",
+        "The clock counts fives: clock number × 5 = minutes."
+      ],
+      "teaser": "your ×2 machine has a turbo button — doubling twice makes ×4, three times makes ×8."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "times-5-10",
+      "concept": {
+        "id": "rem-t5-c",
+        "kind": "concept",
+        "body": "Quick rewind. For ×10, every 1 becomes a 10: so 4 × 10 turns 4 ones into 4 **tens** — 40. For ×5, count on your fingers by fives: 5, 10, 15… each finger is one more group of 5."
+      },
+      "check": {
+        "id": "rem-t5-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "times-5-10",
+        "explanationVariants": [
+          "5 × 10 turns 5 ones into 5 tens: 50.",
+          "Five dimes are 50 pennies."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "5 × 10 = ?",
+          "options": [
+            {
+              "id": "a",
+              "label": "50",
+              "correct": true,
+              "feedback": "Five tens — the 5 shifts into the tens place: 50."
+            },
+            {
+              "id": "b",
+              "label": "15",
+              "feedback": "15 adds 5 + 10. Multiplying turns all five ones into tens: 10, 20, 30, 40, 50."
+            },
+            {
+              "id": "c",
+              "label": "510",
+              "feedback": "510 glues the digits side by side. The 5 shifts one place left — into 50, not past it."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

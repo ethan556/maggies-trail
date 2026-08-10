@@ -1,0 +1,234 @@
+{
+  "id": "esn-01b-03",
+  "slug": "zero-and-negative-exponents",
+  "title": "Zero and Negative Exponents",
+  "courseId": "exponents-scientific-notation",
+  "chapterId": "ch1b-exponent-rules-any-base",
+  "minutes": 12,
+  "standards": [
+    "8.EE.A.1"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Walk down the powers of 2: 16, 8, 4, 2 — each step divides by 2. Keep going and 2¹ = 2 becomes **2⁰ = 1**.\n\nThat is not a convention someone invented; it is forced. Anything else would break the pattern, and it would break the quotient rule too: 2³ ÷ 2³ is obviously 1, and the rule says it is 2⁰.",
+      "figure": "esn8-zero-exponent"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Let the quotient rule land on zero.",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "exponentChain",
+        "answerMode": "numeric",
+        "prompt": "Simplify 6⁴ ÷ 6⁴ to a single power 6^?. What is the exponent?",
+        "values": [
+          4,
+          4
+        ],
+        "exponentOps": [
+          "subtract"
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is the VALUE of 6⁰. The exponent itself is 4 − 4 = 0."
+          },
+          {
+            "value": 8,
+            "feedback": "8 adds the exponents, which is the multiplication rule. Division subtracts: 4 − 4 = 0."
+          }
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "successFeedback": "4 − 4 = 0, so the answer is 6⁰ — and since the top and bottom are identical, that must equal 1.",
+        "explorationFeedback": "Step through at least 2 stages of the chain before checking.",
+        "fallbackFeedback": "4 − 4 = 0, so the answer is 6⁰ — and since the top and bottom are identical, that must equal 1."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Any base at all.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "Every non-zero base to the power 0 is 1, so 9⁰ = 1.",
+        "The descending pattern forces it: the step below 9¹ = 9 is 9 ÷ 9 = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the value of 9⁰?",
+        "answer": 1,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 would be the answer if the exponent multiplied the base. An exponent of zero means no factors at all, which leaves 1."
+          },
+          {
+            "value": 9,
+            "feedback": "9 is 9¹. Dropping the exponent by one divides by 9, giving 1."
+          }
+        ],
+        "fallbackFeedback": "Any non-zero base raised to 0 is 1."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Now step below zero.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "Continuing the halving past 2⁰ = 1 gives 2⁻¹ = ½, so a negative exponent is a reciprocal.",
+        "2⁻² = 1 ÷ 2² = ¼."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What does 2⁻² equal?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/4",
+            "correct": true,
+            "feedback": "A negative exponent flips the base: 2⁻² = 1 ÷ 2² = 1/4."
+          },
+          {
+            "id": "b",
+            "label": "−4",
+            "correct": false,
+            "feedback": "The exponent's sign does not make the value negative. It signals a reciprocal: 1/2² = 1/4."
+          },
+          {
+            "id": "c",
+            "label": "4",
+            "correct": false,
+            "feedback": "That is 2². The minus sign flips it to 1/4."
+          },
+          {
+            "id": "d",
+            "label": "−1/4",
+            "correct": false,
+            "feedback": "The reciprocal is positive. 2⁻² = 1/2² = 1/4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A negative exponent is **not** a negative number. It is an instruction to flip: a⁻ⁿ = 1 / aⁿ.\n\nAnd the rules keep working across the sign. 3² · 3⁻⁵ adds exponents to 3⁻³, which is 1/3³ = 1/27. No special case is needed — the arithmetic of the exponents simply runs into negative territory.",
+      "figure": "ep-negative-exp"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Add exponents straight through zero.",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "exponentChain",
+        "answerMode": "numeric",
+        "prompt": "Simplify 3² · 3⁻⁵ to a single power 3^?. What is the exponent?",
+        "values": [
+          2,
+          -5
+        ],
+        "exponentOps": [
+          "add"
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 3,
+            "feedback": "3 ignores the minus sign. Adding a negative moves the other way: 2 + (−5) = −3."
+          },
+          {
+            "value": -10,
+            "feedback": "−10 multiplies the exponents. Multiplying powers ADDS them: 2 + (−5) = −3."
+          }
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "successFeedback": "2 + (−5) = −3, so the result is 3⁻³ — which is 1/3³ = 1/27.",
+        "explorationFeedback": "Step through at least 2 stages of the chain before checking.",
+        "fallbackFeedback": "2 + (−5) = −3, so the result is 3⁻³ — which is 1/3³ = 1/27."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Convert the answer to a plain number.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "3⁻³ = 1/3³ = 1/27, so the denominator is 27.",
+        "Flip the base and evaluate: 3³ = 27."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "3⁻³ equals 1/n. What is n?",
+        "answer": 27,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is 3². The exponent is 3, so the denominator is 3³ = 27."
+          },
+          {
+            "value": -27,
+            "feedback": "The reciprocal is positive: a negative exponent flips the base but does not change its sign."
+          }
+        ],
+        "fallbackFeedback": "3⁻³ = 1/3³, and 3³ = 27."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One expression, every rule in the chapter.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "4³ · 4⁻³ = 4⁰ = 1 — the two powers are reciprocals, so they cancel exactly.",
+        "3 + (−3) = 0, and any non-zero base to the power 0 is 1."
+      ],
+      "hints": [
+        "Add the exponents first, before evaluating anything.",
+        "3 + (−3) = 0, so the expression is 4⁰.",
+        "Any non-zero base to the power 0 equals 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the value of 4³ · 4⁻³?",
+        "answer": 1,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "0 would need the exponent to reach the value. Adding the exponents gives 4⁰, and 4⁰ = 1."
+          },
+          {
+            "value": 64,
+            "feedback": "64 is 4³ alone. The second factor is its reciprocal, 1/64, and the two cancel to 1."
+          }
+        ],
+        "fallbackFeedback": "3 + (−3) = 0, so this is 4⁰ = 1 — the two factors are reciprocals."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The rules never needed a special case.",
+      "takeaways": [
+        "a⁰ = 1 for any non-zero a — the descending pattern and the quotient rule both force it.",
+        "A negative exponent means a reciprocal: a⁻ⁿ = 1/aⁿ, never a negative value.",
+        "Adding exponents works straight through zero and into the negatives."
+      ],
+      "teaser": "Next chapter: square and cube roots, and solving x² = p."
+    }
+  ],
+  "remedials": []
+}

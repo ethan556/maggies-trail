@@ -1,0 +1,266 @@
+{
+  "id": "sa7-01-01",
+  "slug": "unfolding-a-prism",
+  "title": "Unfolding a Prism",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3c-wrapping-solids",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Surface area is a flat question wearing a 3-D costume. Cut a box along its edges and lay it out: what you get is a NET, a flat arrangement of the same faces. Adding up the net's areas is adding up the solid's surface, because they are the same cardboard either way.",
+      "figure": "sa7-net-unfold"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Fold and unfold until the total matches.",
+      "widget": {
+        "type": "netFold",
+        "prompt": "Set the box's dimensions so the unfolded net's total area is 52 square units.",
+        "targetSurfaceArea": 52,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 1,
+        "hStart": 1,
+        "successFeedback": "4 by 3 by 2: the faces come in matching pairs — two 12s, two 8s, two 6s — and 2(12 + 8 + 6) = 52.",
+        "lowFeedback": "Total still under 52 — enlarge a dimension and watch which two faces grow.",
+        "highFeedback": "Total past 52 — shrink a dimension; each one controls exactly four of the six faces."
+      },
+      "predict": {
+        "prompt": "A closed box has six faces. How many DIFFERENT face areas can it have at most?",
+        "options": [
+          {
+            "id": "six",
+            "label": "Six — every face can differ"
+          },
+          {
+            "id": "three",
+            "label": "Three — they come in matching pairs"
+          },
+          {
+            "id": "two",
+            "label": "Two — top-bottom and sides"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Opposite faces of a box are identical rectangles, so six faces carry at most three distinct areas. That pairing is why every surface-area formula for a box starts by doubling: you compute three faces and the box supplies their twins."
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Build one face of that net on its own.",
+      "widget": {
+        "type": "areaModel",
+        "prompt": "Build the crate's largest face: the 4 by 3 rectangle.",
+        "targetArea": 12,
+        "wMax": 6,
+        "hMax": 6,
+        "wStart": 1,
+        "hStart": 1,
+        "requireFactors": {
+          "w": 4,
+          "h": 3
+        },
+        "factorFeedback": "That rectangle covers 12 square units, but the face this net needs measures 4 by 3 — build those exact sides.",
+        "successFeedback": "12 square units — and the opposite face is identical, so this single rectangle already accounts for 24 of the net's 52.",
+        "lowFeedback": "Face still under 12 square units — grow a side.",
+        "highFeedback": "Face past 12 square units — pull a side back in."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count the faces.",
+      "conceptTag": "sa7-nets-prisms",
+      "explanationVariants": [
+        "A rectangular prism's net has six rectangles — three matching pairs.",
+        "Two ends, two sides, a top and a bottom: six in all."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many rectangles appear in the net of a rectangular prism?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "6",
+            "correct": true,
+            "feedback": "Yes — three matching pairs, which is why surface area doubles three products."
+          },
+          {
+            "id": "o2",
+            "label": "4",
+            "correct": false,
+            "feedback": "That counts only the walls and forgets the top and bottom."
+          },
+          {
+            "id": "o3",
+            "label": "12",
+            "correct": false,
+            "feedback": "12 is the number of EDGES, not faces."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the formula is bookkeeping, not magic: 2(lw + lh + wh). Each product is one face; each 2 is that face's opposite twin. If you ever forget it, unfold the box in your head and add the rectangles — the formula will reassemble itself.",
+      "figure": "sa7-formula-bookkeeping"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Add the net by hand.",
+      "conceptTag": "sa7-nets-prisms",
+      "explanationVariants": [
+        "The three distinct faces are 5×3 = 15, 5×2 = 10 and 3×2 = 6, and 2(15 + 10 + 6) = 62.",
+        "Compute three faces, double the sum: that is the whole method."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 5 by 3 by 2 box: what is its surface area, in square units?",
+        "answer": 62,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That is the VOLUME, 5×3×2 — how much fits inside, not how much wraps around."
+          },
+          {
+            "value": 31,
+            "feedback": "That adds the three distinct faces (15 + 10 + 6) but forgets their opposite twins. Double it."
+          }
+        ],
+        "fallbackFeedback": "Faces: 15, 10 and 6, each appearing twice. 2(15 + 10 + 6) = 62.",
+        "successFeedback": "62 square units — three faces computed, three twins supplied by the box."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which faces does one dimension touch?",
+      "conceptTag": "sa7-nets-prisms",
+      "explanationVariants": [
+        "Height appears in the lh and wh faces — four of the six.",
+        "Changing the height leaves only the top and bottom untouched."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "If you increase ONLY the height of a box, how many of its six faces change area?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "4",
+            "correct": true,
+            "feedback": "Right — the four side walls grow; the top and bottom keep their l×w area."
+          },
+          {
+            "id": "o2",
+            "label": "2",
+            "correct": false,
+            "feedback": "Only two faces AVOID changing — the top and bottom. The other four all involve the height."
+          },
+          {
+            "id": "o3",
+            "label": "6",
+            "correct": false,
+            "feedback": "The top and bottom are l by w, with no height in them at all."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A cube, from one number.",
+      "conceptTag": "sa7-nets-prisms",
+      "explanationVariants": [
+        "A cube has six identical faces of 4×4 = 16, so its surface area is 96.",
+        "6s² with s = 4 gives 6×16 = 96."
+      ],
+      "hints": [
+        "A cube's faces are all the same square — how many of them are there?",
+        "Find the area of one face first, from the edge length 4.",
+        "One face is 4×4 = 16, and there are six of them."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A cube has edge 4. What is its surface area, in square units?",
+        "answer": 96,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "That is the VOLUME, 4³. Surface area wraps the outside: six faces of 16."
+          },
+          {
+            "value": 16,
+            "feedback": "That is ONE face. A cube has six of them."
+          }
+        ],
+        "fallbackFeedback": "One face is 4×4 = 16; six faces give 6×16 = 96.",
+        "successFeedback": "96 — the cube is the case where all three of the box's distinct faces coincide."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Unfold, then add.",
+      "takeaways": [
+        "A net is the solid's surface laid flat; adding its areas gives surface area.",
+        "A box's six faces come in three matching pairs, hence 2(lw + lh + wh).",
+        "Surface area is measured in square units; volume is not the same question."
+      ],
+      "teaser": "Next: run that formula on real boxes — and keep it clearly apart from volume."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa7-nets-prisms",
+      "concept": {
+        "id": "rem-sa7-nets-prisms-c",
+        "kind": "concept",
+        "body": "So the formula is bookkeeping, not magic: 2(lw + lh + wh). Each product is one face; each 2 is that face's opposite twin. If you ever forget it, unfold the box in your head and add the rectangles — the formula will reassemble itself."
+      },
+      "check": {
+        "id": "rem-sa7-nets-prisms-k",
+        "kind": "check",
+        "body": "Count the faces.",
+        "conceptTag": "sa7-nets-prisms",
+        "explanationVariants": [
+          "A rectangular prism's net has six rectangles — three matching pairs.",
+          "Two ends, two sides, a top and a bottom: six in all."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "How many rectangles appear in the net of a rectangular prism?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "6",
+              "correct": true,
+              "feedback": "Yes — three matching pairs, which is why surface area doubles three products."
+            },
+            {
+              "id": "o2",
+              "label": "4",
+              "correct": false,
+              "feedback": "That counts only the walls and forgets the top and bottom."
+            },
+            {
+              "id": "o3",
+              "label": "12",
+              "correct": false,
+              "feedback": "12 is the number of EDGES, not faces."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

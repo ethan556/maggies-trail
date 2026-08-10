@@ -1,0 +1,256 @@
+{
+ "id": "pf-01-01",
+ "slug": "polynomial-functions-and-shape",
+ "title": "Polynomial Functions & Their Shape",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch1-shape-and-end-behavior",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A **polynomial function** is a rule built only from powers of x: f(x) = x³ − 2x + 1. You already know its parts (degree, leading coefficient) — now watch it act as a **graph**: one smooth, unbroken curve with no jumps, no holes, and no sharp corners.",
+   "figure": "parent-functions"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Evaluate at a point.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = x³ − 2x + 1, what is f(2)?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "That's 8 + 2 − 1 — the −2x term is SUBTRACTED: 8 − 4 + 1 = 5."
+     },
+     {
+      "value": 3,
+      "feedback": "The −2x term is −2·2 = −4, not −2: f(2) = 8 − 4 + 1 = 5."
+     }
+    ],
+    "fallbackFeedback": "f(2) = 2³ − 2·2 + 1 = 8 − 4 + 1 = 5."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Degree caps the drama. A degree-n polynomial has **at most n zeros** (x-axis crossings or touches) and **at most n − 1 turning points** (hilltops and valley bottoms). A cubic can wiggle twice, a quartic three times — never more.",
+   "figure": "pf-degree-zeros"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Cap the turning points.",
+   "conceptTag": "pf-anatomy",
+   "explanationVariants": [
+    "A degree-4 polynomial has at most 4 − 1 = 3 turning points.",
+    "Turning points top out one below the degree."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the MAXIMUM number of turning points a degree-4 polynomial can have?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is the max number of ZEROS — turning points cap at degree minus one: 3."
+     },
+     {
+      "value": 5,
+      "feedback": "The cap goes DOWN from the degree, not up: 4 − 1 = 3."
+     }
+    ],
+    "fallbackFeedback": "Max turning points = degree − 1 = 3."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-anatomy__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Cap the zeros.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the MAXIMUM number of zeros a degree-5 polynomial can have?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 is the turning-point cap (5 − 1) — zeros cap at the degree itself: 5."
+     },
+     {
+      "value": 6,
+      "feedback": "A degree-5 polynomial factors into at most 5 linear pieces — never 6 zeros."
+     }
+    ],
+    "fallbackFeedback": "Max zeros = the degree = 5."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Evaluate with a negative input.",
+   "conceptTag": "pf-anatomy",
+   "explanationVariants": [
+    "f(−1) = (−1)³ − 2(−1) + 1 = −1 + 2 + 1 = 2.",
+    "Odd powers keep the minus: (−1)³ = −1; then −2·(−1) adds 2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = x³ − 2x + 1, what is f(−1)?",
+    "answer": 2,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "Close — but (−1)³ = −1 and −2(−1) = +2: total −1 + 2 + 1 = 2, not 0."
+     },
+     {
+      "value": -2,
+      "feedback": "Two sign slips: the cube keeps the minus (−1), and −2x becomes +2: sum is +2."
+     }
+    ],
+    "fallbackFeedback": "−1 + 2 + 1 = 2."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-anatomy__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Spot the impostor.",
+   "conceptTag": "pf-anatomy",
+   "explanationVariants": [
+    "Polynomials allow only whole-number powers of x — √x is x^(1/2), which is not allowed.",
+    "Fractional and negative powers break the polynomial club rules."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which of these is NOT a polynomial function?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "f(x) = √x + 1",
+      "correct": true,
+      "feedback": "Right — √x is x to the ½ power; polynomials allow only whole-number powers."
+     },
+     {
+      "id": "o2",
+      "label": "f(x) = x⁴ − 7",
+      "correct": false,
+      "feedback": "Whole-number powers and a constant — a perfectly good degree-4 polynomial."
+     },
+     {
+      "id": "o3",
+      "label": "f(x) = 5x",
+      "correct": false,
+      "feedback": "Degree 1 with no constant term — still a polynomial (a linear one)."
+     },
+     {
+      "id": "o4",
+      "label": "f(x) = 9",
+      "correct": false,
+      "feedback": "A constant function is a degree-0 polynomial — the x⁰ term alone."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-anatomy__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Evaluate a quartic.",
+   "conceptTag": "pf-anatomy",
+   "explanationVariants": [
+    "f(2) = 16 − 3·4 + 2 = 16 − 12 + 2 = 6.",
+    "Powers first (2⁴ = 16, 2² = 4), then the coefficients."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = x⁴ − 3x² + 2, what is f(2)?",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 30,
+      "feedback": "That's 16 + 12 + 2 — the middle term is SUBTRACTED: 16 − 12 + 2 = 6."
+     },
+     {
+      "value": 14,
+      "feedback": "16 − 3·2 uses x instead of x²: the middle term is 3·(2²) = 12, so 16 − 12 + 2 = 6."
+     }
+    ],
+    "fallbackFeedback": "2⁴ = 16 and 3·2² = 12: 16 − 12 + 2 = 6."
+   },
+   "hints": [
+    "Compute the powers first: 2⁴ and 2².",
+    "16 − 3(4) + 2.",
+    "16 − 12 + 2 = 6."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-anatomy__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Polynomial graphs are smooth and unbroken, with degree-capped wiggles.",
+   "takeaways": [
+    "Evaluate by substituting: powers first, then coefficients, then signs.",
+    "At most n zeros for degree n.",
+    "At most n − 1 turning points."
+   ],
+   "teaser": "Next: what every polynomial does at the far left and far right of its graph."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-anatomy",
+   "concept": {
+    "id": "rem-pf0101-c",
+    "kind": "concept",
+    "body": "Evaluate one term at a time. For f(x) = x² + 3x at x = 2: the square gives 4, the 3x gives 6."
+   },
+   "check": {
+    "id": "rem-pf0101-k",
+    "kind": "check",
+    "body": "Add the pieces.",
+    "conceptTag": "pf-anatomy",
+    "explanationVariants": [
+     "f(2) = 4 + 6 = 10.",
+     "2² = 4 and 3·2 = 6; the sum is 10."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For f(x) = x² + 3x, what is f(2)?",
+     "answer": 10,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 7,
+       "feedback": "3x means 3 TIMES x: 3·2 = 6, so 4 + 6 = 10."
+      },
+      {
+       "value": 8,
+       "feedback": "That reads x² as plain x (2 + 6 = 8) — square first: 4 + 6 = 10."
+      }
+     ],
+     "fallbackFeedback": "4 + 6 = 10."
+    }
+   }
+  }
+ ]
+}

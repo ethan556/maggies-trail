@@ -1,0 +1,329 @@
+{
+ "id": "tc-02-01",
+ "slug": "hypotenuse-leg",
+ "title": "The Hypotenuse-Leg Criterion",
+ "courseId": "triangle-congruence",
+ "chapterId": "ch2-hl-and-cpctc",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "tc-hl",
+   "concept": {
+    "id": "rem-tc-hl-c",
+    "kind": "concept",
+    "body": "HL applies ONLY to right triangles and needs exactly: the right angle, the HYPOTENUSE, and one LEG. Two legs + right angle is SAS. A non-right angle with two sides is ambiguous SSA. The right angle is what lets Pythagoras force the third side, so it can't be dropped."
+   },
+   "check": {
+    "id": "rem-tc-hl-k",
+    "kind": "check",
+    "body": "HL requirements.",
+    "conceptTag": "tc-hl",
+    "explanationVariants": [
+     "HL needs a right angle, the hypotenuse, and one leg — all three.",
+     "Right triangle + hypotenuse + leg is the full HL recipe."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "HL congruence requires which set of parts?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "a right angle, the hypotenuse, and one leg",
+       "correct": true,
+       "feedback": "Exactly HL — the right angle lets the second leg be recovered."
+      },
+      {
+       "id": "o2",
+       "label": "any two sides and any angle",
+       "correct": false,
+       "feedback": "That's SSA, which is ambiguous. HL specifically needs the RIGHT angle plus hypotenuse and leg."
+      },
+      {
+       "id": "o3",
+       "label": "three angles",
+       "correct": false,
+       "feedback": "Angles alone (AAA) give similarity, not congruence. HL needs sides and the right angle."
+      },
+      {
+       "id": "o4",
+       "label": "two legs only",
+       "correct": false,
+       "feedback": "Two legs without naming the right angle isn't enough phrasing; two legs + the right angle is SAS. HL uses the hypotenuse."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Right triangles get a fifth criterion the others don't: **HL** — hypotenuse and one leg. Given a right angle, an equal hypotenuse, and one equal leg, the triangles are congruent. It looks like the forbidden SSA (two sides + a non-included angle), but the right angle rescues it — the second leg is forced by the Pythagorean theorem.",
+   "figure": "hl-criterion"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find the missing leg.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A right triangle has hypotenuse 13 and one leg 5. What is the other leg?",
+    "answer": 12,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 = 13 − 5 subtracts — but the Pythagorean theorem uses SQUARES: √(13² − 5²) = √144 = 12."
+     },
+     {
+      "value": 18,
+      "feedback": "18 = 13 + 5 adds the sides. The missing leg is √(13² − 5²) = √(169 − 25) = 12."
+     }
+    ],
+    "fallbackFeedback": "√(13² − 5²) = √144 = 12."
+   },
+   "predict": {
+    "prompt": "Hypotenuse 13, one leg 5. How is the missing leg found?",
+    "options": [
+     {
+      "id": "squares",
+      "label": "Subtract SQUARES: √(13² − 5²)"
+     },
+     {
+      "id": "linear",
+      "label": "Subtract lengths: 13 − 5 = 8"
+     },
+     {
+      "id": "add",
+      "label": "Add squares: √(13² + 5²)"
+     }
+    ],
+    "outcomeId": "squares",
+    "reveal": "Pythagoras trades in squares, never bare lengths: 169 − 25 = 144, so the leg is 12 — not the tempting 13 − 5 = 8. Adding the squares is for finding a HYPOTENUSE; here 13 already is one, so its square is the total the legs must share."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Why HL escapes ambiguity.",
+   "conceptTag": "tc-hl",
+   "explanationVariants": [
+    "The right angle plus the hypotenuse and one leg force the second leg via a² + b² = c² — only one positive value works, so no ambiguity.",
+    "Unlike general SSA, the fixed right angle lets Pythagoras pin the third side uniquely."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "SSA usually fails, so why does HL (which looks similar) succeed?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The right angle lets the Pythagorean theorem fix the second leg to one value",
+      "correct": true,
+      "feedback": "With the right angle known, a² + b² = c² determines the missing leg uniquely — no swinging, no second triangle."
+     },
+     {
+      "id": "o2",
+      "label": "HL uses three sides like SSS",
+      "correct": false,
+      "feedback": "HL gives a right angle, a hypotenuse, and ONE leg — not three sides. The right angle is what removes the ambiguity."
+     },
+     {
+      "id": "o3",
+      "label": "Right triangles are always congruent",
+      "correct": false,
+      "feedback": "Right triangles vary widely — HL congruence needs the equal hypotenuse and leg. The right angle just fixes the third side."
+     },
+     {
+      "id": "o4",
+      "label": "HL only works for isosceles triangles",
+      "correct": false,
+      "feedback": "HL applies to any right triangle, isosceles or not — the key is the right angle plus hypotenuse and a leg."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-hl__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "HL is really SAS-in-disguise once you compute. Fix the right angle and the two legs (one given, one recovered by Pythagoras) and you have two sides plus the included right angle — the very pattern of SAS. So HL isn't a loophole; it's SAS wearing the right angle as its included angle.",
+   "figure": "hl-criterion"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "The included angle.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "Once the second leg is recovered, HL matches which general criterion?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "SAS — the two legs with the included right angle",
+      "correct": true,
+      "feedback": "The right angle sits BETWEEN the two legs, so recovering the second leg turns HL into an SAS situation."
+     },
+     {
+      "id": "o2",
+      "label": "ASA — two angles and a side",
+      "correct": false,
+      "feedback": "HL supplies only ONE angle (the right angle). With two SIDES and that included angle, it's SAS, not ASA."
+     },
+     {
+      "id": "o3",
+      "label": "SSS — three sides",
+      "correct": false,
+      "feedback": "You start with a hypotenuse and one leg, plus the right angle — not three given sides. It resolves to SAS."
+     },
+     {
+      "id": "o4",
+      "label": "AAA — three angles",
+      "correct": false,
+      "feedback": "HL involves sides, and AAA (angles only) can't even give congruence. HL becomes SAS."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Apply HL.",
+   "conceptTag": "tc-hl",
+   "explanationVariants": [
+    "Both are right triangles with equal hypotenuse and one equal leg — HL applies directly.",
+    "Right angle + hypotenuse + leg is exactly the HL pattern."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two right triangles each have hypotenuse 10 and one leg 6. What can you conclude?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "They are congruent by HL",
+      "correct": true,
+      "feedback": "Right angle, equal hypotenuse (10), equal leg (6) — the HL criterion gives congruence."
+     },
+     {
+      "id": "o2",
+      "label": "They are congruent by SSA",
+      "correct": false,
+      "feedback": "SSA isn't a valid criterion. Because these are RIGHT triangles with hypotenuse and leg, the correct name is HL."
+     },
+     {
+      "id": "o3",
+      "label": "They might not be congruent",
+      "correct": false,
+      "feedback": "With the right angle fixed, the other leg is forced (√(100−36)=8) — the triangles must be congruent by HL."
+     },
+     {
+      "id": "o4",
+      "label": "They are only similar",
+      "correct": false,
+      "feedback": "Equal hypotenuse AND leg fix the size, not just the shape — congruent by HL, not merely similar."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-hl__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "One guardrail: HL needs the **hypotenuse** specifically, plus a leg. Two legs and the right angle would just be SAS. A leg and the hypotenuse with the right angle is HL. But a NON-right angle with two sides is back to ambiguous SSA — the right angle is non-negotiable for HL.",
+   "figure": "tc-hl"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Is it really HL?",
+   "widget": {
+    "type": "triangleConstraintLab",
+    "prompt": "The givens start as SSA, where 5 and 13 leave two different triangles. Switch the givens to HL and take the angle to 90° — then look for the second triangle again.",
+    "targetCriterion": "HL",
+    "startCriterion": "SSA",
+    "sideA": 5,
+    "sideB": 13,
+    "targetAngle": 90,
+    "angleStart": 35,
+    "angleStep": 5,
+    "requiredMoves": 3,
+    "successFeedback": "At 90° with the hypotenuse and a leg given, the second triangle is gone — there is nowhere else for the third vertex to land. That is the whole of HL: SSA normally leaves two candidates, and pinning the angle at a right angle destroys one of them. HL is not a new kind of magic, it is the one case where SSA stops being ambiguous.",
+    "criterionFeedback": "The givens are still on a different combination. HL is the claim under test — hypotenuse and one leg, with the right angle — so set the givens to HL before deciding.",
+    "angleFeedback": "The givens are right but the angle is not at 90° yet. Away from a right angle these parts are just SSA, and SSA is exactly the combination that leaves two triangles.",
+    "evidenceFeedback": "Try the second-triangle control at least once on each setting before checking. The claim is that the ambiguity is there under SSA and absent under HL, and seeing only one of those is not a test."
+   },
+   "predict": {
+    "prompt": "SSA leaves two possible triangles. Fixing the given angle at exactly 90° will…",
+    "options": [
+     {
+      "id": "kills",
+      "label": "Destroy one of them, leaving exactly one triangle"
+     },
+     {
+      "id": "both",
+      "label": "Leave both — a right angle changes nothing"
+     },
+     {
+      "id": "none",
+      "label": "Destroy both — no triangle can close"
+     }
+    ],
+    "outcomeId": "kills",
+    "reveal": "One survives. The second SSA triangle exists because the given side can swing to two positions; at a right angle those two positions collapse onto each other. HL is SSA with the ambiguity removed by the right angle, which is why it works only for right triangles."
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Recover and compare.",
+   "conceptTag": "tc-hl",
+   "hints": [
+    "Both right triangles have hypotenuse 17 and a leg 8. Find the other leg in each.",
+    "√(17² − 8²) = √(289 − 64) = √225.",
+    "Both other legs equal 15, so all corresponding parts match."
+   ],
+   "explanationVariants": [
+    "Each other leg is √(17² − 8²) = √225 = 15, so both triangles are 8-15-17 right triangles — congruent by HL, and their missing legs are 15.",
+    "Pythagoras gives 15 for both; equal right angle, hypotenuse, and both legs confirm HL congruence."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two right triangles each have hypotenuse 17 and one leg 8. What is the length of the other leg in each?",
+    "answer": 15,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 = 17 − 8 subtracts the sides. Use squares: √(17² − 8²) = √225 = 15."
+     },
+     {
+      "value": 25,
+      "feedback": "25 = 17 + 8 adds them. The other leg is √(17² − 8²) = √(289 − 64) = 15."
+     }
+    ],
+    "fallbackFeedback": "√(17² − 8²) = √225 = 15."
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-hl__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The right-triangle shortcut.",
+   "takeaways": [
+    "HL: a right angle, equal hypotenuse, and one equal leg ⇒ congruent.",
+    "It escapes SSA ambiguity because Pythagoras forces the second leg uniquely.",
+    "HL is SAS in disguise — two legs with the included right angle."
+   ],
+   "teaser": "Next: chain criteria and CPCTC through longer proofs."
+  }
+ ]
+}

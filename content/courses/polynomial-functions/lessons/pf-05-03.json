@@ -1,0 +1,402 @@
+{
+ "id": "pf-05-03",
+ "slug": "building-and-using-models",
+ "title": "Building & Using Polynomial Models",
+ "courseId": "polynomial-functions",
+ "chapterId": "ch5-graphs-and-models",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Factored form runs backward beautifully: a monic polynomial with zeros −1, 2, and 3 is f(x) = **(x + 1)(x − 2)(x − 3)** — one factor per zero, signs flipped. Want a bounce at a zero? Square its factor. The blueprint IS the factorization.",
+   "figure": "pf-factored-form"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build and anchor.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = (x + 1)(x − 2)(x − 3), what is f(0)?",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -6,
+      "feedback": "Two negative factors multiply positive: (1)(−2)(−3) = +6."
+     },
+     {
+      "value": 0,
+      "feedback": "0 isn't one of the zeros (−1, 2, 3) — f(0) = (1)(−2)(−3) = 6."
+     }
+    ],
+    "fallbackFeedback": "f(0) = (1)(−2)(−3) = 6 — the y-intercept of the build."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Degree comes from the blueprint too: zeros 4 (multiplicity 2) and −1 (multiplicity 1) force degree **at least 3**, and f(x) = (x − 4)²(x + 1) is the smallest build. The Fundamental Theorem of Algebra guarantees the accounting always balances: degree = total multiplicity.",
+   "figure": "pf-degree-blueprint"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Smallest-degree build.",
+   "conceptTag": "pf-build",
+   "explanationVariants": [
+    "A bounce at 5 needs (x − 5)²; the crossing at −2 needs (x + 2): degree 2 + 1 = 3.",
+    "Add the multiplicities the graph demands: 2 + 1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A graph BOUNCES at x = 5 and CROSSES at x = −2. What is the smallest-degree monic polynomial matching it?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "(x − 5)²(x + 2)",
+      "correct": true,
+      "feedback": "Right — the bounce squares its factor; total degree 3."
+     },
+     {
+      "id": "o2",
+      "label": "(x − 5)(x + 2)",
+      "correct": false,
+      "feedback": "A single (x − 5) would CROSS at 5 — the bounce demands the square."
+     },
+     {
+      "id": "o3",
+      "label": "(x + 5)²(x − 2)",
+      "correct": false,
+      "feedback": "Signs flip going into factors: zero 5 → (x − 5), zero −2 → (x + 2)."
+     },
+     {
+      "id": "o4",
+      "label": "(x − 5)²(x + 2)²",
+      "correct": false,
+      "feedback": "Squaring (x + 2) would make the graph bounce at −2 too — it crosses there, so multiplicity 1."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-build__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Count the degree.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A polynomial has zeros 0, 1, and −4 with multiplicities 2, 1, and 3. What is its smallest possible degree?",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 counts the DISTINCT zeros — the degree adds the multiplicities: 2 + 1 + 3 = 6."
+     },
+     {
+      "value": 5,
+      "feedback": "Recount: 2 + 1 + 3 = 6 — the triple at −4 contributes three."
+     }
+    ],
+    "fallbackFeedback": "Degree = 2 + 1 + 3 = 6."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A real-world blueprint.",
+   "conceptTag": "pf-build",
+   "explanationVariants": [
+    "Cutting x-squares from the corners leaves base sides 10 − 2x and 8 − 2x, folded to height x: V = x(10 − 2x)(8 − 2x).",
+    "Each dimension is a linear factor — volume is naturally a cubic."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Squares of side x are cut from the corners of a 10-by-8 sheet, and the sides fold up into a box. Which is the volume?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "V(x) = x(10 − 2x)(8 − 2x)",
+      "correct": true,
+      "feedback": "Right — height x, and each base side loses x from BOTH ends."
+     },
+     {
+      "id": "o2",
+      "label": "V(x) = x(10 − x)(8 − x)",
+      "correct": false,
+      "feedback": "A cut comes off each END of a side — that's 2x lost per side, not x."
+     },
+     {
+      "id": "o3",
+      "label": "V(x) = (10 − 2x)(8 − 2x)",
+      "correct": false,
+      "feedback": "That's the base AREA — the height x turns it into volume."
+     },
+     {
+      "id": "o4",
+      "label": "V(x) = x · 10 · 8",
+      "correct": false,
+      "feedback": "Folding shrinks the base: the sides become 10 − 2x and 8 − 2x, not 10 and 8."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-build__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Use the model.",
+   "conceptTag": "pf-build",
+   "explanationVariants": [
+    "V(2) = 2 · (10 − 4)(8 − 4) = 2 · 6 · 4 = 48.",
+    "Substitute 2 into every factor, then multiply."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "For V(x) = x(10 − 2x)(8 − 2x), what is V(2) — the volume with 2-unit corner cuts?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "L",
+      "label": "length",
+      "value": 10
+     },
+     {
+      "id": "W",
+      "label": "width",
+      "value": 8
+     },
+     {
+      "id": "x",
+      "label": "corner cut",
+      "value": 2
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "x"
+      },
+      "right": {
+       "op": "subtract",
+       "left": {
+        "op": "const",
+        "id": "L"
+       },
+       "right": {
+        "op": "multiply",
+        "left": {
+         "op": "lit",
+         "value": 2
+        },
+        "right": {
+         "op": "const",
+         "id": "x"
+        }
+       }
+      }
+     },
+     "right": {
+      "op": "subtract",
+      "left": {
+       "op": "const",
+       "id": "W"
+      },
+      "right": {
+       "op": "multiply",
+       "left": {
+        "op": "lit",
+        "value": 2
+       },
+       "right": {
+        "op": "const",
+        "id": "x"
+       }
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 96,
+      "feedback": "8 − 2·2 = 4, not 8 — both base sides shrink: 2 · 6 · 4 = 48."
+     },
+     {
+      "value": 32,
+      "feedback": "10 − 2·2 = 6 (not 4): V(2) = 2 · 6 · 4 = 48."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "2 · 6 · 4 = 48 cubic units.",
+    "successFeedback": "2 · 6 · 4 = 48 cubic units."
+   },
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-build__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Build to spec.",
+   "conceptTag": "pf-build",
+   "explanationVariants": [
+    "Zeros ±2 give (x − 2)(x + 2) = x² − 4; the bounce at 0 gives x²: f(x) = x²(x² − 4), and f(1) = 1 · (−3) = −3.",
+    "Assemble x²(x − 2)(x + 2), then evaluate at 1."
+   ],
+   "widget": {
+    "type": "exactNumberLab",
+    "prompt": "Build the smallest monic polynomial that BOUNCES at 0 and CROSSES at 2 and −2. What is f(1)?",
+    "task": "approximationEvaluate",
+    "values": [],
+    "approxConstants": [
+     {
+      "id": "x",
+      "label": "the input",
+      "value": 1
+     }
+    ],
+    "approxFormula": {
+     "op": "multiply",
+     "left": {
+      "op": "multiply",
+      "left": {
+       "op": "const",
+       "id": "x"
+      },
+      "right": {
+       "op": "const",
+       "id": "x"
+      }
+     },
+     "right": {
+      "op": "subtract",
+      "left": {
+       "op": "multiply",
+       "left": {
+        "op": "const",
+        "id": "x"
+       },
+       "right": {
+        "op": "const",
+        "id": "x"
+       }
+      },
+      "right": {
+       "op": "lit",
+       "value": 4
+      }
+     }
+    },
+    "approxRound": 0,
+    "answerMode": "numeric",
+    "tolerance": 0,
+    "numericErrors": [
+     {
+      "value": 3,
+      "feedback": "f(1) = 1² · (1 − 2)(1 + 2) = 1 · (−1)(3) = −3 — the (1 − 2) keeps its minus."
+     },
+     {
+      "value": -9,
+      "feedback": "The bounce factor is x², and 1² = 1: f(1) = 1 · (−1)(3) = −3, not (−1)(3)·3."
+     }
+    ],
+    "choices": [],
+    "authoredStages": [],
+    "requiredStageKeys": [],
+    "requiredExplorations": 1,
+    "explorationFeedback": "Inspect the required exact-number states before checking.",
+    "fallbackFeedback": "f(x) = x²(x − 2)(x + 2); f(1) = 1 · (−1) · 3 = −3.",
+    "successFeedback": "f(x) = x²(x − 2)(x + 2); f(1) = 1 · (−1) · 3 = −3."
+   },
+   "hints": [
+    "Bounce at 0 → factor x²; crossings at ±2 → (x − 2)(x + 2).",
+    "f(x) = x²(x − 2)(x + 2).",
+    "f(1) = 1 · (−1) · (3) = −3."
+   ],
+   "variant": {
+    "gen": "a2-polynomials",
+    "form": "pf-build__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Zeros in, factors out — polynomials build to order.",
+   "takeaways": [
+    "One factor per zero, sign flipped; square it for a bounce.",
+    "Degree = the sum of all multiplicities (FTA's guarantee).",
+    "Real models: each dimension of a problem becomes a factor."
+   ],
+   "teaser": "That completes Polynomial Functions — rational exponents and radical functions are next in Algebra 2."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pf-build",
+   "concept": {
+    "id": "rem-pf0503-c",
+    "kind": "concept",
+    "body": "One zero, one factor: a zero at 4 means the factor (x − 4); a zero at −4 means (x + 4)."
+   },
+   "check": {
+    "id": "rem-pf0503-k",
+    "kind": "check",
+    "body": "Build the smallest one.",
+    "conceptTag": "pf-build",
+    "explanationVariants": [
+     "Zeros 4 and −4: f(x) = (x − 4)(x + 4).",
+     "Flip each zero's sign to write its factor."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "What is the smallest monic polynomial with zeros 4 and −4?",
+     "options": [
+      {
+       "id": "o1",
+       "label": "(x − 4)(x + 4)",
+       "correct": true,
+       "feedback": "Right — which expands to x² − 16."
+      },
+      {
+       "id": "o2",
+       "label": "(x + 4)(x + 4)",
+       "correct": false,
+       "feedback": "That has −4 as a DOUBLE zero and misses 4 — one factor per zero, signs flipped."
+      },
+      {
+       "id": "o3",
+       "label": "(x − 4)(x − 4)",
+       "correct": false,
+       "feedback": "That doubles the zero at 4 and misses −4 — the factors carry opposite signs."
+      },
+      {
+       "id": "o4",
+       "label": "(x − 16)(x + 16)",
+       "correct": false,
+       "feedback": "Factors take the zeros THEMSELVES (±4), not their squares."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

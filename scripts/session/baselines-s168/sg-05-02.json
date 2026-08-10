@@ -1,0 +1,275 @@
+{
+ "id": "sg-05-02",
+ "slug": "density-and-design",
+ "title": "Density & Design",
+ "courseId": "solid-geometry",
+ "chapterId": "ch5-scale-modeling",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "sg-density",
+   "concept": {
+    "id": "rem-sg-density-c",
+    "kind": "concept",
+    "body": "Density = mass ÷ volume identifies materials (steel ≈ 7.8, water 1, pine 0.6 g/cm³); mass = density × volume cashes out every volume formula in grams. An object floats when its AVERAGE density (mass over total outer volume, hollows included) is below the fluid's — and density never changes under scaling (mass and volume both take k³)."
+   },
+   "check": {
+    "id": "rem-sg-density-k",
+    "kind": "check",
+    "body": "One card.",
+    "conceptTag": "sg-density",
+    "explanationVariants": [
+     "Density = 54/27.",
+     "2 g/cm³."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "A solid cube of side 3 cm has mass 54 g. Density (g/cm³) = ?",
+     "answer": 2,
+     "tolerance": 0.01,
+     "commonErrors": [
+      {
+       "value": 18,
+       "feedback": "18 = 54/3 divides by the side — volume is 27: density 2."
+      },
+      {
+       "value": 162,
+       "feedback": "162 multiplies — divide: 54/27 = 2."
+      }
+     ],
+     "fallbackFeedback": "54 ÷ 27 = 2."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Volume meets matter through **density = mass ÷ volume**. A material's density is its identity card — steel ≈ 7.8 g/cm³, water 1, pine 0.6 — so mass = density × volume turns every formula this course justified into a WEIGHT prediction, and density < 1 predicts floating.",
+   "figure": "sg-density"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Weigh the sphere.",
+   "conceptTag": "sg-density",
+   "explanationVariants": [
+    "V = (4/3)π(27) = 36π ≈ 113.1 cm³.",
+    "Mass = 7.8 × 113.1 ≈ 882 g."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A solid steel sphere (radius 3 cm, density 7.8 g/cm³). Mass (nearest gram) = ?",
+    "answer": 882,
+    "tolerance": 1,
+    "commonErrors": [
+     {
+      "value": 113,
+      "feedback": "113 is the VOLUME (36π) — multiply by the density 7.8: ≈ 882 g."
+     },
+     {
+      "value": 282,
+      "feedback": "282 uses density 2.5 — steel's 7.8 gives ≈ 882."
+     },
+     {
+      "value": 2646,
+      "feedback": "2646 uses V = 4πr³ (dropping the /3): 108π × 7.8 — the sphere holds (4/3)π(27) = 36π ≈ 113.1: mass ≈ 882."
+     }
+    ],
+    "fallbackFeedback": "7.8 × 36π ≈ 882 g — the justified formula, cashed out in grams."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-density__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Identify the material.",
+   "conceptTag": "sg-density",
+   "explanationVariants": [
+    "Density = mass/volume = 512/64.",
+    "8 g/cm³ — close to steel's family."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A solid cube of side 4 cm has mass 512 g. Its density (g/cm³) = ?",
+    "answer": 8,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 128,
+      "feedback": "128 = 512/4 divides by the SIDE — divide by the volume 4³ = 64: density 8."
+     },
+     {
+      "value": 32,
+      "feedback": "32 = 512/16 divides by a FACE — the volume is 64: 8."
+     },
+     {
+      "value": 0.125,
+      "feedback": "0.125 inverts — density = mass ÷ volume = 512/64 = 8."
+     }
+    ],
+    "fallbackFeedback": "512 ÷ 64 = 8 g/cm³ — mass and geometry naming the material together."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-density__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Float or sink.",
+   "conceptTag": "sg-density",
+   "explanationVariants": [
+    "Floating compares the OBJECT's average density to water's 1.",
+    "0.6 < 1: floats — shape never enters."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A solid pine block (density 0.6 g/cm³) of ANY shape is placed in water (density 1). It:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Floats — average density below water's, regardless of shape or size",
+      "correct": true,
+      "feedback": "The float test is a pure density comparison; geometry decides HOW HIGH it rides, not whether."
+     },
+     {
+      "id": "o2",
+      "label": "Sinks if it's large enough",
+      "correct": false,
+      "feedback": "Size scales mass and displaced water TOGETHER (both k³) — the ratio 0.6 never changes."
+     },
+     {
+      "id": "o3",
+      "label": "Floats only as a flat plank",
+      "correct": false,
+      "feedback": "Shape is style, density is verdict: 0.6 < 1 floats in any pose."
+     },
+     {
+      "id": "o4",
+      "label": "Depends on the water's depth",
+      "correct": false,
+      "feedback": "Depth is irrelevant to the comparison — 0.6 vs 1 settles it."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-density__mcq"
+   }
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "The hollow trick.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "A steel shell (density 7.8) has outer volume 100 cm³ but is hollow: only 10 cm³ is actual steel. Its AVERAGE density (mass ÷ outer volume, g/cm³) = ?",
+    "answer": 0.78,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 7.8,
+      "feedback": "7.8 is SOLID steel — the shell's 78 g spreads over 100 cm³ of displaced space: 0.78 (a floating ship's whole secret)."
+     },
+     {
+      "value": 78,
+      "feedback": "78 is the MASS in grams — average density divides by the outer 100: 0.78."
+     }
+    ],
+    "fallbackFeedback": "78 g ÷ 100 cm³ = 0.78 < 1 — hollowing beats water: that's how steel ships float."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Density under scaling.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A solid statue is scaled up by k = 4 in the same material. Its density:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "Unchanged — mass and volume both grow ×64, and their ratio cancels",
+      "correct": true,
+      "feedback": "Density is a material property, size-blind: k³ over k³ = 1."
+     },
+     {
+      "id": "o2",
+      "label": "×4",
+      "correct": false,
+      "feedback": "Both mass and volume take k³ — the ratio holds."
+     },
+     {
+      "id": "o3",
+      "label": "×64",
+      "correct": false,
+      "feedback": "That's the MASS factor alone — volume matches it, so density is constant."
+     },
+     {
+      "id": "o4",
+      "label": "÷4",
+      "correct": false,
+      "feedback": "Nothing dilutes — same material, same density."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "The counterfeit crown.",
+   "conceptTag": "sg-density",
+   "hints": [
+    "Archimedes' original problem: compare the crown's density to gold's.",
+    "Density = 3700 ÷ 200.",
+    "Gold runs 19.3 — does the crown measure up?"
+   ],
+   "explanationVariants": [
+    "3700/200 = 18.5 < 19.3 — the crown is NOT pure gold: something lighter is alloyed in. Enter 18.5.",
+    "Density 18.5 g/cm³, under gold's 19.3: adulterated."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A 'gold' crown has mass 3700 g and displaces 200 cm³ of water. Pure gold's density is 19.3 g/cm³. The crown's measured density = ?",
+    "answer": 18.5,
+    "tolerance": 0.01,
+    "commonErrors": [
+     {
+      "value": 19.3,
+      "feedback": "19.3 is PURE gold's card — this crown measures 3700/200 = 18.5: adulterated."
+     },
+     {
+      "value": 0.054,
+      "feedback": "0.054 inverts — density = mass ÷ volume = 18.5."
+     },
+     {
+      "value": 740000,
+      "feedback": "740000 multiplies — DIVIDE: 3700/200 = 18.5."
+     }
+    ],
+    "fallbackFeedback": "3700 ÷ 200 = 18.5 < 19.3 — Archimedes' verdict by division: not pure."
+   },
+   "variant": {
+    "gen": "g10-solid-geometry",
+    "form": "sg-density__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Geometry, weighed.",
+   "takeaways": [
+    "Density = mass ÷ volume: the material's identity card (steel 7.8, water 1, pine 0.6).",
+    "Mass = density × justified volume; float when average density < 1 (hollowing lowers it — ships).",
+    "Density is scale-invariant: k³ over k³."
+   ],
+   "teaser": "Finale: full modeling — cost, capacity, and the k²-vs-k³ economy."
+  }
+ ]
+}

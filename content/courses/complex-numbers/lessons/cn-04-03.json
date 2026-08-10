@@ -1,0 +1,322 @@
+{
+  "id": "cn-04-03",
+  "slug": "the-full-discriminant-story",
+  "title": "The Full Discriminant Story",
+  "courseId": "complex-numbers",
+  "chapterId": "ch4-complex-roots",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Algebra 1's discriminant chart had a hole: 'D < 0: no real solutions.' The full story: **every** quadratic has exactly **two** roots. D > 0: two distinct reals. D = 0: one real, counted twice. D < 0: two complex conjugates. Nothing is ever missing — it just moves off the real line.",
+      "figure": "discriminant-cases"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Reread an old case.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For x² + x + 1 = 0, D = 1 − 4 = −3. What does that mean now?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "two complex conjugate roots",
+            "correct": true,
+            "feedback": "Right — the roots exist; they're just off the real line, as a conjugate pair."
+          },
+          {
+            "id": "o2",
+            "label": "no solutions at all",
+            "correct": false,
+            "feedback": "That was the Algebra 1 shorthand — the equation HAS two solutions; they're complex."
+          },
+          {
+            "id": "o3",
+            "label": "two distinct real roots",
+            "correct": false,
+            "feedback": "D < 0 means the parabola misses the x-axis — the roots are complex, not real."
+          },
+          {
+            "id": "o4",
+            "label": "one repeated root",
+            "correct": false,
+            "feedback": "One repeated root is the D = 0 boundary case — D = −3 gives a complex PAIR."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So classifying is a one-number job: compute D = b² − 4ac and read its **sign**. Positive → two real crossings. Zero → the vertex kisses the axis. Negative → the parabola floats clear and the pair goes complex.",
+      "figure": "cn-discriminant"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Compute and classify.",
+      "conceptTag": "cn-disc-full",
+      "explanationVariants": [
+        "D = (−3)² − 4(2)(4) = 9 − 32 = −23.",
+        "b² = 9 and 4ac = 32; subtracting gives −23 — complex pair."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 2x² − 3x + 4 = 0, what is the discriminant?",
+        "answer": -23,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 23,
+            "feedback": "9 − 32 is NEGATIVE: −23 — this one's roots are a complex pair."
+          },
+          {
+            "value": 41,
+            "feedback": "That's 9 + 32 — the discriminant subtracts 4ac: 9 − 32 = −23."
+          }
+        ],
+        "fallbackFeedback": "9 − 32 = −23; negative, so two complex conjugate roots."
+      },
+      "variant": {
+        "gen": "cn-disc-repeat"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort six equations.",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Drag each equation to its root type (use the sign of D = b² − 4ac).",
+        "buckets": [
+          {
+            "id": "real2",
+            "label": "two distinct real roots"
+          },
+          {
+            "id": "rep",
+            "label": "one repeated real root"
+          },
+          {
+            "id": "cplx",
+            "label": "two complex conjugate roots"
+          }
+        ],
+        "items": [
+          {
+            "id": "e1",
+            "label": "x² − 9 = 0",
+            "bucketId": "real2",
+            "feedback": "D = 0 + 36 = 36 > 0 — it crosses the axis twice, at ±3."
+          },
+          {
+            "id": "e2",
+            "label": "x² − 5x + 6 = 0",
+            "bucketId": "real2",
+            "feedback": "D = 25 − 24 = 1 > 0 — two distinct real roots (2 and 3)."
+          },
+          {
+            "id": "e3",
+            "label": "x² + 6x + 9 = 0",
+            "bucketId": "rep",
+            "feedback": "D = 36 − 36 = 0 — the perfect square (x + 3)² kisses the axis once."
+          },
+          {
+            "id": "e4",
+            "label": "x² − 2x + 1 = 0",
+            "bucketId": "rep",
+            "feedback": "D = 4 − 4 = 0 — (x − 1)², one root counted twice."
+          },
+          {
+            "id": "e5",
+            "label": "x² + 4 = 0",
+            "bucketId": "cplx",
+            "feedback": "D = 0 − 16 = −16 < 0 — the pair ±2i, off the real line."
+          },
+          {
+            "id": "e6",
+            "label": "x² + 2x + 2 = 0",
+            "bucketId": "cplx",
+            "feedback": "D = 4 − 8 = −4 < 0 — conjugate pair −1 ± i."
+          }
+        ],
+        "missFeedback": "Compute D for each: positive means two real, zero means repeated, negative means complex pair.",
+        "successFeedback": "All six sorted — the sign of D alone settles every case."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Design a repeated root.",
+      "conceptTag": "cn-disc-full",
+      "explanationVariants": [
+        "Repeated root needs D = 36 − 4c = 0, so c = 9 — and indeed x² + 6x + 9 = (x + 3)².",
+        "Set the discriminant to zero and solve for c: 4c = 36."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For what value of c does x² + 6x + c = 0 have exactly one repeated root?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "c = 9",
+            "correct": true,
+            "feedback": "Right — D = 36 − 4c = 0 at c = 9, the perfect square (x + 3)²."
+          },
+          {
+            "id": "o2",
+            "label": "c = 6",
+            "correct": false,
+            "feedback": "That copies b — the condition is 36 − 4c = 0, so c = 9."
+          },
+          {
+            "id": "o3",
+            "label": "c = 36",
+            "correct": false,
+            "feedback": "36 is b² — but D = b² − 4c, so 4c must equal 36: c = 9."
+          },
+          {
+            "id": "o4",
+            "label": "c = −9",
+            "correct": false,
+            "feedback": "c = −9 makes D = 36 + 36 > 0 — two REAL roots, not a repeat."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-disc-repeat",
+        "form": "forceCMcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Design one from b.",
+      "conceptTag": "cn-disc-full",
+      "explanationVariants": [
+        "D = b² − 64 = 0 needs b² = 64: b = 8 works (b = −8 would too).",
+        "Match b² to 4ac = 64."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which value of b gives x² + bx + 16 = 0 exactly one repeated root?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "b = 8",
+            "correct": true,
+            "feedback": "Right — D = 64 − 64 = 0, giving (x + 4)². (b = −8 works too.)"
+          },
+          {
+            "id": "o2",
+            "label": "b = 4",
+            "correct": false,
+            "feedback": "D = 16 − 64 = −48 < 0 — that sends the roots complex, not repeated."
+          },
+          {
+            "id": "o3",
+            "label": "b = 16",
+            "correct": false,
+            "feedback": "D = 256 − 64 = 192 > 0 — two distinct real roots. The balance point is b² = 64."
+          },
+          {
+            "id": "o4",
+            "label": "b = 2",
+            "correct": false,
+            "feedback": "D = 4 − 64 = −60 < 0 — a complex pair. You need b² = 64."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "cn-disc-repeat",
+        "form": "forceB"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more design.",
+      "conceptTag": "cn-disc-full",
+      "explanationVariants": [
+        "D = 100 − 4c = 0 gives c = 25 — the perfect square (x − 5)².",
+        "Half of −10 is −5, and (−5)² = 25: completing the square and the discriminant agree."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For what value of c does x² − 10x + c = 0 have exactly one repeated root?",
+        "answer": 25,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 is b² — the repeated-root condition is b² = 4c, so c = 100/4 = 25."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is b/2 — the constant of the perfect square is (b/2)² = 25."
+          }
+        ],
+        "fallbackFeedback": "D = 100 − 4c = 0 at c = 25; then x² − 10x + 25 = (x − 5)²."
+      },
+      "hints": [
+        "Repeated root means D = 0.",
+        "D = (−10)² − 4(1)c = 100 − 4c.",
+        "Solve 100 − 4c = 0: c = 25."
+      ],
+      "variant": {
+        "gen": "cn-disc-repeat",
+        "form": "forceC"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Every quadratic has exactly two roots — D's sign says where they live.",
+      "takeaways": [
+        "D > 0: two distinct real roots; D = 0: one repeated; D < 0: a conjugate pair.",
+        "'No real solutions' really means 'both solutions went complex'.",
+        "D = 0 designs perfect squares: b² = 4ac."
+      ],
+      "teaser": "Next chapter: sum and product of roots survive the trip into the complex plane."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-disc-full",
+      "concept": {
+        "id": "rem-cn0403-c",
+        "kind": "concept",
+        "body": "D = b² − 4ac with every sign intact. For x² + 1 = 0: a = 1, b = 0, c = 1."
+      },
+      "check": {
+        "id": "rem-cn0403-k",
+        "kind": "check",
+        "body": "Read one sign.",
+        "conceptTag": "cn-disc-full",
+        "explanationVariants": [
+          "D = 0 − 4 = −4 — negative, so the roots (±i) are a complex pair.",
+          "With b = 0, D = −4ac = −4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For x² + 1 = 0, what is the discriminant?",
+          "answer": -4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "The 4ac term subtracts: 0 − 4 = −4 — that minus is what makes the roots ±i."
+            },
+            {
+              "value": 0,
+              "feedback": "b = 0, but D isn't b² alone: D = 0 − 4(1)(1) = −4."
+            }
+          ],
+          "fallbackFeedback": "0 − 4 = −4."
+        }
+      }
+    }
+  ]
+}

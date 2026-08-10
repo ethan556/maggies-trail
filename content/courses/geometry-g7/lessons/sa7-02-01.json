@@ -1,0 +1,238 @@
+{
+  "id": "sa7-02-01",
+  "slug": "volume-of-right-prisms",
+  "title": "Volume of Right Prisms",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3d-filling-and-combining",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Volume of a right prism is one idea repeated: cover the base once, then stack that layer as many times as the height allows. Base area times height. For a box the base is a rectangle, but the rule never mentions rectangles — it works for a triangular base, a hexagonal base, any base at all.",
+      "figure": "sa7-stack-the-layer"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build a solid to a required capacity.",
+      "widget": {
+        "type": "volumeBuilder",
+        "commonBuilds": [
+          {
+            "volume": 12,
+            "feedback": "Only one layer's worth. The height is 2, so the base area must be 12, not 24."
+          },
+          {
+            "volume": 48,
+            "feedback": "Twice the target — halve the length."
+          }
+        ],
+        "prompt": "This prism is 3 wide and 2 high, both locked. Set its length so it holds exactly 24 cubic units.",
+        "targetVolume": 24,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 3,
+        "hStart": 2,
+        "lockW": true,
+        "lockH": true,
+        "successFeedback": "Length 4: the base is 4 × 3 = 12 square units, stacked twice, filling 24 cubic units. Base area × height, exactly.",
+        "lowFeedback": "Not full yet — lengthen the prism.",
+        "highFeedback": "Overfilled — shorten the prism."
+      },
+      "predict": {
+        "prompt": "The height is fixed at 2 and you need 24 cubic units. What must the BASE area be?",
+        "options": [
+          {
+            "id": "24",
+            "label": "24 — the same as the volume"
+          },
+          {
+            "id": "12",
+            "label": "12"
+          },
+          {
+            "id": "48",
+            "label": "48"
+          }
+        ],
+        "outcomeId": "12",
+        "reveal": "Two identical layers make the solid, so each layer holds half the total: 12 square units of base — which at a locked width of 3 means a length of 4. Volume divided by height recovers the base area every time, and that is how capacity problems get solved backwards."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Base times height.",
+      "conceptTag": "sa7-volume-prisms",
+      "explanationVariants": [
+        "A base of 15 stacked 4 high gives 15×4 = 60 cubic units.",
+        "Each layer contributes the base area; four layers contribute four times it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A prism has base area 15 square units and height 4. What is its volume?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 19,
+            "feedback": "That adds base and height. Volume multiplies them."
+          },
+          {
+            "value": 30,
+            "feedback": "That doubles the base instead of stacking four layers of it."
+          }
+        ],
+        "fallbackFeedback": "15 × 4 = 60 cubic units.",
+        "successFeedback": "60 cubic units — fifteen squares of floor, four layers deep."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Because the rule is base-area times height, a triangular prism needs no new formula at all. Compute the triangle's area, multiply by the length, done. The shape of the base changes what you compute FIRST; it never changes the stacking.",
+      "figure": "sa7-same-rule-any-base"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A triangular base.",
+      "conceptTag": "sa7-volume-prisms",
+      "explanationVariants": [
+        "The base is (6×4)/2 = 12, and 12×10 = 120 cubic units.",
+        "Triangle first, then stack it along the length."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A triangular prism has a base triangle with base 6 and height 4, and length 10. What is its volume?",
+        "answer": 120,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 240,
+            "feedback": "The triangle was treated as a rectangle. Its area is half of 6×4, so 12, not 24."
+          },
+          {
+            "value": 12,
+            "feedback": "That is the base triangle's AREA. It still has to be stacked along the length of 10."
+          }
+        ],
+        "fallbackFeedback": "Base (6×4)/2 = 12; volume 12×10 = 120 cubic units.",
+        "successFeedback": "120 cubic units — the same stacking rule, applied to a triangle."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Recover a missing dimension.",
+      "conceptTag": "sa7-volume-prisms",
+      "explanationVariants": [
+        "Height = volume ÷ base area = 90 ÷ 18 = 5.",
+        "Dividing by the base area undoes the stacking."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A prism holds 90 cubic units on a base of 18 square units. What is its height?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1620,
+            "feedback": "That multiplies where it should divide — the volume already includes the base."
+          },
+          {
+            "value": 72,
+            "feedback": "That subtracts. Stacking is multiplication, so undoing it is division."
+          }
+        ],
+        "fallbackFeedback": "90 ÷ 18 = 5.",
+        "successFeedback": "5 — volume divided by base area returns the number of layers."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Fill a container.",
+      "conceptTag": "sa7-volume-prisms",
+      "explanationVariants": [
+        "The tank holds 8×5×3 = 120 cubic units; half of that is 60.",
+        "Compute the full capacity, then halve it."
+      ],
+      "hints": [
+        "Find the tank's full volume before worrying about the half.",
+        "8 × 5 × 3 gives the full capacity.",
+        "Full is 120 cubic units; the tank is filled halfway."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A tank 8 by 5 by 3 is filled halfway. How many cubic units of water does it hold?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "That is the FULL tank. It is only half full."
+          },
+          {
+            "value": 40,
+            "feedback": "That halves a dimension rather than the volume. Halving the water halves the whole 120."
+          }
+        ],
+        "fallbackFeedback": "Full volume 8×5×3 = 120; half of that is 60 cubic units.",
+        "successFeedback": "60 cubic units — and note halving the water is the same as halving the height, which is why 8×5×1.5 agrees."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cover the base, then stack.",
+      "takeaways": [
+        "Volume of any right prism is base area × height, in cubic units.",
+        "The base's shape changes what you compute first, not the stacking rule.",
+        "Dividing volume by base area recovers the height."
+      ],
+      "teaser": "Next: shapes that are not one clean piece — cut them up and keep a ledger."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa7-volume-prisms",
+      "concept": {
+        "id": "rem-sa7-volume-prisms-c",
+        "kind": "concept",
+        "body": "Because the rule is base-area times height, a triangular prism needs no new formula at all. Compute the triangle's area, multiply by the length, done. The shape of the base changes what you compute FIRST; it never changes the stacking."
+      },
+      "check": {
+        "id": "rem-sa7-volume-prisms-k",
+        "kind": "check",
+        "body": "Base times height.",
+        "conceptTag": "sa7-volume-prisms",
+        "explanationVariants": [
+          "A base of 15 stacked 4 high gives 15×4 = 60 cubic units.",
+          "Each layer contributes the base area; four layers contribute four times it."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A prism has base area 15 square units and height 4. What is its volume?",
+          "answer": 60,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 19,
+              "feedback": "That adds base and height. Volume multiplies them."
+            },
+            {
+              "value": 30,
+              "feedback": "That doubles the base instead of stacking four layers of it."
+            }
+          ],
+          "fallbackFeedback": "15 × 4 = 60 cubic units.",
+          "successFeedback": "60 cubic units — fifteen squares of floor, four layers deep."
+        }
+      }
+    }
+  ]
+}

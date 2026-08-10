@@ -1,0 +1,344 @@
+{
+ "id": "dop-03-02",
+ "slug": "long-division-two-digit-divisor",
+ "title": "Long Division, Two-Digit Divisor",
+ "courseId": "decimal-operations",
+ "chapterId": "ch3-two-digit-division",
+ "minutes": 8,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Long division repeats four steps: **divide, multiply, subtract, bring down.** For 372 ÷ 12, look at 37 first. Your estimate says 12 fits about 3 times. Place the 3, multiply 3 × 12 = 36, subtract 37 − 36 = 1, then bring down the next digit. The estimate from last lesson picks each digit.",
+   "figure": "dop-long-division"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "See the quotient digit as hops before you write it.",
+   "conceptTag": "long-division-2digit",
+   "widget": {
+    "type": "numberLineHop",
+    "prompt": "Hop by 12s from 0: take as many full hops as fit under 37 — land on the last safe spot.",
+    "min": 0,
+    "max": 48,
+    "start": 0,
+    "hop": 12,
+    "hops": 3,
+    "direction": "forward",
+    "commonLandings": [
+     {
+      "value": 24,
+      "feedback": "12 fits once more — 36 is still under 37. Three full hops."
+     },
+     {
+      "value": 48,
+      "feedback": "Four hops overshoot: 48 > 37. Long division wants the LAST hop that still fits — 36."
+     }
+    ],
+    "missFeedback": "Count by 12s: 12, 24, 36 — then 48 would be too far.",
+    "successFeedback": "36 — three 12s with 1 to spare. That 3 is exactly the digit long division writes first."
+   },
+   "hints": [
+    "Estimate: 12 into 37.",
+    "3 × 12 = 36, 4 × 12 = 48.",
+    "36 fits, 48 doesn't — so 3."
+   ],
+   "explanationVariants": [
+    "3 × 12 = 36 ≤ 37 < 48 = 4 × 12, so the digit is 3.",
+    "The largest multiple of 12 not over 37 is 36 = 3 × 12."
+   ],
+   "predict": {
+    "prompt": "How many hops of 12 fit under 37 — will 3 hops overshoot?",
+    "options": [
+     {
+      "id": "fits",
+      "label": "No — 3 hops reach 36, still under 37"
+     },
+     {
+      "id": "over",
+      "label": "Yes — 3 hops pass 37"
+     },
+     {
+      "id": "exact",
+      "label": "3 hops land exactly on 37"
+     }
+    ],
+    "outcomeId": "fits",
+    "reveal": "12, 24, 36 — three hops stop at 36 with 1 left over; a fourth (48) would blow past. 'How many times does 12 fit into 37' IS this hop count: the first digit of the long-division quotient is a number-line fact."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": false,
+    "kernel": "quantity-composition",
+    "actionGoal": "Manipulate the model and track how it represents long division 2digit.",
+    "invariants": [
+     "The manipulated model and the mathematical relationship for long division 2digit must stay consistent."
+    ],
+    "misconceptions": [
+     "Changing a visible feature without preserving the relationship that defines long division 2digit."
+    ],
+    "representations": [
+     "number-line",
+     "symbolic"
+    ],
+    "translationFrom": "number-line",
+    "translationTo": "symbolic",
+    "fadeLevel": 0,
+    "transferFamily": "decimal-operations:long-division-2digit",
+    "delayed": true,
+    "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "After placing the 3: multiply 3 × 12 = 36, subtract 37 − 36 = 1. That 1 is what's left over so far. Now **bring down** the next digit of 372 — the 2 — beside the 1, making 12. The leftover joins the next digit to keep dividing.",
+   "figure": "dop-long-division"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Subtract to find the leftover.",
+   "conceptTag": "long-division-2digit",
+   "explanationVariants": [
+    "3 × 12 = 36, and 37 − 36 = 1 — that's the leftover before bringing down.",
+    "After 3 × 12 = 36, subtract from 37 to get 1."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "You placed 3 and computed 3 × 12 = 36. What is 37 − 36?",
+    "answer": 1,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "0 would mean 12 divides 37 evenly, but 37 − 36 = 1 is left over."
+     },
+     {
+      "value": 11,
+      "feedback": "11 mis-subtracts. 37 − 36 = 1 — just one left over."
+     }
+    ],
+    "fallbackFeedback": "37 − 36 = 1 is the leftover."
+   },
+   "variant": {
+    "gen": "long-div-2digit"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Bring down, divide again.",
+   "conceptTag": "long-division-2digit",
+   "widget": {
+    "type": "numeric",
+    "prompt": "Bring down the 2 beside the leftover 1, making 12. How many times does 12 fit into 12?",
+    "answer": 1,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "0 misses it — 12 fits into 12 exactly once. That's the next quotient digit."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is too many: 2 × 12 = 24 is bigger than 12. It fits exactly 1 time."
+     }
+    ],
+    "fallbackFeedback": "12 ÷ 12 = 1 exactly, so the next digit is 1."
+   },
+   "hints": [
+    "The new number is 12.",
+    "How many 12s in 12?",
+    "Exactly 1."
+   ],
+   "explanationVariants": [
+    "12 ÷ 12 = 1 exactly.",
+    "One 12 fits into 12 with nothing left."
+   ]
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Read off the quotient.",
+   "conceptTag": "long-division-2digit",
+   "explanationVariants": [
+    "The digits placed were 3 then 1, so 372 ÷ 12 = 31.",
+    "First digit 3, second digit 1 → 31, with nothing left over."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "The quotient digits were 3 then 1. What is 372 ÷ 12?",
+    "answer": 31,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 21,
+      "feedback": "21 changes the first digit — it was 3, not 2. The quotient is 31."
+     },
+     {
+      "value": 13,
+      "feedback": "13 reverses the digits. In order they were 3 then 1: 31."
+     }
+    ],
+    "fallbackFeedback": "Digits 3 then 1 read as 31."
+   },
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "digitsRead"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "A full one on your own.",
+   "conceptTag": "long-division-2digit",
+   "explanationVariants": [
+    "57 ÷ 23 → 2 (2×23=46, 57−46=11); bring down 5 → 115 ÷ 23 = 5; so 25.",
+    "Estimate 60÷23≈2, then 115÷23=5 exactly → 575 ÷ 23 = 25."
+   ],
+   "widget": {
+    "type": "quotientReasoningLab",
+    "task": "integerQuotient",
+    "answerMode": "numeric",
+    "prompt": "Use long division: 575 ÷ 23 = ?",
+    "dividend": {
+     "num": 575,
+     "den": 1
+    },
+    "divisor": {
+     "num": 23,
+     "den": 1
+    },
+    "candidates": [],
+    "requiredExplorations": 3,
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 15,
+      "feedback": "15 mis-picks the first digit. 57 ÷ 23 → 2 (2×23=46), then 115 ÷ 23 = 5, giving 25."
+     },
+     {
+      "value": 35,
+      "feedback": "35 makes the first digit too big: 3 × 23 = 69 > 57. It's 2, then 5 — so 25."
+     }
+    ],
+    "fractionErrors": [],
+    "authoredStages": [],
+    "successFeedback": "57 ÷ 23 → 2, then bring down: 115 ÷ 23 → 5, so 25.",
+    "explorationFeedback": "Inspect at least 3 exact quotient states before checking.",
+    "fallbackFeedback": "57 ÷ 23 → 2, then bring down: 115 ÷ 23 → 5, so 25."
+   },
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "fullDivide"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "This one won't come out even.",
+   "conceptTag": "long-division-2digit",
+   "hints": [
+    "49 ÷ 15 → estimate 3 (3 × 15 = 45).",
+    "Bring down the 2 → 42 ÷ 15 → 2 (2 × 15 = 30).",
+    "The quotient is 32, and 42 − 30 leaves a remainder."
+   ],
+   "explanationVariants": [
+    "49 ÷ 15 → 3 (45, leftover 4); bring down 2 → 42 ÷ 15 → 2 (30, leftover 12). Quotient 32, remainder 12.",
+    "492 ÷ 15 = 32 with 12 left over — the remainder."
+   ],
+   "widget": {
+    "type": "quotientReasoningLab",
+    "task": "integerQuotient",
+    "answerMode": "numeric",
+    "prompt": "Find the QUOTIENT (whole-number part) of 492 ÷ 15. It leaves a remainder — just enter the quotient.",
+    "dividend": {
+     "num": 492,
+     "den": 1
+    },
+    "divisor": {
+     "num": 15,
+     "den": 1
+    },
+    "candidates": [],
+    "requiredExplorations": 3,
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
+     {
+      "value": 33,
+      "feedback": "33 is one too many: 33 × 15 = 495, past 492. The quotient is 32, with 12 left over."
+     },
+     {
+      "value": 31,
+      "feedback": "31 is one too few: 32 × 15 = 480 still fits under 492 (leftover 12). The quotient is 32."
+     }
+    ],
+    "fractionErrors": [],
+    "authoredStages": [],
+    "successFeedback": "49 ÷ 15 → 3, then 42 ÷ 15 → 2: quotient 32 (remainder 12).",
+    "explorationFeedback": "Inspect at least 3 exact quotient states before checking.",
+    "fallbackFeedback": "49 ÷ 15 → 3, then 42 ÷ 15 → 2: quotient 32 (remainder 12)."
+   },
+   "variant": {
+    "gen": "long-div-2digit",
+    "form": "quotRemainder"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Divide, multiply, subtract, bring down — repeat.",
+   "takeaways": [
+    "Use your estimate to pick each quotient digit, largest that fits without going over.",
+    "Multiply, subtract to find the leftover, then bring down the next digit.",
+    "Sometimes there's a remainder left at the end — more on that next."
+   ],
+   "teaser": "next: what the remainder actually means."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "long-division-2digit",
+   "concept": {
+    "id": "rem-ld-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Pick the largest digit whose product doesn't go over.** For 84 ÷ 14: 14 fits into 84 how many times? 6 × 14 = 84 exactly, so the digit is 6. Multiply, subtract (84 − 84 = 0), done: 84 ÷ 14 = 6."
+   },
+   "check": {
+    "id": "rem-ld-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "long-division-2digit",
+    "explanationVariants": [
+     "6 × 14 = 84 exactly, so 84 ÷ 14 = 6.",
+     "Estimate 84 ÷ 14 ≈ 80 ÷ 14; 6 × 14 = 84 fits perfectly."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "84 ÷ 14 = ?",
+     "answer": 6,
+     "tolerance": 0,
+     "unit": "",
+     "commonErrors": [
+      {
+       "value": 5,
+       "feedback": "5 is too few: 5 × 14 = 70 leaves 14, and another 14 still fits. Use 6: 6 × 14 = 84."
+      },
+      {
+       "value": 7,
+       "feedback": "7 is too many: 7 × 14 = 98, past 84. The answer is 6."
+      }
+     ],
+     "fallbackFeedback": "6 × 14 = 84 exactly, so 84 ÷ 14 = 6."
+    }
+   }
+  }
+ ]
+}

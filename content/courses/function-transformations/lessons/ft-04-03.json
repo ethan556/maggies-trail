@@ -1,0 +1,295 @@
+{
+  "id": "ft-04-03",
+  "slug": "composition-formulas",
+  "title": "Composition Formulas",
+  "courseId": "function-transformations",
+  "chapterId": "ch4-combining-composing",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To write **f(g(x))** as a formula, substitute **g's entire expression** wherever f's rule says x. With f(x) = x² and g(x) = x + 1: f(g(x)) = **(x + 1)²** — the whole package gets squared, parentheses and all.",
+      "figure": "composition-chain"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build the formula.",
+      "widget": {
+        "type": "functionMachine",
+        "a": 1,
+        "b": 1,
+        "square": false,
+        "stage2": {
+          "a": 1,
+          "b": 0,
+          "square": true
+        },
+        "join": "compose",
+        "inputMin": 0,
+        "inputMax": 8,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 16,
+        "prompt": "g adds 1, then f squares the result. Find the input that comes out as 16 — and watch which number gets squared.",
+        "successFeedback": "3 → 4 → 16. The squaring happens to (x + 1), not to x, which is why f(g(x)) is (x + 1)² and not x² + 1. The middle box is where you can see it.",
+        "lowFeedback": "Under 16 — raise the input.",
+        "highFeedback": "Over 16 — ease the input back."
+      },
+      "predict": {
+        "prompt": "f(g(x)) with f squaring and g adding 1. When x flows through, which operation happens FIRST?",
+        "options": [
+          {
+            "id": "inner",
+            "label": "Add 1 first — the inside function acts first"
+          },
+          {
+            "id": "outer",
+            "label": "Square first — read f before g"
+          }
+        ],
+        "outcomeId": "inner",
+        "reveal": "Composition works inside-out: x picks up the +1 from g, THEN gets squared — (x + 1)². Squaring first builds x² + 1, which is g(f(x)), a genuinely different curve: at x = 1 they read 4 and 2."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Test with a number** to expose a wrong formula. At x = 3: the chain gives g(3) = 4 then f(4) = 16. The candidate (3 + 1)² = 16 ✓, but 3² + 1 = 10 ✗ — one plug-in settles it.",
+      "figure": "ft-test-number"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the formula.",
+      "conceptTag": "ft-compose-rule",
+      "explanationVariants": [
+        "(6 + 1)² = 7² = 49.",
+        "Chain check: g(6) = 7, then f(7) = 49 — the formula agrees."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using f(g(x)) = (x + 1)², what is the value at x = 6?",
+        "answer": 49,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 37,
+            "feedback": "That's 6² + 1 — the +1 happens INSIDE the square: (6 + 1)² = 49."
+          },
+          {
+            "value": 42,
+            "feedback": "That's 6 × 7 — the rule squares: 7² = 49."
+          }
+        ],
+        "fallbackFeedback": "(6 + 1)² = 7² = 49."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-compose-rule__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Compose the other way.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "With f(x) = 2x and g(x) = x − 4, which formula is g(f(x))?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "2x − 4",
+            "correct": true,
+            "feedback": "Right — f runs first (doubling), then g subtracts 4 from that result."
+          },
+          {
+            "id": "o2",
+            "label": "2(x − 4)",
+            "correct": false,
+            "feedback": "That's f(g(x)) — subtract-then-double. In g(f(x)), the doubling is INNERMOST: 2x first, then − 4."
+          },
+          {
+            "id": "o3",
+            "label": "2x + 4",
+            "correct": false,
+            "feedback": "g subtracts 4, it doesn't add — the outer step takes 4 away: 2x − 4."
+          },
+          {
+            "id": "o4",
+            "label": "x − 8",
+            "correct": false,
+            "feedback": "The 2 multiplies x, and only one 4 is subtracted: 2x − 4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Verify with a number.",
+      "conceptTag": "ft-compose-rule",
+      "explanationVariants": [
+        "f first: 2 × 5 = 10; then g: 10 − 4 = 6 — matching the formula 2x − 4 at x = 5.",
+        "g(f(5)) = g(10) = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "With f(x) = 2x and g(x) = x − 4, what is g(f(5))?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That's 2 × (5 − 4) — the wrong order. Here f is inner: 10 first, then − 4 = 6."
+          },
+          {
+            "value": 10,
+            "feedback": "That's f(5) — g still runs: 10 − 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "f(5) = 10, then g(10) = 6."
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-compose-rule__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Take a formula apart.",
+      "conceptTag": "ft-compose-rule",
+      "explanationVariants": [
+        "The inner action is subtracting 5; the outer action squares — so g(x) = x − 5 and f(x) = x².",
+        "Test at x = 7: g gives 2, f squares to 4, and (7 − 5)² = 4 ✓."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "h(x) = (x − 5)² equals f(g(x)) for which pair?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "g(x) = x − 5 and f(x) = x²",
+            "correct": true,
+            "feedback": "Right — subtract inside first, square outside second."
+          },
+          {
+            "id": "o2",
+            "label": "g(x) = x² and f(x) = x − 5",
+            "correct": false,
+            "feedback": "That order gives x² − 5 — squaring first, subtracting second. In h, the subtraction sits INSIDE."
+          },
+          {
+            "id": "o3",
+            "label": "g(x) = x + 5 and f(x) = x²",
+            "correct": false,
+            "feedback": "That builds (x + 5)² — the inner step must SUBTRACT 5 to match."
+          },
+          {
+            "id": "o4",
+            "label": "g(x) = x − 5 and f(x) = 2x",
+            "correct": false,
+            "feedback": "The outer f must SQUARE, not double: that pair builds 2x − 10."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-compose-rule__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve through a composition.",
+      "conceptTag": "ft-compose-rule",
+      "explanationVariants": [
+        "f(g(x)) = 2x + 3, so 2x + 3 = 15 → 2x = 12 → x = 6.",
+        "Undo outside-in: take away the +3 (15 − 3 = 12), then undo the doubling: x = 6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "With f(x) = x + 3 and g(x) = 2x, the composition f(g(x)) = 2x + 3. Solve f(g(x)) = 15. What is x?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is 2x — one more undo: divide by 2 to get x = 6."
+          },
+          {
+            "value": 9,
+            "feedback": "That's (15 + 3) ÷ 2 — undo the +3 by SUBTRACTING: 15 − 3 = 12, then halve: 6."
+          }
+        ],
+        "fallbackFeedback": "2x + 3 = 15 → 2x = 12 → x = 6."
+      },
+      "hints": [
+        "Set the composed formula equal to 15: 2x + 3 = 15.",
+        "Undo the last step first: subtract 3 from both sides.",
+        "2x = 12, so x = 6."
+      ],
+      "variant": {
+        "gen": "a2-transformations",
+        "form": "ft-compose-rule__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Substitute the whole inner expression; verify with one number.",
+      "takeaways": [
+        "f(g(x)): replace f's x with ALL of g's expression.",
+        "A single numeric plug-in exposes a wrong formula.",
+        "To solve f(g(x)) = c, undo the outer steps first."
+      ],
+      "teaser": "Next chapter: the ultimate undo — inverse functions."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ft-compose-rule",
+      "concept": {
+        "id": "rem-ft0403-c",
+        "kind": "concept",
+        "body": "To build f(g(x)), substitute g's WHOLE expression for f's x — parentheses included. Check the result with one number."
+      },
+      "check": {
+        "id": "rem-ft0403-k",
+        "kind": "check",
+        "body": "One more formula.",
+        "conceptTag": "ft-compose-rule",
+        "explanationVariants": [
+          "g's whole expression x − 2 goes inside the square: (x − 2)². Check x = 5: chain gives 3² = 9 and the formula gives 9 ✓.",
+          "The subtraction is innermost, so it happens before the squaring: (x − 2)²."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "With f(x) = x² and g(x) = x − 2, which formula is f(g(x))?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "(x − 2)²",
+              "correct": true,
+              "feedback": "Right — the whole x − 2 gets squared."
+            },
+            {
+              "id": "o2",
+              "label": "x² − 2",
+              "correct": false,
+              "feedback": "That's g(f(x)) — square-then-subtract. Here the subtraction happens first, inside: (x − 2)²."
+            },
+            {
+              "id": "o3",
+              "label": "x² − 2x",
+              "correct": false,
+              "feedback": "Substitution keeps g intact inside f: (x − 2)², which expands to x² − 4x + 4, not x² − 2x."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

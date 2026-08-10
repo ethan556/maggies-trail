@@ -1,0 +1,324 @@
+{
+  "id": "sc-02-02",
+  "slug": "radius-of-convergence",
+  "title": "Where the Polynomial Gives Up",
+  "courseId": "series-convergence",
+  "chapterId": "ch2-taylor-series",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A Taylor series does not always work.\n\n**1/(1 − x) = 1 + x + x² + x³ + …** is perfect near 0 — and **useless** at x = 2, where it claims 1 + 2 + 4 + 8 + … equals −1.\n\nThere is a boundary. Inside it the polynomial hugs the curve; outside it, the terms grow and the whole thing runs away. That boundary is the **radius of convergence**.",
+      "figure": "sc-taylor-hug-peel"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the boundary yourself.",
+      "widget": {
+        "type": "taylorApprox",
+        "fn": "geometric",
+        "mode": "radius",
+        "atX": 1,
+        "tolerance": 0.01,
+        "targetN": 4,
+        "nStart": 0,
+        "targetXTenths": 10,
+        "xStart": 3,
+        "prompt": "1/(1 − x) with eight terms. Drag the evaluation point outward and find the SMALLEST x at which the terms xᵏ stop shrinking.",
+        "successFeedback": "x = 1. Below it the terms shrink and the polynomial hugs the curve; at exactly 1 every term is 1 — dead level, never fading — and beyond it they GROW. That is the radius of convergence, and you did not solve for it: you WATCHED the approximation give up. The dashed lines at ±1 are the boundary, and nothing you do with more terms will get you past them.",
+        "lowFeedback": "The terms are still shrinking here, so the series still converges — the polynomial is still hugging the curve. Push further out.",
+        "highFeedback": "The terms are growing here, so it has already given up — but you have overshot. Come back to the SMALLEST x where the shrinking stops."
+      },
+      "predict": {
+        "prompt": "What does adding another correct Taylor term guarantee near the center?",
+        "options": [
+          {
+            "id": "local",
+            "label": "More matched local derivative information"
+          },
+          {
+            "id": "global",
+            "label": "Exact equality for every x"
+          },
+          {
+            "id": "random",
+            "label": "A randomly better graph"
+          }
+        ],
+        "outcomeId": "local",
+        "reveal": "Each added term matches another derivative at the center, improving the local approximation without promising global equality."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Add local derivative information term by term and compare a polynomial approximation with its target function.",
+        "invariants": [
+          "matched-derivatives-anchor-local-approximation",
+          "more-terms-expand-local-accuracy"
+        ],
+        "misconceptions": [
+          "series-equals-function-everywhere",
+          "highest-degree-term-dominates-near-center"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "series-convergence-taylorApprox",
+        "delayed": true,
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this taylorApprox away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why is a Taylor polynomial strongest near its center?",
+          "options": [
+            {
+              "id": "derivatives",
+              "label": "Its coefficients are chosen to match successive derivatives there.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "degree",
+              "label": "Every high-degree polynomial is exact near zero.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "pixels",
+              "label": "The curves merely look similar on the screen.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "sc-radius"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "More terms will not save you.",
+      "conceptTag": "sc-radius",
+      "explanationVariants": [
+        "Outside the radius, each new term is BIGGER than the last, so adding terms makes the polynomial worse, not better. No number of terms can rescue it.",
+        "This is the crucial difference from ordinary approximation error: inside the radius more terms always help; outside, they actively hurt."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "At x = 2, the series 1 + x + x² + … has terms 1, 2, 4, 8, … What happens if you add more terms?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "It gets WORSE — each term is bigger than the last, so the sum runs away.",
+            "correct": true,
+            "feedback": "Right, and that is what makes the radius a hard boundary rather than a soft one. Outside it, more terms actively hurt."
+          },
+          {
+            "id": "o2",
+            "label": "It slowly improves.",
+            "correct": false,
+            "feedback": "The terms are DOUBLING. Every one you add pushes the sum further from the true value of 1/(1 − 2) = −1."
+          },
+          {
+            "id": "o3",
+            "label": "It converges to −1 eventually.",
+            "correct": false,
+            "feedback": "−1 is the value of the FUNCTION there, and the series has no way of reaching it. The two have simply parted company."
+          },
+          {
+            "id": "o4",
+            "label": "It stays the same.",
+            "correct": false,
+            "feedback": "Each new term adds a larger amount than the one before, so the partial sums climb without bound."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-radius__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the radius with the ratio test.",
+      "conceptTag": "sc-radius",
+      "explanationVariants": [
+        "The ratio of consecutive terms of Σxⁿ is |x|. The ratio test demands that be under 1, so the series converges exactly when |x| < 1: the radius is 1.",
+        "The ratio test does not merely test a series — pointed at a POWER series, it hands you the radius directly."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For Σxⁿ, the ratio of consecutive terms is |x|. What is the radius of convergence?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "A radius of 0 would mean it converges only at the centre. But at x = 0.5 the terms shrink beautifully, so the radius is larger than that."
+          },
+          {
+            "value": 2,
+            "feedback": "At x = 2 the terms 1, 2, 4, 8 GROW, so the series has already failed there. The boundary is at 1."
+          },
+          {
+            "value": 0.5,
+            "feedback": "At x = 0.5 the series converges perfectly well (to 2). The boundary is further out, at 1."
+          }
+        ],
+        "fallbackFeedback": "The ratio test needs |x| < 1, so the radius is exactly 1."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-radius__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "And now the contrast that makes the point.\n\n**eˣ** has an n! in every denominator. The ratio of consecutive terms is |x|/(n + 1) — which goes to **0 for every x**. The factorials always win, so the radius is **infinite**.\n\n**1/(1 − x)** has no factorials. Its ratio is just |x|, which needs |x| < 1.\n\nThe factorial is the difference between a series that never gives up and one that does.",
+      "figure": "sc-taylor-hug-peel"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why eˣ never gives up.",
+      "conceptTag": "sc-radius",
+      "explanationVariants": [
+        "The ratio |x|/(n + 1) shrinks to 0 no matter how big x is — the denominator eventually outruns any fixed numerator. So eˣ's series converges everywhere.",
+        "Even at x = 1000, the terms eventually collapse: once n passes 1000, each term is smaller than the last."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For eˣ, the ratio of consecutive terms is |x|/(n + 1). Why is the radius infinite?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "However big x is, the (n + 1) eventually outruns it — so the ratio goes to 0 for every x.",
+            "correct": true,
+            "feedback": "Right. Even at x = 1000, once n passes 1000 the terms start collapsing. The factorials always win in the end."
+          },
+          {
+            "id": "o2",
+            "label": "Because eˣ is always positive.",
+            "correct": false,
+            "feedback": "Sign has nothing to do with it. 1/(1 − x) is positive near 0 too, and it still has a finite radius."
+          },
+          {
+            "id": "o3",
+            "label": "Because e is irrational.",
+            "correct": false,
+            "feedback": "Irrationality is irrelevant. What matters is the factorial in the denominator, which crushes the terms."
+          },
+          {
+            "id": "o4",
+            "label": "It is not infinite — the radius is 1.",
+            "correct": false,
+            "feedback": "Try the widget at any x you like: the eˣ polynomial keeps hugging. The factorials mean it never gives up."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-radius__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read the radius off the ratio.",
+      "conceptTag": "sc-radius",
+      "hints": [
+        "For Σ xⁿ/2ⁿ, write out the ratio of consecutive terms.",
+        "It is |x|/2, and the ratio test needs that under 1.",
+        "|x|/2 < 1 means |x| < 2."
+      ],
+      "explanationVariants": [
+        "|x|/2 < 1 gives |x| < 2, so the radius is 2.",
+        "It is a geometric series in disguise, with ratio x/2 — and geometric series converge exactly when the ratio is under 1 in magnitude."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Find the radius of convergence of Σ xⁿ/2ⁿ.",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "That is the radius for Σxⁿ. Dividing by 2ⁿ makes the terms shrink twice as fast, which pushes the boundary out to 2."
+          },
+          {
+            "value": 0.5,
+            "feedback": "You may have inverted the ratio. |x|/2 < 1 gives |x| < 2, not |x| < 1/2."
+          },
+          {
+            "value": 4,
+            "feedback": "Check the ratio: it is |x|/2, not |x|/4. The condition |x|/2 < 1 gives |x| < 2."
+          }
+        ],
+        "fallbackFeedback": "The ratio is |x|/2, so |x| < 2: the radius is 2."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-radius__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A boundary you can see.",
+      "takeaways": [
+        "Inside the radius, more terms always help. OUTSIDE it, more terms make things worse — the boundary is hard, not soft.",
+        "The ratio test, pointed at a power series, hands you the radius directly.",
+        "Factorials in the denominator crush the terms and give an infinite radius. Without them, the radius is finite."
+      ],
+      "teaser": "That is BC series. Last course: parametric and polar curves, differentiated and integrated."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sc-radius",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Look at the terms at the x you care about. **Shrinking?** The series converges there and more terms help. **Growing?** It has given up, and no number of terms will bring it back. The boundary between the two is the radius.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Shrinking or growing?",
+        "conceptTag": "sc-radius",
+        "explanationVariants": [
+          "At x = 3 the terms of Σxⁿ are 1, 3, 9, 27 — growing. The series has given up.",
+          "Growing terms mean divergence, always."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "At x = 3, the terms of 1 + x + x² + … are 1, 3, 9, 27, … Does the series converge?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "No — the terms are growing, so it diverges.",
+              "correct": true,
+              "feedback": "Right. Terms that grow can never be summed, and no number of them will help."
+            },
+            {
+              "id": "o2",
+              "label": "Yes, slowly.",
+              "correct": false,
+              "feedback": "Each term is three times the last. The partial sums race away to infinity."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

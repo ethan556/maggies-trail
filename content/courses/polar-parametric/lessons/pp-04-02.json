@@ -1,0 +1,344 @@
+{
+ "id": "pp-04-02",
+ "slug": "eliminating-the-parameter",
+ "title": "Eliminating the Parameter",
+ "courseId": "polar-parametric",
+ "chapterId": "ch4-parametric",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "To see the SHAPE, remove t. When t appears simply, **solve one equation for t and substitute**. For x = t + 1, y = 2t: from the first, t = x − 1; substitute into the second, y = 2(x − 1) = **2x − 2** — a line. The parameter vanishes, leaving a rectangular equation.",
+   "figure": "pp-remove-t-solve"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Substitute for t.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "x = t + 1, y = 2t. Eliminating t gives:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "y = 2x − 2",
+      "correct": true,
+      "feedback": "Right — t = x − 1, so y = 2(x − 1) = 2x − 2."
+     },
+     {
+      "id": "o2",
+      "label": "y = 2x + 2",
+      "feedback": "Sign slip: t = x − 1 (not x + 1), so y = 2(x − 1) = 2x − 2."
+     },
+     {
+      "id": "o3",
+      "label": "y = 2x",
+      "feedback": "Don't forget to substitute t = x − 1: y = 2(x − 1) = 2x − 2."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "A parabola emerges.",
+   "conceptTag": "pp-eliminate",
+   "explanationVariants": [
+    "x = t, y = t²: since x = t directly, y = x² — the standard parabola.",
+    "Substituting t = x into y = t² gives y = x²."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Eliminate t from x = t, y = t².",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "y ="
+     },
+     {
+      "id": "t1",
+      "label": "x ="
+     },
+     {
+      "id": "t2",
+      "label": "x²"
+     },
+     {
+      "id": "t3",
+      "label": "y²"
+     },
+     {
+      "id": "t4",
+      "label": "x"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t2"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t1",
+       "t3"
+      ],
+      "feedback": "That's the sideways version. Here x = t and y = t², so y = x²."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t4"
+      ],
+      "feedback": "y = t² is the SQUARE of t: substituting t = x gives y = x²."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Substitute t = x into y = t²: the result is y = x².",
+    "successFeedback": "Right — t = x, so y = t² = x²."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-eliminate__buildExpression"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "When t sits inside sine and cosine, use a **Pythagorean identity** instead of solving for t. x = cos t, y = sin t: square and add — x² + y² = cos²t + sin²t = 1, the unit circle (recall). Trig parametrizations collapse via sin²+cos²=1, not by isolating t.",
+   "figure": "pp-pythagorean-eliminate"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Identity elimination.",
+   "conceptTag": "pp-eliminate",
+   "explanationVariants": [
+    "x = 2cos t, y = 2sin t: (x/2)² + (y/2)² = cos²t + sin²t = 1, so x² + y² = 4 — a circle of radius 2.",
+    "Divide each by 2 before squaring; the identity gives x² + y² = 4."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Eliminate t from x = 2cos t, y = 2sin t.",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x² + y²"
+     },
+     {
+      "id": "t1",
+      "label": "x + y"
+     },
+     {
+      "id": "t2",
+      "label": "="
+     },
+     {
+      "id": "t3",
+      "label": "4"
+     },
+     {
+      "id": "t4",
+      "label": "1"
+     },
+     {
+      "id": "t5",
+      "label": "2"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t2",
+     "t3"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4"
+      ],
+      "feedback": "The 2's matter: x = 2cos t means x/2 = cos t, giving x² + y² = 4, not 1."
+     },
+     {
+      "sequence": [
+       "t1",
+       "t2",
+       "t5"
+      ],
+      "feedback": "Squaring is required to use sin² + cos² = 1: the result is x² + y² = 4."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "x = 2cos t, y = 2sin t ⇒ x/2 = cos t, y/2 = sin t; square and add to get x² + y² = 4.",
+    "successFeedback": "Right — (x/2)² + (y/2)² = 1 multiplies out to x² + y² = 4, a radius-2 circle."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-eliminate__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "An ellipse.",
+   "conceptTag": "pp-eliminate",
+   "explanationVariants": [
+    "x = 3cos t, y = 2sin t: (x/3)² + (y/2)² = cos²t + sin²t = 1 — an ellipse.",
+    "Different divisors on x and y give an ellipse, not a circle."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Eliminate t from x = 3cos t, y = 2sin t.",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "(x/3)² + (y/2)²"
+     },
+     {
+      "id": "t1",
+      "label": "(x/2)² + (y/3)²"
+     },
+     {
+      "id": "t2",
+      "label": "x² + y²"
+     },
+     {
+      "id": "t3",
+      "label": "="
+     },
+     {
+      "id": "t4",
+      "label": "1"
+     },
+     {
+      "id": "t5",
+      "label": "5"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t3",
+     "t4"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t2",
+       "t3",
+       "t5"
+      ],
+      "feedback": "Unequal coefficients give an ELLIPSE, not a circle: (x/3)² + (y/2)² = 1."
+     },
+     {
+      "sequence": [
+       "t1",
+       "t3",
+       "t4"
+      ],
+      "feedback": "Match each divisor to its own variable: x uses 3, y uses 2 → (x/3)² + (y/2)² = 1."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Divide each variable by its own coefficient before squaring: (x/3)² + (y/2)² = 1.",
+    "successFeedback": "Right — divide before squaring: cos²t + sin²t = 1 gives the ellipse."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-eliminate__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Eliminate and evaluate.",
+   "conceptTag": "pp-eliminate",
+   "explanationVariants": [
+    "x = t², y = t → t = y, so x = y² (sideways parabola). At y = 3, x = 9.",
+    "Solve the simpler equation (y = t) for t and substitute: x = y²; then x = 3² = 9."
+   ],
+   "hints": [
+    "Which equation is easier to solve for t? y = t.",
+    "Substitute t = y into x = t²: x = y².",
+    "Now set y = 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Eliminate t from x = t², y = t to get x = y². What is x when y = 3?",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "6 = 2·3 doubles instead of squaring. x = y² = 3² = 9."
+     },
+     {
+      "value": 3,
+      "feedback": "3 = y itself. x = y² = 9."
+     }
+    ],
+    "fallbackFeedback": "x = y² = 3² = 9."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-eliminate__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Erase t, reveal the shape.",
+   "takeaways": [
+    "t appears simply → solve for t and substitute.",
+    "t inside sin/cos → square and add via sin²t + cos²t = 1.",
+    "The rectangular equation shows the shape; the parametrization added the motion."
+   ],
+   "teaser": "Next: writing your OWN parametrization — and choosing its direction."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-eliminate",
+   "concept": {
+    "id": "rem-pp0402-c",
+    "kind": "concept",
+    "body": "Eliminate t: if it appears algebraically, solve one equation for t and substitute; if inside sin/cos, square and add to use sin²t + cos²t = 1."
+   },
+   "check": {
+    "id": "rem-pp0402-k",
+    "kind": "check",
+    "body": "One elimination.",
+    "conceptTag": "pp-eliminate",
+    "explanationVariants": [
+     "x = t, y = 3t → y = 3x.",
+     "t = x, so y = 3t = 3x."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Eliminate t from x = t, y = 3t.",
+     "options": [
+      {
+       "id": "o1",
+       "label": "y = 3x",
+       "correct": true,
+       "feedback": "Right — t = x gives y = 3x."
+      },
+      {
+       "id": "o2",
+       "label": "y = x/3",
+       "feedback": "Substitute t = x into y = 3t: y = 3x, not x/3."
+      },
+      {
+       "id": "o3",
+       "label": "y = x + 3",
+       "feedback": "y = 3t is a PRODUCT: y = 3x."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

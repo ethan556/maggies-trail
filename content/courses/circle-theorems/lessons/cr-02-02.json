@@ -1,0 +1,310 @@
+{
+  "id": "cr-02-02",
+  "slug": "perpendicular-from-center",
+  "title": "The Perpendicular from the Center",
+  "courseId": "circle-theorems",
+  "chapterId": "ch2-chords",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "cr-chord-perp",
+      "concept": {
+        "id": "rem-cr-chord-perp-c",
+        "kind": "concept",
+        "body": "The perpendicular from the center to a chord bisects the chord (HL congruence on the two radius triangles) and bisects its arc. The right triangle it creates has legs = distance d and HALF the chord, hypotenuse = radius: (chord/2)² + d² = r². Converse: every chord's perpendicular bisector passes through the center — two bisectors locate it."
+      },
+      "check": {
+        "id": "rem-cr-chord-perp-k",
+        "kind": "check",
+        "body": "One triangle.",
+        "conceptTag": "cr-chord-perp",
+        "explanationVariants": [
+          "Half-chord = √(5² − 3²) = 4, so the chord is 8 — the 3-4-5 inside the circle.",
+          "Legs 3 and half-chord, hypotenuse 5: half = 4, chord = 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Radius 5, chord 3 units from the center. Chord length = ?",
+          "answer": 8,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 is the HALF-chord — the perpendicular bisected it, so double: 8."
+            },
+            {
+              "value": 2,
+              "feedback": "2 = 5 − 3 subtracts lengths — subtract SQUARES instead: 2√(25 − 9) = 8."
+            }
+          ],
+          "fallbackFeedback": "2√(5² − 3²) = 8."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Drop a perpendicular from the center onto any chord: it lands on the chord's **midpoint** — and bisects the chord's arc too. Proof: the two endpoint triangles share the perpendicular leg and have matching radius hypotenuses — HL congruence, then CPCTC. One perpendicular, two halves.",
+      "figure": "chord-distance"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Radius, distance, half-chord.",
+      "conceptTag": "cr-chord-perp",
+      "explanationVariants": [
+        "The perpendicular makes a right triangle: half-chord = √(10² − 6²) = 8, so the chord is 16.",
+        "Legs d = 6 and half-chord, hypotenuse r = 10: half = 8, whole = 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 10, and a chord sits 6 units from the center. Find the CHORD's length.",
+        "answer": 16,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is the HALF-chord — the perpendicular bisects, so double it: 16."
+          },
+          {
+            "value": 23.32,
+            "feedback": "23.32 ≈ 2√(100 + 36) ADDS squares — the radius is the hypotenuse, so subtract: 2√64 = 16."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = 10 − 6 subtracts lengths — Pythagoras subtracts SQUARES: 2√(100 − 36) = 16."
+          }
+        ],
+        "fallbackFeedback": "2√(10² − 6²) = 16."
+      },
+      "variant": {
+        "gen": "chord-perp"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Run it backward: given the chord, find its distance. Half the chord and the distance are the legs; the radius is always the hypotenuse. Radius 13, chord 24: half-chord 12, so d = √(169 − 144) = 5. The 5-12-13 triple lives inside every such circle problem.",
+      "figure": "cr-half-chord"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Distance from chord.",
+      "conceptTag": "cr-chord-perp",
+      "explanationVariants": [
+        "Half-chord 12 with radius 13: d = √(13² − 12²) = 5.",
+        "The 5-12-13 triple: distance 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Radius 13, chord 24. How far is the chord from the center?",
+        "answer": 5,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the HALF-CHORD leg — the distance is the other leg: √(169 − 144) = 5."
+          },
+          {
+            "value": 25,
+            "feedback": "25 = 13 + 12 adds — the right triangle SUBTRACTS squares: 5."
+          },
+          {
+            "value": 1,
+            "feedback": "1 = 13 − 12 subtracts plain lengths — subtract their SQUARES, then root: 5."
+          }
+        ],
+        "fallbackFeedback": "√(13² − 12²) = 5."
+      },
+      "variant": {
+        "gen": "chord-perp",
+        "form": "distFromChord"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The converse is a center-finder: **the perpendicular bisector of any chord passes through the center** — the center is equidistant from the chord's endpoints, and the bisector is exactly the set of such points. Two chords, two bisectors, one intersection: the lost center, found. Restorers rebuild broken plates this way.",
+      "figure": "cr-perp-bisector-center"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Find the lost center.",
+      "conceptTag": "cr-chord-perp",
+      "explanationVariants": [
+        "Each chord's perpendicular bisector passes through the center — two of them can only meet there.",
+        "Two bisectors, one crossing: the center."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "You have a fragment of a broken circular plate. How do you locate the original center?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Draw two chords on the rim arc; their perpendicular bisectors intersect at the center",
+            "correct": true,
+            "feedback": "Both bisectors must pass through the center (the converse), so their crossing pins it — the classic restoration technique."
+          },
+          {
+            "id": "o2",
+            "label": "Measure the longest visible chord and take its midpoint",
+            "correct": false,
+            "feedback": "A fragment's longest chord is rarely a diameter, and a non-diameter's midpoint isn't the center. Two bisectors always work."
+          },
+          {
+            "id": "o3",
+            "label": "Balance the fragment on a pin",
+            "correct": false,
+            "feedback": "That finds the fragment's center of MASS — not the original circle's center. Geometry beats physics here: two bisectors."
+          },
+          {
+            "id": "o4",
+            "label": "It's impossible from a fragment",
+            "correct": false,
+            "feedback": "Any arc big enough for two chords suffices — their perpendicular bisectors triangulate the center exactly."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-circle-theorems",
+        "form": "cr-chord-perp__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The perpendicular from the centre bisects the chord.",
+      "predict": {
+        "prompt": "Drop a perpendicular from the centre onto a chord. Where does it meet the chord?",
+        "options": [
+          {
+            "id": "midpoint",
+            "label": "Exactly at the midpoint — always, for every chord"
+          },
+          {
+            "id": "longer",
+            "label": "Nearer the end closer to the longer arc"
+          },
+          {
+            "id": "depends",
+            "label": "It depends on how long the chord is"
+          }
+        ],
+        "outcomeId": "midpoint",
+        "reveal": "Exactly the midpoint, every time. The two radii to the chord's ends are equal, so the triangle is isosceles and the perpendicular from the apex must bisect the base. Watch the two half-readouts stay equal to each other as you slide."
+      },
+      "widget": {
+        "type": "circleMeasureExplore",
+        "mode": "chordDistance",
+        "radius": 5,
+        "targetLength": 8,
+        "start": 0,
+        "prompt": "Radius 5. Slide the chord to a length of 8, watching the two halves as you go.",
+        "successFeedback": "A chord of 8 sits 3 from the centre — and there is the 3-4-5 triangle: half the chord is 4, the distance 3, the radius 5. The two halves stayed equal at EVERY position, because the perpendicular from the centre always lands on the midpoint. That is not a coincidence; it is two congruent right triangles sharing a hypotenuse.",
+        "lowFeedback": "Shorter than 8 — the chord is too far from the centre.",
+        "highFeedback": "Longer than 8 — the chord is too close to the centre. The diameter, at distance 0, is the longest chord there is."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate circle measurements while tangent, chord, radius, and power relationships update together.",
+        "invariants": [
+          "tangent-radius-perpendicular",
+          "circle-measures-remain-linked"
+        ],
+        "misconceptions": [
+          "tangent-as-chord",
+          "diagram-not-to-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 0,
+        "transferFamily": "circle-theorems",
+        "delayed": false
+      },
+      "conceptTag": "cr-chord-perp"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Tunnel clearance.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A semicircular tunnel has radius 10 m. How high is the ceiling 6 m to the side of the center line?",
+        "answer": 8,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = 10 − 6 subtracts lengths — the height is a Pythagorean leg: √(100 − 36) = 8 m."
+          },
+          {
+            "value": 11.66,
+            "feedback": "11.66 ≈ √(100 + 36) adds squares — the radius is the HYPOTENUSE, so subtract: 8 m."
+          }
+        ],
+        "fallbackFeedback": "Height = √(10² − 6²) = 8 m — the chord right-triangle, stood on its end."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Two parallel chords.",
+      "conceptTag": "cr-chord-perp",
+      "hints": [
+        "Each chord gets its own right triangle with the same radius 10: half-chords 8 and 6.",
+        "Distances: √(100 − 64) = 6 and √(100 − 36) = 8.",
+        "SAME side of the center: the gap is the DIFFERENCE of the distances."
+      ],
+      "explanationVariants": [
+        "Distances are 6 (for the 16-chord) and 8 (for the 12-chord); same side ⇒ gap = 8 − 6 = 2.",
+        "The longer chord sits CLOSER (6 < 8), and the strip between them is 2 units."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A circle has radius 10. Two parallel chords of lengths 16 and 12 lie on the SAME side of the center. Find the distance between them.",
+        "answer": 2,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 = 6 + 8 is the answer for OPPOSITE sides of the center — same side means subtract: 8 − 6 = 2."
+          },
+          {
+            "value": 4,
+            "feedback": "4 = 16 − 12 subtracts the chord LENGTHS — the gap lives between their distances: 8 − 6 = 2."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is the 16-chord's own distance from the center — the question asks the gap between the CHORDS: 2."
+          }
+        ],
+        "fallbackFeedback": "d₁ = √(100−64) = 6, d₂ = √(100−36) = 8; same side ⇒ 8 − 6 = 2."
+      },
+      "variant": {
+        "gen": "chord-perp",
+        "form": "parallelChords"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One perpendicular, everything measured.",
+      "takeaways": [
+        "The center's perpendicular bisects the chord AND its arc (HL + CPCTC).",
+        "Right-triangle engine: (half-chord)² + d² = r² — solve for any missing piece.",
+        "Converse: chord perpendicular bisectors pass through the center — two of them FIND it."
+      ],
+      "teaser": "Next: comparing chords by their distances — who sits closer, who runs longer."
+    }
+  ]
+}

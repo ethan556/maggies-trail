@@ -1,0 +1,329 @@
+{
+ "id": "pv2-03-03",
+ "slug": "front-end-estimation",
+ "title": "Front-End Estimation",
+ "courseId": "place-value-million",
+ "chapterId": "ch3-rounding-any-place",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Front-end estimation is the FASTEST way to estimate: keep only the **leading digit**, and turn every digit after it into a zero. For 42,371: keep the 4 (ten-thousands), zero the rest — **40,000.** No checking a neighbor digit, no deciding up or down. Just truncate.",
+   "figure": "pv4-front-end"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match each number to its front-end value.",
+   "conceptTag": "front-end-estimation",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each number to its front-end estimate (leading digit kept, rest zeroed).",
+    "left": [
+     {
+      "id": "n42371",
+      "label": "42,371"
+     },
+     {
+      "id": "n31842",
+      "label": "31,842"
+     },
+     {
+      "id": "n6509",
+      "label": "6,509"
+     }
+    ],
+    "right": [
+     {
+      "id": "f40000",
+      "label": "40,000"
+     },
+     {
+      "id": "f30000",
+      "label": "30,000"
+     },
+     {
+      "id": "f6000",
+      "label": "6,000"
+     }
+    ],
+    "pairs": {
+     "n42371": "f40000",
+     "n31842": "f30000",
+     "n6509": "f6000"
+    },
+    "pairErrors": [
+     {
+      "left": "n6509",
+      "right": "f30000",
+      "feedback": "30,000 belongs to 31,842. 6,509's leading digit is 6, in the thousands place — its front-end value is 6,000."
+     }
+    ],
+    "missFeedback": "Keep only the leading digit, and zero out everything after it.",
+    "successFeedback": "42,371→40,000, 31,842→30,000, 6,509→6,000 — every digit after the first becomes zero."
+   },
+   "predict": {
+    "prompt": "A front-end estimate (leading digit kept, the rest zeroed) — does it run HIGH, LOW, or either?",
+    "options": [
+     {
+      "id": "low",
+      "label": "Never above the real number"
+     },
+     {
+      "id": "high",
+      "label": "Never below it"
+     },
+     {
+      "id": "either",
+      "label": "Either side, randomly"
+     }
+    ],
+    "outcomeId": "low",
+    "reveal": "Zeroing the trailing digits only ever throws value away — the estimate can match the number but never beat it. Knowing an estimate's bias is half its usefulness."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Truncate to the leading digit.",
+   "conceptTag": "front-end-estimation",
+   "explanationVariants": [
+    "53,720's leading digit is 5, in the ten-thousands place — zeroing the rest gives 50,000.",
+    "Keep the 5, zero everything after: 50,000."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using front-end estimation, what does 53,720 become?",
+    "answer": 50000,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 53000,
+      "feedback": "53,000 keeps TWO digits. Front-end estimation keeps only the leading digit and zeros the rest: 50,000."
+     },
+     {
+      "value": 5000,
+      "feedback": "5,000 misplaces the leading digit — 53,720 has 5 digits, so its leading digit (5) sits in the TEN-THOUSANDS place: 50,000, not 5,000."
+     }
+    ],
+    "fallbackFeedback": "Keep only the very first digit, and turn every digit after it into a zero."
+   },
+   "variant": {
+    "gen": "g4-place-million",
+    "form": "pvFrontEndNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "For a SUM, front-end estimation keeps each number's leading digit, then adds those simplified numbers. It's much faster than full rounding — but it always **truncates down**, never rounding up, unlike true rounding, which can go either way.",
+   "figure": "pv4-front-end"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Front-end estimate a sum.",
+   "conceptTag": "front-end-estimation",
+   "explanationVariants": [
+    "68,412's leading digit gives 60,000; 21,955's leading digit gives 20,000; the front-end estimate is 60,000 + 20,000 = 80,000.",
+    "Keeping just each leading digit and adding: 80,000."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Using front-end estimation, what is 68,412 + 21,955 estimated as?",
+    "answer": 80000,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 90000,
+      "feedback": "90,000 is what you'd get by properly ROUNDING each number (which can round up). Front-end estimation always keeps the leading digit AS IS, never rounding it up: 60,000 + 20,000 = 80,000."
+     },
+     {
+      "value": 90367,
+      "feedback": "90,367 is the exact sum. Front-end estimation truncates each number first: 60,000 + 20,000 = 80,000."
+     }
+    ],
+    "fallbackFeedback": "Keep only each number's leading digit, zero the rest, then add."
+   },
+   "variant": {
+    "gen": "g4-place-million",
+    "form": "pvFrontEndNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Front-end vs. full rounding.",
+   "conceptTag": "front-end-estimation",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each number: does front-end estimation AGREE with true rounding (to the same place), or DISAGREE?",
+    "buckets": [
+     {
+      "id": "agree",
+      "label": "Agree",
+      "icon": "🤝"
+     },
+     {
+      "id": "disagree",
+      "label": "Disagree",
+      "icon": "⚡"
+     }
+    ],
+    "items": [
+     {
+      "id": "v31200",
+      "label": "31,200",
+      "bucketId": "agree",
+      "feedback": "Front-end gives 30,000; true rounding also gives 30,000 (the next digit, 1, is <5)."
+     },
+     {
+      "id": "v68700",
+      "label": "68,700",
+      "bucketId": "disagree",
+      "feedback": "Front-end gives 60,000; true rounding gives 70,000 (the next digit, 8, is ≥5 and rounds up)."
+     },
+     {
+      "id": "v24100",
+      "label": "24,100",
+      "bucketId": "agree",
+      "feedback": "Front-end gives 20,000; true rounding also gives 20,000 (the next digit, 4, is <5)."
+     },
+     {
+      "id": "v59400",
+      "label": "59,400",
+      "bucketId": "disagree",
+      "feedback": "Front-end gives 50,000; true rounding gives 60,000 (the next digit, 9, is ≥5 and rounds up)."
+     }
+    ],
+    "missFeedback": "Front-end always truncates down. It only matches true rounding when the next digit is less than 5.",
+    "successFeedback": "31,200 and 24,100 agree (next digit <5); 68,700 and 59,400 disagree (next digit ≥5, so true rounding climbs higher)."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Quick estimate, no rounding.",
+   "conceptTag": "front-end-estimation",
+   "explanationVariants": [
+    "47,300's leading digit gives 40,000; 52,600's leading digit gives 50,000; the front-end estimate is 40,000 + 50,000 = 90,000.",
+    "Keeping just the leading digits: 90,000."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "You want a quick rough estimate of 47,300 + 52,600 using front-end estimation. What do you get?",
+    "answer": 90000,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 99900,
+      "feedback": "99,900 is the exact sum. Front-end estimation truncates each number to its leading digit first: 40,000 + 50,000 = 90,000."
+     },
+     {
+      "value": 100000,
+      "feedback": "100,000 comes from ROUNDING the exact sum instead — a different method. Front-end truncates each original number: 40,000 + 50,000 = 90,000."
+     }
+    ],
+    "fallbackFeedback": "Truncate each number to its leading digit, then add."
+   },
+   "variant": {
+    "gen": "g4-place-million",
+    "form": "pvFrontEndNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The instant order estimate.",
+   "conceptTag": "front-end-estimation",
+   "hints": [
+    "Keep only the leading digit of 38,600: that's 30,000.",
+    "Keep only the leading digit of 24,900: that's 20,000.",
+    "Add those two front-end values."
+   ],
+   "explanationVariants": [
+    "38,600's leading digit gives 30,000; 24,900's leading digit gives 20,000; the front-end estimate is 30,000 + 20,000 = 50,000.",
+    "Truncating both numbers to their leading digits and adding gives 50,000."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Two orders cost $38,600 and $24,900. Using front-end estimation (no exact adding), what's the quick estimated total?",
+    "answer": 50000,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 63500,
+      "feedback": "63,500 is the exact sum — but front-end estimation skips exact adding entirely. Truncating first: 30,000 + 20,000 = 50,000."
+     },
+     {
+      "value": 60000,
+      "feedback": "60,000 comes from fully ROUNDING each number first (38,600 up to 40,000). Front-end estimation just truncates, never rounds up: 30,000 + 20,000 = 50,000."
+     }
+    ],
+    "fallbackFeedback": "Truncate each cost to its leading digit, then add."
+   },
+   "variant": {
+    "gen": "g4-place-million",
+    "form": "pvFrontEndNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The fastest estimate there is.",
+   "takeaways": [
+    "Front-end estimation keeps only the leading digit and zeros everything after it — no up-or-down decision needed.",
+    "It always truncates down, unlike true rounding, which can go either way.",
+    "It's the fastest estimate, but the roughest — save it for split-second decisions."
+   ],
+   "teaser": "next chapter: adding and subtracting these big numbers with full precision, using regrouping."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "front-end-estimation",
+   "concept": {
+    "id": "rem-fe-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Keep only the very first digit, and zero everything after it.** For 6,842: keep the 6 (thousands place), zero the rest — 6,000. No comparing to 5, no deciding up or down. Just truncate."
+   },
+   "check": {
+    "id": "rem-fe-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "front-end-estimation",
+    "explanationVariants": [
+     "6,842's leading digit is 6, in the thousands place: 6,000.",
+     "Keep the 6, zero the rest: 6,000."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Using front-end estimation, what does 6,842 become?",
+     "options": [
+      {
+       "id": "a",
+       "label": "6,000",
+       "correct": true,
+       "feedback": "Keep the leading digit (6), zero the rest: 6,000."
+      },
+      {
+       "id": "b",
+       "label": "7,000",
+       "feedback": "7,000 rounds up — but front-end estimation never rounds, it just truncates: 6,000."
+      },
+      {
+       "id": "c",
+       "label": "6,800",
+       "feedback": "6,800 keeps two digits. Front-end estimation keeps only the leading digit: 6,000."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

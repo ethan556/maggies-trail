@@ -1,0 +1,543 @@
+{
+  "id": "cg-04-02",
+  "slug": "true-in-the-hierarchy",
+  "title": "True in the Hierarchy",
+  "courseId": "coordinate-geometry",
+  "chapterId": "ch4-classify-shapes",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Family claims get one of three verdicts. **Always**: true of every member (\"a square is a rectangle\"). **Sometimes**: true of some, false of others — proving it takes one example AND one counterexample (\"a rectangle is a square\": an all-sides-4 rectangle yes, a 5-by-2 no). **Never**: a fact blocks every possible example.",
+      "figure": "quad-family-tree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try the middle verdict.",
+      "conceptTag": "hierarchy-logic",
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "\"A rectangle is a square.\" Always, sometimes, or never?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "rectangle",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "square",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "relation": "overlap",
+        "subjectLabel": "rectangle",
+        "predicateLabel": "square",
+        "witness": "A 4-by-4 rectangle is a square.",
+        "counterexample": "A 5-by-2 rectangle is not a square.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "Right — a rectangle with all sides 4 IS a square (example), and a 5-by-2 rectangle isn't (counterexample).",
+            "evidenceKind": "example",
+            "evidenceText": "A 4-by-4 rectangle is a square. A 5-by-2 rectangle is not a square.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "The 5-by-2 rectangle is the counterexample — its sides aren't all equal, so it's no square. Some rectangles are, some aren't.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always claim fails the required example-and-counterexample test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "An all-sides-4 rectangle is both a rectangle AND a square — one example is enough to defeat never.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The never claim fails the required example-and-counterexample test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — a rectangle with all sides 4 IS a square (example), and a 5-by-2 rectangle isn't (counterexample)."
+      },
+      "hints": [
+        "Hunt an example first, then a counterexample.",
+        "All-sides-4 rectangle? 5-by-2 rectangle?",
+        "One of each means sometimes."
+      ],
+      "explanationVariants": [
+        "One yes (4-4-4-4) and one no (5-2-5-2): sometimes.",
+        "Some rectangles are squares; most aren't."
+      ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The downward direction.",
+      "conceptTag": "hierarchy-logic",
+      "explanationVariants": [
+        "Down the tree is always.",
+        "The name's promises settle it — no member can fail."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "\"A square is a rhombus.\" Always, sometimes, or never?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "square",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "rhombus",
+            "attributes": []
+          }
+        ],
+        "edges": [
+          [
+            "predicate",
+            "subject"
+          ]
+        ],
+        "relation": "subset",
+        "subjectLabel": "square",
+        "predicateLabel": "rhombus",
+        "witness": "Every square has four equal sides.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "Right — every square has 4 equal sides, which is the whole rhombus test. No square can fail it.",
+            "evidenceKind": "path",
+            "evidenceText": "Every square has four equal sides.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "There's no counterexample to find — equal sides come guaranteed with the square's name. Down the tree, membership is always.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The sometimes claim fails the required no-counterexample test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "Quite the opposite — the square's guaranteed equal sides make it a rhombus every single time.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The never claim fails the required no-counterexample test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — every square has 4 equal sides, which is the whole rhombus test. No square can fail it."
+      },
+      "hints": [
+        "What does 'square' promise about sides?",
+        "Is the rhombus test ever failed?",
+        "Guaranteed pass → always."
+      ],
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgSquareRhombusAlways"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Never** verdicts need a **blocker** — one fact that kills every possible example. \"A trapezoid is a parallelogram\": never, because ours has exactly one parallel pair and a parallelogram needs two. \"An equilateral triangle is a right triangle\": never, because equilateral angles are locked at 60° and right demands a 90°. A blocker beats any amount of searching.",
+      "figure": "cg-never-blocker"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the blocker.",
+      "conceptTag": "hierarchy-logic",
+      "explanationVariants": [
+        "60° everywhere blocks the 90°: never.",
+        "The angle lock is the blocker."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "\"An equilateral triangle is a right triangle.\" Always, sometimes, or never?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "equilateral triangle",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "right triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "relation": "disjoint",
+        "subjectLabel": "equilateral triangle",
+        "predicateLabel": "right triangle",
+        "blocker": "Three 60° angles cannot include a 90° angle.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Never — its angles are all 60°, and right needs a 90°",
+            "claim": "never",
+            "feedback": "Right — the 60° lock is the blocker. No example can exist.",
+            "evidenceKind": "blocker",
+            "evidenceText": "Three 60° angles cannot include a 90° angle.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Sometimes — if it's drawn large enough",
+            "claim": "sometimes",
+            "feedback": "Size never changes angles — a bigger equilateral triangle still has three 60° corners. The blocker holds at every size.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The sometimes claim fails the required blocker test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "It's the reverse — not only is it not always, no equilateral triangle can EVER have the 90° a right triangle needs.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always claim fails the required blocker test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — the 60° lock is the blocker. No example can exist."
+      },
+      "hints": [
+        "What are an equilateral triangle's angles?",
+        "Does 90° fit anywhere?",
+        "A blocker means never."
+      ],
+      "variant": {
+        "gen": "attributes",
+        "form": "cgEquilateralRightNever"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Example hunt.",
+      "conceptTag": "hierarchy-logic",
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "\"An isosceles triangle is equilateral.\" Always, sometimes, or never?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "isosceles triangle",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "equilateral triangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "relation": "overlap",
+        "subjectLabel": "isosceles triangle",
+        "predicateLabel": "equilateral triangle",
+        "witness": "7, 7, 7 is both.",
+        "counterexample": "5, 5, 8 is isosceles but not equilateral.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "Right — 7, 7, 7 is isosceles AND equilateral (example); 5, 5, 8 is isosceles but not equilateral (counterexample).",
+            "evidenceKind": "example",
+            "evidenceText": "7, 7, 7 is both. 5, 5, 8 is isosceles but not equilateral.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "5, 5, 8 is the counterexample — isosceles by its pair, but the 8 blocks equilateral. Only some isosceles triangles go all the way.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always claim fails the required example-and-counterexample test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "7, 7, 7 defeats never — under our at-least-two-equal definition, every equilateral triangle is already isosceles, so examples certainly exist.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The never claim fails the required example-and-counterexample test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — 7, 7, 7 is isosceles AND equilateral (example); 5, 5, 8 is isosceles but not equilateral (counterexample)."
+      },
+      "hints": [
+        "Can you build one of each?",
+        "7, 7, 7 versus 5, 5, 8.",
+        "An example and a counterexample: sometimes."
+      ],
+      "explanationVariants": [
+        "7-7-7 yes, 5-5-8 no: sometimes.",
+        "Up the tree is only sometimes."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Definitions decide.",
+      "conceptTag": "hierarchy-logic",
+      "explanationVariants": [
+        "Two pairs is never exactly one.",
+        "Under our definition, the categories can't overlap."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "Using our definition (exactly one pair of parallel sides): \"A parallelogram is a trapezoid.\" Always, sometimes, or never?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "parallelogram",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "trapezoid (exactly one parallel pair)",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "relation": "disjoint",
+        "subjectLabel": "parallelogram",
+        "predicateLabel": "trapezoid (exactly one parallel pair)",
+        "blocker": "Two parallel pairs cannot equal exactly one pair.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Never — two parallel pairs can't be exactly one",
+            "claim": "never",
+            "feedback": "Right — the definitions conflict head-on, so no parallelogram can ever qualify. That's a blocker.",
+            "evidenceKind": "blocker",
+            "evidenceText": "Two parallel pairs cannot equal exactly one pair.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Sometimes — when it has parallel sides",
+            "claim": "sometimes",
+            "feedback": "That's the at-least-one-pair convention, which some books use. Under OUR exactly-one definition, two pairs always disqualify it: never.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The sometimes claim fails the required blocker test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "The reverse — under exactly-one-pair, a parallelogram's second parallel pair disqualifies it every time.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always claim fails the required blocker test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — the definitions conflict head-on, so no parallelogram can ever qualify. That's a blocker."
+      },
+      "hints": [
+        "Count pairs in each definition.",
+        "2 versus exactly 1.",
+        "Direct conflict → never."
+      ],
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgParallelogramTrapezoidVerdict"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The subtlest overlap.",
+      "conceptTag": "hierarchy-logic",
+      "hints": [
+        "The two branches of the tree can meet.",
+        "Which shape is in BOTH the rhombus and rectangle families?",
+        "A square says yes; a tilted rhombus says no."
+      ],
+      "explanationVariants": [
+        "A square is a rhombus that IS a rectangle; a tilted rhombus is one that isn't — sometimes.",
+        "The branches overlap exactly at the squares, so the verdict is sometimes."
+      ],
+      "widget": {
+        "type": "shapeHierarchyLab",
+        "prompt": "\"A rhombus is a rectangle.\" Always, sometimes, or never?",
+        "mode": "verdict",
+        "nodes": [
+          {
+            "id": "subject",
+            "label": "rhombus",
+            "attributes": []
+          },
+          {
+            "id": "predicate",
+            "label": "rectangle",
+            "attributes": []
+          }
+        ],
+        "edges": [],
+        "relation": "overlap",
+        "subjectLabel": "rhombus",
+        "predicateLabel": "rectangle",
+        "witness": "A square is both.",
+        "counterexample": "A tilted rhombus has no right angles.",
+        "choices": [
+          {
+            "id": "a",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "Right — a square is a rhombus that's also a rectangle (example); a tilted rhombus has no right angles (counterexample).",
+            "evidenceKind": "example",
+            "evidenceText": "A square is both. A tilted rhombus has no right angles.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "b",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "The square defeats never — it belongs to BOTH families at once. The two branches meet exactly there.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The never claim fails the required example-and-counterexample test.",
+            "highlightNodeIds": []
+          },
+          {
+            "id": "c",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "A tilted rhombus is the counterexample — equal sides, zero right angles. Only the square-shaped rhombuses are rectangles.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "The always claim fails the required example-and-counterexample test.",
+            "highlightNodeIds": []
+          }
+        ],
+        "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+        "successFeedback": "Right — a square is a rhombus that's also a rectangle (example); a tilted rhombus has no right angles (counterexample)."
+      },
+      "variant": {
+        "gen": "shape-hierarchy",
+        "form": "cgRhombusRectangleSometimes"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Three verdicts, one tree.",
+      "takeaways": [
+        "Always: down the tree, guaranteed by the name's promises.",
+        "Sometimes: prove it with one example AND one counterexample.",
+        "Never: find the blocker — one fact that kills every example."
+      ],
+      "teaser": "course complete — the coordinate plane mapped and every shape family in its place."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "hierarchy-logic",
+      "concept": {
+        "id": "rem-hl-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Test a claim by hunting.** Find one example that fits — if none can exist because a fact blocks them, the verdict is never. Find a counterexample too — if you have one of each, it's sometimes. If no counterexample can exist, it's always."
+      },
+      "check": {
+        "id": "rem-hl-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "hierarchy-logic",
+        "explanationVariants": [
+          "Every square inherits two parallel pairs, so the verdict is always.",
+          "Down the tree — squares can't fail the parallelogram test."
+        ],
+        "widget": {
+          "type": "shapeHierarchyLab",
+          "prompt": "\"A square is a parallelogram.\" Always, sometimes, or never?",
+          "mode": "verdict",
+          "nodes": [
+            {
+              "id": "subject",
+              "label": "square",
+              "attributes": []
+            },
+            {
+              "id": "predicate",
+              "label": "parallelogram",
+              "attributes": []
+            }
+          ],
+          "edges": [
+            [
+              "predicate",
+              "subject"
+            ]
+          ],
+          "relation": "subset",
+          "subjectLabel": "square",
+          "predicateLabel": "parallelogram",
+          "witness": "Every square has two parallel pairs.",
+          "choices": [
+            {
+              "id": "a",
+              "label": "Always",
+              "claim": "always",
+              "feedback": "Right — every square inherits two parallel pairs from its family chain. No counterexample can exist.",
+              "evidenceKind": "path",
+              "evidenceText": "Every square has two parallel pairs.",
+              "highlightNodeIds": []
+            },
+            {
+              "id": "b",
+              "label": "Sometimes",
+              "claim": "sometimes",
+              "feedback": "There's no square that fails — the parallel pairs come guaranteed with the name. Down the tree means always.",
+              "evidenceKind": "counterexample",
+              "evidenceText": "The sometimes claim fails the required no-counterexample test.",
+              "highlightNodeIds": []
+            },
+            {
+              "id": "c",
+              "label": "Never",
+              "claim": "never",
+              "feedback": "The opposite — every single square passes the parallelogram test by inheritance.",
+              "evidenceKind": "counterexample",
+              "evidenceText": "The never claim fails the required no-counterexample test.",
+              "highlightNodeIds": []
+            }
+          ],
+          "fallbackFeedback": "Use the family path, fixed triangle givens, or the required example, counterexample, or blocker evidence.",
+          "successFeedback": "Right — every square inherits two parallel pairs from its family chain. No counterexample can exist."
+        }
+      }
+    }
+  ]
+}

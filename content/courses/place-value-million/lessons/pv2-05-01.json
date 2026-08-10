@@ -1,0 +1,347 @@
+{
+  "id": "pv2-05-01",
+  "slug": "comparing-big-numbers",
+  "title": "Comparing Big Numbers",
+  "courseId": "place-value-million",
+  "chapterId": "ch5-comparing-ordering",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "To compare two numbers, **count the digits first.** More digits means a bigger number — each extra digit is a whole new rung on the ladder. 428,619 (6 digits) beats 98,750 (5 digits) automatically, no matter what the actual digits say.",
+      "figure": "pv4-compare"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compare by position, not by digit-counting.",
+      "widget": {
+        "type": "numberLinePlace",
+        "min": 3000000,
+        "max": 4000000,
+        "step": 10000,
+        "tickStep": 100000,
+        "target": 3450000,
+        "start": 3000000,
+        "prompt": "Place 3,450,000 on the line between three million and four million.",
+        "successFeedback": "Just under halfway. Every number with the same number of digits still has a place on this line, and the leftmost digits that differ decide the order — exactly what you see on the line.",
+        "lowFeedback": "Your marker is below 3,450,000.",
+        "highFeedback": "Your marker is above 3,450,000."
+      },
+      "predict": {
+        "prompt": "Before you place it: is 3450000 closer to 3000000 or to 4000000?",
+        "options": [
+          {
+            "id": "min",
+            "label": "Closer to 3000000"
+          },
+          {
+            "id": "max",
+            "label": "Closer to 4000000"
+          },
+          {
+            "id": "half",
+            "label": "Exactly halfway"
+          }
+        ],
+        "outcomeId": "min",
+        "reveal": "3450000 sits 450000 from 3000000 and 550000 from 4000000 — the 3000000 side wins. Judging position from the endpoints first makes the exact placement easier to defend."
+      },
+      "conceptTag": "compare-big-numbers",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents compare big numbers.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for compare big numbers must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines compare big numbers."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "place-value-million:compare-big-numbers",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The nines trap.",
+      "conceptTag": "compare-big-numbers",
+      "explanationVariants": [
+        "1,000,000 has 7 digits; 999,999 has only 6. Digit count settles it, even though every digit in 999,999 is the biggest single digit there is.",
+        "More digits always wins, regardless of how large the individual digits look."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which is bigger: 999,999 or 1,000,000?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1,000,000 — it has 7 digits, one more than 999,999's 6",
+            "correct": true,
+            "feedback": "Digit count decides it: 7 digits beats 6, no matter how the individual digits compare."
+          },
+          {
+            "id": "b",
+            "label": "999,999 — every digit is a 9, the biggest single digit",
+            "feedback": "Big-looking digits don't override digit COUNT. 1,000,000 has one more digit, so it wins."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "They differ by exactly 1. 1,000,000 is bigger — its extra digit settles the comparison."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without subtracting",
+            "feedback": "Digit count alone tells you: 1,000,000 (7 digits) beats 999,999 (6 digits) — no subtraction needed."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvCompareBigMcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When digit counts are EQUAL, compare place by place, starting from the **leftmost** (highest) place. The first place where the digits differ decides the whole comparison — whatever's further right doesn't matter anymore.",
+      "figure": "pv4-compare"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find the deciding place.",
+      "conceptTag": "compare-big-numbers",
+      "explanationVariants": [
+        "428,619 and 425,983 match in the hundred-thousands and ten-thousands places; the thousands place (8 vs 5) is the first difference, and 8 wins.",
+        "Once the thousands place differs, nothing further right can change the outcome."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Compare 428,619 and 425,983 (same number of digits). Which is bigger, and why?",
+        "options": [
+          {
+            "id": "a",
+            "label": "428,619 — they match until the thousands place, where 8 beats 5",
+            "correct": true,
+            "feedback": "The first difference (thousands: 8 vs 5) decides it, before checking anything further right."
+          },
+          {
+            "id": "b",
+            "label": "425,983 — it has a 9 in it, and 9 is the biggest single digit",
+            "feedback": "A bigger digit further RIGHT doesn't matter once an earlier place already differs. The thousands place (8 vs 5) already decided this in 428,619's favor."
+          },
+          {
+            "id": "c",
+            "label": "428,619 — because it's listed first",
+            "feedback": "Order of listing means nothing. The thousands place (8 vs 5) is what actually decides it."
+          },
+          {
+            "id": "d",
+            "label": "They're equal, since both start with 42",
+            "feedback": "Matching so far isn't the same as equal — keep comparing. The thousands place (8 vs 5) breaks the tie."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvCompareBigMcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match each pair to its deciding place.",
+      "conceptTag": "compare-big-numbers",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each comparison to the place value that decides it.",
+        "left": [
+          {
+            "id": "m1",
+            "label": "512,340 vs. 512,890"
+          },
+          {
+            "id": "m2",
+            "label": "673,201 vs. 682,199"
+          },
+          {
+            "id": "m3",
+            "label": "340,501 vs. 340,500"
+          }
+        ],
+        "right": [
+          {
+            "id": "d1",
+            "label": "decided by hundreds (3 vs 8)"
+          },
+          {
+            "id": "d2",
+            "label": "decided by ten-thousands (7 vs 8)"
+          },
+          {
+            "id": "d3",
+            "label": "decided by ones (1 vs 0)"
+          }
+        ],
+        "pairs": {
+          "m1": "d1",
+          "m2": "d2",
+          "m3": "d3"
+        },
+        "pairErrors": [
+          {
+            "left": "m3",
+            "right": "d1",
+            "feedback": "340,501 and 340,500 match all the way through hundreds — they only differ in the very last digit, the ones place."
+          }
+        ],
+        "missFeedback": "Find the first place, reading left to right, where the two numbers' digits differ.",
+        "successFeedback": "Hundreds, ten-thousands, and ones — three different deciding places, each one the FIRST difference reading left to right."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Don't skip the digit count.",
+      "conceptTag": "compare-big-numbers",
+      "explanationVariants": [
+        "876,540 has 6 digits; 87,654 has only 5. Even though both start with 8-7-6, the digit count settles it before any place-by-place comparison is needed.",
+        "Matching leading digits can trick you into forgetting to check digit count first."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Compare 87,654 and 876,540. Which is bigger?",
+        "options": [
+          {
+            "id": "a",
+            "label": "876,540 — it has 6 digits, one more than 87,654's 5",
+            "correct": true,
+            "feedback": "Digit count settles it immediately, even though both numbers happen to start with the same 8-7-6."
+          },
+          {
+            "id": "b",
+            "label": "87,654 — it's greater when you line up matching digits",
+            "feedback": "Lining up the wrong way skips the digit-count check. 876,540 has one more digit and wins outright."
+          },
+          {
+            "id": "c",
+            "label": "They're equal, since both start with 8-7-6",
+            "feedback": "Matching leading digits isn't equality. Checking digit count first shows 876,540 (6 digits) beats 87,654 (5 digits)."
+          },
+          {
+            "id": "d",
+            "label": "Numbers with different lengths can't be compared",
+            "feedback": "They can — that's exactly what the digit-count rule is for. 876,540 (6 digits) beats 87,654 (5 digits)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvCompareBigMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The two cities.",
+      "conceptTag": "compare-big-numbers",
+      "hints": [
+        "Compare digit counts first — City A's number has one more digit.",
+        "Find the exact difference: 340,872 − 89,999.",
+        "Round that difference to the nearest ten-thousand."
+      ],
+      "explanationVariants": [
+        "City A (340,872, 6 digits) beats City B (89,999, 5 digits) on digit count alone. The exact difference is 250,873, which rounds down to 250,000 (its thousands digit, 0, is less than 5).",
+        "340,872 − 89,999 = 250,873, rounding to 250,000."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "City A has 340,872 people. City B has 89,999 people. City A has more people. About how many more, rounded to the nearest ten-thousand?",
+        "answer": 250000,
+        "tolerance": 0,
+        "unit": "people",
+        "commonErrors": [
+          {
+            "value": 250873,
+            "feedback": "250,873 is the exact difference, not yet rounded. Its thousands digit (0) is less than 5, so it rounds down to 250,000."
+          },
+          {
+            "value": 260000,
+            "feedback": "260,000 checked the wrong neighbor digit. Rounding to the nearest ten-thousand checks the THOUSANDS digit (0, which is <5), giving 250,000."
+          }
+        ],
+        "fallbackFeedback": "Subtract exactly (340,872 − 89,999 = 250,873), then round to the nearest ten-thousand."
+      },
+      "variant": {
+        "gen": "g4-place-million",
+        "form": "pvCompareBigNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Bigger, decided in order.",
+      "takeaways": [
+        "Count digits first — more digits (almost) always wins.",
+        "When digit counts match, compare place by place from the LEFT, stopping at the first difference.",
+        "A bigger digit further right never overrides an earlier difference."
+      ],
+      "teaser": "next: ordering a whole list of big numbers using this same rule, repeated."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "compare-big-numbers",
+      "concept": {
+        "id": "rem-cb-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Count the digits first.** 5,200 (4 digits) is bigger than 999 (3 digits), even though 999 looks like 'a lot of 9s.' Only when digit counts match do you compare place by place, from the left."
+      },
+      "check": {
+        "id": "rem-cb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "compare-big-numbers",
+        "explanationVariants": [
+          "5,200 has 4 digits; 999 has only 3. More digits wins.",
+          "Digit count alone decides this one."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which is bigger: 999 or 5,200?",
+          "options": [
+            {
+              "id": "a",
+              "label": "5,200 — it has 4 digits, one more than 999's 3",
+              "correct": true,
+              "feedback": "More digits wins: 5,200 beats 999."
+            },
+            {
+              "id": "b",
+              "label": "999 — it's all 9s, the biggest digit",
+              "feedback": "Big-looking digits don't override digit count. 5,200 has one more digit and wins."
+            },
+            {
+              "id": "c",
+              "label": "They're equal",
+              "feedback": "They aren't close — 5,200 has a whole extra digit, making it much bigger than 999."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

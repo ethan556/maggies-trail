@@ -1,0 +1,278 @@
+{
+  "id": "ia-04-01",
+  "slug": "motion-revisited",
+  "title": "Motion Revisited: ∫v and ∫|v|",
+  "courseId": "integration-applications",
+  "chapterId": "ch4-motion-revisited",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "In C2 you split a journey into legs by hand, measured each one, and added the lengths as positive numbers. That was hard work.\n\nHere is the machine that does it:\n\n**Displacement = ∫ₐᵇ v dt** — where you ended up.\n**Total distance = ∫ₐᵇ |v| dt** — every metre you actually covered.\n\nThe absolute value does *exactly* the leg-splitting you did by hand. It was never a different idea; it was the same idea, automated.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Displacement is the easy one.",
+      "conceptTag": "ia-motion",
+      "explanationVariants": [
+        "An antiderivative of t² − 4t + 3 is t³/3 − 2t² + 3t. At 4 it is 64/3 − 32 + 12 = 4/3; at 0 it is 0. So the displacement is 4/3 ≈ 1.333.",
+        "The signed integral does not care about the backtracking — that is precisely what makes it displacement rather than distance."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "v(t) = t² − 4t + 3 on [0, 4]. Find the DISPLACEMENT, to three decimals.",
+        "answer": 1.333,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That is the TOTAL DISTANCE. The displacement is the SIGNED integral, and the backward stretch cancels part of the forward: 4/3 ≈ 1.333."
+          },
+          {
+            "value": 0,
+            "feedback": "Check the antiderivative at 4: 64/3 − 32 + 12 = 4/3, not 0. (It IS 0 at t = 3, which is a different time.)"
+          },
+          {
+            "value": 21.333,
+            "feedback": "That is 64/3 — you evaluated t³/3 alone and dropped the −2t² + 3t."
+          }
+        ],
+        "fallbackFeedback": "F(t) = t³/3 − 2t² + 3t → F(4) − F(0) = 4/3 ≈ 1.333."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-motion__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The signed area, seen.",
+      "widget": {
+        "type": "accumulateArea",
+        "fn": "shifted",
+        "mode": "point",
+        "targetArea": 0,
+        "targetX": 2,
+        "start": 0,
+        "prompt": "A velocity that starts NEGATIVE and turns positive. Drag to the instant where the accumulated displacement stops falling.",
+        "successFeedback": "At the moment v crosses zero, the accumulation is flat — the particle has stopped reversing and is about to go forward again. Before it, the area under v was BELOW the axis and counted negative; after it, positive. That signed accounting IS displacement, and the total distance is what you get by refusing to let any of it count negative.",
+        "lowFeedback": "v is still negative here, so the displacement is still falling. Keep going right.",
+        "highFeedback": "Past the crossing — v has turned positive and the displacement is climbing again. Come back left."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move an upper bound and coordinate accumulated area with the integrand's current value.",
+        "invariants": [
+          "accumulation-changes-at-integrand-rate",
+          "signed-area-can-decrease"
+        ],
+        "misconceptions": [
+          "integral-is-always-positive-area",
+          "accumulation-graph-copies-integrand"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-applications-accumulateArea",
+        "delayed": false
+      },
+      "conceptTag": "ia-motion",
+      "predict": {
+        "prompt": "The velocity starts negative and later turns positive. The accumulated displacement stops falling at the instant when…",
+        "options": [
+          {
+            "id": "zero",
+            "label": "The velocity reaches zero"
+          },
+          {
+            "id": "min",
+            "label": "The velocity is at its most negative"
+          },
+          {
+            "id": "back",
+            "label": "The object gets back to where it started"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "When v hits zero. Displacement falls exactly while v is negative, so the turn is where v crosses the axis — not where the object happens to return, and not where it is moving fastest backwards. That crossing is also the moment displacement and total distance stop agreeing."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Where to split.",
+      "conceptTag": "ia-motion",
+      "explanationVariants": [
+        "|v| changes formula wherever v changes SIGN. v = (t − 1)(t − 3) is zero at t = 1 and t = 3, so [0, 4] splits into three pieces.",
+        "You cannot integrate |v| in one go — you must find the sign changes first, exactly as you found the turning points by hand in C2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "v(t) = (t − 1)(t − 3). To compute ∫₀⁴ |v| dt, into how many pieces must the interval be split?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "v changes sign TWICE — at t = 1 and at t = 3 — which cuts [0, 4] into three pieces: [0,1], [1,3] and [3,4]."
+          },
+          {
+            "value": 1,
+            "feedback": "|v| has a different formula on each stretch where v has a different sign, and there are three such stretches."
+          },
+          {
+            "value": 4,
+            "feedback": "Two sign changes make three pieces, not four."
+          }
+        ],
+        "fallbackFeedback": "v changes sign at t = 1 and t = 3, giving three pieces."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-motion__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the recipe for total distance is exactly the hand method, written down:\n\n**Find where v = 0 and changes sign.** (the turns)\n**Integrate v on each piece.**\n**Add the ABSOLUTE VALUES.**\n\nAnd that is why ∫|v| is not a strange new integral — it is three ordinary integrals with the minus signs stripped off.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Add the magnitudes.",
+      "conceptTag": "ia-motion",
+      "explanationVariants": [
+        "The three pieces give 4/3, −4/3 and 4/3. Taking absolute values: 4/3 + 4/3 + 4/3 = 4.",
+        "The middle leg is negative — the particle was reversing — and stripping its sign is what turns displacement into distance."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The three legs of ∫v dt come out as 4/3, −4/3 and 4/3. Find the TOTAL DISTANCE travelled.",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1.333,
+            "feedback": "That is the DISPLACEMENT: 4/3 − 4/3 + 4/3 = 4/3, with the signs left in. Distance strips them: 4/3 + 4/3 + 4/3 = 4."
+          },
+          {
+            "value": 0,
+            "feedback": "The legs cancel only if you keep the signs. Total distance takes the ABSOLUTE VALUE of each: 4."
+          },
+          {
+            "value": 2.667,
+            "feedback": "That is two legs' worth. There are three, each of magnitude 4/3, so the total is 4."
+          }
+        ],
+        "fallbackFeedback": "|4/3| + |−4/3| + |4/3| = 4."
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-motion__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both answers, one integral each.",
+      "conceptTag": "ia-motion",
+      "hints": [
+        "Average VELOCITY is displacement ÷ elapsed time. Average SPEED is total distance ÷ elapsed time.",
+        "The displacement is 4/3 and the total distance is 4, over 4 seconds.",
+        "So the two averages are (4/3)/4 and 4/4 — and they are wildly different."
+      ],
+      "explanationVariants": [
+        "Average speed = 4/4 = 1, while average velocity = (4/3)/4 = 1/3. The particle covered ground three times faster than it made progress.",
+        "That gap is the whole distinction: velocity is about where you ended up; speed is about how hard you worked."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Displacement 4/3, total distance 4, over 4 seconds. Find the AVERAGE SPEED.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0.333,
+            "feedback": "That is the average VELOCITY: displacement ÷ time = (4/3)/4 = 1/3. Average SPEED uses the distance: 4/4 = 1."
+          },
+          {
+            "value": 4,
+            "feedback": "That is the total distance. Divide by the elapsed time, 4 seconds."
+          },
+          {
+            "value": 1.333,
+            "feedback": "That is the displacement itself. Average speed = distance ÷ time = 4/4 = 1."
+          }
+        ],
+        "fallbackFeedback": "Average speed = total distance ÷ time = 4/4 = 1. (Average velocity is only 1/3 — the particle covered ground three times faster than it made progress.)"
+      },
+      "variant": {
+        "gen": "g13-integration-applications",
+        "form": "integration-applications__ia-motion__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The absolute value does the leg-splitting.",
+      "takeaways": [
+        "Displacement = ∫v dt. Total distance = ∫|v| dt.",
+        "To compute ∫|v|, find where v changes sign, integrate on each piece, and add the MAGNITUDES.",
+        "It is not a new idea — it is the hand method from C2, written as a machine."
+      ],
+      "teaser": "That is what the integral is FOR. Next course: differential equations, where the rate is all you are given."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ia-motion",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Two questions, two integrals. **Where did it end up?** — integrate v, signs and all. **How far did it travel?** — integrate |v|, which means splitting at the sign changes and adding the magnitudes.",
+        "figure": "dr-derivative-as-function"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which integral?",
+        "conceptTag": "ia-motion",
+        "explanationVariants": [
+          "Total distance counts every metre, forwards and backwards, so it needs ∫|v| dt.",
+          "The plain ∫v would let the backtracking cancel."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which integral gives the TOTAL DISTANCE travelled?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "∫|v| dt",
+              "correct": true,
+              "feedback": "Right — the absolute value stops the backward stretches from cancelling the forward ones."
+            },
+            {
+              "id": "o2",
+              "label": "∫v dt",
+              "correct": false,
+              "feedback": "That is the DISPLACEMENT. Backward travel subtracts from it, which is exactly what distance must not allow."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

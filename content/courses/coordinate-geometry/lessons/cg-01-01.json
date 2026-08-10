@@ -1,0 +1,341 @@
+{
+  "id": "cg-01-01",
+  "slug": "the-coordinate-plane",
+  "title": "The Coordinate Plane",
+  "courseId": "coordinate-geometry",
+  "chapterId": "ch1-coordinate-plane",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The **coordinate plane** is two number lines crossed at a point called the **origin**. The **x-axis** runs to the right; the **y-axis** runs up. Every point gets an address called an **ordered pair (x, y)**: first how far **right** from the origin, then how far **up**. The point (3, 2) sits 3 right and 2 up.",
+      "figure": "coordinate-plane"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "An address, not a pair of numbers.",
+      "widget": {
+        "type": "plotPoint",
+        "cols": 8,
+        "rows": 8,
+        "targets": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "prompt": "Plot the point 3 across and 5 up.",
+        "successFeedback": "(3, 5). The order is not a convention to memorise — it is the difference between two different places on the grid. Across first, then up.",
+        "missFeedback": "Not there. Count 3 columns across from the corner, then 5 rows up."
+      },
+      "predict": {
+        "prompt": "You'll go 3 across and 5 up. Would 5 across and 3 up reach the same spot?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a different spot"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — the same spot"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Across and up are different directions — trading their numbers lands you somewhere else entirely. The order IS the address."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Construct the ordered pair through horizontal and vertical movement and explain the axis roles.",
+        "predictionId": "g5-coordinate-transformations-prediction",
+        "invariants": [
+          "ordered-pair-axis-meaning"
+        ],
+        "misconceptions": [
+          "xy-reversal",
+          "axis-order-confusion"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "graph",
+        "fadeLevel": 1,
+        "transferFamily": "unfamiliar-quadrant-or-shape",
+        "delayed": true,
+        "counterfactualPrompt": "Swap the coordinates. Which movement changes first, and where does the point go?",
+        "explanation": {
+          "prompt": "Why does coordinate order matter?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "The first number controls horizontal position and the second controls vertical position.",
+              "correct": true,
+              "feedback": "Exactly. Axis roles make an ordered pair directional, not interchangeable."
+            },
+            {
+              "id": "surface",
+              "label": "Coordinates can be swapped because they use the same two numbers.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Axis roles make an ordered pair directional, not interchangeable."
+            }
+          ]
+        }
+      },
+      "conceptTag": "coord-read"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The starting point itself.",
+      "conceptTag": "coord-read",
+      "explanationVariants": [
+        "The origin is (0, 0).",
+        "Zero in both slots names the crossing."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Which ordered pair names the origin, where the two axes cross?",
+        "answer": [
+          0,
+          0
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              1,
+              1
+            ],
+            "feedback": "(1, 1) is 1 right and 1 up — one step away from the crossing. The origin itself is (0, 0)."
+          },
+          {
+            "values": [
+              0,
+              1
+            ],
+            "feedback": "(0, 1) is on the y-axis, 1 up. The crossing point has both distances 0: (0, 0)."
+          }
+        ],
+        "fallbackFeedback": "The origin is where both axes cross — zero along x AND zero along y.",
+        "successFeedback": "Right — the origin is 0 right and 0 up: (0, 0)."
+      },
+      "hints": [
+        "How far right is the crossing from itself?",
+        "Zero right, zero up.",
+        "(0, 0)."
+      ],
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "cgOrigin"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Order matters.** (2, 5) and (5, 2) are different points — like an address where the street number and the floor got swapped. The first number always travels along the x-axis (right), the second always climbs the y-axis (up). Walk the street first, then take the elevator.",
+      "figure": "cg-order-matters"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Two pairs, same digits.",
+      "conceptTag": "coord-read",
+      "explanationVariants": [
+        "(5, 2): right 5, up 2.",
+        "First slot right, second slot up."
+      ],
+      "widget": {
+        "type": "pointEntry",
+        "prompt": "Which ordered pair names the point 5 units right and 2 units up from the origin?",
+        "answer": [
+          5,
+          2
+        ],
+        "delimiter": "paren",
+        "commonEntries": [
+          {
+            "values": [
+              2,
+              5
+            ],
+            "feedback": "(2, 5) swaps the slots — that point is 2 right and 5 up, a different spot."
+          },
+          {
+            "values": [
+              5,
+              5
+            ],
+            "feedback": "(5, 5) repeats the right-distance. The up-distance is 2: (5, 2)."
+          }
+        ],
+        "fallbackFeedback": "Count the x-move first (5 right), then the y-move (2 up): (x, y) order.",
+        "successFeedback": "Right — 5 right fills the first slot, 2 up fills the second."
+      },
+      "hints": [
+        "Right-distance first.",
+        "5 goes in the first slot.",
+        "(5, 2)."
+      ],
+      "variant": {
+        "gen": "coordinate-plot"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Pull one number out.",
+      "conceptTag": "coord-read",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A point sits at (6, 3). How many units RIGHT of the origin is it?",
+        "answer": 6,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the second number — the up-distance. The right-distance is the first number: 6."
+          },
+          {
+            "value": 9,
+            "feedback": "9 adds the two numbers. Each slot is its own distance; right is the first: 6."
+          }
+        ],
+        "fallbackFeedback": "In (6, 3), the first number is the right-distance: 6."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Now the other slot.",
+      "conceptTag": "coord-read",
+      "explanationVariants": [
+        "The y-coordinate is the up-distance: 7.",
+        "In (4, 7) the second slot holds the climb: y = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A point is 4 units right and 7 units up. What is its y-coordinate?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the x-coordinate — the right-distance. The y-coordinate is the up-distance: 7."
+          },
+          {
+            "value": 11,
+            "feedback": "11 adds both distances. The y-coordinate is just the up part: 7."
+          }
+        ],
+        "fallbackFeedback": "Up-distance = y-coordinate = 7; the pair is (4, 7)."
+      },
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "cgYCoordinate"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two points, one x.",
+      "conceptTag": "coord-read",
+      "hints": [
+        "Compare the pairs slot by slot.",
+        "Both are 3 right; the up-distances differ.",
+        "Same right-distance means stacked vertically."
+      ],
+      "explanationVariants": [
+        "Both points are 3 right, at heights 6 and 1 — one directly above the other.",
+        "Equal x-coordinates put P and Q on the same vertical line."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Point P is at (3, 6) and point Q is at (3, 1). What is true about P and Q?",
+        "options": [
+          {
+            "id": "a",
+            "label": "They line up vertically — same distance right, different heights",
+            "correct": true,
+            "feedback": "Right — both sit 3 right, so P is directly above Q."
+          },
+          {
+            "id": "b",
+            "label": "They line up horizontally — same height, different distances right",
+            "feedback": "Their heights are 6 and 1 — different. It's the right-distance (3) they share, so the line-up is vertical."
+          },
+          {
+            "id": "c",
+            "label": "They are the same point",
+            "feedback": "Same x, but the y-coordinates differ (6 vs 1) — two different points, stacked vertically."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "coordinate-plot",
+        "form": "cgVerticalAlignment"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Right, then up.",
+      "takeaways": [
+        "An ordered pair (x, y) means x right, then y up from the origin (0, 0).",
+        "Order matters: (2, 5) and (5, 2) are different points.",
+        "Sharing an x stacks points vertically; sharing a y lines them up sideways."
+      ],
+      "teaser": "next: you place the points on the grid yourself."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "coord-read",
+      "concept": {
+        "id": "rem-cr-c",
+        "kind": "concept",
+        "body": "Quick rewind. **(x, y) reads right-then-up.** Start at the origin. The first number says how far right to go; the second says how far up. So (3, 1) is 3 right, 1 up — always in that order."
+      },
+      "check": {
+        "id": "rem-cr-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "coord-read",
+        "explanationVariants": [
+          "3 right and 1 up is (3, 1).",
+          "x = 3 first, y = 1 second."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Which pair names the point 3 units right and 1 unit up?",
+          "options": [
+            {
+              "id": "a",
+              "label": "(3, 1)",
+              "correct": true,
+              "feedback": "Right — 3 right, 1 up: (3, 1)."
+            },
+            {
+              "id": "b",
+              "label": "(1, 3)",
+              "feedback": "(1, 3) swaps the slots. Right comes first: (3, 1)."
+            },
+            {
+              "id": "c",
+              "label": "(3, 3)",
+              "feedback": "(3, 3) repeats the 3. The up-distance is 1: (3, 1)."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

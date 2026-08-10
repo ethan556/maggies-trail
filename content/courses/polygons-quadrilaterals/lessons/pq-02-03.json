@@ -1,0 +1,307 @@
+{
+ "id": "pq-02-03",
+ "slug": "diagonals-bisect",
+ "title": "The Diagonals Bisect Each Other",
+ "courseId": "polygons-quadrilaterals",
+ "chapterId": "ch2-parallelogram-properties",
+ "minutes": 9,
+ "remedials": [
+  {
+   "conceptTag": "pq-para-diagonals",
+   "concept": {
+    "id": "rem-pq-para-diagonals-c",
+    "kind": "concept",
+    "body": "In every parallelogram the diagonals bisect EACH OTHER: their crossing point O is the midpoint of both, so AO = OC and BO = OD. That's the only universal diagonal property — equal diagonals (rectangle), perpendicular diagonals (rhombus), and angle-bisecting diagonals (rhombus) are upgrades that general parallelograms don't carry."
+   },
+   "check": {
+    "id": "rem-pq-para-diagonals-k",
+    "kind": "check",
+    "body": "Midpoint arithmetic.",
+    "conceptTag": "pq-para-diagonals",
+    "explanationVariants": [
+     "O is the midpoint of BD: OD = BO = 11, and BD = 22.",
+     "The halves of one diagonal match: OD = 11."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "Diagonals meet at O; BO = 11. Find OD.",
+     "answer": 11,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 22,
+       "feedback": "22 is the FULL diagonal BD. OD is the other half, equal to BO: 11."
+      },
+      {
+       "value": 5.5,
+       "feedback": "5.5 halves the half — BO is already a half. Its partner OD matches it: 11."
+      }
+     ],
+     "fallbackFeedback": "OD = BO = 11."
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Draw BOTH diagonals and mark their crossing point O. Alternate interior angles plus the opposite sides we've already proved congruent make the small triangles across O congruent (ASA) — and CPCTC lands the third jewel: **the diagonals bisect each other.** Each diagonal cuts the other exactly in half at O.",
+   "figure": "pq-diagonals-bisect"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "What bisect buys.",
+   "widget": {
+    "type": "coordinateProofLab",
+    "prompt": "Turn on 'Inspect midpoints' and watch the two diagonal midpoints. Move D until ABCD is a parallelogram, and see what the two dots do when it becomes one.",
+    "fixed": [
+     [
+      1,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "target": [
+     3,
+     5
+    ],
+    "start": [
+     6,
+     4
+    ],
+    "targetClaim": "parallelogram",
+    "gridMin": 0,
+    "gridMax": 10,
+    "requiredEvidence": [
+     "midpoints"
+    ],
+    "requiredMoves": 3,
+    "successFeedback": "The two dots have landed on each other at (5, 3). That single point is what 'the diagonals bisect each other' buys you: the midpoint of AC and the midpoint of BD are not merely close, they are the same point, so each diagonal cuts the other into two equal halves.",
+    "positionFeedback": "D is not at (3, 5) yet, and the two midpoint dots are still apart. Two separate dots means each diagonal is cutting the other somewhere off-centre — which is exactly what bisection rules out.",
+    "evidenceFeedback": "Turn on 'Inspect midpoints' and move D a few times before checking. One position is not evidence: the claim is that the dots merge for a parallelogram and separate for everything else, and you have to see both halves of that."
+   },
+   "predict": {
+    "prompt": "In a parallelogram, the midpoint of diagonal AC and the midpoint of diagonal BD are…",
+    "options": [
+     {
+      "id": "same",
+      "label": "The same point"
+     },
+     {
+      "id": "near",
+      "label": "Close together, but generally different points"
+     },
+     {
+      "id": "ends",
+      "label": "At opposite ends of the shape"
+     }
+    ],
+    "outcomeId": "same",
+    "reveal": "The same point. That is what makes 'bisect each other' a single fact rather than two: one crossing point that is simultaneously the middle of both diagonals, giving AO = OC and BO = OD in one stroke."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Half a diagonal.",
+   "conceptTag": "pq-para-diagonals",
+   "explanationVariants": [
+    "O is AC's midpoint: AO = 18/2 = 9.",
+    "The other diagonal halves AC at O: 9."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Diagonal AC of a parallelogram measures 18, meeting BD at O. Find AO.",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 18,
+      "feedback": "18 is the WHOLE diagonal — O sits at its midpoint, so AO is half: 9."
+     },
+     {
+      "value": 36,
+      "feedback": "36 doubles it — backwards. From whole to half: 18/2 = 9."
+     }
+    ],
+    "fallbackFeedback": "AO = 18/2 = 9."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-diagonals__numeric"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Half to whole.",
+   "conceptTag": "pq-para-diagonals",
+   "explanationVariants": [
+    "O is BD's midpoint too: BD = 2 × BO = 14.",
+    "The halves match (BO = OD = 7), so the whole is 14."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "In the same parallelogram, BO = 7. Find the full diagonal BD.",
+    "answer": 14,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 7,
+      "feedback": "7 is only the HALF from B to O — the diagonal continues equally beyond: BD = 14."
+     },
+     {
+      "value": 28,
+      "feedback": "28 doubles the whole — BO is a half, so one doubling suffices: 2 × 7 = 14."
+     }
+    ],
+    "fallbackFeedback": "BD = 2 × 7 = 14."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-diagonals__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Keep the guarantees straight, because the specials will blur them: a general parallelogram's diagonals **need not be equal** (that's the rectangle's badge), **need not be perpendicular**, and **need not bisect the corner angles** (both are the rhombus's badges). The one universal diagonal fact is the mutual halving.",
+   "figure": "pq-keep-straight"
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Guarantee or bonus?",
+   "conceptTag": "pq-para-diagonals",
+   "explanationVariants": [
+    "Only the mutual bisection is universal; equal length and perpendicularity are special-parallelogram upgrades.",
+    "Every parallelogram halves its diagonals at the crossing; rectangles and rhombi add extra perks."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which diagonal property holds in EVERY parallelogram?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "They bisect each other",
+      "correct": true,
+      "feedback": "The four-small-triangles ASA argument works in every parallelogram — mutual halving is universal."
+     },
+     {
+      "id": "o2",
+      "label": "They are equal in length",
+      "correct": false,
+      "feedback": "Equal diagonals is the RECTANGLE's signature — skew a rectangle and one diagonal stretches while the other shrinks."
+     },
+     {
+      "id": "o3",
+      "label": "They are perpendicular",
+      "correct": false,
+      "feedback": "Perpendicular diagonals mark the RHOMBUS. A long, low parallelogram crosses its diagonals at a shallow angle."
+     },
+     {
+      "id": "o4",
+      "label": "They bisect the corner angles",
+      "correct": false,
+      "feedback": "Angle-bisecting diagonals also belong to the RHOMBUS. The universal fact is that each diagonal halves the other."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-diagonals__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Set up the equation.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "AO = 2x + 3 and OC = x + 8 on diagonal AC of a parallelogram. Which equation finds x?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "2x + 3 = x + 8",
+      "correct": true,
+      "feedback": "O is the midpoint of AC, so its two halves are EQUAL — set them equal and solve."
+     },
+     {
+      "id": "o2",
+      "label": "(2x + 3) + (x + 8) = 180",
+      "correct": false,
+      "feedback": "180 is for supplementary ANGLES — these are lengths. Midpoint means the halves match: 2x + 3 = x + 8."
+     },
+     {
+      "id": "o3",
+      "label": "2x + 3 = 2(x + 8)",
+      "correct": false,
+      "feedback": "Neither half doubles the other — they're the SAME size. Plain equality: 2x + 3 = x + 8."
+     },
+     {
+      "id": "o4",
+      "label": "(2x + 3)(x + 8) = AC",
+      "correct": false,
+      "feedback": "Halves ADD to the whole; they never multiply. And for x, just equate them: 2x + 3 = x + 8."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Finish the diagonal.",
+   "conceptTag": "pq-para-diagonals",
+   "hints": [
+    "Halves equal: 2x + 3 = x + 8.",
+    "x = 5, so each half is 2(5) + 3 = 13.",
+    "The whole diagonal is TWICE the half."
+   ],
+   "explanationVariants": [
+    "x = 5 makes AO = OC = 13, so AC = 26.",
+    "Solve (x = 5), evaluate a half (13), double for the whole: 26."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "With AO = 2x + 3 and OC = x + 8, find the FULL diagonal AC.",
+    "answer": 26,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 5,
+      "feedback": "5 is x — the question asks the diagonal's LENGTH. Each half is 13, so AC = 26."
+     },
+     {
+      "value": 13,
+      "feedback": "13 is one HALF (AO). The diagonal spans both halves: 2 × 13 = 26."
+     }
+    ],
+    "fallbackFeedback": "x = 5; AC = 2 × 13 = 26."
+   },
+   "variant": {
+    "gen": "g10-polygons-quadrilaterals",
+    "form": "pq-para-diagonals__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Halved at the crossing.",
+   "takeaways": [
+    "Parallelogram diagonals bisect each other: AO = OC and BO = OD.",
+    "They need NOT be equal, perpendicular, or angle-bisecting — those are rectangle/rhombus upgrades.",
+    "Midpoint equalities turn diagonal expressions into equations; remember to answer for the length asked."
+   ],
+   "teaser": "Chapter 3 flips everything: given a mystery quadrilateral, which facts PROVE it's a parallelogram?"
+  }
+ ]
+}

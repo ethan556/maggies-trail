@@ -1,0 +1,289 @@
+{
+  "id": "pq-02-01",
+  "slug": "opposite-sides",
+  "title": "Opposite Sides",
+  "courseId": "polygons-quadrilaterals",
+  "chapterId": "ch2-parallelogram-properties",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "pq-para-sides",
+      "concept": {
+        "id": "rem-pq-para-sides-c",
+        "kind": "concept",
+        "body": "In any parallelogram, opposite sides are congruent — proved by drawing a diagonal: the two pairs of parallel sides give two pairs of alternate interior angles, the diagonal is shared, so the two triangles are congruent by ASA, and CPCTC matches the opposite sides. Adjacent sides may differ; opposite ones never do."
+      },
+      "check": {
+        "id": "rem-pq-para-sides-k",
+        "kind": "check",
+        "body": "Match the partner.",
+        "conceptTag": "pq-para-sides",
+        "explanationVariants": [
+          "XY's opposite side in WXYZ is WZ, so WZ = 17.",
+          "Opposite sides congruent: WZ matches XY at 17."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "In parallelogram WXYZ, side XY = 17. Its opposite side WZ = ?",
+          "answer": 17,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 34,
+              "feedback": "34 doubles it — opposite sides MATCH, they don't combine: WZ = 17."
+            },
+            {
+              "value": 8.5,
+              "feedback": "8.5 halves it — halving belongs to diagonals-bisecting, not sides. WZ = XY = 17."
+            }
+          ],
+          "fallbackFeedback": "WZ = XY = 17."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **parallelogram** is a quadrilateral with BOTH pairs of opposite sides parallel — that's the entire definition. Everything else you've heard about parallelograms is a theorem waiting to be earned. The key that unlocks them all: draw one diagonal, and the parallelogram splits into two triangles that turn out to be congruent.",
+      "figure": "parallelogram-congruent-triangles"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Earn the congruence.",
+      "widget": {
+        "type": "coordinateProofLab",
+        "prompt": "Place D so that ABCD is a parallelogram, then prove it twice over: opposite sides with equal slopes, and opposite sides with equal lengths.",
+        "fixed": [
+          [
+            1,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            8,
+            5
+          ]
+        ],
+        "target": [
+          3,
+          5
+        ],
+        "start": [
+          7,
+          8
+        ],
+        "targetClaim": "parallelogram",
+        "gridMin": 0,
+        "gridMax": 10,
+        "requiredEvidence": [
+          "slopes",
+          "distances"
+        ],
+        "requiredMoves": 4,
+        "successFeedback": "D = (3, 5). AB and DC have the same slope AND the same length; so do BC and AD. That is the theorem: in a parallelogram, opposite sides are not merely parallel — they are equal. The slopes give the parallel, the distances give the equal, and neither follows from the picture alone.",
+        "positionFeedback": "The computed slopes or lengths still disagree. Move D until both pairs of opposite sides match on both counts.",
+        "evidenceFeedback": "It looks like a parallelogram, but looking is not proving. Compute the slopes and the side lengths before checking."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Congruent triangles pay out through CPCTC: the matching sides of △ABC and △CDA are the parallelogram's opposite sides. So in every parallelogram, **opposite sides are congruent** — parallel wasn't just direction, it forced equal length too.",
+      "figure": "pq-opposite-sides"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read off a side.",
+      "conceptTag": "pq-para-sides",
+      "explanationVariants": [
+        "RS sits opposite PQ, and opposite sides of a parallelogram are congruent: RS = 13.",
+        "CPCTC on the diagonal's two triangles matches RS with PQ: 13."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In parallelogram PQRS, PQ = 13 and QR = 8. Find RS.",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is QR, the side ADJACENT to RS — adjacency promises nothing. RS faces PQ across the shape: 13."
+          },
+          {
+            "value": 21,
+            "feedback": "21 = 13 + 8 adds the two givens — no sum is involved. Opposite sides simply MATCH: RS = PQ = 13."
+          },
+          {
+            "value": 5,
+            "feedback": "5 = 13 − 8 subtracts — also not a parallelogram fact. RS = its opposite partner PQ = 13."
+          }
+        ],
+        "fallbackFeedback": "RS = PQ = 13 (opposite sides congruent)."
+      },
+      "variant": {
+        "gen": "pq-para-side"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Perimeter for free.",
+      "conceptTag": "pq-para-sides",
+      "explanationVariants": [
+        "Opposite sides match, so the perimeter is 2(9 + 14) = 46.",
+        "Two 9s and two 14s: 18 + 28 = 46."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A parallelogram has adjacent sides 9 and 14. Its perimeter?",
+        "answer": 46,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 23,
+            "feedback": "23 = 9 + 14 counts each length once — but each appears TWICE (opposite sides congruent): 2 × 23 = 46."
+          },
+          {
+            "value": 126,
+            "feedback": "126 = 9 × 14 computes an area-style product. Perimeter adds the boundary: 2(9 + 14) = 46."
+          }
+        ],
+        "fallbackFeedback": "P = 2(9 + 14) = 46."
+      },
+      "variant": {
+        "gen": "pq-para-side",
+        "form": "perimeter"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The property doubles as an equation factory. Opposite sides congruent means their expressions are EQUAL: if one side is 3x + 4 and its opposite is 19, then 3x + 4 = 19. Solve, then — the classic finish-line trap — answer the question actually asked: x itself, or the side's length?",
+      "figure": "pq-equation-factory"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Which sides pair up?",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In parallelogram ABCD (vertices in order), which side is OPPOSITE side AB?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "CD",
+            "correct": true,
+            "feedback": "Walking A→B→C→D, side AB and side CD never touch — they're the opposite, congruent pair."
+          },
+          {
+            "id": "o2",
+            "label": "BC",
+            "correct": false,
+            "feedback": "BC shares vertex B with AB — that's ADJACENT. The opposite side shares nothing: CD."
+          },
+          {
+            "id": "o3",
+            "label": "AD",
+            "correct": false,
+            "feedback": "AD shares vertex A — adjacent again. Opposite means no shared vertex: CD."
+          },
+          {
+            "id": "o4",
+            "label": "The diagonal AC",
+            "correct": false,
+            "feedback": "AC cuts through the interior — it's a diagonal, not a side. AB's opposite side is CD."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Solve across the shape.",
+      "conceptTag": "pq-para-sides",
+      "explanationVariants": [
+        "3x + 4 = 19 → 3x = 15 → x = 5.",
+        "Opposite sides equal: subtract 4, divide by 3, x = 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "One side of a parallelogram measures 3x + 4; its opposite side measures 19. Find x.",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is 3x — one step from the finish. Divide by 3: x = 5."
+          },
+          {
+            "value": 7.67,
+            "feedback": "7.67 ≈ (19 + 4)/3 ADDS the 4 instead of subtracting it across the equals sign: 3x = 19 − 4 = 15, so x = 5."
+          }
+        ],
+        "fallbackFeedback": "3x + 4 = 19 → x = 5."
+      },
+      "variant": {
+        "gen": "pq-para-side",
+        "form": "solveSide"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Perimeter with algebra.",
+      "conceptTag": "pq-para-sides",
+      "hints": [
+        "Opposite sides equal: 2y − 1 = 11 pins down y.",
+        "y = 6, so the other side pair is y + 4 = 10 each.",
+        "Perimeter = 2(11) + 2(10)."
+      ],
+      "explanationVariants": [
+        "2y − 1 = 11 gives y = 6; the adjacent side is y + 4 = 10; perimeter = 2(11 + 10) = 42.",
+        "Solve the opposite-side equation first (y = 6), then total the boundary: 42."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "In a parallelogram, one side is 2y − 1 with opposite side 11, and an adjacent side is y + 4. Find the perimeter.",
+        "answer": 42,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "21 = 11 + 10 counts each side once — double it, since opposite sides repeat: 42."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is y — the question asks the PERIMETER. Sides are 11 and 10: 2(21) = 42."
+          },
+          {
+            "value": 44,
+            "feedback": "44 = 4 × 11 treats all four sides as equal — that's a RHOMBUS assumption. Here the adjacent side is 10: P = 2(11 + 10) = 42."
+          }
+        ],
+        "fallbackFeedback": "y = 6; P = 2(11 + 10) = 42."
+      },
+      "variant": {
+        "gen": "pq-para-side",
+        "form": "algPerimeter"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Parallel forces equal.",
+      "takeaways": [
+        "Definition: both pairs of opposite sides parallel — everything else is proved.",
+        "One diagonal + alternate interior angles + ASA ⇒ two congruent triangles ⇒ opposite sides congruent (CPCTC).",
+        "Equal opposite sides turn side-expressions into solvable equations."
+      ],
+      "teaser": "Next: the same diagonal trick hands us the ANGLES of a parallelogram."
+    }
+  ]
+}

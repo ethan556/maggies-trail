@@ -1,0 +1,294 @@
+{
+  "id": "pf-02-03",
+  "slug": "factor-and-remainder-theorems",
+  "title": "The Factor & Remainder Theorems",
+  "courseId": "polynomial-functions",
+  "chapterId": "ch2-zeros-and-factors",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two power tools. **Remainder Theorem:** dividing f(x) by (x − c) leaves remainder **f(c)** — one substitution replaces a whole division. **Factor Theorem:** if f(c) = 0, then (x − c) is a **factor** of f. Plug in a number; learn a factor.",
+      "figure": "pf-remainder-theorem"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Test a candidate.",
+      "predict": {
+        "prompt": "f(x) = x³ − 7x + 6 factors as (x + 3)(x − 1)(x − 2). Before probing — what will f(1) be?",
+        "options": [
+          {
+            "id": "zero",
+            "label": "Exactly 0 — one of the factors becomes zero, so the whole product does"
+          },
+          {
+            "id": "six",
+            "label": "6 — the constant term is what is left when the x terms vanish"
+          },
+          {
+            "id": "nonzero",
+            "label": "Some small non-zero number; it only gets close to 0"
+          }
+        ],
+        "outcomeId": "zero",
+        "reveal": "Exactly 0. At x = 1 the factor (x − 1) is 0, and a product with a zero factor is zero — no matter what the other factors are. That is the Factor Theorem in one direction: a root makes a factor vanish."
+      },
+      "widget": {
+        "type": "signChart",
+        "prompt": "Build the sign chart for f(x) = x³ − 7x + 6, then slide the probe and watch the value of f at the probe.",
+        "roots": [
+          {
+            "x": -3,
+            "mult": 1
+          },
+          {
+            "x": 1,
+            "mult": 1
+          },
+          {
+            "x": 2,
+            "mult": 1
+          }
+        ],
+        "leadingPositive": true,
+        "probeX": true,
+        "successFeedback": "Negative, positive, negative, positive. Now slide the probe: f collapses to exactly 0 at −3, at 1 and at 2 — nowhere else. Those are the three places a factor vanishes, which is why \"is a root\" and \"is a factor\" are the same fact: f(1) = 0 and (x − 1) divides f are two ways of saying it.",
+        "crossFeedback": "All three roots are single, so the curve crosses at each one and the sign changes every time. Use the probe: wherever f is 0, the sign on either side must differ.",
+        "bounceFeedback": "A sign that stays the same across a root belongs to an even multiplicity — a bounce. Every factor here appears once, so all three are crossings."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why it works: division always writes f(x) = (x − c)·q(x) + r for some quotient q and constant remainder r. Substitute x = c: the first piece dies, leaving **f(c) = r**. If that's 0, the division is exact — a factor.",
+      "figure": "pf-division-identity"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Remainder without dividing.",
+      "conceptTag": "pf-factor-thm",
+      "explanationVariants": [
+        "Remainder = f(2) = 8 + 4 − 5 = 7.",
+        "One substitution replaces the whole long division: f(2) = 7."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the remainder when f(x) = x³ + 2x − 5 is divided by (x − 2)?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "−5 is f(0), the constant term — the divisor (x − 2) asks for f(2) = 8 + 4 − 5 = 7."
+          },
+          {
+            "value": 17,
+            "feedback": "That's 8 + 4 + 5 — the constant is SUBTRACTED: 8 + 4 − 5 = 7."
+          }
+        ],
+        "fallbackFeedback": "f(2) = 2³ + 2·2 − 5 = 7."
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-factor-thm__numeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Mind the sign of c.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For f(x) = x³ + 8, what is f(−2)?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "(−2)³ = −8, not +8 — the odd power keeps the minus: −8 + 8 = 0."
+          },
+          {
+            "value": 6,
+            "feedback": "That reads x³ as plain x (−2 + 8) — cube first: −8 + 8 = 0."
+          }
+        ],
+        "fallbackFeedback": "(−2)³ + 8 = −8 + 8 = 0 — so (x + 2) is a factor of x³ + 8."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which factor did we just find?",
+      "conceptTag": "pf-factor-thm",
+      "explanationVariants": [
+        "f(−2) = 0 means the factor is (x − (−2)) = (x + 2).",
+        "The Factor Theorem's factor is x minus the ROOT: x − (−2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Since f(−2) = 0 for f(x) = x³ + 8, which is guaranteed to be a factor?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(x + 2)",
+            "correct": true,
+            "feedback": "Right — x minus the root: x − (−2) = x + 2."
+          },
+          {
+            "id": "o2",
+            "label": "(x − 2)",
+            "correct": false,
+            "feedback": "That tests f(+2) = 8 + 8 = 16 ≠ 0 — the zero lives at −2, so the factor is (x + 2)."
+          },
+          {
+            "id": "o3",
+            "label": "(x + 8)",
+            "correct": false,
+            "feedback": "The 8 is f's constant, not the root — the root is −2, giving (x + 2)."
+          },
+          {
+            "id": "o4",
+            "label": "(x³ + 2)",
+            "correct": false,
+            "feedback": "Factors from the theorem are LINEAR, x minus the root: (x + 2)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-factor-thm__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use it in reverse.",
+      "conceptTag": "pf-factor-thm",
+      "explanationVariants": [
+        "If (x − 3) is a factor, then f(3) must equal exactly 0.",
+        "Factor ⟺ zero remainder ⟺ f(c) = 0 — the theorem runs both directions."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "If (x − 3) is a factor of f(x), what must be true?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "f(3) = 0",
+            "correct": true,
+            "feedback": "Right — factor and zero are the same fact, by the theorem."
+          },
+          {
+            "id": "o2",
+            "label": "f(0) = 3",
+            "correct": false,
+            "feedback": "f(0) is the y-intercept — the factor (x − 3) speaks about the input x = 3: f(3) = 0."
+          },
+          {
+            "id": "o3",
+            "label": "f(−3) = 0",
+            "correct": false,
+            "feedback": "(x − 3) dies at x = +3, so it's f(3) that must vanish."
+          },
+          {
+            "id": "o4",
+            "label": "f(3) = 3",
+            "correct": false,
+            "feedback": "A factor means the remainder f(3) is exactly ZERO, not 3."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-factor-thm__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the missing coefficient.",
+      "conceptTag": "pf-factor-thm",
+      "explanationVariants": [
+        "(x − 2) a factor forces f(2) = 0: 8 − 12 + k = 0, so k = 4.",
+        "Substitute 2, set the result to zero, solve for k."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For what value of k is (x − 2) a factor of f(x) = x³ − 3x² + k?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "8 − 12 + k = 0 gives k = +4 — the k must CANCEL the −4, not repeat it."
+          },
+          {
+            "value": 20,
+            "feedback": "That's 8 + 12 — the middle term subtracts: 8 − 12 = −4, so k = 4."
+          }
+        ],
+        "fallbackFeedback": "f(2) = 8 − 12 + k = 0 forces k = 4."
+      },
+      "hints": [
+        "Factor Theorem: (x − 2) is a factor exactly when f(2) = 0.",
+        "f(2) = 8 − 12 + k.",
+        "Solve −4 + k = 0."
+      ],
+      "variant": {
+        "gen": "a2-polynomials",
+        "form": "pf-factor-thm__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One substitution reveals remainders and factors alike.",
+      "takeaways": [
+        "Remainder of f ÷ (x − c) is f(c) — no division needed.",
+        "f(c) = 0 ⟺ (x − c) is a factor.",
+        "Watch the sign: a zero at −2 means the factor (x + 2)."
+      ],
+      "teaser": "Next chapter: when you DO need the quotient — polynomial division, long and synthetic."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pf-factor-thm",
+      "concept": {
+        "id": "rem-pf0203-c",
+        "kind": "concept",
+        "body": "To test the divisor (x − c), substitute c. For f(x) = x² − 9 and divisor (x − 3): compute f(3)."
+      },
+      "check": {
+        "id": "rem-pf0203-k",
+        "kind": "check",
+        "body": "Run the test.",
+        "conceptTag": "pf-factor-thm",
+        "explanationVariants": [
+          "f(3) = 9 − 9 = 0 — zero remainder, so (x − 3) is a factor.",
+          "One substitution: 3² − 9 = 0."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For f(x) = x² − 9, what is the remainder on dividing by (x − 3)?",
+          "answer": 0,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 9,
+              "feedback": "9 is 3² alone — subtract the 9: f(3) = 9 − 9 = 0."
+            },
+            {
+              "value": -9,
+              "feedback": "−9 is f(0), the constant — the divisor asks for f(3) = 0."
+            }
+          ],
+          "fallbackFeedback": "Remainder = f(3) = 0."
+        }
+      }
+    }
+  ]
+}

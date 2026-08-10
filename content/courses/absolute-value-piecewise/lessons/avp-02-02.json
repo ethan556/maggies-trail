@@ -1,0 +1,254 @@
+{
+  "id": "avp-02-02",
+  "slug": "no-solution-one-or-two",
+  "title": "No Solution, One, or Two",
+  "courseId": "absolute-value-piecewise",
+  "chapterId": "ch2-equations-with-abs",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The pair is the usual case, not the only one. |x| = k has two solutions when k > 0, exactly one when k = 0 (zero is its own mirror), and NONE when k < 0 — because no point on the line sits a negative distance from anywhere.",
+      "figure": "avp-solution-count-cases"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the case with only one answer.",
+      "widget": {
+        "type": "numberLinePlace",
+        "step": 1,
+        "tickStep": 1,
+        "start": 0,
+        "commonPlacements": [
+          {
+            "value": 2,
+            "feedback": "Sign flipped. The inside is x + 2, which vanishes at x = −2, not +2."
+          },
+          {
+            "value": 0,
+            "feedback": "That makes the inside 2, not 0 — |0 + 2| = 2. The quantity in the bars has to vanish, not x itself."
+          }
+        ],
+        "prompt": "|x + 2| = 0 has exactly ONE solution. Place it.",
+        "min": -6,
+        "max": 6,
+        "target": -2,
+        "showDistanceFromZero": true,
+        "successFeedback": "−2: the inside reads 0, whose distance from zero is 0. Zero is the one number that is its own mirror image, so this case cannot produce a pair.",
+        "lowFeedback": "Too far left — the inside has gone negative past zero.",
+        "highFeedback": "Too far right — slide left until the inside vanishes."
+      },
+      "predict": {
+        "prompt": "How many solutions does |x + 2| = −4 have?",
+        "options": [
+          {
+            "id": "two",
+            "label": "Two — as usual"
+          },
+          {
+            "id": "one",
+            "label": "One"
+          },
+          {
+            "id": "none",
+            "label": "None"
+          }
+        ],
+        "outcomeId": "none",
+        "reveal": "A distance is never negative, so nothing can be −4 units from anywhere. Notice this can be settled without a single algebraic step — the geometry rules it out before the work starts."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Count without solving.",
+      "conceptTag": "avp-solution-count",
+      "explanationVariants": [
+        "The right side is negative and a distance cannot be, so no solutions exist.",
+        "|anything| ≥ 0 always, so it can never equal −3."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many solutions does |x − 7| = −3 have?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "None",
+            "correct": true,
+            "feedback": "Right — and no algebra was needed: the right side is negative, which distance forbids."
+          },
+          {
+            "id": "o2",
+            "label": "Two, at 4 and 10",
+            "correct": false,
+            "feedback": "Those come from treating the −3 as if it were 3. The equation as written asks for a negative distance."
+          },
+          {
+            "id": "o3",
+            "label": "One, at x = 7",
+            "correct": false,
+            "feedback": "x = 7 makes the inside 0, so |x − 7| = 0, not −3."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the count is decided by the number on the right, before any case-splitting begins. Positive right side: a pair. Zero: a single solution where the inside vanishes. Negative right side: nothing. Reading the right-hand side first saves the whole procedure.",
+      "figure": "avp-right-side-decides"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The single-solution case.",
+      "conceptTag": "avp-solution-count",
+      "explanationVariants": [
+        "|x − 6| = 0 forces x − 6 = 0, so x = 6 and there is exactly one solution.",
+        "Zero distance can only happen at the center itself."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "|x − 6| = 0. How many solutions does it have?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "The pair appears only for a POSITIVE distance. Zero has no mirror image — it is its own."
+          },
+          {
+            "value": 0,
+            "feedback": "There is a solution: x = 6 makes the inside vanish. The count is one, not none."
+          }
+        ],
+        "fallbackFeedback": "Zero distance happens only at the center, so x = 6 is the sole solution: exactly 1.",
+        "successFeedback": "1 — the case where the V's vertex just touches the horizontal line."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Match the count to the picture.",
+      "conceptTag": "avp-solution-count",
+      "explanationVariants": [
+        "A horizontal line below the vertex never meets the V, so the equation has no solutions.",
+        "The V's floor is its vertex; lines beneath it miss entirely."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Graphically, why does |x| = −2 have no solutions?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The line y = −2 passes below the V, which never dips under the x-axis",
+            "correct": true,
+            "feedback": "Exactly — the graph shows the impossibility at a glance."
+          },
+          {
+            "id": "o2",
+            "label": "The V is too narrow to reach it",
+            "correct": false,
+            "feedback": "Width is not the issue; the V extends forever sideways but never downward."
+          },
+          {
+            "id": "o3",
+            "label": "Because −2 is not an integer distance",
+            "correct": false,
+            "feedback": "−2 is an integer. The obstacle is its sign, not its type."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Choose the boundary.",
+      "conceptTag": "avp-solution-count",
+      "explanationVariants": [
+        "Exactly one solution requires the right side to be 0, so k = 0.",
+        "The single-solution case is the vertex-touching case, which needs distance zero."
+      ],
+      "hints": [
+        "Ask what right-hand value gives a solution that has no mirror twin.",
+        "Two solutions need a positive right side; none needs a negative one. What is left?",
+        "Only distance 0 has a single point, so k = 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For which value of k does |x − 3| = k have EXACTLY one solution?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the center, not the distance. |x − 3| = 3 has two solutions, 0 and 6."
+          },
+          {
+            "value": -1,
+            "feedback": "A negative right side gives NO solutions, not one."
+          }
+        ],
+        "fallbackFeedback": "Only k = 0 works: the inside must vanish, which happens at the single point x = 3.",
+        "successFeedback": "k = 0 — the knife edge between two solutions and none."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Read the right side first.",
+      "takeaways": [
+        "|expression| = k has two solutions for k > 0, one for k = 0, and none for k < 0.",
+        "The count can be settled before any case-splitting.",
+        "Graphically the count is how many times a horizontal line meets the V."
+      ],
+      "teaser": "Next: swap the equals sign for an inequality — and watch one band split into two rays."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "avp-solution-count",
+      "concept": {
+        "id": "rem-avp-solution-count-c",
+        "kind": "concept",
+        "body": "So the count is decided by the number on the right, before any case-splitting begins. Positive right side: a pair. Zero: a single solution where the inside vanishes. Negative right side: nothing. Reading the right-hand side first saves the whole procedure."
+      },
+      "check": {
+        "id": "rem-avp-solution-count-k",
+        "kind": "check",
+        "body": "Count without solving.",
+        "conceptTag": "avp-solution-count",
+        "explanationVariants": [
+          "The right side is negative and a distance cannot be, so no solutions exist.",
+          "|anything| ≥ 0 always, so it can never equal −3."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "How many solutions does |x − 7| = −3 have?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "None",
+              "correct": true,
+              "feedback": "Right — and no algebra was needed: the right side is negative, which distance forbids."
+            },
+            {
+              "id": "o2",
+              "label": "Two, at 4 and 10",
+              "correct": false,
+              "feedback": "Those come from treating the −3 as if it were 3. The equation as written asks for a negative distance."
+            },
+            {
+              "id": "o3",
+              "label": "One, at x = 7",
+              "correct": false,
+              "feedback": "x = 7 makes the inside 0, so |x − 7| = 0, not −3."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

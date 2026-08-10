@@ -1,0 +1,231 @@
+{
+ "id": "lc-04-01",
+ "slug": "continuity-at-a-point",
+ "title": "Continuity at a Point",
+ "courseId": "limits-continuity",
+ "chapterId": "ch4-continuity-ivt",
+ "minutes": 10,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "A function is **continuous at x = a** if you can draw through that point without lifting your pen. Precisely, three things must ALL hold: (1) f(a) is defined, (2) the limit lim_{x→a} f(x) exists, and (3) they're **equal**: lim_{x→a} f(x) = f(a). Break any one and continuity fails.",
+   "figure": "lc-continuity-conditions"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "A continuous case.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For f(x) = x² + 1, both f(2) and the limit as x → 2 equal the same value. What is it?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4,
+      "feedback": "4 = 2² forgets the + 1. f(2) = 4 + 1 = 5, and the limit matches."
+     },
+     {
+      "value": 2,
+      "feedback": "Plug in x = 2: f(2) = 2² + 1 = 5."
+     }
+    ],
+    "fallbackFeedback": "f(2) = 4 + 1 = 5 = the limit, so f is continuous at 2."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Which condition fails?",
+   "conceptTag": "lc-continuity",
+   "explanationVariants": [
+    "If lim_{x→a} f(x) exists but f(a) is undefined (a hole), condition (1) fails — the function isn't continuous there even though the limit is fine.",
+    "A hole breaks 'f(a) defined' while the limit still exists."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A function has a hole at x = 2: the limit exists (= 4) but f(2) is undefined. Continuity fails because:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "f(2) is not defined",
+      "correct": true,
+      "feedback": "Right — condition (1) fails; the limit existing isn't enough on its own."
+     },
+     {
+      "id": "o2",
+      "label": "the limit does not exist",
+      "feedback": "The limit DOES exist here (= 4). What fails is that f(2) is undefined."
+     },
+     {
+      "id": "o3",
+      "label": "nothing fails; it's continuous",
+      "feedback": "A hole means f(2) is undefined, so continuity fails at x = 2."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-continuity__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "For 'nice' functions — polynomials, and rational/root/trig functions where they're defined — continuity is automatic, so the limit is just **f(a)** by direct substitution (recall Ch2). Continuity is what MAKES substitution legal. The interesting points are exactly where one of the three conditions breaks.",
+   "figure": "lc-nice-continuous"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Test a polynomial.",
+   "conceptTag": "lc-continuity",
+   "explanationVariants": [
+    "f(x) = x² + 1 is a polynomial, continuous everywhere: at x = 3, lim = f(3) = 10.",
+    "Polynomials are continuous, so just substitute: f(3) = 10."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For the continuous function f(x) = x² + 1, find lim_{x→3} f(x).",
+    "answer": 10,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 9,
+      "feedback": "9 = 3² omits + 1. f(3) = 9 + 1 = 10."
+     },
+     {
+      "value": 7,
+      "feedback": "Substitute x = 3: 3² + 1 = 10."
+     }
+    ],
+    "fallbackFeedback": "Continuous → lim = f(3) = 9 + 1 = 10."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-continuity__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "All three needed.",
+   "conceptTag": "lc-continuity",
+   "explanationVariants": [
+    "Continuity requires f(a) defined AND the limit existing AND the two being equal — all three, not just one.",
+    "Miss any single condition and the function is discontinuous at a."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Continuity at x = a requires:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "f(a) defined, the limit exists, and they are equal",
+      "correct": true,
+      "feedback": "Right — all three conditions together define continuity."
+     },
+     {
+      "id": "o2",
+      "label": "only that f(a) is defined",
+      "feedback": "Not enough — the limit must also exist AND equal f(a)."
+     },
+     {
+      "id": "o3",
+      "label": "only that the limit exists",
+      "feedback": "The limit existing isn't enough; f(a) must be defined and equal it."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-continuity__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Continuous by substitution.",
+   "conceptTag": "lc-continuity",
+   "explanationVariants": [
+    "f(x) = 2x² − x + 3 is a polynomial (continuous), so lim_{x→2} = f(2) = 8 − 2 + 3 = 9.",
+    "Substitute directly: 2(4) − 2 + 3 = 9."
+   ],
+   "hints": [
+    "Polynomials are continuous everywhere.",
+    "So the limit = f(2).",
+    "2(2²) − 2 + 3."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Find lim_{x→2} (2x² − x + 3).",
+    "answer": 9,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 11,
+      "feedback": "2(4) − 2 + 3 = 9, not 11 (watch the −x term)."
+     },
+     {
+      "value": 13,
+      "feedback": "2·2² = 8, then − 2 + 3: 8 − 2 + 3 = 9."
+     }
+    ],
+    "fallbackFeedback": "f(2) = 8 − 2 + 3 = 9."
+   },
+   "variant": {
+    "gen": "g12-limits-continuity",
+    "form": "limits-continuity__lc-continuity__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Draw it without lifting.",
+   "takeaways": [
+    "Continuous at a: f(a) defined, limit exists, and limit = f(a).",
+    "For continuous functions, the limit is just f(a) (substitution).",
+    "Discontinuities are where one of the three conditions breaks."
+   ],
+   "teaser": "Next: naming the ways continuity can break."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "lc-continuity",
+   "concept": {
+    "id": "rem-lc0401-c",
+    "kind": "concept",
+    "body": "Continuous at a: (1) f(a) defined, (2) limit exists, (3) limit = f(a). For continuous functions the limit is just f(a)."
+   },
+   "check": {
+    "id": "rem-lc0401-k",
+    "kind": "check",
+    "body": "One limit.",
+    "conceptTag": "lc-continuity",
+    "explanationVariants": [
+     "f(x) = x + 4 is continuous, so lim_{x→1} = f(1) = 5.",
+     "Substitute: 1 + 4 = 5."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For the continuous f(x) = x + 4, find lim_{x→1} f(x).",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "Include the x: f(1) = 1 + 4 = 5."
+      },
+      {
+       "value": 1,
+       "feedback": "Substitute x = 1: 1 + 4 = 5."
+      }
+     ],
+     "fallbackFeedback": "f(1) = 5."
+    }
+   }
+  }
+ ]
+}

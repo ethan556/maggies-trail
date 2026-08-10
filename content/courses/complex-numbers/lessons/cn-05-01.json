@@ -1,0 +1,242 @@
+{
+  "id": "cn-05-01",
+  "slug": "sum-and-product-complex",
+  "title": "Sum & Product with Complex Roots",
+  "courseId": "complex-numbers",
+  "chapterId": "ch5-roots-and-methods",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The old shortcuts survive the trip: for x² + bx + c = 0, the roots still **sum to −b** and **multiply to c** — even when they're complex. x² − 4x + 13 has roots 2 ± 3i: sum (2 + 3i) + (2 − 3i) = 4 = −b. ✓",
+      "figure": "cn-sum-product"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sum without solving.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Without solving, what is the SUM of the roots of x² − 4x + 13 = 0?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -4,
+            "feedback": "The sum is −b = −(−4) = +4 — the sign flips."
+          },
+          {
+            "value": 13,
+            "feedback": "13 is c, which gives the PRODUCT — the sum comes from −b = 4."
+          }
+        ],
+        "fallbackFeedback": "Sum = −b = 4, matching (2 + 3i) + (2 − 3i)."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The product uses the conjugate pattern: (2 + 3i)(2 − 3i) = 4 + 9 = **13** = c. ✓ In general a ± bi sums to **2a** (the imaginary parts cancel) and multiplies to **a² + b²** (always real — which is exactly why c is real).",
+      "figure": "cn-conjugate-product"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Product without solving.",
+      "conceptTag": "cn-sum-product",
+      "explanationVariants": [
+        "Product = c = 13 — and directly, (2 + 3i)(2 − 3i) = 4 + 9 = 13.",
+        "The conjugate product a² + b² = 4 + 9 lands exactly on c."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the PRODUCT of the roots of x² − 4x + 13 = 0?",
+        "answer": 13,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -5,
+            "feedback": "4 − 9 subtracts — the conjugate product ADDS the squares: 4 + 9 = 13."
+          },
+          {
+            "value": 4,
+            "feedback": "4 is only the real parts multiplied (and also the sum) — the full product is 4 + 9 = 13."
+          }
+        ],
+        "fallbackFeedback": "Product = c = 13 = 2² + 3²."
+      },
+      "variant": {
+        "gen": "cn-sum-product"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Cancel the imaginaries.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the sum of 5 + 2i and 5 − 2i?",
+        "answer": 10,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "Only the IMAGINARY parts cancel — the real parts add: 5 + 5 = 10."
+          },
+          {
+            "value": 29,
+            "feedback": "29 is the PRODUCT (5² + 2²) — the sum is 5 + 5 = 10."
+          }
+        ],
+        "fallbackFeedback": "(5 + 2i) + (5 − 2i) = 10; the ±2i cancel."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Multiply the pair.",
+      "conceptTag": "cn-sum-product",
+      "explanationVariants": [
+        "(5 + 2i)(5 − 2i) = 5² + 2² = 29.",
+        "Conjugate product: a² + b² = 25 + 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the product of 5 + 2i and 5 − 2i?",
+        "answer": 29,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 21,
+            "feedback": "25 − 4 subtracts — conjugates give a² PLUS b²: 29."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the SUM of the pair — the product is 25 + 4 = 29."
+          }
+        ],
+        "fallbackFeedback": "25 + 4 = 29."
+      },
+      "variant": {
+        "gen": "cn-sum-product",
+        "form": "conjProduct"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "From roots to c.",
+      "conceptTag": "cn-sum-product",
+      "explanationVariants": [
+        "c = product = 1² + 4² = 17.",
+        "Roots 1 ± 4i multiply to a² + b² = 1 + 16."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A quadratic x² + bx + c = 0 has roots 1 ± 4i. What is c?",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -15,
+            "feedback": "1 − 16 subtracts — the conjugate product is 1 + 16 = 17."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is only b² of the pair — add the real part's square: 1 + 16 = 17."
+          }
+        ],
+        "fallbackFeedback": "c = (1 + 4i)(1 − 4i) = 1 + 16 = 17."
+      },
+      "variant": {
+        "gen": "cn-sum-product",
+        "form": "findC"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "From roots to b.",
+      "conceptTag": "cn-sum-product",
+      "explanationVariants": [
+        "Sum = 6, and sum = −b, so b = −6.",
+        "3 + i and 3 − i add to 6; flipping the sign gives b."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A quadratic x² + bx + c = 0 has roots 3 ± i. What is b?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the SUM — but sum = −b, so b = −6."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is the PRODUCT (9 + 1 = c) — b comes from the sum: b = −6."
+          }
+        ],
+        "fallbackFeedback": "Sum = 6 = −b, so b = −6 (and c would be 10)."
+      },
+      "hints": [
+        "Add the pair first: the imaginary parts cancel.",
+        "(3 + i) + (3 − i) = 6.",
+        "Sum = −b, so b = −6."
+      ],
+      "variant": {
+        "gen": "cn-sum-product",
+        "form": "findB"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Sum = −b and product = c hold for complex roots too.",
+      "takeaways": [
+        "a ± bi sums to 2a and multiplies to a² + b².",
+        "Both results are real — that's why real-coefficient quadratics can host complex roots.",
+        "Sign trap: sum = MINUS b."
+      ],
+      "teaser": "Next: run it backward — build the quadratic from its roots."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "cn-sum-product",
+      "concept": {
+        "id": "rem-cn0501-c",
+        "kind": "concept",
+        "body": "Conjugate pairs sum by cancelling their imaginary parts: (2 + i) + (2 − i) = 2 + 2."
+      },
+      "check": {
+        "id": "rem-cn0501-k",
+        "kind": "check",
+        "body": "Add one pair.",
+        "conceptTag": "cn-sum-product",
+        "explanationVariants": [
+          "The ±i cancel; 2 + 2 = 4.",
+          "Sum of a ± bi is always 2a — here 2·2 = 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is the sum of 2 + i and 2 − i?",
+          "answer": 4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "Only the imaginary halves cancel — the reals add to 4."
+            },
+            {
+              "value": 2,
+              "feedback": "Both roots contribute their real part: 2 + 2 = 4."
+            }
+          ],
+          "fallbackFeedback": "2 + 2 = 4."
+        }
+      }
+    }
+  ]
+}

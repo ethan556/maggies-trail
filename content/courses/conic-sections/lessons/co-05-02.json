@@ -1,0 +1,290 @@
+{
+  "id": "co-05-02",
+  "slug": "focus-directrix-view",
+  "title": "The Focus-Directrix View",
+  "courseId": "conic-sections",
+  "chapterId": "ch5-eccentricity-orbits",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Why does one number rule them all? Because every conic obeys the **same** rule: for a fixed focus and a fixed line (the **directrix**),\n\n(distance to focus) / (distance to directrix) = e.\n\nThat single ratio, held constant, traces a circle-to-hyperbola depending only on e. The parabola (Ch1) was this with e = 1.",
+      "figure": "co-eccentricity-scale"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One focus-directrix ratio generates the entire conic family. Find the boundary case.",
+      "widget": {
+        "type": "conicLocusLab",
+        "prompt": "Sweep eccentricity across the conic family, sample at least four ratios, and land exactly on the parabola boundary.",
+        "targetEccentricityTenths": 10,
+        "startEccentricityTenths": 3,
+        "focusDistance": 2,
+        "requiredSamples": 4,
+        "successFeedback": "At e = 1, every locus point is equally distant from focus and directrix: the defining condition for a parabola.",
+        "explorationFeedback": "Test values below, at, and above 1 before deciding where the family changes.",
+        "lowFeedback": "This ratio is below 1, so the locus remains bounded as a circle or ellipse.",
+        "highFeedback": "This ratio is above 1, so the locus has two hyperbola branches."
+      },
+      "predict": {
+        "prompt": "What happens at the boundary ratio e = 1?",
+        "options": [
+          {
+            "id": "ellipse",
+            "label": "The locus stays a closed ellipse"
+          },
+          {
+            "id": "parabola",
+            "label": "The locus becomes a parabola"
+          },
+          {
+            "id": "hyperbola",
+            "label": "The locus splits into two branches"
+          }
+        ],
+        "outcomeId": "parabola",
+        "reveal": "At e = 1, every point is equally distant from the focus and directrix, which is exactly the parabola definition."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Vary eccentricity and infer how one focus-directrix ratio generates every conic family.",
+        "invariants": [
+          "focus-directrix-ratio-defines-locus",
+          "eccentricity-classifies-conic"
+        ],
+        "misconceptions": [
+          "conics-are-unrelated-formulas",
+          "parabola-is-just-a-u-shape"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "conic-sections-conicLocusLab",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "counterfactualPrompt": "Change the controlling quantity in this conicLocusLab away from the successful state. Which invariant remains true, and which visible consequence changes?",
+        "explanation": {
+          "prompt": "Why does changing one number e move through all four conic families?",
+          "options": [
+            {
+              "id": "ratio",
+              "label": "The same focus-directrix distance ratio defines every locus; its value determines the family.",
+              "correct": true,
+              "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
+            },
+            {
+              "id": "shape",
+              "label": "Each family is chosen only by how its sketch looks.",
+              "correct": false,
+              "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
+            },
+            {
+              "id": "formula",
+              "label": "The four equations are unrelated formulas.",
+              "correct": false,
+              "feedback": "The live model contradicts that claim when its control is changed."
+            }
+          ]
+        }
+      },
+      "conceptTag": "co-focus-directrix"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Ellipse ratio < 1.",
+      "conceptTag": "co-focus-directrix",
+      "explanationVariants": [
+        "For an ellipse the focus is CLOSER than the directrix, so the ratio (distance to focus)/(distance to directrix) is less than 1 — matching e < 1.",
+        "Points hug the focus more tightly than the directrix: ratio < 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For an ellipse (e < 1), the distance to the focus compared to the distance to the directrix is:",
+        "options": [
+          {
+            "id": "o1",
+            "label": "smaller (ratio < 1)",
+            "correct": true,
+            "feedback": "Right — the focus is nearer, so the ratio is below 1, i.e. e < 1."
+          },
+          {
+            "id": "o2",
+            "label": "larger (ratio > 1)",
+            "feedback": "Ratio > 1 is a hyperbola. An ellipse has ratio < 1."
+          },
+          {
+            "id": "o3",
+            "label": "always equal",
+            "feedback": "Equal (ratio 1) is the parabola. An ellipse has ratio < 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "ecc-classify",
+        "form": "ratioCompare"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The directrix location depends on e and the size. For a horizontal ellipse the directrix is the vertical line x = a/e (equivalently a²/c). For a = 5, e = 0.8: x = 5/0.8 = 6.25 — just outside the vertex at x = 5. As e → 0 the directrix races off to infinity (a circle has none).",
+      "figure": "co-directrix-location"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Locate a directrix.",
+      "conceptTag": "co-focus-directrix",
+      "explanationVariants": [
+        "Directrix at x = a/e = 5/0.8 = 6.25 (also a²/c = 25/4).",
+        "Divide a by e: 5/0.8 = 6.25."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An ellipse has a = 5 and e = 0.8. Its directrix is x = a/e. Find that value.",
+        "answer": 6.25,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 = a·e = c, the FOCUS distance. The directrix is a/e = 6.25."
+          },
+          {
+            "value": 0.16,
+            "feedback": "0.16 = e/a inverts it. Directrix x = a/e = 5/0.8 = 6.25."
+          }
+        ],
+        "fallbackFeedback": "x = a/e = 5/0.8 = 6.25."
+      },
+      "variant": {
+        "gen": "directrix-ecc"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Verify the ratio at a vertex.",
+      "conceptTag": "co-focus-directrix",
+      "explanationVariants": [
+        "Vertex (5, 0), focus (4, 0), directrix x = 6.25: distances 1 and 1.25, ratio 1/1.25 = 0.8 = e. The definition checks out.",
+        "1 ÷ 1.25 = 0.8 recovers the eccentricity."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Vertex (5, 0), focus (4, 0), directrix x = 6.25. The focal distance is 1 and the directrix distance is 1.25. What is their ratio?",
+        "answer": 0.8,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.25,
+            "feedback": "1.25 = directrix ÷ focus (inverted). The ratio is focus ÷ directrix = 1/1.25 = 0.8 = e."
+          },
+          {
+            "value": 0.25,
+            "feedback": "0.25 = 1.25 − 1 subtracts. The ratio DIVIDES: 1/1.25 = 0.8."
+          }
+        ],
+        "fallbackFeedback": "1 / 1.25 = 0.8 = e."
+      },
+      "variant": {
+        "gen": "directrix-ecc",
+        "form": "ratio"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Hyperbola ratio.",
+      "conceptTag": "co-focus-directrix",
+      "explanationVariants": [
+        "A hyperbola has e = c/a > 1: for a = 3, c = 5, the focus-directrix ratio is e = 5/3 ≈ 1.67, above 1 as required.",
+        "Ratio = e = 5/3 > 1 confirms the open, hyperbolic case."
+      ],
+      "hints": [
+        "The ratio equals e for every conic.",
+        "Hyperbola: e = c/a.",
+        "5/3 ≈ ?"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For a hyperbola with a = 3, c = 5, the focus-directrix ratio equals e. Find it to two decimals.",
+        "answer": 1.67,
+        "tolerance": 0.01,
+        "commonErrors": [
+          {
+            "value": 0.6,
+            "feedback": "0.6 = a/c inverts it (and would be an ellipse). e = c/a = 5/3 ≈ 1.67."
+          },
+          {
+            "value": 1,
+            "feedback": "e = 1 is a parabola. This hyperbola has e = 5/3 ≈ 1.67."
+          }
+        ],
+        "fallbackFeedback": "ratio = e = 5/3 ≈ 1.67."
+      },
+      "variant": {
+        "gen": "directrix-ecc",
+        "form": "hypEcc"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One rule to define them.",
+      "takeaways": [
+        "Every conic: (distance to focus)/(distance to directrix) = e.",
+        "Ratio < 1 ellipse, = 1 parabola, > 1 hyperbola.",
+        "Directrix at x = a/e; it vanishes to infinity as e → 0 (circle)."
+      ],
+      "teaser": "Finale: conics in orbits and the sky."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "co-focus-directrix",
+      "concept": {
+        "id": "rem-co0502-c",
+        "kind": "concept",
+        "body": "Unified conic: (distance to focus)/(distance to directrix) = e. Ratio < 1 ellipse, = 1 parabola, > 1 hyperbola. Ellipse directrix at x = a/e."
+      },
+      "check": {
+        "id": "rem-co0502-k",
+        "kind": "check",
+        "body": "One directrix.",
+        "conceptTag": "co-focus-directrix",
+        "explanationVariants": [
+          "a = 4, e = 0.5: directrix x = a/e = 4/0.5 = 8.",
+          "Divide: 4/0.5 = 8."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An ellipse has a = 4, e = 0.5. Find the directrix x = a/e.",
+          "answer": 8,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "2 = a·e = c (focus). The directrix is a/e = 8."
+            },
+            {
+              "value": 0.125,
+              "feedback": "That inverts the ratio. x = a/e = 4/0.5 = 8."
+            }
+          ],
+          "fallbackFeedback": "x = 4/0.5 = 8."
+        }
+      }
+    }
+  ]
+}

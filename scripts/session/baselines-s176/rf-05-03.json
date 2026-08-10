@@ -1,0 +1,269 @@
+{
+ "id": "rf-05-03",
+ "slug": "inverse-and-joint-variation",
+ "title": "Inverse & Joint Variation",
+ "courseId": "rational-functions",
+ "chapterId": "ch5-rational-equations-and-variation",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "You met **direct** variation in proportional relationships: y = kx (double x, double y). **Inverse** variation is the reciprocal's world: y = k/x — double x, **halve** y. Speed and travel time work this way: at speed s, a 120-mile trip takes t = 120/s hours.",
+   "figure": "rf-direct-variation"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Feel the inverse.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "t = 120/s: the trip takes 3 hours at 40 mph. How many hours at 80 mph?",
+    "answer": 1.5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 6,
+      "feedback": "Doubling the speed HALVES the time — inverse variation: 120/80 = 1.5 (6 doubles it)."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is the speed RATIO (80/40) — the question asks the new TIME: 120/80 = 1.5 hours."
+     }
+    ],
+    "fallbackFeedback": "120/80 = 1.5 — double the speed, half the time."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Every variation problem is a two-step: **find k from one data pair, then predict.** If y varies inversely with x and y = 6 when x = 4, then k = xy = 24, so y = 24/x. At x = 8: y = 24/8 = **3**. The product xy stays constant — that's inverse variation's fingerprint.",
+   "figure": "rf-two-step-variation"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find k, then predict.",
+   "conceptTag": "rf-variation",
+   "explanationVariants": [
+    "k = xy = 3 · 10 = 30, so y = 30/x; at x = 5: y = 6.",
+    "The constant product 30 rebalances: bigger x, smaller y."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "y varies inversely with x, and y = 10 when x = 3. What is y when x = 5?",
+    "answer": 6,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 50,
+      "feedback": "Inverse means y = k/x with k = 3 · 10 = 30 — at 5: 30/5 = 6 (50 uses y = kx, DIRECT variation)."
+     },
+     {
+      "value": 12,
+      "feedback": "k = xy = 30 (a product, not the sum 13): y = 30/5 = 6."
+     }
+    ],
+    "fallbackFeedback": "k = 30 → y = 30/5 = 6."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-variation__numeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Spot the fingerprint.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A table shows pairs (2, 18), (3, 12), (6, 6). Which variation fits?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "inverse — every product xy is 36",
+      "correct": true,
+      "feedback": "Right — 2·18 = 3·12 = 6·6 = 36: constant product, so y = 36/x."
+     },
+     {
+      "id": "o2",
+      "label": "direct — y grows with x",
+      "correct": false,
+      "feedback": "y FALLS as x rises here (18 → 12 → 6) — and the RATIOS y/x aren't constant, the products are."
+     },
+     {
+      "id": "o3",
+      "label": "direct — every ratio y/x is constant",
+      "correct": false,
+      "feedback": "Check: 18/2 = 9 but 12/3 = 4 — the ratios drift; the PRODUCTS hold at 36."
+     },
+     {
+      "id": "o4",
+      "label": "neither",
+      "correct": false,
+      "feedback": "One test settles it: xy = 36 in every row — a clean inverse law."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Direct vs inverse, one question.",
+   "conceptTag": "rf-variation",
+   "explanationVariants": [
+    "Direct: y/x constant (both rise together). Inverse: xy constant (one rises, the other falls).",
+    "Ratios for direct, products for inverse."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Which quantity pair naturally varies INVERSELY?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "number of workers and hours to finish a fixed job",
+      "correct": true,
+      "feedback": "Right — more workers, less time: their product (worker-hours) is the fixed job size."
+     },
+     {
+      "id": "o2",
+      "label": "hours worked and total pay at a fixed hourly rate",
+      "correct": false,
+      "feedback": "Pay grows WITH hours — that's direct variation, y = kx."
+     },
+     {
+      "id": "o3",
+      "label": "distance traveled and time at a fixed speed",
+      "correct": false,
+      "feedback": "Distance rises with time (d = st) — direct."
+     },
+     {
+      "id": "o4",
+      "label": "a square's side and its perimeter",
+      "correct": false,
+      "feedback": "P = 4s climbs with s — direct, with k = 4."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-variation__mcq"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Joint variation.",
+   "conceptTag": "rf-variation",
+   "explanationVariants": [
+    "z = kxy: 24 = k · 2 · 3 → k = 4, so z = 4xy; at (3, 5): z = 60.",
+    "Joint means proportional to the PRODUCT of the others."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "z varies jointly with x and y (z = kxy), and z = 24 when x = 2, y = 3. What is z when x = 3, y = 5?",
+    "answer": 60,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 40,
+      "feedback": "k = 24/(2·3) = 4 (not 24/... a single variable): z = 4 · 3 · 5 = 60."
+     },
+     {
+      "value": 15,
+      "feedback": "15 is just x · y — multiply by the constant k = 4: z = 60."
+     }
+    ],
+    "fallbackFeedback": "k = 4 → z = 4 · 15 = 60."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-variation__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Inverse capstone.",
+   "conceptTag": "rf-variation",
+   "explanationVariants": [
+    "Pressure P = k/V: 12 = k/10 → k = 120; at V = 4: P = 120/4 = 30.",
+    "Constant product PV = 120 (Boyle's law in miniature)."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A gas's pressure varies inversely with volume: P = 12 when V = 10. What is P when V = 4?",
+    "answer": 30,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 4.8,
+      "feedback": "k = PV = 120 → P = 120/4 = 30 (4.8 runs the DIRECT law P = 1.2V)."
+     },
+     {
+      "value": 120,
+      "feedback": "120 is k itself — divide by the new volume: 120/4 = 30."
+     }
+    ],
+    "fallbackFeedback": "k = 120 → P = 120/4 = 30; smaller volume, larger pressure. ✓"
+   },
+   "hints": [
+    "Find k from the given pair: k = PV = 12 · 10.",
+    "k = 120, so P = 120/V.",
+    "At V = 4: P = 30."
+   ],
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-variation__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Find k from one pair, then predict — products for inverse, ratios for direct.",
+   "takeaways": [
+    "Inverse: y = k/x, constant product xy = k.",
+    "Joint: z = kxy — proportional to the product.",
+    "Two-step ritual: solve for k, then substitute."
+   ],
+   "teaser": "That completes Rational Functions — logarithms and exponentials come next in Algebra 2."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "rf-variation",
+   "concept": {
+    "id": "rem-rf0503-c",
+    "kind": "concept",
+    "body": "The two-step in miniature: y = k/x with y = 8 at x = 2. Step 1: k = xy."
+   },
+   "check": {
+    "id": "rem-rf0503-k",
+    "kind": "check",
+    "body": "Compute k.",
+    "conceptTag": "rf-variation",
+    "explanationVariants": [
+     "k = 2 · 8 = 16.",
+     "Inverse variation stores its constant as the product."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "y varies inversely with x, and y = 8 when x = 2. What is k?",
+     "answer": 16,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 4,
+       "feedback": "k is the PRODUCT xy = 16 (4 divides them — that's the direct-variation ratio)."
+      },
+      {
+       "value": 10,
+       "feedback": "Multiply, don't add: 2 · 8 = 16."
+      }
+     ],
+     "fallbackFeedback": "k = xy = 16."
+    }
+   }
+  }
+ ]
+}

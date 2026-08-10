@@ -1,0 +1,308 @@
+{
+ "id": "rf-04-03",
+ "slug": "horizontal-asymptotes",
+ "title": "Horizontal Asymptotes",
+ "courseId": "rational-functions",
+ "chapterId": "ch4-graphs-asymptotes-and-holes",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Where do the far ends settle? Compare **degrees**. Top degree < bottom: outputs shrink to **y = 0**. Degrees equal: outputs settle at the **ratio of leading coefficients**. Top degree > bottom: the function escapes — **no horizontal asymptote**.",
+   "figure": "ha-degree-panels"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Smaller top.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the horizontal asymptote of f(x) = (3x + 1)/(x² + 5)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "y = 0",
+      "correct": true,
+      "feedback": "Right — degree 1 over degree 2: the bottom outgrows the top, crushing the ratio toward 0."
+     },
+     {
+      "id": "o2",
+      "label": "y = 3",
+      "correct": false,
+      "feedback": "y = 3 would need EQUAL degrees — here the bottom's x² dominates the top's 3x."
+     },
+     {
+      "id": "o3",
+      "label": "y = 3/5",
+      "correct": false,
+      "feedback": "Leading coefficients only rule when degrees MATCH — 1 < 2 sends everything to 0."
+     },
+     {
+      "id": "o4",
+      "label": "none",
+      "correct": false,
+      "feedback": "'None' is the top-heavy case — a heavier BOTTOM pins the ends to y = 0."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Why the ratio rule? For large x, only the leading terms matter (Chapter 1 of pf!): (4x² + x)/(2x² − 7) behaves like 4x²/2x² = **2**. Test x = 100: 40100/19993 ≈ 2.006 — already hugging y = 2. The lower-order terms fade like passengers on a rocket.",
+   "figure": "rf-horizontal-asymptote"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Equal degrees.",
+   "conceptTag": "rf-ha",
+   "explanationVariants": [
+    "Degrees match (2 and 2): HA = ratio of leads = 6/3 = 2.",
+    "For huge x, 6x²/3x² = 2 dominates everything else."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the horizontal asymptote of f(x) = (6x² − x)/(3x² + 8)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "y = 2",
+      "correct": true,
+      "feedback": "Right — equal degrees: 6/3 = 2."
+     },
+     {
+      "id": "o2",
+      "label": "y = 0",
+      "correct": false,
+      "feedback": "y = 0 needs a HEAVIER bottom — these degrees tie, so the lead ratio wins: 2."
+     },
+     {
+      "id": "o3",
+      "label": "y = 6",
+      "correct": false,
+      "feedback": "Both leads count: 6 divided by 3, not 6 alone."
+     },
+     {
+      "id": "o4",
+      "label": "y = −1/8",
+      "correct": false,
+      "feedback": "That reads the LOWEST-order terms — far-end behavior is ruled by the highest: 6/3."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-ha__mcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Top-heavy.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "What is the horizontal asymptote of f(x) = (x³ + 1)/(x + 2)?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "none — the top's degree is larger",
+      "correct": true,
+      "feedback": "Right — degree 3 over 1: for huge x this behaves like x², escaping upward."
+     },
+     {
+      "id": "o2",
+      "label": "y = 0",
+      "correct": false,
+      "feedback": "y = 0 is the BOTTOM-heavy case — here the top outguns the bottom and runs away."
+     },
+     {
+      "id": "o3",
+      "label": "y = 1",
+      "correct": false,
+      "feedback": "The lead ratio (1/1) applies only to EQUAL degrees — 3 > 1 means no settling at all."
+     },
+     {
+      "id": "o4",
+      "label": "y = 1/2",
+      "correct": false,
+      "feedback": "1/2 reads the constants — the x³ up top overwhelms everything: no horizontal asymptote."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Read from far-out values.",
+   "conceptTag": "rf-ha",
+   "explanationVariants": [
+    "(10x + 3)/(2x − 1) at x = 1000: 10003/1999 ≈ 5.004 — settling at 10/2 = 5.",
+    "Equal degrees (both 1): the lead ratio 10/2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "f(x) = (10x + 3)/(2x − 1) settles toward which horizontal asymptote value y?",
+    "answer": 5,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "Both leads participate: 10 DIVIDED BY 2 = 5."
+     },
+     {
+      "value": -3,
+      "feedback": "−3 pairs the low-order terms (3 and −1) — the far ends obey the LEADS: 10/2 = 5."
+     }
+    ],
+    "fallbackFeedback": "y = 10/2 = 5; at x = 1000 the value is already ≈ 5.004."
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-ha__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Crossing is allowed.",
+   "conceptTag": "rf-ha",
+   "explanationVariants": [
+    "Horizontal asymptotes describe the FAR ENDS — mid-graph the curve may cross freely (unlike vertical walls, which are never touched).",
+    "f(x) = x/(x² + 1) crosses y = 0 at the origin, then settles back onto it."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Can a graph CROSS its own horizontal asymptote?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "yes — the rule only governs far-end behavior",
+      "correct": true,
+      "feedback": "Right — x/(x² + 1) passes straight through y = 0 at the origin, then hugs it far out."
+     },
+     {
+      "id": "o2",
+      "label": "never — asymptotes can't be touched",
+      "correct": false,
+      "feedback": "That's true of VERTICAL asymptotes (banned inputs) — horizontal ones only promise end behavior."
+     },
+     {
+      "id": "o3",
+      "label": "only if there's a hole",
+      "correct": false,
+      "feedback": "Holes are unrelated — mid-graph crossings are ordinary; try x/(x² + 1) at 0."
+     },
+     {
+      "id": "o4",
+      "label": "only for y = 0",
+      "correct": false,
+      "feedback": "Any horizontal asymptote can be crossed mid-graph — the constraint lives at the ends alone."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-ha__mcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full asymptote inventory.",
+   "conceptTag": "rf-ha",
+   "explanationVariants": [
+    "f(x) = (2x² − 8)/(x² − 1): equal degrees → HA y = 2/1 = 2; bottom zeros ±1 (no cancellation: top zeros are ±2) → vertical asymptotes x = 1 and x = −1.",
+    "Three rails total: y = 2, x = 1, x = −1."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "List ALL asymptotes of f(x) = (2x² − 8)/(x² − 1).",
+    "options": [
+     {
+      "id": "o1",
+      "label": "y = 2; x = 1 and x = −1",
+      "correct": true,
+      "feedback": "Right — lead ratio 2/1, plus both surviving denominator zeros."
+     },
+     {
+      "id": "o2",
+      "label": "y = 8; x = ±1",
+      "correct": false,
+      "feedback": "The HA is the ratio of LEADS: 2x²/x² = 2 (8 pairs the constants)."
+     },
+     {
+      "id": "o3",
+      "label": "y = 2; x = ±2",
+      "correct": false,
+      "feedback": "±2 zero the TOP (x-intercepts) — the walls stand at the BOTTOM's zeros, ±1."
+     },
+     {
+      "id": "o4",
+      "label": "y = 2; hole at x = 1",
+      "correct": false,
+      "feedback": "2x² − 8 = 2(x − 2)(x + 2) shares nothing with (x − 1)(x + 1) — no cancellation, no hole: walls at ±1."
+     }
+    ]
+   },
+   "hints": [
+    "Degrees are equal: HA = 2/1 = 2.",
+    "Factor both: top 2(x − 2)(x + 2), bottom (x − 1)(x + 1) — nothing cancels.",
+    "Every bottom zero survives: vertical asymptotes at ±1."
+   ],
+   "variant": {
+    "gen": "a2-rationals",
+    "form": "rf-ha__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Compare degrees for the horizontal story; factor for the vertical one.",
+   "takeaways": [
+    "top < bottom: y = 0; equal: lead ratio; top > bottom: none.",
+    "Only leading terms matter far out — the rest fades.",
+    "Horizontal rails can be crossed mid-graph; vertical walls cannot."
+   ],
+   "teaser": "Final chapter: rational EQUATIONS — clear the fractions and check for phantoms."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "rf-ha",
+   "concept": {
+    "id": "rem-rf0403-c",
+    "kind": "concept",
+    "body": "One comparison: (5x + 1)/(x + 3). Both degrees are 1 — equal — so the HA is the lead ratio."
+   },
+   "check": {
+    "id": "rem-rf0403-k",
+    "kind": "check",
+    "body": "Divide the leads.",
+    "conceptTag": "rf-ha",
+    "explanationVariants": [
+     "y = 5/1 = 5.",
+     "5x over x: the x's match, 5 remains."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "What is the horizontal asymptote value y for (5x + 1)/(x + 3)?",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 1,
+       "feedback": "The leads are 5x and 1x — their ratio is 5 (1/3 pairs the leftovers)."
+      },
+      {
+       "value": 0,
+       "feedback": "y = 0 needs a heavier BOTTOM — these degrees are equal, so y = 5/1."
+      }
+     ],
+     "fallbackFeedback": "Equal degrees: y = 5/1 = 5."
+    }
+   }
+  }
+ ]
+}

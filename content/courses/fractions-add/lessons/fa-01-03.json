@@ -1,0 +1,329 @@
+{
+ "id": "fa-01-03",
+ "slug": "using-the-rule-and-reversing-it",
+ "title": "Using the Rule (and Reversing It)",
+ "courseId": "fractions-add",
+ "chapterId": "ch1-equivalence-derived",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "The ×n/×n rule runs backward too — call it **un-slicing**. If every 2 pieces of 6/8 merge back into 1 bigger piece, the 8 pieces become 8÷2=4, and the 6 shaded pieces become 6÷2=3 shaded. Nothing about the amount changes — you're just merging small pieces into fewer, bigger ones. That's **simplifying**: 6/8 = 3/4.",
+   "figure": "fa-simplify"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match the simplify.",
+   "conceptTag": "simplify-fractions",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each fraction to its simplified form.",
+    "left": [
+     {
+      "id": "s1",
+      "label": "8/12 ÷4/÷4"
+     },
+     {
+      "id": "s2",
+      "label": "9/12 ÷3/÷3"
+     },
+     {
+      "id": "s3",
+      "label": "6/10 ÷2/÷2"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "2/3"
+     },
+     {
+      "id": "r2",
+      "label": "3/4"
+     },
+     {
+      "id": "r3",
+      "label": "3/5"
+     }
+    ],
+    "pairs": {
+     "s1": "r1",
+     "s2": "r2",
+     "s3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "s3",
+      "right": "r2",
+      "feedback": "3/4 comes from 9/12 ÷3/÷3 (9÷3=3, 12÷3=4). 6/10 ÷2/÷2 gives 3/5 (6÷2=3, 10÷2=5)."
+     }
+    ],
+    "missFeedback": "Divide both the top and bottom by the same number.",
+    "successFeedback": "8/12→2/3, 9/12→3/4, 6/10→3/5 — the same divisor hits both numbers every time."
+   },
+   "predict": {
+    "prompt": "Does simplifying a fraction change its VALUE, or only how it's written?",
+    "options": [
+     {
+      "id": "look",
+      "label": "Only how it's written"
+     },
+     {
+      "id": "value",
+      "label": "Its value shrinks"
+     },
+     {
+      "id": "both",
+      "label": "Both change a little"
+     }
+    ],
+    "outcomeId": "look",
+    "reveal": "Simplifying regroups the same amount into bigger pieces — 4/8 and 1/2 are one quantity wearing two outfits. The value never moves."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Simplify by dividing.",
+   "conceptTag": "simplify-fractions",
+   "explanationVariants": [
+    "10/20 ÷10/÷10 gives 1/2 — the top becomes 10÷10=1.",
+    "Both numbers divide evenly by 10."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Simplify 10/20 by dividing both by 10. What is the simplified numerator (top)?",
+    "answer": 1,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 10,
+      "feedback": "10 is the ORIGINAL numerator, not yet divided. Dividing by 10: 10 ÷ 10 = 1."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is the simplified DENOMINATOR (20÷10). The simplified numerator is 10 ÷ 10 = 1."
+     }
+    ],
+    "fallbackFeedback": "Divide the top by 10, the same as the bottom."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faSimplifyNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Smaller divisors still work, but need repeating. The **greatest common factor** — the biggest number that divides both top and bottom evenly — gets you to simplest form in ONE step. Course 6 already taught you to hunt factor pairs; here, you're hunting the biggest SHARED factor of two numbers.",
+   "figure": "fa-simplify"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Find the greatest common factor.",
+   "conceptTag": "simplify-fractions",
+   "explanationVariants": [
+    "Factors of 12: 1,2,3,4,6,12. Factors of 18: 1,2,3,6,9,18. The biggest shared factor is 6.",
+    "Both 12 and 18 divide evenly by 6, and no bigger shared factor exists."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "What is the greatest common factor of 12 and 18 (useful for simplifying 12/18)?",
+    "answer": 6,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 3,
+      "feedback": "3 is a shared factor, but not the GREATEST one — 6 also divides both 12 and 18 evenly, and it's bigger."
+     },
+     {
+      "value": 2,
+      "feedback": "2 is a shared factor, but a bigger one exists: 6 divides both 12 and 18 evenly, and no shared factor is bigger."
+     }
+    ],
+    "fallbackFeedback": "List each number's factors, then find the biggest one they share."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faSimplifyNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Already simplest, or not?",
+   "conceptTag": "simplify-fractions",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each fraction: is it already in simplest form, or can it still be simplified?",
+    "buckets": [
+     {
+      "id": "simplest",
+      "label": "Already simplest",
+      "icon": "✅"
+     },
+     {
+      "id": "cansimplify",
+      "label": "Can still simplify",
+      "icon": "🔁"
+     }
+    ],
+    "items": [
+     {
+      "id": "f34",
+      "label": "3/4",
+      "bucketId": "simplest",
+      "feedback": "3 and 4 share no factor except 1 — already simplest."
+     },
+     {
+      "id": "f68",
+      "label": "6/8",
+      "bucketId": "cansimplify",
+      "feedback": "6 and 8 share the factor 2 — divide both by 2 to get 3/4."
+     },
+     {
+      "id": "f59",
+      "label": "5/9",
+      "bucketId": "simplest",
+      "feedback": "5 and 9 share no factor except 1 — already simplest."
+     },
+     {
+      "id": "f1012",
+      "label": "10/12",
+      "bucketId": "cansimplify",
+      "feedback": "10 and 12 share the factor 2 — divide both by 2 to get 5/6."
+     }
+    ],
+    "missFeedback": "Check whether the top and bottom share any factor bigger than 1.",
+    "successFeedback": "3/4 and 5/9 share no factor but 1; 6/8 and 10/12 both share a 2, so they can simplify further."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Simplify to lowest terms.",
+   "conceptTag": "simplify-fractions",
+   "explanationVariants": [
+    "The greatest common factor of 15 and 20 is 5. Dividing both: 15÷5=3, 20÷5=4 — simplified to 3/4.",
+    "5 is the biggest number dividing both 15 and 20 evenly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Simplify 15/20 to lowest terms. What is the denominator (bottom) of the simplified fraction?",
+    "answer": 4,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 20,
+      "feedback": "20 is the ORIGINAL bottom, not yet simplified. Dividing by the greatest common factor (5): 20 ÷ 5 = 4."
+     },
+     {
+      "value": 10,
+      "feedback": "10 would come from dividing by 2, but 5 is the GREATEST shared factor of 15 and 20. Dividing by 5: 20 ÷ 5 = 4."
+     }
+    ],
+    "fallbackFeedback": "Find the greatest common factor of 15 and 20, then divide the bottom by it."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faSimplifyNumeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The pizza slices.",
+   "conceptTag": "simplify-fractions",
+   "hints": [
+    "8 of 12 slices were eaten: the fraction is 8/12.",
+    "Find the greatest common factor of 8 and 12.",
+    "Divide both the top and bottom by that factor."
+   ],
+   "explanationVariants": [
+    "The greatest common factor of 8 and 12 is 4. Dividing both: 8÷4=2, 12÷4=3 — simplified to 2/3.",
+    "8/12 simplifies to 2/3 in one step using their greatest common factor, 4."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A pizza is cut into 12 slices; 8 are eaten. Simplify the eaten fraction to lowest terms. What is the numerator (top) of the simplified fraction?",
+    "answer": 2,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 8,
+      "feedback": "8 is the ORIGINAL numerator, not yet simplified. Dividing by the greatest common factor (4): 8 ÷ 4 = 2."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is the greatest common factor itself, not the simplified numerator. Dividing 8 by 4 gives the true simplified top: 2."
+     }
+    ],
+    "fallbackFeedback": "Find the greatest common factor of 8 and 12, then divide the top by it."
+   },
+   "variant": {
+    "gen": "g4-fractions",
+    "form": "faSimplifyNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "The rule, both ways.",
+   "takeaways": [
+    "÷n/÷n simplifies a fraction the exact same way ×n/×n grows one — same rule, opposite direction.",
+    "The greatest common factor gets you to simplest form in one step.",
+    "A fraction is in simplest form when its top and bottom share no factor besides 1."
+   ],
+   "teaser": "next chapter: comparing fractions using benchmarks, without needing a common denominator at all."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "simplify-fractions",
+   "concept": {
+    "id": "rem-sf-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Divide the top and bottom by the same number to simplify.** For 4/6: both share the factor 2, so 4÷2=2 and 6÷2=3 — simplified to 2/3. Look for the biggest shared factor to finish in one step."
+   },
+   "check": {
+    "id": "rem-sf-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "simplify-fractions",
+    "explanationVariants": [
+     "4 and 6 share the factor 2: 4÷2=2, 6÷2=3.",
+     "Dividing both by 2 simplifies 4/6 to 2/3."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Simplify 4/6 to lowest terms.",
+     "options": [
+      {
+       "id": "a",
+       "label": "2/3",
+       "correct": true,
+       "feedback": "4÷2=2 and 6÷2=3 — both divided by their shared factor, 2."
+      },
+      {
+       "id": "b",
+       "label": "4/6",
+       "feedback": "4 and 6 still share the factor 2 — this isn't simplest form yet. Dividing both by 2 gives 2/3."
+      },
+      {
+       "id": "c",
+       "label": "2/4",
+       "feedback": "That divides only the top by 2. Both numbers must divide the same way: 4÷2=2, 6÷2=3, giving 2/3."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

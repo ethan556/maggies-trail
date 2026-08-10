@@ -1,0 +1,312 @@
+{
+  "id": "ep-01-03",
+  "slug": "zero-and-negative-exponents",
+  "title": "Zero & Negative Exponents",
+  "courseId": "exponents-polynomials",
+  "chapterId": "ch1-exponent-rules",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "exponent-repeat",
+      "body": "The quotient rule explains two new cases. a^n / a^n = a^0, but it's also 1, so **a^0 = 1** for any nonzero base. And when the bottom exponent is larger, you get a **negative** exponent, which the next step unpacks."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Anything to the zero.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Evaluate 5^0.",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "A zero exponent gives 1, not the base: 5^0 = 1."
+          },
+          {
+            "value": 0,
+            "feedback": "A zero exponent means one factor of nothing left — the value is 1, not 0."
+          }
+        ],
+        "fallbackFeedback": "Any nonzero base to the 0 power is 1: 5^0 = 1."
+      },
+      "predict": {
+        "prompt": "Walk the ladder down — 5³ = 125, 5² = 25, 5¹ = 5, each step dividing by 5. So 5⁰ is…",
+        "options": [
+          {
+            "id": "one",
+            "label": "1 — one more ÷5"
+          },
+          {
+            "id": "zero",
+            "label": "0 — no fives left"
+          },
+          {
+            "id": "five",
+            "label": "5"
+          }
+        ],
+        "outcomeId": "one",
+        "reveal": "The ladder keeps dividing: 125, 25, 5, then 5 ÷ 5 = 1. A zero exponent isn't 'nothing' — it's where the pattern lands, and it's the value that keeps the product and quotient rules honest."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Mix in a zero result.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.",
+        "Add the exponents, keeping the sign: 3 + (−1) = 2, so 2^2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify 2^3 · 2^-1 to 2^?. What is the exponent?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "The second exponent is −1, so add its sign: 3 + (−1) = 2."
+          },
+          {
+            "value": 3,
+            "feedback": "The −1 still counts. 3 + (−1) = 2."
+          }
+        ],
+        "fallbackFeedback": "Add the exponents with signs: 3 + (−1) = 2."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "exponent-zero-negative__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A **negative exponent means reciprocal**: a^(−n) = 1/a^n. Flip the base into the denominator and drop the sign. So 2^(−3) = 1/2^3 = **1/8**. A negative exponent never makes the value negative — it makes it a fraction.",
+      "figure": "ep-negative-exp"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Rewrite as a fraction.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is 2^-3 as a fraction?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/8",
+            "correct": true,
+            "feedback": "Yes — 2^-3 = 1/2^3 = 1/8."
+          },
+          {
+            "id": "b",
+            "label": "-8",
+            "feedback": "A negative exponent makes a reciprocal, not a negative: 2^-3 = 1/8."
+          },
+          {
+            "id": "c",
+            "label": "1/6",
+            "feedback": "The 3 is an exponent, not a multiplier: 2^3 = 8, so 1/8."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Negative exponents also appear from division when the bottom is bigger: a^m / a^n with n > m. For 3^4 / 3^6, subtract: 3^(4−6) = 3^(−2), which means 1/3^2 = **1/9**.",
+      "figure": "ep-neg-from-division"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Subtract into a negative.",
+      "widget": {
+        "type": "placeValueTransformLab",
+        "task": "exponentChain",
+        "answerMode": "numeric",
+        "prompt": "3⁴ / 3⁶ simplifies to a single power 3^?. Chain through the subtraction.",
+        "values": [
+          4,
+          6
+        ],
+        "exponentOps": [
+          "subtract"
+        ],
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "2 ignores the sign of the subtraction. Dividing means the SMALLER exponent's power cancels out of the larger, leaving a NEGATIVE remainder: 4 − 6 = −2."
+          },
+          {
+            "value": -10,
+            "feedback": "−10 adds the exponents, which is the rule for MULTIPLYING powers. Dividing subtracts: 4 − 6 = −2."
+          }
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "successFeedback": "4 − 6 = −2, so 3⁴ / 3⁶ = 3⁻². A negative result here is not a special case — it just means more 3's cancelled from the bottom than were on top, which is exactly what a negative exponent records.",
+        "explorationFeedback": "Step through the chain before checking — the sign of the answer is the whole point.",
+        "fallbackFeedback": "4 − 6 = −2."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Product with a negative.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "x^5 · x^-2 = x^(5 + (−2)) = x^3.",
+        "Add the exponents with signs: 5 + (−2) = 3, so x^3."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify x^5 · x^-2 to x^?. What is the exponent?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "The second exponent is −2, so add its sign: 5 + (−2) = 3."
+          },
+          {
+            "value": -3,
+            "feedback": "Keep the order: 5 + (−2) = 3, not −3."
+          }
+        ],
+        "fallbackFeedback": "Add with signs: 5 + (−2) = 3, so x^3."
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "exponent-zero-negative__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Rewrite this one.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "3^-2 = 1/3^2 = 1/9.",
+        "Flip to a reciprocal: 1 over 3^2, which is 1/9."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is 3^-2 as a fraction?",
+        "options": [
+          {
+            "id": "a",
+            "label": "1/9",
+            "correct": true,
+            "feedback": "Yes — 3^-2 = 1/3^2 = 1/9."
+          },
+          {
+            "id": "b",
+            "label": "-9",
+            "feedback": "A negative exponent makes a reciprocal, not a negative: 1/9."
+          },
+          {
+            "id": "c",
+            "label": "1/6",
+            "feedback": "The 2 is an exponent: 3^2 = 9, so 1/9."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "exponent-zero-negative__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Product landing on a negative.",
+      "conceptTag": "exponent-zero-negative",
+      "explanationVariants": [
+        "2^3 · 2^-5 = 2^(3 + (−5)) = 2^(−2).",
+        "Add the exponents with signs: 3 + (−5) = −2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Simplify 2^3 · 2^-5 to 2^?. What is the exponent?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Keep the sign: 3 + (−5) = −2, not +2."
+          },
+          {
+            "value": 8,
+            "feedback": "The second exponent is −5, so add its sign: 3 + (−5) = −2."
+          }
+        ],
+        "fallbackFeedback": "Add with signs: 3 + (−5) = −2, so 2^(−2)."
+      },
+      "hints": [
+        "Same base, product, so add the exponents.",
+        "The second exponent is −5: 3 + (−5).",
+        "3 − 5 = −2, so 2^(−2)."
+      ],
+      "variant": {
+        "gen": "a1-polynomials",
+        "form": "exponent-zero-negative__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Zero gives 1; negative gives a reciprocal.",
+      "takeaways": [
+        "a^0 = 1 for any nonzero base.",
+        "a^(−n) = 1/a^n — a reciprocal, never a negative value.",
+        "Keep exponent signs when adding or subtracting."
+      ],
+      "teaser": "next chapter: polynomials — degree, like terms, and adding them."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "exponent-zero-negative",
+      "concept": {
+        "id": "rem-ezn-c",
+        "kind": "concept",
+        "body": "a^0 = 1 for any nonzero base. A negative exponent means reciprocal: a^(−n) = 1/a^n, so 2^-3 = 1/8. When adding exponents, keep their signs: 2^3 · 2^-1 = 2^2."
+      },
+      "check": {
+        "id": "rem-ezn-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "exponent-zero-negative",
+        "explanationVariants": [
+          "Add with signs: 4 + (−1) = 3, so 2^3.",
+          "2^4 · 2^-1 = 2^(4−1) = 2^3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Simplify 2^4 · 2^-1 to 2^?. What is the exponent?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 5,
+              "feedback": "The second exponent is −1: 4 + (−1) = 3."
+            },
+            {
+              "value": 4,
+              "feedback": "The −1 still counts: 4 + (−1) = 3."
+            }
+          ],
+          "fallbackFeedback": "Add with signs: 4 + (−1) = 3."
+        }
+      }
+    }
+  ]
+}

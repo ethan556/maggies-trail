@@ -1,0 +1,288 @@
+{
+ "id": "pra-02-02",
+ "slug": "the-conjugate-pair-theorem",
+ "title": "Mirror Pairs: the Conjugate Zero Theorem",
+ "courseId": "polynomial-rational-analysis",
+ "chapterId": "ch2-fta-conjugates",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "For a polynomial with **real coefficients**, non-real zeros never travel alone: if a + bi is a zero, its **conjugate a − bi** is too. The pair is a mirror image across the real axis — one reflection the coefficients can't tell apart.",
+   "figure": "pra-conjugate-mirror"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Name the partner.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A real-coefficient polynomial has the zero 3 + 2i. Which number MUST also be a zero?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "3 − 2i",
+      "correct": true,
+      "feedback": "Right — conjugates flip only the imaginary part's sign: the mirror across the real axis."
+     },
+     {
+      "id": "o2",
+      "label": "−3 − 2i",
+      "feedback": "That flips BOTH parts (reflection through the origin). The conjugate keeps the real part: 3 − 2i."
+     },
+     {
+      "id": "o3",
+      "label": "2 + 3i",
+      "feedback": "That swaps the parts. The conjugate of a + bi is a − bi: here, 3 − 2i."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The pairing has muscle: non-real zeros come in **twos**, so a real-coefficient cubic can have **0 or 2** non-real zeros — never 1 or 3. Every odd-degree real polynomial is therefore forced to keep **at least one real zero**.",
+   "figure": "pra-conjugate-pairs"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Use the parity.",
+   "conceptTag": "pra-conjugate",
+   "explanationVariants": [
+    "2i's partner −2i is forced, using 2 of the 3 slots; the FTA's third zero must then be REAL.",
+    "Non-real zeros pair up: 3 total − 2 paired = 1 real zero remaining."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A real-coefficient CUBIC has the zero 2i. What can you conclude about its other zeros?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "−2i is also a zero, and the third zero is real",
+      "correct": true,
+      "feedback": "Exactly — the conjugate fills one slot, and the leftover single slot can't hold an unpaired non-real zero."
+     },
+     {
+      "id": "o2",
+      "label": "The other two zeros are both non-real",
+      "feedback": "Then the cubic would have 3 non-real zeros — an odd number, impossible when they must pair up. One zero is real."
+     },
+     {
+      "id": "o3",
+      "label": "Only that −2i is a zero; the third could be anything complex",
+      "feedback": "The third zero can't be non-real: it would need ITS conjugate too, a 4th zero a cubic doesn't have. It must be real."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-conjugate__mcq"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Watch the pair build real coefficients.",
+   "conceptTag": "pra-conjugate",
+   "explanationVariants": [
+    "(x − 2i)(x + 2i) = x² − (2i)² = x² + 4 — the i's annihilate, leaving real coefficients.",
+    "The pair multiplies to x² + 4 because (2i)(−2i) = +4 and the middle terms cancel."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Multiply the conjugate pair: (x − 2i)(x + 2i) = x² + c. What is c?",
+    "answer": 4,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": -4,
+      "feedback": "(x − 2i)(x + 2i) = x² − (2i)² = x² − (−4) = x² + 4: the double negative flips to plus."
+     },
+     {
+      "value": 2,
+      "feedback": "The constant is (−2i)(+2i) = −4i² = +4, not the 2 from 2i."
+     }
+    ],
+    "fallbackFeedback": "x² − (2i)² = x² + 4."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-conjugate__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Assemble the whole cubic.",
+   "conceptTag": "pra-conjugate",
+   "explanationVariants": [
+    "(x² + 4)(x − 1) = x³ − x² + 4x − 4 — real coefficients throughout, zeros 2i, −2i, 1.",
+    "Multiply out: x³ + 4x from the x, minus (x² + 4): x³ − x² + 4x − 4."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "The cubic with zeros 2i, −2i, and 1 (leading coefficient 1) is:",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x³"
+     },
+     {
+      "id": "t1",
+      "label": "− x²"
+     },
+     {
+      "id": "t2",
+      "label": "+ x²"
+     },
+     {
+      "id": "t3",
+      "label": "+ 4x"
+     },
+     {
+      "id": "t4",
+      "label": "− 4x"
+     },
+     {
+      "id": "t5",
+      "label": "− 4"
+     },
+     {
+      "id": "t6",
+      "label": "+ 4"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t1",
+     "t3",
+     "t5"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t3",
+       "t6"
+      ],
+      "feedback": "That's (x² + 4)(x + 1), whose real zero is −1, not 1."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t1",
+       "t4",
+       "t6"
+      ],
+      "feedback": "A −4x term would need the factor (x² − 4), whose zeros are ±2 — real, not ±2i."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Multiply (x² + 4)(x − 1) — the conjugate pair contributes x² + 4, the real zero the (x − 1).",
+    "successFeedback": "Right — (x² + 4)(x − 1) expands to exactly this, and every coefficient is real."
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-conjugate__buildExpression"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "An impossible inventory.",
+   "conceptTag": "pra-conjugate",
+   "explanationVariants": [
+    "The list has 5 − 4i unpaired: real coefficients would force 5 + 4i as a FIFTH zero, but a quartic holds only 4. The claimed list is impossible.",
+    "Count the pairs: 1 ± 2i pair up, but 5 − 4i's partner is missing — with real coefficients, no quartic can have exactly this zero set."
+   ],
+   "hints": [
+    "Check each non-real zero for its conjugate partner in the list.",
+    "1 + 2i and 1 − 2i pair up fine. What about 5 − 4i?",
+    "5 − 4i needs 5 + 4i, which would be a 5th zero — one too many for degree 4."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A student claims a REAL-coefficient quartic has exactly the zeros {3, 1 + 2i, 1 − 2i, 5 − 4i}. Is that possible?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "No — 5 − 4i is unpaired, and its forced conjugate would exceed degree 4",
+      "correct": true,
+      "feedback": "Right — the conjugate theorem would demand 5 + 4i too, a fifth zero no quartic can carry."
+     },
+     {
+      "id": "o2",
+      "label": "Yes — the FTA allows any 4 complex numbers as zeros",
+      "feedback": "With COMPLEX coefficients, yes — but real coefficients force conjugate pairing, and 5 − 4i's partner is absent."
+     },
+     {
+      "id": "o3",
+      "label": "No — a quartic can have at most 2 non-real zeros",
+      "feedback": "A quartic CAN have 4 non-real zeros (two conjugate pairs, like x⁴ + 5x² + 4). The problem here is the unpaired 5 − 4i."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g12-polynomial-rational-analysis",
+    "form": "polynomial-rational-analysis__pra-conjugate__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Mirrors are mandatory.",
+   "takeaways": [
+    "Real coefficients ⇒ non-real zeros come in conjugate pairs.",
+    "Odd degree ⇒ at least one real zero.",
+    "A conjugate pair multiplies to a real quadratic: (x − a − bi)(x − a + bi)."
+   ],
+   "teaser": "Next: building custom polynomials from ANY mix of real and complex zeros."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pra-conjugate",
+   "concept": {
+    "id": "rem-pra0202-c",
+    "kind": "concept",
+    "body": "Conjugate = same real part, opposite imaginary sign. In a real-coefficient polynomial's zero list, every a + bi (b ≠ 0) must appear alongside a − bi."
+   },
+   "check": {
+    "id": "rem-pra0202-k",
+    "kind": "check",
+    "body": "Name one partner.",
+    "conceptTag": "pra-conjugate",
+    "explanationVariants": [
+     "The conjugate of −4 + 7i keeps −4 and flips 7i: −4 − 7i.",
+     "Mirror across the real axis: the imaginary part 7 becomes −7."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A real-coefficient polynomial has the zero −4 + 7i. Its forced partner is:",
+     "options": [
+      {
+       "id": "o1",
+       "label": "−4 − 7i",
+       "correct": true,
+       "feedback": "Right — real part unchanged, imaginary sign flipped."
+      },
+      {
+       "id": "o2",
+       "label": "4 − 7i",
+       "feedback": "The REAL part never flips under conjugation: it stays −4."
+      },
+      {
+       "id": "o3",
+       "label": "7 − 4i",
+       "feedback": "Conjugation doesn't swap the parts — it only negates the imaginary one: −4 − 7i."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

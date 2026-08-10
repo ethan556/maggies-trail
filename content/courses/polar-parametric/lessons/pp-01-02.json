@@ -1,0 +1,221 @@
+{
+ "id": "pp-01-02",
+ "slug": "polar-to-rectangular",
+ "title": "Polar → Rectangular: Drop the Triangle",
+ "courseId": "polar-parametric",
+ "chapterId": "ch1-polar-coordinates",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every polar point makes a right triangle with the axes (recall SOH-CAH-TOA): the hypotenuse is r at angle θ. So the legs are\n\nx = **r cos θ**,  y = **r sin θ**.\n\nThat's the entire polar-to-rectangular bridge — just the triangle's legs.",
+   "figure": "pp-convert-triangle"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Find x.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "For the polar point (4, π/3), what is x? (Exact decimal.)",
+    "answer": 2,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 3.46,
+      "feedback": "3.46 ≈ 2√3 is the Y value (r sin θ). x uses COSINE: 4·cos(π/3) = 4·(1/2) = 2."
+     },
+     {
+      "value": 4,
+      "feedback": "4 is r itself. Project onto x with cosine: 4·(1/2) = 2."
+     }
+    ],
+    "fallbackFeedback": "x = r cos θ = 4·cos(π/3) = 4·(1/2) = 2."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Find y.",
+   "conceptTag": "pp-to-rect",
+   "explanationVariants": [
+    "y = r sin θ = 4·sin(π/3) = 4·(√3/2) = 2√3 ≈ 3.4641.",
+    "The vertical leg uses sine: 2√3 ≈ 3.46."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Same point (4, π/3). What is y? (To four decimals.)",
+    "answer": 3.4641,
+    "tolerance": 0.0005,
+    "commonErrors": [
+     {
+      "value": 2,
+      "feedback": "2 = r cos θ is the X leg. y uses SINE: 4·(√3/2) = 2√3 ≈ 3.4641."
+     },
+     {
+      "value": 2.8284,
+      "feedback": "2.8284 = 2√2 would be sin(π/4)·4. Here θ = π/3: 4·(√3/2) = 2√3 ≈ 3.4641."
+     }
+    ],
+    "fallbackFeedback": "y = r sin θ = 4·(√3/2) = 2√3 ≈ 3.4641."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-to-rect__numeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The formulas handle EVERY case automatically — the sign of cos θ and sin θ places the point in the correct quadrant, and a negative r flips both legs. No separate rules to memorize: plug in θ, and the trig does the bookkeeping.",
+   "figure": "pp-formulas-every-case"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A second-quadrant angle.",
+   "conceptTag": "pp-to-rect",
+   "explanationVariants": [
+    "(2, 3π/4): x = 2 cos(3π/4) = 2·(−√2/2) = −√2 ≈ −1.4142 — cosine's negativity places it left.",
+    "The Q2 angle gives a negative x automatically: −√2."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For (2, 3π/4), what is x? (To four decimals.)",
+    "answer": -1.4142,
+    "tolerance": 0.0005,
+    "commonErrors": [
+     {
+      "value": 1.4142,
+      "feedback": "cos(3π/4) is NEGATIVE (−√2/2), so x = −√2 ≈ −1.4142. The formula handles the sign."
+     },
+     {
+      "value": -2,
+      "feedback": "−2 forgets the cosine factor: 2·(−√2/2) = −√2 ≈ −1.4142, not −2."
+     }
+    ],
+    "fallbackFeedback": "x = 2·cos(3π/4) = 2·(−√2/2) = −√2 ≈ −1.4142."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-to-rect__numeric"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Negative r, checked.",
+   "conceptTag": "pp-to-rect",
+   "explanationVariants": [
+    "(−3, π/6): y = −3·sin(π/6) = −3·(1/2) = −1.5 — the negative r drags the point below the axis.",
+    "Plugging the negative r straight in gives y = −1.5, no special-casing."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For (−3, π/6), what is y? (Exact decimal.)",
+    "answer": -1.5,
+    "tolerance": 0.005,
+    "commonErrors": [
+     {
+      "value": 1.5,
+      "feedback": "The negative r flips the sign: y = (−3)·(1/2) = −1.5, not +1.5."
+     },
+     {
+      "value": -2.6,
+      "feedback": "−2.6 ≈ −3·sin(π/3). Here θ = π/6, so sin = 1/2: y = −1.5."
+     }
+    ],
+    "fallbackFeedback": "y = r sin θ = (−3)·(1/2) = −1.5."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-to-rect__numeric"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Full conversion.",
+   "conceptTag": "pp-to-rect",
+   "explanationVariants": [
+    "(6, 2π/3): x = 6 cos(2π/3) = 6·(−1/2) = −3; y = 6 sin(2π/3) = 6·(√3/2) = 3√3 ≈ 5.196. The point (−3, 3√3). Asked for x + y = −3 + 3√3 ≈ 2.196.",
+    "Both legs from the formulas; their sum is −3 + 3√3 ≈ 2.1962."
+   ],
+   "hints": [
+    "x = 6 cos(2π/3), y = 6 sin(2π/3).",
+    "cos(2π/3) = −1/2, sin(2π/3) = √3/2.",
+    "x = −3, y = 3√3 ≈ 5.196; add them."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Convert (6, 2π/3) to rectangular and report x + y, to four decimals.",
+    "answer": 2.1962,
+    "tolerance": 0.001,
+    "commonErrors": [
+     {
+      "value": 8.196,
+      "feedback": "8.196 = 3 + 3√3 uses +3 for x. But cos(2π/3) = −1/2 gives x = −3: sum −3 + 3√3 ≈ 2.1962."
+     },
+     {
+      "value": -2.196,
+      "feedback": "Sign slip: x = −3 and y = +3√3, so x + y = −3 + 5.196 ≈ +2.1962."
+     }
+    ],
+    "fallbackFeedback": "x = −3, y = 3√3; x + y = −3 + 3√3 ≈ 2.1962."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-to-rect__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Just the legs.",
+   "takeaways": [
+    "x = r cos θ, y = r sin θ — the triangle's legs.",
+    "Signs of cos/sin place the quadrant automatically.",
+    "Negative r plugs straight in; no special rules."
+   ],
+   "teaser": "Next: the harder direction — rectangular back to polar."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-to-rect",
+   "concept": {
+    "id": "rem-pp0102-c",
+    "kind": "concept",
+    "body": "Polar → rectangular: x = r cos θ, y = r sin θ. Substitute r and θ directly; the trig signs and any negative r handle the quadrant."
+   },
+   "check": {
+    "id": "rem-pp0102-k",
+    "kind": "check",
+    "body": "One leg.",
+    "conceptTag": "pp-to-rect",
+    "explanationVariants": [
+     "(5, 0): x = 5 cos 0 = 5·1 = 5.",
+     "At angle 0 the point lies on the x-axis: x = 5."
+    ],
+    "widget": {
+     "type": "numeric",
+     "prompt": "For (5, 0), what is x?",
+     "answer": 5,
+     "tolerance": 0,
+     "commonErrors": [
+      {
+       "value": 0,
+       "feedback": "cos 0 = 1, so x = 5·1 = 5 (not 0). 0 would be y = 5 sin 0."
+      },
+      {
+       "value": 1,
+       "feedback": "1 = cos 0; multiply by r: x = 5·1 = 5."
+      }
+     ],
+     "fallbackFeedback": "x = 5·cos 0 = 5."
+    }
+   }
+  }
+ ]
+}

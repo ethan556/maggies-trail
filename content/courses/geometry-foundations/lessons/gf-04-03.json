@@ -1,0 +1,312 @@
+{
+  "id": "gf-04-03",
+  "slug": "rotational-symmetry",
+  "title": "Rotational Symmetry",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch4-composition-symmetry",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-rotational-symmetry",
+      "concept": {
+        "id": "rem-gf-rotational-symmetry-c",
+        "kind": "concept",
+        "body": "Order counts SEATS: how many positions in one full spin look identical to the start. The angle between seats is the full turn shared equally: 360° ÷ order. Order 4 ⇒ 90° steps; order 3 ⇒ 120° steps."
+      },
+      "check": {
+        "id": "rem-gf-rotational-symmetry-k",
+        "kind": "check",
+        "body": "Seats around the turn.",
+        "conceptTag": "gf-rotational-symmetry",
+        "explanationVariants": [
+          "Order 3 splits the full turn into three equal steps: 360 ÷ 3 = 120°.",
+          "Three matching seats, equally spaced: each step is a third of 360°."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An equilateral triangle has rotational symmetry of order 3. What is its smallest matching angle, in degrees?",
+          "answer": 120,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "3 is the order — the seat count. The angle is the full turn divided among the seats: 360 ÷ 3 = 120°."
+            },
+            {
+              "value": 60,
+              "feedback": "60° is the hexagon's step (order 6). With only THREE seats the steps are twice as wide: 120°."
+            }
+          ],
+          "fallbackFeedback": "360 ÷ 3 = 120°."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The turning version: a figure has **rotational symmetry** when some rotation of LESS than a full turn maps it onto itself. Its **order** is how many matching positions fit in one full turn, and the smallest matching angle is **360° ÷ order**. (Every figure trivially matches after 360° — that one doesn't count.)",
+      "figure": "gf-rotational-symmetry"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Turn the square.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the SMALLEST positive rotation (in degrees) that maps a square onto itself?",
+        "answer": 90,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "45° lands the corners on the edge-midpoints — a diamond pose, not the original. The first true match comes at a quarter turn: 90°."
+          },
+          {
+            "value": 180,
+            "feedback": "180° works, but it isn't the smallest — the square already matches at the quarter turn, 90°."
+          }
+        ],
+        "fallbackFeedback": "Four matching positions in a full turn: 360 ÷ 4 = 90°."
+      },
+      "predict": {
+        "prompt": "A square is about to be turned. How many different turns UNDER 360° land it back on itself?",
+        "options": [
+          {
+            "id": "three",
+            "label": "Three — at 90°, 180°, and 270°"
+          },
+          {
+            "id": "one",
+            "label": "One — only the 180° half turn"
+          },
+          {
+            "id": "all",
+            "label": "Every turn works — it's symmetric"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Four identical corners give a match every 360° ÷ 4 = 90°: the square re-lands at 90°, 180°, and 270°. The SMALLEST of those, 90°, is the one that names its rotational symmetry — and it's the answer you're about to enter."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The hexagon's angle.",
+      "conceptTag": "gf-rotational-symmetry",
+      "explanationVariants": [
+        "A regular hexagon has order 6 — six matching positions — so the smallest angle is 360 ÷ 6 = 60°.",
+        "Each turn advances every vertex to its neighbor's seat; six equal seats split 360° into 60° steps."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A regular hexagon has rotational symmetry of order 6. What is its SMALLEST matching rotation, in degrees?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the ORDER — the count of matching positions. The angle divides the turn among them: 360 ÷ 6 = 60°."
+          },
+          {
+            "value": 120,
+            "feedback": "120° is 360 ÷ 3 — an order-3 answer (the triangle's). With SIX positions the step shrinks to 60°."
+          }
+        ],
+        "fallbackFeedback": "360 ÷ order = 360 ÷ 6 = 60°."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-rotational-symmetry__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Order and angle are two dials on one machine: **order × smallest angle = 360°**. Read either from the other. Order 2 means a half-turn match (180°) — the letters S, N, and Z have exactly that: turn them upside down and they read the same.",
+      "figure": "gf-order-angle"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Read the other dial.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A pinwheel design first matches itself after a 45° turn. What is its order of rotational symmetry?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "45 is the ANGLE dial. The order counts positions: 360 ÷ 45 = 8."
+          },
+          {
+            "value": 4,
+            "feedback": "4 would pair with 90° turns. A 45° first-match packs TWICE as many positions into the full turn: 8."
+          }
+        ],
+        "fallbackFeedback": "360 ÷ 45 = 8 matching positions."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Half-turn letters.",
+      "conceptTag": "gf-rotational-symmetry",
+      "explanationVariants": [
+        "N maps onto itself after a 180° turn — order 2. Its diagonal stroke keeps any mirror from working, but the half turn is perfect.",
+        "Rotate each letter mentally by half a turn: N still reads N; the others land wrong-way."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which letter has rotational symmetry of order 2 (matches itself after a 180° turn)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "N",
+            "correct": true,
+            "feedback": "Upside-down N is still N — the two verticals trade places and the diagonal maps onto itself: order 2."
+          },
+          {
+            "id": "o2",
+            "label": "A",
+            "correct": false,
+            "feedback": "Half-turned, A stands on its point — that's not an A. A's symmetry is a MIRROR (vertical line), not a turn."
+          },
+          {
+            "id": "o3",
+            "label": "E",
+            "correct": false,
+            "feedback": "A 180° turn sends E's three arms pointing LEFT — clearly not an E. Its real symmetry is the horizontal MIRROR (top folds onto bottom), which is a reflection, not a rotation."
+          },
+          {
+            "id": "o4",
+            "label": "T",
+            "correct": false,
+            "feedback": "Half-turned T stands on its crossbar — upside down. T's symmetry is the vertical mirror line only."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-rotational-symmetry__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The two symmetry kinds are **independent**. A shape can have both (square), neither (scalene triangle), mirrors only (isosceles trapezoid) — or the sneaky fourth cell: **rotation only**. The plain parallelogram lives there: a perfect half-turn match, yet every candidate fold fails.",
+      "figure": "gf-symmetry-independent"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Confirm the half turn.",
+      "widget": {
+        "type": "rotationLab",
+        "mode": "symmetryOrder",
+        "prompt": "This is a (non-special) parallelogram, and the centre marked is where its diagonals cross. Hunt the smallest turn about that point which lands it exactly back on itself.",
+        "shape": [
+          [
+            -3,
+            -1
+          ],
+          [
+            1,
+            -1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            -1,
+            1
+          ]
+        ],
+        "centre": [
+          0,
+          0
+        ],
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 15,
+        "gridMax": 6,
+        "commonTurns": [
+          {
+            "angle": 90,
+            "feedback": "A quarter turn does NOT land this parallelogram on itself — its sides are unequal, so the corners miss. Keep turning."
+          },
+          {
+            "angle": 45,
+            "feedback": "Nothing matches at 45° — a parallelogram has no eighth-turn symmetry. Try turning much further."
+          }
+        ],
+        "successFeedback": "180° — a half turn, and nothing smaller works. So the order is 360 ÷ 180 = 2. Notice what this shape does NOT have: no mirror line folds it onto itself, yet it turns onto itself perfectly. Rotational symmetry and line symmetry are genuinely independent.",
+        "lowFeedback": "Not landed on itself yet — the corners have not reached the opposite corners' places.",
+        "highFeedback": "Past the half turn — the smallest matching turn came earlier."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The four-cell table.",
+      "conceptTag": "gf-rotational-symmetry",
+      "hints": [
+        "Test each shape twice: any fold that matches? any turn under 360° that matches?",
+        "The parallelogram just passed the 180° turn — now try to find it a mirror line.",
+        "Every candidate fold of a slanted parallelogram mismatches the tilted sides: rotation yes, mirror no."
+      ],
+      "explanationVariants": [
+        "The parallelogram: 180° rotational match (opposite vertices swap through the diagonal crossing) but ZERO mirror lines — every fold sends a slanted side onto a wrongly-slanted side.",
+        "Square: both kinds. Isosceles triangle: mirror only. Scalene: neither. The parallelogram uniquely fills the rotation-only cell."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which shape has ROTATIONAL symmetry but NO line symmetry?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a parallelogram (no right angles, unequal sides)",
+            "correct": true,
+            "feedback": "It matches itself at 180° — yet no fold works: the slanted sides always land wrong. Rotation-only, the sneaky cell."
+          },
+          {
+            "id": "o2",
+            "label": "a square",
+            "correct": false,
+            "feedback": "The square has BOTH: order-4 rotation and 4 mirror lines — too symmetric for this cell."
+          },
+          {
+            "id": "o3",
+            "label": "an isosceles triangle (not equilateral)",
+            "correct": false,
+            "feedback": "The opposite cell: one mirror line down the middle, but no rotation under 360° matches — mirror-only."
+          },
+          {
+            "id": "o4",
+            "label": "a scalene triangle",
+            "correct": false,
+            "feedback": "Neither kind: no fold matches unequal sides, and no partial turn does either."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-rotational-symmetry__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Symmetry by turning.",
+      "takeaways": [
+        "Rotational symmetry: some turn under 360° maps the shape onto itself.",
+        "order × smallest angle = 360° — each dial reads from the other.",
+        "Mirrors and turns are independent: the parallelogram turns but never folds."
+      ],
+      "teaser": "Next chapter: aim rigid motions at TWO figures — congruence gets its real definition."
+    }
+  ]
+}

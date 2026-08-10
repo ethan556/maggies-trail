@@ -1,0 +1,317 @@
+{
+ "id": "pp-04-03",
+ "slug": "writing-parametrizations",
+ "title": "Writing Parametrizations & Orientation",
+ "courseId": "polar-parametric",
+ "chapterId": "ch4-parametric",
+ "minutes": 9,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Going the other way: given a curve, WRITE a parametrization. The line y = 2x − 2 is easiest with x = t: then y = 2t − 2. The choice x = t is the default 'let x be the clock' move, valid for any function y = f(x): x = t, y = f(t).",
+   "figure": "pp-write-parametrization"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Parametrize a line.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "A parametrization of y = 3x + 1 is:",
+    "options": [
+     {
+      "id": "o1",
+      "label": "x = t, y = 3t + 1",
+      "correct": true,
+      "feedback": "Right — let x = t, then y = f(t) = 3t + 1."
+     },
+     {
+      "id": "o2",
+      "label": "x = 3t + 1, y = t",
+      "feedback": "That swaps the roles — it parametrizes x = 3y + 1 instead. Use x = t, y = 3t + 1."
+     },
+     {
+      "id": "o3",
+      "label": "x = t, y = 3t",
+      "feedback": "Don't drop the + 1: y = 3t + 1."
+     }
+    ]
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "To parametrize a **circle** of radius R centered at origin: x = R cos t, y = R sin t (counterclockwise). Reverse the orientation by negating the sine: x = R cos t, y = −R sin t goes clockwise. A phase or sign choice sets the STARTING point and DIRECTION.",
+   "figure": "pp-circle-param"
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Circle of a given radius.",
+   "conceptTag": "pp-parametrize",
+   "explanationVariants": [
+    "Radius 5, centered at origin: x = 5cos t, y = 5sin t.",
+    "Scale both by the radius 5."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Parametrize the circle x² + y² = 25 (counterclockwise).",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x = 5cos t"
+     },
+     {
+      "id": "t1",
+      "label": "x = 25cos t"
+     },
+     {
+      "id": "t2",
+      "label": ", "
+     },
+     {
+      "id": "t3",
+      "label": "y = 5sin t"
+     },
+     {
+      "id": "t4",
+      "label": "y = 25sin t"
+     },
+     {
+      "id": "t5",
+      "label": "y = −5sin t"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t2",
+     "t3"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t1",
+       "t2",
+       "t4"
+      ],
+      "feedback": "That's radius 25, giving x² + y² = 625. The radius is √25 = 5."
+     },
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t5"
+      ],
+      "feedback": "The negative sine reverses to CLOCKWISE. For counterclockwise use +5sin t."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Radius √25 = 5 on both; positive sine keeps it counterclockwise: x = 5cos t, y = 5sin t.",
+    "successFeedback": "Right — radius √25 = 5, so x = 5cos t, y = 5sin t."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametrize__buildExpression"
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Flip the direction.",
+   "conceptTag": "pp-parametrize",
+   "explanationVariants": [
+    "To trace the unit circle CLOCKWISE, negate the sine: x = cos t, y = −sin t (or equivalently swap the roles).",
+    "Clockwise reverses the vertical motion: y = −sin t."
+   ],
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Which parametrization traces the unit circle CLOCKWISE from (1, 0)?",
+    "tokens": [
+     {
+      "id": "t0",
+      "label": "x = cos t"
+     },
+     {
+      "id": "t1",
+      "label": "x = −cos t"
+     },
+     {
+      "id": "t2",
+      "label": ", "
+     },
+     {
+      "id": "t3",
+      "label": "y = −sin t"
+     },
+     {
+      "id": "t4",
+      "label": "y = sin t"
+     }
+    ],
+    "correct": [
+     "t0",
+     "t2",
+     "t3"
+    ],
+    "acceptAlso": [],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t0",
+       "t2",
+       "t4"
+      ],
+      "feedback": "That's the counterclockwise standard. Negate the sine for clockwise."
+     },
+     {
+      "sequence": [
+       "t1",
+       "t2",
+       "t4"
+      ],
+      "feedback": "That starts at (−1, 0), not (1, 0). Clockwise from (1,0) is x = cos t, y = −sin t."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Start at (1,0) needs x = cos t; the negative sine dips to −y first, tracing clockwise.",
+    "successFeedback": "Right — at small t > 0 this dips to negative y, i.e. clockwise."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametrize__buildExpression"
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Match orientation to points.",
+   "conceptTag": "pp-parametrize",
+   "explanationVariants": [
+    "x = cos t, y = −sin t: at t = π/2 gives (0, −1) — below the axis, confirming clockwise.",
+    "A quarter turn reaching (0,−1) instead of (0,1) is the clockwise signature."
+   ],
+   "widget": {
+    "type": "pointEntry",
+    "prompt": "For x = cos t, y = −sin t, where is the point at t = π/2?",
+    "answer": [
+     0,
+     -1
+    ],
+    "delimiter": "paren",
+    "commonEntries": [
+     {
+      "values": [
+       0,
+       1
+      ],
+      "feedback": "The NEGATIVE sine sends it to (0, −1), not (0, 1)."
+     },
+     {
+      "values": [
+       -1,
+       0
+      ],
+      "feedback": "That's t = π. At t = π/2 the point is (0, −1)."
+     }
+    ],
+    "fallbackFeedback": "Evaluate x = cos t and y = −sin t at t = π/2.",
+    "successFeedback": "Right — cos(π/2) = 0, −sin(π/2) = −1: the clockwise quarter-turn."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametrize__pointEntry"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "Parametrize with a start point.",
+   "conceptTag": "pp-parametrize",
+   "explanationVariants": [
+    "A circle radius 3 starting at (0, 3) counterclockwise: x = 3sin t, y = 3cos t works (t = 0 → (0, 3), t = π/2 → (3, 0)... that's clockwise). Use x = −3sin t, y = 3cos t for CCW; but the standard start-at-(3,0) form is x = 3cos t, y = 3sin t. At t = π/2, y = 3sin(π/2) = 3, so the y-coordinate is 3.",
+    "For x = 3cos t, y = 3sin t at t = π/2: y = 3."
+   ],
+   "hints": [
+    "Use x = 3cos t, y = 3sin t for a radius-3 circle.",
+    "Substitute t = π/2.",
+    "sin(π/2) = 1."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "For the circle x = 3cos t, y = 3sin t, what is the y-coordinate at t = π/2?",
+    "answer": 3,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 0,
+      "feedback": "0 is the x-coordinate (3cos(π/2)). The y is 3sin(π/2) = 3."
+     },
+     {
+      "value": 1,
+      "feedback": "sin(π/2) = 1, but y = 3sin(π/2) = 3·1 = 3."
+     }
+    ],
+    "fallbackFeedback": "y = 3sin(π/2) = 3."
+   },
+   "variant": {
+    "gen": "g12-polar-parametric",
+    "form": "polar-parametric__pp-parametrize__numeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "You choose the journey.",
+   "takeaways": [
+    "Any y = f(x): parametrize with x = t, y = f(t).",
+    "Circle radius R: x = R cos t, y = R sin t (counterclockwise).",
+    "Negate the sine to reverse orientation to clockwise."
+   ],
+   "teaser": "Final chapter: parametrics in the wild — projectile motion."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "pp-parametrize",
+   "concept": {
+    "id": "rem-pp0403-c",
+    "kind": "concept",
+    "body": "Parametrize y = f(x) with x = t, y = f(t). Circle radius R: x = R cos t, y = R sin t (CCW); negate the sine for CW."
+   },
+   "check": {
+    "id": "rem-pp0403-k",
+    "kind": "check",
+    "body": "One parametrization.",
+    "conceptTag": "pp-parametrize",
+    "explanationVariants": [
+     "y = x² becomes x = t, y = t².",
+     "Let x = t; then y = t²."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Parametrize y = x².",
+     "options": [
+      {
+       "id": "o1",
+       "label": "x = t, y = t²",
+       "correct": true,
+       "feedback": "Right — x = t, y = f(t) = t²."
+      },
+      {
+       "id": "o2",
+       "label": "x = t², y = t",
+       "feedback": "That parametrizes x = y² (sideways). For y = x² use x = t, y = t²."
+      },
+      {
+       "id": "o3",
+       "label": "x = t, y = 2t",
+       "feedback": "y = x² is the SQUARE, not 2x: y = t²."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,459 @@
+{
+  "id": "g4p-02-02",
+  "slug": "the-sieve",
+  "title": "The Sieve",
+  "courseId": "patterns-factors-g4",
+  "chapterId": "ch2-primes-and-the-sieve",
+  "minutes": 7,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "The sieve finds every prime in a range by elimination: cross out the multiples of 2, then 3, then 5, and whatever survives is prime.",
+      "narration": "The sieve finds every prime in a range by elimination: cross out the multiples of 2, then 3, then 5, and whatever survives is prime."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g4pf-sieve",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Run the multiples-of-3 pass: count by 3s from 0 and watch which numbers get crossed out.",
+        "min": 0,
+        "max": 30,
+        "start": 0,
+        "hop": 3,
+        "hops": 6,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 15,
+            "feedback": "Five hops reach 15; the sixth landing is the one being tested."
+          },
+          {
+            "value": 21,
+            "feedback": "Seven hops overshoot — the sixth multiple of 3 is 18."
+          }
+        ],
+        "missFeedback": "Each hop is 10. From 430, 3 hops land on 460.",
+        "successFeedback": "18 — and every landing on the way (3, 6, 9, 12, 15) is crossed out as a multiple of 3.",
+        "lowFeedback": "Short of the landing — each hop covers 3, so six of them reach 18.",
+        "highFeedback": "Past the landing — six hops of 3 stop exactly on 18."
+      },
+      "predict": {
+        "prompt": "After crossing out multiples of 2, is a separate pass for 4 needed?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — already gone"
+          },
+          {
+            "id": "yes",
+            "label": "Yes"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Every multiple of 4 is also a multiple of 2, so the first pass already removed them all."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf sieve.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf sieve can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-sieve",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g4pf-sieve",
+      "explanationVariants": [
+        "Only primes sieve.",
+        "Composites add nothing."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In a sieve you cross out multiples of 2, then 3, then 5. Why is 4 never used as a crossing-out number?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Every multiple of 4 was already crossed out as a multiple of 2",
+            "correct": true,
+            "feedback": "Correct — 4 is itself composite, so its multiples are also multiples of its factor 2 and are gone already."
+          },
+          {
+            "id": "o1",
+            "label": "Because 4 has no multiples",
+            "correct": false,
+            "feedback": "4 has infinitely many multiples; the point is they were already removed by an earlier pass."
+          },
+          {
+            "id": "o2",
+            "label": "Because 4 is prime",
+            "correct": false,
+            "feedback": "4 is composite — it is 2 × 2 — which is exactly why it is skipped as a sieve number."
+          },
+          {
+            "id": "o3",
+            "label": "Because 4 is too small to matter",
+            "correct": false,
+            "feedback": "Size is not the reason; 5 is used and 4 is not, because only PRIMES add new crossings."
+          }
+        ]
+      },
+      "hints": [
+        "Count the factor pairs.",
+        "Only 1 and itself.",
+        "One is neither."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf sieve.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf sieve can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-sieve",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Only PRIMES need to be sieve numbers. The multiples of 4 vanished with the multiples of 2, because 4 is itself built from 2.",
+      "narration": "Only PRIMES need to be sieve numbers. The multiples of 4 vanished with the multiples of 2, because 4 is itself built from 2."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g4pf-sieve",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "Run the multiples-of-3 pass: count by 3s from 0 and watch which numbers get crossed out.",
+        "min": 0,
+        "max": 30,
+        "start": 0,
+        "hop": 3,
+        "hops": 6,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 15,
+            "feedback": "Five hops reach 15; the sixth landing is the one being tested."
+          },
+          {
+            "value": 21,
+            "feedback": "Seven hops overshoot — the sixth multiple of 3 is 18."
+          }
+        ],
+        "missFeedback": "Each hop is 10. From 430, 3 hops land on 460.",
+        "successFeedback": "18 — and every landing on the way (3, 6, 9, 12, 15) is crossed out as a multiple of 3.",
+        "lowFeedback": "Short of the landing — each hop covers 3, so six of them reach 18.",
+        "highFeedback": "Past the landing — six hops of 3 stop exactly on 18."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf sieve.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf sieve can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-sieve",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g4pf-sieve",
+      "explanationVariants": [
+        "Survivors are prime.",
+        "Two is the first survivor."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is the smallest prime number?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 has only ONE factor — itself — while a prime needs exactly two, so 1 is neither prime nor composite."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is prime, but a smaller one comes before it and is the only even prime there is."
+          }
+        ],
+        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
+        "successFeedback": "Correct — 2."
+      },
+      "hints": [
+        "Count the factor pairs.",
+        "Only 1 and itself.",
+        "One is neither."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf sieve.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf sieve can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-sieve",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbPrimeCompositeNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g4pf-sieve",
+      "explanationVariants": [
+        "4's multiples went with 2's.",
+        "Factors carry through."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In a sieve you cross out multiples of 2, then 3, then 5. Why is 4 never used as a crossing-out number?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Every multiple of 4 was already crossed out as a multiple of 2",
+            "correct": true,
+            "feedback": "Correct — 4 is itself composite, so its multiples are also multiples of its factor 2 and are gone already."
+          },
+          {
+            "id": "o1",
+            "label": "Because 4 has no multiples",
+            "correct": false,
+            "feedback": "4 has infinitely many multiples; the point is they were already removed by an earlier pass."
+          },
+          {
+            "id": "o2",
+            "label": "Because 4 is prime",
+            "correct": false,
+            "feedback": "4 is composite — it is 2 × 2 — which is exactly why it is skipped as a sieve number."
+          },
+          {
+            "id": "o3",
+            "label": "Because 4 is too small to matter",
+            "correct": false,
+            "feedback": "Size is not the reason; 5 is used and 4 is not, because only PRIMES add new crossings."
+          }
+        ]
+      },
+      "hints": [
+        "Count the factor pairs.",
+        "Only 1 and itself.",
+        "One is neither."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf sieve.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf sieve can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-sieve",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g4pf-sieve",
+      "explanationVariants": [
+        "Check the survivors.",
+        "Two factors only."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is 11 prime or composite?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Prime",
+            "correct": true,
+            "feedback": "Correct — 11 has no factors besides 1 and itself, so the only rectangle it builds is 1 by 11."
+          },
+          {
+            "id": "o1",
+            "label": "Composite",
+            "correct": false,
+            "feedback": "11 has no factor pair other than 1 and 11, so it cannot be composed of smaller whole-number sides."
+          }
+        ]
+      },
+      "hints": [
+        "Count the factor pairs.",
+        "Only 1 and itself.",
+        "One is neither."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Build the arrangements a number allows, and read the rule that generates the next term for g4pf sieve.",
+        "invariants": [
+          "A factor pair is a rectangle a number can build and a multiple is a landing a count reaches, so every claim about g4pf sieve can be settled by construction rather than recall."
+        ],
+        "misconceptions": [
+          "Reading an additive gap as a multiplier, stopping a factor search before the pairs repeat, or treating 1 as prime."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "patterns-factors-g4:g4pf-sieve",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would make this rectangle impossible to build with whole-number sides?"
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbPrimeCompositeMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "The sieve eliminates composites.",
+        "Only primes are sieve numbers.",
+        "Survivors are the primes."
+      ],
+      "teaser": "next: rules that generate numbers."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g4pf-sieve",
+      "concept": {
+        "id": "rem-g4pf-sieve-c",
+        "kind": "concept",
+        "body": "Only PRIMES need to be sieve numbers. The multiples of 4 vanished with the multiples of 2, because 4 is itself built from 2.",
+        "narration": "Only PRIMES need to be sieve numbers. The multiples of 4 vanished with the multiples of 2, because 4 is itself built from 2."
+      },
+      "check": {
+        "id": "rem-g4pf-sieve-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g4pf-sieve",
+        "explanationVariants": [
+          "Only primes sieve.",
+          "Composites add nothing."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "In a sieve you cross out multiples of 2, then 3, then 5. Why is 4 never used as a crossing-out number?",
+          "options": [
+            {
+              "id": "o0",
+              "label": "Every multiple of 4 was already crossed out as a multiple of 2",
+              "correct": true,
+              "feedback": "Correct — 4 is itself composite, so its multiples are also multiples of its factor 2 and are gone already."
+            },
+            {
+              "id": "o1",
+              "label": "Because 4 has no multiples",
+              "correct": false,
+              "feedback": "4 has infinitely many multiples; the point is they were already removed by an earlier pass."
+            },
+            {
+              "id": "o2",
+              "label": "Because 4 is prime",
+              "correct": false,
+              "feedback": "4 is composite — it is 2 × 2 — which is exactly why it is skipped as a sieve number."
+            },
+            {
+              "id": "o3",
+              "label": "Because 4 is too small to matter",
+              "correct": false,
+              "feedback": "Size is not the reason; 5 is used and 4 is not, because only PRIMES add new crossings."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

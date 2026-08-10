@@ -1,0 +1,342 @@
+{
+  "id": "gf-04-02",
+  "slug": "line-symmetry",
+  "title": "Line Symmetry",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch4-composition-symmetry",
+  "minutes": 8,
+  "remedials": [
+    {
+      "conceptTag": "gf-line-symmetry",
+      "concept": {
+        "id": "rem-gf-line-symmetry-c",
+        "kind": "concept",
+        "body": "The fold test is the whole definition: a line of symmetry is a fold along which the two halves land EXACTLY on each other — every edge on an edge, every corner on a corner. One overhanging corner disqualifies the fold."
+      },
+      "check": {
+        "id": "rem-gf-line-symmetry-k",
+        "kind": "check",
+        "body": "Apply the fold test.",
+        "conceptTag": "gf-line-symmetry",
+        "explanationVariants": [
+          "The equilateral triangle folds perfectly along the line from each vertex to the opposite side's midpoint — 3 vertices, 3 lines.",
+          "It's the regular 3-gon, so the n-lines rule gives exactly 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many lines of symmetry does an EQUILATERAL triangle have?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is only the vertical fold — but all three sides are equal, so the fold from EACH vertex works: 3 lines."
+            },
+            {
+              "value": 6,
+              "feedback": "6 double-counts each fold from both ends — vertex-to-midpoint is one line. The regular 3-gon has exactly 3."
+            }
+          ],
+          "fallbackFeedback": "Regular 3-gon: 3 lines, one through each vertex."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Point a reflection back at its own figure. A shape has **line symmetry** when some reflection maps the shape **exactly onto itself** — the mirror line is its **line of symmetry**. The physical test: fold along the line; the two halves must match perfectly, edge for edge.",
+      "figure": "gf-line-symmetry"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The fold test on letters.",
+      "widget": {
+        "type": "tapDiagram",
+        "prompt": "Tap every letter that has a VERTICAL line of symmetry (a fold down the middle matches left half to right half).",
+        "mode": "selectAll",
+        "canvas": {
+          "w": 300,
+          "h": 170
+        },
+        "hotspots": [
+          {
+            "id": "lA",
+            "x": 15,
+            "y": 50,
+            "label": "A",
+            "icon": "🔠",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "lB",
+            "x": 38,
+            "y": 50,
+            "label": "B",
+            "icon": "🔠",
+            "count": 1,
+            "correct": false,
+            "feedback": "B's mirror line is HORIZONTAL — fold top onto bottom and it matches. A vertical fold pairs the flat left spine with the round right bumps: no match."
+          },
+          {
+            "id": "lH",
+            "x": 62,
+            "y": 50,
+            "label": "H",
+            "icon": "🔠",
+            "count": 1,
+            "correct": true
+          },
+          {
+            "id": "lR",
+            "x": 85,
+            "y": 50,
+            "label": "R",
+            "icon": "🔠",
+            "count": 1,
+            "correct": false,
+            "feedback": "R has no line of symmetry at all — the leg kicks out one way, and no fold in any direction matches the halves."
+          }
+        ],
+        "missFeedback": "Fold each letter down its vertical middle in your head — both halves must land exactly on each other.",
+        "successFeedback": "A and H pass the vertical fold. (H even passes a horizontal one too — two lines.)"
+      },
+      "conceptTag": "gf-line-symmetry",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Manipulate the model and track how it represents gf line symmetry.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for gf line symmetry must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines gf line symmetry."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "geometry-foundations:gf-line-symmetry",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "A vertical line of symmetry means a fold down the middle matches the left half to the right. Which of these letters has one?",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "l",
+            "label": "L"
+          },
+          {
+            "id": "r",
+            "label": "R"
+          }
+        ],
+        "outcomeId": "a",
+        "reveal": "A. Fold it down the middle and the two halves land exactly on each other. L and R have no fold that works anywhere — a shape either has a mirror that maps it onto itself or it does not, and \"nearly\" is not a kind of symmetry."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The rectangle trap.",
+      "conceptTag": "gf-line-symmetry",
+      "explanationVariants": [
+        "A non-square rectangle has exactly 2 lines: the vertical and horizontal midlines. The diagonals FAIL the fold test — folding along one lands long sides on short sides.",
+        "Try the diagonal fold: the corners overhang instead of matching. Only the two midlines swap the rectangle onto itself."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many lines of symmetry does a (non-square) rectangle have?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 counts the diagonals — but fold a rectangle along a diagonal and the long side lands on a SHORT side. Diagonal mirrors belong to the square; the rectangle keeps only its 2 midlines."
+          },
+          {
+            "value": 1,
+            "feedback": "There are two midline folds, not one: top-onto-bottom AND left-onto-right both match perfectly."
+          }
+        ],
+        "fallbackFeedback": "The two midlines — vertical and horizontal — and nothing else: 2."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-line-symmetry__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Counting lines is a search over mirror candidates: midlines, diagonals, vertex-to-opposite-edge folds. **Regular polygons are maximal**: a regular n-gon has exactly **n** lines of symmetry (through each vertex for odd n; alternating vertex-lines and edge-midpoint-lines for even n).",
+      "figure": "symmetry-fold"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Count the pentagon's mirrors.",
+      "conceptTag": "gf-line-symmetry",
+      "explanationVariants": [
+        "A regular n-gon has n lines: for the pentagon, one through each vertex to the opposite edge's midpoint — 5.",
+        "Rotate the pentagon a fifth of a turn and the \"vertical\" fold becomes a new fold. Five vertices, five folds."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many lines of symmetry does a REGULAR pentagon have?",
+        "answer": 5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is just the vertical fold — but the pentagon is regular, so every vertex-to-opposite-edge fold works the same way. Five vertices, five lines."
+          },
+          {
+            "value": 10,
+            "feedback": "10 double-counts: a fold through a vertex and the opposite edge midpoint is ONE line, not two. Regular n-gon: exactly n lines — here 5."
+          }
+        ],
+        "fallbackFeedback": "Regular n-gon ⇒ n lines: 5."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-line-symmetry__numeric"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Two ends of the spectrum: a scalene triangle has **zero** lines (no fold ever matches unequal sides), while the extreme case is the circle — EVERY diameter is a mirror. Symmetry count is a fingerprint: it separates shapes that otherwise look alike.",
+      "figure": "gf-scalene-zero"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "The extreme case.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "How many lines of symmetry does a circle have?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Infinitely many — every line through the center",
+            "correct": true,
+            "feedback": "Any diameter folds the circle onto itself, and there's a diameter at every angle: no finite count survives."
+          },
+          {
+            "id": "o2",
+            "label": "1",
+            "correct": false,
+            "feedback": "Whatever single line you pick, tilt it a degree about the center — the new line folds the circle just as perfectly. One can't be the total."
+          },
+          {
+            "id": "o3",
+            "label": "2",
+            "correct": false,
+            "feedback": "Two suggests a vertical and a horizontal — but a circle has no preferred directions. Every diameter works equally."
+          },
+          {
+            "id": "o4",
+            "label": "360",
+            "correct": false,
+            "feedback": "360 comes from counting one line per degree — but lines exist at every fraction of a degree too. The count outruns any number."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "The other extreme.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A scalene triangle has three sides of three DIFFERENT lengths. How many lines of symmetry does it have?",
+        "answer": 0,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "3 is the EQUILATERAL count — that fold works because the sides match. With three different lengths, every fold pairs unequal sides: none succeed."
+          },
+          {
+            "value": 1,
+            "feedback": "Even one line would need two sides to trade places exactly — but no two sides here are equal, so every candidate fold overhangs."
+          }
+        ],
+        "fallbackFeedback": "Every fold must land a side on an equal side — impossible with all three different: 0."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Fingerprint match.",
+      "conceptTag": "gf-line-symmetry",
+      "hints": [
+        "Run the fold test on each candidate — how many lines does each shape actually have?",
+        "The square gains folds a rectangle lacks; check its diagonals.",
+        "Square: 2 midlines + 2 diagonals. Which option says 4?"
+      ],
+      "explanationVariants": [
+        "The square has 4 lines: both midlines AND both diagonals (equal sides make the diagonal fold match). Rectangle 2, parallelogram 0, regular hexagon 6.",
+        "A square is a regular 4-gon, so it has exactly 4 lines — the regular-n-gon rule applied at n = 4."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which shape has EXACTLY 4 lines of symmetry?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a square",
+            "correct": true,
+            "feedback": "Two midlines plus two diagonals = 4 — the regular 4-gon gets its full n lines."
+          },
+          {
+            "id": "o2",
+            "label": "a (non-square) rectangle",
+            "correct": false,
+            "feedback": "The rectangle stops at 2 — its diagonal folds land long sides on short sides and fail."
+          },
+          {
+            "id": "o3",
+            "label": "a regular hexagon",
+            "correct": false,
+            "feedback": "Regular n-gon means n lines: the hexagon has 6, one more pair than asked for."
+          },
+          {
+            "id": "o4",
+            "label": "a parallelogram (no right angles)",
+            "correct": false,
+            "feedback": "A generic parallelogram has ZERO lines — every candidate fold mismatches the slanted sides. (Its symmetry is a different kind — next lesson.)"
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-line-symmetry__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Mirrors that hit home.",
+      "takeaways": [
+        "Line symmetry = a reflection mapping the shape onto ITSELF; test by folding.",
+        "Regular n-gon: exactly n lines; circle: infinitely many; scalene: none.",
+        "Diagonals mirror the SQUARE but not the rectangle — the classic miscount."
+      ],
+      "teaser": "Next: symmetry by turning — shapes that come back to themselves before the turn is done."
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "id": "tno-01-01",
+  "slug": "ten-ones-make-a-ten",
+  "title": "Ten Ones Make a Ten",
+  "courseId": "tens-and-ones",
+  "chapterId": "ch1-bundles-of-ten",
+  "minutes": 8,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "ten-bundle",
+      "body": "Ten single ones bundle together to make one ten. A \"ten\" is just 10 ones grouped into a rod. So 3 tens is the same as 30 ones — three groups of ten."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build it with blocks — rods are tens, cubes are ones.",
+      "widget": {
+        "type": "baseTenCompose",
+        "prompt": "Build 30 any way you like — all rods, rods and cubes, whatever lands on 30.",
+        "target": 30,
+        "requireStandard": false,
+        "maxTens": 4,
+        "maxOnes": 20,
+        "commonBuilds": [
+          {
+            "tens": 3,
+            "ones": 3,
+            "feedback": "That's 33 — the 3 cubes add 3 more. Thirty is three rods with NO extra cubes, or a trade like 2 rods and 10 cubes."
+          },
+          {
+            "tens": 0,
+            "ones": 3,
+            "feedback": "3 cubes make 3, not 30. A rod is worth ten cubes — thirty needs three rods' worth, one way or another."
+          }
+        ],
+        "missFeedback": "Count by tens for the rods, then by ones for the cubes — the total must land exactly on 30.",
+        "successFeedback": "30! Three rods, or 2 rods and 10 cubes, or 1 rod and 20 cubes — every trade of 1 rod for 10 cubes keeps the amount the same. That trade is what a ten IS."
+      },
+      "predict": {
+        "prompt": "Maya builds 30 with 3 rods. Leo builds it with 2 rods and 10 cubes. Who has more?",
+        "options": [
+          {
+            "id": "maya",
+            "label": "Maya has more"
+          },
+          {
+            "id": "leo",
+            "label": "Leo has more"
+          },
+          {
+            "id": "same",
+            "label": "They have the same amount"
+          }
+        ],
+        "outcomeId": "same",
+        "reveal": "A rod IS ten cubes bundled together, so trading 1 rod for 10 cubes changes the look but never the amount — both builds are exactly 30."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "quantity-composition",
+        "actionGoal": "Exchange ten ones for one ten and prove that the represented number is unchanged.",
+        "predictionId": "g1-g2-place-exchange-prediction",
+        "invariants": [
+          "quantity-preserved",
+          "unit-value-preserved"
+        ],
+        "misconceptions": [
+          "illegal-exchange",
+          "digit-place-confusion"
+        ],
+        "representations": [
+          "concrete",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "concrete",
+        "translationTo": "table",
+        "fadeLevel": 0,
+        "transferFamily": "symbolic-regrouping-after-fade",
+        "delayed": true,
+        "counterfactualPrompt": "Create a second build for the same number using one more ten and ten fewer ones.",
+        "explanation": {
+          "prompt": "Why is one ten interchangeable with ten ones?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "Both representations have a value of ten.",
+              "correct": true,
+              "feedback": "Exactly. Unit value, not visual size, makes one ten equal to ten ones."
+            },
+            {
+              "id": "surface",
+              "label": "A ten is larger because it is drawn longer.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. Unit value, not visual size, makes one ten equal to ten ones."
+            }
+          ]
+        }
+      },
+      "conceptTag": "tno-ten-bundle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "A few more tens.",
+      "conceptTag": "tno-ten-bundle",
+      "explanationVariants": [
+        "5 tens = 5 × 10 = 50 ones.",
+        "Each ten is 10 ones, so five tens make 50 ones."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many ones are the same as 5 tens?",
+        "answer": 50,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the number of tens. Each ten is 10 ones, so 5 tens = 50 ones."
+          },
+          {
+            "value": 15,
+            "feedback": "Don't add — 5 tens = 5 × 10 = 50 ones."
+          }
+        ],
+        "fallbackFeedback": "5 tens = 50 ones."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoTenBundleNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Going the other way, 40 ones make 4 tens, because 40 is 4 groups of ten. To find how many tens, count the groups of ten.",
+      "figure": "tno-bundle-40"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Count the tens.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many tens make 40?",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is the number of ones. It takes 4 groups of ten to make 40, so 4 tens."
+          },
+          {
+            "value": 14,
+            "feedback": "40 splits into 4 groups of ten, so 4 tens."
+          }
+        ],
+        "fallbackFeedback": "40 = 4 groups of ten, so 4 tens."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "A bundle keeps its size: 1 ten is always 10 ones, whether you see a rod or ten loose cubes. Bundling into tens makes big counts quick to read.",
+      "figure": "tno-ten-is-ten"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Tens in seventy.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many tens make 70?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 70,
+            "feedback": "70 is the number of ones. It takes 7 groups of ten to make 70, so 7 tens."
+          },
+          {
+            "value": 17,
+            "feedback": "70 splits into 7 groups of ten, so 7 tens."
+          }
+        ],
+        "fallbackFeedback": "70 = 7 groups of ten, so 7 tens."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Ones in six tens.",
+      "conceptTag": "tno-ten-bundle",
+      "explanationVariants": [
+        "6 tens = 6 × 10 = 60 ones.",
+        "Each ten is 10 ones, so six tens make 60 ones."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many ones are the same as 6 tens?",
+        "answer": 60,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "6 is the number of tens. Each ten is 10 ones, so 6 tens = 60 ones."
+          },
+          {
+            "value": 16,
+            "feedback": "Don't add — 6 tens = 60 ones."
+          }
+        ],
+        "fallbackFeedback": "6 tens = 60 ones."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoTenBundleNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Tens in twenty.",
+      "conceptTag": "tno-ten-bundle",
+      "explanationVariants": [
+        "20 = 2 groups of ten, so 2 tens.",
+        "It takes 2 tens to make 20."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many tens make 20?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the number of ones. It takes 2 groups of ten, so 2 tens."
+          },
+          {
+            "value": 12,
+            "feedback": "20 splits into 2 groups of ten, so 2 tens."
+          }
+        ],
+        "fallbackFeedback": "20 = 2 tens."
+      },
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoTenBundleNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Nine tens.",
+      "conceptTag": "tno-ten-bundle",
+      "explanationVariants": [
+        "9 tens = 9 × 10 = 90 ones.",
+        "Each ten is 10 ones, so nine tens make 90 ones."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many ones are the same as 9 tens?",
+        "answer": 90,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "9 is the number of tens. Each ten is 10 ones, so 9 tens = 90 ones."
+          },
+          {
+            "value": 19,
+            "feedback": "Don't add — 9 tens = 9 × 10 = 90 ones."
+          }
+        ],
+        "fallbackFeedback": "9 tens = 90 ones."
+      },
+      "hints": [
+        "Each ten is 10 ones.",
+        "So count by tens: 10, 20, 30, … nine times.",
+        "9 × 10 = 90 ones."
+      ],
+      "variant": {
+        "gen": "g1-tens-ones",
+        "form": "TnoTenBundleNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Ten ones make a ten, and you can bundle or unbundle.",
+      "takeaways": [
+        "1 ten = 10 ones.",
+        "To turn tens into ones, count by tens.",
+        "To find tens, count the groups of ten."
+      ],
+      "teaser": "next: the tens and ones inside a two-digit number."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tno-ten-bundle",
+      "concept": {
+        "id": "rem-ttb-c",
+        "kind": "concept",
+        "body": "One ten is 10 ones bundled together. So 3 tens = 30 ones (count by tens), and 40 ones = 4 tens (count the groups of ten)."
+      },
+      "check": {
+        "id": "rem-ttb-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "tno-ten-bundle",
+        "explanationVariants": [
+          "3 tens = 30 ones.",
+          "Count by tens three times: 10, 20, 30."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many ones are the same as 3 tens?",
+          "answer": 30,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 3,
+              "feedback": "Each ten is 10 ones, so 3 tens = 30 ones."
+            },
+            {
+              "value": 13,
+              "feedback": "Count by tens: 10, 20, 30."
+            }
+          ],
+          "fallbackFeedback": "3 tens = 30 ones."
+        }
+      }
+    }
+  ]
+}

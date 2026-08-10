@@ -1,0 +1,321 @@
+{
+  "id": "qu-01-02",
+  "slug": "graphing-from-standard-form",
+  "title": "Graphing from Standard Form",
+  "courseId": "quadratics",
+  "chapterId": "ch1-graphing-parabolas",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "parabola-vertex",
+      "body": "In standard form y = ax² + bx + c, the axis of symmetry is **x = −b/(2a)**. That value is the vertex's x-coordinate; substitute it back into the equation to get the vertex's y-coordinate."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Standard form hides the vertex; build the curve and it appears.",
+      "widget": {
+        "type": "quadraticExplore",
+        "targetA": 1,
+        "targetH": 2,
+        "targetK": -3,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 8,
+        "prompt": "y = x² − 4x + 1 is the same curve as y = (x − 2)² − 3. Build it.",
+        "successFeedback": "Vertex (2, −3). Standard form tells you the y-intercept at a glance and the vertex not at all; vertex form does the reverse. Completing the square is just the translation between the two.",
+        "shapeFeedback": "Shape first: the leading coefficient here is 1.",
+        "vertexFeedback": "The shape is right but the vertex is misplaced — x² − 4x + 1 completes to (x − 2)² − 3."
+      },
+      "predict": {
+        "prompt": "You'll move h UP in y = a(x − h)² + k. Which way does the parabola slide?",
+        "options": [
+          {
+            "id": "right",
+            "label": "To the right"
+          },
+          {
+            "id": "left",
+            "label": "To the left"
+          },
+          {
+            "id": "upward",
+            "label": "Straight up"
+          }
+        ],
+        "outcomeId": "right",
+        "reveal": "Raising h moves the vertex RIGHT even though h is subtracted — (x − h)² is smallest exactly when x = h, so the low point chases h. The minus sign is why so many people guess the wrong direction."
+      },
+      "conceptTag": "quad-standard-axis",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents quad standard axis.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for quad standard axis must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines quad standard axis."
+        ],
+        "representations": [
+          "graph",
+          "symbolic"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "quadratics:quad-standard-axis",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Now the vertex height.",
+      "conceptTag": "quad-standard-axis",
+      "explanationVariants": [
+        "Substitute x = 3: 3² − 6·3 + 5 = 9 − 18 + 5 = −4.",
+        "At the axis x = 3, y = 9 − 18 + 5 = −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = x^2 - 6x + 5, what is the y-coordinate of the vertex?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is c, the y-intercept, not the vertex height. Substitute x = 3: y = −4."
+          },
+          {
+            "value": 3,
+            "feedback": "3 is the axis (the vertex x). Plug it in for the vertex y: 9 − 18 + 5 = −4."
+          }
+        ],
+        "fallbackFeedback": "y = 3² − 6·3 + 5 = −4."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-standard-axis__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Worked: y = x² + 4x + 1, so a = 1, b = 4. Axis: x = −4/(2·1) = **−2**. Vertex y: (−2)² + 4(−2) + 1 = 4 − 8 + 1 = **−3**. Vertex is (−2, −3). Always compute the axis first, then substitute.",
+      "figure": "qu-vertex-standard"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Your turn on the axis.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = x^2 + 4x + 1, what is the axis of symmetry?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "−b/(2a) = −4/2 = −2 — keep the negative sign."
+          },
+          {
+            "value": 4,
+            "feedback": "That's b. Divide by 2a and negate: −4/2 = −2."
+          }
+        ],
+        "fallbackFeedback": "x = −b/(2a) = −4/2 = −2."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The sign of **a** sets the shape: a > 0 opens upward, so the vertex is the **minimum**; a < 0 opens downward, so the vertex is the **maximum**. A larger |a| makes the parabola narrower.",
+      "figure": "qu-sign-of-a"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Open and extremum.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "For y = -3x^2 + x - 2, which way does it open, and is the vertex a max or min?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Opens down; vertex is a maximum",
+            "correct": true,
+            "feedback": "Yes — a = −3 < 0, so it opens downward and the vertex is the highest point."
+          },
+          {
+            "id": "b",
+            "label": "Opens up; vertex is a minimum",
+            "feedback": "a is −3, which is negative, so it opens downward and the vertex is a maximum."
+          },
+          {
+            "id": "c",
+            "label": "Opens down; vertex is a minimum",
+            "feedback": "When it opens down, the vertex is the top — a maximum, not a minimum."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another axis.",
+      "conceptTag": "quad-standard-axis",
+      "explanationVariants": [
+        "x = −b/(2a) = −(−2)/2 = 1.",
+        "With b = −2, the axis is −(−2)/2 = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = x^2 - 2x - 3, what is the axis of symmetry?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "A sign slipped. With b = −2, the formula −b/(2a) gives −(−2)/2 = +1, not −1."
+          },
+          {
+            "value": -2,
+            "feedback": "That's b. The axis is −(−2)/2 = 1."
+          }
+        ],
+        "fallbackFeedback": "x = −(−2)/2 = 1."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-standard-axis__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Its vertex height.",
+      "conceptTag": "quad-standard-axis",
+      "explanationVariants": [
+        "Substitute x = 1: 1 − 2 − 3 = −4.",
+        "At x = 1, y = 1² − 2·1 − 3 = −4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = x^2 - 2x - 3, what is the y-coordinate of the vertex?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -3,
+            "feedback": "−3 is c. Substitute the axis x = 1: 1 − 2 − 3 = −4."
+          },
+          {
+            "value": 1,
+            "feedback": "1 is the axis. Plug it in for the vertex y: 1 − 2 − 3 = −4."
+          }
+        ],
+        "fallbackFeedback": "y = 1 − 2 − 3 = −4."
+      },
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-standard-axis__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Full vertex from standard form.",
+      "conceptTag": "quad-standard-axis",
+      "explanationVariants": [
+        "Axis x = −8/2 = −4. Then y = (−4)² + 8(−4) + 10 = 16 − 32 + 10 = −6.",
+        "At x = −4, y = 16 − 32 + 10 = −6."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For y = x^2 + 8x + 10, what is the y-coordinate of the vertex?",
+        "answer": -6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is c. First find the axis x = −4, then substitute: y = −6."
+          },
+          {
+            "value": -4,
+            "feedback": "−4 is the axis (vertex x). Plug it in for the vertex y: 16 − 32 + 10 = −6."
+          }
+        ],
+        "fallbackFeedback": "Axis −8/2 = −4; y = 16 − 32 + 10 = −6."
+      },
+      "hints": [
+        "First find the axis: x = −b/(2a) = −8/2.",
+        "That gives x = −4; now substitute into the equation.",
+        "16 − 32 + 10 = −6."
+      ],
+      "variant": {
+        "gen": "a1-quadratics",
+        "form": "quad-standard-axis__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "From standard form: axis first, then substitute for the vertex.",
+      "takeaways": [
+        "Axis of symmetry: x = −b/(2a).",
+        "Vertex y: substitute that x back into the equation.",
+        "a > 0 opens up (minimum); a < 0 opens down (maximum)."
+      ],
+      "teaser": "next: stretching, flipping, and shifting the parabola."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "quad-standard-axis",
+      "concept": {
+        "id": "rem-qsa-c",
+        "kind": "concept",
+        "body": "In y = ax² + bx + c, the axis is x = −b/(2a). Substitute it to get the vertex y. For y = x² − 6x + 5: axis x = −(−6)/2 = 3, and y = 9 − 18 + 5 = −4."
+      },
+      "check": {
+        "id": "rem-qsa-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "quad-standard-axis",
+        "explanationVariants": [
+          "x = −(−6)/(2·1) = 3.",
+          "The axis is −b/(2a) = 3."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For y = x^2 - 6x + 5, what is the axis of symmetry?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": -3,
+              "feedback": "A sign slipped. With b = −6, the formula −b/(2a) gives −(−6)/2 = +3."
+            },
+            {
+              "value": 6,
+              "feedback": "That's b. The axis is −b/(2a) = 3."
+            }
+          ],
+          "fallbackFeedback": "x = −(−6)/2 = 3."
+        }
+      }
+    }
+  ]
+}

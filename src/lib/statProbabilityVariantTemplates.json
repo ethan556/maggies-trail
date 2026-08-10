@@ -1,0 +1,789 @@
+{
+  "g10-conditional-probability": {
+    "conditional-probability__cpr-at-least-one__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "Roll two dice. How many of the 36 outcomes show **at least one 6**?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is 6 + 6. The outcome (6, 6) appears in both lists, so a plain sum counts it twice — subtract it once."
+          },
+          {
+            "value": 1,
+            "feedback": "That is only (6, 6). \"At least one\" also includes rolls like (6, 2) and (3, 6) where a single die shows the 6."
+          },
+          {
+            "value": 25,
+            "feedback": "That is the count of rolls with **no** 6. It is the complement — the answer is 36 − 25."
+          }
+        ],
+        "fallbackFeedback": "Count what fails: 5 × 5 = 25 rolls have no 6, so 36 − 25 = 11 rolls have at least one."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Flip four coins. How many of the 16 outcomes show **at least one head**?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "That counts only the outcomes with **exactly** one head. \"At least one\" also allows two, three or four heads."
+          },
+          {
+            "value": 16,
+            "feedback": "That is every outcome, but TTTT has no head at all, so it must be excluded — 16 − 1 = 15."
+          },
+          {
+            "value": 8,
+            "feedback": "That is half of 16, the count for a single fixed coin landing heads. The event allows *any* of the four coins to be the head."
+          }
+        ],
+        "fallbackFeedback": "Only TTTT fails, so 16 − 1 = 15 outcomes contain at least one head."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Roll three dice (216 equally likely outcomes). How many show **at least one 6**?",
+        "answer": 91,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 125,
+            "feedback": "That is the count of rolls with **no** 6 — the complement. Subtract it from 216 to get the rolls that do contain a six."
+          },
+          {
+            "value": 108,
+            "feedback": "That is 216 × 1/2, which is what you get by adding 1/6 three times. Probabilities of overlapping events cannot simply be added."
+          },
+          {
+            "value": 36,
+            "feedback": "That is 6 × 6, the count for one fixed die showing a 6. The other two dice still have to be accounted for."
+          }
+        ],
+        "fallbackFeedback": "Count the misses: 5³ = 125 rolls have no six, so 216 − 125 = 91 rolls have at least one."
+      }
+    ],
+    "conditional-probability__cpr-complement-table__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "A student is picked at random. Which pair of events are complements?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"Bus or sport\" and \"walks and no sport\"",
+            "correct": true,
+            "feedback": "Right — they cover the table with no overlap, so their probabilities must sum to 1: 0.85 + 0.15."
+          },
+          {
+            "id": "o2",
+            "label": "\"Bus or sport\" and \"bus and sport\"",
+            "feedback": "These overlap heavily — the 40 in the crossing cell satisfy both descriptions. Complements can share no one."
+          },
+          {
+            "id": "o3",
+            "label": "\"Takes the bus\" and \"plays a sport\"",
+            "feedback": "A student can do both (40 do) and a student can do neither (30 do). Complements allow neither case."
+          },
+          {
+            "id": "o4",
+            "label": "\"Walks\" and \"plays no sport\"",
+            "feedback": "These two overlap in the 30 walkers with no sport, so they are not complements. Their probabilities sum to 0.95, not 1."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-complement-table__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(neither takes the bus nor plays a sport). Give a decimal.",
+        "answer": 0.15,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.85,
+            "feedback": "That is the union itself — the students who DO satisfy at least one event. \"Neither\" is what is left over: 1 − 0.85."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(walks). Walking alone is not enough — the 70 walkers who play a sport still satisfy the \"sport\" half."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is P(no sport), the whole column. The 60 bus riders inside it are still in the union via the bus row."
+          }
+        ],
+        "fallbackFeedback": "The single unshaded cell holds 30 students: 30/200 = 0.15 = 1 − 0.85."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 150 phones, 90 have a case, 60 have a screen protector, and 40 have both. Find **P(neither)** as a decimal, rounded to three places.",
+        "answer": 0.267,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.733,
+            "feedback": "That is the union, 110/150 — the phones with at least one accessory. \"Neither\" is the leftover: 1 − 0.733."
+          },
+          {
+            "value": 0.533,
+            "feedback": "That is 80/150, which comes from subtracting the 40 overlap twice. It is added twice by 90 + 60, so it comes off exactly once."
+          },
+          {
+            "value": 0.0,
+            "feedback": "That comes from 90 + 60 = 150, as if every phone had exactly one accessory. But 40 phones have both, so those two counts overlap and the union is only 110."
+          }
+        ],
+        "fallbackFeedback": "90 + 60 − 40 = 110 phones have at least one, so 150 − 110 = 40 have neither: 40/150 ≈ 0.267."
+      }
+    ],
+    "conditional-probability__cpr-complement__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "Three coins are flipped. What is the complement of \"at least one head\"?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "No heads at all (TTT)",
+            "correct": true,
+            "feedback": "Right — the only way to miss \"one or more heads\" is to get zero of them."
+          },
+          {
+            "id": "o2",
+            "label": "At least one tail",
+            "correct": false,
+            "feedback": "That is not an opposite: HHT has at least one head *and* at least one tail, so both events happen together. Complements can never overlap."
+          },
+          {
+            "id": "o3",
+            "label": "Exactly one head",
+            "correct": false,
+            "feedback": "Exactly one head is *inside* \"at least one head\", not opposite to it. The complement must contain none of A's outcomes."
+          },
+          {
+            "id": "o4",
+            "label": "All heads (HHH)",
+            "correct": false,
+            "feedback": "HHH is the most extreme case of \"at least one head\", so it belongs to the event itself, not to its complement."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-conditional-table__matchPairs": [
+      {
+        "type": "matchPairs",
+        "prompt": "Each statement uses the same 40 students. Match it to its fraction.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Given they take the bus, they play a sport"
+          },
+          {
+            "id": "w2",
+            "label": "Given they play a sport, they take the bus"
+          },
+          {
+            "id": "w3",
+            "label": "They take the bus and play a sport"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "40/100"
+          },
+          {
+            "id": "y2",
+            "label": "40/110"
+          },
+          {
+            "id": "y3",
+            "label": "40/200"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "Being told they ride the bus makes the 100 bus riders the world, so the denominator is 100, not 110."
+          },
+          {
+            "left": "w3",
+            "right": "y1",
+            "feedback": "An \"and\" statement conditions on nothing — its denominator is everybody: 200."
+          }
+        ],
+        "missFeedback": "Find the word \"given\". Whatever follows it is the denominator; with no \"given\", the denominator is all 200.",
+        "successFeedback": "Three statements, one numerator, three denominators — that is the whole idea of conditioning."
+      }
+    ],
+    "conditional-probability__cpr-conditional-table__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(plays a sport | takes the bus). Give a decimal.",
+        "answer": 0.4,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.2,
+            "feedback": "That is the joint probability 40/200 — dividing by everyone. The condition already cut the world down to the 100 bus riders."
+          },
+          {
+            "value": 0.364,
+            "feedback": "That is 40/110, which conditions on **sport** instead. You were told the travel method, so the sport column is not the surviving world."
+          },
+          {
+            "value": 0.55,
+            "feedback": "That is P(sport) for the whole school. The point of conditioning is that the bus riders need not match the school average."
+          }
+        ],
+        "fallbackFeedback": "Of the 100 bus riders, 40 play a sport: 0.40."
+      }
+    ],
+    "conditional-probability__cpr-indep-vs-disjoint__dragBucket": [
+      {
+        "type": "dragBucket",
+        "prompt": "One card is drawn. Classify each pair of events.",
+        "buckets": [
+          {
+            "id": "exc",
+            "label": "Mutually exclusive",
+            "icon": "🚫"
+          },
+          {
+            "id": "ind",
+            "label": "Independent",
+            "icon": "⚖️"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "the card is a heart · the card is a spade",
+            "bucketId": "exc",
+            "feedback": "A card has one suit, so these cannot both happen. P(spade | heart) = 0, far from P(spade) = 1/4."
+          },
+          {
+            "id": "s2",
+            "label": "the card is a heart · the card is a queen",
+            "bucketId": "ind",
+            "feedback": "The queen of hearts exists, and P(queen | heart) = 1/13 = P(queen). They overlap at exactly the product rate."
+          },
+          {
+            "id": "s3",
+            "label": "the card is red · the card is a club",
+            "bucketId": "exc",
+            "feedback": "Clubs are black, so no card is both. Learning it is red makes 'club' impossible."
+          },
+          {
+            "id": "s4",
+            "label": "the card is red · the card is an ace",
+            "bucketId": "ind",
+            "feedback": "P(ace | red) = 2/26 = 1/13 = P(ace). Red aces exist, and they occur at exactly the product rate."
+          }
+        ],
+        "missFeedback": "Ask first: can one card satisfy both? If it cannot, they are exclusive. If it can, compare P(A | B) with P(A).",
+        "successFeedback": "Suit-vs-suit and colour-vs-suit collide; suit-vs-rank never does — and rank is independent of suit."
+      }
+    ],
+    "conditional-probability__cpr-indep-vs-disjoint__matchPairs": [
+      {
+        "type": "matchPairs",
+        "prompt": "Match each property to the shortcut it licenses.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "Mutually exclusive"
+          },
+          {
+            "id": "w2",
+            "label": "Independent"
+          },
+          {
+            "id": "w3",
+            "label": "Neither of the two"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "P(A ∪ B) = P(A) + P(B)"
+          },
+          {
+            "id": "y2",
+            "label": "P(A ∩ B) = P(A) × P(B)"
+          },
+          {
+            "id": "y3",
+            "label": "No shortcut — use P(A ∩ B) = P(B) × P(A|B)"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y2",
+            "feedback": "Exclusive events have P(A ∩ B) = 0, while P(A) × P(B) is positive — so that is the one product formula exclusivity forbids."
+          },
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "Independent events usually overlap, so plain addition double-counts the overlap. Independence licenses the AND shortcut, not the OR one."
+          }
+        ],
+        "missFeedback": "Exclusive simplifies OR (nothing to subtract). Independent simplifies AND (no conditional needed).",
+        "successFeedback": "One property per shortcut — and with neither property you fall back on the general multiplication rule."
+      }
+    ],
+    "conditional-probability__cpr-indep-vs-disjoint__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "One die. A = \"even\", B = \"shows a 5\". These are mutually exclusive. Are they independent?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Dependent — knowing it is a 5 drops P(even) from 1/2 to 0.",
+            "correct": true,
+            "feedback": "Right — exclusivity is the strongest dependence there is: one event rules the other out completely."
+          },
+          {
+            "id": "o2",
+            "label": "Independent — they never interfere with each other.",
+            "correct": false,
+            "feedback": "They interfere as much as two events possibly can. Learning that A happened makes B impossible, which is the opposite of leaving it unchanged."
+          },
+          {
+            "id": "o3",
+            "label": "Independent — P(A and B) = 0 = P(A) × P(B).",
+            "correct": false,
+            "feedback": "The joint is 0, but the product is 1/2 × 1/6 = 1/12, not 0. The product test fails."
+          },
+          {
+            "id": "o4",
+            "label": "Both, since the two ideas mean the same thing.",
+            "correct": false,
+            "feedback": "They are different ideas — and for events with non-zero probability, they cannot both hold."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-indep-vs-disjoint__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(A) = 0.5, P(B) = 0.3, and A and B are **mutually exclusive**. Find P(A | B).",
+        "answer": 0,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.5,
+            "feedback": "That is P(A) — the answer if the events were *independent*. Exclusive is the opposite: B happening makes A impossible."
+          },
+          {
+            "value": 0.15,
+            "feedback": "That is 0.5 × 0.3, the product an independence assumption would give for the joint. But exclusivity forces the joint to 0."
+          },
+          {
+            "value": 0.8,
+            "feedback": "That is 0.5 + 0.3 = P(A ∪ B), which is the one thing exclusivity *does* let you compute by adding. The conditional is 0."
+          }
+        ],
+        "fallbackFeedback": "Exclusive ⇒ P(A ∩ B) = 0, so P(A | B) = 0/0.3 = 0."
+      }
+    ],
+    "conditional-probability__cpr-joint-prob__matchPairs": [
+      {
+        "type": "matchPairs",
+        "prompt": "Match each probability to the count above 200.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "P(takes the bus)"
+          },
+          {
+            "id": "w2",
+            "label": "P(no sport)"
+          },
+          {
+            "id": "w3",
+            "label": "P(walks and plays a sport)"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "100/200"
+          },
+          {
+            "id": "y2",
+            "label": "90/200"
+          },
+          {
+            "id": "y3",
+            "label": "70/200"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w1",
+            "right": "y3",
+            "feedback": "70 is the walkers who play — one inner cell. P(bus) is the whole bus row: 40 + 60 = 100."
+          },
+          {
+            "left": "w2",
+            "right": "y1",
+            "feedback": "100 is a row total (bus). The no-sport column totals 60 + 30 = 90."
+          }
+        ],
+        "missFeedback": "Rows total 100 and 100; columns total 110 and 90; inner cells are 40, 60, 70, 30.",
+        "successFeedback": "Two edges and one cell — you can now read any joint or marginal probability straight off the table."
+      }
+    ],
+    "conditional-probability__cpr-joint-prob__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(takes the bus **and** plays a sport). Give a decimal.",
+        "answer": 0.2,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.4,
+            "feedback": "That is 40/100 — you divided by the bus row instead of the whole group. A joint probability always divides by the grand total, 200."
+          },
+          {
+            "value": 0.364,
+            "feedback": "That is 40/110 — dividing by the sport column. For a joint probability the denominator is everyone: 200."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(bus), the whole row. The question asks for students who are in the bus row AND the sport column: the single cell where they cross."
+          }
+        ],
+        "fallbackFeedback": "One cell, divided by everyone: 40/200 = 0.20."
+      },
+      {
+        "type": "numeric",
+        "prompt": "You are told only this: 200 students, 90 play no sport, 30 of those 90 walk, and 100 take the bus. Find **P(takes the bus and plays no sport)**.",
+        "answer": 0.3,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.667,
+            "feedback": "That is 60/90 — dividing by the no-sport column. That is a conditional probability; a joint one divides by all 200."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is 90/200, the marginal P(no sport). The question asks for the bus riders inside that column, which is 90 − 30 = 60."
+          },
+          {
+            "value": 0.15,
+            "feedback": "That is 30/200 — the walkers with no sport. The bus riders in that column are the other 60."
+          }
+        ],
+        "fallbackFeedback": "90 − 30 = 60 bus riders play no sport, so 60/200 = 0.30."
+      }
+    ],
+    "conditional-probability__cpr-marginal-prob__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "Which of these is a **marginal** probability?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "P(walks) = 100/200",
+            "correct": true,
+            "feedback": "Right — it uses a whole edge total and says nothing about sport, so one question has been collapsed away."
+          },
+          {
+            "id": "o2",
+            "label": "P(walks and no sport) = 30/200",
+            "feedback": "Both questions are pinned down, so this is one inner cell: a joint probability."
+          },
+          {
+            "id": "o3",
+            "label": "P(bus and sport) = 40/200",
+            "feedback": "The \"and\" is the giveaway — two questions answered at once means one inner cell, which is joint."
+          },
+          {
+            "id": "o4",
+            "label": "P(sport, among bus riders) = 40/100",
+            "feedback": "That divides by 100, not 200 — it is a conditional probability, restricted to the bus row. That is the next chapter."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-marginal-prob__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(plays a sport). Give a decimal.",
+        "answer": 0.55,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.2,
+            "feedback": "That is the joint cell 40/200 — bus riders who play a sport. The marginal also counts the 70 walkers who play."
+          },
+          {
+            "value": 0.35,
+            "feedback": "That is 70/200, the walkers who play. Add the 40 bus riders who play as well: 110 of 200."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is 90/200 — the *no sport* column. The two columns are complements, so a slip here flips the event."
+          }
+        ],
+        "fallbackFeedback": "Sum the whole sport column: 40 + 70 = 110, so 110/200 = 0.55."
+      }
+    ],
+    "conditional-probability__cpr-multiplication-rule__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "When can you compute P(A and B) as simply P(A) × P(B)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "When knowing A leaves the chance of B unchanged.",
+            "correct": true,
+            "feedback": "Right — then P(B | A) = P(B), and the general rule collapses to the product of marginals. That condition has a name, coming next chapter."
+          },
+          {
+            "id": "o2",
+            "label": "Always — that is what \"and\" means.",
+            "correct": false,
+            "feedback": "The bus students showed otherwise: 0.50 × 0.55 = 0.275, but the true joint is 0.20. Knowing they ride the bus changes their sport rate."
+          },
+          {
+            "id": "o3",
+            "label": "Whenever A and B cannot both happen.",
+            "correct": false,
+            "feedback": "If they cannot both happen, P(A and B) is 0, and the product of two positive marginals certainly is not 0."
+          },
+          {
+            "id": "o4",
+            "label": "Whenever A and B have the same probability.",
+            "correct": false,
+            "feedback": "Equal probabilities say nothing about whether one event informs the other. What matters is whether P(B | A) equals P(B)."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-mutually-exclusive__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "One card is drawn from cards 1–20. Which pair of events is mutually exclusive?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "\"the number is even\" and \"the number is odd\"",
+            "correct": true,
+            "feedback": "Right — no card is both, so the events share zero outcomes and cannot happen together."
+          },
+          {
+            "id": "o2",
+            "label": "\"the number is even\" and \"the number is a multiple of 5\"",
+            "correct": false,
+            "feedback": "Cards 10 and 20 are both even and multiples of 5, so the events overlap — exclusivity needs zero shared outcomes."
+          },
+          {
+            "id": "o3",
+            "label": "\"the number is greater than 15\" and \"the number is a multiple of 3\"",
+            "correct": false,
+            "feedback": "Card 18 satisfies both at once, so these events can co-occur; one shared outcome is enough to break exclusivity."
+          },
+          {
+            "id": "o4",
+            "label": "\"the number is prime\" and \"the number is odd\"",
+            "correct": false,
+            "feedback": "Most primes here are odd — 3, 5, 7, 11 … — so the events overlap heavily. Sharing outcomes is the opposite of exclusive."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-overlap-count__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "In a class of 30, 18 play a sport, 12 play an instrument, and 7 do both. How many do **at least one**?",
+        "answer": 23,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That is 18 + 12 with the 7 double-counted, which happens to hit the class size — a coincidence, not an answer. Subtract the overlap: 30 − 7 = 23."
+          },
+          {
+            "value": 7,
+            "feedback": "That is the number doing **both**. \"At least one\" includes the sport-only and instrument-only students too."
+          },
+          {
+            "value": 25,
+            "feedback": "That looks like 30 − 5. The students doing neither are not given; they come *out* of the answer, they do not set it."
+          }
+        ],
+        "fallbackFeedback": "These events are not exclusive: 18 + 12 counts the 7 doubles twice, so at least one = 18 + 12 − 7 = 23."
+      },
+      {
+        "type": "numeric",
+        "prompt": "40 people are surveyed: 25 like coffee, 18 like tea, 5 like neither. How many like **both**?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 3,
+            "feedback": "That is 43 − 40 — you subtracted the whole group instead of the group that likes at least one. Five people like neither, so only 35 are inside the circles."
+          },
+          {
+            "value": 43,
+            "feedback": "That is 25 + 18, the double-counted total. The people who like both were counted in each number, so this sum overshoots."
+          },
+          {
+            "value": 5,
+            "feedback": "That is the number who like **neither** — a given, not the answer. Use it to find that 35 like at least one, then compare with 25 + 18."
+          }
+        ],
+        "fallbackFeedback": "35 like at least one (40 − 5). Since 25 + 18 = 43 counts the both-likers twice, both = 43 − 35 = 8."
+      }
+    ],
+    "conditional-probability__cpr-reversal-error__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "\"Of the students who walk, 70% play a sport.\" Which probability is that?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "P(plays a sport | walks) = 70/100",
+            "correct": true,
+            "feedback": "Right — the walkers are the group being divided by, so they sit under the line."
+          },
+          {
+            "id": "o2",
+            "label": "P(walks | plays a sport) = 70/110",
+            "correct": false,
+            "feedback": "That reverses the sentence. It would read \"of the students who play a sport, 64% walk\" — a true statement, but a different one."
+          },
+          {
+            "id": "o3",
+            "label": "P(walks and plays a sport) = 70/200",
+            "correct": false,
+            "feedback": "That is the joint probability, 0.35 — the share of the *whole school*. The sentence restricts attention to walkers first."
+          },
+          {
+            "id": "o4",
+            "label": "P(walks) = 100/200",
+            "correct": false,
+            "feedback": "That is the condition on its own. The 70% describes what happens *inside* that group."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-reversal-error__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(takes the bus | plays a sport). Give a decimal, to three places.",
+        "answer": 0.364,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.4,
+            "feedback": "That is 40/100 = P(sport | bus) — the reverse conditional. Here you are told the sport, so you divide by the 110 who play, not the 100 who ride."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is the joint 40/200. A conditional divides by its condition, and the condition here contains 110 students."
+          },
+          {
+            "value": 0.5,
+            "feedback": "That is P(bus) across the whole school. Being told the student plays a sport should move that number — it lands at 40/110 ≈ 0.364."
+          }
+        ],
+        "fallbackFeedback": "Of the 110 who play a sport, 40 take the bus: 40/110 ≈ 0.364."
+      },
+      {
+        "type": "numeric",
+        "prompt": "P(walks | plays no sport). Give a decimal, to three places.",
+        "answer": 0.333,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.3,
+            "feedback": "That is 30/100 = P(no sport | walks) — the reversed conditional. You were told about sport, so the 90 non-players are the denominator, not the 100 walkers."
+          },
+          {
+            "value": 0.15,
+            "feedback": "That is the joint 30/200. Conditioning on \"no sport\" shrinks the world to 90 students, so the denominator cannot still be 200."
+          },
+          {
+            "value": 0.45,
+            "feedback": "That is P(no sport) = 90/200, the condition itself. The question asks what fraction of that group walks."
+          }
+        ],
+        "fallbackFeedback": "The no-sport column holds 90 students, 30 of whom walk: 30/90 ≈ 0.333."
+      }
+    ],
+    "conditional-probability__cpr-table-union__mcq": [
+      {
+        "type": "mcq",
+        "prompt": "Why do we subtract the 40 when we add the bus row (100) to the sport column (110)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Those 40 students sit in both the row and the column, so they are counted twice.",
+            "correct": true,
+            "feedback": "Exactly — 100 + 110 = 210, which overshoots the 170 shaded students by precisely those 40."
+          },
+          {
+            "id": "o2",
+            "label": "Because those 40 students belong to neither event.",
+            "feedback": "The 40 belong to BOTH events, which is why they are double-counted. The students who belong to neither are the 30 in the last cell."
+          },
+          {
+            "id": "o3",
+            "label": "To make the probability come out under 1.",
+            "feedback": "Staying under 1 is a symptom, not the reason. The subtraction exists because a double-counted student must be counted once."
+          },
+          {
+            "id": "o4",
+            "label": "Because the row and the column have different totals.",
+            "feedback": "Unequal totals are fine — the row and column here happen to be 100 and 110. The correction is about the shared cell, not the sizes."
+          }
+        ]
+      }
+    ],
+    "conditional-probability__cpr-table-union__numeric": [
+      {
+        "type": "numeric",
+        "prompt": "P(takes the bus **or** plays a sport). Give a decimal.",
+        "answer": 0.85,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 1.05,
+            "feedback": "That is 0.50 + 0.55 with nothing subtracted — and a probability above 1 is the tell. The 40 in the crossing cell got counted twice."
+          },
+          {
+            "value": 0.2,
+            "feedback": "That is the joint cell, P(bus and sport). \"Or\" is the larger event: it also holds for the 60 bus riders with no sport and the 70 walkers who play."
+          },
+          {
+            "value": 0.55,
+            "feedback": "That is P(sport) alone. The 60 bus riders who play no sport still satisfy \"bus or sport\"."
+          }
+        ],
+        "fallbackFeedback": "0.50 + 0.55 − 0.20 = 0.85, which matches the 170 shaded students out of 200."
+      }
+    ]
+  }
+}

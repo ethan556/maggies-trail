@@ -1,0 +1,370 @@
+{
+  "id": "bv-04-03",
+  "slug": "association-in-categories",
+  "title": "Association in Categories",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch4-two-way-tables",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Two-way tables reveal **association** between categories. Compare relative frequencies across rows: if children and adults prefer dogs at very different rates, age and pet-preference are **associated**. Similar rates mean little or no association.",
+      "figure": "two-way-table"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Build a survey design that can compare age groups without selection bias.",
+      "widget": {
+        "type": "samplingBiasLab",
+        "prompt": "Study age and pet preference across a town. Choose a design that represents both age groups, use at least 120 people, and repeat it.",
+        "populationLabel": "town residents",
+        "targetMethod": "stratified",
+        "targetSize": 120,
+        "sizeMin": 20,
+        "sizeMax": 200,
+        "sizeStep": 20,
+        "sizeStart": 40,
+        "requiredDraws": 5,
+        "successFeedback": "A stratified sample represents both age groups; repeated larger samples stabilize the relative-frequency comparison.",
+        "methodFeedback": "Sampling only one convenient location can confound age with where people were recruited.",
+        "sizeFeedback": "Keep the stratified design and increase the sample to stabilize subgroup rates.",
+        "drawsFeedback": "Repeat the design so the association is not based on one unusually lucky sample."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Design a fair categorical association study before comparing rates.",
+        "invariants": [
+          "subgroups-represented",
+          "relative-frequency-comparable"
+        ],
+        "misconceptions": [
+          "confounded-selection",
+          "single-table-proof"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "categorical-sampling",
+        "delayed": true,
+        "translationFrom": "diagram",
+        "translationTo": "graph",
+        "counterfactualPrompt": "Make the sample ten times larger without changing a biased method. Which problem remains?",
+        "explanation": {
+          "prompt": "Why can a very large convenience sample still be misleading?",
+          "options": [
+            {
+              "id": "bias",
+              "label": "It can repeatedly overrepresent the same easy-to-reach group.",
+              "correct": true,
+              "feedback": "Exactly — size cannot repair a biased selection process."
+            },
+            {
+              "id": "small",
+              "label": "Large samples are always accurate.",
+              "correct": false,
+              "feedback": "Large samples can be precisely wrong when selection is biased."
+            }
+          ]
+        }
+      },
+      "predict": {
+        "prompt": "Which change reduces selection bias?",
+        "options": [
+          {
+            "id": "method",
+            "label": "Use a representative selection method."
+          },
+          {
+            "id": "size",
+            "label": "Only make the sample larger."
+          },
+          {
+            "id": "repeat",
+            "label": "Repeat the same biased selection many times."
+          }
+        ],
+        "outcomeId": "method",
+        "reveal": "A larger sample reduces random variability, but only representative selection addresses systematic bias."
+      },
+      "conceptTag": "bv-categorical-association"
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The key move is comparing **rates, not raw counts**. Two groups of different sizes can't be compared by counts alone. Turning each into a percent of its own row makes a fair comparison possible.",
+      "figure": "bv-rates-not-counts"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why use rates.",
+      "conceptTag": "bv-categorical-association",
+      "variant": {
+        "gen": "g8-bv-categorical-association",
+        "form": "bvCatWhyRates"
+      },
+      "explanationVariants": [
+        "Groups of different sizes must be compared by rates, since raw counts can mislead.",
+        "Rates make unequal-sized groups comparable; counts alone don't."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why compare relative frequencies (rates) instead of raw counts across rows?",
+        "options": [
+          {
+            "id": "a",
+            "label": "The rows can have different totals, so counts alone aren't a fair comparison",
+            "correct": true,
+            "feedback": "Right — rates adjust for different group sizes, making a fair comparison."
+          },
+          {
+            "id": "b",
+            "label": "Counts are always wrong",
+            "correct": false,
+            "feedback": "Counts aren't wrong — they're just unfair to compare when groups differ in size, so use rates."
+          },
+          {
+            "id": "c",
+            "label": "Rates are easier to add",
+            "correct": false,
+            "feedback": "The reason is fairness across different-sized groups, not ease of adding."
+          },
+          {
+            "id": "d",
+            "label": "Percents are always bigger",
+            "correct": false,
+            "feedback": "Percents aren't bigger — they make different-sized groups comparable."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Spot association from rates.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "In a table, 70% of teens and 68% of adults chose the same brand. Are choice and age strongly associated?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — the rates are nearly equal, so little association",
+            "correct": true,
+            "feedback": "Right — similar rates across groups mean little or no association."
+          },
+          {
+            "id": "b",
+            "label": "Yes — strongly associated",
+            "correct": false,
+            "feedback": "Strong association needs DIFFERENT rates — 70% vs 68% are nearly equal, so little association."
+          },
+          {
+            "id": "c",
+            "label": "Yes — because both are high",
+            "correct": false,
+            "feedback": "High rates alone don't show association — it's the DIFFERENCE that matters, and these barely differ."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell from rates",
+            "correct": false,
+            "feedback": "You CAN tell: nearly-equal rates (70% vs 68%) mean little association."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "A clear association.",
+      "conceptTag": "bv-categorical-association",
+      "variant": {
+        "gen": "g8-bv-categorical-association",
+        "form": "bvCatAssociation"
+      },
+      "explanationVariants": [
+        "90% vs 30% is a large gap, so the two categories are strongly associated.",
+        "A big rate difference (90% vs 30%) signals a strong association."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Among students, 90% of athletes but only 30% of non-athletes ate breakfast. Are being an athlete and eating breakfast associated?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Yes — the rates differ a lot (90% vs 30%)",
+            "correct": true,
+            "feedback": "Right — a large difference in rates signals a strong association."
+          },
+          {
+            "id": "b",
+            "label": "No association",
+            "correct": false,
+            "feedback": "90% vs 30% is a HUGE gap — that's a strong association, not none."
+          },
+          {
+            "id": "c",
+            "label": "Only if the groups are equal size",
+            "correct": false,
+            "feedback": "Rates already adjust for size — the 90% vs 30% gap shows association regardless."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell",
+            "correct": false,
+            "feedback": "The big rate gap (90% vs 30%) clearly shows an association."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Compute a rate to compare.",
+      "conceptTag": "bv-categorical-association",
+      "variant": {
+        "gen": "g8-bv-categorical-association",
+        "form": "bvCatGroup"
+      },
+      "explanationVariants": [
+        "Of 20 adults, 15 prefer cats: 15 ÷ 20 = 75%, versus 10 ÷ 30 ≈ 33% of children — a big gap.",
+        "Adults: 75% cats; children: 33% cats — very different, so associated."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Of the 20 adults, 15 prefer cats. What percent of adults prefer cats? (Compare to children later.)",
+        "answer": 75,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That divides by 50 — 'of adults' means divide by 20: 15 ÷ 20 = 75%."
+          },
+          {
+            "value": 15,
+            "feedback": "That's the count — divide by the 20 adults: 15 ÷ 20 = 75%."
+          }
+        ],
+        "fallbackFeedback": "15 ÷ 20 = 75% of adults prefer cats (vs about 33% of children — a real gap)."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Decide association from a comparison.",
+      "conceptTag": "bv-categorical-association",
+      "variant": {
+        "gen": "g8-bv-categorical-association",
+        "form": "bvCatConclusion"
+      },
+      "explanationVariants": [
+        "Children like cats at 10 ÷ 30 ≈ 33%; adults at 15 ÷ 20 = 75%. The rates differ sharply, so age and preference are associated.",
+        "33% vs 75% is a big gap — associated."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Children prefer cats at about 33% (10 of 30); adults at 75% (15 of 20). What do these rates show?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Age and pet preference are associated — the rates differ sharply",
+            "correct": true,
+            "feedback": "Right — 33% vs 75% is a large gap, showing a clear association."
+          },
+          {
+            "id": "b",
+            "label": "No association — cats appear in both rows",
+            "correct": false,
+            "feedback": "Appearing in both rows isn't the test — the RATES (33% vs 75%) differ sharply, so associated."
+          },
+          {
+            "id": "c",
+            "label": "Nothing, since counts differ",
+            "correct": false,
+            "feedback": "The rates already adjust for the different totals — 33% vs 75% shows association."
+          },
+          {
+            "id": "d",
+            "label": "Adults and children are the same",
+            "correct": false,
+            "feedback": "They're clearly different: 33% vs 75% cat-preference — an association."
+          }
+        ]
+      },
+      "hints": [
+        "Compare the two cat-preference rates: 33% (children) vs 75% (adults).",
+        "A large gap between the rates means the categories are associated.",
+        "33% vs 75% is a big gap, so age and preference ARE associated."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Compare relative frequencies across rows: differing rates show association; similar rates don't. That completes Grade 8.",
+      "takeaways": [
+        "Compare rates (relative frequencies), not raw counts, across groups.",
+        "Sharply different rates signal association between the categories.",
+        "Nearly equal rates mean little or no association."
+      ],
+      "teaser": "That completes Bivariate Statistics — and all of Grade 8 math."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-categorical-association",
+      "concept": {
+        "id": "rem-bv0403-c",
+        "kind": "concept",
+        "body": "To spot association in a two-way table, compare relative frequencies (rates) across rows. Sharply different rates signal association; similar rates mean little or none. Compare rates, not raw counts, because groups can differ in size."
+      },
+      "check": {
+        "id": "rem-bv0403-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-categorical-association",
+        "explanationVariants": [
+          "80% vs 78% are nearly equal, so there's little association.",
+          "Similar rates (80% vs 78%) mean little association."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Group A chose an option at 80% and Group B at 78%. Is there a strong association?",
+          "options": [
+            {
+              "id": "a",
+              "label": "No — the rates are nearly equal",
+              "correct": true,
+              "feedback": "Right — similar rates mean little or no association."
+            },
+            {
+              "id": "b",
+              "label": "Yes — strong association",
+              "correct": false,
+              "feedback": "Strong association needs a big rate gap — 80% vs 78% are nearly equal."
+            },
+            {
+              "id": "c",
+              "label": "Yes — both are high",
+              "correct": false,
+              "feedback": "High rates alone don't show association — these barely differ, so little association."
+            },
+            {
+              "id": "d",
+              "label": "Can't tell",
+              "correct": false,
+              "feedback": "Nearly-equal rates (80% vs 78%) mean little association."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

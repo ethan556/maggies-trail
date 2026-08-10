@@ -1,0 +1,432 @@
+{
+  "id": "g3a-02-01",
+  "slug": "across-two-zeros",
+  "title": "Across Two Zeros",
+  "courseId": "add-subtract-1000-g3",
+  "chapterId": "ch2-harder-cases-and-smarter-roads",
+  "minutes": 7,
+  "readingProfile": "standard",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "Across two zeros the trade cannot happen in one step: the ones need a ten, but the tens column is empty and must borrow a hundred first.",
+      "narration": "Across two zeros the trade cannot happen in one step: the ones need a ten, but the tens column is empty and must borrow a hundred first."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Try it.",
+      "conceptTag": "g3a-two-zeros",
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "503 − 267 = ? The tens are empty — tap to see where the trade must start.",
+        "op": "subtract",
+        "a": 503,
+        "b": 267,
+        "commonResults": [
+          {
+            "value": 364,
+            "feedback": "364 flipped the short columns instead of trading — 7 − 3 and 6 − 0 are not legal moves here."
+          },
+          {
+            "value": 244,
+            "feedback": "The borrow reached the ones but the empty tens column was never charged for passing it along."
+          }
+        ],
+        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
+        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+      },
+      "predict": {
+        "prompt": "In 503 − 267, the ones need a ten but the tens show 0. What happens?",
+        "options": [
+          {
+            "id": "chain",
+            "label": "A hundred is broken first, then a ten"
+          },
+          {
+            "id": "stuck",
+            "label": "The subtraction is impossible"
+          }
+        ],
+        "outcomeId": "chain",
+        "reveal": "Zero has nothing to lend, so it borrows before it lends: one hundred becomes ten tens, leaving 9 after one ten moves on."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a two zeros.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a two zeros."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-two-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3a-two-zeros",
+      "explanationVariants": [
+        "Zero cannot lend.",
+        "Borrow from further left."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "500 − 154 = ?",
+        "answer": 346,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 454,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 356,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 346."
+      },
+      "hints": [
+        "Zero cannot lend.",
+        "Borrow from further left.",
+        "The chain passes through."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a two zeros.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a two zeros."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-two-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "figure": "count-on-hops",
+      "body": "The borrow passes THROUGH the zero. One hundred becomes ten tens; one of those tens becomes ten ones; and the zero column ends up holding nine.",
+      "narration": "The borrow passes THROUGH the zero. One hundred becomes ten tens; one of those tens becomes ten ones; and the zero column ends up holding nine."
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Try it again.",
+      "conceptTag": "g3a-two-zeros",
+      "widget": {
+        "type": "columnCalc",
+        "prompt": "503 − 267 = ? The tens are empty — tap to see where the trade must start.",
+        "op": "subtract",
+        "a": 503,
+        "b": 267,
+        "commonResults": [
+          {
+            "value": 364,
+            "feedback": "364 flipped the short columns instead of trading — 7 − 3 and 6 − 0 are not legal moves here."
+          },
+          {
+            "value": 244,
+            "feedback": "The borrow reached the ones but the empty tens column was never charged for passing it along."
+          }
+        ],
+        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
+        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a two zeros.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a two zeros."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-two-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3a-two-zeros",
+      "explanationVariants": [
+        "The chain starts at the hundreds.",
+        "It passes through the zero."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In 503 − 267, why must the trade start at the HUNDREDS?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "The tens are 0, so they have nothing to lend until they borrow first",
+            "correct": true,
+            "feedback": "Correct — the ones need a ten, but the tens column is empty; it must borrow a hundred before it can lend."
+          },
+          {
+            "id": "o1",
+            "label": "Because subtraction always starts from the left",
+            "correct": false,
+            "feedback": "Column subtraction starts at the ONES; here the empty tens column is what forces the chain leftward."
+          },
+          {
+            "id": "o2",
+            "label": "Because 5 is bigger than 2",
+            "correct": false,
+            "feedback": "That comparison is about the hundreds digits and says nothing about why the ones are stuck."
+          },
+          {
+            "id": "o3",
+            "label": "It does not — you can take 3 from 7",
+            "correct": false,
+            "feedback": "Flipping to 7 − 3 is the small-from-large bug; the top digit is 3 and it genuinely needs a trade."
+          }
+        ]
+      },
+      "hints": [
+        "Zero cannot lend.",
+        "Borrow from further left.",
+        "The chain passes through."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a two zeros.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a two zeros."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-two-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3a-two-zeros",
+      "explanationVariants": [
+        "Nine is what a passed-through zero keeps.",
+        "Ten tens, minus the one lent on."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "600 − 173 = ?",
+        "answer": 427,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 573,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 437,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 427."
+      },
+      "hints": [
+        "Zero cannot lend.",
+        "Borrow from further left.",
+        "The chain passes through."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a two zeros.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a two zeros."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-two-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g3a-two-zeros",
+      "explanationVariants": [
+        "Round numbers hide long chains.",
+        "Trace the trade all the way."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "500 − 334 = ?",
+        "answer": 166,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 234,
+            "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+          },
+          {
+            "value": 176,
+            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+          }
+        ],
+        "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+        "successFeedback": "Correct — 166."
+      },
+      "hints": [
+        "Zero cannot lend.",
+        "Borrow from further left.",
+        "The chain passes through."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and watch what each trade does to g3a two zeros.",
+        "invariants": [
+          "A trade never changes how much there is — ten ones become one ten, one hundred becomes ten tens, and the total stands still while the packaging changes for g3a two zeros."
+        ],
+        "misconceptions": [
+          "Flipping a column to take the small digit from the large one, stranding a carry, or borrowing from a column that has nothing to lend."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-1000-g3:g3a-two-zeros",
+        "delayed": true,
+        "counterfactualPrompt": "If a column comes up short, what must change somewhere else so the total stays exactly the same?"
+      },
+      "variant": {
+        "gen": "g2-place-value-1000",
+        "form": "Pv1000SubtractTradeNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You did it!",
+      "takeaways": [
+        "Zero cannot lend until it borrows.",
+        "The trade passes through.",
+        "A passed-through zero keeps nine."
+      ],
+      "teaser": "next: adding without columns at all."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "g3a-two-zeros",
+      "concept": {
+        "id": "rem-g3a-two-zeros-c",
+        "kind": "concept",
+        "body": "The borrow passes THROUGH the zero. One hundred becomes ten tens; one of those tens becomes ten ones; and the zero column ends up holding nine.",
+        "narration": "The borrow passes THROUGH the zero. One hundred becomes ten tens; one of those tens becomes ten ones; and the zero column ends up holding nine."
+      },
+      "check": {
+        "id": "rem-g3a-two-zeros-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "g3a-two-zeros",
+        "explanationVariants": [
+          "Zero cannot lend.",
+          "Borrow from further left."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "500 − 154 = ?",
+          "answer": 346,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 454,
+              "feedback": "That took the smaller digit from the larger in each column — the classic bug. When the top is short you must trade, not flip."
+            },
+            {
+              "value": 356,
+              "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+            }
+          ],
+          "fallbackFeedback": "Work one place at a time, and trade only when a column truly comes up short.",
+          "successFeedback": "Correct — 346."
+        }
+      }
+    }
+  ]
+}

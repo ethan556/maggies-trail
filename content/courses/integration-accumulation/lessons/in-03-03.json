@@ -1,0 +1,322 @@
+{
+  "id": "in-03-03",
+  "slug": "one-theorem",
+  "title": "Why the Two Halves Are One Theorem",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch3-the-fundamental-theorem",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Part 1: **differentiating an accumulation gives back the function.** (A′ = f)\nPart 2: **the accumulation can be computed from any antiderivative.** (∫ₐᵇ f = F(b) − F(a))\n\nThese are not two facts. They are one fact, read in two directions: **differentiation and integration are inverse operations.** Part 2 is what you get by taking Part 1 seriously.",
+      "figure": "in-ftc-slope-is-height"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Derive Part 2 from Part 1.",
+      "conceptTag": "in-ftc-unified",
+      "explanationVariants": [
+        "A(x) = ∫ₐˣ f has A′ = f (Part 1), so A is an antiderivative. Any other antiderivative F differs by a constant, so F(b) − F(a) = A(b) − A(a) = A(b) − 0 = ∫ₐᵇ f.",
+        "The whole of Part 2 is three moves: A is an antiderivative; constants cancel in a subtraction; A(a) = 0."
+      ],
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Put the derivation of Part 2 in order.",
+        "items": [
+          {
+            "id": "c",
+            "label": "Constants cancel in a subtraction, so F(b) − F(a) = A(b) − A(a)"
+          },
+          {
+            "id": "a",
+            "label": "A(x) = ∫ₐˣ f has A′ = f, so A is an antiderivative of f (Part 1)"
+          },
+          {
+            "id": "d",
+            "label": "A(a) = 0, so A(b) − A(a) = A(b) = ∫ₐᵇ f"
+          },
+          {
+            "id": "b",
+            "label": "Any other antiderivative F differs from A by a constant"
+          }
+        ],
+        "correctOrder": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "c",
+            "second": "b",
+            "feedback": "You cannot say the constants cancel before establishing that two antiderivatives DIFFER by a constant."
+          },
+          {
+            "first": "d",
+            "second": "a",
+            "feedback": "A(a) = 0 is the last step, not the first. Begin with Part 1: A is an antiderivative."
+          }
+        ],
+        "missFeedback": "Start with Part 1 (A is an antiderivative), then the constant, then the cancellation, then A(a) = 0.",
+        "successFeedback": "Four moves, and Part 2 falls out of Part 1. They were never two theorems."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc-unified__dragOrder"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "One picture, both halves.",
+      "widget": {
+        "type": "accumulateArea",
+        "fn": "line",
+        "mode": "area",
+        "targetArea": 9,
+        "targetX": 0,
+        "start": 0,
+        "prompt": "f(x) = 2x. Sweep out an area of 9, and read BOTH theorems off the same picture.",
+        "successFeedback": "x = 3, area 9. Part 1 is the tangent line: the slope of A at x = 3 is 6, which is the height of f. Part 2 is the value: A(3) = 9, which is F(3) − F(0) with F(x) = x². Same picture, same sweep — one theorem, read either as a statement about slopes or as a statement about values.",
+        "lowFeedback": "Not enough area. Keep sweeping right.",
+        "highFeedback": "Past 9. Come back left."
+      },
+      "predict": {
+        "prompt": "You'll sweep out area under f(x) = 2x from the left. As x moves right, the accumulated area grows…",
+        "options": [
+          {
+            "id": "faster",
+            "label": "Faster and faster"
+          },
+          {
+            "id": "steady",
+            "label": "At a steady rate"
+          },
+          {
+            "id": "slower",
+            "label": "Slower and slower"
+          }
+        ],
+        "outcomeId": "faster",
+        "reveal": "Area pours in at exactly the current height of f(x) = 2x — and that height keeps rising, so the accumulation curve bends upward. The rate the area grows IS the function's height."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "covariation",
+        "actionGoal": "Move an upper bound and coordinate accumulated area with the integrand's current value.",
+        "invariants": [
+          "accumulation-changes-at-integrand-rate",
+          "signed-area-can-decrease"
+        ],
+        "misconceptions": [
+          "integral-is-always-positive-area",
+          "accumulation-graph-copies-integrand"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-accumulateArea",
+        "delayed": false
+      },
+      "conceptTag": "in-ftc-unified"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which half are you using?",
+      "conceptTag": "in-ftc-unified",
+      "explanationVariants": [
+        "Differentiating an integral is Part 1. Evaluating an integral with an antiderivative is Part 2.",
+        "Part 1 is a statement about slopes; Part 2 is a recipe for values."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Which half of the theorem does each task use?",
+        "buckets": [
+          {
+            "id": "p1",
+            "label": "Part 1 (A′ = f)",
+            "icon": "📐"
+          },
+          {
+            "id": "p2",
+            "label": "Part 2 (F(b) − F(a))",
+            "icon": "🧮"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Find d/dx[∫₂ˣ sin t dt]",
+            "bucketId": "p1",
+            "feedback": "Differentiating an accumulation — Part 1 hands back the integrand: sin x."
+          },
+          {
+            "id": "s2",
+            "label": "Compute ∫₀¹ x⁵ dx",
+            "bucketId": "p2",
+            "feedback": "Finding a VALUE from an antiderivative: F(x) = x⁶/6, so the answer is 1/6."
+          },
+          {
+            "id": "s3",
+            "label": "Find where ∫₀ˣ (t − 5) dt is smallest",
+            "bucketId": "p1",
+            "feedback": "Turning points of an accumulation need its DERIVATIVE, which Part 1 says is the integrand. Set t − 5 = 0."
+          },
+          {
+            "id": "s4",
+            "label": "Find the total water from a flow rate over [0, 4]",
+            "bucketId": "p2",
+            "feedback": "A definite total from a rate — antiderivative, then subtract."
+          }
+        ],
+        "missFeedback": "Are you DIFFERENTIATING an integral (Part 1) or EVALUATING one (Part 2)?",
+        "successFeedback": "Differentiate an accumulation → Part 1. Compute a definite value → Part 2. One theorem, two jobs."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc-unified__dragBucket"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "And now the two courses are one course.\n\nEvery derivative rule you learned in C1 is now an **antiderivative rule**, read backwards. The power rule reversed gives xⁿ⁺¹/(n+1). The chain rule reversed is about to give you substitution.\n\nDifferentiation was never a separate subject. It was the other half of this one.",
+      "figure": "dr-inverse-reciprocal"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read a derivative rule backwards.",
+      "conceptTag": "in-ftc-unified",
+      "explanationVariants": [
+        "(x⁴)′ = 4x³, so an antiderivative of x³ is x⁴/4. Check by differentiating: (x⁴/4)′ = x³ ✓.",
+        "Raise the power by one, then divide by the new power — the power rule, run in reverse."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "∫₀² x³ dx. (An antiderivative of x³ is x⁴/4.)",
+        "answer": 4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "That is 2⁴ = 16 — you evaluated x⁴ but forgot to divide by 4."
+          },
+          {
+            "value": 8,
+            "feedback": "That is 2³, the height of f at the endpoint, not the area under it."
+          },
+          {
+            "value": 12,
+            "feedback": "Check the antiderivative: x⁴/4 at x = 2 is 16/4 = 4, and at 0 it is 0."
+          }
+        ],
+        "fallbackFeedback": "F(x) = x⁴/4 → F(2) − F(0) = 4."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc-unified__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Both halves in one question.",
+      "conceptTag": "in-ftc-unified",
+      "hints": [
+        "G(x) = ∫₀ˣ (t² − 4) dt. To find where G is smallest, you need G′ — and Part 1 tells you what that is without computing anything.",
+        "G′(x) = x² − 4, which is zero at x = 2 (in [0, 3]) and changes from negative to positive there.",
+        "Now use Part 2 to get the VALUE: an antiderivative of t² − 4 is t³/3 − 4t."
+      ],
+      "explanationVariants": [
+        "Part 1: G′ = x² − 4 = 0 at x = 2, a minimum. Part 2: G(2) = 8/3 − 8 = −16/3 ≈ −5.333.",
+        "One theorem, both jobs: it located the minimum AND evaluated it, and you never drew a rectangle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "G(x) = ∫₀ˣ (t² − 4) dt on [0, 3]. Find the MINIMUM VALUE of G, as a decimal to three places.",
+        "answer": -5.333,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That is WHERE the minimum occurs (x = 2), not its value. Now evaluate: G(2) = 8/3 − 8 = −5.333."
+          },
+          {
+            "value": 0,
+            "feedback": "G(0) = 0, but G then goes negative — the integrand is negative on (0, 2), so area is being subtracted."
+          },
+          {
+            "value": 5.333,
+            "feedback": "The sign is wrong. The region up to x = 2 lies BELOW the axis, so G(2) is negative: −16/3."
+          }
+        ],
+        "fallbackFeedback": "G′ = x² − 4 = 0 at x = 2 (a minimum), and G(2) = 8/3 − 8 = −16/3 ≈ −5.333."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-ftc-unified__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One theorem, two directions.",
+      "takeaways": [
+        "Part 1 (A′ = f) and Part 2 (∫ₐᵇ f = F(b) − F(a)) are one fact: differentiation and integration are inverse.",
+        "Part 2 falls out of Part 1 in four lines — A is an antiderivative, constants cancel, A(a) = 0.",
+        "Every derivative rule is now an antiderivative rule, read backwards."
+      ],
+      "teaser": "Still to come in this course: the full antiderivative library, and substitution — the chain rule run in reverse."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-ftc-unified",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Ask what you are being asked to DO. Differentiating an accumulation? That is Part 1, and the answer is the integrand. Computing a definite value? That is Part 2: antiderivative, then subtract.",
+        "figure": "dr-inverse-reciprocal"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Which half?",
+        "conceptTag": "in-ftc-unified",
+        "explanationVariants": [
+          "Differentiating an integral is Part 1, and it hands the integrand straight back: x⁴.",
+          "No computation is needed — that is the point of Part 1."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "What is d/dx[∫₀ˣ t⁴ dt]?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "x⁴",
+              "correct": true,
+              "feedback": "Right — Part 1: the derivative undoes the accumulation."
+            },
+            {
+              "id": "o2",
+              "label": "x⁵/5",
+              "correct": false,
+              "feedback": "That is the accumulation itself. Differentiating it takes you back to x⁴."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "id": "mult-05-01",
+  "slug": "addition-table-patterns",
+  "title": "Patterns in the Addition Table",
+  "courseId": "multiplication-division",
+  "chapterId": "ch5-number-patterns",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Tables aren't just answer-lookups — they're **pattern pictures**. In the addition table, every cell holds its row number plus its column number. Slide right and cells grow by 1; slide up, by 1. And straight down the middle diagonal, something special marches: the doubles.",
+      "figure": "mult3-add-table"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Find the doubles' hiding place.",
+      "conceptTag": "addition-patterns",
+      "widget": {
+        "type": "plotPoint",
+        "prompt": "This mini addition table adds column + row. Tap every cell where the two numbers being added are EQUAL (1+1, 2+2, 3+3, 4+4).",
+        "cols": 4,
+        "rows": 4,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "targets": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "pointErrors": [
+          {
+            "x": 1,
+            "y": 2,
+            "feedback": "That cell adds 1 + 2 — two DIFFERENT numbers. Doubles live where the column and row match."
+          }
+        ],
+        "missFeedback": "A double's cell has matching column and row: 1-and-1, 2-and-2, 3-and-3, 4-and-4.",
+        "successFeedback": "The doubles march down the diagonal: 2, 4, 6, 8. Every addition table hides them there."
+      },
+      "predict": {
+        "prompt": "In an addition table, where do the doubles (1+1, 2+2, 3+3, …) live?",
+        "options": [
+          {
+            "id": "diag",
+            "label": "On the main diagonal"
+          },
+          {
+            "id": "col",
+            "label": "Down the first column"
+          },
+          {
+            "id": "scatter",
+            "label": "Scattered with no pattern"
+          }
+        ],
+        "outcomeId": "diag",
+        "reveal": "Doubles happen exactly where the row number equals the column number — a straight diagonal line. Patterns in the table are geometry: same-plus-same draws a line you can point at."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents addition patterns.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for addition patterns must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines addition patterns."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiplication-division:addition-patterns",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "The table has a mirror in it — from a lesson you've seen before.",
+      "conceptTag": "addition-patterns",
+      "explanationVariants": [
+        "3 + 5 and 5 + 3 give the same sum, so the cell at (3,5) matches the cell at (5,3) — the whole table mirrors across the doubles diagonal.",
+        "Flipping the table swaps each cell's row and column — but swapping the order of an addition never changes its sum."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Fold the addition table along its doubles diagonal and the numbers match up perfectly. Why?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Because 3 + 5 = 5 + 3 — order never changes a sum",
+            "correct": true,
+            "feedback": "The flip! Folding swaps row and column, and swapped additions always agree — so every cell meets its twin."
+          },
+          {
+            "id": "b",
+            "label": "Because the table is shaped like a square",
+            "feedback": "A square SHAPE alone doesn't make numbers match — a table of random numbers wouldn't fold neatly. It's the swap rule that does it."
+          },
+          {
+            "id": "c",
+            "label": "Because every row repeats the row above it",
+            "feedback": "Rows don't repeat — each row is 1 bigger than the one before. The matching comes from swapping row and column, not repetition."
+          },
+          {
+            "id": "d",
+            "label": "It doesn't — the fold only works for the doubles",
+            "feedback": "Try any cell: 2 + 4 and 4 + 2 both hold 6, and they sit exactly across the fold from each other. Every pair matches."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "addition-patterns"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Another hidden picture: **evens and odds**. Even numbers are pair-able piles. Add two pair-able piles — still paired: even + even = even. Two odd piles? Each has a lone extra, and the two loners pair up: odd + odd = even. Only even + odd leaves a loner: odd.",
+      "figure": "mult3-add-table"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Predict — don't compute.",
+      "conceptTag": "addition-patterns",
+      "explanationVariants": [
+        "46 and 32 are both even — both piles fully paired, and joined they stay paired. Even.",
+        "The ones digits tell it: 6 + 2 keeps everything in pairs; no loner appears anywhere."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Without adding them: 46 + 32 will be…",
+        "options": [
+          {
+            "id": "a",
+            "label": "Even — both numbers are even, so the pairs stay paired",
+            "correct": true,
+            "feedback": "Two fully-paired piles joined together have no loners: even + even = even, no arithmetic needed."
+          },
+          {
+            "id": "b",
+            "label": "Odd — big numbers are usually odd",
+            "feedback": "Size has nothing to do with parity — half of all numbers, big or small, are even. Check the piles' pairing instead."
+          },
+          {
+            "id": "c",
+            "label": "Even — every sum is even",
+            "feedback": "Right answer, wrong rule! 3 + 4 = 7 is odd. It's even HERE because both addends are even."
+          },
+          {
+            "id": "d",
+            "label": "Can't tell without adding",
+            "feedback": "You can tell instantly: even + even is always even. Parity rules predict sums before any computing."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "addition-patterns",
+        "form": "parityPredict"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort sums by parity — computing is not allowed (and not needed).",
+      "conceptTag": "addition-patterns",
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Predict each sum's parity from its two addends.",
+        "buckets": [
+          {
+            "id": "even",
+            "label": "Even sum",
+            "icon": "🤝"
+          },
+          {
+            "id": "odd",
+            "label": "Odd sum",
+            "icon": "🧍"
+          }
+        ],
+        "items": [
+          {
+            "id": "p1",
+            "label": "8 + 6",
+            "bucketId": "even",
+            "feedback": "Even + even: both piles fully paired, nobody left alone — even (it's 14)."
+          },
+          {
+            "id": "p2",
+            "label": "7 + 5",
+            "bucketId": "even",
+            "feedback": "Odd + odd is EVEN — the two loners pair up with each other! (It's 12.) Odd addends don't make odd sums together."
+          },
+          {
+            "id": "p3",
+            "label": "9 + 4",
+            "bucketId": "odd",
+            "feedback": "Odd + even: one loner, no partner for it — odd (it's 13)."
+          },
+          {
+            "id": "p4",
+            "label": "3 + 3",
+            "bucketId": "even",
+            "feedback": "Two odd piles — their loners find each other: even (6). Every double is even, too."
+          }
+        ],
+        "missFeedback": "Count the loners: two odds' loners pair up (even); a single odd leaves one loner (odd); two evens never had any.",
+        "successFeedback": "Sorted by loners! Even+even and odd+odd pair off; only a mixed pair leaves someone standing."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Ride the diagonal further than the table shows.",
+      "conceptTag": "addition-patterns",
+      "explanationVariants": [
+        "The diagonal's Nth number is N + N: the 7th is 7 + 7 = 14.",
+        "The doubles climb by 2 each step: 2, 4, 6, 8, 10, 12, 14 — seven steps."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The doubles diagonal reads 2, 4, 6, 8, … What is its 7th number?",
+        "answer": 14,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "7 is the POSITION on the diagonal. The number sitting there is the double: 7 + 7."
+          },
+          {
+            "value": 49,
+            "feedback": "49 is 7 × 7 — that's the multiplication table's diagonal! The addition table's diagonal holds 7 + 7."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is the 8th double — one step too far. Count by 2s exactly seven times: 2, 4, 6, 8, 10, 12, 14."
+          }
+        ],
+        "fallbackFeedback": "Diagonal cell N holds N + N. Put in 7."
+      },
+      "variant": {
+        "gen": "addition-patterns",
+        "form": "doubleDiagonal"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Walk the table like a game board.",
+      "conceptTag": "addition-patterns",
+      "hints": [
+        "Every cell holds row + column. Where does Sam start?",
+        "Start: 6 + 8 = 14. Each step LEFT drops the column by 1 — which drops the cell by 1.",
+        "Two steps left: the column falls from 8 to 6. Now add row + column again."
+      ],
+      "explanationVariants": [
+        "Start at 6 + 8 = 14; two left-steps drop the column to 6, landing on 6 + 6 = 12.",
+        "Each left-step subtracts 1 from the cell: 14 → 13 → 12. Same answer, walked instead of recomputed."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sam stands on the addition-table cell where the row is 6 and the column is 8. He walks 2 cells to the left. What number is he standing on now?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is where Sam STARTED (6 + 8). He then walked left two cells — each step left drops the number by 1."
+          },
+          {
+            "value": 16,
+            "feedback": "16 walks the wrong way — RIGHT makes cells grow. Left-steps shrink the column: 8 becomes 6."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is just the new column. The cell holds row PLUS column — Sam's row of 6 still counts."
+          }
+        ],
+        "fallbackFeedback": "Cell = row + column. The row stays 6; the column drops from 8 to 6."
+      },
+      "variant": {
+        "gen": "addition-patterns",
+        "form": "additionTableWalk"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The addition table is a picture now.",
+      "takeaways": [
+        "The diagonal holds the doubles; the table mirrors across it because order never changes a sum.",
+        "Parity rules predict sums with zero computing: matching parities make even, mixed makes odd.",
+        "Walking the table works like arithmetic: right/up grows by 1, left/down shrinks by 1."
+      ],
+      "teaser": "the multiplication table hides even better pictures — squares, mirrors, and rows that own each other."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "addition-patterns",
+      "concept": {
+        "id": "rem-ap-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Even = pair-able**: every item has a partner. Join two even piles and every partner stays matched — even + even = even. Try it small: 4 + 6. Both pair up fully, so the join does too: 10, no loner in sight."
+      },
+      "check": {
+        "id": "rem-ap-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "addition-patterns",
+        "explanationVariants": [
+          "6 and 8 are both pair-able — joined, still pair-able: even (14).",
+          "No loners anywhere: even + even = even."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Without adding: 6 + 8 will be…",
+          "options": [
+            {
+              "id": "a",
+              "label": "Even",
+              "correct": true,
+              "feedback": "Both piles fully paired, and they stay that way: even + even = even."
+            },
+            {
+              "id": "b",
+              "label": "Odd",
+              "feedback": "An odd sum needs exactly one loner — but 6 and 8 both pair up completely. Nobody's left standing."
+            },
+            {
+              "id": "c",
+              "label": "Can't tell",
+              "feedback": "Parity tells you instantly: matching parities (even+even or odd+odd) always land even."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

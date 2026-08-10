@@ -1,0 +1,327 @@
+{
+  "id": "in-01-02",
+  "slug": "trapping-the-area",
+  "title": "Trapping the Area",
+  "courseId": "integration-accumulation",
+  "chapterId": "ch1-area-under-a-curve",
+  "minutes": 11,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Here is the move that makes calculus possible.\n\nOn a rising curve, the left sum is **too small** and the right sum is **too big**. So the true area is caught between them:\n\n**left sum ≤ true area ≤ right sum**\n\nAnd the gap between the two is [f(b) − f(a)]·h — which shrinks to nothing as n grows. The trap closes.",
+      "figure": "in-riemann-trap"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Squeeze the trap shut.",
+      "widget": {
+        "type": "riemannSum",
+        "fn": "square",
+        "a": 0,
+        "b": 2,
+        "tolerance": 0.02,
+        "nStart": 2,
+        "ruleStart": "left",
+        "prompt": "Squeeze the estimate to within 0.02 of the truth. Watch the trap — left below, right above — close as you raise n.",
+        "successFeedback": "The trap is nearly shut. There is only ONE number that survives being squeezed from both sides forever, and that number is the area. This is not an approximation scheme that happens to work — it is a DEFINITION, and the squeeze is what makes it legitimate.",
+        "lowFeedback": "Still under the truth. Notice you are approaching from below and cannot cross — that is the left wall of the trap.",
+        "highFeedback": "Still over. You are pressing down from above and cannot cross — that is the right wall."
+      },
+      "predict": {
+        "prompt": "y = x² rises across [0, 2]. Using the LEFT rule, your first estimate will land…",
+        "options": [
+          {
+            "id": "under",
+            "label": "Under the true area"
+          },
+          {
+            "id": "over",
+            "label": "Over the true area"
+          },
+          {
+            "id": "exact",
+            "label": "Exactly on it"
+          }
+        ],
+        "outcomeId": "under",
+        "reveal": "On a rising curve every left-hand strip is only as tall as its shortest edge, so left sums always undershoot — and raising n squeezes the gap toward zero."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Partition an interval and compare how sample rules accumulate approximate signed area.",
+        "invariants": [
+          "sum-is-height-times-width",
+          "refinement-controls-error"
+        ],
+        "misconceptions": [
+          "more-rectangles-always-overestimate",
+          "area-ignores-sign"
+        ],
+        "representations": [
+          "diagram",
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 2,
+        "transferFamily": "integration-accumulation-riemannSum",
+        "delayed": false
+      },
+      "conceptTag": "in-squeeze"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why the trap must close.",
+      "conceptTag": "in-squeeze",
+      "explanationVariants": [
+        "The gap is [f(b) − f(a)]·h, and h = (b − a)/n. As n grows, h shrinks to 0, so the gap does too — and the two walls converge on a single number.",
+        "The height difference f(b) − f(a) is FIXED. Only h shrinks, and it shrinks like 1/n."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The gap between the left and right sums is [f(b) − f(a)]·h. Why does it vanish as n → ∞?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "h = (b − a)/n shrinks to 0, and the height difference is a fixed number.",
+            "correct": true,
+            "feedback": "Right. One factor is constant and the other collapses, so the product collapses. The two walls of the trap have nowhere to go but together."
+          },
+          {
+            "id": "o2",
+            "label": "Because f(b) − f(a) shrinks.",
+            "correct": false,
+            "feedback": "It does not — f(b) and f(a) are fixed heights at the two ends of a fixed interval. Only h moves."
+          },
+          {
+            "id": "o3",
+            "label": "Because the rectangles become perfect.",
+            "correct": false,
+            "feedback": "Individual rectangles never become perfect — each one still misses a sliver. What collapses is the TOTAL error, which can be driven below any number you name. That is a more careful claim, and a stronger one."
+          },
+          {
+            "id": "o4",
+            "label": "It does not vanish — it just gets small.",
+            "correct": false,
+            "feedback": "It can be made SMALLER THAN ANY NUMBER YOU NAME by choosing n large enough. That is exactly what 'vanishes in the limit' means."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-squeeze__mcq"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Pin the area between two numbers.",
+      "conceptTag": "in-squeeze",
+      "explanationVariants": [
+        "Left = 1, right = 5 with 2 strips, so 1 ≤ area ≤ 5. Crude, but already a proof that the area is not 6.",
+        "Even a terrible pair of estimates carries real information, because they bracket the truth from both sides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For x² on [0, 2] with 2 strips, the left sum is 1 and the right sum is 5. What have you PROVED?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The true area is somewhere between 1 and 5.",
+            "correct": true,
+            "feedback": "Right — and that is a proof, not a guess. Crude bounds are still bounds."
+          },
+          {
+            "id": "o2",
+            "label": "The true area is 3, the average.",
+            "correct": false,
+            "feedback": "The average is a reasonable GUESS (and it is what the trapezoid rule computes), but nothing here proves the truth is the midpoint. It happens to be 2.667."
+          },
+          {
+            "id": "o3",
+            "label": "The estimates are useless.",
+            "correct": false,
+            "feedback": "They ruled out every number outside [1, 5], which is most of them. Bracketing is how rigour begins."
+          },
+          {
+            "id": "o4",
+            "label": "The true area is 5, since the right sum is closer.",
+            "correct": false,
+            "feedback": "Nothing has been shown about which sum is closer — and in fact 1 and 5 are equally far from 2.667 here, by coincidence."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-squeeze__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "So the definite integral is **defined** as the number the trap closes on:\n\n∫ₐᵇ f(x) dx = limit of the Riemann sums as n → ∞.\n\nThe elongated S is a stretched-out sum. The dx is the width of a strip that has shrunk to nothing. Every part of the notation is a fossil of the rectangles.",
+      "figure": "dr-derivative-as-function"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Read the notation.",
+      "conceptTag": "in-definite-integral",
+      "explanationVariants": [
+        "The ∫ is a stretched S for 'sum'; f(x) is the height of a strip; dx is its vanishing width. The whole symbol says: add up (height × width) as the width goes to zero.",
+        "The notation was designed to remind you of the construction, and it is worth reading it that way every time."
+      ],
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each part of ∫ₐᵇ f(x) dx to what it was, back when it was rectangles.",
+        "left": [
+          {
+            "id": "w1",
+            "label": "∫"
+          },
+          {
+            "id": "w2",
+            "label": "f(x)"
+          },
+          {
+            "id": "w3",
+            "label": "dx"
+          }
+        ],
+        "right": [
+          {
+            "id": "y1",
+            "label": "a stretched S — 'add them all up'"
+          },
+          {
+            "id": "y2",
+            "label": "the HEIGHT of a strip"
+          },
+          {
+            "id": "y3",
+            "label": "the WIDTH of a strip, shrunk to nothing"
+          }
+        ],
+        "pairs": {
+          "w1": "y1",
+          "w2": "y2",
+          "w3": "y3"
+        },
+        "pairErrors": [
+          {
+            "left": "w3",
+            "right": "y2",
+            "feedback": "dx is the WIDTH. The height is f(x) — the function's value, which is what makes each strip a different size."
+          },
+          {
+            "left": "w2",
+            "right": "y3",
+            "feedback": "f(x) is the height of the rectangle at x. The width is dx, and it is the same for every strip."
+          }
+        ],
+        "missFeedback": "Height × width, summed. The notation is a picture of the construction.",
+        "successFeedback": "Sum of (height × width), with the width driven to zero. Nothing in the symbol is decorative."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-definite-integral__matchPairs"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Bound it yourself.",
+      "conceptTag": "in-squeeze",
+      "hints": [
+        "The interval is [0, 3] and there are 3 strips, so h = 1. The function 2x is rising.",
+        "Left heights: f(0) = 0, f(1) = 2, f(2) = 4. Right heights: f(1) = 2, f(2) = 4, f(3) = 6.",
+        "Left sum = 0 + 2 + 4 = 6. Right sum = 2 + 4 + 6 = 12."
+      ],
+      "explanationVariants": [
+        "Left = 6, right = 12, so 6 ≤ area ≤ 12. The truth is 9, comfortably inside — and it is the midpoint here because the function is linear.",
+        "The gap is [f(3) − f(0)]·h = 6 × 1 = 6, exactly as the formula promises."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "f(x) = 2x on [0, 3] with 3 strips. What is the LEFT sum?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is the RIGHT sum: heights 2, 4, 6. The left heights are f(0) = 0, f(1) = 2, f(2) = 4, giving 6."
+          },
+          {
+            "value": 9,
+            "feedback": "That is the exact area — which no 3-rectangle estimate hits. The left sum is 6."
+          },
+          {
+            "value": 3,
+            "feedback": "Check each strip: width 1, heights 0, 2 and 4. That is 0 + 2 + 4 = 6."
+          }
+        ],
+        "fallbackFeedback": "Heights 0, 2, 4 with width 1 each: the left sum is 6 (and the right sum is 12, so 6 ≤ 9 ≤ 12)."
+      },
+      "variant": {
+        "gen": "g13-integration-accumulation",
+        "form": "integration-accumulation__in-squeeze__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Squeezed from both sides.",
+      "takeaways": [
+        "left sum ≤ true area ≤ right sum, and the gap [f(b) − f(a)]·h shrinks like 1/n.",
+        "Only ONE number survives being squeezed from both sides forever — and the integral is DEFINED as that number.",
+        "∫ f(x) dx is a fossil of the construction: a stretched S for the sum, f(x) for the height, dx for the vanishing width."
+      ],
+      "teaser": "Next chapter: stop asking for one area, and start asking for the area SO FAR."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "in-squeeze",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "The two sums are walls. The true area is between them, and it cannot escape. Raise n and the walls move toward each other — never past the truth, always toward it. Whatever is left when they meet IS the area.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Between the walls.",
+        "conceptTag": "in-squeeze",
+        "explanationVariants": [
+          "The truth is between the left and right sums, so it is between 6 and 12.",
+          "Any number outside that range has been ruled out."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "The left sum is 6 and the right sum is 12 for a rising function. Which value could NOT be the true area?",
+          "options": [
+            {
+              "id": "o1",
+              "label": "13",
+              "correct": true,
+              "feedback": "Right — it is above the right sum, which is an upper wall for a rising curve. It is ruled out."
+            },
+            {
+              "id": "o2",
+              "label": "9",
+              "correct": false,
+              "feedback": "9 is comfortably between 6 and 12, so nothing rules it out. (In fact it is the answer.)"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

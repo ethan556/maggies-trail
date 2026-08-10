@@ -1,0 +1,260 @@
+{
+  "id": "tse-01b-02",
+  "slug": "the-multiplier-inside-a-percent-increase",
+  "title": "The Multiplier Inside a Percent Increase",
+  "courseId": "two-step-equations",
+  "chapterId": "ch1b-factoring-and-structure",
+  "minutes": 11,
+  "standards": [
+    "7.EE.A.2"
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Raise a price *a* by 5% and the natural way to write it is two moves: the price, plus 5% of the price. That is a + 0.05a.\n\nBut a is really 1a, so a + 0.05a is 1a + 0.05a — like terms. Combined, they are **1.05a**. Same value, one move instead of two.",
+      "figure": "tse7-one-step-multiplier"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Do it the two-step way first, and watch where the total lands.",
+      "widget": {
+        "type": "percentChangeLab",
+        "prompt": "A jacket costs $40. The shop raises the price by 5%. What is the new price?",
+        "base": 40,
+        "percent": 5,
+        "direction": "markup",
+        "currency": "$",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "$42.00",
+            "value": 42,
+            "feedback": "5% of $40 is $2, so the new price is $42. Notice: 40 × 1.05 = 42 as well — one multiplication reaches the same place."
+          },
+          {
+            "id": "wrong-1",
+            "label": "$40.05",
+            "value": 40.05,
+            "feedback": "5% of $40 is $2.00, not $0.05. The percent is of the PRICE, not five cents."
+          },
+          {
+            "id": "wrong-2",
+            "label": "$2.00",
+            "value": 2,
+            "feedback": "$2 is the increase alone. The question asks for the new price: 40 + 2 = 42."
+          },
+          {
+            "id": "wrong-3",
+            "label": "$60.00",
+            "value": 60,
+            "feedback": "That is a 50% increase. 5% of 40 is 2, not 20."
+          }
+        ],
+        "fallbackFeedback": "5% of $40 is $2, so the new price is $42 — which is also 40 × 1.05.",
+        "successFeedback": "5% of $40 is $2, so the new price is $42. And 40 × 1.05 = 42: the two-step route and the one-step multiplier agree."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Write the combined form.",
+      "conceptTag": "structure-multiplier",
+      "explanationVariants": [
+        "a is 1a, so a + 0.08a = 1a + 0.08a = 1.08a.",
+        "Both terms carry a, so add the coefficients: 1 + 0.08 = 1.08."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Combine a + 0.08a into a single term. What is the coefficient?",
+        "answer": 1.08,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.08,
+            "feedback": "0.08a is only the increase. The original a is still there, so the coefficient is 1 + 0.08."
+          },
+          {
+            "value": 1.8,
+            "feedback": "Careful with place value: 8% is 0.08, not 0.8. That would be an 80% increase."
+          }
+        ],
+        "fallbackFeedback": "a is 1a, so a + 0.08a = 1.08a."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read a multiplier backwards.",
+      "conceptTag": "structure-multiplier",
+      "explanationVariants": [
+        "1.12a is 1a + 0.12a — the original plus 12% of it, so the increase is 12%.",
+        "Subtract the 1 that represents the original amount: 1.12 − 1 = 0.12 = 12%."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A total is written as 1.12p. What does that say about p?",
+        "options": [
+          {
+            "id": "a",
+            "label": "p was increased by 12%",
+            "correct": true,
+            "feedback": "1.12p = 1p + 0.12p: the whole original plus 12% of it."
+          },
+          {
+            "id": "b",
+            "label": "p was increased by 112%",
+            "correct": false,
+            "feedback": "An increase of 112% would more than double p, giving 2.12p. The leading 1 is the original itself."
+          },
+          {
+            "id": "c",
+            "label": "p was decreased by 12%",
+            "correct": false,
+            "feedback": "A 12% decrease would be 0.88p. Multipliers above 1 grow the amount."
+          },
+          {
+            "id": "d",
+            "label": "p was multiplied by 12",
+            "correct": false,
+            "feedback": "That would be 12p. Read the decimal carefully: 1.12 is just over one."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The multiplier form is not merely shorter — it is more **useful**. Two increases in a row become 1.05 × 1.05 instead of a two-line calculation done twice, and a decrease of 20% becomes × 0.80.\n\nThat is what the standard means by rewriting an expression to shed light: the second form makes the rate visible as a single number.",
+      "figure": "pr7-percent-multiplier"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A markdown, so the multiplier drops below 1.",
+      "widget": {
+        "type": "percentChangeLab",
+        "prompt": "A $60 coat is marked down 20%. What is the sale price?",
+        "base": 60,
+        "percent": 20,
+        "direction": "markdown",
+        "currency": "$",
+        "choices": [
+          {
+            "id": "correct",
+            "label": "$48.00",
+            "value": 48,
+            "feedback": "20% of $60 is $12, so the sale price is $48 — and 60 × 0.80 = 48. Keeping 80% is the one-step version of removing 20%."
+          },
+          {
+            "id": "wrong-1",
+            "label": "$12.00",
+            "value": 12,
+            "feedback": "$12 is the discount itself. Subtract it from the price: 60 − 12 = 48."
+          },
+          {
+            "id": "wrong-2",
+            "label": "$40.00",
+            "value": 40,
+            "feedback": "That is a one-third reduction. 20% of 60 is 12, not 20."
+          },
+          {
+            "id": "wrong-3",
+            "label": "$58.00",
+            "value": 58,
+            "feedback": "20% of $60 is $12, not $2. Percent is per hundred, so 20% is a fifth."
+          }
+        ],
+        "fallbackFeedback": "20% of $60 is $12, so the sale price is $48 — the same as 60 × 0.80.",
+        "successFeedback": "20% of $60 is $12, giving $48. As a multiplier: keeping 80% means × 0.80."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Name the multiplier for a decrease.",
+      "conceptTag": "structure-multiplier",
+      "explanationVariants": [
+        "Removing 15% leaves 85%, so the multiplier is 0.85.",
+        "b − 0.15b = 0.85b: the coefficient is 1 − 0.15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Write b − 0.15b as a single term. What is the coefficient?",
+        "answer": 0.85,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 0.15,
+            "feedback": "0.15b is the part removed, not what remains. What is left is 1 − 0.15."
+          },
+          {
+            "value": 1.15,
+            "feedback": "1.15 would be an INCREASE of 15%. This is a subtraction, so the multiplier drops below 1."
+          }
+        ],
+        "fallbackFeedback": "b is 1b, so b − 0.15b = 0.85b."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two moves in a row — and this is where the multiplier form earns its keep.",
+      "conceptTag": "structure-multiplier",
+      "explanationVariants": [
+        "A 10% rise then another 10% rise is × 1.10 twice: 1.10 × 1.10 = 1.21, a 21% increase overall.",
+        "The second rise applies to the already-raised amount, so the increases do not simply add to 20%."
+      ],
+      "hints": [
+        "Write each increase as a multiplier first.",
+        "A 10% increase is × 1.10, so two of them in a row is 1.10 × 1.10.",
+        "1.10 × 1.10 = 1.21, which is 1 + 0.21 — an increase of 21%, not 20%."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A price rises 10%, then rises 10% again. By what percent has it risen overall?",
+        "options": [
+          {
+            "id": "a",
+            "label": "21%",
+            "correct": true,
+            "feedback": "1.10 × 1.10 = 1.21. The second rise is charged on the already-raised price, so the extra 1% is the growth on the growth."
+          },
+          {
+            "id": "b",
+            "label": "20%",
+            "correct": false,
+            "feedback": "That would be right if both increases applied to the ORIGINAL price. The second one applies to the new, larger price."
+          },
+          {
+            "id": "c",
+            "label": "100%",
+            "correct": false,
+            "feedback": "The price has not doubled. Doubling would be a multiplier of 2."
+          },
+          {
+            "id": "d",
+            "label": "11%",
+            "correct": false,
+            "feedback": "That adds 10% and 1%. Multipliers compound by multiplying: 1.10 × 1.10 = 1.21."
+          }
+        ]
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "One expression, two forms, different amounts of light.",
+      "takeaways": [
+        "a + 0.05a and 1.05a are the same value — a is 1a, so the coefficients simply add.",
+        "A multiplier above 1 is an increase; below 1, a decrease. 0.80 means 20% off.",
+        "Repeated changes multiply their multipliers, which is why 10% twice is 21%, not 20%."
+      ],
+      "teaser": "Next: when the question changes, the useful form changes with it."
+    }
+  ],
+  "remedials": []
+}

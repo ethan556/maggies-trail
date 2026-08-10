@@ -1,0 +1,264 @@
+{
+  "id": "lg-04-01",
+  "slug": "the-number-e",
+  "title": "The Number e",
+  "courseId": "logarithms",
+  "chapterId": "ch4-the-natural-base-e",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Compound $1 at 100% interest: once a year gives $2. Twice a year: (1 + 1/2)² = $2.25. Monthly: ≈ $2.613. Daily: ≈ $2.7146. Compounding **continuously** — infinitely often — the value stops climbing at a specific number: **e ≈ 2.71828**, the natural base of growth.",
+      "figure": "approaching-e"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Chase the limit.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Compute (1 + 1/4)⁴ — quarterly compounding — to 2 decimal places.",
+        "answer": 2.44,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2.25,
+            "feedback": "That's (1 + 1/2)² — quarterly means FOUR steps of 1/4: 1.25⁴ ≈ 2.44."
+          },
+          {
+            "value": 5,
+            "feedback": "The quarter-rate compounds, it doesn't add: (1.25)⁴ ≈ 2.44, not 1.25 · 4."
+          }
+        ],
+        "fallbackFeedback": "1.25⁴ = 2.44140625 ≈ 2.44 — closer to e than 2.25, still short of 2.718."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why care about one weird constant? Because e is the base of **smooth, continuous change** — populations, radioactive decay, cooling coffee, interest compounding every instant. The function f(x) = eˣ is an ordinary exponential (base ≈ 2.718 > 1: growth), sitting between 2ˣ and 3ˣ.",
+      "figure": "lg-e-constant"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Place it.",
+      "conceptTag": "lg-e",
+      "explanationVariants": [
+        "e ≈ 2.718 sits between 2 and 3, so eˣ grows faster than 2ˣ but slower than 3ˣ.",
+        "The base ordering transfers to the growth ordering for x > 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For large positive x, how does eˣ compare to 2ˣ and 3ˣ?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "between them: faster than 2ˣ, slower than 3ˣ",
+            "correct": true,
+            "feedback": "Right — 2 < e < 3 orders the growth rates."
+          },
+          {
+            "id": "o2",
+            "label": "slower than both",
+            "correct": false,
+            "feedback": "e ≈ 2.718 EXCEEDS 2 — eˣ overtakes 2ˣ immediately for x > 0."
+          },
+          {
+            "id": "o3",
+            "label": "faster than both",
+            "correct": false,
+            "feedback": "e < 3, so 3ˣ stays ahead — e is between the two bases."
+          },
+          {
+            "id": "o4",
+            "label": "equal to 2.7ˣ for all x",
+            "correct": false,
+            "feedback": "e is irrational, ≈ 2.71828 — close to 2.7 but not equal; eˣ strictly outgrows 2.7ˣ."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-e__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Instant values.",
+      "widget": {
+        "type": "expLogExplore",
+        "mode": "exponential",
+        "x": 1,
+        "targetBase": 2.7,
+        "startBase": 1.5,
+        "showMirror": true,
+        "prompt": "Compounding more and more often drives the growth factor toward one particular number. Slide the base until b¹ lands near 2.7.",
+        "successFeedback": "≈ 2.718 — the number e. It is not chosen for convenience: it is the limit that (1 + 1/n)ⁿ approaches as the compounding gets finer, and the only base whose curve rises exactly as fast as its own height.",
+        "lowFeedback": "Still below e — quarterly compounding gives 2.44, and finer compounding pushes higher.",
+        "highFeedback": "Past e now. The limit is about 2.718, and no compounding frequency exceeds it."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Growth or decay?",
+      "conceptTag": "lg-e",
+      "explanationVariants": [
+        "e⁻ˣ = (1/e)ˣ with base 1/e ≈ 0.368 < 1: decay.",
+        "The negative exponent flips the base below 1."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Is f(x) = 5e⁻ˣ growth or decay?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "decay — the base is effectively 1/e < 1",
+            "correct": true,
+            "feedback": "Right — e⁻ˣ = (1/e)ˣ ≈ 0.368ˣ: shrinking."
+          },
+          {
+            "id": "o2",
+            "label": "growth — e > 1",
+            "correct": false,
+            "feedback": "The MINUS in the exponent inverts the base: (1/e)ˣ, and 1/e < 1 means decay."
+          },
+          {
+            "id": "o3",
+            "label": "neither — it's constant",
+            "correct": false,
+            "feedback": "Only b = 1 is constant — 1/e ≈ 0.368 shrinks the output every step."
+          },
+          {
+            "id": "o4",
+            "label": "decay — because of the 5",
+            "correct": false,
+            "feedback": "The 5 is just the starting value — the DECAY verdict comes from the base 1/e < 1."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-e__mcq"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Estimate through e.",
+      "conceptTag": "lg-e",
+      "explanationVariants": [
+        "e² = e · e ≈ 2.718 · 2.718 ≈ 7.39.",
+        "Squaring 2.718 lands just under 7.4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using e ≈ 2.718, what is e² to 1 decimal place?",
+        "answer": 7.4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5.4,
+            "feedback": "5.4 DOUBLES e — squaring multiplies e by itself: ≈ 7.39."
+          },
+          {
+            "value": 4.7,
+            "feedback": "That's 2.718 + 2 — compute 2.718 × 2.718 ≈ 7.39."
+          }
+        ],
+        "fallbackFeedback": "2.718² ≈ 7.389 → 7.4."
+      },
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-e__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a continuous-growth value.",
+      "conceptTag": "lg-e",
+      "explanationVariants": [
+        "A(t) = 100e^(0.5t) at t = 4: 100e² ≈ 100 · 7.389 ≈ 738.9 → 739.",
+        "The exponent is 0.5 · 4 = 2; then scale e² ≈ 7.389 by 100."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A(t) = 100e^(0.5t) models continuous growth. Using e² ≈ 7.389, what is A(4) to the nearest whole number?",
+        "answer": 739,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 200,
+            "feedback": "0.5 · 4 = 2 goes in the EXPONENT: 100 · e² ≈ 739 (200 multiplies 100 · 0.5 · 4)."
+          },
+          {
+            "value": 74,
+            "feedback": "Keep the 100: 100 · 7.389 ≈ 739, one decimal shift up from 73.9."
+          }
+        ],
+        "fallbackFeedback": "A(4) = 100e² ≈ 738.9 ≈ 739."
+      },
+      "hints": [
+        "Compute the exponent first: 0.5 · 4 = 2.",
+        "e² ≈ 7.389.",
+        "Scale by the initial 100: ≈ 739."
+      ],
+      "variant": {
+        "gen": "a2-logarithms",
+        "form": "lg-e__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "e ≈ 2.718 is what continuous compounding converges to.",
+      "takeaways": [
+        "More frequent compounding climbs toward e, never past it.",
+        "eˣ is an ordinary exponential between 2ˣ and 3ˣ.",
+        "e⁻ˣ decays: the negative exponent flips the base below 1."
+      ],
+      "teaser": "Next: the logarithm that matches e — the natural log, ln."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "lg-e",
+      "concept": {
+        "id": "rem-lg0401-c",
+        "kind": "concept",
+        "body": "e is just a number: 2.718... — and eˣ follows every exponential rule. e¹ = ?"
+      },
+      "check": {
+        "id": "rem-lg0401-k",
+        "kind": "check",
+        "body": "The first power.",
+        "conceptTag": "lg-e",
+        "explanationVariants": [
+          "e¹ = e ≈ 2.718.",
+          "The first power of any base is the base itself."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "To 3 decimal places, what is e¹?",
+          "answer": 2.718,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1,
+              "feedback": "1 is e⁰ — the FIRST power returns the base itself: ≈ 2.718."
+            },
+            {
+              "value": 2,
+              "feedback": "e is bigger than 2 — the natural base is ≈ 2.718."
+            }
+          ],
+          "fallbackFeedback": "e¹ = e ≈ 2.718."
+        }
+      }
+    }
+  ]
+}

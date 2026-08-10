@@ -1,0 +1,377 @@
+{
+  "id": "gf-04-01",
+  "slug": "composing-rigid-motions",
+  "title": "Composing Rigid Motions",
+  "courseId": "geometry-foundations",
+  "chapterId": "ch4-composition-symmetry",
+  "minutes": 9,
+  "remedials": [
+    {
+      "conceptTag": "gf-composition",
+      "concept": {
+        "id": "rem-gf-composition-c",
+        "kind": "concept",
+        "body": "A composition is an assembly line: the first motion's OUTPUT is the second motion's INPUT. Never apply both to the original point — walk one point through station 1, take what comes out, and only then hand it to station 2."
+      },
+      "check": {
+        "id": "rem-gf-composition-k",
+        "kind": "check",
+        "body": "Assembly line.",
+        "conceptTag": "gf-composition",
+        "explanationVariants": [
+          "Station 1: (1, 2) → (4, 2). Station 2 doubles nothing — it reflects over the y-axis: (−4, 2).",
+          "Track the x: 1 → 4 after the slide, then the mirror flips it to −4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Take (1, 2). Apply (x, y) → (x + 3, y), then reflect the result over the y-axis. What is the final x-coordinate?",
+          "answer": -4,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 4,
+              "feedback": "4 is the x after the slide — the mirror hasn't acted yet. It flips the sign: −4."
+            },
+            {
+              "value": -1,
+              "feedback": "−1 reflects the ORIGINAL point instead of the slid one. The mirror receives (4, 2), so it returns (−4, 2)."
+            }
+          ],
+          "fallbackFeedback": "1 + 3 = 4, then the y-axis flips it: −4."
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Functions chain — so transformations do too. A **composition** applies one motion, then feeds its OUTPUT into the next: translate, THEN reflect. Because each rigid motion preserves distances and angles, any chain of them is still one rigid motion. Bookkeeping tip: track ONE point at a time through the chain.",
+      "figure": "composition-path"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Two slides, one shape — find the single motion that does both jobs at once.",
+      "widget": {
+        "type": "transformExplore",
+        "prompt": "The dashed target is the triangle after sliding by (2, 1) and then by (3, −2). Land it with ONE slide.",
+        "shape": [
+          [
+            -4,
+            0
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            -4,
+            2
+          ]
+        ],
+        "target": [
+          [
+            1,
+            -1
+          ],
+          [
+            4,
+            -1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "allowReflect": true,
+        "successFeedback": "One slide of (5, −1) — exactly (2 + 3, 1 + (−2)). Composing translations just adds their components.",
+        "offsetFeedback": "Right shape, wrong parking spot: the two slides ADD component by component — dx = 2 + 3 = 5, dy = 1 + (−2) = −1.",
+        "reflectFeedback": "The copy is flipped — but both given motions were slides, and no chain of slides can reverse a shape's orientation. Turn the reflection off and translate only."
+      },
+      "predict": {
+        "prompt": "After two translations, what single motion can always replace them?",
+        "options": [
+          {
+            "id": "add",
+            "label": "One translation whose vector is the component-wise sum"
+          },
+          {
+            "id": "reflect",
+            "label": "A reflection followed by a smaller slide"
+          },
+          {
+            "id": "rotate",
+            "label": "A rotation about the origin"
+          }
+        ],
+        "outcomeId": "add",
+        "reveal": "Translations compose by adding horizontal components and vertical components; orientation and all distances stay fixed."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "spatial-invariance",
+        "actionGoal": "Compose two translations by moving one figure while coordinates and orientation update together.",
+        "invariants": [
+          "distance-preserved",
+          "orientation-preserved",
+          "translation-vectors-add"
+        ],
+        "misconceptions": [
+          "compose-by-multiplying",
+          "reflection-needed"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 1,
+        "transferFamily": "rigid-motion-composition",
+        "counterfactualPrompt": "Turn reflection on after matching the target. Which invariant breaks even though the figure can still look similar?",
+        "delayed": true,
+        "explanation": {
+          "prompt": "Why can one translation replace the two given translations?",
+          "options": [
+            {
+              "id": "sum",
+              "label": "Their displacement vectors add component by component.",
+              "correct": true,
+              "feedback": "Exactly—the net horizontal and vertical changes are vector sums."
+            },
+            {
+              "id": "shape",
+              "label": "The triangle changes shape to absorb the second move.",
+              "correct": false,
+              "feedback": "Translations preserve shape; they do not absorb displacement by deforming."
+            },
+            {
+              "id": "origin",
+              "label": "Every composition must pass through the origin.",
+              "correct": false,
+              "feedback": "The origin is not special; only the net displacement matters."
+            }
+          ]
+        }
+      },
+      "conceptTag": "gf-composition"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Translate, then half-turn.",
+      "conceptTag": "gf-composition",
+      "explanationVariants": [
+        "Step 1: (7, 2) → (4, 2). Step 2, the 180° flips both signs: (−4, −2). The x-coordinate is −4.",
+        "Chain the rules: x goes 7 → 7 − 3 = 4 → −4 under the sign flip."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Take (7, 2). Apply (x, y) → (x − 3, y), then rotate the result 180° about the origin. What is the final x-coordinate?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is the x after the translation only — the half turn hasn't fired yet. 180° flips the sign: −4."
+          },
+          {
+            "value": -10,
+            "feedback": "−10 comes from rotating FIRST ((7,2) → (−7,−2)) and translating after (−7 − 3 = −10). The given order is translate, THEN rotate: −4."
+          }
+        ],
+        "fallbackFeedback": "7 − 3 = 4, then the 180° negates it: −4."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-composition__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "**Order can matter.** Reflect-then-translate and translate-then-reflect are DIFFERENT functions in general — like putting on socks and shoes. Some pairs do commute (two translations always do), but never assume it: check by pushing a test point through both orders.",
+      "figure": "gf-order-matters"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Socks and shoes.",
+      "conceptTag": "gf-composition",
+      "explanationVariants": [
+        "Order A (reflect, then translate): (1, 3) → (−1, 3) → (3, 3). Order B (translate, then reflect): (1, 3) → (5, 3) → (−5, 3). Different outputs — the motions don't commute.",
+        "The reflection flips whatever x it receives; feeding it x = 1 versus x = 5 must end differently. One test point settles it."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Motion R = reflect over the y-axis; motion T = (x, y) → (x + 4, y). Starting from (1, 3), do R-then-T and T-then-R land in the same place?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They differ: R-then-T gives (3, 3) but T-then-R gives (−5, 3)",
+            "correct": true,
+            "feedback": "Traced both ways the outputs disagree — this pair does not commute, so order is part of the composition's identity."
+          },
+          {
+            "id": "o2",
+            "label": "Same place — motions can be applied in any order",
+            "correct": false,
+            "feedback": "Trace it: R-then-T ends at (3, 3); T-then-R ends at (−5, 3). One test point is enough to sink \"any order\"."
+          },
+          {
+            "id": "o3",
+            "label": "Same place, because both motions are rigid",
+            "correct": false,
+            "feedback": "Rigid protects DISTANCES, not order. Both orders give rigid results — just different ones: (3, 3) vs (−5, 3)."
+          },
+          {
+            "id": "o4",
+            "label": "They differ, but only because rotations are involved",
+            "correct": false,
+            "feedback": "There's no rotation here at all — a reflection and a translation already refuse to commute: (3, 3) vs (−5, 3)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-composition__mcq"
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "One composition earns its own name: a **glide reflection** — a translation followed by a reflection over a line PARALLEL to the slide (footprints in snow: step forward, mirror to the other foot). Together with translations, rotations, and reflections, that completes the full cast of rigid motions.",
+      "figure": "gf-glide-reflection"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Footprints.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Left and right footprints alternate along a straight walking line — each print is the previous one slid forward AND mirrored across the line. Which single named motion carries one print to the next?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "a glide reflection",
+            "correct": true,
+            "feedback": "Slide-along plus mirror-across-the-same-line is exactly the glide reflection — one named motion doing both jobs."
+          },
+          {
+            "id": "o2",
+            "label": "a translation",
+            "correct": false,
+            "feedback": "A pure slide would keep every print on the SAME side — all left feet. The prints alternate sides, so a mirror is involved."
+          },
+          {
+            "id": "o3",
+            "label": "a reflection",
+            "correct": false,
+            "feedback": "A pure mirror would put the next print directly ACROSS, not forward — the walk also advances, so a slide is involved."
+          },
+          {
+            "id": "o4",
+            "label": "a rotation",
+            "correct": false,
+            "feedback": "A turn would tilt each print at a new angle — these prints all point the same way down the path."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Run a glide.",
+      "conceptTag": "gf-composition",
+      "explanationVariants": [
+        "Slide: (1, 2) → (5, 2). Mirror over the x-axis: (5, −2). The y-coordinate is −2.",
+        "Glide bonus: because the slide runs PARALLEL to the mirror line, this pair commutes — mirror-first gives (1, −2) → (5, −2), the same place."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Glide reflection: apply (x, y) → (x + 4, y), then reflect the result over the x-axis. Starting at (1, 2), what is the final y-coordinate?",
+        "answer": -2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the y after the slide alone — the mirror hasn't fired. The x-axis flips it: −2."
+          },
+          {
+            "value": 5,
+            "feedback": "5 is the final X-coordinate (1 + 4). The question asks for the y, which the mirror flips to −2."
+          }
+        ],
+        "fallbackFeedback": "The slide leaves y at 2; the x-axis mirror flips it: −2."
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-composition__numeric"
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "Chain across the diagonal.",
+      "conceptTag": "gf-composition",
+      "hints": [
+        "Run the first motion alone: what does y = x do to (2, 6)?",
+        "The swap gives (6, 2). Now the half turn acts on THAT point.",
+        "180° flips both signs of whatever it receives."
+      ],
+      "explanationVariants": [
+        "(2, 6) → swap → (6, 2) → 180° → (−6, −2).",
+        "Compose the rules: (x, y) → (y, x) → (−y, −x); at (2, 6) that's (−6, −2)."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Take (2, 6). Reflect over the line y = x, then rotate the result 180° about the origin. Final position?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "(−6, −2)",
+            "correct": true,
+            "feedback": "Swap first: (6, 2). Then both signs flip: (−6, −2)."
+          },
+          {
+            "id": "o2",
+            "label": "(−2, −6)",
+            "correct": false,
+            "feedback": "The swap got skipped — this is the 180° acting on the ORIGINAL point. The reflection hands the rotation (6, 2), not (2, 6)."
+          },
+          {
+            "id": "o3",
+            "label": "(6, 2)",
+            "correct": false,
+            "feedback": "(6, 2) is the point after the swap only — the half turn still has to flip both signs."
+          },
+          {
+            "id": "o4",
+            "label": "(−6, 2)",
+            "correct": false,
+            "feedback": "Only the x flipped — that's a y-axis reflection standing in for the rotation. A 180° turn negates BOTH coordinates of (6, 2)."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-geometry-foundations",
+        "form": "gf-composition__mcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Chains of motions.",
+      "takeaways": [
+        "A composition feeds one motion's output into the next — and rigid chains stay rigid.",
+        "Order can matter: test a point through both orders before assuming it doesn't.",
+        "Glide reflection = slide + mirror over a line parallel to the slide — the last rigid motion in the cast."
+      ],
+      "teaser": "Next: point a motion back at its own figure — when does a shape map exactly onto ITSELF?"
+    }
+  ]
+}

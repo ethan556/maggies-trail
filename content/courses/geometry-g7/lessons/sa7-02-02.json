@@ -1,0 +1,266 @@
+{
+  "id": "sa7-02-02",
+  "slug": "composite-areas",
+  "title": "Composite Areas",
+  "courseId": "geometry-g7",
+  "chapterId": "ch3d-filling-and-combining",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Real floor plans are not single rectangles. The move that handles all of them is the same: break the figure into pieces you already know, find each area, then ADD the pieces that are there and SUBTRACT the ones cut away. A ledger, kept honestly, beats any formula.",
+      "figure": "sa7-decompose-floor-plan"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Keep the ledger for an L-shaped room.",
+      "widget": {
+        "type": "compositeAreaLab",
+        "prompt": "A 10 by 8 room has a 3 by 4 alcove cut out of one corner. What floor area remains?",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "room",
+            "label": "Whole room 10 × 8",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 10,
+            "height": 8
+          },
+          {
+            "id": "alcove",
+            "label": "Alcove removed 3 × 4",
+            "shape": "rectangle",
+            "operation": "subtract",
+            "width": 3,
+            "height": 4
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "c1",
+            "label": "68",
+            "value": 68,
+            "feedback": "Correct: 80 square units of room, less the 12 taken by the alcove."
+          },
+          {
+            "id": "c2",
+            "label": "92",
+            "value": 92,
+            "feedback": "The alcove was ADDED. It is cut away, so its area comes off the total."
+          },
+          {
+            "id": "c3",
+            "label": "80",
+            "value": 80,
+            "feedback": "That is the room before the alcove was removed — the subtraction has not happened yet."
+          },
+          {
+            "id": "c4",
+            "label": "12",
+            "value": 12,
+            "feedback": "That is the alcove alone, not the floor that remains."
+          }
+        ],
+        "fallbackFeedback": "10×8 = 80, minus 3×4 = 12, leaves 68 square units.",
+        "successFeedback": "68 square units. Subtracting a known piece is often far quicker than slicing the leftover into strips."
+      },
+      "predict": {
+        "prompt": "An alcove is cut out of a rectangular room. To find the remaining floor, the alcove's area is…",
+        "options": [
+          {
+            "id": "added",
+            "label": "Added to the room's area"
+          },
+          {
+            "id": "subtracted",
+            "label": "Subtracted from the room's area"
+          },
+          {
+            "id": "ignored",
+            "label": "Ignored — it does not change the floor"
+          }
+        ],
+        "outcomeId": "subtracted",
+        "reveal": "The ledger's signs are the whole method: pieces present count positive, pieces removed count negative. Getting a sign wrong is the most common composite-area error, and it is visible immediately — the answer comes out larger than the whole rectangle it started from."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Add two pieces.",
+      "conceptTag": "sa7-composite-area",
+      "explanationVariants": [
+        "6×4 = 24 plus 5×2 = 10 gives 34 square units.",
+        "Two rectangles side by side simply add."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "An L-shape splits into a 6 by 4 rectangle and a 5 by 2 rectangle. What is its total area?",
+        "answer": 34,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "That is the larger piece alone — the 5 by 2 rectangle is still to be added."
+          },
+          {
+            "value": 17,
+            "feedback": "That adds the dimensions rather than the areas. Compute each rectangle first."
+          }
+        ],
+        "fallbackFeedback": "24 + 10 = 34 square units.",
+        "successFeedback": "34 — cut into knowable pieces, add the ledger."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "There is usually more than one correct cut. The same L-shape can be sliced vertically or horizontally, or read as a big rectangle with a bite taken out. Every honest route gives the same total — which makes a second method the fastest way to check the first.",
+      "figure": "sa7-many-correct-cuts"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Subtract instead.",
+      "conceptTag": "sa7-composite-area",
+      "explanationVariants": [
+        "A 9 by 6 rectangle is 54; removing a 2 by 3 corner of 6 leaves 48.",
+        "Whole minus hole."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 9 by 6 rectangle has a 2 by 3 corner removed. What area remains?",
+        "answer": 48,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "The corner was added instead of removed — the answer cannot exceed the original 54."
+          },
+          {
+            "value": 54,
+            "feedback": "That is the full rectangle; the corner has not been taken off yet."
+          }
+        ],
+        "fallbackFeedback": "54 − 6 = 48 square units.",
+        "successFeedback": "48 — and slicing the L into two rectangles would give 48 as well, which is exactly the check worth doing."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Mixed pieces.",
+      "conceptTag": "sa7-composite-area",
+      "explanationVariants": [
+        "The rectangle is 8×5 = 40 and the triangle (8×3)/2 = 12, totalling 52.",
+        "A house shape is a rectangle plus a triangular roof."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A house outline is an 8 by 5 rectangle topped by a triangle with base 8 and height 3. What is its area?",
+        "answer": 52,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 64,
+            "feedback": "The roof was counted as a full rectangle. A triangle is half of base times height: 12, not 24."
+          },
+          {
+            "value": 40,
+            "feedback": "That is the walls alone — the roof has not been added."
+          }
+        ],
+        "fallbackFeedback": "40 + (8×3)/2 = 40 + 12 = 52 square units.",
+        "successFeedback": "52 — pieces of different shapes cause no trouble as long as each is computed with its own rule."
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Two holes.",
+      "conceptTag": "sa7-composite-area",
+      "explanationVariants": [
+        "12×10 = 120, minus two 3×3 squares of 9 each, leaves 102.",
+        "Subtract both cut-outs, not just one."
+      ],
+      "hints": [
+        "Start with the whole rectangle before removing anything.",
+        "Each cut-out square has area 3×3 = 9, and there are two of them.",
+        "120 minus 9 minus 9."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A 12 by 10 panel has TWO 3 by 3 squares cut out. What area remains?",
+        "answer": 102,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 111,
+            "feedback": "Only one square was removed. Both cut-outs come off the total."
+          },
+          {
+            "value": 120,
+            "feedback": "Neither cut-out has been subtracted yet."
+          }
+        ],
+        "fallbackFeedback": "120 − 9 − 9 = 102 square units.",
+        "successFeedback": "102 — the ledger scales to any number of pieces, in either direction."
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cut, compute, combine.",
+      "takeaways": [
+        "Break a composite figure into shapes whose areas you already know.",
+        "Pieces present are added; pieces removed are subtracted.",
+        "Different valid cuts give the same total, which makes a second method a free check."
+      ],
+      "teaser": "Next: one situation asking for area, surface area AND volume — and how to tell which is which."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sa7-composite-area",
+      "concept": {
+        "id": "rem-sa7-composite-area-c",
+        "kind": "concept",
+        "body": "There is usually more than one correct cut. The same L-shape can be sliced vertically or horizontally, or read as a big rectangle with a bite taken out. Every honest route gives the same total — which makes a second method the fastest way to check the first."
+      },
+      "check": {
+        "id": "rem-sa7-composite-area-k",
+        "kind": "check",
+        "body": "Add two pieces.",
+        "conceptTag": "sa7-composite-area",
+        "explanationVariants": [
+          "6×4 = 24 plus 5×2 = 10 gives 34 square units.",
+          "Two rectangles side by side simply add."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "An L-shape splits into a 6 by 4 rectangle and a 5 by 2 rectangle. What is its total area?",
+          "answer": 34,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 24,
+              "feedback": "That is the larger piece alone — the 5 by 2 rectangle is still to be added."
+            },
+            {
+              "value": 17,
+              "feedback": "That adds the dimensions rather than the areas. Compute each rectangle first."
+            }
+          ],
+          "fallbackFeedback": "24 + 10 = 34 square units.",
+          "successFeedback": "34 — cut into knowable pieces, add the ledger."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+{
+  "id": "tg-02-01",
+  "slug": "cosines-graph",
+  "title": "Cosine's Graph: Starting at the Top",
+  "courseId": "trig-graphs-inverses",
+  "chapterId": "ch2-cosine-equivalence",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Cosine draws the SAME wave shape as sine with one difference: it **starts at the peak**. cos 0 = 1 (recall the unit circle: the point starts at (1, 0), and cosine reads the x-coordinate). Five key points for cos x: peak, midline falling, trough, midline rising, peak.",
+      "figure": "tg-cosine-same"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Anchor the start.",
+      "predict": {
+        "prompt": "y = 2 cos x + 3: where does a COSINE wave start at x = 0\u00b0?",
+        "options": [
+          {
+            "id": "top",
+            "label": "At its crest \u2014 cos 0\u00b0 = 1, so y starts at its maximum"
+          },
+          {
+            "id": "mid",
+            "label": "On its midline, like sine does"
+          },
+          {
+            "id": "bottom",
+            "label": "At its trough \u2014 cosine is sine upside-down"
+          }
+        ],
+        "outcomeId": "top",
+        "reveal": "At the crest: cos 0\u00b0 = 1, so y = 2(1) + 3 = 5 right out of the gate. Cosine's pointer starts at the circle's rightmost point \u2014 full x-coordinate \u2014 which is why its wave is born at the top. Now trace the whole fall and land where it climbs back onto its center line."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = 2 cos x + 3 from its crest at height 5, down through the trough, and land the tip on the SECOND crossing of the center line \u2014 where the wave climbs back onto y = 3.",
+        "targetAngle": 270,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "cos",
+        "amplitude": 2,
+        "midline": 3,
+        "targetFeature": {
+          "kind": "midlineCross",
+          "x": 270,
+          "tol": 5
+        },
+        "successFeedback": "Back on the center line at 270\u00b0, climbing. The wave was born at its crest \u2014 y(0) = 2 cos 0 + 3 = 5, the entry's answer \u2014 because cosine starts at maximum; everything after is the fall to 1, the return you just landed, and the finish back at 5.",
+        "lowFeedback": "Not the crossing that was asked for \u2014 if you stopped near 90\u00b0, that is the FIRST crossing, on the way down. The wave still has its trough ahead; keep dragging until it rises back through the center line.",
+        "highFeedback": "Past the second crossing \u2014 the trace is above the center line again, heading home to its crest. Ease back to 270\u00b0, where it cut through y = 3 on the rise."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Walk half a period.",
+      "conceptTag": "tg-cos-graph",
+      "explanationVariants": [
+        "Half a period after the peak, cosine bottoms out: y = 3 \u2212 2 = 1 at x = \u03c0.",
+        "cos \u03c0 = \u22121 (unit circle: the point at (\u22121, 0)): y = 2(\u22121) + 3 = 1."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same function, y = 2 cos x + 3. What is y at x = \u03c0?",
+        "answer": 1,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 5,
+            "feedback": "5 is the PEAK (x = 0). Half a period later cosine is at its trough: 3 \u2212 2 = 1."
+          },
+          {
+            "value": -1,
+            "feedback": "cos \u03c0 = \u22121, but the wave rides midline 3: y = \u22122 + 3 = 1."
+          }
+        ],
+        "fallbackFeedback": "y = 2(\u22121) + 3 = 1 \u2014 the trough."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-graph__numeric"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Where's the first midline crossing?",
+      "conceptTag": "tg-cos-graph",
+      "explanationVariants": [
+        "Starting AT the peak, cosine reaches the midline one QUARTER period in: x = \u03c0/2 for plain cos.",
+        "cos(\u03c0/2) = 0: the wave crosses y = 3 (its midline) at x = \u03c0/2, heading down."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "For y = 2 cos x + 3, where does the graph FIRST cross its midline (x > 0)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x = \u03c0/2, heading down",
+            "correct": true,
+            "feedback": "Right \u2014 peak at 0, midline a quarter-period later, falling toward the trough."
+          },
+          {
+            "id": "o2",
+            "label": "x = 0",
+            "feedback": "At x = 0 cosine sits at its PEAK (y = 5), not the midline. First crossing: \u03c0/2."
+          },
+          {
+            "id": "o3",
+            "label": "x = \u03c0",
+            "feedback": "x = \u03c0 is the TROUGH. The midline crossing comes earlier, at \u03c0/2."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-graph__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "All four dials work identically on cosine: y = A cos(B(x \u2212 C)) + D has amplitude A, period 2\u03c0/B, shift C, midline D. Only the **starting posture** differs \u2014 cos begins at the top of its band instead of mid-climb.",
+      "figure": "tg-cosine-dials"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Dials on cosine.",
+      "conceptTag": "tg-cos-graph",
+      "explanationVariants": [
+        "B = 2 halves the period to \u03c0; the first trough is HALF a period from the peak at 0: x = \u03c0/2, with y = \u22121 \u2212 3 = \u22124.",
+        "3 cos(2x) \u2212 1 bottoms where 2x = \u03c0: x = \u03c0/2; height D \u2212 A = \u22124."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "y = 3 cos(2x) \u2212 1. What is the y-value at its FIRST trough (x > 0)?",
+        "answer": -4,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": -1,
+            "feedback": "\u22121 is the midline. The trough dips A = 3 below: \u22124."
+          },
+          {
+            "value": 2,
+            "feedback": "2 is the PEAK value (\u22121 + 3), at x = 0. The trough is its mirror: \u22124."
+          },
+          {
+            "value": -7,
+            "feedback": "Don't subtract B too: trough = D \u2212 A = \u22121 \u2212 3 = \u22124."
+          }
+        ],
+        "fallbackFeedback": "Trough y = \u22121 \u2212 3 = \u22124 (at x = \u03c0/2)."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-graph__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Read a cosine off landmarks.",
+      "conceptTag": "tg-cos-graph",
+      "explanationVariants": [
+        "Peak AT x = 0 says: cosine form with C = 0. A = (11 \u2212 3)/2 = 4, D = 7, period \u03c0 \u2192 B = 2. Rule: 4 cos(2x) + 7 \u2014 so at x = \u03c0/2 (half period), the trough: y = 3.",
+        "Half a period from the peak lands on the trough: D \u2212 A = 7 \u2212 4 = 3."
+      ],
+      "hints": [
+        "Get A and D from the extremes first.",
+        "A = 4, D = 7, and B = 2\u03c0/\u03c0 = 2. The wave peaks at x = 0.",
+        "x = \u03c0/2 is exactly half the period \u03c0 after the peak \u2014 which landmark is that?"
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A wave peaks at (0, 11), has min 3, and period \u03c0. What is its y-value at x = \u03c0/2?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 11,
+            "feedback": "11 is the peak. Half a period (\u03c0/2) later, a cosine-start wave is at its TROUGH: 3."
+          },
+          {
+            "value": 7,
+            "feedback": "7 is the midline \u2014 that's at the QUARTER period (\u03c0/4). At \u03c0/2 the wave bottoms out: 3."
+          },
+          {
+            "value": 0,
+            "feedback": "The min is 3, not 0: D \u2212 A = 7 \u2212 4 = 3."
+          }
+        ],
+        "fallbackFeedback": "Half a period past the peak: the trough, y = 3."
+      },
+      "variant": {
+        "gen": "g12-trig-graphs-inverses",
+        "form": "trig-graphs-inverses__tg-cos-graph__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Same wave, top start.",
+      "takeaways": [
+        "cos 0 = 1: cosine begins at its peak.",
+        "Five points: peak, midline, trough, midline, peak.",
+        "All four dials behave exactly as in sine."
+      ],
+      "teaser": "Next: the punchline \u2014 cosine IS sine, worn with a head start."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "tg-cos-graph",
+      "concept": {
+        "id": "rem-tg0201-c",
+        "kind": "concept",
+        "body": "Cosine's five key points start at the peak: (0, D+A), then midline, trough, midline, peak at quarter-period steps."
+      },
+      "check": {
+        "id": "rem-tg0201-k",
+        "kind": "check",
+        "body": "One anchor.",
+        "conceptTag": "tg-cos-graph",
+        "explanationVariants": [
+          "cos 0 = 1, so 5 cos 0 = 5.",
+          "The peak value equals the amplitude here (midline 0): 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is y = 5 cos x at x = 0?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 0,
+              "feedback": "Sine starts at 0; COSINE starts at its peak: 5\u00b71 = 5."
+            },
+            {
+              "value": 1,
+              "feedback": "cos 0 = 1, then scale by the amplitude 5."
+            }
+          ],
+          "fallbackFeedback": "5 \u00b7 cos 0 = 5."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+{
+  "id": "si-06-03",
+  "slug": "z-distance-in-wobbles",
+  "title": "z: Distance Measured in Wobbles",
+  "courseId": "statistical-inference",
+  "chapterId": "ch6-the-bell",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "'Within two σ' keeps coming up — so give the idea its own number. z = (x − μ) / σ asks: how many widths is x from the center? z = 0 is the mean itself; z = 2 is the edge of the 95% country; the sign says which side.",
+      "figure": "si-z-score"
+    },
+    {
+      "id": "i0",
+      "kind": "interactive",
+      "body": "Feel the ruler before computing with it.",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "Slide to A's z-score: a 130 where μ = 100 and σ = 10.",
+        "min": 1,
+        "max": 6,
+        "start": 1,
+        "target": 3,
+        "acceptFactor": 1.1,
+        "unitLabel": "z",
+        "ticks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lowFeedback": "Each σ is worth 10 raw points here — 130 stands further out than that.",
+        "highFeedback": "Too far — (130 − 100)/10 counts exactly three widths, no more.",
+        "successFeedback": "z = 3: thirty points at ten per wobble. Now run B — (65 − 50)/5 — and the predict's answer appears: also 3. Same extremeness, different rulers."
+      },
+      "predict": {
+        "prompt": "Two different tests. A scores 130 where μ = 100, σ = 10. B scores 65 where μ = 50, σ = 5. Who is more extreme?",
+        "options": [
+          {
+            "id": "equal",
+            "label": "They're equally extreme — both 3 σ out"
+          },
+          {
+            "id": "a",
+            "label": "A — 130 is the bigger number"
+          },
+          {
+            "id": "b",
+            "label": "B — smaller scales exaggerate"
+          }
+        ],
+        "outcomeId": "equal",
+        "reveal": "Raw scores lie across scales. A: (130−100)/10 = 3. B: (65−50)/5 = 3. Both stand exactly three wobbles above their crowds — identical rarity. Dividing out the yardstick is z's entire job."
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Compute one z by hand.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Test scores: μ = 100, σ = 10. What is z for a score of 115?",
+        "answer": 1.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 15,
+            "feedback": "15 is the raw distance. z divides by σ: 15/10 = 1.5 widths."
+          },
+          {
+            "value": -1.5,
+            "feedback": "115 sits ABOVE the mean — z is positive: +1.5."
+          }
+        ],
+        "successFeedback": "z = (115 − 100)/10 = 1.5 — one and a half wobbles above the mean. Not yet past the z = 2 frontier the 95% rule watches.",
+        "fallbackFeedback": "Work from the memorized bell numbers: 68 within one σ, 95 within two, 99.7 within three — then halve for a single tail.",
+        "unit": ""
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same test (μ = 100, σ = 10): what is z for a score of 85?",
+        "answer": -1.5,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 1.5,
+            "feedback": "85 is BELOW the mean — the z is negative: −1.5."
+          },
+          {
+            "value": 15,
+            "feedback": "That's the raw distance ignoring sign and σ. Divide by 10 and keep the minus: −1.5."
+          }
+        ],
+        "successFeedback": "z = (85 − 100)/10 = −1.5: the sign carries WHICH side, the size carries HOW far.",
+        "fallbackFeedback": "Work from the memorized bell numbers: 68 within one σ, 95 within two, 99.7 within three — then halve for a single tail.",
+        "unit": ""
+      },
+      "body": "Below the mean now.",
+      "conceptTag": "si-z-score",
+      "explanationVariants": [
+        "z = (85 − 100)/10 = −1.5: the minus sign records the side, the 1.5 records the distance in σ's.",
+        "Below-mean values always carry negative z; the magnitude works exactly as above the mean."
+      ]
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A result lands at z = 2.4. Under the 95% rule, call it:",
+        "options": [
+          {
+            "id": "unusual",
+            "label": "Unusual — beyond the two-σ frontier",
+            "correct": true,
+            "feedback": "Right — less than 5% of honest wobble reaches past |z| = 2. This is exactly the 'how unusual is unusual' judgment, now with a number."
+          },
+          {
+            "id": "typical",
+            "label": "Typical — z under 3 is ordinary",
+            "correct": false,
+            "feedback": "2.4 already beats the 95% fence at 2. The 99.7 fence at 3 is for near-certainty, not the everyday bar."
+          },
+          {
+            "id": "cant",
+            "label": "Can't say without the raw score",
+            "correct": false,
+            "feedback": "z IS the verdict-ready form — the raw score would add nothing."
+          }
+        ],
+        "successFeedback": "z turns 'is this weird?' into a threshold check: past ±2, chance alone rarely goes."
+      },
+      "body": "From z to a verdict.",
+      "conceptTag": "si-z-score",
+      "explanationVariants": [
+        "2.4 lies past the two-σ fence, where less than 5% of honest wobble reaches — 'unusual' by the standard bar.",
+        "z turns the unusualness judgment into a threshold comparison: |z| > 2 is the conventional alarm line."
+      ]
+    },
+    {
+      "id": "k1b",
+      "kind": "check",
+      "body": "Percent from z.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "Using the 68 rule: what percent of scores have z between −1 and +1?",
+        "answer": 68,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 95,
+            "feedback": "95% belongs to |z| ≤ 2. One σ each side holds 68%."
+          },
+          {
+            "value": 34,
+            "feedback": "Don't halve here — the question spans BOTH sides of the mean: the full 68 band."
+          }
+        ],
+        "fallbackFeedback": "|z| ≤ 1 is exactly 'within one σ' — the 68 band.",
+        "successFeedback": "68% — the empirical rule, rewritten on the z-scale. Same bell, cleaner ruler."
+      },
+      "conceptTag": "si-z-score",
+      "explanationVariants": [
+        "|z| ≤ 1 is the one-σ band restated — 68% by the empirical rule.",
+        "The z-scale doesn't change the bell's promises; it just renames the fences 1, 2, 3."
+      ]
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A z of 0 means the result…",
+        "options": [
+          {
+            "id": "mean",
+            "label": "Equals the mean exactly",
+            "correct": true,
+            "feedback": "Zero widths from center: x = μ. The most ordinary result possible."
+          },
+          {
+            "id": "zero",
+            "label": "Equals zero",
+            "correct": false,
+            "feedback": "z = 0 puts x AT μ — the raw value is μ, not 0 (unless μ is 0)."
+          },
+          {
+            "id": "missing",
+            "label": "Is missing data",
+            "correct": false,
+            "feedback": "z = 0 is a real, common, maximally-typical result."
+          }
+        ],
+        "successFeedback": "The z-scale recenters the world at the mean and remeasures it in σ's. Every normal question becomes the same question."
+      },
+      "body": "The center itself.",
+      "conceptTag": "si-z-score",
+      "explanationVariants": [
+        "z = 0 means x − μ = 0: the value IS the mean — the most typical result the distribution can produce.",
+        "Zero distance from center is not missing data; it's the bell's favorite spot."
+      ],
+      "hints": [
+        "z measures distance from the mean in σ's. What distance is zero σ's?",
+        "If (x − μ)/σ = 0, the numerator must be zero.",
+        "x − μ = 0 forces x = μ: the score IS the mean."
+      ]
+    },
+    {
+      "id": "ch0",
+      "kind": "challenge",
+      "body": "Backwards, for once.",
+      "conceptTag": "si-z-score",
+      "explanationVariants": [
+        "Unwinding z: x = μ + zσ = 100 + 2·10 = 120 — the two-σ fencepost itself.",
+        "z-scores convert both ways; multiplying back by σ and adding μ returns to raw units."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Same test (μ = 100, σ = 10). What RAW score sits at z = 2?",
+        "answer": 120,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "2 is the z itself. Convert back: x = μ + zσ = 100 + 20."
+          },
+          {
+            "value": 102,
+            "feedback": "Add TWO σ's, not two points: 100 + 2·10 = 120."
+          }
+        ],
+        "fallbackFeedback": "Reverse the formula: x = μ + z·σ.",
+        "successFeedback": "120 — the 95% fence in raw units. z and x are two names for one location."
+      },
+      "hints": [
+        "z = 2 means two full σ's above the mean — convert back to raw points.",
+        "x = μ + z·σ. Multiply before adding.",
+        "100 + 2·10: the raw score two wobbles up is 120."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "z = (x − μ)/σ: distance in wobbles, sign for side. The 95% rule becomes |z| ≤ 2, and chapter 4's 'how unusual is unusual' now has its ruler. The bell, the promise, the ruler — the normal toolkit is complete.",
+      "takeaways": [
+        "z = (x − μ)/σ: distance in wobbles, sign for side — comparable across any two scales.",
+        "The empirical rule restates cleanly: 68% within |z| ≤ 1, 95% within |z| ≤ 2.",
+        "'How unusual is unusual' becomes a threshold check at |z| = 2."
+      ],
+      "teaser": "The bell, the promise, the ruler — carry all three into 'Is the Difference Real?'."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-z-score",
+      "concept": {
+        "id": "rem-si-z-score-c",
+        "kind": "concept",
+        "body": "'Within two σ' keeps coming up — so give the idea its own number. z = (x − μ) / σ asks: how many widths is x from the center? z = 0 is the mean itself; z = 2 is the edge of the 95% country; the sign says which side."
+      },
+      "check": {
+        "id": "rem-si-z-score-k",
+        "kind": "check",
+        "body": "Below the mean now.",
+        "conceptTag": "si-z-score",
+        "explanationVariants": [
+          "z = (85 − 100)/10 = −1.5: the minus sign records the side, the 1.5 records the distance in σ's.",
+          "Below-mean values always carry negative z; the magnitude works exactly as above the mean."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "Same test (μ = 100, σ = 10): what is z for a score of 85?",
+          "answer": -1.5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 1.5,
+              "feedback": "85 is BELOW the mean — the z is negative: −1.5."
+            },
+            {
+              "value": 15,
+              "feedback": "That's the raw distance ignoring sign and σ. Divide by 10 and keep the minus: −1.5."
+            }
+          ],
+          "successFeedback": "z = (85 − 100)/10 = −1.5: the sign carries WHICH side, the size carries HOW far.",
+          "fallbackFeedback": "Work from the memorized bell numbers: 68 within one σ, 95 within two, 99.7 within three — then halve for a single tail.",
+          "unit": ""
+        }
+      }
+    }
+  ]
+}

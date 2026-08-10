@@ -1,0 +1,239 @@
+{
+  "id": "ti-05-01",
+  "slug": "quadratic-in-a-trig-function",
+  "title": "Quadratics in Disguise",
+  "courseId": "trig-identities-equations",
+  "chapterId": "ch5-identity-equations",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Many trig equations are **quadratics wearing a trig coat**: 2sin²x − sin x − 1 = 0 is just 2u² − u − 1 = 0 with u = sin x. Factor as usual — (2sin x + 1)(sin x − 1) = 0 — then solve each simple trig equation with the twin/ladder rules (recall).",
+      "figure": "ti-branch-tree"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Factor the disguise.",
+      "predict": {
+        "prompt": "2sin²x − sin x − 1 = 0 factors to sin x = 1 or sin x = −1/2. How many solutions on [0°, 360°)?",
+        "options": [
+          {
+            "id": "three",
+            "label": "Three — sin x = 1 touches once; sin x = −1/2 crosses twice"
+          },
+          {
+            "id": "four",
+            "label": "Four — two per factor, always"
+          },
+          {
+            "id": "two",
+            "label": "Two — one per factor"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Three. The line y = 1 only TOUCHES the wave — at its crest — while y = −1/2 cuts clean through it twice. “Solutions per factor” is geometry, not a rule of two: land the trace on the crest and see why sin x = 1 is a one-answer equation."
+      },
+      "widget": {
+        "type": "unitCircleExplore",
+        "prompt": "Trace y = sin x and land the tip exactly on the crest — the single place the factor sin x = 1 is satisfied.",
+        "targetAngle": 90,
+        "angleStart": 0,
+        "angleStep": 5,
+        "trace": "sin",
+        "targetFeature": {
+          "kind": "peak",
+          "x": 90,
+          "tol": 5
+        },
+        "successFeedback": "The crest at 90° — the wave's only visit to height 1 per cycle, so sin x = 1 contributes exactly one solution while sin x = −1/2 (a line through the wave's body) contributes two: 210° and 330°. Three in all — the factoring in the entry, counted on the graph.",
+        "lowFeedback": "Below the crest — the wave is still climbing. sin x = 1 only happens at the very top.",
+        "highFeedback": "Past the crest — descending now. Back up to the single point where the wave touches height 1."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Solve each branch.",
+      "conceptTag": "ti-quad-trig",
+      "explanationVariants": [
+        "sin x = −1/2 → x = 7π/6, 11π/6; sin x = 1 → x = π/2. Three solutions on [0, 2π).",
+        "Branch one gives the Q3/Q4 pair; branch two gives the single peak angle."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does 2sin²x − sin x − 1 = 0 have on [0, 2π)?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "Two branches, but sin x = −1/2 alone gives TWO (7π/6, 11π/6), plus sin x = 1 gives π/2: three."
+          },
+          {
+            "value": 4,
+            "feedback": "sin x = 1 has only ONE solution in [0, 2π) — the peak at π/2 (not two). Total: 2 + 1 = 3."
+          }
+        ],
+        "fallbackFeedback": "sin x = −1/2 (7π/6, 11π/6) and sin x = 1 (π/2): three."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-quad-trig__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Watch for branches with **no solution**: if a factor gives sin x = 2, discard it — sine never exceeds 1 (recall arcsin's domain). Only real, in-range values survive to the twin/ladder step.",
+      "figure": "ti-no-solution-branch"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Prune an impossible branch.",
+      "conceptTag": "ti-quad-trig",
+      "explanationVariants": [
+        "(sin x − 2)(2sin x − 1) = 0: sin x = 2 is impossible; only sin x = 1/2 survives, giving π/6 and 5π/6.",
+        "The first factor has no solution; the second yields the two Q1/Q2 angles: two total."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "(sin x − 2)(2sin x − 1) = 0 on [0, 2π): how many solutions?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "sin x = 2 is IMPOSSIBLE (sine ≤ 1) — that branch contributes nothing. Only sin x = 1/2 survives: 2 solutions."
+          },
+          {
+            "value": 3,
+            "feedback": "Just the sin x = 1/2 branch counts: π/6 and 5π/6. The sin x = 2 branch is empty. Two."
+          }
+        ],
+        "fallbackFeedback": "sin x = 2 impossible; sin x = 1/2 gives π/6, 5π/6: two."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-quad-trig__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A cosine quadratic.",
+      "conceptTag": "ti-quad-trig",
+      "explanationVariants": [
+        "2cos²x − cos x − 1 = 0 → (2cos x + 1)(cos x − 1) = 0 → cos x = −1/2 (2π/3, 4π/3) or cos x = 1 (0). Three solutions.",
+        "Two branches: the Q2/Q3 pair and the single x = 0."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "How many solutions does 2cos²x − cos x − 1 = 0 have on [0, 2π)?",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "cos x = −1/2 gives TWO (2π/3, 4π/3), and cos x = 1 gives x = 0: three total."
+          },
+          {
+            "value": 4,
+            "feedback": "cos x = 1 has one solution in [0, 2π): just x = 0. Plus the two from cos x = −1/2: three."
+          }
+        ],
+        "fallbackFeedback": "cos x = −1/2 (2π/3, 4π/3) and cos x = 1 (0): three."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-quad-trig__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Solve and sum.",
+      "conceptTag": "ti-quad-trig",
+      "explanationVariants": [
+        "2sin²x − sin x − 1 = 0 solutions π/2, 7π/6, 11π/6; sum = π/2 + 7π/6 + 11π/6 = 3π/6 + 7π/6 + 11π/6 = 21π/6 = 7π/2 ≈ 10.9956.",
+        "Add the three: converting to sixths, (3 + 7 + 11)π/6 = 21π/6 = 7π/2."
+      ],
+      "hints": [
+        "Solutions are π/2, 7π/6, 11π/6.",
+        "Convert to a common denominator of 6: 3π/6, 7π/6, 11π/6.",
+        "Sum the numerators: 21π/6 = 7π/2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Sum the solutions of 2sin²x − sin x − 1 = 0 on [0, 2π), to four decimals.",
+        "answer": 10.9956,
+        "tolerance": 0.001,
+        "commonErrors": [
+          {
+            "value": 9.4248,
+            "feedback": "9.4248 = 3π counts only 7π/6 + 11π/6 = 3π. Add π/2: total 7π/2 ≈ 10.9956."
+          },
+          {
+            "value": 1.5708,
+            "feedback": "1.5708 = π/2 is one solution. Add 7π/6 and 11π/6: total 7π/2 ≈ 10.9956."
+          }
+        ],
+        "fallbackFeedback": "π/2 + 7π/6 + 11π/6 = 7π/2 ≈ 10.9956."
+      },
+      "variant": {
+        "gen": "g12-trig-identities-equations",
+        "form": "trig-identities-equations__ti-quad-trig__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "It's just algebra underneath.",
+      "takeaways": [
+        "Substitute u = sin x (or cos x) and factor the quadratic.",
+        "Solve each branch with twin/ladder rules.",
+        "Discard any branch demanding |value| > 1."
+      ],
+      "teaser": "Next: when the equation mixes sin AND cos — convert with an identity first."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "ti-quad-trig",
+      "concept": {
+        "id": "rem-ti0501-c",
+        "kind": "concept",
+        "body": "A trig quadratic: let u = the trig function, factor, solve each u-branch — discarding any |u| > 1 — then apply the twin/ladder rules."
+      },
+      "check": {
+        "id": "rem-ti0501-k",
+        "kind": "check",
+        "body": "One factor.",
+        "conceptTag": "ti-quad-trig",
+        "explanationVariants": [
+          "cos²x − cos x = 0 → cos x(cos x − 1) = 0 → cos x = 0 (π/2, 3π/2) or cos x = 1 (0). Three solutions.",
+          "Factor out cos x; two branches give three angles."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "How many solutions does cos²x − cos x = 0 have on [0, 2π)?",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "cos x = 0 gives TWO (π/2, 3π/2), plus cos x = 1 gives x = 0: three."
+            },
+            {
+              "value": 4,
+              "feedback": "cos x = 1 gives only x = 0 in [0, 2π). Total 2 + 1 = 3."
+            }
+          ],
+          "fallbackFeedback": "cos x = 0 (π/2, 3π/2) and cos x = 1 (0): three."
+        }
+      }
+    }
+  ]
+}

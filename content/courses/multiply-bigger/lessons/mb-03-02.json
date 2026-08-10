@@ -1,0 +1,363 @@
+{
+ "id": "mb-03-02",
+ "slug": "break-the-big-number",
+ "title": "Break the Big Number",
+ "courseId": "multiply-bigger",
+ "chapterId": "ch3-area-model",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "To multiply a big number, break it apart — the same trick you used for area. **6 × 34** splits 34 into 30 + 4, making two rectangles: 6 × 30 and 6 × 4. Multiply each, then add: 180 + 24 = 204. A hard problem becomes two easy ones you already know.",
+   "figure": "mb-break-area"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Build the split.",
+   "conceptTag": "area-model-1digit",
+   "widget": {
+    "type": "buildExpression",
+    "prompt": "Break 6 × 34 into two easier products. Build: 6 × 30 + 6 × 4.",
+    "tokens": [
+     {
+      "id": "t6a",
+      "label": "6"
+     },
+     {
+      "id": "t30",
+      "label": "× 30"
+     },
+     {
+      "id": "tp",
+      "label": "+"
+     },
+     {
+      "id": "t6b",
+      "label": "6"
+     },
+     {
+      "id": "t4",
+      "label": "× 4"
+     },
+     {
+      "id": "t34",
+      "label": "× 34"
+     }
+    ],
+    "correct": [
+     "t6a",
+     "t30",
+     "tp",
+     "t6b",
+     "t4"
+    ],
+    "acceptAlso": [
+     [
+      "t6b",
+      "t4",
+      "tp",
+      "t6a",
+      "t30"
+     ]
+    ],
+    "commonBuilds": [
+     {
+      "sequence": [
+       "t6a",
+       "t30",
+       "tp",
+       "t6b",
+       "t34"
+      ],
+      "feedback": "The second piece should be 6 × 4, not 6 × 34 — you already pulled the 30 out, so only the 4 ones are left."
+     }
+    ],
+    "reusable": false,
+    "missFeedback": "Split 34 into 30 and 4, and multiply 6 by each part: 6 × 30 + 6 × 4.",
+    "successFeedback": "6 × 30 + 6 × 4 — two rectangles from one. Now 180 + 24 = 204."
+   },
+   "predict": {
+    "prompt": "Breaking 6 × 34 into 6 × 30 + 6 × 4: why must BOTH pieces keep the 6?",
+    "options": [
+     {
+      "id": "all",
+      "label": "Every part of 34 gets its 6 groups"
+     },
+     {
+      "id": "one",
+      "label": "They don't — one 6 is enough"
+     },
+     {
+      "id": "looks",
+      "label": "Just to keep it looking balanced"
+     }
+    ],
+    "outcomeId": "all",
+    "reveal": "34 is 30 + 4, and the array is 6 tall the whole way across — the 30 needs its 6 rows AND the 4 needs its 6 rows: 180 + 24 = 204. Dropping a 6 leaves part of the array uncounted."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Add the two rectangles.",
+   "conceptTag": "area-model-1digit",
+   "explanationVariants": [
+    "6 × 30 = 180 and 6 × 4 = 24; together 180 + 24 = 204.",
+    "The two pieces are 180 and 24, and they sum to 204."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "6 × 30 = 180 and 6 × 4 = 24. What is 6 × 34?",
+    "answer": 204,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 180,
+      "feedback": "180 is only the first rectangle (6 × 30). The 6 × 4 = 24 piece still needs adding: 180 + 24 = 204."
+     },
+     {
+      "value": 24,
+      "feedback": "24 is only the second rectangle (6 × 4). Add the big piece 6 × 30 = 180 too: 204."
+     },
+     {
+      "value": 200,
+      "feedback": "200 rounded away the ones. Both whole pieces count: 180 + 24 = 204."
+     }
+    ],
+    "fallbackFeedback": "Add both rectangles: 180 + 24."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbAreaModel1DigitNumeric"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The split always follows place value: pull the number apart into its tens and its ones, multiply each by the single digit, then add the pieces. **4 × 23** → 4 × 20 + 4 × 3 → 80 + 12 → 92. Tens piece plus ones piece — never leave one out.",
+   "figure": "mb-break-area"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Your turn to split.",
+   "conceptTag": "area-model-1digit",
+   "explanationVariants": [
+    "7 × 45 splits into 7 × 40 + 7 × 5 = 280 + 35 = 315.",
+    "The pieces are 280 and 35, summing to 315."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "Use the split to find 7 × 45. (Hint: 7 × 40 + 7 × 5.)",
+    "answer": 315,
+    "tolerance": 0,
+    "unit": "",
+    "commonErrors": [
+     {
+      "value": 280,
+      "feedback": "280 is just 7 × 40. Add the ones rectangle 7 × 5 = 35 to reach 315."
+     },
+     {
+      "value": 63,
+      "feedback": "63 is 7 × 9 — the digits of 45 were added first. Multiply each PART: 7 × 40 = 280, 7 × 5 = 35, total 315."
+     },
+     {
+      "value": 305,
+      "feedback": "305 looks like 280 + 25 — recheck the ones: 7 × 5 = 35, so 280 + 35 = 315."
+     }
+    ],
+    "fallbackFeedback": "7 × 40, then 7 × 5, then add."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbAreaModel1DigitNumeric"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match each rectangle to its piece.",
+   "conceptTag": "area-model-1digit",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "For 3 × 58, match each rectangle to its value.",
+    "left": [
+     {
+      "id": "tens",
+      "label": "3 × 50 (tens rectangle)"
+     },
+     {
+      "id": "ones",
+      "label": "3 × 8 (ones rectangle)"
+     },
+     {
+      "id": "total",
+      "label": "3 × 58 (whole)"
+     }
+    ],
+    "right": [
+     {
+      "id": "v24",
+      "label": "24"
+     },
+     {
+      "id": "v174",
+      "label": "174"
+     },
+     {
+      "id": "v150",
+      "label": "150"
+     }
+    ],
+    "pairs": {
+     "tens": "v150",
+     "ones": "v24",
+     "total": "v174"
+    },
+    "pairErrors": [
+     {
+      "left": "total",
+      "right": "v150",
+      "feedback": "150 is only the tens rectangle (3 × 50). The whole is both pieces: 150 + 24 = 174."
+     }
+    ],
+    "missFeedback": "Tens rectangle 3 × 50 = 150, ones rectangle 3 × 8 = 24, and the whole is their sum.",
+    "successFeedback": "150 + 24 = 174 — the two rectangles rebuild 3 × 58."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Find the missing piece.",
+   "conceptTag": "area-model-1digit",
+   "explanationVariants": [
+    "8 × 26 = 8 × 20 + 8 × 6. The tens piece is 160, so the ones piece must be 8 × 6 = 48.",
+    "The forgotten rectangle is 8 × 6 = 48; without it the answer is 48 short."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "For 8 × 26, Mia found the tens rectangle 8 × 20 = 160 but stopped. Which rectangle did she forget?",
+    "options": [
+     {
+      "id": "a",
+      "label": "8 × 6 = 48 — she still needs the ones rectangle (total 208)",
+      "correct": true,
+      "feedback": "The ones piece 8 × 6 = 48 was missing. 160 + 48 = 208, the full product."
+     },
+     {
+      "id": "b",
+      "label": "Nothing — 160 is the answer",
+      "feedback": "160 covers only 8 × 20. The ones rectangle 8 × 6 = 48 is still owed: 208."
+     },
+     {
+      "id": "c",
+      "label": "8 × 2 = 16",
+      "feedback": "The tens piece is already counted as 160 (8 × 20). What's left is the ONES: 8 × 6 = 48."
+     },
+     {
+      "id": "d",
+      "label": "26 × 26",
+      "feedback": "Only the single digit 8 multiplies each part. The missing piece is 8 × 6 = 48, giving 208."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbAreaModel1DigitMcq"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The stadium seats.",
+   "conceptTag": "area-model-1digit",
+   "hints": [
+    "Split 47 into 40 and 7.",
+    "6 × 40 is a tens-times fact; 6 × 7 is a basic fact.",
+    "Add the two rectangles."
+   ],
+   "explanationVariants": [
+    "6 rows of 47 seats: 6 × 47 = 6 × 40 + 6 × 7 = 240 + 42 = 282 seats.",
+    "The two pieces 240 and 42 sum to 282."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A stand has 6 rows with 47 seats in each row. How many seats in all? (Split 47 into 40 + 7.)",
+    "answer": 282,
+    "tolerance": 0,
+    "unit": "seats",
+    "commonErrors": [
+     {
+      "value": 240,
+      "feedback": "240 is only the tens rectangle (6 × 40). Add the ones rectangle 6 × 7 = 42: 282."
+     },
+     {
+      "value": 78,
+      "feedback": "78 is 6 × 13 — the digits 4 and 7 were added. Multiply each PART: 6 × 40 = 240, 6 × 7 = 42, total 282."
+     }
+    ],
+    "fallbackFeedback": "6 × 40, then 6 × 7, then add."
+   },
+   "variant": {
+    "gen": "g4-multiply",
+    "form": "mbAreaModel1DigitNumeric"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Big number, broken down.",
+   "takeaways": [
+    "Split the big number into tens + ones; multiply each by the digit.",
+    "Two rectangles, then add — the area model of a multiplication.",
+    "Forgetting the ones piece leaves the answer short."
+   ],
+   "teaser": "next: two big numbers at once — four rectangles instead of two."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "area-model-1digit",
+   "concept": {
+    "id": "rem-a1-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Break the two-digit number into tens and ones, multiply each, add.** For 5 × 23: split 23 into 20 + 3, do 5 × 20 = 100 and 5 × 3 = 15, then 100 + 15 = 115. Two small products, added — never drop the ones piece."
+   },
+   "check": {
+    "id": "rem-a1-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "area-model-1digit",
+    "explanationVariants": [
+     "5 × 20 = 100 and 5 × 3 = 15, so 5 × 23 = 115.",
+     "The two pieces 100 and 15 sum to 115."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "5 × 20 = 100 and 5 × 3 = 15. What is 5 × 23?",
+     "options": [
+      {
+       "id": "a",
+       "label": "115",
+       "correct": true,
+       "feedback": "100 + 15 = 115 — both rectangles added."
+      },
+      {
+       "id": "b",
+       "label": "100",
+       "feedback": "100 is only 5 × 20. Add the ones rectangle 5 × 3 = 15: 115."
+      },
+      {
+       "id": "c",
+       "label": "15",
+       "feedback": "15 is only 5 × 3. Add the tens rectangle 5 × 20 = 100: 115."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

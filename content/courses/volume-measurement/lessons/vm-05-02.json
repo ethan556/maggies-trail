@@ -1,0 +1,296 @@
+{
+  "id": "vm-05-02",
+  "slug": "splitting-solids",
+  "title": "Splitting Solids",
+  "courseId": "volume-measurement",
+  "chapterId": "ch5-composite-volume",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "An **L-shaped** solid isn't a box, so no single l × w × h fits it. The trick: **cut it into boxes yourself**. Our L: a bottom slab 5 units long, 2 wide, 2 tall, with a 2 × 2 × 2 block sitting on top of its left end. Cut along the block's base, find each box's volume, add.",
+      "figure": "vm-l-shape"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The slab first.",
+      "conceptTag": "decompose-solid",
+      "widget": {
+        "type": "volumeBuilder",
+        "prompt": "The L's bottom slab is 2 wide and 2 tall, both locked. Slide the length out to 5 and watch what each unit of length is worth.",
+        "targetVolume": 20,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 2,
+        "hStart": 2,
+        "lockW": true,
+        "lockH": true,
+        "commonBuilds": [
+          {
+            "volume": 4,
+            "feedback": "4 cubes is one unit of length — a single 2-by-2 slice. The slab runs 5 of those."
+          },
+          {
+            "volume": 16,
+            "feedback": "16 is four units of length. One more 2-by-2 slice completes the slab."
+          }
+        ],
+        "successFeedback": "20 cubic units. Every unit of length brought a whole 2-by-2 cross-section of 4 cubes — which is why splitting an L-shaped solid works at all: each piece is a plain box, and no cube belongs to two pieces at once.",
+        "lowFeedback": "Shorter than the slab. Each step of length adds a full 2-by-2 slice — 4 cubes.",
+        "highFeedback": "Longer than the slab. Pull the length back toward 5."
+      },
+      "predict": {
+        "prompt": "The slab is 2 wide and 2 tall. Each extra unit of LENGTH will add…",
+        "options": [
+          {
+            "id": "one",
+            "label": "1 cube"
+          },
+          {
+            "id": "two",
+            "label": "2 cubes"
+          },
+          {
+            "id": "four",
+            "label": "4 cubes"
+          }
+        ],
+        "outcomeId": "four",
+        "reveal": "4 — a whole 2-by-2 cross-section arrives with every unit of length. This is why an L-shaped solid can be split and its parts added: each part is a plain box built the same way, and no cube is ever counted by two of them."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Slab plus block.",
+      "conceptTag": "decompose-solid",
+      "explanationVariants": [
+        "The block is 2 × 2 × 2 = 8; the whole L is 20 + 8 = 28.",
+        "Cut at the block's base: 20 cubes below, 8 above, 28 total."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The 2 × 2 × 2 block sits on the slab (volume 20). What is the whole L's volume in cubic units?",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 is the slab alone. Add the block on top: 20 + 8 = 28."
+          },
+          {
+            "value": 40,
+            "feedback": "40 is the 5 × 2 × 4 box the L fits inside — but the notch above the slab's right end is empty. Only 20 + 8 = 28 cubes are really there."
+          }
+        ],
+        "fallbackFeedback": "Block = 2 × 2 × 2 = 8; total = 20 + 8 = 28 cubic units."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "composite"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Here's the satisfying part: **a different cut gives the same answer**. Slice the same L straight down at the block's edge instead. Now the pieces are a tall box 2 long, 2 wide, 4 tall, and a short box 3 long, 2 wide, 2 tall. Every cube still gets counted exactly once — so any legal split must agree.",
+      "figure": "l-solid-cuts"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "The vertical cut.",
+      "conceptTag": "decompose-solid",
+      "explanationVariants": [
+        "Tall piece 2 × 2 × 4 = 16, short piece 3 × 2 × 2 = 12; 16 + 12 = 28 — same as before.",
+        "Different cut, same cubes: 16 + 12 = 28, matching the 20 + 8 split."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The vertical cut gives a 2 × 2 × 4 box and a 3 × 2 × 2 box. What total volume does this cut give, in cubic units?",
+        "answer": 28,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is the tall piece only (2 × 2 × 4). Add the short piece: 16 + 12 = 28."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is the short piece only (3 × 2 × 2). Add the tall piece: 16 + 12 = 28."
+          }
+        ],
+        "fallbackFeedback": "16 + 12 = 28 — the same total as the horizontal cut."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "composite"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Diagnose a wrong method.",
+      "conceptTag": "decompose-solid",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Marco computed the L's volume as 5 × 2 × 4 = 40. What went wrong?",
+        "options": [
+          {
+            "id": "a",
+            "label": "He measured the box the L fits inside — the empty notch isn't part of the solid",
+            "correct": true,
+            "feedback": "Right — that bounding box includes the 12-cube notch above the slab's right end, which is empty air. The L itself is 28."
+          },
+          {
+            "id": "b",
+            "label": "He should have added 5 + 2 + 4 instead",
+            "feedback": "Adding edges is a different mistake — it never gives volume. Marco's real error is counting the empty notch as if it were filled."
+          },
+          {
+            "id": "c",
+            "label": "He multiplied the edges in the wrong order",
+            "feedback": "Order never changes a product. The problem is that 5 × 2 × 4 measures a full box, and the L has an empty notch inside that box."
+          }
+        ]
+      },
+      "hints": [
+        "Is the L really a full 5 × 2 × 4 box?",
+        "What sits above the slab's right end?",
+        "Empty space isn't volume."
+      ],
+      "explanationVariants": [
+        "The bounding box counts the empty notch; the L is 28, not 40.",
+        "40 − 28 = 12 cubes of empty notch got wrongly counted."
+      ]
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "A step-shaped solid.",
+      "conceptTag": "decompose-solid",
+      "explanationVariants": [
+        "Bottom 4 × 3 × 1 = 12, top 2 × 3 × 1 = 6; total 12 + 6 = 18.",
+        "Split at the step: twelve cubes below, six above, 18 in all."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A step-shaped solid is a 4 × 3 × 1 box with a 2 × 3 × 1 box on top of one end. What is its volume in cubic units?",
+        "answer": 18,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is the bottom box only. Add the top step: 12 + 6 = 18."
+          },
+          {
+            "value": 24,
+            "feedback": "24 is the full 4 × 3 × 2 box the step fits inside — but the space above the lower step is empty. Add the real pieces: 12 + 6 = 18."
+          }
+        ],
+        "fallbackFeedback": "4 × 3 × 1 = 12 and 2 × 3 × 1 = 6; total 18."
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "composite"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A fresh L, your cut.",
+      "conceptTag": "decompose-solid",
+      "hints": [
+        "Cut at the block's base.",
+        "Slab: 6 × 2 × 2 = 24. Block: 2 × 2 × 2 = 8.",
+        "24 + 8 = 32."
+      ],
+      "explanationVariants": [
+        "Slab 6 × 2 × 2 = 24 plus block 2 × 2 × 2 = 8 gives 32 cubic units.",
+        "Any legal cut of this L totals 32 — the bounding 6 × 2 × 4 box (48) overcounts the empty notch."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An L-shaped solid is a 6 × 2 × 2 slab with a 2 × 2 × 2 block on top of one end. What is its volume?",
+        "options": [
+          {
+            "id": "a",
+            "label": "32 cubic units",
+            "correct": true,
+            "feedback": "Right — 24 + 8 = 32 cubic units."
+          },
+          {
+            "id": "b",
+            "label": "24 cubic units",
+            "feedback": "24 is the slab alone. Add the block on top: 24 + 8 = 32."
+          },
+          {
+            "id": "c",
+            "label": "48 cubic units",
+            "feedback": "48 is the full 6 × 2 × 4 box around the L — the notch above the slab is empty. The solid holds 24 + 8 = 32."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "box-volume",
+        "form": "compositeMcq"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cut, compute, add.",
+      "takeaways": [
+        "Odd solids split into boxes: find each l × w × h, then add.",
+        "Any legal cut gives the same total — every cube counts once.",
+        "Never use the box a solid merely fits inside; empty notches aren't volume."
+      ],
+      "teaser": "course complete! Next course: plotting points on the coordinate plane."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "decompose-solid",
+      "concept": {
+        "id": "rem-ds-c",
+        "kind": "concept",
+        "body": "Quick rewind. **Split the solid into boxes, then add.** A small L made of a 2 × 2 × 2 box (8 cubes) and a 2 × 1 × 2 box (4 cubes) has volume 8 + 4 = 12. One box at a time, then one addition."
+      },
+      "check": {
+        "id": "rem-ds-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "decompose-solid",
+        "explanationVariants": [
+          "8 + 4 = 12 cubic units.",
+          "Eight cubes in one piece, four in the other: twelve."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A solid splits into a 2 × 2 × 2 box and a 2 × 1 × 2 box. What is its total volume in cubic units?",
+          "answer": 12,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
+            {
+              "value": 8,
+              "feedback": "8 is the first piece only (2 × 2 × 2). Add the second: 8 + 4 = 12."
+            },
+            {
+              "value": 4,
+              "feedback": "4 is the second piece only (2 × 1 × 2). Add the first: 8 + 4 = 12."
+            }
+          ],
+          "fallbackFeedback": "2 × 2 × 2 = 8 and 2 × 1 × 2 = 4; total 12."
+        }
+      }
+    }
+  ]
+}

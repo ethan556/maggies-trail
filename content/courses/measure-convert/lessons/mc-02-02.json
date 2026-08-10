@@ -1,0 +1,336 @@
+{
+ "id": "mc-02-02",
+ "slug": "the-perimeter-formula",
+ "title": "The Perimeter Formula",
+ "courseId": "measure-convert",
+ "chapterId": "ch2-area-perimeter-formulas",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Remember walking the fence — tracing every side and adding the distances? That has a formula name too: **PERIMETER = 2 × (length + width).** For a 6-by-4 rectangle: 2×(6+4)=2×10=**20.** Two lengths, two widths, walked all the way around.",
+   "figure": "md3-perimeter"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Match rectangle to perimeter.",
+   "conceptTag": "perimeter-formula",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each rectangle's dimensions to its perimeter.",
+    "left": [
+     {
+      "id": "e1",
+      "label": "6 × 4"
+     },
+     {
+      "id": "e2",
+      "label": "9 × 5"
+     },
+     {
+      "id": "e3",
+      "label": "7 × 3"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "20"
+     },
+     {
+      "id": "r2",
+      "label": "28"
+     },
+     {
+      "id": "r3",
+      "label": "20"
+     }
+    ],
+    "pairs": {
+     "e1": "r1",
+     "e2": "r2",
+     "e3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "e2",
+      "right": "r1",
+      "feedback": "20 is 6×4's perimeter (and 7×3's too, coincidentally). For 9×5: 2×(9+5)=2×14=28."
+     }
+    ],
+    "missFeedback": "Add length and width, then double the sum — walking all four sides.",
+    "successFeedback": "2×(6+4)=20, 2×(9+5)=28, 2×(7+3)=20 — different-shaped rectangles can share a perimeter."
+   },
+   "predict": {
+    "prompt": "Which is the longer walk around: a 1-by-9 rectangle or a 5-by-5?",
+    "options": [
+     {
+      "id": "equal",
+      "label": "Equal trips"
+     },
+     {
+      "id": "thin",
+      "label": "The 1-by-9"
+     },
+     {
+      "id": "square",
+      "label": "The 5-by-5"
+     }
+    ],
+    "outcomeId": "equal",
+    "reveal": "Both fences total 20 — perimeter listens only to the sum of the sides, not to how skinny or square the shape looks."
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Apply the formula.",
+   "conceptTag": "perimeter-formula",
+   "explanationVariants": [
+    "2×(15+9)=2×24=48.",
+    "Add the two sides, then double for all four."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangle is 15 units by 9 units. What is its perimeter?",
+    "answer": 48,
+    "tolerance": 0,
+    "unit": "units",
+    "commonErrors": [
+     {
+      "value": 135,
+      "feedback": "135 multiplies the sides — that finds the AREA, not the perimeter. Walking around: 2×(15+9)=48."
+     },
+     {
+      "value": 24,
+      "feedback": "24 is only 15+9, one trip around half the rectangle. Double it for all four sides: 2×24=48."
+     }
+    ],
+    "fallbackFeedback": "Add the two sides, then multiply by 2."
+   },
+   "variant": {
+    "gen": "rect-measure"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "Area and perimeter move **independently.** A 3-by-8 rectangle and a 5-by-6 rectangle both have perimeter 22 — but their areas are 24 and 30. Same fence length, different amount of grass inside. One never tells you the other.",
+   "figure": "md3-perimeter"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Same perimeter, different area.",
+   "conceptTag": "perimeter-formula",
+   "explanationVariants": [
+    "3×8 gives perimeter 2×(3+8)=22 and area 3×8=24. 5×6 gives perimeter 2×(5+6)=22 and area 5×6=30 — same perimeter, bigger area.",
+    "Matching fence lengths can enclose very different amounts of space."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "A 3-by-8 rectangle and a 5-by-6 rectangle both have a perimeter of 22. Do they have the same area?",
+    "options": [
+     {
+      "id": "a",
+      "label": "No — 3×8=24 but 5×6=30",
+      "correct": true,
+      "feedback": "Same perimeter doesn't guarantee the same area. 24 and 30 are different amounts of surface."
+     },
+     {
+      "id": "b",
+      "label": "Yes — same perimeter always means same area",
+      "feedback": "Perimeter and area move independently. Here, 3×8=24 and 5×6=30 — different areas despite matching perimeters."
+     },
+     {
+      "id": "c",
+      "label": "Yes, because both numbers add to the same total",
+      "feedback": "Adding to the same total (perimeter) doesn't multiply to the same product (area). 24 ≠ 30."
+     },
+     {
+      "id": "d",
+      "label": "Can't tell without drawing them",
+      "feedback": "The formulas settle it directly: 3×8=24 and 5×6=30 — no drawing needed."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g4-measure",
+    "form": "mcPerimeterFormulaMcq"
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Same measure, or different?",
+   "conceptTag": "perimeter-formula",
+   "widget": {
+    "type": "dragBucket",
+    "prompt": "Sort each rectangle pair by what they share.",
+    "buckets": [
+     {
+      "id": "sameperi",
+      "label": "Same perimeter only",
+      "icon": "🔲"
+     },
+     {
+      "id": "samearea",
+      "label": "Same area only",
+      "icon": "🟨"
+     }
+    ],
+    "items": [
+     {
+      "id": "p1",
+      "label": "3×8 and 5×6",
+      "bucketId": "sameperi",
+      "feedback": "Both have perimeter 22, but areas 24 and 30 differ."
+     },
+     {
+      "id": "p2",
+      "label": "2×12 and 4×6",
+      "bucketId": "samearea",
+      "feedback": "Both have area 24, but perimeters 28 and 20 differ."
+     },
+     {
+      "id": "p3",
+      "label": "1×20 and 4×5",
+      "bucketId": "samearea",
+      "feedback": "Both have area 20, but perimeters 42 and 18 differ."
+     },
+     {
+      "id": "p4",
+      "label": "1×9 and 4×6",
+      "bucketId": "sameperi",
+      "feedback": "Both have perimeter 20, but areas 9 and 24 differ."
+     }
+    ],
+    "missFeedback": "Compute both the perimeter and the area for each pair, then compare.",
+    "successFeedback": "Every pair here matches on one measure while differing sharply on the other."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "Find the missing side.",
+   "conceptTag": "perimeter-formula",
+   "explanationVariants": [
+    "26=2×(7+w) means 7+w=13, so w=13−7=6.",
+    "Half the perimeter (13) minus the known side (7) gives the missing side."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangle has a perimeter of 26 units. One side is 7 units. What is the other side?",
+    "answer": 6,
+    "tolerance": 0,
+    "unit": "units",
+    "commonErrors": [
+     {
+      "value": 19,
+      "feedback": "19 subtracts 7 from the FULL perimeter (26), but perimeter counts each side TWICE. Halve 26 to 13 first, then subtract 7: 6."
+     },
+     {
+      "value": 12,
+      "feedback": "12 divides 26 by 2 but forgets to subtract the known side. Half the perimeter is 13; 13−7=6."
+     }
+    ],
+    "fallbackFeedback": "Half the perimeter (26÷2=13) is length+width; subtract the known side (7)."
+   },
+   "variant": {
+    "gen": "rect-measure",
+    "form": "missingSide"
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The backyard fence.",
+   "conceptTag": "perimeter-formula",
+   "hints": [
+    "Fencing goes AROUND the yard — that's perimeter, not area.",
+    "Add the two sides: 15+9.",
+    "Double that sum for all four sides."
+   ],
+   "explanationVariants": [
+    "A 15-by-9 yard needs 2×(15+9)=2×24=48 units of fencing.",
+    "Fencing traces the perimeter, not the surface."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A rectangular yard is 15 feet by 9 feet. How many feet of fencing are needed to go all the way around it?",
+    "answer": 48,
+    "tolerance": 0,
+    "unit": "feet",
+    "commonErrors": [
+     {
+      "value": 135,
+      "feedback": "135 multiplies the sides — that's the AREA (the grass inside), not the fence length. Fencing needs perimeter: 2×(15+9)=48."
+     },
+     {
+      "value": 24,
+      "feedback": "24 is only 15+9, half the trip around. Double it for all four sides: 2×24=48."
+     }
+    ],
+    "fallbackFeedback": "Fencing needs perimeter: add the two sides, then double."
+   },
+   "variant": {
+    "gen": "rect-measure"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Around, not across.",
+   "takeaways": [
+    "Perimeter = 2 × (length + width) — walking every side, formalized.",
+    "Area and perimeter move independently — matching one never guarantees matching the other.",
+    "Perimeter answers 'how much distance around,' like fencing or framing."
+   ],
+   "teaser": "next: word problems that ask you to choose the right formula."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "perimeter-formula",
+   "concept": {
+    "id": "rem-pf-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Perimeter = 2 × (length + width).** For a 5-by-2 rectangle: 5+2=7, then 2×7=14 — walking all four sides."
+   },
+   "check": {
+    "id": "rem-pf-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "perimeter-formula",
+    "explanationVariants": [
+     "2×(5+2)=2×7=14.",
+     "Add the sides, then double."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A rectangle is 5 units by 2 units. What is its perimeter?",
+     "options": [
+      {
+       "id": "a",
+       "label": "14",
+       "correct": true,
+       "feedback": "2×(5+2)=14."
+      },
+      {
+       "id": "b",
+       "label": "10",
+       "feedback": "10 multiplies the sides — that's area. Perimeter is 2×(5+2)=14."
+      },
+      {
+       "id": "c",
+       "label": "7",
+       "feedback": "7 is only one trip halfway around. Double it: 2×7=14."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

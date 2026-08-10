@@ -1,0 +1,334 @@
+{
+ "id": "la-03-02",
+ "slug": "a-triangles-angles-always-sum-to-180",
+ "title": "A Triangle's Angles Always Sum to 180°",
+ "courseId": "lines-angles",
+ "chapterId": "ch3-classifying-shapes-by-angles",
+ "minutes": 7,
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Every triangle, no matter its shape, has three angles that add up to exactly **180°** — the same total as angles on a straight line. Tear off a triangle's three corners and line them up, and they form a straight line.",
+   "figure": "la-triangle-sum"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Deform a triangle while tracking all three angles and their invariant sum.",
+   "conceptTag": "triangle-angle-sum",
+   "widget": {
+    "type": "triangleAngleLab",
+    "prompt": "Drag the orange vertex until angle A is about 45°. Deform the triangle at least three times and watch what never changes.",
+    "fixedA": [
+     1,
+     1
+    ],
+    "fixedB": [
+     7,
+     1
+    ],
+    "startC": [
+     4,
+     6
+    ],
+    "targetAngleA": 45,
+    "tolerance": 3,
+    "gridMax": 8,
+    "requiredMoves": 3,
+    "successFeedback": "Angle A is about 45°, and every deformation preserved A + B + C = 180°.",
+    "targetFeedback": "Keep deforming. Use the live angle label to bring angle A near 45°.",
+    "invariantFeedback": "Try several different triangle shapes first. The angles change, but their sum must stay 180°."
+   },
+   "predict": {
+    "prompt": "A triangle's angles share a fixed total. If two of its angles GROW, what must the third do?",
+    "options": [
+     {
+      "id": "shrink",
+      "label": "Shrink"
+     },
+     {
+      "id": "grow",
+      "label": "Grow too"
+     },
+     {
+      "id": "stay",
+      "label": "Stay the same"
+     }
+    ],
+    "outcomeId": "shrink",
+    "reveal": "The three angles split one fixed budget of 180° — whatever two of them take, the third gets what's left. Growth anywhere forces shrinkage somewhere."
+   },
+   "cml": {
+    "stage": "construct",
+    "flagship": true,
+    "kernel": "spatial-invariance",
+    "actionGoal": "Deform a triangle and infer the angle-sum invariant from repeated cases.",
+    "invariants": [
+     "triangle-angle-sum"
+    ],
+    "misconceptions": [
+     "shape-changes-sum",
+     "largest-angle-only"
+    ],
+    "representations": [
+     "diagram",
+     "table",
+     "symbolic",
+     "language"
+    ],
+    "fadeLevel": 1,
+    "transferFamily": "triangle-invariants",
+    "delayed": true,
+    "translationFrom": "diagram",
+    "translationTo": "symbolic",
+    "counterfactualPrompt": "Make the triangle extremely narrow, then extremely wide. What remains exactly 180°?",
+    "explanation": {
+     "prompt": "Why can the triangle change shape without changing its angle sum?",
+     "options": [
+      {
+       "id": "budget",
+       "label": "The three angles always share 180°.",
+       "correct": true,
+       "feedback": "Yes — shape changes redistribute a fixed total."
+      },
+      {
+       "id": "same",
+       "label": "All three angles stay the same.",
+       "correct": false,
+       "feedback": "The individual angles change as the vertex moves."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Another missing angle.",
+   "conceptTag": "triangle-angle-sum",
+   "explanationVariants": [
+    "90+35=125; the third angle is 180−125=55.",
+    "Adding the two knowns, then subtracting from 180."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A right triangle has a 90° angle and a 35° angle. What is the third angle?",
+    "answer": 55,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 125,
+      "feedback": "125 is just the sum of the two known angles — not the missing one yet. Subtract it from 180: 55."
+     },
+     {
+      "value": 90,
+      "feedback": "90 just repeats one of the known angles. The three angles must total 180: 180−(90+35)=55."
+     }
+    ],
+    "fallbackFeedback": "Add 90 and 35, then subtract that total from 180."
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "This works for **every** triangle — tiny or huge, acute, right, or obtuse. The 180° total never changes, even though the individual angles can be almost anything, as long as they add up right.",
+   "figure": "la-triangle-sum"
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "A right triangle with equal legs.",
+   "conceptTag": "triangle-angle-sum",
+   "explanationVariants": [
+    "If two angles are equal and the third is 90°, the two equal angles must share 90° between them: 90÷2=45 each.",
+    "180−90=90 left for the two equal angles, split evenly."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A right triangle has one 90° angle, and its other two angles are equal to each other. What is each of those two angles?",
+    "answer": 45,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 90,
+      "feedback": "90 is the already-known right angle. The remaining 90° (180−90) splits evenly between the two equal angles: 45 each."
+     },
+     {
+      "value": 180,
+      "feedback": "180 is the whole triangle's total, not one angle. Subtract the 90° first, then split the rest: 45 each."
+     }
+    ],
+    "fallbackFeedback": "Subtract 90 from 180, then divide the remainder by 2."
+   }
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Match two known angles to the missing one.",
+   "conceptTag": "triangle-angle-sum",
+   "widget": {
+    "type": "matchPairs",
+    "prompt": "Match each pair of known angles to the missing third angle.",
+    "left": [
+     {
+      "id": "e1",
+      "label": "40° and 40°"
+     },
+     {
+      "id": "e2",
+      "label": "90° and 20°"
+     },
+     {
+      "id": "e3",
+      "label": "60° and 80°"
+     }
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "100°"
+     },
+     {
+      "id": "r2",
+      "label": "70°"
+     },
+     {
+      "id": "r3",
+      "label": "40°"
+     }
+    ],
+    "pairs": {
+     "e1": "r1",
+     "e2": "r2",
+     "e3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "e2",
+      "right": "r3",
+      "feedback": "40° belongs to 60°+80°. For 90°+20°: 180−(90+20)=70."
+     }
+    ],
+    "missFeedback": "Add the two known angles, then subtract from 180.",
+    "successFeedback": "40+40 needs 100 more; 90+20 needs 70 more; 60+80 needs 40 more — every triangle still totals 180."
+   }
+  },
+  {
+   "id": "k3",
+   "kind": "check",
+   "body": "An obtuse triangle's missing angle.",
+   "conceptTag": "triangle-angle-sum",
+   "explanationVariants": [
+    "120+35=155; the third angle is 180−155=25.",
+    "Adding the two knowns, then subtracting from 180, works the same regardless of triangle type."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "An obtuse triangle has angles 120° and 35°. What is the third angle?",
+    "answer": 25,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 155,
+      "feedback": "155 is just the sum of the two known angles — not the missing one yet. Subtract it from 180: 25."
+     },
+     {
+      "value": 60,
+      "feedback": "60 doesn't match this pair. Add 120+35=155, then subtract from 180: 25."
+     }
+    ],
+    "fallbackFeedback": "Add 120 and 35, then subtract that total from 180."
+   }
+  },
+  {
+   "id": "ch1",
+   "kind": "challenge",
+   "body": "The sailboat's sail.",
+   "conceptTag": "triangle-angle-sum",
+   "hints": [
+    "The sail's three corners form a triangle.",
+    "Add the two known angles: 65° and 40°.",
+    "Subtract that total from 180 for the third corner."
+   ],
+   "explanationVariants": [
+    "65+40=105; the third corner is 180−105=75.",
+    "Every triangular sail, however it's cut, still totals 180° at its corners."
+   ],
+   "widget": {
+    "type": "numeric",
+    "prompt": "A triangular sail has corner angles of 65° and 40°. What is the third corner's angle?",
+    "answer": 75,
+    "tolerance": 0,
+    "unit": "degrees",
+    "commonErrors": [
+     {
+      "value": 105,
+      "feedback": "105 is just the sum of the two known corners — not the missing one yet. Subtract it from 180: 75."
+     },
+     {
+      "value": 25,
+      "feedback": "25 subtracts one known angle from the other instead of using the 180° total. Add 65+40=105, then subtract from 180: 75."
+     }
+    ],
+    "fallbackFeedback": "Add 65 and 40, then subtract that total from 180."
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "One total, every triangle.",
+   "takeaways": [
+    "Every triangle's three angles add up to exactly 180°, no exceptions.",
+    "Given two angles, subtract their sum from 180 to find the third.",
+    "This connects directly to angles on a straight line, which also total 180°."
+   ],
+   "teaser": "next: classifying four-sided shapes by the angles they contain."
+  }
+ ],
+ "remedials": [
+  {
+   "conceptTag": "triangle-angle-sum",
+   "concept": {
+    "id": "rem-ts-c",
+    "kind": "concept",
+    "body": "Quick rewind. **Every triangle's angles total 180°.** For two known angles, 30° and 90°: add them (30+90=120), then subtract from 180: 180−120=60 is the third angle."
+   },
+   "check": {
+    "id": "rem-ts-k",
+    "kind": "check",
+    "body": "",
+    "conceptTag": "triangle-angle-sum",
+    "explanationVariants": [
+     "30+90=120; the third angle is 180−120=60.",
+     "Add the two knowns, then subtract from 180."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "A triangle has angles 30° and 90°. What is the third angle?",
+     "options": [
+      {
+       "id": "a",
+       "label": "60°",
+       "correct": true,
+       "feedback": "30+90=120; 180−120=60."
+      },
+      {
+       "id": "b",
+       "label": "120°",
+       "feedback": "120 is just the sum of the two known angles. Subtract it from 180: 60."
+      },
+      {
+       "id": "c",
+       "label": "150°",
+       "feedback": "That would make the total more than 180°. The third angle is 180−120=60."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

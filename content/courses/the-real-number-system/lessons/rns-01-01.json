@@ -1,0 +1,576 @@
+{
+  "id": "rns-01-01",
+  "slug": "what-makes-a-number-rational",
+  "title": "What Makes a Number Rational",
+  "courseId": "the-real-number-system",
+  "chapterId": "ch1-rational-decimals",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A **rational number** is any number that can be written as a fraction a/b of two integers (b ≠ 0). That includes whole numbers (5 = 5/1), negatives (-2 = -2/1), and familiar decimals (0.5 = 1/2). Every rational number, in decimal form, either stops or repeats forever.",
+      "figure": "rns-rational-def"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Spot the rational number.",
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "rationalDefinition",
+        "answerMode": "choice",
+        "prompt": "Which of these numbers is rational?",
+        "dividend": {
+          "num": 3,
+          "den": 4
+        },
+        "candidates": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "0.5",
+            "claim": "rational:yes",
+            "feedback": "Yes! 0.5 = 1/2, a ratio of two integers — that makes it rational."
+          },
+          {
+            "id": "b",
+            "label": "an endless, non-repeating decimal",
+            "claim": "misconception:b",
+            "feedback": "That's the definition of an IRRATIONAL number — no fraction matches a decimal that never settles into a pattern."
+          },
+          {
+            "id": "c",
+            "label": "nothing — only whole numbers are rational",
+            "claim": "misconception:c",
+            "feedback": "Whole numbers ARE rational (5 = 5/1), but so are fractions and terminating or repeating decimals — the category is bigger than just whole numbers."
+          },
+          {
+            "id": "d",
+            "label": "only fractions with a small denominator",
+            "claim": "misconception:d",
+            "feedback": "Size of the denominator doesn't matter — 7/1,000,000 is still perfectly rational."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Yes! 0.5 = 1/2, a ratio of two integers — that makes it rational.",
+        "explorationFeedback": "Inspect at least 2 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Why do rational decimals always stop or repeat? Long division only ever produces remainders smaller than the divisor — so dividing by 3, the only possible remainders are 0, 1, or 2. Eventually a remainder must repeat, and once it does, the digits after it repeat too.",
+      "figure": "repeating-decimal-cycle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which decimal equals exactly 1/3?",
+      "conceptTag": "rns-repeat-or-terminate",
+      "explanationVariants": [
+        "1/3 = 0.333…, the digit 3 repeating forever — 0.3 alone is only a rounded approximation.",
+        "Dividing 1 by 3 never reaches a remainder of 0, so the 3s never stop."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "decimalExact",
+        "answerMode": "choice",
+        "prompt": "1/3 as a decimal is exactly:",
+        "dividend": {
+          "num": 1,
+          "den": 3
+        },
+        "candidates": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "0.333…, repeating forever",
+            "claim": "decimal:0.(3)",
+            "feedback": "Right — the 3s never stop."
+          },
+          {
+            "id": "b",
+            "label": "0.3",
+            "claim": "misconception:b",
+            "feedback": "0.3 is close, but it's a rounded approximation, not the exact value — the 3s keep going forever."
+          },
+          {
+            "id": "c",
+            "label": "0.33",
+            "claim": "misconception:c",
+            "feedback": "Still just a rounded approximation — 1/3 never terminates."
+          },
+          {
+            "id": "d",
+            "label": "1.3",
+            "claim": "misconception:d",
+            "feedback": "That misplaces the decimal point entirely — 1/3 is less than 1."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Right — the 3s never stop.",
+        "explorationFeedback": "Inspect at least 2 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsDecimalRepeat"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "See why the remainder forces a repeat.",
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "remainderCycle",
+        "answerMode": "explore",
+        "prompt": "Why must 1 ÷ 3 repeat forever?",
+        "dividend": {
+          "num": 1,
+          "den": 3
+        },
+        "candidates": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [
+          {
+            "title": "Step 1",
+            "body": "Divide 1 by 3: it goes in 0 times, remainder 1. Bring down a zero to make 10. Then 10 ÷ 3 = 3, remainder 1 — the SAME remainder as before."
+          },
+          {
+            "title": "Step 2",
+            "body": "Since the remainder is back to 1, the very next step is identical to the previous one — so the digit 3 repeats forever."
+          }
+        ],
+        "successFeedback": "Exactly — a repeating remainder locks in a repeating digit.",
+        "explorationFeedback": "Inspect at least 2 exact quotient states before checking.",
+        "fallbackFeedback": "Reveal the next step."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which of these will terminate (stop) rather than repeat?",
+      "conceptTag": "rns-repeat-or-terminate",
+      "explanationVariants": [
+        "3/4 = 0.75 exactly — the division reaches a remainder of 0 and stops.",
+        "Only 3/4 hits a remainder of zero; the others cycle through nonzero remainders forever."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "decimalSelect",
+        "answerMode": "choice",
+        "prompt": "Which fraction's decimal STOPS instead of repeating?",
+        "candidates": [
+          {
+            "id": "a",
+            "label": "3/4",
+            "value": {
+              "num": 3,
+              "den": 4
+            }
+          },
+          {
+            "id": "b",
+            "label": "1/3",
+            "value": {
+              "num": 1,
+              "den": 3
+            }
+          },
+          {
+            "id": "c",
+            "label": "2/3",
+            "value": {
+              "num": 2,
+              "den": 3
+            }
+          },
+          {
+            "id": "d",
+            "label": "1/6",
+            "value": {
+              "num": 1,
+              "den": 6
+            }
+          }
+        ],
+        "classificationTarget": "terminates",
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "3/4",
+            "claim": "candidate:a",
+            "feedback": "Right — 3/4 = 0.75 exactly, then it stops."
+          },
+          {
+            "id": "b",
+            "label": "1/3",
+            "claim": "misconception:b",
+            "feedback": "1/3 = 0.333… repeats forever — it never stops."
+          },
+          {
+            "id": "c",
+            "label": "2/3",
+            "claim": "misconception:c",
+            "feedback": "2/3 = 0.666… repeats forever."
+          },
+          {
+            "id": "d",
+            "label": "1/6",
+            "claim": "misconception:d",
+            "feedback": "1/6 = 0.1666… — after the first digit, the 6 repeats forever."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Right — 3/4 = 0.75 exactly, then it stops.",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsChooseTerminate"
+      }
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Divide it out.",
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "decimalValue",
+        "answerMode": "numeric",
+        "prompt": "What is 7 ÷ 8 as a decimal?",
+        "dividend": {
+          "num": 7,
+          "den": 8
+        },
+        "candidates": [],
+        "requiredExplorations": 4,
+        "tolerance": 0.001,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 0.78,
+            "feedback": "That swaps digits partway through — carefully redo the division: 7 ÷ 8 = 0.875."
+          },
+          {
+            "value": 7.8,
+            "feedback": "That misplaces the decimal point — 7 ÷ 8 is less than 1, so it starts 0.8…"
+          }
+        ],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "7 ÷ 8 = 0.875 exactly (the division reaches a remainder of 0).",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "7 ÷ 8 = 0.875 exactly (the division reaches a remainder of 0)."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Which fraction produces a REPEATING decimal?",
+      "conceptTag": "rns-repeat-or-terminate",
+      "explanationVariants": [
+        "1/4, 1/2, and 1/5 all hit a remainder of 0 and stop; 1/3 never does.",
+        "Only 1/3 cycles through nonzero remainders forever — the others terminate."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "decimalSelect",
+        "answerMode": "choice",
+        "prompt": "Which of these fractions REPEATS instead of stopping?",
+        "candidates": [
+          {
+            "id": "a",
+            "label": "1/3",
+            "value": {
+              "num": 1,
+              "den": 3
+            }
+          },
+          {
+            "id": "b",
+            "label": "1/4",
+            "value": {
+              "num": 1,
+              "den": 4
+            }
+          },
+          {
+            "id": "c",
+            "label": "1/2",
+            "value": {
+              "num": 1,
+              "den": 2
+            }
+          },
+          {
+            "id": "d",
+            "label": "1/5",
+            "value": {
+              "num": 1,
+              "den": 5
+            }
+          }
+        ],
+        "classificationTarget": "repeats",
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "1/3",
+            "claim": "candidate:a",
+            "feedback": "Right — 1/3 = 0.333… never stops."
+          },
+          {
+            "id": "b",
+            "label": "1/4",
+            "claim": "misconception:b",
+            "feedback": "1/4 = 0.25 exactly — it stops."
+          },
+          {
+            "id": "c",
+            "label": "1/2",
+            "claim": "misconception:c",
+            "feedback": "1/2 = 0.5 exactly — it stops."
+          },
+          {
+            "id": "d",
+            "label": "1/5",
+            "claim": "misconception:d",
+            "feedback": "1/5 = 0.2 exactly — it stops."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Right — 1/3 = 0.333… never stops.",
+        "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsChooseRepeat"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "Classify 9/20.",
+      "conceptTag": "rns-repeat-or-terminate",
+      "explanationVariants": [
+        "9/20 = 0.45 exactly — the division reaches a remainder of 0 after two digits.",
+        "20 divides evenly enough into the process that the remainder hits zero fast, so it terminates."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "decimalExact",
+        "answerMode": "choice",
+        "prompt": "9/20 as a decimal is:",
+        "dividend": {
+          "num": 9,
+          "den": 20
+        },
+        "candidates": [],
+        "requiredExplorations": 3,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "0.45, terminating",
+            "claim": "decimal:0.45",
+            "feedback": "Right — 9/20 = 0.45 exactly, then it stops."
+          },
+          {
+            "id": "b",
+            "label": "0.45, repeating",
+            "claim": "misconception:b",
+            "feedback": "0.45 stops after two digits — that's terminating, not repeating."
+          },
+          {
+            "id": "c",
+            "label": "4.5, terminating",
+            "claim": "misconception:c",
+            "feedback": "That misplaces the decimal point — 9/20 is less than 1."
+          },
+          {
+            "id": "d",
+            "label": "0.456, repeating",
+            "claim": "misconception:d",
+            "feedback": "Those digits aren't right at all — 9/20 = 0.45 exactly, and it stops."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Right — 9/20 = 0.45 exactly, then it stops.",
+        "explorationFeedback": "Inspect at least 3 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      },
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsDecimalTerminate"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A trickier one: classify 5/11.",
+      "conceptTag": "rns-repeat-or-terminate",
+      "explanationVariants": [
+        "5/11 = 0.454545…, the two-digit block \"45\" repeating forever — long division never hits remainder 0.",
+        "Dividing 5 by 11 cycles the remainder back to 5, so the block \"45\" repeats endlessly."
+      ],
+      "widget": {
+        "type": "quotientReasoningLab",
+        "task": "decimalExact",
+        "answerMode": "choice",
+        "prompt": "5/11 as a decimal is:",
+        "dividend": {
+          "num": 5,
+          "den": 11
+        },
+        "candidates": [],
+        "requiredExplorations": 3,
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "0.454545…, the block \"45\" repeats forever",
+            "claim": "decimal:0.(45)",
+            "feedback": "Right — 5/11 = 0.4545…, and \"45\" repeats forever."
+          },
+          {
+            "id": "b",
+            "label": "0.45, and it stops there",
+            "claim": "misconception:b",
+            "feedback": "It doesn't stop — keep dividing: the remainder returns and \"45\" repeats forever."
+          },
+          {
+            "id": "c",
+            "label": "0.455, and it stops",
+            "claim": "misconception:c",
+            "feedback": "Those aren't the right digits at all — 5/11 = 0.4545… repeating."
+          },
+          {
+            "id": "d",
+            "label": "0.4, repeating",
+            "claim": "misconception:d",
+            "feedback": "That's the wrong repeating block — it's the two digits \"45\" that repeat, not just \"4\"."
+          }
+        ],
+        "numericErrors": [],
+        "fractionErrors": [],
+        "authoredStages": [],
+        "successFeedback": "Right — 5/11 = 0.4545…, and \"45\" repeats forever.",
+        "explorationFeedback": "Inspect at least 3 exact quotient states before checking.",
+        "fallbackFeedback": "Use the exact quotient states to decide."
+      },
+      "hints": [
+        "Do the long division: 5 ÷ 11. Does the remainder ever hit exactly 0?",
+        "Track the remainders as you divide — watch for one you've already seen.",
+        "The remainder returns to 5 after two steps, so the two-digit block \"45\" repeats forever: 0.454545…"
+      ],
+      "variant": {
+        "gen": "g8-rns-decimal-classify",
+        "form": "rnsBlockRepeat"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Rational numbers are a/b fractions, and their decimals always terminate or repeat.",
+      "takeaways": [
+        "Every rational number's decimal either stops or repeats a block forever.",
+        "A repeating remainder in long division is what forces the repeating digits.",
+        "0.333…, 0.4545…, and 0.875 are all rational — two repeat, one terminates."
+      ],
+      "teaser": "Next: predicting which fractions terminate and which repeat — before you ever divide."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rns-repeat-or-terminate",
+      "concept": {
+        "id": "rem-rns0101-c",
+        "kind": "concept",
+        "body": "Every rational number's decimal either stops (terminates) or repeats a block of digits forever. 1/3 = 0.333… repeats; 3/4 = 0.75 stops."
+      },
+      "check": {
+        "id": "rem-rns0101-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rns-repeat-or-terminate",
+        "explanationVariants": [
+          "1/2 hits a remainder of 0 immediately, so it terminates.",
+          "Dividing 1 by 2 stops cleanly — no repeating needed."
+        ],
+        "widget": {
+          "type": "quotientReasoningLab",
+          "task": "decimalClassify",
+          "answerMode": "choice",
+          "prompt": "1/2 as a decimal is:",
+          "dividend": {
+            "num": 1,
+            "den": 2
+          },
+          "candidates": [],
+          "requiredExplorations": 2,
+          "tolerance": 0,
+          "choices": [
+            {
+              "id": "a",
+              "label": "0.5, terminating",
+              "claim": "classification:terminates",
+              "feedback": "Right — 1/2 = 0.5 exactly."
+            },
+            {
+              "id": "b",
+              "label": "0.5, repeating",
+              "claim": "misconception:b",
+              "feedback": "0.5 stops right away — that's terminating, not repeating."
+            },
+            {
+              "id": "c",
+              "label": "0.33, terminating",
+              "claim": "misconception:c",
+              "feedback": "That's the decimal for 1/3, not 1/2."
+            },
+            {
+              "id": "d",
+              "label": "5.0, terminating",
+              "claim": "misconception:d",
+              "feedback": "That misplaces the decimal point — 1/2 is less than 1."
+            }
+          ],
+          "numericErrors": [],
+          "fractionErrors": [],
+          "authoredStages": [],
+          "successFeedback": "Right — 1/2 = 0.5 exactly.",
+          "explorationFeedback": "Inspect at least 2 exact quotient states before checking.",
+          "fallbackFeedback": "Use the exact quotient states to decide."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,330 @@
+{
+  "id": "mb-01-01",
+  "slug": "times-as-many",
+  "title": "Times as Many",
+  "courseId": "multiply-bigger",
+  "chapterId": "ch1-times-as-many",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Welcome to grade-4 territory. You know multiplication as equal groups — now it grows a second job: **comparing**. 'Maya has 3 TIMES as many stickers as Leo' means Maya's pile is Leo's pile, copied 3 times. If Leo has 5, Maya has 3 × 5 = 15.",
+      "figure": "times-as-many"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Stretch the comparison bar.",
+      "conceptTag": "times-as-many",
+      "widget": {
+        "type": "slider",
+        "prompt": "Leo's bar is 4 long. Slide Maya's bar to make it exactly 3 TIMES as long as Leo's.",
+        "min": 4,
+        "max": 20,
+        "step": 4,
+        "start": 4,
+        "target": 12,
+        "visual": "bar",
+        "unitLabel": "stickers",
+        "lowFeedback": "Longer — 'times as many' copies Leo's WHOLE bar again. Count copies: one 4, two 4s…",
+        "highFeedback": "Too long — that's more than three copies of 4. Three copies of Leo's bar stop at 12.",
+        "successFeedback": "12 = three copies of Leo's 4, laid end to end. 'Times as many' means whole copies of the other pile."
+      },
+      "predict": {
+        "prompt": "Maya's bar must be 3 TIMES as long as Leo's 4. Is that the same as 3 MORE than Leo's?",
+        "options": [
+          {
+            "id": "longer",
+            "label": "No — times makes it longer than adding"
+          },
+          {
+            "id": "same",
+            "label": "Yes — it's the same thing"
+          },
+          {
+            "id": "shorter",
+            "label": "No — times makes it shorter"
+          }
+        ],
+        "outcomeId": "longer",
+        "reveal": "Three MORE would reach just 7 — but three TIMES copies Leo's whole bar again and again. Multiplying grows far faster than adding."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Manipulate the model and track how it represents times as many.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for times as many must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines times as many."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "multiply-bigger:times-as-many",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Copy the pile.",
+      "conceptTag": "times-as-many",
+      "explanationVariants": [
+        "4 times as many as 6 means four copies of the 6-pile: 4 × 6 = 24 marbles.",
+        "Bar picture: Jin's bar is four 6-bars laid end to end — 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Kim has 6 marbles. Jin has 4 TIMES as many. How many marbles does Jin have?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "marbles",
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 ADDED 4 to Kim's 6 — that's '4 MORE than', a different comparison. '4 TIMES as many' multiplies: 4 × 6."
+          },
+          {
+            "value": 46,
+            "feedback": "46 glued the digits 4 and 6 together. 'Times as many' means copies: four copies of 6 is 4 × 6 = 24."
+          }
+        ],
+        "fallbackFeedback": "Four copies of Kim's pile: 4 × 6."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbTimesAsManyNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The comparison runs BACKWARD too. If Jin has 24 and that's '4 times as many as Kim,' then Kim's pile is the 24 **shared into 4 copies**: 24 ÷ 4 = 6. Times-as-many forward is multiplication; unwinding it is division — the same fact family you already own.",
+      "figure": "mb-times-compare"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Unwind the comparison.",
+      "conceptTag": "times-as-many",
+      "explanationVariants": [
+        "Rosa's 20 is five copies of Ben's pile, so one copy is 20 ÷ 5 = 4 shells.",
+        "Fact family: 5 × ? = 20, and ? = 20 ÷ 5 = 4."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Rosa has 20 shells — 5 TIMES as many as Ben. How many shells does Ben have?",
+        "answer": 4,
+        "tolerance": 0,
+        "unit": "shells",
+        "commonErrors": [
+          {
+            "value": 100,
+            "feedback": "100 multiplied 20 × 5 — but Rosa's 20 already IS the five-copy pile. To find ONE copy (Ben's), divide: 20 ÷ 5."
+          },
+          {
+            "value": 15,
+            "feedback": "15 subtracted 5 — that unwinds '5 MORE than'. '5 TIMES as many' unwinds by division: 20 ÷ 5 = 4."
+          }
+        ],
+        "fallbackFeedback": "Rosa's pile is 5 copies of Ben's — split it: 20 ÷ 5."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbTimesAsManyNumeric"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Match story to bar picture.",
+      "conceptTag": "times-as-many",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each comparison to the bar picture that shows it.",
+        "left": [
+          {
+            "id": "s3x",
+            "label": "\"Ava has 3 times as many as Sam\""
+          },
+          {
+            "id": "s3m",
+            "label": "\"Ava has 3 more than Sam\""
+          },
+          {
+            "id": "seq",
+            "label": "\"Ava has the same as Sam\""
+          }
+        ],
+        "right": [
+          {
+            "id": "beq",
+            "label": "Two bars, exactly equal"
+          },
+          {
+            "id": "b3x",
+            "label": "Ava's bar = Sam's bar repeated 3 times"
+          },
+          {
+            "id": "b3m",
+            "label": "Ava's bar = Sam's bar plus a little 3-piece"
+          }
+        ],
+        "pairs": {
+          "s3x": "b3x",
+          "s3m": "b3m",
+          "seq": "beq"
+        },
+        "pairErrors": [
+          {
+            "left": "s3x",
+            "right": "b3m",
+            "feedback": "A little 3-piece tacked on shows '3 MORE'. '3 TIMES as many' repeats Sam's WHOLE bar three times — a much bigger stretch."
+          }
+        ],
+        "missFeedback": "TIMES copies the whole bar; MORE tacks on a fixed piece; SAME is equal bars.",
+        "successFeedback": "Times = whole-bar copies, more = a tacked-on piece, same = equal bars. The bar picture never lies."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Whose claim is right?",
+      "conceptTag": "times-as-many",
+      "explanationVariants": [
+        "12 is 2 more than 10 AND — checking copies — 12 isn't a whole-number multiple of 10, so 'times as many' language doesn't fit; Priya's 'more' claim is the accurate one.",
+        "Test the copy claim: 2 times as many as 10 would be 20, not 12. Only the '2 more' comparison matches 12."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Sam has 10 cards; Dee has 12. Priya says 'Dee has 2 more.' Marco says 'Dee has 2 times as many.' Who's right?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Priya — 12 is 2 more than 10; 2 times as many would be 20",
+            "correct": true,
+            "feedback": "The copy test settles it: two copies of 10 is 20, not 12. Dee's edge is additive: +2."
+          },
+          {
+            "id": "b",
+            "label": "Marco — 2 times as many",
+            "feedback": "Two TIMES as many as 10 means two copies: 20. Dee has 12 — only 2 MORE, not 2 times."
+          },
+          {
+            "id": "c",
+            "label": "Both say the same thing",
+            "feedback": "They're very different claims: '2 more' adds 2 (→12); '2 times' copies the whole pile (→20). Only one matches Dee's 12."
+          },
+          {
+            "id": "d",
+            "label": "Neither — you can't compare 10 and 12",
+            "feedback": "You can, two ways: by gap (2 more) or by copies (1.2 times — not whole). The clean, true claim here is Priya's '2 more.'"
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbTimesAsManyMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The sticker ledger.",
+      "conceptTag": "times-as-many",
+      "hints": [
+        "Two comparisons chain together — work one at a time.",
+        "Nia has 3 times Owen's 4: that's 3 × 4.",
+        "Then Priya has 2 times Nia's pile."
+      ],
+      "explanationVariants": [
+        "Chain the copies: Nia = 3 × 4 = 12, then Priya = 2 × 12 = 24 stickers.",
+        "Priya is 2 copies of (3 copies of 4) — 2 × 3 × 4 = 24."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Owen has 4 stickers. Nia has 3 TIMES as many as Owen. Priya has 2 TIMES as many as Nia. How many stickers does Priya have?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "stickers",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is NIA's pile (3 × 4) — Priya doubles that: 2 × 12 = 24."
+          },
+          {
+            "value": 9,
+            "feedback": "9 added the comparison numbers to Owen's pile (4 + 3 + 2) — but each 'times' COPIES a whole pile: 3 × 4 = 12, then 2 × 12."
+          }
+        ],
+        "fallbackFeedback": "First Nia (3 × 4), then Priya (2 × Nia)."
+      },
+      "variant": {
+        "gen": "g4-multiply",
+        "form": "mbTimesAsManyNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Multiplication's second job, unlocked.",
+      "takeaways": [
+        "'n times as many' = n whole copies of the other pile — multiply.",
+        "Unwinding a times-as-many comparison is division (the fact family).",
+        "'Times' copies the whole bar; 'more' only tacks on a piece."
+      ],
+      "teaser": "next: turning comparison sentences into equations you can solve."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "times-as-many",
+      "concept": {
+        "id": "rem-tm-c",
+        "kind": "concept",
+        "body": "Quick rewind. **'Times as many' is a copy machine.** '3 times as many as 5' feeds the whole 5-pile through three times: 5, 10, 15. Draw the other person's bar, then lay down that many copies of it."
+      },
+      "check": {
+        "id": "rem-tm-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "times-as-many",
+        "explanationVariants": [
+          "Two copies of the 7-pile: 2 × 7 = 14.",
+          "Bar picture: two 7-bars end to end reach 14."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Ana has 7 pens. Ben has 2 TIMES as many. Ben has…",
+          "options": [
+            {
+              "id": "a",
+              "label": "14 pens",
+              "correct": true,
+              "feedback": "Two copies of 7: 2 × 7 = 14."
+            },
+            {
+              "id": "b",
+              "label": "9 pens",
+              "feedback": "9 added 2 — that's '2 MORE than'. Two TIMES copies the whole pile: 2 × 7 = 14."
+            },
+            {
+              "id": "c",
+              "label": "27 pens",
+              "feedback": "27 glued the digits together. Two copies of 7 is 2 × 7 = 14."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

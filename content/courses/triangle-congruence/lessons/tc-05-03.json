@@ -1,0 +1,318 @@
+{
+ "id": "tc-05-03",
+ "slug": "inequalities-in-proofs",
+ "title": "Inequalities in Proofs",
+ "courseId": "triangle-congruence",
+ "chapterId": "ch5-triangle-inequalities",
+ "minutes": 10,
+ "remedials": [
+  {
+   "conceptTag": "tc-inequality-proofs",
+   "concept": {
+    "id": "rem-tc-inequality-proofs-c",
+    "kind": "concept",
+    "body": "Inequality toolkit: (1) within one triangle, the LONGER side is opposite the LARGER angle (and vice versa); (2) an EXTERIOR angle equals the sum of the two remote interiors, so it exceeds each; (3) across two triangles sharing two sides, the HINGE theorem compares third sides by included angle."
+   },
+   "check": {
+    "id": "rem-tc-inequality-proofs-k",
+    "kind": "check",
+    "body": "Longer side, which angle?",
+    "conceptTag": "tc-inequality-proofs",
+    "explanationVariants": [
+     "Within a triangle, the longer side is opposite the larger angle.",
+     "Bigger side ⇔ bigger opposite angle."
+    ],
+    "widget": {
+     "type": "mcq",
+     "prompt": "Within a single triangle, the longest side is opposite the…",
+     "options": [
+      {
+       "id": "o1",
+       "label": "largest angle",
+       "correct": true,
+       "feedback": "The longest side always faces the largest angle — and vice versa."
+      },
+      {
+       "id": "o2",
+       "label": "smallest angle",
+       "correct": false,
+       "feedback": "That's reversed — the SHORTEST side faces the smallest angle. The longest faces the LARGEST."
+      },
+      {
+       "id": "o3",
+       "label": "right angle only",
+       "correct": false,
+       "feedback": "Only right triangles have a right angle; in general the longest side faces the largest angle, right or not."
+      },
+      {
+       "id": "o4",
+       "label": "middle angle",
+       "correct": false,
+       "feedback": "The middle side faces the middle angle. The LONGEST side faces the LARGEST angle."
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "steps": [
+  {
+   "id": "c1",
+   "kind": "concept",
+   "body": "Congruence proofs conclude parts are EQUAL; inequality proofs conclude one part is GREATER. The tools mirror each other: instead of SAS congruence you reach for the **hinge theorem**, instead of the base-angles theorem you use **bigger side ⇒ bigger opposite angle**. The proof shape is the same; only the relation changes from = to >.",
+   "figure": "hinge-inequality"
+  },
+  {
+   "id": "i1",
+   "kind": "interactive",
+   "body": "Side-angle ordering.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "In a single triangle, the largest side is opposite the largest angle. In △ABC, side a = 10, b = 7, c = 5. Which angle is largest?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "angle A (opposite the longest side, 10)",
+      "correct": true,
+      "feedback": "The largest angle faces the longest side; side a = 10 is longest, so ∠A is largest."
+     },
+     {
+      "id": "o2",
+      "label": "angle B (opposite 7)",
+      "correct": false,
+      "feedback": "Side b = 7 is the MIDDLE side, so ∠B is the middle angle. The largest is ∠A, opposite the 10."
+     },
+     {
+      "id": "o3",
+      "label": "angle C (opposite 5)",
+      "correct": false,
+      "feedback": "Side c = 5 is the SMALLEST, so ∠C is the smallest angle. The largest is ∠A, opposite the longest side."
+     },
+     {
+      "id": "o4",
+      "label": "they are all equal",
+      "correct": false,
+      "feedback": "The sides differ (10, 7, 5), so the angles differ. The largest is opposite the longest side — ∠A."
+     }
+    ]
+   }
+  },
+  {
+   "id": "k1",
+   "kind": "check",
+   "body": "Order the angles.",
+   "conceptTag": "tc-inequality-proofs",
+   "explanationVariants": [
+    "Angles rank with their opposite sides: smallest side → smallest angle. With sides 5 < 7 < 10, the angles rank ∠C < ∠B < ∠A.",
+    "Match each angle to its opposite side and order: 5, 7, 10 gives ∠C < ∠B < ∠A."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "In △ABC with a = 10, b = 7, c = 5, order the angles from smallest to largest.",
+    "options": [
+     {
+      "id": "o1",
+      "label": "∠C < ∠B < ∠A",
+      "correct": true,
+      "feedback": "Each angle matches its opposite side: c=5 → ∠C smallest, b=7 → ∠B middle, a=10 → ∠A largest."
+     },
+     {
+      "id": "o2",
+      "label": "∠A < ∠B < ∠C",
+      "correct": false,
+      "feedback": "That reverses it — ∠A is opposite the LONGEST side (10), so ∠A is LARGEST, not smallest."
+     },
+     {
+      "id": "o3",
+      "label": "∠B < ∠A < ∠C",
+      "correct": false,
+      "feedback": "Order the opposite sides instead: 5 < 7 < 10 gives ∠C < ∠B < ∠A."
+     },
+     {
+      "id": "o4",
+      "label": "they cannot be ordered",
+      "correct": false,
+      "feedback": "They can — angle order matches opposite-side order: ∠C < ∠B < ∠A."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-inequality-proofs__mcq"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "concept",
+   "body": "The **Exterior Angle Inequality** adds another tool: an exterior angle of a triangle is **greater than either** of the two remote interior angles. (In fact it EQUALS their sum, so it must exceed each.) It's handy for proving one angle bigger than another across a figure.",
+   "figure": "hinge-inequality"
+  },
+  {
+   "id": "i2",
+   "kind": "interactive",
+   "body": "Exterior angle.",
+   "widget": {
+    "type": "numeric",
+    "prompt": "An exterior angle of a triangle equals the sum of the two remote interior angles. If those are 45° and 60°, what is the exterior angle, in degrees?",
+    "answer": 105,
+    "tolerance": 0,
+    "commonErrors": [
+     {
+      "value": 75,
+      "feedback": "75 = 180 − 105 would be the ADJACENT interior angle. The EXTERIOR angle equals the sum of the two REMOTE interiors: 45 + 60 = 105°."
+     },
+     {
+      "value": 52.5,
+      "feedback": "52.5 averages them — but the exterior angle is the SUM of the remote interiors: 45 + 60 = 105°."
+     }
+    ],
+    "fallbackFeedback": "Exterior = sum of remote interiors: 45 + 60 = 105°."
+   }
+  },
+  {
+   "id": "k2",
+   "kind": "check",
+   "body": "Greater than remote.",
+   "conceptTag": "tc-inequality-proofs",
+   "explanationVariants": [
+    "Since the exterior angle equals the SUM of the two remote interiors, it must be greater than either one alone.",
+    "Equalling a sum of two positive angles, the exterior angle exceeds each remote interior."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Why is a triangle's exterior angle greater than either remote interior angle?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "It equals their sum, so it exceeds each one individually",
+      "correct": true,
+      "feedback": "The exterior angle is the sum of both remote interiors — adding a positive angle makes it larger than either alone."
+     },
+     {
+      "id": "o2",
+      "label": "Because exterior angles are always obtuse",
+      "correct": false,
+      "feedback": "Exterior angles can be acute (e.g., remote interiors 20° and 30° give 50°). It exceeds each remote interior because it's their SUM."
+     },
+     {
+      "id": "o3",
+      "label": "Because it is supplementary to them",
+      "correct": false,
+      "feedback": "It's supplementary to the ADJACENT interior angle, not the remote ones. It EQUALS the sum of the remotes."
+     },
+     {
+      "id": "o4",
+      "label": "Because all exterior angles are equal",
+      "correct": false,
+      "feedback": "Exterior angles vary. Each exceeds its remote interiors because it equals their sum."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-inequality-proofs__mcq"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "concept",
+   "body": "Putting it together: to prove one segment or angle bigger than another, find the triangle (or two triangles) linking them, then apply the matching inequality — hinge for two triangles sharing sides, side-angle ordering within one triangle, or the exterior-angle inequality across a vertex. Same detective work as congruence, aimed at > instead of =.",
+   "figure": "tc-inequality-proof"
+  },
+  {
+   "id": "i3",
+   "kind": "interactive",
+   "body": "Pick the tool.",
+   "widget": {
+    "type": "mcq",
+    "prompt": "You want to prove that side XY is longer than side XZ within a single triangle. Which fact do you use?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "The side opposite the larger angle is longer",
+      "correct": true,
+      "feedback": "Within one triangle, compare the angles opposite XY and XZ — the larger angle faces the longer side."
+     },
+     {
+      "id": "o2",
+      "label": "The hinge theorem",
+      "correct": false,
+      "feedback": "The hinge compares TWO triangles sharing sides. Within ONE triangle, use the side-angle ordering instead."
+     },
+     {
+      "id": "o3",
+      "label": "SAS congruence",
+      "correct": false,
+      "feedback": "Congruence proves parts EQUAL, not one longer. For a longer side, use the bigger-angle-opposite-bigger-side rule."
+     },
+     {
+      "id": "o4",
+      "label": "The midsegment theorem",
+      "correct": false,
+      "feedback": "That's about midpoints and half-lengths, not comparing two sides. Use the side-angle inequality."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ch",
+   "kind": "challenge",
+   "body": "Hinge in a proof.",
+   "conceptTag": "tc-inequality-proofs",
+   "hints": [
+    "Two triangles share sides AB and a common side; compare their included angles.",
+    "The one with the larger included angle has the longer third side (hinge).",
+    "If ∠1 > ∠2 are the included angles, the side opposite ∠1 is longer."
+   ],
+   "explanationVariants": [
+    "Both triangles share the two sides, so the hinge theorem applies: the larger included angle (∠1 > ∠2) forces the longer third side opposite ∠1.",
+    "Shared two sides + a bigger included angle ⇒ longer third side, by the hinge theorem."
+   ],
+   "widget": {
+    "type": "mcq",
+    "prompt": "Two triangles share sides of length 8 and 11. The included angle in the first is 65°, in the second 50°. To prove the first's third side is longer, which theorem do you cite?",
+    "options": [
+     {
+      "id": "o1",
+      "label": "the hinge theorem (larger included angle ⇒ longer third side)",
+      "correct": true,
+      "feedback": "Same two sides, and 65° > 50°, so the hinge theorem gives the first triangle the longer third side."
+     },
+     {
+      "id": "o2",
+      "label": "the triangle inequality",
+      "correct": false,
+      "feedback": "The triangle inequality tests whether sides form a triangle — it doesn't COMPARE two triangles' third sides. Use the hinge."
+     },
+     {
+      "id": "o3",
+      "label": "the base angles theorem",
+      "correct": false,
+      "feedback": "That's about isosceles triangles' equal angles, not comparing third sides. The hinge theorem applies here."
+     },
+     {
+      "id": "o4",
+      "label": "SAS congruence",
+      "correct": false,
+      "feedback": "The included angles DIFFER (65° ≠ 50°), so it's not congruence — it's the hinge INEQUALITY."
+     }
+    ]
+   },
+   "variant": {
+    "gen": "g10-triangle-congruence",
+    "form": "tc-inequality-proofs__mcq"
+   }
+  },
+  {
+   "id": "r1",
+   "kind": "recap",
+   "body": "Proving greater-than.",
+   "takeaways": [
+    "Within one triangle: bigger side ⇔ bigger opposite angle.",
+    "Exterior angle inequality: an exterior angle exceeds either remote interior (it equals their sum).",
+    "Across two triangles sharing two sides: the hinge theorem compares third sides."
+   ],
+   "teaser": "Course complete — you can prove triangles congruent, find their centers, and compare their parts. Similarity is next."
+  }
+ ]
+}

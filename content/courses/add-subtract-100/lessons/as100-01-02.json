@@ -1,0 +1,349 @@
+{
+  "id": "as100-01-02",
+  "slug": "near-doubles",
+  "title": "Near Doubles",
+  "courseId": "add-subtract-100",
+  "chapterId": "ch1-fluency-20",
+  "minutes": 7,
+  "readingProfile": "early",
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "near-double",
+      "body": "Neighbors like 7 + 8 are **near doubles**: double 7 is 14, one more is 15.",
+      "narration": "Neighbors like seven plus eight are near doubles: double seven is fourteen, one more is fifteen."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Match each near double to its double-plus-one.",
+      "conceptTag": "near-doubles",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "Match each sum to the double that helps solve it.",
+        "left": [
+          {
+            "id": "n67",
+            "label": "6 + 7"
+          },
+          {
+            "id": "n78",
+            "label": "7 + 8"
+          },
+          {
+            "id": "n89",
+            "label": "8 + 9"
+          }
+        ],
+        "right": [
+          {
+            "id": "h12",
+            "label": "double 6, plus 1 → 13"
+          },
+          {
+            "id": "h14",
+            "label": "double 7, plus 1 → 15"
+          },
+          {
+            "id": "h16",
+            "label": "double 8, plus 1 → 17"
+          }
+        ],
+        "pairs": {
+          "n67": "h12",
+          "n78": "h14",
+          "n89": "h16"
+        },
+        "pairErrors": [
+          {
+            "left": "n67",
+            "right": "h14",
+            "feedback": "6 + 7 doubles the 6: 12 + 1 = 13. Double 7 helps 7 + 8."
+          },
+          {
+            "left": "n89",
+            "right": "h12",
+            "feedback": "8 + 9 doubles the 8: 16 + 1 = 17. Double 6 helps 6 + 7."
+          }
+        ],
+        "missFeedback": "Double the SMALLER number, then add 1.",
+        "successFeedback": "Every neighbor pair solved by its double!"
+      },
+      "predict": {
+        "prompt": "6 + 7 is exactly one more than which double?",
+        "options": [
+          {
+            "id": "six",
+            "label": "6 + 6"
+          },
+          {
+            "id": "seven",
+            "label": "7 + 7"
+          },
+          {
+            "id": "five",
+            "label": "5 + 5"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "6 + 7 hides 6 + 6 with one extra: 12 + 1 = 13. Near doubles lean on a double you already own — one more than 6 + 6, or one less than 7 + 7. Either crutch works."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Use the double.",
+      "conceptTag": "near-doubles",
+      "explanationVariants": [
+        "7 + 8: double 7 is 14, plus one more is 15.",
+        "8 is one more than 7, so 7 + 8 is one more than 14: 15."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "7 + 8 = ?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 14,
+            "feedback": "14 is double 7 — but the 8 brings ONE more: 15."
+          },
+          {
+            "value": 16,
+            "feedback": "16 is double 8 — but the 7 is one LESS: 15."
+          }
+        ],
+        "fallbackFeedback": "Double 7 (14) plus 1 is 15."
+      },
+      "hints": [
+        "Double the smaller number.",
+        "Double 7 is 14.",
+        "One more: 15."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "NearDoublesNumeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Near doubles land on **odd** numbers: 11, 13, 15, 17 — one past an even double.",
+      "narration": "Near doubles land on odd numbers: eleven, thirteen, fifteen, seventeen — one past an even double.",
+      "figure": "as100-near-doubles"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Hop the near double.",
+      "conceptTag": "near-doubles",
+      "widget": {
+        "type": "numberLineHop",
+        "prompt": "6 + 7: start at 6, hop 6 (the double), then 1 more — two hops total. Tap where you land.",
+        "min": 0,
+        "max": 15,
+        "start": 6,
+        "hop": 1,
+        "hops": 7,
+        "direction": "forward",
+        "commonLandings": [
+          {
+            "value": 12,
+            "feedback": "12 is double 6 — the 7 brings one more hop: 13."
+          },
+          {
+            "value": 14,
+            "feedback": "That's 8 hops. 6 + 7 lands on 13."
+          }
+        ],
+        "missFeedback": "6 + 6 = 12, then 1 more: 13.",
+        "successFeedback": "Double 6, one more — 13!"
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "equivalence-transformation",
+        "actionGoal": "Manipulate the model and track how it represents near doubles.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for near doubles must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines near doubles."
+        ],
+        "representations": [
+          "number-line",
+          "symbolic"
+        ],
+        "translationFrom": "number-line",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "add-subtract-100:near-doubles",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Another neighbor pair.",
+      "conceptTag": "near-doubles",
+      "explanationVariants": [
+        "8 + 9: double 8 is 16, plus one is 17.",
+        "9 is one more than 8, so 8 + 9 is one more than 16: 17."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "8 + 9 = ?",
+        "answer": 17,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 16,
+            "feedback": "16 is double 8 — the 9 brings ONE more: 17."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is double 9 — but the 8 is one LESS: 17."
+          }
+        ],
+        "fallbackFeedback": "Double 8 (16) plus 1 is 17."
+      },
+      "hints": [
+        "Double the smaller number.",
+        "Double 8 is 16.",
+        "One more: 17."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "NearDoublesNumeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Pick the strategy.",
+      "conceptTag": "near-doubles",
+      "explanationVariants": [
+        "5 + 6 doubles the smaller: 5 + 5 = 10, plus 1 is 11.",
+        "The neighbor pair 5 + 6 is one more than double 5."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which double helps solve 5 + 6?",
+        "options": [
+          {
+            "id": "a",
+            "label": "5 + 5, then add 1",
+            "correct": true,
+            "feedback": "Yes — 5 + 5 = 10, and one more is 11."
+          },
+          {
+            "id": "b",
+            "label": "6 + 6, then add 1",
+            "feedback": "6 + 6 = 12 then +1 gives 13, too big. Double the smaller, THEN add 1: 10 + 1 = 11."
+          },
+          {
+            "id": "c",
+            "label": "10 + 10",
+            "feedback": "That doubles the answer, not a number in the sum. Use 5 + 5, then add 1."
+          }
+        ]
+      },
+      "hints": [
+        "Double the SMALLER number.",
+        "5 + 5 = 10.",
+        "Then add 1: 11."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "NearDoublesMcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Near double, no picture!",
+      "conceptTag": "near-doubles",
+      "explanationVariants": [
+        "5 + 6: double 5 is 10, plus one is 11.",
+        "6 is one more than 5, so 5 + 6 is one more than 10: 11."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "5 + 6 = ?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "10 is double 5 — the 6 brings ONE more: 11."
+          },
+          {
+            "value": 12,
+            "feedback": "12 is double 6 — but the 5 is one LESS: 11."
+          }
+        ],
+        "fallbackFeedback": "Double 5 (10) plus 1 is 11."
+      },
+      "hints": [
+        "Double the smaller.",
+        "Double 5 is 10.",
+        "One more: 11."
+      ],
+      "variant": {
+        "gen": "g2-add-subtract-100",
+        "form": "NearDoublesNumeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Near doubles are yours!",
+      "takeaways": [
+        "Neighbors = double the smaller, add 1.",
+        "Near doubles land on odd numbers.",
+        "Doubles + near doubles cover many facts."
+      ],
+      "teaser": "next: mixing all your strategies at speed."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "near-doubles",
+      "concept": {
+        "id": "rem-nd-c",
+        "kind": "concept",
+        "body": "Slow it down. 3 + 4: double 3 is 6, then one more is 7. Neighbors are a double plus one.",
+        "narration": "Three plus four: double three is six, then one more is seven. Neighbors are a double plus one."
+      },
+      "check": {
+        "id": "rem-nd-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "near-doubles",
+        "explanationVariants": [
+          "3 + 4: double 3 is 6, plus one is 7.",
+          "4 is one more than 3, so the sum is one more than 6: 7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "3 + 4 = ?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "6 is double 3 — the 4 brings one more: 7."
+            },
+            {
+              "value": 8,
+              "feedback": "8 is double 4 — but the 3 is one less: 7."
+            }
+          ],
+          "fallbackFeedback": "Double 3 (6) plus 1 is 7."
+        }
+      }
+    }
+  ]
+}

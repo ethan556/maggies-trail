@@ -1,0 +1,439 @@
+{
+  "id": "bv-02-01",
+  "slug": "the-line-of-best-fit",
+  "title": "The Line of Best Fit",
+  "courseId": "bivariate-statistics",
+  "chapterId": "ch2-fitting-a-line",
+  "minutes": 9,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "When a scatter plot's form is roughly linear, a single straight line can summarize the trend. This **line of best fit** runs through the middle of the cloud, staying as close as possible to all the dots at once.",
+      "figure": "scatter-best-fit"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Drag the line until it runs through the middle of the cloud. The red gaps are the leftovers — a good fit makes them as small as it can, above and below in balance.",
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit a line to the points' trend.",
+        "points": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            10
+          ]
+        ],
+        "xMin": 0,
+        "xMax": 7,
+        "yMin": 0,
+        "yMax": 12,
+        "mMin": -2,
+        "mMax": 3,
+        "mStep": 0.5,
+        "bMin": 0,
+        "bMax": 8,
+        "bStep": 1,
+        "mStart": 0,
+        "bStart": 6,
+        "tolerance": 0.35,
+        "successFeedback": "That line follows the trend — the leftover gaps are as small as they get, balanced above and below.",
+        "slopeFeedback": "The tilt is off. Raising or lowering this line won't help — it climbs at the wrong rate. Fix the slope first.",
+        "offsetFeedback": "The tilt is right, but the line sits too high or too low. Slide it onto the points with the intercept."
+      },
+      "predict": {
+        "prompt": "The cloud climbs from about (1, 3) to (6, 10). The best-fit slope is closest to…",
+        "options": [
+          {
+            "id": "ratio",
+            "label": "1.4 — up 7 over 5 across"
+          },
+          {
+            "id": "rise",
+            "label": "7 — the total rise"
+          },
+          {
+            "id": "flat",
+            "label": "0 — clouds don't have slopes"
+          }
+        ],
+        "outcomeId": "ratio",
+        "reveal": "End to end the cloud rises 7 while running 5: slope ≈ 7/5 = 1.4 per unit. A fit line's slope is the cloud's average climb RATE — quoting 7 takes the rise and forgets the run."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Fit and perturb a model while residual direction and overall association update together.",
+        "predictionId": "g8-bivariate-association-prediction",
+        "invariants": [
+          "association-not-causation",
+          "residual-direction"
+        ],
+        "misconceptions": [
+          "through-every-point",
+          "outlier-ignored"
+        ],
+        "representations": [
+          "graph",
+          "table",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "symbolic",
+        "fadeLevel": 2,
+        "transferFamily": "unfamiliar-dataset-defend-claim",
+        "delayed": true,
+        "counterfactualPrompt": "Move one point far from the cluster. How should the best-fit line and residual pattern respond?",
+        "explanation": {
+          "prompt": "What makes a line a useful fit?",
+          "options": [
+            {
+              "id": "invariant",
+              "label": "It balances the overall residual pattern and captures the association without needing to hit every point.",
+              "correct": true,
+              "feedback": "Exactly. A best-fit model summarizes a trend; it is not interpolation through every observation."
+            },
+            {
+              "id": "surface",
+              "label": "It must pass through every data point exactly.",
+              "correct": false,
+              "feedback": "That describes a surface feature, not the mathematical relationship that must remain true. A best-fit model summarizes a trend; it is not interpolation through every observation."
+            }
+          ]
+        }
+      },
+      "conceptTag": "bv-fit-idea"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "What the line does.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "What is the job of a line of best fit on a scatter plot?",
+        "options": [
+          {
+            "id": "a",
+            "label": "To summarize the overall trend with one straight line",
+            "correct": true,
+            "feedback": "Right — it captures the general direction of all the dots at once."
+          },
+          {
+            "id": "b",
+            "label": "To pass exactly through every dot",
+            "correct": false,
+            "feedback": "Real data is scattered — the line can't hit every dot; it stays CLOSE to all of them."
+          },
+          {
+            "id": "c",
+            "label": "To connect the dots in order",
+            "correct": false,
+            "feedback": "It's a single straight summary, not a dot-to-dot path."
+          },
+          {
+            "id": "d",
+            "label": "To mark the biggest value",
+            "correct": false,
+            "feedback": "It summarizes the whole trend, not one extreme point."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "A good fit doesn't have to touch any dots. What matters is that the line sits in the **middle** of the cloud — roughly as many dots above it as below, each one not too far away. It's a summary, not a connect-the-dots.",
+      "figure": "bv-best-fit-middle"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Touching the dots.",
+      "conceptTag": "bv-fit-idea",
+      "variant": {
+        "gen": "g8-bv-fit-idea",
+        "form": "bvFitTouch"
+      },
+      "explanationVariants": [
+        "A line of best fit need not pass through any data point — it balances the whole cloud.",
+        "The best-fit line summarizes the trend; hitting individual dots isn't required."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Must a line of best fit pass through at least one data point?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — it just needs to sit close to the whole cloud",
+            "correct": true,
+            "feedback": "Right — it balances all the dots; touching one isn't required."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it must touch at least one dot",
+            "correct": false,
+            "feedback": "Not required — the line summarizes the trend and may pass between all the dots."
+          },
+          {
+            "id": "c",
+            "label": "Yes — it must touch the first and last",
+            "correct": false,
+            "feedback": "It doesn't have to touch any specific dots — it balances the whole cloud."
+          },
+          {
+            "id": "d",
+            "label": "Yes — it must touch the outlier",
+            "correct": false,
+            "feedback": "It should IGNORE outliers if anything — it balances the main cloud, touching no dot in particular."
+          }
+        ]
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Balance the cloud.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "What makes a straight line a GOOD fit for a cloud of points?",
+        "panels": [
+          {
+            "title": "Close",
+            "body": "Every dot should be reasonably close to the line — no large gaps."
+          },
+          {
+            "title": "Balanced",
+            "body": "Roughly as many dots sit above the line as below it — the line runs through the middle."
+          },
+          {
+            "title": "Direction",
+            "body": "The line should follow the cloud's direction (rising for positive, falling for negative). Close + balanced + right direction = a good fit."
+          }
+        ],
+        "continueFeedback": "Reveal the next step.",
+        "successFeedback": "Exactly — close to all dots, balanced above and below, following the trend."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Follow the direction.",
+      "conceptTag": "bv-fit-idea",
+      "variant": {
+        "gen": "g8-bv-fit-idea",
+        "form": "bvFitDirection"
+      },
+      "explanationVariants": [
+        "For a positive association, the best-fit line should rise to the right, matching the cloud.",
+        "The line's direction must match the data's: rising for positive association."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The dots show a positive association. Which way should the line of best fit slope?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Upward to the right",
+            "correct": true,
+            "feedback": "Right — a positive association means the line rises to the right."
+          },
+          {
+            "id": "b",
+            "label": "Downward to the right",
+            "correct": false,
+            "feedback": "Downward matches a NEGATIVE association — a positive one rises to the right."
+          },
+          {
+            "id": "c",
+            "label": "Flat and horizontal",
+            "correct": false,
+            "feedback": "A flat line shows no trend — a positive association needs an upward slope."
+          },
+          {
+            "id": "d",
+            "label": "Straight up and down",
+            "correct": false,
+            "feedback": "A vertical line isn't a function of x — a positive trend slopes upward to the right."
+          }
+        ]
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One line, whole trend.",
+      "conceptTag": "bv-fit-idea",
+      "variant": {
+        "gen": "g8-bv-fit-idea",
+        "form": "bvFitPurpose"
+      },
+      "explanationVariants": [
+        "The line of best fit replaces the scattered cloud with a single simple summary of the relationship.",
+        "It turns many scattered dots into one straight-line model."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why summarize a scatter plot with a line of best fit?",
+        "options": [
+          {
+            "id": "a",
+            "label": "It turns a scattered cloud into one simple trend you can use",
+            "correct": true,
+            "feedback": "Right — one line captures and lets you use the overall relationship."
+          },
+          {
+            "id": "b",
+            "label": "It deletes the outliers from the data",
+            "correct": false,
+            "feedback": "Fitting a line doesn't delete data — it summarizes the trend across all of it."
+          },
+          {
+            "id": "c",
+            "label": "It makes the association disappear",
+            "correct": false,
+            "feedback": "It DESCRIBES the association with a line — it doesn't remove it."
+          },
+          {
+            "id": "d",
+            "label": "It counts the dots",
+            "correct": false,
+            "feedback": "Its purpose is to summarize the trend, not tally the points."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Judge a proposed line.",
+      "conceptTag": "bv-fit-idea",
+      "variant": {
+        "gen": "g8-bv-fit-idea",
+        "form": "bvFitBalance"
+      },
+      "explanationVariants": [
+        "A line hugging only the top dots leaves most points below it — not balanced, so a poor fit.",
+        "If nearly all dots sit on one side, the line isn't balanced — poor fit."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A student draws a line that runs along the very top of the cloud, with almost every dot below it. Is this a good line of best fit?",
+        "options": [
+          {
+            "id": "a",
+            "label": "No — it isn't balanced; most dots are on one side",
+            "correct": true,
+            "feedback": "Right — a good fit has dots balanced above and below, not almost all below."
+          },
+          {
+            "id": "b",
+            "label": "Yes — it touches the highest dots",
+            "correct": false,
+            "feedback": "Touching the top dots isn't the goal — the line should run through the MIDDLE, balanced."
+          },
+          {
+            "id": "c",
+            "label": "Yes — any straight line works",
+            "correct": false,
+            "feedback": "Not any line — a good fit must be close and balanced; this one leaves most dots below."
+          },
+          {
+            "id": "d",
+            "label": "Yes — it has the right slope",
+            "correct": false,
+            "feedback": "Even with the right slope, sitting above nearly every dot means it's not balanced — a poor fit."
+          }
+        ]
+      },
+      "hints": [
+        "A good fit runs through the middle of the cloud.",
+        "Check the balance: are dots split roughly evenly above and below?",
+        "Here almost every dot is below the line, so it's not balanced — a poor fit."
+      ]
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A line of best fit summarizes a roughly linear cloud with one balanced straight line.",
+      "takeaways": [
+        "It runs through the middle of the cloud, close to all dots.",
+        "It need not touch any dot — balance matters, not contact.",
+        "Its direction matches the association (rising or falling)."
+      ],
+      "teaser": "Next: judging which line fits best."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bv-fit-idea",
+      "concept": {
+        "id": "rem-bv0201-c",
+        "kind": "concept",
+        "body": "A line of best fit summarizes a roughly linear scatter plot with one straight line through the middle of the cloud — close to all dots and balanced above and below. It need not touch any dot."
+      },
+      "check": {
+        "id": "rem-bv0201-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bv-fit-idea",
+        "explanationVariants": [
+          "A best-fit line runs through the middle of the cloud, not along its edge.",
+          "The line should balance dots above and below, through the center."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Where should a line of best fit run relative to the cloud of dots?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Through the middle, balanced above and below",
+              "correct": true,
+              "feedback": "Right — it runs through the center of the cloud."
+            },
+            {
+              "id": "b",
+              "label": "Along the very top edge",
+              "correct": false,
+              "feedback": "That leaves all dots below — it should run through the MIDDLE."
+            },
+            {
+              "id": "c",
+              "label": "Below every dot",
+              "correct": false,
+              "feedback": "That's not balanced — the line belongs in the middle of the cloud."
+            },
+            {
+              "id": "d",
+              "label": "Through only the first dot",
+              "correct": false,
+              "feedback": "It balances the WHOLE cloud, not one dot — through the middle."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

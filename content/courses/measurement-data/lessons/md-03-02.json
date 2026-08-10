@@ -1,0 +1,414 @@
+{
+  "id": "md-03-02",
+  "slug": "scaled-bar-graphs",
+  "title": "Scaled Bar Graphs",
+  "courseId": "measurement-data",
+  "chapterId": "ch3-picture-the-data",
+  "minutes": 6,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A bar graph shows amounts as bar heights — but read the **SCALE** first, just like a pictograph's key. If the grid lines climb 0, 2, 4, 6, each step is worth 2, not 1. A bar reaching the third line stands for 6, not 3.",
+      "figure": "md3-bargraph"
+    },
+    {
+      "id": "e1",
+      "kind": "interactive",
+      "body": "Drag each bar to match the data. The scale counts by 5, so a bar that stops halfway between two gridlines lands on a multiple of 5.",
+      "widget": {
+        "type": "barBuilder",
+        "prompt": "Build the graph: Red 20, Blue 15, Green 25 votes.",
+        "categories": [
+          "Red",
+          "Blue",
+          "Green"
+        ],
+        "target": [
+          20,
+          15,
+          25
+        ],
+        "maxVal": 30,
+        "step": 5,
+        "successFeedback": "Every bar matches — 20, 15, and 25, each read off the by-5 scale.",
+        "partialFeedback": "Some bars don't match the data yet. Count the gridlines by 5 and set each bar to its value."
+      },
+      "predict": {
+        "prompt": "The axis counts by 5s. Building Blue's bar of 15 — how many steps will it take?",
+        "options": [
+          {
+            "id": "three",
+            "label": "Exactly 3 steps"
+          },
+          {
+            "id": "fifteen",
+            "label": "15 steps"
+          },
+          {
+            "id": "cannot",
+            "label": "The axis can't show 15"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "Each step of this axis is worth FIVE — three steps carry the bar to 15. Reading the scale, not counting ticks as ones, is the game."
+      },
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "chance-sampling",
+        "actionGoal": "Build bars from a shared scale and coordinate category counts with visual height.",
+        "predictionId": "bar-scale-prediction",
+        "invariants": [
+          "bar-height-proportional-to-count",
+          "common-scale-across-categories"
+        ],
+        "misconceptions": [
+          "ticks-count-as-ones",
+          "each-bar-uses-own-scale"
+        ],
+        "representations": [
+          "diagram",
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "translationFrom": "graph",
+        "translationTo": "table",
+        "fadeLevel": 1,
+        "transferFamily": "scaled-bar-graph-from-new-table",
+        "delayed": true,
+        "counterfactualPrompt": "Double every category count but keep the same axis scale. What changes about the bars, and what relationship stays the same?",
+        "explanation": {
+          "prompt": "Why must all three bars use the same axis scale?",
+          "options": [
+            {
+              "id": "shared",
+              "label": "A shared scale makes bar-height ratios preserve the count ratios.",
+              "correct": true,
+              "feedback": "Exactly. One common unit lets height comparisons represent count comparisons."
+            },
+            {
+              "id": "separate",
+              "label": "Each bar may use whichever scale makes it easiest to draw.",
+              "correct": false,
+              "feedback": "Different scales would make visual heights incomparable and could reverse the apparent ranking."
+            }
+          ]
+        }
+      },
+      "conceptTag": "bar-graph"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Read heights off a by-5 scale.",
+      "conceptTag": "bar-graph",
+      "widget": {
+        "type": "matchPairs",
+        "prompt": "The scale climbs by 5s (0, 5, 10, 15, 20). Match each bar to its value.",
+        "left": [
+          {
+            "id": "b2",
+            "label": "Bar reaching the 2nd line"
+          },
+          {
+            "id": "b4",
+            "label": "Bar reaching the 4th line"
+          },
+          {
+            "id": "b3",
+            "label": "Bar reaching the 3rd line"
+          }
+        ],
+        "right": [
+          {
+            "id": "v20",
+            "label": "20"
+          },
+          {
+            "id": "v10",
+            "label": "10"
+          },
+          {
+            "id": "v15",
+            "label": "15"
+          }
+        ],
+        "pairs": {
+          "b2": "v10",
+          "b4": "v20",
+          "b3": "v15"
+        },
+        "pairErrors": [
+          {
+            "left": "b2",
+            "right": "v20",
+            "feedback": "The 2nd line on a by-5 scale is 2 × 5 = 10, not 20. Count the LINES, then multiply by 5."
+          }
+        ],
+        "missFeedback": "Each grid line is worth 5 — multiply the line number by 5 for each bar.",
+        "successFeedback": "2nd line → 10, 3rd → 15, 4th → 20. The scale multiplies, just like a key."
+      }
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Which bar wins?",
+      "conceptTag": "bar-graph",
+      "explanationVariants": [
+        "Tallest bar = most, always — Tuesday and Wednesday both reach the top, a tie at 7.",
+        "Height is the whole story: the two tallest bars share the lead."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A bar graph of books read: Mon 4, Tue 7, Wed 7, Thu 2. Which statement is TRUE?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Tuesday and Wednesday tie for the most",
+            "correct": true,
+            "feedback": "Both bars reach 7 — the tallest height, shared."
+          },
+          {
+            "id": "b",
+            "label": "Thursday had the most",
+            "feedback": "Thursday's bar (2) is the SHORTEST. 'Most' means the tallest bar, not the shortest."
+          },
+          {
+            "id": "c",
+            "label": "Monday beat Tuesday",
+            "feedback": "Monday's 4 sits below Tuesday's 7 — the taller bar wins."
+          },
+          {
+            "id": "d",
+            "label": "Every day was equal",
+            "feedback": "The bars differ in height — 4, 7, 7, 2. Only Tue and Wed match."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "bar-graph",
+        "form": "default"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "When a bar stops **between two grid lines**, it lands halfway. On a by-2 scale, halfway between the 4-line and the 6-line is 5 — an odd number the scale never labels. Between-lines reading is how bar graphs show numbers their scale skips.",
+      "figure": "md3-bargraph"
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Read between the lines.",
+      "conceptTag": "bar-graph",
+      "explanationVariants": [
+        "Halfway between the 4-line and 6-line on a by-2 scale is one step of 2 split in half — 4 + 1 = 5.",
+        "The scale skips odd numbers; a bar halfway up a by-2 step lands on one: 5."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A bar graph's scale climbs by 2s (0, 2, 4, 6). The soccer bar stops exactly halfway between the 4-line and the 6-line. How many votes?",
+        "answer": 5,
+        "tolerance": 0,
+        "unit": "votes",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 read the line BELOW the bar's top — but the bar climbed halfway past it, to 5."
+          },
+          {
+            "value": 6,
+            "feedback": "6 read the line ABOVE — the bar stopped short of it. Halfway between 4 and 6 is 5."
+          }
+        ],
+        "fallbackFeedback": "The scale steps by 2, so between-lines is worth 1: 4 + 1."
+      },
+      "variant": {
+        "gen": "bar-graph",
+        "form": "halfScale"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sort bars by their real value.",
+      "conceptTag": "bar-graph",
+      "widget": {
+        "type": "dragOrder",
+        "prompt": "Scale climbs by 10s. Order these bars from SHORTEST to tallest by real value.",
+        "items": [
+          {
+            "id": "ba",
+            "label": "Bar at the 3rd line (30)"
+          },
+          {
+            "id": "bb",
+            "label": "Bar at the 1st line (10)"
+          },
+          {
+            "id": "bc",
+            "label": "Bar halfway to the 1st line (5)"
+          },
+          {
+            "id": "bd",
+            "label": "Bar at the 2nd line (20)"
+          }
+        ],
+        "correctOrder": [
+          "bc",
+          "bb",
+          "bd",
+          "ba"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "ba",
+            "second": "bb",
+            "feedback": "The 3rd line is 30, well above the 1st line's 10 — taller bar, bigger value."
+          },
+          {
+            "first": "bb",
+            "second": "bc",
+            "feedback": "Halfway to the first line is only 5 — shorter than the full first line at 10."
+          }
+        ],
+        "missFeedback": "Convert each to its real value (line × 10, or halfway = 5), then order.",
+        "successFeedback": "5, 10, 20, 30 — the scale-by-10s turns line positions into real amounts."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Why scale up?",
+      "conceptTag": "bar-graph",
+      "explanationVariants": [
+        "A by-1 scale for big data would need a graph taller than the room — scaling by 10s keeps it compact.",
+        "Big amounts, small paper: a bigger scale step fits tall bars into a readable graph."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Why might a bar graph use a scale of 10s instead of 1s?",
+        "options": [
+          {
+            "id": "a",
+            "label": "So big amounts fit — a bar of 80 needs only 8 grid steps, not 80",
+            "correct": true,
+            "feedback": "Bigger steps keep tall bars on the page — the same trick the pictograph key uses."
+          },
+          {
+            "id": "b",
+            "label": "To trick the reader",
+            "feedback": "Not a trick — a clearly labeled scale is honest. It just fits big data into a small graph."
+          },
+          {
+            "id": "c",
+            "label": "Because bars can't show small numbers",
+            "feedback": "They can — with a by-1 scale. Bigger scales exist to handle BIG numbers compactly."
+          },
+          {
+            "id": "d",
+            "label": "Scales don't affect the reading",
+            "feedback": "The scale changes everything — a bar at line 3 is 3, 15, or 30 depending on it. Read it first."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "bar-graph",
+        "form": "scalePurpose"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The between-lines showdown.",
+      "conceptTag": "bar-graph",
+      "hints": [
+        "Read the scale: it climbs by 4s (0, 4, 8, 12).",
+        "One bar sits ON the 8-line; the other stops halfway between 8 and 12.",
+        "Halfway across a by-4 step is 2 — so the second bar is 8 + 2."
+      ],
+      "explanationVariants": [
+        "On a by-4 scale, the on-the-8-line bar is 8 and the halfway-to-12 bar is 8 + 2 = 10 — so the second bar wins by 2.",
+        "Between the 8- and 12-lines is a step of 4; halfway is 2, landing the bar at 10, beating the 8-bar by 2."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Scale climbs by 4s (0, 4, 8, 12). Bar A sits on the 8-line. Bar B stops halfway between the 8-line and the 12-line. How many MORE votes does Bar B have than Bar A?",
+        "answer": 2,
+        "tolerance": 0,
+        "unit": "votes",
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 is a full scale step — but Bar B only climbed HALF a step past 8. Half of 4 is 2."
+          },
+          {
+            "value": 10,
+            "feedback": "10 is Bar B's value, not the gap. The question asks how many MORE than Bar A's 8: 10 − 8 = 2."
+          }
+        ],
+        "fallbackFeedback": "Bar A = 8, Bar B = 8 + half a step (half of 4). Then subtract."
+      },
+      "variant": {
+        "gen": "bar-graph",
+        "form": "halfDifference"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Bar graphs, read right.",
+      "takeaways": [
+        "Read the scale first — grid steps can be worth 2, 5, or 10.",
+        "A bar between two lines lands halfway — an in-between number.",
+        "Tallest bar = most; a bigger scale fits bigger data."
+      ],
+      "teaser": "next: asking a graph real questions — 'how many more?' and spotting false claims."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "bar-graph",
+      "concept": {
+        "id": "rem-bg-c",
+        "kind": "concept",
+        "body": "Quick rewind. A bar graph's scale is a **ruler standing on its end** — check what each mark is worth before measuring. If the marks read 0, 5, 10, each step is 5, so a bar at the second mark is 10, not 2."
+      },
+      "check": {
+        "id": "rem-bg-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "bar-graph",
+        "explanationVariants": [
+          "On a by-5 scale, the second mark is 2 × 5 = 10.",
+          "Count marks, multiply by the step: 2 marks × 5 = 10."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "Scale climbs by 5s. A bar reaches the 2nd mark. Its value is…",
+          "options": [
+            {
+              "id": "a",
+              "label": "10",
+              "correct": true,
+              "feedback": "2 marks × 5 = 10."
+            },
+            {
+              "id": "b",
+              "label": "2",
+              "feedback": "2 counts the marks — but each mark is worth 5. Multiply: 10."
+            },
+            {
+              "id": "c",
+              "label": "5",
+              "feedback": "5 is one mark's worth — the bar reached the SECOND mark: 2 × 5 = 10."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

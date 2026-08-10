@@ -1,0 +1,323 @@
+{
+  "id": "si-03-01",
+  "slug": "the-margin-of-error",
+  "title": "The Margin of Error",
+  "courseId": "statistical-inference",
+  "chapterId": "ch3-margin-of-error",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "You know the poll lands within about 2 SE of the truth, 95% of the time. Turn that around and the truth lies within about 2 SE of the poll.\n\nThat distance is the **margin of error**, and it turns a number into a band:\n\n48% ± 3 → every value from 45% to 51% is plausible.",
+      "figure": "si-margin-band"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Read the band.",
+      "conceptTag": "si-margin",
+      "explanationVariants": [
+        "48 − 3 = 45 and 48 + 3 = 51, so the plausible values run from 45% to 51%.",
+        "The single number is only the middle of the band. The band is the finding."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "A poll reports 48% support with a margin of error of 3 points. Which statement is best supported?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Support is plausibly anywhere from 45% to 51%.",
+            "correct": true,
+            "feedback": "Right — the band is the result. The headline number is just its midpoint."
+          },
+          {
+            "id": "o2",
+            "label": "Support is exactly 48%.",
+            "correct": false,
+            "feedback": "That is the one thing the poll cannot say. It reported a band precisely because the estimate wobbles."
+          },
+          {
+            "id": "o3",
+            "label": "Support is definitely below 50%.",
+            "correct": false,
+            "feedback": "The band reaches 51%, so a true majority is squarely inside the plausible range."
+          },
+          {
+            "id": "o4",
+            "label": "Support is between 45% and 51% with certainty.",
+            "correct": false,
+            "feedback": "The method captures the truth about 95% of the time, not always. About 1 poll in 20 produces a band that misses entirely."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-margin__mcq"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The price of precision, drawn as a curve.",
+      "widget": {
+        "type": "estimateSlider",
+        "prompt": "A 400-person poll has a margin of about ±5 points. Roughly how many people would you need for a margin of about ±1 point?",
+        "min": 100,
+        "max": 100000,
+        "start": 1000,
+        "target": 10000,
+        "acceptFactor": 1.6,
+        "unitLabel": "people",
+        "ticks": [
+          100,
+          1000,
+          10000,
+          100000
+        ],
+        "lowFeedback": "Too few. Dividing the margin by 5 costs 5² = 25 times the sample, not 5 times.",
+        "highFeedback": "More people than you need. 400 × 25 = 10,000 already gets the margin down to about a point.",
+        "successFeedback": "About 10,000. Cutting the margin by a factor of 5 means multiplying the sample by 5² = 25 — precision is bought by the square, which is why ±1 polls are rare."
+      },
+      "conceptTag": "si-margin",
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "chance-sampling",
+        "actionGoal": "Manipulate the model and track how it represents si margin.",
+        "invariants": [
+          "The manipulated model and the mathematical relationship for si margin must stay consistent."
+        ],
+        "misconceptions": [
+          "Changing a visible feature without preserving the relationship that defines si margin."
+        ],
+        "representations": [
+          "diagram",
+          "symbolic"
+        ],
+        "translationFrom": "diagram",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "statistical-inference:si-margin",
+        "delayed": true,
+        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+      },
+      "predict": {
+        "prompt": "A 400-person poll carries a margin of about ±5 points. To reach about ±1 point you would need roughly…",
+        "options": [
+          {
+            "id": "double",
+            "label": "Twice as many people"
+          },
+          {
+            "id": "five",
+            "label": "Five times as many people"
+          },
+          {
+            "id": "twentyfive",
+            "label": "Twenty-five times as many people"
+          }
+        ],
+        "outcomeId": "twentyfive",
+        "reveal": "About twenty-five times — some 10,000 people. The margin shrinks with the SQUARE ROOT of the sample, so cutting it to a fifth costs 5² = 25 times the sample. That is why national polls stop near a thousand: the next point of precision is ruinously expensive."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Which lever moves the margin?",
+      "conceptTag": "si-margin",
+      "explanationVariants": [
+        "The margin is 2 × √(p(1−p)/n). Only n is under your control, and it sits under a square root.",
+        "A larger sample narrows the margin. A larger population does nothing, and a more careful interviewer does nothing to the ARITHMETIC — though it may reduce bias, which the margin never covered anyway."
+      ],
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Which of these actually shrink the margin of error?",
+        "buckets": [
+          {
+            "id": "yes",
+            "label": "Shrinks the margin",
+            "icon": "📉"
+          },
+          {
+            "id": "no",
+            "label": "Does not",
+            "icon": "⛔"
+          }
+        ],
+        "items": [
+          {
+            "id": "s1",
+            "label": "Polling 4× as many people",
+            "bucketId": "yes",
+            "feedback": "n rises fourfold, √n doubles, and the margin halves."
+          },
+          {
+            "id": "s2",
+            "label": "Polling in a smaller town",
+            "bucketId": "no",
+            "feedback": "The population size never enters the formula. Only n does."
+          },
+          {
+            "id": "s3",
+            "label": "Asking the question more politely",
+            "bucketId": "no",
+            "feedback": "That may reduce BIAS, which is worth doing — but the margin of error only ever measured random wobble, so it does not move."
+          },
+          {
+            "id": "s4",
+            "label": "Polling when the true split is far from 50/50",
+            "bucketId": "yes",
+            "feedback": "p(1−p) is largest at 0.5, so a lopsided truth gives a smaller SE. You cannot choose it, but it does shrink the margin."
+          }
+        ],
+        "missFeedback": "Look at what actually appears in 2 × √(p(1−p)/n): only p and n.",
+        "successFeedback": "n and p move the margin. Population size and politeness do not — one is absent from the formula, the other fights a different enemy."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-margin__dragBucket"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The margin is honest about exactly one thing: **random sampling wobble**.\n\nIt assumes your sample was random and everyone answered truthfully. It cannot see undercoverage, nonresponse, or a leading question.\n\nSo ± 3 means *if the method is sound*, the truth is within 3 points. If the method leans, the ± is measuring the wrong thing.",
+      "figure": "si-bias-not-fixed"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "What the ± does not cover.",
+      "conceptTag": "si-margin",
+      "explanationVariants": [
+        "The margin is computed from n and p alone. Nothing in it knows who was left out of the frame.",
+        "A biased poll with a huge n reports a tiny margin — and that tiny margin is exactly what makes it dangerous."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "An online opt-in poll of 50,000 fans reports 91% ± 0.3%. What is wrong with quoting that margin?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "The margin measures only random wobble, and the real error here is who was sampled.",
+            "correct": true,
+            "feedback": "Right. It is arithmetic about the wrong problem — precise, and beside the point."
+          },
+          {
+            "id": "o2",
+            "label": "The margin is too small to be calculated correctly.",
+            "correct": false,
+            "feedback": "The arithmetic is fine: with n = 50,000 the random wobble really is about ±0.3 points. That is the trap, not a mistake."
+          },
+          {
+            "id": "o3",
+            "label": "Margins of error only apply to samples under 10,000.",
+            "correct": false,
+            "feedback": "There is no such rule. The formula works at any n — it just never claimed to see bias."
+          },
+          {
+            "id": "o4",
+            "label": "Nothing — a bigger sample makes any poll trustworthy.",
+            "correct": false,
+            "feedback": "Trust comes from the sampling method, not the head count. 50,000 self-selected fans are still 50,000 fans."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-margin__mcq"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Build the band.",
+      "conceptTag": "si-margin",
+      "hints": [
+        "Compute the standard error first: SE = √(p̂(1 − p̂)/n) with p̂ = 0.48 and n = 1000.",
+        "0.48 × 0.52 = 0.2496; divide by 1000 and take the root to get about 0.0158.",
+        "Double it for the 95% margin, then convert to percentage points and round to one decimal."
+      ],
+      "explanationVariants": [
+        "SE = √(0.2496/1000) ≈ 0.0158, so the margin is 2 × 0.0158 ≈ 0.0316 ≈ 3.2 percentage points.",
+        "This is where the familiar ±3 on a thousand-person poll comes from — the arithmetic barely changes for any p near a half."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A poll of 1,000 people finds p̂ = 0.48. Find the 2-SE margin of error, in percentage points (one decimal).",
+        "answer": 3.2,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 1.6,
+            "feedback": "That is one standard error. The 95% margin is two of them."
+          },
+          {
+            "value": 6.3,
+            "feedback": "That is 4 × SE. The convention is a 2-SE band, which covers about 95% of the pile."
+          },
+          {
+            "value": 24.96,
+            "feedback": "That is p̂(1 − p̂) as a percent. The division by n and the square root have not happened yet."
+          }
+        ],
+        "fallbackFeedback": "SE = √(0.48 × 0.52/1000) ≈ 0.0158; twice that is about 3.2 percentage points."
+      },
+      "variant": {
+        "gen": "a2-statistics",
+        "form": "si-margin__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "A poll is a band.",
+      "takeaways": [
+        "Margin of error ≈ 2 × SE, and it turns a point estimate into a range of plausible values.",
+        "Only n (and, out of your control, p) move it — the population size does not.",
+        "The margin measures random wobble and nothing else. It is blind to bias by construction."
+      ],
+      "teaser": "Next: what the \"95%\" in \"95% confident\" is actually counting."
+    }
+  ],
+  "remedials": [
+    {
+      "conceptTag": "si-margin",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Take the estimate, subtract the margin, add the margin — that is the band. Report the band, not the point. And remember what the band was built from: sampling wobble only, assuming the method itself was sound.",
+        "figure": "si-margin-band"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Just build the band.",
+        "conceptTag": "si-margin",
+        "explanationVariants": [
+          "52 − 4 = 48, so the band runs from 48% to 56%.",
+          "The lower end is estimate minus margin: 52 − 4."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A poll reports 52% with a margin of 4 points. What is the LOWER end of the plausible band, in percent?",
+          "answer": 48,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 56,
+              "feedback": "That is the upper end (52 + 4). The lower end subtracts the margin."
+            },
+            {
+              "value": 4,
+              "feedback": "That is the margin itself, not an end of the band. Apply it to the estimate: 52 − 4."
+            }
+          ],
+          "fallbackFeedback": "52 − 4 = 48%."
+        }
+      }
+    }
+  ]
+}
